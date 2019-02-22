@@ -1,0 +1,90 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace ITF {
+	public class FluidConfig : BaseObject {
+		public float Elasticity;
+		public float Velocity;
+		public float Viscosity;
+		public float TargetHeight;
+		public float Amplification;
+		public float TargetMaxHeight;
+		public float TargetMinHeight;
+		public float TargetAddHeight;
+		public float UnityWidth;
+		public uint PolylineUnityMult;
+		public float EnterMult;
+		public float LeaveMult;
+		public float MaxDstInfluence;
+		public uint LevelsFront;
+		public uint LevelsBack;
+		public Vector3 LevelDelta;
+		public Vector2 UVDelta;
+		public uint PerpendicularBack;
+		public float PerpendicularBackZ;
+		public float PerpendicularBackScale;
+		public float PerpendicularBackPos;
+		public float PerpendicularBackPosZ;
+		public uint PerpendicularFront;
+		public float PerpendicularFrontZ;
+		public float PerpendicularFrontScale;
+		public float PerpendicularFrontPos;
+		public float PerpendicularFrontPosZ;
+		public float WeightMultiplier;
+		public float dstInfluenceMultiplier;
+		public float AbsorptionAtEdgeStart;
+		public float AbsorptionAtEdgeEnd;
+		public float AbsorptionAtEdge_Length;
+		public float InfluenceLimit;
+		public uint SideCount;
+		public uint LayerCount;
+		public float BlendFactor;
+		public Path FxActor;
+		public Container<FluidFriseLayer> layers;
+
+		public FluidConfig(Reader reader) : base(reader) {
+			Elasticity = reader.ReadSingle();
+			Velocity = reader.ReadSingle();
+			Viscosity = reader.ReadSingle();
+			TargetHeight = reader.ReadSingle();
+			Amplification = reader.ReadSingle();
+			TargetMaxHeight = reader.ReadSingle();
+			TargetMinHeight = reader.ReadSingle();
+			TargetAddHeight = reader.ReadSingle();
+			UnityWidth = reader.ReadSingle();
+			PolylineUnityMult = reader.ReadUInt32();
+			EnterMult = reader.ReadSingle();
+			LeaveMult = reader.ReadSingle();
+			MaxDstInfluence = reader.ReadSingle();
+			LevelsFront = reader.ReadUInt32();
+			LevelsBack = reader.ReadUInt32();
+			LevelDelta = reader.ReadVector3();
+			UVDelta = reader.ReadVector2();
+			PerpendicularBack = reader.ReadUInt32();
+			PerpendicularBackZ = reader.ReadSingle();
+			PerpendicularBackScale = reader.ReadSingle();
+			PerpendicularBackPos = reader.ReadSingle();
+			PerpendicularBackPosZ = reader.ReadSingle();
+			PerpendicularFront = reader.ReadUInt32();
+			PerpendicularFrontZ = reader.ReadSingle();
+			PerpendicularFrontScale = reader.ReadSingle();
+			PerpendicularFrontPos = reader.ReadSingle();
+			PerpendicularFrontPosZ = reader.ReadSingle();
+			WeightMultiplier = reader.ReadSingle();
+			dstInfluenceMultiplier = reader.ReadSingle();
+			AbsorptionAtEdgeStart = reader.ReadSingle();
+			AbsorptionAtEdgeEnd = reader.ReadSingle();
+			AbsorptionAtEdge_Length = reader.ReadSingle();
+			InfluenceLimit = reader.ReadSingle();
+			SideCount = reader.ReadUInt32();
+			LayerCount = reader.ReadUInt32();
+			BlendFactor = reader.ReadSingle();
+			FxActor = new Path(reader);
+			layers = new Container<FluidFriseLayer>(reader);
+		}
+	}
+}
