@@ -39,7 +39,7 @@ namespace ITF {
 		}
 		public Queue<ObjectPlaceHolder> pathsToLoad = new Queue<ObjectPlaceHolder>();
 
-		public Dictionary<StringID, Container<FriseConfig>> fcg = new Dictionary<StringID, Container<FriseConfig>>();
+		public Dictionary<StringID, Container<Generic<FriseConfig>>> fcg = new Dictionary<StringID, Container<Generic<FriseConfig>>>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 
         public Globals globals = null;
@@ -93,8 +93,8 @@ namespace ITF {
 					foreach (Frise f in mainScene.frise) {
 						GameObject gao = f.Gao;
 					}
-					foreach (Actor a in mainScene.actors) {
-						GameObject gao = a.Gao;
+					foreach (Generic<Actor> a in mainScene.actors) {
+						GameObject gao = a.obj.Gao;
 					}
 				}
 			} catch(Exception ex) {

@@ -7,24 +7,16 @@ using UnityEngine;
 
 namespace ITF {
 	public class PolyLineEdge : BaseObject {
-		public Vector2 pos;
-		public float scale;
-		public bool switchTexture;
-		public Hole holeMode;
-		public Vector2 vector;
-		public Vector2 normalizedVector;
-		public float length;
-		public StringID gameMaterial;
+		[Serialize(0, "POS")] public Vector2 pos;
+		[Serialize(1, "Scale")] public float scale;
+		[Serialize(2, "SwitchTexture")] public bool switchTexture;
+		[Serialize(3, "HoleMode")] public Hole holeMode;
+		[Serialize(4, "Vector")] public Vector2 vector;
+		[Serialize(5, "NormalizedVector")] public Vector2 normalizedVector;
+		[Serialize(6, "Length")] public float length;
+		[Serialize(7, "GameMaterial")] public StringID gameMaterial;
 
 		public PolyLineEdge(Reader reader) : base(reader) {
-			pos = reader.ReadVector2();
-			scale = reader.ReadSingle();
-			switchTexture = reader.ReadBoolean();
-			holeMode = (Hole)reader.ReadUInt32();
-			vector = reader.ReadVector2();
-			normalizedVector = reader.ReadVector2();
-			length = reader.ReadSingle();
-			gameMaterial = new StringID(reader);
 		}
 
 		public enum Hole {

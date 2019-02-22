@@ -7,16 +7,12 @@ using UnityEngine;
 
 namespace ITF {
 	public class TemplatePickable : BaseObject {
-		public Container<string> tags;
-		public bool wip;
-		public bool lowUpdate;
-		public WorldUpdateLayer updateLayer;
-		
+		[Serialize(0, "TAGS")] public Container<string> tags;
+		[Serialize(1, "WIP")] public bool wip;
+		[Serialize(2, "LOWUPDATE")] public bool lowUpdate;
+		[Serialize(3, "UPDATELAYER")] public WorldUpdateLayer updateLayer;
+
 		public TemplatePickable(Reader reader) : base(reader) {
-			tags = new Container<string>(reader);
-			wip = reader.ReadBoolean();
-			lowUpdate = reader.ReadBoolean();
-			updateLayer = (WorldUpdateLayer)reader.ReadUInt32();
 		}
 
 		public enum WorldUpdateLayer {

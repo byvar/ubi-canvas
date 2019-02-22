@@ -7,12 +7,10 @@ using UnityEngine;
 
 namespace ITF {
 	public class SceneConfigs : BaseObject {
-		public uint activeSceneConfig;
-		public Container<SceneConfig> sceneConfigs;
+		[Serialize(0, "activeSceneConfig")] public uint activeSceneConfig;
+		[Serialize(1, "sceneConfigs")] public Container<Generic<SceneConfig>> sceneConfigs;
 
 		public SceneConfigs(Reader reader) : base(reader) {
-			activeSceneConfig = reader.ReadUInt32();
-			sceneConfigs = new Container<SceneConfig>(reader, true);
 		}
 	}
 }

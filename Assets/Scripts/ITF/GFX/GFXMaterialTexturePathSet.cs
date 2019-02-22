@@ -7,25 +7,17 @@ using UnityEngine;
 
 namespace ITF {
 	public class GFXMaterialTexturePathSet : BaseObject {
-		public Path diffuse;
-		public Path back_light;
-		public Path normal;
-		public Path separateAlpha;
-		public Path diffuse_2;
-		public Path back_light_2;
-		public Path anim_impostor;
+		[Serialize(0, "diffuse")] public Path diffuse;
+		[Serialize(1, "back_light")] public Path back_light;
+		[Serialize(2, "normal")] public Path normal;
+		[Serialize(3, "separateAlpha")] public Path separateAlpha;
+		[Serialize(4, "diffuse_2")] public Path diffuse_2;
+		[Serialize(5, "back_light_2")] public Path back_light_2;
+		[Serialize(6, "anim_impostor")] public Path anim_impostor;
 
 		public TextureCooked diffuseTex;
 
-		public GFXMaterialTexturePathSet(Reader reader) : base(reader) {
-			diffuse = new Path(reader);
-			back_light = new Path(reader);
-			normal = new Path(reader);
-			separateAlpha = new Path(reader);
-			diffuse_2 = new Path(reader);
-			back_light_2 = new Path(reader);
-			anim_impostor = new Path(reader);
-			
+		public GFXMaterialTexturePathSet(Reader reader) : base(reader) {			
 			MapLoader.Loader.Load(diffuse, (extReader) => {
 				if (MapLoader.Loader.tex.ContainsKey(diffuse.stringID)) {
 					diffuseTex = MapLoader.Loader.tex[diffuse.stringID];

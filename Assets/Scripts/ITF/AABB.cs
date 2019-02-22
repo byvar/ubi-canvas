@@ -11,8 +11,6 @@ namespace ITF {
 		[Serialize(1, "MAX")] public Vector2 max;
 
 		public AABB(Reader reader) : base(reader) {
-			min = reader.ReadVector2();
-			max = reader.ReadVector2();
 		}
 	}
 }

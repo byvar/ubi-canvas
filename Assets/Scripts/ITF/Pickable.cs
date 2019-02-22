@@ -23,25 +23,17 @@ namespace ITF {
 			gao.transform.localScale = new Vector3(scale.x, scale.y, 1f);
 		}
 
-		public float relativeZ;
-		public Vector2 scale = Vector2.one;
-		public bool xFlipped;
-		public string userFriendly;
-		public uint updateDependencyList;
-		public Vector2 pos2D;
-		public Angle angle;
-		public Path instanceDataFile;
+		[Serialize(0, "RELATIVEZ")] public float relativeZ;
+		[Serialize(1, "SCALE")] public Vector2 scale = Vector2.one;
+		[Serialize(2, "xFLIPPED")] public bool xFlipped;
+		[Serialize(3, "USERFRIENDLY")] public string userFriendly;
+		[Serialize(4, "UPDATEDEPENDENCYLIST")] public uint updateDependencyList;
+		[Serialize(5, "POS2D")] public Vector2 pos2D;
+		[Serialize(6, "ANGLE")] public Angle angle;
+		[Serialize(7, "INSTANCEDATAFILE")] public Path instanceDataFile;
 
 
 		public Pickable(Reader reader) : base(reader) {
-			relativeZ = reader.ReadSingle();
-			scale = reader.ReadVector2();
-			xFlipped = reader.ReadBoolean();
-			userFriendly = reader.ReadString();
-			updateDependencyList = reader.ReadUInt32();
-			pos2D = reader.ReadVector2();
-			angle = new Angle(reader);
-			instanceDataFile = new Path(reader);
 		}
 		public bool CheckFlags(uint flags) {
 			return true; // todo

@@ -7,26 +7,17 @@ using UnityEngine;
 
 namespace ITF {
 	public class FluidFriseLayer : BaseObject {
-		public uint erosion;
-		public Color color;
-		public float threshold;
-		public Path gameMaterial;
-		public Path backsideGameMaterial;
-		public float collisionHeight;
-		public bool hasBacksideInversion;
-		public float forcedHeightWhenNotColored;
-		public bool hasForcedHeightWhenNotColored;
+		[Serialize(0, "erosion")] public uint erosion;
+		[Serialize(1, "color")] public Color color;
+		[Serialize(2, "threshold")] public float threshold;
+		[Serialize(3, "gameMaterial")] public Path gameMaterial;
+		[Serialize(4, "backsideGameMaterial")] public Path backsideGameMaterial;
+		[Serialize(5, "collisionHeight")] public float collisionHeight;
+		[Serialize(6, "hasBacksideInversion")] public bool hasBacksideInversion;
+		[Serialize(7, "forcedHeightWhenNotColored")] public float forcedHeightWhenNotColored;
+		[Serialize(8, "hasForcedHeightWhenNotColored")] public bool hasForcedHeightWhenNotColored;
 
 		public FluidFriseLayer(Reader reader) : base(reader) {
-			erosion = reader.ReadUInt32();
-			color = reader.ReadColor();
-			threshold = reader.ReadSingle();
-			gameMaterial = new Path(reader);
-			backsideGameMaterial = new Path(reader);
-			collisionHeight = reader.ReadSingle();
-			hasBacksideInversion = reader.ReadBoolean();
-			forcedHeightWhenNotColored = reader.ReadSingle();
-			hasForcedHeightWhenNotColored = reader.ReadBoolean();
 		}
 	}
 }

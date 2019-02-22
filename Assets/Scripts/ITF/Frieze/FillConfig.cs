@@ -7,24 +7,16 @@ using UnityEngine;
 
 namespace ITF {
 	public class FillConfig : BaseObject {
-		public float smoothFactor;
-		public float offset;
-		public Angle angle;
-		public Vector2 scale;
-		public StringID tex;
-		public float zExtrude;
-		public bool isSmooth;
-		public int texIndex;
+		[Serialize(0, "smoothFactor")] public float smoothFactor;
+		[Serialize(1, "offset")] public float offset;
+		[Serialize(2, "angle")] public Angle angle;
+		[Serialize(3, "scale")] public Vector2 scale;
+		[Serialize(4, "tex")] public StringID tex;
+		[Serialize(5, "zExtrude")] public float zExtrude;
+		[Serialize(6, "isSmooth")] public bool isSmooth;
+		[Serialize(7, "texIndex")] public int texIndex;
 
 		public FillConfig(Reader reader) : base(reader) {
-			smoothFactor = reader.ReadSingle();
-			offset = reader.ReadSingle();
-			angle = new Angle(reader);
-			scale = reader.ReadVector2();
-			tex = new StringID(reader);
-			zExtrude = reader.ReadSingle();
-			isSmooth = reader.ReadBoolean();
-			texIndex = reader.ReadInt32();
 		}
 	}
 }

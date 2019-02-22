@@ -7,10 +7,9 @@ using UnityEngine;
 
 namespace ITF.ActorComponents {
 	public class LinkComponent : ActorComponent {
-		public Container<SoundDescriptor_Template> children;
+		[Serialize(0, "Children")] public Container<SoundDescriptor_Template> children;
 
 		public LinkComponent(Reader reader) : base(reader) {
-			children = new Container<SoundDescriptor_Template>(reader);
 		}
 	}
 }

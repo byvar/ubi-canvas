@@ -7,12 +7,10 @@ using UnityEngine;
 
 namespace ITF.ActorComponents {
 	public class UnknownComponent1 : ActorComponent {
-		public StringID type;
-		public int value;
+		[Serialize(0, "type")] public StringID type;
+		[Serialize(1, "value")] public int value;
 
 		public UnknownComponent1(Reader reader) : base(reader) {
-			type = new StringID(reader);
-			value = reader.ReadInt32();
 		}
 	}
 }

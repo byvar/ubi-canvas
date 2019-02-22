@@ -7,12 +7,10 @@ using UnityEngine;
 
 namespace ITF {
 	public class Transform2D : BaseObject {
-		public Matrix2D rot;
-		public Vector2 pos;
+		[Serialize(0, "Rot")] public Matrix2D rot;
+		[Serialize(1, "Pos")] public Vector2 pos;
 
 		public Transform2D(Reader reader) : base(reader) {
-			rot = new Matrix2D(reader);
-			pos = reader.ReadVector2();
 		}
 	}
 }

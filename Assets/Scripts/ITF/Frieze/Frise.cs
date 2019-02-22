@@ -8,69 +8,69 @@ using UnityEngine;
 namespace ITF {
 	// In Rayman Adventures, a Frise is an Actor.
 	public class Frise : Pickable {
-		public CollisionData collisionData;
-		public MeshStaticData meshStaticData;
-		public MeshAnimData meshAnimData;
-		public MeshOverlayData meshOverlayData;
-		public PolyLine visualPolyLine;
-		public PolyPointList visualPolyPointLocal;
-		public MeshBuildData meshBuildData;
-		public MeshFluidData meshFluidData;
-		public float AABB_MinZ;
-		public float AABB_MaxZ;
-		public PolyPointList pointsList;
-		public Path configName;
-		public uint switchTexturePipeExtremity;
-		public bool switchExtremityStart;
-		public bool switchExtremityStop;
-		public Vector2 fillUVOrigin;
-		public bool preComputedForCook;
-		public Transform2D xfForCook;
-		public float depthForCook;
-		public GFXPrimitiveParam primitiveParameters;
-		public float depthOffset;
-		public float uvX_Offset;
-		public float uvY_Offset;
-		public bool uvX_Flip;
-		public bool uvY_Flip;
-		public float uvY_Tile;
-		public Vector2 filling_offsetUv;
-		public float animSyncGlobal;
-		public uint atlasIndex;
-		public uint atlasTessellationIndex;
-		public float thickness;
-		public bool useMovingCollision;
-		public bool useTemplatePrimitiveParams;
-		public LockTexture lockTexture;
-		public Path matShader;
+		[Serialize(0, "CollisionData")] public Nullable<CollisionData> collisionData;
+		[Serialize(1, "MeshStaticData")] public Nullable<MeshStaticData> meshStaticData;
+		[Serialize(2, "MeshAnimData")] public Nullable<MeshAnimData> meshAnimData;
+		[Serialize(3, "MeshOverlayData")] public Nullable<MeshOverlayData> meshOverlayData;
+		[Serialize(4, "VisualPolyline")] public PolyLine visualPolyLine;
+		[Serialize(5, "VisualPolyPointLocal")] public PolyPointList visualPolyPointLocal;
+		[Serialize(6, "MeshBuildData")] public Nullable<MeshBuildData> meshBuildData;
+		[Serialize(7, "MeshFluidData")] public Nullable<MeshFluidData> meshFluidData;
+		[Serialize(8, "AABB_MinZ")] public float AABB_MinZ;
+		[Serialize(9, "AABB_MaxZ")] public float AABB_MaxZ;
+		[Serialize(10, "PointsList")] public PolyPointList pointsList;
+		[Serialize(11, "ConfigName")] public Path configName;
+		[Serialize(12, "SwitchTexturePipeExtremity")] public uint switchTexturePipeExtremity;
+		[Serialize(13, "SwitchExtremityStart")] public bool switchExtremityStart;
+		[Serialize(14, "SwitchExtremityStop")] public bool switchExtremityStop;
+		[Serialize(15, "FillUVOrigin")] public Vector2 fillUVOrigin;
+		[Serialize(16, "PreComputedForCook")] public bool preComputedForCook;
+		[Serialize(17, "XfForCook")] public Transform2D xfForCook;
+		[Serialize(18, "DepthForCook")] public float depthForCook;
+		[Serialize(19, "PrimitiveParameters")] public GFXPrimitiveParam primitiveParameters;
+		[Serialize(20, "DepthOffset")] public float depthOffset;
+		[Serialize(21, "UvX_Offset")] public float uvX_Offset;
+		[Serialize(22, "UvY_Offset")] public float uvY_Offset;
+		[Serialize(23, "UvX_Flip")] public byte uvX_Flip;
+		[Serialize(24, "UvY_Flip")] public byte uvY_Flip;
+		[Serialize(25, "UvY_Tile")] public float uvY_Tile;
+		[Serialize(26, "Filling_OffSetUv")] public Vector2 filling_offsetUv;
+		[Serialize(27, "Anim_SyncGlobal")] public float animSyncGlobal;
+		[Serialize(28, "AtlasIndex")] public uint atlasIndex;
+		[Serialize(29, "AtlasTessellationIndex")] public uint atlasTessellationIndex;
+		[Serialize(30, "Thickness")] public float thickness;
+		[Serialize(31, "UseMovingCollision")] public bool useMovingCollision;
+		[Serialize(32, "UseTemplatePrimitiveParams")] public bool useTemplatePrimitiveParams;
+		[Serialize(33, "LockTexture")] public LockTexture lockTexture;
+		[Serialize(34, "MatShader")] public Path matShader;
 
-		public Container<FriseConfig> config;
+		public Container<Generic<FriseConfig>> config;
 
 
 		protected override void InitGameObject() {
 			base.InitGameObject();
-			if (meshBuildData != null) {
-				if (meshBuildData.staticVertexList.Count > 0) {
+			if (meshBuildData.obj != null) {
+				if (meshBuildData.obj.staticVertexList.Count > 0) {
 					Mesh mesh = new Mesh();
-					mesh.vertices = meshBuildData.staticVertexList.Select(v => v.pos).ToArray();
-					int[] tris = new int[meshBuildData.staticIndexList.First().list.Count * 2];
-					for (int i = 0; i < meshBuildData.staticIndexList.First().list.Count / 3; i++) {
-						tris[(i * 6) + 0] = meshBuildData.staticIndexList.First().list[(i * 3) + 0];
-						tris[(i * 6) + 1] = meshBuildData.staticIndexList.First().list[(i * 3) + 1];
-						tris[(i * 6) + 2] = meshBuildData.staticIndexList.First().list[(i * 3) + 2];
-						tris[(i * 6) + 3] = meshBuildData.staticIndexList.First().list[(i * 3) + 0];
-						tris[(i * 6) + 4] = meshBuildData.staticIndexList.First().list[(i * 3) + 2];
-						tris[(i * 6) + 5] = meshBuildData.staticIndexList.First().list[(i * 3) + 1];
+					mesh.vertices = meshBuildData.obj.staticVertexList.Select(v => v.pos).ToArray();
+					int[] tris = new int[meshBuildData.obj.staticIndexList.First().list.Count * 2];
+					for (int i = 0; i < meshBuildData.obj.staticIndexList.First().list.Count / 3; i++) {
+						tris[(i * 6) + 0] = meshBuildData.obj.staticIndexList.First().list[(i * 3) + 0];
+						tris[(i * 6) + 1] = meshBuildData.obj.staticIndexList.First().list[(i * 3) + 1];
+						tris[(i * 6) + 2] = meshBuildData.obj.staticIndexList.First().list[(i * 3) + 2];
+						tris[(i * 6) + 3] = meshBuildData.obj.staticIndexList.First().list[(i * 3) + 0];
+						tris[(i * 6) + 4] = meshBuildData.obj.staticIndexList.First().list[(i * 3) + 2];
+						tris[(i * 6) + 5] = meshBuildData.obj.staticIndexList.First().list[(i * 3) + 1];
 					}
 					mesh.triangles = tris;
 					//mesh.triangles = meshBuildData.staticIndexList.First().list.Select(i => (int)i).ToArray();
-					mesh.uv = meshBuildData.staticVertexList.Select(v => v.uv).ToArray();
+					mesh.uv = meshBuildData.obj.staticVertexList.Select(v => v.uv).ToArray();
 					MeshFilter mf = gao.AddComponent<MeshFilter>();
 					mf.mesh = mesh;
 					MeshRenderer mr = gao.AddComponent<MeshRenderer>();
 					Material mat = new Material(MapLoader.Loader.baseMaterial);
-					if (config != null && config[0].textureConfigs.Count > 0 && config[0].textureConfigs[0].material.textureSet.diffuseTex != null) {
-						mat.SetTexture("_MainTex", config[0].textureConfigs[0].material.textureSet.diffuseTex.Texture);
+					if (config != null && config[0].obj.textureConfigs.Count > 0 && config[0].obj.textureConfigs[0].material.textureSet.diffuseTex != null) {
+						mat.SetTexture("_MainTex", config[0].obj.textureConfigs[0].material.textureSet.diffuseTex.Texture);
 					} else {
 						mat.SetTexture("_MainTex", Util.CreateDummyTexture());
 					}
@@ -81,48 +81,12 @@ namespace ITF {
 
 
 		public Frise(Reader reader) : base(reader) {
-			if (reader.ReadBoolean()) collisionData = new CollisionData(reader);
-			if (reader.ReadBoolean()) meshStaticData = new MeshStaticData(reader);
-			if (reader.ReadBoolean()) meshAnimData = new MeshAnimData(reader);
-			if (reader.ReadBoolean()) meshOverlayData = new MeshOverlayData(reader);
-			visualPolyLine = new PolyLine(reader);
-			visualPolyPointLocal = new PolyPointList(reader);
-			if (reader.ReadBoolean()) meshBuildData = new MeshBuildData(reader);
-			if (reader.ReadBoolean()) meshFluidData = new MeshFluidData(reader);
-			AABB_MinZ = reader.ReadSingle();
-			AABB_MaxZ = reader.ReadSingle();
-			pointsList = new PolyPointList(reader);
-			configName = new Path(reader);
-			switchTexturePipeExtremity = reader.ReadUInt32();
-			switchExtremityStart = reader.ReadBoolean();
-			switchExtremityStop = reader.ReadBoolean();
-			fillUVOrigin = reader.ReadVector2();
-			preComputedForCook = reader.ReadBoolean();
-			xfForCook = new Transform2D(reader);
-			depthForCook = reader.ReadSingle();
-			primitiveParameters = new GFXPrimitiveParam(reader);
-			depthOffset = reader.ReadSingle();
-			uvX_Offset = reader.ReadSingle();
-			uvY_Offset = reader.ReadSingle();
-			uvX_Flip = reader.ReadByte() != 0;
-			uvY_Flip = reader.ReadByte() != 0;
-			uvY_Tile = reader.ReadSingle();
-			filling_offsetUv = reader.ReadVector2();
-			animSyncGlobal = reader.ReadSingle();
-			atlasIndex = reader.ReadUInt32();
-			atlasTessellationIndex = reader.ReadUInt32();
-			thickness = reader.ReadSingle();
-			useMovingCollision = reader.ReadBoolean();
-			useTemplatePrimitiveParams = reader.ReadBoolean();
-			lockTexture = (LockTexture)reader.ReadUInt32();
-			matShader = new Path(reader);
-
 			MapLoader.Loader.Load(configName, (extReader) => {
 				if (MapLoader.Loader.fcg.ContainsKey(configName.stringID)) {
 					config = MapLoader.Loader.fcg[configName.stringID];
 				} else {
 					extReader.flags |= Reader.Flags.AddObjectSizes;
-					config = new Container<FriseConfig>(extReader, true);
+					config = new Container<Generic<FriseConfig>>(extReader);
 					MapLoader.Loader.fcg[configName.stringID] = config;
 					MapLoader.Loader.print("Read:" + extReader.BaseStream.Position.ToString("X8") + " - Length:" + extReader.BaseStream.Length.ToString("X8") + " - " + (extReader.BaseStream.Position == extReader.BaseStream.Length ? "good!" : "bad!"));
 				}
@@ -140,60 +104,44 @@ namespace ITF {
 
 		#region Data classes
 		public class CollisionData : BaseObject {
-			public Container<PolyPointList> localCollisionList;
-			public Container<PolyLine> worldCollisionList;
+			[Serialize(0, "LocalCollisionList")] public Container<PolyPointList> localCollisionList;
+			[Serialize(1, "WorldCollisionList")] public Container<PolyLine> worldCollisionList;
 			public CollisionData(Reader reader) : base(reader) {
-				localCollisionList = new Container<PolyPointList>(reader);
-				worldCollisionList = new Container<PolyLine>(reader);
 			}
 		}
 
 		public class MeshStaticData : BaseObject {
-			public AABB localAABB;
-			public AABB worldAABB;
+			[Serialize(0, "LocalAABB")] public AABB localAABB;
+			[Serialize(1, "WorldAABB")] public AABB worldAABB;
 
 			public MeshStaticData(Reader reader) : base(reader) {
-				localAABB = new AABB(reader);
-				worldAABB = new AABB(reader);
 			}
 		}
 
 		public class MeshAnimData : BaseObject {
-			public AABB localAABB;
-			public AABB worldAABB;
+			[Serialize(0, "LocalAABB")] public AABB localAABB;
+			[Serialize(1, "WorldAABB")] public AABB worldAABB;
 			public MeshAnimData(Reader reader) : base(reader) {
-				localAABB = new AABB(reader);
-				worldAABB = new AABB(reader);
 			}
 		}
 
 		public class MeshOverlayData : BaseObject {
-			public AABB localAABB;
-			public AABB worldAABB;
-			public float cosAngle;
-			public float sinAngle;
+			[Serialize(0, "LocalAABB")] public AABB localAABB;
+			[Serialize(1, "WorldAABB")] public AABB worldAABB;
+			[Serialize(2, "CosAngle")] public float cosAngle;
+			[Serialize(3, "SinAngle")] public float sinAngle;
 			public MeshOverlayData(Reader reader) : base(reader) {
-				localAABB = new AABB(reader);
-				worldAABB = new AABB(reader);
-				cosAngle = reader.ReadSingle();
-				sinAngle = reader.ReadSingle();
 			}
 		}
 
 		public class MeshBuildData : BaseObject {
-			public Container<IndexList> animIndexList;
-			public Container<VertexPNC3T> animVertexList;
-			public Container<IndexList> staticIndexList;
-			public Container<VertexPCT> staticVertexList;
-			public IndexList overlayIndexList;
-			public Container<VertexPCBT> overlayVertexList;
+			[Serialize(0, "AnimIndexList")] public Container<IndexList> animIndexList;
+			[Serialize(1, "AnimVertexList")] public Container<VertexPNC3T> animVertexList;
+			[Serialize(2, "StaticIndexList")] public Container<IndexList> staticIndexList;
+			[Serialize(3, "StaticVertexList")] public Container<VertexPCT> staticVertexList;
+			[Serialize(4, "OverlayIndexList")] public IndexList overlayIndexList;
+			[Serialize(5, "OverlayVertexList")] public Container<VertexPCBT> overlayVertexList;
 			public MeshBuildData(Reader reader) : base(reader) {
-				animIndexList = new Container<IndexList>(reader);
-				animVertexList = new Container<VertexPNC3T>(reader);
-				staticIndexList = new Container<IndexList>(reader);
-				staticVertexList = new Container<VertexPCT>(reader);
-				overlayIndexList = new IndexList(reader);
-				overlayVertexList = new Container<VertexPCBT>(reader);
 			}
 		}
 
@@ -204,12 +152,10 @@ namespace ITF {
 		}
 
 		public class IndexList : BaseObject {
-			public Container<ushort> list;
-			public uint idTexConfig;
+			[Serialize(0, "List")] public Container<ushort> list;
+			[Serialize(1, "IdTexConfig")] public uint idTexConfig;
 
 			public IndexList(Reader reader) : base(reader) {
-				list = new Container<ushort>(reader);
-				idTexConfig = reader.ReadUInt32();
 			}
 		}
 		#endregion

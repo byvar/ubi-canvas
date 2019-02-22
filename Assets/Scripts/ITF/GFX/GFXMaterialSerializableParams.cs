@@ -7,12 +7,10 @@ using UnityEngine;
 
 namespace ITF {
 	public class GFXMaterialSerializableParams : BaseObject {
-		public float reflector_factor;
-		public float hiddenMask_Z_Extrude;
+		[Serialize(0, "Reflector_factor")] public float reflector_factor;
+		[Serialize(1, "HiddenMask_Z_Extrude")] public float hiddenMask_Z_Extrude;
 
 		public GFXMaterialSerializableParams(Reader reader) : base(reader) {
-			reflector_factor = reader.ReadSingle();
-			hiddenMask_Z_Extrude = reader.ReadSingle();
 		}
 	}
 }

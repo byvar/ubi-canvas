@@ -7,37 +7,23 @@ using UnityEngine;
 
 namespace ITF {
 	public class FriseTextureConfig : BaseObject {
-		public GFXMaterialSerializable material;
-		public StringID friendly;
-		public Path gameMaterial;
-		public ColorInteger color;
-		public float fillingOffset;
-		public CollisionTexture collision;
-		public Vector2 scrollUV;
-		public float scrollAngle;
-		public bool useUV2;
-		public Vector2 scaleUV2;
-		public Vector2 scrollUV2;
-		public float scrollAngle2;
-		public byte alphaBorder;
-		public byte alphaUp;
+		[Serialize(0, "material")] public GFXMaterialSerializable material;
+		[Serialize(1, "friendly")] public StringID friendly;
+		[Serialize(2, "gameMaterial")] public Path gameMaterial;
+		[Serialize(3, "color")] public ColorInteger color;
+		[Serialize(4, "fillingOffset")] public float fillingOffset;
+		[Serialize(5, "collision")] public CollisionTexture collision;
+		[Serialize(6, "scrollUV")] public Vector2 scrollUV;
+		[Serialize(7, "scrollAngle")] public float scrollAngle;
+		[Serialize(8, "useUV2")] public bool useUV2;
+		[Serialize(9, "scaleUV2")] public Vector2 scaleUV2;
+		[Serialize(10, "scrollUV2")] public Vector2 scrollUV2;
+		[Serialize(11, "scrollAngle2")] public float scrollAngle2;
+		[Serialize(12, "alphaBorder")] public byte alphaBorder;
+		[Serialize(13, "alphaUp")] public byte alphaUp;
 
 
 		public FriseTextureConfig(Reader reader) : base(reader) {
-			material = new GFXMaterialSerializable(reader);
-			friendly = new StringID(reader);
-			gameMaterial = new Path(reader);
-			color = new ColorInteger(reader);
-			fillingOffset = reader.ReadSingle();
-			collision = new CollisionTexture(reader);
-			scrollUV = reader.ReadVector2();
-			scrollAngle = reader.ReadSingle();
-			useUV2 = reader.ReadBoolean();
-			scaleUV2 = reader.ReadVector2();
-			scrollUV2 = reader.ReadVector2();
-			scrollAngle2 = reader.ReadSingle();
-			alphaBorder = reader.ReadByte();
-			alphaUp = reader.ReadByte();
 		}
 	}
 }

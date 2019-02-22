@@ -8,22 +8,19 @@ using UnityEngine;
 
 namespace ITF {
 	public class Actor : Pickable {
-		public Path lua; // [Description(\"this is the lua file used for the template\")]
-		public Bind parentBind;
-		public Container<ActorComponent> components;
+		[Serialize(0, "LUA")]        public Path lua; // [Description(\"this is the lua file used for the template\")]
+		[Serialize(1, "parentBind")] public Nullable<Bind> parentBind;
+		[Serialize(2, "COMPONENTS")] public Container<Generic<ActorComponent>> components;
 
 		protected override void InitGameObject() {
 			base.InitGameObject();
-			foreach (ActorComponent ac in components) {
+			foreach (Generic<ActorComponent> ac in components) {
 				UnityActorComponentPlaceholder p = gao.AddComponent<UnityActorComponentPlaceholder>();
-				p.name = ac.GetType().Name;
+				p.name = ac.obj.GetType().Name;
 			}
 		}
 
 		public Actor(Reader reader) : base(reader) {
-			lua = new Path(reader);
-			parentBind = new Bind(reader);
-			components = new Container<ActorComponent>(reader, true);
 		}
 	}
 }

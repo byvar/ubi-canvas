@@ -7,22 +7,15 @@ using UnityEngine;
 
 namespace ITF {
 	public class GFXMaterialSerializable : BaseObject {
-		public GFXMaterialTexturePathSet textureSet;
-		public Path shaderPath;
-		public GFXMaterialSerializableParams materialParams;
-		public bool stencilTest;
-		public bool skipDepthTest;
-		public uint alphaTest;
-		public uint alphaRef;
+		[Serialize(0, "textureSet")] public GFXMaterialTexturePathSet textureSet;
+		[Serialize(1, "shaderPath")] public Path shaderPath;
+		[Serialize(2, "materialParams")] public GFXMaterialSerializableParams materialParams;
+		[Serialize(3, "stencilTest")] public bool stencilTest;
+		[Serialize(4, "skipDepthTest")] public bool skipDepthTest;
+		[Serialize(5, "alphaTest")] public uint alphaTest;
+		[Serialize(6, "alphaRef")] public uint alphaRef;
 
 		public GFXMaterialSerializable(Reader reader) : base(reader) {
-			textureSet = new GFXMaterialTexturePathSet(reader);
-			shaderPath = new Path(reader);
-			materialParams = new GFXMaterialSerializableParams(reader);
-			stencilTest = reader.ReadBoolean();
-			skipDepthTest = reader.ReadBoolean();
-			alphaTest = reader.ReadUInt32();
-			alphaRef = reader.ReadUInt32();
 		}
 	}
 }

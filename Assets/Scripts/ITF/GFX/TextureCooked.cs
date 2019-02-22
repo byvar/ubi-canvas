@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ITF {
-	public class TextureCooked : BaseObject {
+	public class TextureCooked {
 		public static uint staticSignature = 0x54455800; // TEX\0
 		public uint unk;
 		public uint signature;
@@ -26,7 +26,7 @@ namespace ITF {
 		public uint unk5;
 		public byte[] texData;
 
-		public TextureCooked(Reader reader) : base(reader) {
+		public TextureCooked(Reader reader) {
 			unk = reader.ReadUInt32();
 			signature = reader.ReadUInt32();
 			hdrSize = reader.ReadUInt32();

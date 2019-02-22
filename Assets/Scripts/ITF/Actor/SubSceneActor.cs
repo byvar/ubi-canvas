@@ -8,32 +8,27 @@ using UnityEngine;
 
 namespace ITF {
 	public class SubSceneActor : Actor {
-		public Path relativePath;
-		public bool embedScene;
-		public bool isSinglePiece;
-		public bool zForced;
-		public bool directPicking;
-		public ViewType viewType;
-		public Scene scene;
+		[Serialize(0, "RELATIVEPATH")] public Path relativePath;
+		[Serialize(1, "EMBED_SCENE")] public bool embedScene;
+		[Serialize(2, "IS_SINGLE_PIECE")] public bool isSinglePiece;
+		[Serialize(3, "ZFORCED")] public bool zForced;
+		[Serialize(4, "DIRECT_PICKING")] public bool directPicking;
+		[Serialize(5, "viewType")] public ViewType viewType;
+		[Serialize(6, "SCENE")] public Nullable<Scene> scene;
 
 		protected override void InitGameObject() {
 			base.InitGameObject();
-			foreach (Frise f in scene.frise) {
-				f.Gao.transform.SetParent(gao.transform);
-			}
-			foreach (Actor a in scene.actors) {
-				a.Gao.transform.SetParent(gao.transform);
+			if (scene.read) {
+				foreach (Frise f in scene.obj.frise) {
+					f.Gao.transform.SetParent(gao.transform);
+				}
+				foreach (Generic<Actor> a in scene.obj.actors) {
+					a.obj.Gao.transform.SetParent(gao.transform);
+				}
 			}
 		}
 
 		public SubSceneActor(Reader reader) : base(reader) {
-			relativePath = new Path(reader);
-			embedScene = reader.ReadBoolean();
-			isSinglePiece = reader.ReadBoolean();
-			zForced = reader.ReadBoolean();
-			directPicking = reader.ReadBoolean();
-			viewType = (ViewType)reader.ReadUInt32();
-			if (reader.ReadBoolean()) scene = new Scene(reader);
 		}
 
 		public enum ViewType {

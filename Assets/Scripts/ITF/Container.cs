@@ -9,9 +9,8 @@ using UnityEngine;
 namespace ITF {
 	public class Container<T> : IList<T> {
 		List<T> container = new List<T>();
-		List<uint> sizes;
 
-		public Container(Reader reader, bool readCRC = false) {
+		public Container(Reader reader) {
 			uint count = reader.ReadUInt32();
 			if (Type.GetTypeCode(typeof(T)) != TypeCode.Object) {
 				for (int i = 0; i < count; i++) {
@@ -51,34 +50,10 @@ namespace ITF {
 					container.Add((T)(object)reader.ReadColor());
 				}
 			} else {
-				if (count > 0 && (reader.flags & Reader.Flags.AddObjectSizes) != 0 && readCRC) {
-					sizes = new List<uint>();
-				}
 				for (int i = 0; i < count; i++) {
-					if (readCRC) {
-						if ((reader.flags & Reader.Flags.AddObjectSizes) != 0) {
-							uint sizeOfEntry = reader.ReadUInt32();
-							sizes.Add(sizeOfEntry);
-						}
-						uint crc = reader.ReadUInt32();
-						if (ClassCRC.classes.ContainsKey(crc)) {
-							MapLoader.Loader.print(crc.ToString("X8") + " - " + ClassCRC.classes[crc]);
-							var ctor = ClassCRC.classes[crc].GetConstructor(new Type[] { typeof(Reader) });
-							var obj = (T)ctor.Invoke(new object[] { reader });
-							container.Add(obj);
-						} else {
-							Debug.LogError("CRC " + crc.ToString("X8")
-								+ " found at " + Pointer.Current(reader)
-								+ " while reading container of type " + typeof(T) + " is not yet supported!");
-							throw new NotImplementedException("CRC " + crc.ToString("X8")
-								+ " found at position " + Pointer.Current(reader)
-								+ " while reading container of type " + typeof(T) + " is not yet supported!");
-						}
-					} else {
-						var ctor = typeof(T).GetConstructor(new Type[] { typeof(Reader) });
-						var obj = (T)ctor.Invoke(new object[] { reader });
-						container.Add(obj);
-					}
+					var ctor = typeof(T).GetConstructor(new Type[] { typeof(Reader) });
+					var obj = (T)ctor.Invoke(new object[] { reader });
+					container.Add(obj);
 				}
 			}
 		}

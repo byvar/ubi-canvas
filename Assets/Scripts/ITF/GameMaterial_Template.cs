@@ -6,48 +6,28 @@ using System.Threading.Tasks;
 
 namespace ITF {
 	public class GameMaterial_Template : BaseObject {
-		public Container<StringID> feedbackTags;
-		public bool solid;
-		public uint filter;
-		public bool nostim;
-		public bool noStick;
-		public bool noWalkOnWall;
-		public bool noShadow;
-		public bool castShadow;
-		public float moveSpeed;
-		public float moveForce;
-		public float friction;
-		public float speedMultiplier;
-		public float regionFriction;
-		public float regionFrictionAir;
-		public float WaterResistance;
-		public uint amount;
-		public uint collisionGroup;
-		public StringID soundMatGUID;
-		public StringID type;
-		public uint phys2DFilter;
+		[Serialize(0, "feedbackTags")] public Container<StringID> feedbackTags;
+		[Serialize(1, "solid")] public bool solid;
+		[Serialize(2, "filter", game = Settings.Game.RA)] public uint filter;
+		[Serialize(3, "nostim")] public bool nostim;
+		[Serialize(4, "noStick")] public bool noStick;
+		[Serialize(5, "noWalkOnWall")] public bool noWalkOnWall;
+		[Serialize(6, "noShadow")] public bool noShadow;
+		[Serialize(7, "castShadow", game = Settings.Game.RA)] public bool castShadow;
+		[Serialize(8, "moveSpeed")] public float moveSpeed;
+		[Serialize(9, "moveForce")] public float moveForce;
+		[Serialize(10, "friction")] public float friction;
+		[Serialize(11, "speedMultiplier")] public float speedMultiplier;
+		[Serialize(12, "regionFriction")] public float regionFriction;
+		[Serialize(13, "regionFrictionAir")] public float regionFrictionAir;
+		[Serialize(14, "WaterResistance")] public float WaterResistance;
+		[Serialize(15, "amount")] public uint amount;
+		[Serialize(16, "collisionGroup")] public uint collisionGroup;
+		[Serialize(17, "soundMatGUID", game = Settings.Game.RA)] public StringID soundMatGUID;
+		[Serialize(18, "type", game = Settings.Game.RA)] public StringID type;
+		[Serialize(19, "phys2DFilter", game = Settings.Game.RA)] public uint phys2DFilter;
 
 		public GameMaterial_Template(Reader reader) : base(reader) {
-			feedbackTags = new Container<StringID>(reader);
-			solid = reader.ReadBoolean();
-			filter = reader.ReadUInt32();
-			nostim = reader.ReadBoolean();
-			noStick = reader.ReadBoolean();
-			noWalkOnWall = reader.ReadBoolean();
-			noShadow = reader.ReadBoolean();
-			castShadow = reader.ReadBoolean();
-			moveSpeed = reader.ReadSingle();
-			moveForce = reader.ReadSingle();
-			friction = reader.ReadSingle();
-			speedMultiplier = reader.ReadSingle();
-			regionFriction = reader.ReadSingle();
-			regionFrictionAir = reader.ReadSingle();
-			WaterResistance = reader.ReadSingle();
-			amount = reader.ReadUInt32();
-			collisionGroup = reader.ReadUInt32();
-			soundMatGUID = new StringID(reader);
-			type = new StringID(reader);
-			phys2DFilter = reader.ReadUInt32();
 		}
 	}
 }

@@ -7,12 +7,10 @@ using UnityEngine;
 
 namespace ITF {
 	public class Matrix2D : BaseObject {
-		public Vector2 col1;
-		public Vector2 col2;
+		[Serialize(0, "Col1")] public Vector2 col1;
+		[Serialize(1, "Col2")] public Vector2 col2;
 
 		public Matrix2D(Reader reader) : base(reader) {
-			col1 = reader.ReadVector2();
-			col2 = reader.ReadVector2();
 		}
 	}
 }

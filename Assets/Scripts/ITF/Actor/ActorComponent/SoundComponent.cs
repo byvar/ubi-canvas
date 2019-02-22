@@ -7,10 +7,9 @@ using UnityEngine;
 
 namespace ITF.ActorComponents {
 	public class SoundComponent : ActorComponent {
-		public Container<SoundDescriptor_Template> soundList;
+		[Serialize(0, "soundList")] public Container<SoundDescriptor_Template> soundList;
 
 		public SoundComponent(Reader reader) : base(reader) {
-			soundList = new Container<SoundDescriptor_Template>(reader);
 		}
 	}
 }

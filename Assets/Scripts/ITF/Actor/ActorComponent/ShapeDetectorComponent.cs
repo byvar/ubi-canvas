@@ -7,13 +7,10 @@ using UnityEngine;
 
 namespace ITF.ActorComponents {
 	public class ShapeDetectorComponent : DetectorComponent {
-		public Vector2 localOffset;
-		public Vector2 localScale;
-		public bool useShapeTransform;
+		[Serialize(0, "localOffset")] public Vector2 localOffset;
+		[Serialize(1, "localScale")] public Vector2 localScale;
+		[Serialize(2, "useShapeTransform")] public bool useShapeTransform;
 		public ShapeDetectorComponent(Reader reader) : base(reader) {
-			localOffset = reader.ReadVector2();
-			localScale = reader.ReadVector2();
-			useShapeTransform = reader.ReadBoolean();
 		}
 	}
 }

@@ -7,9 +7,8 @@ using UnityEngine;
 
 namespace ITF.ActorComponents {
 	public class TriggerComponent : ActorComponent {
-		public Mode mode;
+		[Serialize(0, "mode")] public Mode mode;
 		public TriggerComponent(Reader reader) : base(reader) {
-			mode = (Mode)reader.ReadUInt32();
 		}
 
 		public enum Mode {

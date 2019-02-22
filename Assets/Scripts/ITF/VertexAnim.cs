@@ -7,30 +7,19 @@ using UnityEngine;
 
 namespace ITF {
 	public class VertexAnim : BaseObject {
-		public float animGlobalSpeed;
-		public Angle animGlobalRotSpeed;
-		public float animSpeedX;
-		public float animSpeedY;
-		public float animSyncX;
-		public float animSyncY;
-		public float animAmplitudeX;
-		public float animAmplitudeY;
-		public float animSync;
-		public bool animAngleUsed;
-		public Angle animAngle;
+		[Serialize(0, "animGlobalSpeed")] public float animGlobalSpeed;
+		[Serialize(1, "animGlobalRotSpeed")] public Angle animGlobalRotSpeed;
+		[Serialize(2, "animSpeedX")] public float animSpeedX;
+		[Serialize(3, "animSpeedY")] public float animSpeedY;
+		[Serialize(4, "animSyncX")] public float animSyncX;
+		[Serialize(5, "animSyncY")] public float animSyncY;
+		[Serialize(6, "animAmplitudeX")] public float animAmplitudeX;
+		[Serialize(7, "animAmplitudeY")] public float animAmplitudeY;
+		[Serialize(8, "animSync")] public float animSync;
+		[Serialize(9, "animAngleUsed")] public bool animAngleUsed;
+		[Serialize(10, "animAngle")] public Angle animAngle;
 
 		public VertexAnim(Reader reader) : base(reader) {
-			animGlobalSpeed = reader.ReadSingle();
-			animGlobalRotSpeed = new Angle(reader);
-			animSpeedX = reader.ReadSingle();
-			animSpeedY = reader.ReadSingle();
-			animSyncX = reader.ReadSingle();
-			animSyncY = reader.ReadSingle();
-			animAmplitudeX = reader.ReadSingle();
-			animAmplitudeY = reader.ReadSingle();
-			animSync = reader.ReadSingle();
-			animAngleUsed = reader.ReadBoolean();
-			animAngle = new Angle(reader);
 		}
 	}
 }

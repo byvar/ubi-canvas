@@ -7,22 +7,14 @@ using UnityEngine;
 
 namespace ITF.ActorComponents {
 	public class GraphicComponent : ActorComponent {
-		public GFXPrimitiveParam primitiveParameters;
-		public uint colorComputerTagId;
-		public bool renderInTarget;
-		public bool disableLight;
-		public int disableShadow; // actually a bool, but it seems to be stored as 0xFFFFFFFF sometimes, and we need to save that later
-		public float depthOffset;
+		[Serialize(0, "PrimitiveParameters")] public GFXPrimitiveParam primitiveParameters;
+		[Serialize(1, "colorComputerTagId")] public uint colorComputerTagId;
+		[Serialize(2, "renderInTarget")] public bool renderInTarget;
+		[Serialize(3, "disableLight")] public int disableLight;
+		[Serialize(4, "disableShadow")] public int disableShadow; // actually a bool, but it seems to be stored as 0xFFFFFFFF sometimes, and we need to save that later
+		[Serialize(5, "depthOffset")] public float depthOffset;
 
 		public GraphicComponent(Reader reader) : base(reader) {
-			primitiveParameters = new GFXPrimitiveParam(reader);
-			//Debug.LogError("Decipher GraphiComponent @ " + Pointer.Current(reader));
-			//MapLoader.Loader.print("GFXC @ " + Pointer.Current(reader));
-			colorComputerTagId = reader.ReadUInt32();
-			renderInTarget = reader.ReadBoolean();
-			disableLight = reader.ReadBoolean();
-			disableShadow = reader.ReadInt32();
-			depthOffset = reader.ReadSingle();
 		}
 	}
 }

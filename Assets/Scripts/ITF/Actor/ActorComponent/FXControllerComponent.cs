@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace ITF.ActorComponents {
 	public class FXControllerComponent : ActorComponent {
-		public StringID triggerFx;
-		public StringID defaultFx;
-		public bool allowBusMixEvents;
-		public bool allowMusicEvents;
+		[Serialize(0, "triggerFx")] public StringID triggerFx;
+		[Serialize(1, "defaultFx")] public StringID defaultFx;
+		[Serialize(2, "allowBusMixEvents", game = Settings.Game.RL)] public bool allowBusMixEvents;
+		[Serialize(3, "allowMusicEvents", game = Settings.Game.RL)] public bool allowMusicEvents;
 		public FXControllerComponent(Reader reader) : base(reader) {
-			triggerFx = new StringID(reader);
-			defaultFx = new StringID(reader);
-			allowBusMixEvents = reader.ReadBoolean();
-			allowMusicEvents = reader.ReadBoolean();
 		}
 	}
 }

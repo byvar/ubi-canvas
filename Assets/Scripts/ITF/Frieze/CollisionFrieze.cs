@@ -7,26 +7,17 @@ using UnityEngine;
 
 namespace ITF {
 	public class CollisionFrieze : BaseObject {
-		public bool build;
-		public float offset;
-		public Vector2 extremity;
-		public Vector2 extremity2;
-		public bool flip;
-		public uint methode;
-		public float distMaxToSkipParallelEdge;
-		public float smoothFactor;
-		public bool isSmooth;
+		[Serialize(0, "build")] public bool build;
+		[Serialize(1, "offset")] public float offset;
+		[Serialize(2, "extremity")] public Vector2 extremity;
+		[Serialize(3, "extremity2")] public Vector2 extremity2;
+		[Serialize(4, "flip")] public bool flip;
+		[Serialize(5, "methode")] public uint methode;
+		[Serialize(6, "distMaxToSkipParallelEdge")] public float distMaxToSkipParallelEdge;
+		[Serialize(7, "smoothFactor")] public float smoothFactor;
+		[Serialize(8, "isSmooth")] public bool isSmooth;
 
 		public CollisionFrieze(Reader reader) : base(reader) {
-			build = reader.ReadBoolean();
-			offset = reader.ReadSingle();
-			extremity = reader.ReadVector2();
-			extremity2 = reader.ReadVector2();
-			flip = reader.ReadBoolean();
-			methode = reader.ReadUInt32();
-			distMaxToSkipParallelEdge = reader.ReadSingle();
-			smoothFactor = reader.ReadSingle();
-			isSmooth = reader.ReadBoolean();
 		}
 	}
 }

@@ -11,8 +11,6 @@ namespace ITF.ActorComponents {
 		[Serialize(1, "outerBox")] public AABB outerBox;
 
 		public BoxInterpolatorComponent(Reader reader) : base(reader) {
-			innerBox = new AABB(reader);
-			outerBox = new AABB(reader);
 		}
 	}
 }
