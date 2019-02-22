@@ -68,11 +68,26 @@ namespace ITF {
 					MeshFilter mf = gao.AddComponent<MeshFilter>();
 					mf.mesh = mesh;
 					MeshRenderer mr = gao.AddComponent<MeshRenderer>();
-					Material mat = new Material(MapLoader.Loader.baseMaterial);
-					if (config != null && config[0].obj.textureConfigs.Count > 0 && config[0].obj.textureConfigs[0].material.textureSet.diffuseTex != null) {
-						mat.SetTexture("_MainTex", config[0].obj.textureConfigs[0].material.textureSet.diffuseTex.Texture);
+					Material mat;
+					if (config != null && config[0].obj.textureConfigs.Count > 0) {
+						if (config[0].obj.textureConfigs[0].material.shader != null) {
+							if (config[0].obj.textureConfigs[0].material.shader[0].obj.materialtype == GFXMaterialShader_Template.GFXMat.Default) {
+								mat = new Material(MapLoader.Loader.baseMaterial);
+							} else {
+								mat = new Material(MapLoader.Loader.baseLightMaterial);
+							}
+							if (!config[0].obj.textureConfigs[0].material.shader[0].obj.renderRegular) gao.SetActive(false);
+						} else {
+							mat = new Material(MapLoader.Loader.baseMaterial);
+						}
+						//mat.color = config[0].obj.textureConfigs[0].color.Color;
+						if (config[0].obj.textureConfigs[0].material.textureSet.diffuseTex != null) {
+							mat.SetTexture("_MainTex", config[0].obj.textureConfigs[0].material.textureSet.diffuseTex.Texture);
+						} else {
+							mat.SetTexture("_MainTex", Util.CreateDummyTexture());
+						}
 					} else {
-						mat.SetTexture("_MainTex", Util.CreateDummyTexture());
+						mat = new Material(MapLoader.Loader.baseMaterial);
 					}
 					mr.material = mat;
 				}

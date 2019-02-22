@@ -489,11 +489,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   gameDataBinFolder: '%RIPPING%\RL_Mod\Demo\Bundle\ext\cache\itf_cooked\pc'
-  pathFolder: world\home\level\costumes
-  pathFile: costume_main.isc.ckd
+  pathFolder: world\jungle\level\ju_rl_1_castle\page\subscene\graph
+  pathFile: ju_rl_1_castle_page1_graph.isc.ckd
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}
   baseTransparentMaterial: {fileID: 0}
-  baseLightMaterial: {fileID: 0}
+  baseLightMaterial: {fileID: 2100000, guid: 9baaa1d88e0444447bd915b938cab340, type: 2}
   collideMaterial: {fileID: 0}
   collideTransparentMaterial: {fileID: 0}
   loadingScreen: {fileID: 63262021}

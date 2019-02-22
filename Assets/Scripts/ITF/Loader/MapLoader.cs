@@ -40,6 +40,7 @@ namespace ITF {
 		public Queue<ObjectPlaceHolder> pathsToLoad = new Queue<ObjectPlaceHolder>();
 
 		public Dictionary<StringID, Container<Generic<FriseConfig>>> fcg = new Dictionary<StringID, Container<Generic<FriseConfig>>>();
+		public Dictionary<StringID, Container<Generic<GFXMaterialShader_Template>>> msh = new Dictionary<StringID, Container<Generic<GFXMaterialShader_Template>>>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 
         public Globals globals = null;

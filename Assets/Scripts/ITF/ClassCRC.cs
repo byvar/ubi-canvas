@@ -1,4 +1,5 @@
 ﻿using ITF.ActorComponents;
+using ITF.RO2.Bezier.BranchComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,16 @@ namespace ITF {
 			{ 0x966B519D, typeof(FxBankComponent) },
 			{ 0xF51360DA, typeof(BoxInterpolatorComponent) },
 			{ 0x2B349E69, typeof(AFXPostProcessComponent) },
+			{ 0xAEBB218B, typeof(ClearColorComponent) },
+			{ 0x9189C777, typeof(ProceduralBoneComponent) },
+			{ 0x760B164E, typeof(RO2_BezierTreeComponent) },
+
+			// RO2_BezierBranchComponents
+			{ 0x19972229, typeof(RO2_BezierBranchGrowComponent) },
+			{ 0x12A94E0A, typeof(RO2_BezierBranchFxComponent) },
+
+			// Other
+			{ 0xE6A935E1, typeof(GFXMaterialShader_Template) },
 
 			// Unknown
 			{ 0x047CADF9, typeof(UnknownComponent1) },
