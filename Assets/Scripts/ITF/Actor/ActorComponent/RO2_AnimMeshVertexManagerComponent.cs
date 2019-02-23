@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ITF.ActorComponents {
-	public class LinkComponent : ActorComponent {
-		[Serialize(0, "Children")] public Container<ChildEntry> children;
+	public class RO2_AnimMeshVertexManagerComponent : ActorComponent {
 
-		public LinkComponent(Reader reader) : base(reader) {
+		public RO2_AnimMeshVertexManagerComponent(Reader reader) : base(reader) {
 		}
 	}
 }

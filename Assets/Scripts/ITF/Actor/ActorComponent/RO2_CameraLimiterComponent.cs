@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ITF.ActorComponents {
-	public class LinkComponent : ActorComponent {
-		[Serialize(0, "Children")] public Container<ChildEntry> children;
+	public class RO2_CameraLimiterComponent : ActorComponent {
 
-		public LinkComponent(Reader reader) : base(reader) {
+		public RO2_CameraLimiterComponent(Reader reader) : base(reader) {
 		}
 	}
 }

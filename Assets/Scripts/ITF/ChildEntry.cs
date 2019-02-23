@@ -7,9 +7,10 @@ using UnityEngine;
 
 namespace ITF {
 	public class ChildEntry : BaseObject {
+		[Serialize(0, "Path")] public ObjectPath path;
+		[Serialize(1, "TagValues")] public Container<TagValue> tagValues;
 
 		public ChildEntry(Reader reader) : base(reader) {
-			Debug.LogError("Decipher ChildEntry @ " + Pointer.Current(reader));
 		}
 	}
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ITF.ActorComponents {
-	public class LinkComponent : ActorComponent {
-		[Serialize(0, "Children")] public Container<ChildEntry> children;
+	public class DummyComponent : ActorComponent {
+		[Serialize(0, "is2D", game = Settings.Game.RA)] public bool is2D;
 
-		public LinkComponent(Reader reader) : base(reader) {
+		public DummyComponent(Reader reader) : base(reader) {
 		}
 	}
 }

@@ -30,16 +30,28 @@ namespace ITF {
 			{ 0xAEBB218B, typeof(ClearColorComponent) },
 			{ 0x9189C777, typeof(ProceduralBoneComponent) },
 			{ 0x760B164E, typeof(RO2_BezierTreeComponent) },
+			{ 0x5F5A7A5B, typeof(RO2_BezierTreeRendererComponent) },
+			{ 0xA6E4EFBA, typeof(AnimLightComponent) },
+			{ 0x97C46CE1, typeof(AnimMeshVertexComponent) },
+			{ 0xFBF865C3, typeof(RO2_AnimMeshVertexManagerComponent) },
+			{ 0xB0493A6E, typeof(DummyComponent) },
+			{ 0x6C8DD66E, typeof(CameraModifierComponent) },
+			{ 0xB227E11E, typeof(RO2_CameraLimiterComponent) },
+			{ 0x13E9D108, typeof(TextBoxComponent) },
 
 			// RO2_BezierBranchComponents
 			{ 0x19972229, typeof(RO2_BezierBranchGrowComponent) },
 			{ 0x12A94E0A, typeof(RO2_BezierBranchFxComponent) },
+			{ 0x47D2DED3, typeof(RO2_BezierBranchPolylineComponent) },
+			{ 0xCF0F3EF7, typeof(RO2_BezierBranchRendererComponent) },
+			{ 0x3BED84D3, typeof(RO2_BezierBranchBoneComponent) },
 
 			// Other
 			{ 0xE6A935E1, typeof(GFXMaterialShader_Template) },
 
 			// Unknown
 			{ 0x047CADF9, typeof(UnknownComponent1) },
+			{ 0x68DA00B7, typeof(UnknownDRCComponent) },
 		};
 	}
 }

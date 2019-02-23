@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ITF.ActorComponents {
-	public class LinkComponent : ActorComponent {
-		[Serialize(0, "Children")] public Container<ChildEntry> children;
-
-		public LinkComponent(Reader reader) : base(reader) {
+	public class UnknownDRCComponent : ActorComponent {
+		public UnknownDRCComponent(Reader reader) : base(reader) {
 		}
 	}
 }

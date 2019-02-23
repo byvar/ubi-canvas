@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ITF.ActorComponents {
-	public class LinkComponent : ActorComponent {
-		[Serialize(0, "Children")] public Container<ChildEntry> children;
+	public class TextBoxComponent : UIComponent {
 
-		public LinkComponent(Reader reader) : base(reader) {
+		public TextBoxComponent(Reader reader) : base(reader) {
+			Debug.LogError("Decipher textbox @ " + Pointer.Current(reader));
 		}
 	}
 }

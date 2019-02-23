@@ -21,6 +21,8 @@ namespace ITF {
 			gao = new GameObject(userFriendly);
 			gao.transform.localPosition = new Vector3(pos2D.x, pos2D.y, -relativeZ);
 			gao.transform.localScale = new Vector3(scale.x, scale.y, 1f);
+			gao.transform.localEulerAngles = new Vector3(0, 0, angle.angle * Mathf.Rad2Deg);
+			if (angle.angle != 0f) gao.name += " - " + angle.angle;
 		}
 
 		[Serialize(0, "RELATIVEZ")] public float relativeZ;
