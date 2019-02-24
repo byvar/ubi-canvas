@@ -1,5 +1,7 @@
 ﻿using ITF.ActorComponents;
 using ITF.RO2.Bezier.BranchComponents;
+using ITF.TweenInstructions;
+using ITF.TweenInstructions.Template;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +40,12 @@ namespace ITF {
 			{ 0x6C8DD66E, typeof(CameraModifierComponent) },
 			{ 0xB227E11E, typeof(RO2_CameraLimiterComponent) },
 			{ 0x13E9D108, typeof(TextBoxComponent) },
+			{ 0x79F05C50, typeof(RO2_MultipassTreeRendererComponent) },
+			{ 0xADE95483, typeof(RO2_WaterPerturbationComponent) },
+			{ 0xB5A9E174, typeof(TweenComponent) },
+			{ 0x4890020D, typeof(RO2_GeyserPlatformAIComponent) },
+			{ 0x0C928FA3, typeof(RO2_KuyALumsComponent) },
+			{ 0x8F11DEDF, typeof(TouchScreenInputComponent) },
 
 			// RO2_BezierBranchComponents
 			{ 0x19972229, typeof(RO2_BezierBranchGrowComponent) },
@@ -45,6 +53,14 @@ namespace ITF {
 			{ 0x47D2DED3, typeof(RO2_BezierBranchPolylineComponent) },
 			{ 0xCF0F3EF7, typeof(RO2_BezierBranchRendererComponent) },
 			{ 0x3BED84D3, typeof(RO2_BezierBranchBoneComponent) },
+			{ 0xB3D2DBF2, typeof(RO2_MultipassBranchRendererComponent) },
+			{ 0xDB9C4247, typeof(RO2_FlexMeshBranchComponent) },
+
+			// TweenInstruction
+			{ 0xC32163AC, typeof(TweenLine) },
+
+			// TweenInstruction_Template
+			{ 0x6A97A07E, typeof(TweenLine_Template) },
 
 			// Other
 			{ 0xE6A935E1, typeof(GFXMaterialShader_Template) },
