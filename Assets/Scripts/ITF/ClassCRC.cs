@@ -65,6 +65,7 @@ namespace ITF {
 			{ 0x5534CAE2, typeof(CheckpointComponent) },
 			{ 0x9EF331FE, typeof(PrefetchTargetComponent) },
 			{ 0x35F701E3, typeof(RO2_LeafScrewComponent) },
+			{ 0x38CD061E, typeof(BreakableAIComponent) },
 
 			// RO2_BezierBranchComponents
 			{ 0x19972229, typeof(RO2_BezierBranchGrowComponent) },

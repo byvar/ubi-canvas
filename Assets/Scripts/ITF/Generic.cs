@@ -12,7 +12,7 @@ namespace ITF {
 		public T obj;
 		
 		public Generic(Reader reader) : base(reader) {
-			if (className.stringID == 0xFFFFFFFF) {
+			if (className.IsNull) {
 				obj = default(T);
 			} else {
 				if (ClassCRC.classes.ContainsKey(className.stringID)) {
