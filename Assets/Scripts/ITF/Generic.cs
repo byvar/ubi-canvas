@@ -12,17 +12,21 @@ namespace ITF {
 		public T obj;
 		
 		public Generic(Reader reader) : base(reader) {
-			if (ClassCRC.classes.ContainsKey(className.stringID)) {
-				MapLoader.Loader.print(className.stringID.ToString("X8") + " - " + ClassCRC.classes[className.stringID]);
-				var ctor = ClassCRC.classes[className.stringID].GetConstructor(new Type[] { typeof(Reader) });
-				obj = (T)ctor.Invoke(new object[] { reader });
+			if (className.stringID == 0xFFFFFFFF) {
+				obj = default(T);
 			} else {
-				Debug.LogError("CRC " + className.stringID.ToString("X8")
-					+ " found at " + Pointer.Current(reader)
-					+ " while reading container of type " + typeof(T) + " is not yet supported!");
-				throw new NotImplementedException("CRC " + className.stringID.ToString("X8")
-					+ " found at position " + Pointer.Current(reader)
-					+ " while reading container of type " + typeof(T) + " is not yet supported!");
+				if (ClassCRC.classes.ContainsKey(className.stringID)) {
+					MapLoader.Loader.print(className.stringID.ToString("X8") + " - " + ClassCRC.classes[className.stringID]);
+					var ctor = ClassCRC.classes[className.stringID].GetConstructor(new Type[] { typeof(Reader) });
+					obj = (T)ctor.Invoke(new object[] { reader });
+				} else {
+					Debug.LogError("CRC " + className.stringID.ToString("X8")
+						+ " found at " + Pointer.Current(reader)
+						+ " while reading container of type " + typeof(T) + " is not yet supported!");
+					throw new NotImplementedException("CRC " + className.stringID.ToString("X8")
+						+ " found at position " + Pointer.Current(reader)
+						+ " while reading container of type " + typeof(T) + " is not yet supported!");
+				}
 			}
 		}
 	}

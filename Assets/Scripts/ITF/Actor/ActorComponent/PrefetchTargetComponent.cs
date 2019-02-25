@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace ITF.ActorComponents {
+	public class PrefetchTargetComponent : ActorComponent {
+		[Serialize(0, "ZONE")] public EditableShape zone;
+
+		public PrefetchTargetComponent(Reader reader) : base(reader) {
+		}
+	}
+}

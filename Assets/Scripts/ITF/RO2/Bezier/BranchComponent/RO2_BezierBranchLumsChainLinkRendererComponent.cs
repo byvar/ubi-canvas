@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ITF.RO2.Bezier.BranchComponents {
-	public class RO2_BezierBranchRendererComponent : RO2_BezierBranchBaseRendererComponent {
-		public RO2_BezierBranchRendererComponent(Reader reader) : base(reader) {
+	public class RO2_BezierBranchLumsChainLinkRendererComponent : RO2_BezierBranchBaseRendererComponent {
+		public RO2_BezierBranchLumsChainLinkRendererComponent(Reader reader) : base(reader) {
 		}
 	}
 }

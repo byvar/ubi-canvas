@@ -488,7 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  gameDataBinFolder: '%RIPPING%\RL_Mod\Demo\Bundle\ext\cache\itf_cooked\pc'
+  gameDataBinFolder: C:\BART\RIPPING\RL_Mod\Demo\Bundle\ext\cache\itf_cooked\pc
   pathFolder: world\music\level\mu_rl_1_upright\page
   pathFile: mu_rl_1_upright_page1.isc.ckd
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}

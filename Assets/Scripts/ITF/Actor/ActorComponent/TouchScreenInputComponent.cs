@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ITF.ActorComponents {
-	public class TouchScreenInputComponent : ActorComponent {
-
+	public class TouchScreenInputComponent : ShapeComponent {
+		[Serialize(0, "viewName", game = Settings.Game.RA)] public string viewName;
 		public TouchScreenInputComponent(Reader reader) : base(reader) {
-			Debug.Log("Decipher TouchScreenInputComponent @ " + Pointer.Current(reader));
 		}
 	}
 }

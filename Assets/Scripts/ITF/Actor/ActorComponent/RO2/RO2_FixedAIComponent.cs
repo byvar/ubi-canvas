@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace ITF.ActorComponents {
+	public class RO2_FixedAIComponent : RO2_AIComponent {
+
+		public RO2_FixedAIComponent(Reader reader) : base(reader) {
+		}
+	}
+}

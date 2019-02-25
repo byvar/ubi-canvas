@@ -46,6 +46,25 @@ namespace ITF {
 			{ 0x4890020D, typeof(RO2_GeyserPlatformAIComponent) },
 			{ 0x0C928FA3, typeof(RO2_KuyALumsComponent) },
 			{ 0x8F11DEDF, typeof(TouchScreenInputComponent) },
+			{ 0x2B541820, typeof(PhantomComponent) },
+			{ 0x62A12110, typeof(AnimatedComponent) },
+			{ 0xFF243AF5, typeof(PolylineComponent) },
+			{ 0x2FBA13A8, typeof(RO2_FriendlyBTAIComponent) },
+			{ 0x83646F14, typeof(RO2_GroundAIControllerComponent) },
+			{ 0xB820D559, typeof(StickToPolylinePhysComponent) },
+			{ 0x8401614A, typeof(RO2_PrisonerPostComponent) },
+			{ 0xF2DC9CA7, typeof(RO2_BreakablePropsManagerComponent) },
+			{ 0x9A275982, typeof(FactionComponent) },
+			{ 0xCCD6E553, typeof(RO2_DisplayTutoIconComponent) },
+			{ 0xC509F8EE, typeof(RO2_PrisonerCageComponent) },
+			{ 0x8A711C28, typeof(RO2_FixedAIComponent) },
+			{ 0xAA03F900, typeof(TrajectoryFollowerComponent) },
+			{ 0x4E67A312, typeof(RO2_DiggingRegenerationComponent) },
+			{ 0x75D611DC, typeof(TrajectoryNodeComponent) },
+			{ 0x7A3F8663, typeof(RO2_LumsChainComponent) },
+			{ 0x5534CAE2, typeof(CheckpointComponent) },
+			{ 0x9EF331FE, typeof(PrefetchTargetComponent) },
+			{ 0x35F701E3, typeof(RO2_LeafScrewComponent) },
 
 			// RO2_BezierBranchComponents
 			{ 0x19972229, typeof(RO2_BezierBranchGrowComponent) },
@@ -55,6 +74,10 @@ namespace ITF {
 			{ 0x3BED84D3, typeof(RO2_BezierBranchBoneComponent) },
 			{ 0xB3D2DBF2, typeof(RO2_MultipassBranchRendererComponent) },
 			{ 0xDB9C4247, typeof(RO2_FlexMeshBranchComponent) },
+			{ 0xE40683D3, typeof(RO2_BezierBranchLumsChainLinkRendererComponent) },
+
+			// PhysShape
+			{ 0xD1DD9FA9, typeof(PhysShapeBox) },
 
 			// TweenInstruction
 			{ 0xC32163AC, typeof(TweenLine) },
@@ -67,6 +90,7 @@ namespace ITF {
 
 			// Unknown
 			{ 0x047CADF9, typeof(UnknownComponent1) },
+			{ 0xC3233699, typeof(UnknownComponent2) }, // Deprecated in Adventures 3.5.0. Maybe exists before that
 			{ 0x68DA00B7, typeof(UnknownDRCComponent) },
 		};
 	}
