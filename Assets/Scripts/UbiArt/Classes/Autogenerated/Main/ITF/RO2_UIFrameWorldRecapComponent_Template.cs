@@ -1,0 +1,31 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class RO2_UIFrameWorldRecapComponent_Template : ActorComponent_Template {
+		[Serialize("locId"                )] public LocalisationId locId;
+		[Serialize("FXFirework"           )] public StringID FXFirework;
+		[Serialize("FXFireStreamRight"    )] public StringID FXFireStreamRight;
+		[Serialize("FXFireStreamLeft"     )] public StringID FXFireStreamLeft;
+		[Serialize("offsetFirework"       )] public Vector3 offsetFirework;
+		[Serialize("offsetFireStreamRight")] public Vector3 offsetFireStreamRight;
+		[Serialize("offsetFireStreamLeft" )] public Vector3 offsetFireStreamLeft;
+		[Serialize("standEmptyAnim"       )] public StringID standEmptyAnim;
+		[Serialize("standWithCupAnim"     )] public StringID standWithCupAnim;
+		[Serialize("waitDuration"         )] public float waitDuration;
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(locId));
+			SerializeField(s, nameof(FXFirework));
+			SerializeField(s, nameof(FXFireStreamRight));
+			SerializeField(s, nameof(FXFireStreamLeft));
+			SerializeField(s, nameof(offsetFirework));
+			SerializeField(s, nameof(offsetFireStreamRight));
+			SerializeField(s, nameof(offsetFireStreamLeft));
+			SerializeField(s, nameof(standEmptyAnim));
+			SerializeField(s, nameof(standWithCupAnim));
+			SerializeField(s, nameof(waitDuration));
+		}
+		public override uint? ClassCRC => 0x729EFDF7;
+	}
+}
+

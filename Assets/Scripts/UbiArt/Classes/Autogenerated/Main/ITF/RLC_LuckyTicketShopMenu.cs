@@ -1,0 +1,11 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class RLC_LuckyTicketShopMenu : RLC_ShopScrollingMenu {
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+		}
+		public override uint? ClassCRC => 0xFB68C174;
+	}
+}
+

@@ -1,0 +1,28 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class BTActionStayIdle_Template : BTAction_Template {
+		[Serialize("groundAnim"     )] public StringID groundAnim;
+		[Serialize("swimAnim"       )] public StringID swimAnim;
+		[Serialize("fallAnim"       )] public StringID fallAnim;
+		[Serialize("avoidanceRadius")] public float avoidanceRadius;
+		[Serialize("maxTime"        )] public float maxTime;
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			if (Settings.s.game == Settings.Game.RO) {
+				SerializeField(s, nameof(groundAnim));
+				SerializeField(s, nameof(swimAnim));
+				SerializeField(s, nameof(fallAnim));
+				SerializeField(s, nameof(avoidanceRadius));
+			} else {
+				SerializeField(s, nameof(groundAnim));
+				SerializeField(s, nameof(swimAnim));
+				SerializeField(s, nameof(fallAnim));
+				SerializeField(s, nameof(avoidanceRadius));
+				SerializeField(s, nameof(maxTime));
+			}
+		}
+		public override uint? ClassCRC => 0x8935097E;
+	}
+}
+

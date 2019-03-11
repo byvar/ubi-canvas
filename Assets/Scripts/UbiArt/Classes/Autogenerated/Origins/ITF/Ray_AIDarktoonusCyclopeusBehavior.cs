@@ -1,0 +1,11 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class Ray_AIDarktoonusCyclopeusBehavior : CSerializable {
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+		}
+		public override uint? ClassCRC => 0xC5BAA4F3;
+	}
+}
+

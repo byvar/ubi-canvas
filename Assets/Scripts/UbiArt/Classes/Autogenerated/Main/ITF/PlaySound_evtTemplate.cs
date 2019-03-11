@@ -1,0 +1,33 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class PlaySound_evtTemplate : SequenceEventWithActor_Template {
+		[Serialize("Sound"   )] public Path Sound;
+		[Serialize("Params"  )] public Placeholder Params;
+		[Serialize("Volume"  )] public float Volume;
+		[Serialize("Category")] public string Category;
+		[Serialize("IsStrem" )] public bool IsStrem;
+		[Serialize("Category")] public StringID Category;
+		[Serialize("IsStream")] public bool IsStream;
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			if (Settings.s.game == Settings.Game.RO) {
+				SerializeField(s, nameof(Sound));
+				SerializeField(s, nameof(Params));
+				SerializeField(s, nameof(Volume));
+				SerializeField(s, nameof(Category));
+				SerializeField(s, nameof(IsStrem));
+			} else if (Settings.s.game == Settings.Game.RL) {
+				SerializeField(s, nameof(Sound));
+				SerializeField(s, nameof(Params));
+				SerializeField(s, nameof(Volume));
+				SerializeField(s, nameof(Category));
+				SerializeField(s, nameof(IsStream));
+			} else {
+				SerializeField(s, nameof(Sound));
+			}
+		}
+		public override uint? ClassCRC => 0x8AD848D9;
+	}
+}
+

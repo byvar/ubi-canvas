@@ -1,0 +1,26 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class UISliderComponent_Template : UIItemBasic_Template {
+		[Serialize("scaleOnSelected")] public float scaleOnSelected;
+		[Serialize("isCursor"       )] public bool isCursor;
+		[Serialize("colorOnSelected")] public Color colorOnSelected;
+		[Serialize("speedCursor"    )] public float speedCursor;
+		[Serialize("scalefactor"    )] public float scalefactor;
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			if (Settings.s.game == Settings.Game.RO) {
+				SerializeField(s, nameof(scaleOnSelected));
+				SerializeField(s, nameof(isCursor));
+				SerializeField(s, nameof(colorOnSelected));
+				SerializeField(s, nameof(speedCursor));
+			} else if (Settings.s.game == Settings.Game.RL) {
+				SerializeField(s, nameof(scalefactor));
+				SerializeField(s, nameof(speedCursor));
+			} else {
+			}
+		}
+		public override uint? ClassCRC => 0xD9999111;
+	}
+}
+

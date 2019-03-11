@@ -1,0 +1,11 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class Ray_AILivingStoneDrowningBehavior : CSerializable {
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+		}
+		public override uint? ClassCRC => 0x660B48BF;
+	}
+}
+

@@ -1,0 +1,15 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class FixedCameraComponent : BaseCameraComponent {
+		[Serialize("offset")] public Vector3 offset;
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			if (s.HasFlags(SerializeFlags.Default)) {
+				SerializeField(s, nameof(offset));
+			}
+		}
+		public override uint? ClassCRC => 0x461D3103;
+	}
+}
+

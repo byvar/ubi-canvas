@@ -1,0 +1,37 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	public partial class RO2_SnakeShooterGuardianAIComponent_Template : ActorComponent_Template {
+		[Serialize("waterPerturbationForce"  )] public float waterPerturbationForce;
+		[Serialize("waterTestWidth"          )] public float waterTestWidth;
+		[Serialize("waterTestBubonWidth"     )] public float waterTestBubonWidth;
+		[Serialize("waterTestTailLength"     )] public float waterTestTailLength;
+		[Serialize("waterTestTailWidth"      )] public float waterTestTailWidth;
+		[Serialize("waterTestHeadLength"     )] public float waterTestHeadLength;
+		[Serialize("waterTestHeadWidth"      )] public float waterTestHeadWidth;
+		[Serialize("waterSpawnFxDelay"       )] public float waterSpawnFxDelay;
+		[Serialize("deathRewardSpawnPath"    )] public Path deathRewardSpawnPath;
+		[Serialize("deathRewardNumber"       )] public uint deathRewardNumber;
+		[Serialize("deathRewardSpawnDuration")] public float deathRewardSpawnDuration;
+		[Serialize("deathRewardSpawnDist"    )] public Vector2 deathRewardSpawnDist;
+		[Serialize("deathRewardSpawnAngle"   )] public Vector2 deathRewardSpawnAngle;
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(waterPerturbationForce));
+			SerializeField(s, nameof(waterTestWidth));
+			SerializeField(s, nameof(waterTestBubonWidth));
+			SerializeField(s, nameof(waterTestTailLength));
+			SerializeField(s, nameof(waterTestTailWidth));
+			SerializeField(s, nameof(waterTestHeadLength));
+			SerializeField(s, nameof(waterTestHeadWidth));
+			SerializeField(s, nameof(waterSpawnFxDelay));
+			SerializeField(s, nameof(deathRewardSpawnPath));
+			SerializeField(s, nameof(deathRewardNumber));
+			SerializeField(s, nameof(deathRewardSpawnDuration));
+			SerializeField(s, nameof(deathRewardSpawnDist));
+			SerializeField(s, nameof(deathRewardSpawnAngle));
+		}
+		public override uint? ClassCRC => 0x9EC3554E;
+	}
+}
+
