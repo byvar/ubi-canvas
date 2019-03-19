@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.VH | GameFlags.RL)]
 	public partial class BounceStim : EventStim {
 		[Serialize("bounceType"     )] public BOUNCETYPE bounceType;
 		[Serialize("direction"      )] public Vector2 direction;

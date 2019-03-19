@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIItemCheck_Template : UIItemBasic_Template {
 		[Serialize("iconScalefactor")] public float iconScalefactor;
 		[Serialize("tagUnchecked"   )] public SmartLocId tagUnchecked;

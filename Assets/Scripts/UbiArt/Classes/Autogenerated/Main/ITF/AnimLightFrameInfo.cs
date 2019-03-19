@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class AnimLightFrameInfo : CSerializable {
 		[Serialize("subAnimFrameInfo")] public SubAnimFrameInfo subAnimFrameInfo;
 		[Serialize("weight"          )] public float weight;

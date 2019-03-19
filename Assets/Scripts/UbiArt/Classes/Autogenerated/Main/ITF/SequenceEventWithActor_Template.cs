@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class SequenceEventWithActor_Template : SequenceEvent_Template {
 		[Serialize("TargetFriendlyName"    )] public ObjectPath TargetFriendlyName;
 		[Serialize("DisableComponentsActor")] public bool DisableComponentsActor;

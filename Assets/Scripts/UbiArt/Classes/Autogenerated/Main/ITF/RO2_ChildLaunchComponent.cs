@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChildLaunchComponent : ActorComponent {
 		[Serialize("nextLaunchIndex")] public uint nextLaunchIndex;
 		[Serialize("hintFxEnabled"  )] public bool hintFxEnabled;

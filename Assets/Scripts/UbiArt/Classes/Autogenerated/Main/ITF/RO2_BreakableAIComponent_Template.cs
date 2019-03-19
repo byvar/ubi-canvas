@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BreakableAIComponent_Template : RO2_AIComponent_Template {
 		[Serialize("reward"                 )] public Generic<RO2_EventSpawnReward> reward;
 		[Serialize("crushAttackDamage"      )] public uint crushAttackDamage;
@@ -31,6 +32,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(resetOnCheckpoint));
 			SerializeField(s, nameof(isTouchTapSensitive));
 		}
+		[Games(GameFlags.RA)]
 		public partial class DestructionStage : CSerializable {
 			[Serialize("rumble"        )] public StringID rumble;
 			[Serialize("destroy"       )] public StringID destroy;

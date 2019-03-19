@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DisplayTutoIconComponent : ActorComponent {
 		[Serialize("tutoType"            )] public TutoType tutoType;
 		[Serialize("scale"               )] public float scale;
@@ -19,7 +20,6 @@ namespace UbiArt.ITF {
 		[Serialize("AMActionCountMax"    )] public int AMActionCountMax;
 		[Serialize("tutoSucceeded"       )] public bool tutoSucceeded;
 		[Serialize("tutoType"            )] public Enum_tutoType tutoType;
-		[Serialize("AMActionCountMax"    )] public bool AMActionCountMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -31,13 +31,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(angleOffset));
 					SerializeField(s, nameof(holdMinTime));
 					SerializeField(s, nameof(pos));
-					SerializeField(s, nameof(displayTuto));
-					SerializeField(s, nameof(flip));
-					SerializeField(s, nameof(isPos2D));
+					SerializeField(s, nameof(displayTuto), boolAsByte: true);
+					SerializeField(s, nameof(flip), boolAsByte: true);
+					SerializeField(s, nameof(isPos2D), boolAsByte: true);
 					SerializeField(s, nameof(activateByTrigger));
 					SerializeField(s, nameof(cyclePauseDuration));
 					SerializeField(s, nameof(cycleDisplayDuration));
-					SerializeField(s, nameof(testSceneDepthRef));
+					SerializeField(s, nameof(testSceneDepthRef), boolAsByte: true);
 					SerializeField(s, nameof(AMActionCountMax));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {

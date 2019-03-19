@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SwingComponent_Template : ActorComponent_Template {
 		[Serialize("length"                  )] public float length;
 		[Serialize("angle"                   )] public Angle angle;
@@ -17,19 +18,36 @@ namespace UbiArt.ITF {
 		[Serialize("restAngles"              )] public CArray<Angle> restAngles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(length));
-			SerializeField(s, nameof(angle));
-			SerializeField(s, nameof(gravityMultiplier));
-			SerializeField(s, nameof(memoryTimer));
-			SerializeField(s, nameof(playerDetectRange));
-			SerializeField(s, nameof(armsDistance));
-			SerializeField(s, nameof(armsLengthStiff));
-			SerializeField(s, nameof(armsLengthDamp));
-			SerializeField(s, nameof(armsAngleStiff));
-			SerializeField(s, nameof(armsAngleDamp));
-			SerializeField(s, nameof(armsGraspInterpolateTime));
-			SerializeField(s, nameof(numArms));
-			SerializeField(s, nameof(restAngles));
+			if (Settings.s.game == Settings.Game.RL) {
+				SerializeField(s, nameof(length));
+				SerializeField(s, nameof(angle));
+				SerializeField(s, nameof(gravityMultiplier));
+				SerializeField(s, nameof(memoryTimer));
+				SerializeField(s, nameof(playerDetectRange));
+				SerializeField(s, nameof(armsDistance));
+				SerializeField(s, nameof(armsLengthStiff));
+				SerializeField(s, nameof(armsLengthDamp));
+				SerializeField(s, nameof(armsAngleStiff));
+				SerializeField(s, nameof(armsAngleDamp));
+				SerializeField(s, nameof(armsGraspInterpolateTime));
+				SerializeField(s, nameof(numArms));
+				SerializeField(s, nameof(restAngles));
+			} else {
+				SerializeField(s, nameof(length));
+				SerializeField(s, nameof(angle));
+				SerializeField(s, nameof(gravityMultiplier));
+				SerializeField(s, nameof(memoryTimer));
+				SerializeField(s, nameof(playerDetectRange));
+				SerializeField(s, nameof(armsDistance));
+				SerializeField(s, nameof(armsLengthStiff));
+				SerializeField(s, nameof(armsLengthDamp));
+				SerializeField(s, nameof(armsAngleStiff));
+				SerializeField(s, nameof(armsAngleDamp));
+				SerializeField(s, nameof(armsGraspInterpolateTime));
+				SerializeField(s, nameof(numArms));
+				SerializeField(s, nameof(restAngles));
+				SerializeField(s, nameof(restAngles));
+			}
 		}
 		public override uint? ClassCRC => 0x69030175;
 	}

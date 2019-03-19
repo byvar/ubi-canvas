@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnemyBTAIComponent_Template : RO2_BTAIComponent_Template {
 		[Serialize("squashDeathPenetration"               )] public float squashDeathPenetration;
 		[Serialize("timeFight"                            )] public float timeFight;
@@ -148,6 +149,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(hatBounceMultiplier));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class StiltsDataStruct : CSerializable {
 			[Serialize("used"                           )] public bool used;
 			[Serialize("firstPolyline"                  )] public StringID firstPolyline;

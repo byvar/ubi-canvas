@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Incubator_Template : TemplateObj {
 		[Serialize("IncubatorScenePath"                 )] public Path IncubatorScenePath;
 		[Serialize("PopupCooldown"                      )] public float PopupCooldown;

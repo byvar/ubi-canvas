@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventGameplayScreenshot : Event {
 		[Serialize("delay")] public float delay;
 		protected override void SerializeImpl(CSerializerObject s) {

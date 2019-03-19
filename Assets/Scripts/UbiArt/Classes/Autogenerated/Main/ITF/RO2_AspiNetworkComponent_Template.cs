@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AspiNetworkComponent_Template : ActorComponent_Template {
 		[Serialize("enterDuration"        )] public float enterDuration;
 		[Serialize("enterBezierMultiplier")] public float enterBezierMultiplier;
@@ -19,11 +20,14 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(exitRestoreZDist));
 			SerializeField(s, nameof(fxData));
 		}
+		[Games(GameFlags.RA)]
 		public partial class FxDataNet : CSerializable {
-			[Serialize("fxIn" )] public StringID fxIn;
-			[Serialize("fxOut")] public StringID fxOut;
+			[Serialize("playerFamily")] public string playerFamily;
+			[Serialize("fxIn"        )] public StringID fxIn;
+			[Serialize("fxOut"       )] public StringID fxOut;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
+				SerializeField(s, nameof(playerFamily));
 				SerializeField(s, nameof(fxIn));
 				SerializeField(s, nameof(fxOut));
 			}

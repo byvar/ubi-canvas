@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIFadeEntry : CSerializable {
 		[Serialize("id"          )] public StringID id;
 		[Serialize("duration"    )] public float duration;

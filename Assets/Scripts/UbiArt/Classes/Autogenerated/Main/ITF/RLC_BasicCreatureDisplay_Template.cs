@@ -1,13 +1,16 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_BasicCreatureDisplay_Template : RO2_PowerUpDisplay_Template {
+		[Serialize("creatureActor" )] public PathRef creatureActor;
 		[Serialize("creatureFamily")] public Creature_Family creatureFamily;
 		[Serialize("creatureRarity")] public Creature_Rarity creatureRarity;
 		[Serialize("isForbidden"   )] public bool isForbidden;
 		[Serialize("locId"         )] public uint locId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
+			SerializeField(s, nameof(creatureActor));
 			SerializeField(s, nameof(creatureFamily));
 			SerializeField(s, nameof(creatureRarity));
 			SerializeField(s, nameof(isForbidden));

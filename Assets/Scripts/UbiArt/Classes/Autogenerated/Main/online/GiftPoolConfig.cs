@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GiftPoolConfig : CSerializable {
 		[Serialize("messageType"                            )] public string messageType;
 		[Serialize("messageAskType"                         )] public string messageAskType;
@@ -30,6 +31,7 @@ namespace UbiArt.online {
 			SerializeField(s, nameof(maxGiftReceivedPerRestrictInterval));
 			SerializeField(s, nameof(maxGiftReceivedPending));
 			SerializeField(s, nameof(maxGiftAskPending));
+			SerializeField(s, nameof(KEY));
 			SerializeField(s, nameof(KEY));
 			SerializeField(s, nameof(currentGiftKeyStringID));
 		}

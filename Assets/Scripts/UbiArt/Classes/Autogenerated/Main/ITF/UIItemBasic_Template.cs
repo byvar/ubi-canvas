@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class UIItemBasic_Template : UIItem_Template {
 		[Serialize("blinkScaleMin"            )] public float blinkScaleMin;
 		[Serialize("blinkScale"               )] public float blinkScale;
@@ -32,6 +33,38 @@ namespace UbiArt.ITF {
 		[Serialize("actorIconUnselected"      )] public StringID actorIconUnselected;
 		[Serialize("inverseShadowState"       )] public bool inverseShadowState;
 		[Serialize("actorIconOffset"          )] public Vector2 actorIconOffset;
+		[Serialize("float__0"                 )] public float float__0;
+		[Serialize("float__1"                 )] public float float__1;
+		[Serialize("float__2"                 )] public float float__2;
+		[Serialize("float__3"                 )] public float float__3;
+		[Serialize("float__4"                 )] public float float__4;
+		[Serialize("float__5"                 )] public float float__5;
+		[Serialize("float__6"                 )] public float float__6;
+		[Serialize("float__7"                 )] public float float__7;
+		[Serialize("float__8"                 )] public float float__8;
+		[Serialize("float__9"                 )] public float float__9;
+		[Serialize("uint__10"                 )] public uint uint__10;
+		[Serialize("StringID__11"             )] public StringID StringID__11;
+		[Serialize("StringID__12"             )] public StringID StringID__12;
+		[Serialize("StringID__13"             )] public StringID StringID__13;
+		[Serialize("bool__14"                 )] public bool bool__14;
+		[Serialize("StringID__15"             )] public StringID StringID__15;
+		[Serialize("StringID__16"             )] public StringID StringID__16;
+		[Serialize("Color__17"                )] public Color Color__17;
+		[Serialize("Color__18"                )] public Color Color__18;
+		[Serialize("Color__19"                )] public Color Color__19;
+		[Serialize("float__20"                )] public float float__20;
+		[Serialize("float__21"                )] public float float__21;
+		[Serialize("float__22"                )] public float float__22;
+		[Serialize("float__23"                )] public float float__23;
+		[Serialize("Angle__24"                )] public Angle Angle__24;
+		[Serialize("Angle__25"                )] public Angle Angle__25;
+		[Serialize("StringID__26"             )] public StringID StringID__26;
+		[Serialize("StringID__27"             )] public StringID StringID__27;
+		[Serialize("bool__28"                 )] public bool bool__28;
+		[Serialize("StringID__29"             )] public StringID StringID__29;
+		[Serialize("StringID__30"             )] public StringID StringID__30;
+		[Serialize("StringID__31"             )] public StringID StringID__31;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -59,6 +92,39 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(actorIconUnselected));
 				SerializeField(s, nameof(actorIconOffset));
 				SerializeField(s, nameof(inverseShadowState));
+			} else if (Settings.s.game == Settings.Game.VH) {
+				SerializeField(s, nameof(float__0));
+				SerializeField(s, nameof(float__1));
+				SerializeField(s, nameof(float__2));
+				SerializeField(s, nameof(float__3));
+				SerializeField(s, nameof(float__4));
+				SerializeField(s, nameof(float__5));
+				SerializeField(s, nameof(float__6));
+				SerializeField(s, nameof(float__7));
+				SerializeField(s, nameof(float__8));
+				SerializeField(s, nameof(float__9));
+				SerializeField(s, nameof(uint__10));
+				SerializeField(s, nameof(StringID__11));
+				SerializeField(s, nameof(StringID__12));
+				SerializeField(s, nameof(StringID__13));
+				SerializeField(s, nameof(bool__14));
+				SerializeField(s, nameof(StringID__15));
+				SerializeField(s, nameof(StringID__16));
+				SerializeField(s, nameof(Color__17));
+				SerializeField(s, nameof(Color__18));
+				SerializeField(s, nameof(Color__19));
+				SerializeField(s, nameof(float__20));
+				SerializeField(s, nameof(float__21));
+				SerializeField(s, nameof(float__22));
+				SerializeField(s, nameof(float__23));
+				SerializeField(s, nameof(Angle__24));
+				SerializeField(s, nameof(Angle__25));
+				SerializeField(s, nameof(StringID__26));
+				SerializeField(s, nameof(StringID__27));
+				SerializeField(s, nameof(bool__28));
+				SerializeField(s, nameof(StringID__29));
+				SerializeField(s, nameof(StringID__30));
+				SerializeField(s, nameof(StringID__31));
 			} else {
 				SerializeField(s, nameof(blinkScaleMin));
 				SerializeField(s, nameof(blinkScale));

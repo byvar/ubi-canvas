@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableStackManagerAIComponent_Template : AIComponent_Template {
 		[Serialize("timeShakeBeforeFall"   )] public float timeShakeBeforeFall;
 		[Serialize("countDownHit"          )] public float countDownHit;

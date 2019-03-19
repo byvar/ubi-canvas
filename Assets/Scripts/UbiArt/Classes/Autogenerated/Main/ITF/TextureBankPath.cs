@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TextureBankPath : CSerializable {
 		[Serialize("id"            )] public StringID id;
 		[Serialize("patchBank"     )] public Path patchBank;

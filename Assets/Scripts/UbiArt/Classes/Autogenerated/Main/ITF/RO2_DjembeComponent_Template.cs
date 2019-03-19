@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DjembeComponent_Template : ActorComponent_Template {
 		[Serialize("waveFx"     )] public StringID waveFx;
 		[Serialize("murphyFx"   )] public StringID murphyFx;

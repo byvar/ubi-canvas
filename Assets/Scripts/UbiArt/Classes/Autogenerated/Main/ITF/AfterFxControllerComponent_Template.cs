@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH)]
 	public partial class AfterFxControllerComponent_Template : ActorComponent_Template {
 		[Serialize("useCircle"             )] public bool useCircle;
 		[Serialize("useBox"                )] public bool useBox;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class ShapeData_Template : CSerializable {
 		[Serialize("name"          )] public StringID name;
 		[Serialize("shape"         )] public Generic<PhysShape> shape;

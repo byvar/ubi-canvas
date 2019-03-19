@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsCreatureCountCondition : online.GameGlobalsCondition {
 		[Serialize("count")] public uint count;
 		protected override void SerializeImpl(CSerializerObject s) {

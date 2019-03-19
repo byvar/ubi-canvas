@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.RO | GameFlags.VH)]
 	public partial class UIComponent_Template : ActorComponent_Template {
 		[Serialize("is2D"                 )] public bool is2D;
 		[Serialize("showingFadeDuration"  )] public float showingFadeDuration;
@@ -15,10 +16,10 @@ namespace UbiArt.ITF {
 		[Serialize("actorColor"           )] public Color actorColor;
 		[Serialize("textMode"             )] public uint textMode;
 		[Serialize("textModeY"            )] public uint textModeY;
-		[Serialize("defaultSelected"      )] public bool defaultSelected;
-		[Serialize("isActive"             )] public bool isActive;
-		[Serialize("updatePos"            )] public bool updatePos;
-		[Serialize("rank"                 )] public bool rank;
+		[Serialize("defaultSelected"      )] public int defaultSelected;
+		[Serialize("isActive"             )] public int isActive;
+		[Serialize("updatePos"            )] public int updatePos;
+		[Serialize("rank"                 )] public int rank;
 		[Serialize("friendly"             )] public string friendly;
 		[Serialize("menuBaseName"         )] public string menuBaseName;
 		[Serialize("animSize"             )] public Vector2 animSize;
@@ -26,7 +27,11 @@ namespace UbiArt.ITF {
 		[Serialize("textShadowOffset"     )] public Vector2 textShadowOffset;
 		[Serialize("textShadowColor"      )] public Color textShadowColor;
 		[Serialize("lineSpacingFactor"    )] public float lineSpacingFactor;
-		[Serialize("forceUseAnimSize"     )] public bool forceUseAnimSize;
+		[Serialize("forceUseAnimSize"     )] public int forceUseAnimSize;
+		[Serialize("bool__0"              )] public bool bool__0;
+		[Serialize("bool__1"              )] public bool bool__1;
+		[Serialize("float__2"             )] public float float__2;
+		[Serialize("float__3"             )] public float float__3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
@@ -52,6 +57,11 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(textShadowColor));
 				SerializeField(s, nameof(lineSpacingFactor));
 				SerializeField(s, nameof(forceUseAnimSize));
+			} else if (Settings.s.game == Settings.Game.VH) {
+				SerializeField(s, nameof(bool__0));
+				SerializeField(s, nameof(bool__1));
+				SerializeField(s, nameof(float__2));
+				SerializeField(s, nameof(float__3));
 			} else {
 				SerializeField(s, nameof(is2D));
 				SerializeField(s, nameof(showingFadeDuration));

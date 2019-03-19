@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class StatRewriteRule : CSerializable {
 		[Serialize("DefaultAccept")] public bool DefaultAccept;
 		[Serialize("Rejected"     )] public CList<StringID> Rejected;

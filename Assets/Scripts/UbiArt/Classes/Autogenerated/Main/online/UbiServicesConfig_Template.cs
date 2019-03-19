@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class UbiServicesConfig_Template : ITF.TemplateObj {
 		[Serialize("ApplicationId")] public string ApplicationId;
 		protected override void SerializeImpl(CSerializerObject s) {

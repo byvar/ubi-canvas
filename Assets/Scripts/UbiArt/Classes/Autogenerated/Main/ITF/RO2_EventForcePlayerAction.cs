@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_EventForcePlayerAction : Event {
 		[Serialize("action"      )] public PlayerForcedAction action;
 		[Serialize("enable"      )] public bool enable;

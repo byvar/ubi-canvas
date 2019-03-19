@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LaserGraphicComponent : GraphicComponent {
 		[Serialize("characterTexture"            )] public Path characterTexture;
 		[Serialize("characterMaterial"           )] public GFXMaterialSerializable characterMaterial;
@@ -19,50 +20,27 @@ namespace UbiArt.ITF {
 		[Serialize("laserBoxRightPointCoefOffset")] public float laserBoxRightPointCoefOffset;
 		[Serialize("laserLength"                 )] public float laserLength;
 		[Serialize("textureRatio"                )] public float textureRatio;
-		[Serialize("GraphicLayerForced"          )] public bool GraphicLayerForced;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
-				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(characterTexture));
-				}
-				SerializeField(s, nameof(characterMaterial));
-				SerializeField(s, nameof(ColorNormal));
-				SerializeField(s, nameof(ColorDetected));
-				SerializeField(s, nameof(AlfaOnExtremities));
-				SerializeField(s, nameof(AlfaStart));
-				SerializeField(s, nameof(SpeedLaser));
-				SerializeField(s, nameof(GraphicLayerNb));
-				SerializeField(s, nameof(GraphicLayerForced));
-				SerializeField(s, nameof(GraphicalLayerDelaiChange));
-				SerializeField(s, nameof(GraphicalLayerDelaiRandom));
-				SerializeField(s, nameof(GraphicUVTarget));
-				SerializeField(s, nameof(SacleY));
-				SerializeField(s, nameof(laserBoxLeftPointCoefOffset));
-				SerializeField(s, nameof(laserBoxRightPointCoefOffset));
-				SerializeField(s, nameof(laserLength));
-				SerializeField(s, nameof(textureRatio));
-			} else {
-				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(characterTexture));
-				}
-				SerializeField(s, nameof(characterMaterial));
-				SerializeField(s, nameof(ColorNormal));
-				SerializeField(s, nameof(ColorDetected));
-				SerializeField(s, nameof(AlfaOnExtremities));
-				SerializeField(s, nameof(AlfaStart));
-				SerializeField(s, nameof(SpeedLaser));
-				SerializeField(s, nameof(GraphicLayerNb));
-				SerializeField(s, nameof(GraphicLayerForced));
-				SerializeField(s, nameof(GraphicalLayerDelaiChange));
-				SerializeField(s, nameof(GraphicalLayerDelaiRandom));
-				SerializeField(s, nameof(GraphicUVTarget));
-				SerializeField(s, nameof(SacleY));
-				SerializeField(s, nameof(laserBoxLeftPointCoefOffset));
-				SerializeField(s, nameof(laserBoxRightPointCoefOffset));
-				SerializeField(s, nameof(laserLength));
-				SerializeField(s, nameof(textureRatio));
+			if (s.HasFlags(SerializeFlags.Flags8)) {
+				SerializeField(s, nameof(characterTexture));
 			}
+			SerializeField(s, nameof(characterMaterial));
+			SerializeField(s, nameof(ColorNormal));
+			SerializeField(s, nameof(ColorDetected));
+			SerializeField(s, nameof(AlfaOnExtremities));
+			SerializeField(s, nameof(AlfaStart));
+			SerializeField(s, nameof(SpeedLaser));
+			SerializeField(s, nameof(GraphicLayerNb));
+			SerializeField(s, nameof(GraphicLayerForced));
+			SerializeField(s, nameof(GraphicalLayerDelaiChange));
+			SerializeField(s, nameof(GraphicalLayerDelaiRandom));
+			SerializeField(s, nameof(GraphicUVTarget));
+			SerializeField(s, nameof(SacleY));
+			SerializeField(s, nameof(laserBoxLeftPointCoefOffset));
+			SerializeField(s, nameof(laserBoxRightPointCoefOffset));
+			SerializeField(s, nameof(laserLength));
+			SerializeField(s, nameof(textureRatio));
 		}
 		public override uint? ClassCRC => 0xC3701255;
 	}

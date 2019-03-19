@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventSetMaxSpeed : Event {
 		[Serialize("speed"       )] public float speed;
 		[Serialize("restoreSpeed")] public bool restoreSpeed;

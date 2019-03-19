@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HeartShield_Template : RO2_PowerUpDisplay_Template {
 		[Serialize("heartActor"           )] public Path heartActor;
 		[Serialize("heartDeathBhvName"    )] public StringID heartDeathBhvName;

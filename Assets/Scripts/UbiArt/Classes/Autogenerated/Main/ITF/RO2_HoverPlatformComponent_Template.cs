@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HoverPlatformComponent_Template : ActorComponent_Template {
 		[Serialize("movePhase"         )] public float movePhase;
 		[Serialize("waitPhase"         )] public float waitPhase;
@@ -10,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("landEnabled"       )] public bool landEnabled;
 		[Serialize("chainEnabled"      )] public bool chainEnabled;
 		[Serialize("chainPath"         )] public Path chainPath;
-		[Serialize("animDeathEnabled"  )] public bool animDeathEnabled;
+		[Serialize("animDeathEnabled"  )] public int animDeathEnabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

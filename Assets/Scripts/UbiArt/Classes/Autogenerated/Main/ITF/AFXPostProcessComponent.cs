@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class AFXPostProcessComponent : ActorComponent {
 		[Serialize("blur"        )] public AFX_BlurParam blur;
 		[Serialize("glow"        )] public AFX_GlowParam glow;
@@ -14,10 +15,10 @@ namespace UbiArt.ITF {
 		[Serialize("oldTV"       )] public AFX_OldTVParam oldTV;
 		[Serialize("noise"       )] public AFX_NoiseParam noise;
 		[Serialize("radial"      )] public AFX_RadialParam radial;
-		[Serialize("refraction"  )] public Placeholder refraction;
+		[Serialize("refraction"  )] public AFX_RefractionParam refraction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(blur));
 				SerializeField(s, nameof(glow));
 				SerializeField(s, nameof(colorSetting));
@@ -31,6 +32,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(oldTV));
 				SerializeField(s, nameof(noise));
 				SerializeField(s, nameof(radial));
+			} else if (Settings.s.game == Settings.Game.COL) {
 			} else {
 				SerializeField(s, nameof(blur));
 				SerializeField(s, nameof(glow));

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PhysShapeCircle : PhysShape {
 		[Serialize("Radius")] public float Radius;
 		protected override void SerializeImpl(CSerializerObject s) {

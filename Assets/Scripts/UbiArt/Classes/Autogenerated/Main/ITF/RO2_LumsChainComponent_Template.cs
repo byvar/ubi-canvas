@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LumsChainComponent_Template : ActorComponent_Template {
 		[Serialize("chainCompletedNumRewardLum"       )] public uint chainCompletedNumRewardLum;
 		[Serialize("detectionRadius"                  )] public float detectionRadius;
@@ -127,6 +128,8 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(musicFailedActivationDistance));
 				SerializeField(s, nameof(waitingTimeBeforePlayerActivation));
 				SerializeField(s, nameof(interactiveActorOffsets));
+				SerializeField(s, nameof(interactiveActorOffsets));
+				SerializeField(s, nameof(interactiveActorBgList));
 				SerializeField(s, nameof(interactiveActorBgList));
 				SerializeField(s, nameof(bgZOffsets));
 				SerializeField(s, nameof(displayEyeOnlyOnDRC));

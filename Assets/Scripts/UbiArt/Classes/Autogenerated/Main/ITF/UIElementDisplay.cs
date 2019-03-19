@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIElementDisplay : Event {
 		[Serialize("elementName")] public StringID elementName;
 		[Serialize("display"    )] public bool display;

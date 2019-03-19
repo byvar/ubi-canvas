@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL)]
 	public partial class EventSetReverbOnAux : Event {
 		[Serialize("sender"                    )] public uint sender;
 		[Serialize("XAudio2ReflectionsDelay"   )] public uint XAudio2ReflectionsDelay;
@@ -24,7 +25,7 @@ namespace UbiArt.ITF {
 		[Serialize("XAudio2DecayTime"          )] public float XAudio2DecayTime;
 		[Serialize("XAudio2Density"            )] public float XAudio2Density;
 		[Serialize("XAudio2RoomSize"           )] public float XAudio2RoomSize;
-		[Serialize("XAudio2DisableLateField"   )] public bool XAudio2DisableLateField;
+		[Serialize("XAudio2DisableLateField"   )] public int XAudio2DisableLateField;
 		[Serialize("PS3Room"                   )] public float PS3Room;
 		[Serialize("PS3Room_HF"                )] public float PS3Room_HF;
 		[Serialize("PS3Decay_time"             )] public float PS3Decay_time;
@@ -36,7 +37,7 @@ namespace UbiArt.ITF {
 		[Serialize("PS3Diffusion"              )] public float PS3Diffusion;
 		[Serialize("PS3Density"                )] public float PS3Density;
 		[Serialize("PS3_HF_reference"          )] public float PS3_HF_reference;
-		[Serialize("PS3MixChannel"             )] public bool PS3MixChannel;
+		[Serialize("PS3MixChannel"             )] public int PS3MixChannel;
 		[Serialize("PS3EarlyReflectionPattern" )] public uint PS3EarlyReflectionPattern;
 		[Serialize("PS3LateReverbPattern"      )] public uint PS3LateReverbPattern;
 		[Serialize("PS3EarlyReflectionScaler"  )] public float PS3EarlyReflectionScaler;
@@ -50,7 +51,7 @@ namespace UbiArt.ITF {
 		[Serialize("BlendDuration"             )] public float BlendDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(sender));
 				SerializeField(s, nameof(XAudio2ReflectionsDelay));
 				SerializeField(s, nameof(XAudio2ReverbDelay));

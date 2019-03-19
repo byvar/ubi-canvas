@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class RewardTrigger_Sum : RewardTrigger_Base {
 		[Serialize("typeToGet"         )] public StringID typeToGet;
 		[Serialize("amountToGet"       )] public uint amountToGet;

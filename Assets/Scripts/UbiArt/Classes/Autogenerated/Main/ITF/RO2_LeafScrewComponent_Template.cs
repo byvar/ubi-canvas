@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LeafScrewComponent_Template : RO2_AIComponent_Template {
 		[Serialize("animIdle"                 )] public StringID animIdle;
 		[Serialize("animImpact"               )] public StringID animImpact;

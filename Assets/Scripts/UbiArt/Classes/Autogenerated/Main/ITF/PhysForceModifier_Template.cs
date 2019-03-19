@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class PhysForceModifier_Template : CSerializable {
 		[Serialize("isRadial"           )] public bool isRadial;
 		[Serialize("force"              )] public Vector2 force;

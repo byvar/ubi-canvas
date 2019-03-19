@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SpikyFlowerComponent_Template : ActorComponent_Template {
 		[Serialize("hurtTriggerBounce"   )] public Path hurtTriggerBounce;
 		[Serialize("noHurtTriggerBounce" )] public Path noHurtTriggerBounce;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_AIComponent_Template : AIComponent_Template {
 		[Serialize("reactivateOnCheckpoint"               )] public bool reactivateOnCheckpoint;
 		[Serialize("customCheckpointHandling"             )] public bool customCheckpointHandling;

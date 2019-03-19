@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GyroControllerComponent_Template : ActorComponent_Template {
 		[Serialize("loopfx"                  )] public StringID loopfx;
 		[Serialize("localLoopFx"             )] public StringID localLoopFx;

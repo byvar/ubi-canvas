@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_WaterPerturbationComponent_Template : ActorComponent_Template {
 		[Serialize("fxFile"             )] public Path fxFile;
 		[Serialize("noiseAmplitudeX"    )] public float noiseAmplitudeX;

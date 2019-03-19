@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class FacebookConfig_Template : ITF.TemplateObj {
 		[Serialize("AppId"      )] public string AppId;
 		[Serialize("RedirectUri")] public string RedirectUri;

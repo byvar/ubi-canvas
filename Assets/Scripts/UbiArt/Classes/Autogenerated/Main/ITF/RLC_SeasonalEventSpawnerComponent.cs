@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_SeasonalEventSpawnerComponent : ActorComponent {
 		[Serialize("selectedPathIndex")] public uint selectedPathIndex;
 		[Serialize("weight"           )] public uint weight;

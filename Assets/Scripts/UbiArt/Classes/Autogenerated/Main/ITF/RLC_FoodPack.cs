@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_FoodPack : RLC_DynamicStoreItem {
 		[Serialize("Price"     )] public uint Price;
 		[Serialize("FoodAmount")] public uint FoodAmount;

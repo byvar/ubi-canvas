@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventPostComponent : Event {
 		[Serialize("componentID")] public uint componentID;
 		protected override void SerializeImpl(CSerializerObject s) {

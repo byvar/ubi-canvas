@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_FluidSimulationComponent_Template : RO2_SoftCollisionComponent_Template {
 		[Serialize("FX"           )] public StringID FX;
 		[Serialize("SpawnSound"   )] public StringID SpawnSound;

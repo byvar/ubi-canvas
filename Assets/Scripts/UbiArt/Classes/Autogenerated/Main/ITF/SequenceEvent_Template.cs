@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class SequenceEvent_Template : CSerializable {
 		[Serialize("StartFrame"        )] public int StartFrame;
 		[Serialize("Offset"            )] public int Offset;
@@ -11,13 +12,11 @@ namespace UbiArt.ITF {
 		[Serialize("DisabledForTesting")] public bool DisabledForTesting;
 		[Serialize("uid"               )] public uint uid;
 		[Serialize("EventMode"         )] public event_mode EventMode;
-		[Serialize("StartFrame"        )] public bool StartFrame;
-		[Serialize("Offset"            )] public bool Offset;
-		[Serialize("Duration"          )] public bool Duration;
-		[Serialize("Selected"          )] public bool Selected;
+		[Serialize("DisabledForTesting")] public int DisabledForTesting;
+		[Serialize("EventMode"         )] public Enum_EventMode EventMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(StartFrame));
 				SerializeField(s, nameof(Offset));
 				SerializeField(s, nameof(Duration));
@@ -27,7 +26,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(Selected));
 					SerializeField(s, nameof(DisabledForTesting));
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(StartFrame));
 				SerializeField(s, nameof(Offset));
 				SerializeField(s, nameof(Duration));
@@ -57,6 +56,11 @@ namespace UbiArt.ITF {
 			[Serialize("event_mode_default"      )] _default = 0,
 			[Serialize("event_mode_sequence_only")] sequence_only = 1,
 			[Serialize("event_mode_editor_only"  )] editor_only = 2,
+		}
+		public enum Enum_EventMode {
+			[Serialize("Value_0")] Value_0 = 0,
+			[Serialize("Value_1")] Value_1 = 1,
+			[Serialize("Value_2")] Value_2 = 2,
 		}
 		public override uint? ClassCRC => 0xFB5A38F1;
 	}

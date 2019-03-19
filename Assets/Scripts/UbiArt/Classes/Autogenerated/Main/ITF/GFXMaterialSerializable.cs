@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class GFXMaterialSerializable : CSerializable {
 		[Serialize("textureSet"    )] public GFXMaterialTexturePathSet textureSet;
 		[Serialize("shaderPath"    )] public Path shaderPath;

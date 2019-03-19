@@ -1,11 +1,13 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TouchHoldTriggerComponent : ActorComponent {
 		[Serialize("onHoldEvent"               )] public EventSender onHoldEvent;
 		[Serialize("onReleaseEvent"            )] public EventSender onReleaseEvent;
 		[Serialize("minTimeBeforeHoldEventSend")] public float minTimeBeforeHoldEventSend;
 		[Serialize("useTapGauge"               )] public byte useTapGauge;
+		[Serialize("useTapGauge"               )] public int useTapGauge;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -14,6 +16,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(onReleaseEvent));
 					SerializeField(s, nameof(useTapGauge));
 				}
+			} else if (Settings.s.game == Settings.Game.COL) {
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(onHoldEvent));
+					SerializeField(s, nameof(onReleaseEvent));
+					SerializeField(s, nameof(useTapGauge));
+				}
+				SerializeField(s, nameof(useTapGauge));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(onHoldEvent));

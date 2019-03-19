@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ReversibleHeadComponent_Template : ActorComponent_Template {
 		[Serialize("bad"                       )] public bool bad;
 		[Serialize("hiddenAnimation"           )] public StringID hiddenAnimation;

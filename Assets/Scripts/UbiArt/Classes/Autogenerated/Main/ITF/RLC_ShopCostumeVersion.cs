@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_ShopCostumeVersion : CSerializable {
 		[Serialize("costumeID"   )] public StringID costumeID;
 		[Serialize("tradeVersion")] public uint tradeVersion;

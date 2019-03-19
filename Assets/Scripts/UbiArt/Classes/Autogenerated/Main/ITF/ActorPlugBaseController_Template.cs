@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class ActorPlugBaseController_Template : CSerializable {
 		[Serialize("plugID"      )] public StringID plugID;
 		[Serialize("controllerID")] public StringID controllerID;

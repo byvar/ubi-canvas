@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class LogStatHandler : StatHandler {
 		[Serialize("Parser")] public Generic<IStatParser> Parser;
 		protected override void SerializeImpl(CSerializerObject s) {

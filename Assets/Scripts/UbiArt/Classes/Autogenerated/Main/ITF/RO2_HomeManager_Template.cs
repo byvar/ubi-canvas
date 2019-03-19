@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HomeManager_Template : TemplateObj {
 		[Serialize("tombPath"                              )] public Path tombPath;
 		[Serialize("tombIconPath"                          )] public Path tombIconPath;
@@ -145,7 +146,10 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(playerLevelInfos));
 				SerializeField(s, nameof(cupInfos));
 				SerializeField(s, nameof(medalColors));
+				SerializeField(s, nameof(medalColors));
 				SerializeField(s, nameof(miiverseMenuSequenceNames));
+				SerializeField(s, nameof(miiverseMenuSequenceNames));
+				SerializeField(s, nameof(countryId));
 				SerializeField(s, nameof(countryId));
 				SerializeField(s, nameof(emblemDev));
 				SerializeField(s, nameof(emblemVip));

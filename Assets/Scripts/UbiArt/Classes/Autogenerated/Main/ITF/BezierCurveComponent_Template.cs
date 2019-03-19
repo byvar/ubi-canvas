@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class BezierCurveComponent_Template : ActorComponent_Template {
 		[Serialize("lockFirstTangent")] public bool lockFirstTangent;
 		[Serialize("defaultNodeCount")] public uint defaultNodeCount;

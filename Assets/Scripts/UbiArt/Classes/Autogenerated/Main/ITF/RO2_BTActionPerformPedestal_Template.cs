@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionPerformPedestal_Template : BTAction_Template {
 		[Serialize("animPedestal"       )] public StringID animPedestal;
 		[Serialize("animJump"           )] public StringID animJump;

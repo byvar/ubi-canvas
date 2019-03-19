@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Costume : RLC_InventoryItem {
 		[Serialize("state")] public Enum_state state;
 		protected override void SerializeImpl(CSerializerObject s) {

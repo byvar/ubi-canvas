@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FairyComponent_Template : ActorComponent_Template {
 		[Serialize("flyDist"                   )] public float flyDist;
 		[Serialize("flySpeed"                  )] public float flySpeed;

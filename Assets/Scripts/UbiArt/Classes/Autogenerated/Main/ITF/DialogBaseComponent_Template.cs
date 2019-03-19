@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class DialogBaseComponent_Template : ActorComponent_Template {
 		[Serialize("useOasis"                  )] public bool useOasis;
 		[Serialize("replaceSpeakersByActivator")] public bool replaceSpeakersByActivator;

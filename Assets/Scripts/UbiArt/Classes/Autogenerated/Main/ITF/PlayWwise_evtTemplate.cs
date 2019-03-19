@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlayWwise_evtTemplate : SequenceEventWithActor_Template {
 		[Serialize("WwiseEventGUID"         )] public StringID WwiseEventGUID;
 		[Serialize("WwiseMetronomeID"       )] public METRONOME_TYPE WwiseMetronomeID;

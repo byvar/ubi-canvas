@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIBezierAction_Template : AIAction_Template {
 		[Serialize("changeAngle"              )] public bool changeAngle;
 		[Serialize("updatePhysSpeedAtEnd"     )] public bool updatePhysSpeedAtEnd;

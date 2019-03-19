@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTDrawDesc : CSerializable {
 		[Serialize("StepX"         )] public float StepX;
 		[Serialize("StepY"         )] public float StepY;

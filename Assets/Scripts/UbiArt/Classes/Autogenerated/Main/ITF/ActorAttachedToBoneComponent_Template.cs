@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ActorAttachedToBoneComponent_Template : ActorComponent_Template {
 		[Serialize("boneName"    )] public StringID boneName;
 		[Serialize("useBoneScale")] public bool useBoneScale;

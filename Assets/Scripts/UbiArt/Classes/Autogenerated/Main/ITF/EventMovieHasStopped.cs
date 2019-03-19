@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventMovieHasStopped : Event {
 		[Serialize("endOfMovieReached")] public bool endOfMovieReached;
 		protected override void SerializeImpl(CSerializerObject s) {

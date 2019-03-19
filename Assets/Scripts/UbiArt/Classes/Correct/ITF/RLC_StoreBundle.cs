@@ -1,10 +1,11 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_StoreBundle : RLC_DynamicStoreItem {
 		[Serialize("Price"               )] public float Price;
 		[Serialize("formattedPrice"      )] public string formattedPrice;
-		[Serialize("locId"               )] public uint locId2;
+		[Serialize("locId"               )] public uint locId;
 		[Serialize("infoLocId"           )] public uint infoLocId;
 		[Serialize("reduction"           )] public float reduction;
 		[Serialize("gemspacks"           )] public CList<RLC_GemsPack> gemspacks;
@@ -24,7 +25,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Price));
 			SerializeField(s, nameof(formattedPrice));
-			SerializeField(s, nameof(locId2));
+			SerializeField(s, nameof(locId));
 			SerializeField(s, nameof(infoLocId));
 			SerializeField(s, nameof(reduction));
 			SerializeField(s, nameof(gemspacks));

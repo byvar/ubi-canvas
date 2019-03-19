@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlatformTreeComponent_Template : ActorComponent_Template {
 		[Serialize("ignoreEventTrigger"              )] public bool ignoreEventTrigger;
 		[Serialize("maxStartDelay"                   )] public float maxStartDelay;

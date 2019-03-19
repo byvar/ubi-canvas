@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_MultipassBranchRendererComponent : RO2_BezierBranchComponent {
 		[Serialize("flipTexture")] public bool flipTexture;
 		protected override void SerializeImpl(CSerializerObject s) {

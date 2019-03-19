@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BasicPowerUpData : CSerializable {
 		[Serialize("enabled"     )] public bool enabled;
 		[Serialize("toAllPlayers")] public bool toAllPlayers;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RttiTestTwo : BaseRttiTest {
 		[Serialize("BoolValue")] public bool BoolValue;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_EventPowerUpCooldownReady : Event {
 		[Serialize("id")] public StringID id;
 		protected override void SerializeImpl(CSerializerObject s) {

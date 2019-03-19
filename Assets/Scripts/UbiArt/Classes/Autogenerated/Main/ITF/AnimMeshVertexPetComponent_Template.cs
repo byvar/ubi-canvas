@@ -1,16 +1,17 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AnimMeshVertexPetComponent_Template : ActorComponent_Template {
 		[Serialize("allowUpdate")] public bool allowUpdate;
 		[Serialize("pets"       )] public CList<AnimMeshVertexPetData> pets;
 		[Serialize("randomPets" )] public CList<Vector3> randomPets;
 		[Serialize("allPets"    )] public CList<AnimMeshVertexPetData> allPets;
-		[Serialize("baseParts"  )] public Placeholder baseParts;
-		[Serialize("animList"   )] public Placeholder animList;
+		[Serialize("baseParts"  )] public CArray<string> baseParts;
+		[Serialize("animList"   )] public CArray<string> animList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(allowUpdate));
 				SerializeField(s, nameof(baseParts));
 				SerializeField(s, nameof(animList));

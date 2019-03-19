@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LuckyTicketComponent_Template : ActorComponent_Template {
 		[Serialize("regionPath"                    )] public Path regionPath;
 		[Serialize("startPos"                      )] public Vector2 startPos;
@@ -230,6 +231,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(dalleFadeAlpha));
 				SerializeField(s, nameof(cameraFX));
 				SerializeField(s, nameof(fireworkFX));
+				SerializeField(s, nameof(fireworksOffsets));
 				SerializeField(s, nameof(fireworksOffsets));
 				SerializeField(s, nameof(minTimeBetweenFireworks));
 				SerializeField(s, nameof(maxTimeBetweenFireworks));

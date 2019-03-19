@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class TextureGraphicComponent2D_Template : GraphicComponent_Template {
 		[Serialize("texture"     )] public Path texture;
 		[Serialize("rank"        )] public uint rank;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_TimeSavingPack : RLC_DynamicStoreItem {
 		[Serialize("offerIndex"        )] public uint offerIndex;
 		[Serialize("timeSavingDuration")] public online.TimeInterval timeSavingDuration;

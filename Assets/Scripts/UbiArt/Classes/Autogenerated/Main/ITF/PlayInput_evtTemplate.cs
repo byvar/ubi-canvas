@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PlayInput_evtTemplate : SequenceEventWithActor_Template {
 		[Serialize("InputName"        )] public string InputName;
 		[Serialize("InputSpline"      )] public Spline InputSpline;
@@ -13,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("Colors"           )] public ColorEventList Colors;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(InputName));
 				SerializeField(s, nameof(InputSpline));
 			} else {

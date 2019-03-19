@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class CreditsComponent_Template : CSerializable {
 		[Serialize("styles"  )] public CList<FontTextArea.Style> styles;
 		[Serialize("textdata")] public CList<CreditsDatum> textdata;

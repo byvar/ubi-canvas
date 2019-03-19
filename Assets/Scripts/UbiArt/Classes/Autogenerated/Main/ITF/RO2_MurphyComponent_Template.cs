@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MurphyComponent_Template : ActorComponent_Template {
 		[Serialize("touchRadius"        )] public float touchRadius;
 		[Serialize("brakeForce"         )] public float brakeForce;

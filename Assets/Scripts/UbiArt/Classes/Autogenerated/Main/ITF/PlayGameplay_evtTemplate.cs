@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PlayGameplay_evtTemplate : SequenceEventWithActor_Template {
 		[Serialize("onEnterEventName")] public string onEnterEventName;
 		[Serialize("onEnterEvent"    )] public Generic<Event> onEnterEvent;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeBodyPartActorRenderer_Template : RO2_SnakeBodyPartRenderer_Template {
 		[Serialize("actorPath"    )] public Path actorPath;
 		[Serialize("polyline"     )] public StringID polyline;

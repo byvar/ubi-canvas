@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class RenderBoxComponent_Template : GraphicComponent_Template {
 		[Serialize("is2D"                             )] public bool is2D;
 		[Serialize("addBorders"                       )] public bool addBorders;
@@ -50,15 +51,6 @@ namespace UbiArt.ITF {
 		[Serialize("highlightScale"                   )] public Vector2 highlightScale;
 		[Serialize("highlightTexture"                 )] public Path highlightTexture;
 		[Serialize("highlightMaterial"                )] public GFXMaterialSerializable highlightMaterial;
-		[Serialize("backTopLeftCornerAtlasRotate"     )] public bool backTopLeftCornerAtlasRotate;
-		[Serialize("backTopMiddleCornerAtlasRotate"   )] public bool backTopMiddleCornerAtlasRotate;
-		[Serialize("backTopRightCornerAtlasRotate"    )] public bool backTopRightCornerAtlasRotate;
-		[Serialize("backMiddleLeftCornerAtlasRotate"  )] public bool backMiddleLeftCornerAtlasRotate;
-		[Serialize("backMiddleMiddleCornerAtlasRotate")] public bool backMiddleMiddleCornerAtlasRotate;
-		[Serialize("backMiddleRightCornerAtlasRotate" )] public bool backMiddleRightCornerAtlasRotate;
-		[Serialize("backBottomLeftCornerAtlasRotate"  )] public bool backBottomLeftCornerAtlasRotate;
-		[Serialize("backBottomMiddleCornerAtlasRotate")] public bool backBottomMiddleCornerAtlasRotate;
-		[Serialize("backBottomRightCornerAtlasRotate" )] public bool backBottomRightCornerAtlasRotate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -66,6 +58,59 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(addBorders));
 				SerializeField(s, nameof(useAnimMeshVertex));
 				SerializeField(s, nameof(anims));
+				if (s.HasFlags(SerializeFlags.Flags8)) {
+					SerializeField(s, nameof(texture));
+				}
+				SerializeField(s, nameof(material));
+				if (s.HasFlags(SerializeFlags.Flags8)) {
+					SerializeField(s, nameof(frontTexture));
+				}
+				SerializeField(s, nameof(frontMaterial));
+				SerializeField(s, nameof(leftWidth));
+				SerializeField(s, nameof(rightWidth));
+				SerializeField(s, nameof(topHeight));
+				SerializeField(s, nameof(bottomHeight));
+				SerializeField(s, nameof(backTopLeftCornerAtlasIndex));
+				SerializeField(s, nameof(backTopMiddleCornerAtlasIndex));
+				SerializeField(s, nameof(backTopRightCornerAtlasIndex));
+				SerializeField(s, nameof(backMiddleLeftCornerAtlasIndex));
+				SerializeField(s, nameof(backMiddleMiddleCornerAtlasIndex));
+				SerializeField(s, nameof(backMiddleRightCornerAtlasIndex));
+				SerializeField(s, nameof(backBottomLeftCornerAtlasIndex));
+				SerializeField(s, nameof(backBottomMiddleCornerAtlasIndex));
+				SerializeField(s, nameof(backBottomRightCornerAtlasIndex));
+				SerializeField(s, nameof(backTopLeftCornerAtlasRotate));
+				SerializeField(s, nameof(backTopMiddleCornerAtlasRotate));
+				SerializeField(s, nameof(backTopRightCornerAtlasRotate));
+				SerializeField(s, nameof(backMiddleLeftCornerAtlasRotate));
+				SerializeField(s, nameof(backMiddleMiddleCornerAtlasRotate));
+				SerializeField(s, nameof(backMiddleRightCornerAtlasRotate));
+				SerializeField(s, nameof(backBottomLeftCornerAtlasRotate));
+				SerializeField(s, nameof(backBottomMiddleCornerAtlasRotate));
+				SerializeField(s, nameof(backBottomRightCornerAtlasRotate));
+				SerializeField(s, nameof(backTopMiddleCornerAtlasTile));
+				SerializeField(s, nameof(backMiddleLeftCornerAtlasTile));
+				SerializeField(s, nameof(backMiddleRightCornerAtlasTile));
+				SerializeField(s, nameof(backBottomMiddleCornerAtlasTile));
+				SerializeField(s, nameof(xUVToDistance));
+				SerializeField(s, nameof(yUVToDistance));
+				SerializeField(s, nameof(zOffset));
+				SerializeField(s, nameof(dynamicAMVMinimunBorderSize));
+				SerializeField(s, nameof(shadowOffset));
+				SerializeField(s, nameof(shadowAlpha));
+				SerializeField(s, nameof(shadowUseFrontTexture));
+				SerializeField(s, nameof(posShadowRelative));
+				SerializeField(s, nameof(highlightOffset));
+				SerializeField(s, nameof(highlightAlpha));
+				SerializeField(s, nameof(highlightScale));
+				if (s.HasFlags(SerializeFlags.Flags8)) {
+					SerializeField(s, nameof(highlightTexture));
+				}
+				SerializeField(s, nameof(highlightMaterial));
+			} else if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(is2D));
+				SerializeField(s, nameof(addBorders));
+				SerializeField(s, nameof(useAnimMeshVertex));
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					SerializeField(s, nameof(texture));
 				}

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_BezierNode : CSerializable {
 		[Serialize("pos"                    )] public Vector3 pos;
 		[Serialize("tangent"                )] public Vector2 tangent;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventTouchScreenMandatoryZone : Event {
 		[Serialize("enter"                   )] public bool enter;
 		[Serialize("unswapDRCPlayerIfSwapped")] public bool unswapDRCPlayerIfSwapped;

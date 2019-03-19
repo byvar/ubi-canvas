@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_UIGemsCountComponent_Template : UIComponent_Template {
 		[Serialize("rubyPath"      )] public Path rubyPath;
 		[Serialize("travelDuration")] public float travelDuration;

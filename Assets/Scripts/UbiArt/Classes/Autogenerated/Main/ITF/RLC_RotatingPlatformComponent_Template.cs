@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_RotatingPlatformComponent_Template : ActorComponent_Template {
 		[Serialize("rotationSpeed"          )] public float rotationSpeed;
 		[Serialize("shakingAmplitude"       )] public float shakingAmplitude;

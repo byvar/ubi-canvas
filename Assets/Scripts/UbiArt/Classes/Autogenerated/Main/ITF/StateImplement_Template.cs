@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class StateImplement_Template : CSerializable {
 		[Serialize("stateList" )] public CList<BasicState_Template> stateList;
 		[Serialize("startState")] public StringID startState;

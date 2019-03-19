@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Pad2TouchInput : CSerializable {
 		[Serialize("InputType"     )] public Enum_InputType InputType;
 		[Serialize("forcePosition" )] public bool forcePosition;
@@ -14,6 +15,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(position));
 			SerializeField(s, nameof(offSet));
 			if (s.HasFlags(SerializeFlags.Flags1)) {
+				SerializeField(s, nameof(swipeRandomDir));
 				SerializeField(s, nameof(swipeRandomDir));
 			}
 		}

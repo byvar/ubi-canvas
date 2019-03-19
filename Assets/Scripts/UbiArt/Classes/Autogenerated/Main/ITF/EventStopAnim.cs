@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventStopAnim : Event {
 		[Serialize("AnimToStop")] public StringID AnimToStop;
 		protected override void SerializeImpl(CSerializerObject s) {

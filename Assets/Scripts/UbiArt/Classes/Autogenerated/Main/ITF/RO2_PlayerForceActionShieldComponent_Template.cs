@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerForceActionShieldComponent_Template : RO2_PlayerForceActionComponent_Template {
 		[Serialize("shieldChannelID")] public StringID shieldChannelID;
 		protected override void SerializeImpl(CSerializerObject s) {

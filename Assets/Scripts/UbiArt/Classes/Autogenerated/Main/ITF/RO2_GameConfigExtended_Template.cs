@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_GameConfigExtended_Template : GameConfigExtended_Template {
 		[Serialize("test"                      )] public uint test;
 		[Serialize("PreviewGlobox"             )] public Path PreviewGlobox;

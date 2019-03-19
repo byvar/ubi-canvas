@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceDetails : CSerializable {
 		[Serialize("AmbianceDetailsId")] public StringID AmbianceDetailsId;
 		[Serialize("Bank"             )] public PathRef Bank;

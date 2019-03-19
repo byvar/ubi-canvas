@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH)]
 	public partial class AIWalkInDirAction_Template : AIAction_Template {
 		[Serialize("walkForce"                     )] public float walkForce;
 		[Serialize("walkForceRandomFactor"         )] public float walkForceRandomFactor;

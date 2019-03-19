@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ScreenShotDataWinLevelTimeAttack : online.OpenGraphObject {
 		[Serialize("minutes"     )] public uint minutes;
 		[Serialize("seconds"     )] public uint seconds;

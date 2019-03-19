@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameGlobalsOverride : CSerializable {
 		[Serialize("json"     )] public string json;
 		[Serialize("condition")] public GameGlobalsComplexCondition condition;

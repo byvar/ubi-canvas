@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicScoreAIBranchComponent_Template : RO2_BezierBranchComponent_Template {
 		[Serialize("openingSpeed"      )] public float openingSpeed;
 		[Serialize("noteIntervalHeight")] public float noteIntervalHeight;

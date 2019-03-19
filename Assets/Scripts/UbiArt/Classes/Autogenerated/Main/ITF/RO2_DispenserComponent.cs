@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DispenserComponent : ActorComponent {
 		[Serialize("goodsRemaining")] public uint goodsRemaining;
 		[Serialize("state"         )] public Enum_state state;

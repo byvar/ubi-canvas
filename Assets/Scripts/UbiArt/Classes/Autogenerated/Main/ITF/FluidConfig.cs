@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class FluidConfig : CSerializable {
 		[Serialize("Elasticity"             )] public float Elasticity;
 		[Serialize("Velocity"               )] public float Velocity;

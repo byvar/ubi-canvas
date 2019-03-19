@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableStackManagerAIComponent : AIComponent {
 		[Serialize("width"       )] public uint width;
 		[Serialize("height"      )] public uint height;

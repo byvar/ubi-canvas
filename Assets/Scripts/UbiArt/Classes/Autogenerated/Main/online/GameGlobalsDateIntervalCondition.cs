@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameGlobalsDateIntervalCondition : GameGlobalsCondition {
 		[Serialize("start")] public online.DateTime start;
 		[Serialize("end"  )] public online.DateTime end;

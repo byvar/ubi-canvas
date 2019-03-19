@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PrisonerCageComponent : RO2_AIComponent {
 		[Serialize("shape"              )] public EditableShape shape;
 		[Serialize("savePosOnCheckpoint")] public bool savePosOnCheckpoint;

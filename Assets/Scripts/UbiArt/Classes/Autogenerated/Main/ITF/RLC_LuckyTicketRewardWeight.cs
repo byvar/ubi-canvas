@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_LuckyTicketRewardWeight : CSerializable {
 		[Serialize("luckyTicketReward")] public RLC_LuckyTicketReward luckyTicketReward;
 		[Serialize("weight"           )] public uint weight;

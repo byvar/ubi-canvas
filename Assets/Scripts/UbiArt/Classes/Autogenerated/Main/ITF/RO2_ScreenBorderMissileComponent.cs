@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ScreenBorderMissileComponent : ActorComponent {
 		[Serialize("border"            )] public ScreenBorder border;
 		[Serialize("borderOffset"      )] public float borderOffset;

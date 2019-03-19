@@ -1,0 +1,108 @@
+using UnityEngine;
+
+namespace UbiArt.ITF {
+	[Games(GameFlags.RO)]
+	public partial class Ray_GameManagerConfig_Template : Ray_GameManagerConfig_Template.MapConfig {
+		[Serialize("playerMinHitPoints"               )] public uint playerMinHitPoints;
+		[Serialize("playerMaxHitPoints"               )] public uint playerMaxHitPoints;
+		[Serialize("playerStartHitPoints"             )] public uint playerStartHitPoints;
+		[Serialize("playerStartHitPointsAfterDeath"   )] public uint playerStartHitPointsAfterDeath;
+		[Serialize("playerStartMaxHitPoints"          )] public uint playerStartMaxHitPoints;
+		[Serialize("hiddenAreaWaitPlayersLength"      )] public float hiddenAreaWaitPlayersLength;
+		[Serialize("hiddenAreaWaitLoadLength"         )] public float hiddenAreaWaitLoadLength;
+		[Serialize("checkpointWaitPlayersLength"      )] public float checkpointWaitPlayersLength;
+		[Serialize("lumPath"                          )] public Path lumPath;
+		[Serialize("lumSpawnRadius"                   )] public float lumSpawnRadius;
+		[Serialize("heartPath"                        )] public Path heartPath;
+		[Serialize("defaultLumMusicManagerPath"       )] public Path defaultLumMusicManagerPath;
+		[Serialize("electoonToothScore"               )] public Path electoonToothScore;
+		[Serialize("debugSaves"                       )] public int debugSaves;
+		[Serialize("stargateWaitForPlayersTime"       )] public float stargateWaitForPlayersTime;
+		[Serialize("stargateWaitDistFromDoor"         )] public float stargateWaitDistFromDoor;
+		[Serialize("stargateWaitAngleOffset"          )] public float stargateWaitAngleOffset;
+		[Serialize("stargateWaitPointZOffset"         )] public float stargateWaitPointZOffset;
+		[Serialize("stargateStartToDoorTimeMultiplier")] public float stargateStartToDoorTimeMultiplier;
+		[Serialize("stargateCameraLookAtOffset"       )] public Vector3 stargateCameraLookAtOffset;
+		[Serialize("scaleDoorWaitDelay"               )] public float scaleDoorWaitDelay;
+		[Serialize("scaleDoorMoveK"                   )] public float scaleDoorMoveK;
+		[Serialize("scaleDoorMoveD"                   )] public float scaleDoorMoveD;
+		[Serialize("bounceToLayerOffsetDistFromTarget")] public float bounceToLayerOffsetDistFromTarget;
+		[Serialize("bounceToLayerAngleOffset"         )] public float bounceToLayerAngleOffset;
+		[Serialize("throwTeethSurpriseCameraOffset"   )] public Vector3 throwTeethSurpriseCameraOffset;
+		[Serialize("throwTeethThrowCameraOffset"      )] public Vector3 throwTeethThrowCameraOffset;
+		[Serialize("throwTeethPlayerOffset"           )] public Vector2 throwTeethPlayerOffset;
+		[Serialize("powerUps"                         )] public Placeholder powerUps;
+		[Serialize("levelsInfo"                       )] public Placeholder levelsInfo;
+		[Serialize("missionTypes"                     )] public Placeholder missionTypes;
+		[Serialize("sprintTutorialFailureCount"       )] public uint sprintTutorialFailureCount;
+		[Serialize("sprintTutorialRequiredDuration"   )] public float sprintTutorialRequiredDuration;
+		[Serialize("fadeDeath"                        )] public StringID fadeDeath;
+		[Serialize("fadeChangePage"                   )] public StringID fadeChangePage;
+		[Serialize("fadeHiddenArea"                   )] public StringID fadeHiddenArea;
+		[Serialize("fadeTeleport"                     )] public StringID fadeTeleport;
+		[Serialize("fadeCostume"                      )] public StringID fadeCostume;
+		[Serialize("fadeLoadMap"                      )] public StringID fadeLoadMap;
+		[Serialize("fadeChangePageWithAnim"           )] public StringID fadeChangePageWithAnim;
+		[Serialize("fadeWorldMapTeleport"             )] public StringID fadeWorldMapTeleport;
+		[Serialize("fadeFlash"                        )] public StringID fadeFlash;
+		[Serialize("fadePrologue"                     )] public StringID fadePrologue;
+		[Serialize("wmStartNode"                      )] public ObjectPath wmStartNode;
+		[Serialize("loadingMinFrames"                 )] public uint loadingMinFrames;
+		[Serialize("nbDeathBeforeFirstSkip"           )] public uint nbDeathBeforeFirstSkip;
+		[Serialize("nbDeathBeforeSecondSkip"          )] public uint nbDeathBeforeSecondSkip;
+		[Serialize("endSequencePlayerPosition"        )] public Vector3 endSequencePlayerPosition;
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(playerMinHitPoints));
+			SerializeField(s, nameof(playerMaxHitPoints));
+			SerializeField(s, nameof(playerStartHitPoints));
+			SerializeField(s, nameof(playerStartHitPointsAfterDeath));
+			SerializeField(s, nameof(playerStartMaxHitPoints));
+			SerializeField(s, nameof(hiddenAreaWaitPlayersLength));
+			SerializeField(s, nameof(hiddenAreaWaitLoadLength));
+			SerializeField(s, nameof(checkpointWaitPlayersLength));
+			SerializeField(s, nameof(lumPath));
+			SerializeField(s, nameof(lumSpawnRadius));
+			SerializeField(s, nameof(heartPath));
+			SerializeField(s, nameof(defaultLumMusicManagerPath));
+			SerializeField(s, nameof(electoonToothScore));
+			SerializeField(s, nameof(debugSaves));
+			SerializeField(s, nameof(stargateWaitForPlayersTime));
+			SerializeField(s, nameof(stargateWaitDistFromDoor));
+			SerializeField(s, nameof(stargateWaitAngleOffset));
+			SerializeField(s, nameof(stargateWaitPointZOffset));
+			SerializeField(s, nameof(stargateStartToDoorTimeMultiplier));
+			SerializeField(s, nameof(stargateCameraLookAtOffset));
+			SerializeField(s, nameof(scaleDoorWaitDelay));
+			SerializeField(s, nameof(scaleDoorMoveK));
+			SerializeField(s, nameof(scaleDoorMoveD));
+			SerializeField(s, nameof(bounceToLayerOffsetDistFromTarget));
+			SerializeField(s, nameof(bounceToLayerAngleOffset));
+			SerializeField(s, nameof(throwTeethSurpriseCameraOffset));
+			SerializeField(s, nameof(throwTeethThrowCameraOffset));
+			SerializeField(s, nameof(throwTeethPlayerOffset));
+			SerializeField(s, nameof(powerUps));
+			SerializeField(s, nameof(levelsInfo));
+			SerializeField(s, nameof(missionTypes));
+			SerializeField(s, nameof(sprintTutorialFailureCount));
+			SerializeField(s, nameof(sprintTutorialRequiredDuration));
+			SerializeField(s, nameof(fadeDeath));
+			SerializeField(s, nameof(fadeChangePage));
+			SerializeField(s, nameof(fadeHiddenArea));
+			SerializeField(s, nameof(fadeTeleport));
+			SerializeField(s, nameof(fadeCostume));
+			SerializeField(s, nameof(fadeLoadMap));
+			SerializeField(s, nameof(fadeChangePageWithAnim));
+			SerializeField(s, nameof(fadeWorldMapTeleport));
+			SerializeField(s, nameof(fadeFlash));
+			SerializeField(s, nameof(fadePrologue));
+			SerializeField(s, nameof(wmStartNode));
+			SerializeField(s, nameof(loadingMinFrames));
+			SerializeField(s, nameof(nbDeathBeforeFirstSkip));
+			SerializeField(s, nameof(nbDeathBeforeSecondSkip));
+			SerializeField(s, nameof(endSequencePlayerPosition));
+		}
+		public override uint? ClassCRC => 0xA4344748;
+	}
+}
+

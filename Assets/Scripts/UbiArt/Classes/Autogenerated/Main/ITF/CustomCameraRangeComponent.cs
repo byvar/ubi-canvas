@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class CustomCameraRangeComponent : ActorComponent {
 		[Serialize("updateFrustumEnlargeRange" )] public float updateFrustumEnlargeRange;
 		[Serialize("loadingFrustumEnlargeRange")] public float loadingFrustumEnlargeRange;

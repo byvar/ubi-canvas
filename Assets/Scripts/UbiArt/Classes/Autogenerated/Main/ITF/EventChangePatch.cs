@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventChangePatch : Event {
 		[Serialize("Clear"  )] public bool Clear;
 		[Serialize("BoneId" )] public StringID BoneId;

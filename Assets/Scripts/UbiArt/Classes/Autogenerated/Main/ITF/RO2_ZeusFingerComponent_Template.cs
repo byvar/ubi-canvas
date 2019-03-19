@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ZeusFingerComponent_Template : ActorComponent_Template {
 		[Serialize("idleAnim"         )] public StringID idleAnim;
 		[Serialize("appearAnim"       )] public StringID appearAnim;

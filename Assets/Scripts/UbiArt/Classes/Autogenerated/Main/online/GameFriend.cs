@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameFriend : CSerializable {
 		[Serialize("pid"           )] public string pid;
 		[Serialize("sns_identity"  )] public SocialNetworkIdentity sns_identity;

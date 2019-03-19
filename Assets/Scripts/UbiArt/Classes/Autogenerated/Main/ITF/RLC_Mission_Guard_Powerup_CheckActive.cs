@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_Powerup_CheckActive : RLC_Mission_Guard {
 		[Serialize("powerup")] public StringID powerup;
 		protected override void SerializeImpl(CSerializerObject s) {

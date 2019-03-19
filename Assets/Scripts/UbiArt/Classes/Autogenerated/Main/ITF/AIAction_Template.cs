@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH)]
 	public partial class AIAction_Template : CSerializable {
 		[Serialize("action"               )] public StringID action;
 		[Serialize("endMarker"            )] public StringID endMarker;

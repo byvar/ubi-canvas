@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class PlayerLevelInfos : CSerializable {
 		[Serialize("actorPath"      )] public Path actorPath;
 		[Serialize("actorPath3D"    )] public Path actorPath3D;

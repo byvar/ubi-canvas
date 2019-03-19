@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BubbleAiComponent_Template : RO2_AIComponent_Template {
 		[Serialize("scaleSpeed"     )] public float scaleSpeed;
 		[Serialize("fastScaleSpeed" )] public float fastScaleSpeed;

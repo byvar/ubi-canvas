@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeBodyPartSpriteRenderer_Template : RO2_SnakeBodyPartRenderer_Template {
 		[Serialize("anim"         )] public AnimationAtlas anim;
 		[Serialize("drawAABB"     )] public AABB drawAABB;

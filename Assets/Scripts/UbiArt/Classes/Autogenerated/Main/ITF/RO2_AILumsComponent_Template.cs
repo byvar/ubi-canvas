@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AILumsComponent_Template : ActorComponent_Template {
 		[Serialize("playerDetectorMultiplierInWater")] public float playerDetectorMultiplierInWater;
 		[Serialize("grabAttractiveForceValue"       )] public float grabAttractiveForceValue;

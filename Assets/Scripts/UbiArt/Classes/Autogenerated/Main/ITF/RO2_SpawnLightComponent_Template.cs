@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SpawnLightComponent_Template : ActorComponent_Template {
 		[Serialize("LightPath"      )] public Path LightPath;
 		[Serialize("backLightPath"  )] public Path backLightPath;

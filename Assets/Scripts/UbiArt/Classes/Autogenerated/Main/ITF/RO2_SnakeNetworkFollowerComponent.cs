@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeNetworkFollowerComponent : ActorComponent {
 		[Serialize("baseSpeed"                  )] public float baseSpeed;
 		[Serialize("baseAcceleration"           )] public float baseAcceleration;

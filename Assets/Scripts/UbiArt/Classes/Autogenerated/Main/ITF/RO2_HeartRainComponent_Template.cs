@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HeartRainComponent_Template : AnimMeshVertexComponent_Template {
 		[Serialize("PlanNb"        )] public uint PlanNb;
 		[Serialize("PlanTotalDepth")] public float PlanTotalDepth;

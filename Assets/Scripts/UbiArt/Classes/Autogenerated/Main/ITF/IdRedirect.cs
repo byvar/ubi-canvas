@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class IdRedirect : CSerializable {
 		[Serialize("src")] public StringID src;
 		[Serialize("dst")] public StringID dst;

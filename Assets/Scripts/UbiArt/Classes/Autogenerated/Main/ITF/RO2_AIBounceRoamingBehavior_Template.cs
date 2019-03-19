@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIBounceRoamingBehavior_Template : TemplateAIBehavior {
 		[Serialize("bounceMove"               )] public Generic<AIJumpInDirAction_Template> bounceMove;
 		[Serialize("bounceIdle"               )] public Generic<AIJumpInDirAction_Template> bounceIdle;

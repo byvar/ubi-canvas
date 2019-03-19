@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class SteeringComponent_Template : ActorComponent_Template {
 		[Serialize("walkSpeed")] public float walkSpeed;
 		[Serialize("runSpeed" )] public float runSpeed;

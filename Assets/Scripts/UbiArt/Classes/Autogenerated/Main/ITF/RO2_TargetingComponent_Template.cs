@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TargetingComponent_Template : ActorComponent_Template {
 		[Serialize("predictionFactor"       )] public float predictionFactor;
 		[Serialize("useMove"                )] public bool useMove;

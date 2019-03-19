@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class StatData : CSerializable {
 		[Serialize("allPlayers")] public bool allPlayers;
 		[Serialize("playerId"  )] public uint playerId;

@@ -24,10 +24,13 @@ namespace UbiArt {
 			}
 		}
 
-		protected void SerializeField(CSerializerObject s, string fieldName, Type type = null) {
+		protected void SerializeField(CSerializerObject s, string fieldName, Type type = null, bool boolAsByte = false) {
 			FieldInfo f = GetType().GetField(fieldName);
 			SerializeAttribute[] atts = (SerializeAttribute[])f.GetCustomAttributes(typeof(SerializeAttribute), false);
 			if (atts.Length != 0) {
+				if (boolAsByte && s.HasFlags(SerializeFlags.Flags1) && f.FieldType == typeof(bool)) {
+					type = typeof(byte);
+				}
 				s.Serialize(this, f, atts[0], type: type);
 			}
 		}

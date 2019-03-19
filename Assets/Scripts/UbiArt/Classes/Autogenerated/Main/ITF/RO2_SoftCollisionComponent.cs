@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_SoftCollisionComponent : GraphicComponent {
 		[Serialize("MaxParticles")] public uint MaxParticles;
 		[Serialize("Simulation"  )] public RO2_SoftCollisionSimulation Simulation;

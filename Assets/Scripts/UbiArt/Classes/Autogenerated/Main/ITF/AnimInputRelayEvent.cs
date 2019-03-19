@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class AnimInputRelayEvent : Event {
 		[Serialize("InputName" )] public StringID InputName;
 		[Serialize("TargetMode")] public eTo TargetMode;

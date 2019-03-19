@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTDeciderPolylineSticked_Template : BTDecider_Template {
 		[Serialize("sticked")] public bool sticked;
 		protected override void SerializeImpl(CSerializerObject s) {

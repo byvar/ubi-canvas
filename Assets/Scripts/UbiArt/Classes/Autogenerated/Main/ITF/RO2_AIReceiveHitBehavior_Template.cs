@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIReceiveHitBehavior_Template : AIReceiveHitBehavior_Template {
 		[Serialize("receiveHits"              )] public CList<RO2_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
 		[Serialize("canReceiveRehits"         )] public bool canReceiveRehits;
@@ -33,6 +34,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(wallAction));
 			SerializeField(s, nameof(deathMarkerName));
 		}
+		[Games(GameFlags.RA)]
 		public partial class ReceiveHitData : CSerializable {
 			[Serialize("types"          )] public CList<uint> types;
 			[Serialize("level"          )] public uint level;

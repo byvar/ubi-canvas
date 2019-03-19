@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class BezierBranchRendererSegment_Template : CSerializable {
 		[Serialize("name"                         )] public StringID name;
 		[Serialize("startRatio"                   )] public float startRatio;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BehaviorTree_Template : CSerializable {
 		[Serialize("root" )] public BTNodeTemplate_Ref root;
 		[Serialize("nodes")] public CArray<Generic<BTNode_Template>> nodes;

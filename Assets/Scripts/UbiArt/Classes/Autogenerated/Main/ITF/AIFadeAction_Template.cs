@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIFadeAction_Template : AIAction_Template {
 		[Serialize("visible"     )] public bool visible;
 		[Serialize("fadeDuration")] public float fadeDuration;

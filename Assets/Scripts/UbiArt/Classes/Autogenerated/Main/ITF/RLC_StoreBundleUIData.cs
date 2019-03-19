@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_StoreBundleUIData : CSerializable {
 		[Serialize("conditions"                 )] public CMap<uint, RLC_AutomaticPopupCondition> conditions;
 		[Serialize("openingPeriods"             )] public CMap<uint, RLC_StoreBundlePeriod> openingPeriods;

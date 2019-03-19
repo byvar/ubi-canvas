@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlayGoto_evtTemplate : SequenceEvent_Template {
 		[Serialize("Label"      )] public string Label;
 		[Serialize("WaitForFact")] public StringID WaitForFact;

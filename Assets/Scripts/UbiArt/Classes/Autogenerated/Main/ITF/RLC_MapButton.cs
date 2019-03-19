@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_MapButton : RLC_BasicAdventureButton {
 		[Serialize("Path"                      )] public PathRef Path;
 		[Serialize("Type"                      )] public Enum_Type Type;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_StringWaveGeneratorComponent_Template : ActorComponent_Template {
 		[Serialize("sync"                           )] public bool sync;
 		[Serialize("syncOffset"                     )] public float syncOffset;

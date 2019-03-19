@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EyeDoorComponent_Template : RO2_DoorComponent_Template {
 		[Serialize("eyePath"   )] public Path eyePath;
 		[Serialize("eyePoly"   )] public StringID eyePoly;

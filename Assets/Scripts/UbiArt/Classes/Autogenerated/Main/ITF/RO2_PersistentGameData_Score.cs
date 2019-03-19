@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_PersistentGameData_Score : CSerializable {
 		[Serialize("playersLumCount"  )] public CList<uint> playersLumCount;
 		[Serialize("treasuresLumCount")] public CList<uint> treasuresLumCount;

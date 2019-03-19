@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PersistentDataComponent : ActorComponent {
 		[Serialize("i32Map"    )] public CMap<StringID, int> i32Map;
 		[Serialize("f32Map"    )] public CMap<StringID, float> f32Map;

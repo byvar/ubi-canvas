@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MultipleEventTriggerComponent : ActorComponent {
 		[Serialize("eventConditionList")] public CList<RO2_MultipleEventTriggerComponent.EventCondition> eventConditionList;
 		[Serialize("validationEvent"   )] public Generic<Event> validationEvent;
@@ -9,6 +10,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(eventConditionList));
 			SerializeField(s, nameof(validationEvent));
 		}
+		[Games(GameFlags.RA)]
 		public partial class EventCondition : CSerializable {
 			[Serialize("event"           )] public Generic<Event> _event;
 			[Serialize("operator"        )] public Enum_operator _operator;

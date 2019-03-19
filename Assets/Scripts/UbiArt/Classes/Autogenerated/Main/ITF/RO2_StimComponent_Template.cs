@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_StimComponent_Template : ShapeComponent_Template {
 		[Serialize("faction"            )] public Enum_faction faction;
 		[Serialize("useFixedAngle"      )] public bool useFixedAngle;

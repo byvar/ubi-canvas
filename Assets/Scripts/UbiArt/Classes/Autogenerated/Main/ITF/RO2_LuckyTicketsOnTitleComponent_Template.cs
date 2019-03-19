@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LuckyTicketsOnTitleComponent_Template : ActorComponent_Template {
 		[Serialize("luckyTicketActorPath"    )] public Path luckyTicketActorPath;
 		[Serialize("luckyTicketGreyActorPath")] public Path luckyTicketGreyActorPath;

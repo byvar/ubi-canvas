@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TriggerEventCountComponent : ActorComponent {
 		[Serialize("nbEvents")] public uint nbEvents;
 		protected override void SerializeImpl(CSerializerObject s) {

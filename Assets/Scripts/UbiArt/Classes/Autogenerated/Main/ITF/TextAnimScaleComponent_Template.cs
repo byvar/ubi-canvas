@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TextAnimScaleComponent_Template : ActorComponent_Template {
 		[Serialize("baseSize"   )] public Vector2 baseSize;
 		[Serialize("baseSizeMax")] public Vector2 baseSizeMax;

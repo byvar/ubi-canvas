@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class MultipassStateTreeRendererComponent : GraphicComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

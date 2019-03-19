@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class BezierBranchAmvComponent_Template : BezierBranchComponent_Template {
 		[Serialize("amvPath"               )] public Path amvPath;
 		[Serialize("amvMaterial"           )] public GFXMaterialSerializable amvMaterial;
@@ -23,29 +24,54 @@ namespace UbiArt.ITF {
 		[Serialize("endWidthMax"           )] public float endWidthMax;
 		[Serialize("startOffset"           )] public float startOffset;
 		[Serialize("endOffset"             )] public float endOffset;
+		[Serialize("amvMaterial"           )] public Placeholder amvMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(amvPath));
-			SerializeField(s, nameof(amvMaterial));
-			SerializeField(s, nameof(amvGameMaterial));
-			SerializeField(s, nameof(amvGameMaterialFlipped));
-			SerializeField(s, nameof(spawnIntervalMin));
-			SerializeField(s, nameof(spawnIntervalMax));
-			SerializeField(s, nameof(zOffset));
-			SerializeField(s, nameof(scaleMultiplierMin));
-			SerializeField(s, nameof(scaleMultiplierMax));
-			SerializeField(s, nameof(animIndexMin));
-			SerializeField(s, nameof(animIndexMax));
-			SerializeField(s, nameof(beginLength));
-			SerializeField(s, nameof(endLength));
-			SerializeField(s, nameof(beginWidthMin));
-			SerializeField(s, nameof(beginWidthMax));
-			SerializeField(s, nameof(midWidthMin));
-			SerializeField(s, nameof(midWidthMax));
-			SerializeField(s, nameof(endWidthMin));
-			SerializeField(s, nameof(endWidthMax));
-			SerializeField(s, nameof(startOffset));
-			SerializeField(s, nameof(endOffset));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(amvPath));
+				SerializeField(s, nameof(amvMaterial));
+				SerializeField(s, nameof(amvGameMaterial));
+				SerializeField(s, nameof(amvGameMaterialFlipped));
+				SerializeField(s, nameof(spawnIntervalMin));
+				SerializeField(s, nameof(spawnIntervalMax));
+				SerializeField(s, nameof(zOffset));
+				SerializeField(s, nameof(scaleMultiplierMin));
+				SerializeField(s, nameof(scaleMultiplierMax));
+				SerializeField(s, nameof(animIndexMin));
+				SerializeField(s, nameof(animIndexMax));
+				SerializeField(s, nameof(beginLength));
+				SerializeField(s, nameof(endLength));
+				SerializeField(s, nameof(beginWidthMin));
+				SerializeField(s, nameof(beginWidthMax));
+				SerializeField(s, nameof(midWidthMin));
+				SerializeField(s, nameof(midWidthMax));
+				SerializeField(s, nameof(endWidthMin));
+				SerializeField(s, nameof(endWidthMax));
+				SerializeField(s, nameof(startOffset));
+				SerializeField(s, nameof(endOffset));
+			} else {
+				SerializeField(s, nameof(amvPath));
+				SerializeField(s, nameof(amvMaterial));
+				SerializeField(s, nameof(amvGameMaterial));
+				SerializeField(s, nameof(amvGameMaterialFlipped));
+				SerializeField(s, nameof(spawnIntervalMin));
+				SerializeField(s, nameof(spawnIntervalMax));
+				SerializeField(s, nameof(zOffset));
+				SerializeField(s, nameof(scaleMultiplierMin));
+				SerializeField(s, nameof(scaleMultiplierMax));
+				SerializeField(s, nameof(animIndexMin));
+				SerializeField(s, nameof(animIndexMax));
+				SerializeField(s, nameof(beginLength));
+				SerializeField(s, nameof(endLength));
+				SerializeField(s, nameof(beginWidthMin));
+				SerializeField(s, nameof(beginWidthMax));
+				SerializeField(s, nameof(midWidthMin));
+				SerializeField(s, nameof(midWidthMax));
+				SerializeField(s, nameof(endWidthMin));
+				SerializeField(s, nameof(endWidthMax));
+				SerializeField(s, nameof(startOffset));
+				SerializeField(s, nameof(endOffset));
+			}
 		}
 		public override uint? ClassCRC => 0x865AEE81;
 	}

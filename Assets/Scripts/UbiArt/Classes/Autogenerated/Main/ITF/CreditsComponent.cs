@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class CreditsComponent : ActorComponent {
 		[Serialize("width"          )] public float width;
 		[Serialize("height"         )] public float height;

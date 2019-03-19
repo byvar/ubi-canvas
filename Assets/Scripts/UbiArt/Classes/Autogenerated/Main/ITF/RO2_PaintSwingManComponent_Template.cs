@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PaintSwingManComponent_Template : ActorComponent_Template {
 		[Serialize("LumRewardNb"     )] public uint LumRewardNb;
 		[Serialize("AnimPaint"       )] public StringID AnimPaint;

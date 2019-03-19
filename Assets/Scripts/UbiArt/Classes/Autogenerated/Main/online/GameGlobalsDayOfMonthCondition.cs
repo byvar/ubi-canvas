@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameGlobalsDayOfMonthCondition : GameGlobalsCondition {
 		[Serialize("start")] public uint start;
 		[Serialize("end"  )] public uint end;

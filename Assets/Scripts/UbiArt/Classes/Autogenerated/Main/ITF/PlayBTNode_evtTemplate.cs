@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlayBTNode_evtTemplate : SequenceEventWithActor_Template {
 		[Serialize("BTNodeName")] public string BTNodeName;
 		[Serialize("BTNode"    )] public Generic<BTNode_Template> BTNode;

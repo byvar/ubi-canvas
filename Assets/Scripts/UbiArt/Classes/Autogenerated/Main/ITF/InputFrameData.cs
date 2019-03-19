@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class InputFrameData : CSerializable {
 		[Serialize("InputFrame")] public uint InputFrame;
 		[Serialize("InputPos"  )] public Vector2 InputPos;

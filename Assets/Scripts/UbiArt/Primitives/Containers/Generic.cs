@@ -12,8 +12,13 @@ namespace UbiArt {
 		public T obj;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(this, GetType().GetField(nameof(className)),
-				(SerializeAttribute)GetType().GetField(nameof(className)).GetCustomAttributes(typeof(SerializeAttribute), false).First());
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+				s.Serialize(ref className, name: "NAME");
+			} else {
+				s.Serialize(ref className, name: "$ClassName$");
+			}
+			/*s.Serialize(this, GetType().GetField(nameof(className)),
+				(SerializeAttribute)GetType().GetField(nameof(className)).GetCustomAttributes(typeof(SerializeAttribute), false).First());*/
 			if (className.IsNull) {
 				obj = default;
 			} else {

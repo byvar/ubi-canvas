@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_BeatboxDataList : CSerializable {
 		[Serialize("Day"          )] public uint Day;
 		[Serialize("Month"        )] public uint Month;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionMusicalBounce_Template : BTActionPlayAnim_Template {
 		[Serialize("amplitude"       )] public float amplitude;
 		[Serialize("syncRatio"       )] public float syncRatio;

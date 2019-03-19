@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossComponent_Template : ActorComponent_Template {
 		[Serialize("camShakeType"            )] public StringID camShakeType;
 		[Serialize("offsetZSwitch"           )] public float offsetZSwitch;
@@ -23,7 +24,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(buboBone));
 				SerializeField(s, nameof(shieldBone));
 				SerializeField(s, nameof(faction));
-				SerializeField(s, nameof(giveHearts));
+				SerializeField(s, nameof(giveHearts), boolAsByte: true);
 				SerializeField(s, nameof(hitRequiredToChangePhase));
 				SerializeField(s, nameof(hitRequiredResetDuration));
 				SerializeField(s, nameof(hitFxPhase01Name));

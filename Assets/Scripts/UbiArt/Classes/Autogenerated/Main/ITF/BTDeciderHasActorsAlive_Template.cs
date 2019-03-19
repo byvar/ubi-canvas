@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class BTDeciderHasActorsAlive_Template : BTDecider_Template {
 		[Serialize("invert"   )] public bool invert;
 		[Serialize("checkAll" )] public bool checkAll;

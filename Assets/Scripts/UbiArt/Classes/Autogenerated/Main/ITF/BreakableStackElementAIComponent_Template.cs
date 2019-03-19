@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableStackElementAIComponent_Template : AIComponent_Template {
 		[Serialize("grid"                  )] public CList<InfoElementList> grid;
 		[Serialize("width"                 )] public uint width;

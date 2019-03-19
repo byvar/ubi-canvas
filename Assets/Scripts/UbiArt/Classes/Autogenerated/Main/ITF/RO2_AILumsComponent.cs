@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AILumsComponent : ActorComponent {
 		[Serialize("IsTaken"  )] public bool IsTaken;
 		[Serialize("initColor")] public Color initColor;

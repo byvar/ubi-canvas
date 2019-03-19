@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_moveData : CSerializable {
 		[Serialize("dir"            )] public Vector2 dir;
 		[Serialize("period"         )] public float period;

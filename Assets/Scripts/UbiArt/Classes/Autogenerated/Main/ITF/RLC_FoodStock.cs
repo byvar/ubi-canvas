@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_FoodStock : RLC_InventoryItem {
 		[Serialize("foodType")] public Creature_Food foodType;
 		protected override void SerializeImpl(CSerializerObject s) {

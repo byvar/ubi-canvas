@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AnimMeshVertexManagerComponent_Template : ActorComponent_Template {
 		[Serialize("startingFrameEnabled")] public bool startingFrameEnabled;
 		[Serialize("startingFrame"       )] public uint startingFrame;

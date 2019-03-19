@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_UIItemCompetitorsComponent_Template : UIComponent_Template {
 		[Serialize("competitorActorPath"         )] public Path competitorActorPath;
 		[Serialize("competitorOffset"            )] public float competitorOffset;

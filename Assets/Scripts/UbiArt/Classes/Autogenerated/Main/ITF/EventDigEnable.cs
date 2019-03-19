@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventDigEnable : Event {
 		[Serialize("enable")] public bool enable;
 		[Serialize("radius")] public float radius;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionMusicScore_Template : BTAction_Template {
 		[Serialize("appear3dOffset")] public Vector3 appear3dOffset;
 		[Serialize("animJump"      )] public StringID animJump;

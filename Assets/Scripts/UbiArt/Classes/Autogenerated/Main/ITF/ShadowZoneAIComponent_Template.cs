@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ShadowZoneAIComponent_Template : ActorComponent_Template {
 		[Serialize("fadeTime"               )] public float fadeTime;
 		[Serialize("pulseDuration"          )] public float pulseDuration;

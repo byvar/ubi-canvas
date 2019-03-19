@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_SoftCollisionComponent_Template : GraphicComponent_Template {
 		[Serialize("CellSpace"     )] public float CellSpace;
 		[Serialize("Gravity"       )] public float Gravity;

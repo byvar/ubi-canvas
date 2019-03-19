@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_TestBranchComponent_Template : RO2_BezierBranchComponent_Template {
 		[Serialize("width"      )] public float width;
 		[Serialize("attachToEnd")] public bool attachToEnd;

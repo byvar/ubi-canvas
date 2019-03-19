@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class GFX_BlurPrimitive : CSerializable {
 		[Serialize("PrimitiveParam")] public GFXPrimitiveParam PrimitiveParam;
 		[Serialize("Size"          )] public float Size;

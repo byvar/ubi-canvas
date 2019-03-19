@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TouchHoldTriggerComponent_Template : ActorComponent_Template {
 		[Serialize("ListenToSwipe"            )] public bool ListenToSwipe;
 		[Serialize("input"                    )] public StringID input;
@@ -15,7 +16,7 @@ namespace UbiArt.ITF {
 		[Serialize("tapGaugeHoldAsTapDuration")] public float tapGaugeHoldAsTapDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(ListenToSwipe));
 				SerializeField(s, nameof(input));
 				SerializeField(s, nameof(catchFrontEnabled));

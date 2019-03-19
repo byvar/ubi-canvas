@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RewardCollectible : RewardTrigger_Base {
 		[Serialize("collectibleType")] public StringID collectibleType;
 		[Serialize("count"          )] public uint count;

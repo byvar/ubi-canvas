@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionLookAtAttack_Template : BTAction_Template {
 		[Serialize("enemyDetectionRange")] public Generic<PhysShape> enemyDetectionRange;
 		[Serialize("enemyAttackRange"   )] public Generic<PhysShape> enemyAttackRange;

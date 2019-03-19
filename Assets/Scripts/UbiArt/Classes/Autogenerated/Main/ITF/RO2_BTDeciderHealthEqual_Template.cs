@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_BTDeciderHealthEqual_Template : BTDecider_Template {
 		[Serialize("factActor")] public StringID factActor;
 		[Serialize("invert"   )] public bool invert;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class CollisionFrieze : CSerializable {
 		[Serialize("build"                    )] public bool build;
 		[Serialize("offset"                   )] public float offset;

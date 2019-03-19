@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class BezierTreeComponent : ActorComponent {
 		[Serialize("branch")] public BezierBranch branch;
 		protected override void SerializeImpl(CSerializerObject s) {

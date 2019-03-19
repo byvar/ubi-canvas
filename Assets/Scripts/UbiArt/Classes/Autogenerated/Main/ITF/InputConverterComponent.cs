@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class InputConverterComponent : ActorComponent {
 		[Serialize("inputToListen")] public StringID inputToListen;
 		[Serialize("conversion"   )] public Enum_conversion conversion;

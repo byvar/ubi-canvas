@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_FindCharlieComponent_Template : ActorComponent_Template {
 		[Serialize("TutorialAnimPath")] public Path TutorialAnimPath;
 		protected override void SerializeImpl(CSerializerObject s) {

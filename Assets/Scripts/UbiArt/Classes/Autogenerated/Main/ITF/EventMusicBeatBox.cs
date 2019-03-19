@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventMusicBeatBox : Event {
 		[Serialize("Activate")] public bool Activate;
 		protected override void SerializeImpl(CSerializerObject s) {

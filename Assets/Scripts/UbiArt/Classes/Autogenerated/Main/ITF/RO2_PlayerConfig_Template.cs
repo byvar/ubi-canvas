@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_PlayerConfig_Template : CSerializable {
 		[Serialize("minHitPoints"                    )] public uint minHitPoints;
 		[Serialize("maxHitPoints"                    )] public uint maxHitPoints;

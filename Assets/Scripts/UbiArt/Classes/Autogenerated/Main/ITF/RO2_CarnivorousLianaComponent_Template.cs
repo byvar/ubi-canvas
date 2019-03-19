@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CarnivorousLianaComponent_Template : ActorComponent_Template {
 		[Serialize("defaultFxName"             )] public StringID defaultFxName;
 		[Serialize("minLength"                 )] public float minLength;

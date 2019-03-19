@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class UIControllerComponent_Template : UIComponent_Template {
 		[Serialize("buttonActions"        )] public CList<UIControllerComponent_Template.ControllerTextObject> buttonActions;
 		[Serialize("textboxPath"          )] public Path textboxPath;
@@ -11,11 +12,15 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(buttonActions));
 				SerializeField(s, nameof(textboxPath));
 				SerializeField(s, nameof(inputActorScaleFactor));
+			} else if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(textboxPath));
+				SerializeField(s, nameof(inputActorScaleFactor));
 			} else {
 				SerializeField(s, nameof(buttonActions));
 				SerializeField(s, nameof(textboxPath));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class ControllerTextObject : CSerializable {
 			[Serialize("boneName")] public StringID boneName;
 			[Serialize("locId"   )] public LocalisationId locId;

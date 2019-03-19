@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class SpecificDeviceConfig : CSerializable {
 		[Serialize("configName"                )] public string configName;
 		[Serialize("ignoreMe"                  )] public bool ignoreMe;
@@ -14,6 +15,7 @@ namespace UbiArt.online {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(configName));
 			SerializeField(s, nameof(ignoreMe));
+			SerializeField(s, nameof(models));
 			SerializeField(s, nameof(models));
 			SerializeField(s, nameof(scale));
 			SerializeField(s, nameof(deviceSpeed));

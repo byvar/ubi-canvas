@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnduranceBrickComponent : ActorComponent {
 		[Serialize("canFlip")] public bool canFlip;
 		[Serialize("size"   )] public Vector2 size;
@@ -14,7 +15,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(canFlip));
+					SerializeField(s, nameof(canFlip), boolAsByte: true);
 					SerializeField(s, nameof(size));
 					SerializeField(s, nameof(inPos));
 					SerializeField(s, nameof(inSide));

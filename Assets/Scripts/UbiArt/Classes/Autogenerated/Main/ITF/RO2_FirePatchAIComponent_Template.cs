@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_FirePatchAIComponent_Template : GraphicComponent_Template {
 		[Serialize("sidePatchLength"        )] public float sidePatchLength;
 		[Serialize("sidePatchWidth"         )] public float sidePatchWidth;

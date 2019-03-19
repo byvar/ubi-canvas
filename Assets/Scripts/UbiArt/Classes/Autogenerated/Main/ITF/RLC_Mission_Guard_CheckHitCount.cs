@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_CheckHitCount : RLC_Mission_Guard {
 		[Serialize("hitCount"        )] public uint hitCount;
 		[Serialize("successCondition")] public uint successCondition;

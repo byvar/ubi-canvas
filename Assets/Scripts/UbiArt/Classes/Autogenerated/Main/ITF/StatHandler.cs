@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class StatHandler : CSerializable {
 		[Serialize("Rewriter")] public StatRewriter Rewriter;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeShooterBodyPart_Template : RO2_SnakeBodyPartSimple_Template {
 		[Serialize("health"                )] public int health;
 		[Serialize("damageLevels"          )] public CList<uint> damageLevels;
@@ -19,47 +20,25 @@ namespace UbiArt.ITF {
 		[Serialize("ejectDelayBeforeFade"  )] public float ejectDelayBeforeFade;
 		[Serialize("animTickle"            )] public StringID animTickle;
 		[Serialize("animStand"             )] public StringID animStand;
-		[Serialize("health"                )] public bool health;
-		[Serialize("ejectzForced"          )] public bool ejectzForced;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(health));
-				SerializeField(s, nameof(damageLevels));
-				SerializeField(s, nameof(reward));
-				SerializeField(s, nameof(ejectOnDeath));
-				SerializeField(s, nameof(ejectMinStartSpeed));
-				SerializeField(s, nameof(ejectMaxStartSpeed));
-				SerializeField(s, nameof(ejectzMinSpeed));
-				SerializeField(s, nameof(ejectzAcceleration));
-				SerializeField(s, nameof(ejectGravityMultiplier));
-				SerializeField(s, nameof(ejectDuration));
-				SerializeField(s, nameof(ejectzForced));
-				SerializeField(s, nameof(ejectRotationSpeed));
-				SerializeField(s, nameof(ejectFixedEjectDir));
-				SerializeField(s, nameof(ejectFadeDuration));
-				SerializeField(s, nameof(ejectDelayBeforeFade));
-				SerializeField(s, nameof(animTickle));
-				SerializeField(s, nameof(animStand));
-			} else {
-				SerializeField(s, nameof(health));
-				SerializeField(s, nameof(damageLevels));
-				SerializeField(s, nameof(reward));
-				SerializeField(s, nameof(ejectOnDeath));
-				SerializeField(s, nameof(ejectMinStartSpeed));
-				SerializeField(s, nameof(ejectMaxStartSpeed));
-				SerializeField(s, nameof(ejectzMinSpeed));
-				SerializeField(s, nameof(ejectzAcceleration));
-				SerializeField(s, nameof(ejectGravityMultiplier));
-				SerializeField(s, nameof(ejectDuration));
-				SerializeField(s, nameof(ejectzForced));
-				SerializeField(s, nameof(ejectRotationSpeed));
-				SerializeField(s, nameof(ejectFixedEjectDir));
-				SerializeField(s, nameof(ejectFadeDuration));
-				SerializeField(s, nameof(ejectDelayBeforeFade));
-				SerializeField(s, nameof(animTickle));
-				SerializeField(s, nameof(animStand));
-			}
+			SerializeField(s, nameof(health));
+			SerializeField(s, nameof(damageLevels));
+			SerializeField(s, nameof(reward));
+			SerializeField(s, nameof(ejectOnDeath));
+			SerializeField(s, nameof(ejectMinStartSpeed));
+			SerializeField(s, nameof(ejectMaxStartSpeed));
+			SerializeField(s, nameof(ejectzMinSpeed));
+			SerializeField(s, nameof(ejectzAcceleration));
+			SerializeField(s, nameof(ejectGravityMultiplier));
+			SerializeField(s, nameof(ejectDuration));
+			SerializeField(s, nameof(ejectzForced));
+			SerializeField(s, nameof(ejectRotationSpeed));
+			SerializeField(s, nameof(ejectFixedEjectDir));
+			SerializeField(s, nameof(ejectFadeDuration));
+			SerializeField(s, nameof(ejectDelayBeforeFade));
+			SerializeField(s, nameof(animTickle));
+			SerializeField(s, nameof(animStand));
 		}
 		public override uint? ClassCRC => 0xBA577FF1;
 	}

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsPlayTimeCondition : online.GameGlobalsCondition {
 		[Serialize("duration")] public online.TimeInterval duration;
 		protected override void SerializeImpl(CSerializerObject s) {

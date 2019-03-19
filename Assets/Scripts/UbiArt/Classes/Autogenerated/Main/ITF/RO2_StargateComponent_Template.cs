@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_StargateComponent_Template : ActorComponent_Template {
 		[Serialize("detectShape" )] public Generic<PhysShape> detectShape;
 		[Serialize("pressUpShape")] public Generic<PhysShape> pressUpShape;

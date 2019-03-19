@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_RadarDummyComponent : ActorComponent {
 		[Serialize("dummyIndex")] public uint dummyIndex;
 		protected override void SerializeImpl(CSerializerObject s) {

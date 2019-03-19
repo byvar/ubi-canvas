@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchEyeTriggerComponent_Template : ShapeComponent_Template {
 		[Serialize("eyeInput"       )] public StringID eyeInput;
 		[Serialize("mode"           )] public TouchEyeMode mode;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class DialogBaseComponent : ActorComponent {
 		[Serialize("playOnce"        )] public bool playOnce;
 		[Serialize("loop"            )] public bool loop;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SimpleAIComponent : RO2_AIComponent {
 		[Serialize("isDead" )] public bool isDead;
 		[Serialize("isStuck")] public bool isStuck;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventWantViewDRC : Event {
 		[Serialize("wantView")] public bool wantView;
 		[Serialize("cut"     )] public bool cut;

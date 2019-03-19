@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MrDarkStuckComponent : ActorComponent {
 		[Serialize("disabledAfterEvent"        )] public bool disabledAfterEvent;
 		[Serialize("playingEventCheckpointSave")] public bool playingEventCheckpointSave;

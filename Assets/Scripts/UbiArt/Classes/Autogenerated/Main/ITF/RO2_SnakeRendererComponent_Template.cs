@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeRendererComponent_Template : GraphicComponent_Template {
 		[Serialize("bodyParts"           )] public CArray<Generic<RO2_SnakeBodyPart_Template>> bodyParts;
 		[Serialize("bodyPartsZSpacing"   )] public float bodyPartsZSpacing;
@@ -37,6 +38,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(tapPerturbator));
 			SerializeField(s, nameof(hitPerturbators));
 		}
+		[Games(GameFlags.RA)]
 		public partial class Perturbator : CSerializable {
 			[Serialize("range"    )] public uint range;
 			[Serialize("duration" )] public float duration;

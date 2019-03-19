@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AICornFloatAction_Template : AIAction_Template {
 		[Serialize("floatIntervalMin"     )] public float floatIntervalMin;
 		[Serialize("floatIntervalMax"     )] public float floatIntervalMax;

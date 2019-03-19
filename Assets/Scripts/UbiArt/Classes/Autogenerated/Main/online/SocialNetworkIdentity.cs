@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class SocialNetworkIdentity : CSerializable {
 		[Serialize("sns_type"    )] public SNSType sns_type;
 		[Serialize("sns_pid"     )] public string sns_pid;

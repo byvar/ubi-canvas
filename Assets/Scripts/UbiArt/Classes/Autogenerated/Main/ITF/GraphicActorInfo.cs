@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class GraphicActorInfo : CSerializable {
 		[Serialize("amvPath" )] public Path amvPath;
 		[Serialize("material")] public GFXMaterialSerializable material;

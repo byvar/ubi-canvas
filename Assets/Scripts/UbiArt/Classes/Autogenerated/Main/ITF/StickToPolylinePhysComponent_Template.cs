@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RO | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
 	public partial class StickToPolylinePhysComponent_Template : PhysComponent_Template {
 		[Serialize("physFriction"                            )] public float physFriction;
 		[Serialize("physAirFriction"                         )] public float physAirFriction;
@@ -35,18 +36,13 @@ namespace UbiArt.ITF {
 		[Serialize("physTreatSelfCollision"                  )] public bool physTreatSelfCollision;
 		[Serialize("physCurveSlideAndAngle"                  )] public Curve2D physCurveSlideAndAngle;
 		[Serialize("displayPhysCurveSlideAndAngle"           )] public bool displayPhysCurveSlideAndAngle;
-		[Serialize("physRadius"                              )] public float physRadius;
-		[Serialize("physWeight"                              )] public float physWeight;
-		[Serialize("physWindMultiplier"                      )] public float physWindMultiplier;
-		[Serialize("physWaterMultiplier"                     )] public float physWaterMultiplier;
-		[Serialize("physForce2Speed"                         )] public float physForce2Speed;
-		[Serialize("physWindSpeedLimit"                      )] public float physWindSpeedLimit;
-		[Serialize("physWindScaleFactorWhenSpeedIsOpposite"  )] public float physWindScaleFactorWhenSpeedIsOpposite;
-		[Serialize("physFanForceMultiplier"                  )] public float physFanForceMultiplier;
-		[Serialize("physWaterMinPerturbation"                )] public float physWaterMinPerturbation;
+		[Serialize("physUnstickToOtherMaxDistance"           )] public float physUnstickToOtherMaxDistance;
+		[Serialize("windForceBlendCoef"                      )] public float windForceBlendCoef;
+		[Serialize("secondaryCollisionCheckRadius"           )] public float secondaryCollisionCheckRadius;
+		[Serialize("secondaryCollisionCheckPos"              )] public Vector2 secondaryCollisionCheckPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(physFriction));
 				SerializeField(s, nameof(physAirFriction));
 				SerializeField(s, nameof(physUnstickMinAngle));
@@ -77,7 +73,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(physTreatCornerCase));
 				SerializeField(s, nameof(physCornerCaseDisableDelay));
 				SerializeField(s, nameof(physTreatMovingPolylines));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(physFriction));
 				SerializeField(s, nameof(physAirFriction));
 				SerializeField(s, nameof(physUnstickMinAngle));
@@ -109,6 +105,42 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(physCornerCaseDisableDelay));
 				SerializeField(s, nameof(physTreatMovingPolylines));
 				SerializeField(s, nameof(physTreatSelfCollision));
+			} else if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(physFriction));
+				SerializeField(s, nameof(physAirFriction));
+				SerializeField(s, nameof(physUnstickMinAngle));
+				SerializeField(s, nameof(physUnstickMaxAngle));
+				SerializeField(s, nameof(physUnstickMinAngleSpeed));
+				SerializeField(s, nameof(physUnstickMaxAngleSpeed));
+				SerializeField(s, nameof(physUnstickMinFriction));
+				SerializeField(s, nameof(physUnstickMinForceExternal));
+				SerializeField(s, nameof(physUnstickToOtherMaxDistance));
+				SerializeField(s, nameof(physAngularSpeedMinLinear));
+				SerializeField(s, nameof(physAngularSpeedMaxLinear));
+				SerializeField(s, nameof(physAngularSpeedMinAngular));
+				SerializeField(s, nameof(physAngularSpeedMaxAngular));
+				SerializeField(s, nameof(physAngularAirMultiplier));
+				SerializeField(s, nameof(physGroundAngularSpeedMultiplierMinAngle));
+				SerializeField(s, nameof(physGroundAngularSpeedMultiplierMaxAngle));
+				SerializeField(s, nameof(physGroundAngularSpeedMultiplierMinMult));
+				SerializeField(s, nameof(physGroundAngularSpeedMultiplierMaxMult));
+				SerializeField(s, nameof(physTransferSpeedLossMinAngle));
+				SerializeField(s, nameof(physTransferSpeedLossMaxAngle));
+				SerializeField(s, nameof(physTransferSpeedLossMinLoss));
+				SerializeField(s, nameof(physTransferSpeedLossMaxLoss));
+				SerializeField(s, nameof(physSpeedLossLandEdgeMinAngle));
+				SerializeField(s, nameof(physSpeedLossLandEdgeMaxAngle));
+				SerializeField(s, nameof(physSpeedLossLandMinimum));
+				SerializeField(s, nameof(physSpeedLossLandMaximum));
+				SerializeField(s, nameof(physTorqueRotationMultiplier));
+				SerializeField(s, nameof(physMinSpeedStickToWall));
+				SerializeField(s, nameof(physTreatCornerCase));
+				SerializeField(s, nameof(physCornerCaseDisableDelay));
+				SerializeField(s, nameof(physTreatMovingPolylines));
+				SerializeField(s, nameof(physTreatSelfCollision));
+				SerializeField(s, nameof(windForceBlendCoef));
+				SerializeField(s, nameof(secondaryCollisionCheckRadius));
+				SerializeField(s, nameof(secondaryCollisionCheckPos));
 			} else {
 				SerializeField(s, nameof(physFriction));
 				SerializeField(s, nameof(physAirFriction));

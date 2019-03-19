@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MrDarkStuckComponent_Template : ActorComponent_Template {
 		[Serialize("listenEvents"                      )] public CList<Event> listenEvents;
 		[Serialize("idleAnim"                          )] public StringID idleAnim;

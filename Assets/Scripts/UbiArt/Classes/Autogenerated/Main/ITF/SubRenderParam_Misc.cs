@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SubRenderParam_Misc : SubRenderParam {
 		[Serialize("ZPassOverride")] public GFX_VIEW_ZPASS ZPassOverride;
 		protected override void SerializeImpl(CSerializerObject s) {

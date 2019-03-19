@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTActionOnInputSetFact : BTAction {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

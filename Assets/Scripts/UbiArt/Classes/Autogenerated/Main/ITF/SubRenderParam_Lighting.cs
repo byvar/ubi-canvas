@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SubRenderParam_Lighting : SubRenderParam {
 		[Serialize("GlobalColor"     )] public Color GlobalColor;
 		[Serialize("GlobalStaticFog" )] public Color GlobalStaticFog;

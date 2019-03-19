@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIItemOnOff : UIItemBasic {
 		[Serialize("selectTextStyle"     )] public uint selectTextStyle;
 		[Serialize("selectAnimMeshVertex")] public CList<StringID> selectAnimMeshVertex;

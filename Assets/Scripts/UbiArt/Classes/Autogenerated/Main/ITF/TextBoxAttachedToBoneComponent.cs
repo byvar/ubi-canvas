@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TextBoxAttachedToBoneComponent : ActorComponent {
 		[Serialize("boneName"                  )] public StringID boneName;
 		[Serialize("useBoneScale"              )] public bool useBoneScale;
@@ -12,7 +13,7 @@ namespace UbiArt.ITF {
 		[Serialize("ForceSnappingExternalActor")] public bool ForceSnappingExternalActor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
 			} else {
 				SerializeField(s, nameof(boneName));
 				SerializeField(s, nameof(useBoneScale));

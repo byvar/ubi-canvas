@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_DuplicateReward : CSerializable {
 		[Serialize("cost"       )] public uint cost;
 		[Serialize("rewardType" )] public Enum_rewardType rewardType;

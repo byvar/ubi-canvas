@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionStilts_Template : BTAction_Template {
 		[Serialize("useArmor"           )] public bool useArmor;
 		[Serialize("speedFall"          )] public float speedFall;

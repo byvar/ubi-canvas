@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class FontEffect_Template : CSerializable {
 		[Serialize("name"            )] public StringID name;
 		[Serialize("flags"           )] public Enum_flags flags;

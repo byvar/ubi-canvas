@@ -1,12 +1,17 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class MonologComponent_Template : DialogBaseComponent_Template {
 		[Serialize("textDataList")] public CList<MonologComponent_Template.TextData> textDataList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(textDataList));
+			if (Settings.s.game == Settings.Game.COL) {
+			} else {
+				SerializeField(s, nameof(textDataList));
+			}
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class TextData : CSerializable {
 			[Serialize("textName" )] public StringID textName;
 			[Serialize("locId"    )] public LocalisationId locId;

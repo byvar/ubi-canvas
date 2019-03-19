@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CupCounterComponent_Template : ActorComponent_Template {
 		[Serialize("locID"          )] public LocalisationId locID;
 		[Serialize("bronzeCup"      )] public Path bronzeCup;

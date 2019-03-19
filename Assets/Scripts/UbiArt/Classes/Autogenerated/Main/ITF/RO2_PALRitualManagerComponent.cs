@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PALRitualManagerComponent : ActorComponent {
 		[Serialize("ritualType"   )] public RitualType ritualType;
 		[Serialize("startSequence")] public bool startSequence;

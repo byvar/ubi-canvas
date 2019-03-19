@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_RewardTravelAiComponent_Template : ActorComponent_Template {
 		[Serialize("takenTrajectoryFactorX"           )] public float takenTrajectoryFactorX;
 		[Serialize("takenTrajectoryFactorY"           )] public float takenTrajectoryFactorY;

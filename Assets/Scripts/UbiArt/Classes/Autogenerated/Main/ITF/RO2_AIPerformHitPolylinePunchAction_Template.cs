@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIPerformHitPolylinePunchAction_Template : RO2_AIPerformHitAction_Template {
 		[Serialize("dirOffset"      )] public Angle dirOffset;
 		[Serialize("hitEnvironment" )] public bool hitEnvironment;

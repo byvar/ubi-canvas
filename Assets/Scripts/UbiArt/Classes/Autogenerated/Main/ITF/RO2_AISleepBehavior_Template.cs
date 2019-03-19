@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AISleepBehavior_Template : TemplateAIBehavior {
 		[Serialize("idle"             )] public Generic<AIAction_Template> idle;
 		[Serialize("wakeUp"           )] public Generic<AIAction_Template> wakeUp;

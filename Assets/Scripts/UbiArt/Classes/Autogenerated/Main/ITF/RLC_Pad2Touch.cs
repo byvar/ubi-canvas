@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Pad2Touch : ActorComponent {
 		[Serialize("OffSet"      )] public Vector2 OffSet;
 		[Serialize("viewportName")] public string viewportName;

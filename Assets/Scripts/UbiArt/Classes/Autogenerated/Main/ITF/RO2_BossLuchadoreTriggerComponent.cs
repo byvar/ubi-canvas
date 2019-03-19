@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossLuchadoreTriggerComponent : ActorComponent {
 		[Serialize("luchadoreEvent"         )] public LE luchadoreEvent;
 		[Serialize("phaseTag"               )] public StringID phaseTag;
@@ -10,8 +11,8 @@ namespace UbiArt.ITF {
 		[Serialize("secondaryTweenSelection")] public LT secondaryTweenSelection;
 		[Serialize("triggerOnce"            )] public bool triggerOnce;
 		[Serialize("tweenOffset"            )] public Vector2 tweenOffset;
-		[Serialize("tweenSelection"         )] public LT_Legends tweenSelectionLegends;
-		[Serialize("secondaryTweenSelection")] public LT_Legends secondaryTweenSelectionLegends;
+		[Serialize("tweenSelection"         )] public LTLegends tweenSelection2;
+		[Serialize("secondaryTweenSelection")] public LTLegends secondaryTweenSelection2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -19,9 +20,9 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(phaseTag));
 				SerializeField(s, nameof(instructionTag));
 				SerializeField(s, nameof(neededFlags));
-				SerializeField(s, nameof(tweenSelectionLegends));
-				SerializeField(s, nameof(secondaryTweenSelectionLegends));
-				SerializeField(s, nameof(triggerOnce));
+				SerializeField(s, nameof(tweenSelection2));
+				SerializeField(s, nameof(secondaryTweenSelection2));
+				SerializeField(s, nameof(triggerOnce), boolAsByte: true);
 				SerializeField(s, nameof(tweenOffset));
 			} else {
 				SerializeField(s, nameof(luchadoreEvent));
@@ -62,7 +63,7 @@ namespace UbiArt.ITF {
 			[Serialize("LT_MaxLeft"     )] MaxLeft = 3,
 			[Serialize("LT_MaxRight"    )] MaxRight = 4,
 		}
-		public enum LT_Legends {
+		public enum LTLegends {
 			[Serialize("LT_None")] None = 0,
 			[Serialize("LT_ClosestLeft")] ClosestLeft = 1,
 			[Serialize("LT_ClosestRight")] ClosestRight = 2,

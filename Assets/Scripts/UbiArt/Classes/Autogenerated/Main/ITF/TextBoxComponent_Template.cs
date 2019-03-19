@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TextBoxComponent_Template : UIComponent_Template {
 		[Serialize("styles"              )] public CList<FontTextArea.Style> styles;
 		[Serialize("depthOffset"         )] public float depthOffset;
@@ -9,6 +10,9 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(styles));
+				SerializeField(s, nameof(depthOffset));
+				SerializeField(s, nameof(preSpawnedActorPaths));
+			} else if (Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(depthOffset));
 				SerializeField(s, nameof(preSpawnedActorPaths));
 			} else {

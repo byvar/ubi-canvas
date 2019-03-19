@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class TeaKey : CSerializable {
 		[Serialize("Key1")] public uint Key1;
 		[Serialize("Key2")] public uint Key2;

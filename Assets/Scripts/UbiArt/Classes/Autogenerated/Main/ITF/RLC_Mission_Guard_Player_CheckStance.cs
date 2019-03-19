@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_Player_CheckStance : RLC_Mission_Guard {
 		[Serialize("stance")] public uint stance;
 		protected override void SerializeImpl(CSerializerObject s) {

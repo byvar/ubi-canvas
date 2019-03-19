@@ -1,14 +1,17 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class WwiseInputDesc : CSerializable {
 		[Serialize("name"         )] public StringID name;
 		[Serialize("WwiseRtpcGUID")] public StringID WwiseRtpcGUID;
+		[Serialize("IsLocal"      )] public bool IsLocal;
 		[Serialize("RtpcType"     )] public AUDIO_RTPC RtpcType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(name));
 			SerializeField(s, nameof(WwiseRtpcGUID));
+			SerializeField(s, nameof(IsLocal));
 			SerializeField(s, nameof(RtpcType));
 		}
 		public enum AUDIO_RTPC {

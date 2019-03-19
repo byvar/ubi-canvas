@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TeensyRecapComponent : ActorComponent {
 		[Serialize("teensies")] public CList<RO2_TeensyRecapComponent.Teensy> teensies;
 		[Serialize("level"   )] public StringID level;
@@ -11,6 +12,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(level));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class Teensy : CSerializable {
 			[Serialize("prisonerVisualType")] public Prisoner prisonerVisualType;
 			[Serialize("animVariation"     )] public uint animVariation;

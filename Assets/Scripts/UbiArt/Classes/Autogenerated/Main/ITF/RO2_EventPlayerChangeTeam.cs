@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventPlayerChangeTeam : Event {
 		[Serialize("asker"  )] public uint asker;
 		[Serialize("changer")] public uint changer;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TouchScreenInputComponent_Template : ShapeComponent_Template {
 		[Serialize("priority"         )] public uint priority;
 		[Serialize("ignoreZ"          )] public bool ignoreZ;

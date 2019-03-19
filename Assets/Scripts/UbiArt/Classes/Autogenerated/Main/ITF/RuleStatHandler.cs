@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RuleStatHandler : StatHandler {
 		[Serialize("Rules")] public CMultiMap<StringID, RuleStat> Rules;
 		protected override void SerializeImpl(CSerializerObject s) {

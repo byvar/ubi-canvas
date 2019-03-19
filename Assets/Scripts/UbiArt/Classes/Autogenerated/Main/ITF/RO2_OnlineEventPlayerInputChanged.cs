@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_OnlineEventPlayerInputChanged : Event {
 		[Serialize("jump"        )] public bool jump;
 		[Serialize("helico"      )] public bool helico;

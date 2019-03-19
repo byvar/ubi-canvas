@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class SoundBoxInterpolatorComponent_Template : BoxInterpolatorComponent_Template {
 		[Serialize("sound"         )] public StringID sound;
 		[Serialize("stopOnInactive")] public bool stopOnInactive;

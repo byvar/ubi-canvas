@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SubRenderParam : CSerializable {
 		[Serialize("Enable")] public bool Enable;
 		protected override void SerializeImpl(CSerializerObject s) {

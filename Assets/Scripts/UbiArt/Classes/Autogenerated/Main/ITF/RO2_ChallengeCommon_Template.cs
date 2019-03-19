@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeCommon_Template : TemplateObj {
 		[Serialize("name"                            )] public StringID name;
 		[Serialize("unitSize"                        )] public Vector2 unitSize;
@@ -66,6 +67,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(difficultyChangeMusicEvents));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class DifficultyRange : CSerializable {
 			[Serialize("name"    )] public StringID name;
 			[Serialize("min"     )] public float min;

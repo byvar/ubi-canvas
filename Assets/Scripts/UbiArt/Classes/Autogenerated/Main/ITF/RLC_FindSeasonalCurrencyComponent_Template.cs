@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_FindSeasonalCurrencyComponent_Template : ActorComponent_Template {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

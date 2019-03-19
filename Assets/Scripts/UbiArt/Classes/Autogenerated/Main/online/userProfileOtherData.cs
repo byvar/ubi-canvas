@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class userProfileOtherData : userProfileShortData {
 		[Serialize("userItems"                )] public string userItems;
 		[Serialize("lang"                     )] public uint lang;
@@ -15,7 +16,7 @@ namespace UbiArt.online {
 		[Serialize("mapAdventureCount"        )] public uint mapAdventureCount;
 		[Serialize("incubatorCreatureRegion"  )] public uint incubatorCreatureRegion;
 		[Serialize("randomSeed"               )] public uint randomSeed;
-		[Serialize("populations"              )] public CMap<ITF.StringID, ITF.StringID> populations;
+		[Serialize("populations"              )] public CMap<StringID, StringID> populations;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(userItems));

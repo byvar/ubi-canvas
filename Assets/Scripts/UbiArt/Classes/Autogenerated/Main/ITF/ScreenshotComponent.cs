@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class ScreenshotComponent : ActorComponent {
 		[Serialize("useText"   )] public bool useText;
 		[Serialize("useLogo"   )] public bool useLogo;

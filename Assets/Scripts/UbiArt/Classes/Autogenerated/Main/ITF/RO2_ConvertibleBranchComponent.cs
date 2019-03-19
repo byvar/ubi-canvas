@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_ConvertibleBranchComponent : RO2_BezierBranchComponent {
 		[Serialize("seed")] public uint seed;
 		protected override void SerializeImpl(CSerializerObject s) {

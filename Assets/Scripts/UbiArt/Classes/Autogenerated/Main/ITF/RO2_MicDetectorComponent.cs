@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MicDetectorComponent : ShapeDetectorComponent {
 		[Serialize("smoothFactor"      )] public float smoothFactor;
 		[Serialize("validationDuration")] public float validationDuration;

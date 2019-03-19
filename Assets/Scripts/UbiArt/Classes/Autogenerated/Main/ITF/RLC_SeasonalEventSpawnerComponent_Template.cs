@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_SeasonalEventSpawnerComponent_Template : ActorComponent_Template {
 		[Serialize("actorPaths"                 )] public CList<Path> actorPaths;
 		[Serialize("disabled"                   )] public bool disabled;

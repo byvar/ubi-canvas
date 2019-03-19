@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionHitTarget_Template : BTAction_Template {
 		[Serialize("attacks"                   )] public CList<RO2_BTActionHitTarget_Template.AttackData> attacks;
 		[Serialize("fxBoneName"                )] public StringID fxBoneName;
@@ -31,6 +32,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(canMemorizeHitWithDuration));
 			SerializeField(s, nameof(memorizeHitDuration));
 		}
+		[Games(GameFlags.RA)]
 		public partial class AttackData : CSerializable {
 			[Serialize("punchType"               )] public PUNCHTYPE punchType;
 			[Serialize("level"                   )] public uint level;

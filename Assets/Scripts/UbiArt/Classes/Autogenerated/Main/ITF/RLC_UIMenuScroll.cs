@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_UIMenuScroll : UIMenuBasic {
 		[Serialize("verticalVsHorizontal"      )] public bool verticalVsHorizontal;
 		[Serialize("freeScroll"                )] public bool freeScroll;

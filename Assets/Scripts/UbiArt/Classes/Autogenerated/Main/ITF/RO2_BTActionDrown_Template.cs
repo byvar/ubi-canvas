@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionDrown_Template : BTAction_Template {
 		[Serialize("timeDrown"              )] public float timeDrown;
 		[Serialize("waterPerturbationForce" )] public float waterPerturbationForce;

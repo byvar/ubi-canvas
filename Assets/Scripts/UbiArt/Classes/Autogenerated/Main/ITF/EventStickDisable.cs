@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventStickDisable : Event {
 		[Serialize("Disable")] public bool Disable;
 		protected override void SerializeImpl(CSerializerObject s) {

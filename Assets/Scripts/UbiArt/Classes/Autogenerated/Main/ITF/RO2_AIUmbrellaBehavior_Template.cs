@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIUmbrellaBehavior_Template : TemplateAIBehavior {
 		[Serialize("openAction"      )] public Generic<AIAction_Template> openAction;
 		[Serialize("closedAction"    )] public Generic<AIAction_Template> closedAction;

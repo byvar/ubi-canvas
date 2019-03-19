@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BubbleDreamerComponent_Template : ActorComponent_Template {
 		[Serialize("Quotes"          )] public CList<Quote> Quotes;
 		[Serialize("QuoteMaxDuration")] public float QuoteMaxDuration;

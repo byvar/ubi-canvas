@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PerlinNoise_Template : CSerializable {
 		[Serialize("frequency"     )] public float frequency;
 		[Serialize("persistence"   )] public float persistence;

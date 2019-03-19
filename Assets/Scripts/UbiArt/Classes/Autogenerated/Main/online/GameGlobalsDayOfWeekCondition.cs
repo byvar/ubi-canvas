@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameGlobalsDayOfWeekCondition : GameGlobalsCondition {
 		[Serialize("utc" )] public bool utc;
 		[Serialize("week")] public uint week;

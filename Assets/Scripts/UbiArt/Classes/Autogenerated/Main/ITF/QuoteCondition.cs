@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class QuoteCondition : CSerializable {
 		[Serialize("Type" )] public StringID Type;
 		[Serialize("Value")] public uint Value;

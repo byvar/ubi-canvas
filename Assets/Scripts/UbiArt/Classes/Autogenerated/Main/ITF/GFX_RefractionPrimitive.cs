@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class GFX_RefractionPrimitive : CSerializable {
 		[Serialize("PrimitiveParam"  )] public GFXPrimitiveParam PrimitiveParam;
 		[Serialize("Intensity"       )] public float Intensity;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SpriteBone : CSerializable {
 		[Serialize("name")] public StringID name;
 		[Serialize("p0"  )] public Vector2 p0;

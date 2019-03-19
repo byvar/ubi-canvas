@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DarkCreatureSimulation : RO2_SoftCollisionSimulation {
 		[Serialize("LightLifeTime"           )] public float LightLifeTime;
 		[Serialize("RoamingMoveToTargetCoeff")] public float RoamingMoveToTargetCoeff;

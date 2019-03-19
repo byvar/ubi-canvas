@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerMultiTargetComponent : ActorComponent {
 		[Serialize("onEnterEvents")] public CList<MultiTargetEvent> onEnterEvents;
 		[Serialize("onStayEvents" )] public CList<MultiTargetUpdateEvent> onStayEvents;
@@ -13,6 +14,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(onExitEvents));
 			SerializeField(s, nameof(AlwaysActive));
 		}
+		public override uint? ClassCRC => 0x01A4CB72;
 	}
 }
 

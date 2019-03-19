@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class CreditsDatum : CSerializable {
 		[Serialize("text" )] public SmartLocId text;
 		[Serialize("style")] public uint style;

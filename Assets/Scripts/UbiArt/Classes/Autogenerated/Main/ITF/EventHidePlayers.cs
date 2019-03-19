@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventHidePlayers : Event {
 		[Serialize("hideMainCharacter")] public bool hideMainCharacter;
 		[Serialize("hideSideKick"     )] public bool hideSideKick;

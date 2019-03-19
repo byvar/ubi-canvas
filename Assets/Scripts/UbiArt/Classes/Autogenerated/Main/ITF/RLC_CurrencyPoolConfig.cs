@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CurrencyPoolConfig : CSerializable {
 		[Serialize("replenishmentMinutes" )] public uint replenishmentMinutes;
 		[Serialize("replenishmentNbMin"   )] public uint replenishmentNbMin;

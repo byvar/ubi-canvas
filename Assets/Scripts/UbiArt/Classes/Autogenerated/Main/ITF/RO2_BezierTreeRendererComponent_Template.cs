@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_BezierTreeRendererComponent_Template : GraphicComponent_Template {
 		[Serialize("bezierRenderer"     )] public BezierCurveRenderer_Template bezierRenderer;
 		[Serialize("tileSpriteIndex"    )] public uint tileSpriteIndex;

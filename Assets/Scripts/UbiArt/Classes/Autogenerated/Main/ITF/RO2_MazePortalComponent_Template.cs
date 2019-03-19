@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MazePortalComponent_Template : ActorComponent_Template {
 		[Serialize("exitForce")] public float exitForce;
 		[Serialize("radius"   )] public float radius;

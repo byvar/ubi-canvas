@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PendulumComponent_Template : ActorComponent_Template {
 		[Serialize("pendulumLength"           )] public float pendulumLength;
 		[Serialize("pendulumInitialAngle"     )] public float pendulumInitialAngle;

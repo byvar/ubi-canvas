@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class PrisonerData : CSerializable {
 		[Serialize("path"      )] public Path path;
 		[Serialize("isFree"    )] public bool isFree;

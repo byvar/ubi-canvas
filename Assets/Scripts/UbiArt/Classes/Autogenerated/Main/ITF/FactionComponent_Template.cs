@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class FactionComponent_Template : ActorComponent_Template {
 		[Serialize("faction")] public uint faction;
 		protected override void SerializeImpl(CSerializerObject s) {

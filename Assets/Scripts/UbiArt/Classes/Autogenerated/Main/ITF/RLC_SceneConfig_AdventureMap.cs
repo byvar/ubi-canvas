@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_SceneConfig_AdventureMap : RO2_SceneConfig_Base {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

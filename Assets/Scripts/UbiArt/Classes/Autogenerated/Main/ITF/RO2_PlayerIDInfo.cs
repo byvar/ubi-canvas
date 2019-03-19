@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerIDInfo : PlayerIDInfo {
 		[Serialize("iconTexturePath"  )] public Path iconTexturePath;
 		[Serialize("iconSizeInTexture")] public Vector2 iconSizeInTexture;

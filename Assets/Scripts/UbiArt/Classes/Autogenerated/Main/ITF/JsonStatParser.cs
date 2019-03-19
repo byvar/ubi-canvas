@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class JsonStatParser : IStatParser {
 		[Serialize("Pretty"    )] public bool Pretty;
 		[Serialize("AddNewLine")] public bool AddNewLine;

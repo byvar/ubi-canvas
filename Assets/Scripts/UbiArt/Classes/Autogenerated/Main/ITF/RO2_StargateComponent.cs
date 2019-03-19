@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_StargateComponent : ActorComponent {
 		[Serialize("doorOffset")] public Vector2 doorOffset;
 		protected override void SerializeImpl(CSerializerObject s) {

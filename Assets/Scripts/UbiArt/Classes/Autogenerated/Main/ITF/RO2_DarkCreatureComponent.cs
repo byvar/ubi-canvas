@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DarkCreatureComponent : ActorComponent {
 		[Serialize("MaxCreatures"          )] public uint MaxCreatures;
 		[Serialize("AllAtStart"            )] public bool AllAtStart;

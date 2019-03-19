@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class MatchMakingConfig_Template : ITF.TemplateObj {
 		[Serialize("DefaultSessionType")] public uint DefaultSessionType;
 		[Serialize("DefaultQuery"      )] public uint DefaultQuery;

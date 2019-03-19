@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_PrimaryShopMenu_Template : RLC_ShopScrollingMenu_Template {
 		[Serialize("starterPackButtonPath")] public PathRef starterPackButtonPath;
 		[Serialize("watchVideoButtonPath" )] public PathRef watchVideoButtonPath;

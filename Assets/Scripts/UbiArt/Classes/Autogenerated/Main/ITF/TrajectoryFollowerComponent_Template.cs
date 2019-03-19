@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class TrajectoryFollowerComponent_Template : ActorComponent_Template {
 		[Serialize("speed"                     )] public float speed;
 		[Serialize("speedSmoothFactor"         )] public float speedSmoothFactor;
@@ -34,7 +35,7 @@ namespace UbiArt.ITF {
 		[Serialize("uTurnEnabled"              )] public bool uTurnEnabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(speed));
 				SerializeField(s, nameof(speedSmoothFactor));
 				SerializeField(s, nameof(cameraRelative));

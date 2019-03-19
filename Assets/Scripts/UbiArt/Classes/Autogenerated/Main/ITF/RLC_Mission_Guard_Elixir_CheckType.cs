@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_Elixir_CheckType : RLC_Mission_Guard {
 		[Serialize("elixirType")] public uint elixirType;
 		protected override void SerializeImpl(CSerializerObject s) {

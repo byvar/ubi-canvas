@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RelayData : CSerializable {
 		[Serialize("eventToListen"           )] public Generic<Event> eventToListen;
 		[Serialize("eventToRelay"            )] public Generic<Event> eventToRelay;

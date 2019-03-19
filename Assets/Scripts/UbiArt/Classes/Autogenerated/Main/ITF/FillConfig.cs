@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class FillConfig : CSerializable {
 		[Serialize("smoothFactor")] public float smoothFactor;
 		[Serialize("offset"      )] public float offset;

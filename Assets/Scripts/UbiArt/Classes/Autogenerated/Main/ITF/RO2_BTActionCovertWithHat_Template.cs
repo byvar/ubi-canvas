@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_BTActionCovertWithHat_Template : BTAction_Template {
 		[Serialize("factTarget"       )] public StringID factTarget;
 		[Serialize("animIdle"         )] public StringID animIdle;

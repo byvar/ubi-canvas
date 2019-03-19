@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class BTActionBallisticsFixedGravity_Template : BTActionBallistics_Template {
 		[Serialize("usePhysicsGravity")] public bool usePhysicsGravity;
 		[Serialize("fixedGravity"     )] public float fixedGravity;

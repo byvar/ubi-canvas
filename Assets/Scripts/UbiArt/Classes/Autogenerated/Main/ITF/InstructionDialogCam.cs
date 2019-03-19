@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class InstructionDialogCam : InstructionDialog {
 		[Serialize("typeCamera")] public Enum_typeCamera typeCamera;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossLuchadoreComponent_Template : ActorComponent_Template {
 		[Serialize("phases"                        )] public CList<RO2_BossLuchadoreComponent_Template.SequencePhase> phases;
 		[Serialize("opportunityInputLockedDuration")] public float opportunityInputLockedDuration;
@@ -111,6 +112,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(tweenEvent));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class ForbiddenZone : CSerializable {
 			[Serialize("posX")] public float posX;
 			[Serialize("size")] public float size;
@@ -120,6 +122,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(size));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class SequenceInstruction : CSerializable {
 			[Serialize("tag"                         )] public StringID tag;
 			[Serialize("duration"                    )] public float duration;
@@ -154,6 +157,7 @@ namespace UbiArt.ITF {
 				[Serialize("LF_Aiming"                   )] Aiming = 2,
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class SequencePhase : CSerializable {
 			[Serialize("tag"           )] public StringID tag;
 			[Serialize("animStand"     )] public StringID animStand;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TweenCircle_Template : TweenTranslation_Template {
 		[Serialize("pivot"     )] public Vector3 pivot;
 		[Serialize("cycleCount")] public float cycleCount;

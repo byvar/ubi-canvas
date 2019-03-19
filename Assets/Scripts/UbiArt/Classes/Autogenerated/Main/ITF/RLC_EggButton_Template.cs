@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_EggButton_Template : RLC_BasicAdventureButton_Template {
 		[Serialize("EggUnlocked_ForceDontUseGlobalLighting")] public bool EggUnlocked_ForceDontUseGlobalLighting;
 		protected override void SerializeImpl(CSerializerObject s) {

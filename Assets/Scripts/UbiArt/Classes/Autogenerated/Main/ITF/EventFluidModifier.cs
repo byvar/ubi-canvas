@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventFluidModifier : Event {
 		[Serialize("activated")] public bool activated;
 		protected override void SerializeImpl(CSerializerObject s) {

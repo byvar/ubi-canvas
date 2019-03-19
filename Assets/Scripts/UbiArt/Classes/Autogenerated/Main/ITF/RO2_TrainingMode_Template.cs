@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TrainingMode_Template : RO2_ChallengeCommon_Template {
 		[Serialize("useListOrder"        )] public bool useListOrder;
 		[Serialize("timerPath"           )] public Path timerPath;

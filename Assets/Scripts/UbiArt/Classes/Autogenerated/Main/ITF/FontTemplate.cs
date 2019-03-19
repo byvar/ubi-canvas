@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class FontTemplate : TemplateObj {
 		[Serialize("info"  )] public FontTemplate.Info info;
 		[Serialize("common")] public FontTemplate.Common common;
@@ -8,11 +9,15 @@ namespace UbiArt.ITF {
 		[Serialize("chars" )] public CList<FontTemplate.Char> chars;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(info));
-			SerializeField(s, nameof(common));
-			SerializeField(s, nameof(pages));
-			SerializeField(s, nameof(chars));
+			if (Settings.s.game == Settings.Game.COL) {
+			} else {
+				SerializeField(s, nameof(info));
+				SerializeField(s, nameof(common));
+				SerializeField(s, nameof(pages));
+				SerializeField(s, nameof(chars));
+			}
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class Info : CSerializable {
 			[Serialize("face"         )] public string face;
 			[Serialize("size"         )] public int size;
@@ -50,6 +55,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(outline));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class Common : CSerializable {
 			[Serialize("lineHeight")] public int lineHeight;
 			[Serialize("base"      )] public int _base;
@@ -75,6 +81,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(blueChnl));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class Char : CSerializable {
 			[Serialize("id"      )] public int id;
 			[Serialize("x"       )] public int x;
@@ -100,6 +107,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(chnl));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class Page : CSerializable {
 			[Serialize("id"  )] public int id;
 			[Serialize("file")] public Path file;

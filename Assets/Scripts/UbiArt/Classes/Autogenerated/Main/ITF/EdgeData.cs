@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EdgeData : CSerializable {
 		[Serialize("Level"           )] public float Level;
 		[Serialize("Pos"             )] public float Pos;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfigCreatureRoom : RLC_AmbianceConfig {
 		[Serialize("FamilyId")] public Creature_Family FamilyId;
 		protected override void SerializeImpl(CSerializerObject s) {

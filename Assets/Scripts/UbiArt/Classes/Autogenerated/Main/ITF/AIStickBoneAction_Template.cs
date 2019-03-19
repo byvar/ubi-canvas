@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIStickBoneAction_Template : AIAction_Template {
 		[Serialize("aiStickBoneName")] public StringID aiStickBoneName;
 		[Serialize("aiStickBoneEnd" )] public bool aiStickBoneEnd;

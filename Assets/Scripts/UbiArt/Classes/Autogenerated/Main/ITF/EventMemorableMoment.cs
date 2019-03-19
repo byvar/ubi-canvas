@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventMemorableMoment : Event {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

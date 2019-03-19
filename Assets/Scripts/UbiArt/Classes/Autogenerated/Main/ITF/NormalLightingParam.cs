@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class NormalLightingParam : CSerializable {
 		[Serialize("LightBrightness"     )] public float LightBrightness;
 		[Serialize("LightContrast"       )] public float LightContrast;

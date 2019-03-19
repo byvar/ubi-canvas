@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTActionActorListenEventSetFact : BTAction {
 		[Serialize("ListenEvent")] public Generic<Event> ListenEvent;
 		protected override void SerializeImpl(CSerializerObject s) {

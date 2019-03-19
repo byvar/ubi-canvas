@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class Gifts_Template : ITF.TemplateObj {
 		[Serialize("pools"                      )] public CMap<ITF.StringID, GiftPoolConfig> pools;
 		[Serialize("currentPoolKeyStringID"     )] public StringID currentPoolKeyStringID;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionFishing_Template : BTAction_Template {
 		[Serialize("animFishing" )] public StringID animFishing;
 		[Serialize("animStopFish")] public StringID animStopFish;

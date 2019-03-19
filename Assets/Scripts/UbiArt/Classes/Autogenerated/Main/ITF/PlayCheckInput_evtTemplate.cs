@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlayCheckInput_evtTemplate : SequenceEvent_Template {
 		[Serialize("GotoLabel"    )] public string GotoLabel;
 		[Serialize("ActionToCheck")] public StringID ActionToCheck;

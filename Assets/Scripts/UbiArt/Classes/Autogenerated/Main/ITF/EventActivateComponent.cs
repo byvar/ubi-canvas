@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventActivateComponent : Event {
 		[Serialize("active"            )] public bool active;
 		[Serialize("SpecificComponents")] public CList<EventActivateComponent.sComponentName> SpecificComponents;
@@ -9,6 +10,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(active));
 			SerializeField(s, nameof(SpecificComponents));
 		}
+		[Games(GameFlags.RA)]
 		public partial class sComponentName : CSerializable {
 			[Serialize("ComponentCRC")] public StringID ComponentCRC;
 			protected override void SerializeImpl(CSerializerObject s) {

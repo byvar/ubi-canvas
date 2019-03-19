@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CauldronLidComponent : ActorComponent {
 		[Serialize("touchHandler"          )] public RO2_TouchHandler touchHandler;
 		[Serialize("speedFactor"           )] public float speedFactor;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_BTActionAppearBackground_Rope_Template : BTAction_Template {
 		[Serialize("animStandBack"             )] public StringID animStandBack;
 		[Serialize("animClimbBack"             )] public StringID animClimbBack;

@@ -1,18 +1,20 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class SelfDestroyComponent : ActorComponent {
 		[Serialize("Delay"    )] public float Delay;
 		[Serialize("waitAnim" )] public eWait waitAnim;
 		[Serialize("AnimName" )] public StringID AnimName;
-		[Serialize("EventData")] public CList<SelfDestroyComponent.EventData> eventData;
+		[Serialize("EventData")] public CList<SelfDestroyComponent.EventData> EventData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Delay));
 			SerializeField(s, nameof(waitAnim));
 			SerializeField(s, nameof(AnimName));
-			SerializeField(s, nameof(eventData));
+			SerializeField(s, nameof(EventData));
 		}
+		[Games(GameFlags.RA)]
 		public partial class EventData : CSerializable {
 			[Serialize("matchValues")] public bool matchValues;
 			[Serialize("Event"      )] public Generic<Event> Event;

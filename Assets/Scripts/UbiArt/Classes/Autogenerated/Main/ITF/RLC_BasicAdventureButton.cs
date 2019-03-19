@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_BasicAdventureButton : ActorComponent {
 		[Serialize("LockChildrenTutoStepString")] public string LockChildrenTutoStepString;
 		protected override void SerializeImpl(CSerializerObject s) {

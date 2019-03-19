@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_SeasonalEventManager_Template : TemplateObj {
 		[Serialize("currentSeasonalEventID2"                  )] public RLC_SeasonalEventManager__eSeasonalEventType currentSeasonalEventID2;
 		[Serialize("currentSeasonalEventStartingTime2"        )] public online.DateTime currentSeasonalEventStartingTime2;

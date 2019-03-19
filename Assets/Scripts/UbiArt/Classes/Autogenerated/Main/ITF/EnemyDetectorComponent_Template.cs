@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class EnemyDetectorComponent_Template : ShapeDetectorComponent_Template {
 		[Serialize("faction"       )] public uint faction;
 		[Serialize("noPhantomCheck")] public bool noPhantomCheck;

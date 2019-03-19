@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CreatureWH_BulbComponent_Template : RO2_BezierTree_Template {
 		[Serialize("attackRadius"               )] public float attackRadius;
 		[Serialize("reflexAttackRadius"         )] public float reflexAttackRadius;

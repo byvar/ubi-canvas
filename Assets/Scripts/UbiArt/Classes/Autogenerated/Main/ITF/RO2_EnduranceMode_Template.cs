@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnduranceMode_Template : RO2_ChallengeCommon_Template {
 		[Serialize("flippableTags"          )] public CList<StringID> flippableTags;
 		[Serialize("decoBrickCooldown"      )] public uint decoBrickCooldown;
@@ -27,6 +28,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(treasureRopePath));
 			SerializeField(s, nameof(treasureReachedFxPath));
 		}
+		[Games(GameFlags.RA)]
 		public partial class DecoRange : CSerializable {
 			[Serialize("minDist"   )] public float minDist;
 			[Serialize("maxDist"   )] public float maxDist;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class GameManagerConfig_Template : TemplateObj {
 		[Serialize("debugMenuMapList"                           )] public CArray<Path> debugMenuMapList;
 		[Serialize("gameTextFilePath"                           )] public Path gameTextFilePath;
@@ -29,12 +30,12 @@ namespace UbiArt.ITF {
 		[Serialize("splash1Map"                                 )] public Path splash1Map;
 		[Serialize("levelEndedMap"                              )] public Path levelEndedMap;
 		[Serialize("menuSoundMap"                               )] public Path menuSoundMap;
-		[Serialize("usePressConfMenu"                           )] public bool usePressConfMenu;
+		[Serialize("usePressConfMenu"                           )] public int usePressConfMenu;
 		[Serialize("TEMP_threshold"                             )] public float TEMP_threshold;
-		[Serialize("TEMP_useshake"                              )] public bool TEMP_useshake;
+		[Serialize("TEMP_useshake"                              )] public int TEMP_useshake;
 		[Serialize("TEMP_delay"                                 )] public float TEMP_delay;
-		[Serialize("TEMP_runUseB"                               )] public bool TEMP_runUseB;
-		[Serialize("TEMP_runUseShake"                           )] public bool TEMP_runUseShake;
+		[Serialize("TEMP_runUseB"                               )] public int TEMP_runUseB;
+		[Serialize("TEMP_runUseShake"                           )] public int TEMP_runUseShake;
 		[Serialize("TEMP_swimMaxSpeed"                          )] public float TEMP_swimMaxSpeed;
 		[Serialize("TEMP_swimSmooth"                            )] public float TEMP_swimSmooth;
 		[Serialize("TEMP_runTimerStop"                          )] public float TEMP_runTimerStop;
@@ -74,7 +75,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(TEMP_runTimerStop));
 				SerializeField(s, nameof(iconsButtonPath));
 				SerializeField(s, nameof(gpeIconsPath));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(debugMenuMapList));
 				SerializeField(s, nameof(gameTextFilePath));
 				SerializeField(s, nameof(loading));
@@ -86,11 +87,24 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(maxOnlinePlayers));
 				SerializeField(s, nameof(DRCPlayerFamilyName));
 				SerializeField(s, nameof(maxBonusTeensy));
+			} else if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(debugMenuMapList));
+				SerializeField(s, nameof(gameTextFilePath));
+				SerializeField(s, nameof(loading));
+				SerializeField(s, nameof(familyList));
+				SerializeField(s, nameof(cameraShakeConfig));
+				SerializeField(s, nameof(cutSceneDefaultUnskippableDurationFirstTime));
+				SerializeField(s, nameof(maxLocalPlayers));
+				SerializeField(s, nameof(maxOnlinePlayers));
+				SerializeField(s, nameof(DRCPlayerFamilyName));
+				SerializeField(s, nameof(maxBonusTeensy));
 			} else {
+				SerializeField(s, nameof(debugMenuMapList));
 				SerializeField(s, nameof(debugMenuMapList));
 				SerializeField(s, nameof(gameTextFilePath));
 				SerializeField(s, nameof(loading));
 				SerializeField(s, nameof(playerIDInfo));
+				SerializeField(s, nameof(familyList));
 				SerializeField(s, nameof(familyList));
 				SerializeField(s, nameof(cameraShakeConfig));
 				SerializeField(s, nameof(cutSceneDefaultUnskippableDurationFirstTime));

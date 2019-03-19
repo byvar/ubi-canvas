@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ActorAttachedToBoneComponent : ActorComponent {
 		[Serialize("boneName"    )] public StringID boneName;
 		[Serialize("posOffset"   )] public Vector2 posOffset;

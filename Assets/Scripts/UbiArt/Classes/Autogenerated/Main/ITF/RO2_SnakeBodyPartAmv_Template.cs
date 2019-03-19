@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeBodyPartAmv_Template : RO2_SnakeBodyPart_Template {
 		[Serialize("renderer")] public RO2_SnakeBodyPartAmvRenderer_Template renderer;
 		protected override void SerializeImpl(CSerializerObject s) {

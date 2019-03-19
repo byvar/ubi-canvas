@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class TouchSpringMoveAngular : TouchSpringMoveBase {
 		[Serialize("totalAngle"     )] public Angle totalAngle;
 		[Serialize("minAngleLimit"  )] public Angle minAngleLimit;

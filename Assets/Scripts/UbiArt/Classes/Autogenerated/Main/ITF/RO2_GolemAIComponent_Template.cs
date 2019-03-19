@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GolemAIComponent_Template : RO2_AIComponent_Template {
 		[Serialize("countDownAttack"     )] public float countDownAttack;
 		[Serialize("timeAnticipation"    )] public float timeAnticipation;

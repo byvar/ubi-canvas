@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsCreatureIdCondition : online.GameGlobalsCondition {
 		[Serialize("creature")] public StringID creature;
 		protected override void SerializeImpl(CSerializerObject s) {

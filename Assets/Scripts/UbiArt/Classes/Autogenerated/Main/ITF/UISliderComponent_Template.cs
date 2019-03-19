@@ -1,9 +1,10 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RO | GameFlags.RL)]
 	public partial class UISliderComponent_Template : UIItemBasic_Template {
 		[Serialize("scaleOnSelected")] public float scaleOnSelected;
-		[Serialize("isCursor"       )] public bool isCursor;
+		[Serialize("isCursor"       )] public int isCursor;
 		[Serialize("colorOnSelected")] public Color colorOnSelected;
 		[Serialize("speedCursor"    )] public float speedCursor;
 		[Serialize("scalefactor"    )] public float scalefactor;

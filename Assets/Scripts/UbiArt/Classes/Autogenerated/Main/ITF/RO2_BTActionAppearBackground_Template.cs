@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionAppearBackground_Template : BTAction_Template {
 		[Serialize("animStandHideBack")] public StringID animStandHideBack;
 		[Serialize("animAnticipBack"  )] public StringID animAnticipBack;

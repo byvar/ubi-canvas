@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceManager_Template : TemplateObj {
 		[Serialize("ambianceDetails"                  )] public CArray<Generic<RLC_AmbianceDetails>> ambianceDetails;
 		[Serialize("ambianceConfigs_Adventure"        )] public CArray<Generic<RLC_AmbianceConfigAdventure>> ambianceConfigs_Adventure;

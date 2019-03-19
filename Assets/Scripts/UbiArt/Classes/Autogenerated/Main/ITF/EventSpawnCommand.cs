@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventSpawnCommand : Event {
 		[Serialize("Command" )] public EventSpawnCommand Command;
 		[Serialize("duration")] public float duration;

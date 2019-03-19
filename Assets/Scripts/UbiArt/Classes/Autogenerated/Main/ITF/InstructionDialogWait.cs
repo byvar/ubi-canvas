@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class InstructionDialogWait : InstructionDialog {
 		[Serialize("time"   )] public float time;
 		[Serialize("timeMin")] public float timeMin;

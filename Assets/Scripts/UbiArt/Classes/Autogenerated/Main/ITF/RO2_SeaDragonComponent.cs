@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SeaDragonComponent : ActorComponent {
 		[Serialize("DrawBezier"               )] public bool DrawBezier;
 		[Serialize("DrawSpeedModulation"      )] public bool DrawSpeedModulation;
@@ -29,69 +30,36 @@ namespace UbiArt.ITF {
 		[Serialize("foreGroundColor"          )] public Color foreGroundColor;
 		[Serialize("foreGroundColorZThreshold")] public float foreGroundColorZThreshold;
 		[Serialize("foreGroundColorZMax"      )] public float foreGroundColorZMax;
-		[Serialize("ModuleNumber"             )] public bool ModuleNumber;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
-				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(DrawBezier));
-					SerializeField(s, nameof(DrawSpeedModulation));
-					SerializeField(s, nameof(AutoShock));
-					SerializeField(s, nameof(AllowFlush));
-					SerializeField(s, nameof(FlushHeight));
-					SerializeField(s, nameof(FlushAfterShockDelay));
-					SerializeField(s, nameof(FlushSpeed));
-					SerializeField(s, nameof(DeathZoneStartOffset));
-					SerializeField(s, nameof(ModulateSpeedCoef));
-					SerializeField(s, nameof(StartMaxSpeed));
-					SerializeField(s, nameof(StartMinSpeed));
-					SerializeField(s, nameof(StartingBackTan));
-					SerializeField(s, nameof(StartingFrontTan));
-					SerializeField(s, nameof(RollCoeff));
-					SerializeField(s, nameof(SlowDownDist));
-					SerializeField(s, nameof(IKApproxamationCoeff));
-					SerializeField(s, nameof(ModuleNumber));
-					SerializeField(s, nameof(ModuleDisplacement));
-					SerializeField(s, nameof(HeadBlendRotation));
-					SerializeField(s, nameof(ModuleBlendRotation));
-					SerializeField(s, nameof(ScaleBase));
-					SerializeField(s, nameof(ScaleDisplacement));
-					SerializeField(s, nameof(ScaleOffset));
-					SerializeField(s, nameof(LoopNumber));
-					SerializeField(s, nameof(foreGroundColor));
-					SerializeField(s, nameof(foreGroundColorZThreshold));
-					SerializeField(s, nameof(foreGroundColorZMax));
-				}
-			} else {
-				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(DrawBezier));
-					SerializeField(s, nameof(DrawSpeedModulation));
-					SerializeField(s, nameof(AutoShock));
-					SerializeField(s, nameof(AllowFlush));
-					SerializeField(s, nameof(FlushHeight));
-					SerializeField(s, nameof(FlushAfterShockDelay));
-					SerializeField(s, nameof(FlushSpeed));
-					SerializeField(s, nameof(DeathZoneStartOffset));
-					SerializeField(s, nameof(ModulateSpeedCoef));
-					SerializeField(s, nameof(StartMaxSpeed));
-					SerializeField(s, nameof(StartMinSpeed));
-					SerializeField(s, nameof(StartingBackTan));
-					SerializeField(s, nameof(StartingFrontTan));
-					SerializeField(s, nameof(RollCoeff));
-					SerializeField(s, nameof(SlowDownDist));
-					SerializeField(s, nameof(IKApproxamationCoeff));
-					SerializeField(s, nameof(ModuleNumber));
-					SerializeField(s, nameof(ModuleDisplacement));
-					SerializeField(s, nameof(HeadBlendRotation));
-					SerializeField(s, nameof(ModuleBlendRotation));
-					SerializeField(s, nameof(ScaleBase));
-					SerializeField(s, nameof(ScaleDisplacement));
-					SerializeField(s, nameof(ScaleOffset));
-					SerializeField(s, nameof(LoopNumber));
-					SerializeField(s, nameof(foreGroundColor));
-					SerializeField(s, nameof(foreGroundColorZThreshold));
-					SerializeField(s, nameof(foreGroundColorZMax));
-				}
+			if (s.HasFlags(SerializeFlags.Default)) {
+				SerializeField(s, nameof(DrawBezier));
+				SerializeField(s, nameof(DrawSpeedModulation));
+				SerializeField(s, nameof(AutoShock));
+				SerializeField(s, nameof(AllowFlush));
+				SerializeField(s, nameof(FlushHeight));
+				SerializeField(s, nameof(FlushAfterShockDelay));
+				SerializeField(s, nameof(FlushSpeed));
+				SerializeField(s, nameof(DeathZoneStartOffset));
+				SerializeField(s, nameof(ModulateSpeedCoef));
+				SerializeField(s, nameof(StartMaxSpeed));
+				SerializeField(s, nameof(StartMinSpeed));
+				SerializeField(s, nameof(StartingBackTan));
+				SerializeField(s, nameof(StartingFrontTan));
+				SerializeField(s, nameof(RollCoeff));
+				SerializeField(s, nameof(SlowDownDist));
+				SerializeField(s, nameof(IKApproxamationCoeff));
+				SerializeField(s, nameof(ModuleNumber));
+				SerializeField(s, nameof(ModuleDisplacement));
+				SerializeField(s, nameof(HeadBlendRotation));
+				SerializeField(s, nameof(ModuleBlendRotation));
+				SerializeField(s, nameof(ScaleBase));
+				SerializeField(s, nameof(ScaleDisplacement));
+				SerializeField(s, nameof(ScaleOffset));
+				SerializeField(s, nameof(LoopNumber));
+				SerializeField(s, nameof(foreGroundColor));
+				SerializeField(s, nameof(foreGroundColorZThreshold));
+				SerializeField(s, nameof(foreGroundColorZMax));
 			}
 		}
 		public override uint? ClassCRC => 0x8EC5ED3A;

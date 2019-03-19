@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventSetColorInput : Event {
 		[Serialize("inputName" )] public StringID inputName;
 		[Serialize("inputValue")] public Color inputValue;

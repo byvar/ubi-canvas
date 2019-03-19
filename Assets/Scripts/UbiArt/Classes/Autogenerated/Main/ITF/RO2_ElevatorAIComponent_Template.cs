@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ElevatorAIComponent_Template : ActorComponent_Template {
 		[Serialize("timeStuckTop"              )] public float timeStuckTop;
 		[Serialize("clampForceMin"             )] public float clampForceMin;

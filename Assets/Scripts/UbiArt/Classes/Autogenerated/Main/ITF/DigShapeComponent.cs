@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class DigShapeComponent : ActorComponent {
 		[Serialize("Action")] public Action Action;
 		[Serialize("Radius")] public float Radius;

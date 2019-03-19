@@ -1,13 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_BezierBranchPolylineComponent : RO2_BezierBranchComponent {
 		[Serialize("polylineMode"        )] public RO2_PolylineMode polylineMode;
 		[Serialize("polylineTessellation")] public float polylineTessellation;
 		[Serialize("polylineMode"        )] public Enum_polylineMode polylineMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(polylineMode));
 				}

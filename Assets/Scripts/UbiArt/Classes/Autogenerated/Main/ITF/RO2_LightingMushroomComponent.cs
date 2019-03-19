@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LightingMushroomComponent : ActorComponent {
 		[Serialize("IsMoving"            )] public bool IsMoving;
 		[Serialize("ScaleMin"            )] public float ScaleMin;
@@ -49,12 +50,15 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class MushroomTarget : CSerializable {
+			[Serialize("Position"      )] public Vector3 Position;
 			[Serialize("ExplosionTimer")] public float ExplosionTimer;
 			[Serialize("flareSpeed"    )] public float flareSpeed;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(Position));
 					SerializeField(s, nameof(ExplosionTimer));
 					SerializeField(s, nameof(flareSpeed));
 				}

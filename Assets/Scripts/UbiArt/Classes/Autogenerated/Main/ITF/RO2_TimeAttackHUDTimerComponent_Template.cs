@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TimeAttackHUDTimerComponent_Template : ActorComponent_Template {
 		[Serialize("scale"                )] public float scale;
 		[Serialize("screenMarginX"        )] public float screenMarginX;
@@ -20,48 +21,26 @@ namespace UbiArt.ITF {
 		[Serialize("appearAnim"           )] public StringID appearAnim;
 		[Serialize("standAnim"            )] public StringID standAnim;
 		[Serialize("criticalFX"           )] public StringID criticalFX;
-		[Serialize("criticalTimeMargin"   )] public bool criticalTimeMargin;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(scale));
-				SerializeField(s, nameof(screenMarginX));
-				SerializeField(s, nameof(screenMarginY));
-				SerializeField(s, nameof(boneTimer));
-				SerializeField(s, nameof(boneCup));
-				SerializeField(s, nameof(boneElectoons));
-				SerializeField(s, nameof(boneChrono));
-				SerializeField(s, nameof(textActorFile));
-				SerializeField(s, nameof(timerTextSize));
-				SerializeField(s, nameof(timerTextCriticalSize));
-				SerializeField(s, nameof(prizeTextSize));
-				SerializeField(s, nameof(colorNormal));
-				SerializeField(s, nameof(colorTimeCritical));
-				SerializeField(s, nameof(criticalTimeMargin));
-				SerializeField(s, nameof(criticalTimeIntervals));
-				SerializeField(s, nameof(appearAnim));
-				SerializeField(s, nameof(standAnim));
-				SerializeField(s, nameof(criticalFX));
-			} else {
-				SerializeField(s, nameof(scale));
-				SerializeField(s, nameof(screenMarginX));
-				SerializeField(s, nameof(screenMarginY));
-				SerializeField(s, nameof(boneTimer));
-				SerializeField(s, nameof(boneCup));
-				SerializeField(s, nameof(boneElectoons));
-				SerializeField(s, nameof(boneChrono));
-				SerializeField(s, nameof(textActorFile));
-				SerializeField(s, nameof(timerTextSize));
-				SerializeField(s, nameof(timerTextCriticalSize));
-				SerializeField(s, nameof(prizeTextSize));
-				SerializeField(s, nameof(colorNormal));
-				SerializeField(s, nameof(colorTimeCritical));
-				SerializeField(s, nameof(criticalTimeMargin));
-				SerializeField(s, nameof(criticalTimeIntervals));
-				SerializeField(s, nameof(appearAnim));
-				SerializeField(s, nameof(standAnim));
-				SerializeField(s, nameof(criticalFX));
-			}
+			SerializeField(s, nameof(scale));
+			SerializeField(s, nameof(screenMarginX));
+			SerializeField(s, nameof(screenMarginY));
+			SerializeField(s, nameof(boneTimer));
+			SerializeField(s, nameof(boneCup));
+			SerializeField(s, nameof(boneElectoons));
+			SerializeField(s, nameof(boneChrono));
+			SerializeField(s, nameof(textActorFile));
+			SerializeField(s, nameof(timerTextSize));
+			SerializeField(s, nameof(timerTextCriticalSize));
+			SerializeField(s, nameof(prizeTextSize));
+			SerializeField(s, nameof(colorNormal));
+			SerializeField(s, nameof(colorTimeCritical));
+			SerializeField(s, nameof(criticalTimeMargin));
+			SerializeField(s, nameof(criticalTimeIntervals));
+			SerializeField(s, nameof(appearAnim));
+			SerializeField(s, nameof(standAnim));
+			SerializeField(s, nameof(criticalFX));
 		}
 		public override uint? ClassCRC => 0x129923C6;
 	}

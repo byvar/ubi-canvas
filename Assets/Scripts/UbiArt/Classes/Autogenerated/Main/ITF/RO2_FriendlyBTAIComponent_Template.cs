@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FriendlyBTAIComponent_Template : BTAIComponent_Template {
 		[Serialize("retaliationDuration"    )] public float retaliationDuration;
 		[Serialize("squashDeathPenetration" )] public float squashDeathPenetration;

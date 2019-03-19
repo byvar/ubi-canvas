@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class EventPlayFX : Event {
 		[Serialize("FXName"           )] public StringID FXName;
 		[Serialize("Action"           )] public FX_St Action;
@@ -8,9 +9,12 @@ namespace UbiArt.ITF {
 		[Serialize("UseGlobalPosition")] public bool UseGlobalPosition;
 		[Serialize("GlobalPosition"   )] public Vector3 GlobalPosition;
 		[Serialize("StopImmediate"    )] public bool StopImmediate;
+		[Serialize("sender"           )] public uint sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			} else if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(sender));
 			} else {
 				SerializeField(s, nameof(FXName));
 				SerializeField(s, nameof(Action));

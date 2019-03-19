@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CauldronComponent_Template : ActorComponent_Template {
 		[Serialize("standAnim"       )] public StringID standAnim;
 		[Serialize("lidReceptionAnim")] public StringID lidReceptionAnim;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TeensyRocketComponent : ActorComponent {
 		[Serialize("time"       )] public float time;
 		[Serialize("displayRope")] public bool displayRope;

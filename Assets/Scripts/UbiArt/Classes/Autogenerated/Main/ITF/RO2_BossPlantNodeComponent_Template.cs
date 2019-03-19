@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossPlantNodeComponent_Template : ActorComponent_Template {
 		[Serialize("anim"        )] public StringID anim;
 		[Serialize("animPlayRate")] public float animPlayRate;

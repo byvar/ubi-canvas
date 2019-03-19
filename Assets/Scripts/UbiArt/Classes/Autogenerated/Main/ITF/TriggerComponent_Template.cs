@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class TriggerComponent_Template : ActorComponent_Template {
 		[Serialize("onEnterEvent"        )] public Generic<Event> onEnterEvent;
 		[Serialize("onExitEvent"         )] public Generic<Event> onExitEvent;
@@ -19,13 +20,13 @@ namespace UbiArt.ITF {
 		[Serialize("triggerActivator"    )] public bool triggerActivator;
 		[Serialize("triggerGameManager"  )] public bool triggerGameManager;
 		[Serialize("triggerBroadcast"    )] public bool triggerBroadcast;
-		[Serialize("activateChildren"    )] public bool activateChildren;
-		[Serialize("triggerOnce"         )] public bool triggerOnce;
+		[Serialize("activateChildren"    )] public int activateChildren;
+		[Serialize("triggerOnce"         )] public int triggerOnce;
 		[Serialize("resetOnCheckpoint"   )] public bool resetOnCheckpoint;
 		[Serialize("triggerOnWind"       )] public bool triggerOnWind;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(activateChildren));
 				SerializeField(s, nameof(triggerOnce));
 				SerializeField(s, nameof(resetOnCheckpoint));

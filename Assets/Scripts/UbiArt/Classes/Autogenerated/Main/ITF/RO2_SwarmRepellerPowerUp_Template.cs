@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SwarmRepellerPowerUp_Template : RO2_PowerUpDisplay_Template {
 		[Serialize("repellerActor"     )] public Path repellerActor;
 		[Serialize("playerFollowOffset")] public Vector2 playerFollowOffset;

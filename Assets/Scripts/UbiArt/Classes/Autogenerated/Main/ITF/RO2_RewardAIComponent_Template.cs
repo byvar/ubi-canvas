@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RewardAIComponent_Template : AIComponent_Template {
 		[Serialize("idleBehavior"   )] public Generic<TemplateAIBehavior> idleBehavior;
 		[Serialize("carriedBehavior")] public Generic<TemplateAIBehavior> carriedBehavior;

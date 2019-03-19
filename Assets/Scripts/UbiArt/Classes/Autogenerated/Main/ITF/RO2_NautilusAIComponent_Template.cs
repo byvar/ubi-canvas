@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_NautilusAIComponent_Template : ActorComponent_Template {
 		[Serialize("angularSpeedMultiplier"   )] public float angularSpeedMultiplier;
 		[Serialize("angularAcceleration"      )] public Angle angularAcceleration;
@@ -39,8 +40,8 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(moveRadius));
 				SerializeField(s, nameof(minAngle));
 				SerializeField(s, nameof(maxAngle));
-				SerializeField(s, nameof(lockOnMinReached));
-				SerializeField(s, nameof(lockOnMaxReached));
+				SerializeField(s, nameof(lockOnMinReached), boolAsByte: true);
+				SerializeField(s, nameof(lockOnMaxReached), boolAsByte: true);
 				SerializeField(s, nameof(endBrakeAngle));
 				SerializeField(s, nameof(input));
 				SerializeField(s, nameof(airControlMinAngularSpeed));

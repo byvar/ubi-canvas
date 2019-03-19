@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class UIItemTextField : UIItemBasic {
 		[Serialize("isPassword"       )] public bool isPassword;
 		[Serialize("dialogMaxChar"    )] public uint dialogMaxChar;
@@ -11,9 +12,9 @@ namespace UbiArt.ITF {
 		[Serialize("style"            )] public Enum_style style;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(isPassword));
+					SerializeField(s, nameof(isPassword), boolAsByte: true);
 					SerializeField(s, nameof(dialogMaxChar));
 					SerializeField(s, nameof(dialogAcceptSpace));
 					SerializeField(s, nameof(dialogNameRaw));

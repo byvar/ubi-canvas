@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_RotatingPlatformComponent : ActorComponent {
 		[Serialize("clockwiseRotationLocked"       )] public bool clockwiseRotationLocked;
 		[Serialize("counterClockwiseRotationLocked")] public bool counterClockwiseRotationLocked;

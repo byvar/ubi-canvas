@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HoverPlatformComponent : ActorComponent {
 		[Serialize("cycleEnabled"       )] public bool cycleEnabled;
 		[Serialize("cycleStartIndex"    )] public uint cycleStartIndex;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTDeciderRopeCut_Template : BTDecider_Template {
 		[Serialize("invert"   )] public bool invert;
 		[Serialize("factActor")] public StringID factActor;

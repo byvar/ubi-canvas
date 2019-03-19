@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class SaveInfo : CSerializable {
 		[Serialize("pid"                  )] public string pid;
 		[Serialize("slot"                 )] public uint slot;
@@ -25,6 +26,7 @@ namespace UbiArt.online {
 			SerializeField(s, nameof(populations));
 			SerializeField(s, nameof(iap));
 			SerializeField(s, nameof(iapPrediction));
+			SerializeField(s, nameof(reco));
 			SerializeField(s, nameof(reco));
 		}
 	}

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class StatInfos : CSerializable {
 		[Serialize("id"                  )] public StringID id;
 		[Serialize("color"               )] public Color color;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Pad2Touch_Template : ActorComponent_Template {
 		[Serialize("InputMapping"           )] public CMap<StringID, RLC_Pad2TouchInput> InputMapping;
 		[Serialize("SelectInactive"         )] public bool SelectInactive;

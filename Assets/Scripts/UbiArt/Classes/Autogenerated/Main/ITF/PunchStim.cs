@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL)]
 	public partial class PunchStim : HitStim {
 		[Serialize("hitType"         )] public RECEIVEDHITTYPE hitType;
 		[Serialize("pushBackDistance")] public float pushBackDistance;
@@ -11,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("hitType"         )] public Enum_hitType hitType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(hitType));
 				SerializeField(s, nameof(pushBackDistance));
 				SerializeField(s, nameof(radial));

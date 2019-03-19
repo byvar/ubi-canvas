@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ScaleFunnelComponent_Template : ActorComponent_Template {
 		[Serialize("scale"       )] public float scale;
 		[Serialize("suckMinTime" )] public float suckMinTime;

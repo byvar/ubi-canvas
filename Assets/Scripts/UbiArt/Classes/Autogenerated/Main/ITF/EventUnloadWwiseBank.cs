@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventUnloadWwiseBank : Event {
 		[Serialize("WwiseBankList")] public CList<PathRef> WwiseBankList;
 		protected override void SerializeImpl(CSerializerObject s) {

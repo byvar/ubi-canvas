@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIJumpAction_Template : AIAction_Template {
 		[Serialize("jumpForce")] public float jumpForce;
 		[Serialize("minXSpeed")] public float minXSpeed;

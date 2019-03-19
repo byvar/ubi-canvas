@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class BezierBranchBoneComponent_Template : BezierBranchComponent_Template {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

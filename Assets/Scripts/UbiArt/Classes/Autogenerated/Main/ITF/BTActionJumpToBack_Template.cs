@@ -1,17 +1,27 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class BTActionJumpToBack_Template : BTAction_Template {
 		[Serialize("anim"   )] public StringID anim;
 		[Serialize("time"   )] public float time;
 		[Serialize("zOffset")] public float zOffset;
 		[Serialize("height" )] public float height;
+		[Serialize("name"   )] public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(anim));
-			SerializeField(s, nameof(time));
-			SerializeField(s, nameof(zOffset));
-			SerializeField(s, nameof(height));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(name));
+				SerializeField(s, nameof(anim));
+				SerializeField(s, nameof(time));
+				SerializeField(s, nameof(zOffset));
+				SerializeField(s, nameof(height));
+			} else {
+				SerializeField(s, nameof(anim));
+				SerializeField(s, nameof(time));
+				SerializeField(s, nameof(zOffset));
+				SerializeField(s, nameof(height));
+			}
 		}
 		public override uint? ClassCRC => 0xA2C8211D;
 	}

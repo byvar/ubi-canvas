@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_ConvertibleBranchComponent_Template : RO2_BezierBranchComponent_Template {
 		[Serialize("width"                )] public float width;
 		[Serialize("attachToEnd"          )] public bool attachToEnd;
@@ -26,7 +27,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(width));
-				SerializeField(s, nameof(attachToEnd));
+				SerializeField(s, nameof(attachToEnd), boolAsByte: true);
 				SerializeField(s, nameof(tileLength));
 				SerializeField(s, nameof(tileBones));
 				SerializeField(s, nameof(endLength));
@@ -35,14 +36,14 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(amvMaterial));
 				SerializeField(s, nameof(zOffset));
 				SerializeField(s, nameof(scaleFactor));
-				SerializeField(s, nameof(convertFromEnd));
+				SerializeField(s, nameof(convertFromEnd), boolAsByte: true);
 				SerializeField(s, nameof(conversionSpeed));
 				SerializeField(s, nameof(convertedGameMaterial));
 				SerializeField(s, nameof(conversionOffset));
 				SerializeField(s, nameof(conversionOverlap));
 				SerializeField(s, nameof(elementTypes));
-				SerializeField(s, nameof(drawDebug));
-				SerializeField(s, nameof(drawDebugAnims));
+				SerializeField(s, nameof(drawDebug), boolAsByte: true);
+				SerializeField(s, nameof(drawDebugAnims), boolAsByte: true);
 			} else {
 				SerializeField(s, nameof(width));
 				SerializeField(s, nameof(attachToEnd));

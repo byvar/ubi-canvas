@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CountdownComponent_Template : ActorComponent_Template {
 		[Serialize("onFinishEvent")] public Generic<Event> onFinishEvent;
 		[Serialize("fxControls"   )] public CList<StringID> fxControls;

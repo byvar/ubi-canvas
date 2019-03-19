@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeRideBodyPart_Template : RO2_SnakeBodyPartAmv_Template {
 		[Serialize("animTickle")] public StringID animTickle;
 		protected override void SerializeImpl(CSerializerObject s) {

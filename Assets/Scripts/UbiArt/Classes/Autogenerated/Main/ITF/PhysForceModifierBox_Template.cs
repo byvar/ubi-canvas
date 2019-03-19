@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PhysForceModifierBox_Template : PhysForceModifier_Template {
 		[Serialize("width" )] public float width;
 		[Serialize("height")] public float height;

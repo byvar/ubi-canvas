@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventSetInitialNode : Event {
 		[Serialize("getNodeFromSender"   )] public bool getNodeFromSender;
 		[Serialize("interruptCurrentNode")] public bool interruptCurrentNode;

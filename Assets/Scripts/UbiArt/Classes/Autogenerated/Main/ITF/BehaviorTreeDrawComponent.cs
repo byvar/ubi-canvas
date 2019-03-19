@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BehaviorTreeDrawComponent : ActorComponent {
 		[Serialize("DrawDesc")] public BTDrawDesc DrawDesc;
 		protected override void SerializeImpl(CSerializerObject s) {

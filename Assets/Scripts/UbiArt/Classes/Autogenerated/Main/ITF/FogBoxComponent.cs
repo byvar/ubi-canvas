@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class FogBoxComponent : ActorComponent {
 		[Serialize("attenuationDist")] public Vector2 attenuationDist;
 		[Serialize("near"           )] public float near;

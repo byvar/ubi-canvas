@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIFruitTrapComponent_Template : ActorComponent_Template {
 		[Serialize("delay"          )] public float delay;
 		[Serialize("stayDownDelay"  )] public float stayDownDelay;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_BulletLauncherComponent_Template : ActorComponent_Template {
 		[Serialize("bullet"                )] public Path bullet;
 		[Serialize("launchBone"            )] public StringID launchBone;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_MapButton_Template : RLC_BasicAdventureButton_Template {
 		[Serialize("WwiseGUID_SpawnLums"      )] public StringID WwiseGUID_SpawnLums;
 		[Serialize("WwiseGUID_SpawnEnemy"     )] public StringID WwiseGUID_SpawnEnemy;

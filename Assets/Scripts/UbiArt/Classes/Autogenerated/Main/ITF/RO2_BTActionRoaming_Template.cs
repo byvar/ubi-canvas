@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionRoaming_Template : BTAction_Template {
 		[Serialize("animWalk"    )] public StringID animWalk;
 		[Serialize("animUTurn"   )] public StringID animUTurn;

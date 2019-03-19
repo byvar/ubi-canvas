@@ -1,12 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class ActorSpawnBank_Template : CSerializable {
 		[Serialize("list")] public CList<ActorSpawnBank_Template.ActorSpawnData> list;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(list));
 		}
+		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class ActorSpawnData : CSerializable {
 			[Serialize("id"          )] public StringID id;
 			[Serialize("path"        )] public Path path;

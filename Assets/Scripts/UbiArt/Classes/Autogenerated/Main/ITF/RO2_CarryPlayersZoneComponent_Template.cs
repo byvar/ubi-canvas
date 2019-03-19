@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CarryPlayersZoneComponent_Template : ActorComponent_Template {
 		[Serialize("regionID"                         )] public StringID regionID;
 		[Serialize("carryMinParticulePercent"         )] public float carryMinParticulePercent;

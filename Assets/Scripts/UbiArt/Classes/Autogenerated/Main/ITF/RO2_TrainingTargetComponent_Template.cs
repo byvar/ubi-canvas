@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TrainingTargetComponent_Template : ActorComponent_Template {
 		[Serialize("feedbackActorPath" )] public Path feedbackActorPath;
 		[Serialize("canBePainted"      )] public bool canBePainted;

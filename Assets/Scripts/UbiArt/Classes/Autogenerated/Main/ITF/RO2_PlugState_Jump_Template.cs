@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlugState_Jump_Template : ActorPlugStateImplement_Template {
 		[Serialize("wallImpulseForce"                         )] public float wallImpulseForce;
 		[Serialize("wallBounceMinSpeed"                       )] public Vector2 wallBounceMinSpeed;

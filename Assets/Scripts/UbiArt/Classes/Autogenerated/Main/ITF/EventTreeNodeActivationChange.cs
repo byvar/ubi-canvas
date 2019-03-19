@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventTreeNodeActivationChange : Event {
 		[Serialize("Active"  )] public bool Active;
 		[Serialize("NodeName")] public StringID NodeName;

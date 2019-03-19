@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class InstructionDialogText : InstructionDialog {
 		[Serialize("actorName")] public StringID actorName;
 		[Serialize("idLoc"    )] public LocalisationId idLoc;

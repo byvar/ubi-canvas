@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureCrownComponent_Template : ActorComponent_Template {
 		[Serialize("crownTextureBank"    )] public TextureBankPath crownTextureBank;
 		[Serialize("patchChanges"        )] public CMap<StringID, StringID> patchChanges;

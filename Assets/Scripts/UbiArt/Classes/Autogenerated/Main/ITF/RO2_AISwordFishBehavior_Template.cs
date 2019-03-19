@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AISwordFishBehavior_Template : RO2_AIGroundBaseBehavior_Template {
 		[Serialize("idle"                )] public Generic<AIAction_Template> idle;
 		[Serialize("anticipation"        )] public Generic<AIAction_Template> anticipation;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIPerformHitAction_Template : AIPerformHitAction_Template {
 		[Serialize("level"       )] public uint level;
 		[Serialize("type"        )] public RECEIVEDHITTYPE type;

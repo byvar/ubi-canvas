@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class DigShapeComponent_Template : ActorComponent_Template {
 		[Serialize("digByDefault"   )] public bool digByDefault;
 		[Serialize("digOffset"      )] public Vector2 digOffset;

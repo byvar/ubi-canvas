@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventChangeBankId : Event {
 		[Serialize("BankId")] public StringID BankId;
 		protected override void SerializeImpl(CSerializerObject s) {

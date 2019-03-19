@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameGlobalsComplexCondition : GameGlobalsCondition {
 		[Serialize("conditions")] public CArray<Generic<GameGlobalsCondition>> conditions;
 		[Serialize("needAll"   )] public bool needAll;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AILightningAction_Template : AIAction_Template {
 		[Serialize("startBoneName"  )] public StringID startBoneName;
 		[Serialize("destBoneName"   )] public StringID destBoneName;

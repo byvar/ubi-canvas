@@ -1,11 +1,12 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeFireWallComponent : ActorComponent {
 		[Serialize("screenPosition"          )] public Vector2 screenPosition;
 		[Serialize("actorPosAtCheckpointSave")] public Vector3 actorPosAtCheckpointSave;
 		[Serialize("state"                   )] public State state;
-		[Serialize("useScreenPos"            )] public bool useScreenPos;
+		[Serialize("useScreenPos"            )] public int useScreenPos;
 		[Serialize("state"                   )] public Enum_state state;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

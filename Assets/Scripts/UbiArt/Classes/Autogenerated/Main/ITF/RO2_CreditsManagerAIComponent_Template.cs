@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CreditsManagerAIComponent_Template : ActorComponent_Template {
 		[Serialize("creditsList")] public CList<CreditsLine> creditsList;
 		[Serialize("gmatPath"   )] public Path gmatPath;

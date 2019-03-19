@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIFishBehavior_Template : RO2_AIGroundBaseBehavior_Template {
 		[Serialize("struggle"               )] public Generic<AIAction_Template> struggle;
 		[Serialize("release"                )] public Generic<AIAction_Template> release;

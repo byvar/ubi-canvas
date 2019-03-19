@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ShadowZoneDetectorComponent : ShapeDetectorComponent {
 		[Serialize("detectInLight")] public bool detectInLight;
 		protected override void SerializeImpl(CSerializerObject s) {

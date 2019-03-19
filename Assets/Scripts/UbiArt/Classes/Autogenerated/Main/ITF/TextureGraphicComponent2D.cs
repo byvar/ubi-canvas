@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TextureGraphicComponent2D : GraphicComponent {
 		[Serialize("ALIGN"            )] public align ALIGN;
 		[Serialize("SCREEN_POURCENT_X")] public float SCREEN_POURCENT_X;
@@ -10,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("ALIGN"            )] public Enum_ALIGN ALIGN;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(ALIGN));
 					SerializeField(s, nameof(SCREEN_POURCENT_X));

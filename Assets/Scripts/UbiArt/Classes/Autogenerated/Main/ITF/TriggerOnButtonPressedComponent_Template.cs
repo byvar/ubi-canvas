@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TriggerOnButtonPressedComponent_Template : TriggerComponent_Template {
 		[Serialize("inputs")] public CList<uint> inputs;
 		protected override void SerializeImpl(CSerializerObject s) {

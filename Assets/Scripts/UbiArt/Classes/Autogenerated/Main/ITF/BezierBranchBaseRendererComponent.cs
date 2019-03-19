@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class BezierBranchBaseRendererComponent : BezierBranchComponent {
 		[Serialize("flipTexture")] public bool flipTexture;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class RequestOptions : CSerializable {
 		[Serialize("connectModule"      )] public bool connectModule;
 		[Serialize("retryIfDisconnected")] public bool retryIfDisconnected;
@@ -29,6 +30,7 @@ namespace UbiArt.online {
 			SerializeField(s, nameof(needPid));
 			SerializeField(s, nameof(timeout));
 		}
+		[Games(GameFlags.RA)]
 		public partial class PopupOptions : CSerializable {
 			[Serialize("show"      )] public bool show;
 			[Serialize("trcContext")] public Enum_trcContext trcContext;
@@ -42,6 +44,7 @@ namespace UbiArt.online {
 			public enum Enum_trcContext {
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class ErrorPopupOptions : CSerializable {
 			[Serialize("default" )] public RequestOptions.PopupOptions _default;
 			[Serialize("specific")] public CMap<Error.GameServerError, RequestOptions.PopupOptions> specific;

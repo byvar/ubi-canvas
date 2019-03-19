@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_MissileCreatureDisplay_Template : RLC_PowerUpCreatureDisplay_Template {
 		[Serialize("launchDistance"       )] public float launchDistance;
 		[Serialize("launchYOffset"        )] public float launchYOffset;

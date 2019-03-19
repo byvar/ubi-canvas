@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DoorComponent_Template : ActorComponent_Template {
 		[Serialize("startOpen")] public bool startOpen;
 		[Serialize("openSpeed")] public float openSpeed;

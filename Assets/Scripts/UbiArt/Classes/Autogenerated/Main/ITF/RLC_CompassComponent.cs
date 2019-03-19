@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CompassComponent : ActorComponent {
 		[Serialize("maxRange"  )] public float maxRange;
 		[Serialize("hysteresis")] public float hysteresis;

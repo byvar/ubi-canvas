@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PuzzleManagerComponent_Template : ActorComponent_Template {
 		[Serialize("debugDraw"  )] public bool debugDraw;
 		[Serialize("caseLength" )] public float caseLength;

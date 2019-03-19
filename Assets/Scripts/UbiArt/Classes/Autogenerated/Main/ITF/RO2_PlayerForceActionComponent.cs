@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerForceActionComponent : ActorComponent {
 		[Serialize("Action"                )] public PlayerForcedAction Action;
 		[Serialize("enabledOnInit"         )] public bool enabledOnInit;
@@ -18,25 +19,25 @@ namespace UbiArt.ITF {
 		[Serialize("actorUpdateInfo"       )] public RO2_PlayerForceActionComponent.ActorUpdateInfoStruct actorUpdateInfo;
 		[Serialize("isEnabled"             )] public bool isEnabled;
 		[Serialize("Action"                )] public Enum_Action Action;
-		[Serialize("shadowActorGroupTest"  )] public bool shadowActorGroupTest;
-		[Serialize("shadowActorGroupTest"  )] public Placeholder shadowActorGroupTest;
+		[Serialize("shadowActorGroupTest"  )] public int shadowActorGroupTest;
+		[Serialize("shadowActorGroupTest"  )] public byte shadowActorGroupTest;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(Action));
-					SerializeField(s, nameof(enabledOnInit));
+					SerializeField(s, nameof(enabledOnInit), boolAsByte: true);
 					SerializeField(s, nameof(OverallPriority));
 					SerializeField(s, nameof(priority));
-					SerializeField(s, nameof(Hold));
-					SerializeField(s, nameof(Sprint));
-					SerializeField(s, nameof(KeepDirection));
+					SerializeField(s, nameof(Hold), boolAsByte: true);
+					SerializeField(s, nameof(Sprint), boolAsByte: true);
+					SerializeField(s, nameof(KeepDirection), boolAsByte: true);
 					SerializeField(s, nameof(WaitDuration));
 					SerializeField(s, nameof(WaitType));
 					SerializeField(s, nameof(eventToListen));
-					SerializeField(s, nameof(waitSpecificAngle));
+					SerializeField(s, nameof(waitSpecificAngle), boolAsByte: true);
 					SerializeField(s, nameof(waitSpecificAngleRange));
-					SerializeField(s, nameof(checkEventOnlyInZone));
+					SerializeField(s, nameof(checkEventOnlyInZone), boolAsByte: true);
 					SerializeField(s, nameof(actorUpdateInfo));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
@@ -68,6 +69,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class ActorUpdateInfoStruct : CSerializable {
 			[Serialize("orientationUpdateType"              )] public Enum_orientationUpdateType orientationUpdateType;
 			[Serialize("specificOrientation"                )] public Angle specificOrientation;

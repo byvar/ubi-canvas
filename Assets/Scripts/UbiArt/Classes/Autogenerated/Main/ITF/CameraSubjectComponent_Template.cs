@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class CameraSubjectComponent_Template : ActorComponent_Template {
 		[Serialize("boundingBoxMin")] public Vector2 boundingBoxMin;
 		[Serialize("boundingBoxMax")] public Vector2 boundingBoxMax;

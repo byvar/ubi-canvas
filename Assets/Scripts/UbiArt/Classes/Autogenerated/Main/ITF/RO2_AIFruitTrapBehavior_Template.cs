@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIFruitTrapBehavior_Template : TemplateAIBehavior {
 		[Serialize("delay"          )] public float delay;
 		[Serialize("weightThreshold")] public float weightThreshold;

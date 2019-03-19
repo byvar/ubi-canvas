@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_Map_CheckType : RLC_Mission_Guard {
 		[Serialize("mapType")] public uint mapType;
 		protected override void SerializeImpl(CSerializerObject s) {

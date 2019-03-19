@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_LumSpawnerComponent : ActorComponent {
 		[Serialize("nbLums"     )] public uint nbLums;
 		[Serialize("isRed"      )] public bool isRed;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_BezierBone : CSerializable {
 		[Serialize("id"           )] public StringID id;
 		[Serialize("distance"     )] public float distance;

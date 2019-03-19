@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_Player_HasGround : RLC_Mission_Guard {
 		[Serialize("hasGround")] public bool hasGround;
 		protected override void SerializeImpl(CSerializerObject s) {

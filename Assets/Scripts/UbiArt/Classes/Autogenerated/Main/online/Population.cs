@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class Population : CSerializable {
 		[Serialize("KEY"        )] public StringID KEY;
 		[Serialize("VAL"        )] public float VAL;
@@ -9,6 +10,7 @@ namespace UbiArt.online {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(KEY));
 			SerializeField(s, nameof(VAL));
+			SerializeField(s, nameof(KEY));
 			SerializeField(s, nameof(probability));
 		}
 	}

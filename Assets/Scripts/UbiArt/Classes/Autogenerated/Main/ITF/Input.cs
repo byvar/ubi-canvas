@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class Input : CSerializable {
 		[Serialize("name"   )] public StringID name;
 		[Serialize("varType")] public InputType varType;

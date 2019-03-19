@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class BaseRttiTest : CSerializable {
 		[Serialize("Name")] public string Name;
 		protected override void SerializeImpl(CSerializerObject s) {

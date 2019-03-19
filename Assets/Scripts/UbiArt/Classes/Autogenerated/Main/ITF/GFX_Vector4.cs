@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class GFX_Vector4 : CSerializable {
 		[Serialize("x")] public float x;
 		[Serialize("y")] public float y;

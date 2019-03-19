@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission : CSerializable {
 		[Serialize("triggersStart"     )] public ulong triggersStart;
 		[Serialize("triggersUpdate"    )] public ulong triggersUpdate;
@@ -29,6 +30,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(triggersUpdate));
 			SerializeField(s, nameof(triggersCompletion));
 			SerializeField(s, nameof(triggersReset));
+			SerializeField(s, nameof(requiredHitCount));
 			SerializeField(s, nameof(requiredHitCount));
 			SerializeField(s, nameof(difficulty));
 			SerializeField(s, nameof(objectiveType));

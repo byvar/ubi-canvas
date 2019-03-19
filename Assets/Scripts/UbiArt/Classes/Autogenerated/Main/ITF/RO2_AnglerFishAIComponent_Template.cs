@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AnglerFishAIComponent_Template : RO2_SimpleAIComponent_Template {
 		[Serialize("spawnBone"          )] public StringID spawnBone;
 		[Serialize("lightSpawnPath"     )] public Path lightSpawnPath;

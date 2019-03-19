@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventDarkCreatureVisionActivation : Event {
 		[Serialize("DetectionDistance")] public float DetectionDistance;
 		[Serialize("AttackDistance"   )] public float AttackDistance;

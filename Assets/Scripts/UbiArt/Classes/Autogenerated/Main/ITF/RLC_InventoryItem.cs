@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_InventoryItem : CSerializable {
 		[Serialize("itemId")] public uint itemId;
 		[Serialize("amount")] public uint amount;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlugConfig : CSerializable {
 		[Serialize("plugId"    )] public StringID plugId;
 		[Serialize("slotId"    )] public uint slotId;

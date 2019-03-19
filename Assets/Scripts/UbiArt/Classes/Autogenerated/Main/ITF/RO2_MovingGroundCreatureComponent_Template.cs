@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MovingGroundCreatureComponent_Template : ActorComponent_Template {
 		[Serialize("stepSize"             )] public float stepSize;
 		[Serialize("ringPath"             )] public Path ringPath;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_EventListenerComponent : ActorComponent {
 		[Serialize("TransfertEventToChildren")] public bool TransfertEventToChildren;
 		protected override void SerializeImpl(CSerializerObject s) {

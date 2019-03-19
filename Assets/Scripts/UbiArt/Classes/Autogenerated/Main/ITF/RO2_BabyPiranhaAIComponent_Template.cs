@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BabyPiranhaAIComponent_Template : AIComponent_Template {
 		[Serialize("speed"                     )] public float speed;
 		[Serialize("detectionRange"            )] public float detectionRange;

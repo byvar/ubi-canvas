@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SubRenderParam_ClearColor : SubRenderParam {
 		[Serialize("ClearColor"          )] public Color ClearColor;
 		[Serialize("ClearFrontLightColor")] public Color ClearFrontLightColor;

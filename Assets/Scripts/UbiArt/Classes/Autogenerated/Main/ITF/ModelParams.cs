@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ModelParams : CSerializable {
 		[Serialize("id"                    )] public int id;
 		[Serialize("targetRadius"          )] public float targetRadius;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeShooterGuardianAIComponent_Template : ActorComponent_Template {
 		[Serialize("waterPerturbationForce"  )] public float waterPerturbationForce;
 		[Serialize("waterTestWidth"          )] public float waterTestWidth;

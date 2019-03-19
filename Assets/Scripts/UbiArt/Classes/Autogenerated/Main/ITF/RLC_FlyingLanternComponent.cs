@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_FlyingLanternComponent : RO2_HangSpotComponent {
 		[Serialize("returnSpeed")] public float returnSpeed;
 		[Serialize("triggerOnce")] public bool triggerOnce;

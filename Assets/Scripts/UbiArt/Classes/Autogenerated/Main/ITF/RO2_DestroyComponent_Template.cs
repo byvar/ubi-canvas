@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DestroyComponent_Template : ActorComponent_Template {
 		[Serialize("waitForFx"        )] public bool waitForFx;
 		[Serialize("timeBeforeDestroy")] public float timeBeforeDestroy;

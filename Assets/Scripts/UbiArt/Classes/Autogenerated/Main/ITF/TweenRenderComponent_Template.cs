@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TweenRenderComponent_Template : GraphicComponent_Template {
 		[Serialize("trail")] public Trail_Template trail;
 		protected override void SerializeImpl(CSerializerObject s) {

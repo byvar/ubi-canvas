@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class AnemoneTreeComponent : ActorComponent {
 		[Serialize("startOpen"  )] public bool startOpen;
 		[Serialize("branchSpeed")] public float branchSpeed;

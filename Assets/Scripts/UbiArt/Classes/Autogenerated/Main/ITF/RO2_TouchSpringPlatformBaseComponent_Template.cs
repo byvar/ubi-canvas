@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchSpringPlatformBaseComponent_Template : ActorComponent_Template {
 		[Serialize("swipeValidationSpeed"             )] public float swipeValidationSpeed;
 		[Serialize("tapValidationDuration"            )] public float tapValidationDuration;

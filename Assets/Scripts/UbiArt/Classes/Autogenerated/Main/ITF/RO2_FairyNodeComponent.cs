@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FairyNodeComponent : RO2_SnakeNetworkNodeComponent {
 		[Serialize("lumsCount"       )] public uint lumsCount;
 		[Serialize("lumsDropMinDist" )] public float lumsDropMinDist;

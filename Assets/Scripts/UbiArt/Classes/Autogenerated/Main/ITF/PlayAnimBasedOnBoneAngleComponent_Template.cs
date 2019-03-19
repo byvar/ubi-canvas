@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PlayAnimBasedOnBoneAngleComponent_Template : ActorComponent_Template {
 		[Serialize("bone"    )] public StringID bone;
 		[Serialize("minAngle")] public Angle minAngle;

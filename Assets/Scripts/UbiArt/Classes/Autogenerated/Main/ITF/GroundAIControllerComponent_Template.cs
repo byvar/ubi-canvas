@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class GroundAIControllerComponent_Template : BaseAIControllerComponent_Template {
 		[Serialize("walkForce"                         )] public float walkForce;
 		[Serialize("walkEfficiencyMaxSpeed"            )] public float walkEfficiencyMaxSpeed;
@@ -83,7 +84,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(sprintWalkForceMultiplier));
 				SerializeField(s, nameof(sprintEfficiencyMaxSpeedMultiplier));
 				SerializeField(s, nameof(sprintAccelerationDuration));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(walkForce));
 				SerializeField(s, nameof(walkEfficiencyMaxSpeed));
 				SerializeField(s, nameof(walkEfficiencyMinGroundAngle));

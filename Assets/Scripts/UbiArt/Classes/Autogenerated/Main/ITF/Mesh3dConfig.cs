@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Mesh3dConfig : CSerializable {
 		[Serialize("texureTileSize")] public float texureTileSize;
 		[Serialize("random"        )] public bool random;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MinotaurShieldAIComponent_Template : RO2_AIComponent_Template {
 		[Serialize("flyAnimName"      )] public StringID flyAnimName;
 		[Serialize("landingAnimName"  )] public StringID landingAnimName;

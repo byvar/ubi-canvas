@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventMusicCustomCue : Event {
 		[Serialize("Metronome")] public METRONOME_TYPE Metronome;
 		[Serialize("Cue"      )] public StringID Cue;

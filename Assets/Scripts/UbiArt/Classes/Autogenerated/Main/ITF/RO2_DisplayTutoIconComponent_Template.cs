@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DisplayTutoIconComponent_Template : ActorComponent_Template {
 		[Serialize("tutos3d"            )] public SpawnActorPathList tutos3d;
 		[Serialize("tutos2d"            )] public SpawnActorPathList tutos2d;

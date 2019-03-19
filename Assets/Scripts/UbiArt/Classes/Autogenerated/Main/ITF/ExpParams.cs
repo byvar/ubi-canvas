@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class ExpParams : BaseCurveParams {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PersistentGameData_Level : PersistentGameData_Level {
 		[Serialize("bestLumsTaken"      )] public uint bestLumsTaken;
 		[Serialize("bestDistance"       )] public float bestDistance;
@@ -17,7 +18,7 @@ namespace UbiArt.ITF {
 		[Serialize("historyDateTime"    )] public online.DateTime historyDateTime;
 		[Serialize("seasonalEnemyKilled")] public bool seasonalEnemyKilled;
 		[Serialize("sequenceAlreadySeen")] public Placeholder sequenceAlreadySeen;
-		[Serialize("onlineSynced"       )] public bool onlineSynced;
+		[Serialize("onlineSynced"       )] public int onlineSynced;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

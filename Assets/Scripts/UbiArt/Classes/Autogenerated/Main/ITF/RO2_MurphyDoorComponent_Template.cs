@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MurphyDoorComponent_Template : ActorComponent_Template {
 		[Serialize("cursorTapProgressValue"   )] public float cursorTapProgressValue;
 		[Serialize("cursorGlobalProgressSpeed")] public float cursorGlobalProgressSpeed;

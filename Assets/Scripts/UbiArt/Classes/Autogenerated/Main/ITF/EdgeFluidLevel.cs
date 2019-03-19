@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EdgeFluidLevel : CSerializable {
 		[Serialize("IdEdgeFluid")] public uint IdEdgeFluid;
 		[Serialize("Data"       )] public EdgeData Data;

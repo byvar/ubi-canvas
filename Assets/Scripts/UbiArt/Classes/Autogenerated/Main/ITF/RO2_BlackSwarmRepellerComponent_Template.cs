@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BlackSwarmRepellerComponent_Template : ActorComponent_Template {
 		[Serialize("interactive"              )] public bool interactive;
 		[Serialize("safeZoneToleranceDistance")] public float safeZoneToleranceDistance;
@@ -26,61 +27,32 @@ namespace UbiArt.ITF {
 		[Serialize("interactiveSoundName"     )] public StringID interactiveSoundName;
 		[Serialize("periodicSoundName"        )] public StringID periodicSoundName;
 		[Serialize("pulseMaterial"            )] public GFXMaterialSerializable pulseMaterial;
-		[Serialize("defaultState"             )] public bool defaultState;
-		[Serialize("maxAllowedCycles"         )] public bool maxAllowedCycles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(interactive));
-				SerializeField(s, nameof(safeZoneToleranceDistance));
-				SerializeField(s, nameof(safeZoneRadiusMin));
-				SerializeField(s, nameof(safeZoneRadiusMax));
-				SerializeField(s, nameof(syncOffset));
-				SerializeField(s, nameof(defaultState));
-				SerializeField(s, nameof(cycleDuration));
-				SerializeField(s, nameof(maxAllowedCycles));
-				SerializeField(s, nameof(stateRatioOFF));
-				SerializeField(s, nameof(stateRatioOFFtoON));
-				SerializeField(s, nameof(stateRatioON));
-				SerializeField(s, nameof(stateRatioONtoOFF));
-				SerializeField(s, nameof(useSynchro));
-				SerializeField(s, nameof(safeZonePulseRadius));
-				SerializeField(s, nameof(safeZonePulseTime));
-				SerializeField(s, nameof(minAlphaValue));
-				SerializeField(s, nameof(maxAlphaValue));
-				SerializeField(s, nameof(safeZoneCenterOffset));
-				SerializeField(s, nameof(particleFxName));
-				SerializeField(s, nameof(particleFXSizeRatio));
-				SerializeField(s, nameof(textureBlendMode));
-				SerializeField(s, nameof(interactiveSoundName));
-				SerializeField(s, nameof(periodicSoundName));
-				SerializeField(s, nameof(pulseMaterial));
-			} else {
-				SerializeField(s, nameof(interactive));
-				SerializeField(s, nameof(safeZoneToleranceDistance));
-				SerializeField(s, nameof(safeZoneRadiusMin));
-				SerializeField(s, nameof(safeZoneRadiusMax));
-				SerializeField(s, nameof(syncOffset));
-				SerializeField(s, nameof(defaultState));
-				SerializeField(s, nameof(cycleDuration));
-				SerializeField(s, nameof(maxAllowedCycles));
-				SerializeField(s, nameof(stateRatioOFF));
-				SerializeField(s, nameof(stateRatioOFFtoON));
-				SerializeField(s, nameof(stateRatioON));
-				SerializeField(s, nameof(stateRatioONtoOFF));
-				SerializeField(s, nameof(useSynchro));
-				SerializeField(s, nameof(safeZonePulseRadius));
-				SerializeField(s, nameof(safeZonePulseTime));
-				SerializeField(s, nameof(minAlphaValue));
-				SerializeField(s, nameof(maxAlphaValue));
-				SerializeField(s, nameof(safeZoneCenterOffset));
-				SerializeField(s, nameof(particleFxName));
-				SerializeField(s, nameof(particleFXSizeRatio));
-				SerializeField(s, nameof(textureBlendMode));
-				SerializeField(s, nameof(interactiveSoundName));
-				SerializeField(s, nameof(periodicSoundName));
-				SerializeField(s, nameof(pulseMaterial));
-			}
+			SerializeField(s, nameof(interactive));
+			SerializeField(s, nameof(safeZoneToleranceDistance));
+			SerializeField(s, nameof(safeZoneRadiusMin));
+			SerializeField(s, nameof(safeZoneRadiusMax));
+			SerializeField(s, nameof(syncOffset));
+			SerializeField(s, nameof(defaultState));
+			SerializeField(s, nameof(cycleDuration));
+			SerializeField(s, nameof(maxAllowedCycles));
+			SerializeField(s, nameof(stateRatioOFF));
+			SerializeField(s, nameof(stateRatioOFFtoON));
+			SerializeField(s, nameof(stateRatioON));
+			SerializeField(s, nameof(stateRatioONtoOFF));
+			SerializeField(s, nameof(useSynchro));
+			SerializeField(s, nameof(safeZonePulseRadius));
+			SerializeField(s, nameof(safeZonePulseTime));
+			SerializeField(s, nameof(minAlphaValue));
+			SerializeField(s, nameof(maxAlphaValue));
+			SerializeField(s, nameof(safeZoneCenterOffset));
+			SerializeField(s, nameof(particleFxName));
+			SerializeField(s, nameof(particleFXSizeRatio));
+			SerializeField(s, nameof(textureBlendMode));
+			SerializeField(s, nameof(interactiveSoundName));
+			SerializeField(s, nameof(periodicSoundName));
+			SerializeField(s, nameof(pulseMaterial));
 		}
 		public override uint? ClassCRC => 0xB91C0A84;
 	}

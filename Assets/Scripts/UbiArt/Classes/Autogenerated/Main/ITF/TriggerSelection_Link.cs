@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerSelection_Link : TriggerSelectionAbstract {
 		[Serialize("Static"  )] public bool Static;
 		[Serialize("TagName" )] public StringID TagName;

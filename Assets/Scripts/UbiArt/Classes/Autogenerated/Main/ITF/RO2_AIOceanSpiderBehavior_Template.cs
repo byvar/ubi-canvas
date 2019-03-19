@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIOceanSpiderBehavior_Template : TemplateAIBehavior {
 		[Serialize("Actions"             )] public CList<RO2_AIOceanSpiderBehavior_Template.ActionTemplate> Actions;
 		[Serialize("Instructions"        )] public CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> Instructions;
@@ -11,6 +12,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(Instructions));
 			SerializeField(s, nameof(InactiveInstructions));
 		}
+		[Games(GameFlags.RA)]
 		public partial class InstructionTemplate : CSerializable {
 			[Serialize("actionName")] public StringID actionName;
 			[Serialize("playCount" )] public uint playCount;
@@ -20,6 +22,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(playCount));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class ActionTemplate : CSerializable {
 			[Serialize("name"  )] public StringID name;
 			[Serialize("action")] public Generic<AIAction_Template> action;

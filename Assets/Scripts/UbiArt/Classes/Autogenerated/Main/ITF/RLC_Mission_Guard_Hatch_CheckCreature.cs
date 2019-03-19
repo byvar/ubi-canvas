@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_Hatch_CheckCreature : RLC_Mission_Guard {
 		[Serialize("creatureID" )] public StringID creatureID;
 		[Serialize("powerup"    )] public StringID powerup;

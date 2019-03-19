@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class DetectedPhantom : DetectedObject {
 		[Serialize("PhantomDetectorID")] public StringID PhantomDetectorID;
 		[Serialize("PhantomID"        )] public StringID PhantomID;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventPushForce : Event {
 		[Serialize("force")] public Vector2 force;
 		protected override void SerializeImpl(CSerializerObject s) {

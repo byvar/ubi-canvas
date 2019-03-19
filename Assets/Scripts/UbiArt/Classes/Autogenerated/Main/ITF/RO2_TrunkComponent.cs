@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TrunkComponent : ActorComponent {
 		[Serialize("max"                   )] public Vector2 max;
 		[Serialize("heightUnderLeftCorner" )] public float heightUnderLeftCorner;
@@ -49,14 +50,17 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(trunkIsStoped));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RO2_TrunkCorner : CSerializable {
 			[Serialize("localPos"    )] public Vector2 localPos;
+			[Serialize("color"       )] public Color color;
 			[Serialize("isPined"     )] public bool isPined;
 			[Serialize("angularSpeed")] public Angle angularSpeed;
 			[Serialize("isInCol"     )] public bool isInCol;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(localPos));
+				SerializeField(s, nameof(color));
 				SerializeField(s, nameof(isPined));
 				SerializeField(s, nameof(angularSpeed));
 				SerializeField(s, nameof(isInCol));

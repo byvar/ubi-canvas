@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_BTActionDash_Template : BTAction_Template {
 		[Serialize("animAnticip"         )] public StringID animAnticip;
 		[Serialize("animDash"            )] public StringID animDash;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class GaussParams : BaseCurveParams {
 		[Serialize("curveHeight")] public float curveHeight;
 		[Serialize("bellCenter" )] public float bellCenter;

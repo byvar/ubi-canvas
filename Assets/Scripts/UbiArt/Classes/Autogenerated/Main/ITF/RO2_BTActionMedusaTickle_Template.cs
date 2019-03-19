@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionMedusaTickle_Template : BTAction_Template {
 		[Serialize("animLaugh"                   )] public StringID animLaugh;
 		[Serialize("animLaugh_ToStand"           )] public StringID animLaugh_ToStand;

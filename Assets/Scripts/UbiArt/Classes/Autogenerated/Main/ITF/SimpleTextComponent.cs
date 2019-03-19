@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class SimpleTextComponent : ActorComponent {
 		[Serialize("TextLabel"      )] public string TextLabel;
 		[Serialize("lineId"         )] public LocalisationId lineId;

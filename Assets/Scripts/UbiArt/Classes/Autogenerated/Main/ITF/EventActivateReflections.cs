@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventActivateReflections : Event {
 		[Serialize("RenderInReflections")] public bool RenderInReflections;
 		protected override void SerializeImpl(CSerializerObject s) {

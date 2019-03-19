@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventDragonSwitchAnimation : Event {
 		[Serialize("Animation")] public StringID Animation;
 		protected override void SerializeImpl(CSerializerObject s) {

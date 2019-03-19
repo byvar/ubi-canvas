@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_ExitComponent_Template : ActorComponent_Template {
 		[Serialize("shakeFlagsDistance")] public float shakeFlagsDistance;
 		protected override void SerializeImpl(CSerializerObject s) {

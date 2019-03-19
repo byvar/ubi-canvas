@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BasicPlayerControllerComponent_Template : PlayerControllerComponent_Template {
 		[Serialize("deadSoulFaction"                   )] public uint deadSoulFaction;
 		[Serialize("touchReviveInteractionCircleRadius")] public float touchReviveInteractionCircleRadius;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class HomeTreeBrickComponent_Template : ActorComponent_Template {
 		[Serialize("editor_stepCount" )] public uint editor_stepCount;
 		[Serialize("editor_minGrowth" )] public float editor_minGrowth;

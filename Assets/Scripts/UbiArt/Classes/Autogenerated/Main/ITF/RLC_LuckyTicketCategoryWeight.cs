@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_LuckyTicketCategoryWeight : CSerializable {
 		[Serialize("category")] public Enum_category category;
 		[Serialize("weight"  )] public uint weight;

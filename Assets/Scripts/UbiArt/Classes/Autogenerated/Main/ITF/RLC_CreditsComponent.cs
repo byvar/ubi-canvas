@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreditsComponent : CreditsComponent {
 		[Serialize("jobTitleNameGape" )] public float jobTitleNameGape;
 		[Serialize("jobTitleHorOffset")] public float jobTitleHorOffset;

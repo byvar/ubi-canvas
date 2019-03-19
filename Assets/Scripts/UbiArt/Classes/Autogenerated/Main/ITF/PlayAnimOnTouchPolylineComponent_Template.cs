@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PlayAnimOnTouchPolylineComponent_Template : ActorComponent_Template {
 		[Serialize("maxSpeed")] public float maxSpeed;
 		[Serialize("stiff"   )] public float stiff;

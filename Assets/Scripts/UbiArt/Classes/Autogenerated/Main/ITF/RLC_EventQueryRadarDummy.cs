@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_EventQueryRadarDummy : Event {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class BezierBranch : CSerializable {
 		[Serialize("nodes"            )] public CList<BezierNode> nodes;
 		[Serialize("subBranches"      )] public CList<BezierSubBranch> subBranches;

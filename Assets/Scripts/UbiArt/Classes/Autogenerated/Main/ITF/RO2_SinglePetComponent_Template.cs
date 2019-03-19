@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SinglePetComponent_Template : GraphicComponent_Template {
 		[Serialize("aabb"           )] public AABB aabb;
 		[Serialize("appearAnim"     )] public StringID appearAnim;

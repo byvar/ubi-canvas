@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GiftSendingError : CSerializable {
 		[Serialize("cause")] public Enum_cause cause;
 		[Serialize("time" )] public online.DateTime time;

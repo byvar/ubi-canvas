@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameGlobalsPopulationCondition : GameGlobalsCondition {
 		[Serialize("kind")] public StringID kind;
 		[Serialize("type")] public StringID type;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_ChallengeManager_Template : TemplateObj {
 		[Serialize("lumScoreMult"              )] public float lumScoreMult;
 		[Serialize("distScoreMult"             )] public float distScoreMult;

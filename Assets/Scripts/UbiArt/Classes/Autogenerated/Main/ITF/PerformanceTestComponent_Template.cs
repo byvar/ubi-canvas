@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PerformanceTestComponent_Template : ActorComponent_Template {
 		[Serialize("spawns")] public CArray<Path> spawns;
 		[Serialize("offset")] public Vector3 offset;
@@ -8,10 +9,18 @@ namespace UbiArt.ITF {
 		[Serialize("seed"  )] public uint seed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(spawns));
-			SerializeField(s, nameof(offset));
-			SerializeField(s, nameof(limits));
-			SerializeField(s, nameof(seed));
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+				SerializeField(s, nameof(spawns));
+				SerializeField(s, nameof(offset));
+				SerializeField(s, nameof(limits));
+				SerializeField(s, nameof(seed));
+			} else {
+				SerializeField(s, nameof(spawns));
+				SerializeField(s, nameof(spawns));
+				SerializeField(s, nameof(offset));
+				SerializeField(s, nameof(limits));
+				SerializeField(s, nameof(seed));
+			}
 		}
 		public override uint? ClassCRC => 0x8EB59A46;
 	}

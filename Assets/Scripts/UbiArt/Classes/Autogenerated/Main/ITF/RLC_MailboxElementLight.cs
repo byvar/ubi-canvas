@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_MailboxElementLight : CSerializable {
 		[Serialize("uniqueId")] public string uniqueId;
 		[Serialize("type"    )] public Enum_type type;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_HeadBranchComponent_Template : RO2_BezierBranchComponent_Template {
 		[Serialize("headActor"       )] public Path headActor;
 		[Serialize("headAttachOffset")] public float headAttachOffset;

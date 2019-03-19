@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AutoDiggerComponent : ActorComponent {
 		[Serialize("DigResistance"  )] public float DigResistance;
 		[Serialize("DigImpulsion"   )] public float DigImpulsion;

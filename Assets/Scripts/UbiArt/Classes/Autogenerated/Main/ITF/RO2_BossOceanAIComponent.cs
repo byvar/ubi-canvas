@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossOceanAIComponent : ActorComponent {
 		[Serialize("sequences"     )] public CList<RO2_BossOceanAIComponent.Sequence> sequences;
 		[Serialize("finalCinematic")] public ObjectPath finalCinematic;
@@ -11,6 +12,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(finalCinematic));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class Sequence : CSerializable {
 			[Serialize("tweenSet"              )] public StringID tweenSet;
 			[Serialize("buboId"                )] public StringID buboId;
@@ -23,6 +25,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(buboId));
 				SerializeField(s, nameof(objectToTriggerOnEnter));
 				SerializeField(s, nameof(objectToTriggerOnExit));
+				SerializeField(s, nameof(missileRegions));
 				SerializeField(s, nameof(missileRegions));
 			}
 		}

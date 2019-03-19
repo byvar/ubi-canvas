@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GameModeParameters : GameModeParameters {
 		[Serialize("gameMode")] public Enum_gameMode gameMode;
 		protected override void SerializeImpl(CSerializerObject s) {

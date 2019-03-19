@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class AttractorComponent : ActorComponent {
 		[Serialize("valueOverDistance"    )] public Spline valueOverDistance;
 		[Serialize("valueOverSpeed"       )] public Spline valueOverSpeed;

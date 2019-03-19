@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventChangeSubstitutionTemplateAnim : Event {
 		[Serialize("set"            )] public bool set;
 		[Serialize("templateIdToSet")] public uint templateIdToSet;

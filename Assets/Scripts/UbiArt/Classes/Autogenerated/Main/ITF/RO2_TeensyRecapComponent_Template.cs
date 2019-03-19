@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TeensyRecapComponent_Template : ActorComponent_Template {
 		[Serialize("teensyCount")] public uint teensyCount;
 		[Serialize("teensies"   )] public CList<RO2_TeensyRecapComponent_Template.Teensy> teensies;
@@ -23,6 +24,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(ten));
 			SerializeField(s, nameof(fxAppear));
 		}
+		[Games(GameFlags.RA)]
 		public partial class AnimIndices : CSerializable {
 			[Serialize("stand"      )] public uint stand;
 			[Serialize("standToYeah")] public uint standToYeah;
@@ -36,6 +38,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(yeahToStand));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class Teensy : CSerializable {
 			[Serialize("variationIndices")] public CList<RO2_TeensyRecapComponent_Template.AnimIndices> variationIndices;
 			protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerHudScoreComponent_Template : GraphicComponent_Template {
 		[Serialize("relativeWidth"                       )] public float relativeWidth;
 		[Serialize("relativeSpacing"                     )] public float relativeSpacing;
@@ -25,6 +26,7 @@ namespace UbiArt.ITF {
 		[Serialize("pressStartPos"                       )] public Vector2 pressStartPos;
 		[Serialize("grayedAlpha"                         )] public float grayedAlpha;
 		[Serialize("idleAlpha"                           )] public float idleAlpha;
+		[Serialize("leaveDRCTextID"                      )] public LocalisationId leaveDRCTextID;
 		[Serialize("lumTexture"                          )] public Path lumTexture;
 		[Serialize("lumMaterial"                         )] public GFXMaterialSerializable lumMaterial;
 		[Serialize("lumBoxLocalPosition"                 )] public Vector2 lumBoxLocalPosition;
@@ -44,7 +46,6 @@ namespace UbiArt.ITF {
 		[Serialize("pressStartMinAlpha"                  )] public float pressStartMinAlpha;
 		[Serialize("pressStartMaxAlpha"                  )] public float pressStartMaxAlpha;
 		[Serialize("pressStartTextID"                    )] public LocalisationId pressStartTextID;
-		[Serialize("leaveDRCTextID"                      )] public LocalisationId leaveDRCTextID;
 		[Serialize("girlFriendModePulseDuration"         )] public float girlFriendModePulseDuration;
 		[Serialize("girlFriendModeScorePosXOffset"       )] public float girlFriendModeScorePosXOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -121,6 +122,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(pressStartPos));
 				SerializeField(s, nameof(grayedAlpha));
 				SerializeField(s, nameof(idleAlpha));
+				SerializeField(s, nameof(leaveDRCTextID));
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					SerializeField(s, nameof(lumTexture));
 				}

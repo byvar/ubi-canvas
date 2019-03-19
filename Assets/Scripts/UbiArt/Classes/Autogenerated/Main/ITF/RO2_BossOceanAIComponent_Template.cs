@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossOceanAIComponent_Template : ActorComponent_Template {
 		[Serialize("speedOnBuboHit"       )] public float speedOnBuboHit;
 		[Serialize("accelerationOnBuboHit")] public float accelerationOnBuboHit;

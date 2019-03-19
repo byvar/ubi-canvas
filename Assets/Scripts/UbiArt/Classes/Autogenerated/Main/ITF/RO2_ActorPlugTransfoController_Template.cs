@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ActorPlugTransfoController_Template : ActorPlugPlayableController_Template {
 		[Serialize("autoUnplugDelay"  )] public float autoUnplugDelay;
 		[Serialize("autoUnplugWarning")] public float autoUnplugWarning;

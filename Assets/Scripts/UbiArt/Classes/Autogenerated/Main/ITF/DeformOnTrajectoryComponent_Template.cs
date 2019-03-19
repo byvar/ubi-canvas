@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class DeformOnTrajectoryComponent_Template : ActorComponent_Template {
 		[Serialize("bones"       )] public CList<StringID> bones;
 		[Serialize("sampleLength")] public float sampleLength;

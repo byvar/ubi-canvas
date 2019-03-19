@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TweenFlip_Template : TweenInstruction_Template {
 		[Serialize("mode"    )] public TweenFlipMode mode;
 		[Serialize("duration")] public float duration;
@@ -8,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("mode"    )] public Enum_mode mode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(duration));
 				SerializeField(s, nameof(name));
 				SerializeField(s, nameof(mode));

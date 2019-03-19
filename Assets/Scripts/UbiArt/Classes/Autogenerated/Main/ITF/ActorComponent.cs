@@ -1,11 +1,17 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR)]
 	public partial class ActorComponent : CSerializable {
+		[Serialize("UpdateDisabled"   )] public bool UpdateDisabled;
 		[Serialize("ObjectDeviceSpeed")] public DeviceInfo__Device_Speed ObjectDeviceSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ObjectDeviceSpeed));
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			} else {
+				SerializeField(s, nameof(UpdateDisabled));
+				SerializeField(s, nameof(ObjectDeviceSpeed));
+			}
 		}
 		public enum DeviceInfo__Device_Speed {
 			[Serialize("DeviceInfo::Device_SpeedLow"               )] Low = 1,

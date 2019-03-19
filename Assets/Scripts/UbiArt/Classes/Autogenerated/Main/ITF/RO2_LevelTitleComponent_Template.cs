@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LevelTitleComponent_Template : ActorComponent_Template {
 		[Serialize("textPath"   )] public Path textPath;
 		[Serialize("screenPos"  )] public Vector2 screenPos;

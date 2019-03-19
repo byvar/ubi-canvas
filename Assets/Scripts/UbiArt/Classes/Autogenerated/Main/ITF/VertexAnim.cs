@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class VertexAnim : CSerializable {
 		[Serialize("animGlobalSpeed"   )] public float animGlobalSpeed;
 		[Serialize("animGlobalRotSpeed")] public Angle animGlobalRotSpeed;

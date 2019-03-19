@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicalBossComponent_Template : ActorComponent_Template {
 		[Serialize("faction"               )] public uint faction;
 		[Serialize("metronomeType"         )] public uint metronomeType;

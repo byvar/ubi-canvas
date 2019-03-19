@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ParachuteComponent_Template : ActorComponent_Template {
 		[Serialize("animOpening"         )] public StringID animOpening;
 		[Serialize("animFalling"         )] public StringID animFalling;

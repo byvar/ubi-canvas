@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class VirtualLinkComponent_Template : ActorComponent_Template {
 		[Serialize("channelID"         )] public StringID channelID;
 		[Serialize("emitter"           )] public bool emitter;

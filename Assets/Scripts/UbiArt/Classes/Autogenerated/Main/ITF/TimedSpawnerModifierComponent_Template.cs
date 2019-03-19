@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class TimedSpawnerModifierComponent_Template : ActorComponent_Template {
 		[Serialize("timedSpawnerData" )] public TimedSpawnerData timedSpawnerData;
 		[Serialize("useInstanceValues")] public bool useInstanceValues;

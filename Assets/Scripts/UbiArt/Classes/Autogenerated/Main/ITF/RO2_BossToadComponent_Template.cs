@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossToadComponent_Template : RO2_BossComponent_Template {
 		[Serialize("projectileA"       )] public Path projectileA;
 		[Serialize("projectileB"       )] public Path projectileB;

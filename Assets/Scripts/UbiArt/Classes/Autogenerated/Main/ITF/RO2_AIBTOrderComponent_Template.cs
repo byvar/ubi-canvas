@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIBTOrderComponent_Template : ActorComponent_Template {
 		[Serialize("type"         )] public BTAIORDER type;
 		[Serialize("detectionArea")] public StringID detectionArea;

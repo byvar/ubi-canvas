@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SinkingPlatformComponent_Template : ActorComponent_Template {
 		[Serialize("weightStep"        )] public float weightStep;
 		[Serialize("factor"            )] public float factor;

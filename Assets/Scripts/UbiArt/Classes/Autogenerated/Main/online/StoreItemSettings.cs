@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class StoreItemSettings : CSerializable {
 		[Serialize("price"   )] public uint price;
 		[Serialize("quantity")] public uint quantity;

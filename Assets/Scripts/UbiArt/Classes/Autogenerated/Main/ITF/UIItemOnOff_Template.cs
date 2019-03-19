@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIItemOnOff_Template : UIItemBasic_Template {
 		[Serialize("animOn"        )] public StringID animOn;
 		[Serialize("animOff"       )] public StringID animOff;

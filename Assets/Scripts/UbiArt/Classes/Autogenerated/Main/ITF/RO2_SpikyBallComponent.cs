@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SpikyBallComponent : ActorComponent {
 		[Serialize("torqueFriction"       )] public float torqueFriction;
 		[Serialize("airFrictionMultiplier")] public float airFrictionMultiplier;

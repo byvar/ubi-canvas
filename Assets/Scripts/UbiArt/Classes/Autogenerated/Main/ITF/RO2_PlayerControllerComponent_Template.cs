@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerControllerComponent_Template : RO2_BasicPlayerControllerComponent_Template {
 		[Serialize("abilities"                                             )] public uint abilities;
 		[Serialize("controllerHeight"                                      )] public float controllerHeight;

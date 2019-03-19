@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_StoreBundleLocInfo : CSerializable {
 		[Serialize("StoreBundleTitle"         )] public string StoreBundleTitle;
 		[Serialize("StoreBundlePurchasedTitle")] public string StoreBundlePurchasedTitle;

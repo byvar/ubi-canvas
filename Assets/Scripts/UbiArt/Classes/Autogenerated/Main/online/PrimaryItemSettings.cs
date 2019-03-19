@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class PrimaryItemSettings : CSerializable {
 		[Serialize("amount"   )] public uint amount;
 		[Serialize("reduction")] public float reduction;

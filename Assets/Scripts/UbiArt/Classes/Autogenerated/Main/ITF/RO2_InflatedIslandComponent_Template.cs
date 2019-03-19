@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_InflatedIslandComponent_Template : ActorComponent_Template {
 		[Serialize("pos2Angle"          )] public float pos2Angle;
 		[Serialize("pos2Pos"            )] public float pos2Pos;

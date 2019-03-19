@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class DialogSoundDescriptorElement : CSerializable {
 		[Serialize("Mood"           )] public uint Mood;
 		[Serialize("SoundDescriptor")] public StringID SoundDescriptor;

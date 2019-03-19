@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class ParticlePhysComponent_Template : PhysComponent_Template {
 		[Serialize("physFriction"                          )] public float physFriction;
 		[Serialize("physAngularSpeedMinLinear"             )] public float physAngularSpeedMinLinear;
@@ -14,13 +15,7 @@ namespace UbiArt.ITF {
 		[Serialize("physFanForceMultiplier"                )] public float physFanForceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(physFriction));
-				SerializeField(s, nameof(physAngularSpeedMinLinear));
-				SerializeField(s, nameof(physAngularSpeedMaxLinear));
-				SerializeField(s, nameof(physAngularSpeedMinAngular));
-				SerializeField(s, nameof(physAngularSpeedMaxAngular));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(physFriction));
 				SerializeField(s, nameof(physAngularSpeedMinLinear));
 				SerializeField(s, nameof(physAngularSpeedMaxLinear));

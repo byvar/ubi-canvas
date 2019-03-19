@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeAIComponent_Template : ActorComponent_Template {
 		[Serialize("crushSpeedMultiplier"       )] public float crushSpeedMultiplier;
 		[Serialize("crushAccelerationMultiplier")] public float crushAccelerationMultiplier;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_OnlineEventAnimReset : Event {
 		[Serialize("tree"      )] public bool tree;
 		[Serialize("transition")] public bool transition;

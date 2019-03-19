@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class StatArg : CSerializable {
 		[Serialize("name" )] public string name;
 		[Serialize("value")] public StatValue value;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_StoreBundlePeriod : CSerializable {
 		[Serialize("OpeningTime"           )] public online.DateTime OpeningTime;
 		[Serialize("ClosingTime"           )] public online.DateTime ClosingTime;

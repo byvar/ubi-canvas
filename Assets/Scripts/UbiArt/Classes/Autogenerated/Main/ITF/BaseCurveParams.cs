@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class BaseCurveParams : CSerializable {
 		[Serialize("xofs"  )] public float xofs;
 		[Serialize("yofs"  )] public float yofs;
@@ -13,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("loop"  )] public bool loop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 			} else {
 				SerializeField(s, nameof(xofs));
 				SerializeField(s, nameof(yofs));

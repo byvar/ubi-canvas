@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_EnduranceRule_Template : CSerializable {
 		[Serialize("distanceOffset")] public float distanceOffset;
 		[Serialize("distanceRepeat")] public float distanceRepeat;

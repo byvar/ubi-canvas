@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class FixedCameraComponent : BaseCameraComponent {
 		[Serialize("offset")] public Vector3 offset;
 		protected override void SerializeImpl(CSerializerObject s) {

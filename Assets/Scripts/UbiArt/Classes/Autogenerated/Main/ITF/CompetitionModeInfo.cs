@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class CompetitionModeInfo : CSerializable {
 		[Serialize("mode"                 )] public online__CompetitionMode mode;
 		[Serialize("titleText"            )] public SmartLocId titleText;
@@ -43,6 +44,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(iconPath));
 			SerializeField(s, nameof(iconSpriteIndex));
 		}
+		[Games(GameFlags.RA)]
 		public partial class ThresholdText : CSerializable {
 			[Serialize("text"     )] public SmartLocId text;
 			[Serialize("threshold")] public float threshold;

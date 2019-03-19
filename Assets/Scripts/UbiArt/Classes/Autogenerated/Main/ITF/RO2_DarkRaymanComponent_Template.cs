@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DarkRaymanComponent_Template : ActorComponent_Template {
 		[Serialize("frameToWaitBeforeRehit"         )] public uint frameToWaitBeforeRehit;
 		[Serialize("waitDurationWhenDead"           )] public float waitDurationWhenDead;

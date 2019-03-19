@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventViewportVisibility : Event {
 		[Serialize("ViewportVisibility")] public uint ViewportVisibility;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionAppearSplinterCell_Template : BTAction_Template {
 		[Serialize("animSwimUp"      )] public StringID animSwimUp;
 		[Serialize("speedLimitToStop")] public float speedLimitToStop;

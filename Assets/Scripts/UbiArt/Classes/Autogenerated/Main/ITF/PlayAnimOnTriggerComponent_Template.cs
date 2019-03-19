@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PlayAnimOnTriggerComponent_Template : ActorComponent_Template {
 		[Serialize("triggerOnAnim" )] public StringID triggerOnAnim;
 		[Serialize("triggerOffAnim")] public StringID triggerOffAnim;

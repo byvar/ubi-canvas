@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchEyeAIComponent_Template : ActorComponent_Template {
 		[Serialize("animIdle"   )] public StringID animIdle;
 		[Serialize("animTouched")] public StringID animTouched;

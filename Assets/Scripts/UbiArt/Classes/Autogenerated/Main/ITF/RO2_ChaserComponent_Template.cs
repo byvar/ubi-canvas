@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChaserComponent_Template : ActorComponent_Template {
 		[Serialize("waitAnim"           )] public StringID waitAnim;
 		[Serialize("runAnim"            )] public StringID runAnim;

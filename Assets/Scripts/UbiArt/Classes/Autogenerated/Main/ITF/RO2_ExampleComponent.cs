@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_ExampleComponent : ActorComponent {
 		[Serialize("someValue")] public float someValue;
 		[Serialize("someEvent")] public Generic<Event> someEvent;

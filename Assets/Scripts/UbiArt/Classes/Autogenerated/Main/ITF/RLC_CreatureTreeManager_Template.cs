@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureTreeManager_Template : TemplateObj {
 		[Serialize("TreeTierList"                       )] public CList<RLC_CreatureTreeTier> TreeTierList;
 		[Serialize("TreeTopShapeOffset"                 )] public float TreeTopShapeOffset;

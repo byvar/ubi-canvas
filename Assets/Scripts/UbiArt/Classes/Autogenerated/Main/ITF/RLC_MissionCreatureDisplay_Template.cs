@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_MissionCreatureDisplay_Template : RLC_BasicCreatureDisplay_Template {
 		[Serialize("missionDifficulty")] public Mission_Difficulty missionDifficulty;
 		[Serialize("missionType"      )] public Mission_Type missionType;

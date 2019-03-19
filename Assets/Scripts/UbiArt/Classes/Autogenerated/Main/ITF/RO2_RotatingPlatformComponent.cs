@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RotatingPlatformComponent : ActorComponent {
 		[Serialize("rotating"            )] public bool rotating;
 		[Serialize("destinationAngle"    )] public Angle destinationAngle;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PlayTextBanner_evtTemplate : SequenceEvent_Template {
 		[Serialize("LineId"       )] public uint LineId;
 		[Serialize("LineId2"      )] public uint LineId2;

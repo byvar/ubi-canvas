@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionRescuedDisappear_Template : BTAction_Template {
 		[Serialize("happyAnim")] public StringID happyAnim;
 		[Serialize("spawnFX"  )] public Path spawnFX;

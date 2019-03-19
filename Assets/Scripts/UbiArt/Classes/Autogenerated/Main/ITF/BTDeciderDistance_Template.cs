@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTDeciderDistance_Template : BTDecider_Template {
 		[Serialize("distance")] public float distance;
 		[Serialize("type"    )] public ECompareType type;

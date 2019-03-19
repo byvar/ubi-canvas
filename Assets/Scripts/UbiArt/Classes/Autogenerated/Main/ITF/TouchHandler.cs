@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class TouchHandler : CSerializable {
 		[Serialize("shape"             )] public Generic<PhysShape> shape;
 		[Serialize("endDragOnExitShape")] public bool endDragOnExitShape;

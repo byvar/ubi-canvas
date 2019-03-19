@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlayTimeFactor_evtTemplate : SequenceEventWithActor_Template {
 		[Serialize("TimeFactorSpline")] public Spline TimeFactorSpline;
 		protected override void SerializeImpl(CSerializerObject s) {

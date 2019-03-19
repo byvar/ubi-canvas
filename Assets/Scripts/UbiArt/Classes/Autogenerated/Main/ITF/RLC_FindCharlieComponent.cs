@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_FindCharlieComponent : ActorComponent {
 		[Serialize("ForcedVariant")] public int ForcedVariant;
 		[Serialize("isTutorial"   )] public bool isTutorial;

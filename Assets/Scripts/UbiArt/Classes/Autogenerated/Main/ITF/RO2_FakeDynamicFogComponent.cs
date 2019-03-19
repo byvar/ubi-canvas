@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FakeDynamicFogComponent : ActorComponent {
 		[Serialize("hasMesh3D"                )] public bool hasMesh3D;
 		[Serialize("iActivatedInit"           )] public bool iActivatedInit;

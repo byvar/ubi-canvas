@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossShieldComponent_Template : ActorComponent_Template {
 		[Serialize("animOn"         )] public StringID animOn;
 		[Serialize("animOff"        )] public StringID animOff;

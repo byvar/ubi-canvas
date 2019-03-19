@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RenderSingleAnimData : SingleAnimData {
 		[Serialize("xMin" )] public float xMin;
 		[Serialize("yMin" )] public float yMin;

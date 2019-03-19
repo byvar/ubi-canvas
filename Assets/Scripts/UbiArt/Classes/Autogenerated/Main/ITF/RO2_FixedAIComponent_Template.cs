@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_FixedAIComponent_Template : RO2_AIComponent_Template {
 		[Serialize("genericBehavior")] public Generic<TemplateAIBehavior> genericBehavior;
 		protected override void SerializeImpl(CSerializerObject s) {

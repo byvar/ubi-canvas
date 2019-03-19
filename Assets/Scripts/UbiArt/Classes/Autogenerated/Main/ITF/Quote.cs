@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class Quote : CSerializable {
 		[Serialize("Appear"   )] public QuoteCondition Appear;
 		[Serialize("Disappear")] public QuoteCondition Disappear;

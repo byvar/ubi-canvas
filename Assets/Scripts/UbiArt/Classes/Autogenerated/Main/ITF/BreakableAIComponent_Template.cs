@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableAIComponent_Template : AIComponent_Template {
 		[Serialize("crushAttackDamage"      )] public uint crushAttackDamage;
 		[Serialize("frontDamage"            )] public uint frontDamage;
@@ -27,6 +28,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(openAnimReverse));
 			SerializeField(s, nameof(resetOnCheckpoint));
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class DestructionStage : CSerializable {
 			[Serialize("rumble"        )] public StringID rumble;
 			[Serialize("destroy"       )] public StringID destroy;

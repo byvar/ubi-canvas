@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_InAppPurchaseManager_Template : TemplateObj {
 		[Serialize("Reward_BronzeCup"                       )] public RLC_ScoreRecapReward Reward_BronzeCup;
 		[Serialize("Reward_SilverCup"                       )] public RLC_ScoreRecapReward Reward_SilverCup;

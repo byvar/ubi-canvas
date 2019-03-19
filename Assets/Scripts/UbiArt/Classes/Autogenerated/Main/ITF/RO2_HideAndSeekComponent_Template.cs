@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HideAndSeekComponent_Template : ActorComponent_Template {
 		[Serialize("animHide"              )] public StringID animHide;
 		[Serialize("animShow"              )] public StringID animShow;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PlayStory_evtTemplate : SequenceEvent_Template {
 		[Serialize("baseFilePath")] public Path baseFilePath;
 		[Serialize("isVideo"     )] public bool isVideo;

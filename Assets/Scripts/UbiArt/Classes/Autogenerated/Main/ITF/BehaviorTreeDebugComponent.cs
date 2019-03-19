@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BehaviorTreeDebugComponent : ActorComponent {
 		[Serialize("EnbaleBreakPoints")] public bool EnbaleBreakPoints;
 		[Serialize("BreakPointList"   )] public CList<BreakPointDesc> BreakPointList;

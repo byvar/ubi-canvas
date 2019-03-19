@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossCameraComponent_Template : BaseCameraComponent_Template {
 		[Serialize("attachBone")] public StringID attachBone;
 		protected override void SerializeImpl(CSerializerObject s) {

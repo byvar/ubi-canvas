@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class BoneMapping : CSerializable {
 		[Serialize("inputBone" )] public StringID inputBone;
 		[Serialize("outputBone")] public StringID outputBone;

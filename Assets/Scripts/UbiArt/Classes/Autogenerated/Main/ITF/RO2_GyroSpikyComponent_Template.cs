@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GyroSpikyComponent_Template : RO2_RailComponent_Template {
 		[Serialize("acceleration"           )] public float acceleration;
 		[Serialize("drcAcceleration"        )] public float drcAcceleration;

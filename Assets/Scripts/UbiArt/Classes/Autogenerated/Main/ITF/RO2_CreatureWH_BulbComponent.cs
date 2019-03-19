@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CreatureWH_BulbComponent : RO2_AIComponent {
 		[Serialize("onlyAttackInWater")] public bool onlyAttackInWater;
 		[Serialize("dieOnTrigger"     )] public bool dieOnTrigger;
@@ -19,6 +20,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(slots));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class HandSlot : CSerializable {
 			[Serialize("ckp_state"       )] public uint ckp_state;
 			[Serialize("ckp_pos"         )] public Vector2 ckp_pos;

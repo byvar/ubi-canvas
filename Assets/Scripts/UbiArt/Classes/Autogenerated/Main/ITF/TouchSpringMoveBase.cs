@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class TouchSpringMoveBase : CSerializable {
 		[Serialize("elastic")] public bool elastic;
 		[Serialize("reverse")] public bool reverse;

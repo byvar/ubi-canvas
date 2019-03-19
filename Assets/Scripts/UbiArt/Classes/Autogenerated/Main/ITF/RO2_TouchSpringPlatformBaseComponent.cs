@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchSpringPlatformBaseComponent : ActorComponent {
 		[Serialize("saveOnCheckpoint"       )] public bool saveOnCheckpoint;
 		[Serialize("touchDetectCooldown"    )] public uint touchDetectCooldown;

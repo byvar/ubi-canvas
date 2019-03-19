@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventSyncActorUpdate : Event {
 		[Serialize("wantFreeze"  )] public bool wantFreeze;
 		[Serialize("startAtFrame")] public uint startAtFrame;

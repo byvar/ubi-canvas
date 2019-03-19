@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UITextBox : UIComponent {
 		[Serialize("style"                  )] public uint style;
 		[Serialize("offset"                 )] public Vector2 offset;
@@ -27,7 +28,27 @@ namespace UbiArt.ITF {
 		[Serialize("ViewportVisibility"     )] public uint ViewportVisibility;
 		[Serialize("AdaptToLangage"         )] public bool AdaptToLangage;
 		[Serialize("DontResizeForChinese"   )] public bool DontResizeForChinese;
-		[Serialize("overridingHAlignment"   )] public FONT_ALIGN_LEGENDS overridingHAlignmentLegends;
+		[Serialize("overridingHAlignment"   )] public Enum_overridingHAlignment overridingHAlignment;
+		[Serialize("overridingVAlignment"   )] public Enum_overridingVAlignment overridingVAlignment;
+		[Serialize("overridingAnchor"       )] public Enum_overridingAnchor overridingAnchor;
+		[Serialize("locId"                  )] public StringID locId;
+		[Serialize("uint__0"                )] public uint uint__0;
+		[Serialize("Vector2__1"             )] public Vector2 Vector2__1;
+		[Serialize("float__2"               )] public float float__2;
+		[Serialize("Vector2__3"             )] public Vector2 Vector2__3;
+		[Serialize("Vector2__4"             )] public Vector2 Vector2__4;
+		[Serialize("float__5"               )] public float float__5;
+		[Serialize("string__6"              )] public string string__6;
+		[Serialize("LocalisationId__7"      )] public LocalisationId LocalisationId__7;
+		[Serialize("Color__8"               )] public Color Color__8;
+		[Serialize("Enum_VH_0__9"           )] public Enum_VH_0 Enum_VH_0__9;
+		[Serialize("float__10"              )] public float float__10;
+		[Serialize("float__11"              )] public float float__11;
+		[Serialize("bool__12"               )] public bool bool__12;
+		[Serialize("uint__13"               )] public uint uint__13;
+		[Serialize("Enum_VH_1__14"          )] public Enum_VH_1 Enum_VH_1__14;
+		[Serialize("Enum_VH_2__15"          )] public Enum_VH_2 Enum_VH_2__15;
+		[Serialize("Enum_VH_3__16"          )] public Enum_VH_3 Enum_VH_3__16;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -44,9 +65,47 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(scaleToMatchWithArea));
 					SerializeField(s, nameof(autoScrollSpeed));
 					SerializeField(s, nameof(autoScrollWaitTime));
-					SerializeField(s, nameof(overridingHAlignmentLegends));
+					SerializeField(s, nameof(overridingHAlignment));
 					SerializeField(s, nameof(overridingVAlignment));
 					SerializeField(s, nameof(overridingAnchor));
+				}
+			} else if (Settings.s.game == Settings.Game.COL) {
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(style));
+					SerializeField(s, nameof(offset));
+					SerializeField(s, nameof(depth));
+					SerializeField(s, nameof(scale));
+					SerializeField(s, nameof(area));
+					SerializeField(s, nameof(maxWidth));
+					SerializeField(s, nameof(rawText));
+					SerializeField(s, nameof(locId));
+					SerializeField(s, nameof(overridingColor));
+					SerializeField(s, nameof(scaleToMatchWithArea));
+					SerializeField(s, nameof(autoScrollSpeed));
+					SerializeField(s, nameof(autoScrollWaitTime));
+					SerializeField(s, nameof(overridingHAlignment));
+					SerializeField(s, nameof(overridingVAlignment));
+					SerializeField(s, nameof(overridingAnchor));
+				}
+			} else if (Settings.s.game == Settings.Game.VH) {
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(uint__0));
+					SerializeField(s, nameof(Vector2__1));
+					SerializeField(s, nameof(float__2));
+					SerializeField(s, nameof(Vector2__3));
+					SerializeField(s, nameof(Vector2__4));
+					SerializeField(s, nameof(float__5));
+					SerializeField(s, nameof(string__6));
+					SerializeField(s, nameof(LocalisationId__7));
+					SerializeField(s, nameof(Color__8));
+					SerializeField(s, nameof(Enum_VH_0__9));
+					SerializeField(s, nameof(float__10));
+					SerializeField(s, nameof(float__11));
+					SerializeField(s, nameof(bool__12));
+					SerializeField(s, nameof(uint__13));
+					SerializeField(s, nameof(Enum_VH_1__14));
+					SerializeField(s, nameof(Enum_VH_2__15));
+					SerializeField(s, nameof(Enum_VH_3__16));
 				}
 			} else {
 				SerializeField(s, nameof(style));
@@ -122,11 +181,71 @@ namespace UbiArt.ITF {
 			[Serialize("AREA_ANCHOR_BOTTOM_LEFT"  )] BOTTOM_LEFT = 7,
 			[Serialize("AREA_ANCHOR_BOTTOM_RIGHT" )] BOTTOM_RIGHT = 8,
 		}
-		public enum FONT_ALIGN_LEGENDS {
-			[Serialize("FONT_ALIGN_NONE")] NONE = -1,
-			[Serialize("FONT_ALIGN_LEFT")] LEFT = 0,
-			[Serialize("FONT_ALIGN_CENTER")] CENTER = 1,
-			[Serialize("FONT_ALIGN_RIGHT")] RIGHT = 2,
+		public enum Enum_overridingHAlignment {
+			[Serialize("Value__1")] Value__1 = -1,
+			[Serialize("Value_0" )] Value_0 = 0,
+			[Serialize("Value_1" )] Value_1 = 1,
+			[Serialize("Value_2" )] Value_2 = 2,
+		}
+		public enum Enum_overridingAnchor {
+			[Serialize("Value__1")] Value__1 = -1,
+			[Serialize("Value_0" )] Value_0 = 0,
+			[Serialize("Value_1" )] Value_1 = 1,
+			[Serialize("Value_2" )] Value_2 = 2,
+			[Serialize("Value_3" )] Value_3 = 3,
+			[Serialize("Value_4" )] Value_4 = 4,
+			[Serialize("Value_5" )] Value_5 = 5,
+			[Serialize("Value_6" )] Value_6 = 6,
+			[Serialize("Value_7" )] Value_7 = 7,
+			[Serialize("Value_8" )] Value_8 = 8,
+		}
+		public enum Enum_overridingHAlignment {
+			[Serialize("Value__1")] Value__1 = -1,
+			[Serialize("Value_0" )] Value_0 = 0,
+			[Serialize("Value_1" )] Value_1 = 1,
+			[Serialize("Value_2" )] Value_2 = 2,
+		}
+		public enum Enum_overridingAnchor {
+			[Serialize("Value__1")] Value__1 = -1,
+			[Serialize("Value_0" )] Value_0 = 0,
+			[Serialize("Value_1" )] Value_1 = 1,
+			[Serialize("Value_2" )] Value_2 = 2,
+			[Serialize("Value_3" )] Value_3 = 3,
+			[Serialize("Value_4" )] Value_4 = 4,
+			[Serialize("Value_5" )] Value_5 = 5,
+			[Serialize("Value_6" )] Value_6 = 6,
+			[Serialize("Value_7" )] Value_7 = 7,
+			[Serialize("Value_8" )] Value_8 = 8,
+		}
+		public enum Enum_VH_0 {
+			[Serialize("Value_0")] Value_0 = 0,
+			[Serialize("Value_1")] Value_1 = 1,
+			[Serialize("Value_2")] Value_2 = 2,
+		}
+		public enum Enum_VH_1 {
+			[Serialize("Value__1")] Value__1 = -1,
+			[Serialize("Value_0" )] Value_0 = 0,
+			[Serialize("Value_1" )] Value_1 = 1,
+			[Serialize("Value_2" )] Value_2 = 2,
+			[Serialize("Value_3" )] Value_3 = 3,
+		}
+		public enum Enum_VH_2 {
+			[Serialize("Value__1")] Value__1 = -1,
+			[Serialize("Value_0" )] Value_0 = 0,
+			[Serialize("Value_1" )] Value_1 = 1,
+			[Serialize("Value_2" )] Value_2 = 2,
+		}
+		public enum Enum_VH_3 {
+			[Serialize("Value__1")] Value__1 = -1,
+			[Serialize("Value_0" )] Value_0 = 0,
+			[Serialize("Value_1" )] Value_1 = 1,
+			[Serialize("Value_2" )] Value_2 = 2,
+			[Serialize("Value_3" )] Value_3 = 3,
+			[Serialize("Value_4" )] Value_4 = 4,
+			[Serialize("Value_5" )] Value_5 = 5,
+			[Serialize("Value_6" )] Value_6 = 6,
+			[Serialize("Value_7" )] Value_7 = 7,
+			[Serialize("Value_8" )] Value_8 = 8,
 		}
 		public override uint? ClassCRC => 0xD10CBEED;
 	}

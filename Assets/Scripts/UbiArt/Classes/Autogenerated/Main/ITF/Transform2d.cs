@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Transform2d : CSerializable {
 		[Serialize("Rot")] public matrix2d Rot;
 		[Serialize("Pos")] public Vector2 Pos;

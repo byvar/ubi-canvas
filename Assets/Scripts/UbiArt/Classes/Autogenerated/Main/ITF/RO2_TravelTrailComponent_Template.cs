@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TravelTrailComponent_Template : ActorComponent_Template {
 		[Serialize("accelType"            )] public AccelType accelType;
 		[Serialize("destroyOnEnd"         )] public bool destroyOnEnd;

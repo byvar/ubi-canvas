@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_CameraLimiterComponent_Template : ActorComponent_Template {
 		[Serialize("useEjectMargin"                 )] public bool useEjectMargin;
 		[Serialize("ejectMargin"                    )] public Margin ejectMargin;

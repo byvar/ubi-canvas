@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class TextBoxComponent : UIComponent {
 		[Serialize("style"               )] public uint style;
 		[Serialize("offset"              )] public Vector2 offset;
@@ -23,9 +24,27 @@ namespace UbiArt.ITF {
 		[Serialize("offsetLangage"       )] public Vector2 offsetLangage;
 		[Serialize("overridingHAlignment")] public Enum_overridingHAlignment overridingHAlignment;
 		[Serialize("overridingVAlignment")] public Enum_overridingVAlignment overridingVAlignment;
+		[Serialize("locId"               )] public StringID locId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(style));
+					SerializeField(s, nameof(offset));
+					SerializeField(s, nameof(scale));
+					SerializeField(s, nameof(area));
+					SerializeField(s, nameof(maxWidth));
+					SerializeField(s, nameof(rawText));
+					SerializeField(s, nameof(locId));
+					SerializeField(s, nameof(scaleToMatchWithArea));
+					SerializeField(s, nameof(autoScrollSpeed));
+					SerializeField(s, nameof(autoScrollWaitTime));
+					SerializeField(s, nameof(overridingColor));
+					SerializeField(s, nameof(overridingHAlignment));
+					SerializeField(s, nameof(overridingVAlignment));
+					SerializeField(s, nameof(depthOffset));
+				}
+			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(style));
 					SerializeField(s, nameof(offset));
@@ -86,6 +105,12 @@ namespace UbiArt.ITF {
 			[Serialize("FONT_VALIGN_TOP"   )] VALIGN_TOP = 0,
 			[Serialize("FONT_VALIGN_MIDDLE")] VALIGN_MIDDLE = 1,
 			[Serialize("FONT_VALIGN_BOTTOM")] VALIGN_BOTTOM = 2,
+		}
+		public enum Enum_overridingHAlignment {
+			[Serialize("Value__1")] Value__1 = -1,
+			[Serialize("Value_0" )] Value_0 = 0,
+			[Serialize("Value_1" )] Value_1 = 1,
+			[Serialize("Value_2" )] Value_2 = 2,
 		}
 		public enum Enum_overridingHAlignment {
 			[Serialize("Value__1")] Value__1 = -1,

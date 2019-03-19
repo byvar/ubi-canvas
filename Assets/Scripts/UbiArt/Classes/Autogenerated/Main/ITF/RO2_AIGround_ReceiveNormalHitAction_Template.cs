@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIGround_ReceiveNormalHitAction_Template : RO2_AIGroundReceiveHitAction_Template {
 		[Serialize("frictionMultiplier"         )] public float frictionMultiplier;
 		[Serialize("gravityMultiplier"          )] public float gravityMultiplier;

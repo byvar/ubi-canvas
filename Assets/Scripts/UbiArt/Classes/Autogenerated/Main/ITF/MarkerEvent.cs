@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class MarkerEvent : CSerializable {
 		[Serialize("marker")] public StringID marker;
 		[Serialize("event" )] public Generic<Event> _event;

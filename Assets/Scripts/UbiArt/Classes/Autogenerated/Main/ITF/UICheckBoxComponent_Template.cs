@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class UICheckBoxComponent_Template : UIComponent_Template {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

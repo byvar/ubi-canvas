@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnapComponent_Template : ActorComponent_Template {
 		[Serialize("zOffset")] public float zOffset;
 		protected override void SerializeImpl(CSerializerObject s) {

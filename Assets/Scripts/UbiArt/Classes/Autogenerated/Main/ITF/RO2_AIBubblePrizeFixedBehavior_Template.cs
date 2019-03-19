@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIBubblePrizeFixedBehavior_Template : TemplateAIBehavior {
 		[Serialize("bubblePrize"                    )] public RO2_BubblePrize_Template bubblePrize;
 		[Serialize("playerDetectorMultiplierInWater")] public float playerDetectorMultiplierInWater;

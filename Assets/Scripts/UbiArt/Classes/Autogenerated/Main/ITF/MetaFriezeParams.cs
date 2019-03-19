@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class MetaFriezeParams : CSerializable {
 		[Serialize("path"       )] public Path path;
 		[Serialize("worldOffset")] public Vector3 worldOffset;

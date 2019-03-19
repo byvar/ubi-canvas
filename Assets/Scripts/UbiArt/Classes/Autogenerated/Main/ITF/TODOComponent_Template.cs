@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class TODOComponent_Template : ActorComponent_Template {
 		[Serialize("textPath")] public Path textPath;
 		protected override void SerializeImpl(CSerializerObject s) {

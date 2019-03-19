@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_CheckActiveTime : RLC_Mission_Guard {
 		[Serialize("activeTime"      )] public float activeTime;
 		[Serialize("successCondition")] public uint successCondition;

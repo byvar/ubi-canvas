@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BezierBranchLumsChainLinkRendererComponent_Template : RO2_BezierBranchBaseRendererComponent_Template {
 		[Serialize("branchSpeed" )] public float branchSpeed;
 		[Serialize("boundsOffset")] public float boundsOffset;

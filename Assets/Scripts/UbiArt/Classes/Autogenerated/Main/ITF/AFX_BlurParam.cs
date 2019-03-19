@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AFX_BlurParam : CSerializable {
 		[Serialize("use"      )] public bool use;
 		[Serialize("pixelSize")] public float pixelSize;

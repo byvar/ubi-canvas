@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_AnemoneTreeComponent_Template : ActorComponent_Template {
 		[Serialize("fastMode"                   )] public bool fastMode;
 		[Serialize("polylineDisableOnTransition")] public bool polylineDisableOnTransition;

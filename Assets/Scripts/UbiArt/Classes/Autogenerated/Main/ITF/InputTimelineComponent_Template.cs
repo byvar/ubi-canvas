@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class InputTimelineComponent_Template : ActorComponent_Template {
 		[Serialize("TimelineMaxSize"  )] public uint TimelineMaxSize;
 		[Serialize("PeriodicalSendMax")] public uint PeriodicalSendMax;

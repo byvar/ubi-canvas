@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnemyBTAIComponent : RO2_BTAIComponent {
 		[Serialize("shape"                   )] public EditableShape shape;
 		[Serialize("appearType"              )] public Enum_appearType appearType;
@@ -103,6 +104,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(useQuickLaunch));
 					SerializeField(s, nameof(canTriggerMagnet));
 					SerializeField(s, nameof(noUturn));
+					SerializeField(s, nameof(RA_anglesNoAim));
 					SerializeField(s, nameof(RA_anglesNoAim));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PetsComponent : GraphicComponent {
 		[Serialize("AllAtStart"    )] public bool AllAtStart;
 		[Serialize("PetsSimulation")] public RO2_PetSimulation PetsSimulation;

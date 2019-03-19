@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MurphyStoneEyeComponent : RO2_AIComponent {
 		[Serialize("activeOnTrigger")] public bool activeOnTrigger;
 		[Serialize("activated"      )] public bool activated;

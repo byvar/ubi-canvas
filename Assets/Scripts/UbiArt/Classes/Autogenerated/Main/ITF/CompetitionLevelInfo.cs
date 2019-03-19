@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class CompetitionLevelInfo : CSerializable {
 		[Serialize("level"           )] public StringID level;
 		[Serialize("mode"            )] public uint mode;

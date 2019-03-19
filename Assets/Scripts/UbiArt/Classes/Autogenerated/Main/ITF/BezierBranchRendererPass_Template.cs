@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class BezierBranchRendererPass_Template : CSerializable {
 		[Serialize("name"    )] public StringID name;
 		[Serialize("renderer")] public BezierCurveRenderer_Template renderer;

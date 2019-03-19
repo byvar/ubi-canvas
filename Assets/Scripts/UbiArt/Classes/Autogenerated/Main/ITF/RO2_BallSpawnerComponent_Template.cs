@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BallSpawnerComponent_Template : ActorComponent_Template {
 		[Serialize("ballPath")] public Path ballPath;
 		[Serialize("ballMax" )] public uint ballMax;

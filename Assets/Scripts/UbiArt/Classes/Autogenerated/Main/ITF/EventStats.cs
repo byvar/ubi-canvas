@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventStats : Event {
 		[Serialize("Data")] public CMap<string, string> Data;
 		[Serialize("Name")] public string Name;

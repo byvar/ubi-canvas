@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_TextureImageComponent : TextureGraphicComponent {
 		[Serialize("offsetAfterLoading"          )] public Vector2 offsetAfterLoading;
 		[Serialize("AllowDeloadTextureOnInactive")] public bool AllowDeloadTextureOnInactive;

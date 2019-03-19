@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakPointDesc : CSerializable {
 		[Serialize("DephtNodeID"  )] public string DephtNodeID;
 		[Serialize("BreakOnDecide")] public int BreakOnDecide;

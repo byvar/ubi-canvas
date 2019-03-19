@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class FriseTextureConfig : CSerializable {
 		[Serialize("path"         )] public Path path;
 		[Serialize("material"     )] public GFXMaterialSerializable material;

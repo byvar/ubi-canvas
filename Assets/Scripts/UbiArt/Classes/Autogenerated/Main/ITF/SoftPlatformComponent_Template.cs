@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class SoftPlatformComponent_Template : ActorComponent_Template {
 		[Serialize("softPlatformParticles"  )] public CList<SoftPlatformComponent_Template.BodyData> softPlatformParticles;
 		[Serialize("softPlatformConstraints")] public CList<SoftPlatformComponent_Template.ConstraintData> softPlatformConstraints;
@@ -12,10 +13,11 @@ namespace UbiArt.ITF {
 		[Serialize("gameMaterial"           )] public Path gameMaterial;
 		[Serialize("usePhantom"             )] public bool usePhantom;
 		[Serialize("precision"              )] public ConstraintSolverIterationPrecision precision;
+		[Serialize("usePhantom"             )] public int usePhantom;
 		[Serialize("precision"              )] public Enum_precision precision;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(softPlatformParticles));
 				SerializeField(s, nameof(softPlatformConstraints));
 				SerializeField(s, nameof(weightMultiplier));
@@ -28,6 +30,15 @@ namespace UbiArt.ITF {
 			} else if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(softPlatformParticles));
 				SerializeField(s, nameof(softPlatformConstraints));
+				SerializeField(s, nameof(weightMultiplier));
+				SerializeField(s, nameof(landSpeedMultiplier));
+				SerializeField(s, nameof(hitForceMultiplier));
+				SerializeField(s, nameof(impulseMultiplier));
+				SerializeField(s, nameof(movingPolylineForce));
+				SerializeField(s, nameof(gameMaterial));
+				SerializeField(s, nameof(usePhantom));
+				SerializeField(s, nameof(precision));
+			} else if (Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(weightMultiplier));
 				SerializeField(s, nameof(landSpeedMultiplier));
 				SerializeField(s, nameof(hitForceMultiplier));
@@ -49,6 +60,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(precision));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class BodyData : CSerializable {
 			[Serialize("bone"             )] public string bone;
 			[Serialize("static"           )] public bool _static;
@@ -66,6 +78,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(setAngle));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class ConstraintData : CSerializable {
 			[Serialize("bodyA"      )] public string bodyA;
 			[Serialize("bodyB"      )] public string bodyB;
@@ -95,6 +108,11 @@ namespace UbiArt.ITF {
 			[Serialize("ConstraintSolverIterationPrecision_Low"   )] Low = 0,
 			[Serialize("ConstraintSolverIterationPrecision_Medium")] Medium = 1,
 			[Serialize("ConstraintSolverIterationPrecision_High"  )] High = 2,
+		}
+		public enum Enum_precision {
+			[Serialize("Value_0")] Value_0 = 0,
+			[Serialize("Value_1")] Value_1 = 1,
+			[Serialize("Value_2")] Value_2 = 2,
 		}
 		public enum Enum_precision {
 			[Serialize("Value_0")] Value_0 = 0,

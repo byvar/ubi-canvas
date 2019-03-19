@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIFollowActorAction_Template : AIAction_Template {
 		[Serialize("aiFollowActorRelativPos"    )] public Vector3 aiFollowActorRelativPos;
 		[Serialize("aiFollowActorRelativPosNext")] public Vector3 aiFollowActorRelativPosNext;

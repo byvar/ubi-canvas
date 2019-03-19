@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerTest_Count : TriggerTestAbstract {
 		[Serialize("ValueRef")] public uint ValueRef;
 		[Serialize("Operator")] public ECompareType Operator;

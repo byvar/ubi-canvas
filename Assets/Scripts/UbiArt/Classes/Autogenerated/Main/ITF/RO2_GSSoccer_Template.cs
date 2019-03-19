@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GSSoccer_Template : TemplateObj {
 		[Serialize("bounceToLayerSpeed"                  )] public float bounceToLayerSpeed;
 		[Serialize("cameraDistanceTeamSelect"            )] public float cameraDistanceTeamSelect;

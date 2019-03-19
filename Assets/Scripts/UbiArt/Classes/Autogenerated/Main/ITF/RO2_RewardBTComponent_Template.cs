@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RewardBTComponent_Template : BTAIComponent_Template {
 		[Serialize("air"           )] public bool air;
 		[Serialize("addHp"         )] public bool addHp;

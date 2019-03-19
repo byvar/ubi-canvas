@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ToadPlugPlayableController : ActorPlugPlayableController {
 		[Serialize("tweakJumpImpulse"          )] public float tweakJumpImpulse;
 		[Serialize("tweakBoostedJumpImpulse"   )] public float tweakBoostedJumpImpulse;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.COL | GameFlags.VH | GameFlags.RL)]
 	public partial class AnimMeshVertexComponent_Template : GraphicComponent_Template {
 		[Serialize("defaultUpdate")] public bool defaultUpdate;
 		[Serialize("draw2D"       )] public bool draw2D;

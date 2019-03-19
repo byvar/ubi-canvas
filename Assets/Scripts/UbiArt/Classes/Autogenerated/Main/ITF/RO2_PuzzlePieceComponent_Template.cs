@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PuzzlePieceComponent_Template : ActorComponent_Template {
 		[Serialize("lineCount"  )] public uint lineCount;
 		[Serialize("columnCount")] public uint columnCount;

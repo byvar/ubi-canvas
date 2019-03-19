@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ShadowZonesComponent_Template : ActorComponent_Template {
 		[Serialize("lightTexture"            )] public Path lightTexture;
 		[Serialize("lightMaterial"           )] public GFXMaterialSerializable lightMaterial;

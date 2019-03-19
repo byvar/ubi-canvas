@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_VirtualCurrencyPack : RLC_DynamicStoreItem {
 		[Serialize("Price"         )] public float Price;
 		[Serialize("Amount"        )] public uint Amount;

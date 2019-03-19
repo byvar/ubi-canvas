@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GeyserComponent_Template : RO2_ChildLaunchComponent_Template {
 		[Serialize("warnDuration"     )] public float warnDuration;
 		[Serialize("launchDuration"   )] public float launchDuration;

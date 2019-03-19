@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossJungleComponent : ActorComponent {
 		[Serialize("SlowDownDistValidation" )] public float SlowDownDistValidation;
 		[Serialize("BaseTimeToReachMaxSpeed")] public float BaseTimeToReachMaxSpeed;

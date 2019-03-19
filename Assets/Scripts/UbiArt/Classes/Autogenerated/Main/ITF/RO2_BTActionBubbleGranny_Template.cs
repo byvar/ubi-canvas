@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionBubbleGranny_Template : RO2_BTActionBubble_Template {
 		[Serialize("bubblizedFaction"        )] public uint bubblizedFaction;
 		[Serialize("maxHeightFromGround"     )] public float maxHeightFromGround;

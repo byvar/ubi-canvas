@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LeafsComponent_Template : ActorComponent_Template {
 		[Serialize("standAnims"  )] public CList<StringID> standAnims;
 		[Serialize("explodeAnims")] public CList<StringID> explodeAnims;

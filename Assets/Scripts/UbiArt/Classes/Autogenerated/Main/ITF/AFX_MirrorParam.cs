@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AFX_MirrorParam : CSerializable {
 		[Serialize("use"    )] public bool use;
 		[Serialize("offsetX")] public float offsetX;

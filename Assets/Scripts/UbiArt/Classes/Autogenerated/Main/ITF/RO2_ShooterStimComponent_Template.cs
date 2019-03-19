@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ShooterStimComponent_Template : ActorComponent_Template {
 		[Serialize("basicBullet"         )] public RO2_BasicBullet_Template basicBullet;
 		[Serialize("fxDelayBeforeDestroy")] public float fxDelayBeforeDestroy;

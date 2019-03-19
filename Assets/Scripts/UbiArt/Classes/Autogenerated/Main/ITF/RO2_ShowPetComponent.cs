@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ShowPetComponent : GraphicComponent {
 		[Serialize("VisualID" )] public uint VisualID;
 		[Serialize("Animation")] public Enum_Animation Animation;

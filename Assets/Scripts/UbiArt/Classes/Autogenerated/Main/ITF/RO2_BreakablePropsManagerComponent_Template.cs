@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BreakablePropsManagerComponent_Template : ActorComponent_Template {
 		[Serialize("breakablePropsPath")] public Path breakablePropsPath;
 		[Serialize("transitionAnim"    )] public StringID transitionAnim;

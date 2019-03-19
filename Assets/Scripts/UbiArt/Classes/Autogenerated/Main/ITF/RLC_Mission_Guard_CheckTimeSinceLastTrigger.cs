@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_CheckTimeSinceLastTrigger : RLC_Mission_Guard {
 		[Serialize("timeSinceLastTrigger")] public float timeSinceLastTrigger;
 		[Serialize("successCondition"    )] public uint successCondition;

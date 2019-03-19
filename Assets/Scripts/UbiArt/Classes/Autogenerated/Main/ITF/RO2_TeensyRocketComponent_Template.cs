@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TeensyRocketComponent_Template : ActorComponent_Template {
 		[Serialize("snapBone"     )] public StringID snapBone;
 		[Serialize("FXBurningWick")] public StringID FXBurningWick;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ScreenShotDataRegionUnlocked : online.OpenGraphObject {
 		[Serialize("region_name")] public string region_name;
 		protected override void SerializeImpl(CSerializerObject s) {

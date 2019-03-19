@@ -1,9 +1,10 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class UIItem : UIComponent {
-		[Serialize("transition"    )] public bool transition;
-		[Serialize("display"       )] public bool display;
+		[Serialize("transition"    )] public int transition;
+		[Serialize("display"       )] public int display;
 		[Serialize("leftComponent" )] public string leftComponent;
 		[Serialize("rightComponent")] public string rightComponent;
 		[Serialize("upComponent"   )] public string upComponent;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossPlantArenaComponent_Template : ActorComponent_Template {
 		[Serialize("isMecha"  )] public bool isMecha;
 		[Serialize("buboBones")] public CList<RO2_BossPlantArenaComponent_Template.BuboBone> buboBones;
@@ -16,6 +17,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(buboBones));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class BuboBone : CSerializable {
 			[Serialize("bone")] public StringID bone;
 			protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ComboSoundPlayerComponent_Template : ActorComponent_Template {
 		[Serialize("comboSound"         )] public StringID comboSound;
 		[Serialize("maxTimeBetweenCombo")] public float maxTimeBetweenCombo;

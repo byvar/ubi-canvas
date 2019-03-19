@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIBubblePrizeBehavior_Template : TemplateAIBehavior {
 		[Serialize("isCustomCurve"                  )] public bool isCustomCurve;
 		[Serialize("bubblePrize"                    )] public RO2_BubblePrize_Template bubblePrize;

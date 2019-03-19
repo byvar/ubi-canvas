@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventTimeFactor : Event {
 		[Serialize("ActorFactorValue")] public EventFlip__eFlip ActorFactorValue;
 		[Serialize("WorldFactorValue")] public EventFlip__eFlip WorldFactorValue;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SeaDragonComponent_Template : ActorComponent_Template {
 		[Serialize("DrawDebugHit"   )] public bool DrawDebugHit;
 		[Serialize("BodyPath"       )] public Path BodyPath;

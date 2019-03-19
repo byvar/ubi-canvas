@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTActionActorListenEventSetFact_Template : BTAction_Template {
 		[Serialize("factOnOff"  )] public StringID factOnOff;
 		[Serialize("ListenEvent")] public Generic<Event> ListenEvent;

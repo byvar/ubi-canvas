@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIExplodeAction_Template : AIAction_Template {
 		[Serialize("minRadius"               )] public float minRadius;
 		[Serialize("maxRadius"               )] public float maxRadius;

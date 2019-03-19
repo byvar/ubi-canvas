@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class challengeInfos : CSerializable {
 		[Serialize("seed"                 )] public uint seed;
 		[Serialize("timeLeft"             )] public float timeLeft;
@@ -24,6 +25,7 @@ namespace UbiArt.online {
 			SerializeField(s, nameof(challengeRank));
 			SerializeField(s, nameof(challengeDate));
 			SerializeField(s, nameof(challengeTotalPlayers));
+			SerializeField(s, nameof(disabledBricks));
 			SerializeField(s, nameof(disabledBricks));
 			SerializeField(s, nameof(tokenCount));
 			SerializeField(s, nameof(tokenRechargeTimer));

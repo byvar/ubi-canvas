@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventDisablePadCursor : Event {
 		[Serialize("Disabled")] public bool Disabled;
 		protected override void SerializeImpl(CSerializerObject s) {

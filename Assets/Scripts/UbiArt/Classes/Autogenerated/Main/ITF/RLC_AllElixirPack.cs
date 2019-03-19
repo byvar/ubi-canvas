@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AllElixirPack : RLC_DynamicStoreItem {
 		[Serialize("Price"      )] public uint Price;
 		[Serialize("elixirPacks")] public CList<RLC_ElixirPack> elixirPacks;

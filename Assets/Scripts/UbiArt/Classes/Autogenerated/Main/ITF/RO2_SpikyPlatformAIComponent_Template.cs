@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SpikyPlatformAIComponent_Template : ActorComponent_Template {
 		[Serialize("setDown")] public StringID setDown;
 		[Serialize("setUp"  )] public StringID setUp;

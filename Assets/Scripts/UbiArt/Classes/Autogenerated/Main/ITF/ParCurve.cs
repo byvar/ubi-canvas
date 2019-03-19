@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class ParCurve : CSerializable {
 		[Serialize("baseTime" )] public float baseTime;
 		[Serialize("outputMin")] public Vector3 outputMin;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CamModeMoverComponent : ActorComponent {
 		[Serialize("TimeToMove")] public float TimeToMove;
 		[Serialize("BlendCoeff")] public float BlendCoeff;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTDeciderFactCompare_Template : BTDecider_Template {
 		[Serialize("fact"   )] public StringID fact;
 		[Serialize("value"  )] public string value;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RopeAttachmentComponent : ActorComponent {
 		[Serialize("torqueFriction")] public float torqueFriction;
 		[Serialize("speedFriction" )] public float speedFriction;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeFireWallComponent_Template : ActorComponent_Template {
 		[Serialize("faction"     )] public uint faction;
 		[Serialize("shape"       )] public Generic<PhysShape> shape;

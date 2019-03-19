@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
 	public partial class BTAIComponent_Template : EntityComponent_Template {
 		[Serialize("behaviorTree"       )] public BehaviorTree_Template behaviorTree;
 		[Serialize("registerToAIManager")] public bool registerToAIManager;
@@ -9,6 +10,9 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(behaviorTree));
+			} else if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(registerToAIManager));
+				SerializeField(s, nameof(faction));
 			} else {
 				SerializeField(s, nameof(behaviorTree));
 				SerializeField(s, nameof(registerToAIManager));

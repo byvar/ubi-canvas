@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Curve2DControlPoint : CSerializable {
 		[Serialize("x"       )] public float x;
 		[Serialize("y"       )] public float y;

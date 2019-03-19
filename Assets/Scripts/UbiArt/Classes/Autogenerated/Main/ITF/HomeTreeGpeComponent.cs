@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class HomeTreeGpeComponent : ActorComponent {
 		[Serialize("isDebugActor")] public bool isDebugActor;
 		[Serialize("appearCursor")] public float appearCursor;

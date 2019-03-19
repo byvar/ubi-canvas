@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class Creature_Food : CSerializable {
 		[Serialize("type"       )] public Creature_Food type;
 		[Serialize("actor2DPath")] public Path actor2DPath;

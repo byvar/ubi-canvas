@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_GameManager : GameManager {
 		[Serialize("savedDRCSwappedPlayerIdx"       )] public uint savedDRCSwappedPlayerIdx;
 		[Serialize("playersCurrentScale"            )] public float playersCurrentScale;

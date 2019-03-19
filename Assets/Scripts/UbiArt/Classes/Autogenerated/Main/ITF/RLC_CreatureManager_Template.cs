@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureManager_Template : TemplateObj {
 		[Serialize("creatures"                               )] public CMap<StringID, RLC_BasicCreatureDisplay_Template> creatures;
 		[Serialize("families"                                )] public CList<RLC_CreatureFamily> families;
@@ -38,6 +39,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(creatures));
 			SerializeField(s, nameof(families));
+			SerializeField(s, nameof(startingCreaturesId));
 			SerializeField(s, nameof(startingCreaturesId));
 			SerializeField(s, nameof(duplicateRewards));
 			SerializeField(s, nameof(queenHatchPercentage));

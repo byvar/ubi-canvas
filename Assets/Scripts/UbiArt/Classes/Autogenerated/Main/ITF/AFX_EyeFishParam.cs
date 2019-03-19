@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AFX_EyeFishParam : CSerializable {
 		[Serialize("use"   )] public bool use;
 		[Serialize("height")] public float height;

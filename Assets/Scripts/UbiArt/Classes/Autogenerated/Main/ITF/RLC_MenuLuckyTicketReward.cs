@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_MenuLuckyTicketReward : UIMenuBasic {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

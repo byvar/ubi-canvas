@@ -1,10 +1,13 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class WwiseEngineEvent : CSerializable {
+		[Serialize("GUID"      )] public StringID GUID;
 		[Serialize("EngineType")] public AUDIO_ENGEVT EngineType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
+			SerializeField(s, nameof(GUID));
 			SerializeField(s, nameof(EngineType));
 		}
 		public enum AUDIO_ENGEVT {

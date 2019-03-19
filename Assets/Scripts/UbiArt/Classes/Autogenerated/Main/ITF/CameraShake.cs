@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class CameraShake : CSerializable {
 		[Serialize("name"           )] public StringID name;
 		[Serialize("intensity"      )] public float intensity;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DisplayTutoIconKillerComponent : ActorComponent {
 		[Serialize("Disable_Main_Type")] public bool Disable_Main_Type;
 		[Serialize("Disable_DRC_Type" )] public bool Disable_DRC_Type;

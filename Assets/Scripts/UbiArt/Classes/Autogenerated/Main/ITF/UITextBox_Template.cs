@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class UITextBox_Template : UIComponent_Template {
 		[Serialize("styles"              )] public CList<FontTextArea.Style> styles;
 		[Serialize("depthOffset"         )] public float depthOffset;
@@ -11,20 +12,20 @@ namespace UbiArt.ITF {
 		[Serialize("textHeight"          )] public float textHeight;
 		[Serialize("boxWidth"            )] public float boxWidth;
 		[Serialize("boxHeight"           )] public float boxHeight;
-		[Serialize("isDrawBox"           )] public bool isDrawBox;
+		[Serialize("isDrawBox"           )] public int isDrawBox;
 		[Serialize("croppingMode"        )] public Cropping croppingMode;
-		[Serialize("usePages"            )] public bool usePages;
+		[Serialize("usePages"            )] public int usePages;
 		[Serialize("boxPosition"         )] public BoxPosition boxPosition;
 		[Serialize("textBlock"           )] public Placeholder textBlock;
 		[Serialize("texture"             )] public Path texture;
 		[Serialize("textureOffset2D"     )] public Vector2 textureOffset2D;
 		[Serialize("anchorOffset2D"      )] public Vector2 anchorOffset2D;
 		[Serialize("zOffset"             )] public float zOffset;
-		[Serialize("is2DText"            )] public bool is2DText;
+		[Serialize("is2DText"            )] public int is2DText;
 		[Serialize("zOffsetActors"       )] public float zOffsetActors;
-		[Serialize("useActorPosition"    )] public bool useActorPosition;
-		[Serialize("useActorScale"       )] public bool useActorScale;
-		[Serialize("useActorRotation"    )] public bool useActorRotation;
+		[Serialize("useActorPosition"    )] public int useActorPosition;
+		[Serialize("useActorScale"       )] public int useActorScale;
+		[Serialize("useActorRotation"    )] public int useActorRotation;
 		[Serialize("textShadowOffset"    )] public Vector2 textShadowOffset;
 		[Serialize("textShadowColor"     )] public Color textShadowColor;
 		[Serialize("lineSpacingFactor"   )] public float lineSpacingFactor;
@@ -57,6 +58,9 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(lineSpacingFactor));
 			} else if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(styles));
+				SerializeField(s, nameof(preSpawnedActorPaths));
+				SerializeField(s, nameof(depthOffset));
+			} else if (Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(preSpawnedActorPaths));
 				SerializeField(s, nameof(depthOffset));
 			} else {

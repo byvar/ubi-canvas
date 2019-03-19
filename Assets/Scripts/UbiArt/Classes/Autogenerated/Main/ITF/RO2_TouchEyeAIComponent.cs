@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchEyeAIComponent : ActorComponent {
 		[Serialize("touchedMinDuration")] public float touchedMinDuration;
 		[Serialize("triggered"         )] public bool triggered;

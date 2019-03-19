@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_BezierSubBranch : CSerializable {
 		[Serialize("dist"  )] public float dist;
 		[Serialize("offset")] public float offset;

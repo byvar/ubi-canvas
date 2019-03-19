@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class DigRegionComponent : ActorComponent {
 		[Serialize("Brush_State"            )] public Action Brush_State;
 		[Serialize("Brush_Action"           )] public Action Brush_Action;
@@ -75,6 +76,7 @@ namespace UbiArt.ITF {
 			}
 			SerializeField(s, nameof(IsDiggable));
 		}
+		[Games(GameFlags.RA)]
 		public partial class ParamUV : CSerializable {
 			[Serialize("UseWorldCoord")] public bool UseWorldCoord;
 			[Serialize("Offset"       )] public Vector2 Offset;

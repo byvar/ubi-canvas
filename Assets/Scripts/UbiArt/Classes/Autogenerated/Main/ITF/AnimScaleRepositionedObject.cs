@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class AnimScaleRepositionedObject : CSerializable {
 		[Serialize("repositionType")] public AnimScaleRepositionType repositionType;
 		[Serialize("objectPath"    )] public ObjectPath objectPath;

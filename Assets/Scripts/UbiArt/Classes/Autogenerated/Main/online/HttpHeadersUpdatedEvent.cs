@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class HttpHeadersUpdatedEvent : ITF.Event {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

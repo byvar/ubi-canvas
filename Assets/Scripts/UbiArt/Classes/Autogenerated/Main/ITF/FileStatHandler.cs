@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class FileStatHandler : StatWriter {
 		[Serialize("Path"     )] public Path Path;
 		[Serialize("Parser"   )] public Generic<IStatParser> Parser;

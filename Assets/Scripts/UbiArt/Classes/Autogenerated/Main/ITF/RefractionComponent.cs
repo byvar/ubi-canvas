@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RefractionComponent : ActorComponent {
 		[Serialize("Primitive"  )] public GFX_RefractionPrimitive Primitive;
 		[Serialize("DepthOffset")] public float DepthOffset;

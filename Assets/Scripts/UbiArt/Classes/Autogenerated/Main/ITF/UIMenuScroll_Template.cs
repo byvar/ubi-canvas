@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIMenuScroll_Template : UIMenuBasic_Template {
 		[Serialize("modelSperatorIndex"        )] public int modelSperatorIndex;
 		[Serialize("movingSelectionDelay"      )] public float movingSelectionDelay;
@@ -12,11 +13,10 @@ namespace UbiArt.ITF {
 		[Serialize("movingMomentumDeceleration")] public float movingMomentumDeceleration;
 		[Serialize("extendSpeed"               )] public Vector2 extendSpeed;
 		[Serialize("colapseSpeed"              )] public Vector2 colapseSpeed;
-		[Serialize("modelActorPaths"           )] public Placeholder modelActorPaths;
-		[Serialize("modelSperatorIndex"        )] public bool modelSperatorIndex;
+		[Serialize("modelActorPaths"           )] public CArray<Path> modelActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(modelActorPaths));
 				SerializeField(s, nameof(modelSperatorIndex));
 				SerializeField(s, nameof(movingSelectionDelay));

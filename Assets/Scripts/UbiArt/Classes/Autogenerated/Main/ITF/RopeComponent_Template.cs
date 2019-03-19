@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
 	public partial class RopeComponent_Template : GraphicComponent_Template {
 		[Serialize("beginTexture"                   )] public Path beginTexture;
 		[Serialize("endTexture"                     )] public Path endTexture;
@@ -56,60 +57,117 @@ namespace UbiArt.ITF {
 		[Serialize("fullDisappearOnCut"             )] public CutFade fullDisappearOnCut;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(beginTexture));
-				SerializeField(s, nameof(endTexture));
+			if (Settings.s.game == Settings.Game.COL) {
+				if (s.HasFlags(SerializeFlags.Flags8)) {
+					SerializeField(s, nameof(beginTexture));
+					SerializeField(s, nameof(endTexture));
+				}
+				SerializeField(s, nameof(beginMaterial));
+				SerializeField(s, nameof(endMaterial));
+				SerializeField(s, nameof(gameMaterial));
+				SerializeField(s, nameof(beginTextureScale));
+				SerializeField(s, nameof(endTextureScale));
+				SerializeField(s, nameof(useSwingRope));
+				SerializeField(s, nameof(elastic));
+				SerializeField(s, nameof(oneEventoneChild));
+				SerializeField(s, nameof(gravityFollowOrientation));
+				SerializeField(s, nameof(deactivateOnFinish));
+				SerializeField(s, nameof(bezierRenderer));
+				SerializeField(s, nameof(cutSectionGameMaterial));
+				SerializeField(s, nameof(cutGameMaterial));
+				SerializeField(s, nameof(cutEndGameMaterial));
+				SerializeField(s, nameof(movingPolyForce));
+				SerializeField(s, nameof(weightMultiplier));
+				SerializeField(s, nameof(landSpeedMultiplier));
+				SerializeField(s, nameof(hitForceMultiplier));
+				SerializeField(s, nameof(impulseMultiplier));
+				SerializeField(s, nameof(phantom));
+				SerializeField(s, nameof(bodyWindMultiplier));
+				SerializeField(s, nameof(bodyGravityMultiplier));
+				SerializeField(s, nameof(constraintMinAngle));
+				SerializeField(s, nameof(constraintMaxAngle));
+				SerializeField(s, nameof(constraintMinLength));
+				SerializeField(s, nameof(constraintMaxLength));
+				SerializeField(s, nameof(constraintStiff));
+				SerializeField(s, nameof(constraintDamp));
+				SerializeField(s, nameof(moveNoise));
+				SerializeField(s, nameof(moveNoiseSpeed));
+				SerializeField(s, nameof(cutForceUp));
+				SerializeField(s, nameof(constraintLimitAngle));
+				SerializeField(s, nameof(constraintRelaxLength));
+				SerializeField(s, nameof(precision));
+				SerializeField(s, nameof(faction));
+				SerializeField(s, nameof(ropeCreakSound));
+				SerializeField(s, nameof(swingMaxSwingAngle));
+				SerializeField(s, nameof(swingStiffGravityMultiplier));
+				SerializeField(s, nameof(swingStiffImpulseMultiplier));
+				SerializeField(s, nameof(swingStiffSwingSpeedFriction));
+				SerializeField(s, nameof(swingNonStiffSwingSpeedFriction));
+				SerializeField(s, nameof(swingLandDragMultiplier));
+				SerializeField(s, nameof(swingLandDragDuration));
+				SerializeField(s, nameof(swingCanUseSmall));
+				SerializeField(s, nameof(swingCanUseNormal));
+				SerializeField(s, nameof(swingRepositionWithBones));
+				SerializeField(s, nameof(animMeshAnims));
+				SerializeField(s, nameof(animMeshEnding));
+				SerializeField(s, nameof(animMeshVertexAngleOffset));
+				SerializeField(s, nameof(fullDisappearOnCut));
+			} else {
+				if (s.HasFlags(SerializeFlags.Flags8)) {
+					SerializeField(s, nameof(beginTexture));
+					SerializeField(s, nameof(endTexture));
+				}
+				SerializeField(s, nameof(beginMaterial));
+				SerializeField(s, nameof(endMaterial));
+				SerializeField(s, nameof(gameMaterial));
+				SerializeField(s, nameof(beginTextureScale));
+				SerializeField(s, nameof(endTextureScale));
+				SerializeField(s, nameof(useSwingRope));
+				SerializeField(s, nameof(elastic));
+				SerializeField(s, nameof(oneEventoneChild));
+				SerializeField(s, nameof(gravityFollowOrientation));
+				SerializeField(s, nameof(deactivateOnFinish));
+				SerializeField(s, nameof(bezierRenderer));
+				SerializeField(s, nameof(cutSectionGameMaterial));
+				SerializeField(s, nameof(cutGameMaterial));
+				SerializeField(s, nameof(cutEndGameMaterial));
+				SerializeField(s, nameof(movingPolyForce));
+				SerializeField(s, nameof(weightMultiplier));
+				SerializeField(s, nameof(landSpeedMultiplier));
+				SerializeField(s, nameof(hitForceMultiplier));
+				SerializeField(s, nameof(impulseMultiplier));
+				SerializeField(s, nameof(phantom));
+				SerializeField(s, nameof(bodyWindMultiplier));
+				SerializeField(s, nameof(bodyGravityMultiplier));
+				SerializeField(s, nameof(constraintMinAngle));
+				SerializeField(s, nameof(constraintMaxAngle));
+				SerializeField(s, nameof(constraintMinLength));
+				SerializeField(s, nameof(constraintMaxLength));
+				SerializeField(s, nameof(constraintStiff));
+				SerializeField(s, nameof(constraintDamp));
+				SerializeField(s, nameof(moveNoise));
+				SerializeField(s, nameof(moveNoiseSpeed));
+				SerializeField(s, nameof(cutForceUp));
+				SerializeField(s, nameof(constraintLimitAngle));
+				SerializeField(s, nameof(constraintRelaxLength));
+				SerializeField(s, nameof(precision));
+				SerializeField(s, nameof(faction));
+				SerializeField(s, nameof(ropeCreakSound));
+				SerializeField(s, nameof(swingMaxSwingAngle));
+				SerializeField(s, nameof(swingStiffGravityMultiplier));
+				SerializeField(s, nameof(swingStiffImpulseMultiplier));
+				SerializeField(s, nameof(swingStiffSwingSpeedFriction));
+				SerializeField(s, nameof(swingNonStiffSwingSpeedFriction));
+				SerializeField(s, nameof(swingLandDragMultiplier));
+				SerializeField(s, nameof(swingLandDragDuration));
+				SerializeField(s, nameof(swingCanUseSmall));
+				SerializeField(s, nameof(swingCanUseNormal));
+				SerializeField(s, nameof(swingRepositionWithBones));
+				SerializeField(s, nameof(animMeshAnims));
+				SerializeField(s, nameof(animMeshEnding));
+				SerializeField(s, nameof(animMeshVertexAngleOffset));
+				SerializeField(s, nameof(fullDisappearOnCut));
 			}
-			SerializeField(s, nameof(beginMaterial));
-			SerializeField(s, nameof(endMaterial));
-			SerializeField(s, nameof(gameMaterial));
-			SerializeField(s, nameof(beginTextureScale));
-			SerializeField(s, nameof(endTextureScale));
-			SerializeField(s, nameof(useSwingRope));
-			SerializeField(s, nameof(elastic));
-			SerializeField(s, nameof(oneEventoneChild));
-			SerializeField(s, nameof(gravityFollowOrientation));
-			SerializeField(s, nameof(deactivateOnFinish));
-			SerializeField(s, nameof(bezierRenderer));
-			SerializeField(s, nameof(cutSectionGameMaterial));
-			SerializeField(s, nameof(cutGameMaterial));
-			SerializeField(s, nameof(cutEndGameMaterial));
-			SerializeField(s, nameof(movingPolyForce));
-			SerializeField(s, nameof(weightMultiplier));
-			SerializeField(s, nameof(landSpeedMultiplier));
-			SerializeField(s, nameof(hitForceMultiplier));
-			SerializeField(s, nameof(impulseMultiplier));
-			SerializeField(s, nameof(phantom));
-			SerializeField(s, nameof(bodyWindMultiplier));
-			SerializeField(s, nameof(bodyGravityMultiplier));
-			SerializeField(s, nameof(constraintMinAngle));
-			SerializeField(s, nameof(constraintMaxAngle));
-			SerializeField(s, nameof(constraintMinLength));
-			SerializeField(s, nameof(constraintMaxLength));
-			SerializeField(s, nameof(constraintStiff));
-			SerializeField(s, nameof(constraintDamp));
-			SerializeField(s, nameof(moveNoise));
-			SerializeField(s, nameof(moveNoiseSpeed));
-			SerializeField(s, nameof(cutForceUp));
-			SerializeField(s, nameof(constraintLimitAngle));
-			SerializeField(s, nameof(constraintRelaxLength));
-			SerializeField(s, nameof(precision));
-			SerializeField(s, nameof(faction));
-			SerializeField(s, nameof(ropeCreakSound));
-			SerializeField(s, nameof(swingMaxSwingAngle));
-			SerializeField(s, nameof(swingStiffGravityMultiplier));
-			SerializeField(s, nameof(swingStiffImpulseMultiplier));
-			SerializeField(s, nameof(swingStiffSwingSpeedFriction));
-			SerializeField(s, nameof(swingNonStiffSwingSpeedFriction));
-			SerializeField(s, nameof(swingLandDragMultiplier));
-			SerializeField(s, nameof(swingLandDragDuration));
-			SerializeField(s, nameof(swingCanUseSmall));
-			SerializeField(s, nameof(swingCanUseNormal));
-			SerializeField(s, nameof(swingRepositionWithBones));
-			SerializeField(s, nameof(animMeshAnims));
-			SerializeField(s, nameof(animMeshEnding));
-			SerializeField(s, nameof(animMeshVertexAngleOffset));
-			SerializeField(s, nameof(fullDisappearOnCut));
 		}
 		public enum ConstraintSolverIterationPrecision {
 			[Serialize("ConstraintSolverIterationPrecision_Low"   )] Low = 0,

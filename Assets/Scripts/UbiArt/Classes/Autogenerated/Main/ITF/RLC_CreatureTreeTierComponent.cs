@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureTreeTierComponent : ActorComponent {
 		[Serialize("isTrunk")] public bool isTrunk;
 		protected override void SerializeImpl(CSerializerObject s) {

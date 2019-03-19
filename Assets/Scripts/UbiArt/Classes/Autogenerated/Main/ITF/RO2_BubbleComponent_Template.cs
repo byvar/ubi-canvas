@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BubbleComponent_Template : ActorComponent_Template {
 		[Serialize("SurfaceNodeNb"          )] public uint SurfaceNodeNb;
 		[Serialize("BubbleRadius"           )] public float BubbleRadius;

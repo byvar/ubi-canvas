@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class BTNode_Template : CSerializable {
 		[Serialize("name")] public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {

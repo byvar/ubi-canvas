@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionGhost_Template : BTAction_Template {
 		[Serialize("animFlyOpen"   )] public StringID animFlyOpen;
 		[Serialize("animFlyClosed" )] public StringID animFlyClosed;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_SliderHeadBranchComponent_Template : RO2_BezierBranchComponent_Template {
 		[Serialize("slideForceFactor" )] public float slideForceFactor;
 		[Serialize("slideSpeedSmoothA")] public float slideSpeedSmoothA;

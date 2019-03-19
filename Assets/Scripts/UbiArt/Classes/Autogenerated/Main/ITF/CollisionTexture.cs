@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class CollisionTexture : CSerializable {
 		[Serialize("build"       )] public uint build;
 		[Serialize("offset"      )] public float offset;

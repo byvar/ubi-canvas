@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AtlasGraphicComponent : GraphicComponent {
 		[Serialize("texture"      )] public Path texture;
 		[Serialize("material"     )] public GFXMaterialSerializable material;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_EggVisualConfig : CSerializable {
 		[Serialize("Rarity"             )] public Creature_Rarity Rarity;
 		[Serialize("eggToReachPath"     )] public PathRef eggToReachPath;

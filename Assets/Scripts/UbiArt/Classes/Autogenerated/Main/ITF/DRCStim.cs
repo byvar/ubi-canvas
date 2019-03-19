@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class DRCStim : EventStim {
 		[Serialize("level"    )] public uint level;
 		[Serialize("direction")] public Vector2 direction;

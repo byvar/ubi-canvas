@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ScoreRecapRewardSpawnerComponent_Template : ActorComponent_Template {
 		[Serialize("rewardPath")] public Path rewardPath;
 		[Serialize("snapBone"  )] public StringID snapBone;

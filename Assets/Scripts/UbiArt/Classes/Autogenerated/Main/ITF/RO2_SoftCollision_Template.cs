@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_SoftCollision_Template : CSerializable {
 		[Serialize("radius"   )] public float radius;
 		[Serialize("exitSpeed")] public float exitSpeed;

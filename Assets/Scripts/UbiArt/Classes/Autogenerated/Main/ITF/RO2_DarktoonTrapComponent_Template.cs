@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DarktoonTrapComponent_Template : RO2_AIComponent_Template {
 		[Serialize("animIdle"    )] public StringID animIdle;
 		[Serialize("animAttack"  )] public StringID animAttack;

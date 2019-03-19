@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeBonusComponent : ActorComponent {
 		[Serialize("challengeDuration"        )] public float challengeDuration;
 		[Serialize("maxNumberToTake"          )] public uint maxNumberToTake;

@@ -1,7 +1,9 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Bind : CSerializable {
+		[Serialize("parentPath"      )] public ObjectPath parentPath;
 		[Serialize("offsetPos"       )] public Vector3 offsetPos;
 		[Serialize("offsetAngle"     )] public float offsetAngle;
 		[Serialize("type"            )] public Enum_type type;
@@ -13,6 +15,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
+				SerializeField(s, nameof(parentPath));
 				SerializeField(s, nameof(offsetPos));
 				SerializeField(s, nameof(offsetAngle));
 				SerializeField(s, nameof(type));

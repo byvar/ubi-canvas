@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_UIFramePrisonerCounterComponent_Template : ActorComponent_Template {
 		[Serialize("stand"                  )] public StringID stand;
 		[Serialize("shake"                  )] public StringID shake;
@@ -23,6 +24,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(stand));
 				SerializeField(s, nameof(shake));
 				SerializeField(s, nameof(slotTimeInterval));
+				SerializeField(s, nameof(medalPaths));
 				SerializeField(s, nameof(medalPaths));
 				SerializeField(s, nameof(medalTransitionDuration));
 			}

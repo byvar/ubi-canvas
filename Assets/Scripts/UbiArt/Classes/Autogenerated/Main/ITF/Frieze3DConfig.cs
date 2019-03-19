@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Frieze3DConfig : CSerializable {
 		[Serialize("orient"          )] public bool orient;
 		[Serialize("mesh3DFile"      )] public Path mesh3DFile;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableStackElementAIComponent : AIComponent {
 		[Serialize("managerPath"   )] public ObjectPath managerPath;
 		[Serialize("countSpawnMax" )] public uint countSpawnMax;

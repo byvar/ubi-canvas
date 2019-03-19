@@ -1,16 +1,23 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class HingePlatformComponent_Template : PolylineComponent_Template {
 		[Serialize("hingeBones"     )] public CList<HingePlatformComponent_Template.HingeBoneData> hingeBones;
 		[Serialize("platforms"      )] public CList<HingePlatformComponent_Template.PlatformData> platforms;
 		[Serialize("movingPolylines")] public CList<HingePlatformComponent_Template.MovingPolylineData> movingPolylines;
+		[Serialize("isEnvironment"  )] public int isEnvironment;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hingeBones));
-			SerializeField(s, nameof(platforms));
-			SerializeField(s, nameof(movingPolylines));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(isEnvironment));
+			} else {
+				SerializeField(s, nameof(hingeBones));
+				SerializeField(s, nameof(platforms));
+				SerializeField(s, nameof(movingPolylines));
+			}
 		}
+		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class MovingPolylineData : CSerializable {
 			[Serialize("polyline"       )] public StringID polyline;
 			[Serialize("resistance"     )] public float resistance;
@@ -22,6 +29,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(forceMultiplier));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class HingeBoneData : CSerializable {
 			[Serialize("name"                         )] public StringID name;
 			[Serialize("polyline"                     )] public StringID polyline;
@@ -67,6 +75,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(alwaysApplyAngleLimitation));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class PlatformData : CSerializable {
 			[Serialize("poly"              )] public StringID poly;
 			[Serialize("scale"             )] public StringID scale;

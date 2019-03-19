@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class ConstraintExtended : CSerializable {
 		[Serialize("offset"                  )] public float offset;
 		[Serialize("timeToIncrease"          )] public float timeToIncrease;

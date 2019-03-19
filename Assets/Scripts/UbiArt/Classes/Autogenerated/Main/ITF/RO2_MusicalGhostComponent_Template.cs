@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicalGhostComponent_Template : ActorComponent_Template {
 		[Serialize("minSpeed"                    )] public float minSpeed;
 		[Serialize("maxSpeed"                    )] public float maxSpeed;

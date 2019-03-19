@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Adventure : CSerializable {
 		[Serialize("Path"           )] public PathRef Path;
 		[Serialize("AdventureIdMin" )] public uint AdventureIdMin;

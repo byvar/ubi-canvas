@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_GlobalPowerUpUnlocked : CSerializable {
 		[Serialize("dive"             )] public bool dive;
 		[Serialize("walkOnWallsGlobal")] public bool walkOnWallsGlobal;

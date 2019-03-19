@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class GameProgressEvent : Event {
 		[Serialize("Name")] public StringID Name;
 		protected override void SerializeImpl(CSerializerObject s) {

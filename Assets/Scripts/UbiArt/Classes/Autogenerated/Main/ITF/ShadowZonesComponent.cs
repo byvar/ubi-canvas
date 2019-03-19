@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ShadowZonesComponent : ActorComponent {
 		[Serialize("LightPrimitiveParameters"      )] public GFXPrimitiveParam LightPrimitiveParameters;
 		[Serialize("LightBackPrimitiveParameters"  )] public GFXPrimitiveParam LightBackPrimitiveParameters;

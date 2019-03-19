@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class ProceduralSoftPlatformComponent : GraphicComponent {
 		[Serialize("endPos"         )] public Vector3 endPos;
 		[Serialize("useBeginTexture")] public bool useBeginTexture;
@@ -8,9 +9,12 @@ namespace UbiArt.ITF {
 		[Serialize("initIteration"  )] public bool initIteration;
 		[Serialize("lianaOnTrigger" )] public bool lianaOnTrigger;
 		[Serialize("flipTexture"    )] public bool flipTexture;
+		[Serialize("useBeginTexture")] public int useBeginTexture;
+		[Serialize("useEndTexture"  )] public int useEndTexture;
+		[Serialize("initIteration"  )] public int initIteration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(endPos));
 					SerializeField(s, nameof(useBeginTexture));

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_BezierBranchGrowComponent : RO2_BezierBranchComponent {
 		[Serialize("startCursor"  )] public float startCursor;
 		[Serialize("minCursor"    )] public float minCursor;
@@ -9,7 +10,6 @@ namespace UbiArt.ITF {
 		[Serialize("autoStartTime")] public float autoStartTime;
 		[Serialize("growSpeed"    )] public float growSpeed;
 		[Serialize("easeMode"     )] public EaseMode easeMode;
-		[Serialize("useSameSpeed" )] public Placeholder useSameSpeed;
 		[Serialize("useSameSpeed" )] public bool useSameSpeed;
 		[Serialize("retractSpeed" )] public float retractSpeed;
 		[Serialize("easeMode"     )] public Enum_easeMode easeMode;
@@ -17,8 +17,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(startCursor));
-				SerializeField(s, nameof(useSameSpeed));
-				SerializeField(s, nameof(useSameSpeed));
+				SerializeField(s, nameof(useSameSpeed), boolAsByte: true);
 				SerializeField(s, nameof(growSpeed));
 				SerializeField(s, nameof(retractSpeed));
 				SerializeField(s, nameof(easeMode));

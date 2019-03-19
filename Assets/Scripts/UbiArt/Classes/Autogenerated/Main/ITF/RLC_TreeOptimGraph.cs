@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_TreeOptimGraph : CSerializable {
 		[Serialize("OptimPath"   )] public Path OptimPath;
 		[Serialize("OptimPos"    )] public Vector3 OptimPos;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventLAN_GPE : Event {
 		[Serialize("ID")] public StringID ID;
 		protected override void SerializeImpl(CSerializerObject s) {

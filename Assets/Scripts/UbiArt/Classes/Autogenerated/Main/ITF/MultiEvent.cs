@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class MultiEvent : Event {
 		[Serialize("eventList")] public CArray<Generic<Event>> eventList;
 		protected override void SerializeImpl(CSerializerObject s) {

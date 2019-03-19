@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfigRunnerOverride : RLC_AmbianceConfig {
 		[Serialize("MapPath")] public Path MapPath;
 		protected override void SerializeImpl(CSerializerObject s) {

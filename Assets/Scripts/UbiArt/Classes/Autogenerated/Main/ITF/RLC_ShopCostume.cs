@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_ShopCostume : RLC_DynamicStoreItem {
 		[Serialize("Id"         )] public StringID Id;
 		[Serialize("State"      )] public Enum_State State;

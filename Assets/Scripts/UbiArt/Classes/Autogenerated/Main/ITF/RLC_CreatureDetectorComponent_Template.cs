@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureDetectorComponent_Template : ShapeDetectorComponent_Template {
 		[Serialize("ignoreZ"           )] public bool ignoreZ;
 		[Serialize("maxDetectionRadius")] public float maxDetectionRadius;

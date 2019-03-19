@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_DynamicStoreItem : CSerializable {
 		[Serialize("msdkItemId")] public uint msdkItemId;
 		[Serialize("locId"     )] public uint locId;

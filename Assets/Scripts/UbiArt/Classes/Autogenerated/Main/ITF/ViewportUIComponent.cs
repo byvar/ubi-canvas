@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class ViewportUIComponent : ActorComponent {
 		[Serialize("view"                      )] public View view;
 		[Serialize("active"                    )] public bool active;

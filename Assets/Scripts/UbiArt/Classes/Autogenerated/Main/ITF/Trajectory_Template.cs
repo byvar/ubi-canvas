@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class Trajectory_Template : CSerializable {
 		[Serialize("translation")] public Spline translation;
 		[Serialize("rotation"   )] public Spline rotation;

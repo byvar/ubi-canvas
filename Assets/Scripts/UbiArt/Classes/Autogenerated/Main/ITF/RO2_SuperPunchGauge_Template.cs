@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SuperPunchGauge_Template : RO2_PowerUpDisplay_Template {
 		[Serialize("fxControl"            )] public StringID fxControl;
 		[Serialize("punchActor"           )] public Path punchActor;

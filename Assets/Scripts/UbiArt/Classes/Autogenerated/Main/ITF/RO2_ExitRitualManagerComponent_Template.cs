@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ExitRitualManagerComponent_Template : ActorComponent_Template {
 		[Serialize("animVictoryPlayer"      )] public StringID animVictoryPlayer;
 		[Serialize("animFlying"             )] public StringID animFlying;
@@ -101,6 +102,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(runePath));
 				SerializeField(s, nameof(runeBonesList));
 				SerializeField(s, nameof(medalPaths));
+				SerializeField(s, nameof(medalPaths));
 				SerializeField(s, nameof(medalBones));
 				SerializeField(s, nameof(teensieScale));
 				SerializeField(s, nameof(appearPosOffset));
@@ -114,6 +116,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(onPositionFX));
 				SerializeField(s, nameof(cameraFX));
 				SerializeField(s, nameof(fireworkFX));
+				SerializeField(s, nameof(fireworksOffsets));
 				SerializeField(s, nameof(fireworksOffsets));
 				SerializeField(s, nameof(minTimeBetweenFireworks));
 				SerializeField(s, nameof(maxTimeBetweenFireworks));

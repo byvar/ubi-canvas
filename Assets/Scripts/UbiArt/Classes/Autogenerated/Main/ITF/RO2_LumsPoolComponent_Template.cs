@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LumsPoolComponent_Template : ActorComponent_Template {
 		[Serialize("CellSpace"       )] public float CellSpace;
 		[Serialize("Gravity"         )] public float Gravity;

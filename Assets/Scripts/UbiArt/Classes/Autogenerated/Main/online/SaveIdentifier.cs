@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class SaveIdentifier : CSerializable {
 		[Serialize("pid" )] public string pid;
 		[Serialize("slot")] public uint slot;

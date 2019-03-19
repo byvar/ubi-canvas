@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class adsCampaign : CSerializable {
 		[Serialize("name"               )] public string name;
 		[Serialize("adlocation"         )] public RLC_AdsType adlocation;

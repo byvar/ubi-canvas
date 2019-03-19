@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsPlatformCondition : online.GameGlobalsCondition {
 		[Serialize("platform")] public GGPlatform platform;
 		protected override void SerializeImpl(CSerializerObject s) {

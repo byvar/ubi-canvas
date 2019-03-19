@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfigRunner : RLC_AmbianceConfig {
 		[Serialize("GraphicalFamily")] public Enum_GraphicalFamily GraphicalFamily;
 		[Serialize("GraphicalKit"   )] public Enum_GraphicalKit GraphicalKit;

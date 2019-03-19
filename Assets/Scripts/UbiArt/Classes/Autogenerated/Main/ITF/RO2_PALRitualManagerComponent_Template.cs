@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PALRitualManagerComponent_Template : ActorComponent_Template {
 		[Serialize("sequenceAnimation"   )] public StringID sequenceAnimation;
 		[Serialize("animVictoryPlayer"   )] public StringID animVictoryPlayer;

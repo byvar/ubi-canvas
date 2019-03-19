@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LeafScrewComponent : RO2_AIComponent {
 		[Serialize("actorSpawnedPath")] public Path actorSpawnedPath;
 		[Serialize("terminated"      )] public bool terminated;

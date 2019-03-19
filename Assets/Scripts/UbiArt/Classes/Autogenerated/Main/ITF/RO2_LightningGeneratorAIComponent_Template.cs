@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LightningGeneratorAIComponent_Template : TimedSpawnerAIComponent_Template {
 		[Serialize("pivotBoneName"      )] public StringID pivotBoneName;
 		[Serialize("minAngle"           )] public Angle minAngle;

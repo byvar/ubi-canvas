@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionStun_Template : BTAction_Template {
 		[Serialize("timeBeforeDeath")] public float timeBeforeDeath;
 		[Serialize("useDeathTimer"  )] public bool useDeathTimer;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIHitWallBehavior_Template : TemplateAIBehavior {
 		[Serialize("hitWall"                    )] public Generic<AIAction_Template> hitWall;
 		[Serialize("halfWallHeight"             )] public float halfWallHeight;

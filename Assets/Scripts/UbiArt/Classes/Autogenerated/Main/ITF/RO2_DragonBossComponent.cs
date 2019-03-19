@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DragonBossComponent : ActorComponent {
 		[Serialize("mode"            )] public Enum_mode mode;
 		[Serialize("anim"            )] public StringID anim;

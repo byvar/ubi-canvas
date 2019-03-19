@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CrankComponent : ActorComponent {
 		[Serialize("controlOffset")] public Vector2 controlOffset;
 		[Serialize("textPos"      )] public Vector2 textPos;

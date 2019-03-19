@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventDarkRayman : Event {
 		[Serialize("activateDelaySec")] public float activateDelaySec;
 		[Serialize("attackOwner"     )] public bool attackOwner;

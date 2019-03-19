@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerForceFollowComponent_Template : ActorComponent_Template {
 		[Serialize("sprintDistance"                    )] public float sprintDistance;
 		[Serialize("sprintDistanceHysteresis"          )] public float sprintDistanceHysteresis;

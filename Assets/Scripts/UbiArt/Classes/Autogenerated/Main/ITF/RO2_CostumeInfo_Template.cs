@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_CostumeInfo_Template : CSerializable {
 		[Serialize("playerIDInfo"   )] public StringID playerIDInfo;
 		[Serialize("painting"       )] public Path painting;

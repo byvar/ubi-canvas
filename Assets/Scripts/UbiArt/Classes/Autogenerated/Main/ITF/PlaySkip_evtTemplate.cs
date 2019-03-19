@@ -1,12 +1,13 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class PlaySkip_evtTemplate : SequenceEvent_Template {
 		[Serialize("skipContextIcon")] public ContextIcon skipContextIcon;
 		[Serialize("skipContextIcon")] public Enum_skipContextIcon skipContextIcon;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(skipContextIcon));
 			} else {
 				SerializeField(s, nameof(skipContextIcon));

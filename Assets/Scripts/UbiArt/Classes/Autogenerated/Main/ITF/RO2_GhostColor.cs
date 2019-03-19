@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_GhostColor : CSerializable {
 		[Serialize("colorConfigName"        )] public StringID colorConfigName;
 		[Serialize("ghostFactorColorDefault")] public Color ghostFactorColorDefault;

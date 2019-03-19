@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class TextureGraphicComponent_Template : GraphicComponent_Template {
 		[Serialize("texture"            )] public Path texture;
 		[Serialize("material"           )] public GFXMaterialSerializable material;
@@ -17,7 +18,16 @@ namespace UbiArt.ITF {
 		[Serialize("draw2DNoScreenRatio")] public bool draw2DNoScreenRatio;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+				SerializeField(s, nameof(texture));
+				SerializeField(s, nameof(defaultColor));
+				SerializeField(s, nameof(angleX));
+				SerializeField(s, nameof(angleY));
+				SerializeField(s, nameof(angleZ));
+				SerializeField(s, nameof(speedRotX));
+				SerializeField(s, nameof(speedRotY));
+				SerializeField(s, nameof(speedRotZ));
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					SerializeField(s, nameof(texture));
 				}

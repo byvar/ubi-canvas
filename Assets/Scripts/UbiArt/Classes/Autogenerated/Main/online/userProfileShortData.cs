@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class userProfileShortData : CSerializable {
 		[Serialize("pid"          )] public string pid;
 		[Serialize("name"         )] public string name;

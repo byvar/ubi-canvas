@@ -1,13 +1,13 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CostumeDescriptor_Template : TemplateObj {
 		[Serialize("decorationBrickPath")] public Path decorationBrickPath;
 		[Serialize("priority"           )] public int priority;
 		[Serialize("costumeTag"         )] public StringID costumeTag;
 		[Serialize("costumetype"        )] public CostumeType costumetype;
 		[Serialize("unlockable"         )] public bool unlockable;
-		[Serialize("priority"           )] public bool priority;
 		[Serialize("costumetype"        )] public Enum_costumetype costumetype;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

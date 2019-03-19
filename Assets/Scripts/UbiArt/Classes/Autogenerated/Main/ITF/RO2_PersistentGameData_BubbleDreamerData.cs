@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_PersistentGameData_BubbleDreamerData : CSerializable {
 		[Serialize("hasMet"              )] public bool hasMet;
 		[Serialize("updateRequested"     )] public bool updateRequested;
@@ -17,6 +18,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(teensyLocksOpened));
 			SerializeField(s, nameof(challengeLocksOpened));
 			SerializeField(s, nameof(tutoCount));
+			SerializeField(s, nameof(DisplayQuoteStates));
 			SerializeField(s, nameof(DisplayQuoteStates));
 		}
 	}

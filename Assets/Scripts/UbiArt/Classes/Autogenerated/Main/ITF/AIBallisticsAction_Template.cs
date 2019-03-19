@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RL | GameFlags.VH)]
 	public partial class AIBallisticsAction_Template : AIAction_Template {
 		[Serialize("duration")] public float duration;
 		[Serialize("speed"   )] public float speed;

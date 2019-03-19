@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionFollowActorSpring_Template : BTAction_Template {
 		[Serialize("animFollow"          )] public StringID animFollow;
 		[Serialize("animSpring"          )] public StringID animSpring;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class GameConfigExtended_Template : TemplateObj {
 		[Serialize("doSomething" )] public uint doSomething;
 		[Serialize("playerIDInfo")] public CList<PlayerIDInfo> playerIDInfo;

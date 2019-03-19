@@ -1,12 +1,17 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class FlexMeshBranchComponent : BezierBranchComponent {
 		[Serialize("meshes")] public CList<FlexMeshBranchComponent.FlexMesh> meshes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(meshes));
+			if (Settings.s.game == Settings.Game.COL) {
+			} else {
+				SerializeField(s, nameof(meshes));
+			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class FlexMesh : CSerializable {
 			[Serialize("flexId"  )] public StringID flexId;
 			[Serialize("distance")] public float distance;

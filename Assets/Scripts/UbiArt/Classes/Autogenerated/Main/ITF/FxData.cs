@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class FxData : CSerializable {
 		[Serialize("fxFall"      )] public StringID fxFall;
 		[Serialize("fxHit"       )] public StringID fxHit;

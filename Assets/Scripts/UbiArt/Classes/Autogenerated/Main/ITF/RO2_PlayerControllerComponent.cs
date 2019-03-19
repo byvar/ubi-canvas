@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerControllerComponent : PlayerControllerComponent {
 		[Serialize("trailPath"       )] public Path trailPath;
 		[Serialize("reticlePath"     )] public Path reticlePath;
@@ -23,6 +24,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(disableColorRamp));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class StateDeadSoul_Template : CSerializable {
 			[Serialize("phantomShape"                 )] public Generic<PhysShape> phantomShape;
 			[Serialize("softCollisionRadiusMultiplier")] public float softCollisionRadiusMultiplier;
@@ -62,6 +64,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(useTrail));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class StateRevive_Template : CSerializable {
 			[Serialize("duration"           )] public float duration;
 			[Serialize("bezierHitMultiplier")] public float bezierHitMultiplier;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_GeyserPlatformAIComponent_Template : GraphicComponent_Template {
 		[Serialize("attachBone"              )] public StringID attachBone;
 		[Serialize("ignoreActorScale"        )] public bool ignoreActorScale;
@@ -77,18 +78,18 @@ namespace UbiArt.ITF {
 		[Serialize("fxGeneratorType"         )] public Enum_fxGeneratorType fxGeneratorType;
 		[Serialize("minAngle"                )] public Angle minAngle;
 		[Serialize("maxAngle"                )] public Angle maxAngle;
-		[Serialize("debugForce"              )] public bool debugForce;
-		[Serialize("debugPatch"              )] public bool debugPatch;
-		[Serialize("debugFx"                 )] public bool debugFx;
+		[Serialize("debugForce"              )] public int debugForce;
+		[Serialize("debugPatch"              )] public int debugPatch;
+		[Serialize("debugFx"                 )] public int debugFx;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(attachBone));
 				SerializeField(s, nameof(ignoreActorScale));
 				SerializeField(s, nameof(length));
-				SerializeField(s, nameof(lockLength));
-				SerializeField(s, nameof(lockAngle));
-				SerializeField(s, nameof(lockWidth));
+				SerializeField(s, nameof(lockLength), boolAsByte: true);
+				SerializeField(s, nameof(lockAngle), boolAsByte: true);
+				SerializeField(s, nameof(lockWidth), boolAsByte: true);
 				SerializeField(s, nameof(growTargetSmoothFactor));
 				SerializeField(s, nameof(growSmoothFactor));
 				SerializeField(s, nameof(shrinkTargetSmoothFactor));
@@ -96,12 +97,12 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(lengthVariationAmplitude));
 				SerializeField(s, nameof(lengthVariationFrequency));
 				SerializeField(s, nameof(jumpThreshold));
-				SerializeField(s, nameof(triggerOnHit));
+				SerializeField(s, nameof(triggerOnHit), boolAsByte: true);
 				SerializeField(s, nameof(triggerOnHitDelay));
 				SerializeField(s, nameof(autoCloseDelay));
-				SerializeField(s, nameof(startOpen));
-				SerializeField(s, nameof(changeStateOnTrigger));
-				SerializeField(s, nameof(closeOnTap));
+				SerializeField(s, nameof(startOpen), boolAsByte: true);
+				SerializeField(s, nameof(changeStateOnTrigger), boolAsByte: true);
+				SerializeField(s, nameof(closeOnTap), boolAsByte: true);
 				SerializeField(s, nameof(closeOnTapDuration));
 				SerializeField(s, nameof(material));
 				SerializeField(s, nameof(patchStartOffset));
@@ -124,7 +125,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(forceWidthTop));
 				SerializeField(s, nameof(forceFadeOutLength));
 				SerializeField(s, nameof(overrideDisableForce));
-				SerializeField(s, nameof(usePlatform));
+				SerializeField(s, nameof(usePlatform), boolAsByte: true);
 				SerializeField(s, nameof(platformMaterial));
 				SerializeField(s, nameof(platformWidth));
 				SerializeField(s, nameof(platformBone));
@@ -132,7 +133,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(platformLengthMultiplier));
 				SerializeField(s, nameof(platformLengthOffset));
 				SerializeField(s, nameof(platformHeightSink));
-				SerializeField(s, nameof(fxUseTransform));
+				SerializeField(s, nameof(fxUseTransform), boolAsByte: true);
 				SerializeField(s, nameof(fxGeneratorType));
 				SerializeField(s, nameof(fxGenerators));
 				SerializeField(s, nameof(fxLengthOffset));
@@ -146,13 +147,13 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(animOpened));
 				SerializeField(s, nameof(animClosed));
 				SerializeField(s, nameof(animOpenToClose));
-				SerializeField(s, nameof(useStim));
-				SerializeField(s, nameof(jumpToPlatform));
+				SerializeField(s, nameof(useStim), boolAsByte: true);
+				SerializeField(s, nameof(jumpToPlatform), boolAsByte: true);
 				SerializeField(s, nameof(faction));
-				SerializeField(s, nameof(registerToAIManager));
+				SerializeField(s, nameof(registerToAIManager), boolAsByte: true);
 				SerializeField(s, nameof(windTunnelLevel));
 				SerializeField(s, nameof(regions));
-				SerializeField(s, nameof(isGeyserBehavior));
+				SerializeField(s, nameof(isGeyserBehavior), boolAsByte: true);
 				SerializeField(s, nameof(widthReductionSpeed));
 				if (s.HasFlags(SerializeFlags.Flags9)) {
 					SerializeField(s, nameof(minAngle));
@@ -236,6 +237,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(widthReductionSpeed));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class RegionData : CSerializable {
 			[Serialize("widthOffset" )] public float widthOffset;
 			[Serialize("heightOffset")] public float heightOffset;

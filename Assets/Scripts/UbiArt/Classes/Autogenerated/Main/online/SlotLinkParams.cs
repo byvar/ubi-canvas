@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class SlotLinkParams : LinkCode {
 		[Serialize("token")] public SocialNetworkIdentity token;
 		protected override void SerializeImpl(CSerializerObject s) {

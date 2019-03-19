@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class DynamicStoreConfig_Template : ITF.TemplateObj {
 		[Serialize("StarterGemCounter"                )] public uint StarterGemCounter;
 		[Serialize("StarterFoodCount"                 )] public uint StarterFoodCount;
@@ -48,6 +49,8 @@ namespace UbiArt.online {
 			SerializeField(s, nameof(forcedIAPTier));
 			SerializeField(s, nameof(forcedReductionActive));
 			SerializeField(s, nameof(forcedReductionRatio));
+			SerializeField(s, nameof(KEY));
+			SerializeField(s, nameof(timeSavingPackTimes));
 			SerializeField(s, nameof(KEY));
 			SerializeField(s, nameof(timeSavingPackTimes));
 			SerializeField(s, nameof(maxNewEggIAPPerSave));

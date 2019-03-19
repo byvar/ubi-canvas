@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AFX_RadialParam : CSerializable {
 		[Serialize("use"         )] public bool use;
 		[Serialize("centerOffset")] public Vector2 centerOffset;

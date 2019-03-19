@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EditableShapeComponent : ActorComponent {
 		[Serialize("ZONE")] public EditableShape ZONE;
 		protected override void SerializeImpl(CSerializerObject s) {

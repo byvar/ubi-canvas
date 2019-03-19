@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class MultiTargetEvent : CSerializable {
 		[Serialize("triggerOnce"         )] public bool triggerOnce;
 		[Serialize("triggerSelf"         )] public bool triggerSelf;

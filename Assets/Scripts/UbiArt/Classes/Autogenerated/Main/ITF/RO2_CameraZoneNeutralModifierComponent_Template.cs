@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CameraZoneNeutralModifierComponent_Template : ActorComponent_Template {
 		[Serialize("zoneNeutral"       )] public Vector2 zoneNeutral;
 		[Serialize("swipeSpeed"        )] public float swipeSpeed;

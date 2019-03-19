@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BallComponent_Template : ActorComponent_Template {
 		[Serialize("impulseForce_Ground"            )] public float impulseForce_Ground;
 		[Serialize("impulseForce_Wall"              )] public float impulseForce_Wall;
@@ -96,18 +97,6 @@ namespace UbiArt.ITF {
 		[Serialize("megaHitForce"                   )] public float megaHitForce;
 		[Serialize("drcTapForce"                    )] public float drcTapForce;
 		[Serialize("faction"                        )] public uint faction;
-		[Serialize("ballMode_ShotBasic"             )] public Enum_ballMode_ShotBasic ballMode_ShotBasic;
-		[Serialize("ballMode_ShotCrush"             )] public Enum_ballMode_ShotCrush ballMode_ShotCrush;
-		[Serialize("ballMode_ShotUp"                )] public Enum_ballMode_ShotUp ballMode_ShotUp;
-		[Serialize("ballMode_ShotCharge"            )] public Enum_ballMode_ShotCharge ballMode_ShotCharge;
-		[Serialize("ballMode_EjectY"                )] public Enum_ballMode_EjectY ballMode_EjectY;
-		[Serialize("ballMode_Pass"                  )] public Enum_ballMode_Pass ballMode_Pass;
-		[Serialize("receivedHitType_ShotBasic"      )] public Enum_receivedHitType_ShotBasic receivedHitType_ShotBasic;
-		[Serialize("receivedHitType_ShotCrush"      )] public Enum_receivedHitType_ShotCrush receivedHitType_ShotCrush;
-		[Serialize("receivedHitType_ShotUp"         )] public Enum_receivedHitType_ShotUp receivedHitType_ShotUp;
-		[Serialize("receivedHitType_ShotCharge"     )] public Enum_receivedHitType_ShotCharge receivedHitType_ShotCharge;
-		[Serialize("receivedHitType_EjectY"         )] public Enum_receivedHitType_EjectY receivedHitType_EjectY;
-		[Serialize("receivedHitType_Pass"           )] public Enum_receivedHitType_Pass receivedHitType_Pass;
 		[Serialize("playerHitLifeTime"              )] public float playerHitLifeTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -367,16 +356,6 @@ namespace UbiArt.ITF {
 			[Serialize("Value_1")] Value_1 = 1,
 			[Serialize("Value_2")] Value_2 = 2,
 			[Serialize("Value_3")] Value_3 = 3,
-		}
-		public enum Enum_receivedHitType_ShotBasic {
-			[Serialize("Value__1")] Value__1 = -1,
-			[Serialize("Value_0" )] Value_0 = 0,
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_3" )] Value_3 = 3,
-			[Serialize("Value_4" )] Value_4 = 4,
-			[Serialize("Value_5" )] Value_5 = 5,
-			[Serialize("Value_6" )] Value_6 = 6,
-			[Serialize("Value_7" )] Value_7 = 7,
 		}
 		public override uint? ClassCRC => 0xEB75D38E;
 	}

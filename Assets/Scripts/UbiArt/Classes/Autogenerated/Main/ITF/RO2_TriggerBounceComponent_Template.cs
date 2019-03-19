@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TriggerBounceComponent_Template : ActorComponent_Template {
 		[Serialize("phantom"                          )] public Generic<PhysShape> phantom;
 		[Serialize("hurtLevel"                        )] public uint hurtLevel;

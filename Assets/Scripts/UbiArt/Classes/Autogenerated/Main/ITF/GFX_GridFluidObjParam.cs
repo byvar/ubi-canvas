@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class GFX_GridFluidObjParam : CSerializable {
 		[Serialize("BasicRender"     )] public bool BasicRender;
 		[Serialize("EmitterIntensity")] public float EmitterIntensity;

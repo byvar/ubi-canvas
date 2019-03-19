@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class InterpolatorComponent_Template : ActorComponent_Template {
 		[Serialize("input"                   )] public StringID input;
 		[Serialize("useMainCharacter"        )] public bool useMainCharacter;

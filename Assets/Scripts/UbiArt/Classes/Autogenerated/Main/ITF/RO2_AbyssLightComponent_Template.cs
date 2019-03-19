@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AbyssLightComponent_Template : ActorComponent_Template {
 		[Serialize("radius"            )] public float radius;
 		[Serialize("textureRenderPrio" )] public float textureRenderPrio;

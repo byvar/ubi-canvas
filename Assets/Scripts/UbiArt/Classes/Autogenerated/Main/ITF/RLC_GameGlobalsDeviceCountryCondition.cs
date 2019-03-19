@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsDeviceCountryCondition : online.GameGlobalsCondition {
 		[Serialize("country")] public string country;
 		protected override void SerializeImpl(CSerializerObject s) {

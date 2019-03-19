@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class BTDeciderHasPlayerBehind_Template : BTDecider_Template {
 		[Serialize("radius"  )] public float radius;
 		[Serialize("margin"  )] public float margin;

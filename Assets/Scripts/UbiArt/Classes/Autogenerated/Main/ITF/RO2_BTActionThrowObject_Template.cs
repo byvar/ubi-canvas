@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionThrowObject_Template : BTAction_Template {
 		[Serialize("enemyDetectionRange"       )] public Generic<PhysShape> enemyDetectionRange;
 		[Serialize("anim"                      )] public StringID anim;
@@ -48,6 +49,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(debug));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class ProjectileData : CSerializable {
 			[Serialize("path"          )] public Path path;
 			[Serialize("spawnMaxPeriod")] public uint spawnMaxPeriod;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_Player_CheckFamily : RLC_Mission_Guard {
 		[Serialize("playerFamily")] public string playerFamily;
 		protected override void SerializeImpl(CSerializerObject s) {

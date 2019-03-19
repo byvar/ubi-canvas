@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_alTranquiloAiComponent_Template : AIComponent_Template {
 		[Serialize("idleAnim"        )] public StringID idleAnim;
 		[Serialize("squashedAnim"    )] public StringID squashedAnim;

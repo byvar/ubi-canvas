@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DoorComponent : ActorComponent {
 		[Serialize("detectRange"     )] public float detectRange;
 		[Serialize("automaticOpening")] public bool automaticOpening;

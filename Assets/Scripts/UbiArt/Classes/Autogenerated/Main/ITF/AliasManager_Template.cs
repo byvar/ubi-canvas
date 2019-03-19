@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class AliasManager_Template : CSerializable {
 		[Serialize("Alias")] public CMap<StringID, Path> Alias;
 		protected override void SerializeImpl(CSerializerObject s) {

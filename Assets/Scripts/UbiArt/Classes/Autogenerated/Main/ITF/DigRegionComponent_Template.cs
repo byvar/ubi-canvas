@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class DigRegionComponent_Template : ActorComponent_Template {
 		[Serialize("MaterialDig"             )] public GFXMaterialSerializable MaterialDig;
 		[Serialize("MaterialPlump"           )] public GFXMaterialSerializable MaterialPlump;

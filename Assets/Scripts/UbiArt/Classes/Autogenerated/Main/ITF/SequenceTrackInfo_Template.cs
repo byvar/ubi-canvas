@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class SequenceTrackInfo_Template : CSerializable {
 		[Serialize("isEnable"   )] public bool isEnable;
 		[Serialize("selected"   )] public bool selected;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_HomeTreeGpeComponent_Template : ActorComponent_Template {
 		[Serialize("appearMode"           )] public AppearMode appearMode;
 		[Serialize("fadeDuration"         )] public float fadeDuration;
@@ -17,7 +18,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(fadeDuration));
 				SerializeField(s, nameof(appearAnim));
 				SerializeField(s, nameof(idleAnim));
-				SerializeField(s, nameof(scaleActor));
+				SerializeField(s, nameof(scaleActor), boolAsByte: true);
 				SerializeField(s, nameof(trunkAttachCurveLimit));
 				SerializeField(s, nameof(trunkAttachCurveWidth));
 			} else {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class TextAnimScaleComponent : ActorComponent {
 		[Serialize("isActive"                 )] public bool isActive;
 		[Serialize("margingTop"               )] public float margingTop;
@@ -19,7 +20,23 @@ namespace UbiArt.ITF {
 		[Serialize("scaleType"                )] public Enum_scaleType scaleType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(isActive));
+					SerializeField(s, nameof(margingTop));
+					SerializeField(s, nameof(margingLeft));
+					SerializeField(s, nameof(margingRight));
+					SerializeField(s, nameof(margingBottom));
+					SerializeField(s, nameof(scaleType));
+					SerializeField(s, nameof(autoFillContained), boolAsByte: true);
+					SerializeField(s, nameof(ContainedChildren));
+					SerializeField(s, nameof(autoFillReposition), boolAsByte: true);
+					SerializeField(s, nameof(repositionObjects));
+					SerializeField(s, nameof(relRepositionObjects));
+					SerializeField(s, nameof(minimumSize));
+					SerializeField(s, nameof(aabb));
+				}
+			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(isActive));
 					SerializeField(s, nameof(margingTop));
@@ -28,8 +45,9 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(margingBottom));
 					SerializeField(s, nameof(scaleType));
 					SerializeField(s, nameof(autoFillContained));
+					SerializeField(s, nameof(autoFillContained));
 					SerializeField(s, nameof(ContainedChildren));
-					SerializeField(s, nameof(autoFillReposition));
+					SerializeField(s, nameof(autoFillReposition), boolAsByte: true);
 					SerializeField(s, nameof(repositionObjects));
 					SerializeField(s, nameof(relRepositionObjects));
 					SerializeField(s, nameof(minimumSize));
@@ -59,6 +77,12 @@ namespace UbiArt.ITF {
 			[Serialize("ScaleType_Horizontale")] Horizontale = 1,
 			[Serialize("ScaleType_Verticale"  )] Verticale = 2,
 			[Serialize("ScaleType_All"        )] All = 3,
+		}
+		public enum Enum_scaleType {
+			[Serialize("Value_0")] Value_0 = 0,
+			[Serialize("Value_1")] Value_1 = 1,
+			[Serialize("Value_2")] Value_2 = 2,
+			[Serialize("Value_3")] Value_3 = 3,
 		}
 		public enum Enum_scaleType {
 			[Serialize("Value_0")] Value_0 = 0,

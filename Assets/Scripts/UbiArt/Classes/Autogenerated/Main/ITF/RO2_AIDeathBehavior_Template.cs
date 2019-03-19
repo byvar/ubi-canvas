@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIDeathBehavior_Template : AIDeathBehavior_Template {
 		[Serialize("reward"       )] public Generic<RO2_EventSpawnReward> reward;
 		[Serialize("soul"         )] public Path soul;

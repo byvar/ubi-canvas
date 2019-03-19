@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventSetProceduralCursor : Event {
 		[Serialize("proceduralCursor")] public float proceduralCursor;
 		[Serialize("animName"        )] public StringID animName;

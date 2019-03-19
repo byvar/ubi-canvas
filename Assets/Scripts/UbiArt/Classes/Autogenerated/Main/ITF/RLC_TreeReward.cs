@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_TreeReward : CSerializable {
 		[Serialize("RewardType"     )] public Enum_RewardType RewardType;
 		[Serialize("RequiredStarsNb")] public uint RequiredStarsNb;

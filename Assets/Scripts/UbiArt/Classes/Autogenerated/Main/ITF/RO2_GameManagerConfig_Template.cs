@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GameManagerConfig_Template : GameManagerConfig_Template {
 		[Serialize("playerConfig"                           )] public RO2_PlayerConfig_Template playerConfig;
 		[Serialize("gameplayCameraPath"                     )] public Path gameplayCameraPath;
@@ -145,7 +146,7 @@ namespace UbiArt.ITF {
 		[Serialize("packageDirectories"                     )] public Placeholder packageDirectories;
 		[Serialize("environmentBrickPaths"                  )] public Placeholder environmentBrickPaths;
 		[Serialize("costumeEnvironmentBrickPaths"           )] public Placeholder costumeEnvironmentBrickPaths;
-		[Serialize("firstLevelPath"                         )] public PathRef firstLevelPathRef;
+		[Serialize("firstLevelPath"                         )] public PathRef firstLevelPath;
 		[Serialize("ps3HddIntroMoviePathContainer"          )] public Placeholder ps3HddIntroMoviePathContainer;
 		[Serialize("demoTrailerMoviePathContainer"          )] public Placeholder demoTrailerMoviePathContainer;
 		[Serialize("scoreRecapChallengePath"                )] public Path scoreRecapChallengePath;
@@ -180,7 +181,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(petRewardSpawnHour));
 				SerializeField(s, nameof(homeMapPath));
 				SerializeField(s, nameof(soccerConfig));
-				SerializeField(s, nameof(firstLevelPathRef));
+				SerializeField(s, nameof(firstLevelPath));
 				SerializeField(s, nameof(introMoviePath));
 				SerializeField(s, nameof(introMoviePathContainer));
 				SerializeField(s, nameof(ps3HddIntroMoviePathContainer));
@@ -368,6 +369,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(newsButton_android));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class LockDataClass : CSerializable {
 			[Serialize("tag"         )] public StringID tag;
 			[Serialize("lockType"    )] public MapLockType lockType;
@@ -404,6 +406,7 @@ namespace UbiArt.ITF {
 				[Serialize("NodeBehaviorType_Door"             )] Door = 10,
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class Pet : CSerializable {
 			[Serialize("visualId"   )] public uint visualId;
 			[Serialize("probability")] public uint probability;
@@ -417,6 +420,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(family));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RewardPerWorldCompletion : CSerializable {
 			[Serialize("lastMapID"        )] public StringID lastMapID;
 			[Serialize("luckyTicketReward")] public uint luckyTicketReward;
@@ -426,6 +430,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(luckyTicketReward));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class WorldConfig : CSerializable {
 			[Serialize("tag"                     )] public StringID tag;
 			[Serialize("teensyUnlockCountRetro1" )] public uint teensyUnlockCountRetro1;
@@ -445,6 +450,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(presence));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class LocalisedVideo : CSerializable {
 			[Serialize("language"  )] public Enum_language language;
 			[Serialize("video"     )] public Path video;
@@ -460,6 +466,7 @@ namespace UbiArt.ITF {
 			public enum Enum_language {
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class TagTextClass : CSerializable {
 			[Serialize("tag"  )] public StringID tag;
 			[Serialize("locID")] public LocalisationId locID;
@@ -469,6 +476,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(locID));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class MapConfig : CSerializable {
 			[Serialize("tag"              )] public StringID tag;
 			[Serialize("worldTag"         )] public StringID worldTag;
@@ -525,6 +533,7 @@ namespace UbiArt.ITF {
 				[Serialize("MAPTYPE_MUSICAL")] MUSICAL = 1,
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class LuckyTicketUnlock : CSerializable {
 			[Serialize("mapID")] public uint mapID;
 			protected override void SerializeImpl(CSerializerObject s) {
@@ -532,6 +541,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(mapID));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class InvasionConfig : CSerializable {
 			[Serialize("invadedMapTag"  )] public StringID invadedMapTag;
 			[Serialize("invasionMapTag" )] public StringID invasionMapTag;

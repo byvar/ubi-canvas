@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TouchDetectorComponent : ShapeDetectorComponent {
 		[Serialize("checkTaps"          )] public bool checkTaps;
 		[Serialize("tapTime"            )] public float tapTime;

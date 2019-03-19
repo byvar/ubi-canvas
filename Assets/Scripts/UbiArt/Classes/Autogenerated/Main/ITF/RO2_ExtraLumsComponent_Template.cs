@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ExtraLumsComponent_Template : ActorComponent_Template {
 		[Serialize("lumsCount"            )] public uint lumsCount;
 		[Serialize("disappearStartTime"   )] public float disappearStartTime;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class UIRepositionChildrenComponent : UIItem {
 		[Serialize("spaceBetweenChildren")] public int spaceBetweenChildren;
 		[Serialize("verticalOffset"      )] public int verticalOffset;

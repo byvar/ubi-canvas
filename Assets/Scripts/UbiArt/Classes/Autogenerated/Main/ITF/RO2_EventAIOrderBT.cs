@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EventAIOrderBT : Event {
 		[Serialize("type")] public BTAIORDER type;
 		[Serialize("type")] public Enum_type type;

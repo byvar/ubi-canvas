@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class Phys3DComponent_Template : ActorComponent_Template {
 		[Serialize("gravity" )] public float gravity;
 		[Serialize("friction")] public float friction;

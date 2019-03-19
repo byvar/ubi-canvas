@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsRegionCondition : online.GameGlobalsCondition {
 		[Serialize("region")] public RLC_GraphicalFamily region;
 		protected override void SerializeImpl(CSerializerObject s) {

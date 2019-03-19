@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_EventScoreRecapTrigger : Event {
 		[Serialize("scoreRecapSequence")] public ScoreRecapSequence scoreRecapSequence;
 		[Serialize("scoreRecapSequence")] public Enum_scoreRecapSequence scoreRecapSequence;

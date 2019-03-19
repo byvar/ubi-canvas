@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTDeciderPolylineCrushed_Template : BTDecider_Template {
 		[Serialize("speedThreshold"   )] public float speedThreshold;
 		[Serialize("restartOnNewCrush")] public bool restartOnNewCrush;

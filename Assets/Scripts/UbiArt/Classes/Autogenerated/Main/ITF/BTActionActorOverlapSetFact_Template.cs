@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTActionActorOverlapSetFact_Template : BTAction_Template {
 		[Serialize("factWithActor")] public StringID factWithActor;
 		[Serialize("factOnOff"    )] public StringID factOnOff;

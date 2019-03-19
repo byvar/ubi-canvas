@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ShadowZoneAIComponent : ActorComponent {
 		[Serialize("startOn"          )] public bool startOn;
 		[Serialize("pauseTween"       )] public bool pauseTween;

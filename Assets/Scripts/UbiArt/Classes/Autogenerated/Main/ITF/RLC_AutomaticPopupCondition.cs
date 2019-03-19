@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AutomaticPopupCondition : CSerializable {
 		[Serialize("timeSinceLastShown"    )] public online.TimeInterval timeSinceLastShown;
 		[Serialize("sessionsSinceLastShown")] public uint sessionsSinceLastShown;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_OceanSpiderAIComponent_Template : RO2_SimpleAIComponent_Template {
 		[Serialize("addHitInputName" )] public StringID addHitInputName;
 		[Serialize("buboPath"        )] public Path buboPath;
@@ -8,7 +9,6 @@ namespace UbiArt.ITF {
 		[Serialize("deathAnimName"   )] public StringID deathAnimName;
 		[Serialize("numBubbles"      )] public int numBubbles;
 		[Serialize("bubblePrizeBox"  )] public AABB bubblePrizeBox;
-		[Serialize("numBubbles"      )] public bool numBubbles;
 		[Serialize("bubblePrizePaths")] public Placeholder bubblePrizePaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

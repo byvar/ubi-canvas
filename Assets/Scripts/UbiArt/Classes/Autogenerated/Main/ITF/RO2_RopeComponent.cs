@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RopeComponent : GraphicComponent {
 		[Serialize("useBeginTexture"          )] public bool useBeginTexture;
 		[Serialize("useEndTexture"            )] public bool useEndTexture;
@@ -37,7 +38,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(rendererScaleMultiplier));
 					SerializeField(s, nameof(flipTexture));
 					SerializeField(s, nameof(initIteration));
-					SerializeField(s, nameof(ignoreStims));
+					SerializeField(s, nameof(ignoreStims), boolAsByte: true);
 					SerializeField(s, nameof(initLenth));
 					SerializeField(s, nameof(force));
 					SerializeField(s, nameof(rigidConstraintFactor));

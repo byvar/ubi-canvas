@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIScrollbar : UIComponent {
 		[Serialize("textBoxFriendly")] public StringID textBoxFriendly;
 		[Serialize("speed"          )] public float speed;

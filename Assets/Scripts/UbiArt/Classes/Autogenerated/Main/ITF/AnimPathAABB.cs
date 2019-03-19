@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AnimPathAABB : CSerializable {
 		[Serialize("name")] public StringID name;
 		[Serialize("path")] public Path path;

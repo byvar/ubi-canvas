@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTDeciderSuper_Template : BTDecider_Template {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

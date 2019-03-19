@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class HomeTreeGpeComponent_Template : ActorComponent_Template {
 		[Serialize("appearMode"           )] public AppearMode appearMode;
 		[Serialize("fadeDuration"         )] public float fadeDuration;

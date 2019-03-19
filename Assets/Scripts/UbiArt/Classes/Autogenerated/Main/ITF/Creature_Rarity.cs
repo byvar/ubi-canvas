@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class Creature_Rarity : CSerializable {
 		[Serialize("rarity"             )] public Creature_Rarity rarity;
 		[Serialize("starConversionValue")] public uint starConversionValue;

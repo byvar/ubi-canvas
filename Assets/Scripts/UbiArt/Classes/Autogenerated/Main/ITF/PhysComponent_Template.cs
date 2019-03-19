@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class PhysComponent_Template : ActorComponent_Template {
 		[Serialize("physGravityMultiplier"                 )] public float physGravityMultiplier;
 		[Serialize("physRadius"                            )] public float physRadius;
@@ -14,7 +15,7 @@ namespace UbiArt.ITF {
 		[Serialize("physWaterMinPerturbation"              )] public float physWaterMinPerturbation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(physRadius));
 				SerializeField(s, nameof(physWeight));
 				SerializeField(s, nameof(physGravityMultiplier));
@@ -24,7 +25,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(physWindSpeedLimit));
 				SerializeField(s, nameof(physWindScaleFactorWhenSpeedIsOpposite));
 				SerializeField(s, nameof(physFanForceMultiplier));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(physRadius));
 				SerializeField(s, nameof(physWeight));
 				SerializeField(s, nameof(physGravityMultiplier));

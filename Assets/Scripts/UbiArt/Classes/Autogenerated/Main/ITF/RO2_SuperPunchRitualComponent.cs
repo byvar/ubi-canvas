@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SuperPunchRitualComponent : ActorComponent {
 		[Serialize("detectRadius")] public float detectRadius;
 		[Serialize("m_triggered" )] public bool m_triggered;

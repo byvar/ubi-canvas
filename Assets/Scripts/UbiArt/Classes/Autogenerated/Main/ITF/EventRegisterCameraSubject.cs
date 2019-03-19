@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class EventRegisterCameraSubject : Event {
 		[Serialize("actionActivator")] public ACTION actionActivator;
 		[Serialize("actionChildren" )] public ACTION actionChildren;
@@ -15,7 +16,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(actionActivator));
 				SerializeField(s, nameof(actionChildren));
 				SerializeField(s, nameof(delay));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(sender));
 				SerializeField(s, nameof(actionActivator));
 				SerializeField(s, nameof(actionChildren));

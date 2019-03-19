@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class GameProgressManager_Template : TemplateObj {
 		[Serialize("MapProgressList")] public CMap<StringID, MapProgressContainer> MapProgressList;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameGlobalsHourOfDayCondition : GameGlobalsCondition {
 		[Serialize("startHour"  )] public uint startHour;
 		[Serialize("startMinute")] public uint startMinute;

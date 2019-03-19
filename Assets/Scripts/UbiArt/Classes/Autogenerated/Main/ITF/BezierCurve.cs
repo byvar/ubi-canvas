@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class BezierCurve : CSerializable {
 		[Serialize("points")] public CList<BezierCurve.Point> points;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -9,6 +10,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(points));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class Point : CSerializable {
 			[Serialize("pos" )] public Vector3 pos;
 			[Serialize("tanA")] public Vector3 tanA;

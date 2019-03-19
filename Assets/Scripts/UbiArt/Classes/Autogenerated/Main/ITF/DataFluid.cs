@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class DataFluid : CSerializable {
 		[Serialize("EdgeFluidList"      )] public CList<EdgeFluid> EdgeFluidList;
 		[Serialize("EdgeFluidListLevels")] public CList<EdgeFluidLevel> EdgeFluidListLevels;

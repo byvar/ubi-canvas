@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class AngleRangeTriggerComponent : ActorComponent {
 		[Serialize("minAngle"      )] public Angle minAngle;
 		[Serialize("maxAngle"      )] public Angle maxAngle;
@@ -11,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("sendFirstEvent")] public Enum_sendFirstEvent sendFirstEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(minAngle));
 					SerializeField(s, nameof(maxAngle));

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BezierCurveRendererComponent_Template : ActorComponent_Template {
 		[Serialize("renderer")] public BezierCurveRenderer_Template renderer;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ProjectileComponent : ActorComponent {
 		[Serialize("projectileType")] public ProjectileType projectileType;
 		[Serialize("projectileType")] public Enum_projectileType projectileType;

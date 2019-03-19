@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlatformChainAIComponent_Template : ActorComponent_Template {
 		[Serialize("rollbackDepth")] public uint rollbackDepth;
 		protected override void SerializeImpl(CSerializerObject s) {

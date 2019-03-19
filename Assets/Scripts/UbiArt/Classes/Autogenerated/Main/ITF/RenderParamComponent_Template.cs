@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RenderParamComponent_Template : ActorComponent_Template {
 		[Serialize("input"      )] public InputDesc input;
 		[Serialize("inputFactor")] public InputDesc inputFactor;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PersistentGameData_Universe : PersistentGameData_Universe {
 		[Serialize("score"                                        )] public RO2_PersistentGameData_Score score;
 		[Serialize("bubbleDreamer"                                )] public RO2_PersistentGameData_BubbleDreamerData bubbleDreamer;
@@ -414,8 +415,8 @@ namespace UbiArt.ITF {
 		[Serialize("worldUnlockMessagesSeen"                      )] public Placeholder worldUnlockMessagesSeen;
 		[Serialize("doorUnlockMessageSeen"                        )] public Placeholder doorUnlockMessageSeen;
 		[Serialize("doorUnlockDRCMessageRequired"                 )] public Placeholder doorUnlockDRCMessageRequired;
-		[Serialize("reward39Failed"                               )] public bool reward39Failed;
-		[Serialize("isDemoRewardChecked"                          )] public bool isDemoRewardChecked;
+		[Serialize("reward39Failed"                               )] public int reward39Failed;
+		[Serialize("isDemoRewardChecked"                          )] public int isDemoRewardChecked;
 		[Serialize("messageDummy"                                 )] public Placeholder messageDummy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -500,6 +501,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(score));
 				SerializeField(s, nameof(bubbleDreamer));
 				SerializeField(s, nameof(unlockedPets));
+				SerializeField(s, nameof(unlockedPets));
 				SerializeField(s, nameof(petsDailyReward));
 				SerializeField(s, nameof(unlockedCupsForPets));
 				SerializeField(s, nameof(givenPetCount));
@@ -539,6 +541,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(uplayDoneReward0));
 				SerializeField(s, nameof(uplayDoneReward1));
 				SerializeField(s, nameof(uplayDoneReward2));
+				SerializeField(s, nameof(uplayDoneReward3));
 				SerializeField(s, nameof(uplayDoneReward3));
 				SerializeField(s, nameof(playedChallenge));
 				SerializeField(s, nameof(tvOffOptionEnabledNb));
@@ -631,6 +634,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(lastChallengeSeed));
 				SerializeField(s, nameof(dailyChallengeBestScore));
 				SerializeField(s, nameof(dailyChallengeBestDistance));
+				SerializeField(s, nameof(lastChallengeTombs));
 				SerializeField(s, nameof(lastChallengeTombs));
 				SerializeField(s, nameof(dailyChallengeTicketPiecesState0));
 				SerializeField(s, nameof(dailyChallengeTicketPiecesState1));
@@ -899,6 +903,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(MiniEventsSessionsSinceLastShown));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RO2_LuckyTicketReward : CSerializable {
 			[Serialize("id"  )] public uint id;
 			[Serialize("type")] public uint type;
@@ -908,6 +913,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(type));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class petRewardData : CSerializable {
 			[Serialize("lastSpawnDay"    )] public uint lastSpawnDay;
 			[Serialize("maxRewardNb"     )] public uint maxRewardNb;
@@ -921,6 +927,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(rewardType));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_MenuOptionSave : CSerializable {
 			[Serialize("musicVolume"          )] public float musicVolume;
 			[Serialize("sfxVolume"            )] public float sfxVolume;
@@ -940,6 +947,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(everyplayEnabled));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class UnlockedDoor : CSerializable {
 			[Serialize("worldTag")] public StringID worldTag;
 			[Serialize("type"    )] public uint type;
@@ -951,6 +959,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(isNew));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_MissionData : CSerializable {
 			[Serialize("missionId"             )] public StringID missionId;
 			[Serialize("status"                )] public uint status;
@@ -968,6 +977,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(requiredHitCount));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_CreatureData : CSerializable {
 			[Serialize("creatureId")] public StringID creatureId;
 			[Serialize("count"     )] public uint count;
@@ -981,6 +991,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(exhausted));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_CostumePlayTime : CSerializable {
 			[Serialize("costumeID")] public StringID costumeID;
 			[Serialize("playtime" )] public float playtime;
@@ -990,6 +1001,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(playtime));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class NodeDataStruct : CSerializable {
 			[Serialize("tag"              )] public StringID tag;
 			[Serialize("unteaseSeen"      )] public bool unteaseSeen;
@@ -1003,6 +1015,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(sentUnlockMessage));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_AdventureNodeData : CSerializable {
 			[Serialize("nodeType"                       )] public Enum_nodeType nodeType;
 			[Serialize("nodeIndex"                      )] public uint nodeIndex;
@@ -1080,6 +1093,7 @@ namespace UbiArt.ITF {
 				[Serialize("Rural"                      )] Rural = 28,
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class st_petCups : CSerializable {
 			[Serialize("family")] public int family;
 			[Serialize("cups"  )] public uint cups;
@@ -1089,6 +1103,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(cups));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_ElixirUtilisation : CSerializable {
 			[Serialize("elixirType"   )] public Enum_elixirType elixirType;
 			[Serialize("nbElixirs"    )] public uint nbElixirs;
@@ -1112,6 +1127,7 @@ namespace UbiArt.ITF {
 				[Serialize("HatchNow"         )] HatchNow = 5,
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_NextRegionTravelMark : CSerializable {
 			[Serialize("pos"                               )] public Vector3 pos;
 			[Serialize("adventureSequence"                 )] public uint adventureSequence;
@@ -1146,6 +1162,7 @@ namespace UbiArt.ITF {
 				[Serialize("Intro"        )] Intro = 8,
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_EggData : CSerializable {
 			[Serialize("creatureId" )] public StringID creatureId;
 			[Serialize("rewardType" )] public Enum_rewardType rewardType;
@@ -1220,6 +1237,7 @@ namespace UbiArt.ITF {
 				[Serialize("Creature_Rarity::unknown"  )] unknown = 6,
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class RLC_NextRegionEggSelectionData : CSerializable {
 			[Serialize("pos"                               )] public Vector3 pos;
 			[Serialize("adventureSequence"                 )] public uint adventureSequence;
@@ -1269,6 +1287,7 @@ namespace UbiArt.ITF {
 				[Serialize("Creature_Rarity::unknown"  )] unknown = 6,
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class SeasonalEventData : CSerializable {
 			[Serialize("unlocked")] public bool unlocked;
 			[Serialize("finished")] public bool finished;

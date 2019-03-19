@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class BezierBranchFxComponent_Template : BezierBranchComponent_Template {
 		[Serialize("fxStart"  )] public StringID fxStart;
 		[Serialize("fxLoop"   )] public StringID fxLoop;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_Brick_Template : CSerializable {
 		[Serialize("name"         )] public StringID name;
 		[Serialize("name"         )] public string name;

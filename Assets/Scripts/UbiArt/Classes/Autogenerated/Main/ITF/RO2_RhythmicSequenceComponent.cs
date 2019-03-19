@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RhythmicSequenceComponent : ActorComponent {
 		[Serialize("loop"          )] public bool loop;
 		[Serialize("easeIn"        )] public float easeIn;

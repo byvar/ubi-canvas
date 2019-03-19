@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class LinkCode : CSerializable {
 		[Serialize("slot"     )] public uint slot;
 		[Serialize("profileId")] public string profileId;

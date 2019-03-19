@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ScrollableCameraModifierComponent : CameraModifierComponent {
 		[Serialize("cameraBrake"                        )] public float cameraBrake;
 		[Serialize("cameraBrakeMin"                     )] public float cameraBrakeMin;

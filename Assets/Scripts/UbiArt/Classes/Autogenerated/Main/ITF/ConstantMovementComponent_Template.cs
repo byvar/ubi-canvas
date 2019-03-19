@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class ConstantMovementComponent_Template : ActorComponent_Template {
 		[Serialize("localSpeed"       )] public Vector2 localSpeed;
 		[Serialize("worldSpeed"       )] public Vector3 worldSpeed;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicalBossComponent : ActorComponent {
 		[Serialize("bpm"                )] public float bpm;
 		[Serialize("triggerDistance"    )] public float triggerDistance;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BuboBTAIComponent_Template : BTAIComponent_Template {
 		[Serialize("allowedFaction")] public uint allowedFaction;
 		protected override void SerializeImpl(CSerializerObject s) {

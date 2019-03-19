@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnemyBullet_Template : RO2_BasicBullet_Template {
 		[Serialize("animImpactEnemy"      )] public StringID animImpactEnemy;
 		[Serialize("animImpactEnvironment")] public StringID animImpactEnvironment;

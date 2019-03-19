@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SkullCoinComponent : GraphicComponent {
 		[Serialize("isTaken")] public bool isTaken;
 		protected override void SerializeImpl(CSerializerObject s) {

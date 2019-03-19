@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerSelection_Detector : TriggerSelectionAbstract {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

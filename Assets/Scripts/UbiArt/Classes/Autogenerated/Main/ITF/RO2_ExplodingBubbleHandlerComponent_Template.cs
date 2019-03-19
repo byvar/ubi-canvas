@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ExplodingBubbleHandlerComponent_Template : AnimMeshVertexComponent_Template {
 		[Serialize("bubbleZ"            )] public float bubbleZ;
 		[Serialize("bubbleScale"        )] public float bubbleScale;

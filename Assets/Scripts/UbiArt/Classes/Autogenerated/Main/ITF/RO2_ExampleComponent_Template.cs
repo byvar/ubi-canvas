@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RO2_ExampleComponent_Template : ActorComponent_Template {
 		[Serialize("someShape")] public Generic<PhysShape> someShape;
 		protected override void SerializeImpl(CSerializerObject s) {

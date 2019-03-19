@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_ScoreRecapReward : CSerializable {
 		[Serialize("Type" )] public Enum_Type Type;
 		[Serialize("Count")] public uint Count;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_OnlineEventTeamAllocation : Event {
 		[Serialize("playerOnlineID")] public uint playerOnlineID;
 		[Serialize("teamID"        )] public char teamID;

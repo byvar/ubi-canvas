@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class GameProgress : CSerializable {
 		[Serialize("Name"            )] public StringID Name;
 		[Serialize("GameProgressList")] public CList<GameProgress> GameProgressList;

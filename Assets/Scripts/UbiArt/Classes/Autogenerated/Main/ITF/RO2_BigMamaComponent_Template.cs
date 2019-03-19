@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BigMamaComponent_Template : ActorComponent_Template {
 		[Serialize("eyesHitPoints" )] public uint eyesHitPoints;
 		[Serialize("eyesPerHit"    )] public uint eyesPerHit;

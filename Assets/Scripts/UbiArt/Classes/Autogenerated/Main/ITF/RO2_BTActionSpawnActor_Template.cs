@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionSpawnActor_Template : BTAction_Template {
 		[Serialize("ActorPath")] public Path ActorPath;
 		[Serialize("Offset"   )] public Vector2 Offset;

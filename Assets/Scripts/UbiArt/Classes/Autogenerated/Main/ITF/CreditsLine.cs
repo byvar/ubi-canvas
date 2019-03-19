@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class CreditsLine : CSerializable {
 		[Serialize("type"     )] public uint type;
 		[Serialize("flag"     )] public uint flag;

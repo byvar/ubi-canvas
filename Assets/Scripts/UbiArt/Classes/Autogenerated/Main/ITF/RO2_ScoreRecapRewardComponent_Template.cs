@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ScoreRecapRewardComponent_Template : ActorComponent_Template {
 		[Serialize("idleTime"              )] public float idleTime;
 		[Serialize("finalScale"            )] public float finalScale;

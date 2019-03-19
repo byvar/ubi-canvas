@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_TitleComponent_Template : ActorComponent_Template {
 		[Serialize("titleEFIGTextureBank"    )] public Path titleEFIGTextureBank;
 		[Serialize("titleArabicTextureBank"  )] public Path titleArabicTextureBank;

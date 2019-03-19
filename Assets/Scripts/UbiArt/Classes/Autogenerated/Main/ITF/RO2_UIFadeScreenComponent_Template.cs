@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_UIFadeScreenComponent_Template : UIComponent_Template {
 		[Serialize("types"   )] public CList<UIFadeEntry> types;
 		[Serialize("animSize")] public Vector2 animSize;

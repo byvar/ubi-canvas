@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GroundEnemyAIComponent_Template : RO2_AIComponent_Template {
 		[Serialize("roamBehavior"                 )] public Generic<TemplateAIBehavior> roamBehavior;
 		[Serialize("receiveHitBehavior"           )] public Generic<RO2_AIReceiveHitBehavior_Template> receiveHitBehavior;

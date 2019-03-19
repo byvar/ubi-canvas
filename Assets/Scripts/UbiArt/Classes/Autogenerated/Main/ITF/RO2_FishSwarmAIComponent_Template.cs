@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FishSwarmAIComponent_Template : RO2_AIComponent_Template {
 		[Serialize("widthDensity"       )] public float widthDensity;
 		[Serialize("heightDensity"      )] public float heightDensity;

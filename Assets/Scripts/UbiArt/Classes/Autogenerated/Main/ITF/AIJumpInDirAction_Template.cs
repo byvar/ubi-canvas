@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIJumpInDirAction_Template : AIAction_Template {
 		[Serialize("jumpForce"    )] public Vector2 jumpForce;
 		[Serialize("flipDirection")] public bool flipDirection;

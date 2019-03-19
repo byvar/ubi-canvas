@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionJumpJanod_Template : BTAction_Template {
 		[Serialize("speedJump"   )] public float speedJump;
 		[Serialize("timeOnGround")] public float timeOnGround;

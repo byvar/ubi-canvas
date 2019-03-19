@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class NewsFeedConfig_Template : ITF.TemplateObj {
 		[Serialize("AutoFetch"   )] public bool AutoFetch;
 		[Serialize("RefreshDelay")] public uint RefreshDelay;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class TouchSpringMoveLinear : TouchSpringMoveBase {
 		[Serialize("totalLength"       )] public float totalLength;
 		[Serialize("initPos"           )] public float initPos;

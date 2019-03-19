@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class VertexPCBT : CSerializable {
 		[Serialize("pos"         )] public Vector3 pos;
 		[Serialize("color"       )] public ColorInteger color;

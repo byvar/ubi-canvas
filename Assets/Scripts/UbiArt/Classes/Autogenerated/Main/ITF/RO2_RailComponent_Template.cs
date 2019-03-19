@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RailComponent_Template : ActorComponent_Template {
 		[Serialize("speedMax"       )] public float speedMax;
 		[Serialize("reboundFriction")] public float reboundFriction;

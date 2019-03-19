@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ScreenShotDataRegionMap : online.OpenGraphObject {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -8,3 +9,4 @@ namespace UbiArt.ITF {
 		public override uint? ClassCRC => 0xD0E7FBB8;
 	}
 }
+

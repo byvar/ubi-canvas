@@ -1,14 +1,16 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class LinkComponent_Template : ActorComponent_Template {
 		[Serialize("transferEventsToChildren")] public bool transferEventsToChildren;
 		[Serialize("debugColor"              )] public Color debugColor;
 		[Serialize("debugColorSelected"      )] public Color debugColorSelected;
-		[Serialize("debugChildIndex"         )] public bool debugChildIndex;
+		[Serialize("debugChildIndex"         )] public int debugChildIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			} else if (Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(debugColor));
 					SerializeField(s, nameof(debugColorSelected));

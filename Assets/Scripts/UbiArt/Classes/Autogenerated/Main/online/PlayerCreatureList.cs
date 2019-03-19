@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class PlayerCreatureList : CSerializable {
 		[Serialize("creatures"         )] public CList<ITF.RO2_PersistentGameData_Universe.RLC_CreatureData> creatures;
 		[Serialize("incubationData"    )] public incubationStatusResult incubationData;

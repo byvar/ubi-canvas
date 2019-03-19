@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LumsChainComponent : ActorComponent {
 		[Serialize("moveSpeed"                    )] public float moveSpeed;
 		[Serialize("useGlobalSpeedFactor"         )] public bool useGlobalSpeedFactor;
@@ -32,8 +33,8 @@ namespace UbiArt.ITF {
 		[Serialize("tutoSucceeded"                )] public bool tutoSucceeded;
 		[Serialize("particles"                    )] public CList<RO2_LumsChainComponent.st_Particle> particles;
 		[Serialize("links"                        )] public CList<RO2_LumsChainComponent.st_cursors> links;
-		[Serialize("state"                        )] public CHAINSTATE state;
-		[Serialize("state"                        )] public CHAINSTATE_Legends stateLegends;
+		[Serialize("state"                        )] public Enum_state state;
+		[Serialize("state"                        )] public Enum_state2 state2;
 		[Serialize("isActivated"                  )] public bool isActivated;
 		[Serialize("perfectActivation"            )] public bool perfectActivation;
 		[Serialize("aliveParticles"               )] public CArray<uint> aliveParticles;
@@ -43,7 +44,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(moveSpeed));
-					SerializeField(s, nameof(useGlobalSpeedFactor));
+					SerializeField(s, nameof(useGlobalSpeedFactor), boolAsByte: true);
 					SerializeField(s, nameof(trajectory));
 					SerializeField(s, nameof(chainOrder));
 					SerializeField(s, nameof(spawnMode));
@@ -61,16 +62,16 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(spawningEffectMoveSpeed));
 					SerializeField(s, nameof(disappearTimeInterval));
 					SerializeField(s, nameof(interactiveActorOffsets));
-					SerializeField(s, nameof(flipInteractiveActor));
-					SerializeField(s, nameof(useFireflyCloud));
-					SerializeField(s, nameof(displayLinks));
+					SerializeField(s, nameof(flipInteractiveActor), boolAsByte: true);
+					SerializeField(s, nameof(useFireflyCloud), boolAsByte: true);
+					SerializeField(s, nameof(displayLinks), boolAsByte: true);
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(tutoSucceeded));
 					SerializeField(s, nameof(particles));
 					SerializeField(s, nameof(aliveParticles));
 					SerializeField(s, nameof(links));
-					SerializeField(s, nameof(stateLegends));
+					SerializeField(s, nameof(state2));
 					SerializeField(s, nameof(isActivated));
 					SerializeField(s, nameof(perfectActivation));
 				}
@@ -112,10 +113,12 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(isActivated));
 					SerializeField(s, nameof(perfectActivation));
 					SerializeField(s, nameof(aliveParticles));
+					SerializeField(s, nameof(aliveParticles));
 				}
 				SerializeField(s, nameof(DuplicateLumChainsOffsets));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class st_cursors : CSerializable {
 			[Serialize("indexStart"        )] public uint indexStart;
 			[Serialize("indexEnd"          )] public uint indexEnd;
@@ -133,6 +136,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(catchingEnd));
 			}
 		}
+		[Games(GameFlags.RA)]
 		public partial class st_Particle : CSerializable {
 			[Serialize("state"                 )] public PARTICLESTATE state;
 			[Serialize("cursorDest"            )] public float cursorDest;
@@ -149,6 +153,7 @@ namespace UbiArt.ITF {
 			[Serialize("frameToWait"           )] public uint frameToWait;
 			[Serialize("bitfield"              )] public uint bitfield;
 			[Serialize("pos"                   )] public Vector3 pos;
+			[Serialize("angle"                 )] public Angle angle;
 			[Serialize("speed"                 )] public Vector2 speed;
 			[Serialize("frameCount"            )] public uint frameCount;
 			[Serialize("frameOffset"           )] public uint frameOffset;
@@ -174,6 +179,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(frameToWait));
 				SerializeField(s, nameof(bitfield));
 				SerializeField(s, nameof(pos));
+				SerializeField(s, nameof(angle));
 				SerializeField(s, nameof(speed));
 				SerializeField(s, nameof(frameCount));
 				SerializeField(s, nameof(frameOffset));
@@ -238,7 +244,7 @@ namespace UbiArt.ITF {
 			[Serialize("InteractiveOffset_BreakableDown"       )] BreakableDown = 3,
 			[Serialize("InteractiveOffset_BreakableMiddle_Down")] BreakableMiddle_Down = 4,
 		}
-		public enum CHAINSTATE {
+		public enum Enum_state {
 			[Serialize("CHAINSTATE_READY_TO_SPAWN"          )] CHAINSTATE_READY_TO_SPAWN = 0,
 			[Serialize("CHAINSTATE_WAITING_FOR_SPAWN_EFFECT")] CHAINSTATE_WAITING_FOR_SPAWN_EFFECT = 1,
 			[Serialize("CHAINSTATE_START_EFFECT"            )] CHAINSTATE_START_EFFECT = 2,
@@ -248,15 +254,15 @@ namespace UbiArt.ITF {
 			[Serialize("PARTICLESTATE_DISAPPEARING"         )] PARTICLESTATE_DISAPPEARING = 7,
 			[Serialize("CHAINSTATE_NONE"                    )] CHAINSTATE_NONE = 6,
 		}
-		public enum CHAINSTATE_Legends {
-			[Serialize("CHAINSTATE_READY_TO_SPAWN")] CHAINSTATE_READY_TO_SPAWN = 0,
+		public enum Enum_state2 {
+			[Serialize("CHAINSTATE_READY_TO_SPAWN"          )] CHAINSTATE_READY_TO_SPAWN = 0,
 			[Serialize("CHAINSTATE_WAITING_FOR_SPAWN_EFFECT")] CHAINSTATE_WAITING_FOR_SPAWN_EFFECT = 1,
-			[Serialize("CHAINSTATE_START_EFFECT")] CHAINSTATE_START_EFFECT = 2,
-			[Serialize("CHAINSTATE_SPAWNING")] CHAINSTATE_SPAWNING = 3,
-			[Serialize("CHAINSTATE_MOVING_ON_TRAJECTORY")] CHAINSTATE_MOVING_ON_TRAJECTORY = 4,
-			[Serialize("CHAINSTATE_REACHED_THE_END")] CHAINSTATE_REACHED_THE_END = 5,
-			[Serialize("PARTICLESTATE_DISAPPEARING")] PARTICLESTATE_DISAPPEARING = 8,
-			[Serialize("CHAINSTATE_NONE")] CHAINSTATE_NONE = 6,
+			[Serialize("CHAINSTATE_START_EFFECT"            )] CHAINSTATE_START_EFFECT = 2,
+			[Serialize("CHAINSTATE_SPAWNING"                )] CHAINSTATE_SPAWNING = 3,
+			[Serialize("CHAINSTATE_MOVING_ON_TRAJECTORY"    )] CHAINSTATE_MOVING_ON_TRAJECTORY = 4,
+			[Serialize("CHAINSTATE_REACHED_THE_END"         )] CHAINSTATE_REACHED_THE_END = 5,
+			[Serialize("PARTICLESTATE_DISAPPEARING"         )] PARTICLESTATE_DISAPPEARING = 8,
+			[Serialize("CHAINSTATE_NONE"                    )] CHAINSTATE_NONE = 6,
 		}
 		public override uint? ClassCRC => 0x7A3F8663;
 	}

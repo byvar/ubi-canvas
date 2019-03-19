@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnduranceBrick_Template : RO2_Brick_Template {
 		[Serialize("inTags" )] public CList<StringID> inTags;
 		[Serialize("outTags")] public CList<StringID> outTags;

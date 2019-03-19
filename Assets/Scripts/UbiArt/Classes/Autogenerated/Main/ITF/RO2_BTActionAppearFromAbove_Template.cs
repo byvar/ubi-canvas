@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionAppearFromAbove_Template : BTAction_Template {
 		[Serialize("animFloat"                 )] public StringID animFloat;
 		[Serialize("animFall"                  )] public StringID animFall;
@@ -17,6 +18,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(animFloat));
 			SerializeField(s, nameof(animFall));
 			SerializeField(s, nameof(animGround));
+			SerializeField(s, nameof(groundDistance));
 			SerializeField(s, nameof(groundDistance));
 			SerializeField(s, nameof(fallDist));
 			SerializeField(s, nameof(transitionDuration));

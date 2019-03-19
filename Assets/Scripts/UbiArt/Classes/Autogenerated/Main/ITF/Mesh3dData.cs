@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Mesh3dData : CSerializable {
 		[Serialize("uvMin"   )] public Vector2 uvMin;
 		[Serialize("uvMax"   )] public Vector2 uvMax;

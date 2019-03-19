@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BreakablePropsManagerComponent : ActorComponent {
 		[Serialize("lumsGiven"          )] public uint lumsGiven;
 		[Serialize("lumsDrcGiven"       )] public uint lumsDrcGiven;
@@ -21,6 +22,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(breakablePropsState));
 				}
+				SerializeField(s, nameof(breakablePropsPaint));
 				SerializeField(s, nameof(breakablePropsPaint));
 			}
 		}

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIFlyIdleAction_Template : AIAction_Template {
 		[Serialize("stiff")] public float stiff;
 		[Serialize("damp" )] public float damp;

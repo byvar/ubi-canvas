@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_AIChest2Behavior_Template : TemplateAIBehavior {
 		[Serialize("safeDistance"           )] public float safeDistance;
 		[Serialize("minSpeed"               )] public float minSpeed;

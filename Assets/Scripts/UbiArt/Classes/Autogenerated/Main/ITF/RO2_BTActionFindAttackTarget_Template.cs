@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionFindAttackTarget_Template : BTAction_Template {
 		[Serialize("radius"        )] public float radius;
 		[Serialize("fact"          )] public StringID fact;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class RendezVousConfig_Template : ITF.TemplateObj {
 		[Serialize("Sandbox"  )] public string Sandbox;
 		[Serialize("AccessKey")] public string AccessKey;

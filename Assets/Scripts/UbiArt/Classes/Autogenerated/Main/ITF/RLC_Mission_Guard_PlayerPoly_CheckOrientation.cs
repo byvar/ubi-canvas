@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_PlayerPoly_CheckOrientation : RLC_Mission_Guard {
 		[Serialize("edgeOrientation")] public uint edgeOrientation;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameGlobalsIAPPredictionCondition : GameGlobalsCondition {
 		[Serialize("minThreshold")] public float minThreshold;
 		[Serialize("maxThreshold")] public float maxThreshold;

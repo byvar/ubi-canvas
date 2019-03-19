@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfigAdventure : RLC_AmbianceConfig {
 		[Serialize("GraphicalFamily")] public Enum_GraphicalFamily GraphicalFamily;
 		protected override void SerializeImpl(CSerializerObject s) {

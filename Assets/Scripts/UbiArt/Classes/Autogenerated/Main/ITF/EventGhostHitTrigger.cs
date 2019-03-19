@@ -1,11 +1,12 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.COL | GameFlags.VH | GameFlags.RL)]
 	public partial class EventGhostHitTrigger : EventTrigger {
 		[Serialize("triggeredByCollision")] public bool triggeredByCollision;
 		[Serialize("triggeredByHitStim"  )] public bool triggeredByHitStim;
 		[Serialize("sender"              )] public uint sender;
-		[Serialize("activated"           )] public bool activated;
+		[Serialize("activated"           )] public int activated;
 		[Serialize("activator"           )] public uint activator;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_LuckyTicketStock : RLC_InventoryItem {
 		[Serialize("ticketType")] public Enum_ticketType ticketType;
 		protected override void SerializeImpl(CSerializerObject s) {

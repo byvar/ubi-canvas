@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_TutoBallComponent_Template : ActorComponent_Template {
 		[Serialize("tutoTapPath"  )] public Path tutoTapPath;
 		[Serialize("tutoSwipePath")] public Path tutoSwipePath;

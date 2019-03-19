@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchSpringPlatformNoAnimComponent : RO2_TouchSpringPlatformBaseComponent {
 		[Serialize("limitRight")] public float limitRight;
 		protected override void SerializeImpl(CSerializerObject s) {

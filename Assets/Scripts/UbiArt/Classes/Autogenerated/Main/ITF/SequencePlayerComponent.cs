@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class SequencePlayerComponent : ActorComponent {
 		[Serialize("bankState"        )] public uint bankState;
 		[Serialize("allowPrefetch"    )] public bool allowPrefetch;
@@ -9,9 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("overrideActorAABB")] public bool overrideActorAABB;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(bankState));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(bankState));
 			} else {
 				SerializeField(s, nameof(bankState));

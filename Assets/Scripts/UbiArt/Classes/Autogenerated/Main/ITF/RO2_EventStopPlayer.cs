@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventStopPlayer : Event {
 		[Serialize("stop"         )] public bool stop;
 		[Serialize("disablePhysic")] public bool disablePhysic;

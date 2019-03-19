@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_SubAnchor : CSerializable {
 		[Serialize("name")] public StringID name;
 		[Serialize("pos" )] public Vector3 pos;

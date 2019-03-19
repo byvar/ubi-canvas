@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SkullCoinComponent_Template : GraphicComponent_Template {
 		[Serialize("lumCount"                  )] public uint lumCount;
 		[Serialize("challengeDuration"         )] public float challengeDuration;

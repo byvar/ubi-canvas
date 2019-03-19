@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Border : CSerializable {
 		[Serialize("TextureRatio"         )] public float TextureRatio;
 		[Serialize("BorderHeight"         )] public float BorderHeight;

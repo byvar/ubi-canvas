@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIGroundReceiveHitAction_Template : RO2_AIReceiveHitAction_Template {
 		[Serialize("unstickMultiplier")] public float unstickMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {

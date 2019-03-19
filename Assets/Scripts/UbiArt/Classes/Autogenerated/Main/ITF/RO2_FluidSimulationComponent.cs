@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_FluidSimulationComponent : GraphicComponent {
 		[Serialize("FluidType"      )] public FluidType FluidType;
 		[Serialize("ParticlesMaxNb" )] public uint ParticlesMaxNb;

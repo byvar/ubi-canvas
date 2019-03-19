@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class PolylineParameters : CSerializable {
 		[Serialize("speedLoss"          )] public float speedLoss;
 		[Serialize("weightMultiplier"   )] public float weightMultiplier;

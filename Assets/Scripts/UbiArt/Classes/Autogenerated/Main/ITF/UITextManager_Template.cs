@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
 	public partial class UITextManager_Template : TemplateObj {
 		[Serialize("actorIcons" )] public CList<UITextManager_Template.ActorIcon> actorIcons;
 		[Serialize("iconSize"   )] public float iconSize;
@@ -20,10 +21,12 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(buttonNames));
 				SerializeField(s, nameof(gpePath));
 				SerializeField(s, nameof(gpeNames));
+			} else if (Settings.s.game == Settings.Game.COL) {
 			} else {
 				SerializeField(s, nameof(actorIcons));
 			}
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class ActorIcon : CSerializable {
 			[Serialize("iconName")] public StringID iconName;
 			[Serialize("iconPath")] public Path iconPath;

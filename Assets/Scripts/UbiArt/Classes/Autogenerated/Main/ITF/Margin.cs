@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class Margin : CSerializable {
 		[Serialize("left"  )] public float left;
 		[Serialize("right" )] public float right;

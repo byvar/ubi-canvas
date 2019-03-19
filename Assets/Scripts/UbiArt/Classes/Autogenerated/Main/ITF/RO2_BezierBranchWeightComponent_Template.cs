@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_BezierBranchWeightComponent_Template : RO2_BezierBranchComponent_Template {
 		[Serialize("minAngle"       )] public Angle minAngle;
 		[Serialize("maxAngle"       )] public Angle maxAngle;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicalSimpleActorComponent_Template : ActorComponent_Template {
 		[Serialize("animationIdle"           )] public StringID animationIdle;
 		[Serialize("animationMusical"        )] public StringID animationMusical;

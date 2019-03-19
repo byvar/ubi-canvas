@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class MobileSDKConfig_Template : ITF.TemplateObj {
 		[Serialize("SqliteKey")] public string SqliteKey;
 		protected override void SerializeImpl(CSerializerObject s) {

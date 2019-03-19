@@ -1,9 +1,10 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class TODOComponent : ActorComponent {
 		[Serialize("TextLabel"      )] public CString TextLabel;
-		[Serialize("drawUsingEngine")] public bool drawUsingEngine;
+		[Serialize("drawUsingEngine")] public int drawUsingEngine;
 		[Serialize("drawBoxWidth"   )] public float drawBoxWidth;
 		[Serialize("drawBoxHeight"  )] public float drawBoxHeight;
 		[Serialize("textSize"       )] public float textSize;
@@ -15,7 +16,7 @@ namespace UbiArt.ITF {
 		[Serialize("backgroundRed"  )] public float backgroundRed;
 		[Serialize("backgroundGreen")] public float backgroundGreen;
 		[Serialize("backgroundBlue" )] public float backgroundBlue;
-		[Serialize("centerText"     )] public bool centerText;
+		[Serialize("centerText"     )] public int centerText;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {

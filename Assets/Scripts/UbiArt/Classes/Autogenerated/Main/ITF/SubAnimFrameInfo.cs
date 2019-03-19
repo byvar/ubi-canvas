@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class SubAnimFrameInfo : CSerializable {
 		[Serialize("subAnimIndex"    )] public int subAnimIndex;
 		[Serialize("proceduralCursor")] public float proceduralCursor;

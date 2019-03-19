@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BasicBullet_Template : CSerializable {
 		[Serialize("stimShape"            )] public Generic<PhysShape> stimShape;
 		[Serialize("envContactShape"      )] public Generic<PhysShape> envContactShape;

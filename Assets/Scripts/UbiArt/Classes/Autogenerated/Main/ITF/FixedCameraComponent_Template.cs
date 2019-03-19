@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class FixedCameraComponent_Template : BaseCameraComponent_Template {
 		[Serialize("zOffset")] public float zOffset;
 		protected override void SerializeImpl(CSerializerObject s) {

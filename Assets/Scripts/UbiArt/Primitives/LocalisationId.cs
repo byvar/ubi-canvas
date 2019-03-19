@@ -13,5 +13,11 @@ namespace UbiArt {
 		}
 
 		public const int Invalid = -1;
+
+		public bool IsNull {
+			get {
+				return id == 0xFFFFFFFF;
+			}
+		}
 	}
 }

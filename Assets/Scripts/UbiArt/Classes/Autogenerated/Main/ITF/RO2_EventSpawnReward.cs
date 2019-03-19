@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventSpawnReward : Event {
 		[Serialize("numRewards"          )] public uint numRewards;
 		[Serialize("autoPickup"          )] public bool autoPickup;

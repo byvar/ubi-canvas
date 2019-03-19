@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class SpawnActorPathTuto : CSerializable {
 		[Serialize("tutoType"    )] public uint tutoType;
 		[Serialize("tutoCycle"   )] public uint tutoCycle;

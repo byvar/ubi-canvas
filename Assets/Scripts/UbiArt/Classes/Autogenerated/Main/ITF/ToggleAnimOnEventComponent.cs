@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class ToggleAnimOnEventComponent : ActorComponent {
 		[Serialize("startOpen")] public bool startOpen;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_FoodComponent : ActorComponent {
 		[Serialize("powerupLifetime")] public float powerupLifetime;
 		protected override void SerializeImpl(CSerializerObject s) {

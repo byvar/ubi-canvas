@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlugSnapConfig : CSerializable {
 		[Serialize("duration"          )] public float duration;
 		[Serialize("boneName"          )] public StringID boneName;

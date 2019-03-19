@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class MetaFrieze : Pickable {
 		[Serialize("PointsList"                )] public PolyPointList PointsList;
 		[Serialize("PrimitiveParameters"       )] public CList<GFXPrimitiveParam> PrimitiveParameters;
@@ -27,6 +28,18 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(SwitchExtremityStop));
 				SerializeField(s, nameof(SwitchTexturePipeExtremity));
 				SerializeField(s, nameof(IsFriendlyNameValid));
+			} else if (Settings.s.game == Settings.Game.COL) {
+				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
+					SerializeField(s, nameof(PointsList));
+				}
+				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
+					SerializeField(s, nameof(ConfigCRC));
+				}
+				SerializeField(s, nameof(ConfigName));
+				SerializeField(s, nameof(SwitchExtremityStart), boolAsByte: true);
+				SerializeField(s, nameof(SwitchExtremityStop), boolAsByte: true);
+				SerializeField(s, nameof(SwitchTexturePipeExtremity));
+				SerializeField(s, nameof(IsFriendlyNameValid), boolAsByte: true);
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(PointsList));

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionRoamingInAir_Template : BTAction_Template {
 		[Serialize("animFly"      )] public StringID animFly;
 		[Serialize("uTurnToPlayer")] public bool uTurnToPlayer;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionTorture_Template : BTAction_Template {
 		[Serialize("animTortureHitHeadOnGround")] public StringID animTortureHitHeadOnGround;
 		[Serialize("animTortureJumpOnVictim"   )] public StringID animTortureJumpOnVictim;

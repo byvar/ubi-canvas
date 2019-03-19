@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableAIComponent : AIComponent {
 		[Serialize("currentDestructionStage")] public uint currentDestructionStage;
 		[Serialize("targetDestructionStage" )] public uint targetDestructionStage;

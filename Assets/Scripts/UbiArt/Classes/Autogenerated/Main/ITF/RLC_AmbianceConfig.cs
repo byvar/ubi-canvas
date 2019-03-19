@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfig : CSerializable {
 		[Serialize("AmbianceDetailsId")] public StringID AmbianceDetailsId;
 		protected override void SerializeImpl(CSerializerObject s) {

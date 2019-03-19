@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTDeciderTargetInRange_Template : BTDecider_Template {
 		[Serialize("detectionRange")] public Generic<PhysShape> detectionRange;
 		[Serialize("debug"         )] public bool debug;

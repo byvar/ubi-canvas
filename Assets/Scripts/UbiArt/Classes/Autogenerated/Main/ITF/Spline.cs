@@ -1,16 +1,23 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR)]
 	public partial class Spline : CSerializable {
 		[Serialize("Points"      )] public CList<Spline.SplinePoint> Points;
 		[Serialize("TimeLoopMode")] public uint TimeLoopMode;
 		[Serialize("TimeLoop"    )] public float TimeLoop;
+		[Serialize("Points"      )] public CArray<Spline.SplinePoint> Points;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Points));
-			SerializeField(s, nameof(TimeLoopMode));
-			SerializeField(s, nameof(TimeLoop));
+			if (Settings.s.game == Settings.Game.RFR) {
+				SerializeField(s, nameof(Points));
+			} else {
+				SerializeField(s, nameof(Points));
+				SerializeField(s, nameof(TimeLoopMode));
+				SerializeField(s, nameof(TimeLoop));
+			}
 		}
+		[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 		public partial class SplinePoint : CSerializable {
 			[Serialize("Point"        )] public Vector3 Point;
 			[Serialize("Time"         )] public float Time;

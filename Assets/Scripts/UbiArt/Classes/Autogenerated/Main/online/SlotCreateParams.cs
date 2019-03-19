@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class SlotCreateParams : userProfileOtherData {
 		[Serialize("askedSlot")] public uint askedSlot;
 		[Serialize("token"    )] public SocialNetworkIdentity token;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureRarityWeight : CSerializable {
 		[Serialize("rarity")] public Creature_Rarity rarity;
 		[Serialize("weight")] public uint weight;

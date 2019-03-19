@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AlwaysActiveActorComponent_Template : ActorComponent_Template {
 		[Serialize("safeTimeOutDuration")] public float safeTimeOutDuration;
 		[Serialize("stopOnScreenLeaving")] public bool stopOnScreenLeaving;

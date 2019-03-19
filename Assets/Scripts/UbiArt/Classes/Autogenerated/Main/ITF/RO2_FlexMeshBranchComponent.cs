@@ -1,12 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_FlexMeshBranchComponent : RO2_BezierBranchComponent {
 		[Serialize("meshes")] public CList<RO2_FlexMeshBranchComponent.FlexMesh> meshes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(meshes));
 		}
+		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class FlexMesh : CSerializable {
 			[Serialize("flexId"  )] public StringID flexId;
 			[Serialize("distance")] public float distance;

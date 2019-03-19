@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DuckPlugPlayableController_Template : RO2_ActorPlugTransfoController_Template {
 		[Serialize("walkSpeed"         )] public float walkSpeed;
 		[Serialize("runSpeed"          )] public float runSpeed;

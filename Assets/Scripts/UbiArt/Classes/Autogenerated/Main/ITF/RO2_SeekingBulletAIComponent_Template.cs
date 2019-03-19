@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SeekingBulletAIComponent_Template : RO2_BulletAIComponent_Template {
 		[Serialize("maxTurnAngle"     )] public Angle maxTurnAngle;
 		[Serialize("phaseChangeRadius")] public float phaseChangeRadius;

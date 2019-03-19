@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class EventGhostOnReadingFinish : Event {
 		[Serialize("ghostIndex")] public uint ghostIndex;
 		[Serialize("sender"    )] public uint sender;

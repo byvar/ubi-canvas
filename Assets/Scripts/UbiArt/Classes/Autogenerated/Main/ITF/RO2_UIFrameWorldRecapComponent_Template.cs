@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_UIFrameWorldRecapComponent_Template : ActorComponent_Template {
 		[Serialize("locId"                )] public LocalisationId locId;
 		[Serialize("FXFirework"           )] public StringID FXFirework;

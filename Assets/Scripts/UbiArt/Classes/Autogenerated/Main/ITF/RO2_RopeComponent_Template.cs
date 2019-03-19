@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RopeComponent_Template : GraphicComponent_Template {
 		[Serialize("beginTexture"                   )] public Path beginTexture;
 		[Serialize("endTexture"                     )] public Path endTexture;

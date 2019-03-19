@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeShooterGuardianBodyPart_Template : RO2_SnakeBodyPartActor_Template {
 		[Serialize("health"                    )] public int health;
 		[Serialize("damageLevels"              )] public CList<uint> damageLevels;
@@ -23,8 +24,6 @@ namespace UbiArt.ITF {
 		[Serialize("attackMinDistance"         )] public float attackMinDistance;
 		[Serialize("attackMaxDistance"         )] public float attackMaxDistance;
 		[Serialize("attackAnimation"           )] public StringID attackAnimation;
-		[Serialize("health"                    )] public bool health;
-		[Serialize("bubonHealth"               )] public bool bubonHealth;
 		[Serialize("hitType"                   )] public Enum_hitType hitType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

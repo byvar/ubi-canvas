@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionWalkToTargetCloseToPlayer_Template : BTActionWalkToTarget_Template {
 		[Serialize("checkIntervals")] public float checkIntervals;
 		[Serialize("rangeMin"      )] public float rangeMin;

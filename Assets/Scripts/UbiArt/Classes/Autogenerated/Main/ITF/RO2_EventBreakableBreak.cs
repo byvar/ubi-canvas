@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventBreakableBreak : Event {
 		[Serialize("Break"    )] public bool Break;
 		[Serialize("immediate")] public bool immediate;

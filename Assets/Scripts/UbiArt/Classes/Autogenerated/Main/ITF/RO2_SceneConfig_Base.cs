@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SceneConfig_Base : SceneConfig {
 		[Serialize("DRCGameplayMode"  )] public Enum_DRCGameplayMode DRCGameplayMode;
 		[Serialize("fade"             )] public StringID fade;

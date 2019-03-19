@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RuleStat : CSerializable {
 		[Serialize("action"     )] public Enum_action action;
 		[Serialize("actionName" )] public string actionName;

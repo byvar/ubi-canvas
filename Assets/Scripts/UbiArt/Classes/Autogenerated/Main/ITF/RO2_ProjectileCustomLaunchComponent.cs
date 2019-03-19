@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ProjectileCustomLaunchComponent : ActorComponent {
 		[Serialize("customLaunchData")] public CList<RO2_BTActionThrowObject_Tools.LaunchData> customLaunchData;
 		protected override void SerializeImpl(CSerializerObject s) {

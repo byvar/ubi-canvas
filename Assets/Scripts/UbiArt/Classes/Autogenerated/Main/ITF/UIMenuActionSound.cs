@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIMenuActionSound : CSerializable {
 		[Serialize("action"   )] public StringID action;
 		[Serialize("selection")] public StringID selection;

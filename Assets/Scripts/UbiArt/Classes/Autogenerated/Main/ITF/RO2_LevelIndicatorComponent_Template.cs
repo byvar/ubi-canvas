@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LevelIndicatorComponent_Template : ActorComponent_Template {
 		[Serialize("levels"            )] public CList<SmartLocId> levels;
 		[Serialize("displayDuration"   )] public float displayDuration;

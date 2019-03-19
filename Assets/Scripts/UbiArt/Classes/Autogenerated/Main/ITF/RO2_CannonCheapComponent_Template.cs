@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CannonCheapComponent_Template : RO2_AIComponent_Template {
 		[Serialize("animStand"     )] public StringID animStand;
 		[Serialize("animFire"      )] public StringID animFire;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIJumpToTargetAction_Template : AIAction_Template {
 		[Serialize("duration")] public float duration;
 		[Serialize("height0" )] public float height0;

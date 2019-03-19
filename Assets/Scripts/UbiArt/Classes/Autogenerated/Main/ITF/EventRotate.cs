@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class EventRotate : Event {
 		[Serialize("RelativeAngle")] public bool RelativeAngle;
 		[Serialize("Angle"        )] public Angle Angle;

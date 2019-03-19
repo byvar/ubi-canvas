@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Mesh3dDataElement : CSerializable {
 		[Serialize("path"        )] public Path path;
 		[Serialize("dummyPath"   )] public Path dummyPath;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureFamily : CSerializable {
 		[Serialize("id"             )] public Creature_Family id;
 		[Serialize("locId"          )] public uint locId;

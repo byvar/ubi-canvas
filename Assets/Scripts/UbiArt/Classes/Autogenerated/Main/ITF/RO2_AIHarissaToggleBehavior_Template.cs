@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIHarissaToggleBehavior_Template : TemplateAIBehavior {
 		[Serialize("drcCollisionShape"          )] public Generic<PhysShape> drcCollisionShape;
 		[Serialize("offAction"                  )] public Generic<AIAction_Template> offAction;

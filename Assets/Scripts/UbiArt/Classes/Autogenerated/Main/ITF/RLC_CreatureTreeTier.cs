@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureTreeTier : CSerializable {
 		[Serialize("NbFamilySmall")] public uint NbFamilySmall;
 		[Serialize("NbfamilyBig"  )] public uint NbfamilyBig;

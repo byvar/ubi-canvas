@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIUtensilTrapBehavior_Template : TemplateAIBehavior {
 		[Serialize("stickOffset"            )] public float stickOffset;
 		[Serialize("speed"                  )] public float speed;

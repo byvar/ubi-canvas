@@ -1,10 +1,13 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class WwiseMultiPositionComponent_Template : ActorComponent_Template {
+		[Serialize("SoundName"        )] public StringID SoundName;
 		[Serialize("MultiPositionMode")] public AUDIO_MULTIPOSITION_MODE MultiPositionMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
+			SerializeField(s, nameof(SoundName));
 			SerializeField(s, nameof(MultiPositionMode));
 		}
 		public enum AUDIO_MULTIPOSITION_MODE {

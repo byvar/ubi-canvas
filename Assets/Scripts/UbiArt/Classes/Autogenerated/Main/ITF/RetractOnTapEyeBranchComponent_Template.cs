@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RetractOnTapEyeBranchComponent_Template : BezierBranchComponent_Template {
 		[Serialize("tapRetractDistance"    )] public float tapRetractDistance;
 		[Serialize("tapRetractSpeedSmoothA")] public float tapRetractSpeedSmoothA;

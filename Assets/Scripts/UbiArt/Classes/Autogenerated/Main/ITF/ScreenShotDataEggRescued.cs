@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class ScreenShotDataEggRescued : online.OpenGraphObject {
 		[Serialize("cur_adv_seq")] public uint cur_adv_seq;
 		protected override void SerializeImpl(CSerializerObject s) {

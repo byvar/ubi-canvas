@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Criteria : CSerializable {
 		[Serialize("inputIndex")] public uint inputIndex;
 		[Serialize("compare"   )] public Input compare;

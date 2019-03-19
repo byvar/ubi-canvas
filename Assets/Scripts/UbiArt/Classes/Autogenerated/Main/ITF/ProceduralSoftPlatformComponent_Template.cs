@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class ProceduralSoftPlatformComponent_Template : GraphicComponent_Template {
 		[Serialize("isSwing"                   )] public bool isSwing;
 		[Serialize("isLiana"                   )] public bool isLiana;
@@ -40,10 +41,12 @@ namespace UbiArt.ITF {
 		[Serialize("stiffSwingSpeedFriction"   )] public float stiffSwingSpeedFriction;
 		[Serialize("nonStiffSwingSpeedFriction")] public float nonStiffSwingSpeedFriction;
 		[Serialize("startingBone"              )] public StringID startingBone;
-		[Serialize("precision"                 )] public Enum_precision precision;
+		[Serialize("phantom"                   )] public int phantom;
+		[Serialize("constraintLimitAngle"      )] public int constraintLimitAngle;
+		[Serialize("constraintRelaxLength"     )] public int constraintRelaxLength;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(isSwing));
 				SerializeField(s, nameof(gameMaterial));
 				SerializeField(s, nameof(isLiana));
@@ -69,7 +72,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(beginTexture));
 				SerializeField(s, nameof(endTexture));
 				SerializeField(s, nameof(bezierSampling));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(isSwing));
 				SerializeField(s, nameof(isLiana));
 				SerializeField(s, nameof(defaultEndPos));
@@ -157,11 +160,6 @@ namespace UbiArt.ITF {
 			[Serialize("ConstraintSolverIterationPrecision_Low"   )] Low = 0,
 			[Serialize("ConstraintSolverIterationPrecision_Medium")] Medium = 1,
 			[Serialize("ConstraintSolverIterationPrecision_High"  )] High = 2,
-		}
-		public enum Enum_precision {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
 		}
 		public override uint? ClassCRC => 0x90F63027;
 	}

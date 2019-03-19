@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeShooterAIComponent_Template : ActorComponent_Template {
 		[Serialize("destructibleMode")] public RO2_SnakeDestructibleMode destructibleMode;
 		[Serialize("fxDeath"         )] public StringID fxDeath;

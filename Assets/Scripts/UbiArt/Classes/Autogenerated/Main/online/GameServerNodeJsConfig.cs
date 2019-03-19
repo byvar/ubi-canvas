@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
+	[Games(GameFlags.RA)]
 	public partial class GameServerNodeJsConfig : CSerializable {
 		[Serialize("redirections")] public CMap<string, string> redirections;
 		[Serialize("urls"        )] public CMap<string, string> urls;

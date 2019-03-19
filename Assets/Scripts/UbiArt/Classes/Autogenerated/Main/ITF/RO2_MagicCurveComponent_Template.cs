@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MagicCurveComponent_Template : ActorComponent_Template {
 		[Serialize("bezierRenderer")] public BezierCurveRenderer_Template bezierRenderer;
 		[Serialize("debug"         )] public bool debug;

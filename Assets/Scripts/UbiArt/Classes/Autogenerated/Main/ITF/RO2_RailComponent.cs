@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RailComponent : ActorComponent {
 		[Serialize("limitLeft"           )] public float limitLeft;
 		[Serialize("limitRight"          )] public float limitRight;

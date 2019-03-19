@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class SubRenderParam_ColorRamp : SubRenderParam {
 		[Serialize("ColorRampPath")] public Path ColorRampPath;
 		protected override void SerializeImpl(CSerializerObject s) {

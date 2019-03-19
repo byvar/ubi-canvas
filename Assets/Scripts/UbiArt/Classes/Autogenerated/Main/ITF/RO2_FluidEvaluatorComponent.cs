@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_FluidEvaluatorComponent : ActorComponent {
 		[Serialize("shape"                )] public EditableShape shape;
 		[Serialize("BottomRowOffset"      )] public uint BottomRowOffset;

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TutorialTextComponent : ActorComponent {
 		[Serialize("RELATIVEPOS")] public Vector2 RELATIVEPOS;
 		protected override void SerializeImpl(CSerializerObject s) {

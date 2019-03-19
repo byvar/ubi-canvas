@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchControllerComponent : ActorComponent {
 		[Serialize("duration"                )] public float duration;
 		[Serialize("swipe"                   )] public bool swipe;

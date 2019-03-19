@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA)]
 	public partial class RLC_PlayerTouchInputController_Template : TemplateObj {
 		[Serialize("JumpCommandDurationMaxAllowed"   )] public float JumpCommandDurationMaxAllowed;
 		[Serialize("SwipeDetectionDuration"          )] public float SwipeDetectionDuration;

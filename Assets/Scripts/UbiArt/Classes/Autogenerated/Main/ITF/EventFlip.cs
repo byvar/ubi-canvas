@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventFlip : Event {
 		[Serialize("ForceDirection")] public EventFlip__eFlip ForceDirection;
 		protected override void SerializeImpl(CSerializerObject s) {

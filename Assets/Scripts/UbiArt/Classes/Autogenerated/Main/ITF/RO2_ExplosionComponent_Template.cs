@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_ExplosionComponent_Template : ActorComponent_Template {
 		[Serialize("fxName"  )] public StringID fxName;
 		[Serialize("shape"   )] public Generic<PhysShape> shape;

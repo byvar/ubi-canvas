@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIDeathBehavior_Template : AIPlayActionsBehavior_Template {
 		[Serialize("pauseComponentWhenDone")] public bool pauseComponentWhenDone;
 		[Serialize("pauseActorWhenDone"    )] public bool pauseActorWhenDone;
