@@ -11,8 +11,8 @@ namespace UbiArt.ITF {
 		[Serialize("DBG_AnimRewardValueEnabled")] public bool DBG_AnimRewardValueEnabled;
 		[Serialize("DBG_AnimRewardValue"       )] public uint DBG_AnimRewardValue;
 		[Serialize("currentPath"               )] public PathRef currentPath;
-		[Serialize("currentType"               )] public Enum_currentType currentType;
-		[Serialize("currentKit"                )] public Enum_currentKit currentKit;
+		[Serialize("currentType"               )] public Enum_Type currentType;
+		[Serialize("currentKit"                )] public Enum_Kit currentKit;
 		[Serialize("currentDifficulty"         )] public uint currentDifficulty;
 		[Serialize("currentHistoryCpt"         )] public uint currentHistoryCpt;
 		[Serialize("eventSentWhenSpawned"      )] public Generic<Event> eventSentWhenSpawned;

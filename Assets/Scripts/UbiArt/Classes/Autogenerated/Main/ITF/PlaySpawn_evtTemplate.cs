@@ -9,10 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("SpawnOffset")] public Vector2 SpawnOffset;
 		[Serialize("Flipped"    )] public bool Flipped;
 		[Serialize("IluFile"    )] public Path IluFile;
-		[Serialize("Visible"    )] public int Visible;
-		[Serialize("Stay"       )] public int Stay;
 		[Serialize("FileName"   )] public string FileName;
-		[Serialize("Flipped"    )] public int Flipped;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {

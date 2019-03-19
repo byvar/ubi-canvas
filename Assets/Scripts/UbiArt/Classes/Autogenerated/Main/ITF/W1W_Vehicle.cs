@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class W1W_Vehicle : W1W_InteractiveGenComponent {
 		[Serialize("uint__0"        )] public uint uint__0;
 		[Serialize("bool__1"        )] public bool bool__1;
-		[Serialize("Enum_VH_0__2"   )] public Enum_VH_0 Enum_VH_0__2;
+		[Serialize("Enum_VH_0__2"   )] public Enum_VH_0_1 Enum_VH_0__2;
 		[Serialize("bool__3"        )] public bool bool__3;
 		[Serialize("bool__4"        )] public bool bool__4;
 		[Serialize("bool__5"        )] public bool bool__5;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__14"      )] public float float__14;
 		[Serialize("float__15"      )] public float float__15;
 		[Serialize("float__16"      )] public float float__16;
-		[Serialize("float__17"      )] public float float__17;
+		[Serialize("float__17"      )] public float float__17_2;
 		[Serialize("float__18"      )] public float float__18;
 		[Serialize("float__19"      )] public float float__19;
 		[Serialize("float__20"      )] public float float__20;
@@ -40,16 +40,16 @@ namespace UbiArt.ITF {
 		[Serialize("float__34"      )] public float float__34;
 		[Serialize("uint__35"       )] public uint uint__35;
 		[Serialize("float__36"      )] public float float__36;
-		[Serialize("Enum_VH_0__37"  )] public Enum_VH_0 Enum_VH_0__37;
+		[Serialize("Enum_VH_0__37"  )] public Enum_VH_0_2 Enum_VH_0__37;
 		[Serialize("EventSender__38")] public EventSender EventSender__38;
 		[Serialize("EventSender__39")] public EventSender EventSender__39;
 		[Serialize("EventSender__40")] public EventSender EventSender__40;
 		[Serialize("EventSender__41")] public EventSender EventSender__41;
 		[Serialize("EventSender__42")] public EventSender EventSender__42;
-		[Serialize("float__43"      )] public float float__43;
-		[Serialize("float__44"      )] public float float__44;
-		[Serialize("float__45"      )] public float float__45;
-		[Serialize("float__46"      )] public float float__46;
+		[Serialize("float__43"      )] public float float__43_2;
+		[Serialize("float__44"      )] public float float__44_2;
+		[Serialize("float__45"      )] public float float__45_2;
+		[Serialize("float__46"      )] public float float__46_2;
 		[Serialize("float__47"      )] public float float__47;
 		[Serialize("float__48"      )] public float float__48;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -58,7 +58,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(float__14));
 				SerializeField(s, nameof(float__15));
 				SerializeField(s, nameof(float__16));
-				SerializeField(s, nameof(float__17));
+				SerializeField(s, nameof(float__17_2));
 				SerializeField(s, nameof(float__18));
 				SerializeField(s, nameof(float__19));
 				SerializeField(s, nameof(float__20));
@@ -84,10 +84,10 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(EventSender__40));
 				SerializeField(s, nameof(EventSender__41));
 				SerializeField(s, nameof(EventSender__42));
-				SerializeField(s, nameof(float__43));
-				SerializeField(s, nameof(float__44));
-				SerializeField(s, nameof(float__45));
-				SerializeField(s, nameof(float__46));
+				SerializeField(s, nameof(float__43_2));
+				SerializeField(s, nameof(float__44_2));
+				SerializeField(s, nameof(float__45_2));
+				SerializeField(s, nameof(float__46_2));
 				SerializeField(s, nameof(float__47));
 				SerializeField(s, nameof(float__48));
 			}
@@ -108,7 +108,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(bool__13));
 			}
 		}
-		public enum Enum_VH_0 {
+		public enum Enum_VH_0_1 {
 			[Serialize("Value_0")] Value_0 = 0,
 			[Serialize("Value_1")] Value_1 = 1,
 			[Serialize("Value_5")] Value_5 = 5,
@@ -116,7 +116,7 @@ namespace UbiArt.ITF {
 			[Serialize("Value_3")] Value_3 = 3,
 			[Serialize("Value_4")] Value_4 = 4,
 		}
-		public enum Enum_VH_0 {
+		public enum Enum_VH_0_2 {
 			[Serialize("Value_0"  )] Value_0 = 0,
 			[Serialize("Value_1"  )] Value_1 = 1,
 			[Serialize("Value_2"  )] Value_2 = 2,

@@ -25,14 +25,11 @@ namespace UbiArt.ITF {
 		[Serialize("menuSonBaseName"          )] public string menuSonBaseName;
 		[Serialize("locFileName"              )] public string locFileName;
 		[Serialize("defaultSelectedByInstance")] public int defaultSelectedByInstance;
-		[Serialize("align"                    )] public align align;
+		[Serialize("align"                    )] public Align align;
 		[Serialize("leftComponent"            )] public string leftComponent;
 		[Serialize("rightComponent"           )] public string rightComponent;
 		[Serialize("upComponent"              )] public string upComponent;
 		[Serialize("downComponent"            )] public string downComponent;
-		[Serialize("displayMask"              )] public Enum_displayMask displayMask;
-		[Serialize("bool__0"                  )] public bool bool__0;
-		[Serialize("bool__1"                  )] public bool bool__1;
 		[Serialize("StringID__2"              )] public StringID StringID__2;
 		[Serialize("StringID__3"              )] public StringID StringID__3;
 		[Serialize("StringID__4"              )] public StringID StringID__4;
@@ -40,7 +37,6 @@ namespace UbiArt.ITF {
 		[Serialize("Vector2__6"               )] public Vector2 Vector2__6;
 		[Serialize("Vector2__7"               )] public Vector2 Vector2__7;
 		[Serialize("float__8"                 )] public float float__8;
-		[Serialize("Enum_VH_0__9"             )] public Enum_VH_0 Enum_VH_0__9;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
@@ -79,8 +75,8 @@ namespace UbiArt.ITF {
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(bool__0));
-					SerializeField(s, nameof(bool__1));
+					SerializeField(s, nameof(transition));
+					SerializeField(s, nameof(display));
 					SerializeField(s, nameof(StringID__2));
 					SerializeField(s, nameof(StringID__3));
 					SerializeField(s, nameof(StringID__4));
@@ -88,7 +84,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(Vector2__6));
 					SerializeField(s, nameof(Vector2__7));
 					SerializeField(s, nameof(float__8));
-					SerializeField(s, nameof(Enum_VH_0__9));
+					SerializeField(s, nameof(displayMask));
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -126,41 +122,11 @@ namespace UbiArt.ITF {
 			[Serialize("View::RemoteAsMainOnly")] RemoteAsMainOnly = 6,
 			[Serialize("View::All"             )] All = -1,
 		}
-		public enum align {
+		public enum Align {
 			[Serialize("align_free"    )] free = 0,
 			[Serialize("align_centerX" )] centerX = 1,
 			[Serialize("align_centerY" )] centerY = 2,
 			[Serialize("align_centerXY")] centerXY = 3,
-		}
-		public enum Enum_displayMask {
-			[Serialize("Value_0" )] Value_0 = 0,
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_2" )] Value_2 = 2,
-			[Serialize("Value_3" )] Value_3 = 3,
-			[Serialize("Value_4" )] Value_4 = 4,
-			[Serialize("Value_5" )] Value_5 = 5,
-			[Serialize("Value_6" )] Value_6 = 6,
-			[Serialize("Value__1")] Value__1 = -1,
-		}
-		public enum Enum_displayMask {
-			[Serialize("Value_0" )] Value_0 = 0,
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_2" )] Value_2 = 2,
-			[Serialize("Value_3" )] Value_3 = 3,
-			[Serialize("Value_4" )] Value_4 = 4,
-			[Serialize("Value_5" )] Value_5 = 5,
-			[Serialize("Value_6" )] Value_6 = 6,
-			[Serialize("Value__1")] Value__1 = -1,
-		}
-		public enum Enum_VH_0 {
-			[Serialize("Value_0" )] Value_0 = 0,
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_2" )] Value_2 = 2,
-			[Serialize("Value_3" )] Value_3 = 3,
-			[Serialize("Value_4" )] Value_4 = 4,
-			[Serialize("Value_5" )] Value_5 = 5,
-			[Serialize("Value_6" )] Value_6 = 6,
-			[Serialize("Value__1")] Value__1 = -1,
 		}
 		public override uint? ClassCRC => 0x850E4705;
 	}

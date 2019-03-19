@@ -6,14 +6,8 @@ namespace UbiArt.ITF {
 		[Serialize("health")] public int health;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(health));
-				}
-			} else {
-				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(health));
-				}
+			if (s.HasFlags(SerializeFlags.Persistent)) {
+				SerializeField(s, nameof(health));
 			}
 		}
 		public override uint? ClassCRC => 0xB83B5C61;

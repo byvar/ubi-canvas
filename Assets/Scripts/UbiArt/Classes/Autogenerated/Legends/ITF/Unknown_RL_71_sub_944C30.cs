@@ -4,8 +4,6 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.COL)]
 	public partial class Unknown_RL_71_sub_944C30 : CSerializable {
 		[Serialize("startingLeaf"         )] public uint startingLeaf;
-		[Serialize("looping"              )] public int looping;
-		[Serialize("useIntro"             )] public int useIntro;
 		[Serialize("pauseInsensitiveFlags")] public uint pauseInsensitiveFlags;
 		[Serialize("looping"              )] public bool looping;
 		[Serialize("useIntro"             )] public bool useIntro;

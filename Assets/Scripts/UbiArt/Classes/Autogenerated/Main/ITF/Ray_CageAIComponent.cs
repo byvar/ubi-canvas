@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_CageAIComponent : Ray_BigMamaAIComponent {
+	public partial class Ray_CageAIComponent : GenericAIComponent {
 		[Serialize("CageIndex"         )] public int CageIndex;
 		[Serialize("wasBrokenInSession")] public int wasBrokenInSession;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -14,10 +14,6 @@ namespace UbiArt.ITF {
 		[Serialize("leftStepsCount" )] public int leftStepsCount;
 		[Serialize("rightStepsCount")] public int rightStepsCount;
 		[Serialize("pendouilleAnim" )] public int pendouilleAnim;
-		[Serialize("ringSide"       )] public Enum_ringSide ringSide;
-		[Serialize("lianaSide"      )] public Enum_lianaSide lianaSide;
-		[Serialize("idleStand"      )] public Enum_idleStand idleStand;
-		[Serialize("roamStand"      )] public Enum_roamStand roamStand;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -56,17 +52,6 @@ namespace UbiArt.ITF {
 			[Serialize("SwampCreatureStand_Down"  )] Down = 1,
 			[Serialize("SwampCreatureStand_Middle")] Middle = 2,
 			[Serialize("SwampCreatureStand_Up"    )] Up = 3,
-		}
-		public enum Enum_ringSide {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-		}
-		public enum Enum_idleStand {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
 		}
 		public override uint? ClassCRC => 0x4839A19F;
 	}

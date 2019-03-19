@@ -9,9 +9,6 @@ namespace UbiArt.ITF {
 		[Serialize("initIteration"  )] public bool initIteration;
 		[Serialize("lianaOnTrigger" )] public bool lianaOnTrigger;
 		[Serialize("flipTexture"    )] public bool flipTexture;
-		[Serialize("useBeginTexture")] public int useBeginTexture;
-		[Serialize("useEndTexture"  )] public int useEndTexture;
-		[Serialize("initIteration"  )] public int initIteration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {

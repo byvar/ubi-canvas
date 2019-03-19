@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_ShooterTurretAIComponent : Ray_BigMamaAIComponent {
+	public partial class Ray_ShooterTurretAIComponent : Ray_MultiPiecesActorAIComponent {
 		[Serialize("timedSpawnerData")] public Placeholder timedSpawnerData;
 		[Serialize("fixedAngle"      )] public float fixedAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
