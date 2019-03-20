@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIDarktoonTrapBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIDarktoonTrapBehavior_Template : TemplateAIBehavior {
 		[Serialize("startsHidden"     )] public int startsHidden;
 		[Serialize("heightFactor"     )] public float heightFactor;
 		[Serialize("attackRate"       )] public float attackRate;

@@ -4,13 +4,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
 	public partial class EventSetText : Event {
 		[Serialize("text"      )] public SmartLocId text;
-		[Serialize("sender"    )] public uint sender;
 		[Serialize("smartLocId")] public Placeholder smartLocId;
 		[Serialize("styleIndex")] public uint styleIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
 				SerializeField(s, nameof(smartLocId));
 				SerializeField(s, nameof(styleIndex));
 			} else {

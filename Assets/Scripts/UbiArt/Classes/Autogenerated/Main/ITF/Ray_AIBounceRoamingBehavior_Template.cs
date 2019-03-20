@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIBounceRoamingBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIBounceRoamingBehavior_Template : TemplateAIBehavior {
 		[Serialize("bounceMove"               )] public Placeholder bounceMove;
 		[Serialize("bounceIdle"               )] public Placeholder bounceIdle;
 		[Serialize("bounceJump"               )] public Placeholder bounceJump;

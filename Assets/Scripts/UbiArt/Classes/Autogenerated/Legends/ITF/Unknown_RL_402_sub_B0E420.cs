@@ -7,8 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("pauseTween"       )] public bool pauseTween;
 		[Serialize("pauseTrajectory"  )] public bool pauseTrajectory;
 		[Serialize("pauseTime"        )] public float pauseTime;
-		[Serialize("UseLaserDetection")] public int UseLaserDetection;
-		[Serialize("UseLaserDetection")] public byte UseLaserDetection;
+		[Serialize("UseLaserDetection")] public bool UseLaserDetection;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
@@ -16,9 +15,8 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(pauseTween), boolAsByte: true);
 				SerializeField(s, nameof(pauseTrajectory), boolAsByte: true);
 				SerializeField(s, nameof(pauseTime));
-				SerializeField(s, nameof(UseLaserDetection));
+				SerializeField(s, nameof(UseLaserDetection), boolAsByte: true);
 			}
-			SerializeField(s, nameof(UseLaserDetection));
 		}
 		public override uint? ClassCRC => 0xFF8630D5;
 	}

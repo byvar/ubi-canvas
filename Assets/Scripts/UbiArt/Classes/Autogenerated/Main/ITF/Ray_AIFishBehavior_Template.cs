@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIFishBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIFishBehavior_Template : TemplateAIBehavior {
 		[Serialize("struggle"               )] public Placeholder struggle;
 		[Serialize("release"                )] public Placeholder release;
 		[Serialize("spikeHit"               )] public Placeholder spikeHit;

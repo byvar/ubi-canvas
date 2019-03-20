@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AISwordFishBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AISwordFishBehavior_Template : TemplateAIBehavior {
 		[Serialize("idle"                )] public Placeholder idle;
 		[Serialize("anticipation"        )] public Placeholder anticipation;
 		[Serialize("attack"              )] public Placeholder attack;

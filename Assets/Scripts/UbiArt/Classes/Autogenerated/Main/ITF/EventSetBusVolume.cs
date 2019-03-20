@@ -6,19 +6,9 @@ namespace UbiArt.ITF {
 		[Serialize("bus"   )] public StringID bus;
 		[Serialize("volume")] public Volume volume;
 		[Serialize("time"  )] public float time;
-		[Serialize("sender")] public uint sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(bus));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(time));
-			} else if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(sender));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(time));
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
+			if (Settings.s.game != Settings.Game.RA) {
 				SerializeField(s, nameof(bus));
 				SerializeField(s, nameof(volume));
 				SerializeField(s, nameof(time));

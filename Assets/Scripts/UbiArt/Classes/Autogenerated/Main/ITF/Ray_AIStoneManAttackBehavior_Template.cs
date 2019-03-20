@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIStoneManAttackBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIStoneManAttackBehavior_Template : TemplateAIBehavior {
 		[Serialize("respawnBoulder")] public Placeholder respawnBoulder;
 		[Serialize("idle"          )] public Placeholder idle;
 		[Serialize("anticipation"  )] public Placeholder anticipation;

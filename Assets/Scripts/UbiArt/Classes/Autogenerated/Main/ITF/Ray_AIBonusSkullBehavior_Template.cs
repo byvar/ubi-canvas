@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIBonusSkullBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIBonusSkullBehavior_Template : TemplateAIBehavior {
 		[Serialize("defaultSizePercent")] public float defaultSizePercent;
 		[Serialize("maxSizePercent"    )] public float maxSizePercent;
 		[Serialize("pulseDuration"     )] public float pulseDuration;

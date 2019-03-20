@@ -6,17 +6,11 @@ namespace UbiArt.ITF {
 		[Serialize("sticked"    )] public bool sticked;
 		[Serialize("speed"      )] public Vector2 speed;
 		[Serialize("polylineRef")] public uint polylineRef;
-		[Serialize("sender"     )] public uint sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(sticked));
-			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(sticked));
-				SerializeField(s, nameof(speed));
-				SerializeField(s, nameof(polylineRef));
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(sticked));
 				SerializeField(s, nameof(speed));
 				SerializeField(s, nameof(polylineRef));

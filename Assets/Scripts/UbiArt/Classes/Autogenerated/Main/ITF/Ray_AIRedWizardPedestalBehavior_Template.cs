@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIRedWizardPedestalBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIRedWizardPedestalBehavior_Template : TemplateAIBehavior {
 		[Serialize("idle"        )] public Placeholder idle;
 		[Serialize("supportBone" )] public StringID supportBone;
 		[Serialize("gameMaterial")] public Path gameMaterial;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIChest2Behavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIChest2Behavior_Template : TemplateAIBehavior {
 		[Serialize("safeDistance"           )] public float safeDistance;
 		[Serialize("minSpeed"               )] public float minSpeed;
 		[Serialize("maxSpeed"               )] public float maxSpeed;

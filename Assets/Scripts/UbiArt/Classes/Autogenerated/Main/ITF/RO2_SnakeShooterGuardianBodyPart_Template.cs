@@ -18,13 +18,12 @@ namespace UbiArt.ITF {
 		[Serialize("bubonReward"               )] public Generic<RO2_EventSpawnReward> bubonReward;
 		[Serialize("rewardNumber"              )] public uint rewardNumber;
 		[Serialize("destroyRewardNumber"       )] public uint destroyRewardNumber;
-		[Serialize("faction"                   )] public Enum_faction faction;
+		[Serialize("faction"                   )] public RO2_FACTION faction;
 		[Serialize("hitType"                   )] public RECEIVEDHITTYPE hitType;
 		[Serialize("hitLevel"                  )] public uint hitLevel;
 		[Serialize("attackMinDistance"         )] public float attackMinDistance;
 		[Serialize("attackMaxDistance"         )] public float attackMaxDistance;
 		[Serialize("attackAnimation"           )] public StringID attackAnimation;
-		[Serialize("hitType"                   )] public Enum_hitType hitType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -73,7 +72,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(attackAnimation));
 			}
 		}
-		public enum Enum_faction {
+		public enum RO2_FACTION {
 			[Serialize("FACTION_UNKNOWN"     )] FACTION_UNKNOWN = -1,
 			[Serialize("RO2_FACTION_NEUTRAL" )] RO2_FACTION_NEUTRAL = 0,
 			[Serialize("RO2_FACTION_FRIENDLY")] RO2_FACTION_FRIENDLY = 1,
@@ -89,23 +88,6 @@ namespace UbiArt.ITF {
 			[Serialize("RECEIVEDHITTYPE_DARKTOONIFY")] DARKTOONIFY = 5,
 			[Serialize("RECEIVEDHITTYPE_EARTHQUAKE" )] EARTHQUAKE = 6,
 			[Serialize("RECEIVEDHITTYPE_SHOOTER"    )] SHOOTER = 7,
-		}
-		public enum Enum_faction {
-			[Serialize("Value__1")] Value__1 = -1,
-			[Serialize("Value_0" )] Value_0 = 0,
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_2" )] Value_2 = 2,
-			[Serialize("Value_3" )] Value_3 = 3,
-		}
-		public enum Enum_hitType {
-			[Serialize("Value__1")] Value__1 = -1,
-			[Serialize("Value_0" )] Value_0 = 0,
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_3" )] Value_3 = 3,
-			[Serialize("Value_4" )] Value_4 = 4,
-			[Serialize("Value_5" )] Value_5 = 5,
-			[Serialize("Value_6" )] Value_6 = 6,
-			[Serialize("Value_7" )] Value_7 = 7,
 		}
 		public override uint? ClassCRC => 0x73162ABD;
 	}

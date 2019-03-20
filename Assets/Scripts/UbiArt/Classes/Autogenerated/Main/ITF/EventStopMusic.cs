@@ -5,7 +5,6 @@ namespace UbiArt.ITF {
 	public partial class EventStopMusic : Event {
 		[Serialize("metronomeType")] public uint metronomeType;
 		[Serialize("fadeTime"     )] public float fadeTime;
-		[Serialize("sender"       )] public uint sender;
 		[Serialize("name"         )] public StringID name;
 		[Serialize("fadeOutTime"  )] public float fadeOutTime;
 		[Serialize("stopOnNext"   )] public uint stopOnNext;
@@ -14,15 +13,10 @@ namespace UbiArt.ITF {
 		[Serialize("setPriority"  )] public uint setPriority;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(metronomeType));
-				SerializeField(s, nameof(fadeTime));
-			} else if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(sender));
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(metronomeType));
 				SerializeField(s, nameof(fadeTime));
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
 				SerializeField(s, nameof(name));
 				SerializeField(s, nameof(metronomeType));
 				SerializeField(s, nameof(fadeOutTime));

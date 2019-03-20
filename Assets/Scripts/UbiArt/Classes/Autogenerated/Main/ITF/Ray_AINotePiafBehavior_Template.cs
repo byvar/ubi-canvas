@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AINotePiafBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AINotePiafBehavior_Template : TemplateAIBehavior {
 		[Serialize("weightThreshold"  )] public float weightThreshold;
 		[Serialize("flyBackDelay"     )] public float flyBackDelay;
 		[Serialize("fallBreakDelay"   )] public float fallBreakDelay;

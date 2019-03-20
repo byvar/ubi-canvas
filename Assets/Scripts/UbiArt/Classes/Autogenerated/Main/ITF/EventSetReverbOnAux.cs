@@ -3,7 +3,6 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL)]
 	public partial class EventSetReverbOnAux : Event {
-		[Serialize("sender"                    )] public uint sender;
 		[Serialize("XAudio2ReflectionsDelay"   )] public uint XAudio2ReflectionsDelay;
 		[Serialize("XAudio2ReverbDelay"        )] public char XAudio2ReverbDelay;
 		[Serialize("XAudio2RearDelay"          )] public char XAudio2RearDelay;
@@ -52,7 +51,6 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
 				SerializeField(s, nameof(XAudio2ReflectionsDelay));
 				SerializeField(s, nameof(XAudio2ReverbDelay));
 				SerializeField(s, nameof(XAudio2RearDelay));

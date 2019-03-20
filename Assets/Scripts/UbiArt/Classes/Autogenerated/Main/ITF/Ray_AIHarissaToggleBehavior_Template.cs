@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIHarissaToggleBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIHarissaToggleBehavior_Template : TemplateAIBehavior {
 		[Serialize("offAction"                  )] public Placeholder offAction;
 		[Serialize("onAction"                   )] public Placeholder onAction;
 		[Serialize("hitAction"                  )] public Placeholder hitAction;

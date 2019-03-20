@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIFriendly_WaitBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIFriendly_WaitBehavior_Template : TemplateAIBehavior {
 		[Serialize("idle"                )] public Placeholder idle;
 		[Serialize("randomAction"        )] public Placeholder randomAction;
 		[Serialize("triggerTarget"       )] public int triggerTarget;

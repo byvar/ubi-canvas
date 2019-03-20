@@ -7,21 +7,12 @@ namespace UbiArt.ITF {
 		[Serialize("time"   )] public float time;
 		[Serialize("zOffset")] public float zOffset;
 		[Serialize("height" )] public float height;
-		[Serialize("name"   )] public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(time));
-				SerializeField(s, nameof(zOffset));
-				SerializeField(s, nameof(height));
-			} else {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(time));
-				SerializeField(s, nameof(zOffset));
-				SerializeField(s, nameof(height));
-			}
+			SerializeField(s, nameof(anim));
+			SerializeField(s, nameof(time));
+			SerializeField(s, nameof(zOffset));
+			SerializeField(s, nameof(height));
 		}
 		public override uint? ClassCRC => 0xA2C8211D;
 	}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AICageBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AICageBehavior_Template : TemplateAIBehavior {
 		[Serialize("electoonCount"               )] public uint electoonCount;
 		[Serialize("electoonAppearRadius"        )] public float electoonAppearRadius;
 		[Serialize("cageSpawnerYOffset"          )] public float cageSpawnerYOffset;

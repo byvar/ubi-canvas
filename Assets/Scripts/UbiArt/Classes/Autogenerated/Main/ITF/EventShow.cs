@@ -10,18 +10,10 @@ namespace UbiArt.ITF {
 		[Serialize("color"         )] public Color color;
 		[Serialize("pauseOnEnd"    )] public bool pauseOnEnd;
 		[Serialize("destroyOnEnd"  )] public bool destroyOnEnd;
-		[Serialize("sender"        )] public uint sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(alpha));
-				SerializeField(s, nameof(transitionTime));
-				SerializeField(s, nameof(overrideColor));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(pauseOnEnd));
-				SerializeField(s, nameof(destroyOnEnd));
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO
+				|| Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(alpha));
 				SerializeField(s, nameof(transitionTime));
 				SerializeField(s, nameof(overrideColor));

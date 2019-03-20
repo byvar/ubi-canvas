@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIDarktoonLaunchBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIDarktoonLaunchBehavior_Template : TemplateAIBehavior {
 		[Serialize("ballistics")] public Placeholder ballistics;
 		[Serialize("landing"   )] public Placeholder landing;
 		protected override void SerializeImpl(CSerializerObject s) {

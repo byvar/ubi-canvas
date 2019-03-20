@@ -7,16 +7,9 @@ namespace UbiArt.ITF {
 		[Serialize("prevPos")] public Vector2 prevPos;
 		[Serialize("angle"  )] public float angle;
 		[Serialize("z"      )] public float z;
-		[Serialize("sender" )] public uint sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
-				SerializeField(s, nameof(pos));
-				SerializeField(s, nameof(prevPos));
-				SerializeField(s, nameof(angle));
-				SerializeField(s, nameof(z));
 			} else {
 				SerializeField(s, nameof(pos));
 				SerializeField(s, nameof(prevPos));

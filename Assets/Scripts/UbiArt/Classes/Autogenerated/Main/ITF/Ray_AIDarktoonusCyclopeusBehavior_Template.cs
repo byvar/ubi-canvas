@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIDarktoonusCyclopeusBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIDarktoonusCyclopeusBehavior_Template : TemplateAIBehavior {
 		[Serialize("idle"               )] public Placeholder idle;
 		[Serialize("prepareFocus"       )] public Placeholder prepareFocus;
 		[Serialize("focus"              )] public Placeholder focus;

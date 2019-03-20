@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIElectoonBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIElectoonBehavior_Template : TemplateAIBehavior {
 		[Serialize("walk"                                 )] public Placeholder walk;
 		[Serialize("minTimeBeforeWalking"                 )] public float minTimeBeforeWalking;
 		[Serialize("maxTimeBeforeWalking"                 )] public float maxTimeBeforeWalking;

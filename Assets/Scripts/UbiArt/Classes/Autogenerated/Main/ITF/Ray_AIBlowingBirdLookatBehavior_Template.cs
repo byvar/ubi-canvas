@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIBlowingBirdLookatBehavior_Template : BlendTreeNodeTemplate<AnimTreeResult> {
+	public partial class Ray_AIBlowingBirdLookatBehavior_Template : TemplateAIBehavior {
 		[Serialize("uturn"        )] public Placeholder uturn;
 		[Serialize("attack"       )] public Placeholder attack;
 		[Serialize("beginDuration")] public float beginDuration;

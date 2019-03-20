@@ -17,14 +17,12 @@ namespace UbiArt.ITF {
 		[Serialize("autoScrollWaitTime"  )] public float autoScrollWaitTime;
 		[Serialize("overridingColor"     )] public Color overridingColor;
 		[Serialize("overridingHAlignment")] public FONT_ALIGN overridingHAlignment;
+		[Serialize("overridingHAlignment")] public FONT_ALIGN2 overridingHAlignment2;
 		[Serialize("overridingVAlignment")] public FONT overridingVAlignment;
 		[Serialize("depthOffset"         )] public float depthOffset;
 		[Serialize("ViewportVisibility"  )] public uint ViewportVisibility;
 		[Serialize("AdaptToLangage"      )] public bool AdaptToLangage;
 		[Serialize("offsetLangage"       )] public Vector2 offsetLangage;
-		[Serialize("overridingHAlignment")] public Enum_overridingHAlignment overridingHAlignment;
-		[Serialize("overridingVAlignment")] public Enum_overridingVAlignment overridingVAlignment;
-		[Serialize("locId"               )] public StringID locId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
@@ -40,7 +38,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(autoScrollSpeed));
 					SerializeField(s, nameof(autoScrollWaitTime));
 					SerializeField(s, nameof(overridingColor));
-					SerializeField(s, nameof(overridingHAlignment));
+					SerializeField(s, nameof(overridingHAlignment2));
 					SerializeField(s, nameof(overridingVAlignment));
 					SerializeField(s, nameof(depthOffset));
 				}
@@ -52,12 +50,12 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(area));
 					SerializeField(s, nameof(maxWidth));
 					SerializeField(s, nameof(rawText));
-					SerializeField(s, nameof(locId));
+					SerializeField(s, nameof(locId), type: typeof(StringID));
 					SerializeField(s, nameof(scaleToMatchWithArea));
 					SerializeField(s, nameof(autoScrollSpeed));
 					SerializeField(s, nameof(autoScrollWaitTime));
 					SerializeField(s, nameof(overridingColor));
-					SerializeField(s, nameof(overridingHAlignment));
+					SerializeField(s, nameof(overridingHAlignment2));
 					SerializeField(s, nameof(overridingVAlignment));
 					SerializeField(s, nameof(depthOffset));
 				}
@@ -106,17 +104,11 @@ namespace UbiArt.ITF {
 			[Serialize("FONT_VALIGN_MIDDLE")] VALIGN_MIDDLE = 1,
 			[Serialize("FONT_VALIGN_BOTTOM")] VALIGN_BOTTOM = 2,
 		}
-		public enum Enum_overridingHAlignment {
-			[Serialize("Value__1")] Value__1 = -1,
-			[Serialize("Value_0" )] Value_0 = 0,
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_2" )] Value_2 = 2,
-		}
-		public enum Enum_overridingHAlignment {
-			[Serialize("Value__1")] Value__1 = -1,
-			[Serialize("Value_0" )] Value_0 = 0,
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_2" )] Value_2 = 2,
+		public enum FONT_ALIGN2 {
+			[Serialize("FONT_ALIGN_NONE"   )] NONE = -1,
+			[Serialize("FONT_ALIGN_LEFT"   )] LEFT = 0,
+			[Serialize("FONT_ALIGN_CENTER" )] CENTER = 1,
+			[Serialize("FONT_ALIGN_RIGHT"  )] RIGHT = 2,
 		}
 		public override uint? ClassCRC => 0x13E9D108;
 	}

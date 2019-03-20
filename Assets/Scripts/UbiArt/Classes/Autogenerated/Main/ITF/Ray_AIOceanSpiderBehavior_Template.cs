@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIOceanSpiderBehavior_Template : BlendTreeNodeTemplate<Q23ITF14AnimTreeResult> {
+	public partial class Ray_AIOceanSpiderBehavior_Template : TemplateAIBehavior {
 		[Serialize("Actions"             )] public Placeholder Actions;
 		[Serialize("Instructions"        )] public Placeholder Instructions;
 		[Serialize("InactiveInstructions")] public Placeholder InactiveInstructions;
