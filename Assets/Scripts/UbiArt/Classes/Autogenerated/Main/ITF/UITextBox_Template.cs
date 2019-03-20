@@ -6,9 +6,6 @@ namespace UbiArt.ITF {
 		[Serialize("styles"              )] public CList<FontTextArea.Style> styles;
 		[Serialize("depthOffset"         )] public float depthOffset;
 		[Serialize("is2DNoScreenRatio"   )] public bool is2DNoScreenRatio;
-		[Serialize("fontName"            )] public Path fontName;
-		[Serialize("textMode"            )] public uint textMode;
-		[Serialize("textModeY"           )] public uint textModeY;
 		[Serialize("textHeight"          )] public float textHeight;
 		[Serialize("boxWidth"            )] public float boxWidth;
 		[Serialize("boxHeight"           )] public float boxHeight;
@@ -16,7 +13,7 @@ namespace UbiArt.ITF {
 		[Serialize("croppingMode"        )] public Cropping croppingMode;
 		[Serialize("usePages"            )] public int usePages;
 		[Serialize("boxPosition"         )] public BoxPosition boxPosition;
-		[Serialize("textBlock"           )] public Placeholder textBlock;
+		[Serialize("textBlock"           )] public CArray<StringID> textBlock;
 		[Serialize("texture"             )] public Path texture;
 		[Serialize("textureOffset2D"     )] public Vector2 textureOffset2D;
 		[Serialize("anchorOffset2D"      )] public Vector2 anchorOffset2D;
@@ -26,10 +23,7 @@ namespace UbiArt.ITF {
 		[Serialize("useActorPosition"    )] public int useActorPosition;
 		[Serialize("useActorScale"       )] public int useActorScale;
 		[Serialize("useActorRotation"    )] public int useActorRotation;
-		[Serialize("textShadowOffset"    )] public Vector2 textShadowOffset;
-		[Serialize("textShadowColor"     )] public Color textShadowColor;
-		[Serialize("lineSpacingFactor"   )] public float lineSpacingFactor;
-		[Serialize("preSpawnedActorPaths")] public Placeholder preSpawnedActorPaths;
+		[Serialize("preSpawnedActorPaths")] public CList<Path> preSpawnedActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
@@ -56,15 +50,13 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(textShadowOffset));
 				SerializeField(s, nameof(textShadowColor));
 				SerializeField(s, nameof(lineSpacingFactor));
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(styles));
-				SerializeField(s, nameof(preSpawnedActorPaths));
-				SerializeField(s, nameof(depthOffset));
-			} else if (Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(preSpawnedActorPaths));
 				SerializeField(s, nameof(depthOffset));
 			} else {
 				SerializeField(s, nameof(styles));
+				SerializeField(s, nameof(preSpawnedActorPaths));
 				SerializeField(s, nameof(depthOffset));
 				SerializeField(s, nameof(is2DNoScreenRatio));
 			}

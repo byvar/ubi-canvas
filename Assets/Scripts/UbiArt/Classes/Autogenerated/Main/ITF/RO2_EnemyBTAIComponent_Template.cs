@@ -45,13 +45,12 @@ namespace UbiArt.ITF {
 		[Serialize("useBumperPolyline"                    )] public bool useBumperPolyline;
 		[Serialize("heartShieldData"                      )] public CList<RO2_HeartShield_Template> heartShieldData;
 		[Serialize("AMCheckTouch"                         )] public bool AMCheckTouch;
-		[Serialize("enemyType"                            )] public enemyType enemyType;
+		[Serialize("enemyType"                            )] public EnemyType enemyType;
 		[Serialize("isSeasonalEnemy"                      )] public bool isSeasonalEnemy;
 		[Serialize("withHat"                              )] public bool withHat;
 		[Serialize("colHat"                               )] public StringID colHat;
 		[Serialize("hatBounceMultiplier"                  )] public float hatBounceMultiplier;
 		[Serialize("hideTextureDuration"                  )] public float hideTextureDuration;
-		[Serialize("enemyType"                            )] public Enum_enemyType enemyType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -179,15 +178,10 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(stiltsOriginCenter));
 			}
 		}
-		public enum enemyType {
+		public enum EnemyType {
 			[Serialize("enemyType_None"  )] None = 0,
 			[Serialize("enemyType_Toad"  )] Toad = 1,
 			[Serialize("enemyType_Turnip")] Turnip = 2,
-		}
-		public enum Enum_enemyType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
 		}
 		public override uint? ClassCRC => 0xF3259B14;
 	}

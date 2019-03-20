@@ -5,6 +5,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_EnemyBTAIComponent : RO2_BTAIComponent {
 		[Serialize("shape"                   )] public EditableShape shape;
 		[Serialize("appearType"              )] public Enum_appearType appearType;
+		[Serialize("appearType"              )] public Enum_appearType2 appearType2;
 		[Serialize("useChargeDirect"         )] public bool useChargeDirect;
 		[Serialize("useChargeSpot"           )] public bool useChargeSpot;
 		[Serialize("chargeOnce"              )] public bool chargeOnce;
@@ -42,7 +43,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(shape));
-					SerializeField(s, nameof(appearType));
+					SerializeField(s, nameof(appearType2));
 					SerializeField(s, nameof(useChargeDirect));
 					SerializeField(s, nameof(useChargeSpot));
 					SerializeField(s, nameof(chargeOnce));
@@ -133,21 +134,16 @@ namespace UbiArt.ITF {
 			[Serialize("HitHeadOnGround")] HitHeadOnGround = 1,
 			[Serialize("JumpOnVictim"   )] JumpOnVictim = 2,
 		}
-		public enum Enum_appearType {
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_4")] Value_4 = 4,
-			[Serialize("Value_5")] Value_5 = 5,
-			[Serialize("Value_6")] Value_6 = 6,
-			[Serialize("Value_7")] Value_7 = 7,
-			[Serialize("Value_8")] Value_8 = 8,
-		}
-		public enum Enum_tortureTypeType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
+		public enum Enum_appearType2 {
+			[Serialize("Direct"           )] Direct = 3,
+			[Serialize("FromGround"       )] FromGround = 0,
+			[Serialize("Parachute"        )] Parachute = 1,
+			[Serialize("JumpFromZ"        )] JumpFromZ = 2,
+			[Serialize("JumpFromZ_Ninja"  )] JumpFromZ_Ninja = 4,
+			[Serialize("JumpFromZ_Ladders")] JumpFromZ_Ladders = 5,
+			[Serialize("Fall"             )] Fall = 6,
+			[Serialize("Splinter"         )] Splinter = 7,
+			[Serialize("FromAbove"        )] FromAbove = 8,
 		}
 		public override uint? ClassCRC => 0x8DDACC87;
 	}

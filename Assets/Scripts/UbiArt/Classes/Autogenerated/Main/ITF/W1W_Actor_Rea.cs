@@ -129,6 +129,12 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(StringID__0));
 			}
 		}
+		[Games(GameFlags.VH)]
+		public partial class Orientation_MC : CSerializable {
+			protected override void SerializeImpl(CSerializerObject s) {
+				base.SerializeImpl(s);
+			}
+		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_0"  )] Value_0 = 0,
 			[Serialize("Value_1"  )] Value_1 = 1,

@@ -30,38 +30,42 @@ namespace UbiArt.ITF {
 		[Serialize("forceUseAnimSize"     )] public int forceUseAnimSize;
 		[Serialize("bool__0"              )] public bool bool__0;
 		[Serialize("bool__1"              )] public bool bool__1;
-		[Serialize("float__2"             )] public float float__2;
-		[Serialize("float__3"             )] public float float__3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(fontName));
-				SerializeField(s, nameof(fontHeight));
-				SerializeField(s, nameof(textColor));
-				SerializeField(s, nameof(textColorHighlighted));
-				SerializeField(s, nameof(textColorInactive));
-				SerializeField(s, nameof(actorColorHighlighted));
-				SerializeField(s, nameof(actorColorInactive));
-				SerializeField(s, nameof(actorColor));
-				SerializeField(s, nameof(textMode));
-				SerializeField(s, nameof(textModeY));
-				SerializeField(s, nameof(defaultSelected));
-				SerializeField(s, nameof(isActive));
-				SerializeField(s, nameof(updatePos));
-				SerializeField(s, nameof(rank));
-				SerializeField(s, nameof(friendly));
-				SerializeField(s, nameof(menuBaseName));
-				SerializeField(s, nameof(animSize));
-				SerializeField(s, nameof(fontHeightSelected));
-				SerializeField(s, nameof(textShadowOffset));
-				SerializeField(s, nameof(textShadowColor));
-				SerializeField(s, nameof(lineSpacingFactor));
-				SerializeField(s, nameof(forceUseAnimSize));
+				if (!(this is UITextBox_Template)) {
+					SerializeField(s, nameof(fontName));
+					SerializeField(s, nameof(fontHeight));
+					SerializeField(s, nameof(textColor));
+					SerializeField(s, nameof(textColorHighlighted));
+					SerializeField(s, nameof(textColorInactive));
+					SerializeField(s, nameof(actorColorHighlighted));
+					SerializeField(s, nameof(actorColorInactive));
+					SerializeField(s, nameof(actorColor));
+					SerializeField(s, nameof(textMode));
+					SerializeField(s, nameof(textModeY));
+					SerializeField(s, nameof(defaultSelected));
+					SerializeField(s, nameof(isActive));
+					SerializeField(s, nameof(updatePos));
+					SerializeField(s, nameof(rank));
+					SerializeField(s, nameof(friendly));
+					SerializeField(s, nameof(menuBaseName));
+					SerializeField(s, nameof(animSize));
+					SerializeField(s, nameof(fontHeightSelected));
+					SerializeField(s, nameof(textShadowOffset));
+					SerializeField(s, nameof(textShadowColor));
+					SerializeField(s, nameof(lineSpacingFactor));
+					SerializeField(s, nameof(forceUseAnimSize));
+				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(bool__0));
 				SerializeField(s, nameof(bool__1));
-				SerializeField(s, nameof(float__2));
-				SerializeField(s, nameof(float__3));
+				SerializeField(s, nameof(showingFadeDuration));
+				SerializeField(s, nameof(hidingFadeDuration));
+			} else if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(is2D), boolAsByte: true);
+				SerializeField(s, nameof(showingFadeDuration));
+				SerializeField(s, nameof(hidingFadeDuration));
 			} else {
 				SerializeField(s, nameof(is2D));
 				SerializeField(s, nameof(showingFadeDuration));

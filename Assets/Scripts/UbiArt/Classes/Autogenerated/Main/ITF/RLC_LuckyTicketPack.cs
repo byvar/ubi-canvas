@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("Price"           )] public uint Price;
 		[Serialize("Amount"          )] public uint Amount;
 		[Serialize("GoldenTicketPack")] public bool GoldenTicketPack;
-		[Serialize("msdkItemId"      )] public uint msdkItemId;
+		[Serialize("msdkItemId"      )] public uint msdkItemId_;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Price));
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			if (s.HasFlags(SerializeFlags.Flags8)) {
 				SerializeField(s, nameof(GoldenTicketPack));
 			}
-			SerializeField(s, nameof(msdkItemId));
+			SerializeField(s, nameof(msdkItemId_));
 		}
 		public override uint? ClassCRC => 0xACECEBCA;
 	}
