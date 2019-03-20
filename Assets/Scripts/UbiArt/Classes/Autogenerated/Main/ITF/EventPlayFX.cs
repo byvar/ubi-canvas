@@ -9,12 +9,9 @@ namespace UbiArt.ITF {
 		[Serialize("UseGlobalPosition")] public bool UseGlobalPosition;
 		[Serialize("GlobalPosition"   )] public Vector3 GlobalPosition;
 		[Serialize("StopImmediate"    )] public bool StopImmediate;
-		[Serialize("sender"           )] public uint sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {
 			} else {
 				SerializeField(s, nameof(FXName));
 				SerializeField(s, nameof(Action));

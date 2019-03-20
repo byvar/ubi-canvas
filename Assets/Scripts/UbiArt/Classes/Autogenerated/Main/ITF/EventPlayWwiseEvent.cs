@@ -6,21 +6,17 @@ namespace UbiArt.ITF {
 		[Serialize("WwiseEventGUID"              )] public StringID WwiseEventGUID;
 		[Serialize("EventGUIDBackupSerialization")] public StringID EventGUIDBackupSerialization;
 		[Serialize("soundPlayAfterdestroy"       )] public bool soundPlayAfterdestroy;
-		[Serialize("sender"                      )] public uint sender;
-		[Serialize("WwiseMetronomeID"            )] public Enum_WwiseMetronomeID WwiseMetronomeID;
+		[Serialize("WwiseMetronomeID"            )] public Enum_WwiseMetronomeID WwiseMetronomeID2;
 		[Serialize("StopOnDestroy"               )] public int StopOnDestroy;
-		[Serialize("StringID__0"                 )] public StringID StringID__0;
-		[Serialize("bool__1"                     )] public bool bool__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
 				SerializeField(s, nameof(WwiseEventGUID));
-				SerializeField(s, nameof(WwiseMetronomeID));
+				SerializeField(s, nameof(WwiseMetronomeID2));
 				SerializeField(s, nameof(StopOnDestroy));
 			} else if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(StringID__0));
-				SerializeField(s, nameof(bool__1));
+				SerializeField(s, nameof(WwiseEventGUID));
+				SerializeField(s, nameof(soundPlayAfterdestroy));
 			} else {
 				SerializeField(s, nameof(WwiseEventGUID));
 				SerializeField(s, nameof(EventGUIDBackupSerialization));

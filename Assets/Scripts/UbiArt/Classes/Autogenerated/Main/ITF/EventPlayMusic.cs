@@ -9,7 +9,6 @@ namespace UbiArt.ITF {
 		[Serialize("volume"       )] public Volume volume;
 		[Serialize("playOnNext"   )] public uint playOnNext;
 		[Serialize("stopAndPlay"  )] public int stopAndPlay;
-		[Serialize("sender"       )] public uint sender;
 		[Serialize("name"         )] public StringID name;
 		[Serialize("fadeInTime"   )] public float fadeInTime;
 		[Serialize("fadeOutTime"  )] public float fadeOutTime;
@@ -21,38 +20,14 @@ namespace UbiArt.ITF {
 		[Serialize("bus"          )] public StringID bus;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(metronomeType));
 				SerializeField(s, nameof(nodeName));
 				SerializeField(s, nameof(fadeTime));
 				SerializeField(s, nameof(volume));
 				SerializeField(s, nameof(playOnNext));
 				SerializeField(s, nameof(stopAndPlay));
-			} else if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(sender));
-				SerializeField(s, nameof(metronomeType));
-				SerializeField(s, nameof(nodeName));
-				SerializeField(s, nameof(fadeTime));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(playOnNext));
-				SerializeField(s, nameof(stopAndPlay));
-			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(sender));
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(metronomeType));
-				SerializeField(s, nameof(nodeName));
-				SerializeField(s, nameof(fadeInTime));
-				SerializeField(s, nameof(fadeOutTime));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(playOnNext));
-				SerializeField(s, nameof(stopAndPlay));
-				SerializeField(s, nameof(offsetTime));
-				SerializeField(s, nameof(delay));
-				SerializeField(s, nameof(eventDelay));
-				SerializeField(s, nameof(priority));
-				SerializeField(s, nameof(setPriority));
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(name));
 				SerializeField(s, nameof(metronomeType));
 				SerializeField(s, nameof(nodeName));

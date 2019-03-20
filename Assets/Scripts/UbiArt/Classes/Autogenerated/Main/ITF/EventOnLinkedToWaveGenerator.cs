@@ -2,11 +2,9 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RL)]
-	public partial class EventOnLinkedToWaveGenerator : CSerializable {
-		[Serialize("sender")] public uint sender;
+	public partial class EventOnLinkedToWaveGenerator : Event {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
 		}
 		public override uint? ClassCRC => 0xE4DC7879;
 	}

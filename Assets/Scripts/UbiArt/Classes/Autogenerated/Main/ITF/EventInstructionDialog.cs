@@ -9,14 +9,12 @@ namespace UbiArt.ITF {
 		[Serialize("offset"          )] public Vector2 offset;
 		[Serialize("durationMin"     )] public float durationMin;
 		[Serialize("actorScaleFactor")] public float actorScaleFactor;
-		[Serialize("sender"          )] public uint sender;
-		[Serialize("text"            )] public string text;
+		[Serialize("text"            )] public string textStr;
 		[Serialize("snapToScreen"    )] public int snapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
-				SerializeField(s, nameof(text));
+				SerializeField(s, nameof(textStr));
 				SerializeField(s, nameof(mood));
 				SerializeField(s, nameof(sizeText));
 				SerializeField(s, nameof(offset));

@@ -18,14 +18,13 @@ namespace UbiArt.ITF {
 		[Serialize("checkEventOnlyInZone"  )] public bool checkEventOnlyInZone;
 		[Serialize("actorUpdateInfo"       )] public RO2_PlayerForceActionComponent.ActorUpdateInfoStruct actorUpdateInfo;
 		[Serialize("isEnabled"             )] public bool isEnabled;
-		[Serialize("Action"                )] public Enum_Action Action;
-		[Serialize("shadowActorGroupTest"  )] public int shadowActorGroupTest;
-		[Serialize("shadowActorGroupTest"  )] public byte shadowActorGroupTest;
+		[Serialize("Action"                )] public PlayerForcedAction2 Action2;
+		[Serialize("shadowActorGroupTest"  )] public bool shadowActorGroupTest;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(Action));
+					SerializeField(s, nameof(Action2));
 					SerializeField(s, nameof(enabledOnInit), boolAsByte: true);
 					SerializeField(s, nameof(OverallPriority));
 					SerializeField(s, nameof(priority));
@@ -44,9 +43,8 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(isEnabled));
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(shadowActorGroupTest));
+					SerializeField(s, nameof(shadowActorGroupTest), boolAsByte: true);
 				}
-				SerializeField(s, nameof(shadowActorGroupTest));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(Action));
@@ -106,17 +104,12 @@ namespace UbiArt.ITF {
 			[Serialize("SlingShot")] SlingShot = 1,
 			[Serialize("StuckUp"  )] StuckUp = 2,
 		}
-		public enum Enum_Action {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-		}
-		public enum Enum_WaitType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
+		public enum PlayerForcedAction2 {
+			[Serialize("PlayerForcedAction_None")] None = 0,
+			[Serialize("PlayerForcedAction_Walk")] Walk = 1,
+			[Serialize("PlayerForcedAction_Jump")] Jump = 2,
+			[Serialize("PlayerForcedAction_Helico")] Helico = 3,
+			[Serialize("PlayerForcedAction_Attack")] Attack = 4,
 		}
 		public override uint? ClassCRC => 0x32CD8D9C;
 	}

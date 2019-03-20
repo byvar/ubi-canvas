@@ -2,11 +2,9 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RL | GameFlags.COL)]
-	public partial class EventPlayerIndexChange : CSerializable {
-		[Serialize("sender")] public uint sender;
+	public partial class EventPlayerIndexChange : Event {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
 		}
 		public override uint? ClassCRC => 0xB0B60A18;
 	}

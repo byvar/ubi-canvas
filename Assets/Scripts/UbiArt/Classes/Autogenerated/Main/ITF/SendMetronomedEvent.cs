@@ -10,11 +10,13 @@ namespace UbiArt.ITF {
 		[Serialize("SendTo"          )] public ObjectPath SendTo;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(WwiseMetronomeID));
-			SerializeField(s, nameof(WwisePlayAt));
-			SerializeField(s, nameof(WwisePlayAtCue));
-			SerializeField(s, nameof(onPlayEvent));
-			SerializeField(s, nameof(SendTo));
+			if (Settings.s.game != Settings.Game.COL) {
+				SerializeField(s, nameof(WwiseMetronomeID));
+				SerializeField(s, nameof(WwisePlayAt));
+				SerializeField(s, nameof(WwisePlayAtCue));
+				SerializeField(s, nameof(onPlayEvent));
+				SerializeField(s, nameof(SendTo));
+			}
 		}
 		public enum METRONOME_TYPE {
 			[Serialize("METRONOME_TYPE_DEFAULT" )] DEFAULT = 0,

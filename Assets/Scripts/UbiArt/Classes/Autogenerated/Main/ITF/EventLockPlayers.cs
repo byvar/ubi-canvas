@@ -7,14 +7,12 @@ namespace UbiArt.ITF {
 		[Serialize("stopPlayers"   )] public bool stopPlayers;
 		[Serialize("stopInputs"    )] public bool stopInputs;
 		[Serialize("forceRevive"   )] public bool forceRevive;
-		[Serialize("sender"        )] public uint sender;
 		[Serialize("lock"          )] public int _lock;
 		[Serialize("applyToPlayers")] public int applyToPlayers;
 		[Serialize("applyToInputs" )] public int applyToInputs;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(sender));
 				SerializeField(s, nameof(_lock));
 				SerializeField(s, nameof(applyToPlayers));
 				SerializeField(s, nameof(applyToInputs));

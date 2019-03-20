@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.RO | GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.COL)]
 	public partial class SoundDescriptor_Template : CSerializable {
 		[Serialize("name"                 )] public StringID name;
 		[Serialize("soundPlayAfterdestroy")] public bool soundPlayAfterdestroy;
@@ -10,26 +10,79 @@ namespace UbiArt.ITF {
 		[Serialize("WwisePlayAt"          )] public AUDIO_SYNC_PLAY WwisePlayAt;
 		[Serialize("WwisePlayAtCue"       )] public StringID WwisePlayAtCue;
 		[Serialize("StringID__0"          )] public StringID StringID__0;
-		[Serialize("Volume__1"            )] public Volume Volume__1;
-		[Serialize("StringID__2"          )] public StringID StringID__2;
-		[Serialize("StringID__3"          )] public StringID StringID__3;
-		[Serialize("uint__4"              )] public uint uint__4;
-		[Serialize("uint__5"              )] public uint uint__5;
-		[Serialize("int__6"               )] public int int__6;
-		[Serialize("CList<Path>__7"       )] public CList<Path> CList_Path__7;
-		[Serialize("SoundParams__8"       )] public SoundParams SoundParams__8;
+		[Serialize("Volume__1"            )] public Volume volume;
+		[Serialize("category"             )] public StringID category;
+		[Serialize("limitCategory"        )] public StringID limitCategory;
+		[Serialize("limitMode"            )] public uint limitMode;
+		[Serialize("maxInstances"         )] public uint maxInstances;
+		[Serialize("isStream"             )] public int isStream;
+		[Serialize("CList<Path>__7"       )] public CList<Path> files;
+		[Serialize("SoundParams__8"       )] public SoundParams _params;
+		[Serialize("spawnEvent"           )] public SoundGUID spawnEvent;
+		[Serialize("livingEvent"          )] public SoundGUID livingEvent;
+		[Serialize("deathEvent"           )] public SoundGUID deathEvent;
+		[Serialize("onEnterZone"          )] public SoundGUID onEnterZone;
+		[Serialize("onExitZone"           )] public SoundGUID onExitZone;
+		[Serialize("soundPlayAfterDestroy")] public bool soundPlayAfterDestroy;
+		[Serialize("limitMode"                )] public Enum_limitMode limitModeEnum;
+		[Serialize("isPrefetched"             )] public int isPrefetched;
+		[Serialize("localizedFiles"           )] public CList<LocalizedPath> localizedFiles;
+		[Serialize("filesIntro"               )] public CList<Path> filesIntro;
+		[Serialize("filesBody"                )] public CList<Path> filesBody;
+		[Serialize("filesBodyOption"          )] public CList<Unknown_RL_12955_sub_591530> filesBodyOption;
+		[Serialize("filesOutro"               )] public CList<Path> filesOutro;
+		[Serialize("serialPlayingMode"        )] public Enum_serialPlayingMode serialPlayingMode;
+		[Serialize("serialStoppingMode"       )] public Enum_serialStoppingMode serialStoppingMode;
+		[Serialize("pauseInsensitiveFlags"    )] public uint pauseInsensitiveFlags;
+		[Serialize("outDevices"               )] public uint outDevices;
+		[Serialize("soundPlayFadeAfterdestroy")] public int soundPlayFadeAfterdestroy;
+		[Serialize("noDrop"                   )] public int noDrop;
+		[Serialize("Priority"                 )] public uint Priority;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(StringID__0));
-				SerializeField(s, nameof(Volume__1));
-				SerializeField(s, nameof(StringID__2));
-				SerializeField(s, nameof(StringID__3));
-				SerializeField(s, nameof(uint__4));
-				SerializeField(s, nameof(uint__5));
-				SerializeField(s, nameof(int__6));
-				SerializeField(s, nameof(CList_Path__7));
-				SerializeField(s, nameof(SoundParams__8));
+				SerializeField(s, nameof(name));
+				SerializeField(s, nameof(volume));
+				SerializeField(s, nameof(category));
+				SerializeField(s, nameof(limitCategory));
+				SerializeField(s, nameof(limitMode));
+				SerializeField(s, nameof(maxInstances));
+				SerializeField(s, nameof(isStream));
+				SerializeField(s, nameof(files));
+				SerializeField(s, nameof(_params));
+			} else if (Settings.s.game == Settings.Game.RL) {
+				SerializeField(s, nameof(name));
+				SerializeField(s, nameof(volume));
+				SerializeField(s, nameof(category));
+				SerializeField(s, nameof(limitCategory));
+				SerializeField(s, nameof(limitModeEnum));
+				SerializeField(s, nameof(maxInstances));
+				SerializeField(s, nameof(isStream));
+				SerializeField(s, nameof(isPrefetched));
+				SerializeField(s, nameof(files));
+				SerializeField(s, nameof(localizedFiles));
+				SerializeField(s, nameof(filesIntro));
+				SerializeField(s, nameof(filesBody));
+				SerializeField(s, nameof(filesBodyOption));
+				SerializeField(s, nameof(filesOutro));
+				SerializeField(s, nameof(serialPlayingMode));
+				SerializeField(s, nameof(serialStoppingMode));
+				SerializeField(s, nameof(_params));
+				SerializeField(s, nameof(pauseInsensitiveFlags));
+				SerializeField(s, nameof(outDevices));
+				SerializeField(s, nameof(soundPlayAfterdestroy));
+				SerializeField(s, nameof(soundPlayFadeAfterdestroy));
+				SerializeField(s, nameof(noDrop));
+				SerializeField(s, nameof(Priority));
+			} else if(Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(name));
+				SerializeField(s, nameof(spawnEvent));
+				SerializeField(s, nameof(livingEvent));
+				SerializeField(s, nameof(deathEvent));
+				SerializeField(s, nameof(onEnterZone));
+				SerializeField(s, nameof(onExitZone));
+				SerializeField(s, nameof(soundPlayAfterDestroy), boolAsByte: true);
 			} else {
 				SerializeField(s, nameof(name));
 				SerializeField(s, nameof(soundPlayAfterdestroy));
@@ -54,6 +107,22 @@ namespace UbiArt.ITF {
 			[Serialize("AUDIO_SYNC_PLAY_AT_NEXT_CUSTOM_CUE")] AT_NEXT_CUSTOM_CUE = 5,
 			[Serialize("AUDIO_SYNC_PLAY_AT_ENTRY_CUE"      )] AT_ENTRY_CUE = 6,
 			[Serialize("AUDIO_SYNC_PLAY_AT_EXIT_CUE"       )] AT_EXIT_CUE = 7,
+		}
+		public enum Enum_limitMode {
+			[Serialize("Value_0")] Value_0 = 0,
+			[Serialize("Value_1")] Value_1 = 1,
+			[Serialize("Value_2")] Value_2 = 2,
+			[Serialize("Value_3")] Value_3 = 3,
+			[Serialize("Value_4")] Value_4 = 4,
+		}
+		public enum Enum_serialPlayingMode {
+			[Serialize("Value_0")] Value_0 = 0,
+			[Serialize("Value_1")] Value_1 = 1,
+			[Serialize("Value_2")] Value_2 = 2,
+		}
+		public enum Enum_serialStoppingMode {
+			[Serialize("Value_0")] Value_0 = 0,
+			[Serialize("Value_1")] Value_1 = 1,
 		}
 	}
 }
