@@ -25,10 +25,6 @@ namespace UbiArt.ITF {
 		[Serialize("phys2dFilter"       )] public uint phys2dFilter;
 		[Serialize("archetype"          )] public StringID archetype;
 		[Serialize("fxkit"              )] public Nullable<FxKit> fxkit;
-		[Serialize("bool__3"            )] public bool bool__3;
-		[Serialize("bool__4"            )] public bool bool__4;
-		[Serialize("bool__5"            )] public bool bool__5;
-		[Serialize("bool__6"            )] public bool bool__6;
 		[Serialize("StringID__16"       )] public StringID StringID__16;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -69,10 +65,10 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(feedbackTags));
 				SerializeField(s, nameof(solid));
 				SerializeField(s, nameof(filter));
-				SerializeField(s, nameof(bool__3));
-				SerializeField(s, nameof(bool__4));
-				SerializeField(s, nameof(bool__5));
-				SerializeField(s, nameof(bool__6));
+				SerializeField(s, nameof(nostim));
+				SerializeField(s, nameof(noStick));
+				SerializeField(s, nameof(noWalkOnWall));
+				SerializeField(s, nameof(noShadow));
 				SerializeField(s, nameof(moveSpeed));
 				SerializeField(s, nameof(moveForce));
 				SerializeField(s, nameof(friction));

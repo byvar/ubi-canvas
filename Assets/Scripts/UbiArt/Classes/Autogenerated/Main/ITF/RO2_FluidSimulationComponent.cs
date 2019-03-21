@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_FluidSimulationComponent : GraphicComponent {
-		[Serialize("FluidType"      )] public FluidType FluidType;
+		[Serialize("FluidType"      )] public FluidType fluidType;
 		[Serialize("ParticlesMaxNb" )] public uint ParticlesMaxNb;
 		[Serialize("FluidSimulation")] public RO2_FluidSimulation FluidSimulation;
 		[Serialize("downColor"      )] public Color downColor;
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(innerSize));
 				SerializeField(s, nameof(outerSize));
 			} else {
-				SerializeField(s, nameof(FluidType));
+				SerializeField(s, nameof(fluidType));
 				SerializeField(s, nameof(ParticlesMaxNb));
 				SerializeField(s, nameof(FluidSimulation));
 				SerializeField(s, nameof(downColor));

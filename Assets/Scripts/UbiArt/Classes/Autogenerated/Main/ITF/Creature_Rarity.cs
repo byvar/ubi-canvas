@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class Creature_Rarity : CSerializable {
-		[Serialize("rarity"             )] public Creature_Rarity rarity;
+		[Serialize("rarity"             )] public Creature_Rarity_Type rarity;
 		[Serialize("starConversionValue")] public uint starConversionValue;
 		[Serialize("stepPercentage"     )] public float stepPercentage;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(starConversionValue));
 			SerializeField(s, nameof(stepPercentage));
 		}
-		public enum Creature_Rarity {
+		public enum Creature_Rarity_Type {
 			[Serialize("Creature_Rarity::common"   )] common = 0,
 			[Serialize("Creature_Rarity::unCommon" )] unCommon = 1,
 			[Serialize("Creature_Rarity::rare"     )] rare = 2,

@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_314_sub_A19310 : CSerializable {
-		[Serialize("Brush_State"            )] public Enum_Brush_State Brush_State;
-		[Serialize("Brush_Action"           )] public Enum_Brush_Action Brush_Action;
+	public partial class DigRegionComponent_314_sub_A19310 : CSerializable {
+		[Serialize("Brush_State"            )] public Action Brush_State;
+		[Serialize("Brush_Action"           )] public Action Brush_Action;
 		[Serialize("BoxCountX"              )] public uint BoxCountX;
 		[Serialize("BoxCountY"              )] public uint BoxCountY;
 		[Serialize("BrushRadiusGrid"        )] public int BrushRadiusGrid;
@@ -26,11 +26,11 @@ namespace UbiArt.ITF {
 		[Serialize("Regeneration_EndDelay"  )] public float Regeneration_EndDelay;
 		[Serialize("Regeneration_AccDist"   )] public float Regeneration_AccDist;
 		[Serialize("Regeneration_TimeMaxDRC")] public float Regeneration_TimeMaxDRC;
-		[Serialize("Uv_Fill"                )] public Placeholder Uv_Fill;
-		[Serialize("Uv_Hole"                )] public Placeholder Uv_Hole;
+		[Serialize("Uv_Fill"                )] public DigRegionComponent.ParamUV Uv_Fill;
+		[Serialize("Uv_Hole"                )] public DigRegionComponent.ParamUV Uv_Hole;
 		[Serialize("Brush_Radius"           )] public float Brush_Radius;
 		[Serialize("Brush_ActionFill"       )] public int Brush_ActionFill;
-		[Serialize("PrimitiveParameters"    )] public Placeholder PrimitiveParameters;
+		[Serialize("PrimitiveParameters"    )] public GFXPrimitiveParam PrimitiveParameters;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
@@ -68,10 +68,10 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		public enum Enum_Brush_State {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
+		public enum Action {
+			[Serialize("Action_Dig")] Dig = 0,
+			[Serialize("Action_Fill")] Fill = 1,
+			[Serialize("Action_Toggle")] Toggle = 2,
 		}
 		public override uint? ClassCRC => 0x0C4BD15D;
 	}

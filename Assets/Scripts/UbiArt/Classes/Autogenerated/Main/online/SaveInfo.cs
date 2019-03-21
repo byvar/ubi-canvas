@@ -10,7 +10,7 @@ namespace UbiArt.online {
 		[Serialize("save"                 )] public string save;
 		[Serialize("msdkData"             )] public string msdkData;
 		[Serialize("saveGameVersionFormat")] public uint saveGameVersionFormat;
-		[Serialize("populations"          )] public CMap<ITF.StringID, ITF.StringID> populations;
+		[Serialize("populations"          )] public CMap<StringID, StringID> populations;
 		[Serialize("iap"                  )] public bool iap;
 		[Serialize("iapPrediction"        )] public float iapPrediction;
 		[Serialize("reco"                 )] public CArray<string> reco;

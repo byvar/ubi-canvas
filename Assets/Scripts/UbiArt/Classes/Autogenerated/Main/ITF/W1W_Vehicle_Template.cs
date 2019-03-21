@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Vehicle_Template : W1W_InteractiveGenComponent_Template {
 		[Serialize("Vector2__0"  )] public Vector2 Vector2__0;
-		[Serialize("StringID__1" )] public StringID StringID__1;
+		[Serialize("StringID__1" )] public StringID StringID__1_;
 		[Serialize("Path__2"     )] public Path Path__2;
 		[Serialize("float__3"    )] public float float__3;
 		[Serialize("float__4"    )] public float float__4;
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Vector2__0));
-			SerializeField(s, nameof(StringID__1));
+			SerializeField(s, nameof(StringID__1_));
 			SerializeField(s, nameof(Path__2));
 			SerializeField(s, nameof(float__3));
 			SerializeField(s, nameof(float__4));

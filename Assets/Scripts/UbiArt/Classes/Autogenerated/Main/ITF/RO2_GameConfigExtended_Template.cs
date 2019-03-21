@@ -62,7 +62,35 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(shareConfigFamilyShowcase));
 			SerializeField(s, nameof(shareConfigCostumeShowcase));
 		}
+		public enum RLC_GraphicalFamily {
+			[Serialize("RLC_GraphicalFamily_Unknown"      )] Unknown = 0,
+			[Serialize("RLC_GraphicalFamily_Shaolin"      )] Shaolin = 1,
+			[Serialize("RLC_GraphicalFamily_Medieval"     )] Medieval = 2,
+			[Serialize("RLC_GraphicalFamily_ToadStory"    )] ToadStory = 3,
+			[Serialize("RLC_GraphicalFamily_Desert"       )] Desert = 4,
+			[Serialize("RLC_GraphicalFamily_UnderWater"   )] UnderWater = 5,
+			[Serialize("RLC_GraphicalFamily_Greece"       )] Greece = 6,
+			[Serialize("RLC_GraphicalFamily_LandOfTheDead")] LandOfTheDead = 7,
+			[Serialize("RLC_GraphicalFamily_Intro"        )] Intro = 8,
+			[Serialize("RLC_GraphicalFamily_Count"        )] Count = 9,
+		}
 		public override uint? ClassCRC => 0x1D0C1207;
+
+		[Games(GameFlags.RA)]
+		public partial class ShareConfig : CSerializable {
+			[Serialize("snsUrl" )] public CMap<online.SNSType, string> snsUrl;
+			[Serialize("url"    )] public string url;
+			[Serialize("anim"   )] public string anim;
+			[Serialize("preview")] public Path preview;
+			protected override void SerializeImpl(CSerializerObject s) {
+				base.SerializeImpl(s);
+				SerializeField(s, nameof(snsUrl));
+				SerializeField(s, nameof(url));
+				SerializeField(s, nameof(anim));
+				SerializeField(s, nameof(preview));
+			}
+
+		}
 	}
 }
 

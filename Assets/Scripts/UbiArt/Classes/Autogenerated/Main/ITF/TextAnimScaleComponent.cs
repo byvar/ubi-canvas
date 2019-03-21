@@ -17,7 +17,6 @@ namespace UbiArt.ITF {
 		[Serialize("borderRepositionedObjects")] public CList<AnimScaleRepositionedObject> borderRepositionedObjects;
 		[Serialize("minimumSize"              )] public Vector2 minimumSize;
 		[Serialize("aabb"                     )] public AABB aabb;
-		[Serialize("scaleType"                )] public Enum_scaleType scaleType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
@@ -44,8 +43,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(margingRight));
 					SerializeField(s, nameof(margingBottom));
 					SerializeField(s, nameof(scaleType));
-					SerializeField(s, nameof(autoFillContained));
-					SerializeField(s, nameof(autoFillContained));
+					SerializeField(s, nameof(autoFillContained), boolAsByte: true);
 					SerializeField(s, nameof(ContainedChildren));
 					SerializeField(s, nameof(autoFillReposition), boolAsByte: true);
 					SerializeField(s, nameof(repositionObjects));
@@ -77,18 +75,6 @@ namespace UbiArt.ITF {
 			[Serialize("ScaleType_Horizontale")] Horizontale = 1,
 			[Serialize("ScaleType_Verticale"  )] Verticale = 2,
 			[Serialize("ScaleType_All"        )] All = 3,
-		}
-		public enum Enum_scaleType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-		}
-		public enum Enum_scaleType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
 		}
 		public override uint? ClassCRC => 0xA9A85954;
 	}

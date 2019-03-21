@@ -23,9 +23,6 @@ namespace UbiArt.ITF {
 		[Serialize("zSegmentation"        )] public float zSegmentation;
 		[Serialize("drawDebug"            )] public bool drawDebug;
 		[Serialize("drawDebugAnims"       )] public bool drawDebugAnims;
-		[Serialize("tileBones"            )] public Placeholder tileBones;
-		[Serialize("endBones"             )] public Placeholder endBones;
-		[Serialize("amvMaterial"          )] public Placeholder amvMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {

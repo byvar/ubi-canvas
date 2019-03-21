@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class MultiTextureGraphicComponent : CSerializable {
+	public partial class MultiTextureGraphicComponent : GraphicComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

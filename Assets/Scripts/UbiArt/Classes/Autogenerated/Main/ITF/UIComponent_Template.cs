@@ -62,7 +62,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(bool__1));
 				SerializeField(s, nameof(showingFadeDuration));
 				SerializeField(s, nameof(hidingFadeDuration));
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(is2D), boolAsByte: true);
 				SerializeField(s, nameof(showingFadeDuration));
 				SerializeField(s, nameof(hidingFadeDuration));

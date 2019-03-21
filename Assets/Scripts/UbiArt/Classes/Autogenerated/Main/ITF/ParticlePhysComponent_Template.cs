@@ -8,11 +8,6 @@ namespace UbiArt.ITF {
 		[Serialize("physAngularSpeedMaxLinear"             )] public float physAngularSpeedMaxLinear;
 		[Serialize("physAngularSpeedMinAngular"            )] public Angle physAngularSpeedMinAngular;
 		[Serialize("physAngularSpeedMaxAngular"            )] public Angle physAngularSpeedMaxAngular;
-		[Serialize("physWindMultiplier"                    )] public float physWindMultiplier;
-		[Serialize("physForce2Speed"                       )] public float physForce2Speed;
-		[Serialize("physWindSpeedLimit"                    )] public float physWindSpeedLimit;
-		[Serialize("physWindScaleFactorWhenSpeedIsOpposite")] public float physWindScaleFactorWhenSpeedIsOpposite;
-		[Serialize("physFanForceMultiplier"                )] public float physFanForceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {

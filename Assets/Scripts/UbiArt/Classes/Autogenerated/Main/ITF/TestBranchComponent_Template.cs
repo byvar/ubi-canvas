@@ -11,9 +11,6 @@ namespace UbiArt.ITF {
 		[Serialize("endBones"   )] public CList<TestSpriteBone> endBones;
 		[Serialize("drawDebug"  )] public bool drawDebug;
 		[Serialize("debugMode"  )] public uint debugMode;
-		[Serialize("tileBones"  )] public Placeholder tileBones;
-		[Serialize("endBones"   )] public Placeholder endBones;
-		[Serialize("drawDebug"  )] public int drawDebug;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {

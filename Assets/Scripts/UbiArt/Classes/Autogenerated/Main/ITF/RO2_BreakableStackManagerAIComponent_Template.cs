@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("atlasMaterial"         )] public GFXMaterialSerializable atlasMaterial;
 		[Serialize("atlasParticlesMaterial")] public GFXMaterialSerializable atlasParticlesMaterial;
 		[Serialize("edgeSize"              )] public float edgeSize;
-		[Serialize("faction"               )] public uint faction;
+		[Serialize("faction"               )] public uint faction2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(timeShakeBeforeFall));
@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(atlasMaterial));
 			SerializeField(s, nameof(atlasParticlesMaterial));
 			SerializeField(s, nameof(edgeSize));
-			SerializeField(s, nameof(faction));
+			SerializeField(s, nameof(faction2));
 		}
 		public override uint? ClassCRC => 0x189DAE6B;
 	}
