@@ -6,15 +6,13 @@ namespace UbiArt.ITF {
 		[Serialize("disableWindForce")] public bool disableWindForce;
 		[Serialize("startWithHalo"   )] public bool startWithHalo;
 		[Serialize("bounceMultiplier")] public float bounceMultiplier;
-		[Serialize("startWithHalo"   )] public byte startWithHalo;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(disableWindForce), boolAsByte: true);
-					SerializeField(s, nameof(startWithHalo));
+					SerializeField(s, nameof(startWithHalo), boolAsByte: true);
 				}
-				SerializeField(s, nameof(startWithHalo));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(disableWindForce));

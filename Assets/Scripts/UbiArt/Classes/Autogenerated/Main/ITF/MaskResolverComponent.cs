@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("blurFrontLightBuffer" )] public int blurFrontLightBuffer;
 		[Serialize("blurBackLightBuffer"  )] public int blurBackLightBuffer;
 		[Serialize("blurQuality"          )] public uint blurQuality;
-		[Serialize("blurSize"             )] public uint blurSize;
+		[Serialize("blurSize"             )] public uint blurSize2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(blurFrontLightBuffer));
 				SerializeField(s, nameof(blurBackLightBuffer));
 				SerializeField(s, nameof(blurQuality));
-				SerializeField(s, nameof(blurSize));
+				SerializeField(s, nameof(blurSize2));
 			} else {
 				SerializeField(s, nameof(clearFrontLightBuffer));
 				SerializeField(s, nameof(clearFrontLightColor));

@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__8"       )] public float float__8;
 		[Serialize("StringID__9"    )] public StringID StringID__9;
 		[Serialize("StringID__10"   )] public StringID StringID__10;
-		[Serialize("float__11"      )] public float float__11;
+		[Serialize("float__11"      )] public float float__11_;
 		[Serialize("EventSender__12")] public EventSender EventSender__12;
 		[Serialize("EventSender__13")] public EventSender EventSender__13;
 		[Serialize("EventSender__14")] public EventSender EventSender__14;
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(float__8));
 			SerializeField(s, nameof(StringID__9));
 			SerializeField(s, nameof(StringID__10));
-			SerializeField(s, nameof(float__11));
+			SerializeField(s, nameof(float__11_));
 			SerializeField(s, nameof(EventSender__12));
 			SerializeField(s, nameof(EventSender__13));
 			SerializeField(s, nameof(EventSender__14));

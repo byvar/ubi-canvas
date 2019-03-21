@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__4"     )] public float float__4;
 		[Serialize("int__5"       )] public int int__5;
 		[Serialize("uint__6"      )] public uint uint__6;
-		[Serialize("Enum_RFR_1__7")] public Enum_RFR_1 Enum_RFR_1__7;
+		[Serialize("Enum_RFR_1__7")] public Enum_RFR_0 Enum_RFR_1__7;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
@@ -25,6 +25,7 @@ namespace UbiArt.ITF {
 			}
 		}
 		public enum Enum_RFR_0 {
+			[Serialize("Value_0")] Value_0 = 0,
 			[Serialize("Value_1")] Value_1 = 1,
 			[Serialize("Value_2")] Value_2 = 2,
 		}

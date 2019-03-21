@@ -11,7 +11,6 @@ namespace UbiArt.ITF {
 		[Serialize("blockState"         )] public uint blockState;
 		[Serialize("hasTuto"            )] public bool hasTuto;
 		[Serialize("atlasPrimitiveParam")] public GFXPrimitiveParam atlasPrimitiveParam;
-		[Serialize("hasTuto"            )] public byte hasTuto;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -26,9 +25,8 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(blockState));
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(hasTuto));
+					SerializeField(s, nameof(hasTuto), boolAsByte: true);
 				}
-				SerializeField(s, nameof(hasTuto));
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(managerPath));

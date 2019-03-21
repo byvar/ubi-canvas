@@ -8,7 +8,6 @@ namespace UbiArt.ITF {
 		[Serialize("closedDuration"          )] public float closedDuration;
 		[Serialize("sendTapAlways"           )] public bool sendTapAlways;
 		[Serialize("invertSentOpenCloseEvent")] public bool invertSentOpenCloseEvent;
-		[Serialize("invertSentOpenCloseEvent")] public byte invertSentOpenCloseEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -17,9 +16,8 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(openDuration));
 					SerializeField(s, nameof(closedDuration));
 					SerializeField(s, nameof(sendTapAlways));
-					SerializeField(s, nameof(invertSentOpenCloseEvent));
+					SerializeField(s, nameof(invertSentOpenCloseEvent), boolAsByte: true);
 				}
-				SerializeField(s, nameof(invertSentOpenCloseEvent));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(startOpen));

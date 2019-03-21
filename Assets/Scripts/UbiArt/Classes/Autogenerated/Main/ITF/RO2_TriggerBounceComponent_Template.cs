@@ -32,7 +32,6 @@ namespace UbiArt.ITF {
 		[Serialize("registerToAIManager"              )] public bool registerToAIManager;
 		[Serialize("playBounceAnimOnHit"              )] public bool playBounceAnimOnHit;
 		[Serialize("useActorPosForBounce"             )] public bool useActorPosForBounce;
-		[Serialize("bounceType"                       )] public Enum_bounceType bounceType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -102,12 +101,6 @@ namespace UbiArt.ITF {
 			[Serialize("BOUNCETYPE_BUMPER"           )] BUMPER = 2,
 			[Serialize("BOUNCETYPE_BUMPER_AIRCONTROL")] BUMPER_AIRCONTROL = 8,
 			[Serialize("BOUNCETYPE_SETBACKS"         )] SETBACKS = 7,
-		}
-		public enum Enum_bounceType {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_8")] Value_8 = 8,
-			[Serialize("Value_7")] Value_7 = 7,
 		}
 		public override uint? ClassCRC => 0x542A5D77;
 	}

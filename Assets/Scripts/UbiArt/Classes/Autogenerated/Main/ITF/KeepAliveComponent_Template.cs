@@ -6,11 +6,11 @@ namespace UbiArt.ITF {
 		[Serialize("startDying"  )] public bool startDying;
 		[Serialize("useFade"     )] public bool useFade;
 		[Serialize("fadeDuration")] public float fadeDuration;
-		[Serialize("startDying"  )] public int startDying;
+		[Serialize("startDying"  )] public int startDying2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(startDying));
+				SerializeField(s, nameof(startDying2));
 			} else {
 				SerializeField(s, nameof(startDying));
 				SerializeField(s, nameof(useFade));

@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_InteractiveContainer : W1W_InteractiveGenComponent {
 		[Serialize("Path__0"       )] public Path Path__0;
-		[Serialize("Enum_VH_0__1"  )] public Enum_VH_0 Enum_VH_0__1;
+		[Serialize("Enum_VH_0__1"  )] public Enum_VH_0_ Enum_VH_0__1;
 		[Serialize("bool__2"       )] public bool bool__2;
 		[Serialize("EventSender__3")] public EventSender EventSender__3;
 		[Serialize("uint__4"       )] public uint uint__4;
@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(EventSender__3));
 			SerializeField(s, nameof(uint__4));
 		}
-		public enum Enum_VH_0 {
+		public enum Enum_VH_0_ {
 			[Serialize("Value_0" )] Value_0 = 0,
 			[Serialize("Value_1" )] Value_1 = 1,
 			[Serialize("Value_2" )] Value_2 = 2,

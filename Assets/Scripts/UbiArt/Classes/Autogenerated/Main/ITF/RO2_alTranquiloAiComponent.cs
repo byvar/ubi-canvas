@@ -5,15 +5,13 @@ namespace UbiArt.ITF {
 	public partial class RO2_alTranquiloAiComponent : AIComponent {
 		[Serialize("bubbleLifetime")] public float bubbleLifetime;
 		[Serialize("useTuto"       )] public bool useTuto;
-		[Serialize("useTuto"       )] public byte useTuto;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(bubbleLifetime));
-					SerializeField(s, nameof(useTuto));
+					SerializeField(s, nameof(useTuto), boolAsByte: true);
 				}
-				SerializeField(s, nameof(useTuto));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(bubbleLifetime));

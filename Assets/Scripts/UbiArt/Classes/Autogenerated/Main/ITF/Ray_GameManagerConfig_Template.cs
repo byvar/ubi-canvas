@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_GameManagerConfig_Template : Ray_GameManagerConfig_Template.MapConfig {
+	public partial class Ray_GameManagerConfig_Template : GameManagerConfig_Template {
 		[Serialize("playerMinHitPoints"               )] public uint playerMinHitPoints;
 		[Serialize("playerMaxHitPoints"               )] public uint playerMaxHitPoints;
 		[Serialize("playerStartHitPoints"             )] public uint playerStartHitPoints;
@@ -31,9 +31,9 @@ namespace UbiArt.ITF {
 		[Serialize("throwTeethSurpriseCameraOffset"   )] public Vector3 throwTeethSurpriseCameraOffset;
 		[Serialize("throwTeethThrowCameraOffset"      )] public Vector3 throwTeethThrowCameraOffset;
 		[Serialize("throwTeethPlayerOffset"           )] public Vector2 throwTeethPlayerOffset;
-		[Serialize("powerUps"                         )] public Placeholder powerUps;
-		[Serialize("levelsInfo"                       )] public Placeholder levelsInfo;
-		[Serialize("missionTypes"                     )] public Placeholder missionTypes;
+		[Serialize("powerUps"                         )] public Ray_PowerUpManager_Template powerUps;
+		[Serialize("levelsInfo"                       )] public CList<Ray_GameManagerConfig_Template.MapConfig> levelsInfo;
+		[Serialize("missionTypes"                     )] public CList<Ray_GameManagerConfig_Template.MissionConfig> missionTypes;
 		[Serialize("sprintTutorialFailureCount"       )] public uint sprintTutorialFailureCount;
 		[Serialize("sprintTutorialRequiredDuration"   )] public float sprintTutorialRequiredDuration;
 		[Serialize("fadeDeath"                        )] public StringID fadeDeath;
@@ -103,6 +103,105 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(endSequencePlayerPosition));
 		}
 		public override uint? ClassCRC => 0xA4344748;
+
+		[Games(GameFlags.RO)]
+		public partial class MapConfig : CSerializable {
+			[Serialize("tag"               )] public StringID tag;
+			[Serialize("worldTag"          )] public StringID worldTag;
+			[Serialize("type"              )] public StringID type;
+			[Serialize("music"             )] public StringID music;
+			[Serialize("powerUnlocked"     )] public StringID powerUnlocked;
+			[Serialize("defaultState"      )] public SPOT_STATE defaultState;
+			[Serialize("defaultDisplayName")] public string defaultDisplayName;
+			[Serialize("titleId"           )] public LocalisationId titleId;
+			[Serialize("path"              )] public Path path;
+			[Serialize("loadingScreen"     )] public Path loadingScreen;
+			[Serialize("minTeeth"          )] public uint minTeeth;
+			[Serialize("minElectoons"      )] public uint minElectoons;
+			[Serialize("unlock"            )] public CList<StringID> unlock;
+			[Serialize("unlockedBy"        )] public CList<StringID> unlockedBy;
+			[Serialize("lastLevel"         )] public int lastLevel;
+			[Serialize("isDefaultLevel"    )] public int isDefaultLevel;
+			[Serialize("musicVolume"       )] public Volume musicVolume;
+			[Serialize("lumAttack1"        )] public int lumAttack1;
+			[Serialize("lumAttack2"        )] public int lumAttack2;
+			[Serialize("lumAttack3"        )] public int lumAttack3;
+			[Serialize("timeAttack1"       )] public int timeAttack1;
+			[Serialize("timeAttack2"       )] public int timeAttack2;
+			[Serialize("richPresenceIndex" )] public uint richPresenceIndex;
+			[Serialize("disableRewards"    )] public int disableRewards;
+			[Serialize("disableMenuToWM"   )] public int disableMenuToWM;
+			[Serialize("isSkippable"       )] public int isSkippable;
+			protected override void SerializeImpl(CSerializerObject s) {
+				base.SerializeImpl(s);
+				SerializeField(s, nameof(tag));
+				SerializeField(s, nameof(worldTag));
+				SerializeField(s, nameof(type));
+				SerializeField(s, nameof(music));
+				SerializeField(s, nameof(powerUnlocked));
+				SerializeField(s, nameof(defaultState));
+				SerializeField(s, nameof(defaultDisplayName));
+				SerializeField(s, nameof(titleId));
+				SerializeField(s, nameof(path));
+				SerializeField(s, nameof(loadingScreen));
+				SerializeField(s, nameof(minTeeth));
+				SerializeField(s, nameof(minElectoons));
+				SerializeField(s, nameof(unlock));
+				SerializeField(s, nameof(unlockedBy));
+				SerializeField(s, nameof(lastLevel));
+				SerializeField(s, nameof(isDefaultLevel));
+				SerializeField(s, nameof(musicVolume));
+				SerializeField(s, nameof(lumAttack1));
+				SerializeField(s, nameof(lumAttack2));
+				SerializeField(s, nameof(lumAttack3));
+				SerializeField(s, nameof(timeAttack1));
+				SerializeField(s, nameof(timeAttack2));
+				SerializeField(s, nameof(richPresenceIndex));
+				SerializeField(s, nameof(disableRewards));
+				SerializeField(s, nameof(disableMenuToWM));
+				SerializeField(s, nameof(isSkippable));
+			}
+			public enum SPOT_STATE {
+				[Serialize("SPOT_STATE_CLOSED"      )] CLOSED = 0,
+				[Serialize("SPOT_STATE_NEW"         )] NEW = 1,
+				[Serialize("SPOT_STATE_CANNOT_ENTER")] CANNOT_ENTER = 2,
+				[Serialize("SPOT_STATE_OPEN"        )] OPEN = 3,
+				[Serialize("SPOT_STATE_COMPLETED"   )] COMPLETED = 4,
+			}
+		}
+
+		[Games(GameFlags.RO)]
+		public partial class MissionConfig : CSerializable {
+			[Serialize("type"      )] public StringID type;
+			[Serialize("medalSlots")] public CList<MedalSlotConfig> medalSlots;
+			[Serialize("medalPath" )] public Path medalPath;
+			[Serialize("lumAttack3")] public int lumAttack3;
+			protected override void SerializeImpl(CSerializerObject s) {
+				base.SerializeImpl(s);
+				SerializeField(s, nameof(type));
+				SerializeField(s, nameof(medalSlots));
+				SerializeField(s, nameof(medalPath));
+				SerializeField(s, nameof(lumAttack3));
+			}
+		}
+
+		[Games(GameFlags.RO)]
+		public partial class MedalSlotConfig : CSerializable {
+			[Serialize("type"    )] public Enum_type type;
+			[Serialize("value"   )] public int value;
+			[Serialize("cupValue")] public int cupValue;
+			protected override void SerializeImpl(CSerializerObject s) {
+				base.SerializeImpl(s);
+				SerializeField(s, nameof(type));
+				SerializeField(s, nameof(value));
+				SerializeField(s, nameof(cupValue));
+			}
+			public enum Enum_type {
+				[Serialize("Cage"      )] Cage = 0,
+				[Serialize("TimeAttack")] TimeAttack = 1,
+				[Serialize("LumAttack" )] LumAttack = 2,
+			}
+		}
 	}
 }
 

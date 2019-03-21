@@ -7,12 +7,8 @@ namespace UbiArt.ITF {
 		[Serialize("isEnvironment" )] public bool isEnvironment;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(isEnvironment));
-			} else {
-				SerializeField(s, nameof(polylineParams));
-				SerializeField(s, nameof(isEnvironment));
-			}
+			SerializeField(s, nameof(polylineParams));
+			SerializeField(s, nameof(isEnvironment));
 		}
 		public override uint? ClassCRC => 0x72853946;
 	}

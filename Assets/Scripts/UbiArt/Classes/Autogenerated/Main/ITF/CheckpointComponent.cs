@@ -9,8 +9,6 @@ namespace UbiArt.ITF {
 		[Serialize("persistentSaveOnce"                                             )] public bool persistentSaveOnce;
 		[Serialize("active"                                                         )] public bool active;
 		[Serialize("persistentDataSaved"                                            )] public bool persistentDataSaved;
-		[Serialize("joinAlive"                                                      )] public int joinAlive;
-		[Serialize("active"                                                         )] public int active;
 		[Serialize("canBeTriggeredWhenInactive"                                     )] public bool canBeTriggeredWhenInactive;
 		[Serialize("bool__0"                                                        )] public bool bool__0;
 		[Serialize("Enum_VH_0__1"                                                   )] public Enum_VH_0 Enum_VH_0__1;
@@ -31,7 +29,7 @@ namespace UbiArt.ITF {
 		[Serialize("Path__16"                                                       )] public Path Path__16;
 		[Serialize("CArray<CheckpointComponent.SerializableDisguiseElementType>__17")] public CArray<CheckpointComponent.SerializableDisguiseElementType> CArray_CheckpointComponent_SerializableDisguiseElementType__17;
 		[Serialize("Enum_VH_1__18"                                                  )] public Enum_VH_1 Enum_VH_1__18;
-		[Serialize("Enum_VH_2__19"                                                  )] public Enum_VH_2 Enum_VH_2__19;
+		[Serialize("Enum_VH_2__19"                                                  )] public Enum_VH_1 Enum_VH_1__19;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL) {
@@ -53,11 +51,12 @@ namespace UbiArt.ITF {
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(uint__3));
-					SerializeField(s, nameof(bool__4));
+					SerializeField(s, nameof(INDEX));
+					SerializeField(s, nameof(Enum_VH_0__1));
+					SerializeField(s, nameof(joinAlive));
 				}
-				SerializeField(s, nameof(bool__5));
-				SerializeField(s, nameof(bool__6));
+				SerializeField(s, nameof(persistent));
+				SerializeField(s, nameof(persistentSaveOnce));
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(active));
 					SerializeField(s, nameof(persistentDataSaved));
@@ -74,7 +73,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(Path__16));
 				SerializeField(s, nameof(CArray_CheckpointComponent_SerializableDisguiseElementType__17));
 				SerializeField(s, nameof(Enum_VH_1__18));
-				SerializeField(s, nameof(Enum_VH_2__19));
+				SerializeField(s, nameof(Enum_VH_1__19));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(INDEX));

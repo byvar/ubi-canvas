@@ -14,9 +14,9 @@ namespace UbiArt.ITF {
 		[Serialize("float__8" )] public float float__8;
 		[Serialize("float__9" )] public float float__9;
 		[Serialize("uint__10" )] public uint uint__10;
-		[Serialize("float__11")] public float float__11;
+		[Serialize("float__11")] public float float__11_;
 		[Serialize("bool__12" )] public bool bool__12;
-		[Serialize("float__13")] public float float__13;
+		[Serialize("float__13")] public float float__13_;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
@@ -31,9 +31,9 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(float__8));
 				SerializeField(s, nameof(float__9));
 				SerializeField(s, nameof(uint__10));
-				SerializeField(s, nameof(float__11));
+				SerializeField(s, nameof(float__11_));
 				SerializeField(s, nameof(bool__12));
-				SerializeField(s, nameof(float__13));
+				SerializeField(s, nameof(float__13_));
 			}
 		}
 		public override uint? ClassCRC => 0x9B0058FF;

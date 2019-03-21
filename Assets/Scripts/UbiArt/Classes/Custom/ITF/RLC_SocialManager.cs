@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	public partial class RLC_SocialManager : CSerializable {
 		public enum eScreenShotType {
-			[Serialize("ScreenShotType_unknown")] ScreenShotType_HatchCreature = 0,
+			[Serialize("ScreenShotType_unknown")] ScreenShotType_unknown = 0,
 			[Serialize("ScreenShotType_HatchCreature")] ScreenShotType_HatchCreature = 1,
 			[Serialize("ScreenShotType_WinLevelScore")] ScreenShotType_WinLevelScore = 2,
 			[Serialize("ScreenShotType_WinLevelTimeAttack")] ScreenShotType_WinLevelTimeAttack = 3,

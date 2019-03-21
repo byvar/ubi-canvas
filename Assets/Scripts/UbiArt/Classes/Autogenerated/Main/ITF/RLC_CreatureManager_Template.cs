@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("startingCreaturesId"                     )] public CArray<StringID> startingCreaturesId;
 		[Serialize("duplicateRewards"                        )] public CMap<uint, RLC_DuplicateReward> duplicateRewards;
 		[Serialize("queenHatchPercentage"                    )] public float queenHatchPercentage;
-		[Serialize("rarityDefinitions"                       )] public CMap<Creature_Rarity.Enum, Creature_Rarity> rarityDefinitions;
+		[Serialize("rarityDefinitions"                       )] public CMap<Creature_Rarity.Creature_Rarity_Enum, Creature_Rarity> rarityDefinitions;
 		[Serialize("foodDefinitions"                         )] public CMap<Creature_Food.Enum, Creature_Food> foodDefinitions;
 		[Serialize("basketFrontPath"                         )] public Path basketFrontPath;
 		[Serialize("basketBackPath"                          )] public Path basketBackPath;

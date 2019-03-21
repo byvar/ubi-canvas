@@ -12,8 +12,8 @@ namespace UbiArt.ITF {
 		[Serialize("Path__6"      )] public Path Path__6;
 		[Serialize("Path__7"      )] public Path Path__7;
 		[Serialize("float__8"     )] public float float__8;
-		[Serialize("Enum_VH_0__9" )] public Enum_VH_0 Enum_VH_0__9;
-		[Serialize("Enum_VH_1__10")] public Enum_VH_1 Enum_VH_1__10;
+		[Serialize("Enum_VH_0__9" )] public Enum_VH_0_ Enum_VH_0__9;
+		[Serialize("Enum_VH_1__10")] public Enum_VH_1_ Enum_VH_1__10;
 		[Serialize("bool__11"     )] public bool bool__11;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(bool__11));
 			}
 		}
-		public enum Enum_VH_0 {
+		public enum Enum_VH_0_ {
 			[Serialize("Value_0")] Value_0 = 0,
 			[Serialize("Value_1")] Value_1 = 1,
 			[Serialize("Value_5")] Value_5 = 5,
@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 			[Serialize("Value_3")] Value_3 = 3,
 			[Serialize("Value_4")] Value_4 = 4,
 		}
-		public enum Enum_VH_1 {
+		public enum Enum_VH_1_ {
 			[Serialize("Value_0" )] Value_0 = 0,
 			[Serialize("Value_1" )] Value_1 = 1,
 			[Serialize("Value_2" )] Value_2 = 2,

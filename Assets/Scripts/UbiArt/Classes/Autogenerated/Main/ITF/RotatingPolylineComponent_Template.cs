@@ -4,14 +4,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class RotatingPolylineComponent_Template : PolylineComponent_Template {
 		[Serialize("rotatingPolys")] public CList<RotatingPolylineComponent_Template.RotatingPoly> rotatingPolys;
-		[Serialize("isEnvironment")] public int isEnvironment;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(isEnvironment));
-			} else {
-				SerializeField(s, nameof(rotatingPolys));
-			}
+			SerializeField(s, nameof(rotatingPolys));
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class RotatingPoly : CSerializable {

@@ -41,9 +41,6 @@ namespace UbiArt.ITF {
 		[Serialize("stiffSwingSpeedFriction"   )] public float stiffSwingSpeedFriction;
 		[Serialize("nonStiffSwingSpeedFriction")] public float nonStiffSwingSpeedFriction;
 		[Serialize("startingBone"              )] public StringID startingBone;
-		[Serialize("phantom"                   )] public int phantom;
-		[Serialize("constraintLimitAngle"      )] public int constraintLimitAngle;
-		[Serialize("constraintRelaxLength"     )] public int constraintRelaxLength;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {

@@ -7,15 +7,15 @@ namespace UbiArt.ITF {
 		[Serialize("defaultSound"              )] public StringID defaultSound;
 		[Serialize("inputs"                    )] public CList<InputDesc> inputs;
 		[Serialize("WwiseBankList"             )] public CList<PathRef> WwiseBankList;
+		[Serialize("WwiseBankList"             )] public CList<Path> WwiseBankList2;
 		[Serialize("WwiseInputList"            )] public CList<WwiseInputDesc> WwiseInputList;
 		[Serialize("defaultSoundIsAlwaysActive")] public bool defaultSoundIsAlwaysActive;
 		[Serialize("volume"                    )] public Volume volume;
-		[Serialize("inputs"                    )] public CArray<InputDesc> inputs;
-		[Serialize("musicList"                 )] public Placeholder musicList;
-		[Serialize("busMixList"                )] public Placeholder busMixList;
-		[Serialize("WwiseBankList"             )] public Volume WwiseBankList;
-		[Serialize("RegisterRtpcListener"      )] public CArray<InputDesc> RegisterRtpcListener;
-		[Serialize("UseDefaultEmitter"         )] public int UseDefaultEmitter;
+		[Serialize("musicList"                 )] public CList<Placeholder> musicList;
+		[Serialize("busMixList"                )] public CList<Placeholder> busMixList; // same type
+		[Serialize("RegisterRtpcListener"      )] public bool RegisterRtpcListener;
+		[Serialize("UseDefaultEmitter"         )] public bool UseDefaultEmitter;
+		[Serialize("unk_RFR")] public bool unk_RFR;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RO) {
@@ -23,10 +23,18 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(defaultSound));
 				SerializeField(s, nameof(volume));
 				SerializeField(s, nameof(inputs));
-			} else if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.COL) {
+			} else if (Settings.s.game == Settings.Game.RFR) {
 				SerializeField(s, nameof(soundList));
 				SerializeField(s, nameof(defaultSound));
-				SerializeField(s, nameof(WwiseBankList));
+				SerializeField(s, nameof(volume));
+				SerializeField(s, nameof(inputs));
+				SerializeField(s, nameof(unk_RFR));
+			} else if( Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(soundList));
+				SerializeField(s, nameof(defaultSound));
+				SerializeField(s, nameof(inputs));
+				SerializeField(s, nameof(WwiseBankList2));
+				SerializeField(s, nameof(WwiseInputList));
 				SerializeField(s, nameof(RegisterRtpcListener));
 				SerializeField(s, nameof(UseDefaultEmitter));
 			} else if (Settings.s.game == Settings.Game.RL) {

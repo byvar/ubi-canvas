@@ -13,8 +13,6 @@ namespace UbiArt.ITF {
 		[Serialize("gameMaterial"           )] public Path gameMaterial;
 		[Serialize("usePhantom"             )] public bool usePhantom;
 		[Serialize("precision"              )] public ConstraintSolverIterationPrecision precision;
-		[Serialize("usePhantom"             )] public int usePhantom;
-		[Serialize("precision"              )] public Enum_precision precision;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
@@ -27,26 +25,6 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(movingPolylineForce));
 				SerializeField(s, nameof(gameMaterial));
 				SerializeField(s, nameof(usePhantom));
-			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(softPlatformParticles));
-				SerializeField(s, nameof(softPlatformConstraints));
-				SerializeField(s, nameof(weightMultiplier));
-				SerializeField(s, nameof(landSpeedMultiplier));
-				SerializeField(s, nameof(hitForceMultiplier));
-				SerializeField(s, nameof(impulseMultiplier));
-				SerializeField(s, nameof(movingPolylineForce));
-				SerializeField(s, nameof(gameMaterial));
-				SerializeField(s, nameof(usePhantom));
-				SerializeField(s, nameof(precision));
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(weightMultiplier));
-				SerializeField(s, nameof(landSpeedMultiplier));
-				SerializeField(s, nameof(hitForceMultiplier));
-				SerializeField(s, nameof(impulseMultiplier));
-				SerializeField(s, nameof(movingPolylineForce));
-				SerializeField(s, nameof(gameMaterial));
-				SerializeField(s, nameof(usePhantom));
-				SerializeField(s, nameof(precision));
 			} else {
 				SerializeField(s, nameof(softPlatformParticles));
 				SerializeField(s, nameof(softPlatformConstraints));
@@ -108,16 +86,6 @@ namespace UbiArt.ITF {
 			[Serialize("ConstraintSolverIterationPrecision_Low"   )] Low = 0,
 			[Serialize("ConstraintSolverIterationPrecision_Medium")] Medium = 1,
 			[Serialize("ConstraintSolverIterationPrecision_High"  )] High = 2,
-		}
-		public enum Enum_precision {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-		}
-		public enum Enum_precision {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
 		}
 		public override uint? ClassCRC => 0x44047C07;
 	}

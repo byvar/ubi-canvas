@@ -20,7 +20,7 @@ namespace UbiArt.online {
 		[Serialize("spyglassMax"        )] public uint spyglassMax;
 		[Serialize("starsCount"         )] public uint starsCount;
 		[Serialize("eggType"            )] public RLC_EggType eggType;
-		[Serialize("levelType"          )] public RLC_MapType levelType;
+		[Serialize("levelType"          )] public ITF.RLC_MapType levelType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(name));
@@ -60,18 +60,6 @@ namespace UbiArt.online {
 			[Serialize("RLC_EggType_Silver"     )] Silver = 5,
 			[Serialize("RLC_EggType_Gold"       )] Gold = 6,
 			[Serialize("RLC_EggType_Queen"      )] Queen = 7,
-		}
-		public enum RLC_MapType {
-			[Serialize("RLC_MapType_Unknown"          )] Unknown = 0,
-			[Serialize("RLC_MapType_Lums"             )] Lums = 1,
-			[Serialize("RLC_MapType_Enemies"          )] Enemies = 2,
-			[Serialize("RLC_MapType_Exploration"      )] Exploration = 3,
-			[Serialize("RLC_MapType_TimeTrial"        )] TimeTrial = 4,
-			[Serialize("RLC_MapType_Puzzle"           )] Puzzle = 5,
-			[Serialize("RLC_MapType_HideNSeek"        )] HideNSeek = 6,
-			[Serialize("RLC_MapType_Soccer"           )] Soccer = 7,
-			[Serialize("RLC_MapType_AdversarialSoccer")] AdversarialSoccer = 8,
-			[Serialize("RLC_MapType_Count"            )] Count = 9,
 		}
 	}
 }

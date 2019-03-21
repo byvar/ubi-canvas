@@ -19,6 +19,14 @@ namespace UbiArt.ITF {
 			[Serialize("Creature_Food::donut"  )] donut = 3,
 			[Serialize("Creature_Food::pancake")] pancake = 4,
 		}
+		public enum Enum {
+			[Serialize("cookie")] cookie = 0,
+			[Serialize("pizza")] pizza = 1,
+			[Serialize("plum")] plum = 2,
+			[Serialize("donut")] donut = 3,
+			[Serialize("pancake")] pancake = 4,
+			[Serialize("count")] count = 5,
+		}
 	}
 }
 

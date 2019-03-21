@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
@@ -23,7 +24,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__17"             )] public float float__17;
 		[Serialize("float__18"             )] public float float__18;
 		[Serialize("StringID__19"          )] public StringID StringID__19;
-		[Serialize("Enum_VH_3__20"         )] public Enum_VH_3 Enum_VH_3__20;
+		[Serialize("Enum_VH_3__20"         )] public Enum_VH_1 Enum_VH_1__20;
 		[Serialize("float__21"             )] public float float__21;
 		[Serialize("StringID__22"          )] public StringID StringID__22;
 		[Serialize("Generic<Event>__23"    )] public Generic<Event> Generic_Event__23;
@@ -58,7 +59,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(float__17));
 			SerializeField(s, nameof(float__18));
 			SerializeField(s, nameof(StringID__19));
-			SerializeField(s, nameof(Enum_VH_3__20));
+			SerializeField(s, nameof(Enum_VH_1__20));
 			SerializeField(s, nameof(float__21));
 			SerializeField(s, nameof(StringID__22));
 			SerializeField(s, nameof(Generic_Event__23));
@@ -80,6 +81,7 @@ namespace UbiArt.ITF {
 			[Serialize("Value_4")] Value_4 = 4,
 			[Serialize("Value_5")] Value_5 = 5,
 		}
+		[Flags]
 		public enum Enum_VH_1 {
 			[Serialize("Value_0")] Value_0 = 0,
 			[Serialize("Value_1")] Value_1 = 1,

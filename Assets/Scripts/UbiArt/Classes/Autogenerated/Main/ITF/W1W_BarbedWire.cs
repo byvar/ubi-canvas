@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_BarbedWire : W1W_InteractiveGenComponent {
 		[Serialize("bool__0"          )] public bool bool__0;
-		[Serialize("Enum_VH_0__1"     )] public Enum_VH_0 Enum_VH_0__1;
+		[Serialize("Enum_VH_0__1"     )] public Enum_VH_0_ Enum_VH_0__1;
 		[Serialize("uint__2"          )] public uint uint__2;
 		[Serialize("uint__3"          )] public uint uint__3;
 		[Serialize("Generic<Event>__4")] public Generic<Event> Generic_Event__4;
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(bool__0));
 			}
 		}
-		public enum Enum_VH_0 {
+		public enum Enum_VH_0_ {
 			[Serialize("Value_0")] Value_0 = 0,
 			[Serialize("Value_1")] Value_1 = 1,
 		}
