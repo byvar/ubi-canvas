@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_EventMonitorComponent : CSerializable {
+	public partial class COL_EventMonitorComponent : Event {
 		[Serialize("numToMonitor")] public uint numToMonitor;
 		[Serialize("successEvent")] public Placeholder successEvent;
 		protected override void SerializeImpl(CSerializerObject s) {

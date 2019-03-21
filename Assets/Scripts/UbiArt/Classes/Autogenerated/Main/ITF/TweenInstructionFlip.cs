@@ -2,11 +2,9 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class TweenInstructionFlip : CSerializable {
-		[Serialize("name")] public StringID name;
+	public partial class TweenInstructionFlip : TweenInstruction {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
 		}
 		public override uint? ClassCRC => 0xB295DE78;
 	}

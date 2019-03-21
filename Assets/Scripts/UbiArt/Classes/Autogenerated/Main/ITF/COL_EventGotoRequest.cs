@@ -2,8 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_EventGotoRequest : CSerializable {
-		[Serialize("sender"            )] public uint sender;
+	public partial class COL_EventGotoRequest : Event {
 		[Serialize("gotoRequestType"   )] public Enum_gotoRequestType gotoRequestType;
 		[Serialize("gotoTargetObject"  )] public Placeholder gotoTargetObject;
 		[Serialize("gotoTargetPosition")] public Vector2 gotoTargetPosition;
@@ -12,7 +11,6 @@ namespace UbiArt.ITF {
 		[Serialize("startOnGround"     )] public bool startOnGround;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
 			SerializeField(s, nameof(gotoRequestType));
 			SerializeField(s, nameof(gotoTargetObject));
 			SerializeField(s, nameof(gotoTargetPosition));

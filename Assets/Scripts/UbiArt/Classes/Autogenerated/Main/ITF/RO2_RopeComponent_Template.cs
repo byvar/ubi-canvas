@@ -55,8 +55,6 @@ namespace UbiArt.ITF {
 		[Serialize("animMeshEnding"                 )] public StringID animMeshEnding;
 		[Serialize("animMeshVertexAngleOffset"      )] public Angle animMeshVertexAngleOffset;
 		[Serialize("fullDisappearOnCut"             )] public CutFade fullDisappearOnCut;
-		[Serialize("precision"                      )] public Enum_precision precision;
-		[Serialize("fullDisappearOnCut"             )] public Enum_fullDisappearOnCut fullDisappearOnCut;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

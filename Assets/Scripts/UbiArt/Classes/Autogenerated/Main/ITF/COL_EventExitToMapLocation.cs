@@ -2,8 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_EventExitToMapLocation : CSerializable {
-		[Serialize("sender"            )] public uint sender;
+	public partial class COL_EventExitToMapLocation : Event {
 		[Serialize("unlock"            )] public bool unlock;
 		[Serialize("mapLocationId"     )] public StringID mapLocationId;
 		[Serialize("mapPath"           )] public PathRef mapPath;
@@ -11,7 +10,6 @@ namespace UbiArt.ITF {
 		[Serialize("checkpointObjectId")] public Placeholder checkpointObjectId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
 			SerializeField(s, nameof(unlock), boolAsByte: true);
 			SerializeField(s, nameof(mapLocationId));
 			SerializeField(s, nameof(mapPath));

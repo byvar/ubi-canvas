@@ -2,13 +2,11 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_EventLightOrbPicked : CSerializable {
-		[Serialize("sender")] public uint sender;
+	public partial class COL_EventLightOrbPicked : Event {
 		[Serialize("value" )] public float value;
 		[Serialize("type"  )] public Enum_type type;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
 			SerializeField(s, nameof(value));
 			SerializeField(s, nameof(type));
 		}

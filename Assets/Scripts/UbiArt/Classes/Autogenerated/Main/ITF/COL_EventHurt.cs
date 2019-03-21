@@ -2,12 +2,10 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_EventHurt : CSerializable {
-		[Serialize("sender"    )] public uint sender;
+	public partial class COL_EventHurt : Event {
 		[Serialize("damageType")] public Enum_damageType damageType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
 			SerializeField(s, nameof(damageType));
 		}
 		public enum Enum_damageType {

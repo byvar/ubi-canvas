@@ -2,13 +2,11 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_EventInventoryItemAttachement : CSerializable {
-		[Serialize("sender")] public uint sender;
+	public partial class COL_EventInventoryItemAttachement : Event {
 		[Serialize("action")] public Enum_action action;
 		[Serialize("itemID")] public StringID itemID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
 			SerializeField(s, nameof(action));
 			SerializeField(s, nameof(itemID));
 		}

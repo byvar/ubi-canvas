@@ -2,13 +2,11 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_EventChangeAuroraVersion : CSerializable {
-		[Serialize("sender" )] public uint sender;
+	public partial class COL_EventChangeAuroraVersion : Event {
 		[Description("Aurora's version")]
 		[Serialize("version")] public Enum_version version;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
 			SerializeField(s, nameof(version));
 		}
 		public enum Enum_version {
