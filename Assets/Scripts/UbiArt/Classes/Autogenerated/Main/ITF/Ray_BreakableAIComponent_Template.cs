@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_BreakableAIComponent_Template : Ray_AIComponent_Template {
-		[Serialize("reward"                 )] public Generic<Ray_EventSpawnReward> reward;
+		[Serialize("reward"                 )] public Generic<Ray_EventSpawnReward> reward2;
 		[Serialize("crushAttackDamage"      )] public uint crushAttackDamage;
 		[Serialize("frontDamage"            )] public uint frontDamage;
 		[Serialize("backDamage"             )] public uint backDamage;
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		[Serialize("resetOnCheckpoint"      )] public int resetOnCheckpoint;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(reward));
+			SerializeField(s, nameof(reward2));
 			SerializeField(s, nameof(crushAttackDamage));
 			SerializeField(s, nameof(frontDamage));
 			SerializeField(s, nameof(backDamage));

@@ -1,12 +1,13 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_PowerUpManager : CSerializable {
-		[Serialize("CMap<ITF::StringID, Ray_GlobalPowerUpData>__0")] public CMap<ITF::StringID, Ray_GlobalPowerUpData> CMap_ITF_StringID, Ray_GlobalPowerUpData__0;
+		[Serialize("globalData")] public CMap<StringID, Ray_GlobalPowerUpData> globalData;
+		[Serialize("perPlayerData")] public CMap<StringID, CArray<Ray_PerPlayerPowerUpData>> perPlayerData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(CMap_ITF_StringID, Ray_GlobalPowerUpData__0));
+			SerializeField(s, nameof(globalData));
 		}
 	}
 }

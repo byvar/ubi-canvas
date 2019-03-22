@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Letter : W1W_InteractiveGenComponent {
 		[Serialize("bool__0"          )] public bool bool__0;
-		[Serialize("StringID__1"      )] public StringID StringID__1;
+		[Serialize("StringID__1"      )] public StringID StringID__1_;
 		[Serialize("uint__2"          )] public uint uint__2;
 		[Serialize("uint__3"          )] public uint uint__3;
 		[Serialize("uint__4"          )] public uint uint__4;
@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(bool__0));
-			SerializeField(s, nameof(StringID__1));
+			SerializeField(s, nameof(StringID__1_));
 			SerializeField(s, nameof(uint__2));
 			SerializeField(s, nameof(uint__3));
 			SerializeField(s, nameof(uint__4));

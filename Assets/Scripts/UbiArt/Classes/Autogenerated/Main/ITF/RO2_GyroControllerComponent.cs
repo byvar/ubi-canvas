@@ -17,7 +17,6 @@ namespace UbiArt.ITF {
 		[Serialize("TVOffcameraZOffset"           )] public float TVOffcameraZOffset;
 		[Serialize("TVOffcameraPosOffset"         )] public Vector2 TVOffcameraPosOffset;
 		[Serialize("TVOffcameraResetMultiplier"   )] public bool TVOffcameraResetMultiplier;
-		[Serialize("TVOffcameraResetMultiplier"   )] public byte TVOffcameraResetMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -35,9 +34,8 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(cameraZOffset));
 					SerializeField(s, nameof(TVOffcameraZOffset));
 					SerializeField(s, nameof(TVOffcameraPosOffset));
-					SerializeField(s, nameof(TVOffcameraResetMultiplier));
+					SerializeField(s, nameof(TVOffcameraResetMultiplier), boolAsByte: true);
 				}
-				SerializeField(s, nameof(TVOffcameraResetMultiplier));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(cursorSmooth));

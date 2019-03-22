@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("string__5"        )] public string string__5;
 		[Serialize("LocalisationId__6")] public LocalisationId LocalisationId__6;
 		[Serialize("Enum_VH_0__7"     )] public Enum_VH_0 Enum_VH_0__7;
-		[Serialize("float__8"         )] public float float__8;
+		[Serialize("float__8"         )] public float float__8_;
 		[Serialize("float__9"         )] public float float__9;
 		[Serialize("Color__10"        )] public Color Color__10;
 		[Serialize("Enum_VH_1__11"    )] public Enum_VH_1 Enum_VH_1__11;
@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(string__5));
 				SerializeField(s, nameof(LocalisationId__6));
 				SerializeField(s, nameof(Enum_VH_0__7));
-				SerializeField(s, nameof(float__8));
+				SerializeField(s, nameof(float__8_));
 				SerializeField(s, nameof(float__9));
 				SerializeField(s, nameof(Color__10));
 				SerializeField(s, nameof(Enum_VH_1__11));

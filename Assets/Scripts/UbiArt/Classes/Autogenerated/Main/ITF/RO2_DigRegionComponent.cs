@@ -1,93 +1,93 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_DigRegionComponent : ActorComponent {
-		[Serialize("Enum_VH_0__0"                      )] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("Enum_VH_1__1"                      )] public Enum_VH_1 Enum_VH_1__1;
-		[Serialize("uint__2"                           )] public uint uint__2;
-		[Serialize("uint__3"                           )] public uint uint__3;
-		[Serialize("int__4"                            )] public int int__4;
-		[Serialize("Vector2__5"                        )] public Vector2 Vector2__5;
-		[Serialize("int__6"                            )] public int int__6;
-		[Serialize("float__7"                          )] public float float__7;
-		[Serialize("float__8"                          )] public float float__8;
-		[Serialize("float__9"                          )] public float float__9;
-		[Serialize("bool__10"                          )] public bool bool__10;
-		[Serialize("Angle__11"                         )] public Angle Angle__11;
-		[Serialize("float__12"                         )] public float float__12;
-		[Serialize("float__13"                         )] public float float__13;
-		[Serialize("float__14"                         )] public float float__14;
-		[Serialize("float__15"                         )] public float float__15;
-		[Serialize("float__16"                         )] public float float__16;
-		[Serialize("int__17"                           )] public int int__17;
-		[Serialize("float__18"                         )] public float float__18;
-		[Serialize("float__19"                         )] public float float__19;
-		[Serialize("float__20"                         )] public float float__20;
-		[Serialize("float__21"                         )] public float float__21;
-		[Serialize("float__22"                         )] public float float__22;
-		[Serialize("RO2_DigRegionComponent.ParamUV__23")] public RO2_DigRegionComponent.ParamUV RO2_DigRegionComponent_ParamUV__23;
-		[Serialize("RO2_DigRegionComponent.ParamUV__24")] public RO2_DigRegionComponent.ParamUV RO2_DigRegionComponent_ParamUV__24;
-		[Serialize("float__25"                         )] public float float__25;
-		[Serialize("bool__26"                          )] public bool bool__26;
-		[Serialize("GFXPrimitiveParam__27"             )] public GFXPrimitiveParam GFXPrimitiveParam__27;
-		[Serialize("bool__28"                          )] public bool bool__28;
-		[Serialize("bool__29"                          )] public bool bool__29;
+		[Serialize("Brush_State"            )] public Action Brush_State;
+		[Serialize("Brush_Action"           )] public Action Brush_Action;
+		[Serialize("BoxCountX"              )] public uint BoxCountX;
+		[Serialize("BoxCountY"              )] public uint BoxCountY;
+		[Serialize("BrushRadiusGrid"        )] public int BrushRadiusGrid;
+		[Serialize("LightDir"               )] public Vector2 LightDir;
+		[Serialize("MergeCount"             )] public int MergeCount;
+		[Serialize("Vecto_LengthMax"        )] public float Vecto_LengthMax;
+		[Serialize("Smooth_LengthMax"       )] public float Smooth_LengthMax;
+		[Serialize("Smooth_ShapeMinSize"    )] public float Smooth_ShapeMinSize;
+		[Serialize("Collision_Build"        )] public int Collision_Build;
+		[Serialize("Light_Angle"            )] public Angle Light_Angle;
+		[Serialize("Grid_Width"             )] public float Grid_Width;
+		[Serialize("Grid_Heigth"            )] public float Grid_Heigth;
+		[Serialize("Grid_Unity"             )] public float Grid_Unity;
+		[Serialize("Grid_VisualOffset"      )] public float Grid_VisualOffset;
+		[Serialize("Particles_Spacing"      )] public float Particles_Spacing;
+		[Serialize("Particles_NbPerLocation")] public int Particles_NbPerLocation;
+		[Serialize("Regeneration_Speed"     )] public float Regeneration_Speed;
+		[Serialize("Regeneration_StartDelay")] public float Regeneration_StartDelay;
+		[Serialize("Regeneration_EndDelay"  )] public float Regeneration_EndDelay;
+		[Serialize("Regeneration_AccDist"   )] public float Regeneration_AccDist;
+		[Serialize("Regeneration_TimeMaxDRC")] public float Regeneration_TimeMaxDRC;
+		[Serialize("Uv_Fill"                )] public RO2_DigRegionComponent.ParamUV Uv_Fill;
+		[Serialize("Uv_Hole"                )] public RO2_DigRegionComponent.ParamUV Uv_Hole;
+		[Serialize("Brush_Radius"           )] public float Brush_Radius;
+		[Serialize("Brush_ActionFill"       )] public bool Brush_ActionFill;
+		[Serialize("PrimitiveParameters"    )] public GFXPrimitiveParam PrimitiveParameters;
+		[Serialize("Brush_Enabled"          )] public bool Brush_Enabled;
+		[Serialize("IsDiggable"             )] public bool IsDiggable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(Enum_VH_0__0));
-				SerializeField(s, nameof(Enum_VH_1__1));
+				SerializeField(s, nameof(Brush_State));
+				SerializeField(s, nameof(Brush_Action));
 			}
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(uint__2));
-				SerializeField(s, nameof(uint__3));
-				SerializeField(s, nameof(int__4));
-				SerializeField(s, nameof(Vector2__5));
-				SerializeField(s, nameof(int__6));
+				SerializeField(s, nameof(BoxCountX));
+				SerializeField(s, nameof(BoxCountY));
+				SerializeField(s, nameof(BrushRadiusGrid));
+				SerializeField(s, nameof(LightDir));
+				SerializeField(s, nameof(MergeCount));
 				if (s.HasFlags(SerializeFlags.Flags_x03)) {
-					SerializeField(s, nameof(float__7));
-					SerializeField(s, nameof(float__8));
-					SerializeField(s, nameof(float__9));
-					SerializeField(s, nameof(bool__10));
-					SerializeField(s, nameof(Angle__11));
-					SerializeField(s, nameof(float__12));
-					SerializeField(s, nameof(float__13));
-					SerializeField(s, nameof(float__14));
-					SerializeField(s, nameof(float__15));
-					SerializeField(s, nameof(float__16));
-					SerializeField(s, nameof(int__17));
-					SerializeField(s, nameof(float__18));
-					SerializeField(s, nameof(float__19));
-					SerializeField(s, nameof(float__20));
-					SerializeField(s, nameof(float__21));
-					SerializeField(s, nameof(float__22));
-					SerializeField(s, nameof(RO2_DigRegionComponent_ParamUV__23));
-					SerializeField(s, nameof(RO2_DigRegionComponent_ParamUV__24));
-					SerializeField(s, nameof(float__25));
-					SerializeField(s, nameof(bool__26));
-					SerializeField(s, nameof(GFXPrimitiveParam__27));
-					SerializeField(s, nameof(bool__28));
+					SerializeField(s, nameof(Vecto_LengthMax));
+					SerializeField(s, nameof(Smooth_LengthMax));
+					SerializeField(s, nameof(Smooth_ShapeMinSize));
+					SerializeField(s, nameof(Collision_Build));
+					SerializeField(s, nameof(Light_Angle));
+					SerializeField(s, nameof(Grid_Width));
+					SerializeField(s, nameof(Grid_Heigth));
+					SerializeField(s, nameof(Grid_Unity));
+					SerializeField(s, nameof(Grid_VisualOffset));
+					SerializeField(s, nameof(Particles_Spacing));
+					SerializeField(s, nameof(Particles_NbPerLocation));
+					SerializeField(s, nameof(Regeneration_Speed));
+					SerializeField(s, nameof(Regeneration_StartDelay));
+					SerializeField(s, nameof(Regeneration_EndDelay));
+					SerializeField(s, nameof(Regeneration_AccDist));
+					SerializeField(s, nameof(Regeneration_TimeMaxDRC));
+					SerializeField(s, nameof(Uv_Fill));
+					SerializeField(s, nameof(Uv_Hole));
+					SerializeField(s, nameof(Brush_Radius));
+					SerializeField(s, nameof(Brush_ActionFill));
+					SerializeField(s, nameof(PrimitiveParameters));
+					SerializeField(s, nameof(Brush_Enabled));
 				}
 			}
-			SerializeField(s, nameof(bool__29));
+			SerializeField(s, nameof(IsDiggable));
 		}
-		[Games(GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RL)]
 		public partial class ParamUV : CSerializable {
-			[Serialize("bool__0"   )] public bool bool__0;
-			[Serialize("Vector2__1")] public Vector2 Vector2__1;
-			[Serialize("Vector2__2")] public Vector2 Vector2__2;
+			[Serialize("UseWorldCoord")] public bool UseWorldCoord;
+			[Serialize("Offset"       )] public Vector2 Offset;
+			[Serialize("Scale"        )] public Vector2 Scale;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(bool__0));
-				SerializeField(s, nameof(Vector2__1));
-				SerializeField(s, nameof(Vector2__2));
+				SerializeField(s, nameof(UseWorldCoord));
+				SerializeField(s, nameof(Offset));
+				SerializeField(s, nameof(Scale));
 			}
 		}
-		public enum Enum_VH_0 {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
+		public enum Action {
+			[Serialize("Action_Dig"   )] Dig = 0,
+			[Serialize("Action_Fill"  )] Fill = 1,
+			[Serialize("Action_Toggle")] Toggle = 2,
 		}
 		public override uint? ClassCRC => 0x0C4BD15D;
 	}

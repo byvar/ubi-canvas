@@ -15,10 +15,9 @@ namespace UbiArt.ITF {
 		[Serialize("animationList"   )] public Animation3DSet_Template animationList;
 		[Serialize("inputs"          )] public CList<InputDesc> inputs;
 		[Serialize("animationNode"   )] public StringID animationNode;
-		[Serialize("force2DRender"   )] public int force2DRender;
 		[Serialize("force2DRender"   )] public bool force2DRender;
 		[Serialize("renderToTexture" )] public bool renderToTexture;
-		[Serialize("impostorAABB"    )] public Placeholder impostorAABB;
+		[Serialize("impostorAABB"    )] public AABB impostorAABB;
 		[Serialize("impostorBoneName")] public StringID impostorBoneName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -38,12 +37,16 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(animationNode));
 			} else if (Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(forcedAABB));
+				SerializeField(s, nameof(materialList));
 				SerializeField(s, nameof(mesh3D));
 				SerializeField(s, nameof(mesh3Dlist));
 				SerializeField(s, nameof(skeleton3D));
 				SerializeField(s, nameof(animation3D));
 				SerializeField(s, nameof(defaultColor));
 				SerializeField(s, nameof(animation3Dlist));
+				SerializeField(s, nameof(animationTree));
+				SerializeField(s, nameof(animationList));
+				SerializeField(s, nameof(inputs));
 				SerializeField(s, nameof(force2DRender), boolAsByte: true);
 				SerializeField(s, nameof(animationNode));
 				SerializeField(s, nameof(renderToTexture), boolAsByte: true);

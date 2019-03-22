@@ -7,10 +7,10 @@ namespace UbiArt.ITF {
 		[Serialize("TRCActorsList"      )] public CArray<Path> TRCActorsList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			if (Settings.s.game == Settings.Game.RL || 
+				Settings.s.game == Settings.Game.VH ||
+				Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(TRCLocalisationList));
-				SerializeField(s, nameof(TRCActorsList));
-			} else if (Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(TRCActorsList));
 			} else {
 				SerializeField(s, nameof(TRCLocalisationList));

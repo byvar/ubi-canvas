@@ -27,7 +27,6 @@ namespace UbiArt.ITF {
 		[Serialize("disableAfterFadeOnRelease")] public bool disableAfterFadeOnRelease;
 		[Serialize("wasCut"                   )] public bool wasCut;
 		[Serialize("cutLength"                )] public float cutLength;
-		[Serialize("beginBindType"            )] public Enum_beginBindType beginBindType;
 		[Serialize("cutSender"                )] public uint cutSender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -95,11 +94,6 @@ namespace UbiArt.ITF {
 			[Serialize("RopeBind::Root"              )] Root = 0,
 			[Serialize("RopeBind::BoneName"          )] BoneName = 1,
 			[Serialize("RopeBind::ProceduralBoneName")] ProceduralBoneName = 2,
-		}
-		public enum Enum_beginBindType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
 		}
 		public override uint? ClassCRC => 0x23302B8F;
 	}

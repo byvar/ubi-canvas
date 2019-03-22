@@ -203,6 +203,10 @@ namespace UbiArt.ITF {
 			[Serialize("Value_4" )] Value_4 = 4,
 			[Serialize("Value__1")] Value__1 = -1,
 		}
+		public enum UpdateType {
+			[Serialize("Pickable::UpdateType_OnlyIfVisible")] OnlyIfVisible = 0,
+			[Serialize("Pickable::UpdateType_OffscreenAllowed")] OffscreenAllowed = 1,
+		}
 		public override uint? ClassCRC => 0x2371CC09;
 	}
 }

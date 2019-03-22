@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class MoviePlayerComponent_Template : ActorComponent_Template {
 		[Serialize("video"            )] public Path video;
 		[Serialize("audioTrack"       )] public int audioTrack;
-		[Serialize("videoTrack"       )] public int videoTrack;
+		[Serialize("videoTrack"       )] public bool videoTrack;
 		[Serialize("autoPlay"         )] public bool autoPlay;
 		[Serialize("fadeInTime"       )] public float fadeInTime;
 		[Serialize("fadeOutTime"      )] public float fadeOutTime;
@@ -14,12 +14,11 @@ namespace UbiArt.ITF {
 		[Serialize("loop"             )] public bool loop;
 		[Serialize("sound"            )] public bool sound;
 		[Serialize("mainthread"       )] public bool mainthread;
-		[Serialize("audioTracks"      )] public Placeholder audioTracks;
-		[Serialize("videoTrack"       )] public bool videoTrack;
+		[Serialize("audioTracks"      )] public CList<uint> audioTracks;
 		[Serialize("playFade"         )] public bool playFade;
 		[Serialize("whiteFade"        )] public bool whiteFade;
 		[Serialize("pauseGameSounds"  )] public bool pauseGameSounds;
-		[Serialize("subsFontTextStyle")] public Placeholder subsFontTextStyle;
+		[Serialize("subsFontTextStyle")] public FontTextArea.Style subsFontTextStyle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {

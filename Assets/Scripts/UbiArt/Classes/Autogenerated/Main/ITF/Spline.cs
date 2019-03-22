@@ -6,7 +6,6 @@ namespace UbiArt.ITF {
 		[Serialize("Points"      )] public CList<Spline.SplinePoint> Points;
 		[Serialize("TimeLoopMode")] public uint TimeLoopMode;
 		[Serialize("TimeLoop"    )] public float TimeLoop;
-		[Serialize("Points"      )] public CArray<Spline.SplinePoint> Points;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {

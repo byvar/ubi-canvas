@@ -8,10 +8,9 @@ namespace UbiArt.ITF {
 		[Serialize("Volume"  )] public float Volume;
 		[Serialize("Category")] public string Category;
 		[Serialize("IsStrem" )] public int IsStrem;
-		[Serialize("Params"  )] public Placeholder Params;
-		[Serialize("Category")] public StringID Category;
+		[Serialize("Category")] public StringID Category2;
 		[Serialize("IsStream")] public int IsStream;
-		[Serialize("Sound"   )] public string Sound;
+		[Serialize("Sound"   )] public string Sound2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
@@ -24,12 +23,12 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(Sound));
 				SerializeField(s, nameof(Params));
 				SerializeField(s, nameof(Volume));
-				SerializeField(s, nameof(Category));
+				SerializeField(s, nameof(Category2));
 				SerializeField(s, nameof(IsStream));
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(Sound));
+				SerializeField(s, nameof(Sound2));
 				SerializeField(s, nameof(Volume));
-				SerializeField(s, nameof(Category));
+				SerializeField(s, nameof(Category2));
 				SerializeField(s, nameof(IsStream));
 			} else {
 				SerializeField(s, nameof(Sound));

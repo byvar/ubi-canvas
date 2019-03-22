@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
@@ -46,7 +47,6 @@ namespace UbiArt.ITF {
 		[Serialize("fireflyCloudStandFX"              )] public StringID fireflyCloudStandFX;
 		[Serialize("fireflyCloudActivationFX"         )] public StringID fireflyCloudActivationFX;
 		[Serialize("fireflyCloudCollisionGroup"       )] public ECOLLISIONGROUP fireflyCloudCollisionGroup;
-		[Serialize("fireflyCloudCollisionGroup"       )] public Enum_fireflyCloudCollisionGroup fireflyCloudCollisionGroup;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -141,17 +141,12 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(fireflyCloudCollisionGroup));
 			}
 		}
+		[Flags]
 		public enum ECOLLISIONGROUP {
 			[Serialize("ECOLLISIONGROUP_NONE"     )] NONE = 1,
 			[Serialize("ECOLLISIONGROUP_POLYLINE" )] POLYLINE = 2,
 			[Serialize("ECOLLISIONGROUP_CHARACTER")] CHARACTER = 4,
 			[Serialize("ECOLLISIONGROUP_ITEMS"    )] ITEMS = 8,
-		}
-		public enum Enum_fireflyCloudCollisionGroup {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_4")] Value_4 = 4,
-			[Serialize("Value_8")] Value_8 = 8,
 		}
 		public override uint? ClassCRC => 0x30492D29;
 	}

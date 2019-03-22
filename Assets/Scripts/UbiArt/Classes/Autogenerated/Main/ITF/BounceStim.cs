@@ -7,7 +7,6 @@ namespace UbiArt.ITF {
 		[Serialize("direction"      )] public Vector2 direction;
 		[Serialize("radial"         )] public bool radial;
 		[Serialize("multiplier"     )] public float multiplier;
-		[Serialize("bounceType"     )] public Enum_bounceType bounceType;
 		[Serialize("bounceReactType")] public uint bounceReactType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -29,12 +28,6 @@ namespace UbiArt.ITF {
 			[Serialize("BOUNCETYPE_BUMPER"           )] BUMPER = 2,
 			[Serialize("BOUNCETYPE_BUMPER_AIRCONTROL")] BUMPER_AIRCONTROL = 8,
 			[Serialize("BOUNCETYPE_SETBACKS"         )] SETBACKS = 7,
-		}
-		public enum Enum_bounceType {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_8")] Value_8 = 8,
-			[Serialize("Value_7")] Value_7 = 7,
 		}
 		public override uint? ClassCRC => 0x30DD3B8D;
 	}

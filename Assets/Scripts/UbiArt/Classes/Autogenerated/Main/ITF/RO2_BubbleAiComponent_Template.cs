@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("ownerSnapBone"  )] public StringID ownerSnapBone;
 		[Serialize("DRC_catchRadius")] public float DRC_catchRadius;
 		[Serialize("DRC_forceCoeff" )] public float DRC_forceCoeff;
-		[Serialize("faction"        )] public uint faction;
+		[Serialize("faction"        )] public uint faction2;
 		[Serialize("bubbleBehavior" )] public Generic<RO2_AIBubbleDeathBehavior_Template> bubbleBehavior;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(ownerSnapBone));
 			SerializeField(s, nameof(DRC_catchRadius));
 			SerializeField(s, nameof(DRC_forceCoeff));
-			SerializeField(s, nameof(faction));
+			SerializeField(s, nameof(faction2));
 			SerializeField(s, nameof(bubbleBehavior));
 		}
 		public override uint? ClassCRC => 0x0F730A08;

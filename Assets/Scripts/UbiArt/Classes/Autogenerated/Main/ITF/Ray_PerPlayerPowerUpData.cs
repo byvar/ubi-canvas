@@ -1,12 +1,12 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_PerPlayerPowerUpData : CSerializable {
-		[Serialize("int__0")] public int int__0;
+		[Serialize("enabled")] public bool enabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(int__0));
+			SerializeField(s, nameof(enabled));
 		}
 	}
 }

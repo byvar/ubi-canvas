@@ -12,12 +12,11 @@ namespace UbiArt.ITF {
 		[Serialize("textColor"      )] public Color textColor;
 		[Serialize("backgroundColor")] public Color backgroundColor;
 		[Serialize("centerText"     )] public bool centerText;
-		[Serialize("TextLabel"      )] public CString TextLabel;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(TextLabel));
+					SerializeField(s, nameof(TextLabel), type: typeof(CString));
 					SerializeField(s, nameof(lineId));
 					SerializeField(s, nameof(drawUsingEngine));
 					SerializeField(s, nameof(drawBoxWidth));

@@ -7,7 +7,6 @@ namespace UbiArt.ITF {
 		[Serialize("localScale"       )] public Vector2 localScale;
 		[Serialize("useShapeTransform")] public bool useShapeTransform;
 		[Serialize("AnimPolylineList" )] public CList<StringID> AnimPolylineList;
-		[Serialize("useShapeTransform")] public byte useShapeTransform;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
@@ -25,9 +24,8 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(localScale));
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(useShapeTransform));
+					SerializeField(s, nameof(useShapeTransform), boolAsByte: true);
 				}
-				SerializeField(s, nameof(useShapeTransform));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(localOffset));

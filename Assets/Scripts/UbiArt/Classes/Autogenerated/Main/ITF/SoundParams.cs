@@ -1,107 +1,100 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL)]
 	public partial class SoundParams : CSerializable {
-		[Serialize("uint__0"                           )] public uint uint__0;
-		[Serialize("int__1"                            )] public int int__1;
-		[Serialize("Enum_RJR_0__2"                     )] public Enum_RJR_0 Enum_RJR_0__2;
-		[Serialize("Volume__3"                         )] public Volume Volume__3;
-		[Serialize("Volume__4"                         )] public Volume Volume__4;
-		[Serialize("float__5"                          )] public float float__5;
-		[Serialize("float__6"                          )] public float float__6;
-		[Serialize("float__7"                          )] public float float__7;
-		[Serialize("float__8"                          )] public float float__8;
-		[Serialize("float__9"                          )] public float float__9;
-		[Serialize("float__10"                         )] public float float__10;
-		[Serialize("float__11"                         )] public float float__11;
-		[Serialize("float__12"                         )] public float float__12;
-		[Serialize("Enum_RJR_1__13"                    )] public Enum_RJR_1 Enum_RJR_1__13;
-		[Serialize("uint__14"                          )] public uint uint__14;
-		[Serialize("uint__15"                          )] public uint uint__15;
-		[Serialize("CArray<Generic<SoundModifier>>__16")] public CArray<Generic<SoundModifier>> CArray_Generic_SoundModifier__16;
-		[Serialize("uint__17"                          )] public uint uint__17;
-		[Serialize("int__18"                           )] public int int__18;
-		[Serialize("Enum_RFR_0__19"                    )] public Enum_RFR_0 Enum_RFR_0__19;
-		[Serialize("Volume__20"                        )] public Volume Volume__20;
-		[Serialize("Volume__21"                        )] public Volume Volume__21;
-		[Serialize("float__22"                         )] public float float__22;
-		[Serialize("float__23"                         )] public float float__23;
-		[Serialize("float__24"                         )] public float float__24;
-		[Serialize("float__25"                         )] public float float__25;
-		[Serialize("float__26"                         )] public float float__26;
-		[Serialize("float__27"                         )] public float float__27;
-		[Serialize("float__28"                         )] public float float__28;
-		[Serialize("float__29"                         )] public float float__29;
-		[Serialize("Enum_RFR_1__30"                    )] public Enum_RFR_1 Enum_RFR_1__30;
-		[Serialize("uint__31"                          )] public uint uint__31;
-		[Serialize("uint__32"                          )] public uint uint__32;
-		[Serialize("CArray<Generic<SoundModifier>>__33")] public CArray<Generic<SoundModifier>> CArray_Generic_SoundModifier__33;
+		[Serialize("numChannels"    )] public uint numChannels;
+		[Serialize("loop"           )] public int loop;
+		[Serialize("playMode"       )] public PlayMode playMode;
+		[Serialize("playMode"       )] public PlayMode2 playMode2;
+		[Serialize("randomVolMin"   )] public Volume randomVolMin;
+		[Serialize("randomVolMax"   )] public Volume randomVolMax;
+		[Serialize("delay"          )] public float delay;
+		[Serialize("randomDelay"    )] public float randomDelay;
+		[Serialize("randomPitchMin" )] public float randomPitchMin;
+		[Serialize("randomPitchMax" )] public float randomPitchMax;
+		[Serialize("fadeInTime"     )] public float fadeInTime;
+		[Serialize("fadeOutTime"    )] public float fadeOutTime;
+		[Serialize("filterFrequency")] public float filterFrequency;
+		[Serialize("filterQ"        )] public float filterQ;
+		[Serialize("filterType"     )] public FilterType filterType;
+		[Serialize("filterType"     )] public FilterType2 filterType2;
+		[Serialize("metronomeType"  )] public uint metronomeType;
+		[Serialize("playOnNext"     )] public uint playOnNext;
+		[Serialize("modifiers"      )] public CArray<Generic<SoundModifier>> modifiers;
+		
+		[Serialize("playModeInput"  )] public StringID playModeInput;
+		[Serialize("isMusic"        )] public int isMusic;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(uint__17));
-				SerializeField(s, nameof(int__18));
-				SerializeField(s, nameof(Enum_RFR_0__19));
-				SerializeField(s, nameof(Volume__20));
-				SerializeField(s, nameof(Volume__21));
-				SerializeField(s, nameof(float__22));
-				SerializeField(s, nameof(float__23));
-				SerializeField(s, nameof(float__24));
-				SerializeField(s, nameof(float__25));
-				SerializeField(s, nameof(float__26));
-				SerializeField(s, nameof(float__27));
-				SerializeField(s, nameof(float__28));
-				SerializeField(s, nameof(float__29));
-				SerializeField(s, nameof(Enum_RFR_1__30));
-				SerializeField(s, nameof(uint__31));
-				SerializeField(s, nameof(uint__32));
-				SerializeField(s, nameof(CArray_Generic_SoundModifier__33));
+			if (Settings.s.game == Settings.Game.RL) {
+				SerializeField(s, nameof(numChannels));
+				SerializeField(s, nameof(loop));
+				SerializeField(s, nameof(playMode2));
+				SerializeField(s, nameof(playModeInput));
+				SerializeField(s, nameof(randomVolMin));
+				SerializeField(s, nameof(randomVolMax));
+				SerializeField(s, nameof(delay));
+				SerializeField(s, nameof(randomDelay));
+				SerializeField(s, nameof(randomPitchMin));
+				SerializeField(s, nameof(randomPitchMax));
+				SerializeField(s, nameof(fadeInTime));
+				SerializeField(s, nameof(fadeOutTime));
+				SerializeField(s, nameof(filterFrequency));
+				SerializeField(s, nameof(filterType2));
+				SerializeField(s, nameof(metronomeType));
+				SerializeField(s, nameof(playOnNext));
+				SerializeField(s, nameof(modifiers));
+				SerializeField(s, nameof(isMusic));
 			} else {
-				SerializeField(s, nameof(uint__0));
-				SerializeField(s, nameof(int__1));
-				SerializeField(s, nameof(Enum_RJR_0__2));
-				SerializeField(s, nameof(Volume__3));
-				SerializeField(s, nameof(Volume__4));
-				SerializeField(s, nameof(float__5));
-				SerializeField(s, nameof(float__6));
-				SerializeField(s, nameof(float__7));
-				SerializeField(s, nameof(float__8));
-				SerializeField(s, nameof(float__9));
-				SerializeField(s, nameof(float__10));
-				SerializeField(s, nameof(float__11));
-				SerializeField(s, nameof(float__12));
-				SerializeField(s, nameof(Enum_RJR_1__13));
-				SerializeField(s, nameof(uint__14));
-				SerializeField(s, nameof(uint__15));
-				SerializeField(s, nameof(CArray_Generic_SoundModifier__16));
+				SerializeField(s, nameof(numChannels));
+				SerializeField(s, nameof(loop));
+				SerializeField(s, nameof(playMode));
+				SerializeField(s, nameof(randomVolMin));
+				SerializeField(s, nameof(randomVolMax));
+				SerializeField(s, nameof(delay));
+				SerializeField(s, nameof(randomDelay));
+				SerializeField(s, nameof(randomPitchMin));
+				SerializeField(s, nameof(randomPitchMax));
+				SerializeField(s, nameof(fadeInTime));
+				SerializeField(s, nameof(fadeOutTime));
+				SerializeField(s, nameof(filterFrequency));
+				SerializeField(s, nameof(filterQ));
+				SerializeField(s, nameof(filterType));
+				SerializeField(s, nameof(metronomeType));
+				SerializeField(s, nameof(playOnNext));
+				SerializeField(s, nameof(modifiers));
 			}
 		}
-		public enum Enum_RJR_0 {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-			[Serialize("Value_5")] Value_5 = 5,
+		public enum PlayMode {
+			[Serialize("PlayMode_PlayFirst"         )] PlayFirst = 0,
+			[Serialize("PlayMode_Random"            )] Random = 1,
+			[Serialize("PlayMode_RandomRememberLast")] RandomRememberLast = 2,
+			[Serialize("PlayMode_RandomSequence"    )] RandomSequence = 3,
+			[Serialize("PlayMode_Sequence"          )] Sequence = 4,
+			[Serialize("PlayMode_Input"             )] Input = 5,
 		}
-		public enum Enum_RJR_1 {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
+		public enum FilterType {
+			[Serialize("FilterType_LowPass" )] LowPass = 0,
+			[Serialize("FilterType_BandPass")] BandPass = 1,
+			[Serialize("FilterType_HighPass")] HighPass = 2,
+			[Serialize("FilterType_Notch"   )] Notch = 3,
+			[Serialize("FilterType_None"    )] None = 4,
 		}
-		public enum Enum_RFR_0 {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-			[Serialize("Value_5")] Value_5 = 5,
+		public enum PlayMode2 {
+			[Serialize("PlayMode_PlayFirst"         )] PlayFirst = 0,
+			[Serialize("PlayMode_Random"            )] Random = 1,
+			[Serialize("PlayMode_RandomRememberLast")] RandomRememberLast = 2,
+			[Serialize("PlayMode_RandomSequence"    )] RandomSequence = 3,
+			[Serialize("PlayMode_Sequence"          )] Sequence = 4,
+			[Serialize("PlayMode_Input"             )] Input = 5,
+			[Serialize("Value_6")] Value_6 = 6,
 		}
-		public enum Enum_RFR_1 {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
+		public enum FilterType2 {
+			[Serialize("FilterType_LowPass" )] LowPass = 0,
+			[Serialize("FilterType_BandPass")] BandPass = 1,
+			[Serialize("FilterType_HighPass")] HighPass = 2,
 		}
 	}
 }

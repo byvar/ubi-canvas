@@ -4,11 +4,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_EventLoadMap : Event {
 		[Serialize("map")] public PathRef map;
-		[Serialize("map")] public Path map;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(map));
+				SerializeField(s, nameof(map), type: typeof(Path));
 			} else {
 				SerializeField(s, nameof(map));
 			}

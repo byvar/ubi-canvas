@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PushedAIComponent_Template : Ray_AIComponent_Template {
-		[Serialize("faction"             )] public uint faction;
+		[Serialize("faction"             )] public uint faction2;
 		[Serialize("forceMultiplier"     )] public float forceMultiplier;
 		[Serialize("maxSpeed"            )] public float maxSpeed;
 		[Serialize("bounceMultiplier"    )] public float bounceMultiplier;
@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		[Serialize("landXForceMultiplier")] public float landXForceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(faction));
+			SerializeField(s, nameof(faction2));
 			SerializeField(s, nameof(forceMultiplier));
 			SerializeField(s, nameof(maxSpeed));
 			SerializeField(s, nameof(bounceMultiplier));

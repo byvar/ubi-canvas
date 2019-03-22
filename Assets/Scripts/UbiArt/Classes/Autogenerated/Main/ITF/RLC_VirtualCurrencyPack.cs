@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("Price"         )] public float Price;
 		[Serialize("Amount"        )] public uint Amount;
 		[Serialize("formattedPrice")] public string formattedPrice;
-		[Serialize("locId"         )] public uint locId;
+		[Serialize("locId"         )] public uint locId_;
 		[Serialize("icon"          )] public uint icon;
 		[Serialize("stickerNew"    )] public bool stickerNew;
 		[Serialize("stickerPopular")] public bool stickerPopular;
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(Price));
 			SerializeField(s, nameof(Amount));
 			SerializeField(s, nameof(formattedPrice));
-			SerializeField(s, nameof(locId));
+			SerializeField(s, nameof(locId_));
 			SerializeField(s, nameof(icon));
 			SerializeField(s, nameof(stickerNew));
 			SerializeField(s, nameof(stickerPopular));

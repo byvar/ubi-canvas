@@ -54,7 +54,7 @@ namespace UbiArt.ITF {
 		[Serialize("platformHeightSink"      )] public float platformHeightSink;
 		[Serialize("fx"                      )] public StringID fx;
 		[Serialize("fxUseTransform"          )] public bool fxUseTransform;
-		[Serialize("fxGeneratorType"         )] public GeneratorType_B fxGeneratorType;
+		[Serialize("fxGeneratorType"         )] public GeneratorType fxGeneratorType;
 		[Serialize("fxGenerators"            )] public CList<StringID> fxGenerators;
 		[Serialize("fxLengthOffset"          )] public float fxLengthOffset;
 		[Serialize("fxLengthMultiplier"      )] public float fxLengthMultiplier;
@@ -75,7 +75,6 @@ namespace UbiArt.ITF {
 		[Serialize("regions"                 )] public CList<RO2_GeyserPlatformAIComponent_Template.RegionData> regions;
 		[Serialize("isGeyserBehavior"        )] public bool isGeyserBehavior;
 		[Serialize("widthReductionSpeed"     )] public float widthReductionSpeed;
-		[Serialize("fxGeneratorType"         )] public Enum_fxGeneratorType fxGeneratorType;
 		[Serialize("minAngle"                )] public Angle minAngle;
 		[Serialize("maxAngle"                )] public Angle maxAngle;
 		[Serialize("debugForce"              )] public int debugForce;
@@ -251,13 +250,9 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(gameMaterial));
 			}
 		}
-		public enum GeneratorType_B {
-			[Serialize("GeneratorType_Ballistic")] allistic = 0,
-			[Serialize("GeneratorType_Box"      )] ox = 1,
-		}
-		public enum Enum_fxGeneratorType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
+		public enum GeneratorType {
+			[Serialize("GeneratorType_Ballistic")] Ballistic = 0,
+			[Serialize("GeneratorType_Box"      )] Box = 1,
 		}
 		public override uint? ClassCRC => 0xBA0DBA79;
 	}

@@ -11,24 +11,17 @@ namespace UbiArt.ITF {
 		[Serialize("listenToActivateEvent")] public int listenToActivateEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
 				SerializeField(s, nameof(registerToAIManager));
 				SerializeField(s, nameof(faction));
 				SerializeField(s, nameof(health));
 				SerializeField(s, nameof(damageLevels));
 				SerializeField(s, nameof(scaleRandomFactor));
 				SerializeField(s, nameof(listenToActivateEvent));
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(registerToAIManager));
-				SerializeField(s, nameof(faction));
-				SerializeField(s, nameof(health));
-				SerializeField(s, nameof(damageLevels));
-				SerializeField(s, nameof(scaleRandomFactor));
 			} else {
 				SerializeField(s, nameof(registerToAIManager));
 				SerializeField(s, nameof(faction));
 				SerializeField(s, nameof(health));
-				SerializeField(s, nameof(damageLevels));
 				SerializeField(s, nameof(damageLevels));
 				SerializeField(s, nameof(scaleRandomFactor));
 			}

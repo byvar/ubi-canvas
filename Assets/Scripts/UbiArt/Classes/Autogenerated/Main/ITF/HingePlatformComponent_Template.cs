@@ -6,16 +6,11 @@ namespace UbiArt.ITF {
 		[Serialize("hingeBones"     )] public CList<HingePlatformComponent_Template.HingeBoneData> hingeBones;
 		[Serialize("platforms"      )] public CList<HingePlatformComponent_Template.PlatformData> platforms;
 		[Serialize("movingPolylines")] public CList<HingePlatformComponent_Template.MovingPolylineData> movingPolylines;
-		[Serialize("isEnvironment"  )] public int isEnvironment;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(isEnvironment));
-			} else {
-				SerializeField(s, nameof(hingeBones));
-				SerializeField(s, nameof(platforms));
-				SerializeField(s, nameof(movingPolylines));
-			}
+			SerializeField(s, nameof(hingeBones));
+			SerializeField(s, nameof(platforms));
+			SerializeField(s, nameof(movingPolylines));
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class MovingPolylineData : CSerializable {

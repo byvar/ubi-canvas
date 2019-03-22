@@ -9,13 +9,13 @@ namespace UbiArt.ITF {
 		[Serialize("textOffset"      )] public Vector2 textOffset;
 		[Serialize("localisationId"  )] public LocalisationId localisationId;
 		[Serialize("sizeText"        )] public float sizeText;
-		[Serialize("Text"            )] public Path Text;
-		[Serialize("Params"          )] public Placeholder Params;
+		[Serialize("Text"            )] public Path Text2;
+		[Serialize("Params"          )] public SimpleTextComponent Params;
 		[Serialize("textSnapToScreen")] public int textSnapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(Text));
+				SerializeField(s, nameof(Text2));
 				SerializeField(s, nameof(Params));
 			} else if (Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(Text));

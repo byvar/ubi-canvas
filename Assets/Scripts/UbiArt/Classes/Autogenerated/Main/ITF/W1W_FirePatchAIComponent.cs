@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
@@ -7,15 +8,16 @@ namespace UbiArt.ITF {
 		[Serialize("float__1"    )] public float float__1;
 		[Serialize("float__2"    )] public float float__2;
 		[Serialize("Enum_VH_0__3")] public Enum_VH_0 Enum_VH_0__3;
-		[Serialize("Enum_VH_1__4")] public Enum_VH_1 Enum_VH_1__4;
+		[Serialize("Enum_VH_1__4")] public Enum_VH_0 Enum_VH_0__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Vector3__0));
 			SerializeField(s, nameof(float__1));
 			SerializeField(s, nameof(float__2));
 			SerializeField(s, nameof(Enum_VH_0__3));
-			SerializeField(s, nameof(Enum_VH_1__4));
+			SerializeField(s, nameof(Enum_VH_0__4));
 		}
+		[Flags]
 		public enum Enum_VH_0 {
 			[Serialize("Value_0"  )] Value_0 = 0,
 			[Serialize("Value_1"  )] Value_1 = 1,

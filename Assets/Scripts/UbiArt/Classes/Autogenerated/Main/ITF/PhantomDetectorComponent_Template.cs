@@ -5,9 +5,6 @@ namespace UbiArt.ITF {
 	public partial class PhantomDetectorComponent_Template : ShapeDetectorComponent_Template {
 		[Serialize("allowDeadActors")] public bool allowDeadActors;
 		[Serialize("factionToDetect")] public uint factionToDetect;
-		[Serialize("allowDeadActors")] public int allowDeadActors;
-		[Serialize("uint__0"        )] public uint uint__0;
-		[Serialize("bool__1"        )] public bool bool__1;
 		[Serialize("Enum_VH_0__2"   )] public Enum_VH_0 Enum_VH_0__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -15,8 +12,8 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(factionToDetect));
 				SerializeField(s, nameof(allowDeadActors));
 			} else if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(uint__0));
-				SerializeField(s, nameof(bool__1));
+				SerializeField(s, nameof(factionToDetect));
+				SerializeField(s, nameof(allowDeadActors));
 				SerializeField(s, nameof(Enum_VH_0__2));
 			} else {
 				SerializeField(s, nameof(allowDeadActors));

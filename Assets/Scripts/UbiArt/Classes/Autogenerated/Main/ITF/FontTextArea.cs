@@ -50,8 +50,9 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
 		public partial class Style : CSerializable {
+			[Serialize("fontPath"               )] public Path fontPath;
 			[Serialize("fontSet"                )] public FontTextArea.FontSet fontSet;
 			[Serialize("fontSize"               )] public float fontSize;
 			[Serialize("color"                  )] public Color color;
@@ -61,49 +62,53 @@ namespace UbiArt.ITF {
 			[Serialize("paragraphSpacing"       )] public float paragraphSpacing;
 			[Serialize("anchor"                 )] public AREA_ANCHOR anchor;
 			[Serialize("hAlignment"             )] public FONT_ALIGN hAlignment;
+			[Serialize("hAlignment"             )] public FONT_ALIGN2 hAlignment2;
 			[Serialize("vAlignment"             )] public FONT vAlignment;
 			[Serialize("useGradient"            )] public bool useGradient;
 			[Serialize("gradientSize"           )] public float gradientSize;
 			[Serialize("gradientOffset"         )] public float gradientOffset;
 			[Serialize("gradientColor"          )] public Color gradientColor;
 			[Serialize("charSpacing"            )] public float charSpacing;
-			[Serialize("Path__0"                )] public Path Path__0;
-			[Serialize("FontTextArea.FontSet__1")] public FontTextArea.FontSet FontTextArea_FontSet__1;
-			[Serialize("float__2"               )] public float float__2;
-			[Serialize("Color__3"               )] public Color Color__3;
-			[Serialize("Vector2__4"             )] public Vector2 Vector2__4;
-			[Serialize("Color__5"               )] public Color Color__5;
-			[Serialize("float__6"               )] public float float__6;
-			[Serialize("float__7"               )] public float float__7;
-			[Serialize("Enum_VH_0__8"           )] public Enum_VH_0 Enum_VH_0__8;
-			[Serialize("Enum_VH_1__9"           )] public Enum_VH_1 Enum_VH_1__9;
-			[Serialize("Enum_VH_2__10"          )] public Enum_VH_2 Enum_VH_2__10;
-			[Serialize("bool__11"               )] public bool bool__11;
-			[Serialize("float__12"              )] public float float__12;
-			[Serialize("float__13"              )] public float float__13;
-			[Serialize("Color__14"              )] public Color Color__14;
-			[Serialize("float__15"              )] public float float__15;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (Settings.s.game == Settings.Game.VH) {
+				if (Settings.s.game == Settings.Game.COL) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(Path__0));
+						SerializeField(s, nameof(fontPath));
 					}
-					SerializeField(s, nameof(FontTextArea_FontSet__1));
-					SerializeField(s, nameof(float__2));
-					SerializeField(s, nameof(Color__3));
-					SerializeField(s, nameof(Vector2__4));
-					SerializeField(s, nameof(Color__5));
-					SerializeField(s, nameof(float__6));
-					SerializeField(s, nameof(float__7));
-					SerializeField(s, nameof(Enum_VH_0__8));
-					SerializeField(s, nameof(Enum_VH_1__9));
-					SerializeField(s, nameof(Enum_VH_2__10));
-					SerializeField(s, nameof(bool__11));
-					SerializeField(s, nameof(float__12));
-					SerializeField(s, nameof(float__13));
-					SerializeField(s, nameof(Color__14));
-					SerializeField(s, nameof(float__15));
+					SerializeField(s, nameof(fontSet));
+					SerializeField(s, nameof(fontSize));
+					SerializeField(s, nameof(color));
+					SerializeField(s, nameof(shadowOffset));
+					SerializeField(s, nameof(shadowColor));
+					SerializeField(s, nameof(lineSpacing));
+					SerializeField(s, nameof(paragraphSpacing));
+					SerializeField(s, nameof(anchor));
+					SerializeField(s, nameof(hAlignment2));
+					SerializeField(s, nameof(vAlignment));
+					SerializeField(s, nameof(useGradient), boolAsByte: true);
+					SerializeField(s, nameof(gradientSize));
+					SerializeField(s, nameof(gradientOffset));
+					SerializeField(s, nameof(gradientColor));
+					SerializeField(s, nameof(charSpacing));
+				} else if (Settings.s.game == Settings.Game.VH) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						SerializeField(s, nameof(fontPath));
+					}
+					SerializeField(s, nameof(fontSet));
+					SerializeField(s, nameof(fontSize));
+					SerializeField(s, nameof(color));
+					SerializeField(s, nameof(shadowOffset));
+					SerializeField(s, nameof(shadowColor));
+					SerializeField(s, nameof(lineSpacing));
+					SerializeField(s, nameof(paragraphSpacing));
+					SerializeField(s, nameof(anchor));
+					SerializeField(s, nameof(hAlignment));
+					SerializeField(s, nameof(vAlignment));
+					SerializeField(s, nameof(useGradient));
+					SerializeField(s, nameof(gradientSize));
+					SerializeField(s, nameof(gradientOffset));
+					SerializeField(s, nameof(gradientColor));
+					SerializeField(s, nameof(charSpacing));
 				} else {
 					SerializeField(s, nameof(fontSet));
 					SerializeField(s, nameof(fontSize));
@@ -146,29 +151,11 @@ namespace UbiArt.ITF {
 				[Serialize("FONT_VALIGN_MIDDLE")] VALIGN_MIDDLE = 1,
 				[Serialize("FONT_VALIGN_BOTTOM")] VALIGN_BOTTOM = 2,
 			}
-			public enum Enum_VH_0 {
-				[Serialize("Value_0")] Value_0 = 0,
-				[Serialize("Value_1")] Value_1 = 1,
-				[Serialize("Value_2")] Value_2 = 2,
-				[Serialize("Value_3")] Value_3 = 3,
-				[Serialize("Value_4")] Value_4 = 4,
-				[Serialize("Value_5")] Value_5 = 5,
-				[Serialize("Value_6")] Value_6 = 6,
-				[Serialize("Value_7")] Value_7 = 7,
-				[Serialize("Value_8")] Value_8 = 8,
-			}
-			public enum Enum_VH_1 {
-				[Serialize("Value__1")] Value__1 = -1,
-				[Serialize("Value_0" )] Value_0 = 0,
-				[Serialize("Value_1" )] Value_1 = 1,
-				[Serialize("Value_2" )] Value_2 = 2,
-				[Serialize("Value_3" )] Value_3 = 3,
-			}
-			public enum Enum_VH_2 {
-				[Serialize("Value__1")] Value__1 = -1,
-				[Serialize("Value_0" )] Value_0 = 0,
-				[Serialize("Value_1" )] Value_1 = 1,
-				[Serialize("Value_2" )] Value_2 = 2,
+			public enum FONT_ALIGN2 {
+				[Serialize("FONT_ALIGN_NONE")] NONE = -1,
+				[Serialize("FONT_ALIGN_LEFT")] LEFT = 0,
+				[Serialize("FONT_ALIGN_CENTER")] CENTER = 1,
+				[Serialize("FONT_ALIGN_RIGHT")] RIGHT = 2,
 			}
 		}
 	}

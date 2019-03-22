@@ -16,7 +16,6 @@ namespace UbiArt.ITF {
 		[Serialize("GPEColor"            )] public uint GPEColor;
 		[Serialize("fireOnce"            )] public bool fireOnce;
 		[Serialize("triggerSpawn"        )] public bool triggerSpawn;
-		[Serialize("ExplosionRadius"     )] public Enum_ExplosionRadius ExplosionRadius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -69,12 +68,6 @@ namespace UbiArt.ITF {
 			[Serialize("SizeMedium")] Medium = 1,
 			[Serialize("SizeLarge" )] Large = 2,
 			[Serialize("SizeXLarge")] XLarge = 3,
-		}
-		public enum Enum_ExplosionRadius {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
 		}
 		public override uint? ClassCRC => 0xB1E5E5CC;
 	}

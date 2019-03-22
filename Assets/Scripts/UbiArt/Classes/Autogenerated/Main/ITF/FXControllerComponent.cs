@@ -9,10 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("triggerFXisActive"   )] public int triggerFXisActive;
 		[Serialize("triggerFx"           )] public StringID triggerFx;
 		[Serialize("defaultFx"           )] public StringID defaultFx;
-		[Serialize("allowMusicEvents"    )] public byte allowMusicEvents;
-		[Serialize("defaultFxList"       )] public Placeholder defaultFxList;
-		[Serialize("bool__0"             )] public bool bool__0;
-		[Serialize("bool__1"             )] public bool bool__1;
+		[Serialize("defaultFxList"       )] public CList<StringID> defaultFxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
@@ -24,22 +21,20 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(triggerFx));
 					SerializeField(s, nameof(defaultFx));
 					SerializeField(s, nameof(allowBusMixEvents), boolAsByte: true);
-					SerializeField(s, nameof(allowMusicEvents));
+					SerializeField(s, nameof(allowMusicEvents), boolAsByte: true);
 				}
-				SerializeField(s, nameof(allowMusicEvents));
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(triggerFx));
 					SerializeField(s, nameof(defaultFx));
 					SerializeField(s, nameof(defaultFxList));
 					SerializeField(s, nameof(allowBusMixEvents), boolAsByte: true);
-					SerializeField(s, nameof(allowMusicEvents));
+					SerializeField(s, nameof(allowMusicEvents), boolAsByte: true);
 				}
-				SerializeField(s, nameof(allowMusicEvents));
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(bool__0));
-					SerializeField(s, nameof(bool__1));
+					SerializeField(s, nameof(allowBusMixEvents));
+					SerializeField(s, nameof(allowMusicEvents));
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {

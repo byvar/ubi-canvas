@@ -6,16 +6,14 @@ namespace UbiArt.ITF {
 		[Serialize("testShieldInZone"     )] public bool testShieldInZone;
 		[Serialize("removeShieldCollision")] public bool removeShieldCollision;
 		[Serialize("testPlayerOnShield"   )] public bool testPlayerOnShield;
-		[Serialize("testPlayerOnShield"   )] public byte testPlayerOnShield;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(testShieldInZone), boolAsByte: true);
 					SerializeField(s, nameof(removeShieldCollision), boolAsByte: true);
-					SerializeField(s, nameof(testPlayerOnShield));
+					SerializeField(s, nameof(testPlayerOnShield), boolAsByte: true);
 				}
-				SerializeField(s, nameof(testPlayerOnShield));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(testShieldInZone));
