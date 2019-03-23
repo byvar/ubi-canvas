@@ -6,16 +6,14 @@ namespace UbiArt.ITF {
 		[Serialize("isDebugActor")] public bool isDebugActor;
 		[Serialize("appearCursor")] public float appearCursor;
 		[Serialize("useComponent")] public bool useComponent;
-		[Serialize("useComponent")] public byte useComponent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(isDebugActor), boolAsByte: true);
 					SerializeField(s, nameof(appearCursor));
-					SerializeField(s, nameof(useComponent));
+					SerializeField(s, nameof(useComponent), boolAsByte: true);
 				}
-				SerializeField(s, nameof(useComponent));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(isDebugActor));

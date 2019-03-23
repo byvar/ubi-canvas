@@ -8,7 +8,6 @@ namespace UbiArt.ITF {
 		[Serialize("fallAnim"       )] public StringID fallAnim;
 		[Serialize("avoidanceRadius")] public float avoidanceRadius;
 		[Serialize("maxTime"        )] public float maxTime;
-		[Serialize("name"           )] public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
@@ -16,13 +15,6 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(swimAnim));
 				SerializeField(s, nameof(fallAnim));
 				SerializeField(s, nameof(avoidanceRadius));
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(groundAnim));
-				SerializeField(s, nameof(swimAnim));
-				SerializeField(s, nameof(fallAnim));
-				SerializeField(s, nameof(avoidanceRadius));
-				SerializeField(s, nameof(maxTime));
 			} else {
 				SerializeField(s, nameof(groundAnim));
 				SerializeField(s, nameof(swimAnim));

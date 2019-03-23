@@ -9,8 +9,6 @@ namespace UbiArt.ITF {
 		[Serialize("bouncingDefaultActorWeight"    )] public float bouncingDefaultActorWeight;
 		[Serialize("bouncingPunchMultiplier"       )] public float bouncingPunchMultiplier;
 		[Serialize("physAngularRealignSmoothFactor")] public float physAngularRealignSmoothFactor;
-		[Serialize("physRadius"                    )] public float physRadius;
-		[Serialize("physWindMultiplier"            )] public float physWindMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {

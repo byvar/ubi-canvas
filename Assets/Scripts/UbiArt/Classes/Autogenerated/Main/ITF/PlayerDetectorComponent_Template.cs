@@ -12,10 +12,8 @@ namespace UbiArt.ITF {
 		[Serialize("drcPlayerOnly"          )] public bool drcPlayerOnly;
 		[Serialize("detectPivotOnly"        )] public bool detectPivotOnly;
 		[Serialize("playerId"               )] public int playerId;
-		[Serialize("allowDeadActors"        )] public int allowDeadActors;
-		[Serialize("firstPlayerOnly"        )] public int firstPlayerOnly;
 		[Serialize("playerToDetect"         )] public int playerToDetect;
-		[Serialize("allowAIControlledPlayer")] public int allowAIControlledPlayer;
+		[Serialize("allowAIControlledPlayer")] public bool allowAIControlledPlayer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {

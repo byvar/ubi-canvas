@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.COL)]
+	[Games(GameFlags.RA | GameFlags.COL | GameFlags.RL)]
 	public partial class BezierTreeRendererComponent_Template : GraphicComponent_Template {
 		[Serialize("bezierRenderer"     )] public BezierCurveRenderer_Template bezierRenderer;
 		[Serialize("tileSpriteIndex"    )] public uint tileSpriteIndex;
@@ -16,10 +16,9 @@ namespace UbiArt.ITF {
 		[Serialize("uvScaleAdaptive"    )] public bool uvScaleAdaptive;
 		[Serialize("uvScrollSpeed"      )] public float uvScrollSpeed;
 		[Serialize("zOffset"            )] public float zOffset;
-		[Serialize("bezierRenderer"     )] public Placeholder bezierRenderer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(bezierRenderer));
 				SerializeField(s, nameof(tileSpriteIndex));
 				SerializeField(s, nameof(tileSpriteSubDiv));

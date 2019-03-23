@@ -21,11 +21,9 @@ namespace UbiArt.ITF {
 		[Serialize("FogAlpha"                    )] public Spline FogAlpha;
 		[Serialize("UseSequenceInitialPos"       )] public bool UseSequenceInitialPos;
 		[Serialize("MustUpdateChildrenPos"       )] public bool MustUpdateChildrenPos;
-		[Serialize("RestoreInitialPos"           )] public int RestoreInitialPos;
 		[Serialize("coeffTwoCamera"              )] public float coeffTwoCamera;
 		[Serialize("coeffTwoCameraOut"           )] public float coeffTwoCameraOut;
 		[Serialize("depthZ"                      )] public float depthZ;
-		[Serialize("dynamicDeltaFogZ"            )] public int dynamicDeltaFogZ;
 		[Serialize("actorInterpoDuration"        )] public float actorInterpoDuration;
 		[Serialize("actorInterpoSetFlipFromSpeed")] public int actorInterpoSetFlipFromSpeed;
 		[Serialize("dynamicDeltaFogZ"            )] public bool dynamicDeltaFogZ;
@@ -83,6 +81,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(ParentID));
 				SerializeField(s, nameof(ParentBone));
 				SerializeField(s, nameof(RestoreInitialPos), boolAsByte: true);
+				SerializeField(s, nameof(Keyframes));
 				SerializeField(s, nameof(startFrameCameraBlend));
 				SerializeField(s, nameof(actorInterpoDuration));
 				SerializeField(s, nameof(actorInterpoSetFlipFromSpeed));
@@ -97,22 +96,22 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(UseSequenceInitialPos), boolAsByte: true);
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(float__0));
-					SerializeField(s, nameof(float__1));
+					SerializeField(s, nameof(coeffOneCamera));
+					SerializeField(s, nameof(coeffOneCameraOut));
 				}
-				SerializeField(s, nameof(ObjectPath__2));
-				SerializeField(s, nameof(StringID__3));
-				SerializeField(s, nameof(string__4));
-				SerializeField(s, nameof(bool__5));
-				SerializeField(s, nameof(Trajectory_Template__6));
-				SerializeField(s, nameof(int__7));
-				SerializeField(s, nameof(float__8));
-				SerializeField(s, nameof(float__9));
-				SerializeField(s, nameof(uint__10));
-				SerializeField(s, nameof(BoolEventList__11));
-				SerializeField(s, nameof(Spline__12));
-				SerializeField(s, nameof(Spline__13));
-				SerializeField(s, nameof(bool__14));
+				SerializeField(s, nameof(ParentFriendlyName));
+				SerializeField(s, nameof(ParentID));
+				SerializeField(s, nameof(ParentBone));
+				SerializeField(s, nameof(RestoreInitialPos));
+				SerializeField(s, nameof(Keyframes));
+				SerializeField(s, nameof(startFrameCameraBlend));
+				SerializeField(s, nameof(coeffCameraIn));
+				SerializeField(s, nameof(coeffCameraOut));
+				SerializeField(s, nameof(cameraMask));
+				SerializeField(s, nameof(Flip));
+				SerializeField(s, nameof(Color));
+				SerializeField(s, nameof(Alpha));
+				SerializeField(s, nameof(UseSequenceInitialPos));
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					SerializeField(s, nameof(coeffOneCamera));

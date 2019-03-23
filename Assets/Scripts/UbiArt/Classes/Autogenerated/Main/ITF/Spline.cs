@@ -43,6 +43,16 @@ namespace UbiArt.ITF {
 				[Serialize("interp_bezier_standard")] bezier_standard = 4,
 			}
 		}
+
+		public enum UsageMode {
+			X,
+			Y,
+			Z,
+			XY,
+			XYZ,
+			RGB,
+			WZ
+		}
 	}
 }
 

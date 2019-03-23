@@ -6,8 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("onHoldEvent"               )] public EventSender onHoldEvent;
 		[Serialize("onReleaseEvent"            )] public EventSender onReleaseEvent;
 		[Serialize("minTimeBeforeHoldEventSend")] public float minTimeBeforeHoldEventSend;
-		[Serialize("useTapGauge"               )] public byte useTapGauge;
-		[Serialize("useTapGauge"               )] public int useTapGauge;
+		[Serialize("useTapGauge"               )] public bool useTapGauge;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -20,9 +19,8 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(onHoldEvent));
 					SerializeField(s, nameof(onReleaseEvent));
-					SerializeField(s, nameof(useTapGauge));
+					SerializeField(s, nameof(useTapGauge), boolAsByte: true);
 				}
-				SerializeField(s, nameof(useTapGauge));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(onHoldEvent));

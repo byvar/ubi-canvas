@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class DigShapeComponent : ActorComponent {
-		[Serialize("Action")] public Action Action;
+		[Serialize("Action")] public Action action;
 		[Serialize("Radius")] public float Radius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(Action));
+				SerializeField(s, nameof(action));
 				SerializeField(s, nameof(Radius));
 			}
 		}

@@ -18,11 +18,10 @@ namespace UbiArt.ITF {
 		[Serialize("disableIfMapAlreadyCompleted")] public bool disableIfMapAlreadyCompleted;
 		[Serialize("triggerActivator"            )] public bool triggerActivator;
 		[Serialize("retriggerOnCheckpoint"       )] public int retriggerOnCheckpoint;
-		[Serialize("triggerOnceDone"             )] public int triggerOnceDone;
 		[Serialize("activator"                   )] public uint activator;
-		[Serialize("mode"                        )] public Enum_mode mode;
-		[Serialize("onEnterEvent"                )] public Placeholder onEnterEvent;
-		[Serialize("onExitEvent"                 )] public Placeholder onExitEvent;
+
+		[Serialize("onEnterEvent"                )] public Generic<Event> onEnterEvent;
+		[Serialize("onExitEvent"                 )] public Generic<Event> onExitEvent;
 		[Serialize("resetOnExit"                 )] public bool resetOnExit;
 		[Serialize("triggerEachActor"            )] public bool triggerEachActor;
 		[Serialize("triggerAllActors"            )] public bool triggerAllActors;
@@ -39,11 +38,7 @@ namespace UbiArt.ITF {
 		[Serialize("triggerBroadcast"            )] public bool triggerBroadcast;
 		[Serialize("triggerExitOnBecomeInactive" )] public bool triggerExitOnBecomeInactive;
 		[Serialize("version"                     )] public uint version;
-		[Serialize("Enum_VH_0__0"                )] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("float__1"                    )] public float float__1;
-		[Serialize("bool__2"                     )] public bool bool__2;
-		[Serialize("bool__3"                     )] public bool bool__3;
-		[Serialize("Generic<Event>__4"           )] public Generic<Event> Generic_Event__4;
+		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
@@ -93,21 +88,23 @@ namespace UbiArt.ITF {
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(Enum_VH_0__0));
+					SerializeField(s, nameof(mode));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(triggerOnceDone));
+					SerializeField(s, nameof(activator));
 				}
-				SerializeField(s, nameof(float__1));
-				SerializeField(s, nameof(bool__2));
-				SerializeField(s, nameof(bool__3));
-				SerializeField(s, nameof(Generic_Event__4));
+				SerializeField(s, nameof(countdown));
+				SerializeField(s, nameof(DBG_DrawCountdown));
+				SerializeField(s, nameof(AutoActivation));
+				SerializeField(s, nameof(NoConditionEvent));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(mode));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(triggerOnceDone));
+					SerializeField(s, nameof(activator));
 				}
 				SerializeField(s, nameof(countdown));
 				SerializeField(s, nameof(DBG_DrawCountdown));
@@ -128,24 +125,6 @@ namespace UbiArt.ITF {
 			[Serialize("Mode_OnceAndRetrigger")] OnceAndRetrigger = 2,
 			[Serialize("Mode_OnceAndReset"    )] OnceAndReset = 3,
 			[Serialize("Mode_Multiple"        )] Multiple = 4,
-		}
-		public enum Enum_mode {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-		}
-		public enum Enum_mode {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-		}
-		public enum Enum_VH_0 {
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
 		}
 		public override uint? ClassCRC => 0x5E302A40;
 	}

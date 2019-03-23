@@ -10,14 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("DIRECT_PICKING" )] public bool DIRECT_PICKING;
 		[Serialize("viewType"       )] public VIEWTYPE viewType;
 		[Serialize("SCENE"          )] public Nullable<Scene> SCENE;
-		[Serialize("EMBED_SCENE"    )] public int EMBED_SCENE;
-		[Serialize("IS_SINGLE_PIECE")] public int IS_SINGLE_PIECE;
-		[Serialize("ZFORCED"        )] public int ZFORCED;
-		[Serialize("xFLIPPED"       )] public int xFLIPPED;
-		[Serialize("parentBind"     )] public Nullable<ActorBind> parentBind;
-		[Serialize("SCENE"          )] public Generic<Scene> SCENE;
-		[Serialize("parentBind"     )] public Nullable<Bind> parentBind;
-		[Serialize("USERFRIENDLY"   )] public string USERFRIENDLY;
+		[Serialize("SCENE"          )] public Generic<Scene> SCENEOrigins;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
@@ -27,16 +20,16 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(IS_SINGLE_PIECE));
 					SerializeField(s, nameof(ZFORCED));
 					SerializeField(s, nameof(xFLIPPED));
-					SerializeField(s, nameof(parentBind));
+					SerializeField(s, nameof(parentBindOrigins)); // Serialized a second time
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(RELATIVEPATH));
 					SerializeField(s, nameof(EMBED_SCENE));
 					SerializeField(s, nameof(IS_SINGLE_PIECE));
 					SerializeField(s, nameof(ZFORCED));
-					SerializeField(s, nameof(SCENE));
+					SerializeField(s, nameof(SCENEOrigins));
 				}
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(RELATIVEPATH));
 				SerializeField(s, nameof(EMBED_SCENE));
 				SerializeField(s, nameof(IS_SINGLE_PIECE));
@@ -47,18 +40,12 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(SCENE));
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30)) {
-					SerializeField(s, nameof(parentBind));
-					SerializeField(s, nameof(USERFRIENDLY));
-				}
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(RELATIVEPATH));
-				SerializeField(s, nameof(EMBED_SCENE));
-				SerializeField(s, nameof(IS_SINGLE_PIECE));
-				SerializeField(s, nameof(ZFORCED));
-				SerializeField(s, nameof(DIRECT_PICKING));
-				SerializeField(s, nameof(viewType));
-				if (s.HasFlags(SerializeFlags.Flags_x30)) {
-					SerializeField(s, nameof(USERFRIENDLY));
+					if (s.HasFlags(SerializeFlags.Flags11 | SerializeFlags.Flags12)) {
+						SerializeField(s, nameof(parentBind)); // Serialized a second time
+					}
+					if (!s.HasFlags(SerializeFlags.Default)) {
+						SerializeField(s, nameof(USERFRIENDLY)); // Serialized a second time
+					}
 				}
 			} else {
 				SerializeField(s, nameof(RELATIVEPATH));

@@ -143,16 +143,15 @@ namespace UbiArt.ITF {
 		[Serialize("newsButton_iOS"                         )] public bool newsButton_iOS;
 		[Serialize("newsButton_tvOS"                        )] public bool newsButton_tvOS;
 		[Serialize("newsButton_android"                     )] public bool newsButton_android;
-		[Serialize("packageDirectories"                     )] public Placeholder packageDirectories;
-		[Serialize("environmentBrickPaths"                  )] public Placeholder environmentBrickPaths;
-		[Serialize("costumeEnvironmentBrickPaths"           )] public Placeholder costumeEnvironmentBrickPaths;
-		[Serialize("firstLevelPath"                         )] public PathRef firstLevelPath;
-		[Serialize("ps3HddIntroMoviePathContainer"          )] public Placeholder ps3HddIntroMoviePathContainer;
-		[Serialize("demoTrailerMoviePathContainer"          )] public Placeholder demoTrailerMoviePathContainer;
+		[Serialize("packageDirectories"                     )] public CList<Path> packageDirectories;
+		[Serialize("environmentBrickPaths"                  )] public CList<Path> environmentBrickPaths;
+		[Serialize("costumeEnvironmentBrickPaths"           )] public CList<Path> costumeEnvironmentBrickPaths;
+		[Serialize("ps3HddIntroMoviePathContainer"          )] public CList<RO2_GameManagerConfig_Template.LocalisedVideo> ps3HddIntroMoviePathContainer;
+		[Serialize("demoTrailerMoviePathContainer"          )] public CList<Path> demoTrailerMoviePathContainer;
 		[Serialize("scoreRecapChallengePath"                )] public Path scoreRecapChallengePath;
-		[Serialize("catchTheAllMaps"                        )] public Placeholder catchTheAllMaps;
-		[Serialize("debugmapslist"                          )] public Placeholder debugmapslist;
-		[Serialize("packages"                               )] public Placeholder packages;
+		[Serialize("catchTheAllMaps"                        )] public CList<Path> catchTheAllMaps;
+		[Serialize("debugmapslist"                          )] public CList<Path> debugmapslist;
+		[Serialize("packages"                               )] public CList<Path> packages;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -181,7 +180,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(petRewardSpawnHour));
 				SerializeField(s, nameof(homeMapPath));
 				SerializeField(s, nameof(soccerConfig));
-				SerializeField(s, nameof(firstLevelPath));
+				SerializeField(s, nameof(firstLevelPath), type: typeof(PathRef));
 				SerializeField(s, nameof(introMoviePath));
 				SerializeField(s, nameof(introMoviePathContainer));
 				SerializeField(s, nameof(ps3HddIntroMoviePathContainer));

@@ -16,7 +16,6 @@ namespace UbiArt.ITF {
 		[Serialize("childOrientationInfluence")] public float childOrientationInfluence;
 		[Serialize("attachToChild"            )] public bool attachToChild;
 		[Serialize("width"                    )] public float width;
-		[Serialize("attachToChild"            )] public int attachToChild;
 		[Serialize("parentBoneEnd"            )] public bool parentBoneEnd;
 		[Serialize("childBoneEnd"             )] public bool childBoneEnd;
 		protected override void SerializeImpl(CSerializerObject s) {

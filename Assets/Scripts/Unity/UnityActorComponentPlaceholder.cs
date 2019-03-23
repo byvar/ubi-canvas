@@ -3,5 +3,5 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UnityActorComponentPlaceholder : MonoBehaviour {
-	public string name;
+	public string componentName;
 }

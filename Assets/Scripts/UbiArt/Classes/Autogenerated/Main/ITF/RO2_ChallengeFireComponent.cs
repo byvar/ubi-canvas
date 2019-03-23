@@ -6,7 +6,6 @@ namespace UbiArt.ITF {
 		[Serialize("distanceFromCheckpoint")] public float distanceFromCheckpoint;
 		[Serialize("speedFactor"           )] public float speedFactor;
 		[Serialize("hasMoved"              )] public bool hasMoved;
-		[Serialize("hasMoved"              )] public byte hasMoved;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -15,9 +14,8 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(speedFactor));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(hasMoved));
+					SerializeField(s, nameof(hasMoved), boolAsByte: true);
 				}
-				SerializeField(s, nameof(hasMoved));
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(distanceFromCheckpoint));

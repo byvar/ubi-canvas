@@ -48,10 +48,10 @@ namespace Asyncoroutine
             return new AwaiterCoroutine<WaitWhile>(waitWhile);
         }
 
-        public static AwaiterCoroutine<WWW> GetAwaiter(this WWW www)
+        /*public static AwaiterCoroutine<WWW> GetAwaiter(this WWW www)
         {
             return new AwaiterCoroutine<WWW>(www);
-        }
+        }*/
 
         public static AwaiterCoroutine<AsyncOperation> GetAwaiter(this AsyncOperation asyncOperation)
         {

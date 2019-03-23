@@ -10,7 +10,6 @@ namespace UbiArt.ITF {
 		[Serialize("scaleActor"           )] public bool scaleActor;
 		[Serialize("trunkAttachCurveLimit")] public float trunkAttachCurveLimit;
 		[Serialize("trunkAttachCurveWidth")] public float trunkAttachCurveWidth;
-		[Serialize("appearMode"           )] public Enum_appearMode appearMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -36,12 +35,6 @@ namespace UbiArt.ITF {
 			[Serialize("AppearMode_ScaleAndFade")] ScaleAndFade = 1,
 			[Serialize("AppearMode_Anim"        )] Anim = 2,
 			[Serialize("AppearMode_Grow"        )] Grow = 3,
-		}
-		public enum Enum_appearMode {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
 		}
 		public override uint? ClassCRC => 0x22B261CD;
 	}

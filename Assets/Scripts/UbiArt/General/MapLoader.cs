@@ -39,8 +39,8 @@ namespace UbiArt {
 		}
 		public Queue<ObjectPlaceHolder> pathsToLoad = new Queue<ObjectPlaceHolder>();
 
-		public Dictionary<StringID, CList<Generic<FriseConfig>>> fcg = new Dictionary<StringID, CList<Generic<FriseConfig>>>();
-		public Dictionary<StringID, CList<Generic<GFXMaterialShader_Template>>> msh = new Dictionary<StringID, CList<Generic<GFXMaterialShader_Template>>>();
+		public Dictionary<StringID, CList<Generic<ITF.FriseConfig>>> fcg = new Dictionary<StringID, CList<Generic<ITF.FriseConfig>>>();
+		public Dictionary<StringID, CList<Generic<ITF.GFXMaterialShader_Template>>> msh = new Dictionary<StringID, CList<Generic<ITF.GFXMaterialShader_Template>>>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 
 		public Globals globals = null;
@@ -61,12 +61,12 @@ namespace UbiArt {
 
 		public async Task LoadAll() {
 			try {
-				Scene mainScene = null;
+				ITF.Scene mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (Reader reader) => {
 						if (reader.ReadBoolean()) { // Read scene
-							mainScene = new Scene(reader);
+							mainScene = new ITF.Scene(reader);
 							print("Read:" + reader.BaseStream.Position.ToString("X8") + " - Length:" + reader.BaseStream.Length.ToString("X8") + " - " + (reader.BaseStream.Position == reader.BaseStream.Length ? "good!" : "bad!"));
 						}
 					});
@@ -91,10 +91,10 @@ namespace UbiArt {
 					await WaitFrame();
 				}
 				if (mainScene != null) {
-					foreach (Frise f in mainScene.frise) {
+					foreach (ITF.Frise f in mainScene.FRISE) {
 						GameObject gao = f.Gao;
 					}
-					foreach (Generic<Actor> a in mainScene.actors) {
+					foreach (Generic<ITF.Actor> a in mainScene.ACTORS) {
 						GameObject gao = a.obj.Gao;
 					}
 				}

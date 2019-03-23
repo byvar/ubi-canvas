@@ -7,21 +7,12 @@ namespace UbiArt.ITF {
 		[Serialize("anim"         )] public StringID anim;
 		[Serialize("duration"     )] public float duration;
 		[Serialize("speed"        )] public float speed;
-		[Serialize("name"         )] public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(factTargetPos));
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(duration));
-				SerializeField(s, nameof(speed));
-			} else {
-				SerializeField(s, nameof(factTargetPos));
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(duration));
-				SerializeField(s, nameof(speed));
-			}
+			SerializeField(s, nameof(factTargetPos));
+			SerializeField(s, nameof(anim));
+			SerializeField(s, nameof(duration));
+			SerializeField(s, nameof(speed));
 		}
 		public override uint? ClassCRC => 0x7BB9644A;
 	}
