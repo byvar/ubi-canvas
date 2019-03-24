@@ -1,11 +1,10 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CheckpointComponent : CheckpointComponent {
-		[Serialize("PrimaryPowerUp"             )] public Enum_PrimaryPowerUp PrimaryPowerUp;
-		[Serialize("SecondaryPowerUp"           )] public Enum_SecondaryPowerUp SecondaryPowerUp;
-		[Serialize("mapPowerup"                 )] public Enum_mapPowerup mapPowerup;
 		[Serialize("PrimaryPowerUp"             )] public StringID PrimaryPowerUp;
 		[Serialize("SecondaryPowerUp"           )] public StringID SecondaryPowerUp;
 		[Serialize("mapPowerup"                 )] public StringID mapPowerup;
@@ -21,10 +20,11 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 			} else {
-				if (s.HasFlags(SerializeFlags.Flags_x03)) {
-					SerializeField(s, nameof(PrimaryPowerUp));
-					SerializeField(s, nameof(SecondaryPowerUp));
-					SerializeField(s, nameof(mapPowerup));
+				if (s.HasFlags(SerializeFlags.Editor)) {
+					SerializeFieldAsChoiceList(s, nameof(PrimaryPowerUp), choices: PowerUpList);
+					SerializeFieldAsChoiceList(s, nameof(SecondaryPowerUp), choices: PowerUpList);
+					SerializeFieldAsChoiceList(s, nameof(mapPowerup), choices: PowerUpList);
+				} else {
 					SerializeField(s, nameof(PrimaryPowerUp));
 					SerializeField(s, nameof(SecondaryPowerUp));
 					SerializeField(s, nameof(mapPowerup));
@@ -42,6 +42,29 @@ namespace UbiArt.ITF {
 		public enum Enum_PrimaryPowerUp {
 		}
 		public override uint? ClassCRC => 0x0A060966;
+
+		private List<Tuple<string, StringID>> powerUpList;
+		public List<Tuple<string, StringID>> PowerUpList {
+			get {
+				if (powerUpList == null) {
+					powerUpList = new List<Tuple<string, StringID>> {
+						{ new Tuple<string, StringID>("RLC_PowerUp_None", new StringID("RLC_PowerUp_None")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_DoubleJump", new StringID("RLC_PowerUp_DoubleJump")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_Helico", new StringID("RLC_PowerUp_Helico")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_Fireball", new StringID("RLC_PowerUp_Fireball")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_FireballActive", new StringID("RLC_PowerUp_FireballActive")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_Magnet", new StringID("RLC_PowerUp_Magnet")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_Shield", new StringID("RLC_PowerUp_Shield")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_Tickle", new StringID("RLC_PowerUp_Tickle")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_AutoAttack", new StringID("RLC_PowerUp_AutoAttack")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_Invincibility", new StringID("RLC_PowerUp_Invincibility")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_Polymorph", new StringID("RLC_PowerUp_Polymorph")) },
+						{ new Tuple<string, StringID>("RLC_PowerUp_Detector", new StringID("RLC_PowerUp_Detector")) },
+					};
+				}
+				return powerUpList;
+			}
+		}
 	}
 }
 

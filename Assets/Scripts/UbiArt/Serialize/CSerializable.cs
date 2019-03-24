@@ -35,6 +35,14 @@ namespace UbiArt {
 			}
 		}
 
+		protected void SerializeFieldAsChoiceList(CSerializerObject s, string fieldName, string empty = null, List<Tuple<string, StringID>> choices = null) {
+			FieldInfo f = GetType().GetField(fieldName);
+			SerializeAttribute[] atts = (SerializeAttribute[])f.GetCustomAttributes(typeof(SerializeAttribute), false);
+			if (atts.Length != 0) {
+				s.Serialize(this, f, atts[0]);
+			}
+		}
+
 		public virtual uint? ClassCRC => null;
 	}
 }

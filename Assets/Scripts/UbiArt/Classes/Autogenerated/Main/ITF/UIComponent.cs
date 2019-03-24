@@ -5,10 +5,10 @@ namespace UbiArt.ITF {
 	public partial class UIComponent : ActorComponent {
 		[Serialize("transition"               )] public bool transition;
 		[Serialize("display"                  )] public bool display;
-		[Serialize("leftComponentID"          )] public Enum_leftComponentID leftComponentID;
-		[Serialize("rightComponentID"         )] public Enum_rightComponentID rightComponentID;
-		[Serialize("upComponentID"            )] public Enum_upComponentID upComponentID;
-		[Serialize("downComponentID"          )] public Enum_downComponentID downComponentID;
+		[Serialize("leftComponentID"          )] public StringID leftComponentID;
+		[Serialize("rightComponentID"         )] public StringID rightComponentID;
+		[Serialize("upComponentID"            )] public StringID upComponentID;
+		[Serialize("downComponentID"          )] public StringID downComponentID;
 		[Serialize("buggyLine"                )] public bool buggyLine;
 		[Serialize("showingFadeDuration"      )] public float showingFadeDuration;
 		[Serialize("hidingFadeDuration"       )] public float hidingFadeDuration;
@@ -30,10 +30,6 @@ namespace UbiArt.ITF {
 		[Serialize("rightComponent"           )] public string rightComponent;
 		[Serialize("upComponent"              )] public string upComponent;
 		[Serialize("downComponent"            )] public string downComponent;
-		[Serialize("StringID__2"              )] public StringID StringID__2;
-		[Serialize("StringID__3"              )] public StringID StringID__3;
-		[Serialize("StringID__4"              )] public StringID StringID__4;
-		[Serialize("StringID__5"              )] public StringID StringID__5;
 		[Serialize("Vector2__6"               )] public Vector2 Vector2__6;
 		[Serialize("Vector2__7"               )] public Vector2 Vector2__7;
 		[Serialize("float__8"                 )] public float float__8;
@@ -77,10 +73,10 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(transition));
 					SerializeField(s, nameof(display));
-					SerializeField(s, nameof(StringID__2));
-					SerializeField(s, nameof(StringID__3));
-					SerializeField(s, nameof(StringID__4));
-					SerializeField(s, nameof(StringID__5));
+					SerializeField(s, nameof(leftComponentID));
+					SerializeField(s, nameof(rightComponentID));
+					SerializeField(s, nameof(upComponentID));
+					SerializeField(s, nameof(downComponentID));
 					SerializeField(s, nameof(Vector2__6));
 					SerializeField(s, nameof(Vector2__7));
 					SerializeField(s, nameof(float__8));
@@ -90,10 +86,17 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(transition));
 					SerializeField(s, nameof(display));
-					SerializeField(s, nameof(leftComponentID));
-					SerializeField(s, nameof(rightComponentID));
-					SerializeField(s, nameof(upComponentID));
-					SerializeField(s, nameof(downComponentID));
+					if (s.HasFlags(SerializeFlags.Editor)) {
+						SerializeFieldAsChoiceList(s, nameof(leftComponentID), "Empty");
+						SerializeFieldAsChoiceList(s, nameof(rightComponentID), "Empty");
+						SerializeFieldAsChoiceList(s, nameof(upComponentID), "Empty");
+						SerializeFieldAsChoiceList(s, nameof(downComponentID), "Empty");
+					} else {
+						SerializeField(s, nameof(leftComponentID));
+						SerializeField(s, nameof(rightComponentID));
+						SerializeField(s, nameof(upComponentID));
+						SerializeField(s, nameof(downComponentID));
+					}
 					SerializeField(s, nameof(buggyLine));
 					SerializeField(s, nameof(showingFadeDuration));
 					SerializeField(s, nameof(hidingFadeDuration));
@@ -102,15 +105,12 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(screenSpace));
 				}
-				if (s.HasFlags(SerializeFlags.Flags_x03)) {
+				if (s.HasFlags(SerializeFlags.Editor)) {
 					SerializeField(s, nameof(UIState));
 				}
 				SerializeField(s, nameof(needsAspectRatioFix));
 				SerializeField(s, nameof(needsAspectRatioFixLocal));
 			}
-		}
-		public enum Enum_leftComponentID {
-			[Serialize("Empty")] Empty = -1,
 		}
 		public enum View {
 			[Serialize("View::None"            )] None = 0,

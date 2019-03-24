@@ -9,11 +9,8 @@ namespace UbiArt.ITF {
 		[Serialize("WwiseValidateSounds"  )] public CList<StringID> WwiseValidateSounds;
 		[Serialize("WwiseBackSounds"      )] public CList<StringID> WwiseBackSounds;
 		[Serialize("defaultItem"          )] public StringID defaultItem;
-		[Serialize("defaultItem"          )] public Enum_defaultItem defaultItem;
-		[Serialize("defaultValidate"      )] public Enum_defaultValidate defaultValidate;
-		[Serialize("backItem"             )] public Enum_backItem backItem;
+		[Serialize("defaultValidate"      )] public StringID defaultValidate;
 		[Serialize("defaultPadItem"       )] public StringID defaultPadItem;
-		[Serialize("defaultPadItem"       )] public Enum_defaultPadItem defaultPadItem;
 		[Serialize("backItem"             )] public StringID backItem;
 		[Serialize("actionItem"           )] public StringID actionItem;
 		[Serialize("otherItem"            )] public StringID otherItem;
@@ -50,12 +47,17 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(WwiseValidateSounds));
 				SerializeField(s, nameof(WwiseBackSounds));
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(defaultItem));
-					SerializeField(s, nameof(defaultItem));
-					SerializeField(s, nameof(defaultValidate));
-					SerializeField(s, nameof(backItem));
-					SerializeField(s, nameof(defaultPadItem));
-					SerializeField(s, nameof(defaultPadItem));
+					if (s.HasFlags(SerializeFlags.Editor)) {
+						SerializeFieldAsChoiceList(s, nameof(defaultItem), "Empty");
+						SerializeFieldAsChoiceList(s, nameof(defaultValidate), "Empty");
+						SerializeFieldAsChoiceList(s, nameof(backItem), "Empty");
+						SerializeFieldAsChoiceList(s, nameof(defaultPadItem), "Empty");
+					} else {
+						SerializeField(s, nameof(defaultItem));
+						SerializeField(s, nameof(defaultValidate));
+						SerializeField(s, nameof(backItem));
+						SerializeField(s, nameof(defaultPadItem));
+					}
 				}
 			}
 		}
@@ -70,9 +72,6 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(mainSoundId));
 				SerializeField(s, nameof(remoteSoundId));
 			}
-		}
-		public enum Enum_defaultItem {
-			[Serialize("Empty")] Empty = -1,
 		}
 		public override uint? ClassCRC => 0x93AE77AE;
 	}

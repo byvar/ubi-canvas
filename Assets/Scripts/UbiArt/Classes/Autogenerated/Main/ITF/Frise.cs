@@ -86,7 +86,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(USERPIVOT));
 					SerializeField(s, nameof(ConfigName));
 					SerializeField(s, nameof(SwitchTexturePipeExtremity));
-					if (s.HasFlags(SerializeFlags.Flags_x03)) {
+					if (s.HasFlags(SerializeFlags.Default)) {
 						SerializeField(s, nameof(ColorFactor_Red));
 						SerializeField(s, nameof(ColorFactor_Green));
 						SerializeField(s, nameof(ColorFactor_Blu));
@@ -145,13 +145,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(PreComputedForCook));
 					SerializeField(s, nameof(XfForCook));
 					SerializeField(s, nameof(DepthForCook));
-					if (s.HasFlags(SerializeFlags.Flags_x03 | SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(ColorFactor));
-						SerializeField(s, nameof(ColorFog));
-						SerializeField(s, nameof(useStaticFog));
-						SerializeField(s, nameof(renderInRelection));
-					}
-					if (s.HasFlags(SerializeFlags.Flags_x03)) {
+					if (s.HasFlags(SerializeFlags.Default)) {
+						if (s.HasFlags(SerializeFlags.Flags8)) {
+							SerializeField(s, nameof(ColorFactor));
+							SerializeField(s, nameof(ColorFog));
+							SerializeField(s, nameof(useStaticFog));
+							SerializeField(s, nameof(renderInRelection));
+						}
 						SerializeField(s, nameof(PrimitiveParameters));
 						SerializeField(s, nameof(DepthOffset));
 						SerializeField(s, nameof(UvX_Offset));
@@ -196,13 +196,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(PreComputedForCook), boolAsByte: true);
 					SerializeField(s, nameof(XfForCook));
 					SerializeField(s, nameof(DepthForCook));
-					if (s.HasFlags(SerializeFlags.Flags_x03 | SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(ColorFactor));
-						SerializeField(s, nameof(ColorFog));
-						SerializeField(s, nameof(useStaticFog), boolAsByte: true);
-						SerializeField(s, nameof(renderInRelection), boolAsByte: true);
-					}
-					if (s.HasFlags(SerializeFlags.Flags_x03)) {
+					if (s.HasFlags(SerializeFlags.Default)) {
+						if (s.HasFlags(SerializeFlags.Flags8)) {
+							SerializeField(s, nameof(ColorFactor));
+							SerializeField(s, nameof(ColorFog));
+							SerializeField(s, nameof(useStaticFog), boolAsByte: true);
+							SerializeField(s, nameof(renderInRelection), boolAsByte: true);
+						}
 						SerializeField(s, nameof(PrimitiveParameters));
 						SerializeField(s, nameof(DepthOffset));
 						SerializeField(s, nameof(UvX_Offset));
@@ -254,13 +254,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(PreComputedForCook));
 					SerializeField(s, nameof(XfForCook));
 					SerializeField(s, nameof(DepthForCook));
-					if (s.HasFlags(SerializeFlags.Flags_x03 | SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(ColorFactor));
-						SerializeField(s, nameof(ColorFog));
-						SerializeField(s, nameof(useStaticFog));
-						SerializeField(s, nameof(renderInRelection));
-					}
-					if (s.HasFlags(SerializeFlags.Flags_x03)) {
+					if (s.HasFlags(SerializeFlags.Default)) {
+						if (s.HasFlags(SerializeFlags.Flags8)) {
+							SerializeField(s, nameof(ColorFactor));
+							SerializeField(s, nameof(ColorFog));
+							SerializeField(s, nameof(useStaticFog));
+							SerializeField(s, nameof(renderInRelection));
+						}
 						SerializeField(s, nameof(PrimitiveParameters));
 						SerializeField(s, nameof(DepthOffset));
 						SerializeField(s, nameof(UvX_Offset));
@@ -316,11 +316,11 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(PreComputedForCook));
 					SerializeField(s, nameof(XfForCook));
 					SerializeField(s, nameof(DepthForCook));
-					if (s.HasFlags(SerializeFlags.Flags_x03 | SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(ColorFactor));
-						SerializeField(s, nameof(ColorFog));
-					}
-					if (s.HasFlags(SerializeFlags.Flags_x03)) {
+					if (s.HasFlags(SerializeFlags.Default)) {
+						if (s.HasFlags(SerializeFlags.Flags8)) {
+							SerializeField(s, nameof(ColorFactor));
+							SerializeField(s, nameof(ColorFog));
+						}
 						SerializeField(s, nameof(PrimitiveParameters));
 						SerializeField(s, nameof(DepthOffset));
 						SerializeField(s, nameof(UvX_Offset));

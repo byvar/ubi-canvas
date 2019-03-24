@@ -43,8 +43,8 @@ namespace UbiArt {
 		Persistent = Flags2 | StoreObjectSizes,
 		Flags_xC0 = Flags6 | Flags7,
 		Flags_x30 = Flags4 | Flags5,
-		Flags_x03 = Flags0 | Flags1,
-		Flags_0xF = Flags_x03 | Persistent,
-		Default = Flags_x03 | Flags_xC0,
+		Editor = Flags0 | Flags1,
+		Flags_0xF = Editor | Persistent,
+		Default = Editor | Flags_xC0,
 	}
 }

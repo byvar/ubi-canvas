@@ -47,7 +47,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(BrushRadiusGrid));
 				SerializeField(s, nameof(LightDir));
 				SerializeField(s, nameof(MergeCount));
-				if (s.HasFlags(SerializeFlags.Flags_x03)) {
+				if (s.HasFlags(SerializeFlags.Editor)) {
 					SerializeField(s, nameof(Vecto_LengthMax));
 					SerializeField(s, nameof(Smooth_LengthMax));
 					SerializeField(s, nameof(Smooth_ShapeMinSize));

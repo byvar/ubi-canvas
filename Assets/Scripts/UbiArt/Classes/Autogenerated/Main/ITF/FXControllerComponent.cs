@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(allowBusMixEvents));
 					SerializeField(s, nameof(allowMusicEvents));
 				}
-				if (s.HasFlags(SerializeFlags.Flags_x03)) {
+				if (s.HasFlags(SerializeFlags.Editor)) {
 					SerializeField(s, nameof(FXCurrentSwitchRules));
 				}
 			}

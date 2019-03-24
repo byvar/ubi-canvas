@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(AutoStart));
-				if (!s.HasFlags(SerializeFlags.Flags_x03)) {
+				if (!s.HasFlags(SerializeFlags.Editor)) {
 					SerializeField(s, nameof(Detection));
 					SerializeField(s, nameof(DetectionOperator));
 					SerializeField(s, nameof(Test));
@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(OnStayActive));
 			} else {
 				SerializeField(s, nameof(AutoStart));
-				if (!s.HasFlags(SerializeFlags.Flags_x03)) {
+				if (!s.HasFlags(SerializeFlags.Editor)) {
 					SerializeField(s, nameof(Detection));
 					SerializeField(s, nameof(DetectionOperator));
 					SerializeField(s, nameof(Test));
@@ -49,7 +49,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(OnActivate));
 				SerializeField(s, nameof(OnDeactivate));
 				SerializeField(s, nameof(OnStayActive));
-				if (s.HasFlags(SerializeFlags.Flags_x03)) {
+				if (s.HasFlags(SerializeFlags.Editor)) {
 					SerializeField(s, nameof(StayActiveDelay));
 				}
 			}

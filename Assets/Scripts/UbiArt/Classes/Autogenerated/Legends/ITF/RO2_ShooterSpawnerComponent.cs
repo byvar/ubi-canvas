@@ -2,15 +2,20 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_449_sub_B85570 : CSerializable {
-		[Serialize("tweenId"                    )] public Enum_tweenId tweenId;
-		[Serialize("spawnActorId"               )] public Enum_spawnActorId spawnActorId;
+	public partial class RO2_ShooterSpawnerComponent : CSerializable {
+		[Serialize("tweenId"                    )] public StringID tweenId;
+		[Serialize("spawnActorId"               )] public StringID spawnActorId;
 		[Serialize("beforeCamRelativeInitialPos")] public Vector3 beforeCamRelativeInitialPos;
 		[Serialize("useTutoOnFirstSpawnee"      )] public bool useTutoOnFirstSpawnee;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(tweenId));
-			SerializeField(s, nameof(spawnActorId));
+			if (s.HasFlags(SerializeFlags.Editor)) {
+				SerializeFieldAsChoiceList(s, nameof(tweenId), "invalid");
+				SerializeFieldAsChoiceList(s, nameof(spawnActorId), "invalid");
+			} else {
+				SerializeField(s, nameof(tweenId));
+				SerializeField(s, nameof(spawnActorId));
+			}
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 				SerializeField(s, nameof(beforeCamRelativeInitialPos));
 			}

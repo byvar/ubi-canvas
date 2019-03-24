@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(nodePaintingOffsetY));
 			SerializeField(s, nameof(frequency));
-			if (s.HasFlags(SerializeFlags.Flags_x03)) {
+			if (s.HasFlags(SerializeFlags.Editor)) {
 				SerializeField(s, nameof(currentOffset));
 			}
 		}

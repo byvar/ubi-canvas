@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(heightUnderRightCorner));
 				SerializeField(s, nameof(hookLengthLeft));
 				SerializeField(s, nameof(hookLengthRight));
-				if (s.HasFlags(SerializeFlags.Flags_x03)) {
+				if (s.HasFlags(SerializeFlags.Editor)) {
 					SerializeField(s, nameof(onlyOneTrigger));
 					SerializeField(s, nameof(setUpEnabled));
 					SerializeField(s, nameof(osciSummitHeight));
