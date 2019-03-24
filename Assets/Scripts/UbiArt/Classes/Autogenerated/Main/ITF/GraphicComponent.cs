@@ -48,13 +48,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(disableLight));
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
-				if (s.HasFlags(SerializeFlags.Default | SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(ColorFactor));
-					SerializeField(s, nameof(ColorFog));
-					SerializeField(s, nameof(useStaticFog));
-					SerializeField(s, nameof(renderInReflection));
-				}
 				if (s.HasFlags(SerializeFlags.Default)) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						SerializeField(s, nameof(ColorFactor));
+						SerializeField(s, nameof(ColorFog));
+						SerializeField(s, nameof(useStaticFog));
+						SerializeField(s, nameof(renderInReflection));
+					}
 					SerializeField(s, nameof(PrimitiveParameters));
 					SerializeField(s, nameof(colorComputerTagId));
 					SerializeField(s, nameof(renderInTarget));
@@ -63,13 +63,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(depthOffset));
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
-				if (s.HasFlags(SerializeFlags.Default | SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(ColorFactor));
-					SerializeField(s, nameof(ColorFog));
-					SerializeField(s, nameof(useStaticFog));
-					SerializeField(s, nameof(renderInReflection));
-				}
 				if (s.HasFlags(SerializeFlags.Default)) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						SerializeField(s, nameof(ColorFactor));
+						SerializeField(s, nameof(ColorFog));
+						SerializeField(s, nameof(useStaticFog));
+						SerializeField(s, nameof(renderInReflection));
+					}
 					SerializeField(s, nameof(PrimitiveParameters));
 					SerializeField(s, nameof(colorComputerTagId));
 					SerializeField(s, nameof(renderInTarget));
@@ -79,11 +79,11 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(AlphaInit));
 				}
 			} else {
-				if (s.HasFlags(SerializeFlags.Default | SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(ColorFactor));
-					SerializeField(s, nameof(ColorFog));
-				}
 				if (s.HasFlags(SerializeFlags.Default)) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						SerializeField(s, nameof(ColorFactor));
+						SerializeField(s, nameof(ColorFog));
+					}
 					SerializeField(s, nameof(PrimitiveParameters));
 					SerializeField(s, nameof(colorComputerTagId));
 					SerializeField(s, nameof(renderInTarget));

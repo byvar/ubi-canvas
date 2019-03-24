@@ -75,7 +75,7 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.All)]
 		public partial class InstructionSet : CSerializable {
 			[Serialize("name"           )] public StringID name;
-			[Serialize("instructions"   )] public CList<TweenInstruction_Template> instructions;
+			[Serialize("instructions"   )] public CList<Generic<TweenInstruction_Template>> instructions;
 			[Serialize("iterationCount" )] public uint iterationCount;
 			[Serialize("angleOffset"    )] public AngleAmount angleOffset;
 			[Serialize("startEvent"     )] public Generic<Event> startEvent;

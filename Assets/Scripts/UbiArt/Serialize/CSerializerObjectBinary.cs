@@ -48,6 +48,9 @@ namespace UbiArt {
 				obj = reader.ReadColor();
 			} else {
 				var ctor = type.GetConstructor(Type.EmptyTypes);
+				if (ctor == null) {
+					throw new Exception("Constructor is null");
+				}
 				obj = ctor.Invoke(new object[] { });
 				if (obj is ICSerializable) {
 					((ICSerializable)obj).Serialize(this, name);
@@ -58,11 +61,23 @@ namespace UbiArt {
 		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
 			object obj = null;
 			Serialize(ref obj, type ?? f.FieldType, name: name);
+			if (type != null) {
+				if (type == typeof(byte) && f.FieldType == typeof(bool)) {
+					if (((byte)obj) == 1) {
+						obj = true;
+					} else if (((byte)obj) != 0) {
+						throw new Exception(Position + ": BoolAsByte with name " + name + " was " + ((byte)obj) + "!");
+						obj = false;
+					} else {
+						obj = false;
+					}
+				}
+			}
 			f.SetValue(containerObj, obj);
 		}
 
 		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null) {
-			if (((a.version & Settings.s.versionFlags) == Settings.s.versionFlags) && (a.flags == SerializeFlags.None || (flags & a.flags) == a.flags)) {
+			if (((a.version & Settings.s.versionFlags) == Settings.s.versionFlags) && (a.flags == SerializeFlags.None || (flags & a.flags) != SerializeFlags.None)) {
 				Serialize(o, f, type: type, name: a.Name);
 			}
 		}

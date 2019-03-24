@@ -25,6 +25,7 @@ namespace UbiArt {
 		}
 
 		protected void SerializeField(CSerializerObject s, string fieldName, Type type = null, bool boolAsByte = false) {
+			Pointer pos = s.Position;
 			FieldInfo f = GetType().GetField(fieldName);
 			SerializeAttribute[] atts = (SerializeAttribute[])f.GetCustomAttributes(typeof(SerializeAttribute), false);
 			if (atts.Length != 0) {
@@ -32,6 +33,9 @@ namespace UbiArt {
 					type = typeof(byte);
 				}
 				s.Serialize(this, f, atts[0], type: type);
+				if (Type.GetTypeCode(type) != TypeCode.Object) {
+					MapLoader.Loader.print(pos + " - " + fieldName + " - " + f.GetValue(this));
+				}
 			}
 		}
 

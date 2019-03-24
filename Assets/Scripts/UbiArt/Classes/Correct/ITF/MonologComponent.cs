@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(textID), type: typeof(FakeEnum<LocalisationId>));
+				SerializeFieldAsChoiceList(s, nameof(textID), "invalid");
 			}
 		}
 		public override uint? ClassCRC => 0x0DB39EE4;

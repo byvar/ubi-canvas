@@ -16,7 +16,11 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(startSet), type: typeof(FakeEnum<StringID>));
+					if (s.HasFlags(SerializeFlags.Editor)) {
+						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
+					} else {
+						SerializeField(s, nameof(startSet));
+					}
 					SerializeField(s, nameof(instructionSets));
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
@@ -29,7 +33,11 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(skipInstructionSetSyncOffset), boolAsByte: true);
 					SerializeField(s, nameof(autoStart), boolAsByte: true);
 					SerializeField(s, nameof(groupIndex));
-					SerializeField(s, nameof(startSet), type: typeof(FakeEnum<StringID>));
+					if (s.HasFlags(SerializeFlags.Editor)) {
+						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
+					} else {
+						SerializeField(s, nameof(startSet));
+					}
 					SerializeField(s, nameof(instructionSets));
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
@@ -41,7 +49,11 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(skipInstructionSetSyncOffset), boolAsByte: true);
 					SerializeField(s, nameof(autoStart), boolAsByte: true);
 					SerializeField(s, nameof(groupIndex));
-					SerializeField(s, nameof(startSet), type: typeof(FakeEnum<StringID>));
+					if (s.HasFlags(SerializeFlags.Editor)) {
+						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
+					} else {
+						SerializeField(s, nameof(startSet));
+					}
 					SerializeField(s, nameof(instructionSets));
 				}
 			} else {
@@ -54,7 +66,11 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(skipInstructionSetSyncOffset));
 					SerializeField(s, nameof(autoStart));
 					SerializeField(s, nameof(groupIndex));
-					SerializeField(s, nameof(startSet), type: typeof(FakeEnum<StringID>));
+					if (s.HasFlags(SerializeFlags.Editor)) {
+						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
+					} else {
+						SerializeField(s, nameof(startSet));
+					}
 					SerializeField(s, nameof(instructionSets));
 				}
 			}

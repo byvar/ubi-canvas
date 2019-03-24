@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class GFXPrimitiveParam : CSerializable {
 		[Serialize("GridFluidParam"                   )] public GFX_GridFluidObjParam GridFluidParam;
 		[Serialize("GlobalScissor"                    )] public Enum_GlobalScissor GlobalScissor;
@@ -17,6 +17,7 @@ namespace UbiArt.ITF {
 		[Serialize("OutlineGlow"                      )] public float OutlineGlow;
 		[Serialize("ViewportVisibility"               )] public uint ViewportVisibility;
 		[Serialize("gfxOccludeInfo"                   )] public GFX_OCCLUDE_INFO gfxOccludeInfo;
+		[Serialize("gfxOccludeInfo"                   )] public GFX_OCCLUDE_INFO2 gfxOccludeInfo2;
 		[Serialize("colorForMask1"                    )] public Color colorForMask1;
 		[Serialize("colorForMask2"                    )] public Color colorForMask2;
 		[Serialize("colorForMask3"                    )] public Color colorForMask3;
@@ -26,11 +27,12 @@ namespace UbiArt.ITF {
 		[Serialize("BackLightFactor"                  )] public float BackLightFactor;
 		[Serialize("FrontLightBlurFactor"             )] public float FrontLightBlurFactor;
 		[Serialize("BackLightBlurFactor"              )] public float BackLightBlurFactor;
-		[Serialize("Color__0"                         )] public Color Color__0;
-		[Serialize("float__1"                         )] public float float__1;
-		[Serialize("float__2"                         )] public float float__2;
-		[Serialize("float__3"                         )] public float float__3;
-		[Serialize("float__4"                         )] public float float__4;
+
+		
+		[Serialize("useStaticFog"        )] public bool useStaticFog;
+		[Serialize("RenderInReflections" )] public bool RenderInReflections;
+		[Serialize("RenderToTexture"     )] public bool RenderToTexture;
+
 		[Serialize("Color__5"                         )] public Color Color__5;
 		[Serialize("float__6"                         )] public float float__6;
 		[Serialize("bool__7"                          )] public bool bool__7;
@@ -50,29 +52,43 @@ namespace UbiArt.ITF {
 		[Serialize("float__21"                        )] public float float__21;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(Color__0));
-				SerializeField(s, nameof(float__1));
-				SerializeField(s, nameof(float__2));
-				SerializeField(s, nameof(float__3));
-				SerializeField(s, nameof(float__4));
-				SerializeField(s, nameof(Color__5));
-				SerializeField(s, nameof(float__6));
+			if (Settings.s.game == Settings.Game.RL) {
+				SerializeField(s, nameof(colorFactor));
+				SerializeField(s, nameof(FrontLightBrightness));
+				SerializeField(s, nameof(FrontLightContrast));
+				SerializeField(s, nameof(BackLightBrightness));
+				SerializeField(s, nameof(BackLightContrast));
+				SerializeField(s, nameof(colorFog));
+				SerializeField(s, nameof(DynamicFogFactor));
+				SerializeField(s, nameof(useStaticFog));
+				SerializeField(s, nameof(RenderInReflections));
+				if (s.HasFlags(SerializeFlags.Flags8)) {
+					SerializeField(s, nameof(RenderToTexture));
+				}
+				SerializeField(s, nameof(gfxOccludeInfo2));
+			} else if (Settings.s.game == Settings.Game.VH) {
+				SerializeField(s, nameof(colorFactor));
+				SerializeField(s, nameof(FrontLightBrightness));
+				SerializeField(s, nameof(FrontLightContrast));
+				SerializeField(s, nameof(BackLightBrightness));
+				SerializeField(s, nameof(BackLightContrast));
+				SerializeField(s, nameof(colorFog));
+				SerializeField(s, nameof(DynamicFogFactor));
 				SerializeField(s, nameof(bool__7));
 				SerializeField(s, nameof(bool__8));
 				SerializeField(s, nameof(bool__9));
 				SerializeField(s, nameof(bool__10));
 				SerializeField(s, nameof(Nullable_NormalLightingParam__11));
-				SerializeField(s, nameof(Color__12));
-				SerializeField(s, nameof(float__13));
-				SerializeField(s, nameof(float__14));
-				SerializeField(s, nameof(uint__15));
+				SerializeField(s, nameof(OutlineColor));
+				SerializeField(s, nameof(OutlineWidth));
+				SerializeField(s, nameof(OutlineGlow));
+				SerializeField(s, nameof(ViewportVisibility));
 				SerializeField(s, nameof(Enum_VH_0__16));
 				SerializeField(s, nameof(Enum_VH_1__17));
-				SerializeField(s, nameof(Color__18));
-				SerializeField(s, nameof(Color__19));
-				SerializeField(s, nameof(Color__20));
-				SerializeField(s, nameof(float__21));
+				SerializeField(s, nameof(colorForMask1));
+				SerializeField(s, nameof(colorForMask2));
+				SerializeField(s, nameof(colorForMask3));
+				SerializeField(s, nameof(saturation));
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					SerializeField(s, nameof(GridFluidParam));
@@ -112,6 +128,11 @@ namespace UbiArt.ITF {
 			[Serialize("GFX_OCCLUDE_INFO_BIG_OPAQUE"          )] BIG_OPAQUE = 1,
 			[Serialize("GFX_OCCLUDE_INFO_SMALL_OR_TRANSPARENT")] SMALL_OR_TRANSPARENT = 2,
 			[Serialize("GFX_OCCLUDE_INFO_ZPASS_ONLY"          )] ZPASS_ONLY = 3,
+		}
+		public enum GFX_OCCLUDE_INFO2 {
+			[Serialize("GFX_OCCLUDE_INFO_DEFAULT"             )] DEFAULT = 0,
+			[Serialize("GFX_OCCLUDE_INFO_BIG_OPAQUE"          )] BIG_OPAQUE = 1,
+			[Serialize("GFX_OCCLUDE_INFO_SMALL_OR_TRANSPARENT")] SMALL_OR_TRANSPARENT = 2,
 		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_0")] Value_0 = 0,

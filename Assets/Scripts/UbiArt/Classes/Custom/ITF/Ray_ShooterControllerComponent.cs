@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 			public override uint? ClassCRC => 0x24E7EEE0;
 		}
 
-		[Games(GameFlags.RO)]
+		[Games(GameFlags.RO | GameFlags.RL)]
 		public partial class StateSequences : CSerializable {
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

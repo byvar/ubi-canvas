@@ -65,7 +65,7 @@ namespace UbiArt {
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
-						s.flags |= SerializeFlags.Flags7 | SerializeFlags.Flags1;
+						s.flags |= SerializeFlags.Flags7 | SerializeFlags.Flags0;
 						bool readScene = true;
 						s.Serialize(ref readScene);
 						if (readScene) { // Read scene

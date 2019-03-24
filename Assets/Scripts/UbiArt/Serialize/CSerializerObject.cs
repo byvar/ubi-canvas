@@ -36,7 +36,7 @@ namespace UbiArt {
 					return (((this.flags & (SerializeFlags.Flags4 | SerializeFlags.Flags7)) == SerializeFlags.None) &&
 						((this.flags & SerializeFlags.Default) != SerializeFlags.None));
 				case SerializeFlags.Flags10:
-					return (((this.flags & SerializeFlags.Flags1) != SerializeFlags.None) &&
+					return (((this.flags & SerializeFlags.Flags0) != SerializeFlags.None) &&
 						((this.flags & SerializeFlags.Flags_xC0) != SerializeFlags.None));
 				default:
 					return ((this.flags & flags) != SerializeFlags.None);
