@@ -384,19 +384,14 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(SinAngle));
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 		public partial class IndexList : CSerializable {
-			[Serialize("IdTexConfig"              )] public uint IdTexConfig;
-			[Serialize("CArray<unsigned short>__0")] public CArray<ushort> CArray_ushort__0;
-			[Serialize("uint__1"                  )] public uint uint__1;
+			[Serialize("List"       )] public CList<ushort> List;
+			[Serialize("IdTexConfig")] public uint IdTexConfig;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (Settings.s.game == Settings.Game.VH) {
-					SerializeField(s, nameof(CArray_ushort__0));
-					SerializeField(s, nameof(uint__1));
-				} else {
-					SerializeField(s, nameof(IdTexConfig));
-				}
+				SerializeField(s, nameof(List));
+				SerializeField(s, nameof(IdTexConfig));
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]

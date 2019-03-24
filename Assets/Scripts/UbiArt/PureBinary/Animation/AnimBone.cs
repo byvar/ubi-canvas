@@ -7,19 +7,19 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimBone::serialize
-	public class AnimBone {
+	public class AnimBone : ICSerializable {
 		public Link key;
 		public StringID tag;
 		public byte unk2;
 		public uint unk3;
 		public Link parentKey;
 
-		public AnimBone(Reader reader) {
-			key = new Link(reader);
-			tag = new StringID(reader);
-			unk2 = reader.ReadByte();
-			unk3 = reader.ReadUInt32();
-			parentKey = new Link(reader);
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref key);
+			s.Serialize(ref tag);
+			s.Serialize(ref unk2);
+			s.Serialize(ref unk3);
+			s.Serialize(ref parentKey);
 		}
 		/*
 		Example:

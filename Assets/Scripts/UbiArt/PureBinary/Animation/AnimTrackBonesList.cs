@@ -7,17 +7,17 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackBonesList::serialize
-	public class AnimTrackBonesList {
+	public class AnimTrackBonesList : ICSerializable {
 		public ushort unk0;
 		public ushort unk1;
 		public ushort unk2;
 		public ushort unk3;
-
-		public AnimTrackBonesList(Reader reader) {
-			unk0 = reader.ReadUInt16();
-			unk1 = reader.ReadUInt16();
-			unk2 = reader.ReadUInt16();
-			unk3 = reader.ReadUInt16();
+		
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref unk0);
+			s.Serialize(ref unk1);
+			s.Serialize(ref unk2);
+			s.Serialize(ref unk3);
 		}
 	}
 }

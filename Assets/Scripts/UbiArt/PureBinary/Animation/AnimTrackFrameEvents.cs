@@ -7,19 +7,20 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackFrameEvents::serialize
-	public class AnimTrackFrameEvents {
+	public class AnimTrackFrameEvents : ICSerializable {
 		public float unk;
 		public CList<AnimMarkerEvent> events;
 
-		public AnimTrackFrameEvents(Reader reader) {
-			unk = reader.ReadSingle();
-			events = new CList<AnimMarkerEvent>(reader);
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref unk);
+			s.Serialize(ref events);
 		}
 
-		public class AnimMarkerEvent {
+		public class AnimMarkerEvent : ICSerializable {
 			public uint type;
-			public AnimMarkerEvent(Reader reader) {
-				type = reader.ReadUInt32();
+
+			public void Serialize(CSerializerObject s, string name) {
+				s.Serialize(ref type);
 			}
 		}
 	}

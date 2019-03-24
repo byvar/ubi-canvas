@@ -16,6 +16,10 @@ namespace UbiArt {
 		}
 
 		public override Pointer Position => Pointer.Current(reader);
+		public override Pointer Length => new Pointer((uint)reader.BaseStream.Length, Pointer.Current(reader).file);
+		public override void ResetPosition() {
+			reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+		}
 
 		public override void Serialize(ref object obj, Type type, string name = null) {
 			if (Type.GetTypeCode(type) != TypeCode.Object) {
@@ -67,6 +71,10 @@ namespace UbiArt {
 			object obj2 = null;
 			Serialize(ref obj2, type ?? typeof(T), name: name);
 			obj = (T)obj2;
+		}
+
+		public override void SerializeBytes(ref byte[] obj, int numBytes) {
+			obj = reader.ReadBytes(numBytes);
 		}
 	}
 }

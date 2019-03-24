@@ -23,7 +23,8 @@ namespace UbiArt.FileFormat {
                 data = fileReader.ReadBytes((int)stream.Length);
             }
             reader = new Reader(new MemoryStream(data), Settings.s.IsLittleEndian);
-            baseOffset = -headerOffset;
+			serializer = new CSerializerObjectBinary(reader);
+			baseOffset = -headerOffset;
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
         }
 

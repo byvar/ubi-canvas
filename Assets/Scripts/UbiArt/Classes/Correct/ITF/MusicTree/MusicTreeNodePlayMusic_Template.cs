@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RO)]
-	public partial class MusicTreeNodePlayMusic_Template : BlendTreeNodeTemplate<MusicTreeResult> {
+	[Games(GameFlags.RO | GameFlags.RL | GameFlags.COL)]
+	public partial class MusicTreeNodePlayMusic_Template : MusicTreeNode_Template {
 		[Serialize("musicName")] public StringID musicName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -28,11 +28,11 @@ namespace UbiArt {
 		public bool blockyMode = false;
 
 		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
-		public delegate void ReadAction(Reader reader);
+		public delegate void SerializeAction(CSerializerObject s);
 		public struct ObjectPlaceHolder {
 			public Path path;
-			public ReadAction action;
-			public ObjectPlaceHolder(Path path, ReadAction action) {
+			public SerializeAction action;
+			public ObjectPlaceHolder(Path path, SerializeAction action) {
 				this.path = path;
 				this.action = action;
 			}
@@ -64,10 +64,13 @@ namespace UbiArt {
 				ITF.Scene mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
 					Path p = new Path(pathFolder, pathFile);
-					Load(p, (Reader reader) => {
-						if (reader.ReadBoolean()) { // Read scene
-							mainScene = new ITF.Scene(reader);
-							print("Read:" + reader.BaseStream.Position.ToString("X8") + " - Length:" + reader.BaseStream.Length.ToString("X8") + " - " + (reader.BaseStream.Position == reader.BaseStream.Length ? "good!" : "bad!"));
+					Load(p, (CSerializerObject s) => {
+						s.flags |= SerializeFlags.Flags7 | SerializeFlags.Flags1;
+						bool readScene = true;
+						s.Serialize(ref readScene);
+						if (readScene) { // Read scene
+							s.Serialize(ref mainScene);
+							print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 						}
 					});
 				}
@@ -83,10 +86,9 @@ namespace UbiArt {
 					}
 					if (files.ContainsKey(id)) {
 						FileWithPointers f = files[id];
-						Reader reader = f.reader;
-						Pointer.DoAt(ref reader, Pointer.FromPathID(id), () => {
-							o.action(reader);
-						});
+						CSerializerObject s = f.serializer;
+						s.ResetPosition();
+						o.action(s);
 					}
 					await WaitFrame();
 				}
@@ -108,14 +110,13 @@ namespace UbiArt {
 			}
 		}
 
-		public void Load(Path path, ReadAction action) {
+		public void Load(Path path, SerializeAction action) {
 			if (path.IsNull) return;
 			if (files.ContainsKey(path.stringID)) {
 				FileWithPointers f = files[path.stringID];
-				Reader reader = f.reader;
-				Pointer.DoAt(ref reader, Pointer.FromPathID(path.stringID), () => {
-					action(reader);
-				});
+				CSerializerObject s = f.serializer;
+				s.ResetPosition();
+				action(s);
 			} else {
 				pathsToLoad.Enqueue(new ObjectPlaceHolder(path, action));
 			}

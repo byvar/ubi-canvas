@@ -7,13 +7,22 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimBonePAS::serialize
-	public class AnimBonePAS {
+	public class AnimBonePAS : ICSerializable {
 		public ushort unk0;
 		public short unk1;
 		public short unk2;
 		public short unk3;
 		public short unk4;
 		public short unk5;
+
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref unk0);
+			s.Serialize(ref unk1);
+			s.Serialize(ref unk2);
+			s.Serialize(ref unk3);
+			s.Serialize(ref unk4);
+			s.Serialize(ref unk5);
+		}
 
 		public AnimBonePAS(Reader reader) {
 			unk0 = reader.ReadUInt16();

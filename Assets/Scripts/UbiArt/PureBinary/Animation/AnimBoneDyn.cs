@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimBoneDyn::serialize
-	public class AnimBoneDyn {
+	public class AnimBoneDyn : ICSerializable {
 		public Vector2 vec0;
 		public float float1;
 		public Vector2 vec2;
@@ -16,14 +16,14 @@ namespace UbiArt.Animation {
 		public Vector2 vec5;
 		public float float6;
 
-		public AnimBoneDyn(Reader reader) {
-			vec0 = reader.ReadVector2();
-			float1 = reader.ReadSingle();
-			vec2 = reader.ReadVector2();
-			float3 = reader.ReadSingle();
-			float4 = reader.ReadSingle();
-			vec5 = reader.ReadVector2();
-			float6 = reader.ReadSingle();
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref vec0);
+			s.Serialize(ref float1);
+			s.Serialize(ref vec2);
+			s.Serialize(ref float3);
+			s.Serialize(ref float4);
+			s.Serialize(ref vec5);
+			s.Serialize(ref float6);
 		}
 		/*
 		Example:

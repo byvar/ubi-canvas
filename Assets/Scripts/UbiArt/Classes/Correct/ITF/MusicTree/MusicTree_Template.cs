@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RL)]
 	public partial class MusicTree_Template : BlendTreeTemplate<MusicTreeResult> {
 		[Serialize("metronomeType"  )] public uint metronomeType;
 		protected override void SerializeImpl(CSerializerObject s) {

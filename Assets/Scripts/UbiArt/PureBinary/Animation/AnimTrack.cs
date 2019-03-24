@@ -8,7 +8,7 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrack::serialize
 	// anm.ckd file
-	public class AnimTrack {
+	public class AnimTrack : ICSerializable {
 		public uint version;
 		public float unk;
 		public CList<AnimTrackBML> bml;
@@ -33,40 +33,41 @@ namespace UbiArt.Animation {
 		public uint unk0;
 		public uint unk1;
 
-		public AnimTrack(Reader reader) {
-			version = reader.ReadUInt32();
-			unk = reader.ReadSingle();
-			bml = new CList<AnimTrackBML>(reader);
-			bonePAS = new CList<AnimBonePAS>(reader);
-			unks = new CList<uint>(reader);
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref version);
+			s.Serialize(ref unk);
+			s.Serialize(ref bml);
+			s.Serialize(ref bonePAS);
+			s.Serialize(ref unks);
 			if (unks.Count == 0) {
-				bonePAS2 = new CList<AnimBonePAS>(reader);
+				s.Serialize(ref bonePAS2);
 			}
-			boneZAL = new CList<AnimBoneZAL>(reader);
-			flt0 = reader.ReadSingle();
-			flt1 = reader.ReadSingle();
-			flt2 = reader.ReadSingle();
-			polylines = new CList<AnimTrackPolyline>(reader);
-			bonesLists = new CList<AnimTrackBonesList>(reader);
-			frameEvents = new CList<AnimTrackFrameEvents>(reader);
-			soundEvents = new CList<AnimTrackFrameSoundEvents>(reader);
-			vectors = new CList<Vector2>(reader);
-			vec0 = reader.ReadVector2();
-			vec1 = reader.ReadVector2();
-			vec2 = reader.ReadVector2();
-			vec3 = reader.ReadVector2();
-			skeletonPath = new TexturePath(reader);
-			texturePaths = new CList<TexturePath>(reader);
-			unk0 = reader.ReadUInt32();
-			unk1 = reader.ReadUInt32();
+			s.Serialize(ref boneZAL);
+			s.Serialize(ref flt0);
+			s.Serialize(ref flt1);
+			s.Serialize(ref flt2);
+			s.Serialize(ref polylines);
+			s.Serialize(ref bonesLists);
+			s.Serialize(ref frameEvents);
+			s.Serialize(ref soundEvents);
+			s.Serialize(ref vectors);
+			s.Serialize(ref vec0);
+			s.Serialize(ref vec1);
+			s.Serialize(ref vec2);
+			s.Serialize(ref vec3);
+			s.Serialize(ref skeletonPath);
+			s.Serialize(ref texturePaths);
+			s.Serialize(ref unk0);
+			s.Serialize(ref unk1);
 		}
 
-		public class TexturePath {
+		public class TexturePath : ICSerializable {
 			public StringID sid;
 			public Path path;
-			public TexturePath(Reader reader) {
-				sid = new StringID(reader);
-				path = new Path(reader);
+
+			public void Serialize(CSerializerObject s, string name) {
+				s.Serialize(ref sid);
+				s.Serialize(ref path);
 			}
 		}
 	}

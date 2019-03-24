@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_EventAddForceBone : Event {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RL)]
 	public partial class Sound : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

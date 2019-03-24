@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt {
-	public class TextureCooked {
+	public class TextureCooked : ICSerializable {
 		public static uint staticSignature = 0x54455800; // TEX\0
 		public uint unk;
 		public uint signature;
@@ -26,23 +26,23 @@ namespace UbiArt {
 		public uint unk5;
 		public byte[] texData;
 
-		public TextureCooked(Reader reader) {
-			unk = reader.ReadUInt32();
-			signature = reader.ReadUInt32();
-			hdrSize = reader.ReadUInt32();
-			texSize = reader.ReadUInt32();
-			width = reader.ReadUInt16();
-			height = reader.ReadUInt16();
-			unk_x = reader.ReadUInt16();
-			unk_y = reader.ReadUInt16();
-			texSize2 = reader.ReadUInt32();
-			unk0 = reader.ReadUInt32();
-			unk1 = reader.ReadUInt32();
-			unk2 = reader.ReadUInt32();
-			unk3 = reader.ReadUInt32();
-			unk4 = reader.ReadUInt32();
-			unk5 = reader.ReadUInt32();
-			texData = reader.ReadBytes((int)texSize);
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref unk);
+			s.Serialize(ref signature);
+			s.Serialize(ref hdrSize);
+			s.Serialize(ref texSize);
+			s.Serialize(ref width);
+			s.Serialize(ref height);
+			s.Serialize(ref unk_x);
+			s.Serialize(ref unk_y);
+			s.Serialize(ref texSize2);
+			s.Serialize(ref unk0);
+			s.Serialize(ref unk1);
+			s.Serialize(ref unk2);
+			s.Serialize(ref unk3);
+			s.Serialize(ref unk4);
+			s.Serialize(ref unk5);
+			s.SerializeBytes(ref texData, (int)texSize);
 		}
 
 		private Texture2D texture;

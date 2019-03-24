@@ -15,7 +15,6 @@ namespace UbiArt.ITF {
 		[Serialize("INSTANCEDATAFILE"         )] public Path INSTANCEDATAFILE;
 		[Serialize("persistenceId"            )] public uint persistenceId;
 		[Serialize("USEVIEWFRUSTUMFLAG"       )] public bool USEVIEWFRUSTUMFLAG;
-		[Serialize("ANGLE"                    )] public float ANGLE2;
 		[Serialize("SCALE"                    )] public Vector2 SCALE;
 		[Serialize("OFFSCREEN_UPDATE_OVERRIDE")] public int OFFSCREEN_UPDATE_OVERRIDE;
 		[Serialize("UPDATE_TYPE"              )] public UpdateType UPDATE_TYPE;
@@ -35,7 +34,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(POS2D));
 					SerializeField(s, nameof(RELATIVEZ));
-					SerializeField(s, nameof(ANGLE2));
+					SerializeField(s, nameof(ANGLE), type: typeof(float));
 					SerializeField(s, nameof(SCALE));
 					SerializeField(s, nameof(USERFRIENDLY));
 					SerializeField(s, nameof(OFFSCREEN_UPDATE_OVERRIDE));

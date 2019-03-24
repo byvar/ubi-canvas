@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace UbiArt.Animation {
 	// See: ITF::AnimSkeleton::serialize
 	// skl.ckd file
-	public class AnimSkeleton {
+	public class AnimSkeleton : ICSerializable {
 		public uint version;
 		public CList<StringID> boneTags;
 		public CList<StringID> boneIndices;
@@ -18,16 +18,17 @@ namespace UbiArt.Animation {
 		public CList<AnimBone> bones;
 		public CList<AnimBoneDyn> bonesDyn;
 
-		public AnimSkeleton(Reader reader) {
-			version = reader.ReadUInt32();
-			boneTags = new CList<StringID>(reader);
-			boneIndices = new CList<StringID>(reader);
-			boneTags2 = new CList<StringID>(reader);
-			boneIndices2 = new CList<StringID>(reader);
-			boneTags3 = new CList<StringID>(reader);
-			boneIndices3 = new CList<StringID>(reader);
-			bones = new CList<AnimBone>(reader);
-			bonesDyn = new CList<AnimBoneDyn>(reader);
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref version);
+			s.Serialize(ref boneTags);
+			s.Serialize(ref boneIndices);
+			s.Serialize(ref boneTags2);
+			s.Serialize(ref boneIndices2);
+			s.Serialize(ref boneTags3);
+			s.Serialize(ref boneIndices3);
+			s.Serialize(ref bones);
+			s.Serialize(ref bonesDyn);
+			throw new Exception(s.Position + " - Reading Skeleton. Code Incomplete!");
 			/*
 			Example of what comes after this:
 			00000000

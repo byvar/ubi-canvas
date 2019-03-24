@@ -7,21 +7,22 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackBML::serialize
-	public class AnimTrackBML {
+	public class AnimTrackBML : ICSerializable {
 		public float unk;
 		public CList<Entry> entries;
 
-		public AnimTrackBML(Reader reader) {
-			unk = reader.ReadSingle();
-			entries = new CList<Entry>(reader);
+		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref unk);
+			s.Serialize(ref entries);
 		}
 
-		public class Entry {
+		public class Entry : ICSerializable {
 			public StringID sid0;
 			public StringID sid1;
-			public Entry(Reader reader) {
-				sid0 = new StringID(reader);
-				sid1 = new StringID(reader);
+
+			public void Serialize(CSerializerObject s, string name) {
+				s.Serialize(ref sid0);
+				s.Serialize(ref sid1);
 			}
 		}
 		/*

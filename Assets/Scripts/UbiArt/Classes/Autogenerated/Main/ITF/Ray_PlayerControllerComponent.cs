@@ -60,7 +60,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(float__3));
 			}
 		}
-		[Games(GameFlags.RO)]
+		[Games(GameFlags.RO | GameFlags.RL)]
 		public partial class StateStargate : CSerializable {
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

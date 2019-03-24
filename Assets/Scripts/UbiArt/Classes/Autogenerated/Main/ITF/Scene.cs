@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(friezeConnections));
 					SerializeField(s, nameof(MUSIC_THEME));
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
 					SerializeField(s, nameof(ENGINE_VERSION));
 				}
@@ -84,21 +84,6 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(ACTORS));
 				SerializeField(s, nameof(friezeConnections));
 				SerializeField(s, nameof(sceneConfigs));
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(ENGINE_VERSION));
-				if (s.HasFlags(SerializeFlags.Flags6)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
-				}
-				if (s.HasFlags(SerializeFlags.Flags9)) {
-					SerializeField(s, nameof(TABS));
-					SerializeField(s, nameof(GRIDUNIT));
-					SerializeField(s, nameof(DEPTH_SEPARATOR));
-					SerializeField(s, nameof(NEAR_SEPARATOR));
-					SerializeField(s, nameof(FAR_SEPARATOR));
-				}
-				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(DEPENDENCIES));
-				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
 					SerializeField(s, nameof(ENGINE_VERSION));
