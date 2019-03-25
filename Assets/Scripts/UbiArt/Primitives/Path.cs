@@ -46,5 +46,10 @@ namespace UbiArt {
 			s.Serialize<StringID>(ref stringID);
 			s.Serialize<uint>(ref unk);
 		}
+
+		public override string ToString() {
+			if (stringID.IsNull) return "Path(null)";
+			return "Path(\"" + folder + "\", \"" + filename + "\")";
+		}
 	}
 }

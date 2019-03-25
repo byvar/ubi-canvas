@@ -11,20 +11,38 @@ namespace UbiArt.ITF {
 		[Serialize("useParentFlip"   )] public bool useParentFlip;
 		[Serialize("useParentScale"  )] public bool useParentScale;
 		[Serialize("useParentAlpha"  )] public bool useParentAlpha;
+		[Serialize("useRelativeZ"    )] public bool useRelativeZ;
 		[Serialize("removeWithParent")] public bool removeWithParent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(parentPath));
-				SerializeField(s, nameof(offsetPos));
-				SerializeField(s, nameof(offsetAngle));
-				SerializeField(s, nameof(type));
-				SerializeField(s, nameof(typeData));
-				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeField(s, nameof(useParentFlip));
-					SerializeField(s, nameof(useParentScale));
-					SerializeField(s, nameof(useParentAlpha));
-					SerializeField(s, nameof(removeWithParent));
+			if (Settings.s.game == Settings.Game.RL) {
+				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
+					SerializeField(s, nameof(parentPath));
+					SerializeField(s, nameof(offsetPos));
+					SerializeField(s, nameof(offsetAngle));
+					SerializeField(s, nameof(type));
+					SerializeField(s, nameof(typeData));
+					if (s.HasFlags(SerializeFlags.Editor)) {
+						SerializeField(s, nameof(useParentFlip));
+						SerializeField(s, nameof(useParentScale));
+						SerializeField(s, nameof(useParentAlpha));
+						SerializeField(s, nameof(useRelativeZ));
+						SerializeField(s, nameof(removeWithParent));
+					}
+				}
+			} else {
+				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
+					SerializeField(s, nameof(parentPath));
+					SerializeField(s, nameof(offsetPos));
+					SerializeField(s, nameof(offsetAngle));
+					SerializeField(s, nameof(type));
+					SerializeField(s, nameof(typeData));
+					if (s.HasFlags(SerializeFlags.Editor)) {
+						SerializeField(s, nameof(useParentFlip));
+						SerializeField(s, nameof(useParentScale));
+						SerializeField(s, nameof(useParentAlpha));
+						SerializeField(s, nameof(removeWithParent));
+					}
 				}
 			}
 		}

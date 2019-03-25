@@ -132,5 +132,9 @@ namespace UbiArt {
 		public static implicit operator StringID(string s) {
 			return new StringID(s);
 		}
+
+		public override string ToString() {
+			return "StringID(0x" + stringID.ToString("X8") + ")";
+		}
 	}
 }

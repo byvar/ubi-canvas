@@ -24,7 +24,18 @@ namespace UbiArt {
 		public override void Serialize(ref object obj, Type type, string name = null) {
 			if (Type.GetTypeCode(type) != TypeCode.Object) {
 				switch (Type.GetTypeCode(type)) {
-					case TypeCode.Boolean: obj = (object)reader.ReadBoolean(); break;
+					case TypeCode.Boolean:
+						uint tmp = reader.ReadUInt32();
+						if (tmp == 1) {
+							obj = true;
+						} else if (tmp != 0) {
+							throw new Exception(Position + ": Bool with name " + name + " was " + ((byte)obj) + "!");
+							obj = false;
+						} else {
+							obj = false;
+						}
+						//obj = (object)reader.ReadBoolean();
+						break;
 					case TypeCode.Byte: obj = (object)reader.ReadByte(); break;
 					case TypeCode.Char: obj = (object)reader.ReadChar(); break;
 					case TypeCode.String: obj = (object)reader.ReadString(); break;
