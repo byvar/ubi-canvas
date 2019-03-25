@@ -20,7 +20,11 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(tex));
 			SerializeField(s, nameof(zExtrude));
 			if (s.HasFlags(SerializeFlags.Flags10)) {
-				SerializeField(s, nameof(isSmooth));
+				if (Settings.s.game == Settings.Game.COL) {
+					SerializeField(s, nameof(isSmooth), boolAsByte: true);
+				} else {
+					SerializeField(s, nameof(isSmooth));
+				}
 				SerializeField(s, nameof(texIndex));
 			}
 		}

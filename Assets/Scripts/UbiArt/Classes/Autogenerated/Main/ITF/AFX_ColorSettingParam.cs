@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_ColorSettingParam : CSerializable {
 		[Serialize("use"            )] public bool use;
 		[Serialize("saturation"     )] public float saturation;
@@ -11,7 +11,11 @@ namespace UbiArt.ITF {
 		[Serialize("colorCorrection")] public Color colorCorrection;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(use));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(use), boolAsByte: true);
+			} else {
+				SerializeField(s, nameof(use));
+			}
 			SerializeField(s, nameof(saturation));
 			SerializeField(s, nameof(contrast));
 			SerializeField(s, nameof(contrastScale));

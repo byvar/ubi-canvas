@@ -10,8 +10,8 @@ namespace UbiArt {
 		public Matrix4x4 matrix;
 
 		public void Serialize(CSerializerObject s, string name) {
-			Debug.LogError(s.Position + ": Encountered Matrix44 with name " + name);
-			throw new Exception(s.Position + ": Encountered Matrix44 with name " + name);
+			/*Debug.LogError(s.Position + ": Encountered Matrix44 with name " + name);
+			throw new Exception(s.Position + ": Encountered Matrix44 with name " + name);*/
 			s.Serialize<float>(ref matrix.m00);
 			s.Serialize<float>(ref matrix.m01);
 			s.Serialize<float>(ref matrix.m02);

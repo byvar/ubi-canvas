@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_182_sub_761540 : CSerializable {
+	[Games(GameFlags.RL)] // There's an empty parent between this and ActorComponent
+	public partial class Unknown_RL_182_sub_761540 : ActorComponent {
 		[Serialize("name"               )] public string name;
 		[Serialize("mapPath"            )] public PathRef mapPath;
 		[Serialize("hasOnlineContent"   )] public int hasOnlineContent;

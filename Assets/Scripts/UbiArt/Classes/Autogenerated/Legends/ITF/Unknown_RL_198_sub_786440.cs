@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_198_sub_786440 : CSerializable {
-		[Serialize("shape"                )] public Placeholder shape;
+	public partial class Unknown_RL_198_sub_786440 : ActorComponent {
+		[Serialize("shape"                )] public EditableShape shape;
 		[Serialize("detectDangerousGround")] public bool detectDangerousGround;
 		[Serialize("broken"               )] public int broken;
 		protected override void SerializeImpl(CSerializerObject s) {

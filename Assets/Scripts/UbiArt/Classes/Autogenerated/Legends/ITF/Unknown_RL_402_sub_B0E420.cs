@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_402_sub_B0E420 : CSerializable {
+	public partial class Unknown_RL_402_sub_B0E420 : ActorComponent {
 		[Serialize("startOn"          )] public bool startOn;
 		[Serialize("pauseTween"       )] public bool pauseTween;
 		[Serialize("pauseTrajectory"  )] public bool pauseTrajectory;

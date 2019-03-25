@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class FriseTextureConfig : CSerializable {
 		[Serialize("path"         )] public Path path;
 		[Serialize("material"     )] public GFXMaterialSerializable material;
@@ -31,7 +31,11 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(collision));
 			SerializeField(s, nameof(scrollUV));
 			SerializeField(s, nameof(scrollAngle));
-			SerializeField(s, nameof(useUV2));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(useUV2), boolAsByte: true);
+			} else {
+				SerializeField(s, nameof(useUV2));
+			}
 			SerializeField(s, nameof(scaleUV2));
 			SerializeField(s, nameof(scrollUV2));
 			SerializeField(s, nameof(scrollAngle2));

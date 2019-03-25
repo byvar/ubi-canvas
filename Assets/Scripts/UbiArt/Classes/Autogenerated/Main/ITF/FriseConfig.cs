@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class FriseConfig : Actor_Template {
 		[Serialize("gameMaterial"                  )] public Path gameMaterial;
 		[Serialize("gameMaterialExtremityStart"    )] public Path gameMaterialExtremityStart;
@@ -74,7 +75,8 @@ namespace UbiArt.ITF {
 		[Serialize("frieze3D"                      )] public Frieze3DConfig frieze3D;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
+				throw new Exception(s.Position + " - FriseConfig is internal/purebinary in RO version, but you can figure it out with RFR. TODO!");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(gameMaterial));
 				SerializeField(s, nameof(gameMaterialExtremityStart));

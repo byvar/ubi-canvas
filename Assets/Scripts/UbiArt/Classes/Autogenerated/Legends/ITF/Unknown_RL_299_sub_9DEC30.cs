@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.COL)]
-	public partial class Unknown_RL_299_sub_9DEC30 : CSerializable {
+	public partial class Unknown_RL_299_sub_9DEC30 : ActorComponent {
 		[Serialize("near" )] public float near;
 		[Serialize("far"  )] public float far;
 		[Serialize("color")] public Color color;

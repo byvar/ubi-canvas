@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
 	public partial class FluidFriseLayer : CSerializable {
 		[Serialize("erosion"                      )] public uint erosion;
 		[Serialize("color"                        )] public Color color;

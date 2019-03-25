@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_OldTVParam : CSerializable {
 		[Serialize("use"          )] public bool use;
 		[Serialize("lineFade"     )] public float lineFade;
@@ -11,12 +11,21 @@ namespace UbiArt.ITF {
 		[Serialize("scanLineSize" )] public float scanLineSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(use));
-			SerializeField(s, nameof(lineFade));
-			SerializeField(s, nameof(useScanLine));
-			SerializeField(s, nameof(scanLineFade));
-			SerializeField(s, nameof(scanLineSpeed));
-			SerializeField(s, nameof(scanLineSize));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(use), boolAsByte: true);
+				SerializeField(s, nameof(lineFade));
+				SerializeField(s, nameof(useScanLine), boolAsByte: true);
+				SerializeField(s, nameof(scanLineFade));
+				SerializeField(s, nameof(scanLineSpeed));
+				SerializeField(s, nameof(scanLineSize));
+			} else {
+				SerializeField(s, nameof(use));
+				SerializeField(s, nameof(lineFade));
+				SerializeField(s, nameof(useScanLine));
+				SerializeField(s, nameof(scanLineFade));
+				SerializeField(s, nameof(scanLineSpeed));
+				SerializeField(s, nameof(scanLineSize));
+			}
 		}
 	}
 }

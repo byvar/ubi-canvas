@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_KaleiParam : CSerializable {
 		[Serialize("use"      )] public bool use;
 		[Serialize("pixelSize")] public float pixelSize;
@@ -10,7 +10,11 @@ namespace UbiArt.ITF {
 		[Serialize("UV3"      )] public Vector2 UV3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(use));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(use), boolAsByte: true);
+			} else {
+				SerializeField(s, nameof(use));
+			}
 			SerializeField(s, nameof(pixelSize));
 			SerializeField(s, nameof(UV1));
 			SerializeField(s, nameof(UV2));

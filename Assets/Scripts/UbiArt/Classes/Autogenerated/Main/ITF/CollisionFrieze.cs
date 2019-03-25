@@ -14,16 +14,30 @@ namespace UbiArt.ITF {
 		[Serialize("isSmooth"                 )] public bool isSmooth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(build));
-			SerializeField(s, nameof(offset));
-			SerializeField(s, nameof(extremity));
-			SerializeField(s, nameof(extremity2));
-			SerializeField(s, nameof(flip));
-			SerializeField(s, nameof(methode));
-			SerializeField(s, nameof(distMaxToSkipParallelEdge));
-			SerializeField(s, nameof(smoothFactor));
-			if (s.HasFlags(SerializeFlags.Flags10)) {
-				SerializeField(s, nameof(isSmooth));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(build));
+				SerializeField(s, nameof(offset));
+				SerializeField(s, nameof(extremity));
+				SerializeField(s, nameof(extremity2));
+				SerializeField(s, nameof(flip), boolAsByte: true);
+				SerializeField(s, nameof(methode));
+				SerializeField(s, nameof(distMaxToSkipParallelEdge));
+				SerializeField(s, nameof(smoothFactor));
+				if (s.HasFlags(SerializeFlags.Flags10)) {
+					SerializeField(s, nameof(isSmooth), boolAsByte: true);
+				}
+			} else {
+				SerializeField(s, nameof(build));
+				SerializeField(s, nameof(offset));
+				SerializeField(s, nameof(extremity));
+				SerializeField(s, nameof(extremity2));
+				SerializeField(s, nameof(flip));
+				SerializeField(s, nameof(methode));
+				SerializeField(s, nameof(distMaxToSkipParallelEdge));
+				SerializeField(s, nameof(smoothFactor));
+				if (s.HasFlags(SerializeFlags.Flags10)) {
+					SerializeField(s, nameof(isSmooth));
+				}
 			}
 		}
 	}

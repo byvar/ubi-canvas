@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class VertexAnim : CSerializable {
 		[Serialize("animGlobalSpeed"   )] public float animGlobalSpeed;
 		[Serialize("animGlobalRotSpeed")] public Angle animGlobalRotSpeed;
@@ -25,7 +25,11 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(animAmplitudeX));
 			SerializeField(s, nameof(animAmplitudeY));
 			SerializeField(s, nameof(animSync));
-			SerializeField(s, nameof(animAngleUsed));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(animAngleUsed), boolAsByte: true);
+			} else {
+				SerializeField(s, nameof(animAngleUsed));
+			}
 			SerializeField(s, nameof(animAngle));
 		}
 	}

@@ -17,10 +17,10 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(path));
 					SerializeField(s, nameof(prisonerVisualType));
-					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeField(s, nameof(prisonerType));
-						SerializeField(s, nameof(prisonerIndexType));
-					}
+				}
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(prisonerType));
+					SerializeField(s, nameof(prisonerIndexType));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(targetWaypoint));
@@ -31,11 +31,11 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(path));
 					SerializeField(s, nameof(prisonerVisualType));
-					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeField(s, nameof(prisonerType));
-						SerializeField(s, nameof(prisonerIndexType));
-						SerializeField(s, nameof(canReceiveHits));
-					}
+				}
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(prisonerType));
+					SerializeField(s, nameof(prisonerIndexType));
+					SerializeField(s, nameof(canReceiveHits));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(targetWaypoint));

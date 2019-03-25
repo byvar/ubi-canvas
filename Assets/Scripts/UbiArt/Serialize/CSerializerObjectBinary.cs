@@ -13,6 +13,7 @@ namespace UbiArt {
 
 		public CSerializerObjectBinary(Reader reader) {
 			this.reader = reader;
+			flagsOwn = SerializeFlags.Flags0 | SerializeFlags.Flags4;
 		}
 
 		public override Pointer Position => Pointer.Current(reader);
@@ -29,7 +30,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							obj = true;
 						} else if (tmp != 0) {
-							throw new Exception(Position + ": Bool with name " + name + " was " + ((byte)obj) + "!");
+							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
 							obj = false;
 						} else {
 							obj = false;
@@ -82,6 +83,8 @@ namespace UbiArt {
 					} else {
 						obj = false;
 					}
+				} else if (type == typeof(uint) && f.FieldType == typeof(ObjectRef)) {
+					obj = (ObjectRef)(uint)obj;
 				}
 			}
 			f.SetValue(containerObj, obj);

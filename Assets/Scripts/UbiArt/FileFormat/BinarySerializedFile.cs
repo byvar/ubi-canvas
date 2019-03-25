@@ -24,6 +24,7 @@ namespace UbiArt.FileFormat {
             }
             reader = new Reader(new MemoryStream(data), Settings.s.IsLittleEndian);
 			serializer = new CSerializerObjectBinary(reader);
+			MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref serializer.flags, ref serializer.flagsOwn, name.Substring(name.LastIndexOf(".") + 1));
 			baseOffset = -headerOffset;
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
         }

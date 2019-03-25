@@ -8,6 +8,7 @@ using UnityEngine;
 using System.Collections;
 using System.Threading.Tasks;
 using Asyncoroutine;
+using System.Text;
 
 namespace UbiArt {
 	public class MapLoader {
@@ -16,6 +17,7 @@ namespace UbiArt {
 		public string pathFolder;
 		public string pathFile;
 		//public string lvlName;
+		public string logFile;
 
 		public Material baseMaterial;
 		public Material baseTransparentMaterial;
@@ -26,6 +28,7 @@ namespace UbiArt {
 		public bool allowDeadPointers = false;
 		public bool forceDisplayBackfaces = false;
 		public bool blockyMode = false;
+		public StringBuilder log = new StringBuilder();
 
 		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
 		public delegate void SerializeAction(CSerializerObject s);
@@ -65,7 +68,6 @@ namespace UbiArt {
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
-						s.flags |= SerializeFlags.Flags7 | SerializeFlags.Flags0;
 						bool readScene = true;
 						s.Serialize(ref readScene);
 						if (readScene) { // Read scene
@@ -107,6 +109,28 @@ namespace UbiArt {
 					kv.Value.Dispose();
 				}
 				files.Clear();
+				WriteLog();
+			}
+		}
+
+		public void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref SerializeFlags ownFlags, string extension) {
+			switch (extension) {
+				case "isc":
+					flags |= SerializeFlags.Flags7;
+					break;
+				case "fcg":
+				case "msh":
+					flags |= SerializeFlags.Flags7;
+					ownFlags |= SerializeFlags.StoreObjectSizes;
+					break;
+			}
+		}
+
+		private void WriteLog() {
+			if (logFile != null && logFile.Trim() != "") {
+				using (StreamWriter writer = new StreamWriter(logFile)) {
+					writer.WriteLine(log.ToString());
+				}
 			}
 		}
 
@@ -124,6 +148,9 @@ namespace UbiArt {
 
 		// Defining it this way, clicking the print will go straight to the code you want
 		public Action<object> print = MonoBehaviour.print;
+		public void Log(object obj) {
+			log.AppendLine(obj != null ? obj.ToString() : "");
+		}
 
 
 		public static async Task WaitFrame() {

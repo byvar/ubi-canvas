@@ -1,12 +1,16 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_RefractionParam : CSerializable {
-		[Serialize("bool__0")] public bool bool__0;
+		[Serialize("use")] public bool use;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bool__0));
+			if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(use), boolAsByte: true);
+			} else {
+				SerializeField(s, nameof(use));
+			}
 		}
 	}
 }

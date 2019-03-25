@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace UbiArt {
 	public abstract class CSerializerObject {
 		public SerializeFlags flags;
+		public SerializeFlags flagsOwn;
 
 		public CSerializerObject() {
 		}
@@ -28,19 +29,22 @@ namespace UbiArt {
 		public bool HasFlags(SerializeFlags flags) {
 			switch (flags) {
 				case SerializeFlags.Flags8:
-					if((this.flags & SerializeFlags.Flags_x30) == SerializeFlags.None) {
+					if((this.flagsOwn & SerializeFlags.Flags_x30) == SerializeFlags.None) {
 						return ((this.flags & SerializeFlags.Flags6) != SerializeFlags.None);
 					}
 					return false;
 				case SerializeFlags.Flags9:
-					return (((this.flags & (SerializeFlags.Flags4 | SerializeFlags.Flags7)) == SerializeFlags.None) &&
+					return (((this.flagsOwn & (SerializeFlags.Flags4 | SerializeFlags.Flags7)) == SerializeFlags.None) &&
 						((this.flags & SerializeFlags.Default) != SerializeFlags.None));
 				case SerializeFlags.Flags10:
-					return (((this.flags & SerializeFlags.Flags0) != SerializeFlags.None) &&
+					return (((this.flagsOwn & SerializeFlags.Flags0) != SerializeFlags.None) &&
 						((this.flags & SerializeFlags.Flags_xC0) != SerializeFlags.None));
 				default:
 					return ((this.flags & flags) != SerializeFlags.None);
 			}
+		}
+		public bool HasOwnFlags(SerializeFlags flags) {
+			return ((this.flagsOwn & flags) != SerializeFlags.None);
 		}
 	}
 }

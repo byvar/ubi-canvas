@@ -22,26 +22,56 @@ namespace UbiArt.ITF {
 		[Serialize("moveSavedCurrentCursor" )] public float moveSavedCurrentCursor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(saveOnCheckpoint));
-				SerializeField(s, nameof(touchDetectCooldown));
-				SerializeField(s, nameof(speed));
-				SerializeField(s, nameof(bounce));
-				SerializeField(s, nameof(smoothTarget));
-				SerializeField(s, nameof(holdSpeed));
-				SerializeField(s, nameof(holdBounce));
-				SerializeField(s, nameof(holdSmoothTarget));
-				SerializeField(s, nameof(move));
-				SerializeField(s, nameof(oneShotSwipe));
-				SerializeField(s, nameof(oneShotSwipeAxisMin));
-				SerializeField(s, nameof(oneShotSwipeAxisMax));
-				SerializeField(s, nameof(oneShotSwipeAngleToler));
-				SerializeField(s, nameof(oneShotTap));
-				SerializeField(s, nameof(proceduralAnimMaxCursor));
-				SerializeField(s, nameof(shape));
-			}
-			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(moveSavedCurrentCursor));
+			if (Settings.s.game == Settings.Game.RL) {
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(saveOnCheckpoint));
+					SerializeField(s, nameof(touchDetectCooldown));
+					SerializeField(s, nameof(speed));
+					SerializeField(s, nameof(bounce));
+					SerializeField(s, nameof(smoothTarget));
+					SerializeField(s, nameof(holdSpeed));
+					SerializeField(s, nameof(holdBounce));
+					SerializeField(s, nameof(holdSmoothTarget));
+					SerializeField(s, nameof(move));
+					SerializeField(s, nameof(oneShotSwipe), boolAsByte: true);
+					if (oneShotSwipe) {
+						SerializeField(s, nameof(oneShotSwipeAxisMin));
+						SerializeField(s, nameof(oneShotSwipeAxisMax));
+						SerializeField(s, nameof(oneShotSwipeAngleToler));
+					} else {
+						SerializeField(s, nameof(oneShotTap), boolAsByte: true);
+					}
+					SerializeField(s, nameof(proceduralAnimMaxCursor));
+					SerializeField(s, nameof(shape));
+				}
+				if (s.HasFlags(SerializeFlags.Persistent)) {
+					SerializeField(s, nameof(moveSavedCurrentCursor));
+				}
+			} else {
+				if (s.HasFlags(SerializeFlags.Default)) {
+					SerializeField(s, nameof(saveOnCheckpoint));
+					SerializeField(s, nameof(touchDetectCooldown));
+					SerializeField(s, nameof(speed));
+					SerializeField(s, nameof(bounce));
+					SerializeField(s, nameof(smoothTarget));
+					SerializeField(s, nameof(holdSpeed));
+					SerializeField(s, nameof(holdBounce));
+					SerializeField(s, nameof(holdSmoothTarget));
+					SerializeField(s, nameof(move));
+					SerializeField(s, nameof(oneShotSwipe));
+					if (oneShotSwipe) {
+						SerializeField(s, nameof(oneShotSwipeAxisMin));
+						SerializeField(s, nameof(oneShotSwipeAxisMax));
+						SerializeField(s, nameof(oneShotSwipeAngleToler));
+					} else {
+						SerializeField(s, nameof(oneShotTap));
+					}
+					SerializeField(s, nameof(proceduralAnimMaxCursor));
+					SerializeField(s, nameof(shape));
+				}
+				if (s.HasFlags(SerializeFlags.Persistent)) {
+					SerializeField(s, nameof(moveSavedCurrentCursor));
+				}
 			}
 		}
 		public override uint? ClassCRC => 0x151A8CB5;

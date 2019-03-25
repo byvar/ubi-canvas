@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_400_sub_B0DA80 : CSerializable {
+	public partial class Unknown_RL_400_sub_B0DA80 : DetectorComponent {
 		[Serialize("detectInLight")] public bool detectInLight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

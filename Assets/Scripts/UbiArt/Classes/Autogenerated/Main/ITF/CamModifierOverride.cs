@@ -1,21 +1,21 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.ROVersion)]
 	public partial class CamModifierOverride : CSerializable {
-		[Serialize("int__0")] public int int__0;
-		[Serialize("int__1")] public int int__1;
-		[Serialize("int__2")] public int int__2;
-		[Serialize("int__3")] public int int__3;
-		[Serialize("int__4")] public int int__4;
+		[Serialize("constraintLeftIsActive"  )] public bool constraintLeftIsActive;
+		[Serialize("constraintRightIsActive" )] public bool constraintRightIsActive;
+		[Serialize("constraintTopIsActive"   )] public bool constraintTopIsActive;
+		[Serialize("constraintBottomIsActive")] public bool constraintBottomIsActive;
+		[Serialize("constraintMatchView"     )] public bool constraintMatchView;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(int__0));
-				SerializeField(s, nameof(int__1));
-				SerializeField(s, nameof(int__2));
-				SerializeField(s, nameof(int__3));
-				SerializeField(s, nameof(int__4));
+				SerializeField(s, nameof(constraintLeftIsActive));
+				SerializeField(s, nameof(constraintRightIsActive));
+				SerializeField(s, nameof(constraintTopIsActive));
+				SerializeField(s, nameof(constraintBottomIsActive));
+				SerializeField(s, nameof(constraintMatchView));
 			}
 		}
 	}

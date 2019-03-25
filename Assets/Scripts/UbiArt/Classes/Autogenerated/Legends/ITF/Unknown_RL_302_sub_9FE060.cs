@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_302_sub_9FE060 : CSerializable {
-		[Serialize("LightPrimitiveParameters"      )] public Placeholder LightPrimitiveParameters;
-		[Serialize("LightBackPrimitiveParameters"  )] public Placeholder LightBackPrimitiveParameters;
-		[Serialize("ShadowsPrimitiveParameters"    )] public Placeholder ShadowsPrimitiveParameters;
-		[Serialize("ShadowsBackPrimitiveParameters")] public Placeholder ShadowsBackPrimitiveParameters;
+	public partial class RO2_ShadowZonesComponent : ActorComponent { // Equal to ShadowZonesComponent. Maybe RO2_ShadowZonesComponent.
+		[Serialize("LightPrimitiveParameters"      )] public GFXPrimitiveParam LightPrimitiveParameters;
+		[Serialize("LightBackPrimitiveParameters"  )] public GFXPrimitiveParam LightBackPrimitiveParameters;
+		[Serialize("ShadowsPrimitiveParameters"    )] public GFXPrimitiveParam ShadowsPrimitiveParameters;
+		[Serialize("ShadowsBackPrimitiveParameters")] public GFXPrimitiveParam ShadowsBackPrimitiveParameters;
 		[Serialize("radius"                        )] public float radius;
 		[Serialize("angle"                         )] public Angle angle;
 		[Serialize("angleOffset"                   )] public Angle angleOffset;

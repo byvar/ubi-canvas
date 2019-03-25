@@ -19,7 +19,7 @@ namespace UbiArt {
 		protected virtual void OnPreSerialize(CSerializerObject s) {}
 		protected virtual void OnPostSerialize(CSerializerObject s) {}
 		protected virtual void SerializeImpl(CSerializerObject s) {
-			if (s.HasFlags(SerializeFlags.StoreObjectSizes)) {
+			if (s.HasOwnFlags(SerializeFlags.StoreObjectSizes)) {
 				SerializeField(s, nameof(sizeOf));
 			}
 		}
@@ -33,9 +33,7 @@ namespace UbiArt {
 					type = typeof(byte);
 				}
 				s.Serialize(this, f, atts[0], type: type);
-				if (Type.GetTypeCode(type) != TypeCode.Object) {
-					MapLoader.Loader.print(pos + " - " + fieldName + " - " + f.GetValue(this));
-				}
+				MapLoader.Loader.Log(pos + " - (" + GetType() + ") " + fieldName + " - " + f.GetValue(this));
 			}
 		}
 

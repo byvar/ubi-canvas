@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class FluidConfig : CSerializable {
 		[Serialize("Elasticity"             )] public float Elasticity;
 		[Serialize("Velocity"               )] public float Velocity;
@@ -44,45 +44,86 @@ namespace UbiArt.ITF {
 		[Serialize("Layers"                 )] public CList<FluidFriseLayer> Layers;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Elasticity));
-			SerializeField(s, nameof(Velocity));
-			SerializeField(s, nameof(Viscosity));
-			SerializeField(s, nameof(TargetHeight));
-			SerializeField(s, nameof(Amplification));
-			SerializeField(s, nameof(TargetMaxHeight));
-			SerializeField(s, nameof(TargetMinHeight));
-			SerializeField(s, nameof(TargetAddHeight));
-			SerializeField(s, nameof(UnityWidth));
-			SerializeField(s, nameof(PolylineUnityMult));
-			SerializeField(s, nameof(PolylineReaction));
-			SerializeField(s, nameof(EnterMult));
-			SerializeField(s, nameof(LeaveMult));
-			SerializeField(s, nameof(MaxDstInfluence));
-			SerializeField(s, nameof(LevelsFront));
-			SerializeField(s, nameof(LevelsBack));
-			SerializeField(s, nameof(LevelDelta));
-			SerializeField(s, nameof(UVDelta));
-			SerializeField(s, nameof(PerpendicularBack));
-			SerializeField(s, nameof(PerpendicularBackZ));
-			SerializeField(s, nameof(PerpendicularBackScale));
-			SerializeField(s, nameof(PerpendicularBackPos));
-			SerializeField(s, nameof(PerpendicularBackPosZ));
-			SerializeField(s, nameof(PerpendicularFront));
-			SerializeField(s, nameof(PerpendicularFrontZ));
-			SerializeField(s, nameof(PerpendicularFrontScale));
-			SerializeField(s, nameof(PerpendicularFrontPos));
-			SerializeField(s, nameof(PerpendicularFrontPosZ));
-			SerializeField(s, nameof(WeightMultiplier));
-			SerializeField(s, nameof(dstInfluenceMultiplier));
-			SerializeField(s, nameof(AbsorptionAtEdgeStart));
-			SerializeField(s, nameof(AbsorptionAtEdgeEnd));
-			SerializeField(s, nameof(AbsorptionAtEdge_Length));
-			SerializeField(s, nameof(InfluenceLimit));
-			SerializeField(s, nameof(SideCount));
-			SerializeField(s, nameof(LayerCount));
-			SerializeField(s, nameof(BlendFactor));
-			SerializeField(s, nameof(FxActor));
-			SerializeField(s, nameof(Layers));
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(Elasticity));
+				SerializeField(s, nameof(Velocity));
+				SerializeField(s, nameof(Viscosity));
+				SerializeField(s, nameof(TargetHeight));
+				SerializeField(s, nameof(Amplification));
+				SerializeField(s, nameof(TargetMaxHeight));
+				SerializeField(s, nameof(TargetMinHeight));
+				SerializeField(s, nameof(TargetAddHeight));
+				SerializeField(s, nameof(UnityWidth));
+				SerializeField(s, nameof(PolylineUnityMult));
+				SerializeField(s, nameof(EnterMult));
+				SerializeField(s, nameof(LeaveMult));
+				SerializeField(s, nameof(MaxDstInfluence));
+				SerializeField(s, nameof(LevelsFront));
+				SerializeField(s, nameof(LevelsBack));
+				SerializeField(s, nameof(LevelDelta));
+				SerializeField(s, nameof(UVDelta));
+				SerializeField(s, nameof(PerpendicularBack));
+				SerializeField(s, nameof(PerpendicularBackZ));
+				SerializeField(s, nameof(PerpendicularBackScale));
+				SerializeField(s, nameof(PerpendicularBackPos));
+				SerializeField(s, nameof(PerpendicularBackPosZ));
+				SerializeField(s, nameof(PerpendicularFront));
+				SerializeField(s, nameof(PerpendicularFrontZ));
+				SerializeField(s, nameof(PerpendicularFrontScale));
+				SerializeField(s, nameof(PerpendicularFrontPos));
+				SerializeField(s, nameof(PerpendicularFrontPosZ));
+				SerializeField(s, nameof(WeightMultiplier));
+				SerializeField(s, nameof(dstInfluenceMultiplier));
+				SerializeField(s, nameof(AbsorptionAtEdgeStart));
+				SerializeField(s, nameof(AbsorptionAtEdgeEnd));
+				SerializeField(s, nameof(AbsorptionAtEdge_Length));
+				SerializeField(s, nameof(InfluenceLimit));
+				SerializeField(s, nameof(SideCount));
+				SerializeField(s, nameof(LayerCount));
+				SerializeField(s, nameof(BlendFactor));
+				SerializeField(s, nameof(FxActor));
+				SerializeField(s, nameof(Layers));
+			} else {
+				SerializeField(s, nameof(Elasticity));
+				SerializeField(s, nameof(Velocity));
+				SerializeField(s, nameof(Viscosity));
+				SerializeField(s, nameof(TargetHeight));
+				SerializeField(s, nameof(Amplification));
+				SerializeField(s, nameof(TargetMaxHeight));
+				SerializeField(s, nameof(TargetMinHeight));
+				SerializeField(s, nameof(TargetAddHeight));
+				SerializeField(s, nameof(UnityWidth));
+				SerializeField(s, nameof(PolylineUnityMult));
+				SerializeField(s, nameof(PolylineReaction));
+				SerializeField(s, nameof(EnterMult));
+				SerializeField(s, nameof(LeaveMult));
+				SerializeField(s, nameof(MaxDstInfluence));
+				SerializeField(s, nameof(LevelsFront));
+				SerializeField(s, nameof(LevelsBack));
+				SerializeField(s, nameof(LevelDelta));
+				SerializeField(s, nameof(UVDelta));
+				SerializeField(s, nameof(PerpendicularBack));
+				SerializeField(s, nameof(PerpendicularBackZ));
+				SerializeField(s, nameof(PerpendicularBackScale));
+				SerializeField(s, nameof(PerpendicularBackPos));
+				SerializeField(s, nameof(PerpendicularBackPosZ));
+				SerializeField(s, nameof(PerpendicularFront));
+				SerializeField(s, nameof(PerpendicularFrontZ));
+				SerializeField(s, nameof(PerpendicularFrontScale));
+				SerializeField(s, nameof(PerpendicularFrontPos));
+				SerializeField(s, nameof(PerpendicularFrontPosZ));
+				SerializeField(s, nameof(WeightMultiplier));
+				SerializeField(s, nameof(dstInfluenceMultiplier));
+				SerializeField(s, nameof(AbsorptionAtEdgeStart));
+				SerializeField(s, nameof(AbsorptionAtEdgeEnd));
+				SerializeField(s, nameof(AbsorptionAtEdge_Length));
+				SerializeField(s, nameof(InfluenceLimit));
+				SerializeField(s, nameof(SideCount));
+				SerializeField(s, nameof(LayerCount));
+				SerializeField(s, nameof(BlendFactor));
+				SerializeField(s, nameof(FxActor));
+				SerializeField(s, nameof(Layers));
+			}
 		}
 	}
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_407_sub_B1FE00 : CSerializable {
+	public partial class Unknown_RL_407_sub_B1FE00 : ActorComponent {
 		[Serialize("UplayAction")] public Enum_UplayAction UplayAction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

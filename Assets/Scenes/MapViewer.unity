@@ -508,9 +508,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  gameDataBinFolder: ..\..\RIPPING\RL_Mod\Demo\Bundle\ext\cache\itf_cooked\pc
-  pathFolder: world\music\level\mu_rl_1_upright\page
-  pathFile: mu_rl_1_upright_page1.isc.ckd
+  gameDataBinFolder: ..\..\RIPPING\RL_Mod\full\ext\cache\itf_cooked\pc
+  pathFolder: world\challenge\musical\castle
+  pathFile: musical_1_grannieswt.isc.ckd
+  logFile: ..\..\RIPPING\RL_Mod\log.txt
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}
   baseTransparentMaterial: {fileID: 0}
   baseLightMaterial: {fileID: 2100000, guid: 9baaa1d88e0444447bd915b938cab340, type: 2}

@@ -22,6 +22,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+				if (this is FriseConfig) return;
 				SerializeField(s, nameof(scaleForced));
 				SerializeField(s, nameof(scaleMin));
 				SerializeField(s, nameof(scaleMax));
@@ -37,11 +38,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(COMPONENTS));
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+				if (this is FriseConfig) return;
 				SerializeField(s, nameof(PROCEDURAL), boolAsByte: true);
 				SerializeField(s, nameof(STARTPAUSED), boolAsByte: true);
 				SerializeField(s, nameof(FORCEISENVIRONMENT), boolAsByte: true);
 				SerializeField(s, nameof(COMPONENTS));
 			} else if (Settings.s.game == Settings.Game.VH) {
+				if (this is FriseConfig) return;
 				SerializeField(s, nameof(PROCEDURAL));
 				SerializeField(s, nameof(STARTPAUSED));
 				SerializeField(s, nameof(FORCEISENVIRONMENT));
@@ -55,12 +58,6 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(UPDATEFREQUENCE));
 				SerializeField(s, nameof(COMPONENTS));
 			}
-		}
-		public enum Enum_RJR_0 {
-			[Serialize("Value_1")] Value_1 = 1,
-		}
-		public enum Enum_RFR_0 {
-			[Serialize("Value_1")] Value_1 = 1,
 		}
 		public override uint? ClassCRC => 0x1B857BCE;
 	}

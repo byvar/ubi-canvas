@@ -35,8 +35,12 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(WaitType));
 					SerializeField(s, nameof(eventToListen));
 					SerializeField(s, nameof(waitSpecificAngle), boolAsByte: true);
-					SerializeField(s, nameof(waitSpecificAngleRange));
-					SerializeField(s, nameof(checkEventOnlyInZone), boolAsByte: true);
+					if (waitSpecificAngle) {
+						SerializeField(s, nameof(waitSpecificAngleRange));
+					}
+					if (!eventToListen.IsNull) {
+						SerializeField(s, nameof(checkEventOnlyInZone), boolAsByte: true);
+					}
 					SerializeField(s, nameof(actorUpdateInfo));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
@@ -58,8 +62,12 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(WaitType));
 					SerializeField(s, nameof(eventToListen));
 					SerializeField(s, nameof(waitSpecificAngle));
-					SerializeField(s, nameof(waitSpecificAngleRange));
-					SerializeField(s, nameof(checkEventOnlyInZone));
+					if (waitSpecificAngle) {
+						SerializeField(s, nameof(waitSpecificAngleRange));
+					}
+					if (!eventToListen.IsNull) {
+						SerializeField(s, nameof(checkEventOnlyInZone));
+					}
 					SerializeField(s, nameof(actorUpdateInfo));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
@@ -67,7 +75,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA)]
+		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class ActorUpdateInfoStruct : CSerializable {
 			[Serialize("orientationUpdateType"              )] public Enum_orientationUpdateType orientationUpdateType;
 			[Serialize("specificOrientation"                )] public Angle specificOrientation;
@@ -77,9 +85,24 @@ namespace UbiArt.ITF {
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(orientationUpdateType));
-				SerializeField(s, nameof(specificOrientation));
-				SerializeField(s, nameof(axisRecenter_StopActionInCorridor));
-				SerializeField(s, nameof(axisRecenter_FollowDRCInteractActor));
+				if (orientationUpdateType == Enum_orientationUpdateType.useOnlySpecific) {
+					SerializeField(s, nameof(specificOrientation));
+				}
+				if (orientationUpdateType == Enum_orientationUpdateType.dynamicAxisRecenter) {
+					if (Settings.s.game == Settings.Game.RL) {
+						SerializeField(s, nameof(axisRecenter_StopActionInCorridor), boolAsByte: true);
+					} else {
+						SerializeField(s, nameof(axisRecenter_StopActionInCorridor));
+					}
+				}
+				if (orientationUpdateType == Enum_orientationUpdateType.dynamicAxisRecenter ||
+					orientationUpdateType == Enum_orientationUpdateType.dynamicHelicoCorridorRecenter) {
+					if (Settings.s.game == Settings.Game.RL) {
+						SerializeField(s, nameof(axisRecenter_FollowDRCInteractActor), boolAsByte: true);
+					} else {
+						SerializeField(s, nameof(axisRecenter_FollowDRCInteractActor));
+					}
+				}
 				SerializeField(s, nameof(retriggerOrderDelay));
 			}
 			public enum Enum_orientationUpdateType {

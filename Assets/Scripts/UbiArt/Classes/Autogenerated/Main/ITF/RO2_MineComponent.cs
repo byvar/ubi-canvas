@@ -26,9 +26,11 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(RotationSpeed));
 			SerializeField(s, nameof(Size));
 			SerializeField(s, nameof(UseSoftCol));
-			SerializeField(s, nameof(SoftColDist));
-			SerializeField(s, nameof(SoftColDistStop));
-			SerializeField(s, nameof(SoftColStrengthReturn));
+			if (UseSoftCol) {
+				SerializeField(s, nameof(SoftColDist));
+				SerializeField(s, nameof(SoftColDistStop));
+				SerializeField(s, nameof(SoftColStrengthReturn));
+			}
 		}
 		public override uint? ClassCRC => 0x15DA355C;
 	}

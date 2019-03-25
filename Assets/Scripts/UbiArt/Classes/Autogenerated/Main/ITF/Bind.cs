@@ -22,13 +22,13 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(offsetAngle));
 					SerializeField(s, nameof(type));
 					SerializeField(s, nameof(typeData));
-					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeField(s, nameof(useParentFlip));
-						SerializeField(s, nameof(useParentScale));
-						SerializeField(s, nameof(useParentAlpha));
-						SerializeField(s, nameof(useRelativeZ));
-						SerializeField(s, nameof(removeWithParent));
-					}
+				}
+				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
+					SerializeField(s, nameof(useParentFlip));
+					SerializeField(s, nameof(useParentScale));
+					SerializeField(s, nameof(useParentAlpha));
+					SerializeField(s, nameof(useRelativeZ));
+					SerializeField(s, nameof(removeWithParent));
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
@@ -37,12 +37,12 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(offsetAngle));
 					SerializeField(s, nameof(type));
 					SerializeField(s, nameof(typeData));
-					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeField(s, nameof(useParentFlip));
-						SerializeField(s, nameof(useParentScale));
-						SerializeField(s, nameof(useParentAlpha));
-						SerializeField(s, nameof(removeWithParent));
-					}
+				}
+				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
+					SerializeField(s, nameof(useParentFlip));
+					SerializeField(s, nameof(useParentScale));
+					SerializeField(s, nameof(useParentAlpha));
+					SerializeField(s, nameof(removeWithParent));
 				}
 			}
 		}

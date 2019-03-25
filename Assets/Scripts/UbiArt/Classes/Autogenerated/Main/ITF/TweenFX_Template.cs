@@ -9,8 +9,10 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
+				SerializeField(s, nameof(fx));
 				SerializeField(s, nameof(stop), boolAsByte: true);
 			} else if (Settings.s.game == Settings.Game.COL) {
+				SerializeField(s, nameof(fx));
 				SerializeField(s, nameof(stop), boolAsByte: true);
 				SerializeField(s, nameof(useLocalInitialPos), boolAsByte: true);
 			} else {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_ShooterSpawnerComponent : CSerializable {
+	public partial class RO2_ShooterSpawnerComponent : TimedSpawnerComponent {
 		[Serialize("tweenId"                    )] public StringID tweenId;
 		[Serialize("spawnActorId"               )] public StringID spawnActorId;
 		[Serialize("beforeCamRelativeInitialPos")] public Vector3 beforeCamRelativeInitialPos;
@@ -20,9 +20,6 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(beforeCamRelativeInitialPos));
 			}
 			SerializeField(s, nameof(useTutoOnFirstSpawnee), boolAsByte: true);
-		}
-		public enum Enum_tweenId {
-			[Serialize("Value__1")] Value__1 = -1,
 		}
 		public override uint? ClassCRC => 0xF27AB10B;
 	}

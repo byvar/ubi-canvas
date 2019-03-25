@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace UbiArt {
-	public class ClassCRC {
+	public class ObjectFactory {
 		public static Dictionary<uint, Type> classes = new Dictionary<uint, Type> {
 			{ 0x0013B956, typeof(ITF.RO2_BlackSwarmSpawnerComponent) },
 			{ 0x001A132B, typeof(ITF.EventSyncActorUpdate) },
@@ -3329,7 +3329,7 @@ namespace UbiArt {
 			{ 0xAA368C44, typeof(ITF.UITextManager_Template) },
 			{ 0xAA4520A3, typeof(ITF.Ray_AIReceiveHitBehavior_Template) },
 			{ 0xAA492116, typeof(ITF.COL_MissionConditionPostBattle_Template) },
-			{ 0xAA4BCE24, typeof(ITF.Unknown_RL_302_sub_9FE060) },
+			{ 0xAA4BCE24, typeof(ITF.RO2_ShadowZonesComponent) },
 			{ 0xAA5B5DAD, typeof(ITF.ClearColorComponent_Template) },
 			{ 0xAA5CE752, typeof(ITF.HitPhantomDetectorComponent_Template) },
 			{ 0xAA6D656B, typeof(ITF.PlayAnimOnEventReceiveComponent) },

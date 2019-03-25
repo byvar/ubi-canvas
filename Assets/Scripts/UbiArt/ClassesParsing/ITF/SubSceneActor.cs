@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 			base.InitGameObject();
 			if (SCENE.read) {
 				foreach (Frise f in SCENE.value.FRISE) {
-					f.Gao.transform.SetParent(gao.transform);
+					f.SetGameObjectParent(gao);
 				}
 				foreach (Generic<Actor> a in SCENE.value.ACTORS) {
-					a.obj.Gao.transform.SetParent(gao.transform);
+					a.obj.SetGameObjectParent(gao);
 				}
 			}
 		}

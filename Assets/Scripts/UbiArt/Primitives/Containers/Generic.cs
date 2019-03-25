@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt {
-	public class Generic<T> : ICSerializable {
+	public class Generic<T> : CSerializable {
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;
 
-		public void Serialize(CSerializerObject s, string name) {
+		public bool IsNull {
+			get {
+				return className != null ? className.IsNull : true;
+			}
+		}
+
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			Pointer pos = s.Position;
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
 				s.Serialize(ref className, name: "NAME");
 			} else {
@@ -22,9 +30,9 @@ namespace UbiArt {
 			if (className.IsNull) {
 				obj = default;
 			} else {
-				if (ClassCRC.classes.ContainsKey(className.stringID)) {
-					MapLoader.Loader.print(className.stringID.ToString("X8") + " - " + ClassCRC.classes[className.stringID]);
-					s.Serialize(ref obj, ClassCRC.classes[className.stringID], name: ClassCRC.classes[className.stringID].Name);
+				if (ObjectFactory.classes.ContainsKey(className.stringID)) {
+					MapLoader.Loader.Log(pos + " - " + className.stringID.ToString("X8") + " - " + ObjectFactory.classes[className.stringID]);
+					s.Serialize(ref obj, ObjectFactory.classes[className.stringID], name: ObjectFactory.classes[className.stringID].Name);
 				} else {
 					Debug.LogError("CRC " + className.stringID.ToString("X8")
 						+ " found at " + s.Position

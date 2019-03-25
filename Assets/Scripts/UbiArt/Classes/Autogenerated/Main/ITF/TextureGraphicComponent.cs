@@ -23,10 +23,10 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(texture));
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
-				if (s.HasFlags(SerializeFlags.Default | SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
-				}
 				if (s.HasFlags(SerializeFlags.Default)) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						SerializeField(s, nameof(texture));
+					}
 					SerializeField(s, nameof(anchor));
 					SerializeField(s, nameof(material));
 					SerializeField(s, nameof(spriteIndex));
@@ -34,10 +34,10 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(uvTranslationSpeed));
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
-				if (s.HasFlags(SerializeFlags.Default | SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
-				}
 				if (s.HasFlags(SerializeFlags.Default)) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						SerializeField(s, nameof(texture));
+					}
 					SerializeField(s, nameof(anchor));
 					SerializeField(s, nameof(material));
 					SerializeField(s, nameof(spriteIndex));
@@ -46,10 +46,10 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(uvTranslationSpeed));
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
-				if (s.HasFlags(SerializeFlags.Default | SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
-				}
 				if (s.HasFlags(SerializeFlags.Default)) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						SerializeField(s, nameof(texture));
+					}
 					SerializeField(s, nameof(anchor));
 					SerializeField(s, nameof(material));
 					SerializeField(s, nameof(spriteIndex));

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class EdgeProcessData : CSerializable {
 		[Serialize("Id"        )] public int Id;
 		[Serialize("IndexStart")] public int IndexStart;
