@@ -7,6 +7,8 @@ namespace UbiArt.ITF {
 
 		protected override void InitGameObject() {
 			base.InitGameObject();
+			UnityFrise uf = gao.AddComponent<UnityFrise>();
+			uf.frise = this;
 			if (meshBuildData.value != null) {
 				if (meshBuildData.value.StaticVertexList.Count > 0) {
 					Mesh mesh = new Mesh();
@@ -60,7 +62,6 @@ namespace UbiArt.ITF {
 				if (l.fcg.ContainsKey(ConfigName.stringID)) {
 					config = l.fcg[ConfigName.stringID];
 				} else {
-					extS.flags |= SerializeFlags.StoreObjectSizes;
 					extS.Serialize(ref config);
 					l.fcg[ConfigName.stringID] = config;
 					l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));

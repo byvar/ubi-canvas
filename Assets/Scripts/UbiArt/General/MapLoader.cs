@@ -113,7 +113,7 @@ namespace UbiArt {
 			}
 		}
 
-		public void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref SerializeFlags ownFlags, string extension) {
+		public void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref CSerializerObject.Flags ownFlags, string extension) {
 			switch (extension) {
 				case "isc":
 					flags |= SerializeFlags.Flags7;
@@ -121,7 +121,7 @@ namespace UbiArt {
 				case "fcg":
 				case "msh":
 					flags |= SerializeFlags.Flags7;
-					ownFlags |= SerializeFlags.StoreObjectSizes;
+					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
 					break;
 			}
 		}

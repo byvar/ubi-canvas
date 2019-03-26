@@ -19,7 +19,7 @@ namespace UbiArt {
 		protected virtual void OnPreSerialize(CSerializerObject s) {}
 		protected virtual void OnPostSerialize(CSerializerObject s) {}
 		protected virtual void SerializeImpl(CSerializerObject s) {
-			if (s.HasOwnFlags(SerializeFlags.StoreObjectSizes)) {
+			if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)) {
 				SerializeField(s, nameof(sizeOf));
 			}
 		}

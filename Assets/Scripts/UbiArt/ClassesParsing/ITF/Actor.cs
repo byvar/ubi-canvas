@@ -6,8 +6,9 @@ namespace UbiArt.ITF {
 			base.InitGameObject();
 			if (this is Frise) return;
 			foreach (Generic<ActorComponent> ac in COMPONENTS) {
-				UnityActorComponentPlaceholder p = gao.AddComponent<UnityActorComponentPlaceholder>();
-				p.componentName = ac.obj.GetType().Name;
+				UnityActorComponent uac = gao.AddComponent<UnityActorComponent>();
+				uac.actor = this;
+				uac.component = ac;
 			}
 		}
 	}

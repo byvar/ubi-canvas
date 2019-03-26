@@ -13,7 +13,7 @@ namespace UbiArt {
 
 		public CSerializerObjectBinary(Reader reader) {
 			this.reader = reader;
-			flagsOwn = SerializeFlags.Flags0 | SerializeFlags.Flags4;
+			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
 
 		public override Pointer Position => Pointer.Current(reader);

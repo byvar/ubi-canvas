@@ -51,8 +51,10 @@ namespace UbiArt {
 		public override string ToString() {
 			if (file != null && file.baseOffset != 0) {
 				return file.name + "|" + String.Format("0x{0:X8}", offset) + "[" + String.Format("0x{0:X8}", offset + file.baseOffset) + "]";
-			} else {
+			} else if (file != null) {
 				return file.name + "|" + String.Format("0x{0:X8}", offset);
+			} else {
+				return "FakeFile|" + String.Format("0x{0:X8}", offset);
 			}
 		}
 
