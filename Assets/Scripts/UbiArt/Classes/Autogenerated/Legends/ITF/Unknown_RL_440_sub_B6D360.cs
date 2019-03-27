@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_440_sub_B6D360 : CSerializable {
+	public partial class Unknown_RL_440_sub_B6D360 : ActorComponent {
 		[Serialize("lockWithTeensy")] public int lockWithTeensy;
 		[Serialize("detectRange"   )] public float detectRange;
 		[Serialize("worldTag"      )] public StringID worldTag;

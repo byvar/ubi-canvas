@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UbiArt {
 	[SerializeEmbed]
-	public class CArray<T> : IList<T>, ICSerializable {
+	public class CArray<T> : IList<T>, ICSerializable, IObjectContainer {
 		T[] container;
 
 		public CArray() {

@@ -30,6 +30,7 @@ namespace UbiArt {
 		public bool blockyMode = false;
 		public StringBuilder log = new StringBuilder();
 
+		public UV.UVAtlasManager uvAtlasManager;
 		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
 		public delegate void SerializeAction(CSerializerObject s);
 		public struct ObjectPlaceHolder {
@@ -64,10 +65,16 @@ namespace UbiArt {
 
 		public async Task LoadAll() {
 			try {
+				Path pAtlas = new Path("", "atlascontainer.ckd");
+				Load(pAtlas, (CSerializerObject s) => {
+					s.Serialize(ref uvAtlasManager);
+					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				});
 				ITF.Scene mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
+						s.log = true;
 						bool readScene = true;
 						s.Serialize(ref readScene);
 						if (readScene) { // Read scene

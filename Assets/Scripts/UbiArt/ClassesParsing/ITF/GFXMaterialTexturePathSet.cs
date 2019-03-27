@@ -12,6 +12,7 @@ namespace UbiArt.ITF {
 						diffuseTex = l.tex[diffuse.stringID];
 					} else {
 						extS.Serialize(ref diffuseTex);
+						diffuseTex.atlas = l.uvAtlasManager.GetAtlasIfExists(diffuse);
 						l.tex[diffuse.stringID] = diffuseTex;
 						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 					}

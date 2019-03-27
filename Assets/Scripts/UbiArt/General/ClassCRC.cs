@@ -1019,7 +1019,7 @@ namespace UbiArt {
 			{ 0x3557406E, typeof(ITF.W1W_CharDiaNavigation_Template) },
 			{ 0x355CE175, typeof(ITF.AnimTreeNodeSequence_Template) },
 			{ 0x355CF9C5, typeof(ITF.RO2_EventShowTargets) },
-			{ 0x35663FAD, typeof(ITF.Unknown_RL_398_sub_B0CD30) },
+			{ 0x35663FAD, typeof(ITF.RO2_ShooterTurretAIComponent) },
 			{ 0x35699FA6, typeof(ITF.Ray_FriendlyBTAIComponent) },
 			{ 0x356AF464, typeof(ITF.COL_UIEventShowPopUp) },
 			{ 0x3583F321, typeof(ITF.RLC_AmbianceManager_Template) },

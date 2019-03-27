@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UbiArt {
 	[SerializeEmbed]
-	public class CMultiMap<TKey, TValue> : IDictionary<TKey, TValue>, ICSerializable {
+	public class CMultiMap<TKey, TValue> : IDictionary<TKey, TValue>, ICSerializable, IObjectContainer {
 		Dictionary<TKey, HashSet<TValue>> container = new Dictionary<TKey, HashSet<TValue>>();
 		
 		public void Serialize(CSerializerObject s, string name) {

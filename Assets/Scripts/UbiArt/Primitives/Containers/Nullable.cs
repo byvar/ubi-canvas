@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UbiArt {
 	[SerializeEmbed]
-	public class Nullable<T> : ICSerializable {
+	public class Nullable<T> : ICSerializable, IObjectContainer {
 		[Serialize("read")] public bool read;
 		public T value;
 

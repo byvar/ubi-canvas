@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UbiArt {
 	[SerializeEmbed]
-	public class FakeEnum<T> : ICSerializable {
+	public class FakeEnum<T> : ICSerializable, IObjectContainer {
 		public string invalidString;
 		public T Item;
 

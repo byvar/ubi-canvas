@@ -368,7 +368,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(newsButton_android));
 			}
 		}
-		[Games(GameFlags.RA)]
+		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class LockDataClass : CSerializable {
 			[Serialize("tag"         )] public StringID tag;
 			[Serialize("lockType"    )] public MapLockType lockType;

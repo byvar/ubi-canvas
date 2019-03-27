@@ -9,10 +9,14 @@ namespace UbiArt.ITF {
 			base.InitGameObject();
 			UnityFrise uf = gao.AddComponent<UnityFrise>();
 			uf.frise = this;
+			if (config != null && config.Count > 0) {
+				UnityFriseConfig ufcg = gao.AddComponent<UnityFriseConfig>();
+				ufcg.friseConfig = config[0].obj;
+			}
 			if (meshBuildData.value != null) {
 				if (meshBuildData.value.StaticVertexList.Count > 0) {
 					Mesh mesh = new Mesh();
-					mesh.vertices = meshBuildData.value.StaticVertexList.Select(v => v.pos).ToArray();
+					mesh.vertices = meshBuildData.value.StaticVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
 					int[] tris = new int[meshBuildData.value.StaticIndexList.First().List.Count * 2];
 					for (int i = 0; i < meshBuildData.value.StaticIndexList.First().List.Count / 3; i++) {
 						tris[(i * 6) + 0] = meshBuildData.value.StaticIndexList.First().List[(i * 3) + 0];

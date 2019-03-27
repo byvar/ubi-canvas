@@ -25,6 +25,8 @@ namespace UbiArt {
 		public uint unk4;
 		public uint unk5;
 		public byte[] texData;
+		
+		public UV.UVAtlas atlas = null;
 
 		public void Serialize(CSerializerObject s, string name) {
 			s.Serialize(ref unk);
@@ -46,12 +48,17 @@ namespace UbiArt {
 		}
 
 		private Texture2D texture;
+		private Texture2D[] subtextures;
 		public Texture2D Texture {
 			get {
 				if (texture == null && texData != null) {
 					//texture = new Texture2D(width, height);
 					using (DDSImage dds = new DDSImage(texData)) {
 						texture = dds.BitmapImage;
+						/*if (texture.width != width || texture.height != height) {
+							MapLoader.Loader.print("Width: " + texture.width + " - " + width);
+							MapLoader.Loader.print("Height: " + texture.height + " - " + height);
+						}*/
 					}
 					//texture = LoadTextureDXT(texData);
 				}

@@ -27,15 +27,21 @@ namespace UbiArt {
 		}
 
 		protected void SerializeField(CSerializerObject s, string fieldName, Type type = null, bool boolAsByte = false) {
-			Pointer pos = s.Position;
+			//Pointer pos = s.Position;
 			FieldInfo f = GetType().GetField(fieldName);
 			SerializeAttribute[] atts = (SerializeAttribute[])f.GetCustomAttributes(typeof(SerializeAttribute), false);
 			if (atts.Length != 0) {
 				if (boolAsByte && s.HasFlags(SerializeFlags.Flags1) && f.FieldType == typeof(bool)) {
 					type = typeof(byte);
 				}
+				//bool isBigObject = isFirstLoad && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
+				/*if (isFirstLoad && isBigObject) {
+					MapLoader.Loader.Log(s.Position + ":" + new string(' ', (s.Indent + 1) * 2) + "(" + GetType() + ") " + fieldName + ":");
+				}*/
 				s.Serialize(this, f, atts[0], type: type);
-				MapLoader.Loader.Log(pos + " - (" + GetType() + ") " + fieldName + " - " + f.GetValue(this));
+				/*if (isFirstLoad && !isBigObject) {
+					MapLoader.Loader.Log(s.Position + ":" + new string(' ', (s.Indent + 1) * 2) + "(" + GetType() + ") " + fieldName + " - " + f.GetValue(this));
+				}*/
 			}
 		}
 

@@ -66,12 +66,19 @@ namespace UbiArt {
 				}
 				obj = ctor.Invoke(new object[] { });
 				if (obj is ICSerializable) {
+					indent++;
 					((ICSerializable)obj).Serialize(this, name);
+					indent--;
 				}
 			}
 		}
 
 		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
+			Pointer pos = log ? Position : null;
+			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
+			if (log && isBigObject) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
+			}
 			object obj = null;
 			Serialize(ref obj, type ?? f.FieldType, name: name);
 			if (type != null) {
@@ -89,6 +96,9 @@ namespace UbiArt {
 				}
 			}
 			f.SetValue(containerObj, obj);
+			if (log && !isBigObject) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
+			}
 		}
 
 		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null) {
@@ -98,9 +108,19 @@ namespace UbiArt {
 		}
 
 		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+			Pointer pos = log && index.HasValue ? Position : null;
+			bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+			if (log && index.HasValue && isBigObject) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
+			}
+
 			object obj2 = null;
 			Serialize(ref obj2, type ?? typeof(T), name: name);
 			obj = (T)obj2;
+
+			if (log && index.HasValue && !isBigObject) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
+			}
 		}
 
 		public override void SerializeBytes(ref byte[] obj, int numBytes) {

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UbiArt {
 	[SerializeEmbed]
-	public class Pair<T1, T2> : ICSerializable {
+	public class Pair<T1, T2> : ICSerializable, IObjectContainer {
 		public T1 Item1;
 		public T2 Item2;
 

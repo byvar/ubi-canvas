@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RL)]
 	public partial class TimedSpawnerData : CSerializable {
 		[Serialize("spawnDelay"        )] public float spawnDelay;
 		[Serialize("spawnRate"         )] public float spawnRate;

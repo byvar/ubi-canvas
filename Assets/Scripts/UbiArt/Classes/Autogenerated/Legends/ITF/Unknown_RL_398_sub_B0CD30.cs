@@ -1,9 +1,9 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_398_sub_B0CD30 : CSerializable {
-		[Serialize("timedSpawnerData")] public Placeholder timedSpawnerData;
+	[Games(GameFlags.RL)] // There is one more empty parent between this and RO2_AIComponent
+	public partial class RO2_ShooterTurretAIComponent : RO2_AIComponent {
+		[Serialize("timedSpawnerData")] public TimedSpawnerData timedSpawnerData;
 		[Serialize("fixedAngle"      )] public float fixedAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

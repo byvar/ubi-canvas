@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt {
-	public class Generic<T> : CSerializable {
+	public class Generic<T> : CSerializable, IObjectContainer {
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;
 
@@ -31,7 +31,9 @@ namespace UbiArt {
 				obj = default;
 			} else {
 				if (ObjectFactory.classes.ContainsKey(className.stringID)) {
-					MapLoader.Loader.Log(pos + " - " + className.stringID.ToString("X8") + " - " + ObjectFactory.classes[className.stringID]);
+					if (s.log) {
+						MapLoader.Loader.Log(pos + ":" + new string(' ', (s.Indent + 1) * 2) + "$ClassName$ - " + className.stringID.ToString("X8") + "(" + ObjectFactory.classes[className.stringID] + ")");
+					}
 					s.Serialize(ref obj, ObjectFactory.classes[className.stringID], name: ObjectFactory.classes[className.stringID].Name);
 				} else {
 					Debug.LogError("CRC " + className.stringID.ToString("X8")

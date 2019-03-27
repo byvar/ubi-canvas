@@ -9,6 +9,9 @@ namespace UbiArt {
 	public abstract class CSerializerObject {
 		public SerializeFlags flags;
 		public Flags flagsOwn;
+		protected int indent;
+		public int Indent => indent;
+		public bool log = false;
 
 		public CSerializerObject() {
 		}

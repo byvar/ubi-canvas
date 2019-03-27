@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UbiArt {
 	[SerializeEmbed]
-	public class CMap<TKey,TValue> : IDictionary<TKey,TValue>, ICSerializable {
+	public class CMap<TKey,TValue> : IDictionary<TKey,TValue>, ICSerializable, IObjectContainer {
 		Dictionary<TKey, TValue> container = new Dictionary<TKey, TValue>();
 
 
@@ -27,6 +27,7 @@ namespace UbiArt {
 				}
 				s.Serialize(ref key, name: "KEY", index: i); // todo: check if names are correct, they probably aren't
 				s.Serialize(ref val, name: "VAL", index: i);
+				Add(key, val);
 			}
 		}
 
