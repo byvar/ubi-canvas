@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_186_sub_767ED0 : CSerializable {
+	public partial class Unknown_RL_186_sub_767ED0 : ActorComponent {
 		[Serialize("tag"             )] public StringID tag;
 		[Serialize("teensyRecapIndex")] public uint teensyRecapIndex;
 		[Serialize("behaviorTag"     )] public StringID behaviorTag;

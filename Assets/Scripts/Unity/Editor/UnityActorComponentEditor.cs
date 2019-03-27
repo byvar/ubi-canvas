@@ -16,8 +16,8 @@ public class UnityActorComponentEditor : Editor {
 		EditorGUI.DrawRect(rect, EditorGUIUtility.isProSkin ? proColor : plebColor);
 
 		UnityActorComponent uac = target as UnityActorComponent;
-		if (uac != null && uac.component != null && !uac.component.IsNull) {
-			string header = uac.component.obj.GetType().Name;
+		if (uac != null && uac.component != null) {
+			string header = uac.component.GetType().Name;
 			EditorGUI.LabelField(rect, header, EditorStyles.boldLabel);
 		} else {
 
@@ -30,8 +30,8 @@ public class UnityActorComponentEditor : Editor {
 		OnHeaderGUI();
 
 		UnityActorComponent uac = target as UnityActorComponent;
-		if (uac != null && uac.component != null && !uac.component.IsNull) {
-			uac.component.obj.Serialize(CSerializerObjectUnityEditor.Serializer, "Component");
+		if (uac != null && uac.component != null) {
+			uac.component.Serialize(CSerializerObjectUnityEditor.Serializer, "Component");
 		}
 
 	}

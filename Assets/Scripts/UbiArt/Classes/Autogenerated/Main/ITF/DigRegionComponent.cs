@@ -47,32 +47,32 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(BrushRadiusGrid));
 				SerializeField(s, nameof(LightDir));
 				SerializeField(s, nameof(MergeCount));
-				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeField(s, nameof(Vecto_LengthMax));
-					SerializeField(s, nameof(Smooth_LengthMax));
-					SerializeField(s, nameof(Smooth_ShapeMinSize));
-					SerializeField(s, nameof(Collision_Build));
-					SerializeField(s, nameof(Light_Angle));
-					SerializeField(s, nameof(Grid_Width));
-					SerializeField(s, nameof(Grid_Heigth));
-					SerializeField(s, nameof(Grid_Unity));
-					SerializeField(s, nameof(Grid_VisualOffset));
-					SerializeField(s, nameof(Particles_Spacing));
-					SerializeField(s, nameof(Particles_NbPerLocation));
-					SerializeField(s, nameof(Regeneration_Speed));
-					SerializeField(s, nameof(Regeneration_StartDelay));
-					SerializeField(s, nameof(Regeneration_EndDelay));
-					SerializeField(s, nameof(Regeneration_AccDist));
-					SerializeField(s, nameof(Regeneration_TimeMaxDRC));
-					SerializeField(s, nameof(Uv_Fill));
-					SerializeField(s, nameof(Uv_Hole));
-					SerializeField(s, nameof(Brush_ActionFill));
-					SerializeField(s, nameof(Brush_Radius));
-					SerializeField(s, nameof(padBrushRadius));
-					SerializeField(s, nameof(usePadBrushRadius));
-					SerializeField(s, nameof(PrimitiveParameters));
-					SerializeField(s, nameof(Brush_Enabled));
-				}
+			}
+			if (s.HasFlags(SerializeFlags.Default)) {
+				SerializeField(s, nameof(Vecto_LengthMax));
+				SerializeField(s, nameof(Smooth_LengthMax));
+				SerializeField(s, nameof(Smooth_ShapeMinSize));
+				SerializeField(s, nameof(Collision_Build));
+				SerializeField(s, nameof(Light_Angle));
+				SerializeField(s, nameof(Grid_Width));
+				SerializeField(s, nameof(Grid_Heigth));
+				SerializeField(s, nameof(Grid_Unity));
+				SerializeField(s, nameof(Grid_VisualOffset));
+				SerializeField(s, nameof(Particles_Spacing));
+				SerializeField(s, nameof(Particles_NbPerLocation));
+				SerializeField(s, nameof(Regeneration_Speed));
+				SerializeField(s, nameof(Regeneration_StartDelay));
+				SerializeField(s, nameof(Regeneration_EndDelay));
+				SerializeField(s, nameof(Regeneration_AccDist));
+				SerializeField(s, nameof(Regeneration_TimeMaxDRC));
+				SerializeField(s, nameof(Uv_Fill));
+				SerializeField(s, nameof(Uv_Hole));
+				SerializeField(s, nameof(Brush_ActionFill));
+				SerializeField(s, nameof(Brush_Radius));
+				SerializeField(s, nameof(padBrushRadius));
+				SerializeField(s, nameof(usePadBrushRadius));
+				SerializeField(s, nameof(PrimitiveParameters));
+				SerializeField(s, nameof(Brush_Enabled));
 			}
 			SerializeField(s, nameof(IsDiggable));
 		}

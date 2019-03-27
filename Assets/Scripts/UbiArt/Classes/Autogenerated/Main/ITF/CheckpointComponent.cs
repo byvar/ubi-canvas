@@ -10,6 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("active"                                                         )] public bool active;
 		[Serialize("persistentDataSaved"                                            )] public bool persistentDataSaved;
 		[Serialize("canBeTriggeredWhenInactive"                                     )] public bool canBeTriggeredWhenInactive;
+
 		[Serialize("bool__0"                                                        )] public bool bool__0;
 		[Serialize("Enum_VH_0__1"                                                   )] public Enum_VH_0 Enum_VH_0__1;
 		[Serialize("bool__2"                                                        )] public bool bool__2;

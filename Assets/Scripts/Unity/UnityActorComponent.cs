@@ -4,5 +4,5 @@ using UbiArt.ITF;
 
 public class UnityActorComponent : MonoBehaviour {
 	public Actor actor;
-	public Generic<ActorComponent> component;
+	public ActorComponent component;
 }

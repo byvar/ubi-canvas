@@ -57,16 +57,18 @@ namespace UbiArt.ITF {
 
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			MapLoader l = MapLoader.Loader;
-			l.Load(ConfigName, (extS) => {
-				if (l.fcg.ContainsKey(ConfigName.stringID)) {
-					config = l.fcg[ConfigName.stringID];
-				} else {
-					extS.Serialize(ref config);
-					l.fcg[ConfigName.stringID] = config;
-					l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
-				}
-			});
+			if (isFirstLoad) {
+				MapLoader l = MapLoader.Loader;
+				l.Load(ConfigName, (extS) => {
+					if (l.fcg.ContainsKey(ConfigName.stringID)) {
+						config = l.fcg[ConfigName.stringID];
+					} else {
+						extS.Serialize(ref config);
+						l.fcg[ConfigName.stringID] = config;
+						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+					}
+				});
+			}
 		}
 	}
 }

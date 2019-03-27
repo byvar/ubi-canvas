@@ -135,7 +135,7 @@ namespace UbiArt {
 		}
 
 		public void Load(Path path, SerializeAction action) {
-			if (path.IsNull) return;
+			if (path == null || path.IsNull) return;
 			if (files.ContainsKey(path.stringID)) {
 				FileWithPointers f = files[path.stringID];
 				CSerializerObject s = f.serializer;

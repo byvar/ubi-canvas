@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_349_sub_A4FF20 : CSerializable {
+	public partial class Unknown_RL_349_sub_A4FF20 : ActorComponent {
 		[Serialize("costumeId"       )] public StringID costumeId;
 		[Serialize("standAlone"      )] public int standAlone;
 		[Serialize("descriptionLocId")] public LocalisationId descriptionLocId;

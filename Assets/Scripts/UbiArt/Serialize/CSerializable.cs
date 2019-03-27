@@ -8,12 +8,14 @@ using UnityEngine;
 
 namespace UbiArt {
 	public class CSerializable : ICSerializable {
+		protected bool isFirstLoad = true;
 		[Serialize("sizeof")] public uint sizeOf;
 
 		public void Serialize(CSerializerObject s, string name) {
 			OnPreSerialize(s);
 			SerializeImpl(s);
 			OnPostSerialize(s);
+			isFirstLoad = false;
 		}
 
 		protected virtual void OnPreSerialize(CSerializerObject s) {}

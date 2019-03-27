@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
@@ -25,11 +26,13 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(unlockable));
 			}
 		}
+		[Flags]
 		public enum CostumeType {
 			[Serialize("CostumeType_Regular"  )] Regular = 0,
 			[Serialize("CostumeType_Developer")] Developer = 1,
 			[Serialize("CostumeType_Bonus"    )] Bonus = 2,
 		}
+		[Flags]
 		public enum CostumeType2 {
 			[Serialize("CostumeType_Regular"  )] Regular = 0,
 			[Serialize("CostumeType_Developer")] Developer = 1,

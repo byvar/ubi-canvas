@@ -2,11 +2,10 @@
 
 namespace UbiArt.ITF {
 	public partial class GFXMaterialSerializable {
-		bool loaded = false;
 		public CList<Generic<GFXMaterialShader_Template>> shader;
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (!loaded) {
+			if (isFirstLoad) {
 				MapLoader l = MapLoader.Loader;
 				l.Load(shaderPath, (extS) => {
 					if (l.msh.ContainsKey(shaderPath.stringID)) {
@@ -17,7 +16,6 @@ namespace UbiArt.ITF {
 						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 					}
 				});
-				loaded = true;
 			}
 		}
 	}
