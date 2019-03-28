@@ -345,7 +345,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -509,8 +509,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 1
   gameDataBinFolder: ..\..\RIPPING\RL_Mod\full\ext\cache\itf_cooked\pc
-  pathFolder: world\mountain_retro\level\mo_shooter_b
-  pathFile: mo_shooter_b.isc.ckd
+  pathFolder: world\music\level\mu_rl_5_bosstoad
+  pathFile: mu_rl_5_bosstoad.isc.ckd
   logFile: ..\..\RIPPING\RL_Mod\log.txt
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}
   baseTransparentMaterial: {fileID: 0}

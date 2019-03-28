@@ -81,6 +81,10 @@ namespace UbiArt {
 			return result;
 		}
 
+		public override char ReadChar() {
+			return Convert.ToChar(ReadByte());
+		}
+
 		public string ReadNullDelimitedString() {
 			string result = "";
 			char c = Convert.ToChar(ReadByte());

@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_123_sub_6E0620 : CSerializable {
+	[Games(GameFlags.RL)] // Definitely for a dragon
+	public partial class Unknown_RL_123_sub_6E0620 : ActorComponent {
 		[Serialize("DrawBezier"          )] public int DrawBezier;
 		[Serialize("DrawSpeedModulation" )] public int DrawSpeedModulation;
 		[Serialize("UseAlwaysActive"     )] public int UseAlwaysActive;

@@ -67,6 +67,7 @@ namespace UbiArt.ITF {
 					if (l.fcg.ContainsKey(ConfigName.stringID)) {
 						config = l.fcg[ConfigName.stringID];
 					} else {
+						//extS.log = true;
 						extS.Serialize(ref config);
 						l.fcg[ConfigName.stringID] = config;
 						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
