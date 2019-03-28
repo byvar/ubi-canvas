@@ -43,8 +43,9 @@ namespace UbiArt {
 		}
 		public Queue<ObjectPlaceHolder> pathsToLoad = new Queue<ObjectPlaceHolder>();
 
-		public Dictionary<StringID, CList<Generic<ITF.FriseConfig>>> fcg = new Dictionary<StringID, CList<Generic<ITF.FriseConfig>>>();
-		public Dictionary<StringID, CList<Generic<ITF.GFXMaterialShader_Template>>> msh = new Dictionary<StringID, CList<Generic<ITF.GFXMaterialShader_Template>>>();
+		public Dictionary<StringID, GenericFile<ITF.Actor_Template>> tpl = new Dictionary<StringID, GenericFile<ITF.Actor_Template>>();
+		public Dictionary<StringID, GenericFile<ITF.FriseConfig>> fcg = new Dictionary<StringID, GenericFile<ITF.FriseConfig>>();
+		public Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>> msh = new Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 
 		public Globals globals = null;
@@ -127,6 +128,7 @@ namespace UbiArt {
 					break;
 				case "fcg":
 				case "msh":
+				case "tpl":
 					flags |= SerializeFlags.Flags7;
 					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
 					break;

@@ -66,9 +66,9 @@ namespace UbiArt {
 				}
 				obj = ctor.Invoke(new object[] { });
 				if (obj is ICSerializable) {
-					indent++;
+					IncreaseLevel();
 					((ICSerializable)obj).Serialize(this, name);
-					indent--;
+					DecreaseLevel();
 				}
 			}
 		}

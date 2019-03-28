@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 			} else {
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 		public partial class FontSet : CSerializable {
 			[Serialize("default"      )] public Path _default;
 			[Serialize("japanese"     )] public Path japanese;
@@ -23,21 +23,15 @@ namespace UbiArt.ITF {
 			[Serialize("russian"      )] public Path russian;
 			[Serialize("arabic"       )] public Path arabic;
 			[Serialize("thai"         )] public Path thai;
-			[Serialize("Path__0"      )] public Path Path__0;
-			[Serialize("Path__1"      )] public Path Path__1;
-			[Serialize("Path__2"      )] public Path Path__2;
-			[Serialize("Path__3"      )] public Path Path__3;
-			[Serialize("Path__4"      )] public Path Path__4;
-			[Serialize("Path__5"      )] public Path Path__5;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (Settings.s.game == Settings.Game.VH) {
-					SerializeField(s, nameof(Path__0));
-					SerializeField(s, nameof(Path__1));
-					SerializeField(s, nameof(Path__2));
-					SerializeField(s, nameof(Path__3));
-					SerializeField(s, nameof(Path__4));
-					SerializeField(s, nameof(Path__5));
+				if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+					SerializeField(s, nameof(_default));
+					SerializeField(s, nameof(japanese));
+					SerializeField(s, nameof(korean));
+					SerializeField(s, nameof(tradChinese));
+					SerializeField(s, nameof(simpleChinese));
+					SerializeField(s, nameof(russian));
 				} else {
 					SerializeField(s, nameof(_default));
 					SerializeField(s, nameof(japanese));
@@ -86,6 +80,25 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(hAlignment2));
 					SerializeField(s, nameof(vAlignment));
 					SerializeField(s, nameof(useGradient), boolAsByte: true);
+					SerializeField(s, nameof(gradientSize));
+					SerializeField(s, nameof(gradientOffset));
+					SerializeField(s, nameof(gradientColor));
+					SerializeField(s, nameof(charSpacing));
+				} else if (Settings.s.game == Settings.Game.RL) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						SerializeField(s, nameof(fontPath));
+					}
+					SerializeField(s, nameof(fontSet));
+					SerializeField(s, nameof(fontSize));
+					SerializeField(s, nameof(color));
+					SerializeField(s, nameof(shadowOffset));
+					SerializeField(s, nameof(shadowColor));
+					SerializeField(s, nameof(lineSpacing));
+					SerializeField(s, nameof(paragraphSpacing));
+					SerializeField(s, nameof(anchor));
+					SerializeField(s, nameof(hAlignment2));
+					SerializeField(s, nameof(vAlignment));
+					SerializeField(s, nameof(useGradient));
 					SerializeField(s, nameof(gradientSize));
 					SerializeField(s, nameof(gradientOffset));
 					SerializeField(s, nameof(gradientColor));

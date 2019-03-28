@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class TweenInstructionSet_Template : CSerializable {
 		[Serialize("name"          )] public StringID name;
-		[Serialize("instructions"  )] public CList<TweenInstruction_Template> instructions;
+		[Serialize("instructions"  )] public CList<Generic<TweenInstruction_Template>> instructions;
 		[Serialize("iterationCount")] public uint iterationCount;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

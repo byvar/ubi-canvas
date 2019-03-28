@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("useDataAnims" )] public bool useDataAnims;
 		[Serialize("useActorScale")] public bool useActorScale;
 		[Serialize("stopDuration" )] public float stopDuration;
-		[Serialize("animPackage"  )] public Placeholder animPackage;
+		[Serialize("animPackage"  )] public AnimResourcePackage animPackage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

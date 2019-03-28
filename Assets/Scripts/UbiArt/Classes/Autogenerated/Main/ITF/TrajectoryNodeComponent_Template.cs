@@ -8,6 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("name"        )] public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
+			if (Settings.s.game == Settings.Game.RL && this is RO2_SnakeNetworkNodeComponent_Template) return;
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(useCurvedEnd));
 				SerializeField(s, nameof(name));

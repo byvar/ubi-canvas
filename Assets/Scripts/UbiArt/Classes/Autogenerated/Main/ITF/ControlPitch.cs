@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.COL | GameFlags.RL)]
-	public partial class ControlPitch : CSerializable {
+	public partial class ControlPitch : SoundModifier {
 		[Serialize("input")] public ProceduralInputData input;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

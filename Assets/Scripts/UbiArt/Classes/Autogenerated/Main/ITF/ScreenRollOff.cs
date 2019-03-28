@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
-	public partial class ScreenRollOff : CSerializable {
+	public partial class ScreenRollOff : SoundModifier {
 		[Serialize("distanceMin"  )] public float distanceMin;
 		[Serialize("distanceMax"  )] public float distanceMax;
-		[Serialize("useMetricUnit")] public int useMetricUnit;
+		[Serialize("useMetricUnit")] public bool useMetricUnit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {

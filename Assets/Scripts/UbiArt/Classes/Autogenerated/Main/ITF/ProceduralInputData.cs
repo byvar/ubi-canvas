@@ -9,10 +9,10 @@ namespace UbiArt.ITF {
 		[Serialize("initialValue")] public float initialValue;
 		[Serialize("minValue"    )] public float minValue;
 		[Serialize("maxValue"    )] public float maxValue;
-		[Serialize("mod"         )] public bool mod;
-		[Serialize("abs"         )] public bool abs;
-		[Serialize("add"         )] public bool add;
-		[Serialize("sin"         )] public bool sin;
+		[Serialize("mod"         )] public int mod;
+		[Serialize("abs"         )] public int abs;
+		[Serialize("add"         )] public int add;
+		[Serialize("sin"         )] public int sin;
 		[Serialize("curve"       )] public Spline curve;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

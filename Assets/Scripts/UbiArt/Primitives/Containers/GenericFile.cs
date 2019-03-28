@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt {
-	public class Generic<T> : ICSerializable, IObjectContainer {
+	public class GenericFile<T> : ICSerializable, IObjectContainer {
+		[Serialize("read"       )] public bool read;
+		[Serialize("sizeof"     )] public uint sizeOf;
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;
 
@@ -18,6 +20,10 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
+			s.Serialize(ref read, name: "read");
+			if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)) {
+				s.Serialize(ref sizeOf, name: "sizeof");
+			}
 			Pointer pos = s.Position;
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
 				s.Serialize(ref className, name: "NAME");

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
-	public partial class SpatializedPanning : CSerializable {
+	public partial class SpatializedPanning : SoundModifier {
 		[Serialize("widthMin")] public float widthMin;
 		[Serialize("widthMax")] public float widthMax;
 		protected override void SerializeImpl(CSerializerObject s) {

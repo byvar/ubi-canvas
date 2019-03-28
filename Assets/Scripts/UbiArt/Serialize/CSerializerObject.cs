@@ -12,6 +12,9 @@ namespace UbiArt {
 		protected int indent;
 		public int Indent => indent;
 		public bool log = false;
+		protected Stack<int> embeddedLevels = new Stack<int>();
+		protected bool embedded = false;
+		public bool Embedded => embeddedLevels.Count > 0 && embeddedLevels.Peek() == indent;
 
 		public CSerializerObject() {
 		}
@@ -28,6 +31,30 @@ namespace UbiArt {
 			get;
 		}
 		public abstract void ResetPosition();
+		public void EnterEmbed() {
+			embedded = true;
+		}
+		public void ExitEmbed() {
+			embedded = false;
+		}
+		protected void IncreaseLevel() {
+			if (!embedded) {
+				indent++;
+			} else {
+				embeddedLevels.Push(indent);
+				embedded = false;
+			}
+		}
+		protected void DecreaseLevel() {
+			if (!embedded) {
+				if (embeddedLevels.Count > 0 && embeddedLevels.Peek() == indent) {
+					embeddedLevels.Pop();
+					embedded = true;
+				} else {
+					indent--;
+				}
+			}
+		}
 
 		public bool HasFlags(SerializeFlags flags) {
 			switch (flags) {

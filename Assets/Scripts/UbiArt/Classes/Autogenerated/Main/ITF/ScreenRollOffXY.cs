@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
-	public partial class ScreenRollOffXY : CSerializable {
+	public partial class ScreenRollOffXY : SoundModifier {
 		[Serialize("distanceMinX" )] public float distanceMinX;
 		[Serialize("distanceMaxX" )] public float distanceMaxX;
 		[Serialize("distanceMinY" )] public float distanceMinY;
 		[Serialize("distanceMaxY" )] public float distanceMaxY;
-		[Serialize("useX"         )] public int useX;
-		[Serialize("useY"         )] public int useY;
-		[Serialize("useMetricUnit")] public int useMetricUnit;
+		[Serialize("useX"         )] public bool useX;
+		[Serialize("useY"         )] public bool useY;
+		[Serialize("useMetricUnit")] public bool useMetricUnit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {

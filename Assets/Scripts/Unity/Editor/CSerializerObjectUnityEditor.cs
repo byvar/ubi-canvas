@@ -79,9 +79,9 @@ namespace UbiArt {
 					foldouts[obj] = EditorGUILayout.Foldout(foldouts[obj], name, true);
 					if (foldouts[obj]) {
 						EditorGUI.indentLevel++;
-						indent++;
+						IncreaseLevel();
 						((ICSerializable)obj).Serialize(this, name);
-						indent--;
+						DecreaseLevel();
 						EditorGUI.indentLevel--;
 					}
 				}

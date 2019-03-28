@@ -21,11 +21,13 @@ namespace UbiArt {
 			if (count != (uint)Count) {
 				Array.Resize(ref container, (int)count);
 			}
+			//s.EnterEmbed();
 			for (int i = 0; i < count; i++) {
 				T obj = container[i];
 				s.Serialize<T>(ref obj, name: name, index: i);
 				container[i] = obj;
 			}
+			//s.ExitEmbed();
 		}
 
 		#region List interface

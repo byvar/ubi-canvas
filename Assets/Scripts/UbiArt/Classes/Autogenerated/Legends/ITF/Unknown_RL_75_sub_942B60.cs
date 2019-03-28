@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.COL)]
-	public partial class Unknown_RL_75_sub_942B60 : CSerializable {
+	public partial class Unknown_RL_75_sub_942B60 : Unknown_RL_74_sub_9456B0 {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

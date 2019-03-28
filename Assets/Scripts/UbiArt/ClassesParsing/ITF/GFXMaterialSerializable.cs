@@ -2,7 +2,7 @@
 
 namespace UbiArt.ITF {
 	public partial class GFXMaterialSerializable {
-		public CList<Generic<GFXMaterialShader_Template>> shader;
+		public GenericFile<GFXMaterialShader_Template> shader;
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (isFirstLoad) {

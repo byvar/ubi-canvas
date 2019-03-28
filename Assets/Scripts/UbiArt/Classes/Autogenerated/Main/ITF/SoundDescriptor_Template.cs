@@ -10,14 +10,14 @@ namespace UbiArt.ITF {
 		[Serialize("WwisePlayAt"          )] public AUDIO_SYNC_PLAY WwisePlayAt;
 		[Serialize("WwisePlayAtCue"       )] public StringID WwisePlayAtCue;
 		[Serialize("StringID__0"          )] public StringID StringID__0;
-		[Serialize("Volume__1"            )] public Volume volume;
+		[Serialize("volume"               )] public Volume volume;
 		[Serialize("category"             )] public StringID category;
 		[Serialize("limitCategory"        )] public StringID limitCategory;
 		[Serialize("limitMode"            )] public uint limitMode;
 		[Serialize("maxInstances"         )] public uint maxInstances;
 		[Serialize("isStream"             )] public int isStream;
-		[Serialize("CList<Path>__7"       )] public CList<Path> files;
-		[Serialize("SoundParams__8"       )] public SoundParams _params;
+		[Serialize("files"                )] public CList<Path> files;
+		[Serialize("params"               )] public SoundParams _params;
 		[Serialize("spawnEvent"           )] public SoundGUID spawnEvent;
 		[Serialize("livingEvent"          )] public SoundGUID livingEvent;
 		[Serialize("deathEvent"           )] public SoundGUID deathEvent;

@@ -4879,7 +4879,7 @@ namespace UbiArt {
 			{ 0xFE049019, typeof(ITF.RO2_EventMurphySwapSequenceEnd) },
 			{ 0xFE05FBD1, typeof(ITF.Unknown_RL_342_sub_A0B180) },
 			{ 0xFE1C88DA, typeof(ITF.LD_TriggerComponent_Template) },
-			{ 0xFE2667F1, typeof(ITF.Unknown_RL_68_sub_943DF0) },
+			{ 0xFE2667F1, typeof(ITF.MusicTreeNode_Template) },
 			{ 0xFE2CCCDF, typeof(ITF.Unknown_RL_138_sub_A763E0) },
 			{ 0xFE30FA88, typeof(ITF.PlayAnimBasedOnBoneAngleComponent_Template) },
 			{ 0xFE44A3D7, typeof(ITF.RO2_PuzzleManagerComponent_Template) },

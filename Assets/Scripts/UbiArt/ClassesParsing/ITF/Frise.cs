@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class Frise {
-		public CList<Generic<FriseConfig>> config;
+		public GenericFile<FriseConfig> config;
 
 		protected override void InitGameObject() {
 			base.InitGameObject();
 			UnityFrise uf = gao.AddComponent<UnityFrise>();
 			uf.frise = this;
-			if (config != null && config.Count > 0) {
+			if (config != null && config.obj != null) {
 				UnityFriseConfig ufcg = gao.AddComponent<UnityFriseConfig>();
-				ufcg.friseConfig = config[0].obj;
+				ufcg.friseConfig = config.obj;
 			}
 			if (meshBuildData.value != null) {
 				if (meshBuildData.value.StaticVertexList.Count > 0) {
@@ -33,21 +33,21 @@ namespace UbiArt.ITF {
 					mf.mesh = mesh;
 					MeshRenderer mr = gao.AddComponent<MeshRenderer>();
 					Material mat;
-					if (config != null && config[0].obj.textureConfigs.Count > 0) {
-						if (config[0].obj.textureConfigs[0].material.shader != null) {
+					if (config != null && config.obj.textureConfigs.Count > 0) {
+						if (config.obj.textureConfigs[0].material.shader != null && config.obj.textureConfigs[0].material.shader.obj != null) {
 							// TODO: Get rid of GFX_MAT2 here
-							if (config[0].obj.textureConfigs[0].material.shader[0].obj.materialtype2 == GFXMaterialShader_Template.GFX_MAT2.DEFAULT) {
+							if (config.obj.textureConfigs[0].material.shader.obj.materialtype2 == GFXMaterialShader_Template.GFX_MAT2.DEFAULT) {
 								mat = new Material(MapLoader.Loader.baseMaterial);
 							} else {
 								mat = new Material(MapLoader.Loader.baseLightMaterial);
 							}
-							if (!config[0].obj.textureConfigs[0].material.shader[0].obj.renderRegular) gao.SetActive(false);
+							if (!config.obj.textureConfigs[0].material.shader.obj.renderRegular) gao.SetActive(false);
 						} else {
 							mat = new Material(MapLoader.Loader.baseMaterial);
 						}
 						//mat.color = config[0].obj.textureConfigs[0].color.Color;
-						if (config[0].obj.textureConfigs[0].material.textureSet.diffuseTex != null) {
-							mat.SetTexture("_MainTex", config[0].obj.textureConfigs[0].material.textureSet.diffuseTex.Texture);
+						if (config.obj.textureConfigs[0].material.textureSet.diffuseTex != null) {
+							mat.SetTexture("_MainTex", config.obj.textureConfigs[0].material.textureSet.diffuseTex.Texture);
 						} else {
 							mat.SetTexture("_MainTex", Util.CreateDummyTexture());
 						}

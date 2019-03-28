@@ -71,9 +71,9 @@ namespace UbiArt.ITF {
 		[Serialize("scratchAcceleration"           )] public float scratchAcceleration;
 		[Serialize("scratchDeceleration"           )] public float scratchDeceleration;
 		[Serialize("scratchShapeEnabled"           )] public bool scratchShapeEnabled;
-		[Serialize("musicEnterEvent"               )] public Placeholder musicEnterEvent;
-		[Serialize("musicWinEvent"                 )] public Placeholder musicWinEvent;
-		[Serialize("musicStopEvent"                )] public Placeholder musicStopEvent;
+		[Serialize("musicEnterEvent"               )] public Generic<Event> musicEnterEvent;
+		[Serialize("musicWinEvent"                 )] public Generic<Event> musicWinEvent;
+		[Serialize("musicStopEvent"                )] public Generic<Event> musicStopEvent;
 		[Serialize("textRewardScaleStart"          )] public float textRewardScaleStart;
 		[Serialize("textRewardScaleEnd"            )] public float textRewardScaleEnd;
 		[Serialize("textRewardScaleDuration"       )] public float textRewardScaleDuration;
