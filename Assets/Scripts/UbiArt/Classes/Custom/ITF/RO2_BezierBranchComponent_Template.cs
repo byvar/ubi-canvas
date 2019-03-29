@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	public partial class RO2_BezierBranchComponent_Template : CSerializable {
+	public partial class RO2_BezierBranchComponent_Template : BezierBranchComponent_Template {
 	}
 }
 

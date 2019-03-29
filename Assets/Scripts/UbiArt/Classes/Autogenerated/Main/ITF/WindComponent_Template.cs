@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class WindComponent_Template : PhysForceModifierComponent_Template {
-		[Serialize("windAreas"    )] public CList<PhysForceModifier_Template> windAreas;
+		[Serialize("windAreas"    )] public CList<Generic<PhysForceModifier_Template>> windAreas;
 		[Serialize("canInverse"   )] public bool canInverse;
 		[Serialize("canStop"      )] public bool canStop;
 		[Serialize("enableAtStart")] public bool enableAtStart;

@@ -1,9 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	// Used for challenge historic (e.g. dailyhistoric)
-	[Games(GameFlags.RL)] // There is an empty parent between this and actorComponent.
-	public partial class Unknown_RL_193_sub_76BFA0 : ActorComponent {
+	[Games(GameFlags.RL)] // Used for challenge historic (e.g. dailyhistoric)
+	public partial class Unknown_RL_193_sub_76BFA0 : Unknown_RL_219_sub_A763E0 {
 		[Serialize("nodePaintingOffsetY")] public float nodePaintingOffsetY;
 		[Serialize("frequency"          )] public Enum_frequency frequency;
 		[Serialize("currentOffset"      )] public Vector3 currentOffset;

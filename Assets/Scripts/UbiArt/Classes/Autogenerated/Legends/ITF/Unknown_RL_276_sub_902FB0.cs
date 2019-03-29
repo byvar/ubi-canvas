@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_276_sub_902FB0 : CSerializable {
-		[Serialize("dbgSplineMaterial"                )] public Placeholder dbgSplineMaterial;
+	public partial class Unknown_RL_276_sub_902FB0 : ActorComponent_Template {
+		[Serialize("dbgSplineMaterial"                )] public GFXMaterialSerializable dbgSplineMaterial;
 		[Serialize("shieldDragDistance"               )] public float shieldDragDistance;
 		[Serialize("allowMultiPlayerMode"             )] public int allowMultiPlayerMode;
 		[Serialize("allowAutoGyroActivation"          )] public int allowAutoGyroActivation;

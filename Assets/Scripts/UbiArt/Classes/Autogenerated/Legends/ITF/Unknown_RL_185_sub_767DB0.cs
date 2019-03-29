@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL)] // There is one empty parent between this and ActorComponent
-	public partial class Unknown_RL_185_sub_767DB0 : ActorComponent {
+	[Games(GameFlags.RL)]
+	public partial class Unknown_RL_185_sub_767DB0 : Unknown_RL_219_sub_A763E0 {
 		[Serialize("name"      )] public SmartLocId name;
 		[Serialize("world"     )] public StringID world;
 		[Serialize("locationID")] public SmartLocId locationID;

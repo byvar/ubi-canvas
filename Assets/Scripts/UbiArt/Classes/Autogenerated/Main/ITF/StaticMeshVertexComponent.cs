@@ -12,15 +12,8 @@ namespace UbiArt.ITF {
 		[Serialize("forceMatrixUpdate" )] public int forceMatrixUpdate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(staticMeshElements));
-				SerializeField(s, nameof(sortedMeshElements));
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(localAABB));
-				SerializeField(s, nameof(mergeRange));
-				SerializeField(s, nameof(friseGroupPath));
-				SerializeField(s, nameof(forceMatrixUpdate));
-			} else if (Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(sortedMeshElements));
 				SerializeField(s, nameof(material));
 				SerializeField(s, nameof(localAABB));
@@ -29,7 +22,6 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(forceMatrixUpdate));
 			} else {
 				SerializeField(s, nameof(staticMeshElements));
-				SerializeField(s, nameof(sortedMeshElements));
 				SerializeField(s, nameof(sortedMeshElements));
 				SerializeField(s, nameof(material));
 				SerializeField(s, nameof(localAABB));

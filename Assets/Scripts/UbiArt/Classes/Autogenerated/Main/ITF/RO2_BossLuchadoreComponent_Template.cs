@@ -135,6 +135,8 @@ namespace UbiArt.ITF {
 			[Serialize("activateTweenOnHole"         )] public bool activateTweenOnHole;
 			[Serialize("secondaryActivateTweenName"  )] public StringID secondaryActivateTweenName;
 			[Serialize("secondaryActivateTweenOnHole")] public bool secondaryActivateTweenOnHole;
+			[Serialize("handHitShapeOffset"          )] public Vector2 handHitShapeOffset;
+			[Serialize("handHitShapeScale"           )] public float handHitShapeScale;
 			[Serialize("flags"                       )] public LF flags;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
@@ -149,6 +151,10 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(activateTweenOnHole));
 				SerializeField(s, nameof(secondaryActivateTweenName));
 				SerializeField(s, nameof(secondaryActivateTweenOnHole));
+				if (Settings.s.game == Settings.Game.RL) {
+					SerializeField(s, nameof(handHitShapeOffset));
+					SerializeField(s, nameof(handHitShapeScale));
+				}
 				SerializeField(s, nameof(flags));
 			}
 			public enum LF {
@@ -157,7 +163,7 @@ namespace UbiArt.ITF {
 				[Serialize("LF_Aiming"                   )] Aiming = 2,
 			}
 		}
-		[Games(GameFlags.RA)]
+		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class SequencePhase : CSerializable {
 			[Serialize("tag"           )] public StringID tag;
 			[Serialize("animStand"     )] public StringID animStand;
@@ -165,6 +171,8 @@ namespace UbiArt.ITF {
 			[Serialize("animHit"       )] public StringID animHit;
 			[Serialize("instructions"  )] public CList<RO2_BossLuchadoreComponent_Template.SequenceInstruction> instructions;
 			[Serialize("forbiddenZones")] public CList<RO2_BossLuchadoreComponent_Template.ForbiddenZone> forbiddenZones;
+			[Serialize("changedHitMaterialTarget")] public uint changedHitMaterialTarget;
+			[Serialize("changedHitMaterialSource")] public uint changedHitMaterialSource;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(tag));
@@ -173,6 +181,10 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(animHit));
 				SerializeField(s, nameof(instructions));
 				SerializeField(s, nameof(forbiddenZones));
+				if (Settings.s.game == Settings.Game.RL) {
+					SerializeField(s, nameof(changedHitMaterialTarget));
+					SerializeField(s, nameof(changedHitMaterialSource));
+				}
 			}
 		}
 		public override uint? ClassCRC => 0x4CC59F4C;

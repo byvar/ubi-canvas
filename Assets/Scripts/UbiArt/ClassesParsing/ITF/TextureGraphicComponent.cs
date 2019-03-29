@@ -4,8 +4,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	public partial class TextureGraphicComponent {
 
-		public override void InitUnityComponent(Actor act, GameObject gao) {
-			base.InitUnityComponent(act, gao);
+		public override void InitUnityComponent(Actor act, GameObject gao, int index) {
+			base.InitUnityComponent(act, gao, index);
 			if (material != null && material.textureSet != null && material.textureSet.diffuseTex != null) {
 				MeshFilter mf = gao.AddComponent<MeshFilter>();
 				MeshRenderer mr = gao.AddComponent<MeshRenderer>();
@@ -13,6 +13,18 @@ namespace UbiArt.ITF {
 				Material mat = new Material(MapLoader.Loader.baseMaterial);
 				mat.SetTexture("_MainTex", material.textureSet.diffuseTex.Texture);
 				mr.material = mat;
+			} else if (act.template != null && act.template.obj != null && act.template.obj.COMPONENTS.Count > index
+				&& act.template.obj.COMPONENTS[index].obj != null
+				&& act.template.obj.COMPONENTS[index].obj is TextureGraphicComponent_Template) {
+				TextureGraphicComponent_Template tpl = act.template.obj.COMPONENTS[index].obj as TextureGraphicComponent_Template;
+				if (tpl.material != null && tpl.material.textureSet != null && tpl.material.textureSet.diffuseTex != null) {
+					MeshFilter mf = gao.AddComponent<MeshFilter>();
+					MeshRenderer mr = gao.AddComponent<MeshRenderer>();
+					mf.sharedMesh = CreateMesh(tpl.material.textureSet.diffuseTex);
+					Material mat = new Material(MapLoader.Loader.baseMaterial);
+					mat.SetTexture("_MainTex", tpl.material.textureSet.diffuseTex.Texture);
+					mr.material = mat;
+				}
 			}
 		}
 

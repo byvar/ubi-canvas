@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_352_sub_A644E0 : CSerializable {
+	public partial class Unknown_RL_352_sub_A644E0 : ActorComponent_Template {
 		[Serialize("fadeIn" )] public StringID fadeIn;
 		[Serialize("fadeOut")] public StringID fadeOut;
 		[Serialize("idle"   )] public StringID idle;

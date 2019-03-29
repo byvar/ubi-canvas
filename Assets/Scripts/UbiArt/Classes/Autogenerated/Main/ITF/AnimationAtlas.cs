@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(sequence));
 		}
-		[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RA | GameFlags.RL | GameFlags.RFR | GameFlags.VH)]
 		public partial class Key : CSerializable {
 			[Serialize("atlas")] public uint atlas;
 			[Serialize("count")] public uint count;

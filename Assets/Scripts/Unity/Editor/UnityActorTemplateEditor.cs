@@ -2,8 +2,8 @@
 using UbiArt;
 using UnityEngine;
 
-[CustomEditor(typeof(UnityFriseConfig))]
-public class UnityFriseConfigEditor : Editor {
+[CustomEditor(typeof(UnityActorTemplate))]
+public class UnityActorTemplateEditor : Editor {
 	Color proColor = (Color)new Color32(56, 56, 56, 255);
 	Color plebColor = (Color)new Color32(194, 194, 194, 255);
 	protected override void OnHeaderGUI() {
@@ -15,7 +15,7 @@ public class UnityFriseConfigEditor : Editor {
 
 		EditorGUI.DrawRect(rect, EditorGUIUtility.isProSkin ? proColor : plebColor);
 
-		string header = "Frise Config (Shared)";
+		string header = "Actor Template (Shared)";
 		EditorGUI.LabelField(rect, header, EditorStyles.boldLabel);
 	}
 
@@ -23,9 +23,9 @@ public class UnityFriseConfigEditor : Editor {
 		//DrawDefaultInspector();
 		OnHeaderGUI();
 
-		UnityFriseConfig fcg = target as UnityFriseConfig;
-		if (fcg != null && fcg.friseConfig != null) {
-			fcg.friseConfig.Serialize(CSerializerObjectUnityEditor.Serializer, "FriseConfig");
+		UnityActorTemplate tpl = target as UnityActorTemplate;
+		if (tpl != null && tpl.template != null) {
+			tpl.template.Serialize(CSerializerObjectUnityEditor.Serializer, "Template");
 		}
 
 	}

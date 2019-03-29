@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_348_sub_A513D0 : CSerializable {
+	public partial class Unknown_RL_348_sub_A513D0 : ActorComponent_Template {
 		[Serialize("usedAnim"     )] public StringID usedAnim;
 		[Serialize("nextAnim"     )] public StringID nextAnim;
 		[Serialize("lockedAnim"   )] public StringID lockedAnim;
 		[Serialize("availableAnim")] public StringID availableAnim;
 		[Serialize("unlockAnim"   )] public StringID unlockAnim;
 		[Serialize("changeFX"     )] public StringID changeFX;
-		[Serialize("pressUpShape" )] public Placeholder pressUpShape;
+		[Serialize("pressUpShape" )] public Generic<PhysShape> pressUpShape;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(usedAnim));

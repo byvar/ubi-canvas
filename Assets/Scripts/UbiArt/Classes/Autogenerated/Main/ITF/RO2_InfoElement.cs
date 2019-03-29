@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_InfoElement : CSerializable {
 		[Serialize("isOccupied")] public bool isOccupied;
 		[Serialize("reward"    )] public uint reward;

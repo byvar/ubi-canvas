@@ -2,13 +2,13 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_436_sub_B68190 : CSerializable {
+	public partial class Unknown_RL_436_sub_B68190 : ActorComponent_Template {
 		[Serialize("enter"                 )] public int enter;
-		[Serialize("hi5Event"              )] public Placeholder hi5Event;
+		[Serialize("hi5Event"              )] public Generic<Event> hi5Event;
 		[Serialize("autoMurphy"            )] public int autoMurphy;
 		[Serialize("autoMurphyMultiAllowed")] public int autoMurphyMultiAllowed;
-		[Serialize("AMSoundEventList"      )] public Placeholder AMSoundEventList;
-		[Serialize("AMSoundMapList"        )] public Placeholder AMSoundMapList;
+		[Serialize("AMSoundEventList"      )] public CList<Generic<Event>> AMSoundEventList;
+		[Serialize("AMSoundMapList"        )] public CList<StringID> AMSoundMapList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(enter));

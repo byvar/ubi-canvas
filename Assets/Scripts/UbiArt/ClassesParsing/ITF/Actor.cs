@@ -7,9 +7,18 @@ namespace UbiArt.ITF {
 		protected override void InitGameObject() {
 			base.InitGameObject();
 			if (Settings.s.game != Settings.Game.RA && this is Frise) return;
-			foreach (Generic<ActorComponent> ac in COMPONENTS) {
+			for(int i = 0; i < COMPONENTS.Count; i++) {
+				Generic<ActorComponent> ac = COMPONENTS[i];
 				if (ac != null && !ac.IsNull) {
-					ac.obj.InitUnityComponent(this, gao);
+					ac.obj.InitUnityComponent(this, gao, i);
+				}
+			}
+			if (template != null && template.obj != null) {
+				for (int i = 0; i < template.obj.COMPONENTS.Count; i++) {
+					Generic<ActorComponent_Template> ac = template.obj.COMPONENTS[i];
+					if (ac != null && !ac.IsNull) {
+						ac.obj.InitUnityComponent(this, template.obj, gao, i);
+					}
 				}
 			}
 		}
@@ -26,7 +35,6 @@ namespace UbiArt.ITF {
 						extS.log = true;
 						extS.Serialize(ref template);
 						l.tpl[LUA.stringID] = template;
-						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 					}
 				});
 			}

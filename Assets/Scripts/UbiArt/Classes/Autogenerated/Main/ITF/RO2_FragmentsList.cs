@@ -7,7 +7,6 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(fragments));
-			SerializeField(s, nameof(fragments));
 		}
 	}
 }

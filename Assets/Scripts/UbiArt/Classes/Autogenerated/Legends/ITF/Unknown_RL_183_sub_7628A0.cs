@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_183_sub_7628A0 : CSerializable {
+	public partial class Unknown_RL_183_sub_7628A0 : Unknown_RL_220_sub_A763E0 {
 		[Serialize("maxSpeedToFocusCostumeFrame"      )] public float maxSpeedToFocusCostumeFrame;
 		[Serialize("paintScale"                       )] public Vector2 paintScale;
 		[Serialize("nodeDialogsDelay"                 )] public float nodeDialogsDelay;
@@ -12,21 +12,21 @@ namespace UbiArt.ITF {
 		[Serialize("unteasingDuration"                )] public float unteasingDuration;
 		[Serialize("paintTransitionDuration"          )] public float paintTransitionDuration;
 		[Serialize("invasionFrameDisplayDelay"        )] public uint invasionFrameDisplayDelay;
-		[Serialize("HomeNodeDialog_Lock"              )] public Placeholder HomeNodeDialog_Lock;
-		[Serialize("HomeNodeDialog_Challengers"       )] public Placeholder HomeNodeDialog_Challengers;
-		[Serialize("HomeNodeDialog_DiamondCup"        )] public Placeholder HomeNodeDialog_DiamondCup;
-		[Serialize("HomeNodeDialog_GoldCup"           )] public Placeholder HomeNodeDialog_GoldCup;
-		[Serialize("HomeNodeDialog_SilverCup"         )] public Placeholder HomeNodeDialog_SilverCup;
-		[Serialize("HomeNodeDialog_BronzeCup"         )] public Placeholder HomeNodeDialog_BronzeCup;
-		[Serialize("HomeNodeDialog_Teaser_Day"        )] public Placeholder HomeNodeDialog_Teaser_Day;
-		[Serialize("HomeNodeDialog_Teaser_Hour"       )] public Placeholder HomeNodeDialog_Teaser_Hour;
-		[Serialize("HomeNodeDialog_Teaser_Minute"     )] public Placeholder HomeNodeDialog_Teaser_Minute;
-		[Serialize("HomeNodeDialog_Teaser_Second"     )] public Placeholder HomeNodeDialog_Teaser_Second;
-		[Serialize("HomeNodeDialog_FriendChallengers" )] public Placeholder HomeNodeDialog_FriendChallengers;
-		[Serialize("HomeNodeDialog_TotalChallengers"  )] public Placeholder HomeNodeDialog_TotalChallengers;
-		[Serialize("HomeNodeDialog_CostumeDescription")] public Placeholder HomeNodeDialog_CostumeDescription;
-		[Serialize("HomeNodeDialog_Highlight"         )] public Placeholder HomeNodeDialog_Highlight;
-		[Serialize("HomeNodeDialog_NeedOnline"        )] public Placeholder HomeNodeDialog_NeedOnline;
+		[Serialize("HomeNodeDialog_Lock"              )] public EventInstructionDialog HomeNodeDialog_Lock;
+		[Serialize("HomeNodeDialog_Challengers"       )] public EventInstructionDialog HomeNodeDialog_Challengers;
+		[Serialize("HomeNodeDialog_DiamondCup"        )] public EventInstructionDialog HomeNodeDialog_DiamondCup;
+		[Serialize("HomeNodeDialog_GoldCup"           )] public EventInstructionDialog HomeNodeDialog_GoldCup;
+		[Serialize("HomeNodeDialog_SilverCup"         )] public EventInstructionDialog HomeNodeDialog_SilverCup;
+		[Serialize("HomeNodeDialog_BronzeCup"         )] public EventInstructionDialog HomeNodeDialog_BronzeCup;
+		[Serialize("HomeNodeDialog_Teaser_Day"        )] public EventInstructionDialog HomeNodeDialog_Teaser_Day;
+		[Serialize("HomeNodeDialog_Teaser_Hour"       )] public EventInstructionDialog HomeNodeDialog_Teaser_Hour;
+		[Serialize("HomeNodeDialog_Teaser_Minute"     )] public EventInstructionDialog HomeNodeDialog_Teaser_Minute;
+		[Serialize("HomeNodeDialog_Teaser_Second"     )] public EventInstructionDialog HomeNodeDialog_Teaser_Second;
+		[Serialize("HomeNodeDialog_FriendChallengers" )] public EventInstructionDialog HomeNodeDialog_FriendChallengers;
+		[Serialize("HomeNodeDialog_TotalChallengers"  )] public EventInstructionDialog HomeNodeDialog_TotalChallengers;
+		[Serialize("HomeNodeDialog_CostumeDescription")] public EventInstructionDialog HomeNodeDialog_CostumeDescription;
+		[Serialize("HomeNodeDialog_Highlight"         )] public EventInstructionDialog HomeNodeDialog_Highlight;
+		[Serialize("HomeNodeDialog_NeedOnline"        )] public EventInstructionDialog HomeNodeDialog_NeedOnline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(maxSpeedToFocusCostumeFrame));

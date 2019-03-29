@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL)] // One empty parent between this and actorComponent
-	public partial class Unknown_RL_471_sub_692000 : ActorComponent {
+	[Games(GameFlags.RL)]
+	public partial class Unknown_RL_471_sub_692000 : TrajectoryFollowerComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

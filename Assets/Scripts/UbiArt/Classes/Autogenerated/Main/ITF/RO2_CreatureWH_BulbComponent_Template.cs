@@ -2,7 +2,15 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
-	public partial class RO2_CreatureWH_BulbComponent_Template : RO2_BezierTree_Template {
+	public partial class RO2_CreatureWH_BulbComponent_Template : RO2_AIComponent_Template {
+		// v From RO2_BezierTree_Template
+		[Serialize("sampleCount"      )] public uint sampleCount;
+		[Serialize("widthForAABB"     )] public float widthForAABB;
+		[Serialize("linkMainBranch"   )] public RO2_BezierTree_Template.LinkMode linkMainBranch;
+		[Serialize("branchComponents" )] public CArray<Generic<RO2_BezierBranchComponent_Template>> branchComponents;
+		[Serialize("tweenInterpreter" )] public TweenInterpreter_Template tweenInterpreter;
+		[Serialize("lengthCursorInput")] public StringID lengthCursorInput;
+		// ^ From RO2_BezierTree_Template
 		[Serialize("attackRadius"               )] public float attackRadius;
 		[Serialize("reflexAttackRadius"         )] public float reflexAttackRadius;
 		[Serialize("speedAttack"                )] public float speedAttack;
@@ -46,6 +54,12 @@ namespace UbiArt.ITF {
 		[Serialize("collisionShape"             )] public Generic<PhysShape> collisionShape;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
+			SerializeField(s, nameof(sampleCount));
+			SerializeField(s, nameof(widthForAABB));
+			SerializeField(s, nameof(linkMainBranch));
+			SerializeField(s, nameof(branchComponents));
+			SerializeField(s, nameof(tweenInterpreter));
+			SerializeField(s, nameof(lengthCursorInput));
 			SerializeField(s, nameof(attackRadius));
 			SerializeField(s, nameof(reflexAttackRadius));
 			SerializeField(s, nameof(speedAttack));
@@ -89,6 +103,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(collisionShape));
 		}
 		public override uint? ClassCRC => 0xABE470E1;
+		
 	}
 }
 

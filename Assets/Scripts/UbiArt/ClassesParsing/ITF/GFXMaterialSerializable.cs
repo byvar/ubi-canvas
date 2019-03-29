@@ -13,7 +13,6 @@ namespace UbiArt.ITF {
 					} else {
 						extS.Serialize(ref shader);
 						l.msh[shaderPath.stringID] = shader;
-						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 					}
 				});
 			}
