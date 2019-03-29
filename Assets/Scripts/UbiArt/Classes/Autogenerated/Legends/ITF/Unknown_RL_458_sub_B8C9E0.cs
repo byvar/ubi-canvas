@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_458_sub_B8C9E0 : CSerializable {
-		[Serialize("basicBullet")] public Placeholder basicBullet;
+	public partial class Unknown_RL_458_sub_B8C9E0 : AIAction_Template {
+		[Serialize("basicBullet")] public RO2_BasicBullet_Template basicBullet;
 		[Serialize("posOffset"  )] public Vector2 posOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

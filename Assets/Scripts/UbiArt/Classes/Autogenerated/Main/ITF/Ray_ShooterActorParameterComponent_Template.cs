@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(onVacuumedStim));
 			SerializeField(s, nameof(onEnemyReVacuumedStim));
 		}
-		[Games(GameFlags.RFR | GameFlags.RO)]
+		[Games(GameFlags.RFR | GameFlags.RO | GameFlags.RL)]
 		public partial class VacuumFxNames : CSerializable {
 			[Serialize("fxNameVacuuming"    )] public StringID fxNameVacuuming;
 			[Serialize("fxNameVacuumingStop")] public StringID fxNameVacuumingStop;

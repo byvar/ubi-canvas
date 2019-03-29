@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_480_sub_B96400 : CSerializable {
+	public partial class Unknown_RL_480_sub_B96400 : BTAction_Template {
 		[Serialize("anim"       )] public StringID anim;
-		[Serialize("basicBullet")] public Placeholder basicBullet;
+		[Serialize("basicBullet")] public RO2_BasicBullet_Template basicBullet;
 		[Serialize("posOffset"  )] public Vector2 posOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

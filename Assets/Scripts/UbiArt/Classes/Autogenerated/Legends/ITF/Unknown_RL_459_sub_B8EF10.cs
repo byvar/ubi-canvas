@@ -2,23 +2,23 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_459_sub_B8EF10 : CSerializable {
-		[Serialize("vacuumData"                     )] public Placeholder vacuumData;
-		[Serialize("playerEjectBehavior"            )] public Placeholder playerEjectBehavior;
-		[Serialize("playerStartVaccumBehavior"      )] public Placeholder playerStartVaccumBehavior;
-		[Serialize("playerVacuumBehavior"           )] public Placeholder playerVacuumBehavior;
-		[Serialize("playerVacuumEffectiveBehavior"  )] public Placeholder playerVacuumEffectiveBehavior;
+	public partial class Unknown_RL_459_sub_B8EF10 : ActorComponent_Template {
+		[Serialize("vacuumData"                     )] public Ray_VacuumData_Template vacuumData;
+		[Serialize("playerEjectBehavior"            )] public Generic<TemplateAIBehavior> playerEjectBehavior;
+		[Serialize("playerStartVaccumBehavior"      )] public Generic<TemplateAIBehavior> playerStartVaccumBehavior;
+		[Serialize("playerVacuumBehavior"           )] public Generic<TemplateAIBehavior> playerVacuumBehavior;
+		[Serialize("playerVacuumEffectiveBehavior"  )] public Generic<TemplateAIBehavior> playerVacuumEffectiveBehavior;
 		[Serialize("enemyReVacuumedSwallowedBhvName")] public StringID enemyReVacuumedSwallowedBhvName;
 		[Serialize("playerStartVacuumFact"          )] public StringID playerStartVacuumFact;
 		[Serialize("playerVacuumEffectiveFact"      )] public StringID playerVacuumEffectiveFact;
 		[Serialize("playerEjectFact"                )] public StringID playerEjectFact;
-		[Serialize("vacuumFxNamesContainer"         )] public Placeholder vacuumFxNamesContainer;
-		[Serialize("vacuumedReward"                 )] public Placeholder vacuumedReward;
+		[Serialize("vacuumFxNamesContainer"         )] public Ray_ShooterActorParameterComponent_Template.VacuumFxNames vacuumFxNamesContainer;
+		[Serialize("vacuumedReward"                 )] public Generic<Event> vacuumedReward;
 		[Serialize("deathRewardSpawnPath"           )] public Path deathRewardSpawnPath;
 		[Serialize("deathRewardNumber"              )] public uint deathRewardNumber;
-		[Serialize("stackData"                      )] public Placeholder stackData;
-		[Serialize("onVacuumedStim"                 )] public Placeholder onVacuumedStim;
-		[Serialize("onEnemyReVacuumedStim"          )] public Placeholder onEnemyReVacuumedStim;
+		[Serialize("stackData"                      )] public Ray_ShooterActorParameter_StackData stackData;
+		[Serialize("onVacuumedStim"                 )] public Generic<Event> onVacuumedStim;
+		[Serialize("onEnemyReVacuumedStim"          )] public Generic<Event> onEnemyReVacuumedStim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(vacuumData));

@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Ray_ForceFieldComponent_Template : GraphicComponent_Template {
 		[Serialize("softCollisionRadius"                 )] public float softCollisionRadius;
 		[Serialize("bounceRadius"                        )] public float bounceRadius;
-		[Serialize("linkEvents"                          )] public Placeholder linkEvents;
+		[Serialize("linkEvents"                          )] public CList<Ray_ForceFieldComponent_Template.LinkEvent> linkEvents;
 		[Serialize("softCollisionExitSpeed"              )] public float softCollisionExitSpeed;
 		[Serialize("softCollisionExitForce"              )] public float softCollisionExitForce;
 		[Serialize("lockedFx"                            )] public StringID lockedFx;
@@ -52,6 +52,19 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(blendmode2));
 		}
 		public override uint? ClassCRC => 0x35A6B61A;
+
+		[Games(GameFlags.RO | GameFlags.RL)]
+		public partial class LinkEvent : CSerializable {
+			[Serialize("tag"                        )] public StringID tag;
+			[Serialize("onActivateForceFieldEvent"  )] public Generic<Event> onActivateForceFieldEvent;
+			[Serialize("onDeactivateForceFieldEvent")] public Generic<Event> onDeactivateForceFieldEvent;
+			protected override void SerializeImpl(CSerializerObject s) {
+				base.SerializeImpl(s);
+				SerializeField(s, nameof(tag));
+				SerializeField(s, nameof(onActivateForceFieldEvent));
+				SerializeField(s, nameof(onDeactivateForceFieldEvent));
+			}
+		}
 	}
 }
 

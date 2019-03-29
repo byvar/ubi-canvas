@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FromChallengeComponent : ActorComponent {
 		[Serialize("filter"     )] public CList<string> filter;
-		[Serialize("filterOrder")] public Placeholder filterOrder;
+		[Serialize("filterOrder")] public CList<CList<string>> filterOrder;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

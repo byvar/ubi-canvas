@@ -132,6 +132,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(platformLengthMultiplier));
 				SerializeField(s, nameof(platformLengthOffset));
 				SerializeField(s, nameof(platformHeightSink));
+				SerializeField(s, nameof(fx));
 				SerializeField(s, nameof(fxUseTransform), boolAsByte: true);
 				SerializeField(s, nameof(fxGeneratorType));
 				SerializeField(s, nameof(fxGenerators));

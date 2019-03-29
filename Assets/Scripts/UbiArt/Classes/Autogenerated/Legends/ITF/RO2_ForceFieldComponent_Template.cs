@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_115_sub_6A2440 : CSerializable {
-		[Serialize("gfxMaterial"                         )] public Placeholder gfxMaterial;
+	public partial class RO2_ForceFieldComponent_Template : GraphicComponent_Template {
+		[Serialize("gfxMaterial"                         )] public GFXMaterialSerializable gfxMaterial;
 		[Serialize("texture"                             )] public Path texture;
 		[Serialize("softCollisionRadius"                 )] public float softCollisionRadius;
 		[Serialize("bounceRadius"                        )] public float bounceRadius;
-		[Serialize("linkEvents"                          )] public Placeholder linkEvents;
+		[Serialize("linkEvents"                          )] public CList<Ray_ForceFieldComponent_Template.LinkEvent> linkEvents;
 		[Serialize("softCollisionExitSpeed"              )] public float softCollisionExitSpeed;
 		[Serialize("softCollisionExitForce"              )] public float softCollisionExitForce;
 		[Serialize("lockedFx"                            )] public StringID lockedFx;

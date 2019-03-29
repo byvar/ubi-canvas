@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_454_sub_B8B1C0 : CSerializable {
-		[Serialize("ejectAction"             )] public Placeholder ejectAction;
+	public partial class Unknown_RL_454_sub_B8B1C0 : TemplateAIBehavior {
+		[Serialize("ejectAction"             )] public Generic<AIAction_Template> ejectAction;
 		[Serialize("destroyOnEjectActionsEnd")] public int destroyOnEjectActionsEnd;
 		[Serialize("killOnEnd"               )] public int killOnEnd;
 		[Serialize("hitNumber"               )] public uint hitNumber;

@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		[Serialize("allowNonPlayerHits"   )] public bool allowNonPlayerHits;
 		[Serialize("disableWhenDone"      )] public bool disableWhenDone;
 		[Serialize("fxStandPaint"         )] public StringID fxStandPaint;
-		[Serialize("ejectionAngleList"    )] public Placeholder ejectionAngleList;
+		[Serialize("ejectionAngleList"    )] public CList<Angle> ejectionAngleList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
