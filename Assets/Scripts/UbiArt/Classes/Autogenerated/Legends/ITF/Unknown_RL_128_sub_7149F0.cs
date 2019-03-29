@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_128_sub_7149F0 : CSerializable {
+	public partial class Unknown_RL_128_sub_7149F0 : ActorComponent_Template {
 		[Serialize("requireActivationTrigger")] public int requireActivationTrigger;
 		[Serialize("oneShotAnimation"        )] public int oneShotAnimation;
 		[Serialize("lumsToGive"              )] public uint lumsToGive;
 		[Serialize("drcDetectionShapeRadius" )] public float drcDetectionShapeRadius;
-		[Serialize("canReInit"               )] public int canReInit;
+		[Serialize("canReInit"               )] public bool canReInit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(requireActivationTrigger));

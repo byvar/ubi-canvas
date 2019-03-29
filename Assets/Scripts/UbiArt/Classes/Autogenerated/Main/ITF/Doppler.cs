@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
-	public partial class Doppler : CSerializable {
+	public partial class Doppler : SoundModifier {
 		[Serialize("factor")] public float factor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

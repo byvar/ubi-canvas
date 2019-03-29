@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.COL)]
-	public partial class Unknown_RL_6_sub_38AFF0 : CSerializable {
-		[Serialize("buslist")] public Placeholder buslist;
+	public partial class Unknown_RL_6_sub_38AFF0 : SoundCommand {
+		[Serialize("buslist")] public CList<StringID> buslist;
 		[Serialize("pitch"  )] public float pitch;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

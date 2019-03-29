@@ -162,6 +162,7 @@ namespace UbiArt.ITF {
 			[Serialize("softColForce"                   )] public float softColForce;
 			[Serialize("startLevel"                     )] public uint startLevel;
 			[Serialize("stiltsOriginCenter"             )] public Vector2 stiltsOriginCenter;
+			[Serialize("phantomShape"                   )] public StringID phantomShape;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(used));
@@ -176,6 +177,9 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(softColForce));
 				SerializeField(s, nameof(startLevel));
 				SerializeField(s, nameof(stiltsOriginCenter));
+				if (Settings.s.game == Settings.Game.RL) {
+					SerializeField(s, nameof(phantomShape));
+				}
 			}
 		}
 		public enum EnemyType {

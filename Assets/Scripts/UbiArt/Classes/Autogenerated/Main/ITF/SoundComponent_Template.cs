@@ -11,8 +11,8 @@ namespace UbiArt.ITF {
 		[Serialize("WwiseInputList"            )] public CList<WwiseInputDesc> WwiseInputList;
 		[Serialize("defaultSoundIsAlwaysActive")] public bool defaultSoundIsAlwaysActive;
 		[Serialize("volume"                    )] public Volume volume;
-		[Serialize("musicList"                 )] public CList<Placeholder> musicList;
-		[Serialize("busMixList"                )] public CList<Placeholder> busMixList; // same type
+		[Serialize("musicList"                 )] public CList<Generic<Event>> musicList;
+		[Serialize("busMixList"                )] public CList<Generic<Event>> busMixList;
 		[Serialize("RegisterRtpcListener"      )] public bool RegisterRtpcListener;
 		[Serialize("UseDefaultEmitter"         )] public bool UseDefaultEmitter;
 		[Serialize("unk_RFR")] public bool unk_RFR;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_215_sub_7E8750 : CSerializable {
+	public partial class Unknown_RL_215_sub_7E8750 : ActorComponent_Template {
 		[Serialize("fxName"       )] public StringID fxName;
 		[Serialize("autoUpdatePos")] public int autoUpdatePos;
 		[Serialize("scaleFXGrab"  )] public Vector2 scaleFXGrab;

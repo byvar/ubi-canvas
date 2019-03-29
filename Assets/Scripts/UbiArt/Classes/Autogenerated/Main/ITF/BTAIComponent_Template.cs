@@ -10,9 +10,6 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(behaviorTree));
-			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(registerToAIManager));
-				SerializeField(s, nameof(faction));
 			} else {
 				SerializeField(s, nameof(behaviorTree));
 				SerializeField(s, nameof(registerToAIManager));

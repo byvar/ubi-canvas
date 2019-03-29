@@ -2,15 +2,11 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_BTAIComponent_Template : CSerializable {
-		[Serialize("registerToAIManager")] public int registerToAIManager;
-		[Serialize("faction"            )] public uint faction;
+	public partial class COL_BTAIComponent_Template : BTAIComponent_Template {
 		[Serialize("defaultOrientation" )] public Enum_defaultOrientation defaultOrientation;
 		[Serialize("groundCheckDistance")] public float groundCheckDistance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(registerToAIManager));
-			SerializeField(s, nameof(faction));
 			if (s.HasFlags(SerializeFlags.Default)) {
 				SerializeField(s, nameof(defaultOrientation));
 				SerializeField(s, nameof(groundCheckDistance));
