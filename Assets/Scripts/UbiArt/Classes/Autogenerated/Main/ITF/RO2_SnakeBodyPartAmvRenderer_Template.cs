@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		[Serialize("startFrame"   )] public uint startFrame;
 		[Serialize("scale"        )] public Vector2 scale;
 		[Serialize("color"        )] public Color color;
-		[Serialize("polyline"     )] public Placeholder polyline;
-		[Serialize("otherPolyline")] public Placeholder otherPolyline;
+		[Serialize("polyline"     )] public CList<Vector2> polyline;
+		[Serialize("otherPolyline")] public CList<Vector2> otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

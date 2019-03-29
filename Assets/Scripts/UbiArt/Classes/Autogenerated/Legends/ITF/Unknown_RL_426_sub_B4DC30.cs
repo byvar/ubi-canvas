@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_426_sub_B4DC30 : CSerializable {
+	public partial class Unknown_RL_426_sub_B4DC30 : ActorComponent_Template {
 		[Serialize("DebugDisplay"                    )] public int DebugDisplay;
 		[Serialize("DebugDisplayName"                )] public int DebugDisplayName;
 		[Serialize("RewardLumNb"                     )] public uint RewardLumNb;
