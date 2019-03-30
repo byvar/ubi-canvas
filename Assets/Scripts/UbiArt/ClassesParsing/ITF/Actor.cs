@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 					if (l.tpl.ContainsKey(LUA.stringID)) {
 						template = l.tpl[LUA.stringID];
 					} else {
-						extS.log = true;
+						extS.log = l.logEnabled;
 						extS.Serialize(ref template);
 						l.tpl[LUA.stringID] = template;
 					}

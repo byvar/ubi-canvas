@@ -13,6 +13,7 @@ public class Controller : MonoBehaviour {
 	public string pathFolder;
 	public string pathFile;
 	private string lvlName;
+	public bool log;
 	public string logFile;
 
 	public Material baseMaterial;
@@ -112,6 +113,7 @@ public class Controller : MonoBehaviour {
 		loader.collideTransparentMaterial = collideTransparentMaterial;
 		loader.baseLightMaterial = baseLightMaterial;
 		loader.logFile = logFile;
+		loader.logEnabled = log;
 
 		await Init();
 	}

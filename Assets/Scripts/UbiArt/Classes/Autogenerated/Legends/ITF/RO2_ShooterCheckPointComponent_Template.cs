@@ -2,13 +2,13 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_442_sub_B7EC80 : CSerializable {
+	public partial class RO2_ShooterCheckPointComponent_Template : CheckpointComponent_Template {
 		[Serialize("enterExit"                     )] public int enterExit;
 		[Serialize("exitOnly"                      )] public int exitOnly;
 		[Serialize("useCameraBorderSpawn"          )] public int useCameraBorderSpawn;
 		[Serialize("cameraBorderSpawnOffset"       )] public float cameraBorderSpawnOffset;
 		[Serialize("cameraBorderSpawnPlayersOffset")] public float cameraBorderSpawnPlayersOffset;
-		[Serialize("playersSpawnPosList"           )] public Placeholder playersSpawnPosList;
+		[Serialize("playersSpawnPosList"           )] public CList<PlayerSpawnPos> playersSpawnPosList;
 		[Serialize("visualScaleMultiplier"         )] public float visualScaleMultiplier;
 		[Serialize("checkpointIn"                  )] public int checkpointIn;
 		[Serialize("quickLanding"                  )] public int quickLanding;

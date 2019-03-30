@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("channelID"         )] public StringID channelID;
 		[Serialize("emitter"           )] public bool emitter;
 		[Serialize("receiver"          )] public bool receiver;
-		[Serialize("broadcastEventList")] public CList<Event> broadcastEventList;
+		[Serialize("broadcastEventList")] public CList<Generic<Event>> broadcastEventList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(channelID));

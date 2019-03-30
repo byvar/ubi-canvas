@@ -28,6 +28,7 @@ namespace UbiArt {
 		public bool allowDeadPointers = false;
 		public bool forceDisplayBackfaces = false;
 		public bool blockyMode = false;
+		public bool logEnabled = false;
 		public StringBuilder log = new StringBuilder();
 
 		public UV.UVAtlasManager uvAtlasManager;
@@ -75,7 +76,7 @@ namespace UbiArt {
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
-						s.log = true;
+						s.log = logEnabled;
 						bool readScene = true;
 						s.Serialize(ref readScene);
 						if (readScene) { // Read scene
