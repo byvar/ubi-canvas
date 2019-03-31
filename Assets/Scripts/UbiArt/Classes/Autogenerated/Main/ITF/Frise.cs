@@ -12,6 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("VisualPolyline"                     )] public PolyLine VisualPolyline;
 		[Serialize("VisualPolyPointLocal"               )] public PolyPointList VisualPolyPointLocal;
 		[Serialize("MeshBuildData"                      )] public Nullable<Frise.MeshBuildData> meshBuildData;
+		[Serialize("MeshBuildData"                      )] public MeshBuildData meshBuildData2;
 		[Serialize("MeshFluidData"                      )] public Nullable<Frise.MeshFluidData> meshFluidData;
 		[Serialize("AABB_MinZ"                          )] public float AABB_MinZ;
 		[Serialize("AABB_MaxZ"                          )] public float AABB_MaxZ;
@@ -124,7 +125,11 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(meshOverlayData));
 					SerializeField(s, nameof(VisualPolyline));
 					SerializeField(s, nameof(VisualPolyPointLocal));
-					SerializeField(s, nameof(meshBuildData));
+					if (Settings.s.isCatchThemAll) {
+						SerializeField(s, nameof(meshBuildData2));
+					} else {
+						SerializeField(s, nameof(meshBuildData));
+					}
 					SerializeField(s, nameof(meshFluidData));
 					SerializeField(s, nameof(AABB_MinZ));
 					SerializeField(s, nameof(AABB_MaxZ));
@@ -158,6 +163,9 @@ namespace UbiArt.ITF {
 						SerializeField(s, nameof(UvY_Offset));
 						SerializeField(s, nameof(UvX_Flip), type: typeof(byte));
 						SerializeField(s, nameof(UvY_Flip), type: typeof(byte));
+						if (Settings.s.isCatchThemAll) {
+							SerializeField(s, nameof(UvY_Flip), type: typeof(byte));
+						}
 						SerializeField(s, nameof(uvY_Tile));
 						SerializeField(s, nameof(Filling_OffSetUv));
 						SerializeField(s, nameof(Anim_SyncGlobal));
@@ -166,6 +174,9 @@ namespace UbiArt.ITF {
 						SerializeField(s, nameof(Thickness));
 						SerializeField(s, nameof(UseMovingCollision));
 						SerializeField(s, nameof(UseTemplatePrimitiveParams));
+						if (Settings.s.isCatchThemAll) {
+							SerializeField(s, nameof(UvY_Flip), type: typeof(byte));
+						}
 						SerializeField(s, nameof(lockTexture));
 						SerializeField(s, nameof(MatShader));
 					}

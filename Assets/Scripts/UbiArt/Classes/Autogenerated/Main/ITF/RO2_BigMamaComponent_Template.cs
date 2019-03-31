@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("ejectHeight1"  )] public float ejectHeight1;
 		[Serialize("ejectHeight2"  )] public float ejectHeight2;
 		[Serialize("ejectSpeed"    )] public float ejectSpeed;
-		[Serialize("musics"        )] public Placeholder musics;
+		[Serialize("musics"        )] public CList<EventPlayMusic> musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

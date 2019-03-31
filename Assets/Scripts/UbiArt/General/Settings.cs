@@ -6,7 +6,7 @@ using System.Text;
 namespace UbiArt {
 	public class Settings {
 		public enum Mode {
-			RaymanOriginsPC, RaymanLegendsPC, RaymanAdventuresIOS
+			RaymanOriginsPC, RaymanLegendsPC, RaymanLegendsVitaCatchThemAll, RaymanAdventuresIOS
 		};
 		public Mode mode = Mode.RaymanLegendsPC;
 
@@ -16,7 +16,7 @@ namespace UbiArt {
 			RL = 1
 		};
 		public enum Game { None, RO, RL, RA, RJR, RFR, COL, VH };
-		public enum Platform { None, PC, iOS, Android, WiiU };
+		public enum Platform { None, PC, iOS, Android, WiiU, Vita };
 		public enum Endian { Little, Big };
 
 		public EngineVersion engineVersion;
@@ -25,6 +25,7 @@ namespace UbiArt {
 		public Endian endian;
 		public VersionFlags versionFlags;
 		public bool usesSerializeFlags = true;
+		public bool isCatchThemAll = false;
 
 		public bool IsLittleEndian {
 			get { return endian == Endian.Little; }
@@ -34,6 +35,7 @@ namespace UbiArt {
 			switch (mode) {
 				case Mode.RaymanOriginsPC: s = ROPC; break;
 				case Mode.RaymanLegendsPC: s = RLPC; break;
+				case Mode.RaymanLegendsVitaCatchThemAll: s = RLVita; break;
 				case Mode.RaymanAdventuresIOS: s = RAIOS; break;
 			}
 			if (s != null) s.mode = mode;
@@ -62,6 +64,14 @@ namespace UbiArt {
 			platform = Platform.iOS,
 			endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures
+		};
+		public static Settings RLVita = new Settings() {
+			engineVersion = EngineVersion.RL,
+			game = Game.RL,
+			platform = Platform.Vita,
+			endian = Endian.Big,
+			versionFlags = VersionFlags.Legends,
+			isCatchThemAll = true
 		};
 	}
 }

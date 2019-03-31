@@ -53,6 +53,13 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
+				if (Settings.s.isCatchThemAll) {
+					SerializeField(s, nameof(colorFactor));
+					SerializeField(s, nameof(uint__15), type: typeof(byte));
+					SerializeField(s, nameof(uint__15), type: typeof(byte));
+					SerializeField(s, nameof(uint__15), type: typeof(byte));
+					SerializeField(s, nameof(uint__15));
+				}
 				SerializeField(s, nameof(colorFactor));
 				SerializeField(s, nameof(FrontLightBrightness));
 				SerializeField(s, nameof(FrontLightContrast));

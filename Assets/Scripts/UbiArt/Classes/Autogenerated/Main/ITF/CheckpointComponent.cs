@@ -41,6 +41,17 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(active));
 				}
+				if (Settings.s.isCatchThemAll) {
+					SerializeField(s, nameof(uint__3));
+					SerializeField(s, nameof(uint__3));
+					SerializeField(s, nameof(uint__3));
+					SerializeField(s, nameof(uint__3));
+					SerializeField(s, nameof(uint__3));
+					SerializeField(s, nameof(uint__3));
+					SerializeField(s, nameof(uint__3));
+					SerializeField(s, nameof(uint__3));
+					SerializeField(s, nameof(uint__3));
+				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(INDEX));

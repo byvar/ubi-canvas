@@ -96,6 +96,8 @@ public class Controller : MonoBehaviour {
 		switch (modeString) {
 			case "rl_pc":
 				mode = Settings.Mode.RaymanLegendsPC; break;
+			case "rl_vita":
+				mode = Settings.Mode.RaymanLegendsVitaCatchThemAll; break;
 			case "ra_ios":
 				mode = Settings.Mode.RaymanAdventuresIOS; break;
 		}

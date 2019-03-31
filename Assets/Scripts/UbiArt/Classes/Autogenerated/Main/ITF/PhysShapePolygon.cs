@@ -12,6 +12,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(Points));
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+				if (Settings.s.isCatchThemAll) return;
 				SerializeField(s, nameof(Points));
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					SerializeField(s, nameof(normals));

@@ -21,6 +21,12 @@ namespace UbiArt.ITF {
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
 				if (this is Frise) return;
+				if (Settings.s.isCatchThemAll) {
+					uint lol = 0;
+					s.Serialize<uint>(ref lol, name: "placeholder");
+					s.Serialize<uint>(ref lol, name: "placeholder");
+					s.Serialize<uint>(ref lol, name: "placeholder");
+				}
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(LUA));
 					SerializeField(s, nameof(parentBind));

@@ -57,6 +57,10 @@ namespace UbiArt.ITF {
 					}
 					SerializeField(s, nameof(PrimitiveParameters));
 					SerializeField(s, nameof(colorComputerTagId));
+					if (Settings.s.isCatchThemAll) {
+						SerializeField(s, nameof(renderInTarget));
+						SerializeField(s, nameof(renderInTarget), type: typeof(byte));
+					}
 					SerializeField(s, nameof(renderInTarget));
 					SerializeField(s, nameof(disableLight));
 					SerializeField(s, nameof(disableShadow));

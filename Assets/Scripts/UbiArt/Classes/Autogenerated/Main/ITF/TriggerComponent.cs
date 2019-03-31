@@ -53,6 +53,9 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(mode));
 				}
+				if (Settings.s.isCatchThemAll) {
+					SerializeField(s, nameof(triggerOnceDone), typeof(byte));
+				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(triggerOnceDone));
 					SerializeField(s, nameof(activator));

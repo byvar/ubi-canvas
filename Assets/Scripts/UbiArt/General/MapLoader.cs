@@ -82,6 +82,7 @@ namespace UbiArt {
 						if (readScene) { // Read scene
 							s.Serialize(ref mainScene);
 							print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+							Settings.s.isCatchThemAll = false;
 						}
 					});
 				}
@@ -137,7 +138,7 @@ namespace UbiArt {
 		}
 
 		private void WriteLog() {
-			if (logFile != null && logFile.Trim() != "") {
+			if (logEnabled && logFile != null && logFile.Trim() != "") {
 				using (StreamWriter writer = new StreamWriter(logFile)) {
 					writer.WriteLine(log.ToString());
 				}
@@ -159,7 +160,8 @@ namespace UbiArt {
 		// Defining it this way, clicking the print will go straight to the code you want
 		public Action<object> print = MonoBehaviour.print;
 		public void Log(object obj) {
-			log.AppendLine(obj != null ? obj.ToString() : "");
+			if(logEnabled)
+				log.AppendLine(obj != null ? obj.ToString() : "");
 		}
 
 

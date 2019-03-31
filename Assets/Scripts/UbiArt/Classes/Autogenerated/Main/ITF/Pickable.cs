@@ -60,6 +60,12 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(USERFRIENDLY));
 					SerializeField(s, nameof(UPDATEDEPENDENCYLIST));
 				}
+				if (Settings.s.isCatchThemAll) {
+					SerializeField(s, nameof(isEnabled), boolAsByte: true);
+					SerializeField(s, nameof(isEnabled), boolAsByte: true);
+					SerializeField(s, nameof(isEnabled), boolAsByte: true);
+					SerializeField(s, nameof(isEnabled), boolAsByte: true);
+				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(isEnabled), boolAsByte: true);
 				}
