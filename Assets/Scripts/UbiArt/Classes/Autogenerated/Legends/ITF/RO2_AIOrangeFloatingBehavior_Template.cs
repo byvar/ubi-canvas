@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_365_sub_ACD4A0 : CSerializable {
+	public partial class RO2_AIOrangeFloatingBehavior_Template : RO2_AIWaterFloatingBehavior_Template {
 		[Serialize("orangeMinSpeed"        )] public float orangeMinSpeed;
 		[Serialize("orangeMaxSpeed"        )] public float orangeMaxSpeed;
 		[Serialize("landingSpeedXThreshold")] public float landingSpeedXThreshold;

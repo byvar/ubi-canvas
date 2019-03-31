@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 				UnityFriseConfig ufcg = gao.AddComponent<UnityFriseConfig>();
 				ufcg.friseConfig = config.obj;
 			}
-			/*if (meshBuildData.value != null) {
+			if (meshBuildData != null && meshBuildData.value != null) {
 				if (meshBuildData.value.StaticIndexList.Count > 0) {
 					Mesh mesh = new Mesh();
 					mesh.subMeshCount = meshBuildData.value.StaticIndexList.Count;
@@ -62,7 +62,7 @@ namespace UbiArt.ITF {
 					mf.mesh = mesh;
 					mr.materials = mats;
 				}
-			}*/
+			}
 
 			if (meshBuildData2 != null) {
 				if (meshBuildData2.StaticIndexList.Count > 0) {

@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_382_sub_AEA360 : CSerializable {
-		[Serialize("roamBehavior"                  )] public Placeholder roamBehavior;
-		[Serialize("deathBehavior"                 )] public Placeholder deathBehavior;
-		[Serialize("floatingBehavior"              )] public Placeholder floatingBehavior;
-		[Serialize("receiveHitBehavior"            )] public Placeholder receiveHitBehavior;
-		[Serialize("sleepBehavior"                 )] public Placeholder sleepBehavior;
-		[Serialize("stuckBehavior"                 )] public Placeholder stuckBehavior;
-		[Serialize("snappedBehavior"               )] public Placeholder snappedBehavior;
+	public partial class RO2_FruitAIComponent_Template : RO2_AIComponent_Template {
+		[Serialize("roamBehavior"                  )] public Generic<TemplateAIBehavior> roamBehavior;
+		[Serialize("deathBehavior"                 )] public Generic<TemplateAIBehavior> deathBehavior;
+		[Serialize("floatingBehavior"              )] public Generic<TemplateAIBehavior> floatingBehavior;
+		[Serialize("receiveHitBehavior"            )] public Generic<TemplateAIBehavior> receiveHitBehavior;
+		[Serialize("sleepBehavior"                 )] public Generic<TemplateAIBehavior> sleepBehavior;
+		[Serialize("stuckBehavior"                 )] public Generic<TemplateAIBehavior> stuckBehavior;
+		[Serialize("snappedBehavior"               )] public Generic<TemplateAIBehavior> snappedBehavior;
 		[Serialize("isHanging"                     )] public int isHanging;
 		[Serialize("nonStickableTime"              )] public float nonStickableTime;
 		[Serialize("reinitWhenBecomesInactive"     )] public int reinitWhenBecomesInactive;

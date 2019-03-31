@@ -509,8 +509,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 1
   gameDataBinFolder: ..\..\RIPPING\RL_Mod\full\ext\cache\itf_cooked\pc
-  pathFolder: 
-  pathFile: 
+  pathFolder: world\mountain\level\mo_rl_1_flyingshield_am
+  pathFile: mo_rl_1_flyingshield_am.isc.ckd
   log: 1
   logFile: ..\..\RIPPING\RL_Mod\log.txt
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}

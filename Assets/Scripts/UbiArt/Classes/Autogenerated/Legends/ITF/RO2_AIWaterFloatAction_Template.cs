@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_371_sub_ADC8E0 : CSerializable {
+	public partial class RO2_AIWaterFloatAction_Template : AIPlayAnimAction_Template {
 		[Serialize("floatForceDistMultiplier"  )] public float floatForceDistMultiplier;
 		[Serialize("floatForceSpeedMultiplier" )] public float floatForceSpeedMultiplier;
 		[Serialize("orientForceDistMultiplier" )] public float orientForceDistMultiplier;

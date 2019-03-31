@@ -14,8 +14,8 @@ namespace UbiArt.ITF {
 		[Serialize("disableStickOnWallsOnHit" )] public bool disableStickOnWallsOnHit;
 		[Serialize("receiveDamageFromDomino"  )] public bool receiveDamageFromDomino;
 		[Serialize("canBubblize"              )] public bool canBubblize;
-		[Serialize("ceilingAction"            )] public Generic<AIReceiveHitAction_Template> ceilingAction;
-		[Serialize("wallAction"               )] public Generic<AIReceiveHitAction_Template> wallAction;
+		[Serialize("ceilingAction"            )] public Generic<AIAction_Template> ceilingAction;
+		[Serialize("wallAction"               )] public Generic<AIAction_Template> wallAction;
 		[Serialize("deathMarkerName"          )] public StringID deathMarkerName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

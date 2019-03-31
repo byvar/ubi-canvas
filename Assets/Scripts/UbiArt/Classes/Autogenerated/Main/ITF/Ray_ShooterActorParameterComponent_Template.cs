@@ -2,20 +2,20 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_ShooterActorParameterComponent_Template : CSerializable {
-		[Serialize("vacuumData"                                                  )] public Ray_VacuumData_Template vacuumData;
-		[Serialize("playerEjectBehavior"                                         )] public Generic<TemplateAIBehavior> playerEjectBehavior;
-		[Serialize("playerStartVaccumBehavior"                                   )] public Generic<TemplateAIBehavior> playerStartVaccumBehavior;
-		[Serialize("playerVacuumBehavior"                                        )] public Generic<TemplateAIBehavior> playerVacuumBehavior;
-		[Serialize("playerVacuumEffectiveBehavior"                               )] public Generic<TemplateAIBehavior> playerVacuumEffectiveBehavior;
-		[Serialize("enemyReVacuumedSwallowedBhvName"                             )] public StringID enemyReVacuumedSwallowedBhvName;
-		[Serialize("vacuumFxNamesContainer"                                      )] public Ray_ShooterActorParameterComponent_Template.VacuumFxNames vacuumFxNamesContainer;
-		[Serialize("vacuumedReward"                                              )] public Generic<Ray_EventSpawnReward> vacuumedReward;
-		[Serialize("deathRewardSpawnPath"                                        )] public Path deathRewardSpawnPath;
-		[Serialize("deathRewardNumber"                                           )] public uint deathRewardNumber;
-		[Serialize("stackData"                                                   )] public Ray_ShooterActorParameter_StackData stackData;
-		[Serialize("onVacuumedStim"                                              )] public Generic<PunchStim> onVacuumedStim;
-		[Serialize("onEnemyReVacuumedStim"                                       )] public Generic<PunchStim> onEnemyReVacuumedStim;
+	public partial class Ray_ShooterActorParameterComponent_Template : ActorComponent_Template {
+		[Serialize("vacuumData"                     )] public Ray_VacuumData_Template vacuumData;
+		[Serialize("playerEjectBehavior"            )] public Generic<TemplateAIBehavior> playerEjectBehavior;
+		[Serialize("playerStartVaccumBehavior"      )] public Generic<TemplateAIBehavior> playerStartVaccumBehavior;
+		[Serialize("playerVacuumBehavior"           )] public Generic<TemplateAIBehavior> playerVacuumBehavior;
+		[Serialize("playerVacuumEffectiveBehavior"  )] public Generic<TemplateAIBehavior> playerVacuumEffectiveBehavior;
+		[Serialize("enemyReVacuumedSwallowedBhvName")] public StringID enemyReVacuumedSwallowedBhvName;
+		[Serialize("vacuumFxNamesContainer"         )] public Ray_ShooterActorParameterComponent_Template.VacuumFxNames vacuumFxNamesContainer;
+		[Serialize("vacuumedReward"                 )] public Generic<Ray_EventSpawnReward> vacuumedReward;
+		[Serialize("deathRewardSpawnPath"           )] public Path deathRewardSpawnPath;
+		[Serialize("deathRewardNumber"              )] public uint deathRewardNumber;
+		[Serialize("stackData"                      )] public Ray_ShooterActorParameter_StackData stackData;
+		[Serialize("onVacuumedStim"                 )] public Generic<PunchStim> onVacuumedStim;
+		[Serialize("onEnemyReVacuumedStim"          )] public Generic<PunchStim> onEnemyReVacuumedStim;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

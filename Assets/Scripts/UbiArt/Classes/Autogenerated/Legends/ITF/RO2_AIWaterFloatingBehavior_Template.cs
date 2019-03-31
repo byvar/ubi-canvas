@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_363_sub_ACD340 : CSerializable {
+	public partial class RO2_AIWaterFloatingBehavior_Template : RO2_AIWaterBaseBehavior_Template {
 		[Serialize("minSpeed"            )] public float minSpeed;
 		[Serialize("maxSpeed"            )] public float maxSpeed;
 		[Serialize("minForce"            )] public float minForce;
@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("speedScaleMax"       )] public float speedScaleMax;
 		[Serialize("landForceMultiplier" )] public float landForceMultiplier;
 		[Serialize("landXForceMultiplier")] public float landXForceMultiplier;
-		[Serialize("float"               )] public Placeholder _float;
+		[Serialize("float"               )] public Generic<AIAction_Template> _float;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(minSpeed));

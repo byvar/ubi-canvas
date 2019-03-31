@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_369_sub_AD24D0 : CSerializable {
+	public partial class RO2_AIFruitRoamingBehavior_Template : TemplateAIBehavior {
 		[Serialize("apexTypicalHeight"                     )] public float apexTypicalHeight;
 		[Serialize("normalGravityMultiplier"               )] public float normalGravityMultiplier;
 		[Serialize("startToFloatTime"                      )] public float startToFloatTime;

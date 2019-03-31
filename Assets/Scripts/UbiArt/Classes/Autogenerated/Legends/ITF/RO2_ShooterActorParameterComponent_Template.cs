@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_459_sub_B8EF10 : ActorComponent_Template {
+	public partial class RO2_ShooterActorParameterComponent_Template : ActorComponent_Template {
 		[Serialize("vacuumData"                     )] public Ray_VacuumData_Template vacuumData;
 		[Serialize("playerEjectBehavior"            )] public Generic<TemplateAIBehavior> playerEjectBehavior;
 		[Serialize("playerStartVaccumBehavior"      )] public Generic<TemplateAIBehavior> playerStartVaccumBehavior;

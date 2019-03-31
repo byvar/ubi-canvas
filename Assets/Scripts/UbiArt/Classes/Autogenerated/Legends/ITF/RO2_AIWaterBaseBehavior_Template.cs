@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_361_sub_ACC0F0 : CSerializable {
+	public partial class RO2_AIWaterBaseBehavior_Template : TemplateAIBehavior {
 		[Serialize("gravityMultiplier")] public float gravityMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
