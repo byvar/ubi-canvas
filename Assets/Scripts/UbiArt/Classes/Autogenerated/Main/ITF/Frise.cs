@@ -12,7 +12,6 @@ namespace UbiArt.ITF {
 		[Serialize("VisualPolyline"                     )] public PolyLine VisualPolyline;
 		[Serialize("VisualPolyPointLocal"               )] public PolyPointList VisualPolyPointLocal;
 		[Serialize("MeshBuildData"                      )] public Nullable<Frise.MeshBuildData> meshBuildData;
-		[Serialize("MeshBuildData"                      )] public MeshBuildData meshBuildData2;
 		[Serialize("MeshFluidData"                      )] public Nullable<Frise.MeshFluidData> meshFluidData;
 		[Serialize("AABB_MinZ"                          )] public float AABB_MinZ;
 		[Serialize("AABB_MaxZ"                          )] public float AABB_MaxZ;
@@ -126,7 +125,8 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(VisualPolyline));
 					SerializeField(s, nameof(VisualPolyPointLocal));
 					if (Settings.s.isCatchThemAll) {
-						SerializeField(s, nameof(meshBuildData2));
+						meshBuildData = new Nullable<MeshBuildData>();
+						s.Serialize(ref meshBuildData.value, name: "MeshBuildData");
 					} else {
 						SerializeField(s, nameof(meshBuildData));
 					}

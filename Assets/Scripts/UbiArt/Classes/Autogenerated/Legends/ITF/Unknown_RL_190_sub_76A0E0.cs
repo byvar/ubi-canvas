@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_190_sub_76A0E0 : CSerializable {
+	public partial class Unknown_RL_190_sub_76A0E0 : Unknown_RL_183_sub_7628A0 {
 		[Serialize("mainNodeDefaultScale"        )] public Vector2 mainNodeDefaultScale;
 		[Serialize("mainNodeRollOverScale"       )] public Vector2 mainNodeRollOverScale;
 		[Serialize("defaultScale"                )] public Vector2 defaultScale;
@@ -12,8 +12,8 @@ namespace UbiArt.ITF {
 		[Serialize("pastilleActorPath"           )] public Path pastilleActorPath;
 		[Serialize("arrowActorPath"              )] public Path arrowActorPath;
 		[Serialize("paintingColorAnim"           )] public StringID paintingColorAnim;
-		[Serialize("tomorrowText"                )] public Placeholder tomorrowText;
-		[Serialize("nextWeekText"                )] public Placeholder nextWeekText;
+		[Serialize("tomorrowText"                )] public SmartLocId tomorrowText;
+		[Serialize("nextWeekText"                )] public SmartLocId nextWeekText;
 		[Serialize("selectBlinkScale"            )] public float selectBlinkScale;
 		[Serialize("selectBlinkPeriod"           )] public float selectBlinkPeriod;
 		[Serialize("time_countdownPulseThreshold")] public float time_countdownPulseThreshold;

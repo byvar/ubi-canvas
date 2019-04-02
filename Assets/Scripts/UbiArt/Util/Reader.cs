@@ -117,7 +117,11 @@ namespace UbiArt {
 			return new Vector4(ReadSingle(), ReadSingle(), ReadSingle(), ReadSingle());
 		}
 		public Color ReadColor() {
-			return new Color(ReadSingle(), ReadSingle(), ReadSingle(), ReadSingle());
+			float b = ReadSingle();
+			float g = ReadSingle();
+			float r = ReadSingle();
+			float a = ReadSingle();
+			return new Color(r, g, b, a);
 		}
 
 		// To make sure position is a multiple of alignBytes

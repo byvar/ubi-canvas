@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			if (ANGLE.angle != 0f) gao.name += " - " + ANGLE.angle;
 		}
 		public void SetGameObjectParent(GameObject gp) {
-			Gao.transform.SetParent(gp.transform);
+			Gao.transform.SetParent(gp.transform, false);
 			Gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
 			Gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
 			Gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.angle * Mathf.Rad2Deg);

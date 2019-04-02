@@ -4,6 +4,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	public partial class Frise {
 		public GenericFile<FriseConfig> config;
+		public GameObject mesh_static;
 
 		protected override void InitGameObject() {
 			base.InitGameObject();
@@ -12,15 +13,28 @@ namespace UbiArt.ITF {
 			if (config != null && config.obj != null) {
 				UnityFriseConfig ufcg = gao.AddComponent<UnityFriseConfig>();
 				ufcg.friseConfig = config.obj;
+				if (config.obj.textureConfigs != null) {
+					foreach (FriseTextureConfig ftc in config.obj.textureConfigs) {
+						if (ftc.material != null && ftc.material.shader != null && ftc.material.shader.obj != null) {
+							UnityGFXMaterialShader_Template sh = gao.AddComponent<UnityGFXMaterialShader_Template>();
+							sh.shader = ftc.material.shader.obj;
+						}
+					}
+				}
 			}
 			if (meshBuildData != null && meshBuildData.value != null) {
 				if (meshBuildData.value.StaticIndexList.Count > 0) {
+					mesh_static = new GameObject("Static");
+					mesh_static.transform.SetParent(gao.transform, false);
+					mesh_static.transform.localPosition = Vector3.zero;
+					mesh_static.transform.localRotation = Quaternion.identity;
+					mesh_static.transform.localScale = Vector3.one;
 					Mesh mesh = new Mesh();
 					mesh.subMeshCount = meshBuildData.value.StaticIndexList.Count;
 					mesh.vertices = meshBuildData.value.StaticVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
 					mesh.uv = meshBuildData.value.StaticVertexList.Select(v => v.uv).ToArray();
-					MeshFilter mf = gao.AddComponent<MeshFilter>();
-					MeshRenderer mr = gao.AddComponent<MeshRenderer>();
+					MeshFilter mf = mesh_static.AddComponent<MeshFilter>();
+					MeshRenderer mr = mesh_static.AddComponent<MeshRenderer>();
 					Material[] mats = new Material[meshBuildData.value.StaticIndexList.Count];
 					for (int m = 0; m < meshBuildData.value.StaticIndexList.Count; m++) {
 						int[] tris = new int[meshBuildData.value.StaticIndexList[m].List.Count * 2];
@@ -37,7 +51,7 @@ namespace UbiArt.ITF {
 						Material mat;
 						int idTexConfig = meshBuildData.value.StaticIndexList[m].IdTexConfig == 0xFFFFFFFF ? 0 : (int)meshBuildData.value.StaticIndexList[m].IdTexConfig;
 						if (config != null && config.obj.textureConfigs.Count > idTexConfig) {
-							if (config.obj.textureConfigs[idTexConfig].material.shader != null && config.obj.textureConfigs[idTexConfig].material.shader.obj != null) {
+							/*if (config.obj.textureConfigs[idTexConfig].material.shader != null && config.obj.textureConfigs[idTexConfig].material.shader.obj != null) {
 								// TODO: Get rid of GFX_MAT2 here
 								if (config.obj.textureConfigs[idTexConfig].material.shader.obj.materialtype2 == GFXMaterialShader_Template.GFX_MAT2.DEFAULT) {
 									mat = new Material(MapLoader.Loader.baseMaterial);
@@ -49,13 +63,17 @@ namespace UbiArt.ITF {
 								mat = new Material(MapLoader.Loader.baseMaterial);
 							}
 							//mat.color = config.obj.textureConfigs[idTexConfig].color.Color;
-							if (config.obj.textureConfigs[idTexConfig].material.textureSet.diffuseTex != null) {
-								mat.SetTexture("_MainTex", config.obj.textureConfigs[idTexConfig].material.textureSet.diffuseTex.Texture);
+							if (config.obj.textureConfigs[idTexConfig].material.textureSet.tex_diffuse != null) {
+								mat.SetTexture("_MainTex", config.obj.textureConfigs[idTexConfig].material.textureSet.tex_diffuse.Texture);
 							} else {
 								mat.SetTexture("_MainTex", Util.CreateDummyTexture());
 							}
+							mat.color = UseTemplatePrimitiveParams ? config.obj.PrimitiveParameters.colorFactor : PrimitiveParameters.colorFactor;*/
+							mat = config.obj.textureConfigs[idTexConfig].material.UnityMaterial;
+							FillMaterialParams(mat);
 						} else {
 							mat = new Material(MapLoader.Loader.baseMaterial);
+							FillMaterialParams(mat);
 						}
 						mats[m] = mat;
 					}
@@ -63,57 +81,14 @@ namespace UbiArt.ITF {
 					mr.materials = mats;
 				}
 			}
+		}
 
-			if (meshBuildData2 != null) {
-				if (meshBuildData2.StaticIndexList.Count > 0) {
-					Mesh mesh = new Mesh();
-					mesh.subMeshCount = meshBuildData2.StaticIndexList.Count;
-					mesh.vertices = meshBuildData2.StaticVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
-					mesh.uv = meshBuildData2.StaticVertexList.Select(v => v.uv).ToArray();
-					MeshFilter mf = gao.AddComponent<MeshFilter>();
-					MeshRenderer mr = gao.AddComponent<MeshRenderer>();
-					Material[] mats = new Material[meshBuildData2.StaticIndexList.Count];
-					for (int m = 0; m < meshBuildData2.StaticIndexList.Count; m++) {
-						int[] tris = new int[meshBuildData2.StaticIndexList[m].List.Count * 2];
-						for (int i = 0; i < meshBuildData2.StaticIndexList[m].List.Count / 3; i++) {
-							tris[(i * 6) + 0] = meshBuildData2.StaticIndexList[m].List[(i * 3) + 0];
-							tris[(i * 6) + 1] = meshBuildData2.StaticIndexList[m].List[(i * 3) + 1];
-							tris[(i * 6) + 2] = meshBuildData2.StaticIndexList[m].List[(i * 3) + 2];
-							tris[(i * 6) + 3] = meshBuildData2.StaticIndexList[m].List[(i * 3) + 0];
-							tris[(i * 6) + 4] = meshBuildData2.StaticIndexList[m].List[(i * 3) + 2];
-							tris[(i * 6) + 5] = meshBuildData2.StaticIndexList[m].List[(i * 3) + 1];
-						}
-						mesh.SetTriangles(tris, m);
-
-						Material mat;
-						int idTexConfig = meshBuildData2.StaticIndexList[m].IdTexConfig == 0xFFFFFFFF ? 0 : (int)meshBuildData2.StaticIndexList[m].IdTexConfig;
-						if (config != null && config.obj.textureConfigs.Count > idTexConfig) {
-							if (config.obj.textureConfigs[idTexConfig].material.shader != null && config.obj.textureConfigs[idTexConfig].material.shader.obj != null) {
-								// TODO: Get rid of GFX_MAT2 here
-								if (config.obj.textureConfigs[idTexConfig].material.shader.obj.materialtype2 == GFXMaterialShader_Template.GFX_MAT2.DEFAULT) {
-									mat = new Material(MapLoader.Loader.baseMaterial);
-								} else {
-									mat = new Material(MapLoader.Loader.baseLightMaterial);
-								}
-								if (!config.obj.textureConfigs[idTexConfig].material.shader.obj.renderRegular) gao.SetActive(false);
-							} else {
-								mat = new Material(MapLoader.Loader.baseMaterial);
-							}
-							//mat.color = config.obj.textureConfigs[idTexConfig].color.Color;
-							if (config.obj.textureConfigs[idTexConfig].material.textureSet.diffuseTex != null) {
-								mat.SetTexture("_MainTex", config.obj.textureConfigs[idTexConfig].material.textureSet.diffuseTex.Texture);
-							} else {
-								mat.SetTexture("_MainTex", Util.CreateDummyTexture());
-							}
-						} else {
-							mat = new Material(MapLoader.Loader.baseMaterial);
-						}
-						mats[m] = mat;
-					}
-					mf.mesh = mesh;
-					mr.materials = mats;
-				}
-			}
+		private void FillMaterialParams(Material mat) {
+			bool hasConfig = config != null && config.obj != null;
+			//if (!hasConfig) return;
+			GFXPrimitiveParam param = (UseTemplatePrimitiveParams && hasConfig) ? config.obj.PrimitiveParameters : PrimitiveParameters;
+			mat.SetColor("_ColorFactor", param.colorFactor);
+			mat.SetColor("_ColorFog", param.colorFog);
 		}
 
 		protected override void OnPostSerialize(CSerializerObject s) {
