@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_125_sub_6E69D0 : CSerializable {
+	public partial class Unknown_RL_125_sub_6E69D0 : ActorComponent {
 		[Serialize("DEBUG_StartOnPattern")] public uint DEBUG_StartOnPattern;
 		[Serialize("DEBUG_StartOnPhase"  )] public uint DEBUG_StartOnPhase;
 		[Serialize("Alpha"               )] public float Alpha;

@@ -9,8 +9,8 @@
 		_AnimImpostor("Anim Impostor"  , 2D) = "white" {}
 		
 		_ColorFactor("Color Factor",       Color) = (1,1,1,1)
-		_LightConfig("Light Config",      Vector) = (1,1,1,1)
-		_ColorFog("Color Fog"      ,       Color) = (1,1,1,1)
+		_LightConfig("Light Config",      Vector) = (0,1,0,1)
+		_ColorFog("Color Fog",             Color) = (1,1,1,1)
 		_UseTextures("Use Textures",      Vector) = (0,0,0,0)
 		_UseTextures2("Use Textures 2",   Vector) = (0,0,0,0)
 		_ShaderParams("Shader params",    Vector) = (1,0,0,0)
@@ -36,11 +36,11 @@
 
 			#include "UbiArtShared.cginc"
 
-			v2f vert(appdata_full v) {
+			v2f vert(appdata v) {
 				return process_vert(v);
 			}
 			float4 frag(v2f i) : COLOR {
-				clip(_ShaderParams.x-0.5);
+				//clip(_ShaderParams.x-0.5);
 				return process_frag(i);
 			}
 			ENDCG

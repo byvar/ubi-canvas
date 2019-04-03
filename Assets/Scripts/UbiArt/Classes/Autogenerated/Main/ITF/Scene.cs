@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class Scene : BaseObject {
-		[Serialize("ENGINE_VERSION"                    )] public uint ENGINE_VERSION;
-		[Serialize("DEPENDENCIES"                      )] public CArray<Path> DEPENDENCIES;
-		[Serialize("FRISE"                             )] public CList<Frise> FRISE;
-		[Serialize("METAFRIEZE"                        )] public CList<MetaFrieze> METAFRIEZE;
-		[Serialize("ACTORS"                            )] public CArray<Generic<Actor>> ACTORS;
-		[Serialize("friezeConnections"                 )] public CList<FriezeConnectionResult> friezeConnections;
-		[Serialize("sceneConfigs"                      )] public SceneConfigs sceneConfigs;
-		[Serialize("TABS"                              )] public CList<Path> TABS;
-		[Serialize("GRIDUNIT"                          )] public float GRIDUNIT;
-		[Serialize("PLATFORM_FILTER"                   )] public TargetFilterList PLATFORM_FILTER;
-		[Serialize("MUSIC_THEME_PATH"                  )] public Path MUSIC_THEME_PATH;
-		[Serialize("MUSIC_THEME"                       )] public StringID MUSIC_THEME;
-		[Serialize("DEPTH_SEPARATOR"                   )] public int DEPTH_SEPARATOR;
-		[Serialize("NEAR_SEPARATOR"                    )] public Matrix44 NEAR_SEPARATOR;
-		[Serialize("FAR_SEPARATOR"                     )] public Matrix44 FAR_SEPARATOR;
-		[Serialize("FRISE"                             )] public CArray<Generic<Pickable>> FRISE_ORIGINS;
-		[Serialize("ACTORS"                            )] public CArray<Generic<Pickable>> ACTORS_ORIGINS;
+		[Serialize("ENGINE_VERSION"   )] public uint ENGINE_VERSION;
+		[Serialize("DEPENDENCIES"     )] public CArray<Path> DEPENDENCIES;
+		[Serialize("FRISE"            )] public CList<Frise> FRISE;
+		[Serialize("METAFRIEZE"       )] public CList<MetaFrieze> METAFRIEZE;
+		[Serialize("ACTORS"           )] public CArray<Generic<Actor>> ACTORS;
+		[Serialize("friezeConnections")] public CList<FriezeConnectionResult> friezeConnections;
+		[Serialize("sceneConfigs"     )] public SceneConfigs sceneConfigs;
+		[Serialize("TABS"             )] public CList<Path> TABS;
+		[Serialize("GRIDUNIT"         )] public float GRIDUNIT;
+		[Serialize("PLATFORM_FILTER"  )] public TargetFilterList PLATFORM_FILTER;
+		[Serialize("MUSIC_THEME_PATH" )] public Path MUSIC_THEME_PATH;
+		[Serialize("MUSIC_THEME"      )] public StringID MUSIC_THEME;
+		[Serialize("DEPTH_SEPARATOR"  )] public int DEPTH_SEPARATOR;
+		[Serialize("NEAR_SEPARATOR"   )] public Matrix44 NEAR_SEPARATOR;
+		[Serialize("FAR_SEPARATOR"    )] public Matrix44 FAR_SEPARATOR;
+		[Serialize("FRISE"            )] public CArray<Generic<Pickable>> FRISE_ORIGINS;
+		[Serialize("ACTORS"           )] public CArray<Generic<Pickable>> ACTORS_ORIGINS;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

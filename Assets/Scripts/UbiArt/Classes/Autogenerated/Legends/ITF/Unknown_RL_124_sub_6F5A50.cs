@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_124_sub_6F5A50 : CSerializable {
+	public partial class Unknown_RL_124_sub_6F5A50 : ActorComponent_Template {
 		[Serialize("DrawParticleNb"              )] public int DrawParticleNb;
 		[Serialize("DrawBezier"                  )] public int DrawBezier;
 		[Serialize("DrawAppear"                  )] public int DrawAppear;
@@ -15,8 +15,8 @@ namespace UbiArt.ITF {
 		[Serialize("CreatureBaseRadius"          )] public float CreatureBaseRadius;
 		[Serialize("CreatureRadiusSeeder"        )] public float CreatureRadiusSeeder;
 		[Serialize("CreatureNbCoeff"             )] public float CreatureNbCoeff;
-		[Serialize("OnBoneData"                  )] public Placeholder OnBoneData;
-		[Serialize("EyeBoneList"                 )] public Placeholder EyeBoneList;
+		[Serialize("OnBoneData"                  )] public CList<Unknown_RL_20717_sub_6E6EE0> OnBoneData;
+		[Serialize("EyeBoneList"                 )] public CList<StringID> EyeBoneList;
 		[Serialize("ApplyAnimMod"                )] public int ApplyAnimMod;
 		[Serialize("TailBone"                    )] public StringID TailBone;
 		[Serialize("HeadBone"                    )] public StringID HeadBone;
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 		[Serialize("Gravity"                     )] public float Gravity;
 		[Serialize("ExplosionForceMultiplier"    )] public float ExplosionForceMultiplier;
 		[Serialize("ExplosionInitialSpeed"       )] public float ExplosionInitialSpeed;
-		[Serialize("PunchExplosionRadius"        )] public Placeholder PunchExplosionRadius;
+		[Serialize("PunchExplosionRadius"        )] public CList<float> PunchExplosionRadius;
 		[Serialize("PunchPercentageValidation"   )] public float PunchPercentageValidation;
 		[Serialize("TimeToVanish"                )] public float TimeToVanish;
 		[Serialize("RotationCoeff"               )] public float RotationCoeff;
@@ -117,6 +117,27 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(UseFinalExplosion));
 		}
 		public override uint? ClassCRC => 0x6AAD0104;
+
+		[Games(GameFlags.RL)]
+		public partial class Unknown_RL_20717_sub_6E6EE0 : CSerializable {
+			[Serialize("BoneName"   )] public StringID BoneName;
+			[Serialize("CreatureNb" )] public uint CreatureNb;
+			[Serialize("Scale"      )] public float Scale;
+			[Serialize("Radius"     )] public float Radius;
+			[Serialize("IsFlat"     )] public int IsFlat;
+			[Serialize("FlatBoneOne")] public StringID FlatBoneOne;
+			[Serialize("FlatBoneTwo")] public StringID FlatBoneTwo;
+			protected override void SerializeImpl(CSerializerObject s) {
+				base.SerializeImpl(s);
+				SerializeField(s, nameof(BoneName));
+				SerializeField(s, nameof(CreatureNb));
+				SerializeField(s, nameof(Scale));
+				SerializeField(s, nameof(Radius));
+				SerializeField(s, nameof(IsFlat));
+				SerializeField(s, nameof(FlatBoneOne));
+				SerializeField(s, nameof(FlatBoneTwo));
+			}
+		}
 	}
 }
 

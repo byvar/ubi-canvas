@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		[Serialize("ghostDistanceMax"                )] public float ghostDistanceMax;
 		[Serialize("ghostOffsetDistanceTeleportation")] public float ghostOffsetDistanceTeleportation;
 		[Serialize("difficultyChangeMusicEvents"     )] public CList<EventPlayMusic> difficultyChangeMusicEvents;
-		[Serialize("filterOrder"                     )] public Placeholder filterOrder;
+		[Serialize("filterOrder"                     )] public CList<CList<string>> filterOrder;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

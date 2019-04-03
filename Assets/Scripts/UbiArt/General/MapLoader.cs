@@ -33,12 +33,20 @@ namespace UbiArt {
 
 		public UV.UVAtlasManager uvAtlasManager;
 		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
+		public List<Tuple<string, FileWithPointers>> virtualFiles = new List<Tuple<string, FileWithPointers>>();
 		public delegate void SerializeAction(CSerializerObject s);
 		public struct ObjectPlaceHolder {
 			public Path path;
+			public Tuple<string, ArchiveMemory> virtualFile;
 			public SerializeAction action;
 			public ObjectPlaceHolder(Path path, SerializeAction action) {
 				this.path = path;
+				virtualFile = null;
+				this.action = action;
+			}
+			public ObjectPlaceHolder(string name, ArchiveMemory mem, SerializeAction action) {
+				virtualFile = new Tuple<string, ArchiveMemory>(name, mem);
+				this.path = null;
 				this.action = action;
 			}
 		}
@@ -47,6 +55,8 @@ namespace UbiArt {
 		public Dictionary<StringID, GenericFile<ITF.Actor_Template>> tpl = new Dictionary<StringID, GenericFile<ITF.Actor_Template>>();
 		public Dictionary<StringID, GenericFile<ITF.FriseConfig>> fcg = new Dictionary<StringID, GenericFile<ITF.FriseConfig>>();
 		public Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>> msh = new Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>>();
+		public Dictionary<StringID, GenericFile<CSerializable>> isg = new Dictionary<StringID, GenericFile<CSerializable>>();
+		public Dictionary<StringID, SceneFile> isc = new Dictionary<StringID, SceneFile>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 
 		public Globals globals = null;
@@ -72,45 +82,49 @@ namespace UbiArt {
 					s.Serialize(ref uvAtlasManager);
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 				});
-				ITF.Scene mainScene = null;
+				SceneFile mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
 						s.log = logEnabled;
-						bool readScene = true;
-						s.Serialize(ref readScene);
-						if (readScene) { // Read scene
-							s.Serialize(ref mainScene);
-							print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
-							Settings.s.isCatchThemAll = false;
-						}
+						s.Serialize(ref mainScene);
+						isc[p.stringID] = mainScene;
+						Settings.s.isCatchThemAll = false;
 					});
 				}
 				bool ckd = true;
 				while (pathsToLoad.Count > 0) {
 					ObjectPlaceHolder o = pathsToLoad.Dequeue();
-					StringID id = o.path.stringID;
-					if (!files.ContainsKey(id)) {
-						await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
-						if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
-							files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
+					if (o.path != null) {
+						StringID id = o.path.stringID;
+						if (!files.ContainsKey(id)) {
+							await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
+							if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
+								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
+							}
 						}
-					}
-					if (files.ContainsKey(id)) {
-						FileWithPointers f = files[id];
-						CSerializerObject s = f.serializer;
-						s.ResetPosition();
-						o.action(s);
+						if (files.ContainsKey(id)) {
+							FileWithPointers f = files[id];
+							CSerializerObject s = f.serializer;
+							s.ResetPosition();
+							o.action(s);
+						}
+					} else if(o.virtualFile != null) {
+						using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
+							FileWithPointers f = new BinarySerializedFile(o.virtualFile.Item1, str);
+							Tuple<string, FileWithPointers> t = new Tuple<string, FileWithPointers>(o.virtualFile.Item1, f);
+							virtualFiles.Add(t);
+							CSerializerObject s = f.serializer;
+							s.ResetPosition();
+							o.action(s);
+							f.Dispose();
+							virtualFiles.Remove(t);
+						}
 					}
 					await WaitFrame();
 				}
-				if (mainScene != null) {
-					foreach (ITF.Frise f in mainScene.FRISE) {
-						GameObject gao = f.Gao;
-					}
-					foreach (Generic<ITF.Actor> a in mainScene.ACTORS) {
-						GameObject gao = a.obj.Gao;
-					}
+				if (mainScene != null && mainScene.scene != null) {
+					GameObject sceneGao = mainScene.scene.Gao;
 				}
 			} catch (Exception ex) {
 				Debug.LogError(ex.ToString());
@@ -131,6 +145,7 @@ namespace UbiArt {
 				case "fcg":
 				case "msh":
 				case "tpl":
+				case "isg":
 					flags |= SerializeFlags.Flags7;
 					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
 					break;
@@ -157,6 +172,10 @@ namespace UbiArt {
 			}
 		}
 
+		public void Load(ArchiveMemory mem, string name, SerializeAction action) {
+			pathsToLoad.Enqueue(new ObjectPlaceHolder(name, mem, action));
+		}
+
 		// Defining it this way, clicking the print will go straight to the code you want
 		public Action<object> print = MonoBehaviour.print;
 		public void Log(object obj) {
@@ -176,6 +195,11 @@ namespace UbiArt {
 					return file;
 				}
 			}
+			foreach (Tuple<string, FileWithPointers> t in virtualFiles) {
+				if (t.Item2 != null && reader.Equals(t.Item2.reader)) {
+					return t.Item2;
+				}
+			}
 			return null;
 		}
 
@@ -184,6 +208,11 @@ namespace UbiArt {
 				FileWithPointers file = kv.Value;
 				if (file != null && writer.Equals(file.writer)) {
 					return file;
+				}
+			}
+			foreach (Tuple<string, FileWithPointers> t in virtualFiles) {
+				if (t.Item2 != null && writer.Equals(t.Item2.writer)) {
+					return t.Item2;
 				}
 			}
 			return null;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_272_sub_8A41C0 : CSerializable {
+	public partial class Unknown_RL_272_sub_8A41C0 : Event {
 		[Serialize("teleportDuration")] public float teleportDuration;
 		[Serialize("targetActorPath" )] public ObjectPath targetActorPath;
 		protected override void SerializeImpl(CSerializerObject s) {

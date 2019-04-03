@@ -15,8 +15,8 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (isFirstLoad) {
 				LoadTexture(nameof(tex_diffuse), diffuse);
-				/*LoadTexture(nameof(tex_back_light), back_light);
-				LoadTexture(nameof(tex_normal), normal);
+				LoadTexture(nameof(tex_back_light), back_light);
+				/*LoadTexture(nameof(tex_normal), normal);
 				LoadTexture(nameof(tex_separateAlpha), separateAlpha);
 				LoadTexture(nameof(tex_diffuse_2), diffuse_2);
 				LoadTexture(nameof(tex_back_light_2), back_light_2);
@@ -28,8 +28,8 @@ namespace UbiArt.ITF {
 			MapLoader l = MapLoader.Loader;
 			l.Load(path, (extS) => {
 				FieldInfo f = GetType().GetField(fieldName);
-				if (l.tex.ContainsKey(diffuse.stringID)) {
-					f.SetValue(this, l.tex[diffuse.stringID]);
+				if (l.tex.ContainsKey(path.stringID)) {
+					f.SetValue(this, l.tex[path.stringID]);
 				} else {
 					extS.Serialize(this, f);
 					TextureCooked tex = (TextureCooked)f.GetValue(this);

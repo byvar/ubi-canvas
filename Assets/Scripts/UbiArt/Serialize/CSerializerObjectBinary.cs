@@ -59,6 +59,9 @@ namespace UbiArt {
 				obj = reader.ReadVector4();
 			} else if (type == typeof(Color)) {
 				obj = reader.ReadColor();
+			} else if (type == typeof(byte[])) {
+				int numBytes = reader.ReadInt32();
+				obj = reader.ReadBytes(numBytes);
 			} else {
 				var ctor = type.GetConstructor(Type.EmptyTypes);
 				if (ctor == null) {

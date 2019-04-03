@@ -7,13 +7,15 @@ namespace UbiArt.ITF {
 		protected override void InitGameObject() {
 			base.InitGameObject();
 			if (Settings.s.game != Settings.Game.RA && this is Frise) return;
-			for(int i = 0; i < COMPONENTS.Count; i++) {
+			bool hasTemplate = (template != null && template.obj != null);
+			bool hasTemplateComponents = hasTemplate && template.obj.COMPONENTS != null && template.obj.COMPONENTS.Count == COMPONENTS.Count;
+			for (int i = 0; i < COMPONENTS.Count; i++) {
 				Generic<ActorComponent> ac = COMPONENTS[i];
 				if (ac != null && !ac.IsNull) {
-					ac.obj.InitUnityComponent(this, gao, i);
+					ac.obj.InitUnityComponent(this, gao, hasTemplateComponents ? template.obj.COMPONENTS[i].obj : null, i);
 				}
 			}
-			if (template != null && template.obj != null) {
+			if (hasTemplate) {
 				for (int i = 0; i < template.obj.COMPONENTS.Count; i++) {
 					Generic<ActorComponent_Template> ac = template.obj.COMPONENTS[i];
 					if (ac != null && !ac.IsNull) {

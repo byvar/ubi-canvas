@@ -1,31 +1,36 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class TextureGraphicComponent {
+		GameObject tex_gao;
 
-		public override void InitUnityComponent(Actor act, GameObject gao, int index) {
-			base.InitUnityComponent(act, gao, index);
+		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
+			base.InitUnityComponent(act, gao, template, index);
 			if (material != null && material.textureSet != null && material.textureSet.tex_diffuse != null) {
-				MeshFilter mf = gao.AddComponent<MeshFilter>();
-				MeshRenderer mr = gao.AddComponent<MeshRenderer>();
-				mf.sharedMesh = CreateMesh(material.textureSet.tex_diffuse);
-				Material mat = new Material(MapLoader.Loader.baseMaterial);
-				mat.SetTexture("_MainTex", material.textureSet.tex_diffuse.Texture);
-				mr.material = mat;
-			} else if (act.template != null && act.template.obj != null && act.template.obj.COMPONENTS.Count > index
-				&& act.template.obj.COMPONENTS[index].obj != null
-				&& act.template.obj.COMPONENTS[index].obj is TextureGraphicComponent_Template) {
-				TextureGraphicComponent_Template tpl = act.template.obj.COMPONENTS[index].obj as TextureGraphicComponent_Template;
+				CreateGameObject(gao, material);
+			} else if (template != null && template is TextureGraphicComponent_Template) {
+				TextureGraphicComponent_Template tpl = template as TextureGraphicComponent_Template;
 				if (tpl.material != null && tpl.material.textureSet != null && tpl.material.textureSet.tex_diffuse != null) {
-					MeshFilter mf = gao.AddComponent<MeshFilter>();
-					MeshRenderer mr = gao.AddComponent<MeshRenderer>();
-					mf.sharedMesh = CreateMesh(tpl.material.textureSet.tex_diffuse);
-					Material mat = new Material(MapLoader.Loader.baseMaterial);
-					mat.SetTexture("_MainTex", tpl.material.textureSet.tex_diffuse.Texture);
-					mr.material = mat;
+					CreateGameObject(gao, tpl.material);
 				}
 			}
+		}
+
+		private void CreateGameObject(GameObject gao, GFXMaterialSerializable material) {
+			tex_gao = new GameObject("TextureGraphicComponent");
+			tex_gao.transform.SetParent(gao.transform, false);
+			tex_gao.transform.localPosition = Vector3.zero;
+			tex_gao.transform.localRotation = Quaternion.identity;
+			tex_gao.transform.localScale = Vector3.one;
+			
+			MeshFilter mf = tex_gao.AddComponent<MeshFilter>();
+			MeshRenderer mr = tex_gao.AddComponent<MeshRenderer>();
+			mf.sharedMesh = CreateMesh(material.textureSet.tex_diffuse);
+			Material mat = material.GetUnityMaterial();
+			FillMaterialParams(mat);
+			mr.material = mat;
 		}
 
 		private Mesh CreateMesh(TextureCooked tex) {
@@ -71,7 +76,18 @@ namespace UbiArt.ITF {
 			meshUnity.normals = normals;
 			meshUnity.triangles = triangles;
 			meshUnity.SetUVs(0, uvs.ToList());
+			//meshUnity.SetUVs(4, Enumerable.Repeat(Vector4.one, 4).ToList());
 			return meshUnity;
+		}
+		private void FillMaterialParams(Material mat) {
+			GFXPrimitiveParam param = PrimitiveParameters;
+			mat.SetColor("_ColorFactor", param.colorFactor);
+			mat.SetColor("_LightConfig", new Vector4(
+				param.FrontLightBrightness,
+				param.FrontLightContrast,
+				param.BackLightBrightness,
+				param.BackLightContrast));
+			mat.SetColor("_ColorFog", param.colorFog);
 		}
 	}
 }
