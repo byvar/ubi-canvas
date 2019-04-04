@@ -2,15 +2,15 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_401_sub_B0E870 : CSerializable {
+	public partial class Unknown_RL_401_sub_B0E870 : ActorComponent_Template {
 		[Serialize("fadeTime"               )] public float fadeTime;
 		[Serialize("pulseDuration"          )] public float pulseDuration;
 		[Serialize("numPulses"              )] public uint numPulses;
 		[Serialize("blinkOnDuration"        )] public float blinkOnDuration;
 		[Serialize("blinkOffDuration"       )] public float blinkOffDuration;
 		[Serialize("detectedPauseDuration"  )] public float detectedPauseDuration;
-		[Serialize("detectedParams"         )] public Placeholder detectedParams;
-		[Serialize("detectedParams2"        )] public Placeholder detectedParams2;
+		[Serialize("detectedParams"         )] public GFXPrimitiveParam detectedParams;
+		[Serialize("detectedParams2"        )] public GFXPrimitiveParam detectedParams2;
 		[Serialize("laserActorPath"         )] public Path laserActorPath;
 		[Serialize("fadeToOnShortFxTime"    )] public float fadeToOnShortFxTime;
 		[Serialize("animOff"                )] public StringID animOff;

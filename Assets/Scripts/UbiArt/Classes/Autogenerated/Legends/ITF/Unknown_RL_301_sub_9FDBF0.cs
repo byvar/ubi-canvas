@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_301_sub_9FDBF0 : CSerializable {
+	public partial class Unknown_RL_301_sub_9FDBF0 : ActorComponent_Template {
 		[Serialize("lightTexture"            )] public Path lightTexture;
-		[Serialize("lightMaterial"           )] public Placeholder lightMaterial;
+		[Serialize("lightMaterial"           )] public GFXMaterialSerializable lightMaterial;
 		[Serialize("lightRadius"             )] public float lightRadius;
 		[Serialize("lightLateralAttenuation" )] public float lightLateralAttenuation;
 		[Serialize("lightLateralAlpha"       )] public float lightLateralAlpha;
@@ -26,12 +26,12 @@ namespace UbiArt.ITF {
 		[Serialize("lightUVRotationSpeed"    )] public Angle lightUVRotationSpeed;
 		[Serialize("lightUVPivot"            )] public Vector2 lightUVPivot;
 		[Serialize("backLightTexture"        )] public Path backLightTexture;
-		[Serialize("backLightMaterial"       )] public Placeholder backLightMaterial;
+		[Serialize("backLightMaterial"       )] public GFXMaterialSerializable backLightMaterial;
 		[Serialize("backLightOffset"         )] public float backLightOffset;
 		[Serialize("shadowTexture"           )] public Path shadowTexture;
-		[Serialize("shadowMaterial"          )] public Placeholder shadowMaterial;
+		[Serialize("shadowMaterial"          )] public GFXMaterialSerializable shadowMaterial;
 		[Serialize("backShadowTexture"       )] public Path backShadowTexture;
-		[Serialize("backShadowMaterial"      )] public Placeholder backShadowMaterial;
+		[Serialize("backShadowMaterial"      )] public GFXMaterialSerializable backShadowMaterial;
 		[Serialize("backShadowOffset"        )] public float backShadowOffset;
 		[Serialize("shadowOffset"            )] public float shadowOffset;
 		[Serialize("shadowLateralAttenuation")] public float shadowLateralAttenuation;

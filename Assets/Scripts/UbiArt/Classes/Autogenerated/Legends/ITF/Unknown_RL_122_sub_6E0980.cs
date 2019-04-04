@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_122_sub_6E0980 : CSerializable {
+	public partial class Unknown_RL_122_sub_6E0980 : ActorComponent_Template {
 		[Serialize("LookAtDist"         )] public float LookAtDist;
 		[Serialize("MaxLookAtModule"    )] public uint MaxLookAtModule;
 		[Serialize("CheckAttackDistance")] public float CheckAttackDistance;

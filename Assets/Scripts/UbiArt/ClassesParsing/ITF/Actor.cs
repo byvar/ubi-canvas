@@ -41,5 +41,17 @@ namespace UbiArt.ITF {
 				});
 			}
 		}
+		public override int UpdateZSortValue(int val) {
+			val = base.UpdateZSortValue(val);
+			if (COMPONENTS != null) {
+				for (int i = 0; i < COMPONENTS.Count; i++) {
+					Generic<ActorComponent> ac = COMPONENTS[i];
+					if (ac != null && !ac.IsNull && ac.obj is TextureGraphicComponent) {
+						val = ((TextureGraphicComponent)(ac.obj)).UpdateZSortValue(val);
+					}
+				}
+			}
+			return val;
+		}
 	}
 }

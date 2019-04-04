@@ -62,9 +62,11 @@ namespace UbiArt.ITF {
 						blendDst = BlendMode.SrcColor;
 						break;
 				}
+				mat.SetInt("_ZWrite", (int)ZWrite.On);
 				if (shader.renderFrontLight || shader.renderBackLight) {
 					blendSrc = BlendMode.SrcAlpha;
 					blendDst = BlendMode.One;
+					mat.SetInt("_ZWrite", (int)ZWrite.Off);
 				}
 				mat.SetFloat("_BlendSrc", (int)blendSrc);
 				mat.SetFloat("_BlendDst", (int)blendDst);
@@ -78,6 +80,11 @@ namespace UbiArt.ITF {
 				if (textureSet.tex_back_light != null) mat.SetTexture("_BackLight", textureSet.tex_back_light.Texture);
 			}
 			return mat;
+		}
+
+		private enum ZWrite {
+			Off = 0,
+			On = 1
 		}
 	}
 }

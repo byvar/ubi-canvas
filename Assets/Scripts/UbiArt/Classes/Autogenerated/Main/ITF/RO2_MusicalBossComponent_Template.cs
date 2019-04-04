@@ -14,8 +14,8 @@ namespace UbiArt.ITF {
 		[Serialize("alphaB"                )] public float alphaB;
 		[Serialize("alphaFactorWhenWaiting")] public float alphaFactorWhenWaiting;
 		[Serialize("ySmooth"               )] public float ySmooth;
-		[Serialize("musicEvent"            )] public Placeholder musicEvent;
-		[Serialize("deathMusicEvent"       )] public Placeholder deathMusicEvent;
+		[Serialize("musicEvent"            )] public Generic<Event> musicEvent;
+		[Serialize("deathMusicEvent"       )] public Generic<Event> deathMusicEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

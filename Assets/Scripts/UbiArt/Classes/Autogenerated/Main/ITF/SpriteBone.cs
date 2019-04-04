@@ -16,7 +16,9 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(p1));
 			SerializeField(s, nameof(uv0));
 			SerializeField(s, nameof(uv1));
-			SerializeField(s, nameof(z));
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
+				SerializeField(s, nameof(z));
+			}
 		}
 	}
 }

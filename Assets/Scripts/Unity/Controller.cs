@@ -23,6 +23,7 @@ public class Controller : MonoBehaviour {
 	public Material collideTransparentMaterial;
 	public LoadingScreen loadingScreen;
 	public bool forceDisplayBackfaces = false;
+	public ZListManager zListManager;
 	MapLoader loader = null;
 
 	public enum State {
@@ -116,6 +117,7 @@ public class Controller : MonoBehaviour {
 		loader.baseLightMaterial = baseLightMaterial;
 		loader.logFile = logFile;
 		loader.logEnabled = log;
+		loader.controller = this;
 
 		await Init();
 	}
@@ -133,6 +135,7 @@ public class Controller : MonoBehaviour {
 		await MapLoader.WaitFrame();
 		await loader.LoadAll();
 		await MapLoader.WaitFrame();
+		zListManager.Sort();
 		if (state == State.Error) return;
 		state = State.Initializing;
 		detailedState = "Finished";

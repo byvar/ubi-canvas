@@ -62,6 +62,7 @@ namespace UbiArt {
 		public Globals globals = null;
 		public Settings settings = null;
 
+		public Controller controller = null;
 		private static MapLoader loader = null;
 		public static MapLoader Loader {
 			get {

@@ -361,7 +361,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &534669905
@@ -573,6 +573,7 @@ GameObject:
   - component: {fileID: 929858120}
   - component: {fileID: 929858119}
   - component: {fileID: 929858121}
+  - component: {fileID: 929858122}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -594,8 +595,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 1
   gameDataBinFolder: ..\..\RIPPING\RL_Mod\full\ext\cache\itf_cooked\pc
-  pathFolder: world\mountain\level\mo_rl_arena
-  pathFile: mo_rl_arena.isc.ckd
+  pathFolder: world\ocean\level\oc_rl_1
+  pathFile: oc_rl_1.isc.ckd
   log: 0
   logFile: ..\..\RIPPING\RL_Mod\log.txt
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}
@@ -605,6 +606,7 @@ MonoBehaviour:
   collideTransparentMaterial: {fileID: 0}
   loadingScreen: {fileID: 63262021}
   forceDisplayBackfaces: 0
+  zListManager: {fileID: 929858122}
 --- !u!4 &929858120
 Transform:
   m_ObjectHideFlags: 0
@@ -636,6 +638,18 @@ MonoBehaviour:
   frontLightCamera: {fileID: 844852600}
   backLightCamera: {fileID: 1301541515}
   enableLighting: 1
+--- !u!114 &929858122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929858118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8163bc4004763b499c36d080d0c47ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1301541512
 GameObject:
   m_ObjectHideFlags: 0

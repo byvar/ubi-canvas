@@ -5,6 +5,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	public partial class TextureGraphicComponent {
 		GameObject tex_gao;
+		Material tex_mat;
 
 		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
 			base.InitUnityComponent(act, gao, template, index);
@@ -28,9 +29,9 @@ namespace UbiArt.ITF {
 			MeshFilter mf = tex_gao.AddComponent<MeshFilter>();
 			MeshRenderer mr = tex_gao.AddComponent<MeshRenderer>();
 			mf.sharedMesh = CreateMesh(material.textureSet.tex_diffuse);
-			Material mat = material.GetUnityMaterial();
-			FillMaterialParams(mat);
-			mr.material = mat;
+			tex_mat = material.GetUnityMaterial();
+			FillMaterialParams(tex_mat);
+			mr.sharedMaterial = tex_mat;
 		}
 
 		private Mesh CreateMesh(TextureCooked tex) {
@@ -88,6 +89,12 @@ namespace UbiArt.ITF {
 				param.BackLightBrightness,
 				param.BackLightContrast));
 			mat.SetColor("_ColorFog", param.colorFog);
+		}
+		public virtual int UpdateZSortValue(int val) {
+			if (tex_mat != null) {
+				tex_mat.renderQueue = val++;
+			}
+			return val;
 		}
 	}
 }

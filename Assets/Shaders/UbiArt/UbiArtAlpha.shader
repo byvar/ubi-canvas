@@ -18,9 +18,11 @@
 
 		_BlendSrc("Blend mode Source",      Float) = 5
 		_BlendDst("Blend mode Destination", Float) = 10
+		[Enum(Off,0,On,1)] _ZWrite("ZWrite",  Int) = 0
 	}
 	SubShader{
-		//ZWrite Off
+		//ZWrite [_ZWrite]
+		ZWrite Off
 		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
 		Lighting Off
 

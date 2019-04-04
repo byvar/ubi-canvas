@@ -20,10 +20,12 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(animSpikyToFriendly));
 			SerializeField(s, nameof(animFriendly));
 			SerializeField(s, nameof(flip));
-			SerializeField(s, nameof(grow));
-			SerializeField(s, nameof(delayMin));
-			SerializeField(s, nameof(delayMax));
-			SerializeField(s, nameof(density));
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
+				SerializeField(s, nameof(grow));
+				SerializeField(s, nameof(delayMin));
+				SerializeField(s, nameof(delayMax));
+				SerializeField(s, nameof(density));
+			}
 			SerializeField(s, nameof(fx));
 		}
 	}

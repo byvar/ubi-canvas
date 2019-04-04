@@ -50,6 +50,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(airControlMaxAmount));
 				SerializeField(s, nameof(airControlMinDuration));
 				SerializeField(s, nameof(airControlMaxDuration));
+				SerializeField(s, nameof(fx));
 				SerializeField(s, nameof(fxStartSpeed));
 				SerializeField(s, nameof(fxStopSpeed));
 				SerializeField(s, nameof(fxInput));
