@@ -48,6 +48,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(reward));
 				SerializeField(s, nameof(rewardAtStart));
+				SerializeField(s, nameof(fx));
 				SerializeField(s, nameof(spawnOnMarker));
 				SerializeField(s, nameof(swellAction));
 				SerializeField(s, nameof(floatAction));
