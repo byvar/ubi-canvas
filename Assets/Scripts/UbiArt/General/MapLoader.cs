@@ -56,7 +56,8 @@ namespace UbiArt {
 		public Dictionary<StringID, GenericFile<ITF.FriseConfig>> fcg = new Dictionary<StringID, GenericFile<ITF.FriseConfig>>();
 		public Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>> msh = new Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>>();
 		public Dictionary<StringID, GenericFile<CSerializable>> isg = new Dictionary<StringID, GenericFile<CSerializable>>();
-		public Dictionary<StringID, SceneFile> isc = new Dictionary<StringID, SceneFile>();
+		public Dictionary<StringID, ContainerFile<ITF.Scene>> isc = new Dictionary<StringID, ContainerFile<ITF.Scene>>();
+		public Dictionary<StringID, ContainerFile<ITF.Actor>> act = new Dictionary<StringID, ContainerFile<ITF.Actor>>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 
 		public Globals globals = null;
@@ -76,14 +77,14 @@ namespace UbiArt {
 		public MapLoader() {
 		}
 
-		public async Task LoadAll() {
+		public async Task LoadInit() {
 			try {
 				Path pAtlas = new Path("", "atlascontainer.ckd");
 				Load(pAtlas, (CSerializerObject s) => {
 					s.Serialize(ref uvAtlasManager);
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 				});
-				SceneFile mainScene = null;
+				ContainerFile<ITF.Scene> mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
@@ -93,39 +94,46 @@ namespace UbiArt {
 						Settings.s.isCatchThemAll = false;
 					});
 				}
-				bool ckd = true;
+				await LoadLoop();
+				if (mainScene != null && mainScene.obj != null) {
+					GameObject sceneGao = mainScene.obj.Gao;
+				}
+			} catch (Exception ex) {
+				Debug.LogError(ex.ToString());
+			}
+		}
+		protected async Task LoadLoop() {
+			bool ckd = true;
+			try {
 				while (pathsToLoad.Count > 0) {
-					ObjectPlaceHolder o = pathsToLoad.Dequeue();
-					if (o.path != null) {
-						StringID id = o.path.stringID;
-						if (!files.ContainsKey(id)) {
-							await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
-							if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
-								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
-							}
-						}
-						if (files.ContainsKey(id)) {
-							FileWithPointers f = files[id];
-							CSerializerObject s = f.serializer;
-							s.ResetPosition();
-							o.action(s);
-						}
-					} else if(o.virtualFile != null) {
-						using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
-							FileWithPointers f = new BinarySerializedFile(o.virtualFile.Item1, str);
-							Tuple<string, FileWithPointers> t = new Tuple<string, FileWithPointers>(o.virtualFile.Item1, f);
-							virtualFiles.Add(t);
-							CSerializerObject s = f.serializer;
-							s.ResetPosition();
-							o.action(s);
-							f.Dispose();
-							virtualFiles.Remove(t);
+				ObjectPlaceHolder o = pathsToLoad.Dequeue();
+				if (o.path != null) {
+					StringID id = o.path.stringID;
+					if (!files.ContainsKey(id)) {
+						await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
+						if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
+							files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
 						}
 					}
-					await WaitFrame();
+					if (files.ContainsKey(id)) {
+						FileWithPointers f = files[id];
+						CSerializerObject s = f.serializer;
+						s.ResetPosition();
+						o.action(s);
+					}
+				} else if (o.virtualFile != null) {
+					using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
+						FileWithPointers f = new BinarySerializedFile(o.virtualFile.Item1, str);
+						Tuple<string, FileWithPointers> t = new Tuple<string, FileWithPointers>(o.virtualFile.Item1, f);
+						virtualFiles.Add(t);
+						CSerializerObject s = f.serializer;
+						s.ResetPosition();
+						o.action(s);
+						f.Dispose();
+						virtualFiles.Remove(t);
+					}
 				}
-				if (mainScene != null && mainScene.scene != null) {
-					GameObject sceneGao = mainScene.scene.Gao;
+				await WaitFrame();
 				}
 			} catch (Exception ex) {
 				Debug.LogError(ex.ToString());
@@ -141,6 +149,7 @@ namespace UbiArt {
 		public void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref CSerializerObject.Flags ownFlags, string extension) {
 			switch (extension) {
 				case "isc":
+				case "act":
 					flags |= SerializeFlags.Flags7;
 					break;
 				case "fcg":
@@ -175,6 +184,26 @@ namespace UbiArt {
 
 		public void Load(ArchiveMemory mem, string name, SerializeAction action) {
 			pathsToLoad.Enqueue(new ObjectPlaceHolder(name, mem, action));
+		}
+
+		public async Task<ContainerFile<ITF.Actor>> LoadExtraActor(string pathFile, string pathFolder) {
+			if (pathFile.EndsWith(".act") || pathFile.EndsWith(".act.ckd")) {
+				Path p = new Path(pathFolder, pathFile);
+				MapLoader l = MapLoader.Loader;
+				ContainerFile<ITF.Actor> a = null;
+				l.Load(p, (extS) => {
+					if (l.act.ContainsKey(p.stringID)) {
+						a = l.act[p.stringID];
+					} else {
+						extS.log = l.logEnabled;
+						extS.Serialize(ref a);
+						l.act[p.stringID] = a;
+					}
+				});
+				await LoadLoop();
+				return a;
+			}
+			return null;
 		}
 
 		// Defining it this way, clicking the print will go straight to the code you want

@@ -133,7 +133,7 @@ public class Controller : MonoBehaviour {
 		}
 		state = State.Loading;
 		await MapLoader.WaitFrame();
-		await loader.LoadAll();
+		await loader.LoadInit();
 		await MapLoader.WaitFrame();
 		zListManager.Sort();
 		if (state == State.Error) return;

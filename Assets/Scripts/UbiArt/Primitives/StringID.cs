@@ -33,6 +33,9 @@ namespace UbiArt {
 		public StringID() {
 			stringID = 0xFFFFFFFF;
 		}
+		public StringID(uint stringID) {
+			this.stringID = stringID;
+		}
 
 		public StringID(string str) : this(ASCIIEncoding.ASCII.GetBytes(str)) {}
 		public StringID(byte[] array) {

@@ -8,9 +8,9 @@ using UbiArt.ITF;
 using UnityEngine;
 
 namespace UbiArt {
-	public class SceneFile : ICSerializable, IObjectContainer {
-		[Serialize("read" )] public bool read;
-		[Serialize("scene")] public Scene scene;
+	public class ContainerFile<T> : ICSerializable, IObjectContainer where T : ICSerializable {
+		[Serialize("read"  )] public bool read;
+		[Serialize("object")] public T obj;
 
 		public bool IsNull {
 			get {
@@ -21,7 +21,7 @@ namespace UbiArt {
 		public void Serialize(CSerializerObject s, string name) {
 			s.Serialize(ref read, name: "read");
 			if (read) { // Read scene
-				s.Serialize(ref scene);
+				s.Serialize(ref obj);
 				if (s.Length != null) {
 					if (s.Position != s.Length) {
 						throw new Exception("File reading check failed. Position:" + s.Position + " - Length:" + s.Length);

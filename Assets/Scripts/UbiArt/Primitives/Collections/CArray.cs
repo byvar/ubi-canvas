@@ -38,11 +38,12 @@ namespace UbiArt {
 		public bool IsReadOnly => ((IList<T>)container).IsReadOnly;
 
 		public void Add(T item) {
-			((IList<T>)container).Add(item);
+			Array.Resize(ref container, Count+1);
+			container[Count - 1] = item;
 		}
 
 		public void Clear() {
-			((IList<T>)container).Clear();
+			Array.Resize(ref container, 0);
 		}
 
 		public bool Contains(T item) {

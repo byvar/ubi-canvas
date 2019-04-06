@@ -7,9 +7,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt {
-	public class Generic<T> : ICSerializable, IObjectContainer {
+	public class Generic<T> : ICSerializable, IObjectContainer where T : CSerializable {
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;
+
+		public Generic() {
+		}
+
+		public Generic(T obj) {
+			if (obj != null && obj.ClassCRC.HasValue) {
+				className = new StringID(obj.ClassCRC.Value);
+				this.obj = obj;
+			} else {
+				className = new StringID();
+			}
+		}
 
 		public bool IsNull {
 			get {

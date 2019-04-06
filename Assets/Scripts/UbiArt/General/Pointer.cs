@@ -151,7 +151,11 @@ namespace UbiArt {
 			MapLoader l = MapLoader.Loader;
 			uint curPos = (uint)reader.BaseStream.Position;
 			FileWithPointers curFile = l.GetFileByReader(reader);
-			return new Pointer((uint)(curPos - curFile.baseOffset), curFile);
+			if (curFile != null) {
+				return new Pointer((uint)(curPos - curFile.baseOffset), curFile);
+			} else {
+				return new Pointer(curPos, null);
+			}
 		}
 
 		public void DoAt(ref Reader reader, Action action) {
@@ -181,7 +185,11 @@ namespace UbiArt {
 			MapLoader l = MapLoader.Loader;
 			uint curPos = (uint)writer.BaseStream.Position;
 			FileWithPointers curFile = l.GetFileByWriter(writer);
-			return new Pointer((uint)(curPos - curFile.baseOffset), curFile);
+			if (curFile != null) {
+				return new Pointer((uint)(curPos - curFile.baseOffset), curFile);
+			} else {
+				return new Pointer(curPos, null);
+			}
 		}
 
 		public void DoAt(ref Writer writer, Action action) {

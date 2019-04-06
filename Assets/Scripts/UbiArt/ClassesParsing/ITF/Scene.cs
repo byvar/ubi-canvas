@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class Scene {
@@ -17,6 +18,8 @@ namespace UbiArt.ITF {
 			Gao.transform.localPosition = Vector3.zero;
 			Gao.transform.localScale = Vector3.one;
 			Gao.transform.localRotation = Quaternion.identity;
+			UnityScene us = Gao.AddComponent<UnityScene>();
+			us.scene = this;
 			foreach (Frise f in FRISE) {
 				f.SetGameObjectParent(gao);
 			}
@@ -35,6 +38,22 @@ namespace UbiArt.ITF {
 			Gao.transform.localPosition = Vector3.zero;
 			Gao.transform.localScale = Vector3.one;
 			Gao.transform.localRotation = Quaternion.identity;
+		}
+
+		public Actor AddActor(Actor a, string name) {
+			if (ACTORS != null && a != null && !ACTORS.Any(ac => ac.obj != null && ac.obj == a)) {
+				if (a.USERFRIENDLY == null || a.USERFRIENDLY.Length == 0) {
+					a.USERFRIENDLY = name;
+					int i = 0;
+					while(ACTORS.Any(ac => !ac.IsNull && ac.obj.USERFRIENDLY == a.USERFRIENDLY)) {
+						a.USERFRIENDLY = name + "@" + i;
+						i++;
+					}
+				}
+				a.SetGameObjectParent(gao);
+				ACTORS.Add(new Generic<Actor>(a));
+			}
+			return null;
 		}
 	}
 }

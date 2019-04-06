@@ -17,7 +17,7 @@ namespace UbiArt {
 			folder = folder.Replace('\\', '/');
 			if (folder != null && folder != "" && !folder.EndsWith("/")) folder += "/";
 			if (folder != null && folder.StartsWith("/")) folder = folder.Substring(1);
-			if (filename != null && filename.EndsWith(".ckd")) filename = filename.Substring(0, filename.Length - 4);
+			if (filename != null && filename != "" && filename.EndsWith(".ckd")) filename = filename.Substring(0, filename.Length - 4);
 			this.folder = folder;
 			this.filename = filename;
 			if ((folder != null && folder != "") || (filename != null && filename != "")) {

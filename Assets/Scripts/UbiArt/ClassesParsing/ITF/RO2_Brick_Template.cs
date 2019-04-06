@@ -2,7 +2,7 @@
 
 namespace UbiArt.ITF {
 	public partial class RO2_Brick_Template {
-		public SceneFile sceneFile;
+		public ContainerFile<Scene> sceneFile;
 
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);

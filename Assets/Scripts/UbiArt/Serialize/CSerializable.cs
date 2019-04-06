@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -51,6 +52,30 @@ namespace UbiArt {
 			if (atts.Length != 0) {
 				s.Serialize(this, f, atts[0]);
 			}
+		}
+
+		public CSerializable Clone(string extension) {
+			byte[] serializedData = null;
+			CSerializable result = null;
+			using (MemoryStream stream = new MemoryStream()) {
+				using (Writer writer = new Writer(stream)) {
+					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
+					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, extension);
+					object toWrite = this;
+					w.Serialize(ref toWrite, GetType(), name: "clone");
+					serializedData = stream.ToArray();
+				}
+			}
+			using (MemoryStream stream = new MemoryStream(serializedData)) {
+				using (Reader reader = new Reader(stream)) {
+					CSerializerObject r = new CSerializerObjectBinary(reader);
+					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.flagsOwn, extension);
+					object toRead = null;
+					r.Serialize(ref toRead, GetType(), name: "clone");
+					result = toRead as CSerializable;
+				}
+			}
+			return result;
 		}
 
 		public virtual uint? ClassCRC => null;

@@ -1,11 +1,24 @@
 ﻿using System;
 using System.IO;
+using System.Text;
+using UnityEngine;
 
 namespace UbiArt {
 	public class Writer : BinaryWriter {
 		bool isLittleEndian = true;
 		public Writer(System.IO.Stream stream) : base(stream) { isLittleEndian = true; }
 		public Writer(System.IO.Stream stream, bool isLittleEndian) : base(stream) { this.isLittleEndian = isLittleEndian; }
+
+		public override void Write(Boolean value) {
+			if (value == true) {
+				Write(1);
+			} else {
+				Write(0);
+			}
+		}
+		public override void Write(Char value) {
+			Write(Convert.ToByte(value));
+		}
 
 		public override void Write(Int32 value) {
 			var data = BitConverter.GetBytes(value);
@@ -55,9 +68,35 @@ namespace UbiArt {
 			base.Write(data);
 		}
 
-		public void WriteNullDelimitedString(string value) {
-			var data = value.ToCharArray();
-			base.Write(data);
+		public override void Write(String value) {
+			var data = Encoding.ASCII.GetBytes(value);
+			Write(data.Length);
+			Write(data);
+		}
+
+		public void Write(Vector2 value) {
+			Write(value.x);
+			Write(value.y);
+		}
+
+		public void Write(Vector3 value) {
+			Write(value.x);
+			Write(value.y);
+			Write(value.z);
+		}
+
+		public void Write(Vector4 value) {
+			Write(value.x);
+			Write(value.y);
+			Write(value.z);
+			Write(value.w);
+		}
+
+		public void Write(Color value) {
+			Write(value.b);
+			Write(value.g);
+			Write(value.r);
+			Write(value.a);
 		}
 
 		// To make sure position is a multiple of alignBytes
