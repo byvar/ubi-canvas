@@ -24,6 +24,8 @@ public class Controller : MonoBehaviour {
 	public LoadingScreen loadingScreen;
 	public bool forceDisplayBackfaces = false;
 	public ZListManager zListManager;
+	private Sprite[] icons;
+	bool displayGizmos_ = false; public bool displayGizmos = false;
 	MapLoader loader = null;
 
 	public enum State {
@@ -67,6 +69,7 @@ public class Controller : MonoBehaviour {
 			}
 		}
 		Application.logMessageReceived += Log;
+		icons = Resources.LoadAll<Sprite>("tagicons");
 
 		if (Application.platform == RuntimePlatform.WebGLPlayer) {
 			//Application.logMessageReceived += communicator.WebLog;
@@ -158,8 +161,19 @@ public class Controller : MonoBehaviour {
 				loadingScreen.LoadingtextColor = Color.white;
 			}
 		}
+		if (Input.GetKeyDown(KeyCode.G)) {
+			displayGizmos = !displayGizmos;
+		}
 		bool updatedSettings = false;
-    }
+		if (loader != null) {
+			if (displayGizmos != displayGizmos_) {
+				updatedSettings = true;
+			}
+		}
+		if (updatedSettings) {
+			//communicator.SendSettings();
+		}
+	}
 
 	public void Log(string condition, string stacktrace, LogType type) {
 		switch (type) {
@@ -177,5 +191,9 @@ public class Controller : MonoBehaviour {
 				}
 				break;
 		}
+	}
+
+	public Sprite GetIcon(string name) {
+		return icons.FirstOrDefault(s => s.name == name);
 	}
 }

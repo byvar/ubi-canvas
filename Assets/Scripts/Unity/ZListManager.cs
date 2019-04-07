@@ -28,11 +28,9 @@ public class ZListManager : MonoBehaviour {
 		zList.Add(p);
 	}
 
-	public void Sort() {
+	public void Sort(bool printMessages = true) {
 		int zSortValue = 0;
-		print("ZSort count: " + zList.Count);
 		zList.Sort((p1, p2) => (p2.Gao.transform.position.z.CompareTo(p1.Gao.transform.position.z)));
-		print("ZSort count post sort: " + zList.Count);
 		for (int i = 0; i < zList.Count; i++) {
 			zSortValue = zList[i].UpdateZSortValue(zSortValue);
 			if (zSortValue >= 5000) {
@@ -40,7 +38,7 @@ public class ZListManager : MonoBehaviour {
 				break;
 			}
 		}
-		print("Done zsorting");
+		if(printMessages) print("ZSort count: " + zList.Count + " - Done zsorting");
 	}
 
 

@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		[Serialize("slotTimeInterval"       )] public float slotTimeInterval;
 		[Serialize("medalPaths"             )] public CArray<Path> medalPaths;
 		[Serialize("medalTransitionDuration")] public float medalTransitionDuration;
-		[Serialize("medalOffsets"           )] public Placeholder medalOffsets;
-		[Serialize("medalOffsets3Slots"     )] public Placeholder medalOffsets3Slots;
+		[Serialize("medalOffsets"           )] public CArray<Vector3> medalOffsets;
+		[Serialize("medalOffsets3Slots"     )] public CArray<Vector3> medalOffsets3Slots;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -24,7 +24,6 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(stand));
 				SerializeField(s, nameof(shake));
 				SerializeField(s, nameof(slotTimeInterval));
-				SerializeField(s, nameof(medalPaths));
 				SerializeField(s, nameof(medalPaths));
 				SerializeField(s, nameof(medalTransitionDuration));
 			}

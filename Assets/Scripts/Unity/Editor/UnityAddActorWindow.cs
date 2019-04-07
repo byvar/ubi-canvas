@@ -23,6 +23,7 @@ public class UnityAddActorWindow : EditorWindow {
 					ContainerFile<Actor> act = await MapLoader.Loader.LoadExtraActor(pathFile, pathFolder);
 					if (act != null && act.obj != null) {
 						us.scene.AddActor(act.obj.Clone("act") as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
+						MapLoader.Loader.controller.zListManager.Sort();
 					}
 				}
 			}

@@ -17,8 +17,10 @@ namespace UbiArt.ITF {
 			gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
 			gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
 			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.angle * Mathf.Rad2Deg);
+			UnityPickable p = gao.AddComponent<UnityPickable>();
+			p.pickable = this;
 			MapLoader.Loader.controller.zListManager.Register(this);
-			if (ANGLE.angle != 0f) gao.name += " - " + ANGLE.angle;
+			//if (ANGLE.angle != 0f) gao.name += " - " + ANGLE.angle;
 		}
 		public void SetGameObjectParent(GameObject gp) {
 			Gao.transform.SetParent(gp.transform, false);
