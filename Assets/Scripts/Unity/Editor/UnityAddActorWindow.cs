@@ -7,7 +7,7 @@ public class UnityAddActorWindow : EditorWindow {
 	string pathFolder;
 	string pathFile;
 
-	[MenuItem("Window/AddActor")]
+	[MenuItem("Window/Add Actor")]
 	public static void ShowWindow() {
 		GetWindow<UnityAddActorWindow>("Add actor");
 	}

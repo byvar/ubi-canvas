@@ -59,6 +59,7 @@ namespace UbiArt {
 		public Dictionary<StringID, ContainerFile<ITF.Scene>> isc = new Dictionary<StringID, ContainerFile<ITF.Scene>>();
 		public Dictionary<StringID, ContainerFile<ITF.Actor>> act = new Dictionary<StringID, ContainerFile<ITF.Actor>>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
+		public Dictionary<StringID, Path> paths = new Dictionary<StringID, Path>();
 
 		public Globals globals = null;
 		public Settings settings = null;
@@ -109,6 +110,7 @@ namespace UbiArt {
 				ObjectPlaceHolder o = pathsToLoad.Dequeue();
 				if (o.path != null) {
 					StringID id = o.path.stringID;
+					paths[id] = o.path;
 					if (!files.ContainsKey(id)) {
 						await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
 						if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
@@ -150,6 +152,7 @@ namespace UbiArt {
 			switch (extension) {
 				case "isc":
 				case "act":
+				case "ipk":
 					flags |= SerializeFlags.Flags7;
 					break;
 				case "fcg":
@@ -204,6 +207,14 @@ namespace UbiArt {
 				return a;
 			}
 			return null;
+		}
+
+		public async Task WriteBundle(string path, List<Pair<Path, ICSerializable>> files) {
+			Bundle.BundleFile b = new Bundle.BundleFile();
+			foreach (Pair<Path, ICSerializable> f in files) {
+				b.AddFile(f.Item1.CookedPath, f.Item2);
+			}
+			await b.WriteBundle(path);
 		}
 
 		// Defining it this way, clicking the print will go straight to the code you want

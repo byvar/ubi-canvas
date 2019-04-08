@@ -30,6 +30,15 @@ namespace UbiArt {
 		public bool IsLittleEndian {
 			get { return endian == Endian.Little; }
 		}
+		public string PlatformString {
+			get {
+				switch (platform) {
+					case Platform.PC: return "pc";
+					case Platform.Android: return "android";
+					default: return null;
+				}
+			}
+		}
 
 		public static void Init(Mode mode) {
 			switch (mode) {

@@ -37,6 +37,7 @@ namespace UbiArt.Bundle {
 
 		public BundleBootHeader() {
 			if (Settings.s.game == Settings.Game.RL) {
+				signature = staticSignature;
 				unk0 = 5;
 				unk1 = 0;
 				unk2 = false;

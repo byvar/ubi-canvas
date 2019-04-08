@@ -594,7 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  gameDataBinFolder: ..\..\RIPPING\RL_Mod\Demo\Bundle\ext\cache\itf_cooked\pc
+  gameDataBinFolder: ..\..\RIPPING\RL_Mod\full\ext\cache\itf_cooked\pc
   pathFolder: world\jungle\level\ju_rl_1_castle_am
   pathFile: ju_rl_1_castle_am.isc.ckd
   log: 0

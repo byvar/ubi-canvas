@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace UbiArt {
 	public class Angle : ICSerializable {
@@ -21,6 +22,15 @@ namespace UbiArt {
 		}
 		public static implicit operator Angle(AngleAmount a) {
 			return new Angle { angle = a.angle };
+		}
+
+		public float EulerAngle {
+			get {
+				return angle * Mathf.Rad2Deg;
+			}
+			set {
+				angle = value * Mathf.Deg2Rad;
+			}
 		}
 	}
 }

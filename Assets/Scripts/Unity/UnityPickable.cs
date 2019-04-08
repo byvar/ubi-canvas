@@ -30,6 +30,16 @@ public class UnityPickable : MonoBehaviour {
 					MapLoader.Loader.controller.zListManager.Sort(printMessages: false);
 				}
 			}
+			if (transform.localEulerAngles.z != pickable.ANGLE.EulerAngle) {
+				pickable.ANGLE.EulerAngle = transform.localEulerAngles.z;
+			}
+			if (Mathf.Abs(transform.localScale.x) != pickable.SCALE.x) {
+				pickable.SCALE.x = Mathf.Abs(transform.localScale.x);
+			}
+			if (new Vector2(transform.localScale.x, transform.localScale.y) != new Vector2((pickable.xFLIPPED ? -1f : 1f) * pickable.SCALE.x, pickable.SCALE.y)) {
+				pickable.SCALE = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
+				pickable.xFLIPPED = transform.localScale.x < 0 ? true : false;
+			}
 		}
 	}
 	void UpdateGizmo() {

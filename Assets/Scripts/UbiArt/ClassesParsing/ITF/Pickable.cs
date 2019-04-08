@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			gao = new GameObject(USERFRIENDLY);
 			gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
 			gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
-			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.angle * Mathf.Rad2Deg);
+			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
 			UnityPickable p = gao.AddComponent<UnityPickable>();
 			p.pickable = this;
 			MapLoader.Loader.controller.zListManager.Register(this);
@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 			Gao.transform.SetParent(gp.transform, false);
 			Gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
 			Gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
-			Gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.angle * Mathf.Rad2Deg);
+			Gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
 		}
 
 		public virtual int UpdateZSortValue(int val) {

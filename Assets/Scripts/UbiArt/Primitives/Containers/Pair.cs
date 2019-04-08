@@ -16,5 +16,10 @@ namespace UbiArt {
 			s.Serialize(this, GetType().GetField(nameof(Item1)), name: name, index: 0);
 			s.Serialize(this, GetType().GetField(nameof(Item2)), name: name, index: 1);
 		}
+		public Pair() { }
+		public Pair(T1 Item1, T2 Item2) {
+			this.Item1 = Item1;
+			this.Item2 = Item2;
+		}
 	}
 }

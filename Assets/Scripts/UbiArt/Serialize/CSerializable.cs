@@ -58,7 +58,7 @@ namespace UbiArt {
 			byte[] serializedData = null;
 			CSerializable result = null;
 			using (MemoryStream stream = new MemoryStream()) {
-				using (Writer writer = new Writer(stream)) {
+				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
 					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, extension);
 					object toWrite = this;
@@ -67,7 +67,7 @@ namespace UbiArt {
 				}
 			}
 			using (MemoryStream stream = new MemoryStream(serializedData)) {
-				using (Reader reader = new Reader(stream)) {
+				using (Reader reader = new Reader(stream, Settings.s.IsLittleEndian)) {
 					CSerializerObject r = new CSerializerObjectBinary(reader);
 					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.flagsOwn, extension);
 					object toRead = null;

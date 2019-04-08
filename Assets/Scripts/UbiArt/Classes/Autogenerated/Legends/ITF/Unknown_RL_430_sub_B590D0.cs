@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_430_sub_B590D0 : CSerializable {
+	public partial class Unknown_RL_430_sub_B590D0 : ActorComponent_Template {
 		[Serialize("maxSpeed_level0"                )] public float maxSpeed_level0;
 		[Serialize("maxSpeed_level1"                )] public float maxSpeed_level1;
-		[Serialize("phantomShape"                   )] public Placeholder phantomShape;
+		[Serialize("phantomShape"                   )] public Generic<PhysShape> phantomShape;
 		[Serialize("faction"                        )] public uint faction;
 		[Serialize("moveHoldFXName"                 )] public StringID moveHoldFXName;
 		[Serialize("moveTapFXName"                  )] public StringID moveTapFXName;
@@ -41,14 +41,14 @@ namespace UbiArt.ITF {
 		[Serialize("smoothFactorSlow"               )] public float smoothFactorSlow;
 		[Serialize("smoothFactorFast"               )] public float smoothFactorFast;
 		[Serialize("useMagicCurve"                  )] public int useMagicCurve;
-		[Serialize("bezierRenderer"                 )] public Placeholder bezierRenderer;
+		[Serialize("bezierRenderer"                 )] public BezierCurveRenderer_Template bezierRenderer;
 		[Serialize("distTang"                       )] public float distTang;
 		[Serialize("freqRotateTangStart"            )] public float freqRotateTangStart;
 		[Serialize("freqRotateTangEnd"              )] public float freqRotateTangEnd;
 		[Serialize("magicCurveOffsetStart"          )] public float magicCurveOffsetStart;
 		[Serialize("magicCurveOffsetEnd"            )] public float magicCurveOffsetEnd;
 		[Serialize("magicCurveDistMin"              )] public float magicCurveDistMin;
-		[Serialize("swarmRepeller"                  )] public Placeholder swarmRepeller;
+		[Serialize("swarmRepeller"                  )] public RO2_SwarmRepellerPowerUp_Template swarmRepeller;
 		[Serialize("debug"                          )] public int debug;
 		[Serialize("disappearSequenceDialogDuration")] public float disappearSequenceDialogDuration;
 		[Serialize("appearSequenceDuration"         )] public float appearSequenceDuration;

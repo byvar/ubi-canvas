@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_451_sub_B89BF0 : CSerializable {
-		[Serialize("idleBehavior"             )] public Placeholder idleBehavior;
-		[Serialize("receiveHitBehavior"       )] public Placeholder receiveHitBehavior;
-		[Serialize("deathBehavior"            )] public Placeholder deathBehavior;
-		[Serialize("tickleBehavior"           )] public Placeholder tickleBehavior;
+	public partial class Unknown_RL_451_sub_B89BF0 : RO2_AIComponent_Template {
+		[Serialize("idleBehavior"             )] public Generic<TemplateAIBehavior> idleBehavior;
+		[Serialize("receiveHitBehavior"       )] public Generic<TemplateAIBehavior> receiveHitBehavior;
+		[Serialize("deathBehavior"            )] public Generic<TemplateAIBehavior> deathBehavior;
+		[Serialize("tickleBehavior"           )] public Generic<TemplateAIBehavior> tickleBehavior;
 		[Serialize("cameraRelative"           )] public int cameraRelative;
 		[Serialize("triggerable"              )] public int triggerable;
 		[Serialize("dynamicFlip"              )] public int dynamicFlip;
