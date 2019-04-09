@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_120_sub_6D1C30 : CSerializable {
+	public partial class Unknown_RL_120_sub_6D1C30 : ActorComponent_Template {
 		[Serialize("DrawDebugHit"                 )] public int DrawDebugHit;
 		[Serialize("BodyPath"                     )] public Path BodyPath;
 		[Serialize("TailPath"                     )] public Path TailPath;
@@ -42,10 +42,10 @@ namespace UbiArt.ITF {
 		[Serialize("hurtMaxPerPhase"              )] public uint hurtMaxPerPhase;
 		[Serialize("moduleGap"                    )] public float moduleGap;
 		[Serialize("headGap"                      )] public float headGap;
-		[Serialize("diamondShape"                 )] public Placeholder diamondShape;
-		[Serialize("jawUpShape"                   )] public Placeholder jawUpShape;
-		[Serialize("jawLowShape"                  )] public Placeholder jawLowShape;
-		[Serialize("laserShape"                   )] public Placeholder laserShape;
+		[Serialize("diamondShape"                 )] public Generic<PhysShape> diamondShape;
+		[Serialize("jawUpShape"                   )] public Generic<PhysShape> jawUpShape;
+		[Serialize("jawLowShape"                  )] public Generic<PhysShape> jawLowShape;
+		[Serialize("laserShape"                   )] public Generic<PhysShape> laserShape;
 		[Serialize("minTimeToSetPlayRate"         )] public float minTimeToSetPlayRate;
 		[Serialize("wakeUpModuleDelay"            )] public float wakeUpModuleDelay;
 		[Serialize("hurtModuleDelay"              )] public float hurtModuleDelay;

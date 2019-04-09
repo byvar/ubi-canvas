@@ -17,10 +17,33 @@ namespace UbiArt.Animation {
 		}
 
 		public class AnimMarkerEvent : ICSerializable {
-			public uint type;
+			public int type;
+			public uint unk0;
+			public Vector2 vec;
+			public uint unk1;
+			public uint eventData0;
+			public float eventData1;
 
 			public void Serialize(CSerializerObject s, string name) {
 				s.Serialize(ref type);
+				if (Settings.s.game == Settings.Game.RL) {
+					s.Serialize(ref unk0);
+				}
+				s.Serialize(ref vec);
+				s.Serialize(ref unk1);
+				switch (type) {
+					case 1: // AnimFXEvent
+					case 4: // AnimPolylineEvent
+						s.Serialize(ref eventData0);
+						break;
+					case 3: // AnimGameplayEvent
+					case 5: // AnimPartitionEvent
+						s.Serialize(ref eventData1);
+						break;
+					case 2: // AnimAnimationEvent
+					default:
+						break;
+				}
 			}
 		}
 	}

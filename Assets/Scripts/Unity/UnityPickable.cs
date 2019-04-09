@@ -45,19 +45,31 @@ public class UnityPickable : MonoBehaviour {
 	void UpdateGizmo() {
 		Sprite spr = null;
 		if (pickable != null) {
+			Controller c = MapLoader.Loader.controller;
+			TemplatePickable t = pickable.templatePickable;
 			if (pickable is Frise) {
-				Frise f = pickable as Frise;
-				if (f.config != null && f.config.obj != null && f.config.obj.TAGS != null) {
-					if (f.config.obj.TAGS.Contains("front_lgt_frieze")) {
-						spr = MapLoader.Loader.controller.GetIcon("light_front");
-					} else if(f.config.obj.TAGS.Contains("back_lgt_frieze")) {
-						spr = MapLoader.Loader.controller.GetIcon("light_back");
+				if (t != null && t.TAGS != null) {
+					foreach (string tag in t.TAGS) {
+						Sprite sprLoc = c.GetIcon(tag);
+						if (sprLoc == null) {
+							print("Frieze: Untreated tag " + tag);
+						}
+						spr = sprLoc;
 					}
 				}
 			} else if (pickable is Actor) {
 				if (pickable is SubSceneActor) {
 					SubSceneActor ssa = pickable as SubSceneActor;
-					if (ssa.RELATIVEPATH != null && !ssa.RELATIVEPATH.IsNull) {
+					if (t != null && t.TAGS.Count > 0) {
+						foreach (string tag in t.TAGS) {
+							Sprite sprLoc = c.GetIcon(tag);
+							if (sprLoc == null) {
+								print("SubSceneActor: Untreated tag " + tag);
+							}
+							spr = sprLoc;
+						}
+					}
+					if (spr == null && ssa.RELATIVEPATH != null && !ssa.RELATIVEPATH.IsNull) {
 						if (ssa.RELATIVEPATH.filename.EndsWith("_graph.isc")) {
 							spr = MapLoader.Loader.controller.GetIcon("isc_graph");
 						} else if (ssa.RELATIVEPATH.filename.EndsWith("_fx.isc")) {
@@ -74,7 +86,18 @@ public class UnityPickable : MonoBehaviour {
 						spr = MapLoader.Loader.controller.GetIcon("isc");
 					}
 				} else {
-					spr = MapLoader.Loader.controller.GetIcon("actor");
+					if (t != null && t.TAGS.Count > 0) {
+						foreach (string tag in t.TAGS) {
+							Sprite sprLoc = c.GetIcon(tag);
+							if (sprLoc == null) {
+								print("Actor: Untreated tag " + tag);
+							}
+							spr = sprLoc;
+						}
+					}
+					if (spr == null) {
+						spr = MapLoader.Loader.controller.GetIcon("actor");
+					}
 				}
 			}
 		}

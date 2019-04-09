@@ -209,6 +209,9 @@ namespace UbiArt.ITF {
 						extS.Serialize(ref config);
 						l.fcg[ConfigName.stringID] = config;
 					}
+					if (config != null) {
+						templatePickable = config.obj;
+					}
 				});
 			}
 		}

@@ -26,6 +26,7 @@ namespace UbiArt.ITF {
 		[Serialize("freq"                           )] public float freq;
 		[Serialize("freqDelta"                      )] public float freqDelta;
 		[Serialize("forceEmitAtStart"               )] public bool forceEmitAtStart;
+		[Serialize("forceEmitAtStart"               )] public int forceEmitAtStart_int;
 		[Serialize("emitBatchCount"                 )] public uint emitBatchCount;
 		[Serialize("emitBatchCount_AAO"             )] public uint emitBatchCount_AAO;
 		[Serialize("emitBatchCount_AAO_max"         )] public uint emitBatchCount_AAO_max;
@@ -370,7 +371,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(friction));
 				SerializeField(s, nameof(freq));
 				SerializeField(s, nameof(freqDelta));
-				SerializeField(s, nameof(forceEmitAtStart));
+				SerializeField(s, nameof(forceEmitAtStart_int));
 				SerializeField(s, nameof(emitBatchCount));
 				SerializeField(s, nameof(emitBatchCount_AAO));
 				SerializeField(s, nameof(initAngle));

@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class ITF_ParticleGenerator_Template : CSerializable {
-		[Serialize("computeAABB"                   )] public uint computeAABB;
-		[Serialize("useAnim"                       )] public uint useAnim;
-		[Serialize("useAnim"                       )] public bool useAnim_;
-		[Serialize("loop"                          )] public uint loop;
-		[Serialize("amvPath"                       )] public Path amvPath;
-		[Serialize("useUVRandom"                   )] public uint useUVRandom;
-		[Serialize("animstart"                     )] public int animstart;
-		[Serialize("animend"                       )] public int animend;
-		[Serialize("animname"                      )] public StringID animname;
-		[Serialize("AnimUVfreq"                    )] public float AnimUVfreq;
-		[Serialize("params"                        )] public ParticleGeneratorParameters _params;
-		[Serialize("ObjectDeviceSpeed"             )] public DeviceInfo__Device_Speed ObjectDeviceSpeed;
-		[Serialize("zSortMode"                     )] public PARGEN_ZSORT zSortMode;
-		[Serialize("is2D"                          )] public int is2D;
-		[Serialize("phaseLoopStartIndex"           )] public uint phaseLoopStartIndex;
-		[Serialize("phaseLoopStopIndex"            )] public uint phaseLoopStopIndex;
+		[Serialize("computeAABB"        )] public uint computeAABB;
+		[Serialize("useAnim"            )] public uint useAnim;
+		[Serialize("useAnim"            )] public bool useAnim_;
+		[Serialize("loop"               )] public uint loop;
+		[Serialize("amvPath"            )] public Path amvPath;
+		[Serialize("useUVRandom"        )] public uint useUVRandom;
+		[Serialize("animstart"          )] public int animstart;
+		[Serialize("animend"            )] public int animend;
+		[Serialize("animname"           )] public StringID animname;
+		[Serialize("AnimUVfreq"         )] public float AnimUVfreq;
+		[Serialize("params"             )] public ParticleGeneratorParameters _params;
+		[Serialize("ObjectDeviceSpeed"  )] public DeviceInfo__Device_Speed ObjectDeviceSpeed;
+		[Serialize("zSortMode"          )] public PARGEN_ZSORT zSortMode;
+		[Serialize("is2D"               )] public bool is2D;
+		[Serialize("phaseLoopStartIndex")] public uint phaseLoopStartIndex;
+		[Serialize("phaseLoopStopIndex" )] public uint phaseLoopStopIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {

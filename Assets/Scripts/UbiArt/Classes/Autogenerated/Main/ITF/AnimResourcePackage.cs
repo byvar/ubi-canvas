@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class AnimResourcePackage : CSerializable {
 		[Serialize("skeleton"    )] public Path skeleton;
 		[Serialize("textureBank" )] public CList<TextureBankPath> textureBank;

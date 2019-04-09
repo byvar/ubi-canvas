@@ -58,6 +58,8 @@ namespace UbiArt {
 		public Dictionary<StringID, GenericFile<CSerializable>> isg = new Dictionary<StringID, GenericFile<CSerializable>>();
 		public Dictionary<StringID, ContainerFile<ITF.Scene>> isc = new Dictionary<StringID, ContainerFile<ITF.Scene>>();
 		public Dictionary<StringID, ContainerFile<ITF.Actor>> act = new Dictionary<StringID, ContainerFile<ITF.Actor>>();
+		public Dictionary<StringID, Animation.AnimTrack> anm = new Dictionary<StringID, Animation.AnimTrack>();
+		public Dictionary<StringID, Animation.AnimSkeleton> skl = new Dictionary<StringID, Animation.AnimSkeleton>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 		public Dictionary<StringID, Path> paths = new Dictionary<StringID, Path>();
 
@@ -101,44 +103,43 @@ namespace UbiArt {
 				}
 			} catch (Exception ex) {
 				Debug.LogError(ex.ToString());
+				throw;
 			}
 		}
 		protected async Task LoadLoop() {
 			bool ckd = true;
 			try {
 				while (pathsToLoad.Count > 0) {
-				ObjectPlaceHolder o = pathsToLoad.Dequeue();
-				if (o.path != null) {
-					StringID id = o.path.stringID;
-					paths[id] = o.path;
-					if (!files.ContainsKey(id)) {
-						await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
-						if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
-							files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
+					ObjectPlaceHolder o = pathsToLoad.Dequeue();
+					if (o.path != null) {
+						StringID id = o.path.stringID;
+						paths[id] = o.path;
+						if (!files.ContainsKey(id)) {
+							await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
+							if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
+								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
+							}
+						}
+						if (files.ContainsKey(id)) {
+							FileWithPointers f = files[id];
+							CSerializerObject s = f.serializer;
+							s.ResetPosition();
+							o.action(s);
+						}
+					} else if (o.virtualFile != null) {
+						using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
+							FileWithPointers f = new BinarySerializedFile(o.virtualFile.Item1, str);
+							Tuple<string, FileWithPointers> t = new Tuple<string, FileWithPointers>(o.virtualFile.Item1, f);
+							virtualFiles.Add(t);
+							CSerializerObject s = f.serializer;
+							s.ResetPosition();
+							o.action(s);
+							f.Dispose();
+							virtualFiles.Remove(t);
 						}
 					}
-					if (files.ContainsKey(id)) {
-						FileWithPointers f = files[id];
-						CSerializerObject s = f.serializer;
-						s.ResetPosition();
-						o.action(s);
-					}
-				} else if (o.virtualFile != null) {
-					using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
-						FileWithPointers f = new BinarySerializedFile(o.virtualFile.Item1, str);
-						Tuple<string, FileWithPointers> t = new Tuple<string, FileWithPointers>(o.virtualFile.Item1, f);
-						virtualFiles.Add(t);
-						CSerializerObject s = f.serializer;
-						s.ResetPosition();
-						o.action(s);
-						f.Dispose();
-						virtualFiles.Remove(t);
-					}
+					await WaitFrame();
 				}
-				await WaitFrame();
-				}
-			} catch (Exception ex) {
-				Debug.LogError(ex.ToString());
 			} finally {
 				foreach (KeyValuePair<StringID, FileWithPointers> kv in files) {
 					kv.Value.Dispose();

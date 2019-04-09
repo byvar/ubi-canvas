@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_121_sub_6C4A90 : CSerializable {
+	public partial class Unknown_RL_121_sub_6C4A90 : ActorComponent {
 		[Serialize("DrawBezier"               )] public int DrawBezier;
 		[Serialize("DrawSpeedModulation"      )] public int DrawSpeedModulation;
 		[Serialize("ModulateSpeedCoef"        )] public float ModulateSpeedCoef;

@@ -2,99 +2,99 @@ fileFormatVersion: 2
 guid: 02459452e0e3b8f4796deb6989a8b8de
 TextureImporter:
   fileIDToRecycleName:
-    21300000: tagicons_0
-    21300002: tagicons_1
-    21300004: tagicons_2
-    21300006: tagicons_3
-    21300008: tagicons_4
-    21300010: tagicons_5
-    21300012: tagicons_6
-    21300014: tagicons_7
-    21300016: tagicons_8
-    21300018: tagicons_9
+    21300000: frieze
+    21300002: frieze_s
+    21300004: particle
+    21300006: particle_s
+    21300008: afx
+    21300010: afx_s
+    21300012: alpha
+    21300014: alpha_s
+    21300016: amb
+    21300018: amb_s
     21300020: tagicons_10
     21300022: tagicons_11
     21300024: tagicons_12
     21300026: tagicons_13
     21300028: tagicons_14
     21300030: tagicons_15
-    21300032: tagicons_16
-    21300034: tagicons_17
+    21300032: back_lgt_frieze
+    21300034: back_lgt_frieze_s
     21300036: light_back
-    21300038: tagicons_19
+    21300038: light_back_s
     21300040: light_front
-    21300042: tagicons_21
+    21300042: light_front_s
     21300044: light_normal
-    21300046: tagicons_23
-    21300048: tagicons_24
-    21300050: tagicons_25
-    21300052: tagicons_26
-    21300054: tagicons_27
-    21300056: tagicons_28
-    21300058: tagicons_29
+    21300046: light_normal_s
+    21300048: mus
+    21300050: mus_s
+    21300052: fog
+    21300054: fog_s
+    21300056: 3d
+    21300058: 3d_s
     21300060: tagicons_30
     21300062: tagicons_31
     21300064: tagicons_32
-    21300066: tagicons_33
+    21300066: unknown______
     21300068: tagicons_34
     21300070: tagicons_35
     21300072: tagicons_36
-    21300074: tagicons_37
-    21300076: tagicons_38
-    21300078: tagicons_39
-    21300080: tagicons_40
-    21300082: tagicons_41
-    21300084: tagicons_42
-    21300086: tagicons_43
-    21300088: tagicons_44
-    21300090: actor_enemy
-    21300092: actor_enemy_selected
-    21300094: actor_friendly
-    21300096: actor_friendly_selected
-    21300098: tagicons_49
-    21300100: tagicons_50
-    21300102: tagicons_51
-    21300104: tagicons_52
-    21300106: tagicons_53
-    21300108: tagicons_54
-    21300110: tagicons_55
-    21300112: tagicons_56
+    21300074: trigger_autorayman
+    21300076: trigger_autorayman_s
+    21300078: trigger_automurphy
+    21300080: trigger_automurphy_s
+    21300082: breakable
+    21300084: breakable_s
+    21300086: checkpoint
+    21300088: checkpoint_s
+    21300090: enemy
+    21300092: enemy_s
+    21300094: friendly
+    21300096: friendly_s
+    21300098: isc_graph_2
+    21300100: isc_graph_2_s
+    21300102: isc_ld_2
+    21300104: isc_ld_2_s
+    21300106: isc_cine_2
+    21300108: isc_cine_2_s
+    21300110: platform
+    21300112: platform_s
     21300114: tagicons_57
     21300116: tagicons_58
-    21300118: tagicons_59
-    21300120: tagicons_60
-    21300122: tagicons_61
-    21300124: tagicons_62
-    21300126: tagicons_63
-    21300128: tagicons_64
-    21300130: tagicons_65
-    21300132: tagicons_66
-    21300134: tagicons_67
-    21300136: tagicons_68
-    21300138: tagicons_69
-    21300140: tagicons_70
-    21300142: tagicons_71
-    21300144: tagicons_72
-    21300146: tagicons_73
-    21300148: tagicons_74
+    21300118: collectible
+    21300120: collectible_disabled
+    21300122: trigger
+    21300124: trigger_s
+    21300126: isc_sound_2
+    21300128: isc_sound_2_s
+    21300130: isc_fx_2
+    21300132: isc_fx_2_s
+    21300134: tween
+    21300136: tween_s
+    21300138: tween_mob
+    21300140: tween_mob_s
+    21300142: ld_frieze
+    21300144: ld_frieze_s
+    21300146: logic
+    21300148: logic_s
     21300150: isc_graph
-    21300152: tagicons_76
+    21300152: isc_graph_s
     21300154: isc_ld
-    21300156: tagicons_78
+    21300156: isc_ld_s
     21300158: isc_cine
-    21300160: tagicons_80
-    21300162: tagicons_81
-    21300164: tagicons_82
+    21300160: isc_cine_s
+    21300162: fluid
+    21300164: fluid_s
     21300166: tagicons_83
     21300168: tagicons_84
     21300170: tagicons_85
     21300172: tagicons_86
-    21300174: tagicons_87
-    21300176: tagicons_88
+    21300174: tween_editor
+    21300176: tween_editor_s
     21300178: isc_sound
-    21300180: tagicons_90
+    21300180: isc_sound_s
     21300182: isc_fx
-    21300184: tagicons_92
+    21300184: isc_fx_s
     21300186: tagicons_93
     21300188: tagicons_94
     21300190: tagicons_95
@@ -119,8 +119,8 @@ TextureImporter:
     21300228: tagicons_114
     21300230: tagicons_115
     21300232: tagicons_116
-    21300234: tagicons_117
-    21300236: tagicons_118
+    21300234: tsc
+    21300236: tsc_s
     21300238: tagicons_119
     21300240: tagicons_120
     21300242: actor
@@ -141,27 +141,27 @@ TextureImporter:
     21300272: tagicons_136
     21300274: tagicons_137
     21300276: tagicons_138
-    21300278: tagicons_139
+    21300278: unknown__
     21300280: tagicons_140
     21300282: tagicons_141
-    21300284: actor_disabled
-    21300286: actor_disabled_selected
-    21300288: tagicons_144
+    21300284: trajectory
+    21300286: trajectory_s
+    21300288: isc_2
     21300290: isc
-    21300292: tagicons_146
+    21300292: isc_s
     21300294: tagicons_147
     21300296: tagicons_148
     21300298: tagicons_149
     21300300: tagicons_150
-    21300302: tagicons_151
+    21300302: isc_2_s
     21300304: tagicons_152
     21300306: tagicons_153
     21300308: tagicons_154
     21300310: tagicons_155
     21300312: tagicons_156
     21300314: tagicons_157
-    21300316: tagicons_158
-    21300318: tagicons_159
+    21300316: front_lgt_frieze
+    21300318: front_lgt_frieze_s
     21300320: tagicons_160
   externalObjects: {}
   serializedVersion: 9
@@ -278,7 +278,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tagicons_0
+      name: frieze
       rect:
         serializedVersion: 2
         x: 4
@@ -298,7 +298,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_1
+      name: frieze_s
       rect:
         serializedVersion: 2
         x: 68
@@ -318,7 +318,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_2
+      name: particle
       rect:
         serializedVersion: 2
         x: 131
@@ -338,7 +338,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_3
+      name: particle_s
       rect:
         serializedVersion: 2
         x: 195
@@ -358,7 +358,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_4
+      name: afx
       rect:
         serializedVersion: 2
         x: 260
@@ -378,7 +378,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_5
+      name: afx_s
       rect:
         serializedVersion: 2
         x: 324
@@ -398,7 +398,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_6
+      name: alpha
       rect:
         serializedVersion: 2
         x: 388
@@ -418,7 +418,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_7
+      name: alpha_s
       rect:
         serializedVersion: 2
         x: 452
@@ -438,7 +438,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_8
+      name: amb
       rect:
         serializedVersion: 2
         x: 517
@@ -458,7 +458,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_9
+      name: amb_s
       rect:
         serializedVersion: 2
         x: 581
@@ -598,7 +598,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_16
+      name: back_lgt_frieze
       rect:
         serializedVersion: 2
         x: 3
@@ -618,7 +618,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_17
+      name: back_lgt_frieze_s
       rect:
         serializedVersion: 2
         x: 66
@@ -658,7 +658,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_19
+      name: light_back_s
       rect:
         serializedVersion: 2
         x: 194
@@ -698,7 +698,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_21
+      name: light_front_s
       rect:
         serializedVersion: 2
         x: 323
@@ -738,7 +738,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_23
+      name: light_normal_s
       rect:
         serializedVersion: 2
         x: 451
@@ -758,7 +758,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_24
+      name: mus
       rect:
         serializedVersion: 2
         x: 517
@@ -778,7 +778,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_25
+      name: mus_s
       rect:
         serializedVersion: 2
         x: 581
@@ -798,7 +798,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_26
+      name: fog
       rect:
         serializedVersion: 2
         x: 3
@@ -818,7 +818,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_27
+      name: fog_s
       rect:
         serializedVersion: 2
         x: 67
@@ -838,7 +838,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_28
+      name: 3d
       rect:
         serializedVersion: 2
         x: 259
@@ -858,7 +858,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_29
+      name: 3d_s
       rect:
         serializedVersion: 2
         x: 323
@@ -938,7 +938,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_33
+      name: unknown______
       rect:
         serializedVersion: 2
         x: 134
@@ -1018,7 +1018,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_37
+      name: trigger_autorayman
       rect:
         serializedVersion: 2
         x: 390
@@ -1038,7 +1038,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_38
+      name: trigger_autorayman_s
       rect:
         serializedVersion: 2
         x: 454
@@ -1058,7 +1058,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_39
+      name: trigger_automurphy
       rect:
         serializedVersion: 2
         x: 518
@@ -1078,7 +1078,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_40
+      name: trigger_automurphy_s
       rect:
         serializedVersion: 2
         x: 582
@@ -1098,7 +1098,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_41
+      name: breakable
       rect:
         serializedVersion: 2
         x: 3
@@ -1118,7 +1118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_42
+      name: breakable_s
       rect:
         serializedVersion: 2
         x: 67
@@ -1138,7 +1138,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_43
+      name: checkpoint
       rect:
         serializedVersion: 2
         x: 130
@@ -1158,7 +1158,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_44
+      name: checkpoint_s
       rect:
         serializedVersion: 2
         x: 194
@@ -1178,7 +1178,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: actor_enemy
+      name: enemy
       rect:
         serializedVersion: 2
         x: 258
@@ -1198,7 +1198,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: actor_enemy_selected
+      name: enemy_s
       rect:
         serializedVersion: 2
         x: 322
@@ -1218,7 +1218,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: actor_friendly
+      name: friendly
       rect:
         serializedVersion: 2
         x: 386
@@ -1238,7 +1238,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: actor_friendly_selected
+      name: friendly_s
       rect:
         serializedVersion: 2
         x: 450
@@ -1258,7 +1258,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_49
+      name: isc_graph_2
       rect:
         serializedVersion: 2
         x: 515
@@ -1278,7 +1278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_50
+      name: isc_graph_2_s
       rect:
         serializedVersion: 2
         x: 580
@@ -1298,7 +1298,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_51
+      name: isc_ld_2
       rect:
         serializedVersion: 2
         x: 642
@@ -1318,7 +1318,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_52
+      name: isc_ld_2_s
       rect:
         serializedVersion: 2
         x: 707
@@ -1338,7 +1338,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_53
+      name: isc_cine_2
       rect:
         serializedVersion: 2
         x: 771
@@ -1358,7 +1358,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_54
+      name: isc_cine_2_s
       rect:
         serializedVersion: 2
         x: 836
@@ -1378,7 +1378,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_55
+      name: platform
       rect:
         serializedVersion: 2
         x: 2
@@ -1398,7 +1398,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_56
+      name: platform_s
       rect:
         serializedVersion: 2
         x: 66
@@ -1458,7 +1458,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_59
+      name: collectible
       rect:
         serializedVersion: 2
         x: 258
@@ -1478,7 +1478,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_60
+      name: collectible_disabled
       rect:
         serializedVersion: 2
         x: 322
@@ -1498,7 +1498,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_61
+      name: trigger
       rect:
         serializedVersion: 2
         x: 390
@@ -1518,7 +1518,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_62
+      name: trigger_s
       rect:
         serializedVersion: 2
         x: 454
@@ -1538,7 +1538,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_63
+      name: isc_sound_2
       rect:
         serializedVersion: 2
         x: 515
@@ -1558,7 +1558,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_64
+      name: isc_sound_2_s
       rect:
         serializedVersion: 2
         x: 580
@@ -1578,7 +1578,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_65
+      name: isc_fx_2
       rect:
         serializedVersion: 2
         x: 642
@@ -1598,7 +1598,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_66
+      name: isc_fx_2_s
       rect:
         serializedVersion: 2
         x: 707
@@ -1618,7 +1618,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_67
+      name: tween
       rect:
         serializedVersion: 2
         x: 2
@@ -1638,7 +1638,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_68
+      name: tween_s
       rect:
         serializedVersion: 2
         x: 66
@@ -1658,7 +1658,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_69
+      name: tween_mob
       rect:
         serializedVersion: 2
         x: 130
@@ -1678,7 +1678,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_70
+      name: tween_mob_s
       rect:
         serializedVersion: 2
         x: 194
@@ -1698,7 +1698,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_71
+      name: ld_frieze
       rect:
         serializedVersion: 2
         x: 258
@@ -1718,7 +1718,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_72
+      name: ld_frieze_s
       rect:
         serializedVersion: 2
         x: 322
@@ -1738,7 +1738,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_73
+      name: logic
       rect:
         serializedVersion: 2
         x: 386
@@ -1758,7 +1758,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_74
+      name: logic_s
       rect:
         serializedVersion: 2
         x: 450
@@ -1798,7 +1798,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_76
+      name: isc_graph_s
       rect:
         serializedVersion: 2
         x: 580
@@ -1838,7 +1838,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_78
+      name: isc_ld_s
       rect:
         serializedVersion: 2
         x: 708
@@ -1878,7 +1878,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_80
+      name: isc_cine_s
       rect:
         serializedVersion: 2
         x: 835
@@ -1898,7 +1898,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_81
+      name: fluid
       rect:
         serializedVersion: 2
         x: 2
@@ -1918,7 +1918,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_82
+      name: fluid_s
       rect:
         serializedVersion: 2
         x: 66
@@ -2018,7 +2018,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_87
+      name: tween_editor
       rect:
         serializedVersion: 2
         x: 383
@@ -2038,7 +2038,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_88
+      name: tween_editor_s
       rect:
         serializedVersion: 2
         x: 447
@@ -2078,7 +2078,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_90
+      name: isc_sound_s
       rect:
         serializedVersion: 2
         x: 580
@@ -2118,7 +2118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_92
+      name: isc_fx_s
       rect:
         serializedVersion: 2
         x: 708
@@ -2618,7 +2618,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_117
+      name: tsc
       rect:
         serializedVersion: 2
         x: 388
@@ -2638,7 +2638,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_118
+      name: tsc_s
       rect:
         serializedVersion: 2
         x: 452
@@ -3058,11 +3058,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_139
+      name: unknown__
       rect:
         serializedVersion: 2
         x: 137
-        y: 202
+        y: 203
         width: 42
         height: 41
       alignment: 0
@@ -3118,7 +3118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: actor_disabled
+      name: trajectory
       rect:
         serializedVersion: 2
         x: 322
@@ -3138,7 +3138,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: actor_disabled_selected
+      name: trajectory_s
       rect:
         serializedVersion: 2
         x: 386
@@ -3158,7 +3158,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_144
+      name: isc_2
       rect:
         serializedVersion: 2
         x: 451
@@ -3198,7 +3198,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_146
+      name: isc_s
       rect:
         serializedVersion: 2
         x: 67
@@ -3298,7 +3298,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_151
+      name: isc_2_s
       rect:
         serializedVersion: 2
         x: 451
@@ -3438,7 +3438,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_158
+      name: front_lgt_frieze
       rect:
         serializedVersion: 2
         x: 131
@@ -3458,7 +3458,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_159
+      name: front_lgt_frieze_s
       rect:
         serializedVersion: 2
         x: 194

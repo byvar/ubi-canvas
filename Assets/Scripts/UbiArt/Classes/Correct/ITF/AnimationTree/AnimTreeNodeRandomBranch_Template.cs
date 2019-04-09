@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
-	public partial class AnimTreeNodeRandomBranch_Template : BlendTreeNodeChooseBranch_Template<AnimTreeResult> {
+	public partial class AnimTreeNodeRandomBranch_Template<T> : BlendTreeNodeChooseBranch_Template<T> where T : AnimTreeResult {
 		[Serialize("loop")] public bool loop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

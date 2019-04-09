@@ -11,6 +11,7 @@ namespace UbiArt.ITF {
 				return gao;
 			}
 		}
+		public TemplatePickable templatePickable;
 
 		protected virtual void InitGameObject() {
 			gao = new GameObject(USERFRIENDLY);

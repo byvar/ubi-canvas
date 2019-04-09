@@ -1,33 +1,33 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.All)]
 	public partial class SubAnimSet_Template : CSerializable {
 		[Serialize("animations"                   )] public CList<SubAnim_Template> animations;
 		[Serialize("banksChangeId"                )] public CList<BankIdChange> banksChangeId;
 		[Serialize("animPackage"                  )] public AnimResourcePackage animPackage;
 		[Serialize("ignoreTexturesLoading"        )] public bool ignoreTexturesLoading;
-		[Serialize("CList<SubAnim_Template>__0"   )] public CList<SubAnim_Template> CList_SubAnim_Template__0;
-		[Serialize("CList<BankChange_Template>__1")] public CList<BankChange_Template> CList_BankChange_Template__1;
-		[Serialize("CList<string>__2"             )] public CList<string> CList_string__2;
-		[Serialize("int__3"                       )] public int int__3;
-		[Serialize("CList<Path>__4"               )] public CList<Path> CList_Path__4;
-		[Serialize("CList<uint>__5"               )] public CList<uint> CList_uint__5;
-		[Serialize("AABB__6"                      )] public AABB AABB__6;
-		[Serialize("CList<uint>__7"               )] public CList<uint> CList_uint__7;
-		[Serialize("CList<int>__8"                )] public CList<int> CList_int__8;
+		[Serialize("banks"           )] public CList<BankChange_Template> banks;
+		[Serialize("skipFiles"       )] public CList<string> skipFiles;
+		[Serialize("redirectDone"    )] public int redirectDone;
+		[Serialize("resourceList"    )] public CList<Path> resourceList;
+		[Serialize("resourceTypeList")] public CList<uint> resourceTypeList;
+		[Serialize("animAABB"        )] public AABB animAABB;
+		[Serialize("nameId"          )] public CList<uint> nameId;
+		[Serialize("nameResIdx"      )] public CList<int> nameResIdx;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(CList_SubAnim_Template__0));
-				SerializeField(s, nameof(CList_BankChange_Template__1));
-				SerializeField(s, nameof(CList_string__2));
-				SerializeField(s, nameof(int__3));
-				SerializeField(s, nameof(CList_Path__4));
-				SerializeField(s, nameof(CList_uint__5));
-				SerializeField(s, nameof(AABB__6));
-				SerializeField(s, nameof(CList_uint__7));
-				SerializeField(s, nameof(CList_int__8));
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+				SerializeField(s, nameof(animations));
+				SerializeField(s, nameof(banks));
+				SerializeField(s, nameof(skipFiles));
+				SerializeField(s, nameof(redirectDone));
+				SerializeField(s, nameof(resourceList));
+				SerializeField(s, nameof(resourceTypeList));
+				SerializeField(s, nameof(animAABB));
+				SerializeField(s, nameof(nameId));
+				SerializeField(s, nameof(nameResIdx));
 			} else {
 				SerializeField(s, nameof(animations));
 				SerializeField(s, nameof(banksChangeId));

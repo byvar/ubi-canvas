@@ -32,15 +32,18 @@ namespace UbiArt.Animation {
 		public CList<TexturePath> texturePaths;
 		public uint unk0;
 		public uint unk1;
+		public uint unk2;
 
 		public void Serialize(CSerializerObject s, string name) {
 			s.Serialize(ref version);
 			s.Serialize(ref unk);
 			s.Serialize(ref bml);
 			s.Serialize(ref bonePAS);
-			s.Serialize(ref unks);
-			if (unks.Count == 0) {
-				s.Serialize(ref bonePAS2);
+			if (Settings.s.game == Settings.Game.RA) {
+				s.Serialize(ref unks);
+				if (unks.Count == 0) {
+					s.Serialize(ref bonePAS2);
+				}
 			}
 			s.Serialize(ref boneZAL);
 			s.Serialize(ref flt0);
@@ -58,6 +61,9 @@ namespace UbiArt.Animation {
 			s.Serialize(ref skeletonPath);
 			s.Serialize(ref texturePaths);
 			s.Serialize(ref unk0);
+			if (Settings.s.game == Settings.Game.RL) {
+				s.Serialize(ref unk2);
+			}
 			s.Serialize(ref unk1);
 		}
 

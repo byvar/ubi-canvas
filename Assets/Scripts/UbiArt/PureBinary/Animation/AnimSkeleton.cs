@@ -17,6 +17,10 @@ namespace UbiArt.Animation {
 		public CList<StringID> boneIndices3;
 		public CList<AnimBone> bones;
 		public CList<AnimBoneDyn> bonesDyn;
+		public CArray<CArray<byte>> byteArray;
+		public uint bankId0;
+		public uint bankId;
+		public Nullable<AnimPolylineBank> bank;
 
 		public void Serialize(CSerializerObject s, string name) {
 			s.Serialize(ref version);
@@ -28,16 +32,26 @@ namespace UbiArt.Animation {
 			s.Serialize(ref boneIndices3);
 			s.Serialize(ref bones);
 			s.Serialize(ref bonesDyn);
-			throw new Exception(s.Position + " - Reading Skeleton. Code Incomplete!");
+			s.Serialize(ref byteArray);
+			if (Settings.s.game == Settings.Game.RL) {
+				s.Serialize(ref bankId0);
+			}
+			s.Serialize(ref bankId);
+			if (bankId != 0) {
+				s.Serialize(ref bank);
+			}
 			/*
-			Example of what comes after this:
+			Example of what comes after bonesDyn:
 			00000000
 			01CE8C67
 			F77E1A0C
-			00000001
+			*/
+
+			/*
+			legends example:
 			00000000
-			00000000
-			00000000
+			01CE8227
+			0713E113
 			*/
 		}
 	}

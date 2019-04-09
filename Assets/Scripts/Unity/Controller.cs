@@ -138,9 +138,10 @@ public class Controller : MonoBehaviour {
 		await MapLoader.WaitFrame();
 		await loader.LoadInit();
 		await MapLoader.WaitFrame();
-		zListManager.Sort();
 		if (state == State.Error) return;
 		state = State.Initializing;
+		zListManager.Sort();
+		await MapLoader.WaitFrame();
 		detailedState = "Finished";
 		state = State.Finished;
 		loadingScreen.Active = false;

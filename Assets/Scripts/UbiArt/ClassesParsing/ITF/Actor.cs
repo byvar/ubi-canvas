@@ -38,6 +38,9 @@ namespace UbiArt.ITF {
 						extS.Serialize(ref template);
 						l.tpl[LUA.stringID] = template;
 					}
+					if (template != null) {
+						templatePickable = template.obj;
+					}
 				});
 			}
 		}

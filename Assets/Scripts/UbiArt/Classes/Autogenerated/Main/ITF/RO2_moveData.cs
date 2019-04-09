@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_moveData : CSerializable {
 		[Serialize("dir"            )] public Vector2 dir;
 		[Serialize("period"         )] public float period;
@@ -11,6 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("playFxAttach"   )] public bool playFxAttach;
 		[Serialize("playFxMove"     )] public bool playFxMove;
 		[Serialize("playFxDetach"   )] public bool playFxDetach;
+		[Serialize("pauseFxInWait"  )] public bool pauseFxInWait;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
@@ -22,6 +23,9 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(playFxAttach));
 				SerializeField(s, nameof(playFxMove));
 				SerializeField(s, nameof(playFxDetach));
+				if (Settings.s.game == Settings.Game.RL) {
+					SerializeField(s, nameof(pauseFxInWait));
+				}
 			}
 		}
 	}

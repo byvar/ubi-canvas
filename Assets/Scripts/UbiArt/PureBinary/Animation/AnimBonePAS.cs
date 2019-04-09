@@ -24,14 +24,6 @@ namespace UbiArt.Animation {
 			s.Serialize(ref unk5);
 		}
 
-		public AnimBonePAS(Reader reader) {
-			unk0 = reader.ReadUInt16();
-			unk1 = reader.ReadInt16();
-			unk2 = reader.ReadInt16();
-			unk3 = reader.ReadInt16();
-			unk4 = reader.ReadInt16();
-			unk5 = reader.ReadInt16();
-		}
 		/*
 		Example (from yellow_afraid_to_red_afraid.anm.ckd):
 		0000 E7A4 1D90 0AFD 3A66 2C61
