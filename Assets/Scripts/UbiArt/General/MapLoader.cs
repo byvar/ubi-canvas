@@ -60,6 +60,7 @@ namespace UbiArt {
 		public Dictionary<StringID, ContainerFile<ITF.Actor>> act = new Dictionary<StringID, ContainerFile<ITF.Actor>>();
 		public Dictionary<StringID, Animation.AnimTrack> anm = new Dictionary<StringID, Animation.AnimTrack>();
 		public Dictionary<StringID, Animation.AnimSkeleton> skl = new Dictionary<StringID, Animation.AnimSkeleton>();
+		public Dictionary<StringID, Animation.AnimPatchBank> pbk = new Dictionary<StringID, Animation.AnimPatchBank>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 		public Dictionary<StringID, Path> paths = new Dictionary<StringID, Path>();
 

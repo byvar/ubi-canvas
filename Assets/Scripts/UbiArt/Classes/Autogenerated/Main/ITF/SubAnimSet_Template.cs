@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class SubAnimSet_Template : CSerializable {
-		[Serialize("animations"                   )] public CList<SubAnim_Template> animations;
-		[Serialize("banksChangeId"                )] public CList<BankIdChange> banksChangeId;
-		[Serialize("animPackage"                  )] public AnimResourcePackage animPackage;
-		[Serialize("ignoreTexturesLoading"        )] public bool ignoreTexturesLoading;
-		[Serialize("banks"           )] public CList<BankChange_Template> banks;
-		[Serialize("skipFiles"       )] public CList<string> skipFiles;
-		[Serialize("redirectDone"    )] public int redirectDone;
-		[Serialize("resourceList"    )] public CList<Path> resourceList;
-		[Serialize("resourceTypeList")] public CList<uint> resourceTypeList;
-		[Serialize("animAABB"        )] public AABB animAABB;
-		[Serialize("nameId"          )] public CList<uint> nameId;
-		[Serialize("nameResIdx"      )] public CList<int> nameResIdx;
+		[Serialize("animations"           )] public CList<SubAnim_Template> animations;
+		[Serialize("banksChangeId"        )] public CList<BankIdChange> banksChangeId;
+		[Serialize("animPackage"          )] public AnimResourcePackage animPackage;
+		[Serialize("ignoreTexturesLoading")] public bool ignoreTexturesLoading;
+		[Serialize("banks"                )] public CList<BankChange_Template> banks;
+		[Serialize("skipFiles"            )] public CList<string> skipFiles;
+		[Serialize("redirectDone"         )] public int redirectDone;
+		[Serialize("resourceList"         )] public CList<Path> resourceList;
+		[Serialize("resourceTypeList"     )] public CList<uint> resourceTypeList;
+		[Serialize("animAABB"             )] public AABB animAABB;
+		[Serialize("nameId"               )] public CList<uint> nameId;
+		[Serialize("nameResIdx"           )] public CList<int> nameResIdx;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

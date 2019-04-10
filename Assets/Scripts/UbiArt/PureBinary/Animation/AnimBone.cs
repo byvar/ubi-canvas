@@ -11,14 +11,14 @@ namespace UbiArt.Animation {
 		public Link key;
 		public StringID tag;
 		public byte unk2;
-		public uint unk3;
+		public CList<Link> links; // links to AnimPatchPoint?
 		public Link parentKey;
 
 		public void Serialize(CSerializerObject s, string name) {
 			s.Serialize(ref key);
 			s.Serialize(ref tag);
 			s.Serialize(ref unk2);
-			s.Serialize(ref unk3);
+			s.Serialize(ref links);
 			s.Serialize(ref parentKey);
 		}
 		/*

@@ -71,6 +71,7 @@ namespace UbiArt {
 			s.Serialize<string>(ref filename);
 			s.Serialize<StringID>(ref stringID);
 			s.Serialize<uint>(ref flags);
+			if (flags != 0) MapLoader.Loader.print("Path with nonzero flags: " + this + " - " + flags);
 		}
 
 		public override string ToString() {
