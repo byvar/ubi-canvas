@@ -48,6 +48,7 @@ namespace UbiArt {
 		}
 
 		private Texture2D texture;
+		private Texture2D squareTexture;
 		private Texture2D[] subtextures;
 		public Texture2D Texture {
 			get {
@@ -63,6 +64,19 @@ namespace UbiArt {
 					//texture = LoadTextureDXT(texData);
 				}
 				return texture;
+			}
+		}
+		public Texture2D SquareTexture {
+			get {
+				Texture2D tex = Texture;
+				if (squareTexture == null && tex != null) {
+					if (tex.width == tex.height) return tex;
+					int size = Math.Max(tex.width, tex.height);
+					squareTexture = new Texture2D(size, size);
+					squareTexture.SetPixels(0, 0, tex.width, tex.height, tex.GetPixels(0,0,tex.width, tex.height));
+					squareTexture.Apply();
+				}
+				return squareTexture;
 			}
 		}
 

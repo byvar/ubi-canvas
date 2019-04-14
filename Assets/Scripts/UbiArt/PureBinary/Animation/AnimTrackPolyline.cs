@@ -7,13 +7,14 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackPolyline::serialize
-	public class AnimTrackPolyline : ICSerializable {
-		public float unk;
-		public CList<StringID> entries;
+	public class AnimTrackPolyline : CSerializable {
+		[Serialize("unk"    )] public float unk;
+		[Serialize("entries")] public CList<StringID> entries;
 
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref unk);
-			s.Serialize(ref entries);
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(unk));
+			SerializeField(s, nameof(entries));
 		}
 	}
 }

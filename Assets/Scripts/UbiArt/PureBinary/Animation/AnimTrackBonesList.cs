@@ -7,17 +7,18 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackBonesList::serialize
-	public class AnimTrackBonesList : ICSerializable {
-		public ushort unk0;
-		public ushort unk1;
-		public ushort unk2;
-		public ushort unk3;
-		
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref unk0);
-			s.Serialize(ref unk1);
-			s.Serialize(ref unk2);
-			s.Serialize(ref unk3);
+	public class AnimTrackBonesList : CSerializable {
+		[Serialize("startPAS" )] public ushort startPAS;
+		[Serialize("amountPAS")] public ushort amountPAS;
+		[Serialize("startZAL" )] public ushort startZAL;
+		[Serialize("amountZAL")] public ushort amountZAL;
+
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(startPAS));
+			SerializeField(s, nameof(amountPAS));
+			SerializeField(s, nameof(startZAL));
+			SerializeField(s, nameof(amountZAL));
 		}
 	}
 }

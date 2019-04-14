@@ -8,23 +8,22 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimPatch::serialize
 	public class AnimPatch : CSerializable {
-		[Serialize("link" )] public Link link;
-		[Serialize("unk"  )] public uint index;
-		[Serialize("vec0" )] public byte numLinks;
-		[Serialize("links")] public Link[] links = new Link[0];
-		[Serialize("sid"  )] public StringID sid;
-		[Serialize("local")] public AnimPatchPointLocal local;
+		[Serialize("bankId"       )] public Link bankId;
+		[Serialize("templateIndex")] public uint templateIndex;
+		[Serialize("numPoints"    )] public byte numPoints;
+		[Serialize("points"       )] public Link[] points = new Link[0];
+		[Serialize("sid"          )] public StringID sid;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(link));
-			SerializeField(s, nameof(index));
-			SerializeField(s, nameof(numLinks));
-			if (links.Length != numLinks) {
-				Array.Resize(ref links, numLinks);
+			SerializeField(s, nameof(bankId));
+			SerializeField(s, nameof(templateIndex));
+			SerializeField(s, nameof(numPoints));
+			if (points.Length != numPoints) {
+				Array.Resize(ref points, numPoints);
 			}
-			for (int i = 0; i < numLinks; i++) {
-				s.Serialize<Link>(ref links[i], name: "links", index: i);
+			for (int i = 0; i < numPoints; i++) {
+				s.Serialize<Link>(ref points[i], name: "points", index: i);
 			}
 		}
 

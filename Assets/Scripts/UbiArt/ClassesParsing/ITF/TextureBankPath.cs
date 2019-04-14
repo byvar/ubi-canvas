@@ -22,6 +22,7 @@ namespace UbiArt.ITF {
 					if (l.pbk.ContainsKey(patchBank.stringID)) {
 						pbk = l.pbk[patchBank.stringID];
 					} else {
+						extS.log = l.logEnabled;
 						extS.Serialize(ref pbk);
 						l.pbk[patchBank.stringID] = pbk;
 						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));

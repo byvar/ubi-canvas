@@ -595,8 +595,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 1
   gameDataBinFolder: ..\..\RIPPING\RL_Mod\full\ext\cache\itf_cooked\pc
-  pathFolder: world\home\level\petroom
-  pathFile: pet_room.isc.ckd
+  pathFolder: world\home\paintings_and_notifications\painting_retro
+  pathFile: retro.isc.ckd
   log: 0
   logFile: ..\..\RIPPING\RL_Mod\log.txt
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}

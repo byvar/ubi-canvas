@@ -7,19 +7,20 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimBone::serialize
-	public class AnimBone : ICSerializable {
-		public Link key;
-		public StringID tag;
-		public byte unk2;
-		public CList<Link> links; // links to AnimPatchPoint?
-		public Link parentKey;
+	public class AnimBone : CSerializable {
+		[Serialize("key"       )] public Link key;
+		[Serialize("tag"       )] public StringID tag;
+		[Serialize("flags"     )] public byte flags;
+		[Serialize("pointLinks")] public CList<Link> pointLinks; // links to AnimPatchPoint?
+		[Serialize("parentKey" )] public Link parentKey;
 
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref key);
-			s.Serialize(ref tag);
-			s.Serialize(ref unk2);
-			s.Serialize(ref links);
-			s.Serialize(ref parentKey);
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(key));
+			SerializeField(s, nameof(tag));
+			SerializeField(s, nameof(flags));
+			SerializeField(s, nameof(pointLinks));
+			SerializeField(s, nameof(parentKey));
 		}
 		/*
 		Example:
@@ -36,6 +37,9 @@ namespace UbiArt.Animation {
 		10807780 0117AC92 07 00000000 108076C0
 		108077B0 71315DD5 07 00000000 108076C0
 		108077E0 BFDC7CCA 07 00000000 108075A0
+
+		Adv:
+		00000002 1569EC2C 03 00000004 00000003 00000004 00000005 00000006 00000000
 		*/
 	}
 }

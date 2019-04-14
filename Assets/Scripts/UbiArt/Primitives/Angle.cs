@@ -32,5 +32,8 @@ namespace UbiArt {
 				angle = value * Mathf.Deg2Rad;
 			}
 		}
+		public override string ToString() {
+			return "Angle(" + angle + "rad|" + EulerAngle + "°" +")";
+		}
 	}
 }

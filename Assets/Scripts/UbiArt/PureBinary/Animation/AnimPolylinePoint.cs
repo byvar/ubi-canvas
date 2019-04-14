@@ -7,13 +7,14 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimPolylinePoint::serialize
-	public class AnimPolylinePoint : ICSerializable {
-		public Vector2 pos;
-		public StringID name;
+	public class AnimPolylinePoint : CSerializable {
+		[Serialize("pos" )] public Vector2 pos;
+		[Serialize("name")] public StringID name;
 
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref pos);
-			s.Serialize(ref this.name);
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(pos));
+			SerializeField(s, nameof(name));
 		}
 	}
 }

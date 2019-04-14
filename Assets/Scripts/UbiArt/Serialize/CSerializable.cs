@@ -54,7 +54,7 @@ namespace UbiArt {
 			}
 		}
 
-		public CSerializable Clone(string extension) {
+		public virtual CSerializable Clone(string extension) {
 			byte[] serializedData = null;
 			CSerializable result = null;
 			using (MemoryStream stream = new MemoryStream()) {

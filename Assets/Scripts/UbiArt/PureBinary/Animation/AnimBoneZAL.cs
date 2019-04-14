@@ -7,15 +7,16 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimBoneZAL::serialize
-	public class AnimBoneZAL : ICSerializable {
-		public ushort unk0;
-		public float unk1;
-		public short unk2;
+	public class AnimBoneZAL : CSerializable {
+		[Serialize("frame")] public ushort frame;
+		[Serialize("unk1")] public float unk1;
+		[Serialize("unk2")] public short unk2;
 
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref unk0);
-			s.Serialize(ref unk1);
-			s.Serialize(ref unk2);
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(frame));
+			SerializeField(s, nameof(unk1));
+			SerializeField(s, nameof(unk2));
 		}
 	}
 }

@@ -7,23 +7,23 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimBoneDyn::serialize
-	public class AnimBoneDyn : ICSerializable {
-		public Vector2 vec0;
-		public float float1;
-		public Vector2 vec2;
-		public float float3;
-		public float float4;
-		public Vector2 vec5;
-		public float float6;
-
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref vec0);
-			s.Serialize(ref float1);
-			s.Serialize(ref vec2);
-			s.Serialize(ref float3);
-			s.Serialize(ref float4);
-			s.Serialize(ref vec5);
-			s.Serialize(ref float6);
+	public class AnimBoneDyn : CSerializable {
+		[Serialize("vec0"    )] public Vector2 vec0;
+		[Serialize("flt1"    )] public float float1;
+		[Serialize("position")] public Vector2 position;
+		[Serialize("angle"   )] public Angle angle;
+		[Serialize("flt4"    )] public float float4;
+		[Serialize("scale"   )] public Vector2 scale;
+		[Serialize("flt6"    )] public float float6;
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(vec0));
+			SerializeField(s, nameof(float1));
+			SerializeField(s, nameof(position));
+			SerializeField(s, nameof(angle));
+			SerializeField(s, nameof(float4));
+			SerializeField(s, nameof(scale));
+			SerializeField(s, nameof(float6));
 		}
 		/*
 		Example:
@@ -37,6 +37,18 @@ namespace UbiArt.Animation {
 
 		00000000 00000000 00000000 00000000 3F800000 00000000 00000000 3F800000 3F800000 3F800000
 		00000000 00000000 00000000 3F4D0DA0 3B4360CC 3C1167BB 40A00000 3EEEA931 3F800000 3F800000
+
+		Adv:
+		00000000 00000000 00000000 3F014035 3EFD7F95 BBF572F1 00000000 3EDEA6B5 3F800000 3F800000
+		
+		Reordered:
+		00000000 00000000 00000000 3F800000 3F800000 3F800000 00000000 00000000 3F800000 00000000
+		00000000 00000000 3E45FB5D BDC4D114 3F826F70 3F800000 00000000 3FC90FDB 3F800000 00000000
+		00000000 00000000 3C51CAC0 BC89DB40 3F851096 3F800000 00000000 3FC90FDB 3F800000 C0800000
+		00000000 00000000 3F05EE23 3F34D4EB 3F813C5B 3F800000 00000000 400E27DA 3F800000 C0000000
+		00000000 00000000 BBF7AA6B 3F9218C6 3FC8CB01 3F800000 00000000 3FC713DD 3F800000 C0400000
+		00000000 00000000 BF3D2DDE BEA5EA2E 3F0F24C5 3F800000 00000000 3FC46C36 3F800000 00000000
+		vec2d             vec2d             vec2d             x        x        x        x 
 		*/
 	}
 }

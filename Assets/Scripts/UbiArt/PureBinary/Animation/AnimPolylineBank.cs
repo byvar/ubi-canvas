@@ -7,13 +7,14 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimPolylineBank::serialize
-	public class AnimPolylineBank : ICSerializable {
-		public CList<AnimPolyline> polylines;
-		public KeyArray<int> keys;
+	public class AnimPolylineBank : CSerializable {
+		[Serialize("polylines")] public CList<AnimPolyline> polylines;
+		[Serialize("keys"     )] public KeyArray<int> keys;
 
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref polylines);
-			s.Serialize(ref keys);
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(polylines));
+			SerializeField(s, nameof(keys));
 		}
 	}
 }

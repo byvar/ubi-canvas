@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 					MeshRenderer mr = mesh_static.AddComponent<MeshRenderer>();
 					Material[] mats = new Material[meshBuildData.value.StaticIndexList.Count];
 					for (int m = 0; m < meshBuildData.value.StaticIndexList.Count; m++) {
-						int[] tris = new int[meshBuildData.value.StaticIndexList[m].List.Count * 2];
+						/*int[] tris = new int[meshBuildData.value.StaticIndexList[m].List.Count * 2];
 						for (int i = 0; i < meshBuildData.value.StaticIndexList[m].List.Count / 3; i++) {
 							tris[(i * 6) + 0] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 0];
 							tris[(i * 6) + 1] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 1];
@@ -52,6 +52,12 @@ namespace UbiArt.ITF {
 							tris[(i * 6) + 3] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 0];
 							tris[(i * 6) + 4] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 2];
 							tris[(i * 6) + 5] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 1];
+						}*/
+						int[] tris = new int[meshBuildData.value.StaticIndexList[m].List.Count];
+						for (int i = 0; i < meshBuildData.value.StaticIndexList[m].List.Count / 3; i++) {
+							tris[(i * 3) + 0] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 0];
+							tris[(i * 3) + 1] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 1];
+							tris[(i * 3) + 2] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 2];
 						}
 						mesh.SetTriangles(tris, m);
 
@@ -118,7 +124,7 @@ namespace UbiArt.ITF {
 					MeshRenderer mr = mesh_anim.AddComponent<MeshRenderer>();
 					Material[] mats = new Material[meshBuildData.value.AnimIndexList.Count];
 					for (int m = 0; m < meshBuildData.value.AnimIndexList.Count; m++) {
-						int[] tris = new int[meshBuildData.value.AnimIndexList[m].List.Count * 2];
+						/*int[] tris = new int[meshBuildData.value.AnimIndexList[m].List.Count * 2];
 						for (int i = 0; i < meshBuildData.value.AnimIndexList[m].List.Count / 3; i++) {
 							tris[(i * 6) + 0] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 0];
 							tris[(i * 6) + 1] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 1];
@@ -126,6 +132,12 @@ namespace UbiArt.ITF {
 							tris[(i * 6) + 3] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 0];
 							tris[(i * 6) + 4] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 2];
 							tris[(i * 6) + 5] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 1];
+						}*/
+						int[] tris = new int[meshBuildData.value.AnimIndexList[m].List.Count];
+						for (int i = 0; i < meshBuildData.value.AnimIndexList[m].List.Count / 3; i++) {
+							tris[(i * 3) + 0] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 0];
+							tris[(i * 3) + 1] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 1];
+							tris[(i * 3) + 2] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 2];
 						}
 						mesh.SetTriangles(tris, m);
 

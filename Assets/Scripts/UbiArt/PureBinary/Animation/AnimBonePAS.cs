@@ -7,21 +7,22 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimBonePAS::serialize
-	public class AnimBonePAS : ICSerializable {
-		public ushort unk0;
-		public short unk1;
-		public short unk2;
-		public short unk3;
-		public short unk4;
-		public short unk5;
+	public class AnimBonePAS : CSerializable {
+		[Serialize("frame" )] public ushort frame;
+		[Serialize("posX"  )] public short posX;
+		[Serialize("posY"  )] public short posY;
+		[Serialize("angle" )] public short angle;
+		[Serialize("scaleX")] public short scaleX;
+		[Serialize("scaleY")] public short scaleY;
 
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref unk0);
-			s.Serialize(ref unk1);
-			s.Serialize(ref unk2);
-			s.Serialize(ref unk3);
-			s.Serialize(ref unk4);
-			s.Serialize(ref unk5);
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(frame));
+			SerializeField(s, nameof(posX));
+			SerializeField(s, nameof(posY));
+			SerializeField(s, nameof(angle));
+			SerializeField(s, nameof(scaleX));
+			SerializeField(s, nameof(scaleY));
 		}
 
 		/*

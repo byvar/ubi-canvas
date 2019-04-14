@@ -210,6 +210,11 @@ namespace UbiArt {
 			}
 			return null;
 		}
+		public async Task<CSerializable> Clone(CSerializable cs, string extension) {
+			CSerializable c = cs.Clone(extension);
+			await LoadLoop();
+			return c;
+		}
 
 		public async Task WriteBundle(string path, List<Pair<Path, ICSerializable>> files) {
 			Bundle.BundleFile b = new Bundle.BundleFile();

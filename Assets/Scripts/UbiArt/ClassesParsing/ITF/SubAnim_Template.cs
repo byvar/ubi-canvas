@@ -13,6 +13,7 @@ namespace UbiArt.ITF {
 					if (l.anm.ContainsKey(name.stringID)) {
 						anim = l.anm[name.stringID];
 					} else {
+						extS.log = l.logEnabled;
 						extS.Serialize(ref anim);
 						l.anm[name.stringID] = anim;
 						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));

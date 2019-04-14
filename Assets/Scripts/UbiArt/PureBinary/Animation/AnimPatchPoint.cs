@@ -8,19 +8,19 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimPatchPoint::serialize
 	public class AnimPatchPoint : CSerializable {
-		[Serialize("link" )] public Link link;
-		[Serialize("unk"  )] public uint index;
-		[Serialize("vec0" )] public Vector2 vec0;
-		[Serialize("vec1" )] public Vector2 vec1;
-		[Serialize("sid"  )] public StringID sid;
-		[Serialize("local")] public AnimPatchPointLocal local;
+		[Serialize("link"  )] public Link key;
+		[Serialize("index" )] public uint index;
+		[Serialize("uv"    )] public Vector2 uv;
+		[Serialize("normal")] public Vector2 normal;
+		[Serialize("sid"   )] public StringID sid;
+		[Serialize("local" )] public AnimPatchPointLocal local;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(link));
+			SerializeField(s, nameof(key));
 			SerializeField(s, nameof(index));
-			SerializeField(s, nameof(vec0));
-			SerializeField(s, nameof(vec1));
+			SerializeField(s, nameof(uv));
+			SerializeField(s, nameof(normal));
 			if (Settings.s.game == Settings.Game.RA) {
 				SerializeField(s, nameof(sid));
 			}

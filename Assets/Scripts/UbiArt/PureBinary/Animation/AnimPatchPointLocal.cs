@@ -8,14 +8,14 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimPatchPointLocal::serialize
 	public class AnimPatchPointLocal : CSerializable {
-		[Serialize("link")] public Link link;
-		[Serialize("vec0")] public Vector2 vec0;
-		[Serialize("vec1")] public Vector2 vec1;
+		[Serialize("boneId")] public Link boneId;
+		[Serialize("pos"   )] public Vector2 pos;
+		[Serialize("vec1"  )] public Vector2 vec1;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(link));
-			SerializeField(s, nameof(vec0));
+			SerializeField(s, nameof(boneId));
+			SerializeField(s, nameof(pos));
 			SerializeField(s, nameof(vec1));
 		}
 

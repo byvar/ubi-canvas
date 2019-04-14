@@ -22,6 +22,7 @@
 	}
 	SubShader{
 		//ZWrite [_ZWrite]
+		Cull Off
 		ZWrite Off
 		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
 		Lighting Off

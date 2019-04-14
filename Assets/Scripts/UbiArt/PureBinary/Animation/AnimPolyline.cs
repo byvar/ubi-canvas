@@ -7,19 +7,20 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimPolyline::serialize
-	public class AnimPolyline : ICSerializable {
-		public CList<AnimPolylinePoint> points;
-		public KeyArray<int> keys;
-		public StringID name;
-		public bool unk;
-		public uint unk2;
+	public class AnimPolyline : CSerializable {
+		[Serialize("points")] public CList<AnimPolylinePoint> points;
+		[Serialize("keys"  )] public KeyArray<int> keys;
+		[Serialize("name"  )] public StringID name;
+		[Serialize("unk"   )] public bool unk;
+		[Serialize("unk2"  )] public uint unk2;
 
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref points);
-			s.Serialize(ref keys);
-			s.Serialize(ref this.name);
-			s.Serialize(ref unk);
-			s.Serialize(ref unk2);
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(points));
+			SerializeField(s, nameof(keys));
+			SerializeField(s, nameof(name));
+			SerializeField(s, nameof(unk));
+			SerializeField(s, nameof(unk2));
 		}
 	}
 }

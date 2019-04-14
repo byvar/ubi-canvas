@@ -72,7 +72,7 @@ namespace UbiArt.ITF {
 				uvs[2] = new Vector3(uvsArr[1].x, uvsArr[1].y);
 				uvs[3] = new Vector3(uvsArr[1].x, uvsArr[0].y);
 			}
-			int[] triangles = new int[] { 0, 1, 2, 1, 3, 2 };
+			int[] triangles = new int[] { 0, 1, 2, 2, 1, 3 };
 			meshUnity.vertices = vertices;
 			meshUnity.normals = normals;
 			meshUnity.triangles = triangles;

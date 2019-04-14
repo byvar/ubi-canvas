@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("FXFireStream"    )] public StringID FXFireStream;
 		[Serialize("offsetFirework"  )] public Vector3 offsetFirework;
 		[Serialize("offsetFireStream")] public Vector3 offsetFireStream;
-		[Serialize("worldsList"      )] public Placeholder worldsList;
+		[Serialize("worldsList"      )] public CList<StringID> worldsList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

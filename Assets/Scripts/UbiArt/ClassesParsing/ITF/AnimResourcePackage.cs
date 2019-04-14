@@ -13,6 +13,7 @@ namespace UbiArt.ITF {
 					if (l.skl.ContainsKey(skeleton.stringID)) {
 						skel = l.skl[skeleton.stringID];
 					} else {
+						extS.log = l.logEnabled;
 						extS.Serialize(ref skel);
 						l.skl[skeleton.stringID] = skel;
 						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));

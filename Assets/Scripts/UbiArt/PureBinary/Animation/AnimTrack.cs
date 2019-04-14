@@ -78,6 +78,7 @@ namespace UbiArt.Animation {
 					if (l.skl.ContainsKey(skeleton.Item2.stringID)) {
 						skel = l.skl[skeleton.Item2.stringID];
 					} else {
+						extS.log = l.logEnabled;
 						extS.Serialize(ref skel);
 						l.skl[skeleton.Item2.stringID] = skel;
 						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
@@ -85,6 +86,7 @@ namespace UbiArt.Animation {
 				});
 			}
 			if (texturePaths != null) {
+				texs = new TextureCooked[texturePaths.Count];
 				for (int i = 0; i < texturePaths.Count; i++) {
 					LoadTexture(i, texturePaths[i].Item2);
 				}

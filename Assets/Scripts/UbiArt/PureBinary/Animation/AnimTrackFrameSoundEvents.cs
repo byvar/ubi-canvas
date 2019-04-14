@@ -7,15 +7,16 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackFrameSoundEvents::serialize
-	public class AnimTrackFrameSoundEvents : ICSerializable {
-		public StringID sid;
-		public float unk0;
-		public uint unk1;
+	public class AnimTrackFrameSoundEvents : CSerializable {
+		[Serialize("sid" )] public StringID sid;
+		[Serialize("unk0")] public float unk0;
+		[Serialize("unk1")] public uint unk1;
 
-		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref sid);
-			s.Serialize(ref unk0);
-			s.Serialize(ref unk1);
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+			SerializeField(s, nameof(sid));
+			SerializeField(s, nameof(unk0));
+			SerializeField(s, nameof(unk1));
 		}
 	}
 }
