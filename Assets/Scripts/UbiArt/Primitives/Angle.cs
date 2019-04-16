@@ -12,6 +12,12 @@ namespace UbiArt {
 		public void Serialize(CSerializerObject s, string name) {
 			s.Serialize<float>(ref angle);
 		}
+
+		// Constructors
+		public Angle() { }
+		public Angle(float angle) {
+			this.angle = angle;
+		}
 		
 		// Casts
 		public static implicit operator float(Angle a) {
@@ -30,6 +36,22 @@ namespace UbiArt {
 			}
 			set {
 				angle = value * Mathf.Deg2Rad;
+			}
+		}
+		public Vector3 VectorAngle {
+			get {
+				return new Vector3(0, 0, EulerAngle);
+			}
+			set {
+				EulerAngle = value.z;
+			}
+		}
+		public Quaternion QuaternionAngle {
+			get {
+				return Quaternion.Euler(0, 0, EulerAngle);
+			}
+			set {
+				EulerAngle = value.eulerAngles.z;
 			}
 		}
 		public override string ToString() {

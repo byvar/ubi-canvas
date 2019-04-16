@@ -9,14 +9,14 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimBoneZAL::serialize
 	public class AnimBoneZAL : CSerializable {
 		[Serialize("frame")] public ushort frame;
-		[Serialize("unk1")] public float unk1;
-		[Serialize("unk2")] public short unk2;
+		[Serialize("z"    )] public float z;
+		[Serialize("alpha")] public short alpha;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(frame));
-			SerializeField(s, nameof(unk1));
-			SerializeField(s, nameof(unk2));
+			SerializeField(s, nameof(z));
+			SerializeField(s, nameof(alpha));
 		}
 	}
 }

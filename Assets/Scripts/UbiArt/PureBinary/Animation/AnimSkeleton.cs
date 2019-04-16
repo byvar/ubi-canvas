@@ -93,7 +93,7 @@ namespace UbiArt.Animation {
 				if (bones[i].parentKey.stringID != 0) {
 					AnimBone parent = GetBoneFromLink(bones[i].parentKey);
 					int parentIndex = bones.IndexOf(parent);
-					b.parent = unityBones[parentIndex];
+					b.parent = unityBones[parentIndex].GetComponent<UnityBone>();
 					/*ParentConstraint p = unityBones[i].gameObject.AddComponent<ParentConstraint>();
 					p.constraintActive = false;
 					p.AddSource(new ConstraintSource() { sourceTransform = unityBones[parentIndex], weight = 1 });
@@ -101,8 +101,33 @@ namespace UbiArt.Animation {
 					unityBones[i].parent = unityBones[parentIndex];*/
 				}
 				b.localPosition = bonesDyn[i].position;
+				b.localScale = bonesDyn[i].scale;
+				b.localRotation = bonesDyn[i].angle;
+				b.bindPosition = bonesDyn[i].position;
+				b.bindScale = bonesDyn[i].scale;
+				b.bindRotation = bonesDyn[i].angle;
+				
+				b.localPosition = Vector3.zero;
+				b.localScale = Vector3.one;
+				b.localRotation = new Angle(0);
+				b.bind = true;
+				b.UpdateBone();
+			}
+		}
+
+		public void ResetBonesZero(Transform[] unityBones) {
+			for (int i = 0; i < bones.Count; i++) {
+				UnityBone b = unityBones[i].GetComponent<UnityBone>();
+				b.parent = null;
+				b.localPosition = Vector3.zero;
+				b.localScale = Vector3.one;
+				b.localRotation = new Angle(0);
+				b.UpdateBone();
+				/*b.bindPosition = bonesDyn[i].position;
 				unityBones[i].localScale = bonesDyn[i].scale;
-				b.localRotation = Quaternion.Euler(new Vector3(0, 0, bonesDyn[i].angle.EulerAngle));
+				b.bindRotation = Quaternion.Euler(new Vector3(0, 0, bonesDyn[i].angle.EulerAngle));
+				b.localPosition = Vector3.zero;
+				b.localRotation = Quaternion.identity;*/
 			}
 		}
 	}

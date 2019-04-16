@@ -8,23 +8,23 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackBML::serialize
 	public class AnimTrackBML : CSerializable {
-		[Serialize("unk"    )] public float length;
+		[Serialize("frame"  )] public float frame;
 		[Serialize("entries")] public CList<Entry> entries;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(length));
+			SerializeField(s, nameof(frame));
 			SerializeField(s, nameof(entries));
 		}
 
 		public class Entry : CSerializable {
-			[Serialize("sid0")] public StringID sid0;
-			[Serialize("sid1")] public StringID sid1;
+			[Serialize("textureBankId")] public StringID textureBankId;
+			[Serialize("templateId"   )] public StringID templateId;
 
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(sid0));
-				SerializeField(s, nameof(sid1));
+				SerializeField(s, nameof(textureBankId));
+				SerializeField(s, nameof(templateId));
 			}
 		}
 		/*

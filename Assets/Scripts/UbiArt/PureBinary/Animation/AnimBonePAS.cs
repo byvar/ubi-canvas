@@ -25,6 +25,10 @@ namespace UbiArt.Animation {
 			SerializeField(s, nameof(scaleY));
 		}
 
+		public Vector2 Position => new Vector2(posX * 0.000030518f, posY * 0.000030518f);
+		public Vector2 Scale => new Vector2(scaleX * 0.000030518f, scaleY * 0.000030518f);
+		public Angle Rotation => angle * 0.000030518f;
+
 		/*
 		Example (from yellow_afraid_to_red_afraid.anm.ckd):
 		0000 E7A4 1D90 0AFD 3A66 2C61

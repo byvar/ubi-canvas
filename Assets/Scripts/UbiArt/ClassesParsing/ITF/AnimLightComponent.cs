@@ -92,12 +92,20 @@ namespace UbiArt.ITF {
 						patchMaterials.Add(patch_mat);
 					}
 					skeleton.ResetBones(bones);
+					UnityAnimation ua = skeleton_gao.AddComponent<UnityAnimation>();
+					ua.bones = bones.Select(b => b.GetComponent<UnityBone>()).ToArray();
+					ua.skeleton = skeleton;
+					ua.anims = new List<System.Tuple<Path, AnimTrack>>();
+					foreach (SubAnim_Template sat in tpl.animSet.animations) {
+						ua.anims.Add(new System.Tuple<Path, AnimTrack>(sat.name, sat.anim));
+					}
+					ua.Init();
 					/*for (int i = 0; i < bp.pbk.templates.Count; i++) {
 						AnimTemplate at = bp.pbk.templates[i];
 						at.ResetBones(bones, skeleton);
 					}*/
-					//return true;
-					}
+					return true;
+				}
 			}
 			return false;
 		}
