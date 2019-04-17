@@ -11,6 +11,7 @@ using UnityEngine;
 public class UnityAnimation : MonoBehaviour {
 	//public AnimLightComponent animLightComponent;
 	public AnimTrack animTrack;
+	public int animIndex = -1;
 	public List<Tuple<Path, AnimTrack>> anims;
 	public AnimSkeleton skeleton;
 	public UnityBone[] bones;
@@ -25,7 +26,7 @@ public class UnityAnimation : MonoBehaviour {
 	}
 	public void Init() {
 		MapLoader l = MapLoader.Loader;
-		if (animTrack != null && skeleton != null) {
+		if (animIndex > 0 && skeleton != null) {
 			currentFrame = 0;
 			UpdateAnimation();
 		}
@@ -58,8 +59,8 @@ public class UnityAnimation : MonoBehaviour {
 				AnimTrackBonesList bl = animTrack.bonesLists[i];
 				if (bl.amountPAS > 0) {
 					for (int p = 0; p < bl.amountPAS; p++) {
-						AnimBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
-						AnimBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
+						AnimTrackBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
+						AnimTrackBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
 						if (p == bl.amountPAS - 1 || currentFrame < next.frame) {
 							Vector2 pos = pas.Position;
 							Angle rot = pas.Rotation;
@@ -71,9 +72,9 @@ public class UnityAnimation : MonoBehaviour {
 								rot = Mathf.Lerp(rot, next.Rotation, lerp);
 								scl = Vector2.Lerp(scl, next.Scale, lerp);
 							}
-							pos *= animTrack.flt0;
-							rot *= animTrack.flt1;
-							scl *= animTrack.flt2;
+							pos *= animTrack.multiplierP;
+							rot *= animTrack.multiplierA;
+							scl *= animTrack.multiplierS;
 							bones[i].localPosition = pos;
 							bones[i].localScale = scl;
 							bones[i].localRotation = rot;

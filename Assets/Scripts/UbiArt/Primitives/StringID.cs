@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace UbiArt {
-	public class StringID : ICSerializable {
+	public class StringID : ICSerializable, IEquatable<StringID> {
 		public uint stringID;
 
 		public void Serialize(CSerializerObject s, string name) {
@@ -16,18 +16,6 @@ namespace UbiArt {
 			get {
 				return stringID == 0xFFFFFFFF;
 			}
-		}
-
-		public override int GetHashCode() {
-			return stringID.GetHashCode();
-		}
-
-		public override bool Equals(object obj) {
-			if (obj == null || GetType() != obj.GetType())
-				return false;
-
-			StringID other = obj as StringID;
-			return stringID == other.stringID;
 		}
 
 		public StringID() {
@@ -125,6 +113,27 @@ namespace UbiArt {
 
 		public override string ToString() {
 			return "StringID(0x" + stringID.ToString("X8") + ")";
+		}
+
+		public override bool Equals(object obj) {
+			return obj is StringID && this == (StringID)obj;
+		}
+		public override int GetHashCode() {
+			return stringID.GetHashCode();
+		}
+
+		public bool Equals(StringID other) {
+			return this == (StringID)other;
+		}
+
+		public static bool operator ==(StringID x, StringID y) {
+			if (ReferenceEquals(x, y)) return true;
+			if (ReferenceEquals(x, null)) return false;
+			if (ReferenceEquals(y, null)) return false;
+			return x.stringID == y.stringID;
+		}
+		public static bool operator !=(StringID x, StringID y) {
+			return !(x == y);
 		}
 	}
 }

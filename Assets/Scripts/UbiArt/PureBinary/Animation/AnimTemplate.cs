@@ -62,44 +62,26 @@ namespace UbiArt.Animation {
 			Transform[] unityBones = new Transform[bones.Count];
 			for (int i = 0; i < bones.Count; i++) {
 				int boneIndex = skeleton.GetBoneIndexFromTag(bones[i].tag);
-				//unityBones[i] = skeletonBones[boneIndex];
-				Transform parentBone = skeletonBones[boneIndex];
-				GameObject boneGao = new GameObject("Bone " + i);
-				unityBones[i] = boneGao.transform;
-				unityBones[i].transform.SetParent(parentBone);
+				unityBones[i] = skeletonBones[boneIndex];
 			}
 			/*for (int i = 0; i < bones.Count; i++) {
 				unityBones[i].localPosition = bonesDyn[i].position;
 				unityBones[i].localScale = bonesDyn[i].scale;
 				unityBones[i].localRotation = bonesDyn[i].angle.QuaternionAngle;
 			}*/
-			/*for (int i = 0; i < bones.Count; i++) {
+			for (int i = 0; i < bones.Count; i++) {
 				unityBones[i].localPosition = Vector3.zero;
 				unityBones[i].localScale = Vector3.one;
 				unityBones[i].localRotation = Quaternion.identity;
-			}*/
-			for (int i = 0; i < bones.Count; i++) {
-				unityBones[i].parent.localPosition = Vector3.zero;
-				unityBones[i].parent.localScale = Vector3.one;
-				unityBones[i].parent.localRotation = Quaternion.identity;
-				//unityBones[i].parent.localScale = bonesDyn[i].scale;
-				//unityBones[i].parent.localRotation = bonesDyn[i].angle.QuaternionAngle;
 			}
-			   //ResetBones(skeletonBones, skeleton);
 			Matrix4x4[] bindPoses = new Matrix4x4[bones.Count];
 			for (int i = 0; i < bones.Count; i++) {
 				bindPoses[i] = unityBones[i].worldToLocalMatrix * skeleton_gao.transform.localToWorldMatrix;
 			}
-			for (int i = 0; i < bones.Count; i++) {
-				unityBones[i].parent.localPosition = Vector3.zero;
-				unityBones[i].parent.localScale = Vector3.one;
-				unityBones[i].parent.localRotation = Quaternion.identity;
-			}
-			//ResetBonesZero(skeletonBones, skeleton);
 			/*for (int i = 0; i < bones.Count; i++) {
-				unityBones[i].localPosition = bonesDyn[i].position;
-				unityBones[i].localScale = bonesDyn[i].scale;
-				unityBones[i].localRotation = bonesDyn[i].angle.QuaternionAngle;
+				unityBones[i].localPosition = Vector3.zero;
+				unityBones[i].localScale = Vector3.one;
+				unityBones[i].localRotation = Quaternion.identity;
 			}*/
 			mesh.bindposes = bindPoses;
 			return unityBones;

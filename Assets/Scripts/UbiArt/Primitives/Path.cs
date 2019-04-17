@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace UbiArt {
-	public class Path : ICSerializable {
+	public class Path : ICSerializable, IEquatable<Path> {
 		public string folder;
 		public string filename;
 		public StringID stringID;
@@ -84,5 +84,26 @@ namespace UbiArt {
 		 * 0x10: Unicode
 		 * 0x80: Absolute path (rather than relative to the bundle)
 		 */
+		
+		public override bool Equals(object obj) {
+			return obj is Path && this == (Path)obj;
+		}
+		public override int GetHashCode() {
+			return stringID.GetHashCode();
+		}
+
+		public bool Equals(Path other) {
+			return this == (Path)other;
+		}
+
+		public static bool operator ==(Path x, Path y) {
+			if (ReferenceEquals(x, y)) return true;
+			if (ReferenceEquals(x, null)) return false;
+			if (ReferenceEquals(y, null)) return false;
+			return x.stringID == y.stringID;
+		}
+		public static bool operator !=(Path x, Path y) {
+			return !(x == y);
+		}
 	}
 }

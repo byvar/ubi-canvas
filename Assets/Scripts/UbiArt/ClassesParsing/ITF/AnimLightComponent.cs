@@ -95,10 +95,13 @@ namespace UbiArt.ITF {
 					UnityAnimation ua = skeleton_gao.AddComponent<UnityAnimation>();
 					ua.bones = bones.Select(b => b.GetComponent<UnityBone>()).ToArray();
 					ua.skeleton = skeleton;
+					List<Path> animPaths = new List<Path>();
 					ua.anims = new List<System.Tuple<Path, AnimTrack>>();
 					foreach (SubAnim_Template sat in tpl.animSet.animations) {
-						ua.anims.Add(new System.Tuple<Path, AnimTrack>(sat.name, sat.anim));
+						animPaths.Add(sat.name);
 					}
+					MapLoader l = MapLoader.Loader;
+					ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, l.anm[p.stringID]) : null).Where(t => t != null).ToList();
 					ua.Init();
 					/*for (int i = 0; i < bp.pbk.templates.Count; i++) {
 						AnimTemplate at = bp.pbk.templates[i];

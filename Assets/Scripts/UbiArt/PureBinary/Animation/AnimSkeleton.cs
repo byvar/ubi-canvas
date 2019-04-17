@@ -106,6 +106,7 @@ namespace UbiArt.Animation {
 				b.bindPosition = bonesDyn[i].position;
 				b.bindScale = bonesDyn[i].scale;
 				b.bindRotation = bonesDyn[i].angle;
+				b.xOffset = bonesDyn[i].float1;
 				
 				b.localPosition = Vector3.zero;
 				b.localScale = Vector3.one;

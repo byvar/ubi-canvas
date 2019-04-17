@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt.Animation {
-	// See: ITF::AnimBoneZAL::serialize
-	public class AnimBoneZAL : CSerializable {
+	// See: ITF::AnimTrackBoneZAL::serialize
+	public class AnimTrackBoneZAL : CSerializable {
 		[Serialize("frame")] public ushort frame;
 		[Serialize("z"    )] public float z;
 		[Serialize("alpha")] public short alpha;

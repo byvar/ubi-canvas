@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt.Animation {
-	// See: ITF::AnimBonePAS::serialize
-	public class AnimBonePAS : CSerializable {
+	// See: ITF::AnimTrackBonePAS::serialize
+	public class AnimTrackBonePAS : CSerializable {
 		[Serialize("frame" )] public ushort frame;
 		[Serialize("posX"  )] public short posX;
 		[Serialize("posY"  )] public short posY;
@@ -18,9 +18,9 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(frame));
+			SerializeField(s, nameof(angle));
 			SerializeField(s, nameof(posX));
 			SerializeField(s, nameof(posY));
-			SerializeField(s, nameof(angle));
 			SerializeField(s, nameof(scaleX));
 			SerializeField(s, nameof(scaleY));
 		}

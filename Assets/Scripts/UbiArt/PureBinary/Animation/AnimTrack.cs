@@ -12,13 +12,13 @@ namespace UbiArt.Animation {
 		[Serialize("version"    )] public uint version;
 		[Serialize("length"     )] public float length;
 		[Serialize("BML"        )] public CList<AnimTrackBML> bml;
-		[Serialize("PAS"        )] public CList<AnimBonePAS> bonePAS;
+		[Serialize("PAS"        )] public CList<AnimTrackBonePAS> bonePAS;
 		[Serialize("unks"       )] public CList<uint> unks;
-		[Serialize("PAS2"       )] public CList<AnimBonePAS> bonePAS2;
-		[Serialize("ZAL"        )] public CList<AnimBoneZAL> boneZAL;
-		[Serialize("flt0"       )] public float flt0;
-		[Serialize("flt1"       )] public float flt1;
-		[Serialize("flt2"       )] public float flt2;
+		[Serialize("PAS2"       )] public CList<AnimTrackBonePAS> bonePAS2;
+		[Serialize("ZAL"        )] public CList<AnimTrackBoneZAL> boneZAL;
+		[Serialize("multiplierA")] public float multiplierA;
+		[Serialize("multiplierP")] public float multiplierP;
+		[Serialize("multiplierS")] public float multiplierS;
 		[Serialize("polylines"  )] public CList<AnimTrackPolyline> polylines;
 		[Serialize("bones"      )] public CList<AnimTrackBonesList> bonesLists;
 		[Serialize("frameEvents")] public CList<AnimTrackFrameEvents> frameEvents;
@@ -47,9 +47,9 @@ namespace UbiArt.Animation {
 				}
 			}
 			SerializeField(s, nameof(boneZAL));
-			SerializeField(s, nameof(flt0));
-			SerializeField(s, nameof(flt1));
-			SerializeField(s, nameof(flt2));
+			SerializeField(s, nameof(multiplierA));
+			SerializeField(s, nameof(multiplierP));
+			SerializeField(s, nameof(multiplierS));
 			SerializeField(s, nameof(polylines));
 			SerializeField(s, nameof(bonesLists));
 			SerializeField(s, nameof(frameEvents));
