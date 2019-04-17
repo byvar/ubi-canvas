@@ -12,9 +12,12 @@ public class UnityAnimation : MonoBehaviour {
 	//public AnimLightComponent animLightComponent;
 	public AnimTrack animTrack;
 	public int animIndex = -1;
+	public float lastBmlFrame = -1;
 	public List<Tuple<Path, AnimTrack>> anims;
 	public AnimSkeleton skeleton;
 	public UnityBone[] bones;
+	public AnimPatchBank pbk;
+	public List<GameObject> patches;
 	public bool playAnimation = true;
 	public float animationSpeed = 30f;
 	bool loaded = false;
@@ -28,6 +31,7 @@ public class UnityAnimation : MonoBehaviour {
 		MapLoader l = MapLoader.Loader;
 		if (animIndex > 0 && skeleton != null) {
 			currentFrame = 0;
+			lastBmlFrame = -1;
 			UpdateAnimation();
 		}
 		loaded = true;
@@ -81,6 +85,31 @@ public class UnityAnimation : MonoBehaviour {
 							break;
 						}
 					}
+				}
+			}
+			AnimTrackBML bml = null;
+			float currentBmlDifFrame = currentFrame;
+			if (currentFrame < lastBmlFrame) {
+				currentBmlDifFrame += animTrack.length;
+			}
+			for (int i = 0; i < animTrack.bml.Count; i++) {
+				if (animTrack.bml[i].frame <= currentBmlDifFrame) {
+					bml = animTrack.bml[i];
+				}
+			}
+			if(bml != null && bml.frame != lastBmlFrame) {
+				lastBmlFrame = bml.frame;
+				CArray<StringID> keys = pbk.templateKeys.keysLegends;
+				List<int> indexes = new List<int>();
+				foreach (AnimTrackBML.Entry entry in bml.entries) {
+					StringID templateId = entry.templateId;
+					int ind = keys.IndexOf(templateId);
+					if (ind != -1) {
+						indexes.Add(ind);
+					}
+				}
+				for(int i = 0; i < patches.Count; i++) {
+					patches[i].SetActive(indexes.Contains(i));
 				}
 			}
 		}

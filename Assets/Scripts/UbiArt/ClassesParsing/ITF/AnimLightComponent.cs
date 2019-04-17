@@ -97,6 +97,8 @@ namespace UbiArt.ITF {
 					ua.skeleton = skeleton;
 					List<Path> animPaths = new List<Path>();
 					ua.anims = new List<System.Tuple<Path, AnimTrack>>();
+					ua.patches = patches;
+					ua.pbk = bp.pbk;
 					foreach (SubAnim_Template sat in tpl.animSet.animations) {
 						animPaths.Add(sat.name);
 					}
