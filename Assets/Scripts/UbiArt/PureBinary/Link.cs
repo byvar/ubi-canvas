@@ -34,7 +34,7 @@ namespace UbiArt {
 			if (ReferenceEquals(x, y)) return true;
 			if (ReferenceEquals(x, null)) return false;
 			if (ReferenceEquals(y, null)) return false;
-			return x.stringID == y.stringID && x.stringID == y.stringID;
+			return x.stringID == y.stringID;
 		}
 		public static bool operator !=(Link x, Link y) {
 			return !(x == y);

@@ -118,7 +118,7 @@ TextureImporter:
     21300226: tagicons_113
     21300228: tagicons_114
     21300230: tagicons_115
-    21300232: tagicons_116
+    21300232: bone
     21300234: tsc
     21300236: tsc_s
     21300238: tagicons_119
@@ -2598,15 +2598,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_116
+      name: bone
       rect:
         serializedVersion: 2
         x: 259
         y: 418
         width: 114
         height: 28
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.13461946, y: 0.4999989}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

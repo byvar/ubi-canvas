@@ -36,16 +36,19 @@ public class UnityBone : MonoBehaviour {
 	public UnityBone parent;
 	public Vector3 localPosition;
 	public float localRotation;
-	public Vector3 localScale;
+	public Vector3 localScale = Vector3.one;
 	public Vector3 bindPosition;
 	public float bindRotation;
-	public Vector3 bindScale;
+	public Vector3 bindScale = Vector3.one;
+	public Vector3 TPosePosition;
+	public Vector3 TPoseScle = Vector3.one;
+	public float TPoseRotation;
 	public bool bind = false;
-	private Vector3 parentScale = Vector3.one;
 	private float cos = 0f;
 	private float sin = 0f;
 	public Vector3 globalPosition = Vector3.zero;
 	public float globalAngle;
+	public Vector3 computedScale = Vector3.one;
 	public float xOffset = 0f;
 
 	/*void Update() {
@@ -59,6 +62,10 @@ public class UnityBone : MonoBehaviour {
 			transform.localScale = localScale;
 		}
 	}*/
+	private void Start() {
+		/*SpriteRenderer sr = gameObject.AddComponent<SpriteRenderer>();
+		sr.sprite = MapLoader.Loader.controller.GetIcon("bone");*/
+	}
 	void Update() {
 		UpdateBone();
 	}
@@ -67,20 +74,32 @@ public class UnityBone : MonoBehaviour {
 		if (bind) {
 			if (parent != null) {
 				globalAngle = parent.globalAngle + bindRotation + localRotation;
-				float xPos = (parent.bindScale.x * parent.localScale.x) * (bindPosition.x + localPosition.x + parent.xOffset);
-				float yPos = (parent.bindScale.y * parent.localScale.y) * (bindPosition.y + localPosition.y);
+				float xPos = (parent.computedScale.x) * (bindPosition.x + localPosition.x + parent.xOffset);
+				float yPos = (parent.computedScale.y) * (bindPosition.y + localPosition.y);
 				float dot1 = Vector2.Dot(new Vector2(xPos, yPos), new Vector2(parent.cos, parent.sin));
-				float dot2 = Vector2.Dot(new Vector2(yPos, Mathf.Abs(xPos)), new Vector2(parent.cos, parent.sin));
+				float dot2 = Vector2.Dot(new Vector2(yPos, xPos), new Vector2(parent.cos, parent.sin));
 				globalPosition = parent.globalPosition + new Vector3(dot1, dot2, 0f);
 			} else {
-				globalPosition = bindPosition + localPosition;
+				/*globalPosition = bindPosition + localPosition;
+				globalAngle = bindRotation + localRotation;*/
+				/*globalPosition = localPosition;
+				globalAngle = localRotation;*/
+				// Check ITF::AnimInfo::ComputeBonesFromLocalToWorld
+				globalPosition = localPosition;
 				globalAngle = bindRotation + localRotation;
 			}
-			transform.localScale = Vector3.Scale(localScale, bindScale);
+			computedScale = Vector3.Scale(localScale, bindScale);
+			transform.localScale = computedScale;
 			transform.localRotation = new Angle(globalAngle).QuaternionAngle;
 			transform.localPosition = globalPosition;
 			cos = Mathf.Cos(globalAngle);
 			sin = Mathf.Sin(globalAngle);
+
+			/*float xPos2 = xOffset * (bindScale.x * localScale.x);
+
+			float dot12 = Vector2.Dot(new Vector2(xPos2, 0), new Vector2(cos, sin));
+			float dot22 = Vector2.Dot(new Vector2(0, Mathf.Abs(xPos2)), new Vector2(cos, sin));
+			transform.localPosition = globalPosition + new Vector3(dot12, dot22, 0f);*/
 		} else {
 			if (parent != null) {
 				transform.localPosition = parent.transform.localPosition + parent.transform.localRotation * localPosition;

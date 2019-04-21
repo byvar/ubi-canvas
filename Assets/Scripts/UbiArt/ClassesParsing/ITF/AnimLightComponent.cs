@@ -65,7 +65,7 @@ namespace UbiArt.ITF {
 					skeleton_gao.transform.localPosition = Vector3.zero;
 					skeleton_gao.transform.localRotation = Quaternion.identity;
 					skeleton_gao.transform.localScale = Vector3.one;
-					Transform[] bones = skeleton.CreateBones(skeleton_gao);
+					UnityBone[] bones = skeleton.CreateBones(skeleton_gao);
 					for (int i = 0; i < bp.pbk.templates.Count; i++) {
 						AnimTemplate at = bp.pbk.templates[i];
 						Mesh mesh = at.CreateMesh();
@@ -80,12 +80,12 @@ namespace UbiArt.ITF {
 						patch_gao.transform.localRotation = Quaternion.identity;
 						patch_gao.transform.localScale = Vector3.one;
 
-						Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
+						UnityBone[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
 						//Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
 						//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
 						//mf.sharedMesh = mesh;
 						SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
-						mr.bones = mesh_bones;
+						mr.bones = mesh_bones.Select(b => b.transform).ToArray();
 						mr.sharedMaterial = patch_mat;
 						mr.sharedMesh = mesh;
 						patches.Add(patch_gao);

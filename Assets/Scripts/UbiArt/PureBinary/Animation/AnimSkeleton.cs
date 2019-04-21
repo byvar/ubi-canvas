@@ -64,13 +64,19 @@ namespace UbiArt.Animation {
 			return boneTags.IndexOf(tag);
 		}
 
-		public Transform[] CreateBones(GameObject gao) {
-			Transform[] unityBones = new Transform[bones.Count];
+		public UnityBone[] CreateBones(GameObject gao) {
+			UnityBone[] unityBones = new UnityBone[bones.Count];
 			for (int i = 0; i < bones.Count; i++) {
 				GameObject boneGao = new GameObject("Bone " + i);
-				boneGao.AddComponent<UnityBone>();
-				unityBones[i] = boneGao.transform;
+				unityBones[i] = boneGao.AddComponent<UnityBone>();
+				unityBones[i].bind = true;
+				unityBones[i].transform.parent = gao.transform;
 			}
+			ResetBones(unityBones);
+			return unityBones;
+		}
+
+		public void ResetBones(UnityBone[] unityBones) {
 			for (int i = 0; i < bones.Count; i++) {
 				/*if (bones[i].parentKey.stringID != 0) {
 					AnimBone parent = GetBoneFromLink(bones[i].parentKey);
@@ -79,41 +85,59 @@ namespace UbiArt.Animation {
 				} else {
 					unityBones[i].parent = gao.transform;
 				}*/
-				unityBones[i].parent = gao.transform;
-				unityBones[i].localPosition = Vector3.zero;
-				unityBones[i].localScale = Vector3.one;
-				unityBones[i].localRotation = Quaternion.identity;
-			}
-			return unityBones;
-		}
-
-		public void ResetBones(Transform[] unityBones) {
-			for (int i = 0; i < bones.Count; i++) {
-				UnityBone b = unityBones[i].GetComponent<UnityBone>();
 				if (bones[i].parentKey.stringID != 0) {
 					AnimBone parent = GetBoneFromLink(bones[i].parentKey);
 					int parentIndex = bones.IndexOf(parent);
-					b.parent = unityBones[parentIndex].GetComponent<UnityBone>();
-					/*ParentConstraint p = unityBones[i].gameObject.AddComponent<ParentConstraint>();
-					p.constraintActive = false;
-					p.AddSource(new ConstraintSource() { sourceTransform = unityBones[parentIndex], weight = 1 });
-					p.translationOffsets
-					unityBones[i].parent = unityBones[parentIndex];*/
+					unityBones[i].parent = unityBones[parentIndex];
+				} else {
+					unityBones[i].parent = null;
 				}
-				b.localPosition = bonesDyn[i].position;
-				b.localScale = bonesDyn[i].scale;
-				b.localRotation = bonesDyn[i].angle;
-				b.bindPosition = bonesDyn[i].position;
-				b.bindScale = bonesDyn[i].scale;
-				b.bindRotation = bonesDyn[i].angle;
-				b.xOffset = bonesDyn[i].float1;
-				
-				b.localPosition = Vector3.zero;
-				b.localScale = Vector3.one;
-				b.localRotation = new Angle(0);
-				b.bind = true;
-				b.UpdateBone();
+				unityBones[i].bindPosition = bonesDyn[i].position;
+				unityBones[i].bindScale = bonesDyn[i].scale;
+				unityBones[i].bindRotation = bonesDyn[i].angle;
+				unityBones[i].xOffset = bonesDyn[i].float1;
+				unityBones[i].localPosition = Vector3.zero;
+				unityBones[i].localScale = Vector3.one;
+				unityBones[i].localRotation = 0;
+				//unityBones[i].UpdateBone();
 			}
+
+			// Calculate T Pose
+			int[] updateOrder = GetBonesUpdateOrder();
+			for (int i = 0; i < updateOrder.Length; i++) {
+				unityBones[updateOrder[i]].UpdateBone();
+			}
+		}
+
+		public List<int> GetRootIndices() {
+			List<int> rootIndices = new List<int>();
+			for (int i = 0; i < bones.Count; i++) {
+				if ((bones[i].parentKey.stringID == 0)) {
+					rootIndices.Add(i);
+				}
+			}
+			return rootIndices;
+		}
+
+		public int[] GetBonesUpdateOrder() {
+			int[] order = new int[bones.Count];
+			List<int> rootIndices = GetRootIndices();
+			int currentIndex = 0;
+			Queue<int> boneQueue = new Queue<int>();
+			foreach (int i in rootIndices) {
+				boneQueue.Enqueue(i);
+			}
+			while (boneQueue.Count > 0) {
+				int curBone = boneQueue.Dequeue();
+				order[currentIndex++] = curBone;
+				for (int i = 0; i < bones.Count; i++) {
+					if (bones[i].parentKey == bones[curBone].key) {
+						boneQueue.Enqueue(i);
+					}
+				}
+			}
+			if (currentIndex != bones.Count) MapLoader.Loader.print(currentIndex + " - " + bones.Count);
+			return order;
 		}
 
 		public void ResetBonesZero(Transform[] unityBones) {
