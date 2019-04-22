@@ -77,7 +77,7 @@ public class UnityBone : MonoBehaviour {
 				float xPos = (parent.computedScale.x) * (bindPosition.x + localPosition.x + parent.xOffset);
 				float yPos = (parent.computedScale.y) * (bindPosition.y + localPosition.y);
 				float dot1 = Vector2.Dot(new Vector2(xPos, yPos), new Vector2(parent.cos, parent.sin));
-				float dot2 = Vector2.Dot(new Vector2(yPos, xPos), new Vector2(parent.cos, parent.sin));
+				float dot2 = Vector2.Dot(new Vector2(-yPos, xPos), new Vector2(parent.cos, parent.sin));
 				globalPosition = parent.globalPosition + new Vector3(dot1, dot2, 0f);
 			} else {
 				/*globalPosition = bindPosition + localPosition;
