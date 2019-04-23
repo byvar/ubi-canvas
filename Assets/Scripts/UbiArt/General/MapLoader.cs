@@ -29,6 +29,7 @@ namespace UbiArt {
 		public bool forceDisplayBackfaces = false;
 		public bool blockyMode = false;
 		public bool logEnabled = false;
+		public bool loadAnimations = false;
 		public StringBuilder log = new StringBuilder();
 
 		public UV.UVAtlasManager uvAtlasManager;

@@ -50,6 +50,8 @@ public class UnityBone : MonoBehaviour {
 	public float globalAngle;
 	public Vector3 computedScale = Vector3.one;
 	public float xOffset = 0f;
+	public float localZ = 0;
+	public float bindZ = 0;
 
 	/*void Update() {
 		if (parent != null) {

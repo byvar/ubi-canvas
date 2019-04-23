@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
 			UnityPickable p = gao.AddComponent<UnityPickable>();
 			p.pickable = this;
-			MapLoader.Loader.controller.zListManager.Register(this);
+			//MapLoader.Loader.controller.zListManager.Register(this);
 			//if (ANGLE.angle != 0f) gao.name += " - " + ANGLE.angle;
 		}
 		public void SetGameObjectParent(GameObject gp) {
@@ -28,10 +28,6 @@ namespace UbiArt.ITF {
 			Gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
 			Gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
 			Gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
-		}
-
-		public virtual int UpdateZSortValue(int val) {
-			return val;
 		}
 	}
 }

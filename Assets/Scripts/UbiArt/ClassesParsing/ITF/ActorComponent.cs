@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class ActorComponent {
@@ -6,6 +7,9 @@ namespace UbiArt.ITF {
 			UnityActorComponent uac = gao.AddComponent<UnityActorComponent>();
 			uac.actor = act;
 			uac.component = this;
+		}
+
+		public virtual void UpdateZSortValue(Dictionary<Material, float> zdict) {
 		}
 	}
 }

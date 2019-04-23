@@ -12,7 +12,7 @@ namespace UbiArt.Animation {
 		[Serialize("flt1"    )] public float float1;
 		[Serialize("position")] public Vector2 position;
 		[Serialize("angle"   )] public Angle angle;
-		[Serialize("flt4"    )] public float float4;
+		[Serialize("flt4"    )] public float z;
 		[Serialize("scale"   )] public Vector2 scale;
 		[Serialize("flt6"    )] public float float6;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -21,7 +21,7 @@ namespace UbiArt.Animation {
 			SerializeField(s, nameof(float1));
 			SerializeField(s, nameof(position));
 			SerializeField(s, nameof(angle));
-			SerializeField(s, nameof(float4));
+			SerializeField(s, nameof(z));
 			SerializeField(s, nameof(scale));
 			SerializeField(s, nameof(float6));
 		}

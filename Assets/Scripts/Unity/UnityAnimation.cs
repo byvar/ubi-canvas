@@ -17,9 +17,11 @@ public class UnityAnimation : MonoBehaviour {
 	public AnimSkeleton skeleton;
 	public UnityBone[] bones;
 	public AnimPatchBank pbk;
-	public List<GameObject> patches;
+	public GameObject[] patches;
+	public Material[] patchMaterials;
 	public bool playAnimation = true;
 	public float animationSpeed = 30f;
+	public int zValue = 0;
 	bool loaded = false;
 
 	private float updateCounter = 0f;
@@ -32,6 +34,7 @@ public class UnityAnimation : MonoBehaviour {
 		if (animIndex > 0 && skeleton != null) {
 			currentFrame = 0;
 			lastBmlFrame = -1;
+			skeleton.ResetBones(bones);
 			UpdateAnimation();
 		}
 		loaded = true;
@@ -51,21 +54,14 @@ public class UnityAnimation : MonoBehaviour {
 			} else if (currentFrame >= animTrack.length) {
 				currentFrame %= animTrack.length;
 			}
-			int bmlCount = animTrack.bml.Count;
-			if (bmlCount > 0) {
-				int bmlIndex = 0;
-				while (bmlCount > bmlIndex+1 && currentFrame >= animTrack.bml[bmlIndex+1].frame) {
-					bmlIndex++;
-				}
-				// Do bml patch & texturebank switcheroo here
-			}
+
 			for (int i = 0; i < animTrack.bonesLists.Count; i++) {
 				AnimTrackBonesList bl = animTrack.bonesLists[i];
 				if (bl.amountPAS > 0) {
 					for (int p = 0; p < bl.amountPAS; p++) {
 						AnimTrackBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
 						AnimTrackBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
-						if (p == bl.amountPAS - 1 || currentFrame < next.frame) {
+						if (p == bl.amountPAS - 1 || (currentFrame >= pas.frame && currentFrame < next.frame)) {
 							Vector2 pos = pas.Position;
 							Angle rot = pas.Rotation;
 							Vector2 scl = pas.Scale;
@@ -86,7 +82,28 @@ public class UnityAnimation : MonoBehaviour {
 						}
 					}
 				}
+				if (bl.amountZAL > 0) {
+					for (int p = 0; p < bl.amountZAL; p++) {
+						AnimTrackBoneZAL zal = animTrack.boneZAL[bl.startZAL + p];
+						AnimTrackBoneZAL next = animTrack.boneZAL[bl.startZAL + ((p + 1) % bl.amountZAL)];
+						if (p == bl.amountZAL - 1 || (currentFrame >= zal.frame && currentFrame < next.frame)) {
+							float z = zal.z;
+							float alpha = zal.alpha / 255f;
+							if (next != zal) {
+								float nextFrame = next.frame < zal.frame ? next.frame + animTrack.length : next.frame;
+								float lerp = (currentFrame - zal.frame) / (nextFrame - zal.frame);
+								z = Mathf.Lerp(z, next.z, lerp);
+								alpha = Mathf.Lerp(alpha, next.alpha / 255f, lerp);
+							}
+							bones[i].localZ = z;
+							//bones[i].alpha = alpha;
+							break;
+						}
+					}
+				}
 			}
+
+			// Activate the correct patches
 			AnimTrackBML bml = null;
 			bool checkHigher = false;
 			int index = lastBmlFrame == -1 ? 0 : (animTrack.bml.ToList().FindLastIndex(b => b.frame == lastBmlFrame) + 1) % animTrack.bml.Count;
@@ -109,8 +126,39 @@ public class UnityAnimation : MonoBehaviour {
 						indexes.Add(ind);
 					}
 				}
-				for(int i = 0; i < patches.Count; i++) {
-					patches[i].SetActive(indexes.Contains(i));
+				for(int i = 0; i < patches.Length; i++) {
+					if (patches[i] != null) {
+						patches[i].SetActive(indexes.Contains(i));
+					}
+				}
+			}
+
+			// Configure Z for all patches
+			ZListManager zman = MapLoader.Loader.controller.zListManager;
+			if (bml == null) {
+				bml = animTrack.bml.ToList().FindLast(b => b.frame == lastBmlFrame);
+			}
+			if (bml != null) {
+				CArray<StringID> keys = pbk.templateKeys.keysLegends;
+				List<int> indexes = new List<int>();
+				foreach (AnimTrackBML.Entry entry in bml.entries) {
+					StringID templateId = entry.templateId;
+					int ind = keys.IndexOf(templateId);
+					if (ind != -1) {
+						indexes.Add(ind);
+					}
+				}
+				for (int i = 0; i < patches.Length; i++) {
+					if (patches[i] == null || pbk.templates[i].bones.Count == 0) continue;
+					bool patchActive = indexes.Contains(i);
+					if (patchActive) {
+						int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
+						zman.zDict[patchMaterials[i]] = transform.position.z - bones[boneIndex].bindZ - bones[boneIndex].localZ;
+					} else {
+						if (zman.zDict.ContainsKey(patchMaterials[i])) {
+							zman.zDict.Remove(patchMaterials[i]);
+						}
+					}
 				}
 			}
 		}

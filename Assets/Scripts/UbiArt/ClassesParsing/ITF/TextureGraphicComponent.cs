@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class TextureGraphicComponent {
-		GameObject tex_gao;
-		Material tex_mat;
+		public UnityTextureGraphicComponent tex_gao_component;
+		public Material tex_mat;
 
 		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
 			base.InitUnityComponent(act, gao, template, index);
@@ -20,11 +20,13 @@ namespace UbiArt.ITF {
 		}
 
 		private void CreateGameObject(GameObject gao, GFXMaterialSerializable material) {
-			tex_gao = new GameObject("TextureGraphicComponent");
+			GameObject tex_gao = new GameObject("TextureGraphicComponent");
 			tex_gao.transform.SetParent(gao.transform, false);
 			tex_gao.transform.localPosition = Vector3.zero;
 			tex_gao.transform.localRotation = Quaternion.identity;
 			tex_gao.transform.localScale = Vector3.one;
+			tex_gao_component = tex_gao.AddComponent<UnityTextureGraphicComponent>();
+			tex_gao_component.tgc = this;
 			
 			MeshFilter mf = tex_gao.AddComponent<MeshFilter>();
 			MeshRenderer mr = tex_gao.AddComponent<MeshRenderer>();
@@ -89,12 +91,6 @@ namespace UbiArt.ITF {
 				param.BackLightBrightness,
 				param.BackLightContrast));
 			mat.SetColor("_ColorFog", param.colorFog);
-		}
-		public virtual int UpdateZSortValue(int val) {
-			if (tex_mat != null) {
-				tex_mat.renderQueue = val++;
-			}
-			return val;
 		}
 	}
 }

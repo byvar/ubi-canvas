@@ -608,6 +608,7 @@ MonoBehaviour:
   forceDisplayBackfaces: 0
   zListManager: {fileID: 929858122}
   displayGizmos: 0
+  loadAnimations: 1
 --- !u!4 &929858120
 Transform:
   m_ObjectHideFlags: 0

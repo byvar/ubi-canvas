@@ -9,16 +9,18 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (skeleton != null && isFirstLoad) {
 				MapLoader l = MapLoader.Loader;
-				l.Load(skeleton, (extS) => {
-					if (l.skl.ContainsKey(skeleton.stringID)) {
-						skel = l.skl[skeleton.stringID];
-					} else {
-						extS.log = l.logEnabled;
-						extS.Serialize(ref skel);
-						l.skl[skeleton.stringID] = skel;
-						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
-					}
-				});
+				if (l.loadAnimations) {
+					l.Load(skeleton, (extS) => {
+						if (l.skl.ContainsKey(skeleton.stringID)) {
+							skel = l.skl[skeleton.stringID];
+						} else {
+							extS.log = l.logEnabled;
+							extS.Serialize(ref skel);
+							l.skl[skeleton.stringID] = skel;
+							l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+						}
+					});
+				}
 			}
 		}
 	}

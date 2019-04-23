@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		public GenericFile<FriseConfig> config;
 		public GameObject mesh_static;
 		public GameObject mesh_anim;
-		private MeshRenderer mr_static;
-		private MeshRenderer mr_anim;
+		public MeshRenderer mr_static;
+		public MeshRenderer mr_anim;
 		public GenericFile<GFXMaterialShader_Template> shader;
 
 		protected override void InitGameObject() {
@@ -226,21 +226,6 @@ namespace UbiArt.ITF {
 					}
 				});
 			}
-		}
-
-		public override int UpdateZSortValue(int val) {
-			val = base.UpdateZSortValue(val);
-			if (mr_static != null) {
-				foreach (Material m in mr_static.sharedMaterials) {
-					m.renderQueue = val++;
-				}
-			}
-			if (mr_anim != null) {
-				foreach (Material m in mr_anim.sharedMaterials) {
-					m.renderQueue = val++;
-				}
-			}
-			return val;
 		}
 	}
 }

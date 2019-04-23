@@ -8,9 +8,12 @@ namespace UbiArt.ITF {
 	public partial class AnimLightComponent {
 		public GenericFile<GFXMaterialShader_Template> shader;
 		private AnimLightComponent_Template tpl;
-		private List<GameObject> patches;
-		private List<Material> patchMaterials;
+		private GameObject[] patches = new GameObject[0];
+		private Material[] patchMaterials = new Material[0];
 		private GameObject skeleton_gao;
+		private UnityBone[] bones;
+		private int zValue = 0;
+		private UnityAnimation ua;
 
 		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
 			base.InitUnityComponent(act, gao, template, index);
@@ -40,8 +43,6 @@ namespace UbiArt.ITF {
 		// v GameObject
 
 		private void CreateGameObjects(GameObject gao) {
-			patches = new List<GameObject>();
-			patchMaterials = new List<Material>();
 			Material tex_mat = GetUnityMaterial();
 			FillMaterialParams(tex_mat);
 			bool createdOne = false;
@@ -60,12 +61,14 @@ namespace UbiArt.ITF {
 		private bool ProcessTextureBank(TextureBankPath bp, GameObject gao, Material tex_mat, AnimSkeleton skeleton) {
 			if (bp.textureSet != null && skeleton != null) {
 				if (bp.pbk != null) {
+					patches = new GameObject[bp.pbk.templates.Count];
+					patchMaterials = new Material[patches.Length];
 					skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
 					skeleton_gao.transform.SetParent(gao.transform, false);
 					skeleton_gao.transform.localPosition = Vector3.zero;
 					skeleton_gao.transform.localRotation = Quaternion.identity;
 					skeleton_gao.transform.localScale = Vector3.one;
-					UnityBone[] bones = skeleton.CreateBones(skeleton_gao);
+					bones = skeleton.CreateBones(skeleton_gao);
 					for (int i = 0; i < bp.pbk.templates.Count; i++) {
 						AnimTemplate at = bp.pbk.templates[i];
 						Mesh mesh = at.CreateMesh();
@@ -88,16 +91,17 @@ namespace UbiArt.ITF {
 						mr.bones = mesh_bones.Select(b => b.transform).ToArray();
 						mr.sharedMaterial = patch_mat;
 						mr.sharedMesh = mesh;
-						patches.Add(patch_gao);
-						patchMaterials.Add(patch_mat);
+						patches[i] = patch_gao;
+						patchMaterials[i] = patch_mat;
 					}
 					skeleton.ResetBones(bones);
-					UnityAnimation ua = skeleton_gao.AddComponent<UnityAnimation>();
-					ua.bones = bones.Select(b => b.GetComponent<UnityBone>()).ToArray();
+					ua = skeleton_gao.AddComponent<UnityAnimation>();
+					ua.bones = bones;
 					ua.skeleton = skeleton;
 					List<Path> animPaths = new List<Path>();
 					ua.anims = new List<System.Tuple<Path, AnimTrack>>();
 					ua.patches = patches;
+					ua.patchMaterials = patchMaterials;
 					ua.pbk = bp.pbk;
 					foreach (SubAnim_Template sat in tpl.animSet.animations) {
 						animPaths.Add(sat.name);
@@ -156,14 +160,6 @@ namespace UbiArt.ITF {
 				param.BackLightBrightness,
 				param.BackLightContrast));
 			mat.SetColor("_ColorFog", param.colorFog);
-		}
-		public virtual int UpdateZSortValue(int val) {
-			if (patchMaterials != null) {
-				foreach (Material m in patchMaterials) {
-					m.renderQueue = val++;
-				}
-			}
-			return val;
 		}
 		private Material GetUnityMaterial(GFXMaterialShader_Template shader = null) {
 			if (shader == null) shader = (this.shader != null ? this.shader.obj : null);

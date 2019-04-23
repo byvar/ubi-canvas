@@ -99,6 +99,8 @@ namespace UbiArt.Animation {
 				unityBones[i].localPosition = Vector3.zero;
 				unityBones[i].localScale = Vector3.one;
 				unityBones[i].localRotation = 0;
+				unityBones[i].bindZ = bonesDyn[i].z;
+				unityBones[i].localZ = 0;
 				//unityBones[i].UpdateBone();
 			}
 

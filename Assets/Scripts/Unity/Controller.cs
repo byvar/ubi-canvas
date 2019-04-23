@@ -26,6 +26,7 @@ public class Controller : MonoBehaviour {
 	public ZListManager zListManager;
 	private Sprite[] icons;
 	bool displayGizmos_ = false; public bool displayGizmos = false;
+	public bool loadAnimations = false;
 	MapLoader loader = null;
 
 	public enum State {
@@ -120,6 +121,7 @@ public class Controller : MonoBehaviour {
 		loader.baseLightMaterial = baseLightMaterial;
 		loader.logFile = logFile;
 		loader.logEnabled = log;
+		loader.loadAnimations = loadAnimations;
 		loader.controller = this;
 
 		await Init();
