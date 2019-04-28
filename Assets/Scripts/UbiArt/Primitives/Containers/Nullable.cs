@@ -16,7 +16,7 @@ namespace UbiArt {
 			s.Serialize(this, GetType().GetField(nameof(read)), 
 				(SerializeAttribute)GetType().GetField(nameof(read)).GetCustomAttributes(typeof(SerializeAttribute), false).First());
 			if (read) {
-				s.Serialize(this, GetType().GetField(nameof(value)), name: name, index: 0);
+				s.Serialize(this, GetType().GetField(nameof(value)), name: name);
 			}
 		}
 

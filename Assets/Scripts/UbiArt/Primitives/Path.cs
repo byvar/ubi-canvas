@@ -11,7 +11,9 @@ namespace UbiArt {
 		public StringID stringID;
 		public uint flags;
 
-		public Path() {}
+		public Path() {
+			stringID = new StringID();
+		}
 
 		public Path(string folder, string filename, bool cooked=false) {
 			folder = folder.Replace('\\', '/');

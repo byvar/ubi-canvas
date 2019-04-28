@@ -25,8 +25,11 @@ namespace UbiArt {
 					key = copy[i].Key;
 					val = copy[i].Value;
 				}
-				s.Serialize(ref key, name: "KEY", index: i); // todo: check if names are correct, they probably aren't
-				s.Serialize(ref val, name: "VAL", index: i);
+				if (s.ArrayEntryStart(name: name, index: i)) {
+					s.Serialize(ref key, name: "KEY");
+					s.Serialize(ref val, name: "VAL");
+					s.ArrayEntryStop();
+				}
 				Add(key, val);
 			}
 		}

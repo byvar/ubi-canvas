@@ -16,6 +16,9 @@ namespace UbiArt.Animation {
 		[Serialize("boneTags2"   )] public CList<StringID> boneTags2;
 		[Serialize("boneIndices2")] public CList<StringID> boneIndices2;
 		[Serialize("boneTags2"   )] public CList<StringID> boneTags3;
+		[Serialize("boneTags"    )] public CList<ulong> boneTagsAdv;
+		[Serialize("boneTags2"   )] public CList<ulong> boneTags2Adv;
+		[Serialize("boneTags3"   )] public CList<ulong> boneTags3Adv;
 		[Serialize("boneIndices3")] public CList<StringID> boneIndices3;
 		[Serialize("bones"       )] public CList<AnimBone> bones;
 		[Serialize("bonesDyn"    )] public CList<AnimBoneDyn> bonesDyn;
@@ -27,12 +30,21 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(version));
-			SerializeField(s, nameof(boneTags));
-			SerializeField(s, nameof(boneIndices));
-			SerializeField(s, nameof(boneTags2));
-			SerializeField(s, nameof(boneIndices2));
-			SerializeField(s, nameof(boneTags3));
-			SerializeField(s, nameof(boneIndices3));
+			if (Settings.s.game == Settings.Game.RA) {
+				SerializeField(s, nameof(boneTagsAdv));
+				SerializeField(s, nameof(boneIndices));
+				SerializeField(s, nameof(boneTags2Adv));
+				SerializeField(s, nameof(boneIndices2));
+				SerializeField(s, nameof(boneTags3Adv));
+				SerializeField(s, nameof(boneIndices3));
+			} else {
+				SerializeField(s, nameof(boneTags));
+				SerializeField(s, nameof(boneIndices));
+				SerializeField(s, nameof(boneTags2));
+				SerializeField(s, nameof(boneIndices2));
+				SerializeField(s, nameof(boneTags3));
+				SerializeField(s, nameof(boneIndices3));
+			}
 			SerializeField(s, nameof(bones));
 			SerializeField(s, nameof(bonesDyn));
 			SerializeField(s, nameof(byteArray));
@@ -61,7 +73,11 @@ namespace UbiArt.Animation {
 			return bones.FirstOrDefault(b => b.key == link);
 		}
 		public int GetBoneIndexFromTag(StringID tag) {
-			return boneTags.IndexOf(tag);
+			if (Settings.s.game == Settings.Game.RA) {
+				return boneTagsAdv.IndexOf(boneTagsAdv.First(b => tag.stringID == b));
+			} else {
+				return boneTags.IndexOf(tag);
+			}
 		}
 
 		public UnityBone[] CreateBones(GameObject gao) {

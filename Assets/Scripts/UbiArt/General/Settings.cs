@@ -6,7 +6,7 @@ using System.Text;
 namespace UbiArt {
 	public class Settings {
 		public enum Mode {
-			RaymanOriginsPC, RaymanLegendsPC, RaymanLegendsVitaCatchThemAll, RaymanAdventuresIOS
+			RaymanOriginsPC, RaymanLegendsPC, RaymanLegendsVitaCatchThemAll, RaymanAdventuresIOS, RaymanAdventuresAndroid
 		};
 		public Mode mode = Mode.RaymanLegendsPC;
 
@@ -18,12 +18,14 @@ namespace UbiArt {
 		public enum Game { None, RO, RL, RA, RJR, RFR, COL, VH };
 		public enum Platform { None, PC, iOS, Android, WiiU, Vita };
 		public enum Endian { Little, Big };
+		public enum SerializerType { Binary, TagBinary };
 
 		public EngineVersion engineVersion;
 		public Game game;
 		public Platform platform;
 		public Endian endian;
 		public VersionFlags versionFlags;
+		public SerializerType serializerType = SerializerType.Binary;
 		public bool usesSerializeFlags = true;
 		public bool isCatchThemAll = false;
 
@@ -46,6 +48,7 @@ namespace UbiArt {
 				case Mode.RaymanLegendsPC: s = RLPC; break;
 				case Mode.RaymanLegendsVitaCatchThemAll: s = RLVita; break;
 				case Mode.RaymanAdventuresIOS: s = RAIOS; break;
+				case Mode.RaymanAdventuresAndroid: s = RAAndroid; break;
 			}
 			if (s != null) s.mode = mode;
 		}
@@ -72,7 +75,16 @@ namespace UbiArt {
 			game = Game.RA,
 			platform = Platform.iOS,
 			endian = Endian.Big,
-			versionFlags = VersionFlags.Adventures
+			versionFlags = VersionFlags.Adventures,
+			serializerType = SerializerType.TagBinary
+		};
+		public static Settings RAAndroid = new Settings() {
+			engineVersion = EngineVersion.RL,
+			game = Game.RA,
+			platform = Platform.Android,
+			endian = Endian.Big,
+			versionFlags = VersionFlags.Adventures,
+			serializerType = SerializerType.TagBinary
 		};
 		public static Settings RLVita = new Settings() {
 			engineVersion = EngineVersion.RL,

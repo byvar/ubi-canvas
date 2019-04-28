@@ -23,8 +23,17 @@ namespace UbiArt.FileFormat {
                 data = fileReader.ReadBytes((int)stream.Length);
             }
             reader = new Reader(new MemoryStream(data), Settings.s.IsLittleEndian);
-			serializer = new CSerializerObjectBinary(reader);
-			MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref serializer.flags, ref serializer.flagsOwn, name.Substring(name.LastIndexOf(".") + 1));
+			string extension = null;
+			if (name.Contains(".")) {
+				extension = name.Substring(name.LastIndexOf(".") + 1);
+			}
+			MapLoader l = MapLoader.Loader;
+			if (Settings.s.serializerType == Settings.SerializerType.TagBinary && !l.IsPureBinary(extension)) {
+				serializer = new CSerializerObjectTagBinary(reader);
+			} else {
+				serializer = new CSerializerObjectBinary(reader);
+			}
+			l.ConfigureSerializeFlagsForExtension(ref serializer.flags, ref serializer.flagsOwn, extension);
 			baseOffset = -headerOffset;
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
         }

@@ -29,6 +29,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(LOWUPDATE), boolAsByte: true);
 				SerializeField(s, nameof(UPDATELAYER2));
 			}  else {
+				SerializeField(s, nameof(TAGS));
 				SerializeField(s, nameof(WIP));
 				SerializeField(s, nameof(LOWUPDATE));
 				SerializeField(s, nameof(UPDATELAYER));

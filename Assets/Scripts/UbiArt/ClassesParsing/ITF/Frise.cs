@@ -214,6 +214,7 @@ namespace UbiArt.ITF {
 					}
 				});
 				l.Load(ConfigName, (extS) => {
+					extS.log = l.logEnabled;
 					if (l.fcg.ContainsKey(ConfigName.stringID)) {
 						config = l.fcg[ConfigName.stringID];
 					} else {

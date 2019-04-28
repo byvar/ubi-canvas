@@ -63,6 +63,12 @@ namespace UbiArt {
 			return BitConverter.ToInt64(data, 0);
 		}
 
+		public override UInt64 ReadUInt64() {
+			var data = ReadBytes(8);
+			if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+			return BitConverter.ToUInt64(data, 0);
+		}
+
 		public override UInt32 ReadUInt32() {
 			var data = ReadBytes(4);
 			if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);

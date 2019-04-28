@@ -23,7 +23,10 @@ namespace UbiArt.Animation {
 				Array.Resize(ref points, numPoints);
 			}
 			for (int i = 0; i < numPoints; i++) {
-				s.Serialize<Link>(ref points[i], name: "points", index: i);
+				if (s.ArrayEntryStart(name: "points", index: i)) {
+					s.Serialize<Link>(ref points[i], name: "VAL");
+					s.ArrayEntryStop();
+				}
 			}
 		}
 

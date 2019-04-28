@@ -47,7 +47,7 @@ namespace UbiArt {
 						}
 						type = type.MakeGenericType(typeof(T).GetGenericArguments());
 					}
-					s.Serialize(ref obj, type, name: type.Name);
+					s.Serialize(ref obj, type);
 				} else {
 					Debug.LogError("CRC " + className.stringID.ToString("X8")
 						+ " found at " + s.Position

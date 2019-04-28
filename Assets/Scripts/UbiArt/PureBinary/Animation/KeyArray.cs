@@ -20,5 +20,13 @@ namespace UbiArt.Animation {
 			}
 			SerializeField(s, nameof(values));
 		}
+
+		public int GetKeyIndex(StringID key) {
+			if (keysLegends != null) {
+				return keysLegends.IndexOf(key);
+			} else {
+				return keys.IndexOf(key.stringID);
+			}
+		}
 	}
 }

@@ -13,8 +13,6 @@ namespace UbiArt.Animation {
 		[Serialize("length"     )] public float length;
 		[Serialize("BML"        )] public CList<AnimTrackBML> bml;
 		[Serialize("PAS"        )] public CList<AnimTrackBonePAS> bonePAS;
-		[Serialize("unks"       )] public CList<uint> unks;
-		[Serialize("PAS2"       )] public CList<AnimTrackBonePAS> bonePAS2;
 		[Serialize("ZAL"        )] public CList<AnimTrackBoneZAL> boneZAL;
 		[Serialize("multiplierA")] public float multiplierA;
 		[Serialize("multiplierP")] public float multiplierP;
@@ -40,12 +38,6 @@ namespace UbiArt.Animation {
 			SerializeField(s, nameof(length));
 			SerializeField(s, nameof(bml));
 			SerializeField(s, nameof(bonePAS));
-			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(unks));
-				if (unks.Count == 0) {
-					SerializeField(s, nameof(bonePAS2));
-				}
-			}
 			SerializeField(s, nameof(boneZAL));
 			SerializeField(s, nameof(multiplierA));
 			SerializeField(s, nameof(multiplierP));

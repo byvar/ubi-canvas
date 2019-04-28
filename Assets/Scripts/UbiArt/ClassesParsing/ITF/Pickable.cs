@@ -13,6 +13,11 @@ namespace UbiArt.ITF {
 		}
 		public TemplatePickable templatePickable;
 
+		public Pickable() {
+			ANGLE = new Angle(0);
+			SCALE = Vector2.one;
+		}
+
 		protected virtual void InitGameObject() {
 			gao = new GameObject(USERFRIENDLY);
 			gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);

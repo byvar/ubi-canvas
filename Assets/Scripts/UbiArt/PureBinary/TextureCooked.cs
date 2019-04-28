@@ -9,7 +9,7 @@ using UnityEngine;
 namespace UbiArt {
 	public class TextureCooked : ICSerializable {
 		public static uint staticSignature = 0x54455800; // TEX\0
-		public uint unk;
+		public uint version; // 0xD for legends, 0x11 for adventures
 		public uint signature;
 		public uint hdrSize;
 		public uint texSize;
@@ -17,6 +17,7 @@ namespace UbiArt {
 		public ushort height;
 		public ushort unk_x; // tiling flags?
 		public ushort unk_y;
+		public uint unkAdventures;
 		public uint texSize2;
 		public uint unk0;
 		public uint unk1;
@@ -29,7 +30,7 @@ namespace UbiArt {
 		public UV.UVAtlas atlas = null;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref unk);
+			s.Serialize(ref version);
 			s.Serialize(ref signature);
 			s.Serialize(ref hdrSize);
 			s.Serialize(ref texSize);
@@ -37,6 +38,9 @@ namespace UbiArt {
 			s.Serialize(ref height);
 			s.Serialize(ref unk_x);
 			s.Serialize(ref unk_y);
+			if (Settings.s.game == Settings.Game.RA) {
+				s.Serialize(ref unkAdventures);
+			}
 			s.Serialize(ref texSize2);
 			s.Serialize(ref unk0);
 			s.Serialize(ref unk1);

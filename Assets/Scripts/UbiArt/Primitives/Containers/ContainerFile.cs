@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace UbiArt {
 	public class ContainerFile<T> : ICSerializable, IObjectContainer where T : ICSerializable {
-		[Serialize("read"  )] public bool read;
+		[Serialize("read"  )] public bool read = true;
 		[Serialize("object")] public T obj;
 
 		public bool IsNull {

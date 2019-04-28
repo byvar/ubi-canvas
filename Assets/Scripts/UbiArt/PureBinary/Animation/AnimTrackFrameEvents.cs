@@ -20,19 +20,17 @@ namespace UbiArt.Animation {
 		public class AnimMarkerEvent : CSerializable {
 			[Serialize("type"      )] public int type;
 			[Serialize("unk0"      )] public StringID unk0;
-			[Serialize("vec"       )] public Vector2 vec;
-			[Serialize("unk1"      )] public StringID unk1;
+			[Serialize("posLocal"  )] public Vector2 posLocal;
+			[Serialize("name"      )] public StringID name;
 			[Serialize("eventData0")] public uint eventData0;
 			[Serialize("eventData1")] public float eventData1;
 
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(type));
-				if (Settings.s.game == Settings.Game.RL) {
-					SerializeField(s, nameof(unk0));
-				}
-				SerializeField(s, nameof(vec));
-				SerializeField(s, nameof(unk1));
+				SerializeField(s, nameof(unk0));
+				SerializeField(s, nameof(posLocal));
+				SerializeField(s, nameof(name));
 				switch (type) {
 					case 1: // AnimFXEvent
 						SerializeField(s, nameof(eventData0));

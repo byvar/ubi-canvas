@@ -168,6 +168,20 @@ namespace UbiArt {
 			}
 		}
 
+		public bool IsPureBinary(string extension) {
+			switch (extension) {
+				case "anm":
+				case "skl":
+				case "pbk":
+				case "tga":
+				case "png":
+				case null:
+					return true;
+				default:
+					return false;
+			}
+		}
+
 		private void WriteLog() {
 			if (logEnabled && logFile != null && logFile.Trim() != "") {
 				using (StreamWriter writer = new StreamWriter(logFile)) {

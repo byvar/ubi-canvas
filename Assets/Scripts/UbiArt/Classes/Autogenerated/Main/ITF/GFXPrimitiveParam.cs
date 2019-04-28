@@ -3,35 +3,49 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class GFXPrimitiveParam : CSerializable {
-		[Serialize("GridFluidParam"                   )] public GFX_GridFluidObjParam GridFluidParam;
-		[Serialize("GlobalScissor"                    )] public Enum_GlobalScissor GlobalScissor;
-		[Serialize("colorFactor"                      )] public Color colorFactor;
-		[Serialize("FrontLightBrightness"             )] public float FrontLightBrightness;
-		[Serialize("FrontLightContrast"               )] public float FrontLightContrast;
-		[Serialize("BackLightBrightness"              )] public float BackLightBrightness;
-		[Serialize("BackLightContrast"                )] public float BackLightContrast;
-		[Serialize("colorFog"                         )] public Color colorFog;
-		[Serialize("DynamicFogFactor"                 )] public float DynamicFogFactor;
-		[Serialize("OutlineColor"                     )] public Color OutlineColor;
-		[Serialize("OutlineWidth"                     )] public float OutlineWidth;
-		[Serialize("OutlineGlow"                      )] public float OutlineGlow;
-		[Serialize("ViewportVisibility"               )] public uint ViewportVisibility;
-		[Serialize("gfxOccludeInfo"                   )] public GFX_OCCLUDE_INFO gfxOccludeInfo;
-		[Serialize("gfxOccludeInfo"                   )] public GFX_OCCLUDE_INFO2 gfxOccludeInfo2;
-		[Serialize("colorForMask1"                    )] public Color colorForMask1;
-		[Serialize("colorForMask2"                    )] public Color colorForMask2;
-		[Serialize("colorForMask3"                    )] public Color colorForMask3;
-		[Serialize("saturation"                       )] public float saturation;
-		[Serialize("GridFluidEmitterIntensity"        )] public float GridFluidEmitterIntensity;
-		[Serialize("FrontLightFactor"                 )] public float FrontLightFactor;
-		[Serialize("BackLightFactor"                  )] public float BackLightFactor;
-		[Serialize("FrontLightBlurFactor"             )] public float FrontLightBlurFactor;
-		[Serialize("BackLightBlurFactor"              )] public float BackLightBlurFactor;
+		[Serialize("GridFluidParam"           )] public GFX_GridFluidObjParam GridFluidParam;
+		[Serialize("GlobalScissor"            )] public Enum_GlobalScissor GlobalScissor;
+		[Serialize("colorFactor"              )] public Color colorFactor = Color.white;
+		[Serialize("FrontLightBrightness"     )] public float FrontLightBrightness;
+		[Serialize("FrontLightContrast"       )] public float FrontLightContrast = 1f;
+		[Serialize("BackLightBrightness"      )] public float BackLightBrightness;
+		[Serialize("BackLightContrast"        )] public float BackLightContrast = 1f;
+		[Serialize("colorFog"                 )] public Color colorFog;
+		[Serialize("DynamicFogFactor"         )] public float DynamicFogFactor;
+		[Serialize("OutlineColor"             )] public Color OutlineColor;
+		[Serialize("OutlineWidth"             )] public float OutlineWidth;
+		[Serialize("OutlineGlow"              )] public float OutlineGlow;
+		[Serialize("ViewportVisibility"       )] public uint ViewportVisibility;
+		[Serialize("gfxOccludeInfo"           )] public GFX_OCCLUDE_INFO gfxOccludeInfo;
+		[Serialize("gfxOccludeInfo"           )] public GFX_OCCLUDE_INFO2 gfxOccludeInfo2;
+		[Serialize("colorForMask1"            )] public Color colorForMask1;
+		[Serialize("colorForMask2"            )] public Color colorForMask2;
+		[Serialize("colorForMask3"            )] public Color colorForMask3;
+		[Serialize("saturation"               )] public float saturation;
+		[Serialize("GridFluidEmitterIntensity")] public float GridFluidEmitterIntensity;
+		[Serialize("FrontLightFactor"         )] public float FrontLightFactor;
+		[Serialize("BackLightFactor"          )] public float BackLightFactor;
+		[Serialize("FrontLightBlurFactor"     )] public float FrontLightBlurFactor;
+		[Serialize("BackLightBlurFactor"      )] public float BackLightBlurFactor;
 
 		
 		[Serialize("useStaticFog"        )] public bool useStaticFog;
 		[Serialize("RenderInReflections" )] public bool RenderInReflections;
 		[Serialize("RenderToTexture"     )] public bool RenderToTexture;
+		
+		[Serialize("UseGlobalLighting"   )] public bool UseGlobalLighting;
+		[Serialize("UseZInject"          )] public bool UseZInject;
+		[Serialize("RenderRegular"       )] public bool RenderRegular;
+		[Serialize("RenderFrontLight"    )] public bool RenderFrontLight;
+		[Serialize("RenderBackLight"     )] public bool RenderBackLight;
+		[Serialize("RenderFrontLightBlur")] public bool RenderFrontLightBlur;
+		[Serialize("RenderBackLightBlur" )] public bool RenderBackLightBlur;
+		[Serialize("RenderGF_Fluid"      )] public bool RenderGF_Fluid;
+		[Serialize("RenderGF_Force"      )] public bool RenderGF_Force;
+		[Serialize("RenderGF_Blocker"    )] public bool RenderGF_Blocker;
+		[Serialize("UseColorRamp"        )] public bool UseColorRamp;
+		[Serialize("RenderMaskHole"      )] public bool RenderMaskHole;
+		[Serialize("RenderMaskSilhouette")] public bool RenderMaskSilhouette;
 
 		[Serialize("Color__5"                         )] public Color Color__5;
 		[Serialize("float__6"                         )] public float float__6;
@@ -100,6 +114,22 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					SerializeField(s, nameof(GridFluidParam));
 				}
+				SerializeField(s, nameof(useStaticFog));
+				SerializeField(s, nameof(UseGlobalLighting));
+				SerializeField(s, nameof(RenderInReflections));
+				SerializeField(s, nameof(UseZInject));
+				SerializeField(s, nameof(RenderRegular));
+				SerializeField(s, nameof(RenderFrontLight));
+				SerializeField(s, nameof(RenderBackLight));
+				SerializeField(s, nameof(RenderFrontLightBlur));
+				SerializeField(s, nameof(RenderBackLightBlur));
+				SerializeField(s, nameof(RenderGF_Fluid));
+				SerializeField(s, nameof(RenderGF_Force));
+				SerializeField(s, nameof(RenderGF_Blocker));
+				SerializeField(s, nameof(UseColorRamp));
+				SerializeField(s, nameof(RenderMaskHole));
+				SerializeField(s, nameof(RenderMaskSilhouette));
+
 				SerializeField(s, nameof(GlobalScissor));
 				SerializeField(s, nameof(colorFactor));
 				SerializeField(s, nameof(FrontLightBrightness));

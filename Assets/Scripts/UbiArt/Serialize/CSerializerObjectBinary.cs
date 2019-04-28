@@ -32,7 +32,7 @@ namespace UbiArt {
 							obj = true;
 						} else if (tmp != 0) {
 							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
-							obj = false;
+							//obj = false;
 						} else {
 							obj = false;
 						}
@@ -90,7 +90,7 @@ namespace UbiArt {
 						obj = true;
 					} else if (((byte)obj) != 0) {
 						throw new Exception(Position + ": BoolAsByte with name " + name + " was " + ((byte)obj) + "!");
-						obj = false;
+						//obj = false;
 					} else {
 						obj = false;
 					}
@@ -111,23 +111,30 @@ namespace UbiArt {
 		}
 
 		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
-			Pointer pos = log && index.HasValue ? Position : null;
-			bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-			if (log && index.HasValue && isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
+			Pointer pos = log && name != null ? Position : null;
+			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+			if (log && name != null && isBigObject) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
 			}
 
 			object obj2 = null;
 			Serialize(ref obj2, type ?? typeof(T), name: name);
 			obj = (T)obj2;
 
-			if (log && index.HasValue && !isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
+			if (log && name != null && !isBigObject) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 			}
 		}
 
 		public override void SerializeBytes(ref byte[] obj, int numBytes) {
 			obj = reader.ReadBytes(numBytes);
+		}
+
+		public override bool ArrayEntryStart(string name, int index) {
+			if (log) {
+				MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index + "]:");
+			}
+			return base.ArrayEntryStart(name, index);
 		}
 	}
 }

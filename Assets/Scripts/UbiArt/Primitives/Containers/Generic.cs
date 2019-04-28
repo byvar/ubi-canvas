@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt {
+	[SerializeEmbed]
 	public class Generic<T> : ICSerializable, IObjectContainer where T : CSerializable {
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;
 
 		public Generic() {
+			className = new StringID();
 		}
 
 		public Generic(T obj) {
@@ -53,14 +55,20 @@ namespace UbiArt {
 						}
 						type = type.MakeGenericType(typeof(T).GetGenericArguments());
 					}
-					s.Serialize(ref obj, type, name: type.Name);
+					s.Serialize(ref obj, type);
 				} else {
-					Debug.LogError("CRC " + className.stringID.ToString("X8")
-						+ " found at " + s.Position
-						+ " while reading container of type " + typeof(T) + " is not yet supported!");
-					throw new NotImplementedException("CRC " + className.stringID.ToString("X8")
-						+ " found at position " + s.Position
-						+ " while reading container of type " + typeof(T) + " is not yet supported!");
+					if (s is CSerializerObjectTagBinary) {
+						Debug.LogWarning("CRC " + className.stringID.ToString("X8")
+							+ " found at " + s.Position
+							+ " while reading container of type " + typeof(T) + " is not yet supported!");
+					} else {
+						Debug.LogError("CRC " + className.stringID.ToString("X8")
+							+ " found at " + s.Position
+							+ " while reading container of type " + typeof(T) + " is not yet supported!");
+						throw new NotImplementedException("CRC " + className.stringID.ToString("X8")
+							+ " found at position " + s.Position
+							+ " while reading container of type " + typeof(T) + " is not yet supported!");
+					}
 				}
 			}
 		}

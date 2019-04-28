@@ -24,8 +24,12 @@ namespace UbiArt {
 					key = entries[i].Key;
 					val = entries[i].Value;
 				}
-				s.Serialize(ref key, name: "KEY", index: i); // todo: check if names are correct. the RLC multimap uses enum names as keys
-				s.Serialize(ref val, name: "VAL", index: i);
+
+				if (s.ArrayEntryStart(name: name, index: i)) {
+					s.Serialize(ref key, name: "KEY"); // todo: check if names are correct. the RLC multimap uses enum names as keys
+					s.Serialize(ref val, name: "VAL");
+					s.ArrayEntryStop();
+				}
 				Add(key, val);
 			}
 		}

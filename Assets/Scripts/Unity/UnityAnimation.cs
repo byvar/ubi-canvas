@@ -117,11 +117,10 @@ public class UnityAnimation : MonoBehaviour {
 			}
 			if(bml != null && bml.frame != lastBmlFrame) {
 				lastBmlFrame = bml.frame;
-				CArray<StringID> keys = pbk.templateKeys.keysLegends;
 				List<int> indexes = new List<int>();
 				foreach (AnimTrackBML.Entry entry in bml.entries) {
 					StringID templateId = entry.templateId;
-					int ind = keys.IndexOf(templateId);
+					int ind = pbk.templateKeys.GetKeyIndex(templateId);
 					if (ind != -1) {
 						indexes.Add(ind);
 					}
@@ -139,11 +138,10 @@ public class UnityAnimation : MonoBehaviour {
 				bml = animTrack.bml.ToList().FindLast(b => b.frame == lastBmlFrame);
 			}
 			if (bml != null) {
-				CArray<StringID> keys = pbk.templateKeys.keysLegends;
 				List<int> indexes = new List<int>();
 				foreach (AnimTrackBML.Entry entry in bml.entries) {
 					StringID templateId = entry.templateId;
-					int ind = keys.IndexOf(templateId);
+					int ind = pbk.templateKeys.GetKeyIndex(templateId);
 					if (ind != -1) {
 						indexes.Add(ind);
 					}

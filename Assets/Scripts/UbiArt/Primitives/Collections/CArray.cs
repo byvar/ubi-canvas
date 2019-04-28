@@ -21,10 +21,17 @@ namespace UbiArt {
 			if (count != (uint)Count) {
 				Array.Resize(ref container, (int)count);
 			}
+			string typeName = "VAL";
+			if (count > 0 && s.GetTagCode(typeof(T)) == 200) {
+				typeName = null;
+			}
 			//s.EnterEmbed();
 			for (int i = 0; i < count; i++) {
 				T obj = container[i];
-				s.Serialize<T>(ref obj, name: name, index: i);
+				if (s.ArrayEntryStart(name: name, index: i)) {
+					s.Serialize<T>(ref obj, name: typeName);
+					s.ArrayEntryStop();
+				}
 				container[i] = obj;
 			}
 			//s.ExitEmbed();
