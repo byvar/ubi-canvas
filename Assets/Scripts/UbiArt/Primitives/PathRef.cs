@@ -9,7 +9,7 @@ namespace UbiArt {
 		public string folder;
 		public string filename;
 		public StringID stringID;
-		public uint unk;
+		public uint flags;
 
 		public PathRef() {}
 
@@ -44,7 +44,10 @@ namespace UbiArt {
 			s.Serialize<string>(ref folder);
 			s.Serialize<string>(ref filename);
 			s.Serialize<StringID>(ref stringID);
-			s.Serialize<uint>(ref unk);
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				s.Serialize<uint>(ref flags);
+				if (flags != 0) MapLoader.Loader.print("PathRef with nonzero flags: " + this + " - " + flags);
+			}
 		}
 		public override string ToString() {
 			if (stringID.IsNull) return "PathRef(null)";

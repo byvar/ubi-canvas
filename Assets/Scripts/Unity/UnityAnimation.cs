@@ -106,14 +106,16 @@ public class UnityAnimation : MonoBehaviour {
 			// Activate the correct patches
 			AnimTrackBML bml = null;
 			bool checkHigher = false;
-			int index = lastBmlFrame == -1 ? 0 : (animTrack.bml.ToList().FindLastIndex(b => b.frame == lastBmlFrame) + 1) % animTrack.bml.Count;
-			if (lastBmlFrame > currentFrame) {
-				checkHigher = true;
-			}
-			for (int i = 0; i < animTrack.bml.Count; i++) {
-				AnimTrackBML curB = animTrack.bml[(i + index) % animTrack.bml.Count];
-				if ((curB.frame > currentFrame) && !(checkHigher && curB.frame > lastBmlFrame)) break;
-				bml = curB;
+			if (animTrack.bml.Count > 0) {
+				int index = lastBmlFrame == -1 ? 0 : (animTrack.bml.ToList().FindLastIndex(b => b.frame == lastBmlFrame) + 1) % animTrack.bml.Count;
+				if (lastBmlFrame > currentFrame) {
+					checkHigher = true;
+				}
+				for (int i = 0; i < animTrack.bml.Count; i++) {
+					AnimTrackBML curB = animTrack.bml[(i + index) % animTrack.bml.Count];
+					if ((curB.frame > currentFrame) && !(checkHigher && curB.frame > lastBmlFrame)) break;
+					bml = curB;
+				}
 			}
 			if(bml != null && bml.frame != lastBmlFrame) {
 				lastBmlFrame = bml.frame;
@@ -131,6 +133,7 @@ public class UnityAnimation : MonoBehaviour {
 					}
 				}
 			}
+
 
 			// Configure Z for all patches
 			ZListManager zman = MapLoader.Loader.controller.zListManager;

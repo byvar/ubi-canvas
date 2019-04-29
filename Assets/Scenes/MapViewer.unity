@@ -616,10 +616,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b610252c0c159f741a37dd9759d16a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 4
-  gameDataBinFolder: ..\..\RIPPING\RayAdventures\ext\cache\itf_cooked\android
-  pathFolder: world\rlc_avatar\lostruins
-  pathFile: avatar_lostruins_exp_base.isc.ckd
+  mode: 0
+  gameDataBinFolder: ..\..\RIPPING\RO_PC\ext\itf_cooked\pc
+  pathFolder: world\1_jungleworld\level\ju_a5
+  pathFile: ju_a5_swingingcaves.isc.ckd
   log: 1
   logFile: ..\..\RIPPING\RL_Mod\log.txt
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}
@@ -631,7 +631,7 @@ MonoBehaviour:
   forceDisplayBackfaces: 0
   zListManager: {fileID: 929858122}
   displayGizmos: 0
-  loadAnimations: 1
+  loadAnimations: 0
 --- !u!4 &929858120
 Transform:
   m_ObjectHideFlags: 0

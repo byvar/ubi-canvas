@@ -14,11 +14,13 @@ namespace UbiArt.UV {
 		protected override void SerializeImpl(CSerializerObject s) {
 			SerializeField(s, nameof(version));
 			SerializeField(s, nameof(uvData));
-			SerializeField(s, nameof(uvParams));
-			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(uv3D));
-				SerializeField(s, nameof(float0));
-				SerializeField(s, nameof(float1));
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				SerializeField(s, nameof(uvParams));
+				if (Settings.s.game == Settings.Game.RA) {
+					SerializeField(s, nameof(uv3D));
+					SerializeField(s, nameof(float0));
+					SerializeField(s, nameof(float1));
+				}
 			}
 		}
 	}

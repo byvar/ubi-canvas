@@ -108,6 +108,10 @@ namespace UbiArt.ITF {
 					}
 					MapLoader l = MapLoader.Loader;
 					ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, l.anm[p.stringID]) : null).Where(t => t != null).ToList();
+					if (ua.anims.Count > 0) {
+						ua.animIndex = 0;
+						ua.animTrack = ua.anims[0].Item2;
+					}
 					ua.Init();
 					/*for (int i = 0; i < bp.pbk.templates.Count; i++) {
 						AnimTemplate at = bp.pbk.templates[i];
