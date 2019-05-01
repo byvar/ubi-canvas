@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_PlayerCostumeComponent_Template : CSerializable {
+	public partial class Ray_PlayerCostumeComponent_Template : ActorComponent_Template {
 		[Serialize("newIconPath"  )] public Path newIconPath;
 		[Serialize("newIconOffset")] public Vector3 newIconOffset;
 		[Serialize("playerIDInfo" )] public StringID playerIDInfo;

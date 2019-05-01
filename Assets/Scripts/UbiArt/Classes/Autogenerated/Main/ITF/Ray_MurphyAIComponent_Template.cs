@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_MurphyAIComponent_Template : CSerializable {
+	public partial class Ray_MurphyAIComponent_Template : ActorComponent_Template {
 		[Serialize("playerDetectRadiusAppear"   )] public float playerDetectRadiusAppear;
 		[Serialize("playerDetectRadiusDisappear")] public float playerDetectRadiusDisappear;
 		[Serialize("bubbleBone"                 )] public StringID bubbleBone;

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("FrictionMultiplier")] public float FrictionMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 			} else {
 				SerializeField(s, nameof(Mass));
 				SerializeField(s, nameof(Friction));

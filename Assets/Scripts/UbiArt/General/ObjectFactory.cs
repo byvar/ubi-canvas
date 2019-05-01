@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace UbiArt {
 	public class ObjectFactory {
 		public static Dictionary<uint, Type> classes = new Dictionary<uint, Type> {
+			{ 0xA595F825, typeof(ITF.Ray_TutorialComponent) },
 			{ 0x7EB87D5E, typeof(ITF.CatchThemAllComponent) },
 			{ 0x0013B956, typeof(ITF.RO2_BlackSwarmSpawnerComponent) },
 			{ 0x001A132B, typeof(ITF.EventSyncActorUpdate) },

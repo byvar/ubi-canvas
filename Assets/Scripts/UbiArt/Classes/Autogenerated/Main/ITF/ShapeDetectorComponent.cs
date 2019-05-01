@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class ShapeDetectorComponent : DetectorComponent {
 		[Serialize("localOffset"      )] public Vector2 localOffset;
 		[Serialize("localScale"       )] public Vector2 localScale;
@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("editableShape"    )] public EditableShape editableShape;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(localOffset));

@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
 					SerializeField(s, nameof(POS));
 				}

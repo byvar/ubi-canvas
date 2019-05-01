@@ -87,22 +87,24 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(ConfigName));
 					SerializeField(s, nameof(SwitchTexturePipeExtremity));
 					if (s.HasFlags(SerializeFlags.Default)) {
-						SerializeField(s, nameof(ColorFactor_Red));
-						SerializeField(s, nameof(ColorFactor_Green));
-						SerializeField(s, nameof(ColorFactor_Blu));
-						SerializeField(s, nameof(ColorFactor_Alpha));
-						SerializeField(s, nameof(ColorFog_Red));
-						SerializeField(s, nameof(ColorFog_Green));
-						SerializeField(s, nameof(ColorFog_Blu));
-						SerializeField(s, nameof(fogfactor));
+						if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
+							SerializeField(s, nameof(ColorFactor_Red));
+							SerializeField(s, nameof(ColorFactor_Green));
+							SerializeField(s, nameof(ColorFactor_Blu));
+							SerializeField(s, nameof(ColorFactor_Alpha));
+							SerializeField(s, nameof(ColorFog_Red));
+							SerializeField(s, nameof(ColorFog_Green));
+							SerializeField(s, nameof(ColorFog_Blu));
+							SerializeField(s, nameof(fogfactor));
+						}
 						SerializeField(s, nameof(ColorFactor));
 						SerializeField(s, nameof(ColorFog));
 						SerializeField(s, nameof(ColorComputerTagId));
 						SerializeField(s, nameof(renderInTarget));
 						SerializeField(s, nameof(UvX_Offset));
 						SerializeField(s, nameof(UvY_Offset));
-						SerializeField(s, nameof(UvX_Flip));
-						SerializeField(s, nameof(UvY_Flip));
+						SerializeField(s, nameof(UvX_Flip), type: typeof(byte));
+						SerializeField(s, nameof(UvY_Flip), type: typeof(byte));
 						SerializeField(s, nameof(uvY_Tile));
 						SerializeField(s, nameof(Filling_OffSetUv));
 						SerializeField(s, nameof(Anim_SyncGlobal));

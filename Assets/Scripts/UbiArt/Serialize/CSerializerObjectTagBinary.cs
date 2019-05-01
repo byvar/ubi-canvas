@@ -95,20 +95,7 @@ namespace UbiArt {
 					}
 					object obj = null;
 					Serialize(ref obj, objType, name: name);
-					if (type != null) {
-						if (type == typeof(byte) && f.FieldType == typeof(bool)) {
-							if (((byte)obj) == 1) {
-								obj = true;
-							} else if (((byte)obj) != 0) {
-								throw new Exception(Position + ": BoolAsByte with name " + name + " was " + ((byte)obj) + "!");
-								//obj = false;
-							} else {
-								obj = false;
-							}
-						} else if (type == typeof(uint) && f.FieldType == typeof(ObjectRef)) {
-							obj = (ObjectRef)(uint)obj;
-						}
-					}
+					if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 					f.SetValue(containerObj, obj);
 					
 					reader.BaseStream.Position = endPos.Pop();
@@ -125,20 +112,7 @@ namespace UbiArt {
 				object obj = null;
 
 				Serialize(ref obj, objType, name: name);
-				if (type != null) {
-					if (type == typeof(byte) && f.FieldType == typeof(bool)) {
-						if (((byte)obj) == 1) {
-							obj = true;
-						} else if (((byte)obj) != 0) {
-							throw new Exception(Position + ": BoolAsByte with name " + name + " was " + ((byte)obj) + "!");
-							//obj = false;
-						} else {
-							obj = false;
-						}
-					} else if (type == typeof(uint) && f.FieldType == typeof(ObjectRef)) {
-						obj = (ObjectRef)(uint)obj;
-					}
-				}
+				if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 				f.SetValue(containerObj, obj);
 				if (log && !isBigObject) {
 					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);

@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class CharacterDebuggerComponent : ActorComponent {
-		[Serialize("DebugFlags"          )] public CharacterDebuggerComponent__CharacterDebug DebugFlags;
+		[Serialize("DebugFlags"          )] public CharacterDebug DebugFlags;
 		[Serialize("trajectoryPointCount")] public uint trajectoryPointCount;
 		[Serialize("barFrameCount"       )] public uint barFrameCount;
 		[Serialize("beatFrameCount"      )] public uint beatFrameCount;
@@ -19,16 +20,11 @@ namespace UbiArt.ITF {
 		[Serialize("uint__1"             )] public uint uint__1;
 		[Serialize("uint__2"             )] public uint uint__2;
 		[Serialize("uint__3"             )] public uint uint__3;
-		[Serialize("Color__4"            )] public Color Color__4;
-		[Serialize("Color__5"            )] public Color Color__5;
-		[Serialize("Color__6"            )] public Color Color__6;
-		[Serialize("Color__7"            )] public Color Color__7;
-		[Serialize("Color__8"            )] public Color Color__8;
 		[Serialize("bool__9"             )] public bool bool__9;
 		[Serialize("bool__10"            )] public bool bool__10;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(trajectoryPointCount));
 				SerializeField(s, nameof(barFrameCount));
@@ -43,11 +39,11 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(uint__1));
 				SerializeField(s, nameof(uint__2));
 				SerializeField(s, nameof(uint__3));
-				SerializeField(s, nameof(Color__4));
-				SerializeField(s, nameof(Color__5));
-				SerializeField(s, nameof(Color__6));
-				SerializeField(s, nameof(Color__7));
-				SerializeField(s, nameof(Color__8));
+				SerializeField(s, nameof(barColor));
+				SerializeField(s, nameof(beatColor));
+				SerializeField(s, nameof(halfBeatColor));
+				SerializeField(s, nameof(leftButtonColor));
+				SerializeField(s, nameof(rightButtonColor));
 				SerializeField(s, nameof(bool__9));
 				SerializeField(s, nameof(bool__10));
 			} else {
@@ -65,7 +61,8 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(writeLog));
 			}
 		}
-		public enum CharacterDebuggerComponent__CharacterDebug {
+		[Flags]
+		public enum CharacterDebug {
 			[Serialize("CharacterDebuggerComponent::CharacterDebug_Collider"   )] Collider = 1,
 			[Serialize("CharacterDebuggerComponent::CharacterDebug_Trajectory" )] Trajectory = 2,
 			[Serialize("CharacterDebuggerComponent::CharacterDebug_Controller" )] Controller = 4,

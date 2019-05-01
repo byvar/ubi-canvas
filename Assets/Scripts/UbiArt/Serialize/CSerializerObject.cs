@@ -110,6 +110,39 @@ namespace UbiArt {
 			return ((this.flagsOwn & flags) != Flags.None);
 		}
 
+		protected void ConvertTypeBefore(ref object obj, string name, Type type, Type fieldType) {
+			if (type == typeof(byte) && fieldType == typeof(bool)) {
+				if (((bool)obj) == true) {
+					obj = (byte)1;
+				} else {
+					obj = (byte)0;
+				}
+			} else if (type == typeof(uint) && fieldType == typeof(ObjectRef)) {
+				ObjectRef objref = ((ObjectRef)obj);
+				obj = objref == null ? (uint)0xFFFFFFFF : objref.objectRef;
+			} else if (type == typeof(float) && fieldType == typeof(Angle)) {
+				Angle a = ((Angle)obj);
+				obj = a == null ? 0 : a.angle;
+			}
+		}
+
+		protected void ConvertTypeAfter(ref object obj, string name, Type type, Type fieldType) {
+			if (type == typeof(byte) && fieldType == typeof(bool)) {
+				if (((byte)obj) == 1) {
+					obj = true;
+				} else if (((byte)obj) != 0) {
+					throw new Exception(Position + ": BoolAsByte with name " + name + " was " + ((byte)obj) + "!");
+					//obj = false;
+				} else {
+					obj = false;
+				}
+			} else if (type == typeof(uint) && fieldType == typeof(ObjectRef)) {
+				obj = (ObjectRef)(uint)obj;
+			} else if (type == typeof(float) && fieldType == typeof(Angle)) {
+				obj = (Angle)(float)obj;
+			}
+		}
+
 		[Flags]
 		public enum Flags {
 			None = 0,

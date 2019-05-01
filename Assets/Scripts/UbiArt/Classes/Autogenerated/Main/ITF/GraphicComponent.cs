@@ -24,23 +24,14 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(ColorFog_Red));
-					SerializeField(s, nameof(ColorFog_Green));
-					SerializeField(s, nameof(ColorFog_Blu));
-					SerializeField(s, nameof(ColorFactor));
-					SerializeField(s, nameof(ColorFog));
-					SerializeField(s, nameof(colorComputerTagId));
-					SerializeField(s, nameof(renderInTarget));
-					SerializeField(s, nameof(disableLight));
-				}
-			} else if (Settings.s.game == Settings.Game.RO) {
-				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(ColorFog_Red));
-					SerializeField(s, nameof(ColorFog_Green));
-					SerializeField(s, nameof(ColorFog_Blu));
-					SerializeField(s, nameof(fogfactor));
+					if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
+						SerializeField(s, nameof(ColorFog_Red));
+						SerializeField(s, nameof(ColorFog_Green));
+						SerializeField(s, nameof(ColorFog_Blu));
+						SerializeField(s, nameof(fogfactor));
+					}
 					SerializeField(s, nameof(ColorFactor));
 					SerializeField(s, nameof(ColorFog));
 					SerializeField(s, nameof(colorComputerTagId));

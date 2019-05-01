@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_TutorialComponent_Template : CSerializable {
+	public partial class Ray_TutorialComponent_Template : ActorComponent_Template {
 		[Serialize("startsActive"      )] public int startsActive;
 		[Serialize("isSprintTutorial"  )] public int isSprintTutorial;
 		[Serialize("padDisplayDuration")] public float padDisplayDuration;

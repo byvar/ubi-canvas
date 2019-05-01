@@ -27,7 +27,9 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(EMBED_SCENE));
 					SerializeField(s, nameof(IS_SINGLE_PIECE));
 					SerializeField(s, nameof(ZFORCED));
-					SerializeField(s, nameof(SCENEOrigins));
+					if (EMBED_SCENE) {
+						SerializeField(s, nameof(SCENEOrigins));
+					}
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(RELATIVEPATH));
@@ -36,7 +38,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(ZFORCED));
 				SerializeField(s, nameof(DIRECT_PICKING));
 				SerializeField(s, nameof(viewType));
-				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
+				if (s.HasFlags(SerializeFlags.Flags_xC0) && EMBED_SCENE) {
 					SerializeField(s, nameof(SCENE));
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30)) {
@@ -54,7 +56,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(ZFORCED));
 				SerializeField(s, nameof(DIRECT_PICKING));
 				SerializeField(s, nameof(viewType));
-				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
+				if (s.HasFlags(SerializeFlags.Flags_xC0) && EMBED_SCENE) {
 					SerializeField(s, nameof(SCENE));
 				}
 				if (s.HasFlags(SerializeFlags.Flags15)) {

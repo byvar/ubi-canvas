@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_ChangePageComponent_Template : CSerializable {
+	public partial class Ray_ChangePageComponent_Template : ActorComponent_Template {
 		[Serialize("waitPlayersDuration"               )] public float waitPlayersDuration;
 		[Serialize("useFadeOutIn"                      )] public int useFadeOutIn;
 		[Serialize("warpZone"                          )] public int warpZone;

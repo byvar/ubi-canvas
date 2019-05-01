@@ -99,12 +99,14 @@ public class Controller : MonoBehaviour {
 			}
 		}
 		switch (modeString) {
+			case "ro_pc":
+				mode = Settings.Mode.RaymanOriginsPC; break;
 			case "rl_pc":
 				mode = Settings.Mode.RaymanLegendsPC; break;
 			case "rl_vita":
 				mode = Settings.Mode.RaymanLegendsVitaCatchThemAll; break;
-			case "ra_ios":
-				mode = Settings.Mode.RaymanAdventuresIOS; break;
+			/*case "ra_ios":
+				mode = Settings.Mode.RaymanAdventuresIOS; break;*/
 		}
 		loadingScreen.Active = true;
 		Settings.Init(mode);

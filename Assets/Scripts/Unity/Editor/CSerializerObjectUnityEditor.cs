@@ -90,32 +90,9 @@ namespace UbiArt {
 
 		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
 			object obj = obj = f.GetValue(containerObj);
-			if (type != null) {
-				if (type == typeof(byte) && f.FieldType == typeof(bool)) {
-					if ((bool)obj) {
-						obj = (byte)1;
-					} else {
-						obj = (byte)0;
-					}
-				} else if (type == typeof(uint) && f.FieldType == typeof(ObjectRef)) {
-					obj = (uint)(ObjectRef)f.GetValue(containerObj);
-				}
-			}
+			if (type != null) ConvertTypeBefore(ref obj, name, type, f.FieldType);
 			Serialize(ref obj, type ?? f.FieldType, name: name);
-			if (type != null) {
-				if (type == typeof(byte) && f.FieldType == typeof(bool)) {
-					if (((byte)obj) == 1) {
-						obj = true;
-					} else if (((byte)obj) != 0) {
-						throw new Exception(Position + ": BoolAsByte with name " + name + " was " + ((byte)obj) + "!");
-						obj = false;
-					} else {
-						obj = false;
-					}
-				} else if (type == typeof(uint) && f.FieldType == typeof(ObjectRef)) {
-					obj = (ObjectRef)(uint)obj;
-				}
-			}
+			if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 			f.SetValue(containerObj, obj);
 		}
 

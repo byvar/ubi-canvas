@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace UbiArt {
 	public class ObjectId : ICSerializable {
-		public uint id;
+		public long id;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<uint>(ref id);
+			s.Serialize<long>(ref id);
 		}
 
 		public const int Invalid = -1;
 
 		public bool IsNull {
 			get {
-				return id == 0xFFFFFFFF;
+				return id == -1;
 			}
 		}
 	}

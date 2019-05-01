@@ -63,18 +63,7 @@ namespace UbiArt {
 			Pointer pos = log ? Position : null;
 			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
 			object obj = f.GetValue(containerObj);
-			if (type != null) {
-				if (type == typeof(byte) && f.FieldType == typeof(bool)) {
-					if (((bool)obj) == true) {
-						obj = (byte)1;
-					} else {
-						obj = (byte)0;
-					}
-				} else if (type == typeof(uint) && f.FieldType == typeof(ObjectRef)) {
-					ObjectRef objref = ((ObjectRef)obj);
-					obj = objref == null ? (uint)0xFFFFFFFF : objref.objectRef;
-				}
-			}
+			if (type != null) ConvertTypeBefore(ref obj, name, type, f.FieldType);
 			if (log && isBigObject) {
 				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
 			} else if (log && !isBigObject) {

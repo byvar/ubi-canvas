@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR)]
-	public partial class Ray_PlayerCostumeManagerComponent : CSerializable {
+	[Games(GameFlags.RFR | GameFlags.RO)]
+	public partial class Ray_PlayerCostumeManagerComponent : ActorComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

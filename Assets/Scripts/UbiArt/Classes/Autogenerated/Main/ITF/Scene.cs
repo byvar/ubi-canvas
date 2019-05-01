@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags6)) {
 					SerializeField(s, nameof(ENGINE_VERSION));
 				}
-				if (s.HasFlags(SerializeFlags.Flags0)) {
+				if (s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
 					SerializeField(s, nameof(DEPENDENCIES));
 					SerializeField(s, nameof(MUSIC_THEME_PATH));
 				}
@@ -47,7 +47,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags6)) {
 					SerializeField(s, nameof(ENGINE_VERSION));
 				}
-				if (s.HasFlags(SerializeFlags.Flags0)) {
+				if (s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
 					SerializeField(s, nameof(DEPENDENCIES));
 					SerializeField(s, nameof(MUSIC_THEME_PATH));
 				} else if (s.HasFlags(SerializeFlags.Flags_xC0)) {

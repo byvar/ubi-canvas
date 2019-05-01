@@ -6,7 +6,11 @@ using System.Text;
 namespace UbiArt {
 	public class Settings {
 		public enum Mode {
-			RaymanOriginsPC, RaymanLegendsPC, RaymanLegendsVitaCatchThemAll, RaymanAdventuresIOS, RaymanAdventuresAndroid
+			RaymanOriginsPC,
+			RaymanLegendsPC,
+			RaymanLegendsVitaCatchThemAll,
+			//RaymanAdventuresIOS,
+			RaymanAdventuresAndroid
 		};
 		public Mode mode = Mode.RaymanLegendsPC;
 
@@ -47,7 +51,7 @@ namespace UbiArt {
 				case Mode.RaymanOriginsPC: s = ROPC; break;
 				case Mode.RaymanLegendsPC: s = RLPC; break;
 				case Mode.RaymanLegendsVitaCatchThemAll: s = RLVita; break;
-				case Mode.RaymanAdventuresIOS: s = RAIOS; break;
+				//case Mode.RaymanAdventuresIOS: s = RAIOS; break;
 				case Mode.RaymanAdventuresAndroid: s = RAAndroid; break;
 			}
 			if (s != null) s.mode = mode;

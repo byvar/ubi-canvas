@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("AnimPolylineList" )] public CList<StringID> AnimPolylineList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(localOffset));
