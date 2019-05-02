@@ -22,7 +22,7 @@ namespace UbiArt {
 		protected virtual void OnPreSerialize(CSerializerObject s) {}
 		protected virtual void OnPostSerialize(CSerializerObject s) {}
 		protected virtual void SerializeImpl(CSerializerObject s) {
-			if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes) && !s.Embedded) {
+			if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes) && !s.Embedded && Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				SerializeField(s, nameof(sizeOf));
 			}
 		}

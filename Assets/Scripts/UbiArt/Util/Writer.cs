@@ -73,6 +73,11 @@ namespace UbiArt {
 			Write(data.Length);
 			Write(data);
 		}
+		public void Write16(String value) {
+			var data = Encoding.BigEndianUnicode.GetBytes(value);
+			Write(data.Length / 2);
+			Write(data);
+		}
 
 		public void Write(Vector2 value) {
 			Write(value.x);

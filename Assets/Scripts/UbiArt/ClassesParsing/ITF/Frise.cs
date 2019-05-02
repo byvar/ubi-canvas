@@ -4,6 +4,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	public partial class Frise {
 		public GenericFile<FriseConfig> config;
+		public FriseOrigins.FriseConfigOrigins configOrigins;
 		public GameObject mesh_static;
 		public GameObject mesh_anim;
 		public MeshRenderer mr_static;
@@ -214,16 +215,24 @@ namespace UbiArt.ITF {
 					}
 				});
 				l.Load(ConfigName, (extS) => {
-					extS.log = l.logEnabled;
-					if (l.fcg.ContainsKey(ConfigName.stringID)) {
-						config = l.fcg[ConfigName.stringID];
+					if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+						if (l.fcg.ContainsKey(ConfigName.stringID)) {
+							config = l.fcg[ConfigName.stringID];
+						} else {
+							extS.Serialize(ref config);
+							l.fcg[ConfigName.stringID] = config;
+						}
+						if (config != null) {
+							templatePickable = config.obj;
+						}
 					} else {
-						//extS.log = true;
-						extS.Serialize(ref config);
-						l.fcg[ConfigName.stringID] = config;
-					}
-					if (config != null) {
-						templatePickable = config.obj;
+						extS.log = l.logEnabled;
+						if (l.fcgOrigins.ContainsKey(ConfigName.stringID)) {
+							configOrigins = l.fcgOrigins[ConfigName.stringID];
+						} else {
+							extS.Serialize(ref configOrigins);
+							l.fcgOrigins[ConfigName.stringID] = configOrigins;
+						}
 					}
 				});
 			}

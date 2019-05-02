@@ -55,6 +55,7 @@ namespace UbiArt {
 
 		public Dictionary<StringID, GenericFile<ITF.Actor_Template>> tpl = new Dictionary<StringID, GenericFile<ITF.Actor_Template>>();
 		public Dictionary<StringID, GenericFile<ITF.FriseConfig>> fcg = new Dictionary<StringID, GenericFile<ITF.FriseConfig>>();
+		public Dictionary<StringID, FriseOrigins.FriseConfigOrigins> fcgOrigins = new Dictionary<StringID, FriseOrigins.FriseConfigOrigins>();
 		public Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>> msh = new Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>>();
 		public Dictionary<StringID, GenericFile<CSerializable>> isg = new Dictionary<StringID, GenericFile<CSerializable>>();
 		public Dictionary<StringID, ContainerFile<ITF.Scene>> isc = new Dictionary<StringID, ContainerFile<ITF.Scene>>();

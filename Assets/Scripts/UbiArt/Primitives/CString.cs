@@ -19,5 +19,9 @@ namespace UbiArt {
 			throw new Exception(s.Position + ": CString here");
 			s.Serialize<string>(ref str);
 		}
+
+		public override string ToString() {
+			return "UnicodeString(\"" + str + "\")";
+		}
 	}
 }

@@ -62,6 +62,8 @@ namespace UbiArt {
 				obj = reader.ReadVector4();
 			} else if (type == typeof(Color)) {
 				obj = reader.ReadColor();
+			} else if (type == typeof(CString)) {
+				obj = new CString(reader.ReadString16());
 			} else if (type == typeof(byte[])) {
 				int numBytes = reader.ReadInt32();
 				obj = reader.ReadBytes(numBytes);

@@ -110,6 +110,16 @@ namespace UbiArt {
 				return null;
 			}
 		}
+		public string ReadString16() {
+			int size = ReadInt32();
+			if (size > 0) {
+				return System.Text.Encoding.BigEndianUnicode.GetString(ReadBytes(size * 2)).TrimEnd('\0');
+			} else if (size == 0) {
+				return "";
+			} else {
+				return null;
+			}
+		}
 		public string ReadString(int size) {
 			return System.Text.Encoding.UTF8.GetString(ReadBytes(size)).TrimEnd('\0');
 		}

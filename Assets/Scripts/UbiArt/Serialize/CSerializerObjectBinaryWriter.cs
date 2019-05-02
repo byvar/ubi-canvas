@@ -47,6 +47,8 @@ namespace UbiArt {
 				writer.Write((Vector4)obj);
 			} else if (type == typeof(Color)) {
 				writer.Write((Color)obj);
+			} else if (type == typeof(CString)) {
+				writer.Write16(obj != null ? ((CString)obj).str : null);
 			} else if (type == typeof(byte[])) {
 				writer.Write(((byte[])obj).Length);
 				writer.Write((byte[])obj);

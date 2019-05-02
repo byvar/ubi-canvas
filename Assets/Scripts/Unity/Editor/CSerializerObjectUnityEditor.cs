@@ -64,6 +64,8 @@ namespace UbiArt {
 				obj = EditorGUILayout.Vector4Field(name, (Vector4)obj);
 			} else if (type == typeof(Color)) {
 				obj = EditorGUILayout.ColorField(name, (Color)obj);
+			} else if (type == typeof(CString)) {
+				obj = new CString(EditorGUILayout.TextField(name, ((CString)obj).str));
 			} else {
 				if (obj == null) {
 					var ctor = type.GetConstructor(Type.EmptyTypes);
