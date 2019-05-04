@@ -8,9 +8,9 @@ using UnityEngine;
 namespace UbiArt.FriseOrigins {
 	// See: ITF::FriseTextureConfig::serialize
 	public class FriseTextureConfig : CSerializable {
-		[Serialize("str0")] public CString str0;
-		[Serialize("str1")] public CString str1;
-		[Serialize("str2")] public CString str2;
+		[Serialize("texture1")] public CString texture1;
+		[Serialize("texture2")] public CString texture2;
+		[Serialize("texture3")] public CString texture3;
 		[Serialize("flt3")] public float flt3;
 		[Serialize("flt4")] public float flt4;
 		[Serialize("flt5")] public float flt5;
@@ -28,13 +28,28 @@ namespace UbiArt.FriseOrigins {
 		[Serialize("color2")] public ColorInteger color2;
 		[Serialize("collision1")] public CollisionFrieze collision1;
 		[Serialize("collision2")] public CollisionFrieze collision2;
+		[Serialize("scrollUV"     )] public Vector2 scrollUV;
+		[Serialize("scrollAngle"  )] public float scrollAngle;
+		[Serialize("alphaBorder"  )] public byte alphaBorder;
+		[Serialize("alphaUp"      )] public byte alphaUp;
+		[Serialize("uint1")] public uint uint1;
+		[Serialize("uint2")] public uint uint2;
+		[Serialize("flt10")] public float flt10;
+		[Serialize("flt11")] public float flt11;
+		[Serialize("flt12")] public float flt12;
+		[Serialize("flt13")] public float flt13;
+		[Serialize("int0")] public int int0;
+		[Serialize("int1")] public int int1;
+		[Serialize("int2")] public int int2;
+		[Serialize("uint3")] public uint uint3;
+		[Serialize("flt14")] public float flt14;
 
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(str0));
-			SerializeField(s, nameof(str1));
-			SerializeField(s, nameof(str2));
+			SerializeField(s, nameof(texture1));
+			SerializeField(s, nameof(texture2));
+			SerializeField(s, nameof(texture3));
 			SerializeField(s, nameof(flt3));
 			SerializeField(s, nameof(flt4));
 			SerializeField(s, nameof(flt5));
@@ -52,6 +67,21 @@ namespace UbiArt.FriseOrigins {
 			SerializeField(s, nameof(color2));
 			SerializeField(s, nameof(collision1));
 			SerializeField(s, nameof(collision2));
+			SerializeField(s, nameof(scrollUV));
+			SerializeField(s, nameof(scrollAngle));
+			SerializeField(s, nameof(alphaBorder));
+			SerializeField(s, nameof(alphaUp));
+			SerializeField(s, nameof(uint1));
+			SerializeField(s, nameof(uint2));
+			SerializeField(s, nameof(flt10));
+			SerializeField(s, nameof(flt11));
+			SerializeField(s, nameof(flt12));
+			SerializeField(s, nameof(flt13));
+			SerializeField(s, nameof(int0));
+			SerializeField(s, nameof(int1));
+			SerializeField(s, nameof(int2));
+			SerializeField(s, nameof(uint3));
+			SerializeField(s, nameof(flt14));
 		}
 	}
 }

@@ -16,8 +16,8 @@ namespace UbiArt.ITF {
 		[Serialize("scaleUV2"     )] public Vector2 scaleUV2;
 		[Serialize("scrollUV2"    )] public Vector2 scrollUV2;
 		[Serialize("scrollAngle2" )] public float scrollAngle2;
-		[Serialize("alphaBorder"  )] public char alphaBorder;
-		[Serialize("alphaUp"      )] public char alphaUp;
+		[Serialize("alphaBorder"  )] public byte alphaBorder;
+		[Serialize("alphaUp"      )] public byte alphaUp;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
