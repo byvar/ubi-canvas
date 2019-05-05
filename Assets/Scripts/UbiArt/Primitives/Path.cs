@@ -28,6 +28,24 @@ namespace UbiArt {
 				stringID = new StringID();
 			}
 		}
+		public Path(string fullPath, bool cooked = false) {
+			fullPath = fullPath.Replace('\\', '/');
+			if (fullPath.Contains('/')) {
+				folder = fullPath.Substring(0, fullPath.LastIndexOf('/') + 1);
+				filename = fullPath.Substring(fullPath.LastIndexOf('/') + 1);
+			} else {
+				folder = "";
+				filename = fullPath;
+			}
+			if (folder != null && folder != "" && !folder.EndsWith("/")) folder += "/";
+			if (folder != null && folder.StartsWith("/")) folder = folder.Substring(1);
+			if (!cooked && filename != null && filename != "" && filename.EndsWith(".ckd")) filename = filename.Substring(0, filename.Length - 4);
+			if ((folder != null && folder != "") || (filename != null && filename != "")) {
+				stringID = new StringID(FullPath);
+			} else {
+				stringID = new StringID();
+			}
+		}
 
 		public string FullPath {
 			get {

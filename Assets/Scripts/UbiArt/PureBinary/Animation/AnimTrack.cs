@@ -27,10 +27,15 @@ namespace UbiArt.Animation {
 		[Serialize("vec2"       )] public Vector2 vec2;
 		[Serialize("vec3"       )] public Vector2 vec3;
 		[Serialize("skeleton"   )] public Pair<StringID, Path> skeleton;
+		[Serialize("skeleton"   )] public Pair<StringID, CString> skeletonOrigins;
+		[Serialize("keysOrigins")] public KeyArray<int> keysOrigins;
 		[Serialize("textures"   )] public CList<Pair<StringID, Path>> texturePaths;
+		[Serialize("textures"   )] public CList<Pair<StringID, CString>> texturePathsOrigins;
 		[Serialize("unk0"       )] public uint unk0;
 		[Serialize("unk1"       )] public uint unk1;
 		[Serialize("unk2"       )] public uint unk2;
+		[Serialize("unk0"       )] public ulong unk0Origins;
+		[Serialize("unk1"       )] public CList<ulong> unk1Origins;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -51,36 +56,68 @@ namespace UbiArt.Animation {
 			SerializeField(s, nameof(vec1));
 			SerializeField(s, nameof(vec2));
 			SerializeField(s, nameof(vec3));
-			SerializeField(s, nameof(skeleton));
-			SerializeField(s, nameof(texturePaths));
-			SerializeField(s, nameof(unk0));
-			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(unk1));
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				SerializeField(s, nameof(skeleton));
+				SerializeField(s, nameof(texturePaths));
+				SerializeField(s, nameof(unk0));
+				if (Settings.s.game == Settings.Game.RL) {
+					SerializeField(s, nameof(unk1));
+				}
+				SerializeField(s, nameof(unk2));
+			} else {
+				SerializeField(s, nameof(skeletonOrigins));
+				SerializeField(s, nameof(keysOrigins));
+				SerializeField(s, nameof(texturePathsOrigins));
+				SerializeField(s, nameof(unk0Origins));
+				SerializeField(s, nameof(unk1Origins));
+				SerializeField(s, nameof(unk2));
 			}
-			SerializeField(s, nameof(unk2));
 		}
 
 		public AnimSkeleton skel;
 		public TextureCooked[] texs;
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (skeleton != null && skeleton.Item2 != null && isFirstLoad) {
-				MapLoader l = MapLoader.Loader;
-				l.Load(skeleton.Item2, (extS) => {
-					if (l.skl.ContainsKey(skeleton.Item2.stringID)) {
-						skel = l.skl[skeleton.Item2.stringID];
-					} else {
-						extS.log = l.logEnabled;
-						extS.Serialize(ref skel);
-						l.skl[skeleton.Item2.stringID] = skel;
-						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				if (skeleton != null && skeleton.Item2 != null && isFirstLoad) {
+					MapLoader l = MapLoader.Loader;
+					l.Load(skeleton.Item2, (extS) => {
+						if (l.skl.ContainsKey(skeleton.Item2.stringID)) {
+							skel = l.skl[skeleton.Item2.stringID];
+						} else {
+							extS.log = l.logEnabled;
+							extS.Serialize(ref skel);
+							l.skl[skeleton.Item2.stringID] = skel;
+							l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+						}
+					});
+				}
+				if (texturePaths != null) {
+					texs = new TextureCooked[texturePaths.Count];
+					for (int i = 0; i < texturePaths.Count; i++) {
+						LoadTexture(i, texturePaths[i].Item2);
 					}
-				});
-			}
-			if (texturePaths != null) {
-				texs = new TextureCooked[texturePaths.Count];
-				for (int i = 0; i < texturePaths.Count; i++) {
-					LoadTexture(i, texturePaths[i].Item2);
+				}
+			} else {
+				if (skeletonOrigins != null && skeletonOrigins.Item2 != null && isFirstLoad) {
+					MapLoader l = MapLoader.Loader;
+					l.Load(skeletonOrigins.Item2, (extS) => {
+						Path p = new Path(skeletonOrigins.Item2.str);
+						if (l.skl.ContainsKey(p.stringID)) {
+							skel = l.skl[p.stringID];
+						} else {
+							extS.log = l.logEnabled;
+							extS.Serialize(ref skel);
+							l.skl[p.stringID] = skel;
+							l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+						}
+					});
+				}
+				if (texturePathsOrigins != null) {
+					texs = new TextureCooked[texturePathsOrigins.Count];
+					for (int i = 0; i < texturePathsOrigins.Count; i++) {
+						LoadTexture(i, new Path(texturePathsOrigins[i].Item2.str));
+					}
 				}
 			}
 		}

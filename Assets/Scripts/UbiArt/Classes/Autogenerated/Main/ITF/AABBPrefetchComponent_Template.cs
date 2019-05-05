@@ -6,7 +6,9 @@ namespace UbiArt.ITF {
 		[Serialize("isAlwaysActive")] public bool isAlwaysActive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(isAlwaysActive));
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				SerializeField(s, nameof(isAlwaysActive));
+			}
 		}
 		public override uint? ClassCRC => 0x70B3ABBA;
 	}

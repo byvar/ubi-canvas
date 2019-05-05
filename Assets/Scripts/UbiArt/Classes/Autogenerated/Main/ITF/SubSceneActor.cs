@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("DIRECT_PICKING" )] public bool DIRECT_PICKING;
 		[Serialize("viewType"       )] public VIEWTYPE viewType;
 		[Serialize("SCENE"          )] public Nullable<Scene> SCENE;
-		[Serialize("SCENE"          )] public Generic<Scene> SCENEOrigins;
+		[Serialize("SCENE"          )] public Generic<Scene> SCENE_ORIGINS;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(IS_SINGLE_PIECE));
 					SerializeField(s, nameof(ZFORCED));
 					if (EMBED_SCENE) {
-						SerializeField(s, nameof(SCENEOrigins));
+						SerializeField(s, nameof(SCENE_ORIGINS));
 					}
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {

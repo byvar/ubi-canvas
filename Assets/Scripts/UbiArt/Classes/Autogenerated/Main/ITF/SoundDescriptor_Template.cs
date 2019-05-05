@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
 				SerializeField(s, nameof(name));
 				SerializeField(s, nameof(volume));
 				SerializeField(s, nameof(category));

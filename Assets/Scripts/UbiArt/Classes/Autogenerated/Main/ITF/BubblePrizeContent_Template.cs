@@ -8,26 +8,15 @@ namespace UbiArt.ITF {
 		[Serialize("popSpawn"                )] public Path popSpawn;
 		[Serialize("rewardNumberChangeEnable")] public bool rewardNumberChangeEnable;
 		[Serialize("contentPopType"          )] public ContentPopType contentPopType;
-		[Serialize("Generic<Event>__0"       )] public Generic<Event> Generic_Event__0;
-		[Serialize("Path__1"                 )] public Path Path__1;
-		[Serialize("Enum_RJR_0__2"           )] public Enum_RJR_0 Enum_RJR_0__2;
-		[Serialize("int__3"                  )] public int int__3;
-		[Serialize("Generic<Event>__4"       )] public Generic<Event> Generic_Event__4;
-		[Serialize("Path__5"                 )] public Path Path__5;
-		[Serialize("Enum_RFR_0__6"           )] public Enum_RFR_0 Enum_RFR_0__6;
-		[Serialize("int__7"                  )] public int int__7;
+		[Serialize("bankState"               )] public BubblePrizeBankState bankState;
+		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR) {
-				SerializeField(s, nameof(Generic_Event__0));
-				SerializeField(s, nameof(Path__1));
-				SerializeField(s, nameof(Enum_RJR_0__2));
-				SerializeField(s, nameof(int__3));
-			} else if (Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(Generic_Event__4));
-				SerializeField(s, nameof(Path__5));
-				SerializeField(s, nameof(Enum_RFR_0__6));
-				SerializeField(s, nameof(int__7));
+			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+				SerializeField(s, nameof(popEvent));
+				SerializeField(s, nameof(popSpawn));
+				SerializeField(s, nameof(bankState));
+				SerializeField(s, nameof(rewardNumberChangeEnable));
 			} else {
 				SerializeField(s, nameof(popEvent));
 				SerializeField(s, nameof(popEventPainted));
@@ -42,33 +31,21 @@ namespace UbiArt.ITF {
 			[Serialize("ContentPopType_TouchScreenPlayer")] TouchScreenPlayer = 2,
 			[Serialize("ContentPopType_All"              )] All = 3,
 		}
-		public enum Enum_RJR_0 {
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_3" )] Value_3 = 3,
-			[Serialize("Value_4" )] Value_4 = 4,
-			[Serialize("Value_5" )] Value_5 = 5,
-			[Serialize("Value_6" )] Value_6 = 6,
-			[Serialize("Value_7" )] Value_7 = 7,
-			[Serialize("Value_8" )] Value_8 = 8,
-			[Serialize("Value_9" )] Value_9 = 9,
-			[Serialize("Value_10")] Value_10 = 10,
-			[Serialize("Value_11")] Value_11 = 11,
-			[Serialize("Value_12")] Value_12 = 12,
-			[Serialize("Value_13")] Value_13 = 13,
-		}
-		public enum Enum_RFR_0 {
-			[Serialize("Value_1" )] Value_1 = 1,
-			[Serialize("Value_3" )] Value_3 = 3,
-			[Serialize("Value_4" )] Value_4 = 4,
-			[Serialize("Value_5" )] Value_5 = 5,
-			[Serialize("Value_6" )] Value_6 = 6,
-			[Serialize("Value_7" )] Value_7 = 7,
-			[Serialize("Value_8" )] Value_8 = 8,
-			[Serialize("Value_9" )] Value_9 = 9,
-			[Serialize("Value_10")] Value_10 = 10,
-			[Serialize("Value_11")] Value_11 = 11,
-			[Serialize("Value_12")] Value_12 = 12,
-			[Serialize("Value_13")] Value_13 = 13,
+		
+		public enum BubblePrizeBankState {
+			[Serialize("BubblePrizeBankState_Invalid"           )] Invalid = 0,
+			[Serialize("BubblePrizeBankState_Darktoon"          )] Darktoon = 1,
+			[Serialize("BubblePrizeBankState_Heart"             )] Heart = 3,
+			[Serialize("BubblePrizeBankState_Lum"               )] Lum = 4,
+			[Serialize("BubblePrizeBankState_LumKing"           )] LumKing = 5,
+			[Serialize("BubblePrizeBankState_SuperPunch_basic"  )] SuperPunch_basic = 6,
+			[Serialize("BubblePrizeBankState_SuperPunch_seeking")] SuperPunch_seeking = 7,
+			[Serialize("BubblePrizeBankState_SwarmRepeller"     )] SwarmRepeller = 8,
+			[Serialize("BubblePrizeBankState_RedLum"            )] RedLum = 9,
+			[Serialize("BubblePrizeBankState_Lum_x10"           )] Lum_x10 = 10,
+			[Serialize("BubblePrizeBankState_RedLum_x10"        )] RedLum_x10 = 11,
+			[Serialize("BubblePrizeBankState_Lum_x5"            )] Lum_x5 = 12,
+			[Serialize("BubblePrizeBankState_RedLum_x5"         )] RedLum_x5 = 13,
 		}
 	}
 }

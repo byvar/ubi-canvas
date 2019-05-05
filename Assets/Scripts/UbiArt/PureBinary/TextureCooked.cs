@@ -30,24 +30,28 @@ namespace UbiArt {
 		public UV.UVAtlas atlas = null;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref version);
-			s.Serialize(ref signature);
-			s.Serialize(ref hdrSize);
-			s.Serialize(ref texSize);
-			s.Serialize(ref width);
-			s.Serialize(ref height);
-			s.Serialize(ref unk_x);
-			s.Serialize(ref unk_y);
-			if (Settings.s.game == Settings.Game.RA) {
-				s.Serialize(ref unkAdventures);
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				s.Serialize(ref version);
+				s.Serialize(ref signature);
+				s.Serialize(ref hdrSize);
+				s.Serialize(ref texSize);
+				s.Serialize(ref width);
+				s.Serialize(ref height);
+				s.Serialize(ref unk_x);
+				s.Serialize(ref unk_y);
+				if (Settings.s.game == Settings.Game.RA) {
+					s.Serialize(ref unkAdventures);
+				}
+				s.Serialize(ref texSize2);
+				s.Serialize(ref unk0);
+				s.Serialize(ref unk1);
+				s.Serialize(ref unk2);
+				s.Serialize(ref unk3);
+				s.Serialize(ref unk4);
+				s.Serialize(ref unk5);
+			} else {
+				s.SerializeFileSize(ref texSize);
 			}
-			s.Serialize(ref texSize2);
-			s.Serialize(ref unk0);
-			s.Serialize(ref unk1);
-			s.Serialize(ref unk2);
-			s.Serialize(ref unk3);
-			s.Serialize(ref unk4);
-			s.Serialize(ref unk5);
 			s.SerializeBytes(ref texData, (int)texSize);
 		}
 

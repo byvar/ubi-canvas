@@ -125,5 +125,9 @@ namespace UbiArt {
 			}
 			return base.ArrayEntryStart(name, index);
 		}
+
+		public override void SerializeFileSize(ref uint obj) {
+			obj = (uint)reader.BaseStream.Length;
+		}
 	}
 }

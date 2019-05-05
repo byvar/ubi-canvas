@@ -14,6 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("deltaphasetime"  )] public float deltaphasetime;
 		[Serialize("animstretchtime" )] public bool animstretchtime;
 		[Serialize("blendtonextphase")] public bool blendtonextphase;
+
 		[Serialize("float__0"        )] public float float__0;
 		[Serialize("Color__1"        )] public Color Color__1;
 		[Serialize("Color__2"        )] public Color Color__2;
@@ -26,17 +27,17 @@ namespace UbiArt.ITF {
 		[Serialize("int__9"          )] public int int__9;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(float__0));
-				SerializeField(s, nameof(Color__1));
-				SerializeField(s, nameof(Color__2));
-				SerializeField(s, nameof(Vector2__3));
-				SerializeField(s, nameof(Vector2__4));
-				SerializeField(s, nameof(int__5));
-				SerializeField(s, nameof(int__6));
-				SerializeField(s, nameof(float__7));
-				SerializeField(s, nameof(int__8));
-				SerializeField(s, nameof(int__9));
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+				SerializeField(s, nameof(phaseTime));
+				SerializeField(s, nameof(colorMin));
+				SerializeField(s, nameof(colorMax));
+				SerializeField(s, nameof(sizeMin));
+				SerializeField(s, nameof(sizeMax));
+				SerializeField(s, nameof(animstart));
+				SerializeField(s, nameof(animend));
+				SerializeField(s, nameof(deltaphasetime));
+				SerializeField(s, nameof(animstretchtime));
+				SerializeField(s, nameof(blendtonextphase));
 			} else {
 				SerializeField(s, nameof(phaseTime));
 				SerializeField(s, nameof(colorMin));

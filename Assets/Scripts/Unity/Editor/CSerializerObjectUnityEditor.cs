@@ -113,5 +113,9 @@ namespace UbiArt {
 		public override void SerializeBytes(ref byte[] obj, int numBytes) {
 			//obj = reader.ReadBytes(numBytes);
 		}
+
+		public override void SerializeFileSize(ref uint obj) {
+			//throw new NotImplementedException();
+		}
 	}
 }

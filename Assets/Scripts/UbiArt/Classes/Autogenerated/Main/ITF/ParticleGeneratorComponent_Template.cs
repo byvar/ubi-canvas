@@ -13,24 +13,10 @@ namespace UbiArt.ITF {
 		[Serialize("frequencyInput"         )] public ProceduralInputData frequencyInput;
 		[Serialize("emitCountInput"         )] public ProceduralInputData emitCountInput;
 		[Serialize("maxParticlesInput"      )] public ProceduralInputData maxParticlesInput;
-		[Serialize("float__0"               )] public float float__0;
-		[Serialize("float__1"               )] public float float__1;
-		[Serialize("Path__2"                )] public Path Path__2;
-		[Serialize("int__3"                 )] public int int__3;
-		[Serialize("CArray<InputDesc>__4"   )] public CArray<InputDesc> CArray_InputDesc__4;
-		[Serialize("ProceduralInputData__5" )] public ProceduralInputData ProceduralInputData__5;
-		[Serialize("ProceduralInputData__6" )] public ProceduralInputData ProceduralInputData__6;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(float__0));
-				SerializeField(s, nameof(float__1));
-				SerializeField(s, nameof(Path__2));
-				SerializeField(s, nameof(int__3));
-				SerializeField(s, nameof(CArray_InputDesc__4));
-				SerializeField(s, nameof(ProceduralInputData__5));
-				SerializeField(s, nameof(ProceduralInputData__6));
-			} else if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				SerializeField(s, nameof(ParticleGeneratorParams));
 				SerializeField(s, nameof(startTime));
 				SerializeField(s, nameof(stopTime));

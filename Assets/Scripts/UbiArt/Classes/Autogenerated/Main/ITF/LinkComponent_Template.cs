@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
 			} else if (Settings.s.game == Settings.Game.RO) {
-				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
+				if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0) && s.HasFlags(SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(debugColor));
 					SerializeField(s, nameof(debugColorSelected));
 					SerializeField(s, nameof(debugChildIndex));

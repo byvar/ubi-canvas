@@ -20,11 +20,20 @@ namespace UbiArt.ITF {
 			Gao.transform.localRotation = Quaternion.identity;
 			UnityScene us = Gao.AddComponent<UnityScene>();
 			us.scene = this;
-			foreach (Frise f in FRISE) {
-				f.SetGameObjectParent(gao);
-			}
-			foreach (Generic<Actor> a in ACTORS) {
-				a.obj.SetGameObjectParent(gao);
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				foreach (Frise f in FRISE) {
+					f.SetGameObjectParent(gao);
+				}
+				foreach (Generic<Actor> a in ACTORS) {
+					a.obj.SetGameObjectParent(gao);
+				}
+			} else {
+				foreach (Generic<Pickable> f in FRISE_ORIGINS) {
+					f.obj.SetGameObjectParent(gao);
+				}
+				foreach (Generic<Pickable> a in ACTORS_ORIGINS) {
+					a.obj.SetGameObjectParent(gao);
+				}
 			}
 			if (sceneConfigs != null && sceneConfigs.sceneConfigs != null) {
 				for (int i = 0; i < sceneConfigs.sceneConfigs.Count; i++) {

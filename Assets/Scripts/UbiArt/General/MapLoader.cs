@@ -202,6 +202,11 @@ namespace UbiArt {
 				pathsToLoad.Enqueue(new ObjectPlaceHolder(path, action));
 			}
 		}
+		public void Load(CString path, SerializeAction action) {
+			if (path == null || path.str == null || path.str == "") return;
+			Path p = new Path(path.str);
+			Load(p, action);
+		}
 
 		public void Load(ArchiveMemory mem, string name, SerializeAction action) {
 			pathsToLoad.Enqueue(new ObjectPlaceHolder(name, mem, action));

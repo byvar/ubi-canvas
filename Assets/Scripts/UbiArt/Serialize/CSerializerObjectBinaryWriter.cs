@@ -96,5 +96,9 @@ namespace UbiArt {
 		public override void SerializeBytes(ref byte[] obj, int numBytes) {
 			writer.Write(obj);
 		}
+
+		public override void SerializeFileSize(ref uint obj) {
+			//throw new NotImplementedException();
+		}
 	}
 }

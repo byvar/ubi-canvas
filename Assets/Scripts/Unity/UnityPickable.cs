@@ -60,7 +60,7 @@ public class UnityPickable : MonoBehaviour {
 			} else if (pickable is Actor) {
 				if (pickable is SubSceneActor) {
 					SubSceneActor ssa = pickable as SubSceneActor;
-					if (t != null && t.TAGS.Count > 0) {
+					if (t != null && t.TAGS != null && t.TAGS.Count > 0) {
 						foreach (string tag in t.TAGS) {
 							Sprite sprLoc = c.GetIcon(tag);
 							if (sprLoc == null) {
@@ -86,7 +86,7 @@ public class UnityPickable : MonoBehaviour {
 						spr = MapLoader.Loader.controller.GetIcon("isc");
 					}
 				} else {
-					if (t != null && t.TAGS.Count > 0) {
+					if (t != null && t.TAGS != null && t.TAGS.Count > 0) {
 						foreach (string tag in t.TAGS) {
 							Sprite sprLoc = c.GetIcon(tag);
 							if (sprLoc == null) {

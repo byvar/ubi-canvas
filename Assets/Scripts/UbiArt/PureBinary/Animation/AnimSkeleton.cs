@@ -23,9 +23,11 @@ namespace UbiArt.Animation {
 		[Serialize("bones"       )] public CList<AnimBone> bones;
 		[Serialize("bonesDyn"    )] public CList<AnimBoneDyn> bonesDyn;
 		[Serialize("byteArray"   )] public CArray<CArray<byte>> byteArray;
+		[Serialize("byteArray"   )] public byte[] byteArrayOrigins;
 		[Serialize("bankId0"     )] public uint bankId0;
 		[Serialize("bankId"      )] public uint bankId;
 		[Serialize("bank"        )] public Nullable<AnimPolylineBank> bank;
+		[Serialize("bank"        )] public AnimPolylineBank bankOrigins;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -42,18 +44,28 @@ namespace UbiArt.Animation {
 				SerializeField(s, nameof(boneIndices));
 				SerializeField(s, nameof(boneTags2));
 				SerializeField(s, nameof(boneIndices2));
-				SerializeField(s, nameof(boneTags3));
-				SerializeField(s, nameof(boneIndices3));
+				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+					SerializeField(s, nameof(boneTags3));
+					SerializeField(s, nameof(boneIndices3));
+				}
 			}
 			SerializeField(s, nameof(bones));
 			SerializeField(s, nameof(bonesDyn));
-			SerializeField(s, nameof(byteArray));
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				SerializeField(s, nameof(byteArray));
+			} else {
+				s.SerializeBytes(ref byteArrayOrigins, 8);
+			}
 			if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(bankId0));
 			}
 			SerializeField(s, nameof(bankId));
 			if (bankId != 0) {
-				SerializeField(s, nameof(bank));
+				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+					SerializeField(s, nameof(bank));
+				} else {
+					SerializeField(s, nameof(bankOrigins));
+				}
 			}
 			/*
 			Example of what comes after bonesDyn:

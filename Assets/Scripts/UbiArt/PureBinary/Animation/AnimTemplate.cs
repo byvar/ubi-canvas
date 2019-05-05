@@ -9,6 +9,7 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimTemplate::serialize
 	public class AnimTemplate : CSerializable {
 		[Serialize("boneKeys"   )] public KeyArray<int> boneKeys;
+		[Serialize("unkfloat"   )] public float unkfloat;
 		[Serialize("bones"      )] public CList<AnimBone> bones;
 		[Serialize("bonesDyn"   )] public CList<AnimBoneDyn> bonesDyn;
 		[Serialize("patchPoints")] public CList<AnimPatchPoint> patchPoints;
@@ -17,6 +18,9 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(boneKeys));
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+				SerializeField(s, nameof(unkfloat));
+			}
 			SerializeField(s, nameof(bones));
 			SerializeField(s, nameof(bonesDyn));
 			SerializeField(s, nameof(patchPoints));
@@ -34,6 +38,7 @@ namespace UbiArt.Animation {
 			UnityBone[] unityBones = new UnityBone[bones.Count];
 			for (int i = 0; i < bones.Count; i++) {
 				int boneIndex = skeleton.GetBoneIndexFromTag(bones[i].tag);
+				if (boneIndex == -1) continue;
 				unityBones[i] = skeletonBones[boneIndex];
 				//Vector3 scale = bonesDyn[i].scale / skeleton.bonesDyn[boneIndex].scale;
 				//unityBones[i].localScale = new Vector3(Mathf.Abs(scale.y), Mathf.Abs(scale.x), scale.z);
@@ -56,10 +61,12 @@ namespace UbiArt.Animation {
 			}
 			int[] updateOrder = GetBonesUpdateOrder(null);
 			for (int i = 0; i < updateOrder.Length; i++) {
+				if (unityBones[i] == null) continue;
 				unityBones[updateOrder[i]].UpdateBone();
 			}
 			Matrix4x4[] bindPoses = new Matrix4x4[bones.Count];
 			for (int i = 0; i < bones.Count; i++) {
+				if (unityBones[i] == null) continue;
 				bindPoses[i] = unityBones[i].transform.worldToLocalMatrix * skeleton_gao.transform.localToWorldMatrix;
 			}
 			skeleton.ResetBones(skeletonBones);

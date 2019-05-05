@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(shape));
 				SerializeField(s, nameof(offset));
 				SerializeField(s, nameof(attachPolyline));
-				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
+				if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0) && s.HasFlags(SerializeFlags.Flags_xC0)) {
 					SerializeField(s, nameof(drawDebug));
 				}
 				SerializeField(s, nameof(shapes));

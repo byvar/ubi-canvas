@@ -46,16 +46,81 @@ namespace UbiArt.ITF {
 			Material tex_mat = GetUnityMaterial();
 			FillMaterialParams(tex_mat);
 			bool createdOne = false;
-			foreach (TextureBankPath bp in subAnimInfo.animPackage.textureBank) {
-				createdOne = ProcessTextureBank(bp, gao, tex_mat, subAnimInfo.animPackage.skel);
-				if (createdOne) break;
-			}
-			if (!createdOne) {
-				foreach (TextureBankPath bp in tpl.animSet.animPackage.textureBank) {
-					createdOne = ProcessTextureBank(bp, gao, tex_mat, tpl.animSet.animPackage.skel);
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				foreach (TextureBankPath bp in subAnimInfo.animPackage.textureBank) {
+					createdOne = ProcessTextureBank(bp, gao, tex_mat, subAnimInfo.animPackage.skel);
 					if (createdOne) break;
 				}
+				if (!createdOne) {
+					foreach (TextureBankPath bp in tpl.animSet.animPackage.textureBank) {
+						createdOne = ProcessTextureBank(bp, gao, tex_mat, tpl.animSet.animPackage.skel);
+						if (createdOne) break;
+					}
+				}
+			} else {
+				ProcessOrigins(gao, tex_mat, tpl.animSet.resources);
 			}
+		}
+
+		private void ProcessOrigins(GameObject gao, Material tex_mat, ICSerializable[] resources) {
+			ICSerializable pbkRes = resources.Where(res => res is AnimPatchBank).FirstOrDefault();
+			AnimPatchBank pbk = pbkRes != null ? (AnimPatchBank)pbkRes : null;
+			ICSerializable sklRes = resources.Where(res => res is AnimSkeleton).FirstOrDefault();
+			AnimSkeleton skeleton = sklRes != null ? (AnimSkeleton)sklRes : null;
+			if (pbk == null || skeleton == null) return;
+			patches = new GameObject[pbk.templates.Count];
+			patchMaterials = new Material[patches.Length];
+			skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
+			skeleton_gao.transform.SetParent(gao.transform, false);
+			skeleton_gao.transform.localPosition = Vector3.zero;
+			skeleton_gao.transform.localRotation = Quaternion.identity;
+			skeleton_gao.transform.localScale = Vector3.one;
+
+			bones = skeleton.CreateBones(skeleton_gao);
+			for (int i = 0; i < pbk.templates.Count; i++) {
+				AnimTemplate at = pbk.templates[i];
+				Mesh mesh = at.CreateMesh();
+				if (mesh == null) continue;
+
+				Material patch_mat = new Material(tex_mat);
+				//SetMaterialTextures(patch_mat, bp.textureSet);
+
+				GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
+				patch_gao.transform.SetParent(gao.transform, false);
+				patch_gao.transform.localPosition = Vector3.zero;
+				patch_gao.transform.localRotation = Quaternion.identity;
+				patch_gao.transform.localScale = Vector3.one;
+
+				UnityBone[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
+				//Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
+				//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
+				//mf.sharedMesh = mesh;
+				SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
+				mr.bones = mesh_bones.Select(b => b?.transform).ToArray();
+				mr.sharedMaterial = patch_mat;
+				mr.sharedMesh = mesh;
+				patches[i] = patch_gao;
+				patchMaterials[i] = patch_mat;
+			}
+			skeleton.ResetBones(bones);
+			ua = skeleton_gao.AddComponent<UnityAnimation>();
+			ua.bones = bones;
+			ua.skeleton = skeleton;
+			List<Path> animPaths = new List<Path>();
+			ua.anims = new List<System.Tuple<Path, AnimTrack>>();
+			ua.patches = patches;
+			ua.patchMaterials = patchMaterials;
+			ua.pbk = pbk;
+			foreach (SubAnim_Template sat in tpl.animSet.animations) {
+				animPaths.Add(sat.name);
+			}
+			MapLoader l = MapLoader.Loader;
+			ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, l.anm[p.stringID]) : null).Where(t => t != null).ToList();
+			if (ua.anims.Count > 0) {
+				ua.animIndex = 0;
+				ua.animTrack = ua.anims[0].Item2;
+			}
+			ua.Init();
 		}
 
 		private bool ProcessTextureBank(TextureBankPath bp, GameObject gao, Material tex_mat, AnimSkeleton skeleton) {
@@ -156,14 +221,20 @@ namespace UbiArt.ITF {
 			return meshUnity;
 		}
 		private void FillMaterialParams(Material mat) {
-			GFXPrimitiveParam param = PrimitiveParameters;
-			mat.SetColor("_ColorFactor", param.colorFactor);
-			mat.SetColor("_LightConfig", new Vector4(
-				param.FrontLightBrightness,
-				param.FrontLightContrast,
-				param.BackLightBrightness,
-				param.BackLightContrast));
-			mat.SetColor("_ColorFog", param.colorFog);
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				GFXPrimitiveParam param = PrimitiveParameters;
+				mat.SetColor("_ColorFactor", param.colorFactor);
+				mat.SetColor("_LightConfig", new Vector4(
+					param.FrontLightBrightness,
+					param.FrontLightContrast,
+					param.BackLightBrightness,
+					param.BackLightContrast));
+				mat.SetColor("_ColorFog", param.colorFog);
+			} else {
+				mat.SetColor("_ColorFactor", Color.white);
+				mat.SetColor("_Lightonfig", new Vector4(1, 0, 1, 0));
+				mat.SetColor("_ColorFog", Vector4.zero);
+			}
 		}
 		private Material GetUnityMaterial(GFXMaterialShader_Template shader = null) {
 			if (shader == null) shader = (this.shader != null ? this.shader.obj : null);

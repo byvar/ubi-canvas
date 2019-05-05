@@ -46,6 +46,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+				if (this is FxBankComponent_Template) return;
 				SerializeField(s, nameof(patchLevel));
 				SerializeField(s, nameof(patchHLevel));
 				SerializeField(s, nameof(patchVLevel));

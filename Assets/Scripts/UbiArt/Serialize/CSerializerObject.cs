@@ -25,6 +25,7 @@ namespace UbiArt {
 		public abstract void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null);
 		public abstract void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null);
 		public abstract void SerializeBytes(ref byte[] obj, int numBytes);
+		public abstract void SerializeFileSize(ref uint obj);
 		public abstract Pointer Position {
 			get;
 		}
