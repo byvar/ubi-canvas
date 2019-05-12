@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_AvoidanceComponent_Template : CSerializable {
+	public partial class Ray_AvoidanceComponent_Template : ActorComponent_Template {
 		[Serialize("enabled"          )] public int enabled;
 		[Serialize("radius"           )] public float radius;
 		[Serialize("minDelta"         )] public float minDelta;

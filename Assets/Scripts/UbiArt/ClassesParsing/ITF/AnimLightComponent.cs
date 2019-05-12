@@ -58,11 +58,12 @@ namespace UbiArt.ITF {
 					}
 				}
 			} else {
-				ProcessOrigins(gao, tex_mat, tpl.animSet.resources);
+				ProcessOrigins(gao, tex_mat);
 			}
 		}
 
-		private void ProcessOrigins(GameObject gao, Material tex_mat, ICSerializable[] resources) {
+		private void ProcessOrigins(GameObject gao, Material tex_mat) {
+			ICSerializable[] resources = tpl.animSet.resources;
 			ICSerializable pbkRes = resources.Where(res => res is AnimPatchBank).FirstOrDefault();
 			AnimPatchBank pbk = pbkRes != null ? (AnimPatchBank)pbkRes : null;
 			ICSerializable sklRes = resources.Where(res => res is AnimSkeleton).FirstOrDefault();
@@ -99,6 +100,8 @@ namespace UbiArt.ITF {
 				mr.bones = mesh_bones.Select(b => b?.transform).ToArray();
 				mr.sharedMaterial = patch_mat;
 				mr.sharedMesh = mesh;
+				List<int> roots = at.GetRootIndices();
+				if (roots.Count > 0) mr.rootBone = mr.bones[roots[0]];
 				patches[i] = patch_gao;
 				patchMaterials[i] = patch_mat;
 			}
@@ -106,16 +109,22 @@ namespace UbiArt.ITF {
 			ua = skeleton_gao.AddComponent<UnityAnimation>();
 			ua.bones = bones;
 			ua.skeleton = skeleton;
-			List<Path> animPaths = new List<Path>();
 			ua.anims = new List<System.Tuple<Path, AnimTrack>>();
 			ua.patches = patches;
 			ua.patchMaterials = patchMaterials;
 			ua.pbk = pbk;
+			/*List<Path> animPaths = new List<Path>();
 			foreach (SubAnim_Template sat in tpl.animSet.animations) {
 				animPaths.Add(sat.name);
-			}
+			}*/
 			MapLoader l = MapLoader.Loader;
-			ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, l.anm[p.stringID]) : null).Where(t => t != null).ToList();
+
+			ua.anims = new List<System.Tuple<Path, AnimTrack>>();
+			for (int i = 0; i < resources.Length; i++) {
+				if (resources[i] != null && resources[i] is AnimTrack) {
+					ua.anims.Add(new System.Tuple<Path, AnimTrack>(tpl.animSet.resourceList[i], resources[i] as AnimTrack));
+				}
+			}
 			if (ua.anims.Count > 0) {
 				ua.animIndex = 0;
 				ua.animTrack = ua.anims[0].Item2;
@@ -300,6 +309,16 @@ namespace UbiArt.ITF {
 				if (textureSet.tex_back_light != null) mat.SetTexture("_BackLight", textureSet.tex_back_light.SquareTexture);
 			}
 		}
+		/*private void SetMaterialTextures(Material mat) {
+			if (textureSet != null) {
+				mat.SetVector("_UseTextures", new Vector4(
+					textureSet.tex_diffuse != null ? 1f : 0f,
+					textureSet.tex_back_light != null ? 1f : 0f,
+					0f, 0f));
+				if (textureSet.tex_diffuse != null) mat.SetTexture("_Diffuse", textureSet.tex_diffuse.SquareTexture);
+				if (textureSet.tex_back_light != null) mat.SetTexture("_BackLight", textureSet.tex_back_light.SquareTexture);
+			}
+		}*/
 		private enum ZWrite {
 			Off = 0,
 			On = 1

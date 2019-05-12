@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_ChildLaunchComponent_Template : CSerializable {
+	public partial class Ray_ChildLaunchComponent_Template : ActorComponent_Template {
 		[Serialize("disableAfterLaunch"  )] public int disableAfterLaunch;
 		[Serialize("launchPolyline"      )] public StringID launchPolyline;
 		[Serialize("hintFxPath"          )] public Path hintFxPath;

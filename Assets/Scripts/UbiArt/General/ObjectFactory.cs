@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 namespace UbiArt {
 	public class ObjectFactory {
 		public static Dictionary<uint, Type> classes = new Dictionary<uint, Type> {
+			{ 0x32D9A953, typeof(ITF.Ray_ElectoonTargetComponent_Template) },
+			{ 0xED07671E, typeof(ITF.Ray_ElectoonTargetComponent) },
+			{ 0x0B014B0A, typeof(ITF.Ray_HandsAIComponent) },
+			{ 0x341013E5, typeof(ITF.Ray_ForceFieldComponent) },
+			{ 0x020E95E0, typeof(ITF.Ray_EnterDoorComponent) },
 			{ 0xA595F825, typeof(ITF.Ray_TutorialComponent) },
 			{ 0x7EB87D5E, typeof(ITF.CatchThemAllComponent) },
 			{ 0x0013B956, typeof(ITF.RO2_BlackSwarmSpawnerComponent) },

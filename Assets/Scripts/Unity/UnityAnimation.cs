@@ -120,11 +120,21 @@ public class UnityAnimation : MonoBehaviour {
 			if(bml != null && bml.frame != lastBmlFrame) {
 				lastBmlFrame = bml.frame;
 				List<int> indexes = new List<int>();
+				MapLoader l = MapLoader.Loader;
 				foreach (AnimTrackBML.Entry entry in bml.entries) {
 					StringID templateId = entry.templateId;
 					int ind = pbk.templateKeys.GetKeyIndex(templateId);
 					if (ind != -1) {
 						indexes.Add(ind);
+						if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+							int texInd = animTrack.texturePathKeysOrigins.GetKeyIndex(entry.textureBankId);
+							if (texInd != -1) {
+								Pair<StringID, CString> texPath = animTrack.texturePathsOrigins[texInd];
+								if (l.tex.ContainsKey(texPath.Item1)) {
+									SetMaterialTextureOrigins(patchMaterials[ind], l.tex[texPath.Item1]);
+								}
+							}
+						}
 					}
 				}
 				for(int i = 0; i < patches.Length; i++) {
@@ -162,6 +172,13 @@ public class UnityAnimation : MonoBehaviour {
 					}
 				}
 			}
+		}
+	}
+
+	private void SetMaterialTextureOrigins(Material mat, TextureCooked tex) {
+		if (mat != null && tex != null) {
+			mat.SetVector("_UseTextures", new Vector4(1,0,0,0));
+			mat.SetTexture("_Diffuse", tex.SquareTexture);
 		}
 	}
 }

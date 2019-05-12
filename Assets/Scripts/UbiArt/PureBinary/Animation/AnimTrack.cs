@@ -28,7 +28,7 @@ namespace UbiArt.Animation {
 		[Serialize("vec3"       )] public Vector2 vec3;
 		[Serialize("skeleton"   )] public Pair<StringID, Path> skeleton;
 		[Serialize("skeleton"   )] public Pair<StringID, CString> skeletonOrigins;
-		[Serialize("keysOrigins")] public KeyArray<int> keysOrigins;
+		[Serialize("texturePathKeys")] public KeyArray<int> texturePathKeysOrigins;
 		[Serialize("textures"   )] public CList<Pair<StringID, Path>> texturePaths;
 		[Serialize("textures"   )] public CList<Pair<StringID, CString>> texturePathsOrigins;
 		[Serialize("unk0"       )] public uint unk0;
@@ -66,7 +66,7 @@ namespace UbiArt.Animation {
 				SerializeField(s, nameof(unk2));
 			} else {
 				SerializeField(s, nameof(skeletonOrigins));
-				SerializeField(s, nameof(keysOrigins));
+				SerializeField(s, nameof(texturePathKeysOrigins));
 				SerializeField(s, nameof(texturePathsOrigins));
 				SerializeField(s, nameof(unk0Origins));
 				SerializeField(s, nameof(unk1Origins));

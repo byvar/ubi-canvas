@@ -1,12 +1,12 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.ROVersion)]
-	public partial class Ray_SwingComponent : ActorComponent {
+	[Games(GameFlags.RO)]
+	public partial class Ray_ForceFieldComponent : GraphicComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}
-		public override uint? ClassCRC => 0xB746FB26;
+		public override uint? ClassCRC => 0x341013E5;
 	}
 }
 

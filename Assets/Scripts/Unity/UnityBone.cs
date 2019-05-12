@@ -50,6 +50,7 @@ public class UnityBone : MonoBehaviour {
 	public float globalAngle;
 	public Vector3 computedScale = Vector3.one;
 	public float xOffset = 0f;
+	public float xScaleMultiplier = 1f;
 	public float localZ = 0;
 	public float bindZ = 0;
 
@@ -78,6 +79,8 @@ public class UnityBone : MonoBehaviour {
 				globalAngle = parent.globalAngle + bindRotation + localRotation;
 				float xPos = (parent.computedScale.x) * (bindPosition.x + localPosition.x + parent.xOffset);
 				float yPos = (parent.computedScale.y) * (bindPosition.y + localPosition.y);
+				/*float dot1 = Vector2.Dot(new Vector2(xPos, yPos), new Vector2(parent.cos, parent.sin));
+				float dot2 = Vector2.Dot(new Vector2(yPos, -xPos), new Vector2(parent.cos, parent.sin));*/
 				float dot1 = Vector2.Dot(new Vector2(xPos, yPos), new Vector2(parent.cos, parent.sin));
 				float dot2 = Vector2.Dot(new Vector2(-yPos, xPos), new Vector2(parent.cos, parent.sin));
 				globalPosition = parent.globalPosition + new Vector3(dot1, dot2, 0f);
@@ -91,7 +94,11 @@ public class UnityBone : MonoBehaviour {
 				globalAngle = bindRotation + localRotation;
 			}
 			computedScale = Vector3.Scale(localScale, bindScale);
-			transform.localScale = computedScale;
+			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+				transform.localScale = new Vector3(computedScale.x * xScaleMultiplier, computedScale.y, 1f);
+			} else {
+				transform.localScale = computedScale;
+			}
 			transform.localRotation = new Angle(globalAngle).QuaternionAngle;
 			transform.localPosition = globalPosition;
 			cos = Mathf.Cos(globalAngle);

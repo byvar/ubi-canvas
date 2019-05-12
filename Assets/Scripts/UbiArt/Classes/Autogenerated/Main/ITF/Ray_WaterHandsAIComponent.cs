@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_WaterHandsAIComponent : Ray_BossPlantArenaAIComponent {
+	public partial class Ray_WaterHandsAIComponent : Ray_AIComponent {
 		[Serialize("rangeMaxDetect")] public float rangeMaxDetect;
 		[Serialize("isDead"        )] public int isDead;
 		protected override void SerializeImpl(CSerializerObject s) {

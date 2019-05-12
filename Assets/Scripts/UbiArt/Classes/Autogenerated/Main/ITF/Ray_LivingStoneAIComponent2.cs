@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR)]
-	public partial class Ray_LivingStoneAIComponent2 : CSerializable {
+	public partial class Ray_LivingStoneAIComponent2 : Ray_GroundEnemyAIComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

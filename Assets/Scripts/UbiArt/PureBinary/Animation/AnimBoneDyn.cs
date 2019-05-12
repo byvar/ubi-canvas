@@ -10,7 +10,7 @@ namespace UbiArt.Animation {
 	public class AnimBoneDyn : CSerializable {
 		[Serialize("vec0"    )] public Vector2 vec0;
 		[Serialize("flt1"    )] public float float1;
-		[Serialize("flt2"    )] public float float2;
+		[Serialize("xOffset" )] public float xOffset;
 		[Serialize("position")] public Vector2 position;
 		[Serialize("angle"   )] public Angle angle;
 		[Serialize("flt4"    )] public float z;
@@ -21,7 +21,7 @@ namespace UbiArt.Animation {
 			SerializeField(s, nameof(vec0));
 			SerializeField(s, nameof(float1));
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(float2));
+				SerializeField(s, nameof(xOffset));
 			}
 			SerializeField(s, nameof(position));
 			SerializeField(s, nameof(angle));

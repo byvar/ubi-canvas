@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_SwingComponent_Template : CSerializable {
+	[Games(GameFlags.ROVersion)]
+	public partial class Ray_SwingComponent_Template : ActorComponent_Template {
 		[Serialize("length"                  )] public float length;
 		[Serialize("angle"                   )] public Angle angle;
 		[Serialize("gravityMultiplier"       )] public float gravityMultiplier;

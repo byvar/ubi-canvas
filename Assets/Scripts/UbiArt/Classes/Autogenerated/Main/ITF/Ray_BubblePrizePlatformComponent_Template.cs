@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR)]
-	public partial class Ray_BubblePrizePlatformComponent_Template : CSerializable {
+	[Games(GameFlags.ROVersion)]
+	public partial class Ray_BubblePrizePlatformComponent_Template : Ray_ChildLaunchComponent_Template {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

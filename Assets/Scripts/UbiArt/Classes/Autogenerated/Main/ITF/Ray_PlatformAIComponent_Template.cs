@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_PlatformAIComponent_Template : CSerializable {
+	public partial class Ray_PlatformAIComponent_Template : ActorComponent_Template {
 		[Serialize("startActivated"                     )] public int startActivated;
 		[Serialize("startOpened"                        )] public int startOpened;
 		[Serialize("activateEvent"                      )] public Generic<Event> activateEvent;

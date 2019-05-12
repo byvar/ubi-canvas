@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.ROVersion)]
 	public partial class ActorBind : CSerializable {
 		[Serialize("parentPath"      )] public ObjectPath parentPath;
 		[Serialize("offsetPos"       )] public Vector3 offsetPos;
@@ -20,11 +20,11 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(offsetAngle));
 				SerializeField(s, nameof(type));
 				SerializeField(s, nameof(typeData));
-				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeField(s, nameof(useParentFlip));
-					SerializeField(s, nameof(useParentScale));
-					SerializeField(s, nameof(removeWithParent));
-				}
+			}
+			if(s.HasFlags((SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0 | SerializeFlags.Editor))) {
+				SerializeField(s, nameof(useParentFlip));
+				SerializeField(s, nameof(useParentScale));
+				SerializeField(s, nameof(removeWithParent));
 			}
 		}
 		public enum Type {
