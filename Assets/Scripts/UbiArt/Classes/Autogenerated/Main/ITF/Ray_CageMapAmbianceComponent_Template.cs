@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_CageMapAmbianceComponent_Template : CSerializable {
+	public partial class Ray_CageMapAmbianceComponent_Template : ActorComponent_Template {
 		[Serialize("darkColor"                       )] public Color darkColor;
 		[Serialize("neutralColor"                    )] public Color neutralColor;
 		[Serialize("lightColor"                      )] public Color lightColor;
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("darkAlphaRadialProgressionSpeed" )] public float darkAlphaRadialProgressionSpeed;
 		[Serialize("lightAlphaFadeTime"              )] public float lightAlphaFadeTime;
 		[Serialize("lightAlphaRadialProgressionSpeed")] public float lightAlphaRadialProgressionSpeed;
-		[Serialize("forcedAABB"                      )] public Placeholder forcedAABB;
+		[Serialize("forcedAABB"                      )] public AABB forcedAABB;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(darkColor));

@@ -2,16 +2,9 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
-	public partial class TweenInstructionWait_Template : CSerializable {
-		[Serialize("duration")] public float duration;
-		[Serialize("name"    )] public StringID name;
+	public partial class TweenInstructionWait_Template : TweenInstruction_Template {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(duration));
-				SerializeField(s, nameof(name));
-			} else {
-			}
 		}
 		public override uint? ClassCRC => 0x0441B2AD;
 	}

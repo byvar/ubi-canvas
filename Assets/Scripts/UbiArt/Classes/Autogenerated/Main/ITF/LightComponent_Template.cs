@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
-	public partial class LightComponent_Template : CSerializable {
+	public partial class LightComponent_Template : ActorComponent_Template {
 		[Serialize("near"      )] public float near;
 		[Serialize("far"       )] public float far;
 		[Serialize("shape"     )] public string shape;

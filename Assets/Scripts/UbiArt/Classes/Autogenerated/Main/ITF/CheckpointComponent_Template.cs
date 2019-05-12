@@ -8,6 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("int__1"     )] public int int__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
+			if (this is Ray_ShooterCheckPointComponent_Template) return;
 			if (Settings.s.game == Settings.Game.RFR) {
 				SerializeField(s, nameof(int__0));
 				SerializeField(s, nameof(int__1));

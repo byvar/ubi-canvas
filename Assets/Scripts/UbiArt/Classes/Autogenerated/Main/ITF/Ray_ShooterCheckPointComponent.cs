@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_ShooterCheckPointComponent : CSerializable {
-		[Serialize("SpawnPos")] public Placeholder SpawnPos;
+	public partial class Ray_ShooterCheckPointComponent : CheckpointComponent {
+		[Serialize("SpawnPos")] public CArray<Vector2> SpawnPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_TimeAttackFlagComponent_Template : CSerializable {
+	public partial class Ray_TimeAttackFlagComponent_Template : ActorComponent_Template {
 		[Serialize("waitTime")] public float waitTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

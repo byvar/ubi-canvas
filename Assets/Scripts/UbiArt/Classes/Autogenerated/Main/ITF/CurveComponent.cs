@@ -10,17 +10,17 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(points));
 			}
 		}
-		[Games(GameFlags.RJR | GameFlags.RFR)]
+		[Games(GameFlags.ROVersion)]
 		public partial class TrajectoryNode : CSerializable {
-			[Serialize("Vector3__0")] public Vector3 Vector3__0;
-			[Serialize("Vector3__1")] public Vector3 Vector3__1;
-			[Serialize("Vector3__2")] public Vector3 Vector3__2;
+			[Serialize("pos"  )] public Vector3 pos;
+			[Serialize("tangA")] public Vector3 tangA;
+			[Serialize("tangB")] public Vector3 tangB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(Vector3__0));
-					SerializeField(s, nameof(Vector3__1));
-					SerializeField(s, nameof(Vector3__2));
+					SerializeField(s, nameof(pos));
+					SerializeField(s, nameof(tangA));
+					SerializeField(s, nameof(tangB));
 				}
 			}
 		}

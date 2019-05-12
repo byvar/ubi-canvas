@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_JalapenoKingAiComponent_Template : AIComponent_Template {
-		[Serialize("deathReward")] public Placeholder deathReward;
+		[Serialize("deathReward")] public Generic<Event> deathReward;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(deathReward));

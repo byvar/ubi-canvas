@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("z"      )] public float z;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
 			} else {
 				SerializeField(s, nameof(pos));
 				SerializeField(s, nameof(prevPos));

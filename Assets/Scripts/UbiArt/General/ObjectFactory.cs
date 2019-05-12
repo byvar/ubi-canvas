@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 namespace UbiArt {
 	public class ObjectFactory {
 		public static Dictionary<uint, Type> classes = new Dictionary<uint, Type> {
+			{ 0x71BF09E5, typeof(ITF.Ray_ShooterCameraModifierComponent_Template) },
+			{ 0xE875EFED, typeof(ITF.Ray_ConditionalTriggerComponent_Template) },
+			{ 0xCA970120, typeof(ITF.Ray_ConditionalTriggerComponent) },
+			{ 0x4B5A323E, typeof(ITF.Ray_HandsAIComponent_Template) },
+			{ 0x7B3586EF, typeof(ITF.Ray_CageAIComponent_Template) },
+			{ 0x7151F144, typeof(ITF.Ray_CageMapAmbianceComponent) },
+			{ 0x486C238A, typeof(ITF.Ray_TimeAttackFlagComponent) },
+			{ 0x52FA0F9F, typeof(ITF.Ray_ChronoAIComponent) },
 			{ 0x32D9A953, typeof(ITF.Ray_ElectoonTargetComponent_Template) },
 			{ 0xED07671E, typeof(ITF.Ray_ElectoonTargetComponent) },
 			{ 0x0B014B0A, typeof(ITF.Ray_HandsAIComponent) },

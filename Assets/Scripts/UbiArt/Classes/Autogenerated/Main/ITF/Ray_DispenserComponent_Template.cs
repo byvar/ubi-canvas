@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_DispenserComponent_Template : CSerializable {
+	public partial class Ray_DispenserComponent_Template : ActorComponent_Template {
 		[Serialize("goodsCount"           )] public uint goodsCount;
 		[Serialize("lowLifeGoodsMax"      )] public uint lowLifeGoodsMax;
 		[Serialize("lowLifeThreshold"     )] public float lowLifeThreshold;

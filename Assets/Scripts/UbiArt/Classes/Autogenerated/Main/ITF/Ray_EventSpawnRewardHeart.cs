@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR)]
-	public partial class Ray_EventSpawnRewardHeart : CSerializable {
+	public partial class Ray_EventSpawnRewardHeart : Ray_EventSpawnReward {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

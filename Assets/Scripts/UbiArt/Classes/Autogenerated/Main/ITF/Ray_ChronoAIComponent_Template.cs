@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_ChronoAIComponent_Template : CSerializable {
+	public partial class Ray_ChronoAIComponent_Template : ActorComponent_Template {
 		[Serialize("bubbleBone"       )] public StringID bubbleBone;
 		[Serialize("bubblePath"       )] public Path bubblePath;
 		[Serialize("cupPath"          )] public Path cupPath;

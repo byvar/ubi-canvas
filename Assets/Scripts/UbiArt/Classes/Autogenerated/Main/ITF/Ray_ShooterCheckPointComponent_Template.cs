@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("cameraBorderSpawnOffset"       )] public float cameraBorderSpawnOffset;
 		[Serialize("cameraBorderSpawnPlayersOffset")] public float cameraBorderSpawnPlayersOffset;
 		[Serialize("playersSpawnPosList"           )] public CList<PlayerSpawnPos> playersSpawnPosList;
-		[Serialize("shooterGameModeParameters"     )] public Placeholder shooterGameModeParameters; // It's generic, check classCRC
+		[Serialize("shooterGameModeParameters"     )] public Generic<Ray_ShooterGameModeParameters> shooterGameModeParameters; // It's generic, check classCRC
 		[Serialize("visualScaleMultiplier"         )] public float visualScaleMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

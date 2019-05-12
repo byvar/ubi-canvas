@@ -64,7 +64,7 @@ namespace UbiArt.Animation {
 			}
 			int[] updateOrder = GetBonesUpdateOrder(null);
 			for (int i = 0; i < updateOrder.Length; i++) {
-				if (unityBones[i] == null) continue;
+				if (unityBones[updateOrder[i]] == null) continue;
 				unityBones[updateOrder[i]].UpdateBone();
 			}
 			Matrix4x4[] bindPoses = new Matrix4x4[bones.Count];

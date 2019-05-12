@@ -2,17 +2,19 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_ShooterCameraComponent : Ray_AINetworkComponent {
+	public partial class Ray_ShooterCameraComponent : BaseCameraComponent {
 		[Serialize("Pos"            )] public Vector3 Pos;
-		[Serialize("useInitModifier")] public int useInitModifier;
-		[Serialize("initModifier"   )] public Placeholder initModifier;
+		[Serialize("useInitModifier")] public bool useInitModifier;
+		[Serialize("initModifier"   )] public Ray_ShooterCameraModifierComponent.ShooterCameraModifier initModifier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
 				SerializeField(s, nameof(Pos));
 			}
 			SerializeField(s, nameof(useInitModifier));
-			SerializeField(s, nameof(initModifier));
+			if (useInitModifier) {
+				SerializeField(s, nameof(initModifier));
+			}
 		}
 		public override uint? ClassCRC => 0x69A494EA;
 	}

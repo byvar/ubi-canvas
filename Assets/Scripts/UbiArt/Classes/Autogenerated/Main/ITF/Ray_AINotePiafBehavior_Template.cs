@@ -7,17 +7,17 @@ namespace UbiArt.ITF {
 		[Serialize("flyBackDelay"     )] public float flyBackDelay;
 		[Serialize("fallBreakDelay"   )] public float fallBreakDelay;
 		[Serialize("appear3dOffset"   )] public Vector3 appear3dOffset;
-		[Serialize("isBumper"         )] public int isBumper;
-		[Serialize("noteFxNames"      )] public Placeholder noteFxNames;
-		[Serialize("standAction"      )] public Placeholder standAction;
-		[Serialize("fallResistAction" )] public Placeholder fallResistAction;
-		[Serialize("catchAction"      )] public Placeholder catchAction;
-		[Serialize("fallBreakAction"  )] public Placeholder fallBreakAction;
-		[Serialize("appear3dAction"   )] public Placeholder appear3dAction;
-		[Serialize("disappear3dAction")] public Placeholder disappear3dAction;
-		[Serialize("flyBackAction"    )] public Placeholder flyBackAction;
-		[Serialize("landAction"       )] public Placeholder landAction;
-		[Serialize("pseudoDeathAction")] public Placeholder pseudoDeathAction;
+		[Serialize("isBumper"         )] public bool isBumper;
+		[Serialize("noteFxNames"      )] public CArray<StringID> noteFxNames;
+		[Serialize("standAction"      )] public Generic<AIAction_Template> standAction;
+		[Serialize("fallResistAction" )] public Generic<AIAction_Template> fallResistAction;
+		[Serialize("catchAction"      )] public Generic<AIAction_Template> catchAction;
+		[Serialize("fallBreakAction"  )] public Generic<AIAction_Template> fallBreakAction;
+		[Serialize("appear3dAction"   )] public Generic<AIAction_Template> appear3dAction;
+		[Serialize("disappear3dAction")] public Generic<AIAction_Template> disappear3dAction;
+		[Serialize("flyBackAction"    )] public Generic<AIAction_Template> flyBackAction;
+		[Serialize("landAction"       )] public Generic<AIAction_Template> landAction;
+		[Serialize("pseudoDeathAction")] public Generic<AIAction_Template> pseudoDeathAction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(weightThreshold));

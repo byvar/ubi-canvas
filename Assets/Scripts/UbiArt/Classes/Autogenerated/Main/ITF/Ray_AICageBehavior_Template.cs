@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("durationBeforeFadeOut"       )] public float durationBeforeFadeOut;
 		[Serialize("stillHeartPath"              )] public Path stillHeartPath;
 		[Serialize("broken_generatedRewardRadius")] public float broken_generatedRewardRadius;
-		[Serialize("broken_generatedRewards"     )] public Placeholder broken_generatedRewards;
+		[Serialize("broken_generatedRewards"     )] public CArray<uint> broken_generatedRewards;
 		[Serialize("heartOffset"                 )] public Vector3 heartOffset;
 		[Serialize("lastCageIndex"               )] public int lastCageIndex;
 		[Serialize("alreadyOpenAlpha"            )] public float alreadyOpenAlpha;

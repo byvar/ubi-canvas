@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_EyeAnimationComponent_Template : CSerializable {
+	public partial class Ray_EyeAnimationComponent_Template : ActorComponent_Template {
 		[Serialize("eyeCursorSmoothFactor")] public float eyeCursorSmoothFactor;
 		[Serialize("eyeInputX"            )] public StringID eyeInputX;
 		[Serialize("eyeInputY"            )] public StringID eyeInputY;

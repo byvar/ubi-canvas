@@ -1,8 +1,8 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR)]
-	public partial class Ray_FirePatchAIComponent : CSerializable {
+	[Games(GameFlags.ROVersion)]
+	public partial class Ray_FirePatchAIComponent : GraphicComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

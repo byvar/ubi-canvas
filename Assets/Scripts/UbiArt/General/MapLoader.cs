@@ -91,7 +91,7 @@ namespace UbiArt {
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 				});
 				ContainerFile<ITF.Scene> mainScene = null;
-				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc")) {
+				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
 						s.log = logEnabled;
@@ -155,6 +155,7 @@ namespace UbiArt {
 		public void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref CSerializerObject.Flags ownFlags, string extension) {
 			switch (extension) {
 				case "isc":
+				case "tsc":
 				case "act":
 				case "ipk":
 					flags |= SerializeFlags.Flags7;

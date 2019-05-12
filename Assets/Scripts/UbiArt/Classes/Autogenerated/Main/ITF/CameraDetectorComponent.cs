@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("remote")] public bool remote;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
 			} else {
 				SerializeField(s, nameof(remote));
 			}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_AIReceiveHitAction_Template : AIAction_Template {
+	public partial class Ray_AIReceiveHitAction_Template : AIReceiveHitAction_Template {
 		[Serialize("reward"           )] public Generic<Ray_EventSpawnReward> reward;
 		[Serialize("playRateVariation")] public float playRateVariation;
 		[Serialize("faceHitDir"       )] public int faceHitDir;

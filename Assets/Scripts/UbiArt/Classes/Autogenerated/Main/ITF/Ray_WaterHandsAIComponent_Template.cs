@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_WaterHandsAIComponent_Template : Ray_AIComponent_Template {
-		[Serialize("enemyDetectionRange"   )] public Placeholder enemyDetectionRange;
+		[Serialize("enemyDetectionRange"   )] public AABB enemyDetectionRange;
 		[Serialize("spawnHandPath"         )] public Path spawnHandPath;
 		[Serialize("speedAttack"           )] public float speedAttack;
 		[Serialize("speedReturn"           )] public float speedReturn;

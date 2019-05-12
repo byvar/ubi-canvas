@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_JalapenoKingAiComponent : CSerializable {
+	public partial class Ray_JalapenoKingAiComponent : AIComponent {
 		[Serialize("dead")] public int dead;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

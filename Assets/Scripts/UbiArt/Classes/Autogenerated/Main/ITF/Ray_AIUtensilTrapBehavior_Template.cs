@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_AIUtensilTrapBehavior_Template : CSerializable {
+	public partial class Ray_AIUtensilTrapBehavior_Template : TemplateAIBehavior {
 		[Serialize("stickOffset"            )] public float stickOffset;
 		[Serialize("speed"                  )] public float speed;
 		[Serialize("trapAction"             )] public Generic<AIAction_Template> trapAction;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_AIReceiveHitBehavior_Template : TemplateAIBehavior {
+	public partial class Ray_AIReceiveHitBehavior_Template : AIReceiveHitBehavior_Template {
 		[Serialize("receiveHits"              )] public CList<Ray_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
 		[Serialize("canReceiveRehits"         )] public int canReceiveRehits;
 		[Serialize("hurtDuration"             )] public float hurtDuration;
@@ -34,26 +34,26 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(wallAction));
 			SerializeField(s, nameof(deathMarkerName));
 		}
-		[Games(GameFlags.RJR | GameFlags.RFR)]
+		[Games(GameFlags.ROVersion)]
 		public partial class ReceiveHitData : CSerializable {
-			[Serialize("CArray<uint>__0"                        )] public CArray<uint> CArray_uint__0;
-			[Serialize("uint__1"                                )] public uint uint__1;
-			[Serialize("int__2"                                 )] public int int__2;
-			[Serialize("int__3"                                 )] public int int__3;
-			[Serialize("int__4"                                 )] public int int__4;
-			[Serialize("int__5"                                 )] public int int__5;
-			[Serialize("int__6"                                 )] public int int__6;
-			[Serialize("Generic<AIReceiveHitAction_Template>__7")] public Generic<AIReceiveHitAction_Template> Generic_AIReceiveHitAction_Template__7;
+			[Serialize("types"          )] public CArray<uint> types;
+			[Serialize("level"          )] public uint level;
+			[Serialize("useIfAlive"     )] public int useIfAlive;
+			[Serialize("useIfDead"      )] public int useIfDead;
+			[Serialize("useIfInAir"     )] public int useIfInAir;
+			[Serialize("useIfOnGround"  )] public int useIfOnGround;
+			[Serialize("isInterruptible")] public int isInterruptible;
+			[Serialize("action"         )] public Generic<AIReceiveHitAction_Template> action;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(CArray_uint__0));
-				SerializeField(s, nameof(uint__1));
-				SerializeField(s, nameof(int__2));
-				SerializeField(s, nameof(int__3));
-				SerializeField(s, nameof(int__4));
-				SerializeField(s, nameof(int__5));
-				SerializeField(s, nameof(int__6));
-				SerializeField(s, nameof(Generic_AIReceiveHitAction_Template__7));
+				SerializeField(s, nameof(types));
+				SerializeField(s, nameof(level));
+				SerializeField(s, nameof(useIfAlive));
+				SerializeField(s, nameof(useIfDead));
+				SerializeField(s, nameof(useIfInAir));
+				SerializeField(s, nameof(useIfOnGround));
+				SerializeField(s, nameof(isInterruptible));
+				SerializeField(s, nameof(action));
 			}
 		}
 		public override uint? ClassCRC => 0xAA4520A3;
