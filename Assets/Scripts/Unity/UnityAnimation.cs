@@ -96,7 +96,7 @@ public class UnityAnimation : MonoBehaviour {
 								alpha = Mathf.Lerp(alpha, next.alpha / 255f, lerp);
 							}
 							bones[i].localZ = z;
-							//bones[i].alpha = alpha;
+							bones[i].localAlpha = alpha;
 							break;
 						}
 					}
@@ -164,6 +164,7 @@ public class UnityAnimation : MonoBehaviour {
 					bool patchActive = indexes.Contains(i);
 					if (patchActive) {
 						int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
+						patchMaterials[i].SetColor("_ColorFactor", new Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
 						zman.zDict[patchMaterials[i]] = transform.position.z - bones[boneIndex].bindZ - bones[boneIndex].localZ;
 					} else {
 						if (zman.zDict.ContainsKey(patchMaterials[i])) {

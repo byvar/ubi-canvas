@@ -38,7 +38,9 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(cyclePauseDuration));
 					SerializeField(s, nameof(cycleDisplayDuration));
 					SerializeField(s, nameof(testSceneDepthRef), boolAsByte: true);
-					SerializeField(s, nameof(AMActionCountMax));
+					if (!Settings.s.isCatchThemAll) {
+						SerializeField(s, nameof(AMActionCountMax));
+					}
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					SerializeField(s, nameof(tutoSucceeded));

@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_PlayerScoreComponent_Template : CSerializable {
+	public partial class Ray_PlayerScoreComponent_Template : ActorComponent_Template {
 		[Serialize("lumTrajectorySpeed"         )] public float lumTrajectorySpeed;
 		[Serialize("lumReleaseSpeed"            )] public float lumReleaseSpeed;
-		[Serialize("particleGenerator"          )] public Placeholder particleGenerator;
+		[Serialize("particleGenerator"          )] public ITF_ParticleGenerator_Template particleGenerator;
 		[Serialize("texture"                    )] public Path texture;
 		[Serialize("index"                      )] public uint index;
 		[Serialize("particleSize"               )] public float particleSize;

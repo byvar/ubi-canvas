@@ -67,7 +67,8 @@ namespace UbiArt.ITF {
 		[Serialize("StringID__31"             )] public StringID StringID__31;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			} else if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(blinkScaleMin));
 				SerializeField(s, nameof(blinkScale));
 				SerializeField(s, nameof(blinkPeriod));

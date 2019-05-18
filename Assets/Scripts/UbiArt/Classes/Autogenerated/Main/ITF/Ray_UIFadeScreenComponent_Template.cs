@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_UIFadeScreenComponent_Template : UIComponent_Template {
-		[Serialize("types")] public Placeholder types;
+		[Serialize("types")] public CArray<UIFadeEntry> types;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(types));

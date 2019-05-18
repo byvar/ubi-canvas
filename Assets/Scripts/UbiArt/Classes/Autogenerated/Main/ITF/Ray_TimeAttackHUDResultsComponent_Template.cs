@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_TimeAttackHUDResultsComponent_Template : CSerializable {
+	public partial class Ray_TimeAttackHUDResultsComponent_Template : ActorComponent_Template {
 		[Serialize("scale"        )] public float scale;
 		[Serialize("boneTimer"    )] public StringID boneTimer;
 		[Serialize("boneCup"      )] public StringID boneCup;

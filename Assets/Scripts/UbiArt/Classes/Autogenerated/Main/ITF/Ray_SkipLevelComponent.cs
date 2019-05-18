@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_SkipLevelComponent : CSerializable {
+	public partial class Ray_SkipLevelComponent : ActorComponent {
 		[Serialize("RELATIVEPOS")] public Vector2 RELATIVEPOS;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

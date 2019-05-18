@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
-	public partial class Ray_SnakeAIComponent_Template : CSerializable {
+	public partial class Ray_SnakeAIComponent_Template : ActorComponent_Template {
 		[Serialize("headPolyline"                            )] public StringID headPolyline;
 		[Serialize("bodyParts"                               )] public CList<Generic<BodyPartBase_Template>> bodyParts;
 		[Serialize("bodyPartsZSpacing"                       )] public float bodyPartsZSpacing;

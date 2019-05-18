@@ -35,7 +35,8 @@ namespace UbiArt.ITF {
 		[Serialize("float__8"                 )] public float float__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+				if (this is UITextBox) return;
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(RELATIVEPOSX));
 					SerializeField(s, nameof(RELATIVEPOSY));

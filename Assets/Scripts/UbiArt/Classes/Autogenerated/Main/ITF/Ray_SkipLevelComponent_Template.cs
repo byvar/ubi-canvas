@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_SkipLevelComponent_Template : CSerializable {
+	public partial class Ray_SkipLevelComponent_Template : ActorComponent_Template {
 		[Serialize("textPath"       )] public Path textPath;
 		[Serialize("animSize"       )] public Vector2 animSize;
 		[Serialize("textAnimSize"   )] public Vector2 textAnimSize;

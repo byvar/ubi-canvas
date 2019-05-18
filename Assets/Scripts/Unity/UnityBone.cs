@@ -53,6 +53,8 @@ public class UnityBone : MonoBehaviour {
 	public float xScaleMultiplier = 1f;
 	public float localZ = 0;
 	public float bindZ = 0;
+	public float bindAlpha = 1f;
+	public float localAlpha = 0f;
 
 	/*void Update() {
 		if (parent != null) {

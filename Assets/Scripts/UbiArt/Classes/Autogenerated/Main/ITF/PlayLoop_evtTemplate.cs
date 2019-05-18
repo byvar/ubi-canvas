@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("bool__0"                      )] public bool bool__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (Settings.s.engineVersion == Settings.EngineVersion.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 			} else if (Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(bool__0));
 			} else {

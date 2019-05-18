@@ -15,8 +15,10 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(duration));
 			SerializeField(s, nameof(color));
 			SerializeField(s, nameof(anim));
-			SerializeField(s, nameof(fadeInSound));
-			SerializeField(s, nameof(fadeOutSound));
+			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				SerializeField(s, nameof(fadeInSound));
+				SerializeField(s, nameof(fadeOutSound));
+			}
 		}
 	}
 }

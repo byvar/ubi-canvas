@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 	public partial class Ray_AIFruitTrapBehavior_Template : CSerializable {
 		[Serialize("delay"          )] public float delay;
 		[Serialize("weightThreshold")] public float weightThreshold;
-		[Serialize("standAction"    )] public Placeholder standAction;
-		[Serialize("fruitFallAction")] public Placeholder fruitFallAction;
+		[Serialize("standAction"    )] public Generic<AIAction_Template> standAction;
+		[Serialize("fruitFallAction")] public Generic<AIAction_Template> fruitFallAction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(delay));

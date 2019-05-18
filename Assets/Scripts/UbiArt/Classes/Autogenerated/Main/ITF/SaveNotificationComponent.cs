@@ -6,8 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("saveReasons")] public CList<uint> saveReasons;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-			} else {
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
 				SerializeField(s, nameof(saveReasons));
 			}
 		}

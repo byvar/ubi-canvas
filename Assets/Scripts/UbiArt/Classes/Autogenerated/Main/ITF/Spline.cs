@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("TimeLoop"    )] public float TimeLoop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
 				SerializeField(s, nameof(Points));
 			} else {
 				SerializeField(s, nameof(Points));
@@ -25,6 +25,7 @@ namespace UbiArt.ITF {
 			[Serialize("NormalOut"    )] public Vector3 NormalOut;
 			[Serialize("NormalOutTime")] public Vector3 NormalOutTime;
 			[Serialize("Interpolation")] public interp Interpolation;
+			[Serialize("Interpolation")] public interp_RO Interpolation_RO;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(Point));
@@ -33,7 +34,15 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(NormalInTime));
 				SerializeField(s, nameof(NormalOut));
 				SerializeField(s, nameof(NormalOutTime));
-				SerializeField(s, nameof(Interpolation));
+				if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+					SerializeField(s, nameof(Interpolation_RO));
+				} else {
+					SerializeField(s, nameof(Interpolation));
+				}
+			}
+			public enum interp_RO {
+				[Serialize("interp_linear")] linear = 0,
+				[Serialize("interp_spline")] spline = 1,
 			}
 			public enum interp {
 				[Serialize("interp_linear"         )] linear = 0,

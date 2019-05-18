@@ -34,7 +34,8 @@ namespace UbiArt.ITF {
 		[Serialize("bool__12"               )] public bool bool__12;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(style));
 					SerializeField(s, nameof(offset));

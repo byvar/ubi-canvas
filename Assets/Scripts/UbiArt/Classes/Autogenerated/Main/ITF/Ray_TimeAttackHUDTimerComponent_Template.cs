@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_TimeAttackHUDTimerComponent_Template : CSerializable {
+	public partial class Ray_TimeAttackHUDTimerComponent_Template : ActorComponent_Template {
 		[Serialize("scale"                )] public float scale;
 		[Serialize("screenMarginX"        )] public float screenMarginX;
 		[Serialize("screenMarginY"        )] public float screenMarginY;

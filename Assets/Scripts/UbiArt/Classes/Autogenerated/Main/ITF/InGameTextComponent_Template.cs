@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class InGameTextComponent_Template : CSerializable {
+	public partial class InGameTextComponent_Template : ActorComponent_Template {
 		[Serialize("textBone"             )] public StringID textBone;
 		[Serialize("scaleK"               )] public float scaleK;
 		[Serialize("scaleD"               )] public float scaleD;

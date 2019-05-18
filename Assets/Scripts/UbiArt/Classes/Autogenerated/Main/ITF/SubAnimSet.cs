@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(animPackage));
 			SerializeField(s, nameof(animations));
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if ((Settings.s.game == Settings.Game.RL && !Settings.s.isCatchThemAll) || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(redirectSymmetryPatches));
 			}
 		}

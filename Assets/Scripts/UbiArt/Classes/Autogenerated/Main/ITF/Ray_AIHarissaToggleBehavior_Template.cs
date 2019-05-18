@@ -3,9 +3,9 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIHarissaToggleBehavior_Template : TemplateAIBehavior {
-		[Serialize("offAction"                  )] public Placeholder offAction;
-		[Serialize("onAction"                   )] public Placeholder onAction;
-		[Serialize("hitAction"                  )] public Placeholder hitAction;
+		[Serialize("offAction"                  )] public Generic<AIAction_Template> offAction;
+		[Serialize("onAction"                   )] public Generic<AIAction_Template> onAction;
+		[Serialize("hitAction"                  )] public Generic<AIAction_Template> hitAction;
 		[Serialize("flameFXName"                )] public StringID flameFXName;
 		[Serialize("squashedInAnim"             )] public StringID squashedInAnim;
 		[Serialize("squashedLoopAnim"           )] public StringID squashedLoopAnim;

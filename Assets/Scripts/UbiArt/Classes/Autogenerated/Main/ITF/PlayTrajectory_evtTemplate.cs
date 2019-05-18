@@ -27,21 +27,7 @@ namespace UbiArt.ITF {
 		[Serialize("actorInterpoDuration"        )] public float actorInterpoDuration;
 		[Serialize("actorInterpoSetFlipFromSpeed")] public int actorInterpoSetFlipFromSpeed;
 		[Serialize("dynamicDeltaFogZ"            )] public bool dynamicDeltaFogZ;
-		[Serialize("float__0"                    )] public float float__0;
-		[Serialize("float__1"                    )] public float float__1;
-		[Serialize("ObjectPath__2"               )] public ObjectPath ObjectPath__2;
-		[Serialize("StringID__3"                 )] public StringID StringID__3;
-		[Serialize("string__4"                   )] public string string__4;
-		[Serialize("bool__5"                     )] public bool bool__5;
-		[Serialize("Trajectory_Template__6"      )] public Trajectory_Template Trajectory_Template__6;
-		[Serialize("int__7"                      )] public int int__7;
-		[Serialize("float__8"                    )] public float float__8;
-		[Serialize("float__9"                    )] public float float__9;
-		[Serialize("uint__10"                    )] public uint uint__10;
-		[Serialize("BoolEventList__11"           )] public BoolEventList BoolEventList__11;
-		[Serialize("Spline__12"                  )] public Spline Spline__12;
-		[Serialize("Spline__13"                  )] public Spline Spline__13;
-		[Serialize("bool__14"                    )] public bool bool__14;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {

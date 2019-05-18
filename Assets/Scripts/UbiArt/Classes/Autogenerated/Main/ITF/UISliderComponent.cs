@@ -26,7 +26,8 @@ namespace UbiArt.ITF {
 		[Serialize("bool__8"                 )] public bool bool__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			} else if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(slideBarWidth));
 				SerializeField(s, nameof(fixPosX));
 				SerializeField(s, nameof(fixPosY));

@@ -616,11 +616,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b610252c0c159f741a37dd9759d16a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
-  gameDataBinFolder: ..\..\RIPPING\RO_PC\ext\itf_cooked\pc
-  pathFolder: world\3_foodworld\level\fo_shooter_a
-  pathFile: fo_shooter_a.isc.ckd
-  log: 1
+  mode: 1
+  gameDataBinFolder: ..\..\RIPPING\RL_Mod\full\ext\cache\itf_cooked\pc
+  pathFolder: world\home\level\petroom
+  pathFile: pet_room.isc.ckd
+  log: 0
   logFile: ..\..\RIPPING\RL_Mod\log.txt
   baseMaterial: {fileID: 2100000, guid: b3bda6f01a91f064186f922717645359, type: 2}
   baseTransparentMaterial: {fileID: 0}

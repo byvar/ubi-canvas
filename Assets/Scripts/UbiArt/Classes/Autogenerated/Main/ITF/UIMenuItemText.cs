@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class UIMenuItemText : CSerializable {
+	public partial class UIMenuItemText : UIComponent {
 		[Serialize("lineId")] public LocalisationId lineId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

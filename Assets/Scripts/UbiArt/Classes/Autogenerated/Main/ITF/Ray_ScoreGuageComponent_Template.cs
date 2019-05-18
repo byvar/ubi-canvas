@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_ScoreGuageComponent_Template : CSerializable {
+	public partial class Ray_ScoreGuageComponent_Template : ActorComponent_Template {
 		[Serialize("textureLums"          )] public Path textureLums;
 		[Serialize("countLums"            )] public uint countLums;
 		[Serialize("gaugeLumsLimits_X_Min")] public float gaugeLumsLimits_X_Min;

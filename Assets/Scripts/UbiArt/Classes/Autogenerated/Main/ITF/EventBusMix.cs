@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("name"     )] public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
 				SerializeField(s, nameof(activate));
 				SerializeField(s, nameof(busMix));
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {

@@ -24,7 +24,8 @@ namespace UbiArt.ITF {
 		[Serialize("EventSender__4"            )] public EventSender EventSender__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			} else if (Settings.s.game == Settings.Game.RL) {
 				SerializeField(s, nameof(selectTextStyle));
 				SerializeField(s, nameof(selectAnimMeshVertex));
 			} else if (Settings.s.game == Settings.Game.VH) {
