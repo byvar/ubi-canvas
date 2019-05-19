@@ -19,6 +19,11 @@ Level viewer and editor for UbiArt games such as Rayman Legends and Rayman Adven
 5. If you want to load animations, check the relevant checkbox, otherwise uncheck it. Since loading is slow, there will be a major speed boost if you uncheck it.
 6. Make sure "Maximize on Play" is unchecked (you will want to see the hierarchy and inspector) in the game view tab.
 7. Click the play button and wait for it to load.
+8. Have fun!
+
+## Controls
+- Game view: Shift to toggle camera controls, and WASD to move around after that. Press L to toggle lighting on/off.
+- Scene view: Hold the right mouse button and use WASD to move around
 
 ## Misc tips
 - I have not checked every scene. If there is an error, please let me know and I will do my best to fix it ASAP.
