@@ -17,16 +17,13 @@ public class UnityAddActorWindow : EditorWindow {
 		pathFolder = EditorGUILayout.TextField("Folder", pathFolder);
 		pathFile   = EditorGUILayout.TextField("File",   pathFile);
 		if (GUILayout.Button("Load")) {
+			Scene sc = MapLoader.Loader.mainScene.obj;
 			if (Selection.activeGameObject != null) {
 				UnityScene us = Selection.activeGameObject.GetComponent<UnityScene>();
-				if (us != null && us.scene != null) {
-					ContainerFile<Actor> act = await MapLoader.Loader.LoadExtraActor(pathFile, pathFolder);
-					if (act != null && act.obj != null) {
-						CSerializable c = await MapLoader.Loader.Clone(act.obj, "act");
-						us.scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
-						MapLoader.Loader.controller.zListManager.Sort();
-					}
-				}
+				if (us != null && us.scene != null) sc = us.scene;
+			}
+			if (sc != null) {
+				await FindObjectOfType<Controller>().LoadActor(sc, pathFile, pathFolder);
 			}
 		}
 	}

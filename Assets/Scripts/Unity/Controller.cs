@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections;
 using UbiArt;
 using System.Threading.Tasks;
+using UbiArt.ITF;
 
 public class Controller : MonoBehaviour {
 	public Settings.Mode mode = Settings.Mode.RaymanLegendsPC;
@@ -151,6 +152,23 @@ public class Controller : MonoBehaviour {
 		loadingScreen.Active = false;
 	}
 
+	public async Task LoadActor(Scene scene, string pathFile, string pathFolder) {
+		state = State.Loading;
+		loadingScreen.Active = true;
+		ContainerFile<Actor> act = await MapLoader.Loader.LoadExtraActor(pathFile, pathFolder);
+		if (act != null && act.obj != null) {
+			await MapLoader.WaitFrame();
+			CSerializable c = await MapLoader.Loader.Clone(act.obj, "act");
+			state = State.Initializing;
+			scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
+			MapLoader.Loader.controller.zListManager.Sort();
+			await MapLoader.WaitFrame();
+		}
+		detailedState = "Finished";
+		state = State.Finished;
+		loadingScreen.Active = false;
+	}
+
 	// Update is called once per frame
 	void Update() {
 		if (loadingScreen.Active) {
@@ -166,7 +184,7 @@ public class Controller : MonoBehaviour {
 				loadingScreen.LoadingtextColor = Color.white;
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.G)) {
+		if (UnityEngine.Input.GetKeyDown(KeyCode.G)) {
 			displayGizmos = !displayGizmos;
 		}
 		bool updatedSettings = false;

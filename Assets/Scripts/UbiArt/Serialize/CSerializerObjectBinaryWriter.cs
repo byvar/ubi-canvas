@@ -53,6 +53,12 @@ namespace UbiArt {
 				writer.Write(((byte[])obj).Length);
 				writer.Write((byte[])obj);
 			} else {
+				if (obj == null) {
+					var ctor = type.GetConstructor(Type.EmptyTypes);
+					if (ctor != null) {
+						obj = ctor.Invoke(new object[] { });
+					}
+				}
 				if(obj != null && obj is ICSerializable) {
 					IncreaseLevel();
 					((ICSerializable)obj).Serialize(this, name);

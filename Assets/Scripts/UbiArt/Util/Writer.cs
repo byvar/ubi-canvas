@@ -69,11 +69,13 @@ namespace UbiArt {
 		}
 
 		public override void Write(String value) {
+			if (value == null) value = "";
 			var data = Encoding.ASCII.GetBytes(value);
 			Write(data.Length);
 			Write(data);
 		}
 		public void Write16(String value) {
+			if (value == null) value = "";
 			var data = Encoding.BigEndianUnicode.GetBytes(value);
 			Write(data.Length / 2);
 			Write(data);

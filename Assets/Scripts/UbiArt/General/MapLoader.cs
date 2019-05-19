@@ -9,6 +9,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using Asyncoroutine;
 using System.Text;
+using System.Diagnostics;
 
 namespace UbiArt {
 	public class MapLoader {
@@ -65,9 +66,12 @@ namespace UbiArt {
 		public Dictionary<StringID, Animation.AnimPatchBank> pbk = new Dictionary<StringID, Animation.AnimPatchBank>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 		public Dictionary<StringID, Path> paths = new Dictionary<StringID, Path>();
+		public Stopwatch stopwatch;
 
 		public Globals globals = null;
 		public Settings settings = null;
+
+		public ContainerFile<ITF.Scene> mainScene;
 
 		public Controller controller = null;
 		private static MapLoader loader = null;
@@ -81,6 +85,7 @@ namespace UbiArt {
 		}
 
 		public MapLoader() {
+			stopwatch = new Stopwatch();
 		}
 
 		public async Task LoadInit() {
@@ -90,7 +95,7 @@ namespace UbiArt {
 					s.Serialize(ref uvAtlasManager);
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 				});
-				ContainerFile<ITF.Scene> mainScene = null;
+				mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
@@ -105,13 +110,15 @@ namespace UbiArt {
 					GameObject sceneGao = mainScene.obj.Gao;
 				}
 			} catch (Exception ex) {
-				Debug.LogError(ex.ToString());
+				UnityEngine.Debug.LogError(ex.ToString());
 				throw;
 			}
 		}
 		protected async Task LoadLoop() {
 			bool ckd = true;
 			try {
+				string state = loadingState;
+				stopwatch.Start();
 				while (pathsToLoad.Count > 0) {
 					ObjectPlaceHolder o = pathsToLoad.Dequeue();
 					if (o.path != null) {
@@ -121,6 +128,8 @@ namespace UbiArt {
 							await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
 							if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
 								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
+								loadingState = state + "\n" + o.path.FullPath;
+								await WaitFrame();
 							}
 						}
 						if (files.ContainsKey(id)) {
@@ -141,9 +150,13 @@ namespace UbiArt {
 							virtualFiles.Remove(t);
 						}
 					}
-					await WaitFrame();
+					if (stopwatch.ElapsedMilliseconds > 16) {
+						await WaitFrame();
+					}
+					loadingState = state;
 				}
 			} finally {
+				stopwatch.Stop();
 				foreach (KeyValuePair<StringID, FileWithPointers> kv in files) {
 					kv.Value.Dispose();
 				}
@@ -256,6 +269,9 @@ namespace UbiArt {
 
 		public static async Task WaitFrame() {
 			await new WaitForEndOfFrame();
+			if (loader != null && loader.stopwatch.IsRunning) {
+				loader.stopwatch.Restart();
+			}
 		}
 
 		public FileWithPointers GetFileByReader(Reader reader) {

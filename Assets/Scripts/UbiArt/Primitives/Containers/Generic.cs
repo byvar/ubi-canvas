@@ -61,6 +61,7 @@ namespace UbiArt {
 						Debug.LogWarning("CRC " + className.stringID.ToString("X8")
 							+ " found at " + s.Position
 							+ " while reading container of type " + typeof(T) + " is not yet supported!");
+						className.stringID = 0xFFFFFFFF;
 					} else {
 						Debug.LogError("CRC " + className.stringID.ToString("X8")
 							+ " found at " + s.Position
