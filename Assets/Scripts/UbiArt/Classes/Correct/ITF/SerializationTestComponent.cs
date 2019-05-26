@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 		[Serialize("m_platform"           )] public Platform m_platform;
 		[Serialize("m_objectWithFactory"  )] public Generic<BaseRttiTest> m_objectWithFactory;
 		[Serialize("m_vectorWithFactory"  )] public CArray<Generic<BaseRttiTest>> m_vectorWithFactory;
-		[Serialize("m_mapWithFactory"     )] public CMap<StringID, BaseRttiTest> m_mapWithFactory;
+		[Serialize("m_mapWithFactory"     )] public CMap<StringID, Generic<BaseRttiTest>> m_mapWithFactory;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(m_bool));

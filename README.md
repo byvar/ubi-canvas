@@ -22,8 +22,11 @@ Level viewer and editor for UbiArt games such as Rayman Legends and Rayman Adven
 8. Have fun!
 
 ## Controls
-- Game view: Shift to toggle camera controls, and WASD to move around after that. Press L to toggle lighting on/off.
+- Game view: Shift to toggle camera controls, and WASD to move around after that. Press L to toggle lighting on/off, and G for gizmos.
 - Scene view: Hold the right mouse button and use WASD to move around
+
+## Source Code Documentation
+Some general documentation can be found on the [Wiki](https://github.com/byvar/ubi-canvas/wiki).
 
 ## Misc tips
 - I have not checked every scene. If there is an error, please let me know and I will do my best to fix it ASAP.
