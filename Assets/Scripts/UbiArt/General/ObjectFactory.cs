@@ -8,6 +8,13 @@ using System.Threading.Tasks;
 namespace UbiArt {
 	public class ObjectFactory {
 		public static Dictionary<uint, Type> classes = new Dictionary<uint, Type> {
+			{ 0x16429EB7, typeof(ITF.ViewportUIComponent_Template) },
+			{ 0xFCDDDCBC, typeof(ITF.GridFluidListComponent) },
+			{ 0x5BE9B3A1, typeof(ITF.GridFluidListComponent_Template) },
+			{ 0xB8D8FE0C, typeof(ITF.GridFluidModifierComponent) },
+			{ 0xB1C84883, typeof(ITF.GridFluidModifierComponent_Template) },
+			{ 0x615DA3F8, typeof(ITF.GridFluidComponent) },
+			{ 0xC52E8554, typeof(ITF.GridFluidComponent_Template) },
 			{ 0xD02443D7, typeof(ITF.InGameTextComponent) },
 			{ 0x539ED10A, typeof(ITF.Ray_UIFadeScreenComponent) },
 			{ 0xDE0814AB, typeof(ITF.Ray_TimeAttackHUDResultsComponent) },
