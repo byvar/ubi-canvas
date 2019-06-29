@@ -162,7 +162,7 @@ namespace UbiArt.ITF {
 						//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
 						//mf.sharedMesh = mesh;
 						SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
-						mr.bones = mesh_bones.Select(b => b.transform).ToArray();
+						mr.bones = mesh_bones.Select(b => b != null ? b.transform : null).ToArray();
 						mr.sharedMaterial = patch_mat;
 						mr.sharedMesh = mesh;
 						patches[i] = patch_gao;

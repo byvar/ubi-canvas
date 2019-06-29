@@ -54,8 +54,8 @@ public class UnityAnimation : MonoBehaviour {
 			} else if (currentFrame >= animTrack.length) {
 				currentFrame %= animTrack.length;
 			}
-
-			for (int i = 0; i < animTrack.bonesLists.Count; i++) {
+			int numBones = Math.Min(animTrack.bonesLists.Count, bones.Length);
+			for (int i = 0; i < numBones; i++) {
 				AnimTrackBonesList bl = animTrack.bonesLists[i];
 				if (bl.amountPAS > 0) {
 					for (int p = 0; p < bl.amountPAS; p++) {
@@ -164,8 +164,10 @@ public class UnityAnimation : MonoBehaviour {
 					bool patchActive = indexes.Contains(i);
 					if (patchActive) {
 						int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
-						patchMaterials[i].SetColor("_ColorFactor", new Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
-						zman.zDict[patchMaterials[i]] = transform.position.z - bones[boneIndex].bindZ - bones[boneIndex].localZ;
+						if (boneIndex != -1) {
+							patchMaterials[i].SetColor("_ColorFactor", new Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
+							zman.zDict[patchMaterials[i]] = transform.position.z - bones[boneIndex].bindZ - bones[boneIndex].localZ;
+						}
 					} else {
 						if (zman.zDict.ContainsKey(patchMaterials[i])) {
 							zman.zDict.Remove(patchMaterials[i]);

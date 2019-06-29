@@ -86,7 +86,11 @@ namespace UbiArt.Animation {
 		}
 		public int GetBoneIndexFromTag(StringID tag) {
 			if (Settings.s.game == Settings.Game.RA) {
-				return boneTagsAdv.IndexOf(boneTagsAdv.First(b => tag.stringID == b));
+				if (boneTagsAdv.Any(b => tag.stringID == b)) {
+					return boneTagsAdv.IndexOf(boneTagsAdv.First(b => tag.stringID == b));
+				} else {
+					return -1;
+				}
 			} else {
 				return boneTags.IndexOf(tag);
 			}
