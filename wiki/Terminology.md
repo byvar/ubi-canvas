@@ -20,3 +20,12 @@ Among the UbiArt classes, a lot are prefixed with one of the following:
 * **RLC**: "Rayman Legends Creatures", or something similar. A lot of Rayman Adventures-exclusive classes have this prefix.
 * **COL**: "Child of Light". Only used in Child of Light
 * **W1W**: something about World War 1? It's for Valiant Hearts.
+
+These classes were named like this in the original source code. In my own code, I often use the following more straightforward abbreviations for these games:
+* **RO**: Rayman Origins
+* **RJR**: Rayman Jungle Run
+* **RFR**: Rayman Fiesta Run
+* **RL**: Rayman Legends
+* **RA**: Rayman Adventures
+* **COL**: Child of Light
+* **VH**: Valiant Hearts
