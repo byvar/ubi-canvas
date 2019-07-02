@@ -133,7 +133,7 @@ namespace UbiArt.ITF {
 		}
 
 		private bool ProcessTextureBank(TextureBankPath bp, GameObject gao, Material tex_mat, AnimSkeleton skeleton) {
-			if (bp.textureSet != null && skeleton != null) {
+			if (bp != null && bp.textureSet != null && skeleton != null) {
 				if (bp.pbk != null) {
 					patches = new GameObject[bp.pbk.templates.Count];
 					patchMaterials = new Material[patches.Length];
