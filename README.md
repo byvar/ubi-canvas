@@ -9,14 +9,10 @@ Level viewer and editor for UbiArt games such as Rayman Legends and Rayman Adven
 ## How to use
 1. Download and install Unity 2019
 2. Clone this project and open it with Unity
-3. Open the MapViewer scene (located in Assets/Scenes/)
+3. Open the Ubi-Canvas setup (located under Ubi-Canvas > Ubi-Canvas Setup in the toolbar)
+4. Set the paths to the extracted game folders
 ![Unity Scene](readme-images/main.png)
-4. In the hierarchy (on the left), select the Controller object. In the inspector (right), you can configure the following paths:
-   - GameDataBin Folder: The path to the itf_cooked/pc folder. Note: all ipk files should be extracted to the same directory, including fullLogic.
-   - Path folder: The path (without file) to the scene file, relative to the GameDataBin Folder, e.g. `world/home/level/petroom/`
-   - Path file: The filename of the scene file, e.g. `pet_room.isc.ckd`
-5. Make sure the correct mode is selected too, e.g. Rayman Legends PC.
-5. If you want to load animations, check the relevant checkbox, otherwise uncheck it. Since loading is slow, there will be a major speed boost if you uncheck it.
+5. Optionally more options can be set in the Controller. This can be located by choosing the MapViewer scene (located in Assets/Scenes/). Then in the hierarchy, select the Controller object. In the inspector you can set other options. If you want to load animations, check the relevant checkbox, otherwise uncheck it. Since loading is slow, there will be a major speed boost if you uncheck it.
 6. Make sure "Maximize on Play" is unchecked (you will want to see the hierarchy and inspector) in the game view tab.
 7. Click the play button and wait for it to load.
 8. Have fun!
