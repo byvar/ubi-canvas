@@ -39,7 +39,7 @@ namespace UbiArt {
 				/*if (isFirstLoad && isBigObject) {
 					MapLoader.Loader.Log(s.Position + ":" + new string(' ', (s.Indent + 1) * 2) + "(" + GetType() + ") " + fieldName + ":");
 				}*/
-				s.Serialize(this, f, atts[0], type: type, defaultValue: f.GetValue(this));
+				s.Serialize(this, f, atts[0], type: type);
 				/*if (isFirstLoad && !isBigObject) {
 					MapLoader.Loader.Log(s.Position + ":" + new string(' ', (s.Indent + 1) * 2) + "(" + GetType() + ") " + fieldName + " - " + f.GetValue(this));
 				}*/
@@ -50,7 +50,7 @@ namespace UbiArt {
 			FieldInfo f = GetType().GetField(fieldName);
 			SerializeAttribute[] atts = (SerializeAttribute[])f.GetCustomAttributes(typeof(SerializeAttribute), false);
 			if (atts.Length != 0) {
-				s.Serialize(this, f, atts[0], defaultValue: f.GetValue(this));
+				s.Serialize(this, f, atts[0]);
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace UbiArt {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
 					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, extension);
 					object toWrite = this;
-					w.Serialize(ref toWrite, GetType(), name: "clone", defaultValue: null);
+					w.Serialize(ref toWrite, GetType(), name: "clone");
 					serializedData = stream.ToArray();
 				}
 			}
@@ -71,7 +71,7 @@ namespace UbiArt {
 					CSerializerObject r = new CSerializerObjectBinary(reader);
 					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.flagsOwn, extension);
 					object toRead = null;
-					r.Serialize(ref toRead, GetType(), name: "clone", defaultValue: null);
+					r.Serialize(ref toRead, GetType(), name: "clone");
 					result = toRead as CSerializable;
 				}
 			}

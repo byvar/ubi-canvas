@@ -37,7 +37,7 @@ namespace UbiArt.Bundle {
 						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
 						MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
 						object toWrite = kv.Value;
-						w.Serialize(ref toWrite, kv.Value.GetType(), name: kv.Key.filename, defaultValue: null);
+						w.Serialize(ref toWrite, kv.Value.GetType(), name: kv.Key.filename);
 						serializedData = stream.ToArray();
 					}
 				}
@@ -58,7 +58,7 @@ namespace UbiArt.Bundle {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
 					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
-					w.Serialize(ref toWrite, GetType(), name: "Bundle", defaultValue: null);
+					w.Serialize(ref toWrite, GetType(), name: "Bundle");
 					serializedData = stream.ToArray();
 				}
 			}
@@ -69,7 +69,7 @@ namespace UbiArt.Bundle {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
 					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
-					w.Serialize(ref toWrite, GetType(), name: "Bundle", defaultValue: null);
+					w.Serialize(ref toWrite, GetType(), name: "Bundle");
 					serializedData = stream.ToArray();
 				}
 			}

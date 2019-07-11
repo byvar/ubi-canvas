@@ -33,7 +33,7 @@ namespace UbiArt {
 		public override void ResetPosition() {
 		}
 
-		public override void Serialize(ref object obj, Type type, string name = null, object defaultValue = null) {
+		public override void Serialize(ref object obj, Type type, string name = null) {
 			if (type.IsEnum) {
 				if (type.GetCustomAttributes<FlagsAttribute>().Any()) {
 					obj = EditorGUILayout.EnumFlagsField(name, (Enum)obj);
@@ -90,23 +90,23 @@ namespace UbiArt {
 			}
 		}
 
-		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null, object defaultValue = null) {
+		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
 			object obj = obj = f.GetValue(containerObj);
 			if (type != null) ConvertTypeBefore(ref obj, name, type, f.FieldType);
-			Serialize(ref obj, type ?? f.FieldType, name: name, defaultValue: defaultValue);
+			Serialize(ref obj, type ?? f.FieldType, name: name);
 			if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 			f.SetValue(containerObj, obj);
 		}
 
-		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null, object defaultValue = null) {
+		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null) {
 			if (((a.version & Settings.s.versionFlags) == Settings.s.versionFlags) && (a.flags == SerializeFlags.None || (flags & a.flags) != SerializeFlags.None)) {
-				Serialize(o, f, type: type, name: a.Name, defaultValue: defaultValue);
+				Serialize(o, f, type: type, name: a.Name);
 			}
 		}
 
-		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null, object defaultValue = null) {
+		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
 			object obj2 = obj;
-			Serialize(ref obj2, type ?? typeof(T), name: name, defaultValue: defaultValue);
+			Serialize(ref obj2, type ?? typeof(T), name: name);
 			obj = (T)obj2;
 		}
 
