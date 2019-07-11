@@ -12,6 +12,7 @@ namespace UbiArt {
 		public Reader reader;
 		public static Dictionary<UAFInfo, uint> fieldCRC = new Dictionary<UAFInfo, uint>();
 		protected Stack<long> endPos = new Stack<long>();
+		protected bool fakeSerializeMode = false;
 
 
 		public CSerializerObjectTagBinary(Reader reader) {
@@ -27,6 +28,10 @@ namespace UbiArt {
 		}
 
 		public override void Serialize(ref object obj, Type type, string name = null) {
+			if (fakeSerializeMode) {
+				FakeSerialize(ref obj, type, name: name);
+				return;
+			}
 			if (Type.GetTypeCode(type) != TypeCode.Object) {
 				switch (Type.GetTypeCode(type)) {
 					case TypeCode.Boolean:
@@ -83,10 +88,65 @@ namespace UbiArt {
 			}
 		}
 
+		public void FakeSerialize(ref object obj, Type type, string name = null) {
+			if (obj != null) {
+				return;
+			}
+			if (Type.GetTypeCode(type) != TypeCode.Object) {
+				switch (Type.GetTypeCode(type)) {
+					case TypeCode.Boolean: obj = default(bool); break;
+					case TypeCode.Byte: obj = default(byte); break;
+					case TypeCode.Char: obj = default(char); break;
+					case TypeCode.String: obj = ""; break;
+					case TypeCode.Single: obj = default(float); break;
+					case TypeCode.Double: obj = default(double); break;
+					case TypeCode.UInt16: obj = default(ushort); break;
+					case TypeCode.UInt32: obj = default(uint); break;
+					case TypeCode.UInt64: obj = default(ulong); break;
+					case TypeCode.Int16: obj = default(short); break;
+					case TypeCode.Int32: obj = default(int); break;
+					case TypeCode.Int64: obj = default(long); break;
+					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
+				}
+			} else if (type == typeof(Vector2)) {
+				obj = default(Vector2);
+			} else if (type == typeof(Vector3)) {
+				obj = default(Vector3);
+			} else if (type == typeof(Vector4)) {
+				obj = default(Vector4);
+			} else if (type == typeof(Color)) {
+				obj = default(Color);
+			} else if (type == typeof(CString)) {
+				obj = new CString();
+			} else if (type == typeof(byte[])) {
+				obj = new byte[0];
+			} else {
+				var ctor = type.GetConstructor(Type.EmptyTypes);
+				if (ctor == null) {
+					throw new Exception("Constructor is null");
+				}
+				obj = ctor.Invoke(new object[] { });
+				if (obj is ICSerializable) {
+					IncreaseLevel();
+					((ICSerializable)obj).Serialize(this, name);
+					DecreaseLevel();
+				}
+			}
+		}
+
 		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
 			long position = reader.BaseStream.Position;
 			Type objType = type ?? f.FieldType;
 			if (endPos.Count > 0 && position >= endPos.Peek()) {
+				if (f.GetValue(containerObj) == null) {
+					bool prevFakeSerializeMode = fakeSerializeMode;
+					fakeSerializeMode = true;
+					object obj = null;
+					Serialize(ref obj, objType, name: name);
+					if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
+					f.SetValue(containerObj, obj);
+					fakeSerializeMode = prevFakeSerializeMode;
+				}
 			} else if (name != null && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
@@ -99,10 +159,20 @@ namespace UbiArt {
 					Serialize(ref obj, objType, name: name);
 					if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 					f.SetValue(containerObj, obj);
-					
+
 					reader.BaseStream.Position = endPos.Pop();
 					if (log && !isBigObject) {
 						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
+					}
+				} else {
+					if (f.GetValue(containerObj) == null) {
+						bool prevFakeSerializeMode = fakeSerializeMode;
+						fakeSerializeMode = true;
+						object obj = null;
+						Serialize(ref obj, objType, name: name);
+						if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
+						f.SetValue(containerObj, obj);
+						fakeSerializeMode = prevFakeSerializeMode;
 					}
 				}
 			} else {
@@ -137,6 +207,14 @@ namespace UbiArt {
 			long position = reader.BaseStream.Position;
 			Type objType = type ?? typeof(T);
 			if (endPos.Count > 0 && position >= endPos.Peek()) {
+				if (obj == null) {
+					bool prevFakeSerializeMode = fakeSerializeMode;
+					fakeSerializeMode = true;
+					object obj2 = null;
+					Serialize(ref obj2, type ?? typeof(T), name: name);
+					obj = (T)obj2;
+					fakeSerializeMode = prevFakeSerializeMode;
+				}
 			} else if (name != null && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
@@ -154,7 +232,16 @@ namespace UbiArt {
 					if (log && name != null && !isBigObject) {
 						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 					}
-					
+
+				} else {
+					if (obj == null) {
+						bool prevFakeSerializeMode = fakeSerializeMode;
+						fakeSerializeMode = true;
+						object obj2 = null;
+						Serialize(ref obj2, type ?? typeof(T), name: name);
+						obj = (T)obj2;
+						fakeSerializeMode = prevFakeSerializeMode;
+					}
 				}
 			} else {
 				Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
@@ -178,6 +265,7 @@ namespace UbiArt {
 		}
 
 		public override void SerializeBytes(ref byte[] obj, int numBytes) {
+			if (fakeSerializeMode) return;
 			obj = reader.ReadBytes(numBytes);
 		}
 
@@ -198,6 +286,7 @@ namespace UbiArt {
 		}
 
 		protected bool ReadTag(string name, uint type) {
+			if (fakeSerializeMode) return false;
 			UAFInfo info = new UAFInfo {
 				name = name,
 				type = type
