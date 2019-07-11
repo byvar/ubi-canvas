@@ -24,7 +24,7 @@ public class UnityAnimation : MonoBehaviour {
 	public int zValue = 0;
 	bool loaded = false;
 
-	private float updateCounter = 0f;
+	//private float updateCounter = 0f;
 	public float currentFrame = 0;
 
 	public void Start() {

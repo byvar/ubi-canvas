@@ -10,7 +10,7 @@ public class ShaderManager : MonoBehaviour {
 	public RenderTexture backLight;
 	public Camera frontLightCamera;
 	public Camera backLightCamera;
-	public bool enableLighting = true; private bool _enableLighting = true;
+	public bool enableLighting = true; //private bool _enableLighting = true;
 
 	// Use this for initialization
 	void Start() {

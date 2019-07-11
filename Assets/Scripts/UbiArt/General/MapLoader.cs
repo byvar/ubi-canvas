@@ -34,6 +34,7 @@ namespace UbiArt {
 		public StringBuilder log = new StringBuilder();
 
 		public UV.UVAtlasManager uvAtlasManager;
+		public Localisation.Localisation_Template localisation;
 		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
 		public List<Tuple<string, FileWithPointers>> virtualFiles = new List<Tuple<string, FileWithPointers>>();
 		public delegate void SerializeAction(CSerializerObject s);
@@ -95,6 +96,12 @@ namespace UbiArt {
 					s.Serialize(ref uvAtlasManager);
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 				});
+				Path pLoc = new Path("enginedata/localisation/", "localisation.loc8") { specialUncooked = true };
+				Load(pLoc, (CSerializerObject s) => {
+					s.Serialize(ref localisation);
+					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+
+				});
 				mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
 					Path p = new Path(pathFolder, pathFile);
@@ -115,7 +122,6 @@ namespace UbiArt {
 			}
 		}
 		protected async Task LoadLoop() {
-			bool ckd = true;
 			try {
 				string state = loadingState;
 				stopwatch.Start();
@@ -125,8 +131,10 @@ namespace UbiArt {
 						StringID id = o.path.stringID;
 						paths[id] = o.path;
 						if (!files.ContainsKey(id)) {
-							await PrepareFile(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
-							if (FileSystem.FileExists(gameDataBinFolder + "/" + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
+							bool ckd = Settings.s.cooked && !o.path.specialUncooked;
+							string cookedFolder = ckd ? Settings.s.CookedDirectory : "";
+							await PrepareFile(gameDataBinFolder + "/" + cookedFolder + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
+							if (FileSystem.FileExists(gameDataBinFolder + "/" + cookedFolder + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
 								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
 								loadingState = state + "\n" + o.path.FullPath;
 								await WaitFrame();
@@ -190,6 +198,7 @@ namespace UbiArt {
 				case "pbk":
 				case "tga":
 				case "png":
+				case "loc8":
 				case null:
 					return true;
 				default:

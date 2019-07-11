@@ -9,7 +9,7 @@ public class UnityWriteBundleWindow : EditorWindow {
 	Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
 	Dictionary<StringID, bool> selectedPaths = new Dictionary<StringID, bool>();
 
-	[MenuItem("Window/Write Bundle")]
+	[MenuItem("Ubi-Canvas/Write Bundle")]
 	public static void ShowWindow() {
 		GetWindow<UnityWriteBundleWindow>("Write bundle");
 	}

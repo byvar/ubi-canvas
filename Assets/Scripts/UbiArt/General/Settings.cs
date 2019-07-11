@@ -32,6 +32,7 @@ namespace UbiArt {
 		public SerializerType serializerType = SerializerType.Binary;
 		public bool usesSerializeFlags = true;
 		public bool isCatchThemAll = false;
+		public bool cooked = true;
 
 		public bool IsLittleEndian {
 			get { return endian == Endian.Little; }
@@ -42,6 +43,15 @@ namespace UbiArt {
 					case Platform.PC: return "pc";
 					case Platform.Android: return "android";
 					default: return null;
+				}
+			}
+		}
+		public string CookedDirectory {
+			get {
+				if (cooked) {
+					return "cache/itf_cooked/" + PlatformString + "/";
+				} else {
+					return "";
 				}
 			}
 		}

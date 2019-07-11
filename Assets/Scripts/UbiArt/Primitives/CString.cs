@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace UbiArt {
 	public class CString : ICSerializable {
-		public string str;
+		public string str = "";
 
 		public CString() { }
 		public CString(string str) {

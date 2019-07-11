@@ -99,8 +99,8 @@ namespace UbiArt {
 					break;
 				default:
 					return null;
-					Debug.Log("Invalid TextureFormat. Only DXT1 and DXT5 formats are supported by this method.");
-					throw new Exception("Invalid TextureFormat. Only DXT1 and DXT5 formats are supported by this method.");
+					/*Debug.Log("Invalid TextureFormat. Only DXT1 and DXT5 formats are supported by this method.");
+					throw new Exception("Invalid TextureFormat. Only DXT1 and DXT5 formats are supported by this method.");*/
 			}
 
 			byte ddsSizeCheck = ddsBytes[4];

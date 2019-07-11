@@ -7,7 +7,7 @@ public class UnityAddActorWindow : EditorWindow {
 	string pathFolder;
 	string pathFile;
 
-	[MenuItem("Window/Add Actor")]
+	[MenuItem("Ubi-Canvas/Add Actor")]
 	public static void ShowWindow() {
 		GetWindow<UnityAddActorWindow>("Add actor");
 	}

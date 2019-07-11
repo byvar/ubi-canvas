@@ -10,6 +10,7 @@ namespace UbiArt {
 		public string filename;
 		public StringID stringID;
 		public uint flags;
+		public bool specialUncooked;
 
 		public Path() {
 			stringID = new StringID();
@@ -61,7 +62,7 @@ namespace UbiArt {
 
 		public bool IsCooked {
 			get {
-				return (folder != null && folder.StartsWith("cache/itf_cooked/" + Settings.s.PlatformString + "/")) 
+				return (folder != null && folder.StartsWith(Settings.s.CookedDirectory)) 
 					|| (filename != null && filename.EndsWith(".ckd"));
 			}
 		}
@@ -69,7 +70,7 @@ namespace UbiArt {
 		public Path CookedPath {
 			get {
 				if (!IsNull && !IsCooked) {
-					return new Path(folder != null ? "cache/itf_cooked/" + Settings.s.PlatformString + "/" + folder : null,
+					return new Path(folder != null ? Settings.s.CookedDirectory + folder : null,
 						filename != null ? filename + ".ckd" : null, cooked: true);
 				}
 				return this;

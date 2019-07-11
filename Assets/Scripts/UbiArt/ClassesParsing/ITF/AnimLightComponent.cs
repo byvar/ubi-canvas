@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		private Material[] patchMaterials = new Material[0];
 		private GameObject skeleton_gao;
 		private UnityBone[] bones;
-		private int zValue = 0;
+		//private int zValue = 0;
 		private UnityAnimation ua;
 
 		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
