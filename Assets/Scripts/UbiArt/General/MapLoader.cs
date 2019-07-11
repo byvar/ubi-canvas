@@ -132,7 +132,7 @@ namespace UbiArt {
 						paths[id] = o.path;
 						if (!files.ContainsKey(id)) {
 							bool ckd = Settings.s.cooked && !o.path.specialUncooked;
-							string cookedFolder = ckd ? Settings.s.CookedDirectory : "";
+							string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
 							await PrepareFile(gameDataBinFolder + "/" + cookedFolder + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
 							if (FileSystem.FileExists(gameDataBinFolder + "/" + cookedFolder + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
 								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));

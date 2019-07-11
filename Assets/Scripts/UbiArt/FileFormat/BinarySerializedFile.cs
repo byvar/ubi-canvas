@@ -11,7 +11,7 @@ namespace UbiArt.FileFormat {
         long length;
         byte[] data = null;
 
-        public BinarySerializedFile(string name, Path path, bool ckd) : this(name, FileSystem.GetFileReadStream((MapLoader.Loader.gameDataBinFolder + "/" + (ckd? Settings.s.CookedDirectory : "") + path.folder + path.filename + (ckd? ".ckd" : "")))) {
+        public BinarySerializedFile(string name, Path path, bool ckd) : this(name, FileSystem.GetFileReadStream((MapLoader.Loader.gameDataBinFolder + "/" + (ckd? Settings.s.ITFDirectory : "") + path.folder + path.filename + (ckd? ".ckd" : "")))) {
             this.path = path;
 			this.ckd = ckd;
         }

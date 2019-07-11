@@ -62,7 +62,7 @@ namespace UbiArt {
 
 		public bool IsCooked {
 			get {
-				return (folder != null && folder.StartsWith(Settings.s.CookedDirectory)) 
+				return (folder != null && folder.StartsWith(Settings.s.ITFDirectory)) 
 					|| (filename != null && filename.EndsWith(".ckd"));
 			}
 		}
@@ -70,7 +70,7 @@ namespace UbiArt {
 		public Path CookedPath {
 			get {
 				if (!IsNull && !IsCooked) {
-					return new Path(folder != null ? Settings.s.CookedDirectory + folder : null,
+					return new Path(folder != null ? Settings.s.ITFDirectory + folder : null,
 						filename != null ? filename + ".ckd" : null, cooked: true);
 				}
 				return this;

@@ -233,7 +233,7 @@ public class UbiCanvasSettingsWindow : EditorWindow {
 		// Initialize settings
 		Settings.Init(UbiCanvasSettings.GameMode);
 
-		string directory = (UbiCanvasSettings.CurrentGameDataDir + "/" + Settings.s.CookedDirectory).Replace('\\','/');
+		string directory = (UbiCanvasSettings.CurrentGameDataDir + "/" + Settings.s.ITFDirectory).Replace('\\','/');
 		if (!directory.EndsWith("/")) directory += "/";
 		while (directory.Contains("//")) directory = directory.Replace("//", "/");
 

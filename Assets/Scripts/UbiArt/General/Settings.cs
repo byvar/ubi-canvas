@@ -46,10 +46,14 @@ namespace UbiArt {
 				}
 			}
 		}
-		public string CookedDirectory {
+		public string ITFDirectory {
 			get {
 				if (cooked) {
-					return "cache/itf_cooked/" + PlatformString + "/";
+					if (engineVersion > EngineVersion.RO) {
+						return "cache/itf_cooked/" + PlatformString + "/";
+					} else {
+						return "itf_cooked/" + PlatformString + "/";
+					}
 				} else {
 					return "";
 				}
