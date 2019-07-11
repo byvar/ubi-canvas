@@ -20,7 +20,7 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				s.Serialize(ref read, name: "read");
+				s.Serialize(ref read, name: "read", defaultValue: true);
 			}
 			if (read) { // Read scene
 				s.Serialize(ref obj);

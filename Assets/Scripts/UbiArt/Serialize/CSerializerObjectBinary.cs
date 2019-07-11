@@ -23,7 +23,7 @@ namespace UbiArt {
 			reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
 		}
 
-		public override void Serialize(ref object obj, Type type, string name = null) {
+		public override void Serialize(ref object obj, Type type, string name = null, object defaultValue = null) {
 			if (Type.GetTypeCode(type) != TypeCode.Object) {
 				switch (Type.GetTypeCode(type)) {
 					case TypeCode.Boolean:
@@ -78,14 +78,14 @@ namespace UbiArt {
 			}
 		}
 
-		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
+		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null, object defaultValue = null) {
 			Pointer pos = log ? Position : null;
 			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
 			if (log && isBigObject) {
 				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
 			}
 			object obj = null;
-			Serialize(ref obj, type ?? f.FieldType, name: name);
+			Serialize(ref obj, type ?? f.FieldType, name: name, defaultValue: defaultValue);
 			if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 			f.SetValue(containerObj, obj);
 			if (log && !isBigObject) {
@@ -93,13 +93,13 @@ namespace UbiArt {
 			}
 		}
 
-		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null) {
+		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null, object defaultValue = null) {
 			if (((a.version & Settings.s.versionFlags) == Settings.s.versionFlags) && (a.flags == SerializeFlags.None || (flags & a.flags) != SerializeFlags.None)) {
-				Serialize(o, f, type: type, name: a.Name);
+				Serialize(o, f, type: type, name: a.Name, defaultValue: defaultValue);
 			}
 		}
 
-		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null, object defaultValue = null) {
 			Pointer pos = log && name != null ? Position : null;
 			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && name != null && isBigObject) {
@@ -107,7 +107,7 @@ namespace UbiArt {
 			}
 
 			object obj2 = null;
-			Serialize(ref obj2, type ?? typeof(T), name: name);
+			Serialize(ref obj2, type ?? typeof(T), name: name, defaultValue: defaultValue);
 			obj = (T)obj2;
 
 			if (log && name != null && !isBigObject) {

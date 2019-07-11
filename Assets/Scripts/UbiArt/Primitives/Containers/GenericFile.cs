@@ -21,7 +21,7 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				s.Serialize(ref read, name: "read");
+				s.Serialize(ref read, name: "read", defaultValue: true);
 				if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)) {
 					s.Serialize(ref sizeOf, name: "sizeof");
 				}

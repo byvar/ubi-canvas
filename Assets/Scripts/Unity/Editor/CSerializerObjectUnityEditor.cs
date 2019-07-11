@@ -33,7 +33,7 @@ namespace UbiArt {
 		public override void ResetPosition() {
 		}
 
-		public override void Serialize(ref object obj, Type type, string name = null) {
+		public override void Serialize(ref object obj, Type type, string name = null, object defaultValue = null) {
 			if (type.IsEnum) {
 				if (type.GetCustomAttributes<FlagsAttribute>().Any()) {
 					obj = EditorGUILayout.EnumFlagsField(name, (Enum)obj);
@@ -90,23 +90,23 @@ namespace UbiArt {
 			}
 		}
 
-		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
+		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null, object defaultValue = null) {
 			object obj = obj = f.GetValue(containerObj);
 			if (type != null) ConvertTypeBefore(ref obj, name, type, f.FieldType);
-			Serialize(ref obj, type ?? f.FieldType, name: name);
+			Serialize(ref obj, type ?? f.FieldType, name: name, defaultValue: defaultValue);
 			if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 			f.SetValue(containerObj, obj);
 		}
 
-		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null) {
+		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null, object defaultValue = null) {
 			if (((a.version & Settings.s.versionFlags) == Settings.s.versionFlags) && (a.flags == SerializeFlags.None || (flags & a.flags) != SerializeFlags.None)) {
-				Serialize(o, f, type: type, name: a.Name);
+				Serialize(o, f, type: type, name: a.Name, defaultValue: defaultValue);
 			}
 		}
 
-		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null, object defaultValue = null) {
 			object obj2 = obj;
-			Serialize(ref obj2, type ?? typeof(T), name: name);
+			Serialize(ref obj2, type ?? typeof(T), name: name, defaultValue: defaultValue);
 			obj = (T)obj2;
 		}
 
