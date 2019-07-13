@@ -11,6 +11,7 @@ namespace UbiArt {
 	public class CSerializerObjectUnityEditor : CSerializerObject {
 		private Dictionary<object, bool> foldouts = new Dictionary<object, bool>();
 		public uint position = 0;
+		private LocalisationIdDropdown localisationDropdown = null;
 
 		private static CSerializerObjectUnityEditor serializer;
 		public static CSerializerObjectUnityEditor Serializer {
@@ -56,6 +57,14 @@ namespace UbiArt {
 					case TypeCode.Int64: obj = EditorGUILayout.LongField(name, (long)obj); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
+			} else if (type == typeof(Path)) {
+				Path p = (Path)obj;
+				DrawPath(name, ref p);
+				obj = p;
+			} else if(type == typeof(LocalisationId)) {
+				LocalisationId locId = (LocalisationId)obj;
+				DrawLocId(name, ref locId);
+				obj = locId;
 			} else if (type == typeof(Vector2)) {
 				obj = EditorGUILayout.Vector2Field(name, (Vector2)obj);
 			} else if (type == typeof(Vector3)) {
@@ -116,6 +125,56 @@ namespace UbiArt {
 
 		public override void SerializeFileSize(ref uint obj) {
 			//throw new NotImplementedException();
+		}
+
+		public void DrawPath(string name, ref Path p) {
+			if (p == null) p = new Path();
+			//EditorGUILayout.PrefixLabel(name);
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			//texPreviewRect = EditorGUI.PrefixLabel(texPreviewRect, new GUIContent(name));
+			string fullPath = p.FullPath;
+			//var indent = EditorGUI.indentLevel;
+			//EditorGUI.indentLevel = 0;
+			string newPath = EditorGUI.TextField(rect, new GUIContent(name), fullPath);
+			//EditorGUI.indentLevel = indent;
+			if (newPath != fullPath) {
+				p = new Path(newPath);
+			}
+		}
+		public void DrawLocId(string name, ref LocalisationId locId) {
+			if (locId == null) locId = new LocalisationId();
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			rect = EditorGUI.PrefixLabel(rect, new GUIContent(name));
+
+			
+			int indent = EditorGUI.indentLevel;
+			string locIdPreview = locId.IsNull ? "-1 - " : locId.id + " - ";
+			if (locId.IsNull) {
+				locIdPreview += "None";
+			} else if (locId.id == 0) {
+				locIdPreview += "Empty";
+			} else if (MapLoader.Loader.localisation != null && MapLoader.Loader.localisation.strings.Count > 0 && MapLoader.Loader.localisation.strings[0].ContainsKey(locId)) {
+				locIdPreview += MapLoader.Loader.localisation.strings[0][locId].text;
+			} else {
+				locIdPreview += "Error";
+			}
+
+			EditorGUI.indentLevel = 0;
+			if (EditorGUI.DropdownButton(rect, new GUIContent(locIdPreview), FocusType.Passive)) {
+				if (localisationDropdown == null) {
+					localisationDropdown = new LocalisationIdDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState()) {
+						name = "Localisation ID"
+					};
+				}
+				localisationDropdown.rect = rect;
+				localisationDropdown.Show(rect);
+			}
+			if (localisationDropdown != null && localisationDropdown.selection != null && localisationDropdown.rect == rect) {
+				locId = localisationDropdown.selection;
+				localisationDropdown.selection = null;
+			}
+
+			EditorGUI.indentLevel = indent;
 		}
 	}
 }
