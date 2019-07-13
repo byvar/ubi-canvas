@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_192_sub_7721F0 : CSerializable {
+	public partial class Unknown_RL_192_sub_7721F0 : Unknown_RL_220_sub_A763E0 {
 		[Serialize("leaderboardFocusSpeedThreshold")] public float leaderboardFocusSpeedThreshold;
 		[Serialize("queryResultSize"               )] public uint queryResultSize;
 		[Serialize("nodeScenePath"                 )] public Path nodeScenePath;
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		[Serialize("slideNodeCount"                )] public uint slideNodeCount;
 		[Serialize("coverflowNodeCount"            )] public uint coverflowNodeCount;
 		[Serialize("coverflowNodeSpace"            )] public float coverflowNodeSpace;
-		[Serialize("gfxMaterial"                   )] public Placeholder gfxMaterial;
+		[Serialize("gfxMaterial"                   )] public GFXMaterialSerializable gfxMaterial;
 		[Serialize("startBrickPath"                )] public Path startBrickPath;
 		[Serialize("endBrickPath"                  )] public Path endBrickPath;
 		[Serialize("firstLeftBrickPath"            )] public Path firstLeftBrickPath;
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 		[Serialize("tilesSize"                     )] public float tilesSize;
 		[Serialize("anchorLeft"                    )] public string anchorLeft;
 		[Serialize("anchorRight"                   )] public string anchorRight;
-		[Serialize("tilesPath"                     )] public Placeholder tilesPath;
+		[Serialize("tilesPath"                     )] public CList<Path> tilesPath;
 		[Serialize("friendActorPath"               )] public Path friendActorPath;
 		[Serialize("friendCountMax"                )] public uint friendCountMax;
 		protected override void SerializeImpl(CSerializerObject s) {

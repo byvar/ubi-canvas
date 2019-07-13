@@ -154,7 +154,7 @@ namespace UbiArt {
 			} else if (locId.id == 0) {
 				locIdPreview += "Empty";
 			} else if (MapLoader.Loader.localisation != null && MapLoader.Loader.localisation.strings.Count > 0 && MapLoader.Loader.localisation.strings[0].ContainsKey(locId)) {
-				locIdPreview += MapLoader.Loader.localisation.strings[0][locId].text;
+				locIdPreview += MapLoader.Loader.localisation.strings[0][locId].text.Replace("\n","\\n");
 			} else {
 				locIdPreview += "Error";
 			}
