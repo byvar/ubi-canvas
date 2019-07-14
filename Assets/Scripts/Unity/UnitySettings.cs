@@ -6,7 +6,7 @@ using UnityEditor;
 /// Settings for UbiCanvas
 /// </summary>
 [InitializeOnLoad]
-public class UbiCanvasSettings
+public class UnitySettings
 {
     public static string ROGameDataDir { get; set; }
 
@@ -70,7 +70,7 @@ public class UbiCanvasSettings
 	/// Static constructor loads in editor data at editor startup.
 	/// This way, the data loads even if the editor window isn't active.
 	/// </summary>
-	static UbiCanvasSettings() {
+	static UnitySettings() {
 		Load();
 	}
 

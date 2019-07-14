@@ -8,11 +8,11 @@ namespace UbiArt.ITF {
 			base.InitGameObject();
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				if (SCENE != null && SCENE.read) {
-					SCENE.value.SetGameObjectParent(gao);
+					SCENE.value.SetGameObjectParent(gao, this);
 				}
 			} else {
 				if (SCENE_ORIGINS != null && SCENE_ORIGINS.obj != null) {
-					SCENE_ORIGINS.obj.SetGameObjectParent(gao);
+					SCENE_ORIGINS.obj.SetGameObjectParent(gao, this);
 				}
 			}
 		}

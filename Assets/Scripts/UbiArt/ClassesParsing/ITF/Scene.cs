@@ -42,11 +42,12 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		public void SetGameObjectParent(GameObject gp) {
+		public void SetGameObjectParent(GameObject gp, SubSceneActor actor) {
 			Gao.transform.SetParent(gp.transform, false);
 			Gao.transform.localPosition = Vector3.zero;
 			Gao.transform.localScale = Vector3.one;
 			Gao.transform.localRotation = Quaternion.identity;
+			Gao.GetComponent<UnityScene>().subSceneActor = actor;
 		}
 
 		public Actor AddActor(Actor a, string name) {

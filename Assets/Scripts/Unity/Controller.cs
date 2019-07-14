@@ -37,11 +37,11 @@ public class Controller : MonoBehaviour {
 
 	// Use this for initialization
 	async Task Start() {
-		string gameDataBinFolder = UbiCanvasSettings.CurrentGameDataDir;
-		string lvlPath = UbiCanvasSettings.SelectedLevelFile;
-		string logFile = UbiCanvasSettings.LogFile;
-		bool log = UbiCanvasSettings.Log;
-		bool loadAnimations = UbiCanvasSettings.LoadAnimations;
+		string gameDataBinFolder = UnitySettings.CurrentGameDataDir;
+		string lvlPath = UnitySettings.SelectedLevelFile;
+		string logFile = UnitySettings.LogFile;
+		bool log = UnitySettings.Log;
+		bool loadAnimations = UnitySettings.LoadAnimations;
 
 		// Read command line arguments
 		string[] args = Environment.GetCommandLineArgs();
@@ -98,16 +98,16 @@ public class Controller : MonoBehaviour {
 		}
 		switch (modeString) {
 			case "ro_pc":
-				UbiCanvasSettings.GameMode = Settings.Mode.RaymanOriginsPC; break;
+				UnitySettings.GameMode = Settings.Mode.RaymanOriginsPC; break;
 			case "rl_pc":
-				UbiCanvasSettings.GameMode = Settings.Mode.RaymanLegendsPC; break;
+				UnitySettings.GameMode = Settings.Mode.RaymanLegendsPC; break;
 			case "rl_vita":
-				UbiCanvasSettings.GameMode = Settings.Mode.RaymanLegendsVitaCatchThemAll; break;
+				UnitySettings.GameMode = Settings.Mode.RaymanLegendsVitaCatchThemAll; break;
 				/*case "ra_ios":
                     mode = Settings.Mode.RaymanAdventuresIOS; break;*/
 		}
 		loadingScreen.Active = true;
-		Settings.Init(UbiCanvasSettings.GameMode);
+		Settings.Init(UnitySettings.GameMode);
 		loader = MapLoader.Loader;
 		loader.gameDataBinFolder = gameDataBinFolder;
 		loader.pathFolder = System.IO.Path.GetDirectoryName(lvlPath);
@@ -161,6 +161,15 @@ public class Controller : MonoBehaviour {
 			MapLoader.Loader.controller.zListManager.Sort();
 			await MapLoader.WaitFrame();
 		}
+		detailedState = "Finished";
+		state = State.Finished;
+		loadingScreen.Active = false;
+	}
+
+	public async Task ExportActor(Actor actor, string path) {
+		state = State.Loading;
+		loadingScreen.Active = true;
+		await MapLoader.Loader.WriteActor(path, actor);
 		detailedState = "Finished";
 		state = State.Finished;
 		loadingScreen.Active = false;

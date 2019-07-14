@@ -254,6 +254,7 @@ namespace UbiArt {
 			}
 			return null;
 		}
+
 		public async Task<CSerializable> Clone(CSerializable cs, string extension) {
 			CSerializable c = cs.Clone(extension);
 			await LoadLoop();
@@ -266,6 +267,37 @@ namespace UbiArt {
 				b.AddFile(f.Item1.CookedPath, f.Item2);
 			}
 			await b.WriteBundle(path);
+		}
+
+		public async Task WriteActor(string path, ITF.Actor act) {
+			// Clone actor
+			CSerializable c = await Clone(act, "act");
+			ITF.Actor actClone = c as ITF.Actor;
+			// Reset clone transform
+			actClone.SCALE = Vector2.one;
+			actClone.POS2D = Vector2.zero;
+			actClone.RELATIVEZ = 0;
+			actClone.xFLIPPED = false;
+			actClone.USERFRIENDLY = "";
+			// Add it to a container file
+			ContainerFile<ITF.Actor> container = new ContainerFile<ITF.Actor>() {
+				read = true,
+				obj = actClone
+			};
+			// Serialize container file
+			byte[] serializedData = null;
+			using (MemoryStream stream = new MemoryStream()) {
+				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
+					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
+					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "act");
+					object toWrite = container;
+					w.Serialize(ref toWrite, container.GetType(), name: act.USERFRIENDLY);
+					serializedData = stream.ToArray();
+				}
+			}
+			await MapLoader.WaitFrame();
+			// Write serialized data to file
+			Util.ByteArrayToFile(path, serializedData);
 		}
 
 		// Defining it this way, clicking the print will go straight to the code you want

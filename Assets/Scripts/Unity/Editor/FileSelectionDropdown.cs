@@ -2,15 +2,41 @@
 using UnityEditor.IMGUI.Controls;
 using System.Collections.Generic;
 using System.Linq;
+using UbiArt;
+using System.IO;
+using UnityEngine;
 
 class FileSelectionDropdown : AdvancedDropdown {
 	public string selection = null;
+	public string directory;
+	public string extension;
+	public Settings.Mode mode;
 	public string[] files;
 	public string name;
 	//public SerializedProperty property;
 
 	public FileSelectionDropdown(AdvancedDropdownState state) : base(state) {
 		minimumSize = new UnityEngine.Vector2(50, 400f);
+	}
+	public FileSelectionDropdown(AdvancedDropdownState state, string directory, string extension) : this(state) {
+		this.directory = directory;
+		this.extension = extension;
+		files = FindFiles().ToArray();
+	}
+
+	private List<string> FindFiles() {
+		// Create the output
+		var output = new List<string>();
+
+		// If the directory does not exist, return the empty list
+		if (!Directory.Exists(directory))
+			return output;
+		
+		// Add the found files containing the correct file extension
+		output.AddRange(from file in Directory.EnumerateFiles(directory, extension, SearchOption.AllDirectories) select file.Substring(directory.Length).Replace(System.IO.Path.DirectorySeparatorChar, '/'));
+		
+		// Return the output
+		return output;
 	}
 
 	protected override AdvancedDropdownItem BuildRoot() {
