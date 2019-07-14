@@ -31,12 +31,12 @@ Some general documentation can be found on the [Wiki](https://github.com/byvar/u
 - I have not checked every scene. If there is an error, please let me know and I will do my best to fix it ASAP.
 - Sometimes, you won't see anything in game view or things will be obscured. Press L to disable and enable lighting.
 - To play different animations, navigate to the actor in the hierarchy and if it has animations, there will be a "skeleton" object under it. Select it and use the relevant controls in the inspector to select a different animation.
-- To add an actor from an *.act file to the scene (works with Rayman Legends only):
+- To add an actor from an *.act file to the scene:
   1. While the scene is loaded, go to the Actor Tools window (located under Ubi-Canvas in the toolbar).
   2. Select an actor file (you might have to wait while the data directory is searched for actor files).
   3. In the hierarchy, make sure to select the Scene object that you want to add the actor to - otherwise, the main scene is used.
   4. Click the Load button.
-- To export any actor to an *.act file (works with Rayman Legends only):
+- To export any actor to an *.act file:
   1. While the scene is loaded, go to the Actor Tools window (located under Ubi-Canvas in the toolbar).
   2. Under Export Actor, browse and save the file anywhere. To facilitate loading it afterwards, it is recommended to save it under `cache/itf_cooked/pc`.
   3. Click the Export button.
