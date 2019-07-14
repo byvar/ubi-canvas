@@ -16,9 +16,9 @@ public class UnityWindowActor : UnityWindow {
 		if (EditorApplication.isPlaying) {
 			if (controller == null) controller = FindObjectOfType<Controller>();
 			if (controller.LoadState == Controller.State.Finished) {
-				string extension = Settings.s.engineVersion == Settings.EngineVersion.RO ? "tpl" : "act";
-				if (Settings.s.cooked) {
-					extension += ".ckd";
+				string extension = "act" + (Settings.s.cooked ? ".ckd" : "");
+				if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+					extension = "act_fake";
 				}
 				#region Add Actor
 				DrawHeader(ref yPos, "Add Actor");

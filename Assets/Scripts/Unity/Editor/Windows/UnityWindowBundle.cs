@@ -30,6 +30,7 @@ public class UnityWindowBundle : UnityWindow {
 				//DrawFoldout("Actors", l.act);
 				DrawFoldout(ref yPos, "Frise Config", l.fcg);
 				DrawFoldout(ref yPos, "Actor Templates", l.tpl);
+				EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(path));
 				if (GUI.Button(GetNextRect(ref yPos), new GUIContent("Write"))) {
 					List<Pair<Path, ICSerializable>> selection = new List<Pair<Path, ICSerializable>>();
 					GetSelectedPaths(selection, l.isc);
@@ -39,6 +40,7 @@ public class UnityWindowBundle : UnityWindow {
 					GetSelectedPaths(selection, l.tpl);
 					await MapLoader.Loader.WriteBundle(path, selection);
 				}
+				EditorGUI.EndDisabledGroup();
 				totalyPos = yPos;
 				GUI.EndScrollView();
 			} else {
