@@ -15,10 +15,11 @@ Level viewer and editor for UbiArt games such as Rayman Legends and Rayman Adven
 5. Set the paths to the extracted game folders. These folders should at least contain the following subfolders:
    - For Rayman Origins: An `itf_cooked` directory and a `localisation` directory containing `localisation.loc`.
    - For Rayman Legends and later games: A `cache` directory and an `enginedata` directory containing `localisation/localisation.loc8`.
-6. Optionally more options can be set here. If you want to load animations, check the relevant checkbox, otherwise uncheck it. Since loading is slow, there will be a major speed boost if you uncheck it.
-7. In the Game View tab, make sure "Maximize on Play" is unchecked (you will want to see the hierarchy and inspector).
-8. Click the play button and wait for it to load.
-9. Have fun!
+6. Select a scene file (you might have to wait for the dropdown to appear while the data directory is searched for scene files)
+7. Optionally, more options can be set here. If you want to load animations, check the relevant checkbox, otherwise uncheck it. Since loading is slow, there will be a major speed boost if you uncheck it.
+8. In the Game View tab, make sure "Maximize on Play" is unchecked (you will want to see the hierarchy and inspector).
+9. Click the play button and wait for it to load.
+10. Have fun!
 
 ## Controls
 - Game view: Shift to toggle camera controls, and WASD to move around after that. Press L to toggle lighting on/off, and G for gizmos.
