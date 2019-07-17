@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SerializeField(s, nameof(onHoldEvent));
 					SerializeField(s, nameof(onReleaseEvent));
-					SerializeField(s, nameof(useTapGauge));
+					SerializeField(s, nameof(useTapGauge), type: typeof(byte));
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {

@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		[Serialize("input"                    )] public StringID input;
 		[Serialize("catchFrontEnabled"        )] public bool catchFrontEnabled;
 		[Serialize("noInteraction"            )] public bool noInteraction;
-		[Serialize("tapGaugeFullEvent"        )] public Placeholder tapGaugeFullEvent;
-		[Serialize("tapGaugeEmptyEvent"       )] public Placeholder tapGaugeEmptyEvent;
+		[Serialize("tapGaugeFullEvent"        )] public Generic<Event> tapGaugeFullEvent;
+		[Serialize("tapGaugeEmptyEvent"       )] public Generic<Event> tapGaugeEmptyEvent;
 		[Serialize("tapGaugeFullValue"        )] public float tapGaugeFullValue;
 		[Serialize("tapGaugeEmptyValue"       )] public float tapGaugeEmptyValue;
 		[Serialize("tapGaugeFillTapValue"     )] public float tapGaugeFillTapValue;
