@@ -41,7 +41,9 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(shaderPath));
 				SerializeField(s, nameof(materialParams));
 				SerializeField(s, nameof(stencilTest));
-				SerializeField(s, nameof(skipDepthTest));
+				if (!Settings.s.isCatchThemAll) {
+					SerializeField(s, nameof(skipDepthTest));
+				}
 				SerializeField(s, nameof(alphaTest));
 				SerializeField(s, nameof(alphaRef));
 			} else {

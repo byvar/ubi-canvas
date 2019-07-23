@@ -30,8 +30,10 @@ namespace UbiArt.ITF {
 					SerializeField(s, nameof(anchor));
 					SerializeField(s, nameof(material));
 					SerializeField(s, nameof(spriteIndex));
-					SerializeField(s, nameof(uvRatio));
-					SerializeField(s, nameof(uvTranslationSpeed));
+					if (!Settings.s.isCatchThemAll) {
+						SerializeField(s, nameof(uvRatio));
+						SerializeField(s, nameof(uvTranslationSpeed));
+					}
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
