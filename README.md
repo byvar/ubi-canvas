@@ -45,4 +45,4 @@ Some general documentation can be found on the [Wiki](https://github.com/byvar/u
   1. While the scene is loaded, go to the Bundle Export window (located under Ubi-Canvas in the toolbar).
   2. Make sure "bundle file" is filled in by browsing and saving the file anywhere.
   2. Select all the files you have edited and want to store in the patch bundle.
-  3. Click the Write button. When it's ready, put it in the game folder and test your edits in-game!
+  3. Click the Write button. When it's ready, put it in the game folder as `patch_PC.ipk` and test your edits in-game!
