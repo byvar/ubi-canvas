@@ -480,6 +480,7 @@ namespace UbiArt.ITF {
 			[Serialize("tag"              )] public StringID tag;
 			[Serialize("worldTag"         )] public StringID worldTag;
 			[Serialize("teensyUnlockCount")] public int teensyUnlockCount;
+			[Serialize("mapDependencies"  )] public CList<StringID> mapDependencies;
 			[Serialize("mapPath"          )] public PathRef mapPath;
 			[Serialize("mapPathAM"        )] public PathRef mapPathAM;
 			[Serialize("mapNameId"        )] public LocalisationId mapNameId;
@@ -499,6 +500,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(tag));
 				SerializeField(s, nameof(worldTag));
 				SerializeField(s, nameof(teensyUnlockCount));
+				SerializeField(s, nameof(mapDependencies));
 				SerializeField(s, nameof(mapPath));
 				SerializeField(s, nameof(mapPathAM));
 				SerializeField(s, nameof(mapNameId));
@@ -535,9 +537,11 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA)]
 		public partial class LuckyTicketUnlock : CSerializable {
 			[Serialize("mapID")] public uint mapID;
+			[Serialize("maps" )] public CList<StringID> maps;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(mapID));
+				SerializeField(s, nameof(maps));
 			}
 		}
 		[Games(GameFlags.RA)]
@@ -547,6 +551,8 @@ namespace UbiArt.ITF {
 			[Serialize("invaderMapTag"  )] public StringID invaderMapTag;
 			[Serialize("teensyCount"    )] public uint teensyCount;
 			[Serialize("misterDarkCount")] public uint misterDarkCount;
+			[Serialize("teensies2D"     )] public CList<Path> teensies2D;
+			[Serialize("enemies2D"      )] public CList<Path> enemies2D;
 			[Serialize("musicModeList"  )] public CArray<Generic<Event>> musicModeList;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
@@ -555,6 +561,8 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(invaderMapTag));
 				SerializeField(s, nameof(teensyCount));
 				SerializeField(s, nameof(misterDarkCount));
+				SerializeField(s, nameof(teensies2D));
+				SerializeField(s, nameof(enemies2D));
 				SerializeField(s, nameof(musicModeList));
 			}
 		}

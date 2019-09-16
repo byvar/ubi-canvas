@@ -28,7 +28,11 @@ namespace UbiArt {
 		}
 
 		public override string ToString() {
-			return "LocId(" + id + ")";
+			string mainStr = "LocId(" + id + ")";
+			if (MapLoader.Loader.localisation != null && MapLoader.Loader.localisation.strings[0].ContainsKey(id)) {
+				mainStr += " - " + MapLoader.Loader.localisation.strings[0][id].text.Replace("\n", "\\n");
+			}
+			return mainStr;
 		}
 
 		public override bool Equals(object obj) {

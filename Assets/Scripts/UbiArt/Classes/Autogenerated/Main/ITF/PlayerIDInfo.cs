@@ -10,24 +10,24 @@ namespace UbiArt.ITF {
 		[Serialize("costumeIconAnimationId"                )] public uint costumeIconAnimationId;
 		[Serialize("gameScreens"                           )] public CList<PlayerIDInfo.GameScreenInfo> gameScreens;
 		[Serialize("defaultGameScreenInfo"                 )] public PlayerIDInfo.GameScreenInfo defaultGameScreenInfo;
-		[Serialize("PlayerIDInfo.ActorInfo__0"             )] public PlayerIDInfo.ActorInfo PlayerIDInfo_ActorInfo__0;
-		[Serialize("string__1"                             )] public string string__1;
-		[Serialize("string__2"                             )] public string string__2;
-		[Serialize("CArray<PlayerIDInfo.GameScreenInfo>__3")] public CArray<PlayerIDInfo.GameScreenInfo> CArray_PlayerIDInfo_GameScreenInfo__3;
-		[Serialize("PlayerIDInfo.GameScreenInfo__4"        )] public PlayerIDInfo.GameScreenInfo PlayerIDInfo_GameScreenInfo__4;
+		[Serialize("PlayerIDInfo.ActorInfo__0"             )] public PlayerIDInfo.ActorInfo actorInfo;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
+				SerializeField(s, nameof(id));
+				SerializeField(s, nameof(family));
 				SerializeField(s, nameof(gameScreens));
 				SerializeField(s, nameof(defaultGameScreenInfo));
 			} else if (Settings.s.game == Settings.Game.COL) {
 			} else if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(PlayerIDInfo_ActorInfo__0));
-				SerializeField(s, nameof(string__1));
-				SerializeField(s, nameof(string__2));
-				SerializeField(s, nameof(CArray_PlayerIDInfo_GameScreenInfo__3));
-				SerializeField(s, nameof(PlayerIDInfo_GameScreenInfo__4));
+				SerializeField(s, nameof(actorInfo));
+				SerializeField(s, nameof(id));
+				SerializeField(s, nameof(family));
+				SerializeField(s, nameof(gameScreens));
+				SerializeField(s, nameof(defaultGameScreenInfo));
 			} else {
+				SerializeField(s, nameof(actorInfo));
 				SerializeField(s, nameof(id));
 				SerializeField(s, nameof(family));
 				SerializeField(s, nameof(lineIdName));
@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(defaultGameScreenInfo));
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 		public partial class ActorInfo : CSerializable {
 			[Serialize("file"               )] public Path file;
 			[Serialize("isAlwaysActive"     )] public bool isAlwaysActive;

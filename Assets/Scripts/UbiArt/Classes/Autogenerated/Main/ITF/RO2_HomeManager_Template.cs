@@ -13,6 +13,8 @@ namespace UbiArt.ITF {
 		[Serialize("statsInfos"                            )] public CList<StatInfos> statsInfos;
 		[Serialize("playerLevelInfos"                      )] public CList<PlayerLevelInfos> playerLevelInfos;
 		[Serialize("cupInfos"                              )] public CList<CupInfos> cupInfos;
+		[Serialize("messages"                              )] public CList<ITF.Message> messages;
+		[Serialize("messages"                              )] public CList<online.Message> messagesAdventures;
 		[Serialize("medalColors"                           )] public CArray<Color> medalColors;
 		[Serialize("miiverseMenuSequenceNames"             )] public CArray<StringID> miiverseMenuSequenceNames;
 		[Serialize("countryId"                             )] public CArray<int> countryId;
@@ -67,7 +69,6 @@ namespace UbiArt.ITF {
 		[Serialize("syncMessageDelayMin"                   )] public float syncMessageDelayMin;
 		[Serialize("syncMessageDelayMax"                   )] public float syncMessageDelayMax;
 		[Serialize("syncMessageRestartDelay"               )] public float syncMessageRestartDelay;
-		[Serialize("messages"                              )] public Placeholder messages;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -145,6 +146,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(statsInfos));
 				SerializeField(s, nameof(playerLevelInfos));
 				SerializeField(s, nameof(cupInfos));
+				SerializeField(s, nameof(messagesAdventures));
 				SerializeField(s, nameof(medalColors));
 				SerializeField(s, nameof(medalColors));
 				SerializeField(s, nameof(miiverseMenuSequenceNames));

@@ -37,9 +37,9 @@ namespace UbiArt {
 					obj = default;
 				} else {
 					if (ObjectFactory.classes.ContainsKey(className.stringID)) {
-						if (s.log) {
+						/*if (s.log) {
 							MapLoader.Loader.Log(pos + ":" + new string(' ', (s.Indent + 1) * 2) + "$ClassName$ - " + className.stringID.ToString("X8") + "(" + ObjectFactory.classes[className.stringID] + ")");
-						}
+						}*/
 						Type type = ObjectFactory.classes[className.stringID];
 						if (type.ContainsGenericParameters) {
 							if (!typeof(T).IsGenericType) {

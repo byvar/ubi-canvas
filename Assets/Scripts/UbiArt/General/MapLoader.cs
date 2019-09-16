@@ -33,6 +33,10 @@ namespace UbiArt {
 		public bool loadAnimations = false;
 		public StringBuilder log = new StringBuilder();
 
+
+		public ITF.RO2_GameManagerConfig_Template gameConfig;
+		public ITF.RewardContainer_Template rewardList;
+
 		public UV.UVAtlasManager uvAtlasManager;
 		public Localisation.Localisation_Template localisation;
 		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
@@ -67,6 +71,7 @@ namespace UbiArt {
 		public Dictionary<StringID, Animation.AnimPatchBank> pbk = new Dictionary<StringID, Animation.AnimPatchBank>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 		public Dictionary<StringID, Path> paths = new Dictionary<StringID, Path>();
+		public Dictionary<StringID, string> stringCache = new Dictionary<StringID, string>();
 		public Stopwatch stopwatch;
 
 		public Globals globals = null;
@@ -86,6 +91,11 @@ namespace UbiArt {
 		}
 
 		public MapLoader() {
+			// Init String Cache
+			foreach (uint sid in ObjectFactory.classes.Keys) {
+				stringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
+			}
+			// Init stopwatch (for smoother loading)
 			stopwatch = new Stopwatch();
 		}
 
@@ -102,6 +112,44 @@ namespace UbiArt {
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 
 				});
+				/*Path pGameconfig = new Path("enginedata/gameconfig/gameconfig.isg");
+				Load(pGameconfig, (CSerializerObject s) => {
+					GenericFile<CSerializable> curIsg = null;
+					if (isg.ContainsKey(pGameconfig.stringID)) {
+						curIsg = isg[pGameconfig.stringID];
+					} else {
+						s.log = logEnabled;
+						s.Serialize(ref curIsg);
+						isg[pGameconfig.stringID] = curIsg;
+					}
+					gameConfig = curIsg.obj as ITF.RO2_GameManagerConfig_Template;
+					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				});
+				Path pRewardList = new Path("enginedata/gameconfig/rewardlist.isg");
+				Load(pRewardList, (CSerializerObject s) => {
+					GenericFile<CSerializable> curIsg = null;
+					if (isg.ContainsKey(pRewardList.stringID)) {
+						curIsg = isg[pRewardList.stringID];
+					} else {
+						s.log = logEnabled;
+						s.Serialize(ref curIsg);
+						isg[pRewardList.stringID] = curIsg;
+					}
+					rewardList = curIsg.obj as ITF.RewardContainer_Template;
+					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				});
+				Path pHomeConfig = new Path("enginedata/gameconfig/homeconfig.isg");
+				Load(pHomeConfig, (CSerializerObject s) => {
+					GenericFile<CSerializable> curIsg = null;
+					if (isg.ContainsKey(pHomeConfig.stringID)) {
+						curIsg = isg[pHomeConfig.stringID];
+					} else {
+						s.log = logEnabled;
+						s.Serialize(ref curIsg);
+						isg[pHomeConfig.stringID] = curIsg;
+					}
+					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				});*/
 				mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
 					Path p = new Path(pathFolder, pathFile);

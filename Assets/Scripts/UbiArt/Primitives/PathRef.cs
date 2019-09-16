@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace UbiArt {
-	public class PathRef : ICSerializable {
+	public class PathRef : ICSerializable, IEquatable<PathRef> {
 		public string folder;
 		public string filename;
 		public StringID stringID;
@@ -52,6 +52,34 @@ namespace UbiArt {
 		public override string ToString() {
 			if (stringID.IsNull) return "PathRef(null)";
 			return "PathRef(\"" + folder + "\", \"" + filename + "\")";
+		}
+		public override bool Equals(object obj) {
+			return obj is PathRef && this == (PathRef)obj;
+		}
+		public override int GetHashCode() {
+			return stringID.GetHashCode();
+		}
+
+		public bool Equals(PathRef other) {
+			return this == (PathRef)other;
+		}
+
+		public static bool operator ==(PathRef x, PathRef y) {
+			if (ReferenceEquals(x, y)) return true;
+			if (ReferenceEquals(x, null)) return false;
+			if (ReferenceEquals(y, null)) return false;
+			return x.stringID == y.stringID;
+		}
+		public static bool operator !=(PathRef x, PathRef y) {
+			return !(x == y);
+		}
+		public static implicit operator PathRef(Path p) {
+			return new PathRef {
+				filename = p.filename,
+				folder = p.folder,
+				flags = p.flags,
+				stringID = p.stringID
+			};
 		}
 	}
 }

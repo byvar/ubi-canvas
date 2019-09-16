@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("debugMenuMapList"                           )] public CArray<Path> debugMenuMapList;
 		[Serialize("gameTextFilePath"                           )] public Path gameTextFilePath;
 		[Serialize("loading"                                    )] public Path loading;
-		[Serialize("playerIDInfo"                               )] public CList<PlayerIDInfo> playerIDInfo;
+		[Serialize("playerIDInfo"                               )] public CList<Generic<PlayerIDInfo>> playerIDInfo;
 		[Serialize("familyList"                                 )] public CArray<string> familyList;
 		[Serialize("cameraShakeConfig"                          )] public Path cameraShakeConfig;
 		[Serialize("cutSceneDefaultUnskippableDurationFirstTime")] public float cutSceneDefaultUnskippableDurationFirstTime;

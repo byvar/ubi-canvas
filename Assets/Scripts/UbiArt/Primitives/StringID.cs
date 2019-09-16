@@ -112,7 +112,11 @@ namespace UbiArt {
 		}
 
 		public override string ToString() {
-			return "StringID(0x" + stringID.ToString("X8") + ")";
+			string str = "StringID(0x" + stringID.ToString("X8") + ")";
+			if (!IsNull && MapLoader.Loader.stringCache.ContainsKey(this)) {
+				str += " - " + MapLoader.Loader.stringCache[this].Replace("\n", "\\n");
+			}
+			return str;
 		}
 
 		public override bool Equals(object obj) {

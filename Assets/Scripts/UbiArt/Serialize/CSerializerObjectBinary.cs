@@ -40,7 +40,7 @@ namespace UbiArt {
 						break;
 					case TypeCode.Byte: obj = (object)reader.ReadByte(); break;
 					case TypeCode.Char: obj = (object)reader.ReadChar(); break;
-					case TypeCode.String: obj = (object)reader.ReadString(); break;
+					case TypeCode.String: obj = (object)reader.ReadString(); AddToStringCache(obj); break;
 					case TypeCode.Single: obj = (object)reader.ReadSingle(); break;
 					case TypeCode.Double: obj = (object)reader.ReadDouble(); break;
 					case TypeCode.UInt16: obj = (object)reader.ReadUInt16(); break;
@@ -61,6 +61,7 @@ namespace UbiArt {
 				obj = reader.ReadColor();
 			} else if(type == typeof(CString)) {
 				obj = new CString(reader.ReadString16());
+				AddToStringCache(obj);
 			} else if (type == typeof(byte[])) {
 				int numBytes = reader.ReadInt32();
 				obj = reader.ReadBytes(numBytes);
@@ -74,6 +75,7 @@ namespace UbiArt {
 					IncreaseLevel();
 					((ICSerializable)obj).Serialize(this, name);
 					DecreaseLevel();
+					AddToStringCache(obj);
 				}
 			}
 		}

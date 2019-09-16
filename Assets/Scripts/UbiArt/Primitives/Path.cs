@@ -128,5 +128,13 @@ namespace UbiArt {
 		public static bool operator !=(Path x, Path y) {
 			return !(x == y);
 		}
+		public static implicit operator Path(PathRef p) {
+			return new Path {
+				filename = p.filename,
+				folder = p.folder,
+				flags = p.flags,
+				stringID = p.stringID
+			};
+		}
 	}
 }
