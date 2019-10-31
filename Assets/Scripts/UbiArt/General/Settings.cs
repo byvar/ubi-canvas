@@ -1,18 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace UbiArt {
 	public class Settings {
 		public enum Mode {
-			RaymanOriginsPC,
-			RaymanLegendsPC,
-			RaymanLegendsVitaCatchThemAll,
+			[System.ComponentModel.Description("Rayman Origins (PC)")] RaymanOriginsPC,
+			[System.ComponentModel.Description("Rayman Legends (PC)")] RaymanLegendsPC,
+			[System.ComponentModel.Description("Rayman Legends (PSV)")] RaymanLegendsVitaCatchThemAll,
 			//RaymanAdventuresIOS,
-			RaymanAdventuresAndroid
+			[System.ComponentModel.Description("Rayman Adventures (Android)")] RaymanAdventuresAndroid,
+			[System.ComponentModel.Description("Rayman Mini (MacOS)")] RaymanMiniMacOS
 		};
 		public Mode mode = Mode.RaymanLegendsPC;
+
+
+		public static Dictionary<string, Mode> cmdModeNameDict = new Dictionary<string, Mode>() {
+			{ "ro_pc", Mode.RaymanOriginsPC },
+			{ "rl_pc", Mode.RaymanLegendsPC },
+			{ "rl_vita", Mode.RaymanLegendsVitaCatchThemAll },
+			{ "ra_android", Mode.RaymanAdventuresAndroid },
+			{ "rm_mac", Mode.RaymanMiniMacOS },
+		};
+
 
 		public enum EngineVersion {
 			None = -1,
@@ -20,7 +28,7 @@ namespace UbiArt {
 			RL = 1
 		};
 		public enum Game { None, RO, RL, RA, RJR, RFR, COL, VH };
-		public enum Platform { None, PC, iOS, Android, WiiU, Vita };
+		public enum Platform { None, PC, iOS, Android, WiiU, Vita, MacOS };
 		public enum Endian { Little, Big };
 		public enum SerializerType { Binary, TagBinary };
 
@@ -42,6 +50,7 @@ namespace UbiArt {
 				switch (platform) {
 					case Platform.PC: return "pc";
 					case Platform.Android: return "android";
+					case Platform.MacOS: return "macos";
 					default: return null;
 				}
 			}
@@ -61,12 +70,8 @@ namespace UbiArt {
 		}
 
 		public static void Init(Mode mode) {
-			switch (mode) {
-				case Mode.RaymanOriginsPC: s = ROPC; break;
-				case Mode.RaymanLegendsPC: s = RLPC; break;
-				case Mode.RaymanLegendsVitaCatchThemAll: s = RLVita; break;
-				//case Mode.RaymanAdventuresIOS: s = RAIOS; break;
-				case Mode.RaymanAdventuresAndroid: s = RAAndroid; break;
+			if (settingsDict.ContainsKey(mode)) {
+				s = settingsDict[mode];
 			}
 			if (s != null) s.mode = mode;
 		}
@@ -104,6 +109,14 @@ namespace UbiArt {
 			versionFlags = VersionFlags.Adventures,
 			serializerType = SerializerType.TagBinary
 		};
+		public static Settings RMMac = new Settings() {
+			engineVersion = EngineVersion.RL,
+			game = Game.RA,
+			platform = Platform.MacOS,
+			endian = Endian.Big,
+			versionFlags = VersionFlags.Adventures,
+			serializerType = SerializerType.TagBinary
+		};
 		public static Settings RLVita = new Settings() {
 			engineVersion = EngineVersion.RL,
 			game = Game.RL,
@@ -111,6 +124,15 @@ namespace UbiArt {
 			endian = Endian.Big,
 			versionFlags = VersionFlags.Legends,
 			isCatchThemAll = true
+		};
+
+
+		public static Dictionary<Mode, Settings> settingsDict = new Dictionary<Mode, Settings>() {
+			{ Mode.RaymanOriginsPC, ROPC },
+			{ Mode.RaymanLegendsPC, RLPC },
+			{ Mode.RaymanLegendsVitaCatchThemAll, RLVita },
+			{ Mode.RaymanAdventuresAndroid, RAAndroid },
+			{ Mode.RaymanMiniMacOS, RMMac },
 		};
 	}
 }

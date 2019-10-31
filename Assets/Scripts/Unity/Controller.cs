@@ -37,11 +37,25 @@ public class Controller : MonoBehaviour {
 
 	// Use this for initialization
 	async Task Start() {
-		string gameDataBinFolder = UnitySettings.CurrentGameDataDir;
+		Settings.Mode mode = UnitySettings.GameMode;
+		string gameDataBinFolder = UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "";
 		string lvlPath = UnitySettings.SelectedLevelFile;
 		string logFile = UnitySettings.LogFile;
 		bool log = UnitySettings.Log;
 		bool loadAnimations = UnitySettings.LoadAnimations;
+
+
+#if UNITY_EDITOR
+		if (Application.isEditor && UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL) {
+			FileSystem.mode = FileSystem.Mode.Web;
+		}
+#endif
+		if (Application.platform == RuntimePlatform.WebGLPlayer) {
+			FileSystem.mode = FileSystem.Mode.Web;
+		}
+		if (FileSystem.mode == FileSystem.Mode.Web) {
+			gameDataBinFolder = UnitySettings.GameDirsWeb.ContainsKey(mode) ? UnitySettings.GameDirsWeb[mode] : "";
+		}
 
 		// Read command line arguments
 		string[] args = Environment.GetCommandLineArgs();
@@ -96,18 +110,11 @@ public class Controller : MonoBehaviour {
 				}
 			}
 		}
-		switch (modeString) {
-			case "ro_pc":
-				UnitySettings.GameMode = Settings.Mode.RaymanOriginsPC; break;
-			case "rl_pc":
-				UnitySettings.GameMode = Settings.Mode.RaymanLegendsPC; break;
-			case "rl_vita":
-				UnitySettings.GameMode = Settings.Mode.RaymanLegendsVitaCatchThemAll; break;
-				/*case "ra_ios":
-                    mode = Settings.Mode.RaymanAdventuresIOS; break;*/
+		if (Settings.cmdModeNameDict.ContainsKey(modeString)) {
+			mode = Settings.cmdModeNameDict[modeString];
 		}
 		loadingScreen.Active = true;
-		Settings.Init(UnitySettings.GameMode);
+		Settings.Init(mode);
 		loader = MapLoader.Loader;
 		loader.gameDataBinFolder = gameDataBinFolder;
 		loader.pathFolder = System.IO.Path.GetDirectoryName(lvlPath);
@@ -128,14 +135,6 @@ public class Controller : MonoBehaviour {
 	}
 
 	async Task Init() {
-#if UNITY_EDITOR
-		if (Application.isEditor && UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL) {
-			FileSystem.mode = FileSystem.Mode.Web;
-		}
-#endif
-		if (Application.platform == RuntimePlatform.WebGLPlayer) {
-			FileSystem.mode = FileSystem.Mode.Web;
-		}
 		state = State.Loading;
 		await MapLoader.WaitFrame();
 		await loader.LoadInit();
