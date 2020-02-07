@@ -403,21 +403,21 @@ namespace UbiArt.ITF {
 		[Serialize("CurrentPerkPackActive"                        )] public uint CurrentPerkPackActive;
 		[Serialize("TimeLastShownMiniEventExclamation"            )] public online.DateTime TimeLastShownMiniEventExclamation;
 		[Serialize("MiniEventsSessionsSinceLastShown"             )] public uint MiniEventsSessionsSinceLastShown;
-		[Serialize("profile"                                      )] public Placeholder profile;
-		[Serialize("messages"                                     )] public Placeholder messages;
-		[Serialize("mrDarkUnlockCount"                            )] public Placeholder mrDarkUnlockCount;
-		[Serialize("newCostumes"                                  )] public Placeholder newCostumes;
-		[Serialize("costumeUnlockSeen"                            )] public Placeholder costumeUnlockSeen;
-		[Serialize("retroUnlocks"                                 )] public Placeholder retroUnlocks;
-		[Serialize("playedDiamondCupSequence"                     )] public Placeholder playedDiamondCupSequence;
-		[Serialize("costumes"                                     )] public Placeholder costumes;
-		[Serialize("playedInvasion"                               )] public Placeholder playedInvasion;
-		[Serialize("worldUnlockMessagesSeen"                      )] public Placeholder worldUnlockMessagesSeen;
-		[Serialize("doorUnlockMessageSeen"                        )] public Placeholder doorUnlockMessageSeen;
-		[Serialize("doorUnlockDRCMessageRequired"                 )] public Placeholder doorUnlockDRCMessageRequired;
+		[Serialize("profile"                                      )] public Unknown_RL_31371_sub_894F80 profile;
+		[Serialize("messages"                                     )] public CList<Message> messages;
+		[Serialize("mrDarkUnlockCount"                            )] public CArray<StringID> mrDarkUnlockCount;
+		[Serialize("newCostumes"                                  )] public CArray<StringID> newCostumes;
+		[Serialize("costumeUnlockSeen"                            )] public CArray<StringID> costumeUnlockSeen;
+		[Serialize("retroUnlocks"                                 )] public CArray<StringID> retroUnlocks;
+		[Serialize("playedDiamondCupSequence"                     )] public CArray<StringID> playedDiamondCupSequence;
+		[Serialize("costumes"                                     )] public CArray<StringID> costumes;
+		[Serialize("playedInvasion"                               )] public CArray<StringID> playedInvasion;
+		[Serialize("worldUnlockMessagesSeen"                      )] public CArray<StringID> worldUnlockMessagesSeen;
+		[Serialize("doorUnlockMessageSeen"                        )] public CArray<StringID> doorUnlockMessageSeen;
+		[Serialize("doorUnlockDRCMessageRequired"                 )] public CArray<StringID> doorUnlockDRCMessageRequired;
 		[Serialize("reward39Failed"                               )] public int reward39Failed;
 		[Serialize("isDemoRewardChecked"                          )] public int isDemoRewardChecked;
-		[Serialize("messageDummy"                                 )] public Placeholder messageDummy;
+		[Serialize("messageDummy"                                 )] public Message messageDummy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

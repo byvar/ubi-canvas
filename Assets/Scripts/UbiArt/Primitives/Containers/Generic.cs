@@ -11,6 +11,7 @@ namespace UbiArt {
 	public class Generic<T> : ICSerializable, IObjectContainer where T : CSerializable {
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;
+		public bool serializeClassName = true;
 
 		public Generic() {
 			className = new StringID();
@@ -31,12 +32,18 @@ namespace UbiArt {
 			}
 		}
 
-		public void Serialize(CSerializerObject s, string name) {
-			Pointer pos = s.Position;
+		public void SerializeClassName(CSerializerObject s) {
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
 				s.Serialize(ref className, name: "NAME");
 			} else {
 				s.Serialize(ref className, name: "$ClassName$");
+			}
+		}
+
+		public void Serialize(CSerializerObject s, string name) {
+			Pointer pos = s.Position;
+			if (serializeClassName) {
+				SerializeClassName(s);
 			}
 			/*s.Serialize(this, GetType().GetField(nameof(className)),
 				(SerializeAttribute)GetType().GetField(nameof(className)).GetCustomAttributes(typeof(SerializeAttribute), false).First());*/

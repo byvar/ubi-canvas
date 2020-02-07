@@ -19,7 +19,6 @@ namespace UbiArt.ITF {
 			SerializeField(s, nameof(challengeLocksOpened));
 			SerializeField(s, nameof(tutoCount));
 			SerializeField(s, nameof(DisplayQuoteStates));
-			SerializeField(s, nameof(DisplayQuoteStates));
 		}
 	}
 }

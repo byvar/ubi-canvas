@@ -74,11 +74,13 @@ namespace UbiArt {
 				int numBytes = reader.ReadInt32();
 				obj = reader.ReadBytes(numBytes);
 			} else {
-				var ctor = type.GetConstructor(Type.EmptyTypes);
-				if (ctor == null) {
-					throw new Exception("Constructor is null");
+				if (obj == null) {
+					var ctor = type.GetConstructor(Type.EmptyTypes);
+					if (ctor == null) {
+						throw new Exception("Constructor is null");
+					}
+					obj = ctor.Invoke(new object[] { });
 				}
-				obj = ctor.Invoke(new object[] { });
 				if (obj is ICSerializable) {
 					IncreaseLevel();
 					bool entered = GetTagCode(type) == 200 && !type.IsDefined(typeof(SerializeEmbedAttribute), false) && ReadTag(type.Name, 200);
@@ -226,7 +228,7 @@ namespace UbiArt {
 						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
 					}
 
-					object obj2 = null;
+					object obj2 = obj;
 					Serialize(ref obj2, type ?? typeof(T), name: name);
 					obj = (T)obj2;
 
@@ -252,7 +254,7 @@ namespace UbiArt {
 					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
 				}
 
-				object obj2 = null;
+				object obj2 = obj;
 				Serialize(ref obj2, type ?? typeof(T), name: name);
 				obj = (T)obj2;
 

@@ -112,44 +112,11 @@ namespace UbiArt {
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 
 				});
-				/*Path pGameconfig = new Path("enginedata/gameconfig/gameconfig.isg");
-				Load(pGameconfig, (CSerializerObject s) => {
-					GenericFile<CSerializable> curIsg = null;
-					if (isg.ContainsKey(pGameconfig.stringID)) {
-						curIsg = isg[pGameconfig.stringID];
-					} else {
-						s.log = logEnabled;
-						s.Serialize(ref curIsg);
-						isg[pGameconfig.stringID] = curIsg;
-					}
-					gameConfig = curIsg.obj as ITF.RO2_GameManagerConfig_Template;
-					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
-				});
-				Path pRewardList = new Path("enginedata/gameconfig/rewardlist.isg");
-				Load(pRewardList, (CSerializerObject s) => {
-					GenericFile<CSerializable> curIsg = null;
-					if (isg.ContainsKey(pRewardList.stringID)) {
-						curIsg = isg[pRewardList.stringID];
-					} else {
-						s.log = logEnabled;
-						s.Serialize(ref curIsg);
-						isg[pRewardList.stringID] = curIsg;
-					}
-					rewardList = curIsg.obj as ITF.RewardContainer_Template;
-					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
-				});
-				Path pHomeConfig = new Path("enginedata/gameconfig/homeconfig.isg");
-				Load(pHomeConfig, (CSerializerObject s) => {
-					GenericFile<CSerializable> curIsg = null;
-					if (isg.ContainsKey(pHomeConfig.stringID)) {
-						curIsg = isg[pHomeConfig.stringID];
-					} else {
-						s.log = logEnabled;
-						s.Serialize(ref curIsg);
-						isg[pHomeConfig.stringID] = curIsg;
-					}
-					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
-				});*/
+				//LoadGenericFile("enginedata/gameconfig/gameconfig.isg", (isg) => { gameConfig = isg.obj as ITF.RO2_GameManagerConfig_Template; });
+				//LoadGenericFile("enginedata/gameconfig/rewardlist.isg", (isg) => { rewardList = isg.obj as ITF.RewardContainer_Template; });
+				//LoadGenericFile("enginedata/gameconfig/homeconfig.isg", (isg) => { });
+				//LoadGenericFile("enginedata/gameconfig/ghostconfig.isg", (isg) => { });
+				//LoadSaveFile("RaymanSave_0", (save) => { });
 				mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
 					Path p = new Path(pathFolder, pathFile);
@@ -236,6 +203,9 @@ namespace UbiArt {
 					flags |= SerializeFlags.Flags7;
 					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
 					break;
+				case null: // Save files
+					flags |= SerializeFlags.Flags7;
+					break;
 			}
 		}
 
@@ -315,6 +285,32 @@ namespace UbiArt {
 				b.AddFile(f.Item1.CookedPath, f.Item2);
 			}
 			await b.WriteBundle(path);
+		}
+
+		public void LoadGenericFile(string path, Action<GenericFile<CSerializable>> onResult) {
+			Path pGeneric = new Path(path);
+			Load(pGeneric, (CSerializerObject s) => {
+				GenericFile<CSerializable> curIsg = null;
+				if (isg.ContainsKey(pGeneric.stringID)) {
+					curIsg = isg[pGeneric.stringID];
+				} else {
+					s.log = logEnabled;
+					s.Serialize(ref curIsg);
+					isg[pGeneric.stringID] = curIsg;
+				}
+				onResult(curIsg);
+				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+			});
+		}
+		public void LoadSaveFile(string path, Action<RO2_SaveData> onResult) {
+			Path pGeneric = new Path(path) { specialUncooked = true };
+			Load(pGeneric, (CSerializerObject s) => {
+				RO2_SaveData saveData = null;
+				s.log = logEnabled;
+				s.Serialize(ref saveData);
+				onResult(saveData);
+				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+			});
 		}
 
 		public async Task WriteActor(string path, ITF.Actor act) {

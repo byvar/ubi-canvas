@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		[Serialize("historyOccurenceNb" )] public uint historyOccurenceNb;
 		[Serialize("historyDateTime"    )] public online.DateTime historyDateTime;
 		[Serialize("seasonalEnemyKilled")] public bool seasonalEnemyKilled;
-		[Serialize("sequenceAlreadySeen")] public Placeholder sequenceAlreadySeen;
+		[Serialize("sequenceAlreadySeen")] public CArray<ObjectPath> sequenceAlreadySeen;
 		[Serialize("onlineSynced"       )] public int onlineSynced;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

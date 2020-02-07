@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			} else {
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 		public partial class SaveSession : CSerializable {
 			[Serialize("tags"             )] public CList<float> tags;
 			[Serialize("timers"           )] public CList<float> timers;
@@ -23,8 +23,10 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(tags));
 				SerializeField(s, nameof(timers));
 				SerializeField(s, nameof(rewardsState));
-				SerializeField(s, nameof(uplayRewardsState));
-				SerializeField(s, nameof(uplayActionsState));
+				if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
+					SerializeField(s, nameof(uplayRewardsState));
+					SerializeField(s, nameof(uplayActionsState));
+				}
 			}
 		}
 	}
