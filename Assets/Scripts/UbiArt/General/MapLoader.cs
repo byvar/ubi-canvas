@@ -38,6 +38,7 @@ namespace UbiArt {
 		public ITF.RewardContainer_Template rewardList;
 
 		public UV.UVAtlasManager uvAtlasManager;
+		public SceneConfig.SceneConfigManager sceneConfigManager;
 		public Localisation.Localisation_Template localisation;
 		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
 		public List<Tuple<string, FileWithPointers>> virtualFiles = new List<Tuple<string, FileWithPointers>>();
@@ -115,6 +116,13 @@ namespace UbiArt {
 				//LoadGenericFile("enginedata/gameconfig/gameconfig.isg", (isg) => { gameConfig = isg.obj as ITF.RO2_GameManagerConfig_Template; });
 				//LoadGenericFile("enginedata/gameconfig/rewardlist.isg", (isg) => { rewardList = isg.obj as ITF.RewardContainer_Template; });
 				//LoadGenericFile("enginedata/gameconfig/homeconfig.isg", (isg) => { });
+
+				/*Path pSgsContainer = new Path("", "sgscontainer.ckd");
+				Load(pSgsContainer, (CSerializerObject s) => {
+					s.log = logEnabled;
+					s.Serialize(ref sceneConfigManager);
+					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				});*/
 				//LoadGenericFile("enginedata/gameconfig/ghostconfig.isg", (isg) => { });
 				//LoadSaveFile("RaymanSave_0", (save) => { });
 				mainScene = null;
