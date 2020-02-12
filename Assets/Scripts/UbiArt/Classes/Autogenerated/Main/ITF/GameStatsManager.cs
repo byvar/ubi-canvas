@@ -22,10 +22,12 @@ namespace UbiArt.ITF {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(tags));
 				SerializeField(s, nameof(timers));
-				SerializeField(s, nameof(rewardsState));
-				if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
-					SerializeField(s, nameof(uplayRewardsState));
-					SerializeField(s, nameof(uplayActionsState));
+				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+					SerializeField(s, nameof(rewardsState));
+					if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
+						SerializeField(s, nameof(uplayRewardsState));
+						SerializeField(s, nameof(uplayActionsState));
+					}
 				}
 			}
 		}

@@ -26,11 +26,17 @@ namespace UbiArt {
 					val = copy[i].Value;
 				}
 				if (s.ArrayEntryStart(name: name, index: i)) {
-					val.SerializeClassName(s);
-					s.Serialize(ref key, name: "KEY");
-					val.serializeClassName = false;
-					s.Serialize(ref val, name: "VAL");
-					val.serializeClassName = true;
+					if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+						val.SerializeClassName(s);
+						s.Serialize(ref key, name: "KEY");
+						val.serializeClassName = false;
+						s.Serialize(ref val, name: "VAL");
+						val.serializeClassName = true;
+					} else {
+						// Class name is serialized after key in origins, so like a normal CMap<TKey, Generic<TValue>>
+						s.Serialize(ref key, name: "key");
+						s.Serialize(ref val, name: "VAL");
+					}
 					s.ArrayEntryStop();
 				}
 				Add(key, val);

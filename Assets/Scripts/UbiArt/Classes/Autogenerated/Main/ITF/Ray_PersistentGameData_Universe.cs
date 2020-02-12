@@ -2,26 +2,20 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_PersistentGameData_Universe : CSerializable {
-		[Serialize("score"                          )] public Placeholder score;
-		[Serialize("Ray_PersistentGameData_Score"   )] public Placeholder Ray_PersistentGameData_Score;
-		[Serialize("lumCount"                       )] public Placeholder lumCount;
-		[Serialize("worldMapData"                   )] public Placeholder worldMapData;
-		[Serialize("Ray_PersistentGameData_WorldMap")] public Placeholder Ray_PersistentGameData_WorldMap;
-		[Serialize("trackingData"                   )] public Placeholder trackingData;
-		[Serialize("discoveredCageMapList"          )] public Placeholder discoveredCageMapList;
-		[Serialize("teethReturned"                  )] public uint teethReturned;
-		[Serialize("usedPlayerIDInfo"               )] public StringID usedPlayerIDInfo;
-		[Serialize("sprintTutorialDisabled"         )] public int sprintTutorialDisabled;
-		[Serialize("costumeLastPrice"               )] public uint costumeLastPrice;
-		[Serialize("costumesUsed"                   )] public Placeholder costumesUsed;
+	public partial class Ray_PersistentGameData_Universe : PersistentGameData_Universe {
+		[Serialize("score"                 )] public Ray_PersistentGameData_Score score;
+		[Serialize("worldMapData"          )] public Ray_PersistentGameData_WorldMap worldMapData;
+		[Serialize("trackingData"          )] public Ray_PersistentGameData_UniverseTracking trackingData;
+		[Serialize("discoveredCageMapList" )] public CList<AbsoluteObjectPath> discoveredCageMapList;
+		[Serialize("teethReturned"         )] public uint teethReturned;
+		[Serialize("usedPlayerIDInfo"      )] public StringID usedPlayerIDInfo;
+		[Serialize("sprintTutorialDisabled")] public int sprintTutorialDisabled;
+		[Serialize("costumeLastPrice"      )] public uint costumeLastPrice;
+		[Serialize("costumesUsed"          )] public CList<StringID> costumesUsed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(score));
-			SerializeField(s, nameof(Ray_PersistentGameData_Score));
-			SerializeField(s, nameof(lumCount));
 			SerializeField(s, nameof(worldMapData));
-			SerializeField(s, nameof(Ray_PersistentGameData_WorldMap));
 			SerializeField(s, nameof(trackingData));
 			SerializeField(s, nameof(discoveredCageMapList));
 			SerializeField(s, nameof(teethReturned));
