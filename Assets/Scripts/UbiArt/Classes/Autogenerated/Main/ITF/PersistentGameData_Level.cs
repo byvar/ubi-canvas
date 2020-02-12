@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.RO | GameFlags.VH)]
 	public partial class PersistentGameData_Level : CSerializable {
 		[Serialize("id"                 )] public StringID id;
-		[Serialize("ISDs"               )] public CMapGeneric<StringID, PersistentGameData_Level> ISDs;
+		[Serialize("ISDs"               )] public CMapGeneric<StringID, Ray_PersistentGameData_ISD> ISDs;
 		[Serialize("string__1"          )] public string string__1;
 		[Serialize("CArray<StringID>__2")] public CArray<StringID> CArray_StringID__2;
 		protected override void SerializeImpl(CSerializerObject s) {

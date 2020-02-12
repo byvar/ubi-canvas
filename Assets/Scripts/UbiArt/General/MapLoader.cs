@@ -125,6 +125,7 @@ namespace UbiArt {
 				});*/
 				//LoadGenericFile("enginedata/gameconfig/ghostconfig.isg", (isg) => { });
 				//LoadSaveFile("RaymanSave_0", (save) => { });
+				//LoadSaveFileOrigins("Savegame_0", null);
 				mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
 					Path p = new Path(pathFolder, pathFile);
@@ -316,7 +317,17 @@ namespace UbiArt {
 				RO2_SaveData saveData = null;
 				s.log = logEnabled;
 				s.Serialize(ref saveData);
-				onResult(saveData);
+				onResult?.Invoke(saveData);
+				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+			});
+		}
+		public void LoadSaveFileOrigins(string path, Action<Ray_SaveData> onResult) {
+			Path pGeneric = new Path(path) { specialUncooked = true };
+			Load(pGeneric, (CSerializerObject s) => {
+				Ray_SaveData saveData = null;
+				s.log = logEnabled;
+				s.Serialize(ref saveData);
+				onResult?.Invoke(saveData);
 				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 			});
 		}

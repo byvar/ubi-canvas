@@ -3,9 +3,9 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PersistentGameData_ISD : CSerializable {
-		[Serialize("pickedUpLums"        )] public Placeholder pickedUpLums;
-		[Serialize("takenTooth"          )] public Placeholder takenTooth;
-		[Serialize("alreadySeenCutScenes")] public Placeholder alreadySeenCutScenes;
+		[Serialize("pickedUpLums"        )] public CArray<PackedObjectPath> pickedUpLums;
+		[Serialize("takenTooth"          )] public CArray<PackedObjectPath> takenTooth;
+		[Serialize("alreadySeenCutScenes")] public CArray<PackedObjectPath> alreadySeenCutScenes;
 		[Serialize("foundRelicMask"      )] public uint foundRelicMask;
 		[Serialize("foundCageMask"       )] public uint foundCageMask;
 		protected override void SerializeImpl(CSerializerObject s) {

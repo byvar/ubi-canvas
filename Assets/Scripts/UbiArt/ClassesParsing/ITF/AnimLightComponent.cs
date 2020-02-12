@@ -64,6 +64,7 @@ namespace UbiArt.ITF {
 
 		private void ProcessOrigins(GameObject gao, Material tex_mat) {
 			ICSerializable[] resources = tpl.animSet.resources;
+			if (!MapLoader.Loader.loadAnimations) return;
 			ICSerializable pbkRes = resources.Where(res => res is AnimPatchBank).FirstOrDefault();
 			AnimPatchBank pbk = pbkRes != null ? (AnimPatchBank)pbkRes : null;
 			ICSerializable sklRes = resources.Where(res => res is AnimSkeleton).FirstOrDefault();
