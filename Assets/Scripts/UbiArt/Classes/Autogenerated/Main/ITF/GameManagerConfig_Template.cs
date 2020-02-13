@@ -7,6 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("gameTextFilePath"                           )] public Path gameTextFilePath;
 		[Serialize("loading"                                    )] public Path loading;
 		[Serialize("playerIDInfo"                               )] public CList<Generic<PlayerIDInfo>> playerIDInfo;
+		[Serialize("playerIDInfo"                               )] public CList<PlayerIDInfo> playerIDInfoRO;
 		[Serialize("familyList"                                 )] public CArray<string> familyList;
 		[Serialize("cameraShakeConfig"                          )] public Path cameraShakeConfig;
 		[Serialize("cutSceneDefaultUnskippableDurationFirstTime")] public float cutSceneDefaultUnskippableDurationFirstTime;
@@ -16,11 +17,12 @@ namespace UbiArt.ITF {
 		[Serialize("maxBonusTeensy"                             )] public uint maxBonusTeensy;
 		[Serialize("key"                                        )] public TeaKey key;
 		[Serialize("textHighlightColor"                         )] public Color textHighlightColor;
-		[Serialize("mapListPressConf"                           )] public Placeholder mapListPressConf;
-		[Serialize("menus"                                      )] public Placeholder menus;
-		[Serialize("luaIncludes"                                )] public Placeholder luaIncludes;
-		[Serialize("inputs"                                     )] public Placeholder inputs;
-		[Serialize("musicThemes"                                )] public Placeholder musicThemes;
+		[Serialize("debugMenuMapList"                           )] public CArray<CString> debugMenuMapListRO;
+		[Serialize("mapListPressConf"                           )] public CArray<CString> mapListPressConf;
+		[Serialize("menus"                                      )] public CArray<CString> menus;
+		[Serialize("luaIncludes"                                )] public CArray<Path> luaIncludes;
+		[Serialize("inputs"                                     )] public CArray<Path> inputs;
+		[Serialize("musicThemes"                                )] public CArray<MusicTheme> musicThemes;
 		[Serialize("baseMap"                                    )] public Path baseMap;
 		[Serialize("game2dWorld"                                )] public Path game2dWorld;
 		[Serialize("gameTextFilePath"                           )] public CString gameTextFilePathOrigins;
@@ -44,7 +46,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(debugMenuMapList));
+				SerializeField(s, nameof(debugMenuMapListRO));
 				SerializeField(s, nameof(mapListPressConf));
 				SerializeField(s, nameof(menus));
 				SerializeField(s, nameof(luaIncludes));
@@ -61,7 +63,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(menuSoundMap));
 				SerializeField(s, nameof(loading));
 				SerializeField(s, nameof(usePressConfMenu));
-				SerializeField(s, nameof(playerIDInfo));
+				SerializeField(s, nameof(playerIDInfoRO));
 				SerializeField(s, nameof(familyList));
 				SerializeField(s, nameof(cameraShakeConfig));
 				SerializeField(s, nameof(cutSceneDefaultUnskippableDurationFirstTime));

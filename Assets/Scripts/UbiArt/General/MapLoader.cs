@@ -35,6 +35,7 @@ namespace UbiArt {
 
 
 		public ITF.RO2_GameManagerConfig_Template gameConfig;
+		public ITF.Ray_GameManagerConfig_Template gameConfigRO;
 		public ITF.RewardContainer_Template rewardList;
 
 		public UV.UVAtlasManager uvAtlasManager;
@@ -113,6 +114,13 @@ namespace UbiArt {
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 
 				});
+
+				/*Path pGameConfigRO = new Path("gameconfig/", "gameconfig.isg.ckd");
+				Load(pGameConfigRO, (CSerializerObject s) => {
+					s.log = logEnabled;
+					s.Serialize(ref gameConfigRO);
+					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				});*/
 				//LoadGenericFile("enginedata/gameconfig/gameconfig.isg", (isg) => { gameConfig = isg.obj as ITF.RO2_GameManagerConfig_Template; });
 				//LoadGenericFile("enginedata/gameconfig/rewardlist.isg", (isg) => { rewardList = isg.obj as ITF.RewardContainer_Template; });
 				//LoadGenericFile("enginedata/gameconfig/homeconfig.isg", (isg) => { });
@@ -210,7 +218,9 @@ namespace UbiArt {
 				case "tpl":
 				case "isg":
 					flags |= SerializeFlags.Flags7;
-					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
+					if (extension != "isg" || Settings.s.engineVersion > Settings.EngineVersion.RO) {
+						ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
+					}
 					break;
 				case null: // Save files
 					flags |= SerializeFlags.Flags7;
