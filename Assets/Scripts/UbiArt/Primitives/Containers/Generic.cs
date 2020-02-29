@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt {
-	[SerializeEmbed]
 	public class Generic<T> : ICSerializable, IObjectContainer where T : CSerializable {
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;

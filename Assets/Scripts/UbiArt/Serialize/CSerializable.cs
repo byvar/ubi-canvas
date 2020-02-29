@@ -22,7 +22,10 @@ namespace UbiArt {
 		protected virtual void OnPreSerialize(CSerializerObject s) {}
 		protected virtual void OnPostSerialize(CSerializerObject s) {}
 		protected virtual void SerializeImpl(CSerializerObject s) {
-			if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes) && !s.Embedded && Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)
+				&& !s.Embedded
+				&& Settings.s.engineVersion > Settings.EngineVersion.RO
+				&& !(s is CSerializerObjectTagBinary)) {
 				SerializeField(s, nameof(sizeOf));
 			}
 		}
@@ -77,6 +80,8 @@ namespace UbiArt {
 			}
 			return result;
 		}
+
+		public virtual string ClassName => GetType().Name;
 
 		public virtual uint? ClassCRC => null;
 	}

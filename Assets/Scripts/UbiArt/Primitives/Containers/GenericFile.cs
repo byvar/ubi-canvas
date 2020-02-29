@@ -22,7 +22,10 @@ namespace UbiArt {
 		public void Serialize(CSerializerObject s, string name) {
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				s.Serialize(ref read, name: "read");
-				if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)) {
+				if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)
+					&& !s.Embedded
+					&& Settings.s.engineVersion > Settings.EngineVersion.RO
+					&& !(s is CSerializerObjectTagBinary)) {
 					s.Serialize(ref sizeOf, name: "sizeof");
 				}
 				Pointer pos = s.Position;

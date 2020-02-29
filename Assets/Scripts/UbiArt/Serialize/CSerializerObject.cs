@@ -24,6 +24,7 @@ namespace UbiArt {
 		public abstract void Serialize(object o, FieldInfo f, Type type = null, string name = null, int? index = null);
 		public abstract void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null);
 		public abstract void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null);
+		public abstract void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null);
 		public abstract void SerializeBytes(ref byte[] obj, int numBytes);
 		public abstract void SerializeFileSize(ref uint obj);
 		public abstract Pointer Position {
@@ -268,6 +269,7 @@ namespace UbiArt {
 			{ typeof(Angle),          UAFTag.Angle          },
 			{ typeof(Volume),         UAFTag.Volume         },
 			{ typeof(Path),           UAFTag.Path           },
+			{ typeof(PathRef),        UAFTag.Path           },
 			{ typeof(StringID),       UAFTag.StringID       },
 			{ typeof(string),         UAFTag.String8        },
 			{ typeof(LocalisationId), UAFTag.LocalisationID },

@@ -9,13 +9,17 @@ namespace UbiArt.online {
 		[Serialize("second")] public uint second;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.HasFlags(SerializeFlags.Flags8)) {
+			if (s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
 				SerializeField(s, nameof(value));
+			} else {
+				if (s.HasFlags(SerializeFlags.Flags8)) {
+					SerializeField(s, nameof(value));
+				}
+				SerializeField(s, nameof(day));
+				SerializeField(s, nameof(hour));
+				SerializeField(s, nameof(minute));
+				SerializeField(s, nameof(second));
 			}
-			SerializeField(s, nameof(day));
-			SerializeField(s, nameof(hour));
-			SerializeField(s, nameof(minute));
-			SerializeField(s, nameof(second));
 		}
 	}
 }

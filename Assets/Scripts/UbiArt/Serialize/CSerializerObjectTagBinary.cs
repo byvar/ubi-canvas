@@ -17,7 +17,7 @@ namespace UbiArt {
 
 		public CSerializerObjectTagBinary(Reader reader) {
 			this.reader = reader;
-			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
+			flagsOwn = Flags.Flags0 | Flags.Flags7; // 0x81
 		}
 
 		public override Pointer Position => Pointer.Current(reader);
@@ -83,9 +83,19 @@ namespace UbiArt {
 				}
 				if (obj is ICSerializable) {
 					IncreaseLevel();
-					bool entered = GetTagCode(type) == 200 && !type.IsDefined(typeof(SerializeEmbedAttribute), false) && ReadTag(type.Name, 200);
+					bool entered = false;
+					if (GetTagCode(type) == 200
+						&& !type.IsDefined(typeof(SerializeEmbedAttribute), false)) {
+						string typename = type.Name;
+						if (obj is CSerializable) typename = ((CSerializable)obj).ClassName;
+						entered = ReadTag(typename, 200);
+					}
 					((ICSerializable)obj).Serialize(this, name);
-					if(entered) reader.BaseStream.Position = endPos.Pop();
+					if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
+						Pointer pos = new Pointer((uint)reader.BaseStream.Position, MapLoader.Loader.GetFileByReader(reader));
+						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					}
+					if (entered) reader.BaseStream.Position = endPos.Pop();
 					DecreaseLevel();
 					AddToStringCache(obj);
 				}
@@ -164,6 +174,10 @@ namespace UbiArt {
 					if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 					f.SetValue(containerObj, obj);
 
+					if (log && endPos.Peek() != reader.BaseStream.Position) {
+						Pointer posNew = new Pointer((uint)reader.BaseStream.Position, MapLoader.Loader.GetFileByReader(reader));
+						MapLoader.Loader.Log(posNew + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					}
 					reader.BaseStream.Position = endPos.Pop();
 					if (log && !isBigObject) {
 						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
@@ -328,6 +342,22 @@ namespace UbiArt {
 
 		public override void SerializeFileSize(ref uint obj) {
 			obj = (uint)reader.BaseStream.Length;
+		}
+
+		public override void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+			Pointer pos = log && name != null ? Position : null;
+			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+			if (log && name != null && isBigObject) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
+			}
+
+			object obj2 = obj;
+			Serialize(ref obj2, type ?? typeof(T), name: name);
+			obj = (T)obj2;
+
+			if (log && name != null && !isBigObject) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+			}
 		}
 	}
 }

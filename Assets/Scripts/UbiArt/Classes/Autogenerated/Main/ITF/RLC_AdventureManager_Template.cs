@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_AdventureManager_Template : TemplateObj {
-		[Serialize("maps"                                                  )] public CMap<StringID, RLC_Map> maps;
+		[Serialize("maps"                                                  )] public CMap<StringID, Generic<RLC_Map>> maps;
 		[Serialize("adventures"                                            )] public CMap<StringID, RLC_Adventure> adventures;
 		[Serialize("deprecatedMaps"                                        )] public CMap<PathRef, uint> deprecatedMaps;
 		[Serialize("deprecatedAdventures"                                  )] public CMap<PathRef, uint> deprecatedAdventures;

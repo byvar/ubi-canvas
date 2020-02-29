@@ -94,6 +94,7 @@ namespace UbiArt.ITF {
 		[Serialize("soccerConfig"                           )] public Path soccerConfig;
 		[Serialize("characterSelectionPath"                 )] public Path characterSelectionPath;
 		[Serialize("HideNSeekExitManagerPath"               )] public Path HideNSeekExitManagerPath;
+		[Serialize("HideNSeekIntroCutScenePath"             )] public CList<Path> HideNSeekIntroCutScenePath;
 		[Serialize("introMoviePath"                         )] public PathRef introMoviePath;
 		[Serialize("introMoviePathContainer"                )] public CList<RO2_GameManagerConfig_Template.LocalisedVideo> introMoviePathContainer;
 		[Serialize("mainMenuPath"                           )] public Path mainMenuPath;
@@ -234,6 +235,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(movieLoadingScreenPath));
 				SerializeField(s, nameof(fadeWorldPath));
 				SerializeField(s, nameof(baseWorldPath));
+				SerializeField(s, nameof(packageDirectories));
 				SerializeField(s, nameof(defaultGameplayCameraPath));
 				SerializeField(s, nameof(exploGameplayCameraPath));
 				SerializeField(s, nameof(treeCameraPath));
@@ -289,12 +291,14 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(SideRocketTeensyOffset));
 				SerializeField(s, nameof(SideJacquouilleOffset));
 				SerializeField(s, nameof(environmentBrickPath));
+				SerializeField(s, nameof(environmentBrickPaths));
 				SerializeField(s, nameof(startBrickPath));
 				SerializeField(s, nameof(endBrickPath));
 				SerializeField(s, nameof(firstRightBrickPath));
 				SerializeField(s, nameof(firstLeftBrickPath));
 				SerializeField(s, nameof(defaultDecoBrickPath));
 				SerializeField(s, nameof(costumeEnvironmentBrickPath));
+				SerializeField(s, nameof(costumeEnvironmentBrickPaths));
 				SerializeField(s, nameof(costumeStartBrickPath));
 				SerializeField(s, nameof(costumeEndBrickPath));
 				SerializeField(s, nameof(costumeFirstRightBrickPath));
@@ -317,6 +321,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(soccerConfig));
 				SerializeField(s, nameof(characterSelectionPath));
 				SerializeField(s, nameof(HideNSeekExitManagerPath));
+				SerializeField(s, nameof(HideNSeekIntroCutScenePath));
 				SerializeField(s, nameof(introMoviePath));
 				SerializeField(s, nameof(introMoviePathContainer));
 				SerializeField(s, nameof(mainMenuPath));
@@ -328,9 +333,11 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(costumes));
 				SerializeField(s, nameof(scoreRecapPath));
 				SerializeField(s, nameof(duckTransfoSeqMrDarkActorPath));
+				SerializeField(s, nameof(catchTheAllMaps));
 				SerializeField(s, nameof(demoTimer));
 				SerializeField(s, nameof(demoInactivityTimer));
 				SerializeField(s, nameof(demoEndMenuTimer));
+				SerializeField(s, nameof(debugmapslist));
 				SerializeField(s, nameof(menulookDRCScreenDisplayDuration));
 				SerializeField(s, nameof(menuAutoMurphyScreenDisplayDuration));
 				SerializeField(s, nameof(timeAttackTimerPath));
@@ -344,6 +351,7 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(playerInactivityTime));
 				SerializeField(s, nameof(playerInactivityBlinkingTime));
 				SerializeField(s, nameof(invasionCountdown));
+				SerializeField(s, nameof(packages));
 				SerializeField(s, nameof(levelsInfo));
 				SerializeField(s, nameof(worldsInfo));
 				SerializeField(s, nameof(invasionsInfo));

@@ -176,5 +176,9 @@ namespace UbiArt {
 
 			EditorGUI.indentLevel = indent;
 		}
+
+		public override void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+			Serialize<T>(ref obj, type: type, name: name, index: index);
+		}
 	}
 }

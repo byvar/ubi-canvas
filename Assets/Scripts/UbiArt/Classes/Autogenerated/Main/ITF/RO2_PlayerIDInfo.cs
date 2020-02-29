@@ -5,7 +5,6 @@ namespace UbiArt.ITF {
 	public partial class RO2_PlayerIDInfo : PlayerIDInfo {
 		[Serialize("iconTexturePath"  )] public Path iconTexturePath;
 		[Serialize("iconSizeInTexture")] public Vector2 iconSizeInTexture;
-		[Serialize("deathBubbleColor" )] public Color deathBubbleColor;
 		[Serialize("loadingPath"      )] public Path loadingPath;
 		[Serialize("treePath"         )] public Path treePath;
 		protected override void SerializeImpl(CSerializerObject s) {

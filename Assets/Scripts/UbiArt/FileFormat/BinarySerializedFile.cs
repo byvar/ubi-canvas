@@ -28,7 +28,7 @@ namespace UbiArt.FileFormat {
 				extension = name.Substring(name.LastIndexOf(".") + 1);
 			}
 			MapLoader l = MapLoader.Loader;
-			if (Settings.s.serializerType == Settings.SerializerType.TagBinary && !l.IsPureBinary(extension)) {
+			if (Settings.s.serializerType == Settings.SerializerType.TagBinary && !l.IsPureBinary(name, extension)) {
 				serializer = new CSerializerObjectTagBinary(reader);
 			} else {
 				serializer = new CSerializerObjectBinary(reader);

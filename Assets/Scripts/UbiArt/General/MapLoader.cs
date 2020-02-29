@@ -124,6 +124,7 @@ namespace UbiArt {
 				//LoadGenericFile("enginedata/gameconfig/gameconfig.isg", (isg) => { gameConfig = isg.obj as ITF.RO2_GameManagerConfig_Template; });
 				//LoadGenericFile("enginedata/gameconfig/rewardlist.isg", (isg) => { rewardList = isg.obj as ITF.RewardContainer_Template; });
 				//LoadGenericFile("enginedata/gameconfig/homeconfig.isg", (isg) => { });
+				//LoadGenericFile("enginedata/gameconfig/adventuresconfig.isg", (isg) => { });
 
 				/*Path pSgsContainer = new Path("", "sgscontainer.ckd");
 				Load(pSgsContainer, (CSerializerObject s) => {
@@ -218,9 +219,7 @@ namespace UbiArt {
 				case "tpl":
 				case "isg":
 					flags |= SerializeFlags.Flags7;
-					if (extension != "isg" || Settings.s.engineVersion > Settings.EngineVersion.RO) {
-						ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
-					}
+					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
 					break;
 				case null: // Save files
 					flags |= SerializeFlags.Flags7;
@@ -228,7 +227,10 @@ namespace UbiArt {
 			}
 		}
 
-		public bool IsPureBinary(string extension) {
+		public bool IsPureBinary(string name, string extension) {
+			if (name == "sgscontainer") {
+				return false;
+			}
 			switch (extension) {
 				case "anm":
 				case "skl":
