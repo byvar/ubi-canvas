@@ -13,6 +13,13 @@ namespace UbiArt.ITF {
 		[Serialize("abs"         )] public bool abs;
 		[Serialize("add"         )] public bool add;
 		[Serialize("sin"         )] public bool sin;
+		// The mod, abs, add and sin values are based on one flag. Before serializing, the game code splits them
+		// In Adventures, the values are bitshifted so they are always 0 or 1
+		// In Legends, the values are not bitshifted, so they are 0 or 1, 2, 4, or 8.
+		[Serialize("mod"         )] public int modFlag; // 0 or 1
+		[Serialize("abs"         )] public int absFlag; // 0 or 2
+		[Serialize("add"         )] public int addFlag; // 0 or 4
+		[Serialize("sin"         )] public int sinFlag; // 0 or 8
 		[Serialize("curve"       )] public Spline curve;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -22,19 +29,19 @@ namespace UbiArt.ITF {
 				SerializeField(s, nameof(max));
 				SerializeField(s, nameof(minValue));
 				SerializeField(s, nameof(maxValue));
-				SerializeField(s, nameof(mod));
-				SerializeField(s, nameof(abs));
-				SerializeField(s, nameof(add));
+				SerializeField(s, nameof(modFlag));
+				SerializeField(s, nameof(absFlag));
+				SerializeField(s, nameof(addFlag));
 			} else if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				SerializeField(s, nameof(input));
 				SerializeField(s, nameof(min));
 				SerializeField(s, nameof(max));
 				SerializeField(s, nameof(minValue));
 				SerializeField(s, nameof(maxValue));
-				SerializeField(s, nameof(mod));
-				SerializeField(s, nameof(abs));
-				SerializeField(s, nameof(add));
-				SerializeField(s, nameof(sin));
+				SerializeField(s, nameof(modFlag));
+				SerializeField(s, nameof(absFlag));
+				SerializeField(s, nameof(addFlag));
+				SerializeField(s, nameof(sinFlag));
 				SerializeField(s, nameof(curve));
 			} else {
 				SerializeField(s, nameof(input));

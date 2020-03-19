@@ -17,7 +17,7 @@ namespace UbiArt {
 		public void Serialize(CSerializerObject s, string name) {
 			Debug.LogError(s.Position + ": BasicString here");
 			throw new Exception(s.Position + ": BasicString here");
-			s.Serialize<string>(ref str);
+			//s.Serialize<string>(ref str);
 		}
 	}
 }
