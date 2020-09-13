@@ -83,3 +83,30 @@ The following packages were updated:
   com.unity.timeline from version 1.1.0 to 1.2.10
 The following packages were removed:
   com.unity.package-manager-ui@2.2.0
+
+=== Thu Mar 19 23:21:08 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.test-framework from version 1.1.9 to 1.1.11
+  com.unity.timeline from version 1.2.10 to 1.2.12
+
+=== Wed Jul  1 18:48:13 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ide.vscode from version 1.1.4 to 1.2.1
+  com.unity.test-framework from version 1.1.11 to 1.1.14
+  com.unity.xr.legacyinputhelpers from version 2.0.2 to 2.1.4
+
+=== Sun Sep 13 02:30:30 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.test-framework from version 1.1.14 to 1.1.16
