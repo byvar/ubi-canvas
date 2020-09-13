@@ -109,10 +109,10 @@ TextureImporter:
     second: tagicons_34
   - first:
       213: 21300070
-    second: tagicons_35
+    second: dig
   - first:
       213: 21300072
-    second: tagicons_36
+    second: dig_s
   - first:
       213: 21300074
     second: trigger_autorayman
@@ -486,7 +486,7 @@ TextureImporter:
       213: 21300320
     second: tagicons_160
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -540,6 +540,7 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1340,7 +1341,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_35
+      name: dig
       rect:
         serializedVersion: 2
         x: 258
@@ -1361,7 +1362,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_36
+      name: dig_s
       rect:
         serializedVersion: 2
         x: 322
