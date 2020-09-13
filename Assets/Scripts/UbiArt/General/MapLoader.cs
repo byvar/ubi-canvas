@@ -6,10 +6,9 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using System.Collections;
-using System.Threading.Tasks;
-using Asyncoroutine;
 using System.Text;
 using System.Diagnostics;
+using Cysharp.Threading.Tasks;
 
 namespace UbiArt {
 	public class MapLoader {
@@ -101,7 +100,7 @@ namespace UbiArt {
 			stopwatch = new Stopwatch();
 		}
 
-		public async Task LoadInit() {
+		public async UniTask LoadInit() {
 			try {
 				Path pAtlas = new Path("", "atlascontainer.ckd");
 				Load(pAtlas, (CSerializerObject s) => {
@@ -154,7 +153,7 @@ namespace UbiArt {
 				throw;
 			}
 		}
-		protected async Task LoadLoop() {
+		protected async UniTask LoadLoop() {
 			try {
 				string state = loadingState;
 				stopwatch.Start();
@@ -191,9 +190,7 @@ namespace UbiArt {
 							virtualFiles.Remove(t);
 						}
 					}
-					if (stopwatch.ElapsedMilliseconds > 16) {
-						await WaitFrame();
-					}
+					await WaitIfNecessary();
 					loadingState = state;
 				}
 			} finally {
@@ -274,7 +271,7 @@ namespace UbiArt {
 			pathsToLoad.Enqueue(new ObjectPlaceHolder(name, mem, action));
 		}
 
-		public async Task<ContainerFile<ITF.Actor>> LoadExtraActor(string pathFile, string pathFolder) {
+		public async UniTask<ContainerFile<ITF.Actor>> LoadExtraActor(string pathFile, string pathFolder) {
 			if (pathFile.EndsWith(".act") || pathFile.EndsWith(".act.ckd")) {
 				Path p = new Path(pathFolder, pathFile);
 				MapLoader l = MapLoader.Loader;
@@ -294,13 +291,13 @@ namespace UbiArt {
 			return null;
 		}
 
-		public async Task<CSerializable> Clone(CSerializable cs, string extension) {
+		public async UniTask<CSerializable> Clone(CSerializable cs, string extension) {
 			CSerializable c = cs.Clone(extension);
 			await LoadLoop();
 			return c;
 		}
 
-		public async Task WriteBundle(string path, List<Pair<Path, ICSerializable>> files) {
+		public async UniTask WriteBundle(string path, List<Pair<Path, ICSerializable>> files) {
 			Bundle.BundleFile b = new Bundle.BundleFile();
 			foreach (Pair<Path, ICSerializable> f in files) {
 				b.AddFile(f.Item1.CookedPath, f.Item2);
@@ -344,7 +341,7 @@ namespace UbiArt {
 			});
 		}
 
-		public async Task WriteActor(string path, ITF.Actor act) {
+		public async UniTask WriteActor(string path, ITF.Actor act) {
 			// Clone actor
 			CSerializable c = await Clone(act, "act");
 			ITF.Actor actClone = c as ITF.Actor;
@@ -382,9 +379,14 @@ namespace UbiArt {
 				log.AppendLine(obj != null ? obj.ToString() : "");
 		}
 
+		public static async UniTask WaitIfNecessary() {
+			if (loader.stopwatch.ElapsedMilliseconds > 16) {
+				await WaitFrame();
+			}
+		}
 
-		public static async Task WaitFrame() {
-			await new WaitForEndOfFrame();
+		public static async UniTask WaitFrame() {
+			await UniTask.WaitForEndOfFrame();
 			if (loader != null && loader.stopwatch.IsRunning) {
 				loader.stopwatch.Restart();
 			}
@@ -420,7 +422,7 @@ namespace UbiArt {
 			return null;
 		}
 
-		protected async Task PrepareFile(string path) {
+		protected async UniTask PrepareFile(string path) {
 			if (FileSystem.mode == FileSystem.Mode.Web) {
 				string state = loadingState;
 				loadingState = state + "\nDownloading file: " + path;
@@ -429,7 +431,7 @@ namespace UbiArt {
 			}
 		}
 
-		protected async Task PrepareBigFile(string path, int cacheLength) {
+		protected async UniTask PrepareBigFile(string path, int cacheLength) {
 			if (FileSystem.mode == FileSystem.Mode.Web) {
 				string state = loadingState;
 				loadingState = state + "\nInitializing bigfile: " + path + " (Cache size: " + Util.SizeSuffix(cacheLength, 0) + ")";
