@@ -1,15 +1,14 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class Pickable {
 		protected GameObject gao;
-		public GameObject Gao {
-			get {
-				if (gao == null) {
-					InitGameObject();
-				}
-				return gao;
+		public async UniTask<GameObject> GetGameObject() {
+			if (gao == null) {
+				await InitGameObject();
 			}
+			return gao;
 		}
 		public TemplatePickable templatePickable;
 
@@ -18,21 +17,27 @@ namespace UbiArt.ITF {
 			SCALE = Vec2d.One;
 		}
 
-		protected virtual void InitGameObject() {
+		protected virtual async UniTask InitGameObject() {
 			gao = new GameObject(USERFRIENDLY);
+			MapLoader.Loader.loadingState = "Creating objects\n" + USERFRIENDLY;
+			await Controller.WaitIfNecessary();
 			gao.transform.localPosition = new Vec3d(POS2D.x, POS2D.y, -RELATIVEZ);
 			gao.transform.localScale = new Vec3d((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
 			gao.transform.localEulerAngles = new Vec3d(0, 0, ANGLE.EulerAngle);
 			UnityPickable p = gao.AddComponent<UnityPickable>();
 			p.pickable = this;
+			await UniTask.CompletedTask;
 			//MapLoader.Loader.controller.zListManager.Register(this);
 			//if (ANGLE.angle != 0f) gao.name += " - " + ANGLE.angle;
 		}
-		public void SetGameObjectParent(GameObject gp) {
-			Gao.transform.SetParent(gp.transform, false);
-			Gao.transform.localPosition = new Vec3d(POS2D.x, POS2D.y, -RELATIVEZ);
-			Gao.transform.localScale = new Vec3d((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
-			Gao.transform.localEulerAngles = new Vec3d(0, 0, ANGLE.EulerAngle);
+		public async UniTask SetGameObjectParent(GameObject gp) {
+			if (gao == null) {
+				await GetGameObject();
+			}
+			gao.transform.SetParent(gp.transform, false);
+			gao.transform.localPosition = new Vec3d(POS2D.x, POS2D.y, -RELATIVEZ);
+			gao.transform.localScale = new Vec3d((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
+			gao.transform.localEulerAngles = new Vec3d(0, 0, ANGLE.EulerAngle);
 		}
 	}
 }

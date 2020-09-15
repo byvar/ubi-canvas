@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Cysharp.Threading.Tasks;
+using System.Linq;
 using UnityEngine;
 
 namespace UbiArt.ITF {
@@ -11,8 +12,8 @@ namespace UbiArt.ITF {
 		public MeshRenderer mr_anim;
 		public GenericFile<GFXMaterialShader_Template> shader;
 
-		protected override void InitGameObject() {
-			base.InitGameObject();
+		protected override async UniTask InitGameObject() {
+			await base.InitGameObject();
 			UnityFrise uf = gao.AddComponent<UnityFrise>();
 			uf.frise = this;
 			if (config != null && config.obj != null) {
@@ -28,6 +29,7 @@ namespace UbiArt.ITF {
 				}
 			}
 			if (meshBuildData != null && meshBuildData.value != null) {
+				await Controller.WaitIfNecessary();
 				if (meshBuildData.value.StaticIndexList.Count > 0) {
 					mesh_static = new GameObject("Static");
 					mesh_static.transform.SetParent(gao.transform, false);
@@ -54,8 +56,9 @@ namespace UbiArt.ITF {
 							tris[(i * 6) + 4] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 2];
 							tris[(i * 6) + 5] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 1];
 						}*/
-						int[] tris = new int[meshBuildData.value.StaticIndexList[m].List.Count];
-						for (int i = 0; i < meshBuildData.value.StaticIndexList[m].List.Count / 3; i++) {
+						int trisCount = meshBuildData.value.StaticIndexList[m].List.Count;
+						int[] tris = new int[trisCount];
+						for (int i = 0; i < trisCount / 3; i++) {
 							tris[(i * 3) + 0] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 0];
 							tris[(i * 3) + 1] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 1];
 							tris[(i * 3) + 2] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 2];
@@ -105,6 +108,7 @@ namespace UbiArt.ITF {
 					mr.sharedMaterials = mats;
 					mr_static = mr;
 				}
+				await Controller.WaitIfNecessary();
 				if (meshBuildData.value.AnimIndexList.Count > 0) {
 					mesh_anim = new GameObject("Anim");
 					mesh_anim.transform.SetParent(gao.transform, false);
@@ -134,8 +138,9 @@ namespace UbiArt.ITF {
 							tris[(i * 6) + 4] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 2];
 							tris[(i * 6) + 5] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 1];
 						}*/
-						int[] tris = new int[meshBuildData.value.AnimIndexList[m].List.Count];
-						for (int i = 0; i < meshBuildData.value.AnimIndexList[m].List.Count / 3; i++) {
+						int trisCount = meshBuildData.value.AnimIndexList[m].List.Count;
+						int[] tris = new int[trisCount];
+						for (int i = 0; i < trisCount / 3; i++) {
 							tris[(i * 3) + 0] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 0];
 							tris[(i * 3) + 1] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 1];
 							tris[(i * 3) + 2] = meshBuildData.value.AnimIndexList[m].List[(i * 3) + 2];

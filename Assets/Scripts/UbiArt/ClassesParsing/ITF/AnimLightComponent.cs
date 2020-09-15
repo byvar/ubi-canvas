@@ -248,8 +248,8 @@ namespace UbiArt.ITF {
 		}
 		private Material GetUnityMaterial(GFXMaterialShader_Template shader = null) {
 			if (shader == null) shader = (this.shader != null ? this.shader.obj : null);
-			Shader sh = Shader.Find("Custom/UbiArtAlpha");
-			Material mat = new Material(sh);
+			//Shader sh = Shader.Find("Custom/UbiArtAlpha");
+			Material mat = new Material(MapLoader.Loader.baseTransparentMaterial);
 			if (shader != null) {
 				mat.SetVector("_ShaderParams", new Vector4(
 					shader.renderRegular ? 1f : 0f,

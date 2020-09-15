@@ -176,7 +176,7 @@ public class Controller : MonoBehaviour {
 			await Controller.WaitFrame();
 			CSerializable c = await MapLoader.Loader.Clone(act.obj, "act");
 			LoadState = State.Initializing;
-			scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
+			await scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
 			MapLoader.Loader.controller.zListManager.Sort();
 			await Controller.WaitFrame();
 		}

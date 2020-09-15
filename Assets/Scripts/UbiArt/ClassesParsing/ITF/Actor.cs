@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class Actor {
 		public GenericFile<Actor_Template> template;
 		
-		protected override void InitGameObject() {
-			base.InitGameObject();
+		protected override async UniTask InitGameObject() {
+			await base.InitGameObject();
 			if (this is Frise) return;
 			bool hasTemplate = (template != null && template.obj != null);
 			bool hasTemplateComponents = hasTemplate && template.obj.COMPONENTS != null && template.obj.COMPONENTS.Count == COMPONENTS.Count;
 			for (int i = 0; i < COMPONENTS.Count; i++) {
 				Generic<ActorComponent> ac = COMPONENTS[i];
 				if (ac != null && !ac.IsNull && ac.obj != null) {
+					await Controller.WaitIfNecessary();
 					ac.obj.InitUnityComponent(this, gao, hasTemplateComponents ? template.obj.COMPONENTS[i].obj : null, i);
 				}
 			}
@@ -20,6 +22,7 @@ namespace UbiArt.ITF {
 				for (int i = 0; i < template.obj.COMPONENTS.Count; i++) {
 					Generic<ActorComponent_Template> ac = template.obj.COMPONENTS[i];
 					if (ac != null && !ac.IsNull && ac.obj != null) {
+						await Controller.WaitIfNecessary();
 						ac.obj.InitUnityComponent(this, template.obj, gao, i);
 					}
 				}

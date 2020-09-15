@@ -142,7 +142,7 @@ namespace UbiArt {
 				}
 				await LoadLoop();
 				if (mainScene != null && mainScene.obj != null) {
-					GameObject sceneGao = mainScene.obj.Gao;
+					GameObject sceneGao = await mainScene.obj.GetGameObject();
 				}
 			} catch (Exception ex) {
 				UnityEngine.Debug.LogError(ex.ToString());

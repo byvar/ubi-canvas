@@ -1,18 +1,19 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class SubSceneActor {
 		ContainerFile<Scene> sceneFile;
 
-		protected override void InitGameObject() {
-			base.InitGameObject();
+		protected override async UniTask InitGameObject() {
+			await base.InitGameObject();
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				if (SCENE != null && SCENE.read) {
-					SCENE.value.SetGameObjectParent(gao, this);
+					await SCENE.value.SetGameObjectParent(gao, this);
 				}
 			} else {
 				if (SCENE_ORIGINS != null && SCENE_ORIGINS.obj != null) {
-					SCENE_ORIGINS.obj.SetGameObjectParent(gao, this);
+					await SCENE_ORIGINS.obj.SetGameObjectParent(gao, this);
 				}
 			}
 		}
