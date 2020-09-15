@@ -24,8 +24,8 @@ namespace UbiArt {
 			s.Serialize<float>(ref y);
 			s.Serialize<float>(ref z);
 		}
-		public static Vec3d zero => new Vec3d();
-		public static Vec3d one => new Vec3d() { x = 1f, y = 1f, z = 1f };
+		public static Vec3d Zero => new Vec3d();
+		public static Vec3d One => new Vec3d() { x = 1f, y = 1f, z = 1f };
 
 		public static implicit operator Vec3d(UnityEngine.Vector3 v) {
 			return new Vec3d() {

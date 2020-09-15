@@ -8,24 +8,13 @@ namespace UbiArt.ITF {
 		public uint StateList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
-				fact = s.SerializeObject<StringID>(fact, name: "fact");
-				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeFieldAsChoiceList(s, nameof(ComponentList), "Invalid");
-					SerializeFieldAsChoiceList(s, nameof(StateList)); // No empty for this
-				} else {
-					ComponentList = s.Serialize<uint>(ComponentList, name: "ComponentList");
-					StateList = s.Serialize<uint>(StateList, name: "StateList");
-				}
+			fact = s.SerializeObject<StringID>(fact, name: "fact");
+			if (s.HasFlags(SerializeFlags.Editor)) {
+				ComponentList = s.SerializeChoiceList<uint>(ComponentList, name: "ComponentList", empty: "Invalid");
+				StateList = s.SerializeChoiceList<uint>(StateList, name: "StateList"); // No empty for this
 			} else {
-				fact = s.SerializeObject<StringID>(fact, name: "fact");
-				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeFieldAsChoiceList(s, nameof(ComponentList), "Invalid");
-					SerializeFieldAsChoiceList(s, nameof(StateList)); // No empty for this
-				} else {
-					ComponentList = s.Serialize<uint>(ComponentList, name: "ComponentList");
-					StateList = s.Serialize<uint>(StateList, name: "StateList");
-				}
+				ComponentList = s.Serialize<uint>(ComponentList, name: "ComponentList");
+				StateList = s.Serialize<uint>(StateList, name: "StateList");
 			}
 		}
 		public override uint? ClassCRC => 0x8D9BD77F;

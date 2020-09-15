@@ -1,26 +1,26 @@
-﻿namespace UbiArt.SceneConfig {
+namespace UbiArt.SceneConfig {
 	public class SceneConfigManager : CSerializable {
-		[Serialize("unk"        )] public uint unk;
-		[Serialize("dataversion")] public uint dataversion;
-		[Serialize("sgsMap"     )] public CMapGeneric<StringID, ITF.SceneConfig> sgsMap;
-		[Serialize("sgsMap"     )] public SgsKey sgsMapAdv;
+		public uint unk;
+		public uint dataversion;
+		public CMapGeneric<StringID, ITF.SceneConfig> sgsMap;
+		public SgsKey sgsMapAdv;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			if(Settings.s.game == Settings.Game.RA) {
 				s.SerializePureBinary<uint>(ref unk, name: "unk");
-				SerializeField(s, nameof(sgsMapAdv));
+				sgsMapAdv = s.SerializeObject<SgsKey>(sgsMapAdv, name: "sgsMapAdv");
 			} else {
-				SerializeField(s, nameof(unk));
-				SerializeField(s, nameof(dataversion));
-				SerializeField(s, nameof(sgsMap));
+				unk = s.Serialize<uint>(unk, name: "unk");
+				dataversion = s.Serialize<uint>(dataversion, name: "dataversion");
+				sgsMap = s.SerializeObject<CMapGeneric<StringID, ITF.SceneConfig>>(sgsMap, name: "sgsMap");
 			}
 		}
 
 		public class SgsKey : CSerializable {
-			[Serialize("Keys")] public CMap<StringID, Generic<ITF.SceneConfig>> Keys;
+			public CMap<StringID, Generic<ITF.SceneConfig>> Keys;
 
 			protected override void SerializeImpl(CSerializerObject s) {
-				SerializeField(s, nameof(Keys));
+				Keys = s.SerializeObject<CMap<StringID, Generic<ITF.SceneConfig>>>(Keys, name: "Keys");
 			}
 
 			public override string ClassName => "SceneConfigManager::SgsKey";

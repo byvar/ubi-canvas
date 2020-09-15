@@ -1,17 +1,17 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UbiArt.UV {
 	public class UVdata : CSerializable {
-		[Serialize("uvs")] public CArray<Vec2d> uvs;
-		[Serialize("uv0")] public Vec2d uv0;
-		[Serialize("uv1")] public Vec2d uv1;
+		public CArray<Vec2d> uvs;
+		public Vec2d uv0;
+		public Vec2d uv1;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(uv0));
-				SerializeField(s, nameof(uv1));
+				uv0 = s.SerializeObject<Vec2d>(uv0, name: "uv0");
+				uv1 = s.SerializeObject<Vec2d>(uv1, name: "uv1");
 			} else {
-				SerializeField(s, nameof(uvs));
+				uvs = s.SerializeObject<CArray<Vec2d>>(uvs, name: "uvs");
 			}
 		}
 	}

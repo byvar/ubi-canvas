@@ -202,12 +202,6 @@ namespace UbiArt {
 			}
 		}
 
-		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null) {
-			if (((a.version & Settings.s.versionFlags) == Settings.s.versionFlags) && (a.flags == SerializeFlags.None || (flags & a.flags) != SerializeFlags.None)) {
-				Serialize(o, f, type: type, name: a.Name);
-			}
-		}
-
 		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
 			/*Pointer pos = log && index.HasValue ? Position : null;
 			bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));

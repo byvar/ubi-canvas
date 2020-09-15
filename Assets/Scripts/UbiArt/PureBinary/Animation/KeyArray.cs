@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,18 +7,18 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	public class KeyArray<T> : CSerializable {
-		[Serialize("keys"  )] public CArray<ulong> keys;
-		[Serialize("keys"  )] public CArray<StringID> keysLegends;
-		[Serialize("values")] public CArray<T> values;
+		public CArray<ulong> keys;
+		public CArray<StringID> keysLegends;
+		public CArray<T> values;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(keys));
+				keys = s.SerializeObject<CArray<ulong>>(keys, name: "keys");
 			} else {
-				SerializeField(s, nameof(keysLegends));
+				keysLegends = s.SerializeObject<CArray<StringID>>(keysLegends, name: "keysLegends");
 			}
-			SerializeField(s, nameof(values));
+			values = s.SerializeObject<CArray<T>>(values, name: "values");
 		}
 
 		public int GetKeyIndex(StringID key) {

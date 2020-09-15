@@ -107,12 +107,6 @@ namespace UbiArt {
 			f.SetValue(containerObj, obj);
 		}
 
-		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null) {
-			if (((a.version & Settings.s.versionFlags) == Settings.s.versionFlags) && (a.flags == SerializeFlags.None || (flags & a.flags) != SerializeFlags.None)) {
-				Serialize(o, f, type: type, name: a.Name);
-			}
-		}
-
 		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
 			object obj2 = obj;
 			Serialize(ref obj2, type ?? typeof(T), name: name);

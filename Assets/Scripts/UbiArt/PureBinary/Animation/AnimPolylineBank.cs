@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +8,13 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimPolylineBank::serialize
 	public class AnimPolylineBank : CSerializable {
-		[Serialize("polylines")] public CList<AnimPolyline> polylines;
-		[Serialize("keys"     )] public KeyArray<int> keys;
+		public CList<AnimPolyline> polylines;
+		public KeyArray<int> keys;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(polylines));
-			SerializeField(s, nameof(keys));
+			polylines = s.SerializeObject<CList<AnimPolyline>>(polylines, name: "polylines");
+			keys = s.SerializeObject<KeyArray<int>>(keys, name: "keys");
 		}
 	}
 }

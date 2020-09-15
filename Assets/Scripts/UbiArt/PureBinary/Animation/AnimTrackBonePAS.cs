@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +8,21 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackBonePAS::serialize
 	public class AnimTrackBonePAS : CSerializable {
-		[Serialize("frame" )] public ushort frame;
-		[Serialize("posX"  )] public short posX;
-		[Serialize("posY"  )] public short posY;
-		[Serialize("angle" )] public short angle;
-		[Serialize("scaleX")] public short scaleX;
-		[Serialize("scaleY")] public short scaleY;
+		public ushort frame;
+		public short posX;
+		public short posY;
+		public short angle;
+		public short scaleX;
+		public short scaleY;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(frame));
-			SerializeField(s, nameof(angle));
-			SerializeField(s, nameof(posX));
-			SerializeField(s, nameof(posY));
-			SerializeField(s, nameof(scaleX));
-			SerializeField(s, nameof(scaleY));
+			frame = s.Serialize<ushort>(frame, name: "frame");
+			angle = s.Serialize<short>(angle, name: "angle");
+			posX = s.Serialize<short>(posX, name: "posX");
+			posY = s.Serialize<short>(posY, name: "posY");
+			scaleX = s.Serialize<short>(scaleX, name: "scaleX");
+			scaleY = s.Serialize<short>(scaleY, name: "scaleY");
 		}
 
 		public Vec2d Position => new Vec2d(posX * 0.000030518f, posY * 0.000030518f);

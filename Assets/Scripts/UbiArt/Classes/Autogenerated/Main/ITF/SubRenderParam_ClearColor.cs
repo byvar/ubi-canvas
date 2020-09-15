@@ -3,9 +3,9 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SubRenderParam_ClearColor : SubRenderParam {
-		public Color ClearColor = Color.black;
-		public Color ClearFrontLightColor = Color.black;
-		public Color ClearBackLightColor = Color.black;
+		public Color ClearColor = Color.Black;
+		public Color ClearFrontLightColor = Color.Black;
+		public Color ClearBackLightColor = Color.Black;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			ClearColor = s.SerializeObject<Color>(ClearColor, name: "ClearColor");

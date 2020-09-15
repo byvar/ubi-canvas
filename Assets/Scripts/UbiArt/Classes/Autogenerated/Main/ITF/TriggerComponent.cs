@@ -54,7 +54,7 @@ namespace UbiArt.ITF {
 					mode = s.Serialize<Mode>(mode, name: "mode");
 				}
 				if (Settings.s.isCatchThemAll) {
-					SerializeField(s, nameof(triggerOnceDone), typeof(byte));
+					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone", options: CSerializerObject.Options.ForceAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");

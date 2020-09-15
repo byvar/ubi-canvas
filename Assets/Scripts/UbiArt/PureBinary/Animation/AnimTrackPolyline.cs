@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +8,13 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackPolyline::serialize
 	public class AnimTrackPolyline : CSerializable {
-		[Serialize("unk"    )] public float unk;
-		[Serialize("entries")] public CList<StringID> entries;
+		public float unk;
+		public CList<StringID> entries;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(unk));
-			SerializeField(s, nameof(entries));
+			unk = s.Serialize<float>(unk, name: "unk");
+			entries = s.SerializeObject<CList<StringID>>(entries, name: "entries");
 		}
 	}
 }

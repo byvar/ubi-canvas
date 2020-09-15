@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,23 +8,23 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackBML::serialize
 	public class AnimTrackBML : CSerializable {
-		[Serialize("frame"  )] public float frame;
-		[Serialize("entries")] public CList<Entry> entries;
+		public float frame;
+		public CList<Entry> entries;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(frame));
-			SerializeField(s, nameof(entries));
+			frame = s.Serialize<float>(frame, name: "frame");
+			entries = s.SerializeObject<CList<Entry>>(entries, name: "entries");
 		}
 
 		public class Entry : CSerializable {
-			[Serialize("textureBankId")] public StringID textureBankId;
-			[Serialize("templateId"   )] public StringID templateId;
+			public StringID textureBankId;
+			public StringID templateId;
 
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(textureBankId));
-				SerializeField(s, nameof(templateId));
+				textureBankId = s.SerializeObject<StringID>(textureBankId, name: "textureBankId");
+				templateId = s.SerializeObject<StringID>(templateId, name: "templateId");
 			}
 		}
 		/*

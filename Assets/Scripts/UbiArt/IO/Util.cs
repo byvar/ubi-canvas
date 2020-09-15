@@ -139,7 +139,7 @@ namespace UbiArt {
 
 		public static Texture2D CreateDummyCheckerTexture() {
 			Texture2D texture = new Texture2D(2, 2);
-			Color col1 = Color.white;
+			Color col1 = Color.White;
 			Color col2 = new Color(0.9f, 0.9f, 0.9f, 1f); // very light grey
 			texture.SetPixel(0, 0, col1);
 			texture.SetPixel(1, 1, col1);
@@ -152,7 +152,7 @@ namespace UbiArt {
 
 		public static Texture2D CreateDummyLineTexture() {
 			Texture2D texture = new Texture2D(2, 2);
-			Color col1 = Color.white;
+			Color col1 = Color.White;
 			Color col2 = new Color(0.9f, 0.9f, 0.9f, 1f); // very light grey
 			texture.SetPixel(0, 0, col1);
 			texture.SetPixel(1, 1, col2);

@@ -8,15 +8,14 @@ using UnityEngine;
 
 namespace UbiArt {
 	[SerializeEmbed]
-	public class Nullable<T> : ICSerializable, IObjectContainer {
-		[Serialize("read")] public bool read;
+	public class Nullable<T> : ICSerializable, IObjectContainer where T : ICSerializable, new() {
+		public bool read;
 		public T value;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(this, GetType().GetField(nameof(read)), 
-				(SerializeAttribute)GetType().GetField(nameof(read)).GetCustomAttributes(typeof(SerializeAttribute), false).First());
+			read = s.Serialize<bool>(read, name: "read");
 			if (read) {
-				s.Serialize(this, GetType().GetField(nameof(value)), name: name);
+				value = s.SerializeObject<T>(value, name: name);
 			}
 		}
 

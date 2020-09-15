@@ -21,9 +21,9 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeFieldAsChoiceList(s, nameof(PrimaryPowerUp), choices: PowerUpList);
-					SerializeFieldAsChoiceList(s, nameof(SecondaryPowerUp), choices: PowerUpList);
-					SerializeFieldAsChoiceList(s, nameof(mapPowerup), choices: PowerUpList);
+					PrimaryPowerUp = s.SerializeChoiceListObject<StringID>(PrimaryPowerUp, name: "PrimaryPowerUp", choices: PowerUpList);
+					SecondaryPowerUp = s.SerializeChoiceListObject<StringID>(SecondaryPowerUp, name: "SecondaryPowerUp", choices: PowerUpList);
+					mapPowerup = s.SerializeChoiceListObject<StringID>(mapPowerup, name: "mapPowerup", choices: PowerUpList);
 				} else {
 					PrimaryPowerUp = s.SerializeObject<StringID>(PrimaryPowerUp, name: "PrimaryPowerUp");
 					SecondaryPowerUp = s.SerializeObject<StringID>(SecondaryPowerUp, name: "SecondaryPowerUp");

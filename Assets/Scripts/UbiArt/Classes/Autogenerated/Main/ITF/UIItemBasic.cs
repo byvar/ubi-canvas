@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 				if (!s.HasFlags(SerializeFlags.Editor)) {
 					nextMenuOnValidate = s.SerializeObject<StringID>(nextMenuOnValidate, name: "nextMenuOnValidate");
 				} else {
-					SerializeFieldAsChoiceList(s, nameof(nextMenuOnValidate), "Empty");
+					nextMenuOnValidate = s.SerializeChoiceListObject<StringID>(nextMenuOnValidate, name: "nextMenuOnValidate", empty: "Empty");
 				}
 				WwiseGUID_OnValidate = s.SerializeObject<StringID>(WwiseGUID_OnValidate, name: "WwiseGUID_OnValidate");
 				WwiseGUID_OnValidateLocked = s.SerializeObject<StringID>(WwiseGUID_OnValidateLocked, name: "WwiseGUID_OnValidateLocked");

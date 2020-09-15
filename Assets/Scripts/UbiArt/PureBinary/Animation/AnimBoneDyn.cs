@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,26 +8,26 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimBoneDyn::serialize
 	public class AnimBoneDyn : CSerializable {
-		[Serialize("vec0"    )] public Vec2d vec0;
-		[Serialize("flt1"    )] public float float1;
-		[Serialize("xOffset" )] public float xOffset;
-		[Serialize("position")] public Vec2d position;
-		[Serialize("angle"   )] public Angle angle;
-		[Serialize("flt4"    )] public float z;
-		[Serialize("scale"   )] public Vec2d scale;
-		[Serialize("flt6"    )] public float float6;
+		public Vec2d vec0;
+		public float float1;
+		public float xOffset;
+		public Vec2d position;
+		public Angle angle;
+		public float z;
+		public Vec2d scale;
+		public float float6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(vec0));
-			SerializeField(s, nameof(float1));
+			vec0 = s.SerializeObject<Vec2d>(vec0, name: "vec0");
+			float1 = s.Serialize<float>(float1, name: "float1");
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(xOffset));
+				xOffset = s.Serialize<float>(xOffset, name: "xOffset");
 			}
-			SerializeField(s, nameof(position));
-			SerializeField(s, nameof(angle));
-			SerializeField(s, nameof(z));
-			SerializeField(s, nameof(scale));
-			SerializeField(s, nameof(float6));
+			position = s.SerializeObject<Vec2d>(position, name: "position");
+			angle = s.SerializeObject<Angle>(angle, name: "angle");
+			z = s.Serialize<float>(z, name: "z");
+			scale = s.SerializeObject<Vec2d>(scale, name: "scale");
+			float6 = s.Serialize<float>(float6, name: "float6");
 		}
 		/*
 		Example:

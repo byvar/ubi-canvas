@@ -26,8 +26,8 @@ namespace UbiArt {
 			return $"Vec2d({x}, {y})";
 		}
 
-		public static readonly Vec2d zero = new Vec2d();
-		public static readonly Vec2d one = new Vec2d(1f, 1f);
+		public static Vec2d Zero => new Vec2d();
+		public static Vec2d One => new Vec2d(1f, 1f);
 
 
 		public static implicit operator Vec2d(UnityEngine.Vector2 v) {

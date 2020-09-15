@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,23 +8,23 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimPatchPoint::serialize
 	public class AnimPatchPoint : CSerializable {
-		[Serialize("link"  )] public Link key;
-		[Serialize("index" )] public uint index;
-		[Serialize("uv"    )] public Vec2d uv;
-		[Serialize("normal")] public Vec2d normal;
-		[Serialize("sid"   )] public StringID sid;
-		[Serialize("local" )] public AnimPatchPointLocal local;
+		public Link key;
+		public uint index;
+		public Vec2d uv;
+		public Vec2d normal;
+		public StringID sid;
+		public AnimPatchPointLocal local;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(key));
-			SerializeField(s, nameof(index));
-			SerializeField(s, nameof(uv));
-			SerializeField(s, nameof(normal));
+			key = s.SerializeObject<Link>(key, name: "key");
+			index = s.Serialize<uint>(index, name: "index");
+			uv = s.SerializeObject<Vec2d>(uv, name: "uv");
+			normal = s.SerializeObject<Vec2d>(normal, name: "normal");
 			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(sid));
+				sid = s.SerializeObject<StringID>(sid, name: "sid");
 			}
-			SerializeField(s, nameof(local));
+			local = s.SerializeObject<AnimPatchPointLocal>(local, name: "local");
 		}
 
 		/*

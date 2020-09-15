@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			animState = s.Serialize<AnimState>(animState, name: "animState");
 			if (s.HasFlags(SerializeFlags.Editor)) {
-				SerializeFieldAsChoiceList(s, nameof(AnimName)); // No empty here
+				AnimName = s.SerializeChoiceListObject<StringID>(AnimName, name: "AnimName"); // No empty here
 			} else {
 				AnimName = s.SerializeObject<StringID>(AnimName, name: "AnimName");
 			}

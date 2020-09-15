@@ -9,8 +9,8 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Editor)) {
-				SerializeFieldAsChoiceList(s, nameof(tweenId), "invalid");
-				SerializeFieldAsChoiceList(s, nameof(spawnActorId), "invalid");
+				tweenId = s.SerializeChoiceListObject<StringID>(tweenId, name: "tweenId", empty: "invalid");
+				spawnActorId = s.SerializeChoiceListObject<StringID>(spawnActorId, name: "spawnActorId", empty: "invalid");
 			} else {
 				tweenId = s.SerializeObject<StringID>(tweenId, name: "tweenId");
 				spawnActorId = s.SerializeObject<StringID>(spawnActorId, name: "spawnActorId");

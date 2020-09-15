@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,25 +8,25 @@ using UnityEngine;
 namespace UbiArt.FriseOrigins {
 	// See: ITF::CollisionFrieze::serialize
 	public class CollisionFrieze : CSerializable {
-		[Serialize("flt")] public float flt;
-		[Serialize("int1")] public int int1;
-		[Serialize("int2")] public int int2;
-		[Serialize("int3")] public int int3;
-		[Serialize("vec1")] public Vec2d vec1;
-		[Serialize("vec2")] public Vec2d vec2;
-		[Serialize("vec3")] public Vec2d vec3;
-		[Serialize("vec4")] public Vec2d vec4;
+		public float flt;
+		public int int1;
+		public int int2;
+		public int int3;
+		public Vec2d vec1;
+		public Vec2d vec2;
+		public Vec2d vec3;
+		public Vec2d vec4;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(flt));
-			SerializeField(s, nameof(int1));
-			SerializeField(s, nameof(int2));
-			SerializeField(s, nameof(int3));
-			SerializeField(s, nameof(vec1));
-			SerializeField(s, nameof(vec2));
-			SerializeField(s, nameof(vec3));
-			SerializeField(s, nameof(vec4));
+			flt = s.Serialize<float>(flt, name: "flt");
+			int1 = s.Serialize<int>(int1, name: "int1");
+			int2 = s.Serialize<int>(int2, name: "int2");
+			int3 = s.Serialize<int>(int3, name: "int3");
+			vec1 = s.SerializeObject<Vec2d>(vec1, name: "vec1");
+			vec2 = s.SerializeObject<Vec2d>(vec2, name: "vec2");
+			vec3 = s.SerializeObject<Vec2d>(vec3, name: "vec3");
+			vec4 = s.SerializeObject<Vec2d>(vec4, name: "vec4");
 		}
 	}
 }

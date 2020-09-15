@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			if (s.HasFlags(SerializeFlags.Default)) {
 				AMDisplayTuto = s.Serialize<bool>(AMDisplayTuto, name: "AMDisplayTuto", options: CSerializerObject.Options.BoolAsByte);
 				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeFieldAsChoiceList(s, nameof(AM_MapId), "invalid");
+					AM_MapId = s.SerializeChoiceListObject<StringID>(AM_MapId, name: "AM_MapId", empty: "invalid");
 				} else {
 					AM_MapId = s.SerializeObject<StringID>(AM_MapId, name: "AM_MapId");
 				}

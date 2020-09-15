@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,61 +10,61 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimSkeleton::serialize
 	// skl.ckd file
 	public class AnimSkeleton : CSerializable {
-		[Serialize("version"     )] public uint version;
-		[Serialize("boneTags"    )] public CList<StringID> boneTags;
-		[Serialize("boneIndices" )] public CList<StringID> boneIndices;
-		[Serialize("boneTags2"   )] public CList<StringID> boneTags2;
-		[Serialize("boneIndices2")] public CList<StringID> boneIndices2;
-		[Serialize("boneTags2"   )] public CList<StringID> boneTags3;
-		[Serialize("boneTags"    )] public CList<ulong> boneTagsAdv;
-		[Serialize("boneTags2"   )] public CList<ulong> boneTags2Adv;
-		[Serialize("boneTags3"   )] public CList<ulong> boneTags3Adv;
-		[Serialize("boneIndices3")] public CList<StringID> boneIndices3;
-		[Serialize("bones"       )] public CList<AnimBone> bones;
-		[Serialize("bonesDyn"    )] public CList<AnimBoneDyn> bonesDyn;
-		[Serialize("byteArray"   )] public CArray<CArray<byte>> byteArray;
-		[Serialize("byteArray"   )] public byte[] byteArrayOrigins;
-		[Serialize("bankId0"     )] public uint bankId0;
-		[Serialize("bankId"      )] public uint bankId;
-		[Serialize("bank"        )] public Nullable<AnimPolylineBank> bank;
-		[Serialize("bank"        )] public AnimPolylineBank bankOrigins;
+		public uint version;
+		public CList<StringID> boneTags;
+		public CList<StringID> boneIndices;
+		public CList<StringID> boneTags2;
+		public CList<StringID> boneIndices2;
+		public CList<StringID> boneTags3;
+		public CList<ulong> boneTagsAdv;
+		public CList<ulong> boneTags2Adv;
+		public CList<ulong> boneTags3Adv;
+		public CList<StringID> boneIndices3;
+		public CList<AnimBone> bones;
+		public CList<AnimBoneDyn> bonesDyn;
+		public CArray<CArray<byte>> byteArray;
+		public byte[] byteArrayOrigins;
+		public uint bankId0;
+		public uint bankId;
+		public Nullable<AnimPolylineBank> bank;
+		public AnimPolylineBank bankOrigins;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(version));
+			version = s.Serialize<uint>(version, name: "version");
 			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(boneTagsAdv));
-				SerializeField(s, nameof(boneIndices));
-				SerializeField(s, nameof(boneTags2Adv));
-				SerializeField(s, nameof(boneIndices2));
-				SerializeField(s, nameof(boneTags3Adv));
-				SerializeField(s, nameof(boneIndices3));
+				boneTagsAdv = s.SerializeObject<CList<ulong>>(boneTagsAdv, name: "boneTagsAdv");
+				boneIndices = s.SerializeObject<CList<StringID>>(boneIndices, name: "boneIndices");
+				boneTags2Adv = s.SerializeObject<CList<ulong>>(boneTags2Adv, name: "boneTags2Adv");
+				boneIndices2 = s.SerializeObject<CList<StringID>>(boneIndices2, name: "boneIndices2");
+				boneTags3Adv = s.SerializeObject<CList<ulong>>(boneTags3Adv, name: "boneTags3Adv");
+				boneIndices3 = s.SerializeObject<CList<StringID>>(boneIndices3, name: "boneIndices3");
 			} else {
-				SerializeField(s, nameof(boneTags));
-				SerializeField(s, nameof(boneIndices));
-				SerializeField(s, nameof(boneTags2));
-				SerializeField(s, nameof(boneIndices2));
+				boneTags = s.SerializeObject<CList<StringID>>(boneTags, name: "boneTags");
+				boneIndices = s.SerializeObject<CList<StringID>>(boneIndices, name: "boneIndices");
+				boneTags2 = s.SerializeObject<CList<StringID>>(boneTags2, name: "boneTags2");
+				boneIndices2 = s.SerializeObject<CList<StringID>>(boneIndices2, name: "boneIndices2");
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-					SerializeField(s, nameof(boneTags3));
-					SerializeField(s, nameof(boneIndices3));
+					boneTags3 = s.SerializeObject<CList<StringID>>(boneTags3, name: "boneTags3");
+					boneIndices3 = s.SerializeObject<CList<StringID>>(boneIndices3, name: "boneIndices3");
 				}
 			}
-			SerializeField(s, nameof(bones));
-			SerializeField(s, nameof(bonesDyn));
+			bones = s.SerializeObject<CList<AnimBone>>(bones, name: "bones");
+			bonesDyn = s.SerializeObject<CList<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(byteArray));
+				byteArray = s.SerializeObject<CArray<CArray<byte>>>(byteArray, name: "byteArray");
 			} else {
 				s.SerializeBytes(ref byteArrayOrigins, 8);
 			}
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(bankId0));
+				bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 			}
-			SerializeField(s, nameof(bankId));
+			bankId = s.Serialize<uint>(bankId, name: "bankId");
 			if (bankId != 0) {
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-					SerializeField(s, nameof(bank));
+					bank = s.SerializeObject<Nullable<AnimPolylineBank>>(bank, name: "bank");
 				} else {
-					SerializeField(s, nameof(bankOrigins));
+					bankOrigins = s.SerializeObject<AnimPolylineBank>(bankOrigins, name: "bankOrigins");
 				}
 			}
 			/*
@@ -128,8 +128,8 @@ namespace UbiArt.Animation {
 				unityBones[i].bindScale = (Vector2)bonesDyn[i].scale;
 				unityBones[i].bindRotation = bonesDyn[i].angle;
 				//unityBones[i].xOffset = bonesDyn[i].float1;
-				unityBones[i].localPosition = Vec3d.zero;
-				unityBones[i].localScale = Vec3d.one;
+				unityBones[i].localPosition = Vector3.zero;
+				unityBones[i].localScale = Vector3.one;
 				unityBones[i].localRotation = 0;
 				unityBones[i].bindZ = bonesDyn[i].z;
 				unityBones[i].localZ = 0;
@@ -182,9 +182,9 @@ namespace UbiArt.Animation {
 			for (int i = 0; i < bones.Count; i++) {
 				UnityBone b = unityBones[i].GetComponent<UnityBone>();
 				b.parent = null;
-				b.localPosition = Vec3d.zero;
-				b.localScale = Vec3d.one;
-				b.localRotation = new Angle(0);
+				b.localPosition = Vector3.zero;
+				b.localScale = Vector3.one;
+				b.localRotation = 0f;
 				b.UpdateBone();
 				/*b.bindPosition = bonesDyn[i].position;
 				unityBones[i].localScale = bonesDyn[i].scale;

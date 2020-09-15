@@ -88,10 +88,10 @@ namespace UbiArt.ITF {
 					transition = s.Serialize<bool>(transition, name: "transition");
 					display = s.Serialize<bool>(display, name: "display");
 					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeFieldAsChoiceList(s, nameof(leftComponentID), "Empty");
-						SerializeFieldAsChoiceList(s, nameof(rightComponentID), "Empty");
-						SerializeFieldAsChoiceList(s, nameof(upComponentID), "Empty");
-						SerializeFieldAsChoiceList(s, nameof(downComponentID), "Empty");
+						leftComponentID = s.SerializeChoiceListObject<StringID>(leftComponentID, name: "leftComponentID", empty: "Empty");
+						rightComponentID = s.SerializeChoiceListObject<StringID>(rightComponentID, name: "rightComponentID", empty: "Empty");
+						upComponentID = s.SerializeChoiceListObject<StringID>(upComponentID, name: "upComponentID", empty: "Empty");
+						downComponentID = s.SerializeChoiceListObject<StringID>(downComponentID, name: "downComponentID", empty: "Empty");
 					} else {
 						leftComponentID = s.SerializeObject<StringID>(leftComponentID, name: "leftComponentID");
 						rightComponentID = s.SerializeObject<StringID>(rightComponentID, name: "rightComponentID");

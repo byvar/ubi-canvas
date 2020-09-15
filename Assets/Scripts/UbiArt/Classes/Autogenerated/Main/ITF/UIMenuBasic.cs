@@ -48,10 +48,10 @@ namespace UbiArt.ITF {
 				WwiseBackSounds = s.SerializeObject<CList<StringID>>(WwiseBackSounds, name: "WwiseBackSounds");
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeFieldAsChoiceList(s, nameof(defaultItem), "Empty");
-						SerializeFieldAsChoiceList(s, nameof(defaultValidate), "Empty");
-						SerializeFieldAsChoiceList(s, nameof(backItem), "Empty");
-						SerializeFieldAsChoiceList(s, nameof(defaultPadItem), "Empty");
+						defaultItem = s.SerializeChoiceListObject<StringID>(defaultItem, name: "defaultItem", empty: "Empty");
+						defaultValidate = s.SerializeChoiceListObject<StringID>(defaultValidate, name: "defaultValidate", empty: "Empty");
+						backItem = s.SerializeChoiceListObject<StringID>(backItem, name: "backItem", empty: "Empty");
+						defaultPadItem = s.SerializeChoiceListObject<StringID>(defaultPadItem, name: "defaultPadItem", empty: "Empty");
 					} else {
 						defaultItem = s.SerializeObject<StringID>(defaultItem, name: "defaultItem");
 						defaultValidate = s.SerializeObject<StringID>(defaultValidate, name: "defaultValidate");

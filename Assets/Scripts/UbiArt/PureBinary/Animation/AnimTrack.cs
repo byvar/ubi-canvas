@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,68 +9,68 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimTrack::serialize
 	// anm.ckd file
 	public class AnimTrack : CSerializable {
-		[Serialize("version"    )] public uint version;
-		[Serialize("length"     )] public float length;
-		[Serialize("BML"        )] public CList<AnimTrackBML> bml;
-		[Serialize("PAS"        )] public CList<AnimTrackBonePAS> bonePAS;
-		[Serialize("ZAL"        )] public CList<AnimTrackBoneZAL> boneZAL;
-		[Serialize("multiplierA")] public float multiplierA;
-		[Serialize("multiplierP")] public float multiplierP;
-		[Serialize("multiplierS")] public float multiplierS;
-		[Serialize("polylines"  )] public CList<AnimTrackPolyline> polylines;
-		[Serialize("bones"      )] public CList<AnimTrackBonesList> bonesLists;
-		[Serialize("frameEvents")] public CList<AnimTrackFrameEvents> frameEvents;
-		[Serialize("soundEvents")] public CList<AnimTrackFrameSoundEvents> soundEvents;
-		[Serialize("vectors"    )] public CList<Vec2d> vectors;
-		[Serialize("vec0"       )] public Vec2d vec0;
-		[Serialize("vec1"       )] public Vec2d vec1;
-		[Serialize("vec2"       )] public Vec2d vec2;
-		[Serialize("vec3"       )] public Vec2d vec3;
-		[Serialize("skeleton"   )] public Pair<StringID, Path> skeleton;
-		[Serialize("skeleton"   )] public Pair<StringID, CString> skeletonOrigins;
-		[Serialize("texturePathKeys")] public KeyArray<int> texturePathKeysOrigins;
-		[Serialize("textures"   )] public CList<Pair<StringID, Path>> texturePaths;
-		[Serialize("textures"   )] public CList<Pair<StringID, CString>> texturePathsOrigins;
-		[Serialize("unk0"       )] public uint unk0;
-		[Serialize("unk1"       )] public uint unk1;
-		[Serialize("unk2"       )] public uint unk2;
-		[Serialize("unk0"       )] public ulong unk0Origins;
-		[Serialize("unk1"       )] public CList<ulong> unk1Origins;
+		public uint version;
+		public float length;
+		public CList<AnimTrackBML> bml;
+		public CList<AnimTrackBonePAS> bonePAS;
+		public CList<AnimTrackBoneZAL> boneZAL;
+		public float multiplierA;
+		public float multiplierP;
+		public float multiplierS;
+		public CList<AnimTrackPolyline> polylines;
+		public CList<AnimTrackBonesList> bonesLists;
+		public CList<AnimTrackFrameEvents> frameEvents;
+		public CList<AnimTrackFrameSoundEvents> soundEvents;
+		public CList<Vec2d> vectors;
+		public Vec2d vec0;
+		public Vec2d vec1;
+		public Vec2d vec2;
+		public Vec2d vec3;
+		public Pair<StringID, Path> skeleton;
+		public Pair<StringID, CString> skeletonOrigins;
+		public KeyArray<int> texturePathKeysOrigins;
+		public CList<Pair<StringID, Path>> texturePaths;
+		public CList<Pair<StringID, CString>> texturePathsOrigins;
+		public uint unk0;
+		public uint unk1;
+		public uint unk2;
+		public ulong unk0Origins;
+		public CList<ulong> unk1Origins;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(version));
-			SerializeField(s, nameof(length));
-			SerializeField(s, nameof(bml));
-			SerializeField(s, nameof(bonePAS));
-			SerializeField(s, nameof(boneZAL));
-			SerializeField(s, nameof(multiplierA));
-			SerializeField(s, nameof(multiplierP));
-			SerializeField(s, nameof(multiplierS));
-			SerializeField(s, nameof(polylines));
-			SerializeField(s, nameof(bonesLists));
-			SerializeField(s, nameof(frameEvents));
-			SerializeField(s, nameof(soundEvents));
-			SerializeField(s, nameof(vectors));
-			SerializeField(s, nameof(vec0));
-			SerializeField(s, nameof(vec1));
-			SerializeField(s, nameof(vec2));
-			SerializeField(s, nameof(vec3));
+			version = s.Serialize<uint>(version, name: "version");
+			length = s.Serialize<float>(length, name: "length");
+			bml = s.SerializeObject<CList<AnimTrackBML>>(bml, name: "bml");
+			bonePAS = s.SerializeObject<CList<AnimTrackBonePAS>>(bonePAS, name: "bonePAS");
+			boneZAL = s.SerializeObject<CList<AnimTrackBoneZAL>>(boneZAL, name: "boneZAL");
+			multiplierA = s.Serialize<float>(multiplierA, name: "multiplierA");
+			multiplierP = s.Serialize<float>(multiplierP, name: "multiplierP");
+			multiplierS = s.Serialize<float>(multiplierS, name: "multiplierS");
+			polylines = s.SerializeObject<CList<AnimTrackPolyline>>(polylines, name: "polylines");
+			bonesLists = s.SerializeObject<CList<AnimTrackBonesList>>(bonesLists, name: "bonesLists");
+			frameEvents = s.SerializeObject<CList<AnimTrackFrameEvents>>(frameEvents, name: "frameEvents");
+			soundEvents = s.SerializeObject<CList<AnimTrackFrameSoundEvents>>(soundEvents, name: "soundEvents");
+			vectors = s.SerializeObject<CList<Vec2d>>(vectors, name: "vectors");
+			vec0 = s.SerializeObject<Vec2d>(vec0, name: "vec0");
+			vec1 = s.SerializeObject<Vec2d>(vec1, name: "vec1");
+			vec2 = s.SerializeObject<Vec2d>(vec2, name: "vec2");
+			vec3 = s.SerializeObject<Vec2d>(vec3, name: "vec3");
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(skeleton));
-				SerializeField(s, nameof(texturePaths));
-				SerializeField(s, nameof(unk0));
+				skeleton = s.SerializeObject<Pair<StringID, Path>>(skeleton, name: "skeleton");
+				texturePaths = s.SerializeObject<CList<Pair<StringID, Path>>>(texturePaths, name: "texturePaths");
+				unk0 = s.Serialize<uint>(unk0, name: "unk0");
 				if (Settings.s.game == Settings.Game.RL) {
-					SerializeField(s, nameof(unk1));
+					unk1 = s.Serialize<uint>(unk1, name: "unk1");
 				}
-				SerializeField(s, nameof(unk2));
+				unk2 = s.Serialize<uint>(unk2, name: "unk2");
 			} else {
-				SerializeField(s, nameof(skeletonOrigins));
-				SerializeField(s, nameof(texturePathKeysOrigins));
-				SerializeField(s, nameof(texturePathsOrigins));
-				SerializeField(s, nameof(unk0Origins));
-				SerializeField(s, nameof(unk1Origins));
-				SerializeField(s, nameof(unk2));
+				skeletonOrigins = s.SerializeObject<Pair<StringID, CString>>(skeletonOrigins, name: "skeletonOrigins");
+				texturePathKeysOrigins = s.SerializeObject<KeyArray<int>>(texturePathKeysOrigins, name: "texturePathKeysOrigins");
+				texturePathsOrigins = s.SerializeObject<CList<Pair<StringID, CString>>>(texturePathsOrigins, name: "texturePathsOrigins");
+				unk0Origins = s.Serialize<ulong>(unk0Origins, name: "unk0Origins");
+				unk1Origins = s.SerializeObject<CList<ulong>>(unk1Origins, name: "unk1Origins");
+				unk2 = s.Serialize<uint>(unk2, name: "unk2");
 			}
 		}
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,21 +9,21 @@ namespace UbiArt.Localisation {
 	// See: ITF::Localisation_Template::serialize
 	// loc8 file
 	public class Localisation_Template : CSerializable {
-		[Serialize("strings")] public CMap<int, CMap<LocalisationId, LocText>> strings;
-		[Serialize("audio")] public CMap<LocalisationId, LocAudio> audio;
-		[Serialize("paths")] public CList<Path> paths;
-		[Serialize("count")] public uint count;
+		public CMap<int, CMap<LocalisationId, LocText>> strings;
+		public CMap<LocalisationId, LocAudio> audio;
+		public CList<Path> paths;
+		public uint count;
 		public uint[] unk;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(strings));
-			SerializeField(s, nameof(audio));
-			SerializeField(s, nameof(paths));
+			strings = s.SerializeObject<CMap<int, CMap<LocalisationId, LocText>>>(strings, name: "strings");
+			audio = s.SerializeObject<CMap<LocalisationId, LocAudio>>(audio, name: "audio");
+			paths = s.SerializeObject<CList<Path>>(paths, name: "paths");
 			// Special array with sometimes predefined size
 			if (Settings.s.game == Settings.Game.RA) {
 				// Adventures: length specified in file, but when writing, the script always writes 25.
-				SerializeField(s, nameof(count));
+				count = s.Serialize<uint>(count, name: "count");
 			} else {
 				// Legends: length not specified in file. When writing, the script always writes 19.
 				count = 19;

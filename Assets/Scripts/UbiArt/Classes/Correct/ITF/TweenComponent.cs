@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
 					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
+						startSet = s.SerializeChoiceListObject<StringID>(startSet, name: "startSet", empty: "- None -");
 					} else {
 						startSet = s.SerializeObject<StringID>(startSet, name: "startSet");
 					}
@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 					autoStart = s.Serialize<bool>(autoStart, name: "autoStart", options: CSerializerObject.Options.BoolAsByte);
 					groupIndex = s.Serialize<uint>(groupIndex, name: "groupIndex");
 					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
+						startSet = s.SerializeChoiceListObject<StringID>(startSet, name: "startSet", empty: "- None -");
 					} else {
 						startSet = s.SerializeObject<StringID>(startSet, name: "startSet");
 					}
@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 					autoStart = s.Serialize<bool>(autoStart, name: "autoStart", options: CSerializerObject.Options.BoolAsByte);
 					groupIndex = s.Serialize<uint>(groupIndex, name: "groupIndex");
 					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
+						startSet = s.SerializeChoiceListObject<StringID>(startSet, name: "startSet", empty: "- None -");
 					} else {
 						startSet = s.SerializeObject<StringID>(startSet, name: "startSet");
 					}
@@ -67,7 +67,7 @@ namespace UbiArt.ITF {
 					autoStart = s.Serialize<bool>(autoStart, name: "autoStart");
 					groupIndex = s.Serialize<uint>(groupIndex, name: "groupIndex");
 					if (s.HasFlags(SerializeFlags.Editor)) {
-						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
+						startSet = s.SerializeChoiceListObject<StringID>(startSet, name: "startSet", empty: "- None -");
 					} else {
 						startSet = s.SerializeObject<StringID>(startSet, name: "startSet");
 					}

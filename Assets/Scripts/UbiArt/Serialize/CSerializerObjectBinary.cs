@@ -182,12 +182,6 @@ namespace UbiArt {
 			}
 		}
 
-		public override void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null) {
-			if (((a.version & Settings.s.versionFlags) == Settings.s.versionFlags) && (a.flags == SerializeFlags.None || (flags & a.flags) != SerializeFlags.None)) {
-				Serialize(o, f, type: type, name: a.Name);
-			}
-		}
-
 		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
 			Pointer pos = log && name != null ? Position : null;
 			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
@@ -240,13 +234,22 @@ namespace UbiArt {
 			if (log && isBigObject && name != null) {
 				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
 			}
-			object obj2 = obj;
-			Serialize(ref obj2, typeof(T), name: name);
+
+			IncreaseLevel();
+			T newObj;
+			if (obj == null) {
+				newObj = new T();
+			} else {
+				newObj = obj;
+			}
+			newObj.Serialize(this, name);
+			DecreaseLevel();
+			AddToStringCache(newObj);
 
 			if (log && !isBigObject && name != null) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj2);
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + newObj);
 			}
-			return (T)obj2;
+			return newObj;
 		}
 	}
 }

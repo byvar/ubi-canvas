@@ -1,11 +1,11 @@
-﻿namespace UbiArt.UV {
+namespace UbiArt.UV {
 	public class UVAtlasManager : CSerializable {
-		[Serialize("unk"  )] public uint unk;
-		[Serialize("atlas")] public CMap<StringID, UVAtlas> atlas;
+		public uint unk;
+		public CMap<StringID, UVAtlas> atlas;
 
 		protected override void SerializeImpl(CSerializerObject s) {
-			SerializeField(s, nameof(unk));
-			SerializeField(s, nameof(atlas));
+			unk = s.Serialize<uint>(unk, name: "unk");
+			atlas = s.SerializeObject<CMap<StringID, UVAtlas>>(atlas, name: "atlas");
 		}
 
 		public UVAtlas GetAtlasIfExists(Path path) {

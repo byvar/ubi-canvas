@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +8,17 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackBonesList::serialize
 	public class AnimTrackBonesList : CSerializable {
-		[Serialize("startPAS" )] public ushort startPAS;
-		[Serialize("amountPAS")] public ushort amountPAS;
-		[Serialize("startZAL" )] public ushort startZAL;
-		[Serialize("amountZAL")] public ushort amountZAL;
+		public ushort startPAS;
+		public ushort amountPAS;
+		public ushort startZAL;
+		public ushort amountZAL;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(startPAS));
-			SerializeField(s, nameof(amountPAS));
-			SerializeField(s, nameof(startZAL));
-			SerializeField(s, nameof(amountZAL));
+			startPAS = s.Serialize<ushort>(startPAS, name: "startPAS");
+			amountPAS = s.Serialize<ushort>(amountPAS, name: "amountPAS");
+			startZAL = s.Serialize<ushort>(startZAL, name: "startZAL");
+			amountZAL = s.Serialize<ushort>(amountZAL, name: "amountZAL");
 		}
 	}
 }

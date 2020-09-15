@@ -345,8 +345,8 @@ namespace UbiArt {
 			CSerializable c = await Clone(act, "act");
 			ITF.Actor actClone = c as ITF.Actor;
 			// Reset clone transform
-			actClone.SCALE = Vec2d.one;
-			actClone.POS2D = Vec2d.zero;
+			actClone.SCALE = Vec2d.One;
+			actClone.POS2D = Vec2d.Zero;
 			actClone.RELATIVEZ = 0;
 			actClone.xFLIPPED = false;
 			actClone.USERFRIENDLY = "";

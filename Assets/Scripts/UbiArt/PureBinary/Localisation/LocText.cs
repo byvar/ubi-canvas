@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +8,11 @@ using UnityEngine;
 namespace UbiArt.Localisation {
 	// See: ITF::LocText::serialize
 	public class LocText : CSerializable {
-		[Serialize("text")] public string text;
+		public string text;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(text));
+			text = s.Serialize<string>(text, name: "text");
 		}
 	}
 }

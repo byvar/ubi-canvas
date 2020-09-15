@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ using UnityEngine;
 
 namespace UbiArt {
 	public class Ray_SaveData : ICSerializable {
-		[Serialize("header")] public byte[] header = null;
-		[Serialize("read"  )] public bool read = true;
-		[Serialize("object")] public Ray_PersistentGameData_Universe CONTENT;
-		[Serialize("footer")] public byte[] footer = null;
+		public byte[] header = null;
+		public bool read = true;
+		public Ray_PersistentGameData_Universe CONTENT;
+		public byte[] footer = null;
 
 		public bool IsNull {
 			get {

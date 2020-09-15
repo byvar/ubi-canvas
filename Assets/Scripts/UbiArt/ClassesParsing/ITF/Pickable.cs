@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 
 		public Pickable() {
 			ANGLE = new Angle(0);
-			SCALE = Vec2d.one;
+			SCALE = Vec2d.One;
 		}
 
 		protected virtual void InitGameObject() {

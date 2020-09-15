@@ -1,4 +1,4 @@
-﻿using UbiArt.FileFormat.Texture;
+using UbiArt.FileFormat.Texture;
 using System;
 using System.Collections.Generic;
 using System.Linq;

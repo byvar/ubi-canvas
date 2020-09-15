@@ -91,7 +91,7 @@ namespace UbiArt.ITF {
 								if (sh.obj.renderFrontLight) mesh_static.layer |= LayerMask.NameToLayer("FrontLight");
 								if (sh.obj.renderBackLight) mesh_static.layer |= LayerMask.NameToLayer("BackLight");
 							}
-							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.zero) {
+							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.Zero) {
 								AnimatedTexture animTex = mesh_static.AddComponent<AnimatedTexture>();
 								animTex.ResetMaterial(config.obj.textureConfigs[idTexConfig], mat);
 							}
@@ -171,7 +171,7 @@ namespace UbiArt.ITF {
 								if (sh.obj.renderFrontLight) mesh_anim.layer |= LayerMask.NameToLayer("FrontLight");
 								if (sh.obj.renderBackLight) mesh_anim.layer |= LayerMask.NameToLayer("BackLight");
 							}
-							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.zero) {
+							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.Zero) {
 								AnimatedTexture animTex = mesh_anim.AddComponent<AnimatedTexture>();
 								animTex.ResetMaterial(config.obj.textureConfigs[idTexConfig], mat);
 							}

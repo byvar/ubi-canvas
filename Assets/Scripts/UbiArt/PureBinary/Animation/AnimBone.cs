@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +8,19 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimBone::serialize
 	public class AnimBone : CSerializable {
-		[Serialize("key"       )] public Link key;
-		[Serialize("tag"       )] public StringID tag;
-		[Serialize("flags"     )] public byte flags;
-		[Serialize("pointLinks")] public CList<Link> pointLinks; // links to AnimPatchPoint?
-		[Serialize("parentKey" )] public Link parentKey;
+		public Link key;
+		public StringID tag;
+		public byte flags;
+		public CList<Link> pointLinks; // links to AnimPatchPoint?
+		public Link parentKey;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(key));
-			SerializeField(s, nameof(tag));
-			SerializeField(s, nameof(flags));
-			SerializeField(s, nameof(pointLinks));
-			SerializeField(s, nameof(parentKey));
+			key = s.SerializeObject<Link>(key, name: "key");
+			tag = s.SerializeObject<StringID>(tag, name: "tag");
+			flags = s.Serialize<byte>(flags, name: "flags");
+			pointLinks = s.SerializeObject<CList<Link>>(pointLinks, name: "pointLinks");
+			parentKey = s.SerializeObject<Link>(parentKey, name: "parentKey");
 		}
 		/*
 		Example:

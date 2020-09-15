@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ using UnityEngine;
 
 namespace UbiArt {
 	public class RO2_SaveData : ICSerializable {
-		[Serialize("header")] public byte[] header = null;
-		[Serialize("read"  )] public bool read = true;
-		[Serialize("object")] public RO2_PersistentGameData_Universe CONTENT;
-		[Serialize("footer")] public byte[] footer = null;
+		public byte[] header = null;
+		public bool read = true;
+		public RO2_PersistentGameData_Universe CONTENT;
+		public byte[] footer = null;
 
 		public bool IsNull {
 			get {

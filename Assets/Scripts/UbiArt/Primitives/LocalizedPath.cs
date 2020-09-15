@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace UbiArt {
 	public class LocalizedPath : CSerializable {
-		[Serialize("locId"      )] public LocalisationId locId;
-		[Serialize("defaultPath")] public Path defaultPath;
+		public LocalisationId locId;
+		public Path defaultPath;
 
 		protected override void SerializeImpl(CSerializerObject s) {
-			SerializeField(s, nameof(locId));
-			SerializeField(s, nameof(defaultPath));
+			locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
+			defaultPath = s.SerializeObject<Path>(defaultPath, name: "defaultPath");
 		}
 	}
 }

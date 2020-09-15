@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class GFXPrimitiveParam : CSerializable {
 		public GFX_GridFluidObjParam GridFluidParam;
 		public Enum_GlobalScissor GlobalScissor;
-		public Color colorFactor = Color.white;
+		public Color colorFactor = Color.White;
 		public float FrontLightBrightness;
 		public float FrontLightContrast = 1f;
 		public float BackLightBrightness;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,19 +9,19 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimPatchBank::serialize
 	// pbk.ckd file
 	public class AnimPatchBank : CSerializable {
-		[Serialize("version"     )] public uint version;
-		[Serialize("bankId"      )] public Link bankId;
-		[Serialize("unk"         )] public float unk;
-		[Serialize("templateKeys")] public KeyArray<int> templateKeys;
-		[Serialize("templates"   )] public CList<AnimTemplate> templates;
+		public uint version;
+		public Link bankId;
+		public float unk;
+		public KeyArray<int> templateKeys;
+		public CList<AnimTemplate> templates;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(version));
-			SerializeField(s, nameof(bankId));
-			SerializeField(s, nameof(unk));
-			SerializeField(s, nameof(templateKeys));
-			SerializeField(s, nameof(templates));
+			version = s.Serialize<uint>(version, name: "version");
+			bankId = s.SerializeObject<Link>(bankId, name: "bankId");
+			unk = s.Serialize<float>(unk, name: "unk");
+			templateKeys = s.SerializeObject<KeyArray<int>>(templateKeys, name: "templateKeys");
+			templates = s.SerializeObject<CList<AnimTemplate>>(templates, name: "templates");
 		}
 
 	}

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +8,17 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimPatch::serialize
 	public class AnimPatch : CSerializable {
-		[Serialize("bankId"       )] public Link bankId;
-		[Serialize("templateIndex")] public uint templateIndex;
-		[Serialize("numPoints"    )] public byte numPoints;
-		[Serialize("points"       )] public Link[] points = new Link[0];
-		[Serialize("sid"          )] public StringID sid;
+		public Link bankId;
+		public uint templateIndex;
+		public byte numPoints;
+		public Link[] points = new Link[0];
+		public StringID sid;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bankId));
-			SerializeField(s, nameof(templateIndex));
-			SerializeField(s, nameof(numPoints));
+			bankId = s.SerializeObject<Link>(bankId, name: "bankId");
+			templateIndex = s.Serialize<uint>(templateIndex, name: "templateIndex");
+			numPoints = s.Serialize<byte>(numPoints, name: "numPoints");
 			if (points.Length != numPoints) {
 				Array.Resize(ref points, numPoints);
 			}

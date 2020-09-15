@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,23 +8,23 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimTemplate::serialize
 	public class AnimTemplate : CSerializable {
-		[Serialize("boneKeys"   )] public KeyArray<int> boneKeys;
-		[Serialize("unkfloat"   )] public float unkfloat;
-		[Serialize("bones"      )] public CList<AnimBone> bones;
-		[Serialize("bonesDyn"   )] public CList<AnimBoneDyn> bonesDyn;
-		[Serialize("patchPoints")] public CList<AnimPatchPoint> patchPoints;
-		[Serialize("patches"    )] public CList<AnimPatch> patches;
+		public KeyArray<int> boneKeys;
+		public float unkfloat;
+		public CList<AnimBone> bones;
+		public CList<AnimBoneDyn> bonesDyn;
+		public CList<AnimPatchPoint> patchPoints;
+		public CList<AnimPatch> patches;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(boneKeys));
+			boneKeys = s.SerializeObject<KeyArray<int>>(boneKeys, name: "boneKeys");
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(unkfloat));
+				unkfloat = s.Serialize<float>(unkfloat, name: "unkfloat");
 			}
-			SerializeField(s, nameof(bones));
-			SerializeField(s, nameof(bonesDyn));
-			SerializeField(s, nameof(patchPoints));
-			SerializeField(s, nameof(patches));
+			bones = s.SerializeObject<CList<AnimBone>>(bones, name: "bones");
+			bonesDyn = s.SerializeObject<CList<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
+			patchPoints = s.SerializeObject<CList<AnimPatchPoint>>(patchPoints, name: "patchPoints");
+			patches = s.SerializeObject<CList<AnimPatch>>(patches, name: "patches");
 		}
 
 		public AnimPatchPoint GetPointFromLink(Link link) {
