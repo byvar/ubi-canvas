@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_OnlineEventStopGame : Event {
-		[Serialize("gameType")] public char gameType;
+		public char gameType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(gameType));
+			gameType = s.Serialize<char>(gameType, name: "gameType");
 		}
 		public override uint? ClassCRC => 0x23078B67;
 	}

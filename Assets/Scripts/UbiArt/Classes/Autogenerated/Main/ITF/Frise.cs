@@ -3,448 +3,448 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RO | GameFlags.RFR | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class Frise : Actor {
-		[Serialize("EventShowColorDst"                  )] public Color EventShowColorDst;
-		[Serialize("disablePhysic"                      )] public bool disablePhysic;
-		[Serialize("CollisionData"                      )] public Nullable<Frise.CollisionData> collisionData;
-		[Serialize("MeshStaticData"                     )] public Nullable<Frise.MeshStaticData> meshStaticData;
-		[Serialize("MeshAnimData"                       )] public Nullable<Frise.MeshAnimData> meshAnimData;
-		[Serialize("MeshOverlayData"                    )] public Nullable<Frise.MeshOverlayData> meshOverlayData;
-		[Serialize("VisualPolyline"                     )] public PolyLine VisualPolyline;
-		[Serialize("VisualPolyPointLocal"               )] public PolyPointList VisualPolyPointLocal;
-		[Serialize("MeshBuildData"                      )] public Nullable<Frise.MeshBuildData> meshBuildData;
-		[Serialize("MeshFluidData"                      )] public Nullable<Frise.MeshFluidData> meshFluidData;
-		[Serialize("AABB_MinZ"                          )] public float AABB_MinZ;
-		[Serialize("AABB_MaxZ"                          )] public float AABB_MaxZ;
-		[Serialize("LOCAL_POINTS"                       )] public CList<PolyLineEdge> LOCAL_POINTS;
-		[Serialize("LOOP"                               )] public bool LOOP;
-		[Serialize("PointsList"                         )] public PolyPointList PointsList;
-		[Serialize("ConfigName"                         )] public Path ConfigName;
-		[Serialize("SwitchTexturePipeExtremity"         )] public uint SwitchTexturePipeExtremity;
-		[Serialize("SwitchExtremityStart"               )] public bool SwitchExtremityStart;
-		[Serialize("SwitchExtremityStop"                )] public bool SwitchExtremityStop;
-		[Serialize("FillUVOrigin"                       )] public Vec2d FillUVOrigin;
-		[Serialize("PreComputedForCook"                 )] public bool PreComputedForCook;
-		[Serialize("XfForCook"                          )] public Transform2d XfForCook;
-		[Serialize("DepthForCook"                       )] public float DepthForCook;
-		[Serialize("ColorFactor"                        )] public Color ColorFactor;
-		[Serialize("ColorFog"                           )] public Color ColorFog;
-		[Serialize("PrimitiveParameters"                )] public GFXPrimitiveParam PrimitiveParameters;
-		[Serialize("DepthOffset"                        )] public float DepthOffset;
-		[Serialize("UvX_Offset"                         )] public float UvX_Offset;
-		[Serialize("UvY_Offset"                         )] public float UvY_Offset;
-		[Serialize("UvX_Flip"                           )] public bool UvX_Flip;
-		[Serialize("UvY_Flip"                           )] public bool UvY_Flip;
-		[Serialize("uvY_Tile"                           )] public float uvY_Tile;
-		[Serialize("Filling_OffSetUv"                   )] public Vec2d Filling_OffSetUv;
-		[Serialize("Anim_SyncGlobal"                    )] public float Anim_SyncGlobal;
-		[Serialize("AtlasIndex"                         )] public uint AtlasIndex;
-		[Serialize("AtlasTessellationIndex"             )] public uint AtlasTessellationIndex;
-		[Serialize("Thickness"                          )] public float Thickness;
-		[Serialize("UseMovingCollision"                 )] public bool UseMovingCollision;
-		[Serialize("UseTemplatePrimitiveParams"         )] public bool UseTemplatePrimitiveParams;
-		[Serialize("LockTexture"                        )] public LockTexture lockTexture;
-		[Serialize("MatShader"                          )] public Path MatShader;
-		[Serialize("Mesh3dSeed"                         )] public uint Mesh3dSeed;
-		[Serialize("MeshManualySet"                     )] public CList<int> MeshManualySet;
-		[Serialize("animSpeedFactor"                    )] public float animSpeedFactor;
-		[Serialize("animAmplitudeFactor"                )] public float animAmplitudeFactor;
-		[Serialize("highlightOutlineColor"              )] public Color highlightOutlineColor;
-		[Serialize("highlightFrontLightBrightness"      )] public float highlightFrontLightBrightness;
-		[Serialize("highlightOutlineWidth"              )] public float highlightOutlineWidth;
-		[Serialize("highlightPeriod"                    )] public float highlightPeriod;
-		[Serialize("highlightAmplitude"                 )] public float highlightAmplitude;
-		[Serialize("POINTS"                             )] public CList<PolyLineEdge> POINTS;
-		[Serialize("PivotMode"                          )] public PivotMode pivotMode;
-		[Serialize("USERPIVOT"                          )] public Vec2d USERPIVOT;
-		[Serialize("ColorFactor_Red"                    )] public float ColorFactor_Red;
-		[Serialize("ColorFactor_Green"                  )] public float ColorFactor_Green;
-		[Serialize("ColorFactor_Blu"                    )] public float ColorFactor_Blu;
-		[Serialize("ColorFactor_Alpha"                  )] public float ColorFactor_Alpha;
-		[Serialize("ColorFog_Red"                       )] public float ColorFog_Red;
-		[Serialize("ColorFog_Green"                     )] public float ColorFog_Green;
-		[Serialize("ColorFog_Blu"                       )] public float ColorFog_Blu;
-		[Serialize("fogfactor"                          )] public float fogfactor;
-		[Serialize("ColorComputerTagId"                 )] public uint ColorComputerTagId;
-		[Serialize("renderInTarget"                     )] public int renderInTarget;
-		[Serialize("IsDynamicFrieze"                    )] public int IsDynamicFrieze;
-		[Serialize("useStaticFog"                       )] public bool useStaticFog;
-		[Serialize("renderInRelection"                  )] public bool renderInRelection;
+		public Color EventShowColorDst;
+		public bool disablePhysic;
+		public Nullable<Frise.CollisionData> collisionData;
+		public Nullable<Frise.MeshStaticData> meshStaticData;
+		public Nullable<Frise.MeshAnimData> meshAnimData;
+		public Nullable<Frise.MeshOverlayData> meshOverlayData;
+		public PolyLine VisualPolyline;
+		public PolyPointList VisualPolyPointLocal;
+		public Nullable<Frise.MeshBuildData> meshBuildData;
+		public Nullable<Frise.MeshFluidData> meshFluidData;
+		public float AABB_MinZ;
+		public float AABB_MaxZ;
+		public CList<PolyLineEdge> LOCAL_POINTS;
+		public bool LOOP;
+		public PolyPointList PointsList;
+		public Path ConfigName;
+		public uint SwitchTexturePipeExtremity;
+		public bool SwitchExtremityStart;
+		public bool SwitchExtremityStop;
+		public Vec2d FillUVOrigin;
+		public bool PreComputedForCook;
+		public Transform2d XfForCook;
+		public float DepthForCook;
+		public Color ColorFactor;
+		public Color ColorFog;
+		public GFXPrimitiveParam PrimitiveParameters;
+		public float DepthOffset;
+		public float UvX_Offset;
+		public float UvY_Offset;
+		public bool UvX_Flip;
+		public bool UvY_Flip;
+		public float uvY_Tile;
+		public Vec2d Filling_OffSetUv;
+		public float Anim_SyncGlobal;
+		public uint AtlasIndex;
+		public uint AtlasTessellationIndex;
+		public float Thickness;
+		public bool UseMovingCollision;
+		public bool UseTemplatePrimitiveParams;
+		public LockTexture lockTexture;
+		public Path MatShader;
+		public uint Mesh3dSeed;
+		public CList<int> MeshManualySet;
+		public float animSpeedFactor;
+		public float animAmplitudeFactor;
+		public Color highlightOutlineColor;
+		public float highlightFrontLightBrightness;
+		public float highlightOutlineWidth;
+		public float highlightPeriod;
+		public float highlightAmplitude;
+		public CList<PolyLineEdge> POINTS;
+		public PivotMode pivotMode;
+		public Vec2d USERPIVOT;
+		public float ColorFactor_Red;
+		public float ColorFactor_Green;
+		public float ColorFactor_Blu;
+		public float ColorFactor_Alpha;
+		public float ColorFog_Red;
+		public float ColorFog_Green;
+		public float ColorFog_Blu;
+		public float fogfactor;
+		public uint ColorComputerTagId;
+		public int renderInTarget;
+		public int IsDynamicFrieze;
+		public bool useStaticFog;
+		public bool renderInRelection;
 		
 		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
-					SerializeField(s, nameof(LOCAL_POINTS));
+					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
 				}
 				if (s.HasFlags(SerializeFlags.Flags6 | SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(POINTS));
+					POINTS = s.SerializeObject<CList<PolyLineEdge>>(POINTS, name: "POINTS");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(pivotMode));
-					SerializeField(s, nameof(LOOP));
-					SerializeField(s, nameof(USERPIVOT));
-					SerializeField(s, nameof(ConfigName));
-					SerializeField(s, nameof(SwitchTexturePipeExtremity));
+					pivotMode = s.Serialize<PivotMode>(pivotMode, name: "pivotMode");
+					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
+					USERPIVOT = s.SerializeObject<Vec2d>(USERPIVOT, name: "USERPIVOT");
+					ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");
+					SwitchTexturePipeExtremity = s.Serialize<uint>(SwitchTexturePipeExtremity, name: "SwitchTexturePipeExtremity");
 					if (s.HasFlags(SerializeFlags.Default)) {
 						if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
-							SerializeField(s, nameof(ColorFactor_Red));
-							SerializeField(s, nameof(ColorFactor_Green));
-							SerializeField(s, nameof(ColorFactor_Blu));
-							SerializeField(s, nameof(ColorFactor_Alpha));
-							SerializeField(s, nameof(ColorFog_Red));
-							SerializeField(s, nameof(ColorFog_Green));
-							SerializeField(s, nameof(ColorFog_Blu));
-							SerializeField(s, nameof(fogfactor));
+							ColorFactor_Red = s.Serialize<float>(ColorFactor_Red, name: "ColorFactor_Red");
+							ColorFactor_Green = s.Serialize<float>(ColorFactor_Green, name: "ColorFactor_Green");
+							ColorFactor_Blu = s.Serialize<float>(ColorFactor_Blu, name: "ColorFactor_Blu");
+							ColorFactor_Alpha = s.Serialize<float>(ColorFactor_Alpha, name: "ColorFactor_Alpha");
+							ColorFog_Red = s.Serialize<float>(ColorFog_Red, name: "ColorFog_Red");
+							ColorFog_Green = s.Serialize<float>(ColorFog_Green, name: "ColorFog_Green");
+							ColorFog_Blu = s.Serialize<float>(ColorFog_Blu, name: "ColorFog_Blu");
+							fogfactor = s.Serialize<float>(fogfactor, name: "fogfactor");
 						}
-						SerializeField(s, nameof(ColorFactor));
-						SerializeField(s, nameof(ColorFog));
-						SerializeField(s, nameof(ColorComputerTagId));
-						SerializeField(s, nameof(renderInTarget));
-						SerializeField(s, nameof(UvX_Offset));
-						SerializeField(s, nameof(UvY_Offset));
-						SerializeField(s, nameof(UvX_Flip), type: typeof(byte));
-						SerializeField(s, nameof(UvY_Flip), type: typeof(byte));
-						SerializeField(s, nameof(uvY_Tile));
-						SerializeField(s, nameof(Filling_OffSetUv));
-						SerializeField(s, nameof(Anim_SyncGlobal));
-						SerializeField(s, nameof(IsDynamicFrieze));
-						SerializeField(s, nameof(AtlasIndex));
-						SerializeField(s, nameof(Thickness));
-						SerializeField(s, nameof(lockTexture));
+						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+						ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
+						ColorComputerTagId = s.Serialize<uint>(ColorComputerTagId, name: "ColorComputerTagId");
+						renderInTarget = s.Serialize<int>(renderInTarget, name: "renderInTarget");
+						UvX_Offset = s.Serialize<float>(UvX_Offset, name: "UvX_Offset");
+						UvY_Offset = s.Serialize<float>(UvY_Offset, name: "UvY_Offset");
+						UvX_Flip = s.Serialize<bool>(UvX_Flip, name: "UvX_Flip", options: CSerializerObject.Options.ForceAsByte);
+						UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
+						uvY_Tile = s.Serialize<float>(uvY_Tile, name: "uvY_Tile");
+						Filling_OffSetUv = s.SerializeObject<Vec2d>(Filling_OffSetUv, name: "Filling_OffSetUv");
+						Anim_SyncGlobal = s.Serialize<float>(Anim_SyncGlobal, name: "Anim_SyncGlobal");
+						IsDynamicFrieze = s.Serialize<int>(IsDynamicFrieze, name: "IsDynamicFrieze");
+						AtlasIndex = s.Serialize<uint>(AtlasIndex, name: "AtlasIndex");
+						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
 					}
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(EventShowColorDst));
-					SerializeField(s, nameof(disablePhysic));
+					EventShowColorDst = s.SerializeObject<Color>(EventShowColorDst, name: "EventShowColorDst");
+					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(collisionData));
-					SerializeField(s, nameof(meshStaticData));
-					SerializeField(s, nameof(meshAnimData));
-					SerializeField(s, nameof(meshOverlayData));
-					SerializeField(s, nameof(VisualPolyline));
-					SerializeField(s, nameof(VisualPolyPointLocal));
+					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "collisionData");
+					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "meshStaticData");
+					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "meshAnimData");
+					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "meshOverlayData");
+					VisualPolyline = s.SerializeObject<PolyLine>(VisualPolyline, name: "VisualPolyline");
+					VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
 					if (Settings.s.isCatchThemAll) {
 						meshBuildData = new Nullable<MeshBuildData>();
 						s.Serialize(ref meshBuildData.value, name: "MeshBuildData");
 					} else {
-						SerializeField(s, nameof(meshBuildData));
+						meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "meshBuildData");
 					}
-					SerializeField(s, nameof(meshFluidData));
-					SerializeField(s, nameof(AABB_MinZ));
-					SerializeField(s, nameof(AABB_MaxZ));
+					meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "meshFluidData");
+					AABB_MinZ = s.Serialize<float>(AABB_MinZ, name: "AABB_MinZ");
+					AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				}
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(LOCAL_POINTS));
-					SerializeField(s, nameof(LOOP));
+					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(PointsList));
+					PointsList = s.SerializeObject<PolyPointList>(PointsList, name: "PointsList");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(ConfigName));
-					SerializeField(s, nameof(SwitchTexturePipeExtremity));
-					SerializeField(s, nameof(SwitchExtremityStart));
-					SerializeField(s, nameof(SwitchExtremityStop));
-					SerializeField(s, nameof(FillUVOrigin));
-					SerializeField(s, nameof(PreComputedForCook));
-					SerializeField(s, nameof(XfForCook));
-					SerializeField(s, nameof(DepthForCook));
+					ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");
+					SwitchTexturePipeExtremity = s.Serialize<uint>(SwitchTexturePipeExtremity, name: "SwitchTexturePipeExtremity");
+					SwitchExtremityStart = s.Serialize<bool>(SwitchExtremityStart, name: "SwitchExtremityStart");
+					SwitchExtremityStop = s.Serialize<bool>(SwitchExtremityStop, name: "SwitchExtremityStop");
+					FillUVOrigin = s.SerializeObject<Vec2d>(FillUVOrigin, name: "FillUVOrigin");
+					PreComputedForCook = s.Serialize<bool>(PreComputedForCook, name: "PreComputedForCook");
+					XfForCook = s.SerializeObject<Transform2d>(XfForCook, name: "XfForCook");
+					DepthForCook = s.Serialize<float>(DepthForCook, name: "DepthForCook");
 					if (s.HasFlags(SerializeFlags.Default)) {
 						if (s.HasFlags(SerializeFlags.Flags8)) {
-							SerializeField(s, nameof(ColorFactor));
-							SerializeField(s, nameof(ColorFog));
-							SerializeField(s, nameof(useStaticFog));
-							SerializeField(s, nameof(renderInRelection));
+							ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+							ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
+							useStaticFog = s.Serialize<bool>(useStaticFog, name: "useStaticFog");
+							renderInRelection = s.Serialize<bool>(renderInRelection, name: "renderInRelection");
 						}
-						SerializeField(s, nameof(PrimitiveParameters));
-						SerializeField(s, nameof(DepthOffset));
-						SerializeField(s, nameof(UvX_Offset));
-						SerializeField(s, nameof(UvY_Offset));
-						SerializeField(s, nameof(UvX_Flip), type: typeof(byte));
-						SerializeField(s, nameof(UvY_Flip), type: typeof(byte));
+						PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+						DepthOffset = s.Serialize<float>(DepthOffset, name: "DepthOffset");
+						UvX_Offset = s.Serialize<float>(UvX_Offset, name: "UvX_Offset");
+						UvY_Offset = s.Serialize<float>(UvY_Offset, name: "UvY_Offset");
+						UvX_Flip = s.Serialize<bool>(UvX_Flip, name: "UvX_Flip", options: CSerializerObject.Options.ForceAsByte);
+						UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
 						if (Settings.s.isCatchThemAll) {
-							SerializeField(s, nameof(UvY_Flip), type: typeof(byte));
+							UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
 						}
-						SerializeField(s, nameof(uvY_Tile));
-						SerializeField(s, nameof(Filling_OffSetUv));
-						SerializeField(s, nameof(Anim_SyncGlobal));
-						SerializeField(s, nameof(AtlasIndex));
-						SerializeField(s, nameof(AtlasTessellationIndex));
-						SerializeField(s, nameof(Thickness));
-						SerializeField(s, nameof(UseMovingCollision));
-						SerializeField(s, nameof(UseTemplatePrimitiveParams));
+						uvY_Tile = s.Serialize<float>(uvY_Tile, name: "uvY_Tile");
+						Filling_OffSetUv = s.SerializeObject<Vec2d>(Filling_OffSetUv, name: "Filling_OffSetUv");
+						Anim_SyncGlobal = s.Serialize<float>(Anim_SyncGlobal, name: "Anim_SyncGlobal");
+						AtlasIndex = s.Serialize<uint>(AtlasIndex, name: "AtlasIndex");
+						AtlasTessellationIndex = s.Serialize<uint>(AtlasTessellationIndex, name: "AtlasTessellationIndex");
+						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
+						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision");
+						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams");
 						if (Settings.s.isCatchThemAll) {
-							SerializeField(s, nameof(UvY_Flip), type: typeof(byte));
+							UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
 						}
-						SerializeField(s, nameof(lockTexture));
-						SerializeField(s, nameof(MatShader));
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(EventShowColorDst));
-					SerializeField(s, nameof(disablePhysic));
+					EventShowColorDst = s.SerializeObject<Color>(EventShowColorDst, name: "EventShowColorDst");
+					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(VisualPolyPointLocal));
-					SerializeField(s, nameof(AABB_MinZ));
-					SerializeField(s, nameof(AABB_MaxZ));
+					VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
+					AABB_MinZ = s.Serialize<float>(AABB_MinZ, name: "AABB_MinZ");
+					AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				}
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(LOCAL_POINTS));
-					SerializeField(s, nameof(LOOP));
+					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(PointsList));
+					PointsList = s.SerializeObject<PolyPointList>(PointsList, name: "PointsList");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(ConfigName));
-					SerializeField(s, nameof(SwitchTexturePipeExtremity));
-					SerializeField(s, nameof(SwitchExtremityStart), boolAsByte: true);
-					SerializeField(s, nameof(SwitchExtremityStop), boolAsByte: true);
-					SerializeField(s, nameof(FillUVOrigin));
-					SerializeField(s, nameof(PreComputedForCook), boolAsByte: true);
-					SerializeField(s, nameof(XfForCook));
-					SerializeField(s, nameof(DepthForCook));
+					ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");
+					SwitchTexturePipeExtremity = s.Serialize<uint>(SwitchTexturePipeExtremity, name: "SwitchTexturePipeExtremity");
+					SwitchExtremityStart = s.Serialize<bool>(SwitchExtremityStart, name: "SwitchExtremityStart", options: CSerializerObject.Options.BoolAsByte);
+					SwitchExtremityStop = s.Serialize<bool>(SwitchExtremityStop, name: "SwitchExtremityStop", options: CSerializerObject.Options.BoolAsByte);
+					FillUVOrigin = s.SerializeObject<Vec2d>(FillUVOrigin, name: "FillUVOrigin");
+					PreComputedForCook = s.Serialize<bool>(PreComputedForCook, name: "PreComputedForCook", options: CSerializerObject.Options.BoolAsByte);
+					XfForCook = s.SerializeObject<Transform2d>(XfForCook, name: "XfForCook");
+					DepthForCook = s.Serialize<float>(DepthForCook, name: "DepthForCook");
 					if (s.HasFlags(SerializeFlags.Default)) {
 						if (s.HasFlags(SerializeFlags.Flags8)) {
-							SerializeField(s, nameof(ColorFactor));
-							SerializeField(s, nameof(ColorFog));
-							SerializeField(s, nameof(useStaticFog), boolAsByte: true);
-							SerializeField(s, nameof(renderInRelection), boolAsByte: true);
+							ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+							ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
+							useStaticFog = s.Serialize<bool>(useStaticFog, name: "useStaticFog", options: CSerializerObject.Options.BoolAsByte);
+							renderInRelection = s.Serialize<bool>(renderInRelection, name: "renderInRelection", options: CSerializerObject.Options.BoolAsByte);
 						}
-						SerializeField(s, nameof(PrimitiveParameters));
-						SerializeField(s, nameof(DepthOffset));
-						SerializeField(s, nameof(UvX_Offset));
-						SerializeField(s, nameof(UvY_Offset));
-						SerializeField(s, nameof(UvX_Flip), boolAsByte: true);
-						SerializeField(s, nameof(UvY_Flip), boolAsByte: true);
-						SerializeField(s, nameof(uvY_Tile));
-						SerializeField(s, nameof(Filling_OffSetUv));
-						SerializeField(s, nameof(Anim_SyncGlobal));
-						SerializeField(s, nameof(AtlasIndex));
-						SerializeField(s, nameof(AtlasTessellationIndex));
-						SerializeField(s, nameof(Thickness));
-						SerializeField(s, nameof(UseMovingCollision), boolAsByte: true);
-						SerializeField(s, nameof(UseTemplatePrimitiveParams), boolAsByte: true);
-						SerializeField(s, nameof(lockTexture));
-						SerializeField(s, nameof(MatShader));
+						PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+						DepthOffset = s.Serialize<float>(DepthOffset, name: "DepthOffset");
+						UvX_Offset = s.Serialize<float>(UvX_Offset, name: "UvX_Offset");
+						UvY_Offset = s.Serialize<float>(UvY_Offset, name: "UvY_Offset");
+						UvX_Flip = s.Serialize<bool>(UvX_Flip, name: "UvX_Flip", options: CSerializerObject.Options.BoolAsByte);
+						UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.BoolAsByte);
+						uvY_Tile = s.Serialize<float>(uvY_Tile, name: "uvY_Tile");
+						Filling_OffSetUv = s.SerializeObject<Vec2d>(Filling_OffSetUv, name: "Filling_OffSetUv");
+						Anim_SyncGlobal = s.Serialize<float>(Anim_SyncGlobal, name: "Anim_SyncGlobal");
+						AtlasIndex = s.Serialize<uint>(AtlasIndex, name: "AtlasIndex");
+						AtlasTessellationIndex = s.Serialize<uint>(AtlasTessellationIndex, name: "AtlasTessellationIndex");
+						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
+						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision", options: CSerializerObject.Options.BoolAsByte);
+						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams", options: CSerializerObject.Options.BoolAsByte);
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(EventShowColorDst));
-					SerializeField(s, nameof(disablePhysic));
+					EventShowColorDst = s.SerializeObject<Color>(EventShowColorDst, name: "EventShowColorDst");
+					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(collisionData));
-					SerializeField(s, nameof(meshStaticData));
-					SerializeField(s, nameof(meshAnimData));
-					SerializeField(s, nameof(meshOverlayData));
-					SerializeField(s, nameof(VisualPolyline));
-					SerializeField(s, nameof(VisualPolyPointLocal));
-					SerializeField(s, nameof(meshBuildData));
-					SerializeField(s, nameof(meshFluidData));
-					SerializeField(s, nameof(AABB_MinZ));
-					SerializeField(s, nameof(AABB_MaxZ));
+					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "collisionData");
+					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "meshStaticData");
+					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "meshAnimData");
+					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "meshOverlayData");
+					VisualPolyline = s.SerializeObject<PolyLine>(VisualPolyline, name: "VisualPolyline");
+					VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
+					meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "meshBuildData");
+					meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "meshFluidData");
+					AABB_MinZ = s.Serialize<float>(AABB_MinZ, name: "AABB_MinZ");
+					AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				}
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(LOCAL_POINTS));
-					SerializeField(s, nameof(LOOP));
+					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(PointsList));
+					PointsList = s.SerializeObject<PolyPointList>(PointsList, name: "PointsList");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(ConfigName));
-					SerializeField(s, nameof(SwitchTexturePipeExtremity));
-					SerializeField(s, nameof(SwitchExtremityStart));
-					SerializeField(s, nameof(SwitchExtremityStop));
-					SerializeField(s, nameof(FillUVOrigin));
-					SerializeField(s, nameof(PreComputedForCook));
-					SerializeField(s, nameof(XfForCook));
-					SerializeField(s, nameof(DepthForCook));
+					ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");
+					SwitchTexturePipeExtremity = s.Serialize<uint>(SwitchTexturePipeExtremity, name: "SwitchTexturePipeExtremity");
+					SwitchExtremityStart = s.Serialize<bool>(SwitchExtremityStart, name: "SwitchExtremityStart");
+					SwitchExtremityStop = s.Serialize<bool>(SwitchExtremityStop, name: "SwitchExtremityStop");
+					FillUVOrigin = s.SerializeObject<Vec2d>(FillUVOrigin, name: "FillUVOrigin");
+					PreComputedForCook = s.Serialize<bool>(PreComputedForCook, name: "PreComputedForCook");
+					XfForCook = s.SerializeObject<Transform2d>(XfForCook, name: "XfForCook");
+					DepthForCook = s.Serialize<float>(DepthForCook, name: "DepthForCook");
 					if (s.HasFlags(SerializeFlags.Default)) {
 						if (s.HasFlags(SerializeFlags.Flags8)) {
-							SerializeField(s, nameof(ColorFactor));
-							SerializeField(s, nameof(ColorFog));
-							SerializeField(s, nameof(useStaticFog));
-							SerializeField(s, nameof(renderInRelection));
+							ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+							ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
+							useStaticFog = s.Serialize<bool>(useStaticFog, name: "useStaticFog");
+							renderInRelection = s.Serialize<bool>(renderInRelection, name: "renderInRelection");
 						}
-						SerializeField(s, nameof(PrimitiveParameters));
-						SerializeField(s, nameof(DepthOffset));
-						SerializeField(s, nameof(UvX_Offset));
-						SerializeField(s, nameof(UvY_Offset));
-						SerializeField(s, nameof(UvX_Flip));
-						SerializeField(s, nameof(UvY_Flip));
-						SerializeField(s, nameof(uvY_Tile));
-						SerializeField(s, nameof(Filling_OffSetUv));
-						SerializeField(s, nameof(Anim_SyncGlobal));
-						SerializeField(s, nameof(AtlasIndex));
-						SerializeField(s, nameof(AtlasTessellationIndex));
-						SerializeField(s, nameof(Thickness));
-						SerializeField(s, nameof(UseMovingCollision));
-						SerializeField(s, nameof(UseTemplatePrimitiveParams));
-						SerializeField(s, nameof(lockTexture));
-						SerializeField(s, nameof(MatShader));
+						PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+						DepthOffset = s.Serialize<float>(DepthOffset, name: "DepthOffset");
+						UvX_Offset = s.Serialize<float>(UvX_Offset, name: "UvX_Offset");
+						UvY_Offset = s.Serialize<float>(UvY_Offset, name: "UvY_Offset");
+						UvX_Flip = s.Serialize<bool>(UvX_Flip, name: "UvX_Flip");
+						UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip");
+						uvY_Tile = s.Serialize<float>(uvY_Tile, name: "uvY_Tile");
+						Filling_OffSetUv = s.SerializeObject<Vec2d>(Filling_OffSetUv, name: "Filling_OffSetUv");
+						Anim_SyncGlobal = s.Serialize<float>(Anim_SyncGlobal, name: "Anim_SyncGlobal");
+						AtlasIndex = s.Serialize<uint>(AtlasIndex, name: "AtlasIndex");
+						AtlasTessellationIndex = s.Serialize<uint>(AtlasTessellationIndex, name: "AtlasTessellationIndex");
+						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
+						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision");
+						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams");
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
-				SerializeField(s, nameof(Mesh3dSeed));
-				SerializeField(s, nameof(MeshManualySet));
-				SerializeField(s, nameof(animSpeedFactor));
-				SerializeField(s, nameof(animAmplitudeFactor));
+				Mesh3dSeed = s.Serialize<uint>(Mesh3dSeed, name: "Mesh3dSeed");
+				MeshManualySet = s.SerializeObject<CList<int>>(MeshManualySet, name: "MeshManualySet");
+				animSpeedFactor = s.Serialize<float>(animSpeedFactor, name: "animSpeedFactor");
+				animAmplitudeFactor = s.Serialize<float>(animAmplitudeFactor, name: "animAmplitudeFactor");
 			} else {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(EventShowColorDst));
-					SerializeField(s, nameof(disablePhysic));
+					EventShowColorDst = s.SerializeObject<Color>(EventShowColorDst, name: "EventShowColorDst");
+					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(collisionData));
-					SerializeField(s, nameof(meshStaticData));
-					SerializeField(s, nameof(meshAnimData));
-					SerializeField(s, nameof(meshOverlayData));
+					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "collisionData");
+					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "meshStaticData");
+					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "meshAnimData");
+					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "meshOverlayData");
 				}
-				SerializeField(s, nameof(VisualPolyline));
-				SerializeField(s, nameof(VisualPolyPointLocal));
-				SerializeField(s, nameof(meshBuildData));
-				SerializeField(s, nameof(meshFluidData));
-				SerializeField(s, nameof(AABB_MinZ));
-				SerializeField(s, nameof(AABB_MaxZ));
+				VisualPolyline = s.SerializeObject<PolyLine>(VisualPolyline, name: "VisualPolyline");
+				VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
+				meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "meshBuildData");
+				meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "meshFluidData");
+				AABB_MinZ = s.Serialize<float>(AABB_MinZ, name: "AABB_MinZ");
+				AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(LOCAL_POINTS));
-					SerializeField(s, nameof(LOOP));
+					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(PointsList));
+					PointsList = s.SerializeObject<PolyPointList>(PointsList, name: "PointsList");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(ConfigName));
-					SerializeField(s, nameof(SwitchTexturePipeExtremity));
-					SerializeField(s, nameof(SwitchExtremityStart));
-					SerializeField(s, nameof(SwitchExtremityStop));
-					SerializeField(s, nameof(FillUVOrigin));
-					SerializeField(s, nameof(PreComputedForCook));
-					SerializeField(s, nameof(XfForCook));
-					SerializeField(s, nameof(DepthForCook));
+					ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");
+					SwitchTexturePipeExtremity = s.Serialize<uint>(SwitchTexturePipeExtremity, name: "SwitchTexturePipeExtremity");
+					SwitchExtremityStart = s.Serialize<bool>(SwitchExtremityStart, name: "SwitchExtremityStart");
+					SwitchExtremityStop = s.Serialize<bool>(SwitchExtremityStop, name: "SwitchExtremityStop");
+					FillUVOrigin = s.SerializeObject<Vec2d>(FillUVOrigin, name: "FillUVOrigin");
+					PreComputedForCook = s.Serialize<bool>(PreComputedForCook, name: "PreComputedForCook");
+					XfForCook = s.SerializeObject<Transform2d>(XfForCook, name: "XfForCook");
+					DepthForCook = s.Serialize<float>(DepthForCook, name: "DepthForCook");
 					if (s.HasFlags(SerializeFlags.Default)) {
 						if (s.HasFlags(SerializeFlags.Flags8)) {
-							SerializeField(s, nameof(ColorFactor));
-							SerializeField(s, nameof(ColorFog));
+							ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+							ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
 						}
-						SerializeField(s, nameof(PrimitiveParameters));
-						SerializeField(s, nameof(DepthOffset));
-						SerializeField(s, nameof(UvX_Offset));
-						SerializeField(s, nameof(UvY_Offset));
-						SerializeField(s, nameof(UvX_Flip));
-						SerializeField(s, nameof(UvY_Flip));
-						SerializeField(s, nameof(uvY_Tile));
-						SerializeField(s, nameof(Filling_OffSetUv));
-						SerializeField(s, nameof(Anim_SyncGlobal));
-						SerializeField(s, nameof(AtlasIndex));
-						SerializeField(s, nameof(AtlasTessellationIndex));
-						SerializeField(s, nameof(Thickness));
-						SerializeField(s, nameof(UseMovingCollision));
-						SerializeField(s, nameof(UseTemplatePrimitiveParams));
-						SerializeField(s, nameof(lockTexture));
-						SerializeField(s, nameof(MatShader));
+						PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+						DepthOffset = s.Serialize<float>(DepthOffset, name: "DepthOffset");
+						UvX_Offset = s.Serialize<float>(UvX_Offset, name: "UvX_Offset");
+						UvY_Offset = s.Serialize<float>(UvY_Offset, name: "UvY_Offset");
+						UvX_Flip = s.Serialize<bool>(UvX_Flip, name: "UvX_Flip");
+						UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip");
+						uvY_Tile = s.Serialize<float>(uvY_Tile, name: "uvY_Tile");
+						Filling_OffSetUv = s.SerializeObject<Vec2d>(Filling_OffSetUv, name: "Filling_OffSetUv");
+						Anim_SyncGlobal = s.Serialize<float>(Anim_SyncGlobal, name: "Anim_SyncGlobal");
+						AtlasIndex = s.Serialize<uint>(AtlasIndex, name: "AtlasIndex");
+						AtlasTessellationIndex = s.Serialize<uint>(AtlasTessellationIndex, name: "AtlasTessellationIndex");
+						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
+						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision");
+						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams");
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
-				SerializeField(s, nameof(Mesh3dSeed));
-				SerializeField(s, nameof(MeshManualySet));
-				SerializeField(s, nameof(animSpeedFactor));
-				SerializeField(s, nameof(animAmplitudeFactor));
-				SerializeField(s, nameof(highlightOutlineColor));
-				SerializeField(s, nameof(highlightFrontLightBrightness));
-				SerializeField(s, nameof(highlightOutlineWidth));
-				SerializeField(s, nameof(highlightPeriod));
-				SerializeField(s, nameof(highlightAmplitude));
+				Mesh3dSeed = s.Serialize<uint>(Mesh3dSeed, name: "Mesh3dSeed");
+				MeshManualySet = s.SerializeObject<CList<int>>(MeshManualySet, name: "MeshManualySet");
+				animSpeedFactor = s.Serialize<float>(animSpeedFactor, name: "animSpeedFactor");
+				animAmplitudeFactor = s.Serialize<float>(animAmplitudeFactor, name: "animAmplitudeFactor");
+				highlightOutlineColor = s.SerializeObject<Color>(highlightOutlineColor, name: "highlightOutlineColor");
+				highlightFrontLightBrightness = s.Serialize<float>(highlightFrontLightBrightness, name: "highlightFrontLightBrightness");
+				highlightOutlineWidth = s.Serialize<float>(highlightOutlineWidth, name: "highlightOutlineWidth");
+				highlightPeriod = s.Serialize<float>(highlightPeriod, name: "highlightPeriod");
+				highlightAmplitude = s.Serialize<float>(highlightAmplitude, name: "highlightAmplitude");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class MeshStaticData : CSerializable {
-			[Serialize("LocalAABB")] public AABB LocalAABB;
-			[Serialize("WorldAABB")] public AABB WorldAABB;
+			public AABB LocalAABB;
+			public AABB WorldAABB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(LocalAABB));
-				SerializeField(s, nameof(WorldAABB));
+				LocalAABB = s.SerializeObject<AABB>(LocalAABB, name: "LocalAABB");
+				WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class MeshAnimData : CSerializable {
-			[Serialize("LocalAABB")] public AABB LocalAABB;
-			[Serialize("WorldAABB")] public AABB WorldAABB;
+			public AABB LocalAABB;
+			public AABB WorldAABB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(LocalAABB));
-				SerializeField(s, nameof(WorldAABB));
+				LocalAABB = s.SerializeObject<AABB>(LocalAABB, name: "LocalAABB");
+				WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class MeshOverlayData : CSerializable {
-			[Serialize("LocalAABB")] public AABB LocalAABB;
-			[Serialize("WorldAABB")] public AABB WorldAABB;
-			[Serialize("CosAngle" )] public float CosAngle;
-			[Serialize("SinAngle" )] public float SinAngle;
+			public AABB LocalAABB;
+			public AABB WorldAABB;
+			public float CosAngle;
+			public float SinAngle;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(LocalAABB));
-				SerializeField(s, nameof(WorldAABB));
-				SerializeField(s, nameof(CosAngle));
-				SerializeField(s, nameof(SinAngle));
+				LocalAABB = s.SerializeObject<AABB>(LocalAABB, name: "LocalAABB");
+				WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
+				CosAngle = s.Serialize<float>(CosAngle, name: "CosAngle");
+				SinAngle = s.Serialize<float>(SinAngle, name: "SinAngle");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 		public partial class IndexList : CSerializable {
-			[Serialize("List"       )] public CList<ushort> List;
-			[Serialize("IdTexConfig")] public uint IdTexConfig;
+			public CList<ushort> List;
+			public uint IdTexConfig;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(List));
-				SerializeField(s, nameof(IdTexConfig));
+				List = s.SerializeObject<CList<ushort>>(List, name: "List");
+				IdTexConfig = s.Serialize<uint>(IdTexConfig, name: "IdTexConfig");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class MeshBuildData : CSerializable {
-			[Serialize("AnimIndexList"    )] public CList<Frise.IndexList> AnimIndexList;
-			[Serialize("AnimVertexList"   )] public CList<VertexPNC3T> AnimVertexList;
-			[Serialize("StaticIndexList"  )] public CList<Frise.IndexList> StaticIndexList;
-			[Serialize("StaticVertexList" )] public CList<VertexPCT> StaticVertexList;
-			[Serialize("OverlayIndexList" )] public Frise.IndexList OverlayIndexList;
-			[Serialize("OverlayVertexList")] public CList<VertexPCBT> OverlayVertexList;
+			public CList<Frise.IndexList> AnimIndexList;
+			public CList<VertexPNC3T> AnimVertexList;
+			public CList<Frise.IndexList> StaticIndexList;
+			public CList<VertexPCT> StaticVertexList;
+			public Frise.IndexList OverlayIndexList;
+			public CList<VertexPCBT> OverlayVertexList;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(AnimIndexList));
-				SerializeField(s, nameof(AnimVertexList));
-				SerializeField(s, nameof(StaticIndexList));
-				SerializeField(s, nameof(StaticVertexList));
-				SerializeField(s, nameof(OverlayIndexList));
-				SerializeField(s, nameof(OverlayVertexList));
+				AnimIndexList = s.SerializeObject<CList<Frise.IndexList>>(AnimIndexList, name: "AnimIndexList");
+				AnimVertexList = s.SerializeObject<CList<VertexPNC3T>>(AnimVertexList, name: "AnimVertexList");
+				StaticIndexList = s.SerializeObject<CList<Frise.IndexList>>(StaticIndexList, name: "StaticIndexList");
+				StaticVertexList = s.SerializeObject<CList<VertexPCT>>(StaticVertexList, name: "StaticVertexList");
+				OverlayIndexList = s.SerializeObject<Frise.IndexList>(OverlayIndexList, name: "OverlayIndexList");
+				OverlayVertexList = s.SerializeObject<CList<VertexPCBT>>(OverlayVertexList, name: "OverlayVertexList");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class MeshFluidData : CSerializable {
-			[Serialize("Data"     )] public DataFluid Data;
-			[Serialize("LocalAABB")] public AABB LocalAABB;
-			[Serialize("WorldAABB")] public AABB WorldAABB;
+			public DataFluid Data;
+			public AABB LocalAABB;
+			public AABB WorldAABB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(Data));
-				SerializeField(s, nameof(LocalAABB));
-				SerializeField(s, nameof(WorldAABB));
+				Data = s.SerializeObject<DataFluid>(Data, name: "Data");
+				LocalAABB = s.SerializeObject<AABB>(LocalAABB, name: "LocalAABB");
+				WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class CollisionData : CSerializable {
-			[Serialize("LocalCollisionList")] public CList<PolyPointList> LocalCollisionList;
-			[Serialize("WorldCollisionList")] public CList<PolyLine> WorldCollisionList;
+			public CList<PolyPointList> LocalCollisionList;
+			public CList<PolyLine> WorldCollisionList;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(LocalCollisionList));
-				SerializeField(s, nameof(WorldCollisionList));
+				LocalCollisionList = s.SerializeObject<CList<PolyPointList>>(LocalCollisionList, name: "LocalCollisionList");
+				WorldCollisionList = s.SerializeObject<CList<PolyLine>>(WorldCollisionList, name: "WorldCollisionList");
 			}
 		}
 		public enum LockTexture {

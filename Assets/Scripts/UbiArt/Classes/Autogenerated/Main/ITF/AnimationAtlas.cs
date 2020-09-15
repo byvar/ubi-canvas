@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class AnimationAtlas : CSerializable {
-		[Serialize("sequence")] public CList<AnimationAtlas.Key> sequence;
+		public CList<AnimationAtlas.Key> sequence;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sequence));
+			sequence = s.SerializeObject<CList<AnimationAtlas.Key>>(sequence, name: "sequence");
 		}
 		[Games(GameFlags.RA | GameFlags.RL | GameFlags.RFR | GameFlags.VH)]
 		public partial class Key : CSerializable {
-			[Serialize("atlas")] public uint atlas;
-			[Serialize("count")] public uint count;
+			public uint atlas;
+			public uint count;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(atlas));
-				SerializeField(s, nameof(count));
+				atlas = s.Serialize<uint>(atlas, name: "atlas");
+				count = s.Serialize<uint>(count, name: "count");
 			}
 		}
 	}

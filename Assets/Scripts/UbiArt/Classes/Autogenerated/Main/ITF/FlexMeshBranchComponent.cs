@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class FlexMeshBranchComponent : BezierBranchComponent {
-		[Serialize("meshes")] public CList<FlexMeshBranchComponent.FlexMesh> meshes;
+		public CList<FlexMeshBranchComponent.FlexMesh> meshes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 			} else {
-				SerializeField(s, nameof(meshes));
+				meshes = s.SerializeObject<CList<FlexMeshBranchComponent.FlexMesh>>(meshes, name: "meshes");
 			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class FlexMesh : CSerializable {
-			[Serialize("flexId"  )] public StringID flexId;
-			[Serialize("distance")] public float distance;
-			[Serialize("offset"  )] public float offset;
-			[Serialize("length"  )] public float length;
-			[Serialize("width"   )] public float width;
+			public StringID flexId;
+			public float distance;
+			public float offset;
+			public float length;
+			public float width;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(flexId));
-				SerializeField(s, nameof(distance));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(length));
-				SerializeField(s, nameof(width));
+				flexId = s.SerializeObject<StringID>(flexId, name: "flexId");
+				distance = s.Serialize<float>(distance, name: "distance");
+				offset = s.Serialize<float>(offset, name: "offset");
+				length = s.Serialize<float>(length, name: "length");
+				width = s.Serialize<float>(width, name: "width");
 			}
 		}
 		public override uint? ClassCRC => 0x47EEBCEF;

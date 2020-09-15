@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class WwiseEngineEvent : CSerializable {
-		[Serialize("GUID"      )] public StringID GUID;
-		[Serialize("EngineType")] public AUDIO_ENGEVT EngineType;
+		public StringID GUID;
+		public AUDIO_ENGEVT EngineType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(GUID));
-			SerializeField(s, nameof(EngineType));
+			GUID = s.SerializeObject<StringID>(GUID, name: "GUID");
+			EngineType = s.Serialize<AUDIO_ENGEVT>(EngineType, name: "EngineType");
 		}
 		public enum AUDIO_ENGEVT {
 			[Serialize("AUDIO_ENGEVT_WWISE_PAUSE_GAMEPLAY"  )] WWISE_PAUSE_GAMEPLAY = 0,

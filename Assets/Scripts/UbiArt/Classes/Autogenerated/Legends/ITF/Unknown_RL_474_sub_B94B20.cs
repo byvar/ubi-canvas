@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_474_sub_B94B20 : RO2_EnemyBTAIComponent_Template {
-		[Serialize("cameraRelative"           )] public int cameraRelative;
-		[Serialize("triggerable"              )] public int triggerable;
-		[Serialize("dynamicFlip"              )] public int dynamicFlip;
-		[Serialize("dynamicFlipStartLeft"     )] public int dynamicFlipStartLeft;
-		[Serialize("useFixedAngle"            )] public int useFixedAngle;
-		[Serialize("fixedAngle"               )] public Angle fixedAngle;
-		[Serialize("takeMoveOrientation"      )] public int takeMoveOrientation;
-		[Serialize("takeMoveOrientationOffset")] public Angle takeMoveOrientationOffset;
-		[Serialize("canBeCrushed"             )] public int canBeCrushed;
-		[Serialize("disableOnBecomeInactive"  )] public int disableOnBecomeInactive;
-		[Serialize("visualScaleMultiplier"    )] public float visualScaleMultiplier;
+		public int cameraRelative;
+		public int triggerable;
+		public int dynamicFlip;
+		public int dynamicFlipStartLeft;
+		public int useFixedAngle;
+		public Angle fixedAngle;
+		public int takeMoveOrientation;
+		public Angle takeMoveOrientationOffset;
+		public int canBeCrushed;
+		public int disableOnBecomeInactive;
+		public float visualScaleMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(cameraRelative));
-			SerializeField(s, nameof(triggerable));
-			SerializeField(s, nameof(dynamicFlip));
-			SerializeField(s, nameof(dynamicFlipStartLeft));
-			SerializeField(s, nameof(useFixedAngle));
-			SerializeField(s, nameof(fixedAngle));
-			SerializeField(s, nameof(takeMoveOrientation));
-			SerializeField(s, nameof(takeMoveOrientationOffset));
-			SerializeField(s, nameof(canBeCrushed));
-			SerializeField(s, nameof(disableOnBecomeInactive));
-			SerializeField(s, nameof(visualScaleMultiplier));
+			cameraRelative = s.Serialize<int>(cameraRelative, name: "cameraRelative");
+			triggerable = s.Serialize<int>(triggerable, name: "triggerable");
+			dynamicFlip = s.Serialize<int>(dynamicFlip, name: "dynamicFlip");
+			dynamicFlipStartLeft = s.Serialize<int>(dynamicFlipStartLeft, name: "dynamicFlipStartLeft");
+			useFixedAngle = s.Serialize<int>(useFixedAngle, name: "useFixedAngle");
+			fixedAngle = s.SerializeObject<Angle>(fixedAngle, name: "fixedAngle");
+			takeMoveOrientation = s.Serialize<int>(takeMoveOrientation, name: "takeMoveOrientation");
+			takeMoveOrientationOffset = s.SerializeObject<Angle>(takeMoveOrientationOffset, name: "takeMoveOrientationOffset");
+			canBeCrushed = s.Serialize<int>(canBeCrushed, name: "canBeCrushed");
+			disableOnBecomeInactive = s.Serialize<int>(disableOnBecomeInactive, name: "disableOnBecomeInactive");
+			visualScaleMultiplier = s.Serialize<float>(visualScaleMultiplier, name: "visualScaleMultiplier");
 		}
 		public override uint? ClassCRC => 0x795ED68C;
 	}

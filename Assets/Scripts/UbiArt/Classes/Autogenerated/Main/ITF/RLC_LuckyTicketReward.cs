@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_LuckyTicketReward : CSerializable {
-		[Serialize("type"               )] public Enum_type type;
-		[Serialize("creatureID"         )] public StringID creatureID;
-		[Serialize("count"              )] public uint count;
-		[Serialize("jackpot"            )] public bool jackpot;
-		[Serialize("seasonalFixedReward")] public bool seasonalFixedReward;
+		public Enum_type type;
+		public StringID creatureID;
+		public uint count;
+		public bool jackpot;
+		public bool seasonalFixedReward;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(creatureID));
-			SerializeField(s, nameof(count));
-			SerializeField(s, nameof(jackpot));
-			SerializeField(s, nameof(seasonalFixedReward));
+			type = s.Serialize<Enum_type>(type, name: "type");
+			creatureID = s.SerializeObject<StringID>(creatureID, name: "creatureID");
+			count = s.Serialize<uint>(count, name: "count");
+			jackpot = s.Serialize<bool>(jackpot, name: "jackpot");
+			seasonalFixedReward = s.Serialize<bool>(seasonalFixedReward, name: "seasonalFixedReward");
 		}
 		public enum Enum_type {
 			[Serialize("_unknown"             )] _unknown = 0,

@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TargetingComponent_Template : ActorComponent_Template {
-		[Serialize("predictionFactor"       )] public float predictionFactor;
-		[Serialize("useMove"                )] public bool useMove;
-		[Serialize("useOrientation"         )] public bool useOrientation;
-		[Serialize("maxAngularSpeed"        )] public float maxAngularSpeed;
-		[Serialize("minAngle"               )] public Angle minAngle;
-		[Serialize("maxAngle"               )] public Angle maxAngle;
-		[Serialize("initAngle"              )] public Angle initAngle;
-		[Serialize("targetSpeedSmoothFactor")] public float targetSpeedSmoothFactor;
-		[Serialize("stiffness"              )] public float stiffness;
-		[Serialize("damping"                )] public float damping;
-		[Serialize("angularStiffness"       )] public float angularStiffness;
-		[Serialize("angularDamping"         )] public float angularDamping;
-		[Serialize("activationShape"        )] public Generic<PhysShape> activationShape;
-		[Serialize("shape"                  )] public Generic<PhysShape> shape;
+		public float predictionFactor;
+		public bool useMove;
+		public bool useOrientation;
+		public float maxAngularSpeed;
+		public Angle minAngle;
+		public Angle maxAngle;
+		public Angle initAngle;
+		public float targetSpeedSmoothFactor;
+		public float stiffness;
+		public float damping;
+		public float angularStiffness;
+		public float angularDamping;
+		public Generic<PhysShape> activationShape;
+		public Generic<PhysShape> shape;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(predictionFactor));
-			SerializeField(s, nameof(useMove));
-			SerializeField(s, nameof(useOrientation));
-			SerializeField(s, nameof(maxAngularSpeed));
-			SerializeField(s, nameof(minAngle));
-			SerializeField(s, nameof(maxAngle));
-			SerializeField(s, nameof(initAngle));
-			SerializeField(s, nameof(targetSpeedSmoothFactor));
-			SerializeField(s, nameof(stiffness));
-			SerializeField(s, nameof(damping));
-			SerializeField(s, nameof(angularStiffness));
-			SerializeField(s, nameof(angularDamping));
-			SerializeField(s, nameof(activationShape));
-			SerializeField(s, nameof(shape));
+			predictionFactor = s.Serialize<float>(predictionFactor, name: "predictionFactor");
+			useMove = s.Serialize<bool>(useMove, name: "useMove");
+			useOrientation = s.Serialize<bool>(useOrientation, name: "useOrientation");
+			maxAngularSpeed = s.Serialize<float>(maxAngularSpeed, name: "maxAngularSpeed");
+			minAngle = s.SerializeObject<Angle>(minAngle, name: "minAngle");
+			maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+			initAngle = s.SerializeObject<Angle>(initAngle, name: "initAngle");
+			targetSpeedSmoothFactor = s.Serialize<float>(targetSpeedSmoothFactor, name: "targetSpeedSmoothFactor");
+			stiffness = s.Serialize<float>(stiffness, name: "stiffness");
+			damping = s.Serialize<float>(damping, name: "damping");
+			angularStiffness = s.Serialize<float>(angularStiffness, name: "angularStiffness");
+			angularDamping = s.Serialize<float>(angularDamping, name: "angularDamping");
+			activationShape = s.SerializeObject<Generic<PhysShape>>(activationShape, name: "activationShape");
+			shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 		}
 		public override uint? ClassCRC => 0xFF96CF09;
 	}

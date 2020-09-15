@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_EventGotoRequest : Event {
-		[Serialize("gotoRequestType"   )] public Enum_gotoRequestType gotoRequestType;
-		[Serialize("gotoTargetObject"  )] public Placeholder gotoTargetObject;
-		[Serialize("gotoTargetPosition")] public Vec2d gotoTargetPosition;
-		[Serialize("gotoDuration"      )] public float gotoDuration;
-		[Serialize("run"               )] public bool run;
-		[Serialize("startOnGround"     )] public bool startOnGround;
+		public Enum_gotoRequestType gotoRequestType;
+		public Placeholder gotoTargetObject;
+		public Vec2d gotoTargetPosition;
+		public float gotoDuration;
+		public bool run;
+		public bool startOnGround;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(gotoRequestType));
-			SerializeField(s, nameof(gotoTargetObject));
-			SerializeField(s, nameof(gotoTargetPosition));
-			SerializeField(s, nameof(gotoDuration));
-			SerializeField(s, nameof(run), boolAsByte: true);
-			SerializeField(s, nameof(startOnGround), boolAsByte: true);
+			gotoRequestType = s.Serialize<Enum_gotoRequestType>(gotoRequestType, name: "gotoRequestType");
+			gotoTargetObject = s.SerializeObject<Placeholder>(gotoTargetObject, name: "gotoTargetObject");
+			gotoTargetPosition = s.SerializeObject<Vec2d>(gotoTargetPosition, name: "gotoTargetPosition");
+			gotoDuration = s.Serialize<float>(gotoDuration, name: "gotoDuration");
+			run = s.Serialize<bool>(run, name: "run", options: CSerializerObject.Options.BoolAsByte);
+			startOnGround = s.Serialize<bool>(startOnGround, name: "startOnGround", options: CSerializerObject.Options.BoolAsByte);
 		}
 		public enum Enum_gotoRequestType {
 			[Serialize("Value_0")] Value_0 = 0,

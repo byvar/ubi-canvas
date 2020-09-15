@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR)]
 	public partial class LevelInfo : CSerializable {
-		[Serialize("BasicString__0"            )] public BasicString BasicString__0;
-		[Serialize("BasicString__1"            )] public BasicString BasicString__1;
-		[Serialize("uint__2"                   )] public uint uint__2;
-		[Serialize("RJR_PowerUp__3"            )] public RJR_PowerUp RJR_PowerUp__3;
-		[Serialize("BasicString__4"            )] public BasicString BasicString__4;
-		[Serialize("BasicString__5"            )] public BasicString BasicString__5;
-		[Serialize("uint__6"                   )] public uint uint__6;
-		[Serialize("RJR_PowerUp__7"            )] public RJR_PowerUp RJR_PowerUp__7;
-		[Serialize("uint__8"                   )] public uint uint__8;
-		[Serialize("Gadgets__9"                )] public Gadgets Gadgets__9;
-		[Serialize("CList<UnlockedGadgets>__10")] public CList<UnlockedGadgets> CList_UnlockedGadgets__10;
-		[Serialize("Gadgets__11"               )] public Gadgets Gadgets__11;
+		public BasicString BasicString__0;
+		public BasicString BasicString__1;
+		public uint uint__2;
+		public RJR_PowerUp RJR_PowerUp__3;
+		public BasicString BasicString__4;
+		public BasicString BasicString__5;
+		public uint uint__6;
+		public RJR_PowerUp RJR_PowerUp__7;
+		public uint uint__8;
+		public Gadgets Gadgets__9;
+		public CList<UnlockedGadgets> CList_UnlockedGadgets__10;
+		public Gadgets Gadgets__11;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(BasicString__4));
-				SerializeField(s, nameof(BasicString__5));
-				SerializeField(s, nameof(uint__6));
-				SerializeField(s, nameof(RJR_PowerUp__7));
-				SerializeField(s, nameof(uint__8));
-				SerializeField(s, nameof(Gadgets__9));
-				SerializeField(s, nameof(CList_UnlockedGadgets__10));
-				SerializeField(s, nameof(Gadgets__11));
+				BasicString__4 = s.SerializeObject<BasicString>(BasicString__4, name: "BasicString__4");
+				BasicString__5 = s.SerializeObject<BasicString>(BasicString__5, name: "BasicString__5");
+				uint__6 = s.Serialize<uint>(uint__6, name: "uint__6");
+				RJR_PowerUp__7 = s.SerializeObject<RJR_PowerUp>(RJR_PowerUp__7, name: "RJR_PowerUp__7");
+				uint__8 = s.Serialize<uint>(uint__8, name: "uint__8");
+				Gadgets__9 = s.SerializeObject<Gadgets>(Gadgets__9, name: "Gadgets__9");
+				CList_UnlockedGadgets__10 = s.SerializeObject<CList<UnlockedGadgets>>(CList_UnlockedGadgets__10, name: "CList_UnlockedGadgets__10");
+				Gadgets__11 = s.SerializeObject<Gadgets>(Gadgets__11, name: "Gadgets__11");
 			} else {
-				SerializeField(s, nameof(BasicString__0));
-				SerializeField(s, nameof(BasicString__1));
-				SerializeField(s, nameof(uint__2));
-				SerializeField(s, nameof(RJR_PowerUp__3));
+				BasicString__0 = s.SerializeObject<BasicString>(BasicString__0, name: "BasicString__0");
+				BasicString__1 = s.SerializeObject<BasicString>(BasicString__1, name: "BasicString__1");
+				uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");
+				RJR_PowerUp__3 = s.SerializeObject<RJR_PowerUp>(RJR_PowerUp__3, name: "RJR_PowerUp__3");
 			}
 		}
 	}

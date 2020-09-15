@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class LinkCode : CSerializable {
-		[Serialize("slot"     )] public uint slot;
-		[Serialize("profileId")] public string profileId;
-		[Serialize("code"     )] public string code;
-		[Serialize("ttl"      )] public uint ttl;
+		public uint slot;
+		public string profileId;
+		public string code;
+		public uint ttl;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(slot));
-			SerializeField(s, nameof(profileId));
-			SerializeField(s, nameof(code));
-			SerializeField(s, nameof(ttl));
+			slot = s.Serialize<uint>(slot, name: "slot");
+			profileId = s.Serialize<string>(profileId, name: "profileId");
+			code = s.Serialize<string>(code, name: "code");
+			ttl = s.Serialize<uint>(ttl, name: "ttl");
 		}
 		public override uint? ClassCRC => 0x1038C063;
 	}

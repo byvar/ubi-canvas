@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class BTActionSetFact_Template : BTAction_Template {
-		[Serialize("fact"     )] public StringID fact;
-		[Serialize("value"    )] public string value;
-		[Serialize("type"     )] public EValueType type;
-		[Serialize("operation")] public SetFactOperationType operation;
-		[Serialize("type"     )] public EValueType2 type2;
+		public StringID fact;
+		public string value;
+		public EValueType type;
+		public SetFactOperationType operation;
+		public EValueType2 type2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(fact));
-				SerializeField(s, nameof(value));
-				SerializeField(s, nameof(type2));
+				fact = s.SerializeObject<StringID>(fact, name: "fact");
+				value = s.Serialize<string>(value, name: "value");
+				type2 = s.Serialize<EValueType2>(type2, name: "type2");
 			} else {
-				SerializeField(s, nameof(fact));
-				SerializeField(s, nameof(value));
-				SerializeField(s, nameof(type));
-				SerializeField(s, nameof(operation));
+				fact = s.SerializeObject<StringID>(fact, name: "fact");
+				value = s.Serialize<string>(value, name: "value");
+				type = s.Serialize<EValueType>(type, name: "type");
+				operation = s.Serialize<SetFactOperationType>(operation, name: "operation");
 			}
 		}
 		public enum EValueType {

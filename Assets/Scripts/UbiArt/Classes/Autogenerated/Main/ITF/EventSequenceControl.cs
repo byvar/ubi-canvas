@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RFR | GameFlags.RO | GameFlags.COL)]
 	public partial class EventSequenceControl : Event {
-		[Serialize("state"     )] public Enum_state state2;
-		[Serialize("label"     )] public string label;
-		[Serialize("forceLabel")] public bool forceLabel;
-		[Serialize("state"     )] public SequencePlayerComponent__State state;
+		public Enum_state state2;
+		public string label;
+		public bool forceLabel;
+		public SequencePlayerComponent__State state;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(state2));
-				SerializeField(s, nameof(label));
-				SerializeField(s, nameof(forceLabel));
+				state2 = s.Serialize<Enum_state>(state2, name: "state2");
+				label = s.Serialize<string>(label, name: "label");
+				forceLabel = s.Serialize<bool>(forceLabel, name: "forceLabel");
 			} else {
-				SerializeField(s, nameof(state));
-				SerializeField(s, nameof(label));
-				SerializeField(s, nameof(forceLabel));
+				state = s.Serialize<SequencePlayerComponent__State>(state, name: "state");
+				label = s.Serialize<string>(label, name: "label");
+				forceLabel = s.Serialize<bool>(forceLabel, name: "forceLabel");
 			}
 		}
 		public enum Enum_state {

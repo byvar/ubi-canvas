@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventSpawnReward : Event {
-		[Serialize("numRewards"          )] public uint numRewards;
-		[Serialize("autoPickup"          )] public int autoPickup;
-		[Serialize("ejectionRandomForce" )] public float ejectionRandomForce;
-		[Serialize("ejectionRandomAngle" )] public Angle ejectionRandomAngle;
-		[Serialize("ejectionDuration"    )] public float ejectionDuration;
-		[Serialize("ejectionForce"       )] public float ejectionForce;
-		[Serialize("ejectionGravityAngle")] public Angle ejectionGravityAngle;
+		public uint numRewards;
+		public int autoPickup;
+		public float ejectionRandomForce;
+		public Angle ejectionRandomAngle;
+		public float ejectionDuration;
+		public float ejectionForce;
+		public Angle ejectionGravityAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(numRewards));
-			SerializeField(s, nameof(autoPickup));
-			SerializeField(s, nameof(ejectionRandomForce));
-			SerializeField(s, nameof(ejectionRandomAngle));
-			SerializeField(s, nameof(ejectionDuration));
-			SerializeField(s, nameof(ejectionForce));
-			SerializeField(s, nameof(ejectionGravityAngle));
+			numRewards = s.Serialize<uint>(numRewards, name: "numRewards");
+			autoPickup = s.Serialize<int>(autoPickup, name: "autoPickup");
+			ejectionRandomForce = s.Serialize<float>(ejectionRandomForce, name: "ejectionRandomForce");
+			ejectionRandomAngle = s.SerializeObject<Angle>(ejectionRandomAngle, name: "ejectionRandomAngle");
+			ejectionDuration = s.Serialize<float>(ejectionDuration, name: "ejectionDuration");
+			ejectionForce = s.Serialize<float>(ejectionForce, name: "ejectionForce");
+			ejectionGravityAngle = s.SerializeObject<Angle>(ejectionGravityAngle, name: "ejectionGravityAngle");
 		}
 		public override uint? ClassCRC => 0x08ACF93F;
 	}

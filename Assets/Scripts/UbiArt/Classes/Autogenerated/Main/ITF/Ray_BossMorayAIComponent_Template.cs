@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_BossMorayAIComponent_Template : Ray_SnakeAIComponent_Template {
-		[Serialize("speedOnBuboHit"       )] public float speedOnBuboHit;
-		[Serialize("accelerationOnBuboHit")] public float accelerationOnBuboHit;
-		[Serialize("shrinkDuration"       )] public float shrinkDuration;
-		[Serialize("shrinkSize"           )] public float shrinkSize;
-		[Serialize("shakeFrequency"       )] public float shakeFrequency;
-		[Serialize("shakeAmplitude"       )] public float shakeAmplitude;
-		[Serialize("retractDelay"         )] public float retractDelay;
-		[Serialize("retractSpeed"         )] public float retractSpeed;
-		[Serialize("retractTargetSmooth"  )] public float retractTargetSmooth;
-		[Serialize("retractSmooth"        )] public float retractSmooth;
-		[Serialize("retractOffset"        )] public float retractOffset;
-		[Serialize("retractFinishedLimit" )] public float retractFinishedLimit;
-		[Serialize("splashFX"             )] public Path splashFX;
-		[Serialize("musics"               )] public CList<EventPlayMusic> musics;
+		public float speedOnBuboHit;
+		public float accelerationOnBuboHit;
+		public float shrinkDuration;
+		public float shrinkSize;
+		public float shakeFrequency;
+		public float shakeAmplitude;
+		public float retractDelay;
+		public float retractSpeed;
+		public float retractTargetSmooth;
+		public float retractSmooth;
+		public float retractOffset;
+		public float retractFinishedLimit;
+		public Path splashFX;
+		public CList<EventPlayMusic> musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(speedOnBuboHit));
-			SerializeField(s, nameof(accelerationOnBuboHit));
-			SerializeField(s, nameof(shrinkDuration));
-			SerializeField(s, nameof(shrinkSize));
-			SerializeField(s, nameof(shakeFrequency));
-			SerializeField(s, nameof(shakeAmplitude));
-			SerializeField(s, nameof(retractDelay));
-			SerializeField(s, nameof(retractSpeed));
-			SerializeField(s, nameof(retractTargetSmooth));
-			SerializeField(s, nameof(retractSmooth));
-			SerializeField(s, nameof(retractOffset));
-			SerializeField(s, nameof(retractFinishedLimit));
-			SerializeField(s, nameof(splashFX));
-			SerializeField(s, nameof(musics));
+			speedOnBuboHit = s.Serialize<float>(speedOnBuboHit, name: "speedOnBuboHit");
+			accelerationOnBuboHit = s.Serialize<float>(accelerationOnBuboHit, name: "accelerationOnBuboHit");
+			shrinkDuration = s.Serialize<float>(shrinkDuration, name: "shrinkDuration");
+			shrinkSize = s.Serialize<float>(shrinkSize, name: "shrinkSize");
+			shakeFrequency = s.Serialize<float>(shakeFrequency, name: "shakeFrequency");
+			shakeAmplitude = s.Serialize<float>(shakeAmplitude, name: "shakeAmplitude");
+			retractDelay = s.Serialize<float>(retractDelay, name: "retractDelay");
+			retractSpeed = s.Serialize<float>(retractSpeed, name: "retractSpeed");
+			retractTargetSmooth = s.Serialize<float>(retractTargetSmooth, name: "retractTargetSmooth");
+			retractSmooth = s.Serialize<float>(retractSmooth, name: "retractSmooth");
+			retractOffset = s.Serialize<float>(retractOffset, name: "retractOffset");
+			retractFinishedLimit = s.Serialize<float>(retractFinishedLimit, name: "retractFinishedLimit");
+			splashFX = s.SerializeObject<Path>(splashFX, name: "splashFX");
+			musics = s.SerializeObject<CList<EventPlayMusic>>(musics, name: "musics");
 		}
 		public override uint? ClassCRC => 0x3D1385F1;
 	}

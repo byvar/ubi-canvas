@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_InventoryConfig_Template : CSerializable {
-		[Serialize("startingItemIDs"          )] public Placeholder startingItemIDs;
-		[Serialize("startingItemIDs_TRIAL"    )] public Placeholder startingItemIDs_TRIAL;
-		[Serialize("attachmentBoneName"       )] public StringID attachmentBoneName;
-		[Serialize("inventoryRunesTexturePath")] public Path inventoryRunesTexturePath;
-		[Serialize("inventoryRunesTexture"    )] public Placeholder inventoryRunesTexture;
-		[Serialize("maxLightOrbCount"         )] public uint maxLightOrbCount;
-		[Serialize("potionIDs"                )] public Placeholder potionIDs;
+		public Placeholder startingItemIDs;
+		public Placeholder startingItemIDs_TRIAL;
+		public StringID attachmentBoneName;
+		public Path inventoryRunesTexturePath;
+		public Placeholder inventoryRunesTexture;
+		public uint maxLightOrbCount;
+		public Placeholder potionIDs;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(startingItemIDs));
-			SerializeField(s, nameof(startingItemIDs_TRIAL));
-			SerializeField(s, nameof(attachmentBoneName));
+			startingItemIDs = s.SerializeObject<Placeholder>(startingItemIDs, name: "startingItemIDs");
+			startingItemIDs_TRIAL = s.SerializeObject<Placeholder>(startingItemIDs_TRIAL, name: "startingItemIDs_TRIAL");
+			attachmentBoneName = s.SerializeObject<StringID>(attachmentBoneName, name: "attachmentBoneName");
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(inventoryRunesTexturePath));
+				inventoryRunesTexturePath = s.SerializeObject<Path>(inventoryRunesTexturePath, name: "inventoryRunesTexturePath");
 			}
-			SerializeField(s, nameof(inventoryRunesTexture));
-			SerializeField(s, nameof(maxLightOrbCount));
-			SerializeField(s, nameof(potionIDs));
+			inventoryRunesTexture = s.SerializeObject<Placeholder>(inventoryRunesTexture, name: "inventoryRunesTexture");
+			maxLightOrbCount = s.Serialize<uint>(maxLightOrbCount, name: "maxLightOrbCount");
+			potionIDs = s.SerializeObject<Placeholder>(potionIDs, name: "potionIDs");
 		}
 		public override uint? ClassCRC => 0x4314140A;
 	}

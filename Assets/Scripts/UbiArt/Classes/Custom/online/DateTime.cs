@@ -2,25 +2,25 @@ using UnityEngine;
 
 namespace UbiArt.online {
 	public partial class DateTime : CSerializable {
-		[Serialize("value")] public ulong value;
-		[Serialize("year")] public uint year;
-		[Serialize("month")] public uint month;
-		[Serialize("day")] public uint day;
-		[Serialize("hour")] public uint hour;
-		[Serialize("minute")] public uint minute;
-		[Serialize("second")] public uint second;
+		public ulong value;
+		public uint year;
+		public uint month;
+		public uint day;
+		public uint hour;
+		public uint minute;
+		public uint second;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8) || Settings.s.game != Settings.Game.RA) {
-				SerializeField(s, nameof(value));
+				value = s.Serialize<ulong>(value, name: "value");
 			}
 			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(year));
-				SerializeField(s, nameof(month));
-				SerializeField(s, nameof(day));
-				SerializeField(s, nameof(hour));
-				SerializeField(s, nameof(minute));
-				SerializeField(s, nameof(second));
+				year = s.Serialize<uint>(year, name: "year");
+				month = s.Serialize<uint>(month, name: "month");
+				day = s.Serialize<uint>(day, name: "day");
+				hour = s.Serialize<uint>(hour, name: "hour");
+				minute = s.Serialize<uint>(minute, name: "minute");
+				second = s.Serialize<uint>(second, name: "second");
 			}
 		}
 	}

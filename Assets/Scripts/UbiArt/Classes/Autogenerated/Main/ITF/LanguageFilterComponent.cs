@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class LanguageFilterComponent : ActorComponent {
-		[Serialize("operator"       )] public Enum_operator _operator;
-		[Serialize("languages"      )] public CArray<uint> languages;
-		[Serialize("isDemo"         )] public bool isDemo;
-		[Serialize("Enum_VH_0__0"   )] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("CArray<uint>__1")] public CArray<uint> CArray_uint__1;
+		public Enum_operator _operator;
+		public CArray<uint> languages;
+		public bool isDemo;
+		public Enum_VH_0 Enum_VH_0__0;
+		public CArray<uint> CArray_uint__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(Enum_VH_0__0));
-				SerializeField(s, nameof(CArray_uint__1));
+				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
+				CArray_uint__1 = s.SerializeObject<CArray<uint>>(CArray_uint__1, name: "CArray_uint__1");
 			} else {
-				SerializeField(s, nameof(_operator));
-				SerializeField(s, nameof(languages));
-				SerializeField(s, nameof(languages));
-				SerializeField(s, nameof(isDemo));
+				_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
+				languages = s.SerializeObject<CArray<uint>>(languages, name: "languages");
+				languages = s.SerializeObject<CArray<uint>>(languages, name: "languages");
+				isDemo = s.Serialize<bool>(isDemo, name: "isDemo");
 			}
 		}
 		public enum Enum_operator {

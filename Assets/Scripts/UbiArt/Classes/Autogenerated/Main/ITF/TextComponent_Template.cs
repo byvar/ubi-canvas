@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR)]
 	public partial class TextComponent_Template : CSerializable {
-		[Serialize("CString__0")] public CString CString__0;
-		[Serialize("float__1"  )] public float float__1;
-		[Serialize("Color__2"  )] public Color Color__2;
-		[Serialize("float__3"  )] public float float__3;
-		[Serialize("int__4"    )] public int int__4;
-		[Serialize("float__5"  )] public float float__5;
-		[Serialize("float__6"  )] public float float__6;
-		[Serialize("float__7"  )] public float float__7;
-		[Serialize("CString__8")] public CString CString__8;
+		public CString CString__0;
+		public float float__1;
+		public Color Color__2;
+		public float float__3;
+		public int int__4;
+		public float float__5;
+		public float float__6;
+		public float float__7;
+		public CString CString__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(CString__0));
-			SerializeField(s, nameof(float__1));
-			SerializeField(s, nameof(Color__2));
-			SerializeField(s, nameof(float__3));
-			SerializeField(s, nameof(int__4));
-			SerializeField(s, nameof(float__5));
-			SerializeField(s, nameof(float__6));
-			SerializeField(s, nameof(float__7));
-			SerializeField(s, nameof(CString__8));
+			CString__0 = s.Serialize<CString>(CString__0, name: "CString__0");
+			float__1 = s.Serialize<float>(float__1, name: "float__1");
+			Color__2 = s.SerializeObject<Color>(Color__2, name: "Color__2");
+			float__3 = s.Serialize<float>(float__3, name: "float__3");
+			int__4 = s.Serialize<int>(int__4, name: "int__4");
+			float__5 = s.Serialize<float>(float__5, name: "float__5");
+			float__6 = s.Serialize<float>(float__6, name: "float__6");
+			float__7 = s.Serialize<float>(float__7, name: "float__7");
+			CString__8 = s.Serialize<CString>(CString__8, name: "CString__8");
 		}
 		public override uint? ClassCRC => 0xEA7645E7;
 	}

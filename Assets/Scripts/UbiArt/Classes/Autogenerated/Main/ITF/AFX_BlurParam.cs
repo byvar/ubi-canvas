@@ -3,25 +3,25 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class AFX_BlurParam : CSerializable {
-		[Serialize("use"      )] public bool use;
-		[Serialize("pixelSize")] public float pixelSize;
-		[Serialize("bigBlur"  )] public bool bigBlur;
-		[Serialize("pixelSize")] public uint pixelSize2;
-		[Serialize("quality"  )] public uint quality;
+		public bool use;
+		public float pixelSize;
+		public bool bigBlur;
+		public uint pixelSize2;
+		public uint quality;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (Settings.s.game == Settings.Game.COL) {
-					SerializeField(s, nameof(use), boolAsByte: true);
+					use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 				} else {
-					SerializeField(s, nameof(use));
+					use = s.Serialize<bool>(use, name: "use");
 				}
-				SerializeField(s, nameof(pixelSize2));
-				SerializeField(s, nameof(quality));
+				pixelSize2 = s.Serialize<uint>(pixelSize2, name: "pixelSize2");
+				quality = s.Serialize<uint>(quality, name: "quality");
 			} else {
-				SerializeField(s, nameof(use));
-				SerializeField(s, nameof(pixelSize));
-				SerializeField(s, nameof(bigBlur));
+				use = s.Serialize<bool>(use, name: "use");
+				pixelSize = s.Serialize<float>(pixelSize, name: "pixelSize");
+				bigBlur = s.Serialize<bool>(bigBlur, name: "bigBlur");
 			}
 		}
 	}

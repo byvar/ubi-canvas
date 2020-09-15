@@ -3,49 +3,49 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class PolyLineEdge : CSerializable {
-		[Serialize("POS"             )] public Vec2d POS;
-		[Serialize("Scale"           )] public float Scale;
-		[Serialize("SwitchTexture"   )] public bool SwitchTexture;
-		[Serialize("GMatOverride"    )] public StringID GMatOverride;
-		[Serialize("HoleMode"        )] public Hole HoleMode;
-		[Serialize("Vector"          )] public Vec2d Vector;
-		[Serialize("NormalizedVector")] public Vec2d NormalizedVector;
-		[Serialize("Length"          )] public float Length;
-		[Serialize("GameMaterial"    )] public StringID GameMaterial;
+		public Vec2d POS;
+		public float Scale;
+		public bool SwitchTexture;
+		public StringID GMatOverride;
+		public Hole HoleMode;
+		public Vec2d Vector;
+		public Vec2d NormalizedVector;
+		public float Length;
+		public StringID GameMaterial;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
-					SerializeField(s, nameof(POS));
+					POS = s.SerializeObject<Vec2d>(POS, name: "POS");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(HoleMode));
-					SerializeField(s, nameof(Scale));
-					SerializeField(s, nameof(SwitchTexture));
+					HoleMode = s.Serialize<Hole>(HoleMode, name: "HoleMode");
+					Scale = s.Serialize<float>(Scale, name: "Scale");
+					SwitchTexture = s.Serialize<bool>(SwitchTexture, name: "SwitchTexture");
 				}
 			} else if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(POS));
-				SerializeField(s, nameof(Scale));
-				SerializeField(s, nameof(SwitchTexture));
-				SerializeField(s, nameof(HoleMode));
+				POS = s.SerializeObject<Vec2d>(POS, name: "POS");
+				Scale = s.Serialize<float>(Scale, name: "Scale");
+				SwitchTexture = s.Serialize<bool>(SwitchTexture, name: "SwitchTexture");
+				HoleMode = s.Serialize<Hole>(HoleMode, name: "HoleMode");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(Vector));
-					SerializeField(s, nameof(NormalizedVector));
-					SerializeField(s, nameof(Length));
-					SerializeField(s, nameof(GameMaterial));
+					Vector = s.SerializeObject<Vec2d>(Vector, name: "Vector");
+					NormalizedVector = s.SerializeObject<Vec2d>(NormalizedVector, name: "NormalizedVector");
+					Length = s.Serialize<float>(Length, name: "Length");
+					GameMaterial = s.SerializeObject<StringID>(GameMaterial, name: "GameMaterial");
 				}
 			} else {
-				SerializeField(s, nameof(POS));
-				SerializeField(s, nameof(Scale));
-				SerializeField(s, nameof(SwitchTexture));
-				SerializeField(s, nameof(GMatOverride));
-				SerializeField(s, nameof(HoleMode));
+				POS = s.SerializeObject<Vec2d>(POS, name: "POS");
+				Scale = s.Serialize<float>(Scale, name: "Scale");
+				SwitchTexture = s.Serialize<bool>(SwitchTexture, name: "SwitchTexture");
+				GMatOverride = s.SerializeObject<StringID>(GMatOverride, name: "GMatOverride");
+				HoleMode = s.Serialize<Hole>(HoleMode, name: "HoleMode");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(Vector));
-					SerializeField(s, nameof(NormalizedVector));
-					SerializeField(s, nameof(Length));
-					SerializeField(s, nameof(GameMaterial));
+					Vector = s.SerializeObject<Vec2d>(Vector, name: "Vector");
+					NormalizedVector = s.SerializeObject<Vec2d>(NormalizedVector, name: "NormalizedVector");
+					Length = s.Serialize<float>(Length, name: "Length");
+					GameMaterial = s.SerializeObject<StringID>(GameMaterial, name: "GameMaterial");
 				}
 			}
 		}

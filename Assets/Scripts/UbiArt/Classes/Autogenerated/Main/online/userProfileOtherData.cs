@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class userProfileOtherData : userProfileShortData {
-		[Serialize("userItems"                )] public string userItems;
-		[Serialize("lang"                     )] public uint lang;
-		[Serialize("timeZoneOffset"           )] public int timeZoneOffset;
-		[Serialize("gameVersion"              )] public string gameVersion;
-		[Serialize("engineVersion"            )] public uint engineVersion;
-		[Serialize("creatures"                )] public CList<ITF.RO2_PersistentGameData_Universe.RLC_CreatureData> creatures;
-		[Serialize("currentAdvGraphicalFamily")] public uint currentAdvGraphicalFamily;
-		[Serialize("joinDate"                 )] public string joinDate;
-		[Serialize("lastUpdate"               )] public string lastUpdate;
-		[Serialize("adventureCount"           )] public uint adventureCount;
-		[Serialize("mapAdventureCount"        )] public uint mapAdventureCount;
-		[Serialize("incubatorCreatureRegion"  )] public uint incubatorCreatureRegion;
-		[Serialize("randomSeed"               )] public uint randomSeed;
-		[Serialize("populations"              )] public CMap<StringID, StringID> populations;
+		public string userItems;
+		public uint lang;
+		public int timeZoneOffset;
+		public string gameVersion;
+		public uint engineVersion;
+		public CList<ITF.RO2_PersistentGameData_Universe.RLC_CreatureData> creatures;
+		public uint currentAdvGraphicalFamily;
+		public string joinDate;
+		public string lastUpdate;
+		public uint adventureCount;
+		public uint mapAdventureCount;
+		public uint incubatorCreatureRegion;
+		public uint randomSeed;
+		public CMap<StringID, StringID> populations;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(userItems));
-			SerializeField(s, nameof(lang));
-			SerializeField(s, nameof(timeZoneOffset));
-			SerializeField(s, nameof(gameVersion));
-			SerializeField(s, nameof(engineVersion));
-			SerializeField(s, nameof(creatures));
-			SerializeField(s, nameof(currentAdvGraphicalFamily));
-			SerializeField(s, nameof(joinDate));
-			SerializeField(s, nameof(lastUpdate));
-			SerializeField(s, nameof(adventureCount));
-			SerializeField(s, nameof(mapAdventureCount));
-			SerializeField(s, nameof(incubatorCreatureRegion));
-			SerializeField(s, nameof(randomSeed));
-			SerializeField(s, nameof(populations));
+			userItems = s.Serialize<string>(userItems, name: "userItems");
+			lang = s.Serialize<uint>(lang, name: "lang");
+			timeZoneOffset = s.Serialize<int>(timeZoneOffset, name: "timeZoneOffset");
+			gameVersion = s.Serialize<string>(gameVersion, name: "gameVersion");
+			engineVersion = s.Serialize<uint>(engineVersion, name: "engineVersion");
+			creatures = s.SerializeObject<CList<ITF.RO2_PersistentGameData_Universe.RLC_CreatureData>>(creatures, name: "creatures");
+			currentAdvGraphicalFamily = s.Serialize<uint>(currentAdvGraphicalFamily, name: "currentAdvGraphicalFamily");
+			joinDate = s.Serialize<string>(joinDate, name: "joinDate");
+			lastUpdate = s.Serialize<string>(lastUpdate, name: "lastUpdate");
+			adventureCount = s.Serialize<uint>(adventureCount, name: "adventureCount");
+			mapAdventureCount = s.Serialize<uint>(mapAdventureCount, name: "mapAdventureCount");
+			incubatorCreatureRegion = s.Serialize<uint>(incubatorCreatureRegion, name: "incubatorCreatureRegion");
+			randomSeed = s.Serialize<uint>(randomSeed, name: "randomSeed");
+			populations = s.SerializeObject<CMap<StringID, StringID>>(populations, name: "populations");
 		}
 		public override uint? ClassCRC => 0x4B2CE325;
 	}

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class BTTimer_Template : BTNode_Template {
-		[Serialize("node"   )] public BTNodeTemplate_Ref node;
-		[Serialize("minTime")] public float minTime;
-		[Serialize("maxTime")] public float maxTime;
+		public BTNodeTemplate_Ref node;
+		public float minTime;
+		public float maxTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(node));
-			SerializeField(s, nameof(minTime));
-			SerializeField(s, nameof(maxTime));
+			node = s.SerializeObject<BTNodeTemplate_Ref>(node, name: "node");
+			minTime = s.Serialize<float>(minTime, name: "minTime");
+			maxTime = s.Serialize<float>(maxTime, name: "maxTime");
 		}
 		public override uint? ClassCRC => 0xE180188C;
 	}

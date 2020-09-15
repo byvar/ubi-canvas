@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_BarbedWire : W1W_InteractiveGenComponent {
-		[Serialize("bool__0"          )] public bool bool__0;
-		[Serialize("Enum_VH_0__1"     )] public Enum_VH_0_ Enum_VH_0__1;
-		[Serialize("uint__2"          )] public uint uint__2;
-		[Serialize("uint__3"          )] public uint uint__3;
-		[Serialize("Generic<Event>__4")] public Generic<Event> Generic_Event__4;
+		public bool bool__0;
+		public Enum_VH_0_ Enum_VH_0__1;
+		public uint uint__2;
+		public uint uint__3;
+		public Generic<Event> Generic_Event__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Enum_VH_0__1));
-			SerializeField(s, nameof(uint__2));
-			SerializeField(s, nameof(uint__3));
-			SerializeField(s, nameof(Generic_Event__4));
+			Enum_VH_0__1 = s.Serialize<Enum_VH_0_>(Enum_VH_0__1, name: "Enum_VH_0__1");
+			uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");
+			uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
+			Generic_Event__4 = s.SerializeObject<Generic<Event>>(Generic_Event__4, name: "Generic_Event__4");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(bool__0));
+				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 			}
 		}
 		public enum Enum_VH_0_ {

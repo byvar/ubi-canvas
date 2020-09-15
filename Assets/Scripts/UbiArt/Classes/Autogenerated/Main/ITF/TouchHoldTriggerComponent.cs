@@ -3,29 +3,29 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TouchHoldTriggerComponent : ActorComponent {
-		[Serialize("onHoldEvent"               )] public EventSender onHoldEvent;
-		[Serialize("onReleaseEvent"            )] public EventSender onReleaseEvent;
-		[Serialize("minTimeBeforeHoldEventSend")] public float minTimeBeforeHoldEventSend;
-		[Serialize("useTapGauge"               )] public bool useTapGauge;
+		public EventSender onHoldEvent;
+		public EventSender onReleaseEvent;
+		public float minTimeBeforeHoldEventSend;
+		public bool useTapGauge;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(onHoldEvent));
-					SerializeField(s, nameof(onReleaseEvent));
-					SerializeField(s, nameof(useTapGauge), type: typeof(byte));
+					onHoldEvent = s.SerializeObject<EventSender>(onHoldEvent, name: "onHoldEvent");
+					onReleaseEvent = s.SerializeObject<EventSender>(onReleaseEvent, name: "onReleaseEvent");
+					useTapGauge = s.Serialize<bool>(useTapGauge, name: "useTapGauge", options: CSerializerObject.Options.ForceAsByte);
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(onHoldEvent));
-					SerializeField(s, nameof(onReleaseEvent));
-					SerializeField(s, nameof(useTapGauge), boolAsByte: true);
+					onHoldEvent = s.SerializeObject<EventSender>(onHoldEvent, name: "onHoldEvent");
+					onReleaseEvent = s.SerializeObject<EventSender>(onReleaseEvent, name: "onReleaseEvent");
+					useTapGauge = s.Serialize<bool>(useTapGauge, name: "useTapGauge", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(onHoldEvent));
-					SerializeField(s, nameof(onReleaseEvent));
-					SerializeField(s, nameof(minTimeBeforeHoldEventSend));
+					onHoldEvent = s.SerializeObject<EventSender>(onHoldEvent, name: "onHoldEvent");
+					onReleaseEvent = s.SerializeObject<EventSender>(onReleaseEvent, name: "onReleaseEvent");
+					minTimeBeforeHoldEventSend = s.Serialize<float>(minTimeBeforeHoldEventSend, name: "minTimeBeforeHoldEventSend");
 				}
 			}
 		}

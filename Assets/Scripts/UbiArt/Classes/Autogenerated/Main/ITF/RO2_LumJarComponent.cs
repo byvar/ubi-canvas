@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LumJarComponent : ActorComponent {
-		[Serialize("shape" )] public EditableShape shape;
-		[Serialize("hookUp")] public bool hookUp;
-		[Serialize("hookDn")] public bool hookDn;
+		public EditableShape shape;
+		public bool hookUp;
+		public bool hookDn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(shape));
+					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(shape));
-					SerializeField(s, nameof(hookUp));
-					SerializeField(s, nameof(hookDn));
+					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
+					hookUp = s.Serialize<bool>(hookUp, name: "hookUp");
+					hookDn = s.Serialize<bool>(hookDn, name: "hookDn");
 				}
 			}
 		}

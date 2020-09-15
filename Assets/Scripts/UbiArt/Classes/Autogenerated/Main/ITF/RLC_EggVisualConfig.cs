@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_EggVisualConfig : CSerializable {
-		[Serialize("Rarity"             )] public Creature_Rarity Rarity;
-		[Serialize("eggToReachPath"     )] public PathRef eggToReachPath;
-		[Serialize("eggToChoosePath"    )] public PathRef eggToChoosePath;
-		[Serialize("eggToCrackPath"     )] public PathRef eggToCrackPath;
-		[Serialize("DecoyEggToCrackPath")] public PathRef DecoyEggToCrackPath;
-		[Serialize("incubatorPath"      )] public PathRef incubatorPath;
+		public Creature_Rarity Rarity;
+		public PathRef eggToReachPath;
+		public PathRef eggToChoosePath;
+		public PathRef eggToCrackPath;
+		public PathRef DecoyEggToCrackPath;
+		public PathRef incubatorPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Rarity));
-			SerializeField(s, nameof(eggToReachPath));
-			SerializeField(s, nameof(eggToChoosePath));
-			SerializeField(s, nameof(eggToCrackPath));
-			SerializeField(s, nameof(DecoyEggToCrackPath));
-			SerializeField(s, nameof(incubatorPath));
+			Rarity = s.Serialize<Creature_Rarity>(Rarity, name: "Rarity");
+			eggToReachPath = s.SerializeObject<PathRef>(eggToReachPath, name: "eggToReachPath");
+			eggToChoosePath = s.SerializeObject<PathRef>(eggToChoosePath, name: "eggToChoosePath");
+			eggToCrackPath = s.SerializeObject<PathRef>(eggToCrackPath, name: "eggToCrackPath");
+			DecoyEggToCrackPath = s.SerializeObject<PathRef>(DecoyEggToCrackPath, name: "DecoyEggToCrackPath");
+			incubatorPath = s.SerializeObject<PathRef>(incubatorPath, name: "incubatorPath");
 		}
 		public enum Creature_Rarity {
 			[Serialize("Creature_Rarity::common"   )] common = 0,

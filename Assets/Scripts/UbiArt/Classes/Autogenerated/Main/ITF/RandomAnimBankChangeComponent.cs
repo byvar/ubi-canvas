@@ -3,38 +3,38 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RandomAnimBankChangeComponent : ActorComponent {
-		[Serialize("isAlreadyCompute"                                      )] public bool isAlreadyCompute;
-		[Serialize("NbItem"                                                )] public uint NbItem;
-		[Serialize("ForceRecompute"                                        )] public bool ForceRecompute;
-		[Serialize("PatchNamesToRemove"                                    )] public CList<strRandomPatchName> PatchNamesToRemove;
-		[Serialize("bool__0"                                               )] public bool bool__0;
-		[Serialize("bool__1"                                               )] public bool bool__1;
-		[Serialize("bool__2"                                               )] public bool bool__2;
-		[Serialize("RandomAnimBankChangeComponent.strRandomAnimBankPart__3")] public RandomAnimBankChangeComponent.strRandomAnimBankPart RandomAnimBankChangeComponent_strRandomAnimBankPart__3;
-		[Serialize("strRandomPatchName__4"                                 )] public strRandomPatchName strRandomPatchName__4;
+		public bool isAlreadyCompute;
+		public uint NbItem;
+		public bool ForceRecompute;
+		public CList<strRandomPatchName> PatchNamesToRemove;
+		public bool bool__0;
+		public bool bool__1;
+		public bool bool__2;
+		public RandomAnimBankChangeComponent.strRandomAnimBankPart RandomAnimBankChangeComponent_strRandomAnimBankPart__3;
+		public strRandomPatchName strRandomPatchName__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(bool__0));
-				SerializeField(s, nameof(bool__1));
-				SerializeField(s, nameof(bool__2));
-				SerializeField(s, nameof(RandomAnimBankChangeComponent_strRandomAnimBankPart__3));
-				SerializeField(s, nameof(strRandomPatchName__4));
+				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
+				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
+				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
+				RandomAnimBankChangeComponent_strRandomAnimBankPart__3 = s.SerializeObject<RandomAnimBankChangeComponent.strRandomAnimBankPart>(RandomAnimBankChangeComponent_strRandomAnimBankPart__3, name: "RandomAnimBankChangeComponent_strRandomAnimBankPart__3");
+				strRandomPatchName__4 = s.SerializeObject<strRandomPatchName>(strRandomPatchName__4, name: "strRandomPatchName__4");
 			} else {
-				SerializeField(s, nameof(isAlreadyCompute));
-				SerializeField(s, nameof(NbItem));
-				SerializeField(s, nameof(ForceRecompute));
-				SerializeField(s, nameof(PatchNamesToRemove));
+				isAlreadyCompute = s.Serialize<bool>(isAlreadyCompute, name: "isAlreadyCompute");
+				NbItem = s.Serialize<uint>(NbItem, name: "NbItem");
+				ForceRecompute = s.Serialize<bool>(ForceRecompute, name: "ForceRecompute");
+				PatchNamesToRemove = s.SerializeObject<CList<strRandomPatchName>>(PatchNamesToRemove, name: "PatchNamesToRemove");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class strRandomAnimBankPart : CSerializable {
-			[Serialize("SRC"       )] public StringID SRC;
-			[Serialize("BankChange")] public StringID BankChange;
+			public StringID SRC;
+			public StringID BankChange;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(SRC));
-				SerializeField(s, nameof(BankChange));
+				SRC = s.SerializeObject<StringID>(SRC, name: "SRC");
+				BankChange = s.SerializeObject<StringID>(BankChange, name: "BankChange");
 			}
 		}
 		public override uint? ClassCRC => 0xCD65A590;

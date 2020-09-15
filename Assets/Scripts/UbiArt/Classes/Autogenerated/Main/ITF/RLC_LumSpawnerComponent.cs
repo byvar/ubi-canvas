@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_LumSpawnerComponent : ActorComponent {
-		[Serialize("nbLums"     )] public uint nbLums;
-		[Serialize("isRed"      )] public bool isRed;
-		[Serialize("triggerOnce")] public bool triggerOnce;
+		public uint nbLums;
+		public bool isRed;
+		public bool triggerOnce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(nbLums));
-			SerializeField(s, nameof(isRed));
-			SerializeField(s, nameof(triggerOnce));
+			nbLums = s.Serialize<uint>(nbLums, name: "nbLums");
+			isRed = s.Serialize<bool>(isRed, name: "isRed");
+			triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce");
 		}
 		public override uint? ClassCRC => 0x43CBBD0B;
 	}

@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionThrowStone_Template : BTAction_Template {
-		[Serialize("enemyDetectionRange"     )] public Generic<PhysShape> enemyDetectionRange;
-		[Serialize("animCreateProjectile"    )] public StringID animCreateProjectile;
-		[Serialize("animWait"                )] public StringID animWait;
-		[Serialize("animFire"                )] public StringID animFire;
-		[Serialize("attack_MRK_Name"         )] public StringID attack_MRK_Name;
-		[Serialize("boneNameSnap"            )] public StringID boneNameSnap;
-		[Serialize("useBoneOrientation"      )] public bool useBoneOrientation;
-		[Serialize("typeAttack"              )] public uint typeAttack;
-		[Serialize("defaultDir"              )] public Vec2d defaultDir;
-		[Serialize("projectilesPath"         )] public Path projectilesPath;
-		[Serialize("countProjectilesPrealloc")] public uint countProjectilesPrealloc;
-		[Serialize("countProjectilesMax"     )] public uint countProjectilesMax;
-		[Serialize("projectileSpeed"         )] public float projectileSpeed;
-		[Serialize("debug"                   )] public bool debug;
+		public Generic<PhysShape> enemyDetectionRange;
+		public StringID animCreateProjectile;
+		public StringID animWait;
+		public StringID animFire;
+		public StringID attack_MRK_Name;
+		public StringID boneNameSnap;
+		public bool useBoneOrientation;
+		public uint typeAttack;
+		public Vec2d defaultDir;
+		public Path projectilesPath;
+		public uint countProjectilesPrealloc;
+		public uint countProjectilesMax;
+		public float projectileSpeed;
+		public bool debug;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enemyDetectionRange));
-			SerializeField(s, nameof(animCreateProjectile));
-			SerializeField(s, nameof(animWait));
-			SerializeField(s, nameof(animFire));
-			SerializeField(s, nameof(attack_MRK_Name));
-			SerializeField(s, nameof(boneNameSnap));
-			SerializeField(s, nameof(useBoneOrientation));
-			SerializeField(s, nameof(typeAttack));
-			SerializeField(s, nameof(defaultDir));
-			SerializeField(s, nameof(projectilesPath));
-			SerializeField(s, nameof(countProjectilesPrealloc));
-			SerializeField(s, nameof(countProjectilesMax));
-			SerializeField(s, nameof(projectileSpeed));
-			SerializeField(s, nameof(debug));
+			enemyDetectionRange = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRange, name: "enemyDetectionRange");
+			animCreateProjectile = s.SerializeObject<StringID>(animCreateProjectile, name: "animCreateProjectile");
+			animWait = s.SerializeObject<StringID>(animWait, name: "animWait");
+			animFire = s.SerializeObject<StringID>(animFire, name: "animFire");
+			attack_MRK_Name = s.SerializeObject<StringID>(attack_MRK_Name, name: "attack_MRK_Name");
+			boneNameSnap = s.SerializeObject<StringID>(boneNameSnap, name: "boneNameSnap");
+			useBoneOrientation = s.Serialize<bool>(useBoneOrientation, name: "useBoneOrientation");
+			typeAttack = s.Serialize<uint>(typeAttack, name: "typeAttack");
+			defaultDir = s.SerializeObject<Vec2d>(defaultDir, name: "defaultDir");
+			projectilesPath = s.SerializeObject<Path>(projectilesPath, name: "projectilesPath");
+			countProjectilesPrealloc = s.Serialize<uint>(countProjectilesPrealloc, name: "countProjectilesPrealloc");
+			countProjectilesMax = s.Serialize<uint>(countProjectilesMax, name: "countProjectilesMax");
+			projectileSpeed = s.Serialize<float>(projectileSpeed, name: "projectileSpeed");
+			debug = s.Serialize<bool>(debug, name: "debug");
 		}
 		public override uint? ClassCRC => 0x58C2CF7C;
 	}

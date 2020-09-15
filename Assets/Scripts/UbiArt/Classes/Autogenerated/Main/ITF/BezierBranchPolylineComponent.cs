@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class BezierBranchPolylineComponent : BezierBranchComponent {
-		[Serialize("polylineMode")] public PolylineMode polylineMode;
+		public PolylineMode polylineMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(polylineMode));
+				polylineMode = s.Serialize<PolylineMode>(polylineMode, name: "polylineMode");
 			}
 		}
 		public enum PolylineMode {

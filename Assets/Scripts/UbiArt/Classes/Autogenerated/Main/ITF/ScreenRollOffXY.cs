@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class ScreenRollOffXY : SoundModifier {
-		[Serialize("distanceMinX" )] public float distanceMinX;
-		[Serialize("distanceMaxX" )] public float distanceMaxX;
-		[Serialize("distanceMinY" )] public float distanceMinY;
-		[Serialize("distanceMaxY" )] public float distanceMaxY;
-		[Serialize("useX"         )] public bool useX;
-		[Serialize("useY"         )] public bool useY;
-		[Serialize("useMetricUnit")] public bool useMetricUnit;
+		public float distanceMinX;
+		public float distanceMaxX;
+		public float distanceMinY;
+		public float distanceMaxY;
+		public bool useX;
+		public bool useY;
+		public bool useMetricUnit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(distanceMinX));
-				SerializeField(s, nameof(distanceMaxX));
-				SerializeField(s, nameof(distanceMinY));
-				SerializeField(s, nameof(distanceMaxY));
-				SerializeField(s, nameof(useX));
-				SerializeField(s, nameof(useY));
-				SerializeField(s, nameof(useMetricUnit));
+				distanceMinX = s.Serialize<float>(distanceMinX, name: "distanceMinX");
+				distanceMaxX = s.Serialize<float>(distanceMaxX, name: "distanceMaxX");
+				distanceMinY = s.Serialize<float>(distanceMinY, name: "distanceMinY");
+				distanceMaxY = s.Serialize<float>(distanceMaxY, name: "distanceMaxY");
+				useX = s.Serialize<bool>(useX, name: "useX");
+				useY = s.Serialize<bool>(useY, name: "useY");
+				useMetricUnit = s.Serialize<bool>(useMetricUnit, name: "useMetricUnit");
 			} else {
-				SerializeField(s, nameof(distanceMinX));
-				SerializeField(s, nameof(distanceMaxX));
-				SerializeField(s, nameof(distanceMinY));
-				SerializeField(s, nameof(distanceMaxY));
-				SerializeField(s, nameof(useX));
-				SerializeField(s, nameof(useY));
+				distanceMinX = s.Serialize<float>(distanceMinX, name: "distanceMinX");
+				distanceMaxX = s.Serialize<float>(distanceMaxX, name: "distanceMaxX");
+				distanceMinY = s.Serialize<float>(distanceMinY, name: "distanceMinY");
+				distanceMaxY = s.Serialize<float>(distanceMaxY, name: "distanceMaxY");
+				useX = s.Serialize<bool>(useX, name: "useX");
+				useY = s.Serialize<bool>(useY, name: "useY");
 			}
 		}
 		public override uint? ClassCRC => 0x6C8F3C79;

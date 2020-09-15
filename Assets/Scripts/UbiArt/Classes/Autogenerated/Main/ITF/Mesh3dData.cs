@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Mesh3dData : CSerializable {
-		[Serialize("uvMin"   )] public Vec2d uvMin;
-		[Serialize("uvMax"   )] public Vec2d uvMax;
-		[Serialize("meshList")] public CList<Mesh3dDataElement> meshList;
+		public Vec2d uvMin;
+		public Vec2d uvMax;
+		public CList<Mesh3dDataElement> meshList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(uvMin));
-			SerializeField(s, nameof(uvMax));
-			SerializeField(s, nameof(meshList));
+			uvMin = s.SerializeObject<Vec2d>(uvMin, name: "uvMin");
+			uvMax = s.SerializeObject<Vec2d>(uvMax, name: "uvMax");
+			meshList = s.SerializeObject<CList<Mesh3dDataElement>>(meshList, name: "meshList");
 		}
 	}
 }

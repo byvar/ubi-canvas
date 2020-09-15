@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PetsComponent : GraphicComponent {
-		[Serialize("AllAtStart"    )] public bool AllAtStart;
-		[Serialize("PetsSimulation")] public RO2_PetSimulation PetsSimulation;
+		public bool AllAtStart;
+		public RO2_PetSimulation PetsSimulation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(AllAtStart));
-			SerializeField(s, nameof(PetsSimulation));
+			AllAtStart = s.Serialize<bool>(AllAtStart, name: "AllAtStart");
+			PetsSimulation = s.SerializeObject<RO2_PetSimulation>(PetsSimulation, name: "PetsSimulation");
 		}
 		public override uint? ClassCRC => 0xB2C46183;
 	}

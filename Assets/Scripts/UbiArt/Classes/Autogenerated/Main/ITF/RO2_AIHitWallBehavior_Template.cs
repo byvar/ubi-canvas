@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIHitWallBehavior_Template : TemplateAIBehavior {
-		[Serialize("hitWall"                    )] public Generic<AIAction_Template> hitWall;
-		[Serialize("halfWallHeight"             )] public float halfWallHeight;
-		[Serialize("minimumHeightForWallHit"    )] public float minimumHeightForWallHit;
-		[Serialize("flipOnHitWall"              )] public bool flipOnHitWall;
-		[Serialize("minIncidenceAngleForWallHit")] public Angle minIncidenceAngleForWallHit;
-		[Serialize("minSpeedForWallHit"         )] public float minSpeedForWallHit;
+		public Generic<AIAction_Template> hitWall;
+		public float halfWallHeight;
+		public float minimumHeightForWallHit;
+		public bool flipOnHitWall;
+		public Angle minIncidenceAngleForWallHit;
+		public float minSpeedForWallHit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hitWall));
-			SerializeField(s, nameof(halfWallHeight));
-			SerializeField(s, nameof(minimumHeightForWallHit));
-			SerializeField(s, nameof(flipOnHitWall));
-			SerializeField(s, nameof(minIncidenceAngleForWallHit));
-			SerializeField(s, nameof(minSpeedForWallHit));
+			hitWall = s.SerializeObject<Generic<AIAction_Template>>(hitWall, name: "hitWall");
+			halfWallHeight = s.Serialize<float>(halfWallHeight, name: "halfWallHeight");
+			minimumHeightForWallHit = s.Serialize<float>(minimumHeightForWallHit, name: "minimumHeightForWallHit");
+			flipOnHitWall = s.Serialize<bool>(flipOnHitWall, name: "flipOnHitWall");
+			minIncidenceAngleForWallHit = s.SerializeObject<Angle>(minIncidenceAngleForWallHit, name: "minIncidenceAngleForWallHit");
+			minSpeedForWallHit = s.Serialize<float>(minSpeedForWallHit, name: "minSpeedForWallHit");
 		}
 		public override uint? ClassCRC => 0xD570066E;
 	}

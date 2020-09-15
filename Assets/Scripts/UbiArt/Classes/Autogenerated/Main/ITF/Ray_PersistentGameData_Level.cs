@@ -3,25 +3,25 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PersistentGameData_Level : PersistentGameData_Level {
-		[Serialize("cageMapPassedDoors")] public CArray<PackedObjectPath> cageMapPassedDoors;
-		[Serialize("wonChallenges"     )] public uint wonChallenges;
-		[Serialize("levelState"        )] public SPOT_STATE levelState;
-		[Serialize("bestTimeAttack"    )] public uint bestTimeAttack;
-		[Serialize("bestLumAttack"     )] public uint bestLumAttack;
-		[Serialize("hasWarning"        )] public bool hasWarning;
-		[Serialize("isSkipped"         )] public bool isSkipped;
-		[Serialize("trackingdata"      )] public Ray_PersistentGameData_LevelTracking trackingdata;
+		public CArray<PackedObjectPath> cageMapPassedDoors;
+		public uint wonChallenges;
+		public SPOT_STATE levelState;
+		public uint bestTimeAttack;
+		public uint bestLumAttack;
+		public bool hasWarning;
+		public bool isSkipped;
+		public Ray_PersistentGameData_LevelTracking trackingdata;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(cageMapPassedDoors));
-			SerializeField(s, nameof(wonChallenges));
-			SerializeField(s, nameof(levelState));
-			SerializeField(s, nameof(bestTimeAttack));
-			SerializeField(s, nameof(bestLumAttack));
-			SerializeField(s, nameof(hasWarning));
-			SerializeField(s, nameof(isSkipped));
-			SerializeField(s, nameof(trackingdata));
+			cageMapPassedDoors = s.SerializeObject<CArray<PackedObjectPath>>(cageMapPassedDoors, name: "cageMapPassedDoors");
+			wonChallenges = s.Serialize<uint>(wonChallenges, name: "wonChallenges");
+			levelState = s.Serialize<SPOT_STATE>(levelState, name: "levelState");
+			bestTimeAttack = s.Serialize<uint>(bestTimeAttack, name: "bestTimeAttack");
+			bestLumAttack = s.Serialize<uint>(bestLumAttack, name: "bestLumAttack");
+			hasWarning = s.Serialize<bool>(hasWarning, name: "hasWarning");
+			isSkipped = s.Serialize<bool>(isSkipped, name: "isSkipped");
+			trackingdata = s.SerializeObject<Ray_PersistentGameData_LevelTracking>(trackingdata, name: "trackingdata");
 		}
 		public enum SPOT_STATE {
 			[Serialize("SPOT_STATE_CLOSED"      )] CLOSED = 0,

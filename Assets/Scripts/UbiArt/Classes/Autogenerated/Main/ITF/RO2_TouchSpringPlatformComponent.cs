@@ -3,44 +3,44 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchSpringPlatformComponent : RO2_TouchSpringPlatformBaseComponent {
-		[Serialize("anchorData"       )] public RO2_TouchSpringPlatformComponent.AnchorDataStruct anchorData;
-		[Serialize("calibrationParams")] public RO2_TouchSpringPlatformComponent.CalibrationParamsStruct calibrationParams;
+		public RO2_TouchSpringPlatformComponent.AnchorDataStruct anchorData;
+		public RO2_TouchSpringPlatformComponent.CalibrationParamsStruct calibrationParams;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(anchorData));
-				SerializeField(s, nameof(calibrationParams));
+				anchorData = s.SerializeObject<RO2_TouchSpringPlatformComponent.AnchorDataStruct>(anchorData, name: "anchorData");
+				calibrationParams = s.SerializeObject<RO2_TouchSpringPlatformComponent.CalibrationParamsStruct>(calibrationParams, name: "calibrationParams");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class CalibrationParamsStruct : CSerializable {
-			[Serialize("start"          )] public bool start;
-			[Serialize("invertPivot"    )] public bool invertPivot;
-			[Serialize("checkLinearMove")] public bool checkLinearMove;
+			public bool start;
+			public bool invertPivot;
+			public bool checkLinearMove;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (Settings.s.game == Settings.Game.RL) {
-					SerializeField(s, nameof(start), boolAsByte: true);
-					SerializeField(s, nameof(invertPivot), boolAsByte: true);
-					SerializeField(s, nameof(checkLinearMove), boolAsByte: true);
+					start = s.Serialize<bool>(start, name: "start", options: CSerializerObject.Options.BoolAsByte);
+					invertPivot = s.Serialize<bool>(invertPivot, name: "invertPivot", options: CSerializerObject.Options.BoolAsByte);
+					checkLinearMove = s.Serialize<bool>(checkLinearMove, name: "checkLinearMove", options: CSerializerObject.Options.BoolAsByte);
 				} else {
-					SerializeField(s, nameof(start));
-					SerializeField(s, nameof(invertPivot));
-					SerializeField(s, nameof(checkLinearMove));
+					start = s.Serialize<bool>(start, name: "start");
+					invertPivot = s.Serialize<bool>(invertPivot, name: "invertPivot");
+					checkLinearMove = s.Serialize<bool>(checkLinearMove, name: "checkLinearMove");
 				}
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class AnchorDataStruct : CSerializable {
-			[Serialize("anchorRefBoneName")] public StringID anchorRefBoneName;
-			[Serialize("pivotRefBoneName" )] public StringID pivotRefBoneName;
-			[Serialize("pivotPos"         )] public Vec2d pivotPos;
+			public StringID anchorRefBoneName;
+			public StringID pivotRefBoneName;
+			public Vec2d pivotPos;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(anchorRefBoneName));
-				SerializeField(s, nameof(pivotRefBoneName));
+				anchorRefBoneName = s.SerializeObject<StringID>(anchorRefBoneName, name: "anchorRefBoneName");
+				pivotRefBoneName = s.SerializeObject<StringID>(pivotRefBoneName, name: "pivotRefBoneName");
 				if (pivotRefBoneName == null || pivotRefBoneName.IsNull) {
-					SerializeField(s, nameof(pivotPos));
+					pivotPos = s.SerializeObject<Vec2d>(pivotPos, name: "pivotPos");
 				}
 			}
 		}

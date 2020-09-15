@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PuzzleManagerComponent_Template : ActorComponent_Template {
-		[Serialize("debugDraw"  )] public bool debugDraw;
-		[Serialize("caseLength" )] public float caseLength;
-		[Serialize("caseHeight" )] public float caseHeight;
-		[Serialize("lineCount"  )] public uint lineCount;
-		[Serialize("columnCount")] public uint columnCount;
+		public bool debugDraw;
+		public float caseLength;
+		public float caseHeight;
+		public uint lineCount;
+		public uint columnCount;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(debugDraw));
-			SerializeField(s, nameof(caseLength));
-			SerializeField(s, nameof(caseHeight));
-			SerializeField(s, nameof(lineCount));
-			SerializeField(s, nameof(columnCount));
+			debugDraw = s.Serialize<bool>(debugDraw, name: "debugDraw");
+			caseLength = s.Serialize<float>(caseLength, name: "caseLength");
+			caseHeight = s.Serialize<float>(caseHeight, name: "caseHeight");
+			lineCount = s.Serialize<uint>(lineCount, name: "lineCount");
+			columnCount = s.Serialize<uint>(columnCount, name: "columnCount");
 		}
 		public override uint? ClassCRC => 0xFE44A3D7;
 	}

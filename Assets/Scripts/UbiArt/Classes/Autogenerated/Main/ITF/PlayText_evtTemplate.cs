@@ -3,35 +3,35 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
 	public partial class PlayText_evtTemplate : SequenceEventWithActor_Template {
-		[Serialize("Text"            )] public string Text;
-		[Serialize("wordTime"        )] public float wordTime;
-		[Serialize("mood"            )] public uint mood;
-		[Serialize("textOffset"      )] public Vec2d textOffset;
-		[Serialize("localisationId"  )] public LocalisationId localisationId;
-		[Serialize("sizeText"        )] public float sizeText;
-		[Serialize("Text"            )] public Path Text2;
-		[Serialize("Params"          )] public SimpleTextComponent Params;
-		[Serialize("textSnapToScreen")] public int textSnapToScreen;
+		public string Text;
+		public float wordTime;
+		public uint mood;
+		public Vec2d textOffset;
+		public LocalisationId localisationId;
+		public float sizeText;
+		public Path Text2;
+		public SimpleTextComponent Params;
+		public int textSnapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(Text2));
-				SerializeField(s, nameof(Params));
+				Text2 = s.SerializeObject<Path>(Text2, name: "Text2");
+				Params = s.SerializeObject<SimpleTextComponent>(Params, name: "Params");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(Text));
-				SerializeField(s, nameof(wordTime));
-				SerializeField(s, nameof(mood));
-				SerializeField(s, nameof(textOffset));
-				SerializeField(s, nameof(textSnapToScreen));
-				SerializeField(s, nameof(localisationId));
-				SerializeField(s, nameof(sizeText));
+				Text = s.Serialize<string>(Text, name: "Text");
+				wordTime = s.Serialize<float>(wordTime, name: "wordTime");
+				mood = s.Serialize<uint>(mood, name: "mood");
+				textOffset = s.SerializeObject<Vec2d>(textOffset, name: "textOffset");
+				textSnapToScreen = s.Serialize<int>(textSnapToScreen, name: "textSnapToScreen");
+				localisationId = s.SerializeObject<LocalisationId>(localisationId, name: "localisationId");
+				sizeText = s.Serialize<float>(sizeText, name: "sizeText");
 			} else {
-				SerializeField(s, nameof(Text));
-				SerializeField(s, nameof(wordTime));
-				SerializeField(s, nameof(mood));
-				SerializeField(s, nameof(textOffset));
-				SerializeField(s, nameof(localisationId));
-				SerializeField(s, nameof(sizeText));
+				Text = s.Serialize<string>(Text, name: "Text");
+				wordTime = s.Serialize<float>(wordTime, name: "wordTime");
+				mood = s.Serialize<uint>(mood, name: "mood");
+				textOffset = s.SerializeObject<Vec2d>(textOffset, name: "textOffset");
+				localisationId = s.SerializeObject<LocalisationId>(localisationId, name: "localisationId");
+				sizeText = s.Serialize<float>(sizeText, name: "sizeText");
 			}
 		}
 		public override uint? ClassCRC => 0x77998139;

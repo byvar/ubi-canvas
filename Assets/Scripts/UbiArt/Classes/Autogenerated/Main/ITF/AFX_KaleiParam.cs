@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_KaleiParam : CSerializable {
-		[Serialize("use"      )] public bool use;
-		[Serialize("pixelSize")] public float pixelSize;
-		[Serialize("UV1"      )] public Vec2d UV1;
-		[Serialize("UV2"      )] public Vec2d UV2;
-		[Serialize("UV3"      )] public Vec2d UV3;
+		public bool use;
+		public float pixelSize;
+		public Vec2d UV1;
+		public Vec2d UV2;
+		public Vec2d UV3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(use), boolAsByte: true);
+				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(use));
+				use = s.Serialize<bool>(use, name: "use");
 			}
-			SerializeField(s, nameof(pixelSize));
-			SerializeField(s, nameof(UV1));
-			SerializeField(s, nameof(UV2));
-			SerializeField(s, nameof(UV3));
+			pixelSize = s.Serialize<float>(pixelSize, name: "pixelSize");
+			UV1 = s.SerializeObject<Vec2d>(UV1, name: "UV1");
+			UV2 = s.SerializeObject<Vec2d>(UV2, name: "UV2");
+			UV3 = s.SerializeObject<Vec2d>(UV3, name: "UV3");
 		}
 	}
 }

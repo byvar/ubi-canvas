@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TutoBallComponent_Template : ActorComponent_Template {
-		[Serialize("tutoTapPath"  )] public Path tutoTapPath;
-		[Serialize("tutoSwipePath")] public Path tutoSwipePath;
+		public Path tutoTapPath;
+		public Path tutoSwipePath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(tutoTapPath));
-			SerializeField(s, nameof(tutoSwipePath));
+			tutoTapPath = s.SerializeObject<Path>(tutoTapPath, name: "tutoTapPath");
+			tutoSwipePath = s.SerializeObject<Path>(tutoSwipePath, name: "tutoSwipePath");
 		}
 		public override uint? ClassCRC => 0xC0641AF5;
 	}

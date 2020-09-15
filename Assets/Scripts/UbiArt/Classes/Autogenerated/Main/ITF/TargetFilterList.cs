@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RO | GameFlags.RFR | GameFlags.VH)]
 	public partial class TargetFilterList : CSerializable {
-		[Serialize("platform"         )] public Platform platform;
-		[Serialize("objects"          )] public CArray<string> objects;
-		[Serialize("CString__0"       )] public CString platformStr;
+		public Platform platform;
+		public CArray<string> objects;
+		public CString platformStr;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(platformStr));
-					SerializeField(s, nameof(objects));
+					platformStr = s.Serialize<CString>(platformStr, name: "platformStr");
+					objects = s.SerializeObject<CArray<string>>(objects, name: "objects");
 				}
 			} else {
-				SerializeField(s, nameof(platform));
-				SerializeField(s, nameof(objects));
+				platform = s.SerializeObject<Platform>(platform, name: "platform");
+				objects = s.SerializeObject<CArray<string>>(objects, name: "objects");
 			}
 		}
 	}

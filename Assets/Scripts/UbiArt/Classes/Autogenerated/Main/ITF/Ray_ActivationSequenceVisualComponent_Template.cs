@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ActivationSequenceVisualComponent_Template : GraphicComponent_Template {
-		[Serialize("patchStartRadius"                    )] public float patchStartRadius;
-		[Serialize("patchTileLength"                     )] public float patchTileLength;
-		[Serialize("patchScrollSpeed"                    )] public float patchScrollSpeed;
-		[Serialize("patchStartTangeantRotationOffset"    )] public Angle patchStartTangeantRotationOffset;
-		[Serialize("patchTargetTangeantRotationOffset"   )] public Angle patchTargetTangeantRotationOffset;
-		[Serialize("patchStartTangeantRotationFrequency" )] public float patchStartTangeantRotationFrequency;
-		[Serialize("patchTargetTangeantRotationFrequency")] public float patchTargetTangeantRotationFrequency;
-		[Serialize("patchStartWidth"                     )] public float patchStartWidth;
-		[Serialize("patchTargetWidth"                    )] public float patchTargetWidth;
-		[Serialize("patchTexture"                        )] public Path patchTexture;
-		[Serialize("patchBlendMode"                      )] public GFX_BLEND2 patchBlendMode;
+		public float patchStartRadius;
+		public float patchTileLength;
+		public float patchScrollSpeed;
+		public Angle patchStartTangeantRotationOffset;
+		public Angle patchTargetTangeantRotationOffset;
+		public float patchStartTangeantRotationFrequency;
+		public float patchTargetTangeantRotationFrequency;
+		public float patchStartWidth;
+		public float patchTargetWidth;
+		public Path patchTexture;
+		public GFX_BLEND2 patchBlendMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(patchStartRadius));
-			SerializeField(s, nameof(patchTileLength));
-			SerializeField(s, nameof(patchScrollSpeed));
-			SerializeField(s, nameof(patchStartTangeantRotationOffset));
-			SerializeField(s, nameof(patchTargetTangeantRotationOffset));
-			SerializeField(s, nameof(patchStartTangeantRotationFrequency));
-			SerializeField(s, nameof(patchTargetTangeantRotationFrequency));
-			SerializeField(s, nameof(patchStartWidth));
-			SerializeField(s, nameof(patchTargetWidth));
-			SerializeField(s, nameof(patchTexture));
-			SerializeField(s, nameof(patchBlendMode));
+			patchStartRadius = s.Serialize<float>(patchStartRadius, name: "patchStartRadius");
+			patchTileLength = s.Serialize<float>(patchTileLength, name: "patchTileLength");
+			patchScrollSpeed = s.Serialize<float>(patchScrollSpeed, name: "patchScrollSpeed");
+			patchStartTangeantRotationOffset = s.SerializeObject<Angle>(patchStartTangeantRotationOffset, name: "patchStartTangeantRotationOffset");
+			patchTargetTangeantRotationOffset = s.SerializeObject<Angle>(patchTargetTangeantRotationOffset, name: "patchTargetTangeantRotationOffset");
+			patchStartTangeantRotationFrequency = s.Serialize<float>(patchStartTangeantRotationFrequency, name: "patchStartTangeantRotationFrequency");
+			patchTargetTangeantRotationFrequency = s.Serialize<float>(patchTargetTangeantRotationFrequency, name: "patchTargetTangeantRotationFrequency");
+			patchStartWidth = s.Serialize<float>(patchStartWidth, name: "patchStartWidth");
+			patchTargetWidth = s.Serialize<float>(patchTargetWidth, name: "patchTargetWidth");
+			patchTexture = s.SerializeObject<Path>(patchTexture, name: "patchTexture");
+			patchBlendMode = s.Serialize<GFX_BLEND2>(patchBlendMode, name: "patchBlendMode");
 		}
 		
 		public override uint? ClassCRC => 0x0187DB02;

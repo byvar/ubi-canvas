@@ -3,33 +3,33 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TutoBallComponent : ActorComponent {
-		[Serialize("tutoEnabled"        )] public bool tutoEnabled;
-		[Serialize("tutoSwipeLeftPos"   )] public Vec2d tutoSwipeLeftPos;
-		[Serialize("tutoSwipeRightPos"  )] public Vec2d tutoSwipeRightPos;
-		[Serialize("tutoTapPos"         )] public Vec2d tutoTapPos;
-		[Serialize("distanceFar"        )] public float distanceFar;
-		[Serialize("distanceCloseEnough")] public float distanceCloseEnough;
-		[Serialize("ActionsToResume"    )] public CMultiMap<RLC_TutorialCommandType, RLC_TutoBallComponent.ActionToUnpause> ActionsToResume;
+		public bool tutoEnabled;
+		public Vec2d tutoSwipeLeftPos;
+		public Vec2d tutoSwipeRightPos;
+		public Vec2d tutoTapPos;
+		public float distanceFar;
+		public float distanceCloseEnough;
+		public CMultiMap<RLC_TutorialCommandType, RLC_TutoBallComponent.ActionToUnpause> ActionsToResume;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(tutoEnabled));
-			SerializeField(s, nameof(tutoSwipeLeftPos));
-			SerializeField(s, nameof(tutoSwipeRightPos));
-			SerializeField(s, nameof(tutoTapPos));
-			SerializeField(s, nameof(distanceFar));
-			SerializeField(s, nameof(distanceCloseEnough));
-			SerializeField(s, nameof(ActionsToResume));
+			tutoEnabled = s.Serialize<bool>(tutoEnabled, name: "tutoEnabled");
+			tutoSwipeLeftPos = s.SerializeObject<Vec2d>(tutoSwipeLeftPos, name: "tutoSwipeLeftPos");
+			tutoSwipeRightPos = s.SerializeObject<Vec2d>(tutoSwipeRightPos, name: "tutoSwipeRightPos");
+			tutoTapPos = s.SerializeObject<Vec2d>(tutoTapPos, name: "tutoTapPos");
+			distanceFar = s.Serialize<float>(distanceFar, name: "distanceFar");
+			distanceCloseEnough = s.Serialize<float>(distanceCloseEnough, name: "distanceCloseEnough");
+			ActionsToResume = s.SerializeObject<CMultiMap<RLC_TutorialCommandType, RLC_TutoBallComponent.ActionToUnpause>>(ActionsToResume, name: "ActionsToResume");
 		}
 		[Games(GameFlags.RA)]
 		public partial class ActionToUnpause : CSerializable {
-			[Serialize("id"         )] public StringID id;
-			[Serialize("axis"       )] public float axis;
-			[Serialize("Comparation")] public ECompareType Comparation;
+			public StringID id;
+			public float axis;
+			public ECompareType Comparation;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(id));
-				SerializeField(s, nameof(axis));
-				SerializeField(s, nameof(Comparation));
+				id = s.SerializeObject<StringID>(id, name: "id");
+				axis = s.Serialize<float>(axis, name: "axis");
+				Comparation = s.Serialize<ECompareType>(Comparation, name: "Comparation");
 			}
 			public enum ECompareType {
 				[Serialize("ECompareType_GreaterThan" )] GreaterThan = 1,

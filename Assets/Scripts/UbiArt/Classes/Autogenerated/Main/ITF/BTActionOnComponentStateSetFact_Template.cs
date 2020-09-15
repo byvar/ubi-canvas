@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTActionOnComponentStateSetFact_Template : BTAction_Template {
-		[Serialize("fact"         )] public StringID fact;
-		[Serialize("ComponentList")] public uint ComponentList;
-		[Serialize("StateList"    )] public uint StateList;
+		public StringID fact;
+		public uint ComponentList;
+		public uint StateList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(fact));
+				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				if (s.HasFlags(SerializeFlags.Editor)) {
 					SerializeFieldAsChoiceList(s, nameof(ComponentList), "Invalid");
 					SerializeFieldAsChoiceList(s, nameof(StateList)); // No empty for this
 				} else {
-					SerializeField(s, nameof(ComponentList));
-					SerializeField(s, nameof(StateList));
+					ComponentList = s.Serialize<uint>(ComponentList, name: "ComponentList");
+					StateList = s.Serialize<uint>(StateList, name: "StateList");
 				}
 			} else {
-				SerializeField(s, nameof(fact));
+				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				if (s.HasFlags(SerializeFlags.Editor)) {
 					SerializeFieldAsChoiceList(s, nameof(ComponentList), "Invalid");
 					SerializeFieldAsChoiceList(s, nameof(StateList)); // No empty for this
 				} else {
-					SerializeField(s, nameof(ComponentList));
-					SerializeField(s, nameof(StateList));
+					ComponentList = s.Serialize<uint>(ComponentList, name: "ComponentList");
+					StateList = s.Serialize<uint>(StateList, name: "StateList");
 				}
 			}
 		}

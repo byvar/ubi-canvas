@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_LuckyTicketPack : RLC_DynamicStoreItem {
-		[Serialize("Price"           )] public uint Price;
-		[Serialize("Amount"          )] public uint Amount;
-		[Serialize("GoldenTicketPack")] public bool GoldenTicketPack;
-		[Serialize("msdkItemId"      )] public uint msdkItemId_;
+		public uint Price;
+		public uint Amount;
+		public bool GoldenTicketPack;
+		public uint msdkItemId_;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Price));
-			SerializeField(s, nameof(Amount));
+			Price = s.Serialize<uint>(Price, name: "Price");
+			Amount = s.Serialize<uint>(Amount, name: "Amount");
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(GoldenTicketPack));
+				GoldenTicketPack = s.Serialize<bool>(GoldenTicketPack, name: "GoldenTicketPack");
 			}
-			SerializeField(s, nameof(msdkItemId_));
+			msdkItemId_ = s.Serialize<uint>(msdkItemId_, name: "msdkItemId_");
 		}
 		public override uint? ClassCRC => 0xACECEBCA;
 	}

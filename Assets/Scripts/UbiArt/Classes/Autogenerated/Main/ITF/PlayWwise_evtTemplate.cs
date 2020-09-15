@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlayWwise_evtTemplate : SequenceEventWithActor_Template {
-		[Serialize("WwiseEventGUID"         )] public StringID WwiseEventGUID;
-		[Serialize("WwiseMetronomeID"       )] public METRONOME_TYPE WwiseMetronomeID;
-		[Serialize("soundPlayAfterdestroy"  )] public bool soundPlayAfterdestroy;
-		[Serialize("WwisePlayAt"            )] public AUDIO_SYNC_PLAY WwisePlayAt;
-		[Serialize("WwisePlayAtCue"         )] public StringID WwisePlayAtCue;
-		[Serialize("PlayOutsideTheSeqEvent" )] public bool PlayOutsideTheSeqEvent;
-		[Serialize("PlayOnlyOnceBySequence" )] public bool PlayOnlyOnceBySequence;
-		[Serialize("SubtitlesLocalisationId")] public LocalisationId SubtitlesLocalisationId;
+		public StringID WwiseEventGUID;
+		public METRONOME_TYPE WwiseMetronomeID;
+		public bool soundPlayAfterdestroy;
+		public AUDIO_SYNC_PLAY WwisePlayAt;
+		public StringID WwisePlayAtCue;
+		public bool PlayOutsideTheSeqEvent;
+		public bool PlayOnlyOnceBySequence;
+		public LocalisationId SubtitlesLocalisationId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(WwiseEventGUID));
-			SerializeField(s, nameof(WwiseMetronomeID));
-			SerializeField(s, nameof(soundPlayAfterdestroy));
-			SerializeField(s, nameof(WwisePlayAt));
-			SerializeField(s, nameof(WwisePlayAtCue));
-			SerializeField(s, nameof(PlayOutsideTheSeqEvent));
-			SerializeField(s, nameof(PlayOnlyOnceBySequence));
-			SerializeField(s, nameof(SubtitlesLocalisationId));
+			WwiseEventGUID = s.SerializeObject<StringID>(WwiseEventGUID, name: "WwiseEventGUID");
+			WwiseMetronomeID = s.Serialize<METRONOME_TYPE>(WwiseMetronomeID, name: "WwiseMetronomeID");
+			soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");
+			WwisePlayAt = s.Serialize<AUDIO_SYNC_PLAY>(WwisePlayAt, name: "WwisePlayAt");
+			WwisePlayAtCue = s.SerializeObject<StringID>(WwisePlayAtCue, name: "WwisePlayAtCue");
+			PlayOutsideTheSeqEvent = s.Serialize<bool>(PlayOutsideTheSeqEvent, name: "PlayOutsideTheSeqEvent");
+			PlayOnlyOnceBySequence = s.Serialize<bool>(PlayOnlyOnceBySequence, name: "PlayOnlyOnceBySequence");
+			SubtitlesLocalisationId = s.SerializeObject<LocalisationId>(SubtitlesLocalisationId, name: "SubtitlesLocalisationId");
 		}
 		public enum METRONOME_TYPE {
 			[Serialize("METRONOME_TYPE_DEFAULT" )] DEFAULT = 0,

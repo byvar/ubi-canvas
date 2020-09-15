@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AISleepBehavior_Template : TemplateAIBehavior {
-		[Serialize("idle"             )] public Generic<AIAction_Template> idle;
-		[Serialize("wakeUp"           )] public Generic<AIAction_Template> wakeUp;
-		[Serialize("deactivatePhysics")] public bool deactivatePhysics;
-		[Serialize("wakeUpOnTrigger"  )] public bool wakeUpOnTrigger;
+		public Generic<AIAction_Template> idle;
+		public Generic<AIAction_Template> wakeUp;
+		public bool deactivatePhysics;
+		public bool wakeUpOnTrigger;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idle));
-			SerializeField(s, nameof(wakeUp));
-			SerializeField(s, nameof(deactivatePhysics));
-			SerializeField(s, nameof(wakeUpOnTrigger));
+			idle = s.SerializeObject<Generic<AIAction_Template>>(idle, name: "idle");
+			wakeUp = s.SerializeObject<Generic<AIAction_Template>>(wakeUp, name: "wakeUp");
+			deactivatePhysics = s.Serialize<bool>(deactivatePhysics, name: "deactivatePhysics");
+			wakeUpOnTrigger = s.Serialize<bool>(wakeUpOnTrigger, name: "wakeUpOnTrigger");
 		}
 		public override uint? ClassCRC => 0xD6B8A43F;
 	}

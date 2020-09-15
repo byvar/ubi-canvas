@@ -3,45 +3,45 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class EventPlayMusic : Event {
-		[Serialize("metronomeType")] public uint metronomeType;
-		[Serialize("nodeName"     )] public StringID nodeName;
-		[Serialize("fadeTime"     )] public float fadeTime;
-		[Serialize("volume"       )] public Volume volume;
-		[Serialize("playOnNext"   )] public uint playOnNext;
-		[Serialize("stopAndPlay"  )] public int stopAndPlay;
-		[Serialize("name"         )] public StringID name;
-		[Serialize("fadeInTime"   )] public float fadeInTime;
-		[Serialize("fadeOutTime"  )] public float fadeOutTime;
-		[Serialize("offsetTime"   )] public float offsetTime;
-		[Serialize("delay"        )] public float delay;
-		[Serialize("eventDelay"   )] public float eventDelay;
-		[Serialize("priority"     )] public uint priority;
-		[Serialize("setPriority"  )] public uint setPriority;
-		[Serialize("bus"          )] public StringID bus;
+		public uint metronomeType;
+		public StringID nodeName;
+		public float fadeTime;
+		public Volume volume;
+		public uint playOnNext;
+		public int stopAndPlay;
+		public StringID name;
+		public float fadeInTime;
+		public float fadeOutTime;
+		public float offsetTime;
+		public float delay;
+		public float eventDelay;
+		public uint priority;
+		public uint setPriority;
+		public StringID bus;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(metronomeType));
-				SerializeField(s, nameof(nodeName));
-				SerializeField(s, nameof(fadeTime));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(playOnNext));
-				SerializeField(s, nameof(stopAndPlay));
+				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
+				nodeName = s.SerializeObject<StringID>(nodeName, name: "nodeName");
+				fadeTime = s.Serialize<float>(fadeTime, name: "fadeTime");
+				volume = s.SerializeObject<Volume>(volume, name: "volume");
+				playOnNext = s.Serialize<uint>(playOnNext, name: "playOnNext");
+				stopAndPlay = s.Serialize<int>(stopAndPlay, name: "stopAndPlay");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(metronomeType));
-				SerializeField(s, nameof(nodeName));
-				SerializeField(s, nameof(fadeInTime));
-				SerializeField(s, nameof(fadeOutTime));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(playOnNext));
-				SerializeField(s, nameof(stopAndPlay));
-				SerializeField(s, nameof(offsetTime));
-				SerializeField(s, nameof(bus));
-				SerializeField(s, nameof(delay));
-				SerializeField(s, nameof(eventDelay));
-				SerializeField(s, nameof(priority));
-				SerializeField(s, nameof(setPriority));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
+				nodeName = s.SerializeObject<StringID>(nodeName, name: "nodeName");
+				fadeInTime = s.Serialize<float>(fadeInTime, name: "fadeInTime");
+				fadeOutTime = s.Serialize<float>(fadeOutTime, name: "fadeOutTime");
+				volume = s.SerializeObject<Volume>(volume, name: "volume");
+				playOnNext = s.Serialize<uint>(playOnNext, name: "playOnNext");
+				stopAndPlay = s.Serialize<int>(stopAndPlay, name: "stopAndPlay");
+				offsetTime = s.Serialize<float>(offsetTime, name: "offsetTime");
+				bus = s.SerializeObject<StringID>(bus, name: "bus");
+				delay = s.Serialize<float>(delay, name: "delay");
+				eventDelay = s.Serialize<float>(eventDelay, name: "eventDelay");
+				priority = s.Serialize<uint>(priority, name: "priority");
+				setPriority = s.Serialize<uint>(setPriority, name: "setPriority");
 			} else {
 			}
 		}

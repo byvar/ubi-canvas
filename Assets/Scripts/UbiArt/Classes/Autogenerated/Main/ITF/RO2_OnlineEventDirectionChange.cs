@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_OnlineEventDirectionChange : Event {
-		[Serialize("speed"         )] public Vec2d speed;
-		[Serialize("position"      )] public Vec2d position;
-		[Serialize("bounceX"       )] public float bounceX;
-		[Serialize("bounceY"       )] public float bounceY;
-		[Serialize("reasonType"    )] public uint reasonType;
-		[Serialize("reasonID"      )] public uint reasonID;
-		[Serialize("playerOnlineID")] public uint playerOnlineID;
+		public Vec2d speed;
+		public Vec2d position;
+		public float bounceX;
+		public float bounceY;
+		public uint reasonType;
+		public uint reasonID;
+		public uint playerOnlineID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(speed));
-			SerializeField(s, nameof(position));
-			SerializeField(s, nameof(bounceX));
-			SerializeField(s, nameof(bounceY));
-			SerializeField(s, nameof(reasonType));
-			SerializeField(s, nameof(reasonID));
-			SerializeField(s, nameof(playerOnlineID));
+			speed = s.SerializeObject<Vec2d>(speed, name: "speed");
+			position = s.SerializeObject<Vec2d>(position, name: "position");
+			bounceX = s.Serialize<float>(bounceX, name: "bounceX");
+			bounceY = s.Serialize<float>(bounceY, name: "bounceY");
+			reasonType = s.Serialize<uint>(reasonType, name: "reasonType");
+			reasonID = s.Serialize<uint>(reasonID, name: "reasonID");
+			playerOnlineID = s.Serialize<uint>(playerOnlineID, name: "playerOnlineID");
 		}
 		public override uint? ClassCRC => 0x684F2577;
 	}

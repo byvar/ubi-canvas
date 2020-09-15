@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DispenserComponent : ActorComponent {
-		[Serialize("goodsRemaining")] public uint goodsRemaining;
-		[Serialize("state"         )] public Enum_state state;
+		public uint goodsRemaining;
+		public Enum_state state;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(goodsRemaining));
-				SerializeField(s, nameof(state));
+				goodsRemaining = s.Serialize<uint>(goodsRemaining, name: "goodsRemaining");
+				state = s.Serialize<Enum_state>(state, name: "state");
 			}
 		}
 		public enum Enum_state {

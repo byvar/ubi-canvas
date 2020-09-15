@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_DarktoonTrapAIComponent_Template : Ray_AIComponent_Template {
-		[Serialize("holePath"          )] public Path holePath;
-		[Serialize("holeOffset"        )] public Vec3d holeOffset;
-		[Serialize("trapBehavior"      )] public Placeholder trapBehavior;
-		[Serialize("receiveHitBehavior")] public Placeholder receiveHitBehavior;
-		[Serialize("deathBehavior"     )] public Placeholder deathBehavior;
+		public Path holePath;
+		public Vec3d holeOffset;
+		public Placeholder trapBehavior;
+		public Placeholder receiveHitBehavior;
+		public Placeholder deathBehavior;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(holePath));
-			SerializeField(s, nameof(holeOffset));
-			SerializeField(s, nameof(trapBehavior));
-			SerializeField(s, nameof(receiveHitBehavior));
-			SerializeField(s, nameof(deathBehavior));
+			holePath = s.SerializeObject<Path>(holePath, name: "holePath");
+			holeOffset = s.SerializeObject<Vec3d>(holeOffset, name: "holeOffset");
+			trapBehavior = s.SerializeObject<Placeholder>(trapBehavior, name: "trapBehavior");
+			receiveHitBehavior = s.SerializeObject<Placeholder>(receiveHitBehavior, name: "receiveHitBehavior");
+			deathBehavior = s.SerializeObject<Placeholder>(deathBehavior, name: "deathBehavior");
 		}
 		public override uint? ClassCRC => 0xD72D2A85;
 	}

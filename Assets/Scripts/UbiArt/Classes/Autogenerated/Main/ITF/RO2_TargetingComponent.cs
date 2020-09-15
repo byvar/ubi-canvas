@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TargetingComponent : ActorComponent {
-		[Serialize("targetOffset")] public float targetOffset;
-		[Serialize("eventSender" )] public EventSender eventSender;
+		public float targetOffset;
+		public EventSender eventSender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(targetOffset));
-			SerializeField(s, nameof(eventSender));
+			targetOffset = s.Serialize<float>(targetOffset, name: "targetOffset");
+			eventSender = s.SerializeObject<EventSender>(eventSender, name: "eventSender");
 		}
 		public override uint? ClassCRC => 0xC376AAB9;
 	}

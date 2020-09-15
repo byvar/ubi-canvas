@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PersistentGameData_UniverseTracking : CSerializable {
-		[Serialize("timers"    )] public CArray<float> timers;
-		[Serialize("pafCounter")] public CArray<uint> pafCounter;
+		public CArray<float> timers;
+		public CArray<uint> pafCounter;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(timers));
-			SerializeField(s, nameof(pafCounter));
+			timers = s.SerializeObject<CArray<float>>(timers, name: "timers");
+			pafCounter = s.SerializeObject<CArray<uint>>(pafCounter, name: "pafCounter");
 		}
 	}
 }

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class ActorAttachedToBoneComponent_Template : ActorComponent_Template {
-		[Serialize("boneName"    )] public StringID boneName;
-		[Serialize("useBoneScale")] public bool useBoneScale;
-		[Serialize("useBoneAngle")] public bool useBoneAngle;
+		public StringID boneName;
+		public bool useBoneScale;
+		public bool useBoneAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(boneName));
-			SerializeField(s, nameof(useBoneScale));
-			SerializeField(s, nameof(useBoneAngle));
+			boneName = s.SerializeObject<StringID>(boneName, name: "boneName");
+			useBoneScale = s.Serialize<bool>(useBoneScale, name: "useBoneScale");
+			useBoneAngle = s.Serialize<bool>(useBoneAngle, name: "useBoneAngle");
 		}
 		public override uint? ClassCRC => 0xD24BD29A;
 	}

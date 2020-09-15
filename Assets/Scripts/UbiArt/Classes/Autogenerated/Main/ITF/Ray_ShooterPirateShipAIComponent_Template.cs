@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_ShooterPirateShipAIComponent_Template : Ray_MultiPiecesActorAIComponent_Template {
-		[Serialize("bounceBallonInput"     )] public StringID bounceBallonInput;
-		[Serialize("useDynamicFog"         )] public int useDynamicFog;
-		[Serialize("dynamicFogDefaultColor")] public Vec3d dynamicFogDefaultColor;
-		[Serialize("dynamicFogMaxDepth"    )] public float dynamicFogMaxDepth;
+		public StringID bounceBallonInput;
+		public int useDynamicFog;
+		public Vec3d dynamicFogDefaultColor;
+		public float dynamicFogMaxDepth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bounceBallonInput));
-			SerializeField(s, nameof(useDynamicFog));
-			SerializeField(s, nameof(dynamicFogDefaultColor));
-			SerializeField(s, nameof(dynamicFogMaxDepth));
+			bounceBallonInput = s.SerializeObject<StringID>(bounceBallonInput, name: "bounceBallonInput");
+			useDynamicFog = s.Serialize<int>(useDynamicFog, name: "useDynamicFog");
+			dynamicFogDefaultColor = s.SerializeObject<Vec3d>(dynamicFogDefaultColor, name: "dynamicFogDefaultColor");
+			dynamicFogMaxDepth = s.Serialize<float>(dynamicFogMaxDepth, name: "dynamicFogMaxDepth");
 		}
 		public override uint? ClassCRC => 0xF11D2A7D;
 	}

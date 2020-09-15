@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
 	public partial class EventSetText : Event {
-		[Serialize("text"      )] public SmartLocId text;
-		[Serialize("smartLocId")] public Placeholder smartLocId;
-		[Serialize("styleIndex")] public uint styleIndex;
+		public SmartLocId text;
+		public Placeholder smartLocId;
+		public uint styleIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(smartLocId));
-				SerializeField(s, nameof(styleIndex));
+				smartLocId = s.SerializeObject<Placeholder>(smartLocId, name: "smartLocId");
+				styleIndex = s.Serialize<uint>(styleIndex, name: "styleIndex");
 			} else {
-				SerializeField(s, nameof(text));
+				text = s.SerializeObject<SmartLocId>(text, name: "text");
 			}
 		}
 		public override uint? ClassCRC => 0xC474850E;

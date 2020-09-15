@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class BlendTreeNodeBlendBranches_Template<T> : BlendTreeNodeBlend_Template<T> {
-		[Serialize("blendParams"                )] public CList<BlendLeaf> blendParams;
-		[Serialize("blendInput"                 )] public StringID blendInput;
-		[Serialize("blendInputInterpolation"    )] public float blendInputInterpolation;
-		[Serialize("blendInputInterpoStartValue")] public float blendInputInterpoStartValue;
+		public CList<BlendLeaf> blendParams;
+		public StringID blendInput;
+		public float blendInputInterpolation;
+		public float blendInputInterpoStartValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(blendParams));
-			SerializeField(s, nameof(blendInput));
+			blendParams = s.SerializeObject<CList<BlendLeaf>>(blendParams, name: "blendParams");
+			blendInput = s.SerializeObject<StringID>(blendInput, name: "blendInput");
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(blendInputInterpolation));
-				SerializeField(s, nameof(blendInputInterpoStartValue));
+				blendInputInterpolation = s.Serialize<float>(blendInputInterpolation, name: "blendInputInterpolation");
+				blendInputInterpoStartValue = s.Serialize<float>(blendInputInterpoStartValue, name: "blendInputInterpoStartValue");
 			}
 		}
 		public override uint? ClassCRC => 0xC1143887;
 
 		[Games(GameFlags.All)]
 		public partial class BlendLeaf : CSerializable {
-			[Serialize("blendParam")] public float blendParam;
+			public float blendParam;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(blendParam));
+				blendParam = s.Serialize<float>(blendParam, name: "blendParam");
 			}
 		}
 	}

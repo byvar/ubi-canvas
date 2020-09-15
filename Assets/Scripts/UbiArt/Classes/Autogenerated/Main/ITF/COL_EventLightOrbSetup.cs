@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_EventLightOrbSetup : Event {
-		[Serialize("type"    )] public Enum_type type;
-		[Serialize("orbCount")] public float orbCount;
-		[Serialize("picked"  )] public int picked;
+		public Enum_type type;
+		public float orbCount;
+		public int picked;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(orbCount));
-			SerializeField(s, nameof(picked));
+			type = s.Serialize<Enum_type>(type, name: "type");
+			orbCount = s.Serialize<float>(orbCount, name: "orbCount");
+			picked = s.Serialize<int>(picked, name: "picked");
 		}
 		public enum Enum_type {
 			[Serialize("Value_0")] Value_0 = 0,

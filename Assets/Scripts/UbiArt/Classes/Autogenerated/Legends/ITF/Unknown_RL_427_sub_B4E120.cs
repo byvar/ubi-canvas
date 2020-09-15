@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_427_sub_B4E120 : ActorComponent {
-		[Serialize("CheckFirePatch"   )] public int CheckFirePatch;
-		[Serialize("SuffocateTimer"   )] public float SuffocateTimer;
-		[Serialize("DefaultFlameSize" )] public float DefaultFlameSize;
-		[Serialize("LastSpitFireAngle")] public float LastSpitFireAngle;
-		[Serialize("StartingState"    )] public Enum_StartingState StartingState;
+		public int CheckFirePatch;
+		public float SuffocateTimer;
+		public float DefaultFlameSize;
+		public float LastSpitFireAngle;
+		public Enum_StartingState StartingState;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(CheckFirePatch));
-				SerializeField(s, nameof(SuffocateTimer));
-				SerializeField(s, nameof(DefaultFlameSize));
-				SerializeField(s, nameof(LastSpitFireAngle));
-				SerializeField(s, nameof(StartingState));
+				CheckFirePatch = s.Serialize<int>(CheckFirePatch, name: "CheckFirePatch");
+				SuffocateTimer = s.Serialize<float>(SuffocateTimer, name: "SuffocateTimer");
+				DefaultFlameSize = s.Serialize<float>(DefaultFlameSize, name: "DefaultFlameSize");
+				LastSpitFireAngle = s.Serialize<float>(LastSpitFireAngle, name: "LastSpitFireAngle");
+				StartingState = s.Serialize<Enum_StartingState>(StartingState, name: "StartingState");
 			}
 		}
 		public enum Enum_StartingState {

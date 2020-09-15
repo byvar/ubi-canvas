@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_PlayerCostumeComponent_Template : ActorComponent_Template {
-		[Serialize("newIconPath"  )] public Path newIconPath;
-		[Serialize("newIconOffset")] public Vec3d newIconOffset;
-		[Serialize("playerIDInfo" )] public StringID playerIDInfo;
-		[Serialize("animLocked"   )] public StringID animLocked;
-		[Serialize("animShown"    )] public StringID animShown;
-		[Serialize("animAvailable")] public StringID animAvailable;
-		[Serialize("animUsed"     )] public StringID animUsed;
-		[Serialize("fx"           )] public Path fx;
-		[Serialize("shape"        )] public Generic<PhysShape> shape;
-		[Serialize("shapeOffset"  )] public Vec2d shapeOffset;
+		public Path newIconPath;
+		public Vec3d newIconOffset;
+		public StringID playerIDInfo;
+		public StringID animLocked;
+		public StringID animShown;
+		public StringID animAvailable;
+		public StringID animUsed;
+		public Path fx;
+		public Generic<PhysShape> shape;
+		public Vec2d shapeOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(newIconPath));
-			SerializeField(s, nameof(newIconOffset));
-			SerializeField(s, nameof(playerIDInfo));
-			SerializeField(s, nameof(animLocked));
-			SerializeField(s, nameof(animShown));
-			SerializeField(s, nameof(animAvailable));
-			SerializeField(s, nameof(animUsed));
-			SerializeField(s, nameof(fx));
-			SerializeField(s, nameof(shape));
-			SerializeField(s, nameof(shapeOffset));
+			newIconPath = s.SerializeObject<Path>(newIconPath, name: "newIconPath");
+			newIconOffset = s.SerializeObject<Vec3d>(newIconOffset, name: "newIconOffset");
+			playerIDInfo = s.SerializeObject<StringID>(playerIDInfo, name: "playerIDInfo");
+			animLocked = s.SerializeObject<StringID>(animLocked, name: "animLocked");
+			animShown = s.SerializeObject<StringID>(animShown, name: "animShown");
+			animAvailable = s.SerializeObject<StringID>(animAvailable, name: "animAvailable");
+			animUsed = s.SerializeObject<StringID>(animUsed, name: "animUsed");
+			fx = s.SerializeObject<Path>(fx, name: "fx");
+			shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+			shapeOffset = s.SerializeObject<Vec2d>(shapeOffset, name: "shapeOffset");
 		}
 		public override uint? ClassCRC => 0x311111BB;
 	}

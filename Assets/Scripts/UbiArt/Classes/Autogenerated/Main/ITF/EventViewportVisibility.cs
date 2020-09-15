@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventViewportVisibility : Event {
-		[Serialize("ViewportVisibility")] public uint ViewportVisibility;
+		public uint ViewportVisibility;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ViewportVisibility));
+			ViewportVisibility = s.Serialize<uint>(ViewportVisibility, name: "ViewportVisibility");
 		}
 		public override uint? ClassCRC => 0x6CBBD40F;
 	}

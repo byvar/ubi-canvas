@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_LightOrbSpawnerComponent : CSerializable {
-		[Serialize("orbCount"     )] public uint orbCount;
-		[Serialize("healthOrbsMin")] public float healthOrbsMin;
-		[Serialize("healthOrbsMax")] public float healthOrbsMax;
-		[Serialize("manaOrbsMin"  )] public float manaOrbsMin;
-		[Serialize("manaOrbsMax"  )] public float manaOrbsMax;
+		public uint orbCount;
+		public float healthOrbsMin;
+		public float healthOrbsMax;
+		public float manaOrbsMin;
+		public float manaOrbsMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(orbCount));
-				SerializeField(s, nameof(healthOrbsMin));
-				SerializeField(s, nameof(healthOrbsMax));
-				SerializeField(s, nameof(manaOrbsMin));
-				SerializeField(s, nameof(manaOrbsMax));
+				orbCount = s.Serialize<uint>(orbCount, name: "orbCount");
+				healthOrbsMin = s.Serialize<float>(healthOrbsMin, name: "healthOrbsMin");
+				healthOrbsMax = s.Serialize<float>(healthOrbsMax, name: "healthOrbsMax");
+				manaOrbsMin = s.Serialize<float>(manaOrbsMin, name: "manaOrbsMin");
+				manaOrbsMax = s.Serialize<float>(manaOrbsMax, name: "manaOrbsMax");
 			}
 		}
 		public override uint? ClassCRC => 0x5D240124;

@@ -3,124 +3,124 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TriggerComponent : ActorComponent {
-		[Serialize("mode"                        )] public Mode mode;
-		[Serialize("triggerOnceDone"             )] public bool triggerOnceDone;
-		[Serialize("countdown"                   )] public float countdown;
-		[Serialize("DBG_DrawCountdown"           )] public bool DBG_DrawCountdown;
-		[Serialize("AutoActivation"              )] public bool AutoActivation;
-		[Serialize("NoConditionEvent"            )] public Generic<Event> NoConditionEvent;
-		[Serialize("onEnterMoreEvent"            )] public CList<Event> onEnterMoreEvent;
-		[Serialize("onExitMoreEvent"             )] public CList<Event> onExitMoreEvent;
-		[Serialize("moreEventSendBroadcast"      )] public bool moreEventSendBroadcast;
-		[Serialize("moreEventSendGameManager"    )] public bool moreEventSendGameManager;
-		[Serialize("activatedOnGo"               )] public bool activatedOnGo;
-		[Serialize("specificTutoShieldDialog"    )] public bool specificTutoShieldDialog;
-		[Serialize("disableIfMapAlreadyCompleted")] public bool disableIfMapAlreadyCompleted;
-		[Serialize("triggerActivator"            )] public bool triggerActivator;
-		[Serialize("retriggerOnCheckpoint"       )] public int retriggerOnCheckpoint;
-		[Serialize("activator"                   )] public uint activator;
+		public Mode mode;
+		public bool triggerOnceDone;
+		public float countdown;
+		public bool DBG_DrawCountdown;
+		public bool AutoActivation;
+		public Generic<Event> NoConditionEvent;
+		public CList<Event> onEnterMoreEvent;
+		public CList<Event> onExitMoreEvent;
+		public bool moreEventSendBroadcast;
+		public bool moreEventSendGameManager;
+		public bool activatedOnGo;
+		public bool specificTutoShieldDialog;
+		public bool disableIfMapAlreadyCompleted;
+		public bool triggerActivator;
+		public int retriggerOnCheckpoint;
+		public uint activator;
 
-		[Serialize("onEnterEvent"                )] public Generic<Event> onEnterEvent;
-		[Serialize("onExitEvent"                 )] public Generic<Event> onExitEvent;
-		[Serialize("resetOnExit"                 )] public bool resetOnExit;
-		[Serialize("triggerEachActor"            )] public bool triggerEachActor;
-		[Serialize("triggerAllActors"            )] public bool triggerAllActors;
-		[Serialize("sendEventEveryFrame"         )] public bool sendEventEveryFrame;
-		[Serialize("triggerOnDetector"           )] public bool triggerOnDetector;
-		[Serialize("triggerOnHit"                )] public bool triggerOnHit;
-		[Serialize("triggerOnCrush"              )] public bool triggerOnCrush;
-		[Serialize("triggerable"                 )] public bool triggerable;
-		[Serialize("triggerSelf"                 )] public bool triggerSelf;
-		[Serialize("triggerChildren"             )] public bool triggerChildren;
-		[Serialize("triggerBoundChildren"        )] public bool triggerBoundChildren;
-		[Serialize("triggerParent"               )] public bool triggerParent;
-		[Serialize("triggerGameManager"          )] public bool triggerGameManager;
-		[Serialize("triggerBroadcast"            )] public bool triggerBroadcast;
-		[Serialize("triggerExitOnBecomeInactive" )] public bool triggerExitOnBecomeInactive;
-		[Serialize("version"                     )] public uint version;
+		public Generic<Event> onEnterEvent;
+		public Generic<Event> onExitEvent;
+		public bool resetOnExit;
+		public bool triggerEachActor;
+		public bool triggerAllActors;
+		public bool sendEventEveryFrame;
+		public bool triggerOnDetector;
+		public bool triggerOnHit;
+		public bool triggerOnCrush;
+		public bool triggerable;
+		public bool triggerSelf;
+		public bool triggerChildren;
+		public bool triggerBoundChildren;
+		public bool triggerParent;
+		public bool triggerGameManager;
+		public bool triggerBroadcast;
+		public bool triggerExitOnBecomeInactive;
+		public uint version;
 		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(retriggerOnCheckpoint));
+					retriggerOnCheckpoint = s.Serialize<int>(retriggerOnCheckpoint, name: "retriggerOnCheckpoint");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(triggerOnceDone));
-					SerializeField(s, nameof(activator));
+					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
+					activator = s.Serialize<uint>(activator, name: "activator");
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(mode));
+					mode = s.Serialize<Mode>(mode, name: "mode");
 				}
 				if (Settings.s.isCatchThemAll) {
 					SerializeField(s, nameof(triggerOnceDone), typeof(byte));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(triggerOnceDone));
-					SerializeField(s, nameof(activator));
+					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
+					activator = s.Serialize<uint>(activator, name: "activator");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(mode));
-					SerializeField(s, nameof(onEnterEvent));
-					SerializeField(s, nameof(onExitEvent));
-					SerializeField(s, nameof(resetOnExit), boolAsByte: true);
-					SerializeField(s, nameof(triggerEachActor), boolAsByte: true);
-					SerializeField(s, nameof(triggerAllActors), boolAsByte: true);
-					SerializeField(s, nameof(sendEventEveryFrame), boolAsByte: true);
-					SerializeField(s, nameof(triggerOnDetector), boolAsByte: true);
-					SerializeField(s, nameof(triggerOnHit), boolAsByte: true);
-					SerializeField(s, nameof(triggerOnCrush), boolAsByte: true);
-					SerializeField(s, nameof(triggerable), boolAsByte: true);
-					SerializeField(s, nameof(triggerSelf), boolAsByte: true);
-					SerializeField(s, nameof(triggerChildren), boolAsByte: true);
-					SerializeField(s, nameof(triggerBoundChildren), boolAsByte: true);
-					SerializeField(s, nameof(triggerParent), boolAsByte: true);
-					SerializeField(s, nameof(triggerActivator), boolAsByte: true);
-					SerializeField(s, nameof(triggerGameManager), boolAsByte: true);
-					SerializeField(s, nameof(triggerBroadcast), boolAsByte: true);
-					SerializeField(s, nameof(triggerExitOnBecomeInactive), boolAsByte: true);
+					mode = s.Serialize<Mode>(mode, name: "mode");
+					onEnterEvent = s.SerializeObject<Generic<Event>>(onEnterEvent, name: "onEnterEvent");
+					onExitEvent = s.SerializeObject<Generic<Event>>(onExitEvent, name: "onExitEvent");
+					resetOnExit = s.Serialize<bool>(resetOnExit, name: "resetOnExit", options: CSerializerObject.Options.BoolAsByte);
+					triggerEachActor = s.Serialize<bool>(triggerEachActor, name: "triggerEachActor", options: CSerializerObject.Options.BoolAsByte);
+					triggerAllActors = s.Serialize<bool>(triggerAllActors, name: "triggerAllActors", options: CSerializerObject.Options.BoolAsByte);
+					sendEventEveryFrame = s.Serialize<bool>(sendEventEveryFrame, name: "sendEventEveryFrame", options: CSerializerObject.Options.BoolAsByte);
+					triggerOnDetector = s.Serialize<bool>(triggerOnDetector, name: "triggerOnDetector", options: CSerializerObject.Options.BoolAsByte);
+					triggerOnHit = s.Serialize<bool>(triggerOnHit, name: "triggerOnHit", options: CSerializerObject.Options.BoolAsByte);
+					triggerOnCrush = s.Serialize<bool>(triggerOnCrush, name: "triggerOnCrush", options: CSerializerObject.Options.BoolAsByte);
+					triggerable = s.Serialize<bool>(triggerable, name: "triggerable", options: CSerializerObject.Options.BoolAsByte);
+					triggerSelf = s.Serialize<bool>(triggerSelf, name: "triggerSelf", options: CSerializerObject.Options.BoolAsByte);
+					triggerChildren = s.Serialize<bool>(triggerChildren, name: "triggerChildren", options: CSerializerObject.Options.BoolAsByte);
+					triggerBoundChildren = s.Serialize<bool>(triggerBoundChildren, name: "triggerBoundChildren", options: CSerializerObject.Options.BoolAsByte);
+					triggerParent = s.Serialize<bool>(triggerParent, name: "triggerParent", options: CSerializerObject.Options.BoolAsByte);
+					triggerActivator = s.Serialize<bool>(triggerActivator, name: "triggerActivator", options: CSerializerObject.Options.BoolAsByte);
+					triggerGameManager = s.Serialize<bool>(triggerGameManager, name: "triggerGameManager", options: CSerializerObject.Options.BoolAsByte);
+					triggerBroadcast = s.Serialize<bool>(triggerBroadcast, name: "triggerBroadcast", options: CSerializerObject.Options.BoolAsByte);
+					triggerExitOnBecomeInactive = s.Serialize<bool>(triggerExitOnBecomeInactive, name: "triggerExitOnBecomeInactive", options: CSerializerObject.Options.BoolAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(version));
+					version = s.Serialize<uint>(version, name: "version");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(triggerOnceDone), boolAsByte: true);
-					SerializeField(s, nameof(activator));
+					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone", options: CSerializerObject.Options.BoolAsByte);
+					activator = s.Serialize<uint>(activator, name: "activator");
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(mode));
+					mode = s.Serialize<Mode>(mode, name: "mode");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(triggerOnceDone));
-					SerializeField(s, nameof(activator));
+					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
+					activator = s.Serialize<uint>(activator, name: "activator");
 				}
-				SerializeField(s, nameof(countdown));
-				SerializeField(s, nameof(DBG_DrawCountdown));
-				SerializeField(s, nameof(AutoActivation));
-				SerializeField(s, nameof(NoConditionEvent));
+				countdown = s.Serialize<float>(countdown, name: "countdown");
+				DBG_DrawCountdown = s.Serialize<bool>(DBG_DrawCountdown, name: "DBG_DrawCountdown");
+				AutoActivation = s.Serialize<bool>(AutoActivation, name: "AutoActivation");
+				NoConditionEvent = s.SerializeObject<Generic<Event>>(NoConditionEvent, name: "NoConditionEvent");
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(mode));
+					mode = s.Serialize<Mode>(mode, name: "mode");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(triggerOnceDone));
-					SerializeField(s, nameof(activator));
+					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
+					activator = s.Serialize<uint>(activator, name: "activator");
 				}
-				SerializeField(s, nameof(countdown));
-				SerializeField(s, nameof(DBG_DrawCountdown));
-				SerializeField(s, nameof(AutoActivation));
-				SerializeField(s, nameof(NoConditionEvent));
-				SerializeField(s, nameof(onEnterMoreEvent));
-				SerializeField(s, nameof(onExitMoreEvent));
-				SerializeField(s, nameof(moreEventSendBroadcast));
-				SerializeField(s, nameof(moreEventSendGameManager));
-				SerializeField(s, nameof(activatedOnGo));
-				SerializeField(s, nameof(specificTutoShieldDialog));
-				SerializeField(s, nameof(disableIfMapAlreadyCompleted));
-				SerializeField(s, nameof(triggerActivator));
+				countdown = s.Serialize<float>(countdown, name: "countdown");
+				DBG_DrawCountdown = s.Serialize<bool>(DBG_DrawCountdown, name: "DBG_DrawCountdown");
+				AutoActivation = s.Serialize<bool>(AutoActivation, name: "AutoActivation");
+				NoConditionEvent = s.SerializeObject<Generic<Event>>(NoConditionEvent, name: "NoConditionEvent");
+				onEnterMoreEvent = s.SerializeObject<CList<Event>>(onEnterMoreEvent, name: "onEnterMoreEvent");
+				onExitMoreEvent = s.SerializeObject<CList<Event>>(onExitMoreEvent, name: "onExitMoreEvent");
+				moreEventSendBroadcast = s.Serialize<bool>(moreEventSendBroadcast, name: "moreEventSendBroadcast");
+				moreEventSendGameManager = s.Serialize<bool>(moreEventSendGameManager, name: "moreEventSendGameManager");
+				activatedOnGo = s.Serialize<bool>(activatedOnGo, name: "activatedOnGo");
+				specificTutoShieldDialog = s.Serialize<bool>(specificTutoShieldDialog, name: "specificTutoShieldDialog");
+				disableIfMapAlreadyCompleted = s.Serialize<bool>(disableIfMapAlreadyCompleted, name: "disableIfMapAlreadyCompleted");
+				triggerActivator = s.Serialize<bool>(triggerActivator, name: "triggerActivator");
 			}
 		}
 		public enum Mode {

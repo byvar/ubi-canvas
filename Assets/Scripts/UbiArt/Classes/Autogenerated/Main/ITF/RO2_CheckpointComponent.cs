@@ -5,17 +5,17 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CheckpointComponent : CheckpointComponent {
-		[Serialize("PrimaryPowerUp"             )] public StringID PrimaryPowerUp;
-		[Serialize("SecondaryPowerUp"           )] public StringID SecondaryPowerUp;
-		[Serialize("mapPowerup"                 )] public StringID mapPowerup;
-		[Serialize("slideMode"                  )] public bool slideMode;
-		[Serialize("creatureId"                 )] public StringID creatureId;
-		[Serialize("powerupSelectionActive"     )] public bool powerupSelectionActive;
-		[Serialize("forceFirstMission"          )] public bool forceFirstMission;
-		[Serialize("missionsId"                 )] public CList<StringID> missionsId;
-		[Serialize("bOverrideCharPrimitive"     )] public bool bOverrideCharPrimitive;
-		[Serialize("overrideCharPrimitiveParams")] public GFXPrimitiveParam overrideCharPrimitiveParams;
-		[Serialize("refractionDepthOffset"      )] public float refractionDepthOffset;
+		public StringID PrimaryPowerUp;
+		public StringID SecondaryPowerUp;
+		public StringID mapPowerup;
+		public bool slideMode;
+		public StringID creatureId;
+		public bool powerupSelectionActive;
+		public bool forceFirstMission;
+		public CList<StringID> missionsId;
+		public bool bOverrideCharPrimitive;
+		public GFXPrimitiveParam overrideCharPrimitiveParams;
+		public float refractionDepthOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -25,18 +25,18 @@ namespace UbiArt.ITF {
 					SerializeFieldAsChoiceList(s, nameof(SecondaryPowerUp), choices: PowerUpList);
 					SerializeFieldAsChoiceList(s, nameof(mapPowerup), choices: PowerUpList);
 				} else {
-					SerializeField(s, nameof(PrimaryPowerUp));
-					SerializeField(s, nameof(SecondaryPowerUp));
-					SerializeField(s, nameof(mapPowerup));
+					PrimaryPowerUp = s.SerializeObject<StringID>(PrimaryPowerUp, name: "PrimaryPowerUp");
+					SecondaryPowerUp = s.SerializeObject<StringID>(SecondaryPowerUp, name: "SecondaryPowerUp");
+					mapPowerup = s.SerializeObject<StringID>(mapPowerup, name: "mapPowerup");
 				}
-				SerializeField(s, nameof(slideMode));
-				SerializeField(s, nameof(creatureId));
-				SerializeField(s, nameof(powerupSelectionActive));
-				SerializeField(s, nameof(forceFirstMission));
-				SerializeField(s, nameof(missionsId));
-				SerializeField(s, nameof(bOverrideCharPrimitive));
-				SerializeField(s, nameof(overrideCharPrimitiveParams));
-				SerializeField(s, nameof(refractionDepthOffset));
+				slideMode = s.Serialize<bool>(slideMode, name: "slideMode");
+				creatureId = s.SerializeObject<StringID>(creatureId, name: "creatureId");
+				powerupSelectionActive = s.Serialize<bool>(powerupSelectionActive, name: "powerupSelectionActive");
+				forceFirstMission = s.Serialize<bool>(forceFirstMission, name: "forceFirstMission");
+				missionsId = s.SerializeObject<CList<StringID>>(missionsId, name: "missionsId");
+				bOverrideCharPrimitive = s.Serialize<bool>(bOverrideCharPrimitive, name: "bOverrideCharPrimitive");
+				overrideCharPrimitiveParams = s.SerializeObject<GFXPrimitiveParam>(overrideCharPrimitiveParams, name: "overrideCharPrimitiveParams");
+				refractionDepthOffset = s.Serialize<float>(refractionDepthOffset, name: "refractionDepthOffset");
 			}
 		}
 		public enum Enum_PrimaryPowerUp {

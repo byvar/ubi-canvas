@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIShooterEjectedBehavior_Template : TemplateAIBehavior {
-		[Serialize("ejectAction"             )] public Generic<AIAction_Template> ejectAction;
-		[Serialize("destroyOnEjectActionsEnd")] public int destroyOnEjectActionsEnd;
-		[Serialize("killOnEnd"               )] public int killOnEnd;
-		[Serialize("hitNumber"               )] public uint hitNumber;
-		[Serialize("hitNumberNextBhvName"    )] public StringID hitNumberNextBhvName;
-		[Serialize("ejectActionNextBhvName"  )] public StringID ejectActionNextBhvName;
+		public Generic<AIAction_Template> ejectAction;
+		public int destroyOnEjectActionsEnd;
+		public int killOnEnd;
+		public uint hitNumber;
+		public StringID hitNumberNextBhvName;
+		public StringID ejectActionNextBhvName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ejectAction));
-			SerializeField(s, nameof(destroyOnEjectActionsEnd));
-			SerializeField(s, nameof(killOnEnd));
-			SerializeField(s, nameof(hitNumber));
-			SerializeField(s, nameof(hitNumberNextBhvName));
-			SerializeField(s, nameof(ejectActionNextBhvName));
+			ejectAction = s.SerializeObject<Generic<AIAction_Template>>(ejectAction, name: "ejectAction");
+			destroyOnEjectActionsEnd = s.Serialize<int>(destroyOnEjectActionsEnd, name: "destroyOnEjectActionsEnd");
+			killOnEnd = s.Serialize<int>(killOnEnd, name: "killOnEnd");
+			hitNumber = s.Serialize<uint>(hitNumber, name: "hitNumber");
+			hitNumberNextBhvName = s.SerializeObject<StringID>(hitNumberNextBhvName, name: "hitNumberNextBhvName");
+			ejectActionNextBhvName = s.SerializeObject<StringID>(ejectActionNextBhvName, name: "ejectActionNextBhvName");
 		}
 		public override uint? ClassCRC => 0x73A788E8;
 	}

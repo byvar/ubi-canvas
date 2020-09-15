@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LumJarComponent_Template : ActorComponent_Template {
-		[Serialize("LumNumberReward"  )] public uint LumNumberReward;
-		[Serialize("FrameNbTransition")] public uint FrameNbTransition;
+		public uint LumNumberReward;
+		public uint FrameNbTransition;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(LumNumberReward));
-			SerializeField(s, nameof(FrameNbTransition));
+			LumNumberReward = s.Serialize<uint>(LumNumberReward, name: "LumNumberReward");
+			FrameNbTransition = s.Serialize<uint>(FrameNbTransition, name: "FrameNbTransition");
 		}
 		public override uint? ClassCRC => 0xD0788A27;
 	}

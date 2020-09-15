@@ -3,44 +3,44 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FriendlyBTAIComponent : BTAIComponent {
-		[Serialize("path"              )] public Path path;
-		[Serialize("prisonerVisualType")] public Prisoner prisonerVisualType;
-		[Serialize("prisonerType"      )] public Enum_prisonerType prisonerType;
-		[Serialize("prisonerIndexType" )] public Index prisonerIndexType;
-		[Serialize("canReceiveHits"    )] public bool canReceiveHits;
-		[Serialize("targetWaypoint"    )] public ObjectPath targetWaypoint;
-		[Serialize("respawnPoint"      )] public ObjectPath respawnPoint;
-		[Serialize("rescued"           )] public bool rescued;
+		public Path path;
+		public Prisoner prisonerVisualType;
+		public Enum_prisonerType prisonerType;
+		public Index prisonerIndexType;
+		public bool canReceiveHits;
+		public ObjectPath targetWaypoint;
+		public ObjectPath respawnPoint;
+		public bool rescued;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(path));
-					SerializeField(s, nameof(prisonerVisualType));
+					path = s.SerializeObject<Path>(path, name: "path");
+					prisonerVisualType = s.Serialize<Prisoner>(prisonerVisualType, name: "prisonerVisualType");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(prisonerType));
-					SerializeField(s, nameof(prisonerIndexType));
+					prisonerType = s.Serialize<Enum_prisonerType>(prisonerType, name: "prisonerType");
+					prisonerIndexType = s.Serialize<Index>(prisonerIndexType, name: "prisonerIndexType");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(targetWaypoint));
-					SerializeField(s, nameof(respawnPoint));
-					SerializeField(s, nameof(rescued));
+					targetWaypoint = s.SerializeObject<ObjectPath>(targetWaypoint, name: "targetWaypoint");
+					respawnPoint = s.SerializeObject<ObjectPath>(respawnPoint, name: "respawnPoint");
+					rescued = s.Serialize<bool>(rescued, name: "rescued");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(path));
-					SerializeField(s, nameof(prisonerVisualType));
+					path = s.SerializeObject<Path>(path, name: "path");
+					prisonerVisualType = s.Serialize<Prisoner>(prisonerVisualType, name: "prisonerVisualType");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(prisonerType));
-					SerializeField(s, nameof(prisonerIndexType));
-					SerializeField(s, nameof(canReceiveHits));
+					prisonerType = s.Serialize<Enum_prisonerType>(prisonerType, name: "prisonerType");
+					prisonerIndexType = s.Serialize<Index>(prisonerIndexType, name: "prisonerIndexType");
+					canReceiveHits = s.Serialize<bool>(canReceiveHits, name: "canReceiveHits");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(targetWaypoint));
-					SerializeField(s, nameof(respawnPoint));
-					SerializeField(s, nameof(rescued));
+					targetWaypoint = s.SerializeObject<ObjectPath>(targetWaypoint, name: "targetWaypoint");
+					respawnPoint = s.SerializeObject<ObjectPath>(respawnPoint, name: "respawnPoint");
+					rescued = s.Serialize<bool>(rescued, name: "rescued");
 				}
 			}
 		}

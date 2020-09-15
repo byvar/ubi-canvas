@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureTreeTier : CSerializable {
-		[Serialize("NbFamilySmall")] public uint NbFamilySmall;
-		[Serialize("NbfamilyBig"  )] public uint NbfamilyBig;
-		[Serialize("TreeIN"       )] public TreeInOut TreeIN;
-		[Serialize("TreeOUT"      )] public TreeInOut TreeOUT;
-		[Serialize("TreeTierStyle")] public TreeStyle TreeTierStyle;
-		[Serialize("TreeTierPath" )] public Path TreeTierPath;
-		[Serialize("TreeTierSize" )] public float TreeTierSize;
+		public uint NbFamilySmall;
+		public uint NbfamilyBig;
+		public TreeInOut TreeIN;
+		public TreeInOut TreeOUT;
+		public TreeStyle TreeTierStyle;
+		public Path TreeTierPath;
+		public float TreeTierSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(NbFamilySmall));
-			SerializeField(s, nameof(NbfamilyBig));
-			SerializeField(s, nameof(TreeIN));
-			SerializeField(s, nameof(TreeOUT));
-			SerializeField(s, nameof(TreeTierStyle));
-			SerializeField(s, nameof(TreeTierPath));
-			SerializeField(s, nameof(TreeTierSize));
+			NbFamilySmall = s.Serialize<uint>(NbFamilySmall, name: "NbFamilySmall");
+			NbfamilyBig = s.Serialize<uint>(NbfamilyBig, name: "NbfamilyBig");
+			TreeIN = s.Serialize<TreeInOut>(TreeIN, name: "TreeIN");
+			TreeOUT = s.Serialize<TreeInOut>(TreeOUT, name: "TreeOUT");
+			TreeTierStyle = s.Serialize<TreeStyle>(TreeTierStyle, name: "TreeTierStyle");
+			TreeTierPath = s.SerializeObject<Path>(TreeTierPath, name: "TreeTierPath");
+			TreeTierSize = s.Serialize<float>(TreeTierSize, name: "TreeTierSize");
 		}
 		public enum TreeInOut {
 			[Serialize("TreeInOut::Left" )] Left = 0,

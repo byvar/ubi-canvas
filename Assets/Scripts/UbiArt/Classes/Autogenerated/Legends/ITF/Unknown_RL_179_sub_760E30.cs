@@ -3,25 +3,25 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_179_sub_760E30 : CSerializable {
-		[Serialize("initLeftDoorOpened" )] public int initLeftDoorOpened;
-		[Serialize("initRightDoorOpened")] public int initRightDoorOpened;
-		[Serialize("doorStateCurrent0"  )] public DoorState doorStateCurrent0;
-		[Serialize("doorStateTarget0"   )] public DoorState doorStateTarget0;
-		[Serialize("doorStateCursor0"   )] public float doorStateCursor0;
-		[Serialize("doorStateCurrent1"  )] public DoorState doorStateCurrent1;
-		[Serialize("doorStateTarget1"   )] public DoorState doorStateTarget1;
-		[Serialize("doorStateCursor1"   )] public float doorStateCursor1;
+		public int initLeftDoorOpened;
+		public int initRightDoorOpened;
+		public DoorState doorStateCurrent0;
+		public DoorState doorStateTarget0;
+		public float doorStateCursor0;
+		public DoorState doorStateCurrent1;
+		public DoorState doorStateTarget1;
+		public float doorStateCursor1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(initLeftDoorOpened));
-			SerializeField(s, nameof(initRightDoorOpened));
+			initLeftDoorOpened = s.Serialize<int>(initLeftDoorOpened, name: "initLeftDoorOpened");
+			initRightDoorOpened = s.Serialize<int>(initRightDoorOpened, name: "initRightDoorOpened");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(doorStateCurrent0));
-				SerializeField(s, nameof(doorStateTarget0));
-				SerializeField(s, nameof(doorStateCursor0));
-				SerializeField(s, nameof(doorStateCurrent1));
-				SerializeField(s, nameof(doorStateTarget1));
-				SerializeField(s, nameof(doorStateCursor1));
+				doorStateCurrent0 = s.Serialize<DoorState>(doorStateCurrent0, name: "doorStateCurrent0");
+				doorStateTarget0 = s.Serialize<DoorState>(doorStateTarget0, name: "doorStateTarget0");
+				doorStateCursor0 = s.Serialize<float>(doorStateCursor0, name: "doorStateCursor0");
+				doorStateCurrent1 = s.Serialize<DoorState>(doorStateCurrent1, name: "doorStateCurrent1");
+				doorStateTarget1 = s.Serialize<DoorState>(doorStateTarget1, name: "doorStateTarget1");
+				doorStateCursor1 = s.Serialize<float>(doorStateCursor1, name: "doorStateCursor1");
 			}
 		}
 		public enum DoorState {

@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_PlatformerCameraComponent_Template : InGameCameraComponent_Template {
-		[Serialize("useEjectMargin"                 )] public bool useEjectMargin;
-		[Serialize("ejectMargin"                    )] public float ejectMargin;
-		[Serialize("ejectMarginDeadPlayersOnly"     )] public bool ejectMarginDeadPlayersOnly;
-		[Serialize("ejectMarginDetachesPlayer"      )] public bool ejectMarginDetachesPlayer;
-		[Serialize("ejectForce"                     )] public float ejectForce;
-		[Serialize("useDeathMargin"                 )] public bool useDeathMargin;
-		[Serialize("deathMargin"                    )] public float deathMargin;
-		[Serialize("deathMarginWithBottomConstraint")] public float deathMarginWithBottomConstraint;
-		[Serialize("timeOut"                        )] public float timeOut;
-		[Serialize("lastOnscreenPlayerKillsEveryone")] public bool lastOnscreenPlayerKillsEveryone;
-		[Serialize("pursuitUseDeathMargin"          )] public bool pursuitUseDeathMargin;
-		[Serialize("pursuitDeathMargin"             )] public float pursuitDeathMargin;
-		[Serialize("pursuitTimeOut"                 )] public float pursuitTimeOut;
+		public bool useEjectMargin;
+		public float ejectMargin;
+		public bool ejectMarginDeadPlayersOnly;
+		public bool ejectMarginDetachesPlayer;
+		public float ejectForce;
+		public bool useDeathMargin;
+		public float deathMargin;
+		public float deathMarginWithBottomConstraint;
+		public float timeOut;
+		public bool lastOnscreenPlayerKillsEveryone;
+		public bool pursuitUseDeathMargin;
+		public float pursuitDeathMargin;
+		public float pursuitTimeOut;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(useEjectMargin));
-			SerializeField(s, nameof(ejectMargin));
-			SerializeField(s, nameof(ejectMarginDeadPlayersOnly));
-			SerializeField(s, nameof(ejectMarginDetachesPlayer));
-			SerializeField(s, nameof(ejectForce));
-			SerializeField(s, nameof(useDeathMargin));
-			SerializeField(s, nameof(deathMargin));
-			SerializeField(s, nameof(deathMarginWithBottomConstraint));
-			SerializeField(s, nameof(timeOut));
-			SerializeField(s, nameof(lastOnscreenPlayerKillsEveryone));
-			SerializeField(s, nameof(pursuitUseDeathMargin));
-			SerializeField(s, nameof(pursuitDeathMargin));
-			SerializeField(s, nameof(pursuitTimeOut));
+			useEjectMargin = s.Serialize<bool>(useEjectMargin, name: "useEjectMargin");
+			ejectMargin = s.Serialize<float>(ejectMargin, name: "ejectMargin");
+			ejectMarginDeadPlayersOnly = s.Serialize<bool>(ejectMarginDeadPlayersOnly, name: "ejectMarginDeadPlayersOnly");
+			ejectMarginDetachesPlayer = s.Serialize<bool>(ejectMarginDetachesPlayer, name: "ejectMarginDetachesPlayer");
+			ejectForce = s.Serialize<float>(ejectForce, name: "ejectForce");
+			useDeathMargin = s.Serialize<bool>(useDeathMargin, name: "useDeathMargin");
+			deathMargin = s.Serialize<float>(deathMargin, name: "deathMargin");
+			deathMarginWithBottomConstraint = s.Serialize<float>(deathMarginWithBottomConstraint, name: "deathMarginWithBottomConstraint");
+			timeOut = s.Serialize<float>(timeOut, name: "timeOut");
+			lastOnscreenPlayerKillsEveryone = s.Serialize<bool>(lastOnscreenPlayerKillsEveryone, name: "lastOnscreenPlayerKillsEveryone");
+			pursuitUseDeathMargin = s.Serialize<bool>(pursuitUseDeathMargin, name: "pursuitUseDeathMargin");
+			pursuitDeathMargin = s.Serialize<float>(pursuitDeathMargin, name: "pursuitDeathMargin");
+			pursuitTimeOut = s.Serialize<float>(pursuitTimeOut, name: "pursuitTimeOut");
 		}
 		public override uint? ClassCRC => 0x57790C7C;
 	}

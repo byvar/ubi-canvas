@@ -3,38 +3,38 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_PendulumComponent : CSerializable {
-		[Serialize("phantomHitMultiplier"         )] public float phantomHitMultiplier;
-		[Serialize("collisionFilter"              )] public Enum_collisionFilter collisionFilter;
-		[Serialize("useFixedLength"               )] public int useFixedLength;
-		[Serialize("length"                       )] public float length;
-		[Serialize("maxLength"                    )] public float maxLength;
-		[Serialize("minLength"                    )] public float minLength;
-		[Serialize("shouldLimitAngle"             )] public int shouldLimitAngle;
-		[Serialize("minAngle"                     )] public float minAngle;
-		[Serialize("maxAngle"                     )] public float maxAngle;
-		[Serialize("stiffness"                    )] public float stiffness;
-		[Serialize("damping"                      )] public float damping;
-		[Serialize("constraintPrecision"          )] public Enum_constraintPrecision constraintPrecision;
-		[Serialize("delayBetweenOnHitFx"          )] public float delayBetweenOnHitFx;
-		[Serialize("playOnHitForceThreshold"      )] public float playOnHitForceThreshold;
-		[Serialize("playOnStartMoveSpeedThreshold")] public float playOnStartMoveSpeedThreshold;
+		public float phantomHitMultiplier;
+		public Enum_collisionFilter collisionFilter;
+		public int useFixedLength;
+		public float length;
+		public float maxLength;
+		public float minLength;
+		public int shouldLimitAngle;
+		public float minAngle;
+		public float maxAngle;
+		public float stiffness;
+		public float damping;
+		public Enum_constraintPrecision constraintPrecision;
+		public float delayBetweenOnHitFx;
+		public float playOnHitForceThreshold;
+		public float playOnStartMoveSpeedThreshold;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(phantomHitMultiplier));
-			SerializeField(s, nameof(collisionFilter));
-			SerializeField(s, nameof(useFixedLength));
-			SerializeField(s, nameof(length));
-			SerializeField(s, nameof(maxLength));
-			SerializeField(s, nameof(minLength));
-			SerializeField(s, nameof(shouldLimitAngle));
-			SerializeField(s, nameof(minAngle));
-			SerializeField(s, nameof(maxAngle));
-			SerializeField(s, nameof(stiffness));
-			SerializeField(s, nameof(damping));
-			SerializeField(s, nameof(constraintPrecision));
-			SerializeField(s, nameof(delayBetweenOnHitFx));
-			SerializeField(s, nameof(playOnHitForceThreshold));
-			SerializeField(s, nameof(playOnStartMoveSpeedThreshold));
+			phantomHitMultiplier = s.Serialize<float>(phantomHitMultiplier, name: "phantomHitMultiplier");
+			collisionFilter = s.Serialize<Enum_collisionFilter>(collisionFilter, name: "collisionFilter");
+			useFixedLength = s.Serialize<int>(useFixedLength, name: "useFixedLength");
+			length = s.Serialize<float>(length, name: "length");
+			maxLength = s.Serialize<float>(maxLength, name: "maxLength");
+			minLength = s.Serialize<float>(minLength, name: "minLength");
+			shouldLimitAngle = s.Serialize<int>(shouldLimitAngle, name: "shouldLimitAngle");
+			minAngle = s.Serialize<float>(minAngle, name: "minAngle");
+			maxAngle = s.Serialize<float>(maxAngle, name: "maxAngle");
+			stiffness = s.Serialize<float>(stiffness, name: "stiffness");
+			damping = s.Serialize<float>(damping, name: "damping");
+			constraintPrecision = s.Serialize<Enum_constraintPrecision>(constraintPrecision, name: "constraintPrecision");
+			delayBetweenOnHitFx = s.Serialize<float>(delayBetweenOnHitFx, name: "delayBetweenOnHitFx");
+			playOnHitForceThreshold = s.Serialize<float>(playOnHitForceThreshold, name: "playOnHitForceThreshold");
+			playOnStartMoveSpeedThreshold = s.Serialize<float>(playOnStartMoveSpeedThreshold, name: "playOnStartMoveSpeedThreshold");
 		}
 		public enum Enum_collisionFilter {
 			[Serialize("Value_0"        )] Value_0 = 0,

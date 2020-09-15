@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerTest_Speed : TriggerTestAbstract {
-		[Serialize("SpeedValue"    )] public float SpeedValue;
-		[Serialize("HorizontalTest")] public bool HorizontalTest;
-		[Serialize("Operator"      )] public ECompareType Operator;
-		[Serialize("ActorNbrMin"   )] public uint ActorNbrMin;
-		[Serialize("float__0"      )] public float float__0;
-		[Serialize("Enum_VH_0__1"  )] public Enum_VH_0 Enum_VH_0__1;
-		[Serialize("uint__2"       )] public uint uint__2;
+		public float SpeedValue;
+		public bool HorizontalTest;
+		public ECompareType Operator;
+		public uint ActorNbrMin;
+		public float float__0;
+		public Enum_VH_0 Enum_VH_0__1;
+		public uint uint__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(float__0));
-				SerializeField(s, nameof(Enum_VH_0__1));
-				SerializeField(s, nameof(uint__2));
+				float__0 = s.Serialize<float>(float__0, name: "float__0");
+				Enum_VH_0__1 = s.Serialize<Enum_VH_0>(Enum_VH_0__1, name: "Enum_VH_0__1");
+				uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");
 			} else {
-				SerializeField(s, nameof(SpeedValue));
-				SerializeField(s, nameof(HorizontalTest));
-				SerializeField(s, nameof(Operator));
-				SerializeField(s, nameof(ActorNbrMin));
+				SpeedValue = s.Serialize<float>(SpeedValue, name: "SpeedValue");
+				HorizontalTest = s.Serialize<bool>(HorizontalTest, name: "HorizontalTest");
+				Operator = s.Serialize<ECompareType>(Operator, name: "Operator");
+				ActorNbrMin = s.Serialize<uint>(ActorNbrMin, name: "ActorNbrMin");
 			}
 		}
 		public enum ECompareType {

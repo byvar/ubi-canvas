@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LumGlassBallComponent_Template : ActorComponent_Template {
-		[Serialize("LumNumberReward"  )] public uint LumNumberReward;
-		[Serialize("FrameNbTransition")] public uint FrameNbTransition;
-		[Serialize("landFX"           )] public StringID landFX;
+		public uint LumNumberReward;
+		public uint FrameNbTransition;
+		public StringID landFX;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(LumNumberReward));
-			SerializeField(s, nameof(FrameNbTransition));
-			SerializeField(s, nameof(landFX));
+			LumNumberReward = s.Serialize<uint>(LumNumberReward, name: "LumNumberReward");
+			FrameNbTransition = s.Serialize<uint>(FrameNbTransition, name: "FrameNbTransition");
+			landFX = s.SerializeObject<StringID>(landFX, name: "landFX");
 		}
 		public override uint? ClassCRC => 0x466D4C64;
 	}

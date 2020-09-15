@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_UIItemCompetitorsComponent : UIComponent {
-		[Serialize("firstPlayerOffset")] public float firstPlayerOffset;
+		public float firstPlayerOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(firstPlayerOffset));
+			firstPlayerOffset = s.Serialize<float>(firstPlayerOffset, name: "firstPlayerOffset");
 		}
 		public override uint? ClassCRC => 0xCB815F05;
 	}

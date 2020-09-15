@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_CheckHitCount : RLC_Mission_Guard {
-		[Serialize("hitCount"        )] public uint hitCount;
-		[Serialize("successCondition")] public uint successCondition;
+		public uint hitCount;
+		public uint successCondition;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hitCount));
-			SerializeField(s, nameof(successCondition));
+			hitCount = s.Serialize<uint>(hitCount, name: "hitCount");
+			successCondition = s.Serialize<uint>(successCondition, name: "successCondition");
 		}
 		public override uint? ClassCRC => 0x723ED840;
 	}

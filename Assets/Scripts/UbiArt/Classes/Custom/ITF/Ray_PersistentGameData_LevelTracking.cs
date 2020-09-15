@@ -1,26 +1,26 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PersistentGameData_LevelTracking : CSerializable {
-		[Serialize("runCount"                )] public uint runCount;
-		[Serialize("challengeTimeAttackCount")] public uint challengeTimeAttackCount;
-		[Serialize("challengeHidden1"        )] public uint challengeHidden1;
-		[Serialize("challengeHidden2"        )] public uint challengeHidden2;
-		[Serialize("challengeCage"           )] public uint challengeCage;
-		[Serialize("firstTimeLevelCompleted" )] public float firstTimeLevelCompleted;
-		[Serialize("challengeLumsStage1"     )] public uint challengeLumsStage1;
-		[Serialize("challengeLumsStage2"     )] public uint challengeLumsStage2;
+		public uint runCount;
+		public uint challengeTimeAttackCount;
+		public uint challengeHidden1;
+		public uint challengeHidden2;
+		public uint challengeCage;
+		public float firstTimeLevelCompleted;
+		public uint challengeLumsStage1;
+		public uint challengeLumsStage2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(runCount));
-			SerializeField(s, nameof(challengeTimeAttackCount));
-			SerializeField(s, nameof(challengeHidden1));
-			SerializeField(s, nameof(challengeHidden2));
-			SerializeField(s, nameof(challengeCage));
-			SerializeField(s, nameof(firstTimeLevelCompleted));
-			SerializeField(s, nameof(challengeLumsStage1));
-			SerializeField(s, nameof(challengeLumsStage2));
+			runCount = s.Serialize<uint>(runCount, name: "runCount");
+			challengeTimeAttackCount = s.Serialize<uint>(challengeTimeAttackCount, name: "challengeTimeAttackCount");
+			challengeHidden1 = s.Serialize<uint>(challengeHidden1, name: "challengeHidden1");
+			challengeHidden2 = s.Serialize<uint>(challengeHidden2, name: "challengeHidden2");
+			challengeCage = s.Serialize<uint>(challengeCage, name: "challengeCage");
+			firstTimeLevelCompleted = s.Serialize<float>(firstTimeLevelCompleted, name: "firstTimeLevelCompleted");
+			challengeLumsStage1 = s.Serialize<uint>(challengeLumsStage1, name: "challengeLumsStage1");
+			challengeLumsStage2 = s.Serialize<uint>(challengeLumsStage2, name: "challengeLumsStage2");
 		}
 	}
 }

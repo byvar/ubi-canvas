@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class Unknown_COL_19_sub_7957A0 : CSerializable {
-		[Serialize("brightnessTable"        )] public Placeholder brightnessTable;
-		[Serialize("enableCloth"            )] public int enableCloth;
-		[Serialize("enableCollisionCapsules")] public int enableCollisionCapsules;
-		[Serialize("clothTeleportDistance"  )] public float clothTeleportDistance;
-		[Serialize("renderToTexture"        )] public int renderToTexture;
-		[Serialize("rttMaterial"            )] public Placeholder rttMaterial;
+		public Placeholder brightnessTable;
+		public int enableCloth;
+		public int enableCollisionCapsules;
+		public float clothTeleportDistance;
+		public int renderToTexture;
+		public Placeholder rttMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(brightnessTable));
-			SerializeField(s, nameof(enableCloth));
-			SerializeField(s, nameof(enableCollisionCapsules));
-			SerializeField(s, nameof(clothTeleportDistance));
-			SerializeField(s, nameof(renderToTexture));
-			SerializeField(s, nameof(rttMaterial));
+			brightnessTable = s.SerializeObject<Placeholder>(brightnessTable, name: "brightnessTable");
+			enableCloth = s.Serialize<int>(enableCloth, name: "enableCloth");
+			enableCollisionCapsules = s.Serialize<int>(enableCollisionCapsules, name: "enableCollisionCapsules");
+			clothTeleportDistance = s.Serialize<float>(clothTeleportDistance, name: "clothTeleportDistance");
+			renderToTexture = s.Serialize<int>(renderToTexture, name: "renderToTexture");
+			rttMaterial = s.SerializeObject<Placeholder>(rttMaterial, name: "rttMaterial");
 		}
 		public override uint? ClassCRC => 0x825B7536;
 	}

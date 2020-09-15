@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Actor_Rea_Boss : W1W_Actor_Rea {
-		[Serialize("StringID__0")] public StringID StringID__0;
-		[Serialize("StringID__1")] public StringID StringID__1;
-		[Serialize("StringID__2")] public StringID StringID__2;
-		[Serialize("StringID__3")] public StringID StringID__3;
-		[Serialize("float__4"   )] public float float__4_;
+		public StringID StringID__0;
+		public StringID StringID__1;
+		public StringID StringID__2;
+		public StringID StringID__3;
+		public float float__4_;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(StringID__0));
-			SerializeField(s, nameof(StringID__1));
-			SerializeField(s, nameof(StringID__2));
-			SerializeField(s, nameof(StringID__3));
-			SerializeField(s, nameof(float__4_));
+			StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
+			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
+			StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
+			StringID__3 = s.SerializeObject<StringID>(StringID__3, name: "StringID__3");
+			float__4_ = s.Serialize<float>(float__4_, name: "float__4_");
 		}
 		public override uint? ClassCRC => 0x0B0234EF;
 	}

@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_RockFishAIComponent_Template : CSerializable {
-		[Serialize("attackDetectionShape")] public Placeholder attackDetectionShape;
-		[Serialize("detectionRadius"     )] public float detectionRadius;
-		[Serialize("minDetectTime"       )] public float minDetectTime;
-		[Serialize("minIdleTime"         )] public float minIdleTime;
-		[Serialize("sleepAnim"           )] public StringID sleepAnim;
-		[Serialize("detectAnim"          )] public StringID detectAnim;
-		[Serialize("openAnim"            )] public StringID openAnim;
-		[Serialize("closeAnim"           )] public StringID closeAnim;
-		[Serialize("openTime"            )] public float openTime;
-		[Serialize("points"              )] public Placeholder points;
-		[Serialize("regionType"          )] public StringID regionType;
-		[Serialize("gameMaterial"        )] public Path gameMaterial;
+		public Placeholder attackDetectionShape;
+		public float detectionRadius;
+		public float minDetectTime;
+		public float minIdleTime;
+		public StringID sleepAnim;
+		public StringID detectAnim;
+		public StringID openAnim;
+		public StringID closeAnim;
+		public float openTime;
+		public Placeholder points;
+		public StringID regionType;
+		public Path gameMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(attackDetectionShape));
-			SerializeField(s, nameof(detectionRadius));
-			SerializeField(s, nameof(minDetectTime));
-			SerializeField(s, nameof(minIdleTime));
-			SerializeField(s, nameof(sleepAnim));
-			SerializeField(s, nameof(detectAnim));
-			SerializeField(s, nameof(openAnim));
-			SerializeField(s, nameof(closeAnim));
-			SerializeField(s, nameof(openTime));
-			SerializeField(s, nameof(points));
-			SerializeField(s, nameof(regionType));
-			SerializeField(s, nameof(gameMaterial));
+			attackDetectionShape = s.SerializeObject<Placeholder>(attackDetectionShape, name: "attackDetectionShape");
+			detectionRadius = s.Serialize<float>(detectionRadius, name: "detectionRadius");
+			minDetectTime = s.Serialize<float>(minDetectTime, name: "minDetectTime");
+			minIdleTime = s.Serialize<float>(minIdleTime, name: "minIdleTime");
+			sleepAnim = s.SerializeObject<StringID>(sleepAnim, name: "sleepAnim");
+			detectAnim = s.SerializeObject<StringID>(detectAnim, name: "detectAnim");
+			openAnim = s.SerializeObject<StringID>(openAnim, name: "openAnim");
+			closeAnim = s.SerializeObject<StringID>(closeAnim, name: "closeAnim");
+			openTime = s.Serialize<float>(openTime, name: "openTime");
+			points = s.SerializeObject<Placeholder>(points, name: "points");
+			regionType = s.SerializeObject<StringID>(regionType, name: "regionType");
+			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 		}
 		public override uint? ClassCRC => 0x656104B1;
 	}

@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AutoFlyingPlatformComponent : ActorComponent {
-		[Serialize("baseSpeed"                  )] public float baseSpeed;
-		[Serialize("baseAcceleration"           )] public float baseAcceleration;
-		[Serialize("activeMode"                 )] public ActiveMode activeMode;
-		[Serialize("disableOnCheckpointIfActive")] public bool disableOnCheckpointIfActive;
-		[Serialize("everStarted"                )] public bool everStarted;
+		public float baseSpeed;
+		public float baseAcceleration;
+		public ActiveMode activeMode;
+		public bool disableOnCheckpointIfActive;
+		public bool everStarted;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(baseSpeed));
-				SerializeField(s, nameof(baseAcceleration));
-				SerializeField(s, nameof(activeMode));
-				SerializeField(s, nameof(disableOnCheckpointIfActive));
+				baseSpeed = s.Serialize<float>(baseSpeed, name: "baseSpeed");
+				baseAcceleration = s.Serialize<float>(baseAcceleration, name: "baseAcceleration");
+				activeMode = s.Serialize<ActiveMode>(activeMode, name: "activeMode");
+				disableOnCheckpointIfActive = s.Serialize<bool>(disableOnCheckpointIfActive, name: "disableOnCheckpointIfActive");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(everStarted));
+				everStarted = s.Serialize<bool>(everStarted, name: "everStarted");
 			}
 		}
 		public enum ActiveMode {

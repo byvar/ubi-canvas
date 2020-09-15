@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_Costume : RLC_InventoryItem {
-		[Serialize("state")] public Enum_state state;
+		public Enum_state state;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(state));
+			state = s.Serialize<Enum_state>(state, name: "state");
 		}
 		public enum Enum_state {
 			[Serialize("_unknown"         )] _unknown = 0,

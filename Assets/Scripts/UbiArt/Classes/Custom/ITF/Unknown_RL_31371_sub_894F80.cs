@@ -1,36 +1,36 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_31371_sub_894F80 : CSerializable {
-		[Serialize("pid"                 )] public int pid;
-		[Serialize("name"                )] public string name;
-		[Serialize("statusIcon"          )] public uint statusIcon;
-		[Serialize("country"             )] public int country;
-		[Serialize("globalMedalsRank"    )] public uint globalMedalsRank;
-		[Serialize("globalMedalsMaxRank" )] public uint globalMedalsMaxRank;
-		[Serialize("diamondMedals"       )] public uint diamondMedals;
-		[Serialize("goldMedals"          )] public uint goldMedals;
-		[Serialize("silverMedals"        )] public uint silverMedals;
-		[Serialize("bronzeMedals"        )] public uint bronzeMedals;
-		[Serialize("playerStats"         )] public Unknown_RL_31339_sub_893AE0 playerStats;
-		[Serialize("costume"             )] public uint costume;
-		[Serialize("totalChallengePlayed")] public uint totalChallengePlayed;
+		public int pid;
+		public string name;
+		public uint statusIcon;
+		public int country;
+		public uint globalMedalsRank;
+		public uint globalMedalsMaxRank;
+		public uint diamondMedals;
+		public uint goldMedals;
+		public uint silverMedals;
+		public uint bronzeMedals;
+		public Unknown_RL_31339_sub_893AE0 playerStats;
+		public uint costume;
+		public uint totalChallengePlayed;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(pid));
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(statusIcon));
-				SerializeField(s, nameof(country));
-				SerializeField(s, nameof(globalMedalsRank));
-				SerializeField(s, nameof(globalMedalsMaxRank));
-				SerializeField(s, nameof(diamondMedals));
-				SerializeField(s, nameof(goldMedals));
-				SerializeField(s, nameof(silverMedals));
-				SerializeField(s, nameof(bronzeMedals));
-				SerializeField(s, nameof(playerStats));
-				SerializeField(s, nameof(costume));
-				SerializeField(s, nameof(totalChallengePlayed));
+				pid = s.Serialize<int>(pid, name: "pid");
+				name = s.Serialize<string>(name, name: "name");
+				statusIcon = s.Serialize<uint>(statusIcon, name: "statusIcon");
+				country = s.Serialize<int>(country, name: "country");
+				globalMedalsRank = s.Serialize<uint>(globalMedalsRank, name: "globalMedalsRank");
+				globalMedalsMaxRank = s.Serialize<uint>(globalMedalsMaxRank, name: "globalMedalsMaxRank");
+				diamondMedals = s.Serialize<uint>(diamondMedals, name: "diamondMedals");
+				goldMedals = s.Serialize<uint>(goldMedals, name: "goldMedals");
+				silverMedals = s.Serialize<uint>(silverMedals, name: "silverMedals");
+				bronzeMedals = s.Serialize<uint>(bronzeMedals, name: "bronzeMedals");
+				playerStats = s.SerializeObject<Unknown_RL_31339_sub_893AE0>(playerStats, name: "playerStats");
+				costume = s.Serialize<uint>(costume, name: "costume");
+				totalChallengePlayed = s.Serialize<uint>(totalChallengePlayed, name: "totalChallengePlayed");
 			}
 		}
 	}

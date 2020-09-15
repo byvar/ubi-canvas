@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIScrollbar : UIComponent {
-		[Serialize("textBoxFriendly")] public StringID textBoxFriendly;
-		[Serialize("speed"          )] public float speed;
+		public StringID textBoxFriendly;
+		public float speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(textBoxFriendly));
-				SerializeField(s, nameof(speed));
+				textBoxFriendly = s.SerializeObject<StringID>(textBoxFriendly, name: "textBoxFriendly");
+				speed = s.Serialize<float>(speed, name: "speed");
 			}
 		}
 		public override uint? ClassCRC => 0x6B682541;

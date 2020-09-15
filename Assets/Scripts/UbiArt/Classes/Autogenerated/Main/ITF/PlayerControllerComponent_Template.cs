@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class PlayerControllerComponent_Template : ActorComponent_Template {
-		[Serialize("phantomShape"                      )] public Generic<PhysShape> phantomShape;
-		[Serialize("faction"                           )] public uint faction;
-		[Serialize("deadSoulFaction"                   )] public uint deadSoulFaction;
-		[Serialize("touchReviveInteractionCircleRadius")] public float touchReviveInteractionCircleRadius;
+		public Generic<PhysShape> phantomShape;
+		public uint faction;
+		public uint deadSoulFaction;
+		public float touchReviveInteractionCircleRadius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(phantomShape));
-				SerializeField(s, nameof(faction));
-				SerializeField(s, nameof(deadSoulFaction));
+				phantomShape = s.SerializeObject<Generic<PhysShape>>(phantomShape, name: "phantomShape");
+				faction = s.Serialize<uint>(faction, name: "faction");
+				deadSoulFaction = s.Serialize<uint>(deadSoulFaction, name: "deadSoulFaction");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(phantomShape));
-				SerializeField(s, nameof(faction));
-				SerializeField(s, nameof(deadSoulFaction));
-				SerializeField(s, nameof(touchReviveInteractionCircleRadius));
+				phantomShape = s.SerializeObject<Generic<PhysShape>>(phantomShape, name: "phantomShape");
+				faction = s.Serialize<uint>(faction, name: "faction");
+				deadSoulFaction = s.Serialize<uint>(deadSoulFaction, name: "deadSoulFaction");
+				touchReviveInteractionCircleRadius = s.Serialize<float>(touchReviveInteractionCircleRadius, name: "touchReviveInteractionCircleRadius");
 			} else {
-				SerializeField(s, nameof(phantomShape));
-				SerializeField(s, nameof(faction));
+				phantomShape = s.SerializeObject<Generic<PhysShape>>(phantomShape, name: "phantomShape");
+				faction = s.Serialize<uint>(faction, name: "faction");
 			}
 		}
 		public override uint? ClassCRC => 0x06654841;

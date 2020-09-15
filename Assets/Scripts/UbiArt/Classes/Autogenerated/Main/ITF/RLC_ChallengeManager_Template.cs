@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_ChallengeManager_Template : TemplateObj {
-		[Serialize("lumScoreMult"              )] public float lumScoreMult;
-		[Serialize("distScoreMult"             )] public float distScoreMult;
-		[Serialize("challengeMainPath"         )] public Path challengeMainPath;
-		[Serialize("tombActorPath"             )] public Path tombActorPath;
-		[Serialize("challengeTokenIconSmall"   )] public Path challengeTokenIconSmall;
-		[Serialize("maxTombs"                  )] public uint maxTombs;
-		[Serialize("forcedChallengeParamID"    )] public uint forcedChallengeParamID;
-		[Serialize("adventureSequenceMin"      )] public uint adventureSequenceMin;
-		[Serialize("leaderboardPlayerScenePath")] public Path leaderboardPlayerScenePath;
-		[Serialize("leaderboardRewardScenePath")] public Path leaderboardRewardScenePath;
+		public float lumScoreMult;
+		public float distScoreMult;
+		public Path challengeMainPath;
+		public Path tombActorPath;
+		public Path challengeTokenIconSmall;
+		public uint maxTombs;
+		public uint forcedChallengeParamID;
+		public uint adventureSequenceMin;
+		public Path leaderboardPlayerScenePath;
+		public Path leaderboardRewardScenePath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(lumScoreMult));
-			SerializeField(s, nameof(distScoreMult));
-			SerializeField(s, nameof(challengeMainPath));
-			SerializeField(s, nameof(tombActorPath));
-			SerializeField(s, nameof(challengeTokenIconSmall));
-			SerializeField(s, nameof(maxTombs));
-			SerializeField(s, nameof(forcedChallengeParamID));
-			SerializeField(s, nameof(adventureSequenceMin));
-			SerializeField(s, nameof(leaderboardPlayerScenePath));
-			SerializeField(s, nameof(leaderboardRewardScenePath));
+			lumScoreMult = s.Serialize<float>(lumScoreMult, name: "lumScoreMult");
+			distScoreMult = s.Serialize<float>(distScoreMult, name: "distScoreMult");
+			challengeMainPath = s.SerializeObject<Path>(challengeMainPath, name: "challengeMainPath");
+			tombActorPath = s.SerializeObject<Path>(tombActorPath, name: "tombActorPath");
+			challengeTokenIconSmall = s.SerializeObject<Path>(challengeTokenIconSmall, name: "challengeTokenIconSmall");
+			maxTombs = s.Serialize<uint>(maxTombs, name: "maxTombs");
+			forcedChallengeParamID = s.Serialize<uint>(forcedChallengeParamID, name: "forcedChallengeParamID");
+			adventureSequenceMin = s.Serialize<uint>(adventureSequenceMin, name: "adventureSequenceMin");
+			leaderboardPlayerScenePath = s.SerializeObject<Path>(leaderboardPlayerScenePath, name: "leaderboardPlayerScenePath");
+			leaderboardRewardScenePath = s.SerializeObject<Path>(leaderboardRewardScenePath, name: "leaderboardRewardScenePath");
 		}
 		public override uint? ClassCRC => 0xD0405FD6;
 	}

@@ -3,107 +3,107 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerForceActionComponent : ActorComponent {
-		[Serialize("Action"                )] public PlayerForcedAction Action;
-		[Serialize("enabledOnInit"         )] public bool enabledOnInit;
-		[Serialize("OverallPriority"       )] public uint OverallPriority;
-		[Serialize("priority"              )] public uint priority;
-		[Serialize("Hold"                  )] public bool Hold;
-		[Serialize("Sprint"                )] public bool Sprint;
-		[Serialize("KeepDirection"         )] public bool KeepDirection;
-		[Serialize("WaitDuration"          )] public float WaitDuration;
-		[Serialize("WaitType"              )] public Enum_WaitType WaitType;
-		[Serialize("eventToListen"         )] public Generic<Event> eventToListen;
-		[Serialize("waitSpecificAngle"     )] public bool waitSpecificAngle;
-		[Serialize("waitSpecificAngleRange")] public Vec2d waitSpecificAngleRange;
-		[Serialize("checkEventOnlyInZone"  )] public bool checkEventOnlyInZone;
-		[Serialize("actorUpdateInfo"       )] public RO2_PlayerForceActionComponent.ActorUpdateInfoStruct actorUpdateInfo;
-		[Serialize("isEnabled"             )] public bool isEnabled;
-		[Serialize("Action"                )] public PlayerForcedAction2 Action2;
-		[Serialize("shadowActorGroupTest"  )] public bool shadowActorGroupTest;
+		public PlayerForcedAction Action;
+		public bool enabledOnInit;
+		public uint OverallPriority;
+		public uint priority;
+		public bool Hold;
+		public bool Sprint;
+		public bool KeepDirection;
+		public float WaitDuration;
+		public Enum_WaitType WaitType;
+		public Generic<Event> eventToListen;
+		public bool waitSpecificAngle;
+		public Vec2d waitSpecificAngleRange;
+		public bool checkEventOnlyInZone;
+		public RO2_PlayerForceActionComponent.ActorUpdateInfoStruct actorUpdateInfo;
+		public bool isEnabled;
+		public PlayerForcedAction2 Action2;
+		public bool shadowActorGroupTest;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(Action2));
-					SerializeField(s, nameof(enabledOnInit), boolAsByte: true);
-					SerializeField(s, nameof(OverallPriority));
-					SerializeField(s, nameof(priority));
-					SerializeField(s, nameof(Hold), boolAsByte: true);
-					SerializeField(s, nameof(Sprint), boolAsByte: true);
-					SerializeField(s, nameof(KeepDirection), boolAsByte: true);
-					SerializeField(s, nameof(WaitDuration));
-					SerializeField(s, nameof(WaitType));
-					SerializeField(s, nameof(eventToListen));
-					SerializeField(s, nameof(waitSpecificAngle), boolAsByte: true);
+					Action2 = s.Serialize<PlayerForcedAction2>(Action2, name: "Action2");
+					enabledOnInit = s.Serialize<bool>(enabledOnInit, name: "enabledOnInit", options: CSerializerObject.Options.BoolAsByte);
+					OverallPriority = s.Serialize<uint>(OverallPriority, name: "OverallPriority");
+					priority = s.Serialize<uint>(priority, name: "priority");
+					Hold = s.Serialize<bool>(Hold, name: "Hold", options: CSerializerObject.Options.BoolAsByte);
+					Sprint = s.Serialize<bool>(Sprint, name: "Sprint", options: CSerializerObject.Options.BoolAsByte);
+					KeepDirection = s.Serialize<bool>(KeepDirection, name: "KeepDirection", options: CSerializerObject.Options.BoolAsByte);
+					WaitDuration = s.Serialize<float>(WaitDuration, name: "WaitDuration");
+					WaitType = s.Serialize<Enum_WaitType>(WaitType, name: "WaitType");
+					eventToListen = s.SerializeObject<Generic<Event>>(eventToListen, name: "eventToListen");
+					waitSpecificAngle = s.Serialize<bool>(waitSpecificAngle, name: "waitSpecificAngle", options: CSerializerObject.Options.BoolAsByte);
 					if (waitSpecificAngle) {
-						SerializeField(s, nameof(waitSpecificAngleRange));
+						waitSpecificAngleRange = s.SerializeObject<Vec2d>(waitSpecificAngleRange, name: "waitSpecificAngleRange");
 					}
 					if (!eventToListen.IsNull) {
-						SerializeField(s, nameof(checkEventOnlyInZone), boolAsByte: true);
+						checkEventOnlyInZone = s.Serialize<bool>(checkEventOnlyInZone, name: "checkEventOnlyInZone", options: CSerializerObject.Options.BoolAsByte);
 					}
-					SerializeField(s, nameof(actorUpdateInfo));
+					actorUpdateInfo = s.SerializeObject<RO2_PlayerForceActionComponent.ActorUpdateInfoStruct>(actorUpdateInfo, name: "actorUpdateInfo");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(isEnabled));
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(shadowActorGroupTest), boolAsByte: true);
+					shadowActorGroupTest = s.Serialize<bool>(shadowActorGroupTest, name: "shadowActorGroupTest", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(Action));
-					SerializeField(s, nameof(enabledOnInit));
-					SerializeField(s, nameof(OverallPriority));
-					SerializeField(s, nameof(priority));
-					SerializeField(s, nameof(Hold));
-					SerializeField(s, nameof(Sprint));
-					SerializeField(s, nameof(KeepDirection));
-					SerializeField(s, nameof(WaitDuration));
-					SerializeField(s, nameof(WaitType));
-					SerializeField(s, nameof(eventToListen));
-					SerializeField(s, nameof(waitSpecificAngle));
+					Action = s.Serialize<PlayerForcedAction>(Action, name: "Action");
+					enabledOnInit = s.Serialize<bool>(enabledOnInit, name: "enabledOnInit");
+					OverallPriority = s.Serialize<uint>(OverallPriority, name: "OverallPriority");
+					priority = s.Serialize<uint>(priority, name: "priority");
+					Hold = s.Serialize<bool>(Hold, name: "Hold");
+					Sprint = s.Serialize<bool>(Sprint, name: "Sprint");
+					KeepDirection = s.Serialize<bool>(KeepDirection, name: "KeepDirection");
+					WaitDuration = s.Serialize<float>(WaitDuration, name: "WaitDuration");
+					WaitType = s.Serialize<Enum_WaitType>(WaitType, name: "WaitType");
+					eventToListen = s.SerializeObject<Generic<Event>>(eventToListen, name: "eventToListen");
+					waitSpecificAngle = s.Serialize<bool>(waitSpecificAngle, name: "waitSpecificAngle");
 					if (waitSpecificAngle) {
-						SerializeField(s, nameof(waitSpecificAngleRange));
+						waitSpecificAngleRange = s.SerializeObject<Vec2d>(waitSpecificAngleRange, name: "waitSpecificAngleRange");
 					}
 					if (!eventToListen.IsNull) {
-						SerializeField(s, nameof(checkEventOnlyInZone));
+						checkEventOnlyInZone = s.Serialize<bool>(checkEventOnlyInZone, name: "checkEventOnlyInZone");
 					}
-					SerializeField(s, nameof(actorUpdateInfo));
+					actorUpdateInfo = s.SerializeObject<RO2_PlayerForceActionComponent.ActorUpdateInfoStruct>(actorUpdateInfo, name: "actorUpdateInfo");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(isEnabled));
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled");
 				}
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class ActorUpdateInfoStruct : CSerializable {
-			[Serialize("orientationUpdateType"              )] public Enum_orientationUpdateType orientationUpdateType;
-			[Serialize("specificOrientation"                )] public Angle specificOrientation;
-			[Serialize("axisRecenter_StopActionInCorridor"  )] public bool axisRecenter_StopActionInCorridor;
-			[Serialize("axisRecenter_FollowDRCInteractActor")] public bool axisRecenter_FollowDRCInteractActor;
-			[Serialize("retriggerOrderDelay"                )] public float retriggerOrderDelay;
+			public Enum_orientationUpdateType orientationUpdateType;
+			public Angle specificOrientation;
+			public bool axisRecenter_StopActionInCorridor;
+			public bool axisRecenter_FollowDRCInteractActor;
+			public float retriggerOrderDelay;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(orientationUpdateType));
+				orientationUpdateType = s.Serialize<Enum_orientationUpdateType>(orientationUpdateType, name: "orientationUpdateType");
 				if (orientationUpdateType == Enum_orientationUpdateType.useOnlySpecific) {
-					SerializeField(s, nameof(specificOrientation));
+					specificOrientation = s.SerializeObject<Angle>(specificOrientation, name: "specificOrientation");
 				}
 				if (orientationUpdateType == Enum_orientationUpdateType.dynamicAxisRecenter) {
 					if (Settings.s.game == Settings.Game.RL) {
-						SerializeField(s, nameof(axisRecenter_StopActionInCorridor), boolAsByte: true);
+						axisRecenter_StopActionInCorridor = s.Serialize<bool>(axisRecenter_StopActionInCorridor, name: "axisRecenter_StopActionInCorridor", options: CSerializerObject.Options.BoolAsByte);
 					} else {
-						SerializeField(s, nameof(axisRecenter_StopActionInCorridor));
+						axisRecenter_StopActionInCorridor = s.Serialize<bool>(axisRecenter_StopActionInCorridor, name: "axisRecenter_StopActionInCorridor");
 					}
 				}
 				if (orientationUpdateType == Enum_orientationUpdateType.dynamicAxisRecenter ||
 					orientationUpdateType == Enum_orientationUpdateType.dynamicHelicoCorridorRecenter) {
 					if (Settings.s.game == Settings.Game.RL) {
-						SerializeField(s, nameof(axisRecenter_FollowDRCInteractActor), boolAsByte: true);
+						axisRecenter_FollowDRCInteractActor = s.Serialize<bool>(axisRecenter_FollowDRCInteractActor, name: "axisRecenter_FollowDRCInteractActor", options: CSerializerObject.Options.BoolAsByte);
 					} else {
-						SerializeField(s, nameof(axisRecenter_FollowDRCInteractActor));
+						axisRecenter_FollowDRCInteractActor = s.Serialize<bool>(axisRecenter_FollowDRCInteractActor, name: "axisRecenter_FollowDRCInteractActor");
 					}
 				}
-				SerializeField(s, nameof(retriggerOrderDelay));
+				retriggerOrderDelay = s.Serialize<float>(retriggerOrderDelay, name: "retriggerOrderDelay");
 			}
 			public enum Enum_orientationUpdateType {
 				[Serialize("useEnter"                     )] useEnter = 0,

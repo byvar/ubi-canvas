@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_17_sub_71E3B0 : CSerializable {
-		[Serialize("networkDT"             )] public uint networkDT;
-		[Serialize("networkUpdateSleepTime")] public uint networkUpdateSleepTime;
+		public uint networkDT;
+		public uint networkUpdateSleepTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(networkDT));
-			SerializeField(s, nameof(networkUpdateSleepTime));
+			networkDT = s.Serialize<uint>(networkDT, name: "networkDT");
+			networkUpdateSleepTime = s.Serialize<uint>(networkUpdateSleepTime, name: "networkUpdateSleepTime");
 		}
 		public override uint? ClassCRC => 0xA26D279A;
 	}

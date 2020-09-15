@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionPrisonerTorture_Template : BTAction_Template {
-		[Serialize("animPrisonerJumpOnVictim"        )] public StringID animPrisonerJumpOnVictim;
-		[Serialize("animPrisonerJumpOnVictimLaugh"   )] public StringID animPrisonerJumpOnVictimLaugh;
-		[Serialize("animFreeJumpOnVictim"            )] public StringID animFreeJumpOnVictim;
-		[Serialize("animPrisonerHitHeadOnGround"     )] public StringID animPrisonerHitHeadOnGround;
-		[Serialize("animPrisonerHitHeadOnGroundLaugh")] public StringID animPrisonerHitHeadOnGroundLaugh;
-		[Serialize("animFreeHitHeadOnGround"         )] public StringID animFreeHitHeadOnGround;
-		[Serialize("animThank"                       )] public StringID animThank;
-		[Serialize("animFreeFall"                    )] public StringID animFreeFall;
-		[Serialize("countLumsReward"                 )] public uint countLumsReward;
+		public StringID animPrisonerJumpOnVictim;
+		public StringID animPrisonerJumpOnVictimLaugh;
+		public StringID animFreeJumpOnVictim;
+		public StringID animPrisonerHitHeadOnGround;
+		public StringID animPrisonerHitHeadOnGroundLaugh;
+		public StringID animFreeHitHeadOnGround;
+		public StringID animThank;
+		public StringID animFreeFall;
+		public uint countLumsReward;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animPrisonerJumpOnVictim));
-			SerializeField(s, nameof(animPrisonerJumpOnVictimLaugh));
-			SerializeField(s, nameof(animFreeJumpOnVictim));
-			SerializeField(s, nameof(animPrisonerHitHeadOnGround));
-			SerializeField(s, nameof(animPrisonerHitHeadOnGroundLaugh));
-			SerializeField(s, nameof(animFreeHitHeadOnGround));
-			SerializeField(s, nameof(animThank));
-			SerializeField(s, nameof(animFreeFall));
-			SerializeField(s, nameof(countLumsReward));
+			animPrisonerJumpOnVictim = s.SerializeObject<StringID>(animPrisonerJumpOnVictim, name: "animPrisonerJumpOnVictim");
+			animPrisonerJumpOnVictimLaugh = s.SerializeObject<StringID>(animPrisonerJumpOnVictimLaugh, name: "animPrisonerJumpOnVictimLaugh");
+			animFreeJumpOnVictim = s.SerializeObject<StringID>(animFreeJumpOnVictim, name: "animFreeJumpOnVictim");
+			animPrisonerHitHeadOnGround = s.SerializeObject<StringID>(animPrisonerHitHeadOnGround, name: "animPrisonerHitHeadOnGround");
+			animPrisonerHitHeadOnGroundLaugh = s.SerializeObject<StringID>(animPrisonerHitHeadOnGroundLaugh, name: "animPrisonerHitHeadOnGroundLaugh");
+			animFreeHitHeadOnGround = s.SerializeObject<StringID>(animFreeHitHeadOnGround, name: "animFreeHitHeadOnGround");
+			animThank = s.SerializeObject<StringID>(animThank, name: "animThank");
+			animFreeFall = s.SerializeObject<StringID>(animFreeFall, name: "animFreeFall");
+			countLumsReward = s.Serialize<uint>(countLumsReward, name: "countLumsReward");
 		}
 		public override uint? ClassCRC => 0x9087AE40;
 	}

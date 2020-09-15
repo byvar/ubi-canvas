@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class CreditsLine : CSerializable {
-		[Serialize("type"     )] public uint type;
-		[Serialize("flag"     )] public uint flag;
-		[Serialize("text"     )] public string text;
-		[Serialize("firstName")] public string firstName;
-		[Serialize("lastName" )] public string lastName;
+		public uint type;
+		public uint flag;
+		public string text;
+		public string firstName;
+		public string lastName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(flag));
-			SerializeField(s, nameof(text));
-			SerializeField(s, nameof(firstName));
-			SerializeField(s, nameof(lastName));
+			type = s.Serialize<uint>(type, name: "type");
+			flag = s.Serialize<uint>(flag, name: "flag");
+			text = s.Serialize<string>(text, name: "text");
+			firstName = s.Serialize<string>(firstName, name: "firstName");
+			lastName = s.Serialize<string>(lastName, name: "lastName");
 		}
 	}
 }

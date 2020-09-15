@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class UIPadManager_Template : TemplateObj {
-		[Serialize("snapDistanceWeight")] public float snapDistanceWeight;
-		[Serialize("snapDeadAngle"     )] public float snapDeadAngle;
+		public float snapDistanceWeight;
+		public float snapDeadAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(snapDistanceWeight));
-			SerializeField(s, nameof(snapDeadAngle));
+			snapDistanceWeight = s.Serialize<float>(snapDistanceWeight, name: "snapDistanceWeight");
+			snapDeadAngle = s.Serialize<float>(snapDeadAngle, name: "snapDeadAngle");
 		}
 		public override uint? ClassCRC => 0x3ED7DB9C;
 	}

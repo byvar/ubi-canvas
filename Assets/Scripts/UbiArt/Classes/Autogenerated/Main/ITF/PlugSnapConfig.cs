@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlugSnapConfig : CSerializable {
-		[Serialize("duration"          )] public float duration;
-		[Serialize("boneName"          )] public StringID boneName;
-		[Serialize("boneDefaultFlipped")] public bool boneDefaultFlipped;
-		[Serialize("depthOffset"       )] public float depthOffset;
+		public float duration;
+		public StringID boneName;
+		public bool boneDefaultFlipped;
+		public float depthOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(duration));
-			SerializeField(s, nameof(boneName));
-			SerializeField(s, nameof(boneDefaultFlipped));
-			SerializeField(s, nameof(depthOffset));
+			duration = s.Serialize<float>(duration, name: "duration");
+			boneName = s.SerializeObject<StringID>(boneName, name: "boneName");
+			boneDefaultFlipped = s.Serialize<bool>(boneDefaultFlipped, name: "boneDefaultFlipped");
+			depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 		}
 	}
 }

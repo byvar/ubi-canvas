@@ -3,53 +3,53 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionHitTarget_Template : BTAction_Template {
-		[Serialize("attacks"                   )] public CList<RO2_BTActionHitTarget_Template.AttackData> attacks;
-		[Serialize("fxBoneName"                )] public StringID fxBoneName;
-		[Serialize("forceJumpAttack"           )] public float forceJumpAttack;
-		[Serialize("angleJumpAttack"           )] public Angle angleJumpAttack;
-		[Serialize("fxNames"                   )] public CList<StringID> fxNames;
-		[Serialize("fxMarkerStart"             )] public CList<StringID> fxMarkerStart;
-		[Serialize("fxMarkerStop"              )] public CList<StringID> fxMarkerStop;
-		[Serialize("lightningStart"            )] public StringID lightningStart;
-		[Serialize("lightningStop"             )] public StringID lightningStop;
-		[Serialize("lightningCharge"           )] public StringID lightningCharge;
-		[Serialize("useShakeCamera"            )] public bool useShakeCamera;
-		[Serialize("canMemorizeHitWithDuration")] public bool canMemorizeHitWithDuration;
-		[Serialize("memorizeHitDuration"       )] public float memorizeHitDuration;
+		public CList<RO2_BTActionHitTarget_Template.AttackData> attacks;
+		public StringID fxBoneName;
+		public float forceJumpAttack;
+		public Angle angleJumpAttack;
+		public CList<StringID> fxNames;
+		public CList<StringID> fxMarkerStart;
+		public CList<StringID> fxMarkerStop;
+		public StringID lightningStart;
+		public StringID lightningStop;
+		public StringID lightningCharge;
+		public bool useShakeCamera;
+		public bool canMemorizeHitWithDuration;
+		public float memorizeHitDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(attacks));
-			SerializeField(s, nameof(fxBoneName));
-			SerializeField(s, nameof(forceJumpAttack));
-			SerializeField(s, nameof(angleJumpAttack));
-			SerializeField(s, nameof(fxNames));
-			SerializeField(s, nameof(fxMarkerStart));
-			SerializeField(s, nameof(fxMarkerStop));
-			SerializeField(s, nameof(lightningStart));
-			SerializeField(s, nameof(lightningStop));
-			SerializeField(s, nameof(lightningCharge));
-			SerializeField(s, nameof(useShakeCamera));
-			SerializeField(s, nameof(canMemorizeHitWithDuration));
-			SerializeField(s, nameof(memorizeHitDuration));
+			attacks = s.SerializeObject<CList<RO2_BTActionHitTarget_Template.AttackData>>(attacks, name: "attacks");
+			fxBoneName = s.SerializeObject<StringID>(fxBoneName, name: "fxBoneName");
+			forceJumpAttack = s.Serialize<float>(forceJumpAttack, name: "forceJumpAttack");
+			angleJumpAttack = s.SerializeObject<Angle>(angleJumpAttack, name: "angleJumpAttack");
+			fxNames = s.SerializeObject<CList<StringID>>(fxNames, name: "fxNames");
+			fxMarkerStart = s.SerializeObject<CList<StringID>>(fxMarkerStart, name: "fxMarkerStart");
+			fxMarkerStop = s.SerializeObject<CList<StringID>>(fxMarkerStop, name: "fxMarkerStop");
+			lightningStart = s.SerializeObject<StringID>(lightningStart, name: "lightningStart");
+			lightningStop = s.SerializeObject<StringID>(lightningStop, name: "lightningStop");
+			lightningCharge = s.SerializeObject<StringID>(lightningCharge, name: "lightningCharge");
+			useShakeCamera = s.Serialize<bool>(useShakeCamera, name: "useShakeCamera");
+			canMemorizeHitWithDuration = s.Serialize<bool>(canMemorizeHitWithDuration, name: "canMemorizeHitWithDuration");
+			memorizeHitDuration = s.Serialize<float>(memorizeHitDuration, name: "memorizeHitDuration");
 		}
 		[Games(GameFlags.RA)]
 		public partial class AttackData : CSerializable {
-			[Serialize("punchType"               )] public PUNCHTYPE punchType;
-			[Serialize("level"                   )] public uint level;
-			[Serialize("pushBackRadius"          )] public float pushBackRadius;
-			[Serialize("duration"                )] public float duration;
-			[Serialize("anim"                    )] public StringID anim;
-			[Serialize("updateHitShape"          )] public bool updateHitShape;
-			[Serialize("canUseAnimationRootDelta")] public bool canUseAnimationRootDelta;
+			public PUNCHTYPE punchType;
+			public uint level;
+			public float pushBackRadius;
+			public float duration;
+			public StringID anim;
+			public bool updateHitShape;
+			public bool canUseAnimationRootDelta;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(punchType));
-				SerializeField(s, nameof(level));
-				SerializeField(s, nameof(pushBackRadius));
-				SerializeField(s, nameof(duration));
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(updateHitShape));
-				SerializeField(s, nameof(canUseAnimationRootDelta));
+				punchType = s.Serialize<PUNCHTYPE>(punchType, name: "punchType");
+				level = s.Serialize<uint>(level, name: "level");
+				pushBackRadius = s.Serialize<float>(pushBackRadius, name: "pushBackRadius");
+				duration = s.Serialize<float>(duration, name: "duration");
+				anim = s.SerializeObject<StringID>(anim, name: "anim");
+				updateHitShape = s.Serialize<bool>(updateHitShape, name: "updateHitShape");
+				canUseAnimationRootDelta = s.Serialize<bool>(canUseAnimationRootDelta, name: "canUseAnimationRootDelta");
 			}
 			public enum PUNCHTYPE {
 				[Serialize("PUNCHTYPE_CHARGE"    )] CHARGE = 0,

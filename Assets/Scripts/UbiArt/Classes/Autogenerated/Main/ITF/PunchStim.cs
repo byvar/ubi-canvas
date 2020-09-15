@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL)]
 	public partial class PunchStim : HitStim {
-		[Serialize("hitType"         )] public RECEIVEDHITTYPE hitType;
-		[Serialize("pushBackDistance")] public float pushBackDistance;
-		[Serialize("radial"          )] public bool radial;
-		[Serialize("bounceMultiplier")] public float bounceMultiplier;
-		[Serialize("identifier"      )] public uint identifier;
-		[Serialize("hitEnemiesOnce"  )] public bool hitEnemiesOnce;
+		public RECEIVEDHITTYPE hitType;
+		public float pushBackDistance;
+		public bool radial;
+		public float bounceMultiplier;
+		public uint identifier;
+		public bool hitEnemiesOnce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(hitType));
-				SerializeField(s, nameof(pushBackDistance));
-				SerializeField(s, nameof(radial));
-				SerializeField(s, nameof(bounceMultiplier));
+				hitType = s.Serialize<RECEIVEDHITTYPE>(hitType, name: "hitType");
+				pushBackDistance = s.Serialize<float>(pushBackDistance, name: "pushBackDistance");
+				radial = s.Serialize<bool>(radial, name: "radial");
+				bounceMultiplier = s.Serialize<float>(bounceMultiplier, name: "bounceMultiplier");
 			} else {
-				SerializeField(s, nameof(hitType));
-				SerializeField(s, nameof(pushBackDistance));
-				SerializeField(s, nameof(radial));
-				SerializeField(s, nameof(bounceMultiplier));
-				SerializeField(s, nameof(identifier));
-				SerializeField(s, nameof(hitEnemiesOnce));
+				hitType = s.Serialize<RECEIVEDHITTYPE>(hitType, name: "hitType");
+				pushBackDistance = s.Serialize<float>(pushBackDistance, name: "pushBackDistance");
+				radial = s.Serialize<bool>(radial, name: "radial");
+				bounceMultiplier = s.Serialize<float>(bounceMultiplier, name: "bounceMultiplier");
+				identifier = s.Serialize<uint>(identifier, name: "identifier");
+				hitEnemiesOnce = s.Serialize<bool>(hitEnemiesOnce, name: "hitEnemiesOnce");
 			}
 		}
 		public enum RECEIVEDHITTYPE {

@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RopeHookComponent : ActorComponent {
-		[Serialize("touchHandler"             )] public RO2_TouchHandler touchHandler;
-		[Serialize("torqueFriction"           )] public float torqueFriction;
-		[Serialize("attachmentDetectionRadius")] public float attachmentDetectionRadius;
-		[Serialize("hookingSmoothFactor"      )] public float hookingSmoothFactor;
-		[Serialize("hookOffset"               )] public Vec2d hookOffset;
-		[Serialize("angleOffset"              )] public Angle angleOffset;
-		[Serialize("angleSmoothingFactor"     )] public float angleSmoothingFactor;
-		[Serialize("snapDist"                 )] public float snapDist;
+		public RO2_TouchHandler touchHandler;
+		public float torqueFriction;
+		public float attachmentDetectionRadius;
+		public float hookingSmoothFactor;
+		public Vec2d hookOffset;
+		public Angle angleOffset;
+		public float angleSmoothingFactor;
+		public float snapDist;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(touchHandler));
-			SerializeField(s, nameof(torqueFriction));
-			SerializeField(s, nameof(attachmentDetectionRadius));
-			SerializeField(s, nameof(hookingSmoothFactor));
-			SerializeField(s, nameof(hookOffset));
-			SerializeField(s, nameof(angleOffset));
-			SerializeField(s, nameof(angleSmoothingFactor));
-			SerializeField(s, nameof(snapDist));
+			touchHandler = s.SerializeObject<RO2_TouchHandler>(touchHandler, name: "touchHandler");
+			torqueFriction = s.Serialize<float>(torqueFriction, name: "torqueFriction");
+			attachmentDetectionRadius = s.Serialize<float>(attachmentDetectionRadius, name: "attachmentDetectionRadius");
+			hookingSmoothFactor = s.Serialize<float>(hookingSmoothFactor, name: "hookingSmoothFactor");
+			hookOffset = s.SerializeObject<Vec2d>(hookOffset, name: "hookOffset");
+			angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
+			angleSmoothingFactor = s.Serialize<float>(angleSmoothingFactor, name: "angleSmoothingFactor");
+			snapDist = s.Serialize<float>(snapDist, name: "snapDist");
 		}
 		public override uint? ClassCRC => 0x3DCA3879;
 	}

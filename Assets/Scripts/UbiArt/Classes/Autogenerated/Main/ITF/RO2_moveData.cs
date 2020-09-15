@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_moveData : CSerializable {
-		[Serialize("dir"            )] public Vec2d dir;
-		[Serialize("period"         )] public float period;
-		[Serialize("cycle"          )] public bool cycle;
-		[Serialize("autoStart"      )] public bool autoStart;
-		[Serialize("delayCycleCount")] public float delayCycleCount;
-		[Serialize("playFxAttach"   )] public bool playFxAttach;
-		[Serialize("playFxMove"     )] public bool playFxMove;
-		[Serialize("playFxDetach"   )] public bool playFxDetach;
-		[Serialize("pauseFxInWait"  )] public bool pauseFxInWait;
+		public Vec2d dir;
+		public float period;
+		public bool cycle;
+		public bool autoStart;
+		public float delayCycleCount;
+		public bool playFxAttach;
+		public bool playFxMove;
+		public bool playFxDetach;
+		public bool pauseFxInWait;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(dir));
-				SerializeField(s, nameof(period));
-				SerializeField(s, nameof(cycle));
-				SerializeField(s, nameof(autoStart));
-				SerializeField(s, nameof(delayCycleCount));
-				SerializeField(s, nameof(playFxAttach));
-				SerializeField(s, nameof(playFxMove));
-				SerializeField(s, nameof(playFxDetach));
+				dir = s.SerializeObject<Vec2d>(dir, name: "dir");
+				period = s.Serialize<float>(period, name: "period");
+				cycle = s.Serialize<bool>(cycle, name: "cycle");
+				autoStart = s.Serialize<bool>(autoStart, name: "autoStart");
+				delayCycleCount = s.Serialize<float>(delayCycleCount, name: "delayCycleCount");
+				playFxAttach = s.Serialize<bool>(playFxAttach, name: "playFxAttach");
+				playFxMove = s.Serialize<bool>(playFxMove, name: "playFxMove");
+				playFxDetach = s.Serialize<bool>(playFxDetach, name: "playFxDetach");
 				if (Settings.s.game == Settings.Game.RL) {
-					SerializeField(s, nameof(pauseFxInWait));
+					pauseFxInWait = s.Serialize<bool>(pauseFxInWait, name: "pauseFxInWait");
 				}
 			}
 		}

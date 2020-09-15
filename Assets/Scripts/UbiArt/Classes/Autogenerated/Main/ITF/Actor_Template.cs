@@ -3,60 +3,60 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class Actor_Template : TemplatePickable {
-		[Serialize("PROCEDURAL"                                  )] public bool PROCEDURAL;
-		[Serialize("STARTPAUSED"                                 )] public bool STARTPAUSED;
-		[Serialize("FORCEISENVIRONMENT"                          )] public bool FORCEISENVIRONMENT;
-		[Serialize("FORCEALWAYSACTIVE"                           )] public bool FORCEALWAYSACTIVE;
-		[Serialize("UPDATEFREQUENCE"                             )] public uint UPDATEFREQUENCE;
-		[Serialize("COMPONENTS"                                  )] public CArray<Generic<ActorComponent_Template>> COMPONENTS;
-		[Serialize("scaleForced"                                 )] public Vec2d scaleForced;
-		[Serialize("scaleMin"                                    )] public Vec2d scaleMin;
-		[Serialize("scaleMax"                                    )] public Vec2d scaleMax;
-		[Serialize("xFLIPPED"                                    )] public int xFLIPPED;
-		[Serialize("zForced"                                     )] public float zForced;
-		[Serialize("useZForced"                                  )] public int useZForced;
-		[Serialize("archetype"                                   )] public StringID archetype;
-		[Serialize("type"                                        )] public StringID type;
-		[Serialize("updatetype"                                  )] public Pickable.UpdateType updatetype;
+		public bool PROCEDURAL;
+		public bool STARTPAUSED;
+		public bool FORCEISENVIRONMENT;
+		public bool FORCEALWAYSACTIVE;
+		public uint UPDATEFREQUENCE;
+		public CArray<Generic<ActorComponent_Template>> COMPONENTS;
+		public Vec2d scaleForced;
+		public Vec2d scaleMin;
+		public Vec2d scaleMax;
+		public int xFLIPPED;
+		public float zForced;
+		public int useZForced;
+		public StringID archetype;
+		public StringID type;
+		public Pickable.UpdateType updatetype;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (this is FriseConfig) return;
-				SerializeField(s, nameof(scaleForced));
-				SerializeField(s, nameof(scaleMin));
-				SerializeField(s, nameof(scaleMax));
-				SerializeField(s, nameof(xFLIPPED));
-				SerializeField(s, nameof(PROCEDURAL));
-				SerializeField(s, nameof(STARTPAUSED));
-				SerializeField(s, nameof(zForced));
-				SerializeField(s, nameof(useZForced));
-				SerializeField(s, nameof(archetype));
-				SerializeField(s, nameof(type));
-				SerializeField(s, nameof(updatetype));
+				scaleForced = s.SerializeObject<Vec2d>(scaleForced, name: "scaleForced");
+				scaleMin = s.SerializeObject<Vec2d>(scaleMin, name: "scaleMin");
+				scaleMax = s.SerializeObject<Vec2d>(scaleMax, name: "scaleMax");
+				xFLIPPED = s.Serialize<int>(xFLIPPED, name: "xFLIPPED");
+				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL");
+				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED");
+				zForced = s.Serialize<float>(zForced, name: "zForced");
+				useZForced = s.Serialize<int>(useZForced, name: "useZForced");
+				archetype = s.SerializeObject<StringID>(archetype, name: "archetype");
+				type = s.SerializeObject<StringID>(type, name: "type");
+				updatetype = s.Serialize<Pickable.UpdateType>(updatetype, name: "updatetype");
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(COMPONENTS));
+					COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (this is FriseConfig) return;
-				SerializeField(s, nameof(PROCEDURAL), boolAsByte: true);
-				SerializeField(s, nameof(STARTPAUSED), boolAsByte: true);
-				SerializeField(s, nameof(FORCEISENVIRONMENT), boolAsByte: true);
-				SerializeField(s, nameof(COMPONENTS));
+				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL", options: CSerializerObject.Options.BoolAsByte);
+				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED", options: CSerializerObject.Options.BoolAsByte);
+				FORCEISENVIRONMENT = s.Serialize<bool>(FORCEISENVIRONMENT, name: "FORCEISENVIRONMENT", options: CSerializerObject.Options.BoolAsByte);
+				COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (this is FriseConfig) return;
-				SerializeField(s, nameof(PROCEDURAL));
-				SerializeField(s, nameof(STARTPAUSED));
-				SerializeField(s, nameof(FORCEISENVIRONMENT));
-				SerializeField(s, nameof(FORCEALWAYSACTIVE));
-				SerializeField(s, nameof(COMPONENTS));
+				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL");
+				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED");
+				FORCEISENVIRONMENT = s.Serialize<bool>(FORCEISENVIRONMENT, name: "FORCEISENVIRONMENT");
+				FORCEALWAYSACTIVE = s.Serialize<bool>(FORCEALWAYSACTIVE, name: "FORCEALWAYSACTIVE");
+				COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 			} else {
-				SerializeField(s, nameof(PROCEDURAL));
-				SerializeField(s, nameof(STARTPAUSED));
-				SerializeField(s, nameof(FORCEISENVIRONMENT));
-				SerializeField(s, nameof(FORCEALWAYSACTIVE));
-				SerializeField(s, nameof(UPDATEFREQUENCE));
-				SerializeField(s, nameof(COMPONENTS));
+				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL");
+				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED");
+				FORCEISENVIRONMENT = s.Serialize<bool>(FORCEISENVIRONMENT, name: "FORCEISENVIRONMENT");
+				FORCEALWAYSACTIVE = s.Serialize<bool>(FORCEALWAYSACTIVE, name: "FORCEALWAYSACTIVE");
+				UPDATEFREQUENCE = s.Serialize<uint>(UPDATEFREQUENCE, name: "UPDATEFREQUENCE");
+				COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 			}
 		}
 		public override uint? ClassCRC => 0x1B857BCE;

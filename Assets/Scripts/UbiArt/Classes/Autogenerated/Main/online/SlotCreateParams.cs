@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class SlotCreateParams : userProfileOtherData {
-		[Serialize("askedSlot")] public uint askedSlot;
-		[Serialize("token"    )] public SocialNetworkIdentity token;
+		public uint askedSlot;
+		public SocialNetworkIdentity token;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(askedSlot));
-			SerializeField(s, nameof(token));
+			askedSlot = s.Serialize<uint>(askedSlot, name: "askedSlot");
+			token = s.SerializeObject<SocialNetworkIdentity>(token, name: "token");
 		}
 	}
 }

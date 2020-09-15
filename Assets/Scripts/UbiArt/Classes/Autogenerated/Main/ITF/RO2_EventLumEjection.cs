@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventLumEjection : Event {
-		[Serialize("ejectionForce"       )] public Vec2d ejectionForce;
-		[Serialize("ejectionDuration"    )] public float ejectionDuration;
-		[Serialize("isAutoPickup"        )] public bool isAutoPickup;
-		[Serialize("ejectionGravityAngle")] public Angle ejectionGravityAngle;
+		public Vec2d ejectionForce;
+		public float ejectionDuration;
+		public bool isAutoPickup;
+		public Angle ejectionGravityAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ejectionForce));
-			SerializeField(s, nameof(ejectionDuration));
-			SerializeField(s, nameof(isAutoPickup));
-			SerializeField(s, nameof(ejectionGravityAngle));
+			ejectionForce = s.SerializeObject<Vec2d>(ejectionForce, name: "ejectionForce");
+			ejectionDuration = s.Serialize<float>(ejectionDuration, name: "ejectionDuration");
+			isAutoPickup = s.Serialize<bool>(isAutoPickup, name: "isAutoPickup");
+			ejectionGravityAngle = s.SerializeObject<Angle>(ejectionGravityAngle, name: "ejectionGravityAngle");
 		}
 		public override uint? ClassCRC => 0xABFFA970;
 	}

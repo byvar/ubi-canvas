@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class ScreenShotDataCostumeShowcase : online.OpenGraphObject {
-		[Serialize("costumeName")] public string costumeName;
+		public string costumeName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(costumeName));
+			costumeName = s.Serialize<string>(costumeName, name: "costumeName");
 		}
 		public override uint? ClassCRC => 0x16DA3177;
 	}

@@ -3,72 +3,72 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TextureGraphicComponent : GraphicComponent {
-		[Serialize("texture"                   )] public Path texture;
-		[Serialize("anchor"                    )] public TEXTURE_ANCHOR anchor;
-		[Serialize("material"                  )] public GFXMaterialSerializable material;
-		[Serialize("Scale"                     )] public Vec2d Scale;
-		[Serialize("Width"                     )] public float Width;
-		[Serialize("Angle"                     )] public Angle Angle;
-		[Serialize("Offset"                    )] public Vec3d Offset;
-		[Serialize("UVScale"                   )] public Vec2d UVScale;
-		[Serialize("UVOffset"                  )] public Vec2d UVOffset;
-		[Serialize("spriteIndex"               )] public uint spriteIndex;
-		[Serialize("uvRatio"                   )] public Vec2d uvRatio;
-		[Serialize("uvTranslationSpeed"        )] public Vec2d uvTranslationSpeed;
-		[Serialize("size"                      )] public Vec2d size;
+		public Path texture;
+		public TEXTURE_ANCHOR anchor;
+		public GFXMaterialSerializable material;
+		public Vec2d Scale;
+		public float Width;
+		public Angle Angle;
+		public Vec3d Offset;
+		public Vec2d UVScale;
+		public Vec2d UVOffset;
+		public uint spriteIndex;
+		public Vec2d uvRatio;
+		public Vec2d uvTranslationSpeed;
+		public Vec2d size;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(texture));
+						texture = s.SerializeObject<Path>(texture, name: "texture");
 					}
-					SerializeField(s, nameof(anchor));
-					SerializeField(s, nameof(material));
-					SerializeField(s, nameof(spriteIndex));
+					anchor = s.Serialize<TEXTURE_ANCHOR>(anchor, name: "anchor");
+					material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+					spriteIndex = s.Serialize<uint>(spriteIndex, name: "spriteIndex");
 					if (!Settings.s.isCatchThemAll) {
-						SerializeField(s, nameof(uvRatio));
-						SerializeField(s, nameof(uvTranslationSpeed));
+						uvRatio = s.SerializeObject<Vec2d>(uvRatio, name: "uvRatio");
+						uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 					}
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(texture));
+						texture = s.SerializeObject<Path>(texture, name: "texture");
 					}
-					SerializeField(s, nameof(anchor));
-					SerializeField(s, nameof(material));
-					SerializeField(s, nameof(spriteIndex));
-					SerializeField(s, nameof(size));
-					SerializeField(s, nameof(uvRatio));
-					SerializeField(s, nameof(uvTranslationSpeed));
+					anchor = s.Serialize<TEXTURE_ANCHOR>(anchor, name: "anchor");
+					material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+					spriteIndex = s.Serialize<uint>(spriteIndex, name: "spriteIndex");
+					size = s.SerializeObject<Vec2d>(size, name: "size");
+					uvRatio = s.SerializeObject<Vec2d>(uvRatio, name: "uvRatio");
+					uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(texture));
+						texture = s.SerializeObject<Path>(texture, name: "texture");
 					}
-					SerializeField(s, nameof(anchor));
-					SerializeField(s, nameof(material));
-					SerializeField(s, nameof(spriteIndex));
+					anchor = s.Serialize<TEXTURE_ANCHOR>(anchor, name: "anchor");
+					material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+					spriteIndex = s.Serialize<uint>(spriteIndex, name: "spriteIndex");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default | SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(anchor));
-					SerializeField(s, nameof(material));
-					SerializeField(s, nameof(Scale));
-					SerializeField(s, nameof(Width));
-					SerializeField(s, nameof(Angle));
-					SerializeField(s, nameof(Offset));
-					SerializeField(s, nameof(UVScale));
-					SerializeField(s, nameof(UVOffset));
+					anchor = s.Serialize<TEXTURE_ANCHOR>(anchor, name: "anchor");
+					material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+					Scale = s.SerializeObject<Vec2d>(Scale, name: "Scale");
+					Width = s.Serialize<float>(Width, name: "Width");
+					Angle = s.SerializeObject<Angle>(Angle, name: "Angle");
+					Offset = s.SerializeObject<Vec3d>(Offset, name: "Offset");
+					UVScale = s.SerializeObject<Vec2d>(UVScale, name: "UVScale");
+					UVOffset = s.SerializeObject<Vec2d>(UVOffset, name: "UVOffset");
 				}
 			}
 		}

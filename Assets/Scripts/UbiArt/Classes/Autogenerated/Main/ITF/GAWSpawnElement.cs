@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class GAWSpawnElement : CSerializable {
-		[Serialize("Enum_VH_0__0")] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("Path__1"     )] public Path Path__1;
+		public Enum_VH_0 Enum_VH_0__0;
+		public Path Path__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(Enum_VH_0__0));
-				SerializeField(s, nameof(Path__1));
+				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
+				Path__1 = s.SerializeObject<Path>(Path__1, name: "Path__1");
 			}
 		}
 		public enum Enum_VH_0 {

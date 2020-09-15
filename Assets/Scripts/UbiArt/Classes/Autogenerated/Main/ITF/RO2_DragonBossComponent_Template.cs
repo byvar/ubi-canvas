@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DragonBossComponent_Template : ActorComponent_Template {
-		[Serialize("breathBone"    )] public StringID breathBone;
-		[Serialize("breathLength"  )] public float breathLength;
-		[Serialize("breathWidth"   )] public float breathWidth;
-		[Serialize("flameFx"       )] public Path flameFx;
-		[Serialize("hurtDelay"     )] public float hurtDelay;
-		[Serialize("genericEventId")] public StringID genericEventId;
+		public StringID breathBone;
+		public float breathLength;
+		public float breathWidth;
+		public Path flameFx;
+		public float hurtDelay;
+		public StringID genericEventId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(breathBone));
-			SerializeField(s, nameof(breathLength));
-			SerializeField(s, nameof(breathWidth));
-			SerializeField(s, nameof(flameFx));
-			SerializeField(s, nameof(hurtDelay));
-			SerializeField(s, nameof(genericEventId));
+			breathBone = s.SerializeObject<StringID>(breathBone, name: "breathBone");
+			breathLength = s.Serialize<float>(breathLength, name: "breathLength");
+			breathWidth = s.Serialize<float>(breathWidth, name: "breathWidth");
+			flameFx = s.SerializeObject<Path>(flameFx, name: "flameFx");
+			hurtDelay = s.Serialize<float>(hurtDelay, name: "hurtDelay");
+			genericEventId = s.SerializeObject<StringID>(genericEventId, name: "genericEventId");
 		}
 		public override uint? ClassCRC => 0xC42ECEF9;
 	}

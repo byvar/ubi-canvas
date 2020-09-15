@@ -3,29 +3,29 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class FillConfig : CSerializable {
-		[Serialize("smoothFactor")] public float smoothFactor;
-		[Serialize("offset"      )] public float offset;
-		[Serialize("angle"       )] public Angle angle;
-		[Serialize("scale"       )] public Vec2d scale;
-		[Serialize("tex"         )] public StringID tex;
-		[Serialize("zExtrude"    )] public float zExtrude;
-		[Serialize("isSmooth"    )] public bool isSmooth;
-		[Serialize("texIndex"    )] public int texIndex;
+		public float smoothFactor;
+		public float offset;
+		public Angle angle;
+		public Vec2d scale;
+		public StringID tex;
+		public float zExtrude;
+		public bool isSmooth;
+		public int texIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(smoothFactor));
-			SerializeField(s, nameof(offset));
-			SerializeField(s, nameof(angle));
-			SerializeField(s, nameof(scale));
-			SerializeField(s, nameof(tex));
-			SerializeField(s, nameof(zExtrude));
+			smoothFactor = s.Serialize<float>(smoothFactor, name: "smoothFactor");
+			offset = s.Serialize<float>(offset, name: "offset");
+			angle = s.SerializeObject<Angle>(angle, name: "angle");
+			scale = s.SerializeObject<Vec2d>(scale, name: "scale");
+			tex = s.SerializeObject<StringID>(tex, name: "tex");
+			zExtrude = s.Serialize<float>(zExtrude, name: "zExtrude");
 			if (s.HasFlags(SerializeFlags.Flags10)) {
 				if (Settings.s.game == Settings.Game.COL) {
-					SerializeField(s, nameof(isSmooth), boolAsByte: true);
+					isSmooth = s.Serialize<bool>(isSmooth, name: "isSmooth", options: CSerializerObject.Options.BoolAsByte);
 				} else {
-					SerializeField(s, nameof(isSmooth));
+					isSmooth = s.Serialize<bool>(isSmooth, name: "isSmooth");
 				}
-				SerializeField(s, nameof(texIndex));
+				texIndex = s.Serialize<int>(texIndex, name: "texIndex");
 			}
 		}
 	}

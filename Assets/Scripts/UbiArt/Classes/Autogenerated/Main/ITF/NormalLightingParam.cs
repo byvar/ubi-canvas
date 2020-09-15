@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class NormalLightingParam : CSerializable {
-		[Serialize("LightBrightness"     )] public float LightBrightness;
-		[Serialize("LightContrast"       )] public float LightContrast;
-		[Serialize("Rotation"            )] public Vec3d Rotation;
-		[Serialize("UseNormalMapLighting")] public bool UseNormalMapLighting;
-		[Serialize("RimLightColor"       )] public Color RimLightColor;
-		[Serialize("RimLightPower"       )] public float RimLightPower;
-		[Serialize("SpecIntensity"       )] public float SpecIntensity;
-		[Serialize("SpecSize"            )] public float SpecSize;
+		public float LightBrightness;
+		public float LightContrast;
+		public Vec3d Rotation;
+		public bool UseNormalMapLighting;
+		public Color RimLightColor;
+		public float RimLightPower;
+		public float SpecIntensity;
+		public float SpecSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(LightBrightness));
-			SerializeField(s, nameof(LightContrast));
-			SerializeField(s, nameof(Rotation));
-			SerializeField(s, nameof(UseNormalMapLighting));
-			SerializeField(s, nameof(RimLightColor));
-			SerializeField(s, nameof(RimLightPower));
-			SerializeField(s, nameof(SpecIntensity));
-			SerializeField(s, nameof(SpecSize));
+			LightBrightness = s.Serialize<float>(LightBrightness, name: "LightBrightness");
+			LightContrast = s.Serialize<float>(LightContrast, name: "LightContrast");
+			Rotation = s.SerializeObject<Vec3d>(Rotation, name: "Rotation");
+			UseNormalMapLighting = s.Serialize<bool>(UseNormalMapLighting, name: "UseNormalMapLighting");
+			RimLightColor = s.SerializeObject<Color>(RimLightColor, name: "RimLightColor");
+			RimLightPower = s.Serialize<float>(RimLightPower, name: "RimLightPower");
+			SpecIntensity = s.Serialize<float>(SpecIntensity, name: "SpecIntensity");
+			SpecSize = s.Serialize<float>(SpecSize, name: "SpecSize");
 		}
 	}
 }

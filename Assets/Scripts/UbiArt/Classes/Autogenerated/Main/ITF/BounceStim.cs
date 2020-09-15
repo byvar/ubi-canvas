@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.VH | GameFlags.RL)]
 	public partial class BounceStim : EventStim {
-		[Serialize("bounceType"     )] public BOUNCETYPE bounceType;
-		[Serialize("direction"      )] public Vec2d direction;
-		[Serialize("radial"         )] public bool radial;
-		[Serialize("multiplier"     )] public float multiplier;
-		[Serialize("bounceReactType")] public uint bounceReactType;
+		public BOUNCETYPE bounceType;
+		public Vec2d direction;
+		public bool radial;
+		public float multiplier;
+		public uint bounceReactType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(bounceType));
-				SerializeField(s, nameof(bounceReactType));
-				SerializeField(s, nameof(direction));
-				SerializeField(s, nameof(radial));
-				SerializeField(s, nameof(multiplier));
+				bounceType = s.Serialize<BOUNCETYPE>(bounceType, name: "bounceType");
+				bounceReactType = s.Serialize<uint>(bounceReactType, name: "bounceReactType");
+				direction = s.SerializeObject<Vec2d>(direction, name: "direction");
+				radial = s.Serialize<bool>(radial, name: "radial");
+				multiplier = s.Serialize<float>(multiplier, name: "multiplier");
 			} else {
-				SerializeField(s, nameof(bounceType));
-				SerializeField(s, nameof(direction));
-				SerializeField(s, nameof(radial));
-				SerializeField(s, nameof(multiplier));
+				bounceType = s.Serialize<BOUNCETYPE>(bounceType, name: "bounceType");
+				direction = s.SerializeObject<Vec2d>(direction, name: "direction");
+				radial = s.Serialize<bool>(radial, name: "radial");
+				multiplier = s.Serialize<float>(multiplier, name: "multiplier");
 			}
 		}
 		public enum BOUNCETYPE {

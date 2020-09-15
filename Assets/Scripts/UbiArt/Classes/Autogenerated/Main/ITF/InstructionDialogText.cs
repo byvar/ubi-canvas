@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class InstructionDialogText : InstructionDialog {
-		[Serialize("actorName")] public StringID actorName;
-		[Serialize("idLoc"    )] public LocalisationId idLoc;
-		[Serialize("text"     )] public string text;
-		[Serialize("mood"     )] public uint mood;
-		[Serialize("sizeText" )] public float sizeText;
-		[Serialize("offset"   )] public Vec2d offset;
+		public StringID actorName;
+		public LocalisationId idLoc;
+		public string text;
+		public uint mood;
+		public float sizeText;
+		public Vec2d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(actorName));
-			SerializeField(s, nameof(idLoc));
-			SerializeField(s, nameof(text));
-			SerializeField(s, nameof(mood));
-			SerializeField(s, nameof(sizeText));
-			SerializeField(s, nameof(offset));
+			actorName = s.SerializeObject<StringID>(actorName, name: "actorName");
+			idLoc = s.SerializeObject<LocalisationId>(idLoc, name: "idLoc");
+			text = s.Serialize<string>(text, name: "text");
+			mood = s.Serialize<uint>(mood, name: "mood");
+			sizeText = s.Serialize<float>(sizeText, name: "sizeText");
+			offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 		}
 		public override uint? ClassCRC => 0xD5D2CADB;
 	}

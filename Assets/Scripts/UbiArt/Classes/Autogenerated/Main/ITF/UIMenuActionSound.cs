@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIMenuActionSound : CSerializable {
-		[Serialize("action"   )] public StringID action;
-		[Serialize("selection")] public StringID selection;
-		[Serialize("sound"    )] public StringID sound;
+		public StringID action;
+		public StringID selection;
+		public StringID sound;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(action));
-			SerializeField(s, nameof(selection));
-			SerializeField(s, nameof(sound));
+			action = s.SerializeObject<StringID>(action, name: "action");
+			selection = s.SerializeObject<StringID>(selection, name: "selection");
+			sound = s.SerializeObject<StringID>(sound, name: "sound");
 		}
 	}
 }

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionLookAtAttack : BTAction {
-		[Serialize("enemyDetectionRange")] public Generic<PhysShape> enemyDetectionRange;
-		[Serialize("enemyAttackRange"   )] public Generic<PhysShape> enemyAttackRange;
+		public Generic<PhysShape> enemyDetectionRange;
+		public Generic<PhysShape> enemyAttackRange;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enemyDetectionRange));
-			SerializeField(s, nameof(enemyAttackRange));
+			enemyDetectionRange = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRange, name: "enemyDetectionRange");
+			enemyAttackRange = s.SerializeObject<Generic<PhysShape>>(enemyAttackRange, name: "enemyAttackRange");
 		}
 		public override uint? ClassCRC => 0xEE3BD0D7;
 	}

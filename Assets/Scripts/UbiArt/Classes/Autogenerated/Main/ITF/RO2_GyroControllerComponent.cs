@@ -3,55 +3,55 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GyroControllerComponent : ActorComponent {
-		[Serialize("cursorSmooth"                 )] public float cursorSmooth;
-		[Serialize("rollBackCursorSmooth"         )] public float rollBackCursorSmooth;
-		[Serialize("rollBackCursorSmoothMidTarget")] public float rollBackCursorSmoothMidTarget;
-		[Serialize("angleMultiplier"              )] public float angleMultiplier;
-		[Serialize("forcedAngleMultiplier"        )] public float forcedAngleMultiplier;
-		[Serialize("activateOnTrigger"            )] public bool activateOnTrigger;
-		[Serialize("angleMin"                     )] public float angleMin;
-		[Serialize("angleMax"                     )] public float angleMax;
-		[Serialize("cameraRampUpCoeff"            )] public float cameraRampUpCoeff;
-		[Serialize("cameraRampDownCoeff"          )] public float cameraRampDownCoeff;
-		[Serialize("cameraZOffset"                )] public float cameraZOffset;
-		[Serialize("TVOffcameraZOffset"           )] public float TVOffcameraZOffset;
-		[Serialize("TVOffcameraPosOffset"         )] public Vec2d TVOffcameraPosOffset;
-		[Serialize("TVOffcameraResetMultiplier"   )] public bool TVOffcameraResetMultiplier;
+		public float cursorSmooth;
+		public float rollBackCursorSmooth;
+		public float rollBackCursorSmoothMidTarget;
+		public float angleMultiplier;
+		public float forcedAngleMultiplier;
+		public bool activateOnTrigger;
+		public float angleMin;
+		public float angleMax;
+		public float cameraRampUpCoeff;
+		public float cameraRampDownCoeff;
+		public float cameraZOffset;
+		public float TVOffcameraZOffset;
+		public Vec2d TVOffcameraPosOffset;
+		public bool TVOffcameraResetMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(cursorSmooth));
-					SerializeField(s, nameof(rollBackCursorSmooth));
-					SerializeField(s, nameof(rollBackCursorSmoothMidTarget));
-					SerializeField(s, nameof(angleMultiplier));
-					SerializeField(s, nameof(forcedAngleMultiplier));
-					SerializeField(s, nameof(activateOnTrigger), boolAsByte: true);
-					SerializeField(s, nameof(angleMin));
-					SerializeField(s, nameof(angleMax));
-					SerializeField(s, nameof(cameraRampUpCoeff));
-					SerializeField(s, nameof(cameraRampDownCoeff));
-					SerializeField(s, nameof(cameraZOffset));
-					SerializeField(s, nameof(TVOffcameraZOffset));
-					SerializeField(s, nameof(TVOffcameraPosOffset));
-					SerializeField(s, nameof(TVOffcameraResetMultiplier), boolAsByte: true);
+					cursorSmooth = s.Serialize<float>(cursorSmooth, name: "cursorSmooth");
+					rollBackCursorSmooth = s.Serialize<float>(rollBackCursorSmooth, name: "rollBackCursorSmooth");
+					rollBackCursorSmoothMidTarget = s.Serialize<float>(rollBackCursorSmoothMidTarget, name: "rollBackCursorSmoothMidTarget");
+					angleMultiplier = s.Serialize<float>(angleMultiplier, name: "angleMultiplier");
+					forcedAngleMultiplier = s.Serialize<float>(forcedAngleMultiplier, name: "forcedAngleMultiplier");
+					activateOnTrigger = s.Serialize<bool>(activateOnTrigger, name: "activateOnTrigger", options: CSerializerObject.Options.BoolAsByte);
+					angleMin = s.Serialize<float>(angleMin, name: "angleMin");
+					angleMax = s.Serialize<float>(angleMax, name: "angleMax");
+					cameraRampUpCoeff = s.Serialize<float>(cameraRampUpCoeff, name: "cameraRampUpCoeff");
+					cameraRampDownCoeff = s.Serialize<float>(cameraRampDownCoeff, name: "cameraRampDownCoeff");
+					cameraZOffset = s.Serialize<float>(cameraZOffset, name: "cameraZOffset");
+					TVOffcameraZOffset = s.Serialize<float>(TVOffcameraZOffset, name: "TVOffcameraZOffset");
+					TVOffcameraPosOffset = s.SerializeObject<Vec2d>(TVOffcameraPosOffset, name: "TVOffcameraPosOffset");
+					TVOffcameraResetMultiplier = s.Serialize<bool>(TVOffcameraResetMultiplier, name: "TVOffcameraResetMultiplier", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(cursorSmooth));
-					SerializeField(s, nameof(rollBackCursorSmooth));
-					SerializeField(s, nameof(rollBackCursorSmoothMidTarget));
-					SerializeField(s, nameof(angleMultiplier));
-					SerializeField(s, nameof(forcedAngleMultiplier));
-					SerializeField(s, nameof(activateOnTrigger));
-					SerializeField(s, nameof(angleMin));
-					SerializeField(s, nameof(angleMax));
-					SerializeField(s, nameof(cameraRampUpCoeff));
-					SerializeField(s, nameof(cameraRampDownCoeff));
-					SerializeField(s, nameof(cameraZOffset));
-					SerializeField(s, nameof(TVOffcameraZOffset));
-					SerializeField(s, nameof(TVOffcameraPosOffset));
-					SerializeField(s, nameof(TVOffcameraResetMultiplier));
+					cursorSmooth = s.Serialize<float>(cursorSmooth, name: "cursorSmooth");
+					rollBackCursorSmooth = s.Serialize<float>(rollBackCursorSmooth, name: "rollBackCursorSmooth");
+					rollBackCursorSmoothMidTarget = s.Serialize<float>(rollBackCursorSmoothMidTarget, name: "rollBackCursorSmoothMidTarget");
+					angleMultiplier = s.Serialize<float>(angleMultiplier, name: "angleMultiplier");
+					forcedAngleMultiplier = s.Serialize<float>(forcedAngleMultiplier, name: "forcedAngleMultiplier");
+					activateOnTrigger = s.Serialize<bool>(activateOnTrigger, name: "activateOnTrigger");
+					angleMin = s.Serialize<float>(angleMin, name: "angleMin");
+					angleMax = s.Serialize<float>(angleMax, name: "angleMax");
+					cameraRampUpCoeff = s.Serialize<float>(cameraRampUpCoeff, name: "cameraRampUpCoeff");
+					cameraRampDownCoeff = s.Serialize<float>(cameraRampDownCoeff, name: "cameraRampDownCoeff");
+					cameraZOffset = s.Serialize<float>(cameraZOffset, name: "cameraZOffset");
+					TVOffcameraZOffset = s.Serialize<float>(TVOffcameraZOffset, name: "TVOffcameraZOffset");
+					TVOffcameraPosOffset = s.SerializeObject<Vec2d>(TVOffcameraPosOffset, name: "TVOffcameraPosOffset");
+					TVOffcameraResetMultiplier = s.Serialize<bool>(TVOffcameraResetMultiplier, name: "TVOffcameraResetMultiplier");
 				}
 			}
 		}

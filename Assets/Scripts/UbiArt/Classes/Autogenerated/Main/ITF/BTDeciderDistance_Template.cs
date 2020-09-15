@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTDeciderDistance_Template : BTDecider_Template {
-		[Serialize("distance")] public float distance;
-		[Serialize("type"    )] public ECompareType type;
+		public float distance;
+		public ECompareType type;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(distance));
-			SerializeField(s, nameof(type));
+			distance = s.Serialize<float>(distance, name: "distance");
+			type = s.Serialize<ECompareType>(type, name: "type");
 		}
 		public enum ECompareType {
 			[Serialize("ECompareType_GreaterThan" )] GreaterThan = 1,

@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_LightOrbSpawnerComponent_Template : CSerializable {
-		[Serialize("spawnActorLua"   )] public Path spawnActorLua;
-		[Serialize("FX_Shake"        )] public StringID FX_Shake;
-		[Serialize("FX_OrbsRemaining")] public StringID FX_OrbsRemaining;
-		[Serialize("shakeAnimationID")] public StringID shakeAnimationID;
+		public Path spawnActorLua;
+		public StringID FX_Shake;
+		public StringID FX_OrbsRemaining;
+		public StringID shakeAnimationID;
 		[Description("Time before the spawner can spawn light orbs again.")]
-		[Serialize("timeBeforeRefill")] public float timeBeforeRefill;
+		public float timeBeforeRefill;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(spawnActorLua));
-				SerializeField(s, nameof(FX_Shake));
-				SerializeField(s, nameof(FX_OrbsRemaining));
-				SerializeField(s, nameof(shakeAnimationID));
-				SerializeField(s, nameof(timeBeforeRefill));
+				spawnActorLua = s.SerializeObject<Path>(spawnActorLua, name: "spawnActorLua");
+				FX_Shake = s.SerializeObject<StringID>(FX_Shake, name: "FX_Shake");
+				FX_OrbsRemaining = s.SerializeObject<StringID>(FX_OrbsRemaining, name: "FX_OrbsRemaining");
+				shakeAnimationID = s.SerializeObject<StringID>(shakeAnimationID, name: "shakeAnimationID");
+				timeBeforeRefill = s.Serialize<float>(timeBeforeRefill, name: "timeBeforeRefill");
 			}
 		}
 		public override uint? ClassCRC => 0x4FB77A07;

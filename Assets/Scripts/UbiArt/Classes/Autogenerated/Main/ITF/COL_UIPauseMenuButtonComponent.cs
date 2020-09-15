@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_UIPauseMenuButtonComponent : CSerializable {
-		[Serialize("buttonType")] public Enum_buttonType buttonType;
+		public Enum_buttonType buttonType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(buttonType));
+			buttonType = s.Serialize<Enum_buttonType>(buttonType, name: "buttonType");
 		}
 		public enum Enum_buttonType {
 			[Serialize("Value_0" )] Value_0 = 0,

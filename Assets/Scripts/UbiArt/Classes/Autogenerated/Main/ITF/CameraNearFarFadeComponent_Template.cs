@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class CameraNearFarFadeComponent_Template : ActorComponent_Template {
-		[Serialize("inputInterp"   )] public StringID inputInterp;
-		[Serialize("inputNear"     )] public StringID inputNear;
-		[Serialize("inputFar"      )] public StringID inputFar;
-		[Serialize("inputFadeRange")] public StringID inputFadeRange;
+		public StringID inputInterp;
+		public StringID inputNear;
+		public StringID inputFar;
+		public StringID inputFadeRange;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(inputInterp));
-			SerializeField(s, nameof(inputNear));
-			SerializeField(s, nameof(inputFar));
-			SerializeField(s, nameof(inputFadeRange));
+			inputInterp = s.SerializeObject<StringID>(inputInterp, name: "inputInterp");
+			inputNear = s.SerializeObject<StringID>(inputNear, name: "inputNear");
+			inputFar = s.SerializeObject<StringID>(inputFar, name: "inputFar");
+			inputFadeRange = s.SerializeObject<StringID>(inputFadeRange, name: "inputFadeRange");
 		}
 		public override uint? ClassCRC => 0x51381046;
 	}

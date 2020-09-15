@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ShooterGameModeParameters : CSerializable {
-		[Serialize("playersDataList")] public CArray<PlayerData> playersDataList;
+		public CArray<PlayerData> playersDataList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(playersDataList));
+			playersDataList = s.SerializeObject<CArray<PlayerData>>(playersDataList, name: "playersDataList");
 		}
 		public override uint? ClassCRC => 0x63E0A1F7;
 
 		[Games(GameFlags.RO)]
 		public partial class PlayerData : CSerializable {
-			[Serialize("playerID"  )] public StringID playerID;
-			[Serialize("luaFile"   )] public Path luaFile;
+			public StringID playerID;
+			public Path luaFile;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(playerID));
-				SerializeField(s, nameof(luaFile));
+				playerID = s.SerializeObject<StringID>(playerID, name: "playerID");
+				luaFile = s.SerializeObject<Path>(luaFile, name: "luaFile");
 			}
 		}
 	}

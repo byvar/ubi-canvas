@@ -3,102 +3,102 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class Scene : BaseObject {
-		[Serialize("ENGINE_VERSION"   )] public uint ENGINE_VERSION;
-		[Serialize("DEPENDENCIES"     )] public CArray<Path> DEPENDENCIES;
-		[Serialize("FRISE"            )] public CList<Frise> FRISE;
-		[Serialize("METAFRIEZE"       )] public CList<MetaFrieze> METAFRIEZE;
-		[Serialize("ACTORS"           )] public CArray<Generic<Actor>> ACTORS;
-		[Serialize("friezeConnections")] public CList<FriezeConnectionResult> friezeConnections;
-		[Serialize("sceneConfigs"     )] public SceneConfigs sceneConfigs;
-		[Serialize("TABS"             )] public CList<Path> TABS;
-		[Serialize("GRIDUNIT"         )] public float GRIDUNIT;
-		[Serialize("PLATFORM_FILTER"  )] public TargetFilterList PLATFORM_FILTER;
-		[Serialize("MUSIC_THEME_PATH" )] public Path MUSIC_THEME_PATH;
-		[Serialize("MUSIC_THEME"      )] public StringID MUSIC_THEME;
-		[Serialize("DEPTH_SEPARATOR"  )] public int DEPTH_SEPARATOR;
-		[Serialize("NEAR_SEPARATOR"   )] public Matrix44 NEAR_SEPARATOR;
-		[Serialize("FAR_SEPARATOR"    )] public Matrix44 FAR_SEPARATOR;
-		[Serialize("FRISE"            )] public CArray<Generic<Pickable>> FRISE_ORIGINS;
-		[Serialize("ACTORS"           )] public CArray<Generic<Pickable>> ACTORS_ORIGINS;
+		public uint ENGINE_VERSION;
+		public CArray<Path> DEPENDENCIES;
+		public CList<Frise> FRISE;
+		public CList<MetaFrieze> METAFRIEZE;
+		public CArray<Generic<Actor>> ACTORS;
+		public CList<FriezeConnectionResult> friezeConnections;
+		public SceneConfigs sceneConfigs;
+		public CList<Path> TABS;
+		public float GRIDUNIT;
+		public TargetFilterList PLATFORM_FILTER;
+		public Path MUSIC_THEME_PATH;
+		public StringID MUSIC_THEME;
+		public int DEPTH_SEPARATOR;
+		public Matrix44 NEAR_SEPARATOR;
+		public Matrix44 FAR_SEPARATOR;
+		public CArray<Generic<Pickable>> FRISE_ORIGINS;
+		public CArray<Generic<Pickable>> ACTORS_ORIGINS;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
+					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
 				if (s.HasFlags(SerializeFlags.Flags6)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
+					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
 				if (s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
-					SerializeField(s, nameof(DEPENDENCIES));
-					SerializeField(s, nameof(MUSIC_THEME_PATH));
+					DEPENDENCIES = s.SerializeObject<CArray<Path>>(DEPENDENCIES, name: "DEPENDENCIES");
+					MUSIC_THEME_PATH = s.SerializeObject<Path>(MUSIC_THEME_PATH, name: "MUSIC_THEME_PATH");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(FRISE_ORIGINS));
-					SerializeField(s, nameof(ACTORS_ORIGINS));
-					SerializeField(s, nameof(friezeConnections));
-					SerializeField(s, nameof(MUSIC_THEME));
+					FRISE_ORIGINS = s.SerializeObject<CArray<Generic<Pickable>>>(FRISE_ORIGINS, name: "FRISE_ORIGINS");
+					ACTORS_ORIGINS = s.SerializeObject<CArray<Generic<Pickable>>>(ACTORS_ORIGINS, name: "ACTORS_ORIGINS");
+					friezeConnections = s.SerializeObject<CList<FriezeConnectionResult>>(friezeConnections, name: "friezeConnections");
+					MUSIC_THEME = s.SerializeObject<StringID>(MUSIC_THEME, name: "MUSIC_THEME");
 				}
 			} else if (Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
+					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
 				if (s.HasFlags(SerializeFlags.Flags6)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
+					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
 				if (s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
-					SerializeField(s, nameof(DEPENDENCIES));
-					SerializeField(s, nameof(MUSIC_THEME_PATH));
+					DEPENDENCIES = s.SerializeObject<CArray<Path>>(DEPENDENCIES, name: "DEPENDENCIES");
+					MUSIC_THEME_PATH = s.SerializeObject<Path>(MUSIC_THEME_PATH, name: "MUSIC_THEME_PATH");
 				} else if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(TABS));
-					SerializeField(s, nameof(GRIDUNIT));
-					SerializeField(s, nameof(PLATFORM_FILTER));
+					TABS = s.SerializeObject<CList<Path>>(TABS, name: "TABS");
+					GRIDUNIT = s.Serialize<float>(GRIDUNIT, name: "GRIDUNIT");
+					PLATFORM_FILTER = s.SerializeObject<TargetFilterList>(PLATFORM_FILTER, name: "PLATFORM_FILTER");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(FRISE_ORIGINS));
-					SerializeField(s, nameof(ACTORS_ORIGINS));
-					SerializeField(s, nameof(friezeConnections));
-					SerializeField(s, nameof(MUSIC_THEME));
+					FRISE_ORIGINS = s.SerializeObject<CArray<Generic<Pickable>>>(FRISE_ORIGINS, name: "FRISE_ORIGINS");
+					ACTORS_ORIGINS = s.SerializeObject<CArray<Generic<Pickable>>>(ACTORS_ORIGINS, name: "ACTORS_ORIGINS");
+					friezeConnections = s.SerializeObject<CList<FriezeConnectionResult>>(friezeConnections, name: "friezeConnections");
+					MUSIC_THEME = s.SerializeObject<StringID>(MUSIC_THEME, name: "MUSIC_THEME");
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
+					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
 				if (s.HasFlags(SerializeFlags.Flags6)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
+					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
 				if (s.HasFlags(SerializeFlags.Flags9)) {
-					SerializeField(s, nameof(TABS));
-					SerializeField(s, nameof(GRIDUNIT));
-					SerializeField(s, nameof(DEPTH_SEPARATOR));
-					SerializeField(s, nameof(NEAR_SEPARATOR));
-					SerializeField(s, nameof(FAR_SEPARATOR));
-					SerializeField(s, nameof(PLATFORM_FILTER));
+					TABS = s.SerializeObject<CList<Path>>(TABS, name: "TABS");
+					GRIDUNIT = s.Serialize<float>(GRIDUNIT, name: "GRIDUNIT");
+					DEPTH_SEPARATOR = s.Serialize<int>(DEPTH_SEPARATOR, name: "DEPTH_SEPARATOR");
+					NEAR_SEPARATOR = s.SerializeObject<Matrix44>(NEAR_SEPARATOR, name: "NEAR_SEPARATOR");
+					FAR_SEPARATOR = s.SerializeObject<Matrix44>(FAR_SEPARATOR, name: "FAR_SEPARATOR");
+					PLATFORM_FILTER = s.SerializeObject<TargetFilterList>(PLATFORM_FILTER, name: "PLATFORM_FILTER");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(DEPENDENCIES));
+					DEPENDENCIES = s.SerializeObject<CArray<Path>>(DEPENDENCIES, name: "DEPENDENCIES");
 				}
-				SerializeField(s, nameof(FRISE));
-				SerializeField(s, nameof(METAFRIEZE));
-				SerializeField(s, nameof(ACTORS));
-				SerializeField(s, nameof(friezeConnections));
-				SerializeField(s, nameof(sceneConfigs));
+				FRISE = s.SerializeObject<CList<Frise>>(FRISE, name: "FRISE");
+				METAFRIEZE = s.SerializeObject<CList<MetaFrieze>>(METAFRIEZE, name: "METAFRIEZE");
+				ACTORS = s.SerializeObject<CArray<Generic<Actor>>>(ACTORS, name: "ACTORS");
+				friezeConnections = s.SerializeObject<CList<FriezeConnectionResult>>(friezeConnections, name: "friezeConnections");
+				sceneConfigs = s.SerializeObject<SceneConfigs>(sceneConfigs, name: "sceneConfigs");
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
+					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
 				if (s.HasFlags(SerializeFlags.Flags6)) {
-					SerializeField(s, nameof(ENGINE_VERSION));
+					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(DEPENDENCIES));
+					DEPENDENCIES = s.SerializeObject<CArray<Path>>(DEPENDENCIES, name: "DEPENDENCIES");
 				}
-				SerializeField(s, nameof(FRISE));
-				SerializeField(s, nameof(METAFRIEZE));
-				SerializeField(s, nameof(ACTORS));
-				SerializeField(s, nameof(friezeConnections));
-				SerializeField(s, nameof(sceneConfigs));
+				FRISE = s.SerializeObject<CList<Frise>>(FRISE, name: "FRISE");
+				METAFRIEZE = s.SerializeObject<CList<MetaFrieze>>(METAFRIEZE, name: "METAFRIEZE");
+				ACTORS = s.SerializeObject<CArray<Generic<Actor>>>(ACTORS, name: "ACTORS");
+				friezeConnections = s.SerializeObject<CList<FriezeConnectionResult>>(friezeConnections, name: "friezeConnections");
+				sceneConfigs = s.SerializeObject<SceneConfigs>(sceneConfigs, name: "sceneConfigs");
 			}
 		}
 		public override uint? ClassCRC => 0x0C75B172;

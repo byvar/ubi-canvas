@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EdgeData : CSerializable {
-		[Serialize("Level"           )] public float Level;
-		[Serialize("Pos"             )] public float Pos;
-		[Serialize("Way"             )] public int Way;
-		[Serialize("CutUV"           )] public bool CutUV;
-		[Serialize("HeightScale"     )] public float HeightScale;
-		[Serialize("HeightScaleTotal")] public float HeightScaleTotal;
-		[Serialize("HeightPos"       )] public float HeightPos;
-		[Serialize("PosZ"            )] public float PosZ;
+		public float Level;
+		public float Pos;
+		public int Way;
+		public bool CutUV;
+		public float HeightScale;
+		public float HeightScaleTotal;
+		public float HeightPos;
+		public float PosZ;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Level));
-			SerializeField(s, nameof(Pos));
-			SerializeField(s, nameof(Way));
-			SerializeField(s, nameof(CutUV));
-			SerializeField(s, nameof(HeightScale));
-			SerializeField(s, nameof(HeightScaleTotal));
-			SerializeField(s, nameof(HeightPos));
-			SerializeField(s, nameof(PosZ));
+			Level = s.Serialize<float>(Level, name: "Level");
+			Pos = s.Serialize<float>(Pos, name: "Pos");
+			Way = s.Serialize<int>(Way, name: "Way");
+			CutUV = s.Serialize<bool>(CutUV, name: "CutUV");
+			HeightScale = s.Serialize<float>(HeightScale, name: "HeightScale");
+			HeightScaleTotal = s.Serialize<float>(HeightScaleTotal, name: "HeightScaleTotal");
+			HeightPos = s.Serialize<float>(HeightPos, name: "HeightPos");
+			PosZ = s.Serialize<float>(PosZ, name: "PosZ");
 		}
 	}
 }

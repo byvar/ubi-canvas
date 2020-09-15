@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_24_sub_702B30 : CSerializable {
-		[Serialize("enterShape"           )] public Placeholder enterShape;
-		[Serialize("enterPoint0"          )] public Vec2d enterPoint0;
-		[Serialize("enterPoint1"          )] public Vec2d enterPoint1;
-		[Serialize("playerSpeedMultiplier")] public float playerSpeedMultiplier;
-		[Serialize("travelSpeed"          )] public float travelSpeed;
-		[Serialize("scale"                )] public float scale;
-		[Serialize("catchCooldown"        )] public float catchCooldown;
+		public Placeholder enterShape;
+		public Vec2d enterPoint0;
+		public Vec2d enterPoint1;
+		public float playerSpeedMultiplier;
+		public float travelSpeed;
+		public float scale;
+		public float catchCooldown;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enterShape));
-			SerializeField(s, nameof(enterPoint0));
-			SerializeField(s, nameof(enterPoint1));
-			SerializeField(s, nameof(playerSpeedMultiplier));
-			SerializeField(s, nameof(travelSpeed));
-			SerializeField(s, nameof(scale));
-			SerializeField(s, nameof(catchCooldown));
+			enterShape = s.SerializeObject<Placeholder>(enterShape, name: "enterShape");
+			enterPoint0 = s.SerializeObject<Vec2d>(enterPoint0, name: "enterPoint0");
+			enterPoint1 = s.SerializeObject<Vec2d>(enterPoint1, name: "enterPoint1");
+			playerSpeedMultiplier = s.Serialize<float>(playerSpeedMultiplier, name: "playerSpeedMultiplier");
+			travelSpeed = s.Serialize<float>(travelSpeed, name: "travelSpeed");
+			scale = s.Serialize<float>(scale, name: "scale");
+			catchCooldown = s.Serialize<float>(catchCooldown, name: "catchCooldown");
 		}
 		public override uint? ClassCRC => 0x8616D48B;
 	}

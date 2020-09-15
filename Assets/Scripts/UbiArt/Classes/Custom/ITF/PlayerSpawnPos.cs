@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RO)]
 	public partial class PlayerSpawnPos : CSerializable {
-		[Serialize("playerID")] public StringID playerID;
-		[Serialize("offset"  )] public Vec2d offset;
+		public StringID playerID;
+		public Vec2d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(playerID));
-			SerializeField(s, nameof(offset));
+			playerID = s.SerializeObject<StringID>(playerID, name: "playerID");
+			offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 		}
 	}
 }

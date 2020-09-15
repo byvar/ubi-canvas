@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_BTActionDash_Template : BTAction_Template {
-		[Serialize("animAnticip"         )] public StringID animAnticip;
-		[Serialize("animDash"            )] public StringID animDash;
-		[Serialize("animEndDash"         )] public StringID animEndDash;
-		[Serialize("animDashSuccess"     )] public StringID animDashSuccess;
-		[Serialize("animHitWall"         )] public StringID animHitWall;
-		[Serialize("animPullSword"       )] public StringID animPullSword;
-		[Serialize("animPullSwordToStand")] public StringID animPullSwordToStand;
-		[Serialize("animHoleStop"        )] public StringID animHoleStop;
-		[Serialize("distMaxCharge"       )] public float distMaxCharge;
-		[Serialize("timeTired"           )] public float timeTired;
-		[Serialize("timeAnticip"         )] public float timeAnticip;
-		[Serialize("timePullSword"       )] public float timePullSword;
-		[Serialize("dashEfficiency"      )] public Spline dashEfficiency;
+		public StringID animAnticip;
+		public StringID animDash;
+		public StringID animEndDash;
+		public StringID animDashSuccess;
+		public StringID animHitWall;
+		public StringID animPullSword;
+		public StringID animPullSwordToStand;
+		public StringID animHoleStop;
+		public float distMaxCharge;
+		public float timeTired;
+		public float timeAnticip;
+		public float timePullSword;
+		public Spline dashEfficiency;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animAnticip));
-			SerializeField(s, nameof(animDash));
-			SerializeField(s, nameof(animEndDash));
-			SerializeField(s, nameof(animDashSuccess));
-			SerializeField(s, nameof(animHitWall));
-			SerializeField(s, nameof(animPullSword));
-			SerializeField(s, nameof(animPullSwordToStand));
-			SerializeField(s, nameof(animHoleStop));
-			SerializeField(s, nameof(distMaxCharge));
-			SerializeField(s, nameof(timeTired));
-			SerializeField(s, nameof(timeAnticip));
-			SerializeField(s, nameof(timePullSword));
-			SerializeField(s, nameof(dashEfficiency));
+			animAnticip = s.SerializeObject<StringID>(animAnticip, name: "animAnticip");
+			animDash = s.SerializeObject<StringID>(animDash, name: "animDash");
+			animEndDash = s.SerializeObject<StringID>(animEndDash, name: "animEndDash");
+			animDashSuccess = s.SerializeObject<StringID>(animDashSuccess, name: "animDashSuccess");
+			animHitWall = s.SerializeObject<StringID>(animHitWall, name: "animHitWall");
+			animPullSword = s.SerializeObject<StringID>(animPullSword, name: "animPullSword");
+			animPullSwordToStand = s.SerializeObject<StringID>(animPullSwordToStand, name: "animPullSwordToStand");
+			animHoleStop = s.SerializeObject<StringID>(animHoleStop, name: "animHoleStop");
+			distMaxCharge = s.Serialize<float>(distMaxCharge, name: "distMaxCharge");
+			timeTired = s.Serialize<float>(timeTired, name: "timeTired");
+			timeAnticip = s.Serialize<float>(timeAnticip, name: "timeAnticip");
+			timePullSword = s.Serialize<float>(timePullSword, name: "timePullSword");
+			dashEfficiency = s.SerializeObject<Spline>(dashEfficiency, name: "dashEfficiency");
 		}
 		public override uint? ClassCRC => 0xCE1C0FF4;
 	}

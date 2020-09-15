@@ -3,89 +3,89 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Actor_Rea : ActorComponent {
-		[Serialize("float__0"                              )] public float float__0;
-		[Serialize("float__1"                              )] public float float__1;
-		[Serialize("float__2"                              )] public float float__2;
-		[Serialize("float__3"                              )] public float float__3;
-		[Serialize("float__4"                              )] public float float__4;
-		[Serialize("float__5"                              )] public float float__5;
-		[Serialize("float__6"                              )] public float float__6;
-		[Serialize("float__7"                              )] public float float__7;
-		[Serialize("bool__8"                               )] public bool bool__8;
-		[Serialize("bool__9"                               )] public bool bool__9;
-		[Serialize("bool__10"                              )] public bool bool__10;
-		[Serialize("bool__11"                              )] public bool bool__11;
-		[Serialize("bool__12"                              )] public bool bool__12;
-		[Serialize("bool__13"                              )] public bool bool__13;
-		[Serialize("float__14"                             )] public float float__14;
-		[Serialize("Vector2__15"                           )] public Vec2d Vector2__15;
-		[Serialize("bool__16"                              )] public bool bool__16;
-		[Serialize("bool__17"                              )] public bool bool__17;
-		[Serialize("bool__18"                              )] public bool bool__18;
-		[Serialize("CArray<W1W_Actor_Rea.AvoidHitType>__19")] public CArray<W1W_Actor_Rea.AvoidHitType> CArray_W1W_Actor_Rea_AvoidHitType__19;
-		[Serialize("EventSender__20"                       )] public EventSender EventSender__20;
-		[Serialize("EventSender__21"                       )] public EventSender EventSender__21;
-		[Serialize("Path__22"                              )] public Path Path__22;
-		[Serialize("CArray<W1W_Actor_Rea.spawnStruct>__23" )] public CArray<W1W_Actor_Rea.spawnStruct> CArray_W1W_Actor_Rea_spawnStruct__23;
-		[Serialize("Vector3__24"                           )] public Vec3d Vector3__24;
-		[Serialize("StringID__25"                          )] public StringID StringID__25;
-		[Serialize("bool__26"                              )] public bool bool__26;
-		[Serialize("bool__27"                              )] public bool bool__27;
-		[Serialize("bool__28"                              )] public bool bool__28;
-		[Serialize("Enum_VH_0__29"                         )] public Enum_VH_0 Enum_VH_0__29;
-		[Serialize("W1W_Actor_Rea.Orientation_Link__30"    )] public W1W_Actor_Rea.Orientation_Link W1W_Actor_Rea_Orientation_Link__30;
-		[Serialize("W1W_Actor_Rea.Orientation_MC__31"      )] public W1W_Actor_Rea.Orientation_MC W1W_Actor_Rea_Orientation_MC__31;
-		[Serialize("Angle__32"                             )] public Angle Angle__32;
-		[Serialize("W1W_Actor_Rea.Orientation_Angle__33"   )] public W1W_Actor_Rea.Orientation_Angle W1W_Actor_Rea_Orientation_Angle__33;
-		[Serialize("Path__34"                              )] public Path Path__34;
-		[Serialize("bool__35"                              )] public bool bool__35;
+		public float float__0;
+		public float float__1;
+		public float float__2;
+		public float float__3;
+		public float float__4;
+		public float float__5;
+		public float float__6;
+		public float float__7;
+		public bool bool__8;
+		public bool bool__9;
+		public bool bool__10;
+		public bool bool__11;
+		public bool bool__12;
+		public bool bool__13;
+		public float float__14;
+		public Vec2d Vector2__15;
+		public bool bool__16;
+		public bool bool__17;
+		public bool bool__18;
+		public CArray<W1W_Actor_Rea.AvoidHitType> CArray_W1W_Actor_Rea_AvoidHitType__19;
+		public EventSender EventSender__20;
+		public EventSender EventSender__21;
+		public Path Path__22;
+		public CArray<W1W_Actor_Rea.spawnStruct> CArray_W1W_Actor_Rea_spawnStruct__23;
+		public Vec3d Vector3__24;
+		public StringID StringID__25;
+		public bool bool__26;
+		public bool bool__27;
+		public bool bool__28;
+		public Enum_VH_0 Enum_VH_0__29;
+		public W1W_Actor_Rea.Orientation_Link W1W_Actor_Rea_Orientation_Link__30;
+		public W1W_Actor_Rea.Orientation_MC W1W_Actor_Rea_Orientation_MC__31;
+		public Angle Angle__32;
+		public W1W_Actor_Rea.Orientation_Angle W1W_Actor_Rea_Orientation_Angle__33;
+		public Path Path__34;
+		public bool bool__35;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(float__0));
-				SerializeField(s, nameof(float__1));
-				SerializeField(s, nameof(float__2));
-				SerializeField(s, nameof(float__3));
-				SerializeField(s, nameof(float__4));
-				SerializeField(s, nameof(float__5));
-				SerializeField(s, nameof(float__6));
-				SerializeField(s, nameof(float__7));
-				SerializeField(s, nameof(bool__8));
-				SerializeField(s, nameof(bool__9));
-				SerializeField(s, nameof(bool__10));
-				SerializeField(s, nameof(bool__11));
-				SerializeField(s, nameof(bool__12));
-				SerializeField(s, nameof(bool__13));
-				SerializeField(s, nameof(float__14));
-				SerializeField(s, nameof(Vector2__15));
-				SerializeField(s, nameof(bool__16));
-				SerializeField(s, nameof(bool__17));
-				SerializeField(s, nameof(bool__18));
-				SerializeField(s, nameof(CArray_W1W_Actor_Rea_AvoidHitType__19));
-				SerializeField(s, nameof(EventSender__20));
-				SerializeField(s, nameof(EventSender__21));
-				SerializeField(s, nameof(Path__22));
-				SerializeField(s, nameof(CArray_W1W_Actor_Rea_spawnStruct__23));
-				SerializeField(s, nameof(Vector3__24));
-				SerializeField(s, nameof(StringID__25));
-				SerializeField(s, nameof(bool__26));
-				SerializeField(s, nameof(bool__27));
-				SerializeField(s, nameof(bool__28));
-				SerializeField(s, nameof(Enum_VH_0__29));
-				SerializeField(s, nameof(W1W_Actor_Rea_Orientation_Link__30));
-				SerializeField(s, nameof(W1W_Actor_Rea_Orientation_MC__31));
-				SerializeField(s, nameof(Angle__32));
-				SerializeField(s, nameof(W1W_Actor_Rea_Orientation_Angle__33));
-				SerializeField(s, nameof(Path__34));
-				SerializeField(s, nameof(bool__35));
+				float__0 = s.Serialize<float>(float__0, name: "float__0");
+				float__1 = s.Serialize<float>(float__1, name: "float__1");
+				float__2 = s.Serialize<float>(float__2, name: "float__2");
+				float__3 = s.Serialize<float>(float__3, name: "float__3");
+				float__4 = s.Serialize<float>(float__4, name: "float__4");
+				float__5 = s.Serialize<float>(float__5, name: "float__5");
+				float__6 = s.Serialize<float>(float__6, name: "float__6");
+				float__7 = s.Serialize<float>(float__7, name: "float__7");
+				bool__8 = s.Serialize<bool>(bool__8, name: "bool__8");
+				bool__9 = s.Serialize<bool>(bool__9, name: "bool__9");
+				bool__10 = s.Serialize<bool>(bool__10, name: "bool__10");
+				bool__11 = s.Serialize<bool>(bool__11, name: "bool__11");
+				bool__12 = s.Serialize<bool>(bool__12, name: "bool__12");
+				bool__13 = s.Serialize<bool>(bool__13, name: "bool__13");
+				float__14 = s.Serialize<float>(float__14, name: "float__14");
+				Vector2__15 = s.SerializeObject<Vec2d>(Vector2__15, name: "Vector2__15");
+				bool__16 = s.Serialize<bool>(bool__16, name: "bool__16");
+				bool__17 = s.Serialize<bool>(bool__17, name: "bool__17");
+				bool__18 = s.Serialize<bool>(bool__18, name: "bool__18");
+				CArray_W1W_Actor_Rea_AvoidHitType__19 = s.SerializeObject<CArray<W1W_Actor_Rea.AvoidHitType>>(CArray_W1W_Actor_Rea_AvoidHitType__19, name: "CArray_W1W_Actor_Rea_AvoidHitType__19");
+				EventSender__20 = s.SerializeObject<EventSender>(EventSender__20, name: "EventSender__20");
+				EventSender__21 = s.SerializeObject<EventSender>(EventSender__21, name: "EventSender__21");
+				Path__22 = s.SerializeObject<Path>(Path__22, name: "Path__22");
+				CArray_W1W_Actor_Rea_spawnStruct__23 = s.SerializeObject<CArray<W1W_Actor_Rea.spawnStruct>>(CArray_W1W_Actor_Rea_spawnStruct__23, name: "CArray_W1W_Actor_Rea_spawnStruct__23");
+				Vector3__24 = s.SerializeObject<Vec3d>(Vector3__24, name: "Vector3__24");
+				StringID__25 = s.SerializeObject<StringID>(StringID__25, name: "StringID__25");
+				bool__26 = s.Serialize<bool>(bool__26, name: "bool__26");
+				bool__27 = s.Serialize<bool>(bool__27, name: "bool__27");
+				bool__28 = s.Serialize<bool>(bool__28, name: "bool__28");
+				Enum_VH_0__29 = s.Serialize<Enum_VH_0>(Enum_VH_0__29, name: "Enum_VH_0__29");
+				W1W_Actor_Rea_Orientation_Link__30 = s.SerializeObject<W1W_Actor_Rea.Orientation_Link>(W1W_Actor_Rea_Orientation_Link__30, name: "W1W_Actor_Rea_Orientation_Link__30");
+				W1W_Actor_Rea_Orientation_MC__31 = s.SerializeObject<W1W_Actor_Rea.Orientation_MC>(W1W_Actor_Rea_Orientation_MC__31, name: "W1W_Actor_Rea_Orientation_MC__31");
+				Angle__32 = s.SerializeObject<Angle>(Angle__32, name: "Angle__32");
+				W1W_Actor_Rea_Orientation_Angle__33 = s.SerializeObject<W1W_Actor_Rea.Orientation_Angle>(W1W_Actor_Rea_Orientation_Angle__33, name: "W1W_Actor_Rea_Orientation_Angle__33");
+				Path__34 = s.SerializeObject<Path>(Path__34, name: "Path__34");
+				bool__35 = s.Serialize<bool>(bool__35, name: "bool__35");
 			}
 		}
 		[Games(GameFlags.VH)]
 		public partial class AvoidHitType : CSerializable {
-			[Serialize("Enum_VH_0__0")] public Enum_VH_0 Enum_VH_0__0;
+			public Enum_VH_0 Enum_VH_0__0;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(Enum_VH_0__0));
+				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
 			}
 			public enum Enum_VH_0 {
 				[Serialize("Value_0"  )] Value_0 = 0,
@@ -105,28 +105,28 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.VH)]
 		public partial class spawnStruct : CSerializable {
-			[Serialize("Path__0"    )] public Path Path__0;
-			[Serialize("StringID__1")] public StringID StringID__1;
+			public Path Path__0;
+			public StringID StringID__1;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(Path__0));
-				SerializeField(s, nameof(StringID__1));
+				Path__0 = s.SerializeObject<Path>(Path__0, name: "Path__0");
+				StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
 			}
 		}
 		[Games(GameFlags.VH)]
 		public partial class Orientation_Angle : CSerializable {
-			[Serialize("Angle__0")] public Angle Angle__0;
+			public Angle Angle__0;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(Angle__0));
+				Angle__0 = s.SerializeObject<Angle>(Angle__0, name: "Angle__0");
 			}
 		}
 		[Games(GameFlags.VH)]
 		public partial class Orientation_Link : CSerializable {
-			[Serialize("StringID__0")] public StringID StringID__0;
+			public StringID StringID__0;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(StringID__0));
+				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
 			}
 		}
 		[Games(GameFlags.VH)]

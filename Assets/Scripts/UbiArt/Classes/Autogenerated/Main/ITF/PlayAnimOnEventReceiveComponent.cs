@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class PlayAnimOnEventReceiveComponent : ActorComponent {
-		[Serialize("disabledAfterEvent"        )] public bool disabledAfterEvent;
-		[Serialize("playingEventCheckpointSave")] public bool playingEventCheckpointSave;
-		[Serialize("eventIdlePlayed"           )] public int eventIdlePlayed;
+		public bool disabledAfterEvent;
+		public bool playingEventCheckpointSave;
+		public int eventIdlePlayed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(disabledAfterEvent));
-					SerializeField(s, nameof(playingEventCheckpointSave));
-					SerializeField(s, nameof(eventIdlePlayed));
+					disabledAfterEvent = s.Serialize<bool>(disabledAfterEvent, name: "disabledAfterEvent");
+					playingEventCheckpointSave = s.Serialize<bool>(playingEventCheckpointSave, name: "playingEventCheckpointSave");
+					eventIdlePlayed = s.Serialize<int>(eventIdlePlayed, name: "eventIdlePlayed");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(disabledAfterEvent));
-					SerializeField(s, nameof(playingEventCheckpointSave));
+					disabledAfterEvent = s.Serialize<bool>(disabledAfterEvent, name: "disabledAfterEvent");
+					playingEventCheckpointSave = s.Serialize<bool>(playingEventCheckpointSave, name: "playingEventCheckpointSave");
 				}
 			}
 		}

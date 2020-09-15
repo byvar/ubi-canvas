@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LaserDetectorComponent : ActorComponent {
-		[Serialize("Length"            )] public float Length;
-		[Serialize("DetectedSizeEffect")] public float DetectedSizeEffect;
-		[Serialize("DelaiInactive"     )] public float DelaiInactive;
-		[Serialize("LaserSendPafAlone" )] public bool LaserSendPafAlone;
+		public float Length;
+		public float DetectedSizeEffect;
+		public float DelaiInactive;
+		public bool LaserSendPafAlone;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Length));
-			SerializeField(s, nameof(DetectedSizeEffect));
-			SerializeField(s, nameof(DelaiInactive));
-			SerializeField(s, nameof(LaserSendPafAlone));
+			Length = s.Serialize<float>(Length, name: "Length");
+			DetectedSizeEffect = s.Serialize<float>(DetectedSizeEffect, name: "DetectedSizeEffect");
+			DelaiInactive = s.Serialize<float>(DelaiInactive, name: "DelaiInactive");
+			LaserSendPafAlone = s.Serialize<bool>(LaserSendPafAlone, name: "LaserSendPafAlone");
 		}
 		public override uint? ClassCRC => 0xD6AE6B90;
 	}

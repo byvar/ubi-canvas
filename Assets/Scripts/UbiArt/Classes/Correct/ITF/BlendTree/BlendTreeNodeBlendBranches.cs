@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class BlendTreeNodeBlendBranches<T> : BlendTreeNodeBlend<T> {
-		[Serialize("leafData")] public CList<BlendLeaf> leafData;
+		public CList<BlendLeaf> leafData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(leafData));
+			leafData = s.SerializeObject<CList<BlendLeaf>>(leafData, name: "leafData");
 		}
 		public override uint? ClassCRC => 0x26E3AEE1;
 

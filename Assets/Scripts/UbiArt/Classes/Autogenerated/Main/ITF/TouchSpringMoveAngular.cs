@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class TouchSpringMoveAngular : TouchSpringMoveBase {
-		[Serialize("totalAngle"     )] public Angle totalAngle;
-		[Serialize("minAngleLimit"  )] public Angle minAngleLimit;
-		[Serialize("maxAngleLimit"  )] public Angle maxAngleLimit;
-		[Serialize("initAngle"      )] public Angle initAngle;
-		[Serialize("axisOffsetAngle")] public Angle axisOffsetAngle;
+		public Angle totalAngle;
+		public Angle minAngleLimit;
+		public Angle maxAngleLimit;
+		public Angle initAngle;
+		public Angle axisOffsetAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(totalAngle));
-			SerializeField(s, nameof(minAngleLimit));
-			SerializeField(s, nameof(maxAngleLimit));
-			SerializeField(s, nameof(initAngle));
-			SerializeField(s, nameof(axisOffsetAngle));
+			totalAngle = s.SerializeObject<Angle>(totalAngle, name: "totalAngle");
+			minAngleLimit = s.SerializeObject<Angle>(minAngleLimit, name: "minAngleLimit");
+			maxAngleLimit = s.SerializeObject<Angle>(maxAngleLimit, name: "maxAngleLimit");
+			initAngle = s.SerializeObject<Angle>(initAngle, name: "initAngle");
+			axisOffsetAngle = s.SerializeObject<Angle>(axisOffsetAngle, name: "axisOffsetAngle");
 		}
 		public override uint? ClassCRC => 0x81E5A7CA;
 	}

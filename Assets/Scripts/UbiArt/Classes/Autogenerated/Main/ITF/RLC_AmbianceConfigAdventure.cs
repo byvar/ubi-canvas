@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfigAdventure : RLC_AmbianceConfig {
-		[Serialize("GraphicalFamily")] public Enum_GraphicalFamily GraphicalFamily;
+		public Enum_GraphicalFamily GraphicalFamily;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(GraphicalFamily));
+			GraphicalFamily = s.Serialize<Enum_GraphicalFamily>(GraphicalFamily, name: "GraphicalFamily");
 		}
 		public enum Enum_GraphicalFamily {
 			[Serialize("_unknown"     )] _unknown = 0,

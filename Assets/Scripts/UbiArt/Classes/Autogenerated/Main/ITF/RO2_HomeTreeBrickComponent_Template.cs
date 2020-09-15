@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_HomeTreeBrickComponent_Template : ActorComponent_Template {
-		[Serialize("editor_stepCount" )] public uint editor_stepCount;
-		[Serialize("editor_minGrowth" )] public float editor_minGrowth;
-		[Serialize("editor_brickSize" )] public Vec2d editor_brickSize;
-		[Serialize("editor_trunkWidth")] public float editor_trunkWidth;
+		public uint editor_stepCount;
+		public float editor_minGrowth;
+		public Vec2d editor_brickSize;
+		public float editor_trunkWidth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(editor_stepCount));
-			SerializeField(s, nameof(editor_minGrowth));
-			SerializeField(s, nameof(editor_brickSize));
-			SerializeField(s, nameof(editor_trunkWidth));
+			editor_stepCount = s.Serialize<uint>(editor_stepCount, name: "editor_stepCount");
+			editor_minGrowth = s.Serialize<float>(editor_minGrowth, name: "editor_minGrowth");
+			editor_brickSize = s.SerializeObject<Vec2d>(editor_brickSize, name: "editor_brickSize");
+			editor_trunkWidth = s.Serialize<float>(editor_trunkWidth, name: "editor_trunkWidth");
 		}
 		public override uint? ClassCRC => 0xD1777642;
 	}

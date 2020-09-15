@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BubbleAiComponent_Template : RO2_AIComponent_Template {
-		[Serialize("scaleSpeed"     )] public float scaleSpeed;
-		[Serialize("fastScaleSpeed" )] public float fastScaleSpeed;
-		[Serialize("minScale"       )] public float minScale;
-		[Serialize("maxScale"       )] public float maxScale;
-		[Serialize("snapBone"       )] public StringID snapBone;
-		[Serialize("ownerSnapBone"  )] public StringID ownerSnapBone;
-		[Serialize("DRC_catchRadius")] public float DRC_catchRadius;
-		[Serialize("DRC_forceCoeff" )] public float DRC_forceCoeff;
-		[Serialize("faction"        )] public uint faction2;
-		[Serialize("bubbleBehavior" )] public Generic<RO2_AIBubbleDeathBehavior_Template> bubbleBehavior;
+		public float scaleSpeed;
+		public float fastScaleSpeed;
+		public float minScale;
+		public float maxScale;
+		public StringID snapBone;
+		public StringID ownerSnapBone;
+		public float DRC_catchRadius;
+		public float DRC_forceCoeff;
+		public uint faction2;
+		public Generic<RO2_AIBubbleDeathBehavior_Template> bubbleBehavior;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(scaleSpeed));
-			SerializeField(s, nameof(fastScaleSpeed));
-			SerializeField(s, nameof(minScale));
-			SerializeField(s, nameof(maxScale));
-			SerializeField(s, nameof(snapBone));
-			SerializeField(s, nameof(ownerSnapBone));
-			SerializeField(s, nameof(DRC_catchRadius));
-			SerializeField(s, nameof(DRC_forceCoeff));
-			SerializeField(s, nameof(faction2));
-			SerializeField(s, nameof(bubbleBehavior));
+			scaleSpeed = s.Serialize<float>(scaleSpeed, name: "scaleSpeed");
+			fastScaleSpeed = s.Serialize<float>(fastScaleSpeed, name: "fastScaleSpeed");
+			minScale = s.Serialize<float>(minScale, name: "minScale");
+			maxScale = s.Serialize<float>(maxScale, name: "maxScale");
+			snapBone = s.SerializeObject<StringID>(snapBone, name: "snapBone");
+			ownerSnapBone = s.SerializeObject<StringID>(ownerSnapBone, name: "ownerSnapBone");
+			DRC_catchRadius = s.Serialize<float>(DRC_catchRadius, name: "DRC_catchRadius");
+			DRC_forceCoeff = s.Serialize<float>(DRC_forceCoeff, name: "DRC_forceCoeff");
+			faction2 = s.Serialize<uint>(faction2, name: "faction2");
+			bubbleBehavior = s.SerializeObject<Generic<RO2_AIBubbleDeathBehavior_Template>>(bubbleBehavior, name: "bubbleBehavior");
 		}
 		public override uint? ClassCRC => 0x0F730A08;
 	}

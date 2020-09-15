@@ -3,51 +3,51 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class PlayerDetectorComponent_Template : ShapeDetectorComponent_Template {
-		[Serialize("allowDeadActors"        )] public bool allowDeadActors;
-		[Serialize("firstPlayerOnly"        )] public bool firstPlayerOnly;
-		[Serialize("allPlayerInMode"        )] public uint allPlayerInMode;
-		[Serialize("maxDetectionRadius"     )] public float maxDetectionRadius;
-		[Serialize("allowTouchScreenPlayer" )] public bool allowTouchScreenPlayer;
-		[Serialize("ignoreZ"                )] public bool ignoreZ;
-		[Serialize("drcPlayerOnly"          )] public bool drcPlayerOnly;
-		[Serialize("detectPivotOnly"        )] public bool detectPivotOnly;
-		[Serialize("playerId"               )] public int playerId;
-		[Serialize("playerToDetect"         )] public int playerToDetect;
-		[Serialize("allowAIControlledPlayer")] public bool allowAIControlledPlayer;
+		public bool allowDeadActors;
+		public bool firstPlayerOnly;
+		public uint allPlayerInMode;
+		public float maxDetectionRadius;
+		public bool allowTouchScreenPlayer;
+		public bool ignoreZ;
+		public bool drcPlayerOnly;
+		public bool detectPivotOnly;
+		public int playerId;
+		public int playerToDetect;
+		public bool allowAIControlledPlayer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(playerId));
-				SerializeField(s, nameof(allowDeadActors));
-				SerializeField(s, nameof(firstPlayerOnly));
-				SerializeField(s, nameof(allPlayerInMode));
-				SerializeField(s, nameof(maxDetectionRadius));
+				playerId = s.Serialize<int>(playerId, name: "playerId");
+				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
+				firstPlayerOnly = s.Serialize<bool>(firstPlayerOnly, name: "firstPlayerOnly");
+				allPlayerInMode = s.Serialize<uint>(allPlayerInMode, name: "allPlayerInMode");
+				maxDetectionRadius = s.Serialize<float>(maxDetectionRadius, name: "maxDetectionRadius");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(allowDeadActors));
-				SerializeField(s, nameof(firstPlayerOnly));
-				SerializeField(s, nameof(allPlayerInMode));
-				SerializeField(s, nameof(maxDetectionRadius));
-				SerializeField(s, nameof(allowTouchScreenPlayer));
-				SerializeField(s, nameof(ignoreZ));
-				SerializeField(s, nameof(drcPlayerOnly));
+				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
+				firstPlayerOnly = s.Serialize<bool>(firstPlayerOnly, name: "firstPlayerOnly");
+				allPlayerInMode = s.Serialize<uint>(allPlayerInMode, name: "allPlayerInMode");
+				maxDetectionRadius = s.Serialize<float>(maxDetectionRadius, name: "maxDetectionRadius");
+				allowTouchScreenPlayer = s.Serialize<bool>(allowTouchScreenPlayer, name: "allowTouchScreenPlayer");
+				ignoreZ = s.Serialize<bool>(ignoreZ, name: "ignoreZ");
+				drcPlayerOnly = s.Serialize<bool>(drcPlayerOnly, name: "drcPlayerOnly");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(allowDeadActors));
-				SerializeField(s, nameof(playerToDetect));
-				SerializeField(s, nameof(allPlayerInMode));
-				SerializeField(s, nameof(maxDetectionRadius));
-				SerializeField(s, nameof(allowTouchScreenPlayer));
-				SerializeField(s, nameof(allowAIControlledPlayer));
-				SerializeField(s, nameof(ignoreZ));
-				SerializeField(s, nameof(drcPlayerOnly));
+				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
+				playerToDetect = s.Serialize<int>(playerToDetect, name: "playerToDetect");
+				allPlayerInMode = s.Serialize<uint>(allPlayerInMode, name: "allPlayerInMode");
+				maxDetectionRadius = s.Serialize<float>(maxDetectionRadius, name: "maxDetectionRadius");
+				allowTouchScreenPlayer = s.Serialize<bool>(allowTouchScreenPlayer, name: "allowTouchScreenPlayer");
+				allowAIControlledPlayer = s.Serialize<bool>(allowAIControlledPlayer, name: "allowAIControlledPlayer");
+				ignoreZ = s.Serialize<bool>(ignoreZ, name: "ignoreZ");
+				drcPlayerOnly = s.Serialize<bool>(drcPlayerOnly, name: "drcPlayerOnly");
 			} else {
-				SerializeField(s, nameof(allowDeadActors));
-				SerializeField(s, nameof(firstPlayerOnly));
-				SerializeField(s, nameof(allPlayerInMode));
-				SerializeField(s, nameof(maxDetectionRadius));
-				SerializeField(s, nameof(allowTouchScreenPlayer));
-				SerializeField(s, nameof(ignoreZ));
-				SerializeField(s, nameof(drcPlayerOnly));
-				SerializeField(s, nameof(detectPivotOnly));
+				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
+				firstPlayerOnly = s.Serialize<bool>(firstPlayerOnly, name: "firstPlayerOnly");
+				allPlayerInMode = s.Serialize<uint>(allPlayerInMode, name: "allPlayerInMode");
+				maxDetectionRadius = s.Serialize<float>(maxDetectionRadius, name: "maxDetectionRadius");
+				allowTouchScreenPlayer = s.Serialize<bool>(allowTouchScreenPlayer, name: "allowTouchScreenPlayer");
+				ignoreZ = s.Serialize<bool>(ignoreZ, name: "ignoreZ");
+				drcPlayerOnly = s.Serialize<bool>(drcPlayerOnly, name: "drcPlayerOnly");
+				detectPivotOnly = s.Serialize<bool>(detectPivotOnly, name: "detectPivotOnly");
 			}
 		}
 		public override uint? ClassCRC => 0x3A92D482;

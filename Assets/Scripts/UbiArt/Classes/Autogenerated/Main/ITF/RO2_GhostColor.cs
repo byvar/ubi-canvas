@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_GhostColor : CSerializable {
-		[Serialize("colorConfigName"        )] public StringID colorConfigName;
-		[Serialize("ghostFactorColorDefault")] public Color ghostFactorColorDefault;
-		[Serialize("ghostFactorColorMin"    )] public Color ghostFactorColorMin;
-		[Serialize("ghostFactorColorMax"    )] public Color ghostFactorColorMax;
-		[Serialize("ghostFogColorDefault"   )] public Color ghostFogColorDefault;
-		[Serialize("ghostFogColorMin"       )] public Color ghostFogColorMin;
-		[Serialize("ghostFogColorMax"       )] public Color ghostFogColorMax;
-		[Serialize("ghostDistColorMin"      )] public float ghostDistColorMin;
-		[Serialize("ghostDistColorMax"      )] public float ghostDistColorMax;
+		public StringID colorConfigName;
+		public Color ghostFactorColorDefault;
+		public Color ghostFactorColorMin;
+		public Color ghostFactorColorMax;
+		public Color ghostFogColorDefault;
+		public Color ghostFogColorMin;
+		public Color ghostFogColorMax;
+		public float ghostDistColorMin;
+		public float ghostDistColorMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(colorConfigName));
-			SerializeField(s, nameof(ghostFactorColorDefault));
-			SerializeField(s, nameof(ghostFactorColorMin));
-			SerializeField(s, nameof(ghostFactorColorMax));
-			SerializeField(s, nameof(ghostFogColorDefault));
-			SerializeField(s, nameof(ghostFogColorMin));
-			SerializeField(s, nameof(ghostFogColorMax));
-			SerializeField(s, nameof(ghostDistColorMin));
-			SerializeField(s, nameof(ghostDistColorMax));
+			colorConfigName = s.SerializeObject<StringID>(colorConfigName, name: "colorConfigName");
+			ghostFactorColorDefault = s.SerializeObject<Color>(ghostFactorColorDefault, name: "ghostFactorColorDefault");
+			ghostFactorColorMin = s.SerializeObject<Color>(ghostFactorColorMin, name: "ghostFactorColorMin");
+			ghostFactorColorMax = s.SerializeObject<Color>(ghostFactorColorMax, name: "ghostFactorColorMax");
+			ghostFogColorDefault = s.SerializeObject<Color>(ghostFogColorDefault, name: "ghostFogColorDefault");
+			ghostFogColorMin = s.SerializeObject<Color>(ghostFogColorMin, name: "ghostFogColorMin");
+			ghostFogColorMax = s.SerializeObject<Color>(ghostFogColorMax, name: "ghostFogColorMax");
+			ghostDistColorMin = s.Serialize<float>(ghostDistColorMin, name: "ghostDistColorMin");
+			ghostDistColorMax = s.Serialize<float>(ghostDistColorMax, name: "ghostDistColorMax");
 		}
 	}
 }

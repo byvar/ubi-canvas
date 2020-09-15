@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class MetaFriezeParams : CSerializable {
-		[Serialize("path"       )] public Path path;
-		[Serialize("worldOffset")] public Vec3d worldOffset;
-		[Serialize("localOffset")] public float localOffset;
-		[Serialize("scale"      )] public float scale;
+		public Path path;
+		public Vec3d worldOffset;
+		public float localOffset;
+		public float scale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(path));
-			SerializeField(s, nameof(worldOffset));
-			SerializeField(s, nameof(localOffset));
-			SerializeField(s, nameof(scale));
+			path = s.SerializeObject<Path>(path, name: "path");
+			worldOffset = s.SerializeObject<Vec3d>(worldOffset, name: "worldOffset");
+			localOffset = s.Serialize<float>(localOffset, name: "localOffset");
+			scale = s.Serialize<float>(scale, name: "scale");
 		}
 	}
 }

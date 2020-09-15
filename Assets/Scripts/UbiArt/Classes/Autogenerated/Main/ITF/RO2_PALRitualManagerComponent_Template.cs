@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PALRitualManagerComponent_Template : ActorComponent_Template {
-		[Serialize("sequenceAnimation"   )] public StringID sequenceAnimation;
-		[Serialize("animVictoryPlayer"   )] public StringID animVictoryPlayer;
-		[Serialize("animStandPlayer"     )] public StringID animStandPlayer;
-		[Serialize("victoryTime"         )] public float victoryTime;
-		[Serialize("podiumBoneList"      )] public CList<StringID> podiumBoneList;
-		[Serialize("podiumBoneTeensie"   )] public StringID podiumBoneTeensie;
-		[Serialize("cameraFX"            )] public StringID cameraFX;
-		[Serialize("murphyOnGroundOffset")] public Vec3d murphyOnGroundOffset;
-		[Serialize("murphyInAirOffset"   )] public Vec3d murphyInAirOffset;
-		[Serialize("cameraOffset"        )] public Vec3d cameraOffset;
-		[Serialize("cameraOffsetInAir"   )] public Vec3d cameraOffsetInAir;
-		[Serialize("cameraBlend"         )] public float cameraBlend;
-		[Serialize("maxPlayerSpeed"      )] public float maxPlayerSpeed;
-		[Serialize("musicEvent"          )] public Generic<Event> musicEvent;
+		public StringID sequenceAnimation;
+		public StringID animVictoryPlayer;
+		public StringID animStandPlayer;
+		public float victoryTime;
+		public CList<StringID> podiumBoneList;
+		public StringID podiumBoneTeensie;
+		public StringID cameraFX;
+		public Vec3d murphyOnGroundOffset;
+		public Vec3d murphyInAirOffset;
+		public Vec3d cameraOffset;
+		public Vec3d cameraOffsetInAir;
+		public float cameraBlend;
+		public float maxPlayerSpeed;
+		public Generic<Event> musicEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sequenceAnimation));
-			SerializeField(s, nameof(animVictoryPlayer));
-			SerializeField(s, nameof(animStandPlayer));
-			SerializeField(s, nameof(victoryTime));
-			SerializeField(s, nameof(podiumBoneList));
-			SerializeField(s, nameof(podiumBoneTeensie));
-			SerializeField(s, nameof(cameraFX));
-			SerializeField(s, nameof(murphyOnGroundOffset));
-			SerializeField(s, nameof(murphyInAirOffset));
-			SerializeField(s, nameof(cameraOffset));
-			SerializeField(s, nameof(cameraOffsetInAir));
-			SerializeField(s, nameof(cameraBlend));
-			SerializeField(s, nameof(maxPlayerSpeed));
-			SerializeField(s, nameof(musicEvent));
+			sequenceAnimation = s.SerializeObject<StringID>(sequenceAnimation, name: "sequenceAnimation");
+			animVictoryPlayer = s.SerializeObject<StringID>(animVictoryPlayer, name: "animVictoryPlayer");
+			animStandPlayer = s.SerializeObject<StringID>(animStandPlayer, name: "animStandPlayer");
+			victoryTime = s.Serialize<float>(victoryTime, name: "victoryTime");
+			podiumBoneList = s.SerializeObject<CList<StringID>>(podiumBoneList, name: "podiumBoneList");
+			podiumBoneTeensie = s.SerializeObject<StringID>(podiumBoneTeensie, name: "podiumBoneTeensie");
+			cameraFX = s.SerializeObject<StringID>(cameraFX, name: "cameraFX");
+			murphyOnGroundOffset = s.SerializeObject<Vec3d>(murphyOnGroundOffset, name: "murphyOnGroundOffset");
+			murphyInAirOffset = s.SerializeObject<Vec3d>(murphyInAirOffset, name: "murphyInAirOffset");
+			cameraOffset = s.SerializeObject<Vec3d>(cameraOffset, name: "cameraOffset");
+			cameraOffsetInAir = s.SerializeObject<Vec3d>(cameraOffsetInAir, name: "cameraOffsetInAir");
+			cameraBlend = s.Serialize<float>(cameraBlend, name: "cameraBlend");
+			maxPlayerSpeed = s.Serialize<float>(maxPlayerSpeed, name: "maxPlayerSpeed");
+			musicEvent = s.SerializeObject<Generic<Event>>(musicEvent, name: "musicEvent");
 		}
 		public override uint? ClassCRC => 0xFB944847;
 	}

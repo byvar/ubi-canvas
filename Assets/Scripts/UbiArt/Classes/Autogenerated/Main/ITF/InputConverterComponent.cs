@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class InputConverterComponent : ActorComponent {
-		[Serialize("inputToListen")] public StringID inputToListen;
-		[Serialize("conversion"   )] public Enum_conversion conversion;
+		public StringID inputToListen;
+		public Enum_conversion conversion;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(inputToListen));
-				SerializeField(s, nameof(conversion));
+				inputToListen = s.SerializeObject<StringID>(inputToListen, name: "inputToListen");
+				conversion = s.Serialize<Enum_conversion>(conversion, name: "conversion");
 			}
 		}
 		public enum Enum_conversion {

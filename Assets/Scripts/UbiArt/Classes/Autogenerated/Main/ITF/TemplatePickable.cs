@@ -3,37 +3,37 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class TemplatePickable : TemplateObj {
-		[Serialize("WIP"               )] public bool WIP;
-		[Serialize("LOWUPDATE"         )] public bool LOWUPDATE;
-		[Serialize("UPDATELAYER"       )] public WorldUpdateLayer UPDATELAYER;
-		[Serialize("UPDATELAYER"       )] public WorldUpdateLayer2 UPDATELAYER2;
-		[Serialize("USEVIEWFRUSTUMFLAG")] public bool USEVIEWFRUSTUMFLAG;
-		[Serialize("ANGLE"             )] public Angle ANGLE;
-		[Serialize("SCALE"             )] public Vec2d SCALE;
-		[Serialize("ObjectFamily"      )] public uint ObjectFamily;
-		[Serialize("TAGS"              )] public CList<string> TAGS;
+		public bool WIP;
+		public bool LOWUPDATE;
+		public WorldUpdateLayer UPDATELAYER;
+		public WorldUpdateLayer2 UPDATELAYER2;
+		public bool USEVIEWFRUSTUMFLAG;
+		public Angle ANGLE;
+		public Vec2d SCALE;
+		public uint ObjectFamily;
+		public CList<string> TAGS;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(ANGLE));
-				SerializeField(s, nameof(SCALE));
-				SerializeField(s, nameof(ObjectFamily));
+				ANGLE = s.SerializeObject<Angle>(ANGLE, name: "ANGLE");
+				SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
+				ObjectFamily = s.Serialize<uint>(ObjectFamily, name: "ObjectFamily");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(TAGS));
-				SerializeField(s, nameof(WIP), boolAsByte: true);
-				SerializeField(s, nameof(LOWUPDATE), boolAsByte: true);
-				SerializeField(s, nameof(UPDATELAYER));
+				TAGS = s.SerializeObject<CList<string>>(TAGS, name: "TAGS");
+				WIP = s.Serialize<bool>(WIP, name: "WIP", options: CSerializerObject.Options.BoolAsByte);
+				LOWUPDATE = s.Serialize<bool>(LOWUPDATE, name: "LOWUPDATE", options: CSerializerObject.Options.BoolAsByte);
+				UPDATELAYER = s.Serialize<WorldUpdateLayer>(UPDATELAYER, name: "UPDATELAYER");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(TAGS));
-				SerializeField(s, nameof(WIP), boolAsByte: true);
-				SerializeField(s, nameof(LOWUPDATE), boolAsByte: true);
-				SerializeField(s, nameof(UPDATELAYER2));
+				TAGS = s.SerializeObject<CList<string>>(TAGS, name: "TAGS");
+				WIP = s.Serialize<bool>(WIP, name: "WIP", options: CSerializerObject.Options.BoolAsByte);
+				LOWUPDATE = s.Serialize<bool>(LOWUPDATE, name: "LOWUPDATE", options: CSerializerObject.Options.BoolAsByte);
+				UPDATELAYER2 = s.Serialize<WorldUpdateLayer2>(UPDATELAYER2, name: "UPDATELAYER2");
 			}  else {
-				SerializeField(s, nameof(TAGS));
-				SerializeField(s, nameof(WIP));
-				SerializeField(s, nameof(LOWUPDATE));
-				SerializeField(s, nameof(UPDATELAYER));
-				SerializeField(s, nameof(USEVIEWFRUSTUMFLAG));
+				TAGS = s.SerializeObject<CList<string>>(TAGS, name: "TAGS");
+				WIP = s.Serialize<bool>(WIP, name: "WIP");
+				LOWUPDATE = s.Serialize<bool>(LOWUPDATE, name: "LOWUPDATE");
+				UPDATELAYER = s.Serialize<WorldUpdateLayer>(UPDATELAYER, name: "UPDATELAYER");
+				USEVIEWFRUSTUMFLAG = s.Serialize<bool>(USEVIEWFRUSTUMFLAG, name: "USEVIEWFRUSTUMFLAG");
 			}
 		}
 		public enum WorldUpdateLayer {

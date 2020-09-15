@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIRedWizardWaterSwimBehavior_Template : TemplateAIBehavior {
-		[Serialize("minSpeed" )] public float minSpeed;
-		[Serialize("maxSpeed" )] public float maxSpeed;
-		[Serialize("minForce" )] public float minForce;
-		[Serialize("maxForce" )] public float maxForce;
-		[Serialize("moveForce")] public float moveForce;
-		[Serialize("swim"     )] public Placeholder swim;
-		[Serialize("jump"     )] public Placeholder jump;
+		public float minSpeed;
+		public float maxSpeed;
+		public float minForce;
+		public float maxForce;
+		public float moveForce;
+		public Placeholder swim;
+		public Placeholder jump;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(minSpeed));
-			SerializeField(s, nameof(maxSpeed));
-			SerializeField(s, nameof(minForce));
-			SerializeField(s, nameof(maxForce));
-			SerializeField(s, nameof(moveForce));
-			SerializeField(s, nameof(swim));
-			SerializeField(s, nameof(jump));
+			minSpeed = s.Serialize<float>(minSpeed, name: "minSpeed");
+			maxSpeed = s.Serialize<float>(maxSpeed, name: "maxSpeed");
+			minForce = s.Serialize<float>(minForce, name: "minForce");
+			maxForce = s.Serialize<float>(maxForce, name: "maxForce");
+			moveForce = s.Serialize<float>(moveForce, name: "moveForce");
+			swim = s.SerializeObject<Placeholder>(swim, name: "swim");
+			jump = s.SerializeObject<Placeholder>(jump, name: "jump");
 		}
 		public override uint? ClassCRC => 0xC105379D;
 	}

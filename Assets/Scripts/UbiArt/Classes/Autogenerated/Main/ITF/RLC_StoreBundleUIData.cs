@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_StoreBundleUIData : CSerializable {
-		[Serialize("conditions"                 )] public CMap<uint, RLC_AutomaticPopupCondition> conditions;
-		[Serialize("openingPeriods"             )] public CMap<uint, RLC_StoreBundlePeriod> openingPeriods;
-		[Serialize("genericpacksloc"            )] public CMap<uint, RLC_StoreBundleLocInfo> genericpacksloc;
-		[Serialize("hiddenIfPackDisplayed"      )] public CMap<uint, RLC_StoreBundle.Type> hiddenIfPackDisplayed;
-		[Serialize("hiddenIfPackBought"         )] public CMap<uint, RLC_StoreBundle.Type> hiddenIfPackBought;
-		[Serialize("scrollableButtonPath"       )] public PathRef scrollableButtonPath;
-		[Serialize("InfoMenuCRC"                )] public StringID InfoMenuCRC;
-		[Serialize("PurchasedMenuCRC"           )] public StringID PurchasedMenuCRC;
-		[Serialize("popupPriority"              )] public uint popupPriority;
-		[Serialize("uniquePurchase"             )] public bool uniquePurchase;
-		[Serialize("OnlyIfCollectionNotComplete")] public bool OnlyIfCollectionNotComplete;
-		[Serialize("PayerOnly"                  )] public bool PayerOnly;
-		[Serialize("NonPayerOnly"               )] public bool NonPayerOnly;
-		[Serialize("HiddenIfTimeSaverActive"    )] public bool HiddenIfTimeSaverActive;
+		public CMap<uint, RLC_AutomaticPopupCondition> conditions;
+		public CMap<uint, RLC_StoreBundlePeriod> openingPeriods;
+		public CMap<uint, RLC_StoreBundleLocInfo> genericpacksloc;
+		public CMap<uint, RLC_StoreBundle.Type> hiddenIfPackDisplayed;
+		public CMap<uint, RLC_StoreBundle.Type> hiddenIfPackBought;
+		public PathRef scrollableButtonPath;
+		public StringID InfoMenuCRC;
+		public StringID PurchasedMenuCRC;
+		public uint popupPriority;
+		public bool uniquePurchase;
+		public bool OnlyIfCollectionNotComplete;
+		public bool PayerOnly;
+		public bool NonPayerOnly;
+		public bool HiddenIfTimeSaverActive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(conditions));
-			SerializeField(s, nameof(openingPeriods));
-			SerializeField(s, nameof(genericpacksloc));
-			SerializeField(s, nameof(hiddenIfPackDisplayed));
-			SerializeField(s, nameof(hiddenIfPackBought));
-			SerializeField(s, nameof(scrollableButtonPath));
-			SerializeField(s, nameof(InfoMenuCRC));
-			SerializeField(s, nameof(PurchasedMenuCRC));
-			SerializeField(s, nameof(popupPriority));
-			SerializeField(s, nameof(uniquePurchase));
-			SerializeField(s, nameof(OnlyIfCollectionNotComplete));
-			SerializeField(s, nameof(PayerOnly));
-			SerializeField(s, nameof(NonPayerOnly));
-			SerializeField(s, nameof(HiddenIfTimeSaverActive));
+			conditions = s.SerializeObject<CMap<uint, RLC_AutomaticPopupCondition>>(conditions, name: "conditions");
+			openingPeriods = s.SerializeObject<CMap<uint, RLC_StoreBundlePeriod>>(openingPeriods, name: "openingPeriods");
+			genericpacksloc = s.SerializeObject<CMap<uint, RLC_StoreBundleLocInfo>>(genericpacksloc, name: "genericpacksloc");
+			hiddenIfPackDisplayed = s.SerializeObject<CMap<uint, RLC_StoreBundle.Type>>(hiddenIfPackDisplayed, name: "hiddenIfPackDisplayed");
+			hiddenIfPackBought = s.SerializeObject<CMap<uint, RLC_StoreBundle.Type>>(hiddenIfPackBought, name: "hiddenIfPackBought");
+			scrollableButtonPath = s.SerializeObject<PathRef>(scrollableButtonPath, name: "scrollableButtonPath");
+			InfoMenuCRC = s.SerializeObject<StringID>(InfoMenuCRC, name: "InfoMenuCRC");
+			PurchasedMenuCRC = s.SerializeObject<StringID>(PurchasedMenuCRC, name: "PurchasedMenuCRC");
+			popupPriority = s.Serialize<uint>(popupPriority, name: "popupPriority");
+			uniquePurchase = s.Serialize<bool>(uniquePurchase, name: "uniquePurchase");
+			OnlyIfCollectionNotComplete = s.Serialize<bool>(OnlyIfCollectionNotComplete, name: "OnlyIfCollectionNotComplete");
+			PayerOnly = s.Serialize<bool>(PayerOnly, name: "PayerOnly");
+			NonPayerOnly = s.Serialize<bool>(NonPayerOnly, name: "NonPayerOnly");
+			HiddenIfTimeSaverActive = s.Serialize<bool>(HiddenIfTimeSaverActive, name: "HiddenIfTimeSaverActive");
 		}
 	}
 }

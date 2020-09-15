@@ -3,31 +3,31 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_Brick_Template : CSerializable {
-		[Serialize("name"         )] public StringID name;
-		[Serialize("name"         )] public string name2;
-		[Serialize("path"         )] public Path path;
-		[Serialize("spawnCooldown")] public uint spawnCooldown;
-		[Serialize("difficulty"   )] public uint difficulty;
-		[Serialize("murphymode"   )] public eMM murphymode;
-		[Serialize("archive"      )] public ArchiveMemory archive;
+		public StringID name;
+		public string name2;
+		public Path path;
+		public uint spawnCooldown;
+		public uint difficulty;
+		public eMM murphymode;
+		public ArchiveMemory archive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(path));
-				SerializeField(s, nameof(spawnCooldown));
-				SerializeField(s, nameof(difficulty));
-				SerializeField(s, nameof(murphymode));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				path = s.SerializeObject<Path>(path, name: "path");
+				spawnCooldown = s.Serialize<uint>(spawnCooldown, name: "spawnCooldown");
+				difficulty = s.Serialize<uint>(difficulty, name: "difficulty");
+				murphymode = s.Serialize<eMM>(murphymode, name: "murphymode");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(archive));
+					archive = s.SerializeObject<ArchiveMemory>(archive, name: "archive");
 				}
 			} else {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(name2));
-				SerializeField(s, nameof(path));
-				SerializeField(s, nameof(spawnCooldown));
-				SerializeField(s, nameof(difficulty));
-				SerializeField(s, nameof(murphymode));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				name2 = s.Serialize<string>(name2, name: "name2");
+				path = s.SerializeObject<Path>(path, name: "path");
+				spawnCooldown = s.Serialize<uint>(spawnCooldown, name: "spawnCooldown");
+				difficulty = s.Serialize<uint>(difficulty, name: "difficulty");
+				murphymode = s.Serialize<eMM>(murphymode, name: "murphymode");
 			}
 		}
 		public enum eMM {

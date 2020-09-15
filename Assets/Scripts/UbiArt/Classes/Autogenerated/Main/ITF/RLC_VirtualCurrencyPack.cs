@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_VirtualCurrencyPack : RLC_DynamicStoreItem {
-		[Serialize("Price"         )] public float Price;
-		[Serialize("Amount"        )] public uint Amount;
-		[Serialize("formattedPrice")] public string formattedPrice;
-		[Serialize("locId"         )] public uint locId_;
-		[Serialize("icon"          )] public uint icon;
-		[Serialize("stickerNew"    )] public bool stickerNew;
-		[Serialize("stickerPopular")] public bool stickerPopular;
-		[Serialize("reduction"     )] public float reduction;
-		[Serialize("exclamation"   )] public bool exclamation;
+		public float Price;
+		public uint Amount;
+		public string formattedPrice;
+		public uint locId_;
+		public uint icon;
+		public bool stickerNew;
+		public bool stickerPopular;
+		public float reduction;
+		public bool exclamation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Price));
-			SerializeField(s, nameof(Amount));
-			SerializeField(s, nameof(formattedPrice));
-			SerializeField(s, nameof(locId_));
-			SerializeField(s, nameof(icon));
-			SerializeField(s, nameof(stickerNew));
-			SerializeField(s, nameof(stickerPopular));
-			SerializeField(s, nameof(reduction));
-			SerializeField(s, nameof(exclamation));
+			Price = s.Serialize<float>(Price, name: "Price");
+			Amount = s.Serialize<uint>(Amount, name: "Amount");
+			formattedPrice = s.Serialize<string>(formattedPrice, name: "formattedPrice");
+			locId_ = s.Serialize<uint>(locId_, name: "locId_");
+			icon = s.Serialize<uint>(icon, name: "icon");
+			stickerNew = s.Serialize<bool>(stickerNew, name: "stickerNew");
+			stickerPopular = s.Serialize<bool>(stickerPopular, name: "stickerPopular");
+			reduction = s.Serialize<float>(reduction, name: "reduction");
+			exclamation = s.Serialize<bool>(exclamation, name: "exclamation");
 		}
 		public override uint? ClassCRC => 0x727065A8;
 	}

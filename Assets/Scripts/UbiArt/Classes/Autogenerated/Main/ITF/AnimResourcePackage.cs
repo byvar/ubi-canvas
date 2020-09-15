@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class AnimResourcePackage : CSerializable {
-		[Serialize("skeleton"    )] public Path skeleton;
-		[Serialize("textureBank" )] public CList<TextureBankPath> textureBank;
-		[Serialize("animPathAABB")] public CList<AnimPathAABB> animPathAABB;
-		[Serialize("needPack"    )] public bool needPack;
-		[Serialize("packed"      )] public bool packed;
-		[Serialize("fromHD"      )] public bool fromHD;
+		public Path skeleton;
+		public CList<TextureBankPath> textureBank;
+		public CList<AnimPathAABB> animPathAABB;
+		public bool needPack;
+		public bool packed;
+		public bool fromHD;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(skeleton));
-			SerializeField(s, nameof(textureBank));
-			SerializeField(s, nameof(animPathAABB));
-			SerializeField(s, nameof(needPack));
-			SerializeField(s, nameof(packed));
-			SerializeField(s, nameof(fromHD));
+			skeleton = s.SerializeObject<Path>(skeleton, name: "skeleton");
+			textureBank = s.SerializeObject<CList<TextureBankPath>>(textureBank, name: "textureBank");
+			animPathAABB = s.SerializeObject<CList<AnimPathAABB>>(animPathAABB, name: "animPathAABB");
+			needPack = s.Serialize<bool>(needPack, name: "needPack");
+			packed = s.Serialize<bool>(packed, name: "packed");
+			fromHD = s.Serialize<bool>(fromHD, name: "fromHD");
 		}
 	}
 }

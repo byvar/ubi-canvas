@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class SolidPolylineComponent_Template : PolylineComponent_Template {
-		[Serialize("solidEdges"   )] public CList<SolidPolylineComponent_Template.SolidEdgeData> solidEdges;
+		public CList<SolidPolylineComponent_Template.SolidEdgeData> solidEdges;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(solidEdges));
+			solidEdges = s.SerializeObject<CList<SolidPolylineComponent_Template.SolidEdgeData>>(solidEdges, name: "solidEdges");
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class SolidEdgeData : CSerializable {
-			[Serialize("bone"    )] public StringID bone;
-			[Serialize("minDelta")] public float minDelta;
+			public StringID bone;
+			public float minDelta;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(bone));
-				SerializeField(s, nameof(minDelta));
+				bone = s.SerializeObject<StringID>(bone, name: "bone");
+				minDelta = s.Serialize<float>(minDelta, name: "minDelta");
 			}
 		}
 		public override uint? ClassCRC => 0xDEC09000;

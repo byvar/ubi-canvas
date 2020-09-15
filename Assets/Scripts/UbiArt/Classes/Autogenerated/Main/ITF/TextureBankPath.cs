@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TextureBankPath : CSerializable {
-		[Serialize("id"            )] public StringID id;
-		[Serialize("patchBank"     )] public Path patchBank;
-		[Serialize("texture"       )] public Path texture;
-		[Serialize("textureSet"    )] public GFXMaterialTexturePathSet textureSet;
-		[Serialize("materialShader")] public Path materialShader;
+		public StringID id;
+		public Path patchBank;
+		public Path texture;
+		public GFXMaterialTexturePathSet textureSet;
+		public Path materialShader;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(id));
-			SerializeField(s, nameof(patchBank));
+			id = s.SerializeObject<StringID>(id, name: "id");
+			patchBank = s.SerializeObject<Path>(patchBank, name: "patchBank");
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(texture));
+				texture = s.SerializeObject<Path>(texture, name: "texture");
 			}
-			SerializeField(s, nameof(textureSet));
-			SerializeField(s, nameof(materialShader));
+			textureSet = s.SerializeObject<GFXMaterialTexturePathSet>(textureSet, name: "textureSet");
+			materialShader = s.SerializeObject<Path>(materialShader, name: "materialShader");
 		}
 	}
 }

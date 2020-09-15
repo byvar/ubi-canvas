@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_GeyserComponent_Template : Ray_ChildLaunchComponent_Template {
-		[Serialize("warnDuration"     )] public float warnDuration;
-		[Serialize("launchDuration"   )] public float launchDuration;
-		[Serialize("launchCameraShake")] public StringID launchCameraShake;
-		[Serialize("warnFx"           )] public Path warnFx;
-		[Serialize("warnFxOffset"     )] public Vec3d warnFxOffset;
-		[Serialize("launchFx"         )] public Path launchFx;
-		[Serialize("launchFxOffset"   )] public Vec3d launchFxOffset;
-		[Serialize("idleAnim"         )] public StringID idleAnim;
-		[Serialize("warnAnim"         )] public StringID warnAnim;
-		[Serialize("launchAnim"       )] public StringID launchAnim;
-		[Serialize("doneAnim"         )] public StringID doneAnim;
+		public float warnDuration;
+		public float launchDuration;
+		public StringID launchCameraShake;
+		public Path warnFx;
+		public Vec3d warnFxOffset;
+		public Path launchFx;
+		public Vec3d launchFxOffset;
+		public StringID idleAnim;
+		public StringID warnAnim;
+		public StringID launchAnim;
+		public StringID doneAnim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(warnDuration));
-			SerializeField(s, nameof(launchDuration));
-			SerializeField(s, nameof(launchCameraShake));
-			SerializeField(s, nameof(warnFx));
-			SerializeField(s, nameof(warnFxOffset));
-			SerializeField(s, nameof(launchFx));
-			SerializeField(s, nameof(launchFxOffset));
-			SerializeField(s, nameof(idleAnim));
-			SerializeField(s, nameof(warnAnim));
-			SerializeField(s, nameof(launchAnim));
-			SerializeField(s, nameof(doneAnim));
+			warnDuration = s.Serialize<float>(warnDuration, name: "warnDuration");
+			launchDuration = s.Serialize<float>(launchDuration, name: "launchDuration");
+			launchCameraShake = s.SerializeObject<StringID>(launchCameraShake, name: "launchCameraShake");
+			warnFx = s.SerializeObject<Path>(warnFx, name: "warnFx");
+			warnFxOffset = s.SerializeObject<Vec3d>(warnFxOffset, name: "warnFxOffset");
+			launchFx = s.SerializeObject<Path>(launchFx, name: "launchFx");
+			launchFxOffset = s.SerializeObject<Vec3d>(launchFxOffset, name: "launchFxOffset");
+			idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
+			warnAnim = s.SerializeObject<StringID>(warnAnim, name: "warnAnim");
+			launchAnim = s.SerializeObject<StringID>(launchAnim, name: "launchAnim");
+			doneAnim = s.SerializeObject<StringID>(doneAnim, name: "doneAnim");
 		}
 		public override uint? ClassCRC => 0x8AE897A3;
 	}

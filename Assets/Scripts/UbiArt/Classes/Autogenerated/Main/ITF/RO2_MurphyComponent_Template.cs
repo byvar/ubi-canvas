@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MurphyComponent_Template : ActorComponent_Template {
-		[Serialize("touchRadius"        )] public float touchRadius;
-		[Serialize("brakeForce"         )] public float brakeForce;
-		[Serialize("radius2d"           )] public uint radius2d;
-		[Serialize("stimRadius"         )] public float stimRadius;
-		[Serialize("stimActivationSpeed")] public float stimActivationSpeed;
-		[Serialize("faction"            )] public uint faction;
-		[Serialize("uturnTimer"         )] public float uturnTimer;
-		[Serialize("flyTimer"           )] public float flyTimer;
-		[Serialize("idleTimer"          )] public float idleTimer;
-		[Serialize("idleSpeedThreshold" )] public float idleSpeedThreshold;
-		[Serialize("flySpeedThreshold"  )] public float flySpeedThreshold;
+		public float touchRadius;
+		public float brakeForce;
+		public uint radius2d;
+		public float stimRadius;
+		public float stimActivationSpeed;
+		public uint faction;
+		public float uturnTimer;
+		public float flyTimer;
+		public float idleTimer;
+		public float idleSpeedThreshold;
+		public float flySpeedThreshold;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(touchRadius));
-			SerializeField(s, nameof(brakeForce));
-			SerializeField(s, nameof(radius2d));
-			SerializeField(s, nameof(stimRadius));
-			SerializeField(s, nameof(stimActivationSpeed));
-			SerializeField(s, nameof(faction));
-			SerializeField(s, nameof(uturnTimer));
-			SerializeField(s, nameof(flyTimer));
-			SerializeField(s, nameof(idleTimer));
-			SerializeField(s, nameof(idleSpeedThreshold));
-			SerializeField(s, nameof(flySpeedThreshold));
+			touchRadius = s.Serialize<float>(touchRadius, name: "touchRadius");
+			brakeForce = s.Serialize<float>(brakeForce, name: "brakeForce");
+			radius2d = s.Serialize<uint>(radius2d, name: "radius2d");
+			stimRadius = s.Serialize<float>(stimRadius, name: "stimRadius");
+			stimActivationSpeed = s.Serialize<float>(stimActivationSpeed, name: "stimActivationSpeed");
+			faction = s.Serialize<uint>(faction, name: "faction");
+			uturnTimer = s.Serialize<float>(uturnTimer, name: "uturnTimer");
+			flyTimer = s.Serialize<float>(flyTimer, name: "flyTimer");
+			idleTimer = s.Serialize<float>(idleTimer, name: "idleTimer");
+			idleSpeedThreshold = s.Serialize<float>(idleSpeedThreshold, name: "idleSpeedThreshold");
+			flySpeedThreshold = s.Serialize<float>(flySpeedThreshold, name: "flySpeedThreshold");
 		}
 		public override uint? ClassCRC => 0x3761096A;
 	}

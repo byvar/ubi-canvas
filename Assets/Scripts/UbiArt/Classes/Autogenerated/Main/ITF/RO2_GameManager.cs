@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_GameManager : GameManager {
-		[Serialize("savedDRCSwappedPlayerIdx"       )] public uint savedDRCSwappedPlayerIdx;
-		[Serialize("playersCurrentScale"            )] public float playersCurrentScale;
-		[Serialize("savedtouchScreenPlayerMandatory")] public bool savedtouchScreenPlayerMandatory;
+		public uint savedDRCSwappedPlayerIdx;
+		public float playersCurrentScale;
+		public bool savedtouchScreenPlayerMandatory;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(savedDRCSwappedPlayerIdx));
-				SerializeField(s, nameof(playersCurrentScale));
-				SerializeField(s, nameof(savedtouchScreenPlayerMandatory));
+				savedDRCSwappedPlayerIdx = s.Serialize<uint>(savedDRCSwappedPlayerIdx, name: "savedDRCSwappedPlayerIdx");
+				playersCurrentScale = s.Serialize<float>(playersCurrentScale, name: "playersCurrentScale");
+				savedtouchScreenPlayerMandatory = s.Serialize<bool>(savedtouchScreenPlayerMandatory, name: "savedtouchScreenPlayerMandatory");
 			}
 		}
 		public override uint? ClassCRC => 0xA133CDA6;

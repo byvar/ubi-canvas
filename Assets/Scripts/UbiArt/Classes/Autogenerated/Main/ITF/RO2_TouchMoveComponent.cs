@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchMoveComponent : ActorComponent {
-		[Serialize("touchHandler"      )] public RO2_TouchHandler touchHandler;
-		[Serialize("speedFactor"       )] public float speedFactor;
-		[Serialize("smoothFactor"      )] public float smoothFactor;
-		[Serialize("targetSmoothFactor")] public float targetSmoothFactor;
+		public RO2_TouchHandler touchHandler;
+		public float speedFactor;
+		public float smoothFactor;
+		public float targetSmoothFactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(touchHandler));
-			SerializeField(s, nameof(speedFactor));
-			SerializeField(s, nameof(smoothFactor));
-			SerializeField(s, nameof(targetSmoothFactor));
+			touchHandler = s.SerializeObject<RO2_TouchHandler>(touchHandler, name: "touchHandler");
+			speedFactor = s.Serialize<float>(speedFactor, name: "speedFactor");
+			smoothFactor = s.Serialize<float>(smoothFactor, name: "smoothFactor");
+			targetSmoothFactor = s.Serialize<float>(targetSmoothFactor, name: "targetSmoothFactor");
 		}
 		public override uint? ClassCRC => 0x194F03C1;
 	}

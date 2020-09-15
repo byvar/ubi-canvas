@@ -3,43 +3,43 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL | GameFlags.VH | GameFlags.RL)]
 	public partial class AnimMeshVertexComponent_Template : GraphicComponent_Template {
-		[Serialize("defaultUpdate")] public bool defaultUpdate;
-		[Serialize("draw2D"       )] public bool draw2D;
-		[Serialize("amvPath"      )] public Path amvPath;
-		[Serialize("texture"      )] public Path texture;
-		[Serialize("material"     )] public GFXMaterialSerializable material;
-		[Serialize("useEditor"    )] public bool useEditor;
-		[Serialize("useDataAnims" )] public bool useDataAnims;
-		[Serialize("useActorScale")] public bool useActorScale;
-		[Serialize("stopDuration" )] public float stopDuration;
-		[Serialize("animPackage"  )] public AnimResourcePackage animPackage;
+		public bool defaultUpdate;
+		public bool draw2D;
+		public Path amvPath;
+		public Path texture;
+		public GFXMaterialSerializable material;
+		public bool useEditor;
+		public bool useDataAnims;
+		public bool useActorScale;
+		public float stopDuration;
+		public AnimResourcePackage animPackage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(defaultUpdate));
-				SerializeField(s, nameof(draw2D));
-				SerializeField(s, nameof(amvPath));
+				defaultUpdate = s.Serialize<bool>(defaultUpdate, name: "defaultUpdate");
+				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
+				amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(useEditor));
-				SerializeField(s, nameof(useDataAnims));
-				SerializeField(s, nameof(useActorScale));
-				SerializeField(s, nameof(stopDuration));
-				SerializeField(s, nameof(animPackage));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				useEditor = s.Serialize<bool>(useEditor, name: "useEditor");
+				useDataAnims = s.Serialize<bool>(useDataAnims, name: "useDataAnims");
+				useActorScale = s.Serialize<bool>(useActorScale, name: "useActorScale");
+				stopDuration = s.Serialize<float>(stopDuration, name: "stopDuration");
+				animPackage = s.SerializeObject<AnimResourcePackage>(animPackage, name: "animPackage");
 			} else {
-				SerializeField(s, nameof(defaultUpdate));
-				SerializeField(s, nameof(draw2D));
-				SerializeField(s, nameof(amvPath));
+				defaultUpdate = s.Serialize<bool>(defaultUpdate, name: "defaultUpdate");
+				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
+				amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(useEditor));
-				SerializeField(s, nameof(useDataAnims));
-				SerializeField(s, nameof(useActorScale));
-				SerializeField(s, nameof(stopDuration));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				useEditor = s.Serialize<bool>(useEditor, name: "useEditor");
+				useDataAnims = s.Serialize<bool>(useDataAnims, name: "useDataAnims");
+				useActorScale = s.Serialize<bool>(useActorScale, name: "useActorScale");
+				stopDuration = s.Serialize<float>(stopDuration, name: "stopDuration");
 			}
 		}
 		public override uint? ClassCRC => 0x35E20242;

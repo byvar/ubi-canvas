@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class GameGlobalsComplexCondition : GameGlobalsCondition {
-		[Serialize("conditions")] public CArray<Generic<GameGlobalsCondition>> conditions;
-		[Serialize("needAll"   )] public bool needAll;
-		[Serialize("priority"  )] public uint priority;
-		[Serialize("hotReload" )] public bool hotReload;
+		public CArray<Generic<GameGlobalsCondition>> conditions;
+		public bool needAll;
+		public uint priority;
+		public bool hotReload;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(conditions));
-			SerializeField(s, nameof(needAll));
-			SerializeField(s, nameof(priority));
-			SerializeField(s, nameof(hotReload));
+			conditions = s.SerializeObject<CArray<Generic<GameGlobalsCondition>>>(conditions, name: "conditions");
+			needAll = s.Serialize<bool>(needAll, name: "needAll");
+			priority = s.Serialize<uint>(priority, name: "priority");
+			hotReload = s.Serialize<bool>(hotReload, name: "hotReload");
 		}
 		public override uint? ClassCRC => 0x6345EF2B;
 	}

@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionMedusaTickle_Template : BTAction_Template {
-		[Serialize("animLaugh"                   )] public StringID animLaugh;
-		[Serialize("animLaugh_ToStand"           )] public StringID animLaugh_ToStand;
-		[Serialize("laughingTime"                )] public float laughingTime;
-		[Serialize("distMinForSwipe"             )] public float distMinForSwipe;
-		[Serialize("disabledTweenOnTickle"       )] public bool disabledTweenOnTickle;
-		[Serialize("returnToRootPosition"        )] public bool returnToRootPosition;
-		[Serialize("returnToRootPositionDuration")] public float returnToRootPositionDuration;
-		[Serialize("lumsByReward"                )] public uint lumsByReward;
-		[Serialize("countMaxReward"              )] public uint countMaxReward;
-		[Serialize("timeBetweenRewardInSwipe"    )] public float timeBetweenRewardInSwipe;
-		[Serialize("holdTimeToDoTickle"          )] public float holdTimeToDoTickle;
+		public StringID animLaugh;
+		public StringID animLaugh_ToStand;
+		public float laughingTime;
+		public float distMinForSwipe;
+		public bool disabledTweenOnTickle;
+		public bool returnToRootPosition;
+		public float returnToRootPositionDuration;
+		public uint lumsByReward;
+		public uint countMaxReward;
+		public float timeBetweenRewardInSwipe;
+		public float holdTimeToDoTickle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animLaugh));
-			SerializeField(s, nameof(animLaugh_ToStand));
-			SerializeField(s, nameof(laughingTime));
-			SerializeField(s, nameof(distMinForSwipe));
-			SerializeField(s, nameof(disabledTweenOnTickle));
-			SerializeField(s, nameof(returnToRootPosition));
-			SerializeField(s, nameof(returnToRootPositionDuration));
-			SerializeField(s, nameof(lumsByReward));
-			SerializeField(s, nameof(countMaxReward));
-			SerializeField(s, nameof(timeBetweenRewardInSwipe));
-			SerializeField(s, nameof(holdTimeToDoTickle));
+			animLaugh = s.SerializeObject<StringID>(animLaugh, name: "animLaugh");
+			animLaugh_ToStand = s.SerializeObject<StringID>(animLaugh_ToStand, name: "animLaugh_ToStand");
+			laughingTime = s.Serialize<float>(laughingTime, name: "laughingTime");
+			distMinForSwipe = s.Serialize<float>(distMinForSwipe, name: "distMinForSwipe");
+			disabledTweenOnTickle = s.Serialize<bool>(disabledTweenOnTickle, name: "disabledTweenOnTickle");
+			returnToRootPosition = s.Serialize<bool>(returnToRootPosition, name: "returnToRootPosition");
+			returnToRootPositionDuration = s.Serialize<float>(returnToRootPositionDuration, name: "returnToRootPositionDuration");
+			lumsByReward = s.Serialize<uint>(lumsByReward, name: "lumsByReward");
+			countMaxReward = s.Serialize<uint>(countMaxReward, name: "countMaxReward");
+			timeBetweenRewardInSwipe = s.Serialize<float>(timeBetweenRewardInSwipe, name: "timeBetweenRewardInSwipe");
+			holdTimeToDoTickle = s.Serialize<float>(holdTimeToDoTickle, name: "holdTimeToDoTickle");
 		}
 		public override uint? ClassCRC => 0x745F2ED5;
 	}

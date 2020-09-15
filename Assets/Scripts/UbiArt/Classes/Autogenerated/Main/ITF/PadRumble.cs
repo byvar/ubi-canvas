@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PadRumble : CSerializable {
-		[Serialize("name"          )] public StringID name;
-		[Serialize("intensity"     )] public float intensity;
-		[Serialize("lightIntensity")] public float lightIntensity;
-		[Serialize("duration"      )] public float duration;
-		[Serialize("StringID__0"   )] public StringID StringID__0;
-		[Serialize("float__1"      )] public float float__1;
-		[Serialize("float__2"      )] public float float__2;
+		public StringID name;
+		public float intensity;
+		public float lightIntensity;
+		public float duration;
+		public StringID StringID__0;
+		public float float__1;
+		public float float__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(StringID__0));
-				SerializeField(s, nameof(float__1));
-				SerializeField(s, nameof(float__2));
+				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
+				float__1 = s.Serialize<float>(float__1, name: "float__1");
+				float__2 = s.Serialize<float>(float__2, name: "float__2");
 			} else {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(intensity));
-				SerializeField(s, nameof(lightIntensity));
-				SerializeField(s, nameof(duration));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				intensity = s.Serialize<float>(intensity, name: "intensity");
+				lightIntensity = s.Serialize<float>(lightIntensity, name: "lightIntensity");
+				duration = s.Serialize<float>(duration, name: "duration");
 			}
 		}
 	}

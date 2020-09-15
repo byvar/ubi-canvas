@@ -3,50 +3,50 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class SoundConfig_Template : CSerializable {
-		[Serialize("WwiseLookUpTable"                 )] public CList<WwiseItem> WwiseLookUpTable;
-		[Serialize("WwiseBankList"                    )] public CList<PathRef> WwiseBankList;
-		[Serialize("WwiseEngineEventList"             )] public CList<WwiseEngineEvent> WwiseEngineEventList;
-		[Serialize("WwiseDefaultAuxEffectList"        )] public CList<EventSetWwiseAuxBusEffect> WwiseDefaultAuxEffectList;
-		[Serialize("microZoffset"                     )] public float microZoffset;
-		[Serialize("WwiseStateToRestoreAfterHotReload")] public CList<StringID> WwiseStateToRestoreAfterHotReload;
-		[Serialize("busses"                           )] public Placeholder busses;
-		[Serialize("limiters"                         )] public Placeholder limiters;
-		[Serialize("busMixBank"                       )] public Placeholder busMixBank;
-		[Serialize("pauseFadeIn"                      )] public float pauseFadeIn;
-		[Serialize("pauseFadeOut"                     )] public float pauseFadeOut;
-		[Serialize("headphoneBusMix"                  )] public Placeholder headphoneBusMix;
-		[Serialize("playerNumberBusMix"               )] public Placeholder playerNumberBusMix;
-		[Serialize("limiterStopFade"                  )] public float limiterStopFade;
-		[Serialize("engineStopFade"                   )] public float engineStopFade;
+		public CList<WwiseItem> WwiseLookUpTable;
+		public CList<PathRef> WwiseBankList;
+		public CList<WwiseEngineEvent> WwiseEngineEventList;
+		public CList<EventSetWwiseAuxBusEffect> WwiseDefaultAuxEffectList;
+		public float microZoffset;
+		public CList<StringID> WwiseStateToRestoreAfterHotReload;
+		public Placeholder busses;
+		public Placeholder limiters;
+		public Placeholder busMixBank;
+		public float pauseFadeIn;
+		public float pauseFadeOut;
+		public Placeholder headphoneBusMix;
+		public Placeholder playerNumberBusMix;
+		public float limiterStopFade;
+		public float engineStopFade;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(busses));
-				SerializeField(s, nameof(limiters));
-				SerializeField(s, nameof(busMixBank));
+				busses = s.SerializeObject<Placeholder>(busses, name: "busses");
+				limiters = s.SerializeObject<Placeholder>(limiters, name: "limiters");
+				busMixBank = s.SerializeObject<Placeholder>(busMixBank, name: "busMixBank");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(busses));
-				SerializeField(s, nameof(limiters));
-				SerializeField(s, nameof(pauseFadeIn));
-				SerializeField(s, nameof(pauseFadeOut));
-				SerializeField(s, nameof(headphoneBusMix));
-				SerializeField(s, nameof(playerNumberBusMix));
-				SerializeField(s, nameof(limiterStopFade));
-				SerializeField(s, nameof(engineStopFade));
+				busses = s.SerializeObject<Placeholder>(busses, name: "busses");
+				limiters = s.SerializeObject<Placeholder>(limiters, name: "limiters");
+				pauseFadeIn = s.Serialize<float>(pauseFadeIn, name: "pauseFadeIn");
+				pauseFadeOut = s.Serialize<float>(pauseFadeOut, name: "pauseFadeOut");
+				headphoneBusMix = s.SerializeObject<Placeholder>(headphoneBusMix, name: "headphoneBusMix");
+				playerNumberBusMix = s.SerializeObject<Placeholder>(playerNumberBusMix, name: "playerNumberBusMix");
+				limiterStopFade = s.Serialize<float>(limiterStopFade, name: "limiterStopFade");
+				engineStopFade = s.Serialize<float>(engineStopFade, name: "engineStopFade");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(busses));
-				SerializeField(s, nameof(pauseFadeIn));
-				SerializeField(s, nameof(pauseFadeOut));
-				SerializeField(s, nameof(headphoneBusMix));
-				SerializeField(s, nameof(WwiseBankList));
-				SerializeField(s, nameof(microZoffset));
+				busses = s.SerializeObject<Placeholder>(busses, name: "busses");
+				pauseFadeIn = s.Serialize<float>(pauseFadeIn, name: "pauseFadeIn");
+				pauseFadeOut = s.Serialize<float>(pauseFadeOut, name: "pauseFadeOut");
+				headphoneBusMix = s.SerializeObject<Placeholder>(headphoneBusMix, name: "headphoneBusMix");
+				WwiseBankList = s.SerializeObject<CList<PathRef>>(WwiseBankList, name: "WwiseBankList");
+				microZoffset = s.Serialize<float>(microZoffset, name: "microZoffset");
 			} else {
-				SerializeField(s, nameof(WwiseLookUpTable));
-				SerializeField(s, nameof(WwiseBankList));
-				SerializeField(s, nameof(WwiseEngineEventList));
-				SerializeField(s, nameof(WwiseDefaultAuxEffectList));
-				SerializeField(s, nameof(microZoffset));
-				SerializeField(s, nameof(WwiseStateToRestoreAfterHotReload));
+				WwiseLookUpTable = s.SerializeObject<CList<WwiseItem>>(WwiseLookUpTable, name: "WwiseLookUpTable");
+				WwiseBankList = s.SerializeObject<CList<PathRef>>(WwiseBankList, name: "WwiseBankList");
+				WwiseEngineEventList = s.SerializeObject<CList<WwiseEngineEvent>>(WwiseEngineEventList, name: "WwiseEngineEventList");
+				WwiseDefaultAuxEffectList = s.SerializeObject<CList<EventSetWwiseAuxBusEffect>>(WwiseDefaultAuxEffectList, name: "WwiseDefaultAuxEffectList");
+				microZoffset = s.Serialize<float>(microZoffset, name: "microZoffset");
+				WwiseStateToRestoreAfterHotReload = s.SerializeObject<CList<StringID>>(WwiseStateToRestoreAfterHotReload, name: "WwiseStateToRestoreAfterHotReload");
 			}
 		}
 		public override uint? ClassCRC => 0x9BB5D070;

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_MissionConditionNewGamePlus_Template : CSerializable {
-		[Serialize("numPlaythroughs")] public uint numPlaythroughs;
-		[Serialize("operator"       )] public Enum_operator _operator;
+		public uint numPlaythroughs;
+		public Enum_operator _operator;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(numPlaythroughs));
-			SerializeField(s, nameof(_operator));
+			numPlaythroughs = s.Serialize<uint>(numPlaythroughs, name: "numPlaythroughs");
+			_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
 		}
 		public enum Enum_operator {
 			[Serialize("Value_0")] Value_0 = 0,

@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionLookAtAttack_Template : BTAction_Template {
-		[Serialize("enemyDetectionRange")] public Generic<PhysShape> enemyDetectionRange;
-		[Serialize("enemyAttackRange"   )] public Generic<PhysShape> enemyAttackRange;
-		[Serialize("detectAnim"         )] public StringID detectAnim;
-		[Serialize("attackAnim"         )] public StringID attackAnim;
-		[Serialize("lookAtBlend"        )] public float lookAtBlend;
-		[Serialize("debug"              )] public bool debug;
-		[Serialize("fxNames"            )] public CList<StringID> fxNames;
-		[Serialize("fxMarkerStart"      )] public CList<StringID> fxMarkerStart;
-		[Serialize("fxMarkerStop"       )] public CList<StringID> fxMarkerStop;
-		[Serialize("lightningStart"     )] public StringID lightningStart;
-		[Serialize("lightningStop"      )] public StringID lightningStop;
-		[Serialize("lightningCharge"    )] public StringID lightningCharge;
+		public Generic<PhysShape> enemyDetectionRange;
+		public Generic<PhysShape> enemyAttackRange;
+		public StringID detectAnim;
+		public StringID attackAnim;
+		public float lookAtBlend;
+		public bool debug;
+		public CList<StringID> fxNames;
+		public CList<StringID> fxMarkerStart;
+		public CList<StringID> fxMarkerStop;
+		public StringID lightningStart;
+		public StringID lightningStop;
+		public StringID lightningCharge;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enemyDetectionRange));
-			SerializeField(s, nameof(enemyAttackRange));
-			SerializeField(s, nameof(detectAnim));
-			SerializeField(s, nameof(attackAnim));
-			SerializeField(s, nameof(lookAtBlend));
-			SerializeField(s, nameof(debug));
-			SerializeField(s, nameof(fxNames));
-			SerializeField(s, nameof(fxMarkerStart));
-			SerializeField(s, nameof(fxMarkerStop));
-			SerializeField(s, nameof(lightningStart));
-			SerializeField(s, nameof(lightningStop));
-			SerializeField(s, nameof(lightningCharge));
+			enemyDetectionRange = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRange, name: "enemyDetectionRange");
+			enemyAttackRange = s.SerializeObject<Generic<PhysShape>>(enemyAttackRange, name: "enemyAttackRange");
+			detectAnim = s.SerializeObject<StringID>(detectAnim, name: "detectAnim");
+			attackAnim = s.SerializeObject<StringID>(attackAnim, name: "attackAnim");
+			lookAtBlend = s.Serialize<float>(lookAtBlend, name: "lookAtBlend");
+			debug = s.Serialize<bool>(debug, name: "debug");
+			fxNames = s.SerializeObject<CList<StringID>>(fxNames, name: "fxNames");
+			fxMarkerStart = s.SerializeObject<CList<StringID>>(fxMarkerStart, name: "fxMarkerStart");
+			fxMarkerStop = s.SerializeObject<CList<StringID>>(fxMarkerStop, name: "fxMarkerStop");
+			lightningStart = s.SerializeObject<StringID>(lightningStart, name: "lightningStart");
+			lightningStop = s.SerializeObject<StringID>(lightningStop, name: "lightningStop");
+			lightningCharge = s.SerializeObject<StringID>(lightningCharge, name: "lightningCharge");
 		}
 		public override uint? ClassCRC => 0x9A0B94EA;
 	}

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_177_sub_760840 : CSerializable {
-		[Serialize("neededInput")] public Enum_neededInput neededInput;
+		public Enum_neededInput neededInput;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(neededInput));
+			neededInput = s.Serialize<Enum_neededInput>(neededInput, name: "neededInput");
 		}
 		public enum Enum_neededInput {
 			[Serialize("Value_0")] Value_0 = 0,

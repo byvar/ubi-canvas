@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SubRenderParam_Lighting : SubRenderParam {
-		[Serialize("GlobalColor"     )] public Color GlobalColor;
-		[Serialize("GlobalStaticFog" )] public Color GlobalStaticFog;
-		[Serialize("GlobalFogOpacity")] public float GlobalFogOpacity;
-		[Serialize("GlobalBrightness")] public float GlobalBrightness;
+		public Color GlobalColor;
+		public Color GlobalStaticFog;
+		public float GlobalFogOpacity;
+		public float GlobalBrightness;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(GlobalColor));
-			SerializeField(s, nameof(GlobalStaticFog));
-			SerializeField(s, nameof(GlobalFogOpacity));
-			SerializeField(s, nameof(GlobalBrightness));
+			GlobalColor = s.SerializeObject<Color>(GlobalColor, name: "GlobalColor");
+			GlobalStaticFog = s.SerializeObject<Color>(GlobalStaticFog, name: "GlobalStaticFog");
+			GlobalFogOpacity = s.Serialize<float>(GlobalFogOpacity, name: "GlobalFogOpacity");
+			GlobalBrightness = s.Serialize<float>(GlobalBrightness, name: "GlobalBrightness");
 		}
 		public override uint? ClassCRC => 0x1B6979E9;
 	}

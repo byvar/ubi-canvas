@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_LuckyTicketCategoryWeight : CSerializable {
-		[Serialize("category")] public Enum_category category;
-		[Serialize("weight"  )] public uint weight;
+		public Enum_category category;
+		public uint weight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(category));
-			SerializeField(s, nameof(weight));
+			category = s.Serialize<Enum_category>(category, name: "category");
+			weight = s.Serialize<uint>(weight, name: "weight");
 		}
 		public enum Enum_category {
 			[Serialize("Normal" )] Normal = 0,

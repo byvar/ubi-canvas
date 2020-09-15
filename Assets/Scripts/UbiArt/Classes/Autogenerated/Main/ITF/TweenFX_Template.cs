@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TweenFX_Template : TweenInstruction_Template {
-		[Serialize("fx"                )] public StringID fx;
-		[Serialize("stop"              )] public bool stop;
-		[Serialize("useLocalInitialPos")] public bool useLocalInitialPos;
+		public StringID fx;
+		public bool stop;
+		public bool useLocalInitialPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(fx));
-				SerializeField(s, nameof(stop), boolAsByte: true);
+				fx = s.SerializeObject<StringID>(fx, name: "fx");
+				stop = s.Serialize<bool>(stop, name: "stop", options: CSerializerObject.Options.BoolAsByte);
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(fx));
-				SerializeField(s, nameof(stop), boolAsByte: true);
-				SerializeField(s, nameof(useLocalInitialPos), boolAsByte: true);
+				fx = s.SerializeObject<StringID>(fx, name: "fx");
+				stop = s.Serialize<bool>(stop, name: "stop", options: CSerializerObject.Options.BoolAsByte);
+				useLocalInitialPos = s.Serialize<bool>(useLocalInitialPos, name: "useLocalInitialPos", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(fx));
-				SerializeField(s, nameof(stop));
+				fx = s.SerializeObject<StringID>(fx, name: "fx");
+				stop = s.Serialize<bool>(stop, name: "stop");
 			}
 		}
 		public override uint? ClassCRC => 0xBC2071D6;

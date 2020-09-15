@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_OceanSpiderAIComponent : RO2_SimpleAIComponent {
-		[Serialize("waitForTrigger")] public bool waitForTrigger;
-		[Serialize("bubblePrize"   )] public uint bubblePrize;
+		public bool waitForTrigger;
+		public uint bubblePrize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(waitForTrigger));
+				waitForTrigger = s.Serialize<bool>(waitForTrigger, name: "waitForTrigger");
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						SerializeFieldAsChoiceList(s, nameof(bubblePrize));
 					} else {
-						SerializeField(s, nameof(bubblePrize));
+						bubblePrize = s.Serialize<uint>(bubblePrize, name: "bubblePrize");
 					}
 				}
 			} else {
-				SerializeField(s, nameof(waitForTrigger));
+				waitForTrigger = s.Serialize<bool>(waitForTrigger, name: "waitForTrigger");
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						SerializeFieldAsChoiceList(s, nameof(bubblePrize));
 					} else {
-						SerializeField(s, nameof(bubblePrize));
+						bubblePrize = s.Serialize<uint>(bubblePrize, name: "bubblePrize");
 					}
 				}
 			}

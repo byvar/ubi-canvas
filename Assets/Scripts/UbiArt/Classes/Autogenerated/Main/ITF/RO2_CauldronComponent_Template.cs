@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CauldronComponent_Template : ActorComponent_Template {
-		[Serialize("standAnim"       )] public StringID standAnim;
-		[Serialize("lidReceptionAnim")] public StringID lidReceptionAnim;
+		public StringID standAnim;
+		public StringID lidReceptionAnim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(standAnim));
-			SerializeField(s, nameof(lidReceptionAnim));
+			standAnim = s.SerializeObject<StringID>(standAnim, name: "standAnim");
+			lidReceptionAnim = s.SerializeObject<StringID>(lidReceptionAnim, name: "lidReceptionAnim");
 		}
 		public override uint? ClassCRC => 0x6FBFFBC7;
 	}

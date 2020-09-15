@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIShooterFlyingBombBehavior_Template : TemplateAIBehavior {
-		[Serialize("moveAction"             )] public Generic<AIBezierAction_Template> moveAction;
-		[Serialize("openingAction"          )] public Generic<AIAction_Template> openingAction;
-		[Serialize("alarmAction"            )] public Generic<AIAction_Template> alarmAction;
-		[Serialize("explodeAction"          )] public Generic<AIAction_Template> explodeAction;
-		[Serialize("alarmAnimName"          )] public StringID alarmAnimName;
-		[Serialize("warnAnimName"           )] public StringID warnAnimName;
-		[Serialize("alarmDuration"          )] public float alarmDuration;
-		[Serialize("isTriggered"            )] public int isTriggered;
-		[Serialize("moveActionInitScale"    )] public float moveActionInitScale;
-		[Serialize("animationBankState"     )] public uint animationBankState;
-		[Serialize("explodeOnMoveActionsEnd")] public int explodeOnMoveActionsEnd;
-		[Serialize("moveActionVecOffsetMin" )] public Vec2d moveActionVecOffsetMin;
-		[Serialize("moveActionVecOffsetMax" )] public Vec2d moveActionVecOffsetMax;
+		public Generic<AIBezierAction_Template> moveAction;
+		public Generic<AIAction_Template> openingAction;
+		public Generic<AIAction_Template> alarmAction;
+		public Generic<AIAction_Template> explodeAction;
+		public StringID alarmAnimName;
+		public StringID warnAnimName;
+		public float alarmDuration;
+		public int isTriggered;
+		public float moveActionInitScale;
+		public uint animationBankState;
+		public int explodeOnMoveActionsEnd;
+		public Vec2d moveActionVecOffsetMin;
+		public Vec2d moveActionVecOffsetMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(moveAction));
-			SerializeField(s, nameof(openingAction));
-			SerializeField(s, nameof(alarmAction));
-			SerializeField(s, nameof(explodeAction));
-			SerializeField(s, nameof(alarmAnimName));
-			SerializeField(s, nameof(warnAnimName));
-			SerializeField(s, nameof(alarmDuration));
-			SerializeField(s, nameof(isTriggered));
-			SerializeField(s, nameof(moveActionInitScale));
-			SerializeField(s, nameof(animationBankState));
-			SerializeField(s, nameof(explodeOnMoveActionsEnd));
-			SerializeField(s, nameof(moveActionVecOffsetMin));
-			SerializeField(s, nameof(moveActionVecOffsetMax));
+			moveAction = s.SerializeObject<Generic<AIBezierAction_Template>>(moveAction, name: "moveAction");
+			openingAction = s.SerializeObject<Generic<AIAction_Template>>(openingAction, name: "openingAction");
+			alarmAction = s.SerializeObject<Generic<AIAction_Template>>(alarmAction, name: "alarmAction");
+			explodeAction = s.SerializeObject<Generic<AIAction_Template>>(explodeAction, name: "explodeAction");
+			alarmAnimName = s.SerializeObject<StringID>(alarmAnimName, name: "alarmAnimName");
+			warnAnimName = s.SerializeObject<StringID>(warnAnimName, name: "warnAnimName");
+			alarmDuration = s.Serialize<float>(alarmDuration, name: "alarmDuration");
+			isTriggered = s.Serialize<int>(isTriggered, name: "isTriggered");
+			moveActionInitScale = s.Serialize<float>(moveActionInitScale, name: "moveActionInitScale");
+			animationBankState = s.Serialize<uint>(animationBankState, name: "animationBankState");
+			explodeOnMoveActionsEnd = s.Serialize<int>(explodeOnMoveActionsEnd, name: "explodeOnMoveActionsEnd");
+			moveActionVecOffsetMin = s.SerializeObject<Vec2d>(moveActionVecOffsetMin, name: "moveActionVecOffsetMin");
+			moveActionVecOffsetMax = s.SerializeObject<Vec2d>(moveActionVecOffsetMax, name: "moveActionVecOffsetMax");
 		}
 		public override uint? ClassCRC => 0x877B0B35;
 	}

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_EnduranceRule_Template : CSerializable {
-		[Serialize("distanceOffset")] public float distanceOffset;
-		[Serialize("distanceRepeat")] public float distanceRepeat;
-		[Serialize("tags"          )] public CList<StringID> tags;
+		public float distanceOffset;
+		public float distanceRepeat;
+		public CList<StringID> tags;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(distanceOffset));
-			SerializeField(s, nameof(distanceRepeat));
-			SerializeField(s, nameof(tags));
+			distanceOffset = s.Serialize<float>(distanceOffset, name: "distanceOffset");
+			distanceRepeat = s.Serialize<float>(distanceRepeat, name: "distanceRepeat");
+			tags = s.SerializeObject<CList<StringID>>(tags, name: "tags");
 		}
 	}
 }

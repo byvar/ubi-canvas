@@ -3,76 +3,76 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR)]
 	public partial class PhysForceModifier : CSerializable {
-		[Serialize("force"                 )] public Vec2d force;
-		[Serialize("offset"                )] public Vec2d offset;
-		[Serialize("rotation"              )] public Angle rotation;
-		[Serialize("centerForce"           )] public float centerForce;
-		[Serialize("centerForceMaxSpeed"   )] public float centerForceMaxSpeed;
-		[Serialize("centerForceSpeed2Force")] public float centerForceSpeed2Force;
-		[Serialize("gradientPercentage"    )] public float gradientPercentage;
-		[Serialize("speedMultiplierX"      )] public float speedMultiplierX;
-		[Serialize("speedMultiplierY"      )] public float speedMultiplierY;
-		[Serialize("point"                 )] public int point;
-		[Serialize("inverted"              )] public int inverted;
-		[Serialize("Type"                  )] public TYPE Type;
-		[Serialize("Box"                   )] public PhysForceModifier.BoxData Box;
-		[Serialize("PolyLine"              )] public PhysForceModifier.PolylineData PolyLine;
-		[Serialize("Circle"                )] public PhysForceModifier.CircleData Circle;
+		public Vec2d force;
+		public Vec2d offset;
+		public Angle rotation;
+		public float centerForce;
+		public float centerForceMaxSpeed;
+		public float centerForceSpeed2Force;
+		public float gradientPercentage;
+		public float speedMultiplierX;
+		public float speedMultiplierY;
+		public int point;
+		public int inverted;
+		public TYPE Type;
+		public PhysForceModifier.BoxData Box;
+		public PhysForceModifier.PolylineData PolyLine;
+		public PhysForceModifier.CircleData Circle;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(force));
-			SerializeField(s, nameof(offset));
-			SerializeField(s, nameof(rotation));
-			SerializeField(s, nameof(centerForce));
-			SerializeField(s, nameof(centerForceMaxSpeed));
-			SerializeField(s, nameof(centerForceSpeed2Force));
-			SerializeField(s, nameof(gradientPercentage));
-			SerializeField(s, nameof(speedMultiplierX));
-			SerializeField(s, nameof(speedMultiplierY));
-			SerializeField(s, nameof(point));
-			SerializeField(s, nameof(inverted));
-			SerializeField(s, nameof(Type));
+			force = s.SerializeObject<Vec2d>(force, name: "force");
+			offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+			rotation = s.SerializeObject<Angle>(rotation, name: "rotation");
+			centerForce = s.Serialize<float>(centerForce, name: "centerForce");
+			centerForceMaxSpeed = s.Serialize<float>(centerForceMaxSpeed, name: "centerForceMaxSpeed");
+			centerForceSpeed2Force = s.Serialize<float>(centerForceSpeed2Force, name: "centerForceSpeed2Force");
+			gradientPercentage = s.Serialize<float>(gradientPercentage, name: "gradientPercentage");
+			speedMultiplierX = s.Serialize<float>(speedMultiplierX, name: "speedMultiplierX");
+			speedMultiplierY = s.Serialize<float>(speedMultiplierY, name: "speedMultiplierY");
+			point = s.Serialize<int>(point, name: "point");
+			inverted = s.Serialize<int>(inverted, name: "inverted");
+			Type = s.Serialize<TYPE>(Type, name: "Type");
 			switch (Type) {
 				case TYPE.BOX:
-					SerializeField(s, nameof(Box));
+					Box = s.SerializeObject<PhysForceModifier.BoxData>(Box, name: "Box");
 					break;
 				case TYPE.CIRCLE:
-					SerializeField(s, nameof(Circle));
+					Circle = s.SerializeObject<PhysForceModifier.CircleData>(Circle, name: "Circle");
 					break;
 				case TYPE.POLYLINE:
-					SerializeField(s, nameof(PolyLine));
+					PolyLine = s.SerializeObject<PhysForceModifier.PolylineData>(PolyLine, name: "PolyLine");
 					break;
 			}
 		}
 		[Games(GameFlags.ROVersion)]
 		public partial class BoxData : CSerializable {
-			[Serialize("width" )] public float width;
-			[Serialize("height")] public float height;
+			public float width;
+			public float height;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(width));
-				SerializeField(s, nameof(height));
+				width = s.Serialize<float>(width, name: "width");
+				height = s.Serialize<float>(height, name: "height");
 			}
 		}
 		[Games(GameFlags.ROVersion)]
 		public partial class CircleData : CSerializable {
-			[Serialize("radius"    )] public float radius;
-			[Serialize("angleStart")] public Angle angleStart;
-			[Serialize("angleEnd"  )] public Angle angleEnd;
+			public float radius;
+			public Angle angleStart;
+			public Angle angleEnd;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(radius));
-				SerializeField(s, nameof(angleStart));
-				SerializeField(s, nameof(angleEnd));
+				radius = s.Serialize<float>(radius, name: "radius");
+				angleStart = s.SerializeObject<Angle>(angleStart, name: "angleStart");
+				angleEnd = s.SerializeObject<Angle>(angleEnd, name: "angleEnd");
 			}
 		}
 		[Games(GameFlags.RJR | GameFlags.RFR)]
 		public partial class PolylineData : CSerializable {
-			[Serialize("animId")] public StringID animId;
+			public StringID animId;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(animId));
+				animId = s.SerializeObject<StringID>(animId, name: "animId");
 			}
 		}
 		public enum TYPE {

@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AILumsComponent : ActorComponent {
-		[Serialize("IsTaken"  )] public bool IsTaken;
-		[Serialize("initColor")] public Color initColor;
+		public bool IsTaken;
+		public Color initColor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(IsTaken));
+				IsTaken = s.Serialize<bool>(IsTaken, name: "IsTaken");
 			}
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(initColor));
+				initColor = s.Serialize<Color>(initColor, name: "initColor");
 			}
 		}
 		public enum Color {

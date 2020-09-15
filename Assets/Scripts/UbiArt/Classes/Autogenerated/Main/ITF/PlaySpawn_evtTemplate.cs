@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RFR | GameFlags.RO)]
 	public partial class PlaySpawn_evtTemplate : SequenceEventWithActor_Template {
-		[Serialize("Visible"    )] public bool Visible;
-		[Serialize("Stay"       )] public bool Stay;
-		[Serialize("FileName"   )] public Path FileName;
-		[Serialize("SpawnOffset")] public Vec2d SpawnOffset;
-		[Serialize("Flipped"    )] public bool Flipped;
-		[Serialize("IluFile"    )] public Path IluFile;
-		[Serialize("FileName"   )] public string FileName2;
+		public bool Visible;
+		public bool Stay;
+		public Path FileName;
+		public Vec2d SpawnOffset;
+		public bool Flipped;
+		public Path IluFile;
+		public string FileName2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(Visible));
-				SerializeField(s, nameof(Stay));
-				SerializeField(s, nameof(FileName2));
-				SerializeField(s, nameof(SpawnOffset));
-				SerializeField(s, nameof(Flipped));
+				Visible = s.Serialize<bool>(Visible, name: "Visible");
+				Stay = s.Serialize<bool>(Stay, name: "Stay");
+				FileName2 = s.Serialize<string>(FileName2, name: "FileName2");
+				SpawnOffset = s.SerializeObject<Vec2d>(SpawnOffset, name: "SpawnOffset");
+				Flipped = s.Serialize<bool>(Flipped, name: "Flipped");
 			} else {
-				SerializeField(s, nameof(Visible));
-				SerializeField(s, nameof(Stay));
-				SerializeField(s, nameof(FileName));
-				SerializeField(s, nameof(SpawnOffset));
-				SerializeField(s, nameof(Flipped));
-				SerializeField(s, nameof(IluFile));
+				Visible = s.Serialize<bool>(Visible, name: "Visible");
+				Stay = s.Serialize<bool>(Stay, name: "Stay");
+				FileName = s.SerializeObject<Path>(FileName, name: "FileName");
+				SpawnOffset = s.SerializeObject<Vec2d>(SpawnOffset, name: "SpawnOffset");
+				Flipped = s.Serialize<bool>(Flipped, name: "Flipped");
+				IluFile = s.SerializeObject<Path>(IluFile, name: "IluFile");
 			}
 		}
 		public override uint? ClassCRC => 0x7F4A6F90;

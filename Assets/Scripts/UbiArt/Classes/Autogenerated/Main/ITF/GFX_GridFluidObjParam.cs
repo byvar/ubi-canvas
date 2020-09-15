@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class GFX_GridFluidObjParam : CSerializable {
-		[Serialize("BasicRender"     )] public bool BasicRender;
-		[Serialize("EmitterIntensity")] public float EmitterIntensity;
-		[Serialize("Mode"            )] public GFX_GRID_MOD_MODE Mode;
+		public bool BasicRender;
+		public float EmitterIntensity;
+		public GFX_GRID_MOD_MODE Mode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(BasicRender));
-			SerializeField(s, nameof(EmitterIntensity));
-			SerializeField(s, nameof(Mode));
+			BasicRender = s.Serialize<bool>(BasicRender, name: "BasicRender");
+			EmitterIntensity = s.Serialize<float>(EmitterIntensity, name: "EmitterIntensity");
+			Mode = s.Serialize<GFX_GRID_MOD_MODE>(Mode, name: "Mode");
 		}
 		public enum GFX_GRID_MOD_MODE {
 			[Serialize("GFX_GRID_MOD_MODE_NONE"       )] NONE = 0,

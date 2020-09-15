@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_BasculePlatformComponent_Template : ActorComponent_Template {
-		[Serialize("StringID__0" )] public StringID StringID__0;
-		[Serialize("StringID__1" )] public StringID StringID__1;
-		[Serialize("Angle__2"    )] public Angle Angle__2;
-		[Serialize("float__3"    )] public float float__3;
-		[Serialize("float__4"    )] public float float__4;
-		[Serialize("float__5"    )] public float float__5;
-		[Serialize("float__6"    )] public float float__6;
-		[Serialize("float__7"    )] public float float__7;
-		[Serialize("float__8"    )] public float float__8;
-		[Serialize("StringID__9" )] public StringID StringID__9;
-		[Serialize("StringID__10")] public StringID StringID__10;
-		[Serialize("StringID__11")] public StringID StringID__11;
-		[Serialize("StringID__12")] public StringID StringID__12;
-		[Serialize("Angle__13"   )] public Angle Angle__13;
+		public StringID StringID__0;
+		public StringID StringID__1;
+		public Angle Angle__2;
+		public float float__3;
+		public float float__4;
+		public float float__5;
+		public float float__6;
+		public float float__7;
+		public float float__8;
+		public StringID StringID__9;
+		public StringID StringID__10;
+		public StringID StringID__11;
+		public StringID StringID__12;
+		public Angle Angle__13;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(StringID__0));
-			SerializeField(s, nameof(StringID__1));
-			SerializeField(s, nameof(Angle__2));
-			SerializeField(s, nameof(float__3));
-			SerializeField(s, nameof(float__4));
-			SerializeField(s, nameof(float__5));
-			SerializeField(s, nameof(float__6));
-			SerializeField(s, nameof(float__7));
-			SerializeField(s, nameof(float__8));
-			SerializeField(s, nameof(StringID__9));
-			SerializeField(s, nameof(StringID__10));
-			SerializeField(s, nameof(StringID__11));
-			SerializeField(s, nameof(StringID__12));
-			SerializeField(s, nameof(Angle__13));
+			StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
+			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
+			Angle__2 = s.SerializeObject<Angle>(Angle__2, name: "Angle__2");
+			float__3 = s.Serialize<float>(float__3, name: "float__3");
+			float__4 = s.Serialize<float>(float__4, name: "float__4");
+			float__5 = s.Serialize<float>(float__5, name: "float__5");
+			float__6 = s.Serialize<float>(float__6, name: "float__6");
+			float__7 = s.Serialize<float>(float__7, name: "float__7");
+			float__8 = s.Serialize<float>(float__8, name: "float__8");
+			StringID__9 = s.SerializeObject<StringID>(StringID__9, name: "StringID__9");
+			StringID__10 = s.SerializeObject<StringID>(StringID__10, name: "StringID__10");
+			StringID__11 = s.SerializeObject<StringID>(StringID__11, name: "StringID__11");
+			StringID__12 = s.SerializeObject<StringID>(StringID__12, name: "StringID__12");
+			Angle__13 = s.SerializeObject<Angle>(Angle__13, name: "Angle__13");
 		}
 		public override uint? ClassCRC => 0xB91AC03E;
 	}

@@ -4,26 +4,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIMenu : UIItem {
-		[Serialize("loadResource"  )] public bool loadResource;
-		[Serialize("afxDuration"   )] public float afxDuration;
-		[Serialize("menuType"      )] public MenuType menuType;
-		[Serialize("menuType"      )] public MenuType2 menuType2;
-		[Serialize("menuType"      )] public MenuType3 menuType3;
-		[Serialize("fullscreenMenu")] public bool fullscreenMenu;
+		public bool loadResource;
+		public float afxDuration;
+		public MenuType menuType;
+		public MenuType2 menuType2;
+		public MenuType3 menuType3;
+		public bool fullscreenMenu;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(loadResource));
-				SerializeField(s, nameof(menuType2));
+				loadResource = s.Serialize<bool>(loadResource, name: "loadResource");
+				menuType2 = s.Serialize<MenuType2>(menuType2, name: "menuType2");
 			} else if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(loadResource));
-				SerializeField(s, nameof(afxDuration));
-				SerializeField(s, nameof(menuType3));
+				loadResource = s.Serialize<bool>(loadResource, name: "loadResource");
+				afxDuration = s.Serialize<float>(afxDuration, name: "afxDuration");
+				menuType3 = s.Serialize<MenuType3>(menuType3, name: "menuType3");
 			} else {
-				SerializeField(s, nameof(loadResource));
-				SerializeField(s, nameof(afxDuration));
-				SerializeField(s, nameof(menuType));
-				SerializeField(s, nameof(fullscreenMenu));
+				loadResource = s.Serialize<bool>(loadResource, name: "loadResource");
+				afxDuration = s.Serialize<float>(afxDuration, name: "afxDuration");
+				menuType = s.Serialize<MenuType>(menuType, name: "menuType");
+				fullscreenMenu = s.Serialize<bool>(fullscreenMenu, name: "fullscreenMenu");
 			}
 		}
 		[Flags]

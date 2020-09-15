@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class AbsoluteObjectPath : CSerializable {
-		[Serialize("packedObjectPath")] public PackedObjectPath packedObjectPath;
-		[Serialize("levelCRC"        )] public uint levelCRC;
+		public PackedObjectPath packedObjectPath;
+		public uint levelCRC;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(packedObjectPath));
-			SerializeField(s, nameof(levelCRC));
+			packedObjectPath = s.SerializeObject<PackedObjectPath>(packedObjectPath, name: "packedObjectPath");
+			levelCRC = s.Serialize<uint>(levelCRC, name: "levelCRC");
 		}
 	}
 }

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_EventScoreRecapTrigger : Event {
-		[Serialize("scoreRecapSequence")] public ScoreRecapSequence scoreRecapSequence;
+		public ScoreRecapSequence scoreRecapSequence;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(scoreRecapSequence));
+			scoreRecapSequence = s.Serialize<ScoreRecapSequence>(scoreRecapSequence, name: "scoreRecapSequence");
 		}
 		public enum ScoreRecapSequence {
 			[Serialize("ScoreRecapSequence_None"          )] None = 0,

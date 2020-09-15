@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class StoreItemSettings : CSerializable {
-		[Serialize("price"   )] public uint price;
-		[Serialize("quantity")] public uint quantity;
+		public uint price;
+		public uint quantity;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(price));
-			SerializeField(s, nameof(quantity));
+			price = s.Serialize<uint>(price, name: "price");
+			quantity = s.Serialize<uint>(quantity, name: "quantity");
 		}
 	}
 }

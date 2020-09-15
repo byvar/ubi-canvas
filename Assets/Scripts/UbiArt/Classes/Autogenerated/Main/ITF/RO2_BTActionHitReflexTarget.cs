@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionHitReflexTarget : BTAction {
-		[Serialize("enemyDetectionRange"              )] public Generic<PhysShape> enemyDetectionRange;
-		[Serialize("enemyDetectionRangeInCharge"      )] public Generic<PhysShape> enemyDetectionRangeInCharge;
-		[Serialize("enemyDetectionRangeInRangedAttack")] public Generic<PhysShape> enemyDetectionRangeInRangedAttack;
+		public Generic<PhysShape> enemyDetectionRange;
+		public Generic<PhysShape> enemyDetectionRangeInCharge;
+		public Generic<PhysShape> enemyDetectionRangeInRangedAttack;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enemyDetectionRange));
-			SerializeField(s, nameof(enemyDetectionRangeInCharge));
-			SerializeField(s, nameof(enemyDetectionRangeInRangedAttack));
+			enemyDetectionRange = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRange, name: "enemyDetectionRange");
+			enemyDetectionRangeInCharge = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRangeInCharge, name: "enemyDetectionRangeInCharge");
+			enemyDetectionRangeInRangedAttack = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRangeInRangedAttack, name: "enemyDetectionRangeInRangedAttack");
 		}
 		public override uint? ClassCRC => 0x2C4D12BC;
 	}

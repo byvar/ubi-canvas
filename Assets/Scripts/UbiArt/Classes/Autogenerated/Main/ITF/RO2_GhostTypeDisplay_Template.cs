@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_GhostTypeDisplay_Template : CSerializable {
-		[Serialize("friendlyActorInfo"       )] public GraphicActorInfo friendlyActorInfo;
-		[Serialize("darkActorInfo"           )] public GraphicActorInfo darkActorInfo;
-		[Serialize("rotationSpeed"           )] public float rotationSpeed;
-		[Serialize("posOffset"               )] public Vec2d posOffset;
-		[Serialize("rotatePosDist"           )] public float rotatePosDist;
-		[Serialize("rotatePosDistBlendFactor")] public float rotatePosDistBlendFactor;
-		[Serialize("deltaMove"               )] public float deltaMove;
-		[Serialize("deltaMoveSpeed"          )] public float deltaMoveSpeed;
-		[Serialize("targetTransitionDuration")] public float targetTransitionDuration;
-		[Serialize("testNumber"              )] public uint testNumber;
-		[Serialize("initStartType"           )] public uint initStartType;
+		public GraphicActorInfo friendlyActorInfo;
+		public GraphicActorInfo darkActorInfo;
+		public float rotationSpeed;
+		public Vec2d posOffset;
+		public float rotatePosDist;
+		public float rotatePosDistBlendFactor;
+		public float deltaMove;
+		public float deltaMoveSpeed;
+		public float targetTransitionDuration;
+		public uint testNumber;
+		public uint initStartType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(friendlyActorInfo));
-			SerializeField(s, nameof(darkActorInfo));
-			SerializeField(s, nameof(rotationSpeed));
-			SerializeField(s, nameof(posOffset));
-			SerializeField(s, nameof(rotatePosDist));
-			SerializeField(s, nameof(rotatePosDistBlendFactor));
-			SerializeField(s, nameof(deltaMove));
-			SerializeField(s, nameof(deltaMoveSpeed));
-			SerializeField(s, nameof(targetTransitionDuration));
-			SerializeField(s, nameof(testNumber));
-			SerializeField(s, nameof(initStartType));
+			friendlyActorInfo = s.SerializeObject<GraphicActorInfo>(friendlyActorInfo, name: "friendlyActorInfo");
+			darkActorInfo = s.SerializeObject<GraphicActorInfo>(darkActorInfo, name: "darkActorInfo");
+			rotationSpeed = s.Serialize<float>(rotationSpeed, name: "rotationSpeed");
+			posOffset = s.SerializeObject<Vec2d>(posOffset, name: "posOffset");
+			rotatePosDist = s.Serialize<float>(rotatePosDist, name: "rotatePosDist");
+			rotatePosDistBlendFactor = s.Serialize<float>(rotatePosDistBlendFactor, name: "rotatePosDistBlendFactor");
+			deltaMove = s.Serialize<float>(deltaMove, name: "deltaMove");
+			deltaMoveSpeed = s.Serialize<float>(deltaMoveSpeed, name: "deltaMoveSpeed");
+			targetTransitionDuration = s.Serialize<float>(targetTransitionDuration, name: "targetTransitionDuration");
+			testNumber = s.Serialize<uint>(testNumber, name: "testNumber");
+			initStartType = s.Serialize<uint>(initStartType, name: "initStartType");
 		}
 		public override uint? ClassCRC => 0xA1832B53;
 	}

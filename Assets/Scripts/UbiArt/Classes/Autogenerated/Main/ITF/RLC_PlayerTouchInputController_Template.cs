@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_PlayerTouchInputController_Template : TemplateObj {
-		[Serialize("JumpCommandDurationMaxAllowed"   )] public float JumpCommandDurationMaxAllowed;
-		[Serialize("SwipeDetectionDuration"          )] public float SwipeDetectionDuration;
-		[Serialize("HoldingJumpHelicoTriggerDuration")] public float HoldingJumpHelicoTriggerDuration;
-		[Serialize("AirSwipeDetectionDuration"       )] public float AirSwipeDetectionDuration;
-		[Serialize("HangingAttackDuration"           )] public float HangingAttackDuration;
-		[Serialize("HelicoAttackDuration"            )] public float HelicoAttackDuration;
-		[Serialize("DefaultAttackDuration"           )] public float DefaultAttackDuration;
-		[Serialize("HoldDurationToIgnoreSwipe"       )] public float HoldDurationToIgnoreSwipe;
-		[Serialize("MovingDurationToCancelJump"      )] public float MovingDurationToCancelJump;
-		[Serialize("JumpInputMemoDuration"           )] public float JumpInputMemoDuration;
+		public float JumpCommandDurationMaxAllowed;
+		public float SwipeDetectionDuration;
+		public float HoldingJumpHelicoTriggerDuration;
+		public float AirSwipeDetectionDuration;
+		public float HangingAttackDuration;
+		public float HelicoAttackDuration;
+		public float DefaultAttackDuration;
+		public float HoldDurationToIgnoreSwipe;
+		public float MovingDurationToCancelJump;
+		public float JumpInputMemoDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(JumpCommandDurationMaxAllowed));
-			SerializeField(s, nameof(SwipeDetectionDuration));
-			SerializeField(s, nameof(HoldingJumpHelicoTriggerDuration));
-			SerializeField(s, nameof(AirSwipeDetectionDuration));
-			SerializeField(s, nameof(HangingAttackDuration));
-			SerializeField(s, nameof(HelicoAttackDuration));
-			SerializeField(s, nameof(DefaultAttackDuration));
-			SerializeField(s, nameof(HoldDurationToIgnoreSwipe));
-			SerializeField(s, nameof(MovingDurationToCancelJump));
-			SerializeField(s, nameof(JumpInputMemoDuration));
+			JumpCommandDurationMaxAllowed = s.Serialize<float>(JumpCommandDurationMaxAllowed, name: "JumpCommandDurationMaxAllowed");
+			SwipeDetectionDuration = s.Serialize<float>(SwipeDetectionDuration, name: "SwipeDetectionDuration");
+			HoldingJumpHelicoTriggerDuration = s.Serialize<float>(HoldingJumpHelicoTriggerDuration, name: "HoldingJumpHelicoTriggerDuration");
+			AirSwipeDetectionDuration = s.Serialize<float>(AirSwipeDetectionDuration, name: "AirSwipeDetectionDuration");
+			HangingAttackDuration = s.Serialize<float>(HangingAttackDuration, name: "HangingAttackDuration");
+			HelicoAttackDuration = s.Serialize<float>(HelicoAttackDuration, name: "HelicoAttackDuration");
+			DefaultAttackDuration = s.Serialize<float>(DefaultAttackDuration, name: "DefaultAttackDuration");
+			HoldDurationToIgnoreSwipe = s.Serialize<float>(HoldDurationToIgnoreSwipe, name: "HoldDurationToIgnoreSwipe");
+			MovingDurationToCancelJump = s.Serialize<float>(MovingDurationToCancelJump, name: "MovingDurationToCancelJump");
+			JumpInputMemoDuration = s.Serialize<float>(JumpInputMemoDuration, name: "JumpInputMemoDuration");
 		}
 		public override uint? ClassCRC => 0x570711FF;
 	}

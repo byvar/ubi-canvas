@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventTriggerChangePage : Event {
-		[Serialize("enterPoint"     )] public Vec3d enterPoint;
-		[Serialize("exitPoint"      )] public Vec3d exitPoint;
-		[Serialize("finalPoint"     )] public Vec3d finalPoint;
-		[Serialize("verticalEject"  )] public int verticalEject;
-		[Serialize("destinationPage")] public uint destinationPage;
-		[Serialize("playerDuration" )] public float playerDuration;
-		[Serialize("useFade"        )] public int useFade;
-		[Serialize("isCageDoor"     )] public int isCageDoor;
+		public Vec3d enterPoint;
+		public Vec3d exitPoint;
+		public Vec3d finalPoint;
+		public int verticalEject;
+		public uint destinationPage;
+		public float playerDuration;
+		public int useFade;
+		public int isCageDoor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enterPoint));
-			SerializeField(s, nameof(exitPoint));
-			SerializeField(s, nameof(finalPoint));
-			SerializeField(s, nameof(verticalEject));
-			SerializeField(s, nameof(destinationPage));
-			SerializeField(s, nameof(playerDuration));
-			SerializeField(s, nameof(useFade));
-			SerializeField(s, nameof(isCageDoor));
+			enterPoint = s.SerializeObject<Vec3d>(enterPoint, name: "enterPoint");
+			exitPoint = s.SerializeObject<Vec3d>(exitPoint, name: "exitPoint");
+			finalPoint = s.SerializeObject<Vec3d>(finalPoint, name: "finalPoint");
+			verticalEject = s.Serialize<int>(verticalEject, name: "verticalEject");
+			destinationPage = s.Serialize<uint>(destinationPage, name: "destinationPage");
+			playerDuration = s.Serialize<float>(playerDuration, name: "playerDuration");
+			useFade = s.Serialize<int>(useFade, name: "useFade");
+			isCageDoor = s.Serialize<int>(isCageDoor, name: "isCageDoor");
 		}
 		public override uint? ClassCRC => 0xD0CE9111;
 	}

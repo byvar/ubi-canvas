@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_OnlineEventAnimReset : Event {
-		[Serialize("tree"      )] public bool tree;
-		[Serialize("transition")] public bool transition;
-		[Serialize("curTime"   )] public bool curTime;
+		public bool tree;
+		public bool transition;
+		public bool curTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(tree));
-			SerializeField(s, nameof(transition));
-			SerializeField(s, nameof(curTime));
+			tree = s.Serialize<bool>(tree, name: "tree");
+			transition = s.Serialize<bool>(transition, name: "transition");
+			curTime = s.Serialize<bool>(curTime, name: "curTime");
 		}
 		public override uint? ClassCRC => 0xD672B007;
 	}

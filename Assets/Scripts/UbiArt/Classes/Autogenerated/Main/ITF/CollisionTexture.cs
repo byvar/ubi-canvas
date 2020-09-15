@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class CollisionTexture : CSerializable {
-		[Serialize("build"       )] public uint build;
-		[Serialize("offset"      )] public float offset;
-		[Serialize("cornerIn"    )] public Vec2d cornerIn;
-		[Serialize("cornerOut"   )] public Vec2d cornerOut;
-		[Serialize("cornerInCur" )] public bool cornerInCur;
-		[Serialize("cornerOutCur")] public bool cornerOutCur;
+		public uint build;
+		public float offset;
+		public Vec2d cornerIn;
+		public Vec2d cornerOut;
+		public bool cornerInCur;
+		public bool cornerOutCur;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(build));
-			SerializeField(s, nameof(offset));
-			SerializeField(s, nameof(cornerIn));
-			SerializeField(s, nameof(cornerOut));
+			build = s.Serialize<uint>(build, name: "build");
+			offset = s.Serialize<float>(offset, name: "offset");
+			cornerIn = s.SerializeObject<Vec2d>(cornerIn, name: "cornerIn");
+			cornerOut = s.SerializeObject<Vec2d>(cornerOut, name: "cornerOut");
 			if (s.HasFlags(SerializeFlags.Flags10)) {
-				SerializeField(s, nameof(cornerInCur));
-				SerializeField(s, nameof(cornerOutCur));
+				cornerInCur = s.Serialize<bool>(cornerInCur, name: "cornerInCur");
+				cornerOutCur = s.Serialize<bool>(cornerOutCur, name: "cornerOutCur");
 			}
 		}
 	}

@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ExtraLumsComponent : ActorComponent {
-		[Serialize("disappearStartTime"   )] public float disappearStartTime;
-		[Serialize("disappearIntervalTime")] public float disappearIntervalTime;
+		public float disappearStartTime;
+		public float disappearIntervalTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(disappearStartTime));
-				SerializeField(s, nameof(disappearIntervalTime));
+				disappearStartTime = s.Serialize<float>(disappearStartTime, name: "disappearStartTime");
+				disappearIntervalTime = s.Serialize<float>(disappearIntervalTime, name: "disappearIntervalTime");
 			}
 		}
 		public override uint? ClassCRC => 0x8A1EAD12;

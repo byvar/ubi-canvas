@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class GridFluidModifierComponent : ActorComponent {
-		[Serialize("Reinit"       )] public bool Reinit;
-		[Serialize("FluidModifier")] public GFX_GridFluidModifierList FluidModifier;
-		[Serialize("Margin"       )] public AABB Margin;
+		public bool Reinit;
+		public GFX_GridFluidModifierList FluidModifier;
+		public AABB Margin;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(Reinit));
-				SerializeField(s, nameof(FluidModifier));
-				SerializeField(s, nameof(Margin));
+				Reinit = s.Serialize<bool>(Reinit, name: "Reinit");
+				FluidModifier = s.SerializeObject<GFX_GridFluidModifierList>(FluidModifier, name: "FluidModifier");
+				Margin = s.SerializeObject<AABB>(Margin, name: "Margin");
 			}
 		}
 

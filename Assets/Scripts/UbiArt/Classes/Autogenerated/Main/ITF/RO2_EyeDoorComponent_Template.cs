@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EyeDoorComponent_Template : RO2_DoorComponent_Template {
-		[Serialize("eyePath"   )] public Path eyePath;
-		[Serialize("eyePoly"   )] public StringID eyePoly;
-		[Serialize("eyeZOffset")] public float eyeZOffset;
+		public Path eyePath;
+		public StringID eyePoly;
+		public float eyeZOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(eyePath));
-			SerializeField(s, nameof(eyePoly));
-			SerializeField(s, nameof(eyeZOffset));
+			eyePath = s.SerializeObject<Path>(eyePath, name: "eyePath");
+			eyePoly = s.SerializeObject<StringID>(eyePoly, name: "eyePoly");
+			eyeZOffset = s.Serialize<float>(eyeZOffset, name: "eyeZOffset");
 		}
 		public override uint? ClassCRC => 0x9D0BFE2A;
 	}

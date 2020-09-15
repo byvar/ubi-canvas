@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Criteria : CSerializable {
-		[Serialize("inputIndex")] public uint inputIndex;
-		[Serialize("compare"   )] public Input compare;
-		[Serialize("eval"      )] public Enum_eval eval;
-		[Serialize("or"        )] public bool or;
+		public uint inputIndex;
+		public Input compare;
+		public Enum_eval eval;
+		public bool or;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(inputIndex));
-			SerializeField(s, nameof(compare));
-			SerializeField(s, nameof(eval));
-			SerializeField(s, nameof(or));
+			inputIndex = s.Serialize<uint>(inputIndex, name: "inputIndex");
+			compare = s.SerializeObject<Input>(compare, name: "compare");
+			eval = s.Serialize<Enum_eval>(eval, name: "eval");
+			or = s.Serialize<bool>(or, name: "or");
 		}
 		public enum Enum_eval {
 			[Serialize("Undefined"          )] Undefined = 0,

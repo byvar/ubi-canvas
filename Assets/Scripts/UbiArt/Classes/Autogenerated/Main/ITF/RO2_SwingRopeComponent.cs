@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SwingRopeComponent : SoftPlatformComponent {
-		[Serialize("initialAngle")] public Angle initialAngle;
+		public Angle initialAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(initialAngle));
+				initialAngle = s.SerializeObject<Angle>(initialAngle, name: "initialAngle");
 			}
 		}
 		public override uint? ClassCRC => 0x3076274A;

@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RL)]
 	public partial class AnimNodeSwing : CSerializable {
-		[Serialize("leafs"    )] public Placeholder leafs;
-		[Serialize("childData")] public Placeholder childData;
+		public Placeholder leafs;
+		public Placeholder childData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(leafs));
-				SerializeField(s, nameof(childData));
+				leafs = s.SerializeObject<Placeholder>(leafs, name: "leafs");
+				childData = s.SerializeObject<Placeholder>(childData, name: "childData");
 			} else {
 			}
 		}

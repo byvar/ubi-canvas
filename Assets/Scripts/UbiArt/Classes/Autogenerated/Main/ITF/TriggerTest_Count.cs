@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerTest_Count : TriggerTestAbstract {
-		[Serialize("ValueRef")] public uint ValueRef;
-		[Serialize("Operator")] public ECompareType Operator;
+		public uint ValueRef;
+		public ECompareType Operator;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ValueRef));
-			SerializeField(s, nameof(Operator));
+			ValueRef = s.Serialize<uint>(ValueRef, name: "ValueRef");
+			Operator = s.Serialize<ECompareType>(Operator, name: "Operator");
 		}
 		public enum ECompareType {
 			[Serialize("ECompareType_GreaterThan" )] GreaterThan = 1,

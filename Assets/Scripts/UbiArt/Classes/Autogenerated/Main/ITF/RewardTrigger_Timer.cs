@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class RewardTrigger_Timer : RewardTrigger_Base {
-		[Serialize("timerId"           )] public StringID timerId;
-		[Serialize("timeToGet"         )] public float timeToGet;
-		[Serialize("currentSessionOnly")] public bool currentSessionOnly;
-		[Serialize("reachTimeToGet"    )] public bool reachTimeToGet;
+		public StringID timerId;
+		public float timeToGet;
+		public bool currentSessionOnly;
+		public bool reachTimeToGet;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(timerId));
-			SerializeField(s, nameof(timeToGet));
-			SerializeField(s, nameof(currentSessionOnly));
-			SerializeField(s, nameof(reachTimeToGet));
+			timerId = s.SerializeObject<StringID>(timerId, name: "timerId");
+			timeToGet = s.Serialize<float>(timeToGet, name: "timeToGet");
+			currentSessionOnly = s.Serialize<bool>(currentSessionOnly, name: "currentSessionOnly");
+			reachTimeToGet = s.Serialize<bool>(reachTimeToGet, name: "reachTimeToGet");
 		}
 		public override uint? ClassCRC => 0xB36DD730;
 	}

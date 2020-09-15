@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ExtraLumsComponent_Template : ActorComponent_Template {
-		[Serialize("lumsCount"            )] public uint lumsCount;
-		[Serialize("disappearStartTime"   )] public float disappearStartTime;
-		[Serialize("disappearIntervalTime")] public float disappearIntervalTime;
-		[Serialize("lumsDistance"         )] public float lumsDistance;
-		[Serialize("lumsScale"            )] public float lumsScale;
-		[Serialize("lumsRotationSpeed"    )] public Angle lumsRotationSpeed;
-		[Serialize("attachedBone"         )] public StringID attachedBone;
-		[Serialize("lumsAnimAppear"       )] public StringID lumsAnimAppear;
-		[Serialize("lumsAnimStand"        )] public StringID lumsAnimStand;
-		[Serialize("lumsAnimDisappear"    )] public StringID lumsAnimDisappear;
+		public uint lumsCount;
+		public float disappearStartTime;
+		public float disappearIntervalTime;
+		public float lumsDistance;
+		public float lumsScale;
+		public Angle lumsRotationSpeed;
+		public StringID attachedBone;
+		public StringID lumsAnimAppear;
+		public StringID lumsAnimStand;
+		public StringID lumsAnimDisappear;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(lumsCount));
-			SerializeField(s, nameof(disappearStartTime));
-			SerializeField(s, nameof(disappearIntervalTime));
-			SerializeField(s, nameof(lumsDistance));
-			SerializeField(s, nameof(lumsScale));
-			SerializeField(s, nameof(lumsRotationSpeed));
-			SerializeField(s, nameof(attachedBone));
-			SerializeField(s, nameof(lumsAnimAppear));
-			SerializeField(s, nameof(lumsAnimStand));
-			SerializeField(s, nameof(lumsAnimDisappear));
+			lumsCount = s.Serialize<uint>(lumsCount, name: "lumsCount");
+			disappearStartTime = s.Serialize<float>(disappearStartTime, name: "disappearStartTime");
+			disappearIntervalTime = s.Serialize<float>(disappearIntervalTime, name: "disappearIntervalTime");
+			lumsDistance = s.Serialize<float>(lumsDistance, name: "lumsDistance");
+			lumsScale = s.Serialize<float>(lumsScale, name: "lumsScale");
+			lumsRotationSpeed = s.SerializeObject<Angle>(lumsRotationSpeed, name: "lumsRotationSpeed");
+			attachedBone = s.SerializeObject<StringID>(attachedBone, name: "attachedBone");
+			lumsAnimAppear = s.SerializeObject<StringID>(lumsAnimAppear, name: "lumsAnimAppear");
+			lumsAnimStand = s.SerializeObject<StringID>(lumsAnimStand, name: "lumsAnimStand");
+			lumsAnimDisappear = s.SerializeObject<StringID>(lumsAnimDisappear, name: "lumsAnimDisappear");
 		}
 		public override uint? ClassCRC => 0x46EA8D63;
 	}

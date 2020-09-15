@@ -23,6 +23,99 @@ namespace UbiArt {
 			reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
 		}
 
+
+		// Helper method which returns an object so we can cast it
+		protected object ReadPrimitiveAsObject<T>(string name = null, Options options = Options.None) {
+			// Get the type
+			var type = typeof(T);
+
+			TypeCode typeCode = Type.GetTypeCode(type);
+
+			if (typeCode == TypeCode.Object) {
+				if (type == typeof(CString)) {
+					CString s = new CString(reader.ReadString16());
+					AddToStringCache(s);
+					return s;
+				} else if (type == typeof(byte[])) {
+					int numBytes = reader.ReadInt32();
+					return reader.ReadBytes(numBytes);
+				} else {
+					throw new Exception(Position + ": Field with name " + name + " is not a valid primitive type");
+				}
+			}
+
+			switch (typeCode) {
+
+				case TypeCode.Boolean:
+					bool asByte = false;
+					if (options.HasFlag(Options.ForceAsByte)) {
+						asByte = true;
+					} else if (options.HasFlag(Options.BoolAsByte)) {
+						asByte = HasFlags(SerializeFlags.Flags1);
+					}
+					if(asByte) {
+						uint tmp = reader.ReadByte();
+						if (tmp == 1) {
+							return true;
+						} else if (tmp != 0) {
+							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							//obj = false;
+						} else {
+							return false;
+						}
+					} else {
+						uint tmp = reader.ReadUInt32();
+						if (tmp == 1) {
+							return true;
+						} else if (tmp != 0) {
+							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							//obj = false;
+						} else {
+							return false;
+						}
+					}
+
+				case TypeCode.SByte:
+					return reader.ReadSByte();
+
+				case TypeCode.Byte:
+					return reader.ReadByte();
+
+				case TypeCode.Int16:
+					return reader.ReadInt16();
+
+				case TypeCode.UInt16:
+					return reader.ReadUInt16();
+
+				case TypeCode.Int32:
+					return reader.ReadInt32();
+
+				case TypeCode.UInt32:
+					return reader.ReadUInt32();
+
+				case TypeCode.Int64:
+					return reader.ReadInt64();
+
+				case TypeCode.UInt64:
+					return reader.ReadUInt64();
+
+				case TypeCode.Single:
+					return reader.ReadSingle();
+
+				case TypeCode.Double:
+					return reader.ReadDouble();
+				case TypeCode.String:
+					string s = reader.ReadString();
+					AddToStringCache(s);
+					return s;
+				case TypeCode.Char:
+					return reader.ReadChar();
+				default:
+					throw new NotSupportedException($"The specified generic type ('{name}') can not be read from the reader");
+			}
+		}
+
+
 		public override void Serialize(ref object obj, Type type, string name = null) {
 			if (Type.GetTypeCode(type) != TypeCode.Object) {
 				switch (Type.GetTypeCode(type)) {
@@ -128,6 +221,32 @@ namespace UbiArt {
 
 		public override void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null) {
 			Serialize<T>(ref obj, type: type, name: name, index: index);
+		}
+
+		public override T Serialize<T>(T obj, string name = null, Options options = Options.None) {
+			Pointer pos = log && name != null ? Position : null;
+
+			T t = (T)ReadPrimitiveAsObject<T>(name: name, options: options);
+
+			if (log && name != null) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + t);
+			}
+			return t;
+		}
+
+		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, Options options = Options.None) {
+			Pointer pos = log ? Position : null;
+			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+			if (log && isBigObject && name != null) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
+			}
+			object obj2 = obj;
+			Serialize(ref obj2, typeof(T), name: name);
+
+			if (log && !isBigObject && name != null) {
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj2);
+			}
+			return (T)obj2;
 		}
 	}
 }

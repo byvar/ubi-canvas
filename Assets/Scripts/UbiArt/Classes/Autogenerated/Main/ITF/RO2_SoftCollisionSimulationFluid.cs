@@ -3,43 +3,43 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_SoftCollisionSimulationFluid : CSerializable {
-		[Serialize("ParticlesCanHit"             )] public bool ParticlesCanHit;
-		[Serialize("GridWidth"                   )] public int GridWidth;
-		[Serialize("GridHeight"                  )] public int GridHeight;
-		[Serialize("StaticCollision"             )] public bool StaticCollision;
-		[Serialize("Density"                     )] public float Density;
-		[Serialize("GroundReboudCoeff"           )] public float GroundReboudCoeff;
-		[Serialize("RotationCoeff"               )] public float RotationCoeff;
-		[Serialize("GroundFriction"              )] public float GroundFriction;
-		[Serialize("SpeedLimit_X"                )] public float SpeedLimit_X;
-		[Serialize("SpeedLimit_Y_Up"             )] public float SpeedLimit_Y_Up;
-		[Serialize("SpeedLimit_Y_Down"           )] public float SpeedLimit_Y_Down;
-		[Serialize("AllowWorldPerturbation"      )] public bool AllowWorldPerturbation;
-		[Serialize("PerturbationPower"           )] public float PerturbationPower;
-		[Serialize("VisualScaleMultiplier"       )] public float VisualScaleMultiplier;
-		[Serialize("DRC_MaxCatchNb"              )] public uint DRC_MaxCatchNb;
-		[Serialize("DRC_AttractionRadius"        )] public float DRC_AttractionRadius;
-		[Serialize("PHYSIC_OverlapCollisionCoeff")] public float PHYSIC_OverlapCollisionCoeff;
+		public bool ParticlesCanHit;
+		public int GridWidth;
+		public int GridHeight;
+		public bool StaticCollision;
+		public float Density;
+		public float GroundReboudCoeff;
+		public float RotationCoeff;
+		public float GroundFriction;
+		public float SpeedLimit_X;
+		public float SpeedLimit_Y_Up;
+		public float SpeedLimit_Y_Down;
+		public bool AllowWorldPerturbation;
+		public float PerturbationPower;
+		public float VisualScaleMultiplier;
+		public uint DRC_MaxCatchNb;
+		public float DRC_AttractionRadius;
+		public float PHYSIC_OverlapCollisionCoeff;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(ParticlesCanHit));
-				SerializeField(s, nameof(GridWidth));
-				SerializeField(s, nameof(GridHeight));
-				SerializeField(s, nameof(StaticCollision));
-				SerializeField(s, nameof(Density));
-				SerializeField(s, nameof(GroundReboudCoeff));
-				SerializeField(s, nameof(RotationCoeff));
-				SerializeField(s, nameof(GroundFriction));
-				SerializeField(s, nameof(SpeedLimit_X));
-				SerializeField(s, nameof(SpeedLimit_Y_Up));
-				SerializeField(s, nameof(SpeedLimit_Y_Down));
-				SerializeField(s, nameof(AllowWorldPerturbation));
-				SerializeField(s, nameof(PerturbationPower));
-				SerializeField(s, nameof(VisualScaleMultiplier));
-				SerializeField(s, nameof(DRC_MaxCatchNb));
-				SerializeField(s, nameof(DRC_AttractionRadius));
-				SerializeField(s, nameof(PHYSIC_OverlapCollisionCoeff));
+				ParticlesCanHit = s.Serialize<bool>(ParticlesCanHit, name: "ParticlesCanHit");
+				GridWidth = s.Serialize<int>(GridWidth, name: "GridWidth");
+				GridHeight = s.Serialize<int>(GridHeight, name: "GridHeight");
+				StaticCollision = s.Serialize<bool>(StaticCollision, name: "StaticCollision");
+				Density = s.Serialize<float>(Density, name: "Density");
+				GroundReboudCoeff = s.Serialize<float>(GroundReboudCoeff, name: "GroundReboudCoeff");
+				RotationCoeff = s.Serialize<float>(RotationCoeff, name: "RotationCoeff");
+				GroundFriction = s.Serialize<float>(GroundFriction, name: "GroundFriction");
+				SpeedLimit_X = s.Serialize<float>(SpeedLimit_X, name: "SpeedLimit_X");
+				SpeedLimit_Y_Up = s.Serialize<float>(SpeedLimit_Y_Up, name: "SpeedLimit_Y_Up");
+				SpeedLimit_Y_Down = s.Serialize<float>(SpeedLimit_Y_Down, name: "SpeedLimit_Y_Down");
+				AllowWorldPerturbation = s.Serialize<bool>(AllowWorldPerturbation, name: "AllowWorldPerturbation");
+				PerturbationPower = s.Serialize<float>(PerturbationPower, name: "PerturbationPower");
+				VisualScaleMultiplier = s.Serialize<float>(VisualScaleMultiplier, name: "VisualScaleMultiplier");
+				DRC_MaxCatchNb = s.Serialize<uint>(DRC_MaxCatchNb, name: "DRC_MaxCatchNb");
+				DRC_AttractionRadius = s.Serialize<float>(DRC_AttractionRadius, name: "DRC_AttractionRadius");
+				PHYSIC_OverlapCollisionCoeff = s.Serialize<float>(PHYSIC_OverlapCollisionCoeff, name: "PHYSIC_OverlapCollisionCoeff");
 			}
 		}
 		public override uint? ClassCRC => 0x5F8245D5;

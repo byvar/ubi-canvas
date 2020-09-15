@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventHUDDisplayElem : Event {
-		[Serialize("index")] public uint index;
-		[Serialize("bShow")] public int bShow;
+		public uint index;
+		public int bShow;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(index));
-			SerializeField(s, nameof(bShow));
+			index = s.Serialize<uint>(index, name: "index");
+			bShow = s.Serialize<int>(bShow, name: "bShow");
 		}
 		public override uint? ClassCRC => 0x993EE599;
 	}

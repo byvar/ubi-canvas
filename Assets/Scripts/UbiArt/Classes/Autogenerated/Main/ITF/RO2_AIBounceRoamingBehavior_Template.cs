@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIBounceRoamingBehavior_Template : TemplateAIBehavior {
-		[Serialize("bounceMove"               )] public Generic<AIJumpInDirAction_Template> bounceMove;
-		[Serialize("bounceIdle"               )] public Generic<AIJumpInDirAction_Template> bounceIdle;
-		[Serialize("bounceJump"               )] public Generic<AIJumpAction_Template> bounceJump;
-		[Serialize("minTimeToWalk"            )] public float minTimeToWalk;
-		[Serialize("maxTimeToWalk"            )] public float maxTimeToWalk;
-		[Serialize("minTimeToIdle"            )] public float minTimeToIdle;
-		[Serialize("maxTimeToIdle"            )] public float maxTimeToIdle;
-		[Serialize("obstacleDetectionDistance")] public float obstacleDetectionDistance;
-		[Serialize("wallJumpHeight"           )] public float wallJumpHeight;
+		public Generic<AIJumpInDirAction_Template> bounceMove;
+		public Generic<AIJumpInDirAction_Template> bounceIdle;
+		public Generic<AIJumpAction_Template> bounceJump;
+		public float minTimeToWalk;
+		public float maxTimeToWalk;
+		public float minTimeToIdle;
+		public float maxTimeToIdle;
+		public float obstacleDetectionDistance;
+		public float wallJumpHeight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bounceMove));
-			SerializeField(s, nameof(bounceIdle));
-			SerializeField(s, nameof(bounceJump));
-			SerializeField(s, nameof(minTimeToWalk));
-			SerializeField(s, nameof(maxTimeToWalk));
-			SerializeField(s, nameof(minTimeToIdle));
-			SerializeField(s, nameof(maxTimeToIdle));
-			SerializeField(s, nameof(obstacleDetectionDistance));
-			SerializeField(s, nameof(wallJumpHeight));
+			bounceMove = s.SerializeObject<Generic<AIJumpInDirAction_Template>>(bounceMove, name: "bounceMove");
+			bounceIdle = s.SerializeObject<Generic<AIJumpInDirAction_Template>>(bounceIdle, name: "bounceIdle");
+			bounceJump = s.SerializeObject<Generic<AIJumpAction_Template>>(bounceJump, name: "bounceJump");
+			minTimeToWalk = s.Serialize<float>(minTimeToWalk, name: "minTimeToWalk");
+			maxTimeToWalk = s.Serialize<float>(maxTimeToWalk, name: "maxTimeToWalk");
+			minTimeToIdle = s.Serialize<float>(minTimeToIdle, name: "minTimeToIdle");
+			maxTimeToIdle = s.Serialize<float>(maxTimeToIdle, name: "maxTimeToIdle");
+			obstacleDetectionDistance = s.Serialize<float>(obstacleDetectionDistance, name: "obstacleDetectionDistance");
+			wallJumpHeight = s.Serialize<float>(wallJumpHeight, name: "wallJumpHeight");
 		}
 		public override uint? ClassCRC => 0xCB383C6D;
 	}

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class AIRoamingBehavior_Template : TemplateAIBehavior {
-		[Serialize("idle")] public Generic<AIIdleAction_Template> idle;
-		[Serialize("walk")] public Generic<AIWalkInDirAction_Template> walk;
+		public Generic<AIIdleAction_Template> idle;
+		public Generic<AIWalkInDirAction_Template> walk;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idle));
-			SerializeField(s, nameof(walk));
+			idle = s.SerializeObject<Generic<AIIdleAction_Template>>(idle, name: "idle");
+			walk = s.SerializeObject<Generic<AIWalkInDirAction_Template>>(walk, name: "walk");
 		}
 		public override uint? ClassCRC => 0xDC60F442;
 	}

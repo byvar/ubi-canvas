@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class PlaySkip_evtTemplate : SequenceEvent_Template {
-		[Serialize("skipContextIcon")] public ContextIcon skipContextIcon;
+		public ContextIcon skipContextIcon;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(skipContextIcon));
+			skipContextIcon = s.Serialize<ContextIcon>(skipContextIcon, name: "skipContextIcon");
 		}
 		public enum ContextIcon {
 			[Serialize("ContextIcon_Invalid" )] Invalid = -1,

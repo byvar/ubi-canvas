@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_FeedbackManager_Template : CSerializable {
-		[Serialize("soundDescriptors"                  )] public Placeholder soundDescriptors;
-		[Serialize("fxDescriptors"                     )] public Placeholder fxDescriptors;
-		[Serialize("sequencePaths"                     )] public Placeholder sequencePaths;
-		[Serialize("defaultIdentifier"                 )] public StringID defaultIdentifier;
-		[Serialize("defaultModifier"                   )] public StringID defaultModifier;
-		[Serialize("alwaysLoaded_ContextTag"           )] public StringID alwaysLoaded_ContextTag;
-		[Serialize("alwaysLoadedExploration_ContextTag")] public StringID alwaysLoadedExploration_ContextTag;
-		[Serialize("alwaysLoadedBattle_ContextTag"     )] public StringID alwaysLoadedBattle_ContextTag;
-		[Serialize("isPreloadAllFeedbacksEnabled"      )] public bool isPreloadAllFeedbacksEnabled;
+		public Placeholder soundDescriptors;
+		public Placeholder fxDescriptors;
+		public Placeholder sequencePaths;
+		public StringID defaultIdentifier;
+		public StringID defaultModifier;
+		public StringID alwaysLoaded_ContextTag;
+		public StringID alwaysLoadedExploration_ContextTag;
+		public StringID alwaysLoadedBattle_ContextTag;
+		public bool isPreloadAllFeedbacksEnabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(soundDescriptors));
-			SerializeField(s, nameof(fxDescriptors));
-			SerializeField(s, nameof(sequencePaths));
-			SerializeField(s, nameof(defaultIdentifier));
-			SerializeField(s, nameof(defaultModifier));
-			SerializeField(s, nameof(alwaysLoaded_ContextTag));
-			SerializeField(s, nameof(alwaysLoadedExploration_ContextTag));
-			SerializeField(s, nameof(alwaysLoadedBattle_ContextTag));
-			SerializeField(s, nameof(isPreloadAllFeedbacksEnabled), boolAsByte: true);
+			soundDescriptors = s.SerializeObject<Placeholder>(soundDescriptors, name: "soundDescriptors");
+			fxDescriptors = s.SerializeObject<Placeholder>(fxDescriptors, name: "fxDescriptors");
+			sequencePaths = s.SerializeObject<Placeholder>(sequencePaths, name: "sequencePaths");
+			defaultIdentifier = s.SerializeObject<StringID>(defaultIdentifier, name: "defaultIdentifier");
+			defaultModifier = s.SerializeObject<StringID>(defaultModifier, name: "defaultModifier");
+			alwaysLoaded_ContextTag = s.SerializeObject<StringID>(alwaysLoaded_ContextTag, name: "alwaysLoaded_ContextTag");
+			alwaysLoadedExploration_ContextTag = s.SerializeObject<StringID>(alwaysLoadedExploration_ContextTag, name: "alwaysLoadedExploration_ContextTag");
+			alwaysLoadedBattle_ContextTag = s.SerializeObject<StringID>(alwaysLoadedBattle_ContextTag, name: "alwaysLoadedBattle_ContextTag");
+			isPreloadAllFeedbacksEnabled = s.Serialize<bool>(isPreloadAllFeedbacksEnabled, name: "isPreloadAllFeedbacksEnabled", options: CSerializerObject.Options.BoolAsByte);
 		}
 		public override uint? ClassCRC => 0x4A67ED13;
 	}

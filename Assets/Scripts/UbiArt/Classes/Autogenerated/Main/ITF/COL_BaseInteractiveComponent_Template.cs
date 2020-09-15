@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_BaseInteractiveComponent_Template : CSerializable {
-		[Serialize("interactButtonYOffset"          )] public float interactButtonYOffset;
-		[Serialize("interactButtonZOffsetFromAurora")] public float interactButtonZOffsetFromAurora;
-		[Serialize("authorizedPCStates"             )] public Placeholder authorizedPCStates;
-		[Serialize("onInteractFeedbackID"           )] public StringID onInteractFeedbackID;
+		public float interactButtonYOffset;
+		public float interactButtonZOffsetFromAurora;
+		public Placeholder authorizedPCStates;
+		public StringID onInteractFeedbackID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(interactButtonYOffset));
-			SerializeField(s, nameof(interactButtonZOffsetFromAurora));
-			SerializeField(s, nameof(authorizedPCStates));
-			SerializeField(s, nameof(onInteractFeedbackID));
+			interactButtonYOffset = s.Serialize<float>(interactButtonYOffset, name: "interactButtonYOffset");
+			interactButtonZOffsetFromAurora = s.Serialize<float>(interactButtonZOffsetFromAurora, name: "interactButtonZOffsetFromAurora");
+			authorizedPCStates = s.SerializeObject<Placeholder>(authorizedPCStates, name: "authorizedPCStates");
+			onInteractFeedbackID = s.SerializeObject<StringID>(onInteractFeedbackID, name: "onInteractFeedbackID");
 		}
 		public override uint? ClassCRC => 0xB8752E22;
 	}

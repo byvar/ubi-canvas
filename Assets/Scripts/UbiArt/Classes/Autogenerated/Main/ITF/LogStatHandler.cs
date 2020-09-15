@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class LogStatHandler : StatHandler {
-		[Serialize("Parser")] public Generic<IStatParser> Parser;
+		public Generic<IStatParser> Parser;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Parser));
+			Parser = s.SerializeObject<Generic<IStatParser>>(Parser, name: "Parser");
 		}
 		public override uint? ClassCRC => 0x41BF63EE;
 	}

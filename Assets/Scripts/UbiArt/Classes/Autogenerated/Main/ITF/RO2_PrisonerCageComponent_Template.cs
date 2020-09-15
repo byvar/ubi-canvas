@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PrisonerCageComponent_Template : RO2_AIComponent_Template {
-		[Serialize("animIdle"                )] public StringID animIdle;
-		[Serialize("animExplode"             )] public StringID animExplode;
-		[Serialize("tapSoundFXName"          )] public StringID tapSoundFXName;
-		[Serialize("grabSoundFXName"         )] public StringID grabSoundFXName;
-		[Serialize("landFX"                  )] public StringID landFX;
-		[Serialize("speedMultiplier"         )] public float speedMultiplier;
-		[Serialize("forceSinus"              )] public Vec2d forceSinus;
-		[Serialize("freqSinus"               )] public float freqSinus;
-		[Serialize("isSpiky"                 )] public bool isSpiky;
-		[Serialize("isGrabable"              )] public bool isGrabable;
-		[Serialize("snapBones"               )] public CList<StringID> snapBones;
-		[Serialize("slingShotDetectionRadius")] public float slingShotDetectionRadius;
-		[Serialize("enablePhysic"            )] public bool enablePhysic;
-		[Serialize("useAutoRaymanZone"       )] public bool useAutoRaymanZone;
+		public StringID animIdle;
+		public StringID animExplode;
+		public StringID tapSoundFXName;
+		public StringID grabSoundFXName;
+		public StringID landFX;
+		public float speedMultiplier;
+		public Vec2d forceSinus;
+		public float freqSinus;
+		public bool isSpiky;
+		public bool isGrabable;
+		public CList<StringID> snapBones;
+		public float slingShotDetectionRadius;
+		public bool enablePhysic;
+		public bool useAutoRaymanZone;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animIdle));
-			SerializeField(s, nameof(animExplode));
-			SerializeField(s, nameof(tapSoundFXName));
-			SerializeField(s, nameof(grabSoundFXName));
-			SerializeField(s, nameof(landFX));
-			SerializeField(s, nameof(speedMultiplier));
-			SerializeField(s, nameof(forceSinus));
-			SerializeField(s, nameof(freqSinus));
-			SerializeField(s, nameof(isSpiky));
-			SerializeField(s, nameof(isGrabable));
-			SerializeField(s, nameof(snapBones));
-			SerializeField(s, nameof(slingShotDetectionRadius));
-			SerializeField(s, nameof(enablePhysic));
-			SerializeField(s, nameof(useAutoRaymanZone));
+			animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");
+			animExplode = s.SerializeObject<StringID>(animExplode, name: "animExplode");
+			tapSoundFXName = s.SerializeObject<StringID>(tapSoundFXName, name: "tapSoundFXName");
+			grabSoundFXName = s.SerializeObject<StringID>(grabSoundFXName, name: "grabSoundFXName");
+			landFX = s.SerializeObject<StringID>(landFX, name: "landFX");
+			speedMultiplier = s.Serialize<float>(speedMultiplier, name: "speedMultiplier");
+			forceSinus = s.SerializeObject<Vec2d>(forceSinus, name: "forceSinus");
+			freqSinus = s.Serialize<float>(freqSinus, name: "freqSinus");
+			isSpiky = s.Serialize<bool>(isSpiky, name: "isSpiky");
+			isGrabable = s.Serialize<bool>(isGrabable, name: "isGrabable");
+			snapBones = s.SerializeObject<CList<StringID>>(snapBones, name: "snapBones");
+			slingShotDetectionRadius = s.Serialize<float>(slingShotDetectionRadius, name: "slingShotDetectionRadius");
+			enablePhysic = s.Serialize<bool>(enablePhysic, name: "enablePhysic");
+			useAutoRaymanZone = s.Serialize<bool>(useAutoRaymanZone, name: "useAutoRaymanZone");
 		}
 		public override uint? ClassCRC => 0x7698E7B6;
 	}

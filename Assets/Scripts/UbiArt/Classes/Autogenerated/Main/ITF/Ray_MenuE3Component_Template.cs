@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_MenuE3Component_Template : CSerializable {
-		[Serialize("maps"           )] public Placeholder maps;
-		[Serialize("music"          )] public StringID music;
-		[Serialize("validationSound")] public StringID validationSound;
-		[Serialize("selectionSound" )] public StringID selectionSound;
-		[Serialize("inGameMenu"     )] public int inGameMenu;
-		[Serialize("offset2D"       )] public Vec2d offset2D;
-		[Serialize("zOffset"        )] public float zOffset;
-		[Serialize("pauseAnimSize"  )] public Vec2d pauseAnimSize;
+		public Placeholder maps;
+		public StringID music;
+		public StringID validationSound;
+		public StringID selectionSound;
+		public int inGameMenu;
+		public Vec2d offset2D;
+		public float zOffset;
+		public Vec2d pauseAnimSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(maps));
-			SerializeField(s, nameof(music));
-			SerializeField(s, nameof(validationSound));
-			SerializeField(s, nameof(selectionSound));
-			SerializeField(s, nameof(inGameMenu));
-			SerializeField(s, nameof(offset2D));
-			SerializeField(s, nameof(zOffset));
-			SerializeField(s, nameof(pauseAnimSize));
+			maps = s.SerializeObject<Placeholder>(maps, name: "maps");
+			music = s.SerializeObject<StringID>(music, name: "music");
+			validationSound = s.SerializeObject<StringID>(validationSound, name: "validationSound");
+			selectionSound = s.SerializeObject<StringID>(selectionSound, name: "selectionSound");
+			inGameMenu = s.Serialize<int>(inGameMenu, name: "inGameMenu");
+			offset2D = s.SerializeObject<Vec2d>(offset2D, name: "offset2D");
+			zOffset = s.Serialize<float>(zOffset, name: "zOffset");
+			pauseAnimSize = s.SerializeObject<Vec2d>(pauseAnimSize, name: "pauseAnimSize");
 		}
 		public override uint? ClassCRC => 0xC115C7F0;
 	}

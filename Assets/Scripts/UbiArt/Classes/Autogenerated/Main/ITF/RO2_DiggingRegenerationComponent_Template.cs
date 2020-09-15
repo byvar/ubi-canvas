@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DiggingRegenerationComponent_Template : ActorComponent_Template {
-		[Serialize("RadiusAdditive"                )] public float RadiusAdditive;
-		[Serialize("RadiusRegenerationSafe"        )] public float RadiusRegenerationSafe;
-		[Serialize("TruncateRadiusRegenerationSafe")] public float TruncateRadiusRegenerationSafe;
-		[Serialize("OffsetRegenerationSafe"        )] public Vec2d OffsetRegenerationSafe;
-		[Serialize("RadiusFillingSafe"             )] public float RadiusFillingSafe;
-		[Serialize("OffsetFillingSafe"             )] public Vec2d OffsetFillingSafe;
+		public float RadiusAdditive;
+		public float RadiusRegenerationSafe;
+		public float TruncateRadiusRegenerationSafe;
+		public Vec2d OffsetRegenerationSafe;
+		public float RadiusFillingSafe;
+		public Vec2d OffsetFillingSafe;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(RadiusAdditive));
+				RadiusAdditive = s.Serialize<float>(RadiusAdditive, name: "RadiusAdditive");
 			}
-			SerializeField(s, nameof(RadiusRegenerationSafe));
-			SerializeField(s, nameof(TruncateRadiusRegenerationSafe));
-			SerializeField(s, nameof(OffsetRegenerationSafe));
-			SerializeField(s, nameof(RadiusFillingSafe));
-			SerializeField(s, nameof(OffsetFillingSafe));
+			RadiusRegenerationSafe = s.Serialize<float>(RadiusRegenerationSafe, name: "RadiusRegenerationSafe");
+			TruncateRadiusRegenerationSafe = s.Serialize<float>(TruncateRadiusRegenerationSafe, name: "TruncateRadiusRegenerationSafe");
+			OffsetRegenerationSafe = s.SerializeObject<Vec2d>(OffsetRegenerationSafe, name: "OffsetRegenerationSafe");
+			RadiusFillingSafe = s.Serialize<float>(RadiusFillingSafe, name: "RadiusFillingSafe");
+			OffsetFillingSafe = s.SerializeObject<Vec2d>(OffsetFillingSafe, name: "OffsetFillingSafe");
 		}
 		public override uint? ClassCRC => 0xAC5B8709;
 	}

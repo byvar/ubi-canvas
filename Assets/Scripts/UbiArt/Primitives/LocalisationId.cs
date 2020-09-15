@@ -55,5 +55,14 @@ namespace UbiArt {
 		public static bool operator !=(LocalisationId x, LocalisationId y) {
 			return !(x == y);
 		}
+
+
+		// Casts
+		public static implicit operator LocalisationId(StringID sid) {
+			return new LocalisationId(sid.stringID);
+		}
+		public static implicit operator StringID(LocalisationId lid) {
+			return new StringID(lid.id);
+		}
 	}
 }

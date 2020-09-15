@@ -351,5 +351,13 @@ namespace UbiArt {
 				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 			}
 		}
+
+		public override T Serialize<T>(T obj, string name = null, Options options = Options.None) {
+			throw new NotImplementedException();
+		}
+
+		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, Options options = Options.None) {
+			throw new NotImplementedException();
+		}
 	}
 }

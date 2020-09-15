@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DoorComponent_Template : ActorComponent_Template {
-		[Serialize("startOpen")] public bool startOpen;
-		[Serialize("openSpeed")] public float openSpeed;
+		public bool startOpen;
+		public float openSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(startOpen));
-			SerializeField(s, nameof(openSpeed));
+			startOpen = s.Serialize<bool>(startOpen, name: "startOpen");
+			openSpeed = s.Serialize<float>(openSpeed, name: "openSpeed");
 		}
 		public override uint? ClassCRC => 0xA84FB414;
 	}

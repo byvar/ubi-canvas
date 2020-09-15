@@ -23,5 +23,13 @@ namespace UbiArt {
 		public override string ToString() {
 			return "UnicodeString(\"" + str + "\")";
 		}
+
+		// Casts
+		public static implicit operator string(CString cstr) {
+			return cstr.str;
+		}
+		public static implicit operator CString(string str) {
+			return new CString(str);
+		}
 	}
 }

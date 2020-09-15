@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AILightningAction_Template : AIAction_Template {
-		[Serialize("startBoneName"  )] public StringID startBoneName;
-		[Serialize("destBoneName"   )] public StringID destBoneName;
-		[Serialize("defaultSize"    )] public float defaultSize;
-		[Serialize("angleOffset"    )] public Angle angleOffset;
-		[Serialize("hitLevel"       )] public uint hitLevel;
-		[Serialize("hitType"        )] public uint hitType;
-		[Serialize("useStartStim"   )] public bool useStartStim;
-		[Serialize("useDestStim"    )] public bool useDestStim;
-		[Serialize("startStimRadius")] public float startStimRadius;
-		[Serialize("destStimRadius" )] public float destStimRadius;
-		[Serialize("startStimOffset")] public Vec2d startStimOffset;
-		[Serialize("destStimOffset" )] public Vec2d destStimOffset;
+		public StringID startBoneName;
+		public StringID destBoneName;
+		public float defaultSize;
+		public Angle angleOffset;
+		public uint hitLevel;
+		public uint hitType;
+		public bool useStartStim;
+		public bool useDestStim;
+		public float startStimRadius;
+		public float destStimRadius;
+		public Vec2d startStimOffset;
+		public Vec2d destStimOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(startBoneName));
-			SerializeField(s, nameof(destBoneName));
-			SerializeField(s, nameof(defaultSize));
-			SerializeField(s, nameof(angleOffset));
-			SerializeField(s, nameof(hitLevel));
-			SerializeField(s, nameof(hitType));
-			SerializeField(s, nameof(useStartStim));
-			SerializeField(s, nameof(useDestStim));
-			SerializeField(s, nameof(startStimRadius));
-			SerializeField(s, nameof(destStimRadius));
-			SerializeField(s, nameof(startStimOffset));
-			SerializeField(s, nameof(destStimOffset));
+			startBoneName = s.SerializeObject<StringID>(startBoneName, name: "startBoneName");
+			destBoneName = s.SerializeObject<StringID>(destBoneName, name: "destBoneName");
+			defaultSize = s.Serialize<float>(defaultSize, name: "defaultSize");
+			angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
+			hitLevel = s.Serialize<uint>(hitLevel, name: "hitLevel");
+			hitType = s.Serialize<uint>(hitType, name: "hitType");
+			useStartStim = s.Serialize<bool>(useStartStim, name: "useStartStim");
+			useDestStim = s.Serialize<bool>(useDestStim, name: "useDestStim");
+			startStimRadius = s.Serialize<float>(startStimRadius, name: "startStimRadius");
+			destStimRadius = s.Serialize<float>(destStimRadius, name: "destStimRadius");
+			startStimOffset = s.SerializeObject<Vec2d>(startStimOffset, name: "startStimOffset");
+			destStimOffset = s.SerializeObject<Vec2d>(destStimOffset, name: "destStimOffset");
 		}
 		public override uint? ClassCRC => 0x44AC731E;
 	}

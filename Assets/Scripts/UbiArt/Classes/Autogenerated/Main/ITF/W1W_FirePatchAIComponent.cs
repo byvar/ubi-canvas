@@ -4,18 +4,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_FirePatchAIComponent : GraphicComponent {
-		[Serialize("Vector3__0"  )] public Vec3d Vector3__0;
-		[Serialize("float__1"    )] public float float__1;
-		[Serialize("float__2"    )] public float float__2;
-		[Serialize("Enum_VH_0__3")] public Enum_VH_0 Enum_VH_0__3;
-		[Serialize("Enum_VH_1__4")] public Enum_VH_0 Enum_VH_0__4;
+		public Vec3d Vector3__0;
+		public float float__1;
+		public float float__2;
+		public Enum_VH_0 Enum_VH_0__3;
+		public Enum_VH_0 Enum_VH_0__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Vector3__0));
-			SerializeField(s, nameof(float__1));
-			SerializeField(s, nameof(float__2));
-			SerializeField(s, nameof(Enum_VH_0__3));
-			SerializeField(s, nameof(Enum_VH_0__4));
+			Vector3__0 = s.SerializeObject<Vec3d>(Vector3__0, name: "Vector3__0");
+			float__1 = s.Serialize<float>(float__1, name: "float__1");
+			float__2 = s.Serialize<float>(float__2, name: "float__2");
+			Enum_VH_0__3 = s.Serialize<Enum_VH_0>(Enum_VH_0__3, name: "Enum_VH_0__3");
+			Enum_VH_0__4 = s.Serialize<Enum_VH_0>(Enum_VH_0__4, name: "Enum_VH_0__4");
 		}
 		[Flags]
 		public enum Enum_VH_0 {

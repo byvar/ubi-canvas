@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class AnimInputRelayEvent : Event {
-		[Serialize("InputName" )] public StringID InputName;
-		[Serialize("TargetMode")] public eTo TargetMode;
+		public StringID InputName;
+		public eTo TargetMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(InputName));
-			SerializeField(s, nameof(TargetMode));
+			InputName = s.SerializeObject<StringID>(InputName, name: "InputName");
+			TargetMode = s.Serialize<eTo>(TargetMode, name: "TargetMode");
 		}
 		public enum eTo {
 			[Serialize("eToMyself"   )] Myself = 0,

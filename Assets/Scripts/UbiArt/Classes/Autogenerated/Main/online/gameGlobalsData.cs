@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class gameGlobalsData : CSerializable {
-		[Serialize("variables"  )] public string variables;
-		[Serialize("KEY"        )] public StringID KEY;
-		[Serialize("versionTime")] public online.DateTime versionTime;
+		public string variables;
+		public StringID KEY;
+		public online.DateTime versionTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(variables));
-			SerializeField(s, nameof(KEY));
-			SerializeField(s, nameof(KEY));
-			SerializeField(s, nameof(versionTime));
+			variables = s.Serialize<string>(variables, name: "variables");
+			KEY = s.SerializeObject<StringID>(KEY, name: "KEY");
+			KEY = s.SerializeObject<StringID>(KEY, name: "KEY");
+			versionTime = s.SerializeObject<online.DateTime>(versionTime, name: "versionTime");
 		}
 	}
 }

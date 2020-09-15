@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIDarktoonificationAction_Template : Ray_AIPerformHitPunchAction_Template {
-		[Serialize("trajectoryDuration"        )] public float trajectoryDuration;
-		[Serialize("gravityMultiplier"         )] public float gravityMultiplier;
-		[Serialize("gravityMultiplierAfterFail")] public float gravityMultiplierAfterFail;
-		[Serialize("initialSpeedAfterFail"     )] public float initialSpeedAfterFail;
-		[Serialize("tangentPhaseLimit"         )] public float tangentPhaseLimit;
-		[Serialize("maxTargetHeightDifference" )] public float maxTargetHeightDifference;
-		[Serialize("maxTargetDistance"         )] public float maxTargetDistance;
+		public float trajectoryDuration;
+		public float gravityMultiplier;
+		public float gravityMultiplierAfterFail;
+		public float initialSpeedAfterFail;
+		public float tangentPhaseLimit;
+		public float maxTargetHeightDifference;
+		public float maxTargetDistance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(trajectoryDuration));
-			SerializeField(s, nameof(gravityMultiplier));
-			SerializeField(s, nameof(gravityMultiplierAfterFail));
-			SerializeField(s, nameof(initialSpeedAfterFail));
-			SerializeField(s, nameof(tangentPhaseLimit));
-			SerializeField(s, nameof(maxTargetHeightDifference));
-			SerializeField(s, nameof(maxTargetDistance));
+			trajectoryDuration = s.Serialize<float>(trajectoryDuration, name: "trajectoryDuration");
+			gravityMultiplier = s.Serialize<float>(gravityMultiplier, name: "gravityMultiplier");
+			gravityMultiplierAfterFail = s.Serialize<float>(gravityMultiplierAfterFail, name: "gravityMultiplierAfterFail");
+			initialSpeedAfterFail = s.Serialize<float>(initialSpeedAfterFail, name: "initialSpeedAfterFail");
+			tangentPhaseLimit = s.Serialize<float>(tangentPhaseLimit, name: "tangentPhaseLimit");
+			maxTargetHeightDifference = s.Serialize<float>(maxTargetHeightDifference, name: "maxTargetHeightDifference");
+			maxTargetDistance = s.Serialize<float>(maxTargetDistance, name: "maxTargetDistance");
 		}
 		public override uint? ClassCRC => 0x14B8C0F5;
 	}

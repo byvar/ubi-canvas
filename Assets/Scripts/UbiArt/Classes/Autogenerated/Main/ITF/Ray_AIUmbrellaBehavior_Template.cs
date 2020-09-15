@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIUmbrellaBehavior_Template : TemplateAIBehavior {
-		[Serialize("openAction"      )] public Generic<AIAction_Template> openAction;
-		[Serialize("closedAction"    )] public Generic<AIAction_Template> closedAction;
-		[Serialize("openingAction"   )] public Generic<AIAction_Template> openingAction;
-		[Serialize("closingAction"   )] public Generic<AIAction_Template> closingAction;
-		[Serialize("warningAction"   )] public Generic<AIAction_Template> warningAction;
-		[Serialize("closedStateTime" )] public float closedStateTime;
-		[Serialize("warningStateTime")] public float warningStateTime;
-		[Serialize("weightThreshold" )] public float weightThreshold;
-		[Serialize("closeWithWeight" )] public int closeWithWeight;
+		public Generic<AIAction_Template> openAction;
+		public Generic<AIAction_Template> closedAction;
+		public Generic<AIAction_Template> openingAction;
+		public Generic<AIAction_Template> closingAction;
+		public Generic<AIAction_Template> warningAction;
+		public float closedStateTime;
+		public float warningStateTime;
+		public float weightThreshold;
+		public int closeWithWeight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(openAction));
-			SerializeField(s, nameof(closedAction));
-			SerializeField(s, nameof(openingAction));
-			SerializeField(s, nameof(closingAction));
-			SerializeField(s, nameof(warningAction));
-			SerializeField(s, nameof(closedStateTime));
-			SerializeField(s, nameof(warningStateTime));
-			SerializeField(s, nameof(weightThreshold));
-			SerializeField(s, nameof(closeWithWeight));
+			openAction = s.SerializeObject<Generic<AIAction_Template>>(openAction, name: "openAction");
+			closedAction = s.SerializeObject<Generic<AIAction_Template>>(closedAction, name: "closedAction");
+			openingAction = s.SerializeObject<Generic<AIAction_Template>>(openingAction, name: "openingAction");
+			closingAction = s.SerializeObject<Generic<AIAction_Template>>(closingAction, name: "closingAction");
+			warningAction = s.SerializeObject<Generic<AIAction_Template>>(warningAction, name: "warningAction");
+			closedStateTime = s.Serialize<float>(closedStateTime, name: "closedStateTime");
+			warningStateTime = s.Serialize<float>(warningStateTime, name: "warningStateTime");
+			weightThreshold = s.Serialize<float>(weightThreshold, name: "weightThreshold");
+			closeWithWeight = s.Serialize<int>(closeWithWeight, name: "closeWithWeight");
 		}
 		public override uint? ClassCRC => 0x59A2B301;
 	}

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeShooterAIComponent_Template : ActorComponent_Template {
-		[Serialize("destructibleMode")] public RO2_SnakeDestructibleMode destructibleMode;
-		[Serialize("fxDeath"         )] public StringID fxDeath;
+		public RO2_SnakeDestructibleMode destructibleMode;
+		public StringID fxDeath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(destructibleMode));
-			SerializeField(s, nameof(fxDeath));
+			destructibleMode = s.Serialize<RO2_SnakeDestructibleMode>(destructibleMode, name: "destructibleMode");
+			fxDeath = s.SerializeObject<StringID>(fxDeath, name: "fxDeath");
 		}
 		public enum RO2_SnakeDestructibleMode {
 			[Serialize("RO2_SnakeDestructibleMode_None"      )] None = 0,

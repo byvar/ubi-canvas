@@ -3,31 +3,31 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class EventInstructionDialog : Event {
-		[Serialize("text"            )] public SmartLocId text;
-		[Serialize("mood"            )] public uint mood;
-		[Serialize("sizeText"        )] public float sizeText;
-		[Serialize("offset"          )] public Vec2d offset;
-		[Serialize("durationMin"     )] public float durationMin;
-		[Serialize("actorScaleFactor")] public float actorScaleFactor;
-		[Serialize("text"            )] public string textStr;
-		[Serialize("snapToScreen"    )] public int snapToScreen;
+		public SmartLocId text;
+		public uint mood;
+		public float sizeText;
+		public Vec2d offset;
+		public float durationMin;
+		public float actorScaleFactor;
+		public string textStr;
+		public int snapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(textStr));
-				SerializeField(s, nameof(mood));
-				SerializeField(s, nameof(sizeText));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(snapToScreen));
-				SerializeField(s, nameof(durationMin));
-				SerializeField(s, nameof(actorScaleFactor));
+				textStr = s.Serialize<string>(textStr, name: "textStr");
+				mood = s.Serialize<uint>(mood, name: "mood");
+				sizeText = s.Serialize<float>(sizeText, name: "sizeText");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				snapToScreen = s.Serialize<int>(snapToScreen, name: "snapToScreen");
+				durationMin = s.Serialize<float>(durationMin, name: "durationMin");
+				actorScaleFactor = s.Serialize<float>(actorScaleFactor, name: "actorScaleFactor");
 			} else {
-				SerializeField(s, nameof(text));
-				SerializeField(s, nameof(mood));
-				SerializeField(s, nameof(sizeText));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(durationMin));
-				SerializeField(s, nameof(actorScaleFactor));
+				text = s.SerializeObject<SmartLocId>(text, name: "text");
+				mood = s.Serialize<uint>(mood, name: "mood");
+				sizeText = s.Serialize<float>(sizeText, name: "sizeText");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				durationMin = s.Serialize<float>(durationMin, name: "durationMin");
+				actorScaleFactor = s.Serialize<float>(actorScaleFactor, name: "actorScaleFactor");
 			}
 		}
 		public override uint? ClassCRC => 0x171F42E2;

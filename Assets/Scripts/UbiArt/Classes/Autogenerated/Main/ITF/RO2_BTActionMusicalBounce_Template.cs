@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionMusicalBounce_Template : BTActionPlayAnim_Template {
-		[Serialize("amplitude"       )] public float amplitude;
-		[Serialize("syncRatio"       )] public float syncRatio;
-		[Serialize("syncOffset"      )] public float syncOffset;
-		[Serialize("updateMovement"  )] public bool updateMovement;
-		[Serialize("musicalAnimation")] public StringID musicalAnimation;
+		public float amplitude;
+		public float syncRatio;
+		public float syncOffset;
+		public bool updateMovement;
+		public StringID musicalAnimation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(amplitude));
-			SerializeField(s, nameof(syncRatio));
-			SerializeField(s, nameof(syncOffset));
-			SerializeField(s, nameof(updateMovement));
-			SerializeField(s, nameof(musicalAnimation));
+			amplitude = s.Serialize<float>(amplitude, name: "amplitude");
+			syncRatio = s.Serialize<float>(syncRatio, name: "syncRatio");
+			syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+			updateMovement = s.Serialize<bool>(updateMovement, name: "updateMovement");
+			musicalAnimation = s.SerializeObject<StringID>(musicalAnimation, name: "musicalAnimation");
 		}
 		public override uint? ClassCRC => 0x2CCB5012;
 	}

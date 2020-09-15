@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIDeathBehavior_Template : AIDeathBehavior_Template {
-		[Serialize("reward"       )] public Generic<Ray_EventSpawnReward> reward;
-		[Serialize("soul"         )] public Path soul;
-		[Serialize("numRewards"   )] public CArray<uint> numRewards;
-		[Serialize("spawnOnMarker")] public int spawnOnMarker;
+		public Generic<Ray_EventSpawnReward> reward;
+		public Path soul;
+		public CArray<uint> numRewards;
+		public int spawnOnMarker;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(reward));
-			SerializeField(s, nameof(soul));
-			SerializeField(s, nameof(numRewards));
-			SerializeField(s, nameof(spawnOnMarker));
+			reward = s.SerializeObject<Generic<Ray_EventSpawnReward>>(reward, name: "reward");
+			soul = s.SerializeObject<Path>(soul, name: "soul");
+			numRewards = s.SerializeObject<CArray<uint>>(numRewards, name: "numRewards");
+			spawnOnMarker = s.Serialize<int>(spawnOnMarker, name: "spawnOnMarker");
 		}
 		public override uint? ClassCRC => 0x7D1F295C;
 	}

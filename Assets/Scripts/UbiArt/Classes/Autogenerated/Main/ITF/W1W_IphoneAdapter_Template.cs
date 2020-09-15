@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_IphoneAdapter_Template : ActorComponent_Template {
-		[Serialize("Vector3__0" )] public Vec3d Vector3__0;
-		[Serialize("StringID__1")] public StringID StringID__1;
-		[Serialize("bool__2"    )] public bool bool__2;
-		[Serialize("bool__3"    )] public bool bool__3;
+		public Vec3d Vector3__0;
+		public StringID StringID__1;
+		public bool bool__2;
+		public bool bool__3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Vector3__0));
-			SerializeField(s, nameof(StringID__1));
-			SerializeField(s, nameof(bool__2));
-			SerializeField(s, nameof(bool__3));
+			Vector3__0 = s.SerializeObject<Vec3d>(Vector3__0, name: "Vector3__0");
+			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
+			bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
+			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
 		}
 		public override uint? ClassCRC => 0x9B1B76A4;
 	}

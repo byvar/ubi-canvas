@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class SubAnimFrameInfo : CSerializable {
-		[Serialize("subAnimIndex"    )] public int subAnimIndex;
-		[Serialize("proceduralCursor")] public float proceduralCursor;
-		[Serialize("currentPlayRate" )] public float currentPlayRate;
-		[Serialize("currentTime"     )] public float currentTime;
-		[Serialize("procedural"      )] public bool procedural;
-		[Serialize("looped"          )] public bool looped;
+		public int subAnimIndex;
+		public float proceduralCursor;
+		public float currentPlayRate;
+		public float currentTime;
+		public bool procedural;
+		public bool looped;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(subAnimIndex));
-			SerializeField(s, nameof(proceduralCursor));
-			SerializeField(s, nameof(currentPlayRate));
-			SerializeField(s, nameof(currentTime));
-			SerializeField(s, nameof(procedural));
-			SerializeField(s, nameof(looped));
+			subAnimIndex = s.Serialize<int>(subAnimIndex, name: "subAnimIndex");
+			proceduralCursor = s.Serialize<float>(proceduralCursor, name: "proceduralCursor");
+			currentPlayRate = s.Serialize<float>(currentPlayRate, name: "currentPlayRate");
+			currentTime = s.Serialize<float>(currentTime, name: "currentTime");
+			procedural = s.Serialize<bool>(procedural, name: "procedural");
+			looped = s.Serialize<bool>(looped, name: "looped");
 		}
 	}
 }

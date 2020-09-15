@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GameplayBrick_Template : RO2_EnduranceBrick_Template {
-		[Serialize("ruleTags"        )] public CList<StringID> ruleTags;
-		[Serialize("decoBrick"       )] public StringID decoBrick;
-		[Serialize("decoBrickFlipped")] public StringID decoBrickFlipped;
-		[Serialize("isGapOnly"       )] public bool isGapOnly;
+		public CList<StringID> ruleTags;
+		public StringID decoBrick;
+		public StringID decoBrickFlipped;
+		public bool isGapOnly;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ruleTags));
-			SerializeField(s, nameof(decoBrick));
-			SerializeField(s, nameof(decoBrickFlipped));
-			SerializeField(s, nameof(isGapOnly));
+			ruleTags = s.SerializeObject<CList<StringID>>(ruleTags, name: "ruleTags");
+			decoBrick = s.SerializeObject<StringID>(decoBrick, name: "decoBrick");
+			decoBrickFlipped = s.SerializeObject<StringID>(decoBrickFlipped, name: "decoBrickFlipped");
+			isGapOnly = s.Serialize<bool>(isGapOnly, name: "isGapOnly");
 		}
 		public override uint? ClassCRC => 0x0FB4A8DA;
 	}

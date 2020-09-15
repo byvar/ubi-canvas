@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIFriendly_WaitBehavior_Template : TemplateAIBehavior {
-		[Serialize("idle"                )] public Placeholder idle;
-		[Serialize("randomAction"        )] public Placeholder randomAction;
-		[Serialize("triggerTarget"       )] public int triggerTarget;
-		[Serialize("randomActionDelayMin")] public float randomActionDelayMin;
-		[Serialize("randomActionDelayMax")] public float randomActionDelayMax;
+		public Placeholder idle;
+		public Placeholder randomAction;
+		public int triggerTarget;
+		public float randomActionDelayMin;
+		public float randomActionDelayMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idle));
-			SerializeField(s, nameof(randomAction));
-			SerializeField(s, nameof(triggerTarget));
-			SerializeField(s, nameof(randomActionDelayMin));
-			SerializeField(s, nameof(randomActionDelayMax));
+			idle = s.SerializeObject<Placeholder>(idle, name: "idle");
+			randomAction = s.SerializeObject<Placeholder>(randomAction, name: "randomAction");
+			triggerTarget = s.Serialize<int>(triggerTarget, name: "triggerTarget");
+			randomActionDelayMin = s.Serialize<float>(randomActionDelayMin, name: "randomActionDelayMin");
+			randomActionDelayMax = s.Serialize<float>(randomActionDelayMax, name: "randomActionDelayMax");
 		}
 		public override uint? ClassCRC => 0xF99358B5;
 	}

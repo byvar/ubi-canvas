@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AtlasGraphicComponent : GraphicComponent {
-		[Serialize("texture"      )] public Path texture;
-		[Serialize("material"     )] public GFXMaterialSerializable material;
-		[Serialize("textureLayer" )] public TEXSET_ID textureLayer;
-		[Serialize("atlasIndex"   )] public uint atlasIndex;
-		[Serialize("extrudeFactor")] public float extrudeFactor;
-		[Serialize("offset"       )] public Vec3d offset;
+		public Path texture;
+		public GFXMaterialSerializable material;
+		public TEXSET_ID textureLayer;
+		public uint atlasIndex;
+		public float extrudeFactor;
+		public Vec3d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(texture));
+				texture = s.SerializeObject<Path>(texture, name: "texture");
 			}
-			SerializeField(s, nameof(material));
-			SerializeField(s, nameof(textureLayer));
-			SerializeField(s, nameof(atlasIndex));
-			SerializeField(s, nameof(extrudeFactor));
-			SerializeField(s, nameof(offset));
+			material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+			textureLayer = s.Serialize<TEXSET_ID>(textureLayer, name: "textureLayer");
+			atlasIndex = s.Serialize<uint>(atlasIndex, name: "atlasIndex");
+			extrudeFactor = s.Serialize<float>(extrudeFactor, name: "extrudeFactor");
+			offset = s.SerializeObject<Vec3d>(offset, name: "offset");
 		}
 		public enum TEXSET_ID {
 			[Serialize("TEXSET_ID_DIFFUSE"       )] DIFFUSE = 0,

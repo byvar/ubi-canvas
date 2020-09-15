@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_399_sub_B0D970 : DetectorComponent_Template {
-		[Serialize("playerId"              )] public int playerId;
-		[Serialize("allowDeadActors"       )] public int allowDeadActors;
-		[Serialize("firstPlayerOnly"       )] public int firstPlayerOnly;
-		[Serialize("allPlayerInMode"       )] public uint allPlayerInMode;
-		[Serialize("allowTouchScreenPlayer")] public int allowTouchScreenPlayer;
+		public int playerId;
+		public int allowDeadActors;
+		public int firstPlayerOnly;
+		public uint allPlayerInMode;
+		public int allowTouchScreenPlayer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(playerId));
-			SerializeField(s, nameof(allowDeadActors));
-			SerializeField(s, nameof(firstPlayerOnly));
-			SerializeField(s, nameof(allPlayerInMode));
-			SerializeField(s, nameof(allowTouchScreenPlayer));
+			playerId = s.Serialize<int>(playerId, name: "playerId");
+			allowDeadActors = s.Serialize<int>(allowDeadActors, name: "allowDeadActors");
+			firstPlayerOnly = s.Serialize<int>(firstPlayerOnly, name: "firstPlayerOnly");
+			allPlayerInMode = s.Serialize<uint>(allPlayerInMode, name: "allPlayerInMode");
+			allowTouchScreenPlayer = s.Serialize<int>(allowTouchScreenPlayer, name: "allowTouchScreenPlayer");
 		}
 		public override uint? ClassCRC => 0x193EE9ED;
 	}

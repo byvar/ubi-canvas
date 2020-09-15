@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PendulumComponent_Template : ActorComponent_Template {
-		[Serialize("pendulumLength"           )] public float pendulumLength;
-		[Serialize("pendulumInitialAngle"     )] public float pendulumInitialAngle;
-		[Serialize("pendulumInitialVelocity"  )] public float pendulumInitialVelocity;
-		[Serialize("pendulumGravityMultiplier")] public float pendulumGravityMultiplier;
+		public float pendulumLength;
+		public float pendulumInitialAngle;
+		public float pendulumInitialVelocity;
+		public float pendulumGravityMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(pendulumLength));
-			SerializeField(s, nameof(pendulumInitialAngle));
-			SerializeField(s, nameof(pendulumInitialVelocity));
-			SerializeField(s, nameof(pendulumGravityMultiplier));
+			pendulumLength = s.Serialize<float>(pendulumLength, name: "pendulumLength");
+			pendulumInitialAngle = s.Serialize<float>(pendulumInitialAngle, name: "pendulumInitialAngle");
+			pendulumInitialVelocity = s.Serialize<float>(pendulumInitialVelocity, name: "pendulumInitialVelocity");
+			pendulumGravityMultiplier = s.Serialize<float>(pendulumGravityMultiplier, name: "pendulumGravityMultiplier");
 		}
 		public override uint? ClassCRC => 0x71CA7C14;
 	}

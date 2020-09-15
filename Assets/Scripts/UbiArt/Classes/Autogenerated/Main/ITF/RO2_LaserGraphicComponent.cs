@@ -3,44 +3,44 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LaserGraphicComponent : GraphicComponent {
-		[Serialize("characterTexture"            )] public Path characterTexture;
-		[Serialize("characterMaterial"           )] public GFXMaterialSerializable characterMaterial;
-		[Serialize("ColorNormal"                 )] public Color ColorNormal;
-		[Serialize("ColorDetected"               )] public Color ColorDetected;
-		[Serialize("AlfaOnExtremities"           )] public float AlfaOnExtremities;
-		[Serialize("AlfaStart"                   )] public float AlfaStart;
-		[Serialize("SpeedLaser"                  )] public float SpeedLaser;
-		[Serialize("GraphicLayerNb"              )] public uint GraphicLayerNb;
-		[Serialize("GraphicLayerForced"          )] public int GraphicLayerForced;
-		[Serialize("GraphicalLayerDelaiChange"   )] public float GraphicalLayerDelaiChange;
-		[Serialize("GraphicalLayerDelaiRandom"   )] public float GraphicalLayerDelaiRandom;
-		[Serialize("GraphicUVTarget"             )] public uint GraphicUVTarget;
-		[Serialize("SacleY"                      )] public float SacleY;
-		[Serialize("laserBoxLeftPointCoefOffset" )] public float laserBoxLeftPointCoefOffset;
-		[Serialize("laserBoxRightPointCoefOffset")] public float laserBoxRightPointCoefOffset;
-		[Serialize("laserLength"                 )] public float laserLength;
-		[Serialize("textureRatio"                )] public float textureRatio;
+		public Path characterTexture;
+		public GFXMaterialSerializable characterMaterial;
+		public Color ColorNormal;
+		public Color ColorDetected;
+		public float AlfaOnExtremities;
+		public float AlfaStart;
+		public float SpeedLaser;
+		public uint GraphicLayerNb;
+		public int GraphicLayerForced;
+		public float GraphicalLayerDelaiChange;
+		public float GraphicalLayerDelaiRandom;
+		public uint GraphicUVTarget;
+		public float SacleY;
+		public float laserBoxLeftPointCoefOffset;
+		public float laserBoxRightPointCoefOffset;
+		public float laserLength;
+		public float textureRatio;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(characterTexture));
+				characterTexture = s.SerializeObject<Path>(characterTexture, name: "characterTexture");
 			}
-			SerializeField(s, nameof(characterMaterial));
-			SerializeField(s, nameof(ColorNormal));
-			SerializeField(s, nameof(ColorDetected));
-			SerializeField(s, nameof(AlfaOnExtremities));
-			SerializeField(s, nameof(AlfaStart));
-			SerializeField(s, nameof(SpeedLaser));
-			SerializeField(s, nameof(GraphicLayerNb));
-			SerializeField(s, nameof(GraphicLayerForced));
-			SerializeField(s, nameof(GraphicalLayerDelaiChange));
-			SerializeField(s, nameof(GraphicalLayerDelaiRandom));
-			SerializeField(s, nameof(GraphicUVTarget));
-			SerializeField(s, nameof(SacleY));
-			SerializeField(s, nameof(laserBoxLeftPointCoefOffset));
-			SerializeField(s, nameof(laserBoxRightPointCoefOffset));
-			SerializeField(s, nameof(laserLength));
-			SerializeField(s, nameof(textureRatio));
+			characterMaterial = s.SerializeObject<GFXMaterialSerializable>(characterMaterial, name: "characterMaterial");
+			ColorNormal = s.SerializeObject<Color>(ColorNormal, name: "ColorNormal");
+			ColorDetected = s.SerializeObject<Color>(ColorDetected, name: "ColorDetected");
+			AlfaOnExtremities = s.Serialize<float>(AlfaOnExtremities, name: "AlfaOnExtremities");
+			AlfaStart = s.Serialize<float>(AlfaStart, name: "AlfaStart");
+			SpeedLaser = s.Serialize<float>(SpeedLaser, name: "SpeedLaser");
+			GraphicLayerNb = s.Serialize<uint>(GraphicLayerNb, name: "GraphicLayerNb");
+			GraphicLayerForced = s.Serialize<int>(GraphicLayerForced, name: "GraphicLayerForced");
+			GraphicalLayerDelaiChange = s.Serialize<float>(GraphicalLayerDelaiChange, name: "GraphicalLayerDelaiChange");
+			GraphicalLayerDelaiRandom = s.Serialize<float>(GraphicalLayerDelaiRandom, name: "GraphicalLayerDelaiRandom");
+			GraphicUVTarget = s.Serialize<uint>(GraphicUVTarget, name: "GraphicUVTarget");
+			SacleY = s.Serialize<float>(SacleY, name: "SacleY");
+			laserBoxLeftPointCoefOffset = s.Serialize<float>(laserBoxLeftPointCoefOffset, name: "laserBoxLeftPointCoefOffset");
+			laserBoxRightPointCoefOffset = s.Serialize<float>(laserBoxRightPointCoefOffset, name: "laserBoxRightPointCoefOffset");
+			laserLength = s.Serialize<float>(laserLength, name: "laserLength");
+			textureRatio = s.Serialize<float>(textureRatio, name: "textureRatio");
 		}
 		public override uint? ClassCRC => 0xC3701255;
 	}

@@ -3,58 +3,58 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class GFXMaterialSerializable : CSerializable {
-		[Serialize("textureSet"    )] public GFXMaterialTexturePathSet textureSet;
-		[Serialize("shaderPath"    )] public Path shaderPath;
-		[Serialize("materialParams")] public GFXMaterialSerializableParam materialParams;
-		[Serialize("stencilTest"   )] public bool stencilTest;
-		[Serialize("skipDepthTest" )] public bool skipDepthTest;
-		[Serialize("isTwoSided"    )] public bool isTwoSided;
-		[Serialize("alphaTest"     )] public uint alphaTest;
-		[Serialize("alphaRef"      )] public uint alphaRef;
+		public GFXMaterialTexturePathSet textureSet;
+		public Path shaderPath;
+		public GFXMaterialSerializableParam materialParams;
+		public bool stencilTest;
+		public bool skipDepthTest;
+		public bool isTwoSided;
+		public uint alphaTest;
+		public uint alphaRef;
 
 		// Child of Light is vastly different
-		[Serialize("ATL_Channel"               )] public uint ATL_Channel;
-		[Serialize("stencilRef"                )] public char stencilRef;
-		[Serialize("stencilMode"               )] public Enum_stencilMode stencilMode;
-		[Serialize("depthBias"                 )] public float depthBias;
-		[Serialize("generateBackBrightContrast")] public Vec2d generateBackBrightContrast;
-		[Serialize("backfaceModulation"        )] public uint backfaceModulation;
+		public uint ATL_Channel;
+		public char stencilRef;
+		public Enum_stencilMode stencilMode;
+		public float depthBias;
+		public Vec2d generateBackBrightContrast;
+		public uint backfaceModulation;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(textureSet));
-				SerializeField(s, nameof(ATL_Channel));
-				SerializeField(s, nameof(shaderPath));
-				SerializeField(s, nameof(materialParams));
-				SerializeField(s, nameof(stencilTest), boolAsByte: true);
-				SerializeField(s, nameof(skipDepthTest), boolAsByte: true);
-				SerializeField(s, nameof(stencilRef));
-				SerializeField(s, nameof(stencilMode));
-				SerializeField(s, nameof(alphaTest));
-				SerializeField(s, nameof(alphaRef));
-				SerializeField(s, nameof(depthBias));
-				SerializeField(s, nameof(generateBackBrightContrast));
-				SerializeField(s, nameof(backfaceModulation));
+				textureSet = s.SerializeObject<GFXMaterialTexturePathSet>(textureSet, name: "textureSet");
+				ATL_Channel = s.Serialize<uint>(ATL_Channel, name: "ATL_Channel");
+				shaderPath = s.SerializeObject<Path>(shaderPath, name: "shaderPath");
+				materialParams = s.SerializeObject<GFXMaterialSerializableParam>(materialParams, name: "materialParams");
+				stencilTest = s.Serialize<bool>(stencilTest, name: "stencilTest", options: CSerializerObject.Options.BoolAsByte);
+				skipDepthTest = s.Serialize<bool>(skipDepthTest, name: "skipDepthTest", options: CSerializerObject.Options.BoolAsByte);
+				stencilRef = s.Serialize<char>(stencilRef, name: "stencilRef");
+				stencilMode = s.Serialize<Enum_stencilMode>(stencilMode, name: "stencilMode");
+				alphaTest = s.Serialize<uint>(alphaTest, name: "alphaTest");
+				alphaRef = s.Serialize<uint>(alphaRef, name: "alphaRef");
+				depthBias = s.Serialize<float>(depthBias, name: "depthBias");
+				generateBackBrightContrast = s.SerializeObject<Vec2d>(generateBackBrightContrast, name: "generateBackBrightContrast");
+				backfaceModulation = s.Serialize<uint>(backfaceModulation, name: "backfaceModulation");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(textureSet));
-				SerializeField(s, nameof(shaderPath));
-				SerializeField(s, nameof(materialParams));
-				SerializeField(s, nameof(stencilTest));
+				textureSet = s.SerializeObject<GFXMaterialTexturePathSet>(textureSet, name: "textureSet");
+				shaderPath = s.SerializeObject<Path>(shaderPath, name: "shaderPath");
+				materialParams = s.SerializeObject<GFXMaterialSerializableParam>(materialParams, name: "materialParams");
+				stencilTest = s.Serialize<bool>(stencilTest, name: "stencilTest");
 				if (!Settings.s.isCatchThemAll) {
-					SerializeField(s, nameof(skipDepthTest));
+					skipDepthTest = s.Serialize<bool>(skipDepthTest, name: "skipDepthTest");
 				}
-				SerializeField(s, nameof(alphaTest));
-				SerializeField(s, nameof(alphaRef));
+				alphaTest = s.Serialize<uint>(alphaTest, name: "alphaTest");
+				alphaRef = s.Serialize<uint>(alphaRef, name: "alphaRef");
 			} else {
-				SerializeField(s, nameof(textureSet));
-				SerializeField(s, nameof(shaderPath));
-				SerializeField(s, nameof(materialParams));
-				SerializeField(s, nameof(stencilTest));
-				SerializeField(s, nameof(skipDepthTest));
-				SerializeField(s, nameof(isTwoSided));
-				SerializeField(s, nameof(alphaTest));
-				SerializeField(s, nameof(alphaRef));
+				textureSet = s.SerializeObject<GFXMaterialTexturePathSet>(textureSet, name: "textureSet");
+				shaderPath = s.SerializeObject<Path>(shaderPath, name: "shaderPath");
+				materialParams = s.SerializeObject<GFXMaterialSerializableParam>(materialParams, name: "materialParams");
+				stencilTest = s.Serialize<bool>(stencilTest, name: "stencilTest");
+				skipDepthTest = s.Serialize<bool>(skipDepthTest, name: "skipDepthTest");
+				isTwoSided = s.Serialize<bool>(isTwoSided, name: "isTwoSided");
+				alphaTest = s.Serialize<uint>(alphaTest, name: "alphaTest");
+				alphaRef = s.Serialize<uint>(alphaRef, name: "alphaRef");
 			}
 		}
 		public enum Enum_stencilMode {

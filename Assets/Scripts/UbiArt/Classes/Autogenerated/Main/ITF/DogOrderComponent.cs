@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class DogOrderComponent : ActorComponent {
-		[Serialize("Enum_VH_0__0")] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("StringID__1" )] public StringID StringID__1;
-		[Serialize("bool__2"     )] public bool bool__2;
-		[Serialize("bool__3"     )] public bool bool__3;
-		[Serialize("float__4"    )] public float float__4;
-		[Serialize("bool__5"     )] public bool bool__5;
-		[Serialize("Enum_VH_1__6")] public Enum_VH_1 Enum_VH_1__6;
+		public Enum_VH_0 Enum_VH_0__0;
+		public StringID StringID__1;
+		public bool bool__2;
+		public bool bool__3;
+		public float float__4;
+		public bool bool__5;
+		public Enum_VH_1 Enum_VH_1__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Enum_VH_0__0));
-			SerializeField(s, nameof(StringID__1));
-			SerializeField(s, nameof(bool__2));
-			SerializeField(s, nameof(bool__3));
-			SerializeField(s, nameof(float__4));
-			SerializeField(s, nameof(bool__5));
-			SerializeField(s, nameof(Enum_VH_1__6));
+			Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
+			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
+			bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
+			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
+			float__4 = s.Serialize<float>(float__4, name: "float__4");
+			bool__5 = s.Serialize<bool>(bool__5, name: "bool__5");
+			Enum_VH_1__6 = s.Serialize<Enum_VH_1>(Enum_VH_1__6, name: "Enum_VH_1__6");
 		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_0")] Value_0 = 0,

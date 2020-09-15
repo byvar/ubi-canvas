@@ -3,43 +3,43 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MovingGroundCreatureComponent : ActorComponent {
-		[Serialize("ringSide"       )] public SwampRingSide ringSide;
-		[Serialize("lianaSide"      )] public SwampRingSide lianaSide;
-		[Serialize("isActive"       )] public bool isActive;
-		[Serialize("idleStand"      )] public SwampCreatureStand idleStand;
-		[Serialize("roamStand"      )] public SwampCreatureStand roamStand;
-		[Serialize("isCycle"        )] public bool isCycle;
-		[Serialize("waitDuration"   )] public float waitDuration;
-		[Serialize("startLeft"      )] public bool startLeft;
-		[Serialize("leftStepsCount" )] public int leftStepsCount;
-		[Serialize("rightStepsCount")] public int rightStepsCount;
-		[Serialize("pendouilleAnim" )] public int pendouilleAnim;
+		public SwampRingSide ringSide;
+		public SwampRingSide lianaSide;
+		public bool isActive;
+		public SwampCreatureStand idleStand;
+		public SwampCreatureStand roamStand;
+		public bool isCycle;
+		public float waitDuration;
+		public bool startLeft;
+		public int leftStepsCount;
+		public int rightStepsCount;
+		public int pendouilleAnim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(ringSide));
-				SerializeField(s, nameof(lianaSide));
-				SerializeField(s, nameof(isActive));
-				SerializeField(s, nameof(idleStand));
-				SerializeField(s, nameof(roamStand));
-				SerializeField(s, nameof(isCycle));
-				SerializeField(s, nameof(waitDuration));
-				SerializeField(s, nameof(startLeft));
-				SerializeField(s, nameof(leftStepsCount));
-				SerializeField(s, nameof(rightStepsCount));
-				SerializeField(s, nameof(pendouilleAnim));
+				ringSide = s.Serialize<SwampRingSide>(ringSide, name: "ringSide");
+				lianaSide = s.Serialize<SwampRingSide>(lianaSide, name: "lianaSide");
+				isActive = s.Serialize<bool>(isActive, name: "isActive");
+				idleStand = s.Serialize<SwampCreatureStand>(idleStand, name: "idleStand");
+				roamStand = s.Serialize<SwampCreatureStand>(roamStand, name: "roamStand");
+				isCycle = s.Serialize<bool>(isCycle, name: "isCycle");
+				waitDuration = s.Serialize<float>(waitDuration, name: "waitDuration");
+				startLeft = s.Serialize<bool>(startLeft, name: "startLeft");
+				leftStepsCount = s.Serialize<int>(leftStepsCount, name: "leftStepsCount");
+				rightStepsCount = s.Serialize<int>(rightStepsCount, name: "rightStepsCount");
+				pendouilleAnim = s.Serialize<int>(pendouilleAnim, name: "pendouilleAnim");
 			} else {
-				SerializeField(s, nameof(ringSide));
-				SerializeField(s, nameof(lianaSide));
-				SerializeField(s, nameof(isActive));
-				SerializeField(s, nameof(idleStand));
-				SerializeField(s, nameof(roamStand));
-				SerializeField(s, nameof(isCycle));
-				SerializeField(s, nameof(waitDuration));
-				SerializeField(s, nameof(startLeft));
-				SerializeField(s, nameof(leftStepsCount));
-				SerializeField(s, nameof(rightStepsCount));
-				SerializeField(s, nameof(pendouilleAnim));
+				ringSide = s.Serialize<SwampRingSide>(ringSide, name: "ringSide");
+				lianaSide = s.Serialize<SwampRingSide>(lianaSide, name: "lianaSide");
+				isActive = s.Serialize<bool>(isActive, name: "isActive");
+				idleStand = s.Serialize<SwampCreatureStand>(idleStand, name: "idleStand");
+				roamStand = s.Serialize<SwampCreatureStand>(roamStand, name: "roamStand");
+				isCycle = s.Serialize<bool>(isCycle, name: "isCycle");
+				waitDuration = s.Serialize<float>(waitDuration, name: "waitDuration");
+				startLeft = s.Serialize<bool>(startLeft, name: "startLeft");
+				leftStepsCount = s.Serialize<int>(leftStepsCount, name: "leftStepsCount");
+				rightStepsCount = s.Serialize<int>(rightStepsCount, name: "rightStepsCount");
+				pendouilleAnim = s.Serialize<int>(pendouilleAnim, name: "pendouilleAnim");
 			}
 		}
 		public enum SwampRingSide {

@@ -3,57 +3,57 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIReceiveHitBehavior_Template : AIReceiveHitBehavior_Template {
-		[Serialize("receiveHits"              )] public CList<Ray_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
-		[Serialize("canReceiveRehits"         )] public int canReceiveRehits;
-		[Serialize("hurtDuration"             )] public float hurtDuration;
-		[Serialize("maxNumberOfSuccessiveHits")] public uint maxNumberOfSuccessiveHits;
-		[Serialize("dominoHitShape"           )] public Generic<PhysShape> dominoHitShape;
-		[Serialize("canRehit"                 )] public int canRehit;
-		[Serialize("dominoHitSpeedMultiplier" )] public float dominoHitSpeedMultiplier;
-		[Serialize("minHitLevelForDomino"     )] public uint minHitLevelForDomino;
-		[Serialize("disableStickOnWallsOnHit" )] public int disableStickOnWallsOnHit;
-		[Serialize("receiveDamageFromDomino"  )] public int receiveDamageFromDomino;
-		[Serialize("canBubblize"              )] public int canBubblize;
-		[Serialize("ceilingAction"            )] public Generic<AIReceiveHitAction_Template> ceilingAction;
-		[Serialize("wallAction"               )] public Generic<AIReceiveHitAction_Template> wallAction;
-		[Serialize("deathMarkerName"          )] public StringID deathMarkerName;
+		public CList<Ray_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
+		public int canReceiveRehits;
+		public float hurtDuration;
+		public uint maxNumberOfSuccessiveHits;
+		public Generic<PhysShape> dominoHitShape;
+		public int canRehit;
+		public float dominoHitSpeedMultiplier;
+		public uint minHitLevelForDomino;
+		public int disableStickOnWallsOnHit;
+		public int receiveDamageFromDomino;
+		public int canBubblize;
+		public Generic<AIReceiveHitAction_Template> ceilingAction;
+		public Generic<AIReceiveHitAction_Template> wallAction;
+		public StringID deathMarkerName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(receiveHits));
-			SerializeField(s, nameof(canReceiveRehits));
-			SerializeField(s, nameof(hurtDuration));
-			SerializeField(s, nameof(maxNumberOfSuccessiveHits));
-			SerializeField(s, nameof(dominoHitShape));
-			SerializeField(s, nameof(canRehit));
-			SerializeField(s, nameof(dominoHitSpeedMultiplier));
-			SerializeField(s, nameof(minHitLevelForDomino));
-			SerializeField(s, nameof(disableStickOnWallsOnHit));
-			SerializeField(s, nameof(receiveDamageFromDomino));
-			SerializeField(s, nameof(canBubblize));
-			SerializeField(s, nameof(ceilingAction));
-			SerializeField(s, nameof(wallAction));
-			SerializeField(s, nameof(deathMarkerName));
+			receiveHits = s.SerializeObject<CList<Ray_AIReceiveHitBehavior_Template.ReceiveHitData>>(receiveHits, name: "receiveHits");
+			canReceiveRehits = s.Serialize<int>(canReceiveRehits, name: "canReceiveRehits");
+			hurtDuration = s.Serialize<float>(hurtDuration, name: "hurtDuration");
+			maxNumberOfSuccessiveHits = s.Serialize<uint>(maxNumberOfSuccessiveHits, name: "maxNumberOfSuccessiveHits");
+			dominoHitShape = s.SerializeObject<Generic<PhysShape>>(dominoHitShape, name: "dominoHitShape");
+			canRehit = s.Serialize<int>(canRehit, name: "canRehit");
+			dominoHitSpeedMultiplier = s.Serialize<float>(dominoHitSpeedMultiplier, name: "dominoHitSpeedMultiplier");
+			minHitLevelForDomino = s.Serialize<uint>(minHitLevelForDomino, name: "minHitLevelForDomino");
+			disableStickOnWallsOnHit = s.Serialize<int>(disableStickOnWallsOnHit, name: "disableStickOnWallsOnHit");
+			receiveDamageFromDomino = s.Serialize<int>(receiveDamageFromDomino, name: "receiveDamageFromDomino");
+			canBubblize = s.Serialize<int>(canBubblize, name: "canBubblize");
+			ceilingAction = s.SerializeObject<Generic<AIReceiveHitAction_Template>>(ceilingAction, name: "ceilingAction");
+			wallAction = s.SerializeObject<Generic<AIReceiveHitAction_Template>>(wallAction, name: "wallAction");
+			deathMarkerName = s.SerializeObject<StringID>(deathMarkerName, name: "deathMarkerName");
 		}
 		[Games(GameFlags.ROVersion)]
 		public partial class ReceiveHitData : CSerializable {
-			[Serialize("types"          )] public CArray<uint> types;
-			[Serialize("level"          )] public uint level;
-			[Serialize("useIfAlive"     )] public int useIfAlive;
-			[Serialize("useIfDead"      )] public int useIfDead;
-			[Serialize("useIfInAir"     )] public int useIfInAir;
-			[Serialize("useIfOnGround"  )] public int useIfOnGround;
-			[Serialize("isInterruptible")] public int isInterruptible;
-			[Serialize("action"         )] public Generic<AIReceiveHitAction_Template> action;
+			public CArray<uint> types;
+			public uint level;
+			public int useIfAlive;
+			public int useIfDead;
+			public int useIfInAir;
+			public int useIfOnGround;
+			public int isInterruptible;
+			public Generic<AIReceiveHitAction_Template> action;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(types));
-				SerializeField(s, nameof(level));
-				SerializeField(s, nameof(useIfAlive));
-				SerializeField(s, nameof(useIfDead));
-				SerializeField(s, nameof(useIfInAir));
-				SerializeField(s, nameof(useIfOnGround));
-				SerializeField(s, nameof(isInterruptible));
-				SerializeField(s, nameof(action));
+				types = s.SerializeObject<CArray<uint>>(types, name: "types");
+				level = s.Serialize<uint>(level, name: "level");
+				useIfAlive = s.Serialize<int>(useIfAlive, name: "useIfAlive");
+				useIfDead = s.Serialize<int>(useIfDead, name: "useIfDead");
+				useIfInAir = s.Serialize<int>(useIfInAir, name: "useIfInAir");
+				useIfOnGround = s.Serialize<int>(useIfOnGround, name: "useIfOnGround");
+				isInterruptible = s.Serialize<int>(isInterruptible, name: "isInterruptible");
+				action = s.SerializeObject<Generic<AIReceiveHitAction_Template>>(action, name: "action");
 			}
 		}
 		public override uint? ClassCRC => 0xAA4520A3;

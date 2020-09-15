@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_394_sub_B010E0 : CSerializable {
-		[Serialize("drcTapEnabled"        )] public int drcTapEnabled;
-		[Serialize("drcSwipeEnabled"      )] public int drcSwipeEnabled;
-		[Serialize("drcHoldEnabled"       )] public int drcHoldEnabled;
-		[Serialize("dragOffsetUp"         )] public float dragOffsetUp;
-		[Serialize("dragForceWeight_Left" )] public float dragForceWeight_Left;
-		[Serialize("dragForceWeight_Right")] public float dragForceWeight_Right;
-		[Serialize("dragForceWeight_Up"   )] public float dragForceWeight_Up;
-		[Serialize("dragForceWeight_Down" )] public float dragForceWeight_Down;
-		[Serialize("dragForceDistance"    )] public float dragForceDistance;
-		[Serialize("speed"                )] public float speed;
-		[Serialize("dragForceFadeWeight"  )] public float dragForceFadeWeight;
-		[Serialize("turningAngleMax"      )] public Angle turningAngleMax;
-		[Serialize("normMinToMove"        )] public float normMinToMove;
+		public int drcTapEnabled;
+		public int drcSwipeEnabled;
+		public int drcHoldEnabled;
+		public float dragOffsetUp;
+		public float dragForceWeight_Left;
+		public float dragForceWeight_Right;
+		public float dragForceWeight_Up;
+		public float dragForceWeight_Down;
+		public float dragForceDistance;
+		public float speed;
+		public float dragForceFadeWeight;
+		public Angle turningAngleMax;
+		public float normMinToMove;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(drcTapEnabled));
-			SerializeField(s, nameof(drcSwipeEnabled));
-			SerializeField(s, nameof(drcHoldEnabled));
-			SerializeField(s, nameof(dragOffsetUp));
-			SerializeField(s, nameof(dragForceWeight_Left));
-			SerializeField(s, nameof(dragForceWeight_Right));
-			SerializeField(s, nameof(dragForceWeight_Up));
-			SerializeField(s, nameof(dragForceWeight_Down));
-			SerializeField(s, nameof(dragForceDistance));
-			SerializeField(s, nameof(speed));
-			SerializeField(s, nameof(dragForceFadeWeight));
-			SerializeField(s, nameof(turningAngleMax));
-			SerializeField(s, nameof(normMinToMove));
+			drcTapEnabled = s.Serialize<int>(drcTapEnabled, name: "drcTapEnabled");
+			drcSwipeEnabled = s.Serialize<int>(drcSwipeEnabled, name: "drcSwipeEnabled");
+			drcHoldEnabled = s.Serialize<int>(drcHoldEnabled, name: "drcHoldEnabled");
+			dragOffsetUp = s.Serialize<float>(dragOffsetUp, name: "dragOffsetUp");
+			dragForceWeight_Left = s.Serialize<float>(dragForceWeight_Left, name: "dragForceWeight_Left");
+			dragForceWeight_Right = s.Serialize<float>(dragForceWeight_Right, name: "dragForceWeight_Right");
+			dragForceWeight_Up = s.Serialize<float>(dragForceWeight_Up, name: "dragForceWeight_Up");
+			dragForceWeight_Down = s.Serialize<float>(dragForceWeight_Down, name: "dragForceWeight_Down");
+			dragForceDistance = s.Serialize<float>(dragForceDistance, name: "dragForceDistance");
+			speed = s.Serialize<float>(speed, name: "speed");
+			dragForceFadeWeight = s.Serialize<float>(dragForceFadeWeight, name: "dragForceFadeWeight");
+			turningAngleMax = s.SerializeObject<Angle>(turningAngleMax, name: "turningAngleMax");
+			normMinToMove = s.Serialize<float>(normMinToMove, name: "normMinToMove");
 		}
 		public override uint? ClassCRC => 0x2AC12BCC;
 	}

@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicScoreAIBranchComponent_Template : RO2_BezierBranchComponent_Template {
-		[Serialize("openingSpeed"      )] public float openingSpeed;
-		[Serialize("noteIntervalHeight")] public float noteIntervalHeight;
-		[Serialize("openSound"         )] public StringID openSound;
-		[Serialize("closeSound"        )] public StringID closeSound;
+		public float openingSpeed;
+		public float noteIntervalHeight;
+		public StringID openSound;
+		public StringID closeSound;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(openingSpeed));
-			SerializeField(s, nameof(noteIntervalHeight));
-			SerializeField(s, nameof(openSound));
-			SerializeField(s, nameof(closeSound));
+			openingSpeed = s.Serialize<float>(openingSpeed, name: "openingSpeed");
+			noteIntervalHeight = s.Serialize<float>(noteIntervalHeight, name: "noteIntervalHeight");
+			openSound = s.SerializeObject<StringID>(openSound, name: "openSound");
+			closeSound = s.SerializeObject<StringID>(closeSound, name: "closeSound");
 		}
 		public override uint? ClassCRC => 0xF74BCCEB;
 	}

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_MissionReward : CSerializable {
-		[Serialize("rewardType" )] public Enum_rewardType rewardType;
-		[Serialize("rewardCount")] public uint rewardCount;
-		[Serialize("rewardName" )] public StringID rewardName;
+		public Enum_rewardType rewardType;
+		public uint rewardCount;
+		public StringID rewardName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(rewardType));
-			SerializeField(s, nameof(rewardCount));
-			SerializeField(s, nameof(rewardName));
+			rewardType = s.Serialize<Enum_rewardType>(rewardType, name: "rewardType");
+			rewardCount = s.Serialize<uint>(rewardCount, name: "rewardCount");
+			rewardName = s.SerializeObject<StringID>(rewardName, name: "rewardName");
 		}
 		public enum Enum_rewardType {
 			[Serialize("_unknown"             )] _unknown = 0,

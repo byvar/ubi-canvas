@@ -3,29 +3,29 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class DialogActorComponent : ActorComponent {
-		[Serialize("enableDialog"      )] public bool enableDialog;
-		[Serialize("offset"            )] public Vec2d offset;
-		[Serialize("is3D"              )] public bool is3D;
-		[Serialize("widthTextAreaMax"  )] public float widthTextAreaMax;
-		[Serialize("offSetCorrectionPx")] public Vec2d offSetCorrectionPx;
-		[Serialize("managerOffsetDelta")] public Vec2d managerOffsetDelta;
-		[Serialize("textOffset"        )] public Vec2d textOffset;
-		[Serialize("snapToScreen"      )] public int snapToScreen;
+		public bool enableDialog;
+		public Vec2d offset;
+		public bool is3D;
+		public float widthTextAreaMax;
+		public Vec2d offSetCorrectionPx;
+		public Vec2d managerOffsetDelta;
+		public Vec2d textOffset;
+		public int snapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(enableDialog));
-				SerializeField(s, nameof(textOffset));
-				SerializeField(s, nameof(snapToScreen));
-				SerializeField(s, nameof(is3D));
-				SerializeField(s, nameof(offSetCorrectionPx));
+				enableDialog = s.Serialize<bool>(enableDialog, name: "enableDialog");
+				textOffset = s.SerializeObject<Vec2d>(textOffset, name: "textOffset");
+				snapToScreen = s.Serialize<int>(snapToScreen, name: "snapToScreen");
+				is3D = s.Serialize<bool>(is3D, name: "is3D");
+				offSetCorrectionPx = s.SerializeObject<Vec2d>(offSetCorrectionPx, name: "offSetCorrectionPx");
 			} else {
-				SerializeField(s, nameof(enableDialog));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(is3D));
-				SerializeField(s, nameof(widthTextAreaMax));
-				SerializeField(s, nameof(offSetCorrectionPx));
-				SerializeField(s, nameof(managerOffsetDelta));
+				enableDialog = s.Serialize<bool>(enableDialog, name: "enableDialog");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				is3D = s.Serialize<bool>(is3D, name: "is3D");
+				widthTextAreaMax = s.Serialize<float>(widthTextAreaMax, name: "widthTextAreaMax");
+				offSetCorrectionPx = s.SerializeObject<Vec2d>(offSetCorrectionPx, name: "offSetCorrectionPx");
+				managerOffsetDelta = s.SerializeObject<Vec2d>(managerOffsetDelta, name: "managerOffsetDelta");
 			}
 		}
 		public override uint? ClassCRC => 0x19FA44DD;

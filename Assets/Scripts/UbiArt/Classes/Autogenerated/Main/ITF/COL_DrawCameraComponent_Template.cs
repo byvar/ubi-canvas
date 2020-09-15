@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_DrawCameraComponent_Template : CSerializable {
-		[Serialize("focale")] public Angle focale;
-		[Serialize("depth" )] public float depth;
-		[Serialize("offset")] public Vec3d offset;
+		public Angle focale;
+		public float depth;
+		public Vec3d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(focale));
-			SerializeField(s, nameof(depth));
-			SerializeField(s, nameof(offset));
+			focale = s.SerializeObject<Angle>(focale, name: "focale");
+			depth = s.Serialize<float>(depth, name: "depth");
+			offset = s.SerializeObject<Vec3d>(offset, name: "offset");
 		}
 		public override uint? ClassCRC => 0x7E65B07D;
 	}

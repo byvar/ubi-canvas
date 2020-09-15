@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_LuckyTicketStock : RLC_InventoryItem {
-		[Serialize("ticketType")] public Enum_ticketType ticketType;
+		public Enum_ticketType ticketType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ticketType));
+			ticketType = s.Serialize<Enum_ticketType>(ticketType, name: "ticketType");
 		}
 		public enum Enum_ticketType {
 		}

@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_FluidSimulationComponent_Template : RO2_SoftCollisionComponent_Template {
-		[Serialize("FX"           )] public StringID FX;
-		[Serialize("SpawnSound"   )] public StringID SpawnSound;
-		[Serialize("SwarmSound"   )] public StringID SwarmSound;
-		[Serialize("CaughtSound"  )] public StringID CaughtSound;
-		[Serialize("ReleaseSound" )] public StringID ReleaseSound;
-		[Serialize("InputMaxSpeed")] public float InputMaxSpeed;
-		[Serialize("RadiusMin"    )] public float RadiusMin;
-		[Serialize("RadiusMax"    )] public float RadiusMax;
-		[Serialize("DrawObstacles")] public bool DrawObstacles;
-		[Serialize("DrawPlayers"  )] public bool DrawPlayers;
-		[Serialize("DrawCircles"  )] public bool DrawCircles;
-		[Serialize("FluidMaterial")] public GFXMaterialSerializable FluidMaterial;
+		public StringID FX;
+		public StringID SpawnSound;
+		public StringID SwarmSound;
+		public StringID CaughtSound;
+		public StringID ReleaseSound;
+		public float InputMaxSpeed;
+		public float RadiusMin;
+		public float RadiusMax;
+		public bool DrawObstacles;
+		public bool DrawPlayers;
+		public bool DrawCircles;
+		public GFXMaterialSerializable FluidMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(FX));
-			SerializeField(s, nameof(SpawnSound));
-			SerializeField(s, nameof(SwarmSound));
-			SerializeField(s, nameof(CaughtSound));
-			SerializeField(s, nameof(ReleaseSound));
-			SerializeField(s, nameof(InputMaxSpeed));
-			SerializeField(s, nameof(RadiusMin));
-			SerializeField(s, nameof(RadiusMax));
-			SerializeField(s, nameof(DrawObstacles));
-			SerializeField(s, nameof(DrawPlayers));
-			SerializeField(s, nameof(DrawCircles));
-			SerializeField(s, nameof(FluidMaterial));
+			FX = s.SerializeObject<StringID>(FX, name: "FX");
+			SpawnSound = s.SerializeObject<StringID>(SpawnSound, name: "SpawnSound");
+			SwarmSound = s.SerializeObject<StringID>(SwarmSound, name: "SwarmSound");
+			CaughtSound = s.SerializeObject<StringID>(CaughtSound, name: "CaughtSound");
+			ReleaseSound = s.SerializeObject<StringID>(ReleaseSound, name: "ReleaseSound");
+			InputMaxSpeed = s.Serialize<float>(InputMaxSpeed, name: "InputMaxSpeed");
+			RadiusMin = s.Serialize<float>(RadiusMin, name: "RadiusMin");
+			RadiusMax = s.Serialize<float>(RadiusMax, name: "RadiusMax");
+			DrawObstacles = s.Serialize<bool>(DrawObstacles, name: "DrawObstacles");
+			DrawPlayers = s.Serialize<bool>(DrawPlayers, name: "DrawPlayers");
+			DrawCircles = s.Serialize<bool>(DrawCircles, name: "DrawCircles");
+			FluidMaterial = s.SerializeObject<GFXMaterialSerializable>(FluidMaterial, name: "FluidMaterial");
 		}
 		public override uint? ClassCRC => 0x6F917056;
 	}

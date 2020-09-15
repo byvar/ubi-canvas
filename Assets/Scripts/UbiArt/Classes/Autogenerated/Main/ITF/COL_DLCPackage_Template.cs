@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_DLCPackage_Template : CSerializable {
-		[Serialize("name"                    )] public Placeholder name;
-		[Serialize("annoncementPopUpTitle"   )] public Placeholder annoncementPopUpTitle;
-		[Serialize("annoncementPopUpMsgs"    )] public Placeholder annoncementPopUpMsgs;
-		[Serialize("annoncementPopUpValidate")] public Placeholder annoncementPopUpValidate;
-		[Serialize("localizationPaths"       )] public Placeholder localizationPaths;
-		[Serialize("localizationCommon"      )] public Path localizationCommon;
-		[Serialize("steamID"                 )] public uint steamID;
-		[Serialize("uplayID"                 )] public uint uplayID;
+		public Placeholder name;
+		public Placeholder annoncementPopUpTitle;
+		public Placeholder annoncementPopUpMsgs;
+		public Placeholder annoncementPopUpValidate;
+		public Placeholder localizationPaths;
+		public Path localizationCommon;
+		public uint steamID;
+		public uint uplayID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(annoncementPopUpTitle));
-			SerializeField(s, nameof(annoncementPopUpMsgs));
-			SerializeField(s, nameof(annoncementPopUpValidate));
-			SerializeField(s, nameof(localizationPaths));
-			SerializeField(s, nameof(localizationCommon));
-			SerializeField(s, nameof(steamID));
-			SerializeField(s, nameof(uplayID));
+			name = s.SerializeObject<Placeholder>(name, name: "name");
+			annoncementPopUpTitle = s.SerializeObject<Placeholder>(annoncementPopUpTitle, name: "annoncementPopUpTitle");
+			annoncementPopUpMsgs = s.SerializeObject<Placeholder>(annoncementPopUpMsgs, name: "annoncementPopUpMsgs");
+			annoncementPopUpValidate = s.SerializeObject<Placeholder>(annoncementPopUpValidate, name: "annoncementPopUpValidate");
+			localizationPaths = s.SerializeObject<Placeholder>(localizationPaths, name: "localizationPaths");
+			localizationCommon = s.SerializeObject<Path>(localizationCommon, name: "localizationCommon");
+			steamID = s.Serialize<uint>(steamID, name: "steamID");
+			uplayID = s.Serialize<uint>(uplayID, name: "uplayID");
 		}
 		public override uint? ClassCRC => 0x75BC560D;
 	}

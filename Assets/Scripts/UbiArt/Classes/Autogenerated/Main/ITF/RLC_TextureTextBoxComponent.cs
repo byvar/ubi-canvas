@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TextureTextBoxComponent : TextureGraphicComponent {
-		[Serialize("is2D"                        )] public bool is2D;
-		[Serialize("Text"                        )] public string Text;
-		[Serialize("fontSize"                    )] public uint fontSize;
-		[Serialize("fontAutoScale"               )] public bool fontAutoScale;
-		[Serialize("fontAutoFit"                 )] public bool fontAutoFit;
-		[Serialize("shadowOffset"                )] public Vec2d shadowOffset;
-		[Serialize("textureSize"                 )] public Vec2d textureSize;
-		[Serialize("textColor"                   )] public Color textColor;
-		[Serialize("textShadowColor"             )] public Color textShadowColor;
-		[Serialize("unsecureSource"              )] public bool unsecureSource;
-		[Serialize("AllowAutomaticShowOnActivate")] public bool AllowAutomaticShowOnActivate;
-		[Serialize("textHAlignement"             )] public FONT_ALIGN textHAlignement;
+		public bool is2D;
+		public string Text;
+		public uint fontSize;
+		public bool fontAutoScale;
+		public bool fontAutoFit;
+		public Vec2d shadowOffset;
+		public Vec2d textureSize;
+		public Color textColor;
+		public Color textShadowColor;
+		public bool unsecureSource;
+		public bool AllowAutomaticShowOnActivate;
+		public FONT_ALIGN textHAlignement;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(is2D));
-			SerializeField(s, nameof(Text));
-			SerializeField(s, nameof(fontSize));
-			SerializeField(s, nameof(fontAutoScale));
-			SerializeField(s, nameof(fontAutoFit));
-			SerializeField(s, nameof(shadowOffset));
-			SerializeField(s, nameof(textureSize));
-			SerializeField(s, nameof(textColor));
-			SerializeField(s, nameof(textShadowColor));
-			SerializeField(s, nameof(unsecureSource));
-			SerializeField(s, nameof(AllowAutomaticShowOnActivate));
-			SerializeField(s, nameof(textHAlignement));
+			is2D = s.Serialize<bool>(is2D, name: "is2D");
+			Text = s.Serialize<string>(Text, name: "Text");
+			fontSize = s.Serialize<uint>(fontSize, name: "fontSize");
+			fontAutoScale = s.Serialize<bool>(fontAutoScale, name: "fontAutoScale");
+			fontAutoFit = s.Serialize<bool>(fontAutoFit, name: "fontAutoFit");
+			shadowOffset = s.SerializeObject<Vec2d>(shadowOffset, name: "shadowOffset");
+			textureSize = s.SerializeObject<Vec2d>(textureSize, name: "textureSize");
+			textColor = s.SerializeObject<Color>(textColor, name: "textColor");
+			textShadowColor = s.SerializeObject<Color>(textShadowColor, name: "textShadowColor");
+			unsecureSource = s.Serialize<bool>(unsecureSource, name: "unsecureSource");
+			AllowAutomaticShowOnActivate = s.Serialize<bool>(AllowAutomaticShowOnActivate, name: "AllowAutomaticShowOnActivate");
+			textHAlignement = s.Serialize<FONT_ALIGN>(textHAlignement, name: "textHAlignement");
 		}
 		public enum FONT_ALIGN {
 			[Serialize("FONT_ALIGN_NONE"   )] NONE = -1,

@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PowerUpDisplay_Template : CSerializable {
-		[Serialize("id"       )] public StringID id;
-		[Serialize("debugName")] public string debugName;
+		public StringID id;
+		public string debugName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(id));
+				id = s.SerializeObject<StringID>(id, name: "id");
 			} else {
-				SerializeField(s, nameof(id));
-				SerializeField(s, nameof(debugName));
+				id = s.SerializeObject<StringID>(id, name: "id");
+				debugName = s.Serialize<string>(debugName, name: "debugName");
 			}
 		}
 		public override uint? ClassCRC => 0x41C1630D;

@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_FluidEvaluatorComponent : ActorComponent {
-		[Serialize("shape"                )] public EditableShape shape;
-		[Serialize("BottomRowOffset"      )] public uint BottomRowOffset;
-		[Serialize("CellNbToValidateRow"  )] public uint CellNbToValidateRow;
-		[Serialize("BlendCoeff"           )] public float BlendCoeff;
-		[Serialize("CellPercentValidation")] public float CellPercentValidation;
+		public EditableShape shape;
+		public uint BottomRowOffset;
+		public uint CellNbToValidateRow;
+		public float BlendCoeff;
+		public float CellPercentValidation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(shape));
-				SerializeField(s, nameof(BottomRowOffset));
-				SerializeField(s, nameof(CellNbToValidateRow));
-				SerializeField(s, nameof(BlendCoeff));
-				SerializeField(s, nameof(CellPercentValidation));
+				shape = s.SerializeObject<EditableShape>(shape, name: "shape");
+				BottomRowOffset = s.Serialize<uint>(BottomRowOffset, name: "BottomRowOffset");
+				CellNbToValidateRow = s.Serialize<uint>(CellNbToValidateRow, name: "CellNbToValidateRow");
+				BlendCoeff = s.Serialize<float>(BlendCoeff, name: "BlendCoeff");
+				CellPercentValidation = s.Serialize<float>(CellPercentValidation, name: "CellPercentValidation");
 			}
 		}
 		public override uint? ClassCRC => 0x5A86CDC6;

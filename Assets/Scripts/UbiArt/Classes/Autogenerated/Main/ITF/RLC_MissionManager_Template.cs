@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_MissionManager_Template : TemplateObj {
-		[Serialize("missions"                         )] public CMap<StringID, RLC_Mission> missions;
-		[Serialize("rewards"                          )] public CMap<StringID, RLC_MissionReward> rewards;
-		[Serialize("DailyObjectiveMissingPiecesPrices")] public CMap<uint, uint> DailyObjectiveMissingPiecesPrices;
-		[Serialize("PriceForShuffleDailyObjective"    )] public uint PriceForShuffleDailyObjective;
-		[Serialize("AchievementFamilyTabPath"         )] public PathRef AchievementFamilyTabPath;
-		[Serialize("TutoTapPath"                      )] public Path TutoTapPath;
-		[Serialize("TutoPressDownPath"                )] public Path TutoPressDownPath;
-		[Serialize("AutoOpenNewDailyObjectives"       )] public bool AutoOpenNewDailyObjectives;
+		public CMap<StringID, RLC_Mission> missions;
+		public CMap<StringID, RLC_MissionReward> rewards;
+		public CMap<uint, uint> DailyObjectiveMissingPiecesPrices;
+		public uint PriceForShuffleDailyObjective;
+		public PathRef AchievementFamilyTabPath;
+		public Path TutoTapPath;
+		public Path TutoPressDownPath;
+		public bool AutoOpenNewDailyObjectives;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(missions));
-			SerializeField(s, nameof(rewards));
-			SerializeField(s, nameof(DailyObjectiveMissingPiecesPrices));
-			SerializeField(s, nameof(PriceForShuffleDailyObjective));
-			SerializeField(s, nameof(AchievementFamilyTabPath));
-			SerializeField(s, nameof(TutoTapPath));
-			SerializeField(s, nameof(TutoPressDownPath));
-			SerializeField(s, nameof(AutoOpenNewDailyObjectives));
+			missions = s.SerializeObject<CMap<StringID, RLC_Mission>>(missions, name: "missions");
+			rewards = s.SerializeObject<CMap<StringID, RLC_MissionReward>>(rewards, name: "rewards");
+			DailyObjectiveMissingPiecesPrices = s.SerializeObject<CMap<uint, uint>>(DailyObjectiveMissingPiecesPrices, name: "DailyObjectiveMissingPiecesPrices");
+			PriceForShuffleDailyObjective = s.Serialize<uint>(PriceForShuffleDailyObjective, name: "PriceForShuffleDailyObjective");
+			AchievementFamilyTabPath = s.SerializeObject<PathRef>(AchievementFamilyTabPath, name: "AchievementFamilyTabPath");
+			TutoTapPath = s.SerializeObject<Path>(TutoTapPath, name: "TutoTapPath");
+			TutoPressDownPath = s.SerializeObject<Path>(TutoPressDownPath, name: "TutoPressDownPath");
+			AutoOpenNewDailyObjectives = s.Serialize<bool>(AutoOpenNewDailyObjectives, name: "AutoOpenNewDailyObjectives");
 		}
 		public override uint? ClassCRC => 0x7AB8E76D;
 	}

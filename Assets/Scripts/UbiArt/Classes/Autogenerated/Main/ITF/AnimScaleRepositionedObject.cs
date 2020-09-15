@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class AnimScaleRepositionedObject : CSerializable {
-		[Serialize("repositionType")] public AnimScaleRepositionType repositionType;
-		[Serialize("objectPath"    )] public ObjectPath objectPath;
+		public AnimScaleRepositionType repositionType;
+		public ObjectPath objectPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(repositionType));
-			SerializeField(s, nameof(objectPath));
+			repositionType = s.Serialize<AnimScaleRepositionType>(repositionType, name: "repositionType");
+			objectPath = s.SerializeObject<ObjectPath>(objectPath, name: "objectPath");
 		}
 		public enum AnimScaleRepositionType {
 			[Serialize("AnimScaleRepositionType_Top"        )] Top = 0,

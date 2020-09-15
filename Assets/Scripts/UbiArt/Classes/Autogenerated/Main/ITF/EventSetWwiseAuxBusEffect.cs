@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
 	public partial class EventSetWwiseAuxBusEffect : Event {
-		[Serialize("WwiseBusGUID"   )] public StringID WwiseBusGUID;
-		[Serialize("WwiseEffectGUID")] public StringID WwiseEffectGUID;
-		[Serialize("WwiseBusSlotID" )] public AUDIO_BUS_SLOT WwiseBusSlotID;
+		public StringID WwiseBusGUID;
+		public StringID WwiseEffectGUID;
+		public AUDIO_BUS_SLOT WwiseBusSlotID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(WwiseBusGUID));
-			SerializeField(s, nameof(WwiseEffectGUID));
-			SerializeField(s, nameof(WwiseBusSlotID));
+			WwiseBusGUID = s.SerializeObject<StringID>(WwiseBusGUID, name: "WwiseBusGUID");
+			WwiseEffectGUID = s.SerializeObject<StringID>(WwiseEffectGUID, name: "WwiseEffectGUID");
+			WwiseBusSlotID = s.Serialize<AUDIO_BUS_SLOT>(WwiseBusSlotID, name: "WwiseBusSlotID");
 		}
 		public enum AUDIO_BUS_SLOT {
 			[Serialize("AUDIO_BUS_SLOT_0")] Slot0 = 0,

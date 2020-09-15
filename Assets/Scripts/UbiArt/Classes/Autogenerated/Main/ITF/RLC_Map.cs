@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_Map : CSerializable {
-		[Serialize("Path"               )] public PathRef Path;
-		[Serialize("ScoreRecapPath"     )] public PathRef ScoreRecapPath;
-		[Serialize("Type"               )] public Enum_Type Type;
-		[Serialize("Kit"                )] public Enum_Kit Kit;
-		[Serialize("Mirrored"           )] public bool Mirrored;
-		[Serialize("PlayableOnce"       )] public bool PlayableOnce;
-		[Serialize("Difficulty"         )] public uint Difficulty;
-		[Serialize("ScoreRecapMode"     )] public Enum_ScoreRecapMode ScoreRecapMode;
-		[Serialize("ScoreRecapThreshold")] public CList<uint> ScoreRecapThreshold;
-		[Serialize("MissionId"          )] public StringID MissionId;
-		[Serialize("Spec"               )] public Enum_Spec Spec;
-		[Serialize("InviteLocId"        )] public uint InviteLocId;
-		[Serialize("TopologyId"         )] public StringID TopologyId;
+		public PathRef Path;
+		public PathRef ScoreRecapPath;
+		public Enum_Type Type;
+		public Enum_Kit Kit;
+		public bool Mirrored;
+		public bool PlayableOnce;
+		public uint Difficulty;
+		public Enum_ScoreRecapMode ScoreRecapMode;
+		public CList<uint> ScoreRecapThreshold;
+		public StringID MissionId;
+		public Enum_Spec Spec;
+		public uint InviteLocId;
+		public StringID TopologyId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Path));
-			SerializeField(s, nameof(ScoreRecapPath));
-			SerializeField(s, nameof(Type));
-			SerializeField(s, nameof(Kit));
-			SerializeField(s, nameof(Mirrored));
-			SerializeField(s, nameof(PlayableOnce));
-			SerializeField(s, nameof(Difficulty));
-			SerializeField(s, nameof(ScoreRecapMode));
-			SerializeField(s, nameof(ScoreRecapThreshold));
-			SerializeField(s, nameof(MissionId));
-			SerializeField(s, nameof(Spec));
-			SerializeField(s, nameof(InviteLocId));
-			SerializeField(s, nameof(TopologyId));
+			Path = s.SerializeObject<PathRef>(Path, name: "Path");
+			ScoreRecapPath = s.SerializeObject<PathRef>(ScoreRecapPath, name: "ScoreRecapPath");
+			Type = s.Serialize<Enum_Type>(Type, name: "Type");
+			Kit = s.Serialize<Enum_Kit>(Kit, name: "Kit");
+			Mirrored = s.Serialize<bool>(Mirrored, name: "Mirrored");
+			PlayableOnce = s.Serialize<bool>(PlayableOnce, name: "PlayableOnce");
+			Difficulty = s.Serialize<uint>(Difficulty, name: "Difficulty");
+			ScoreRecapMode = s.Serialize<Enum_ScoreRecapMode>(ScoreRecapMode, name: "ScoreRecapMode");
+			ScoreRecapThreshold = s.SerializeObject<CList<uint>>(ScoreRecapThreshold, name: "ScoreRecapThreshold");
+			MissionId = s.SerializeObject<StringID>(MissionId, name: "MissionId");
+			Spec = s.Serialize<Enum_Spec>(Spec, name: "Spec");
+			InviteLocId = s.Serialize<uint>(InviteLocId, name: "InviteLocId");
+			TopologyId = s.SerializeObject<StringID>(TopologyId, name: "TopologyId");
 		}
 		public enum Enum_Type {
 			[Serialize("_unknown"         )] _unknown = 0,

@@ -3,39 +3,39 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class UIControllerComponent_Template : UIComponent_Template {
-		[Serialize("buttonActions"        )] public CList<UIControllerComponent_Template.ControllerTextObject> buttonActions;
-		[Serialize("textboxPath"          )] public Path textboxPath;
-		[Serialize("inputActorScaleFactor")] public float inputActorScaleFactor;
+		public CList<UIControllerComponent_Template.ControllerTextObject> buttonActions;
+		public Path textboxPath;
+		public float inputActorScaleFactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(buttonActions));
-				SerializeField(s, nameof(textboxPath));
-				SerializeField(s, nameof(inputActorScaleFactor));
+				buttonActions = s.SerializeObject<CList<UIControllerComponent_Template.ControllerTextObject>>(buttonActions, name: "buttonActions");
+				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
+				inputActorScaleFactor = s.Serialize<float>(inputActorScaleFactor, name: "inputActorScaleFactor");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(textboxPath));
-				SerializeField(s, nameof(inputActorScaleFactor));
+				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
+				inputActorScaleFactor = s.Serialize<float>(inputActorScaleFactor, name: "inputActorScaleFactor");
 			} else {
-				SerializeField(s, nameof(buttonActions));
-				SerializeField(s, nameof(textboxPath));
+				buttonActions = s.SerializeObject<CList<UIControllerComponent_Template.ControllerTextObject>>(buttonActions, name: "buttonActions");
+				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class ControllerTextObject : CSerializable {
-			[Serialize("boneName")] public StringID boneName;
-			[Serialize("locId"   )] public LocalisationId locId;
-			[Serialize("color"   )] public Color color;
-			[Serialize("hAlign"  )] public FONT_ALIGN hAlign;
-			[Serialize("vAlign"  )] public FONT vAlign;
-			[Serialize("anchor"  )] public AREA_ANCHOR anchor;
+			public StringID boneName;
+			public LocalisationId locId;
+			public Color color;
+			public FONT_ALIGN hAlign;
+			public FONT vAlign;
+			public AREA_ANCHOR anchor;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(boneName));
-				SerializeField(s, nameof(locId));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(hAlign));
-				SerializeField(s, nameof(vAlign));
-				SerializeField(s, nameof(anchor));
+				boneName = s.SerializeObject<StringID>(boneName, name: "boneName");
+				locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
+				color = s.SerializeObject<Color>(color, name: "color");
+				hAlign = s.Serialize<FONT_ALIGN>(hAlign, name: "hAlign");
+				vAlign = s.Serialize<FONT>(vAlign, name: "vAlign");
+				anchor = s.Serialize<AREA_ANCHOR>(anchor, name: "anchor");
 			}
 			public enum FONT_ALIGN {
 				[Serialize("FONT_ALIGN_NONE"   )] NONE = -1,

@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_GlobalPowerUpUnlocked : CSerializable {
-		[Serialize("dive"             )] public bool dive;
-		[Serialize("walkOnWallsGlobal")] public bool walkOnWallsGlobal;
-		[Serialize("reduction"        )] public bool reduction;
-		[Serialize("helicopter"       )] public bool helicopter;
-		[Serialize("fight"            )] public bool fight;
+		public bool dive;
+		public bool walkOnWallsGlobal;
+		public bool reduction;
+		public bool helicopter;
+		public bool fight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(dive));
-			SerializeField(s, nameof(walkOnWallsGlobal));
-			SerializeField(s, nameof(reduction));
-			SerializeField(s, nameof(helicopter));
-			SerializeField(s, nameof(fight));
+			dive = s.Serialize<bool>(dive, name: "dive");
+			walkOnWallsGlobal = s.Serialize<bool>(walkOnWallsGlobal, name: "walkOnWallsGlobal");
+			reduction = s.Serialize<bool>(reduction, name: "reduction");
+			helicopter = s.Serialize<bool>(helicopter, name: "helicopter");
+			fight = s.Serialize<bool>(fight, name: "fight");
 		}
 	}
 }

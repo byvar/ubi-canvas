@@ -3,52 +3,52 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TRCLocalisation_Detail : CSerializable {
-		[Serialize("type"             )] public Enum_type type;
-		[Serialize("canBack"          )] public bool canBack;
-		[Serialize("message"          )] public SmartLocId message;
-		[Serialize("title"            )] public SmartLocId title;
-		[Serialize("buttonLeft"       )] public SmartLocId buttonLeft;
-		[Serialize("buttonRight"      )] public SmartLocId buttonRight;
-		[Serialize("buttonMiddle"     )] public SmartLocId buttonMiddle;
-		[Serialize("defaultButton"    )] public Button defaultButton;
-		[Serialize("restart"          )] public TRCRestart restart;
-		[Serialize("uint__0"          )] public uint uint__0;
-		[Serialize("string__1"        )] public string string__1;
-		[Serialize("LocalisationId__2")] public LocalisationId LocalisationId__2;
-		[Serialize("LocalisationId__3")] public LocalisationId LocalisationId__3;
-		[Serialize("LocalisationId__4")] public LocalisationId LocalisationId__4;
-		[Serialize("LocalisationId__5")] public LocalisationId LocalisationId__5;
-		[Serialize("SmartLocId__6"    )] public SmartLocId SmartLocId__6;
-		[Serialize("SmartLocId__7"    )] public SmartLocId SmartLocId__7;
-		[Serialize("SmartLocId__8"    )] public SmartLocId SmartLocId__8;
-		[Serialize("SmartLocId__9"    )] public SmartLocId SmartLocId__9;
-		[Serialize("SmartLocId__10"   )] public SmartLocId SmartLocId__10;
-		[Serialize("Enum_VH_0__11"    )] public Enum_VH_0 Enum_VH_0__11;
+		public Enum_type type;
+		public bool canBack;
+		public SmartLocId message;
+		public SmartLocId title;
+		public SmartLocId buttonLeft;
+		public SmartLocId buttonRight;
+		public SmartLocId buttonMiddle;
+		public Button defaultButton;
+		public TRCRestart restart;
+		public uint uint__0;
+		public string string__1;
+		public LocalisationId LocalisationId__2;
+		public LocalisationId LocalisationId__3;
+		public LocalisationId LocalisationId__4;
+		public LocalisationId LocalisationId__5;
+		public SmartLocId SmartLocId__6;
+		public SmartLocId SmartLocId__7;
+		public SmartLocId SmartLocId__8;
+		public SmartLocId SmartLocId__9;
+		public SmartLocId SmartLocId__10;
+		public Enum_VH_0 Enum_VH_0__11;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(uint__0));
-				SerializeField(s, nameof(string__1));
-				SerializeField(s, nameof(LocalisationId__2));
-				SerializeField(s, nameof(LocalisationId__3));
-				SerializeField(s, nameof(LocalisationId__4));
-				SerializeField(s, nameof(LocalisationId__5));
-				SerializeField(s, nameof(SmartLocId__6));
-				SerializeField(s, nameof(SmartLocId__7));
-				SerializeField(s, nameof(SmartLocId__8));
-				SerializeField(s, nameof(SmartLocId__9));
-				SerializeField(s, nameof(SmartLocId__10));
-				SerializeField(s, nameof(Enum_VH_0__11));
+				uint__0 = s.Serialize<uint>(uint__0, name: "uint__0");
+				string__1 = s.Serialize<string>(string__1, name: "string__1");
+				LocalisationId__2 = s.SerializeObject<LocalisationId>(LocalisationId__2, name: "LocalisationId__2");
+				LocalisationId__3 = s.SerializeObject<LocalisationId>(LocalisationId__3, name: "LocalisationId__3");
+				LocalisationId__4 = s.SerializeObject<LocalisationId>(LocalisationId__4, name: "LocalisationId__4");
+				LocalisationId__5 = s.SerializeObject<LocalisationId>(LocalisationId__5, name: "LocalisationId__5");
+				SmartLocId__6 = s.SerializeObject<SmartLocId>(SmartLocId__6, name: "SmartLocId__6");
+				SmartLocId__7 = s.SerializeObject<SmartLocId>(SmartLocId__7, name: "SmartLocId__7");
+				SmartLocId__8 = s.SerializeObject<SmartLocId>(SmartLocId__8, name: "SmartLocId__8");
+				SmartLocId__9 = s.SerializeObject<SmartLocId>(SmartLocId__9, name: "SmartLocId__9");
+				SmartLocId__10 = s.SerializeObject<SmartLocId>(SmartLocId__10, name: "SmartLocId__10");
+				Enum_VH_0__11 = s.Serialize<Enum_VH_0>(Enum_VH_0__11, name: "Enum_VH_0__11");
 			} else {
-				SerializeField(s, nameof(type));
-				SerializeField(s, nameof(canBack));
-				SerializeField(s, nameof(message));
-				SerializeField(s, nameof(title));
-				SerializeField(s, nameof(buttonLeft));
-				SerializeField(s, nameof(buttonRight));
-				SerializeField(s, nameof(buttonMiddle));
-				SerializeField(s, nameof(defaultButton));
-				SerializeField(s, nameof(restart));
+				type = s.Serialize<Enum_type>(type, name: "type");
+				canBack = s.Serialize<bool>(canBack, name: "canBack");
+				message = s.SerializeObject<SmartLocId>(message, name: "message");
+				title = s.SerializeObject<SmartLocId>(title, name: "title");
+				buttonLeft = s.SerializeObject<SmartLocId>(buttonLeft, name: "buttonLeft");
+				buttonRight = s.SerializeObject<SmartLocId>(buttonRight, name: "buttonRight");
+				buttonMiddle = s.SerializeObject<SmartLocId>(buttonMiddle, name: "buttonMiddle");
+				defaultButton = s.Serialize<Button>(defaultButton, name: "defaultButton");
+				restart = s.Serialize<TRCRestart>(restart, name: "restart");
 			}
 		}
 		public enum Enum_type {

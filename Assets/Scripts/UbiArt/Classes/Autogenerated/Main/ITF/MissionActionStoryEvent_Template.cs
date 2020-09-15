@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class MissionActionStoryEvent_Template : CSerializable {
-		[Serialize("storyEvent")] public StringID storyEvent;
-		[Serialize("value"     )] public int value;
-		[Serialize("operator"  )] public Enum_operator _operator;
+		public StringID storyEvent;
+		public int value;
+		public Enum_operator _operator;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(storyEvent));
-			SerializeField(s, nameof(value));
-			SerializeField(s, nameof(_operator));
+			storyEvent = s.SerializeObject<StringID>(storyEvent, name: "storyEvent");
+			value = s.Serialize<int>(value, name: "value");
+			_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
 		}
 		public enum Enum_operator {
 			[Serialize("Value_0")] Value_0 = 0,

@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PaintBumperComponent : ActorComponent {
-		[Serialize("HasBeenDRCified")] public bool HasBeenDRCified;
+		public bool HasBeenDRCified;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(HasBeenDRCified));
+				HasBeenDRCified = s.Serialize<bool>(HasBeenDRCified, name: "HasBeenDRCified");
 			}
 		}
 		public override uint? ClassCRC => 0xD6E104C6;

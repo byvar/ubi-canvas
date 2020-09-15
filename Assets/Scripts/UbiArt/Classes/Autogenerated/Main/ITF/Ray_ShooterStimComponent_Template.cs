@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_ShooterStimComponent_Template : CSerializable {
-		[Serialize("basicBullet"         )] public Ray_BasicBullet_Template basicBullet;
-		[Serialize("fxDelayBeforeDestroy")] public float fxDelayBeforeDestroy;
+		public Ray_BasicBullet_Template basicBullet;
+		public float fxDelayBeforeDestroy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(basicBullet));
-			SerializeField(s, nameof(fxDelayBeforeDestroy));
+			basicBullet = s.SerializeObject<Ray_BasicBullet_Template>(basicBullet, name: "basicBullet");
+			fxDelayBeforeDestroy = s.Serialize<float>(fxDelayBeforeDestroy, name: "fxDelayBeforeDestroy");
 		}
 		public override uint? ClassCRC => 0xD87DCE99;
 	}

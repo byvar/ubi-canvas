@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class DeformOnTrajectoryComponent_Template : ActorComponent_Template {
-		[Serialize("bones"       )] public CList<StringID> bones;
-		[Serialize("sampleLength")] public float sampleLength;
+		public CList<StringID> bones;
+		public float sampleLength;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(bones));
+				bones = s.SerializeObject<CList<StringID>>(bones, name: "bones");
 			} else {
-				SerializeField(s, nameof(bones));
-				SerializeField(s, nameof(sampleLength));
+				bones = s.SerializeObject<CList<StringID>>(bones, name: "bones");
+				sampleLength = s.Serialize<float>(sampleLength, name: "sampleLength");
 			}
 		}
 		public override uint? ClassCRC => 0xCDC7E469;

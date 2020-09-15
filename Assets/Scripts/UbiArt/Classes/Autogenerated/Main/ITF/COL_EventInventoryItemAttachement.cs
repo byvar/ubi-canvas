@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_EventInventoryItemAttachement : Event {
-		[Serialize("action")] public Enum_action action;
-		[Serialize("itemID")] public StringID itemID;
+		public Enum_action action;
+		public StringID itemID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(action));
-			SerializeField(s, nameof(itemID));
+			action = s.Serialize<Enum_action>(action, name: "action");
+			itemID = s.SerializeObject<StringID>(itemID, name: "itemID");
 		}
 		public enum Enum_action {
 			[Serialize("Value_0")] Value_0 = 0,

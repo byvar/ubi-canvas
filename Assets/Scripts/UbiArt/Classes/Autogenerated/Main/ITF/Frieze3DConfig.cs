@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Frieze3DConfig : CSerializable {
-		[Serialize("orient"          )] public bool orient;
-		[Serialize("mesh3DFile"      )] public Path mesh3DFile;
-		[Serialize("mesh3DFile_Left" )] public Path mesh3DFile_Left;
-		[Serialize("mesh3DFile_Right")] public Path mesh3DFile_Right;
+		public bool orient;
+		public Path mesh3DFile;
+		public Path mesh3DFile_Left;
+		public Path mesh3DFile_Right;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(orient));
-			SerializeField(s, nameof(mesh3DFile));
-			SerializeField(s, nameof(mesh3DFile_Left));
-			SerializeField(s, nameof(mesh3DFile_Right));
+			orient = s.Serialize<bool>(orient, name: "orient");
+			mesh3DFile = s.SerializeObject<Path>(mesh3DFile, name: "mesh3DFile");
+			mesh3DFile_Left = s.SerializeObject<Path>(mesh3DFile_Left, name: "mesh3DFile_Left");
+			mesh3DFile_Right = s.SerializeObject<Path>(mesh3DFile_Right, name: "mesh3DFile_Right");
 		}
 	}
 }

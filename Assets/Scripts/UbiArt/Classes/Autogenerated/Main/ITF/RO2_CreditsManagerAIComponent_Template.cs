@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CreditsManagerAIComponent_Template : ActorComponent_Template {
-		[Serialize("creditsList")] public CList<CreditsLine> creditsList;
-		[Serialize("gmatPath"   )] public Path gmatPath;
-		[Serialize("isTriggered")] public bool isTriggered;
+		public CList<CreditsLine> creditsList;
+		public Path gmatPath;
+		public bool isTriggered;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(creditsList));
-			SerializeField(s, nameof(gmatPath));
-			SerializeField(s, nameof(isTriggered));
+			creditsList = s.SerializeObject<CList<CreditsLine>>(creditsList, name: "creditsList");
+			gmatPath = s.SerializeObject<Path>(gmatPath, name: "gmatPath");
+			isTriggered = s.Serialize<bool>(isTriggered, name: "isTriggered");
 		}
 		public override uint? ClassCRC => 0xB0A62194;
 	}

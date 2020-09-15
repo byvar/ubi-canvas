@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HoverPlatformComponent_Template : ActorComponent_Template {
-		[Serialize("movePhase"         )] public float movePhase;
-		[Serialize("waitPhase"         )] public float waitPhase;
-		[Serialize("fxReactor01Enabled")] public bool fxReactor01Enabled;
-		[Serialize("fxReactor02Enabled")] public bool fxReactor02Enabled;
-		[Serialize("fxReactor03Enabled")] public bool fxReactor03Enabled;
-		[Serialize("landEnabled"       )] public bool landEnabled;
-		[Serialize("chainEnabled"      )] public bool chainEnabled;
-		[Serialize("chainPath"         )] public Path chainPath;
-		[Serialize("animDeathEnabled"  )] public int animDeathEnabled;
+		public float movePhase;
+		public float waitPhase;
+		public bool fxReactor01Enabled;
+		public bool fxReactor02Enabled;
+		public bool fxReactor03Enabled;
+		public bool landEnabled;
+		public bool chainEnabled;
+		public Path chainPath;
+		public int animDeathEnabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(movePhase));
-				SerializeField(s, nameof(waitPhase));
-				SerializeField(s, nameof(fxReactor01Enabled));
-				SerializeField(s, nameof(fxReactor02Enabled));
-				SerializeField(s, nameof(fxReactor03Enabled));
-				SerializeField(s, nameof(landEnabled));
-				SerializeField(s, nameof(chainEnabled));
-				SerializeField(s, nameof(chainPath));
-				SerializeField(s, nameof(animDeathEnabled));
+				movePhase = s.Serialize<float>(movePhase, name: "movePhase");
+				waitPhase = s.Serialize<float>(waitPhase, name: "waitPhase");
+				fxReactor01Enabled = s.Serialize<bool>(fxReactor01Enabled, name: "fxReactor01Enabled");
+				fxReactor02Enabled = s.Serialize<bool>(fxReactor02Enabled, name: "fxReactor02Enabled");
+				fxReactor03Enabled = s.Serialize<bool>(fxReactor03Enabled, name: "fxReactor03Enabled");
+				landEnabled = s.Serialize<bool>(landEnabled, name: "landEnabled");
+				chainEnabled = s.Serialize<bool>(chainEnabled, name: "chainEnabled");
+				chainPath = s.SerializeObject<Path>(chainPath, name: "chainPath");
+				animDeathEnabled = s.Serialize<int>(animDeathEnabled, name: "animDeathEnabled");
 			} else {
-				SerializeField(s, nameof(movePhase));
-				SerializeField(s, nameof(waitPhase));
-				SerializeField(s, nameof(fxReactor01Enabled));
-				SerializeField(s, nameof(fxReactor02Enabled));
-				SerializeField(s, nameof(fxReactor03Enabled));
-				SerializeField(s, nameof(landEnabled));
-				SerializeField(s, nameof(chainEnabled));
-				SerializeField(s, nameof(chainPath));
+				movePhase = s.Serialize<float>(movePhase, name: "movePhase");
+				waitPhase = s.Serialize<float>(waitPhase, name: "waitPhase");
+				fxReactor01Enabled = s.Serialize<bool>(fxReactor01Enabled, name: "fxReactor01Enabled");
+				fxReactor02Enabled = s.Serialize<bool>(fxReactor02Enabled, name: "fxReactor02Enabled");
+				fxReactor03Enabled = s.Serialize<bool>(fxReactor03Enabled, name: "fxReactor03Enabled");
+				landEnabled = s.Serialize<bool>(landEnabled, name: "landEnabled");
+				chainEnabled = s.Serialize<bool>(chainEnabled, name: "chainEnabled");
+				chainPath = s.SerializeObject<Path>(chainPath, name: "chainPath");
 			}
 		}
 		public override uint? ClassCRC => 0x5A8B0C8F;

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class SubRenderParam_ColorRamp : SubRenderParam {
-		[Serialize("ColorRampPath")] public Path ColorRampPath;
+		public Path ColorRampPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ColorRampPath));
+			ColorRampPath = s.SerializeObject<Path>(ColorRampPath, name: "ColorRampPath");
 		}
 		public override uint? ClassCRC => 0x1B6979E9;
 	}

@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class GAWPattern : CSerializable {
-		[Serialize("Enum_VH_0__0"             )] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("CArray<unsigned short>__1")] public CArray<ushort> CArray_ushort__1;
-		[Serialize("bool__2"                  )] public bool bool__2;
+		public Enum_VH_0 Enum_VH_0__0;
+		public CArray<ushort> CArray_ushort__1;
+		public bool bool__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(Enum_VH_0__0));
-				SerializeField(s, nameof(CArray_ushort__1));
-				SerializeField(s, nameof(bool__2));
+				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
+				CArray_ushort__1 = s.SerializeObject<CArray<ushort>>(CArray_ushort__1, name: "CArray_ushort__1");
+				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
 			}
 		}
 		public enum Enum_VH_0 {

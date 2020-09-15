@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicalSimpleActorComponent_Template : ActorComponent_Template {
-		[Serialize("animationIdle"           )] public StringID animationIdle;
-		[Serialize("animationMusical"        )] public StringID animationMusical;
-		[Serialize("animationTickle"         )] public StringID animationTickle;
-		[Serialize("animationMusicalToTickle")] public StringID animationMusicalToTickle;
-		[Serialize("animationTickleToMusical")] public StringID animationTickleToMusical;
-		[Serialize("animationMusicalToIdle"  )] public StringID animationMusicalToIdle;
-		[Serialize("animationIdleToMusical"  )] public StringID animationIdleToMusical;
-		[Serialize("animationIdleToTickle"   )] public StringID animationIdleToTickle;
-		[Serialize("animationTickleToIdle"   )] public StringID animationTickleToIdle;
-		[Serialize("lumsByReward"            )] public uint lumsByReward;
-		[Serialize("countMaxReward"          )] public uint countMaxReward;
-		[Serialize("timeBetweenRewardInSwipe")] public float timeBetweenRewardInSwipe;
+		public StringID animationIdle;
+		public StringID animationMusical;
+		public StringID animationTickle;
+		public StringID animationMusicalToTickle;
+		public StringID animationTickleToMusical;
+		public StringID animationMusicalToIdle;
+		public StringID animationIdleToMusical;
+		public StringID animationIdleToTickle;
+		public StringID animationTickleToIdle;
+		public uint lumsByReward;
+		public uint countMaxReward;
+		public float timeBetweenRewardInSwipe;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animationIdle));
-			SerializeField(s, nameof(animationMusical));
-			SerializeField(s, nameof(animationTickle));
-			SerializeField(s, nameof(animationMusicalToTickle));
-			SerializeField(s, nameof(animationTickleToMusical));
-			SerializeField(s, nameof(animationMusicalToIdle));
-			SerializeField(s, nameof(animationIdleToMusical));
-			SerializeField(s, nameof(animationIdleToTickle));
-			SerializeField(s, nameof(animationTickleToIdle));
-			SerializeField(s, nameof(lumsByReward));
-			SerializeField(s, nameof(countMaxReward));
-			SerializeField(s, nameof(timeBetweenRewardInSwipe));
+			animationIdle = s.SerializeObject<StringID>(animationIdle, name: "animationIdle");
+			animationMusical = s.SerializeObject<StringID>(animationMusical, name: "animationMusical");
+			animationTickle = s.SerializeObject<StringID>(animationTickle, name: "animationTickle");
+			animationMusicalToTickle = s.SerializeObject<StringID>(animationMusicalToTickle, name: "animationMusicalToTickle");
+			animationTickleToMusical = s.SerializeObject<StringID>(animationTickleToMusical, name: "animationTickleToMusical");
+			animationMusicalToIdle = s.SerializeObject<StringID>(animationMusicalToIdle, name: "animationMusicalToIdle");
+			animationIdleToMusical = s.SerializeObject<StringID>(animationIdleToMusical, name: "animationIdleToMusical");
+			animationIdleToTickle = s.SerializeObject<StringID>(animationIdleToTickle, name: "animationIdleToTickle");
+			animationTickleToIdle = s.SerializeObject<StringID>(animationTickleToIdle, name: "animationTickleToIdle");
+			lumsByReward = s.Serialize<uint>(lumsByReward, name: "lumsByReward");
+			countMaxReward = s.Serialize<uint>(countMaxReward, name: "countMaxReward");
+			timeBetweenRewardInSwipe = s.Serialize<float>(timeBetweenRewardInSwipe, name: "timeBetweenRewardInSwipe");
 		}
 		public override uint? ClassCRC => 0xC8F79971;
 	}

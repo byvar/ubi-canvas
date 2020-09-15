@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ZeusFingerComponent_Template : ActorComponent_Template {
-		[Serialize("idleAnim"         )] public StringID idleAnim;
-		[Serialize("appearAnim"       )] public StringID appearAnim;
-		[Serialize("reflexAnim"       )] public StringID reflexAnim;
-		[Serialize("chargeAnim"       )] public StringID chargeAnim;
-		[Serialize("shootAnim"        )] public StringID shootAnim;
-		[Serialize("disappearAnim"    )] public StringID disappearAnim;
-		[Serialize("emptyAnim"        )] public StringID emptyAnim;
-		[Serialize("shootDuration"    )] public float shootDuration;
-		[Serialize("useShootDuration" )] public bool useShootDuration;
-		[Serialize("chargeDuration"   )] public float chargeDuration;
-		[Serialize("disappearDuration")] public float disappearDuration;
+		public StringID idleAnim;
+		public StringID appearAnim;
+		public StringID reflexAnim;
+		public StringID chargeAnim;
+		public StringID shootAnim;
+		public StringID disappearAnim;
+		public StringID emptyAnim;
+		public float shootDuration;
+		public bool useShootDuration;
+		public float chargeDuration;
+		public float disappearDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idleAnim));
-			SerializeField(s, nameof(appearAnim));
-			SerializeField(s, nameof(reflexAnim));
-			SerializeField(s, nameof(chargeAnim));
-			SerializeField(s, nameof(shootAnim));
-			SerializeField(s, nameof(disappearAnim));
-			SerializeField(s, nameof(emptyAnim));
-			SerializeField(s, nameof(shootDuration));
-			SerializeField(s, nameof(useShootDuration));
-			SerializeField(s, nameof(chargeDuration));
-			SerializeField(s, nameof(disappearDuration));
+			idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
+			appearAnim = s.SerializeObject<StringID>(appearAnim, name: "appearAnim");
+			reflexAnim = s.SerializeObject<StringID>(reflexAnim, name: "reflexAnim");
+			chargeAnim = s.SerializeObject<StringID>(chargeAnim, name: "chargeAnim");
+			shootAnim = s.SerializeObject<StringID>(shootAnim, name: "shootAnim");
+			disappearAnim = s.SerializeObject<StringID>(disappearAnim, name: "disappearAnim");
+			emptyAnim = s.SerializeObject<StringID>(emptyAnim, name: "emptyAnim");
+			shootDuration = s.Serialize<float>(shootDuration, name: "shootDuration");
+			useShootDuration = s.Serialize<bool>(useShootDuration, name: "useShootDuration");
+			chargeDuration = s.Serialize<float>(chargeDuration, name: "chargeDuration");
+			disappearDuration = s.Serialize<float>(disappearDuration, name: "disappearDuration");
 		}
 		public override uint? ClassCRC => 0x718EE3A8;
 	}

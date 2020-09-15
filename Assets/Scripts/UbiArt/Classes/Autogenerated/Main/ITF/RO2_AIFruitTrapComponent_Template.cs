@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIFruitTrapComponent_Template : ActorComponent_Template {
-		[Serialize("delay"          )] public float delay;
-		[Serialize("stayDownDelay"  )] public float stayDownDelay;
-		[Serialize("weightThreshold")] public float weightThreshold;
-		[Serialize("defaultPosIsUp" )] public bool defaultPosIsUp;
+		public float delay;
+		public float stayDownDelay;
+		public float weightThreshold;
+		public bool defaultPosIsUp;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(delay));
-			SerializeField(s, nameof(stayDownDelay));
-			SerializeField(s, nameof(weightThreshold));
-			SerializeField(s, nameof(defaultPosIsUp));
+			delay = s.Serialize<float>(delay, name: "delay");
+			stayDownDelay = s.Serialize<float>(stayDownDelay, name: "stayDownDelay");
+			weightThreshold = s.Serialize<float>(weightThreshold, name: "weightThreshold");
+			defaultPosIsUp = s.Serialize<bool>(defaultPosIsUp, name: "defaultPosIsUp");
 		}
 		public override uint? ClassCRC => 0xFDFC9D5C;
 	}

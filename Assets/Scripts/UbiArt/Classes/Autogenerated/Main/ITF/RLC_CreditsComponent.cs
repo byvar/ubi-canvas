@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_CreditsComponent : CreditsComponent {
-		[Serialize("jobTitleNameGape" )] public float jobTitleNameGape;
-		[Serialize("jobTitleHorOffset")] public float jobTitleHorOffset;
-		[Serialize("nameHorOffset"    )] public float nameHorOffset;
+		public float jobTitleNameGape;
+		public float jobTitleHorOffset;
+		public float nameHorOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(jobTitleNameGape));
-			SerializeField(s, nameof(jobTitleHorOffset));
-			SerializeField(s, nameof(nameHorOffset));
+			jobTitleNameGape = s.Serialize<float>(jobTitleNameGape, name: "jobTitleNameGape");
+			jobTitleHorOffset = s.Serialize<float>(jobTitleHorOffset, name: "jobTitleHorOffset");
+			nameHorOffset = s.Serialize<float>(nameHorOffset, name: "nameHorOffset");
 		}
 		public override uint? ClassCRC => 0x9A9CE614;
 	}

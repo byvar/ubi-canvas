@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class NameGeneratorConfig_Template : TemplateObj {
-		[Serialize("ColorProbability")] public float ColorProbability;
+		public float ColorProbability;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ColorProbability));
+			ColorProbability = s.Serialize<float>(ColorProbability, name: "ColorProbability");
 		}
 		public override uint? ClassCRC => 0xB051357D;
 	}

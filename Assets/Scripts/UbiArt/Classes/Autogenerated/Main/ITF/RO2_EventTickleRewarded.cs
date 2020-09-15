@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventTickleRewarded : Event {
-		[Serialize("rewardValue")] public uint rewardValue;
+		public uint rewardValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(rewardValue));
+			rewardValue = s.Serialize<uint>(rewardValue, name: "rewardValue");
 		}
 		public override uint? ClassCRC => 0x9D2D508D;
 	}

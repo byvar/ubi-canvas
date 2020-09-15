@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PrisonerPostComponent_Template : RO2_AIComponent_Template {
-		[Serialize("animIdle"        )] public StringID animIdle;
-		[Serialize("animExplodeLeft" )] public StringID animExplodeLeft;
-		[Serialize("animExplodeRight")] public StringID animExplodeRight;
+		public StringID animIdle;
+		public StringID animExplodeLeft;
+		public StringID animExplodeRight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animIdle));
-			SerializeField(s, nameof(animExplodeLeft));
-			SerializeField(s, nameof(animExplodeRight));
+			animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");
+			animExplodeLeft = s.SerializeObject<StringID>(animExplodeLeft, name: "animExplodeLeft");
+			animExplodeRight = s.SerializeObject<StringID>(animExplodeRight, name: "animExplodeRight");
 		}
 		public override uint? ClassCRC => 0x0A0000CA;
 	}

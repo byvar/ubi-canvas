@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_DigShapeComponent_Template : ActorComponent_Template {
-		[Serialize("digByDefault"   )] public bool digByDefault;
-		[Serialize("digOffset"      )] public Vec2d digOffset;
-		[Serialize("digScale"       )] public Vec2d digScale;
-		[Serialize("useActorAngle"  )] public bool useActorAngle;
-		[Serialize("sendEventToSelf")] public bool sendEventToSelf;
-		[Serialize("staticEnabled"  )] public bool staticEnabled;
-		[Serialize("staticDuration" )] public float staticDuration;
-		[Serialize("digShape"       )] public Generic<PhysShape> digShape;
+		public bool digByDefault;
+		public Vec2d digOffset;
+		public Vec2d digScale;
+		public bool useActorAngle;
+		public bool sendEventToSelf;
+		public bool staticEnabled;
+		public float staticDuration;
+		public Generic<PhysShape> digShape;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(digByDefault), boolAsByte: true);
-				SerializeField(s, nameof(digOffset));
-				SerializeField(s, nameof(digScale));
-				SerializeField(s, nameof(useActorAngle), boolAsByte: true);
-				SerializeField(s, nameof(sendEventToSelf), boolAsByte: true);
-				SerializeField(s, nameof(staticEnabled));
-				SerializeField(s, nameof(staticDuration));
-				SerializeField(s, nameof(digShape));
+				digByDefault = s.Serialize<bool>(digByDefault, name: "digByDefault", options: CSerializerObject.Options.BoolAsByte);
+				digOffset = s.SerializeObject<Vec2d>(digOffset, name: "digOffset");
+				digScale = s.SerializeObject<Vec2d>(digScale, name: "digScale");
+				useActorAngle = s.Serialize<bool>(useActorAngle, name: "useActorAngle", options: CSerializerObject.Options.BoolAsByte);
+				sendEventToSelf = s.Serialize<bool>(sendEventToSelf, name: "sendEventToSelf", options: CSerializerObject.Options.BoolAsByte);
+				staticEnabled = s.Serialize<bool>(staticEnabled, name: "staticEnabled");
+				staticDuration = s.Serialize<float>(staticDuration, name: "staticDuration");
+				digShape = s.SerializeObject<Generic<PhysShape>>(digShape, name: "digShape");
 			} else {
-				SerializeField(s, nameof(digByDefault));
-				SerializeField(s, nameof(digOffset));
-				SerializeField(s, nameof(digScale));
-				SerializeField(s, nameof(useActorAngle));
-				SerializeField(s, nameof(sendEventToSelf));
-				SerializeField(s, nameof(staticEnabled));
-				SerializeField(s, nameof(staticDuration));
-				SerializeField(s, nameof(digShape));
+				digByDefault = s.Serialize<bool>(digByDefault, name: "digByDefault");
+				digOffset = s.SerializeObject<Vec2d>(digOffset, name: "digOffset");
+				digScale = s.SerializeObject<Vec2d>(digScale, name: "digScale");
+				useActorAngle = s.Serialize<bool>(useActorAngle, name: "useActorAngle");
+				sendEventToSelf = s.Serialize<bool>(sendEventToSelf, name: "sendEventToSelf");
+				staticEnabled = s.Serialize<bool>(staticEnabled, name: "staticEnabled");
+				staticDuration = s.Serialize<float>(staticDuration, name: "staticDuration");
+				digShape = s.SerializeObject<Generic<PhysShape>>(digShape, name: "digShape");
 			}
 		}
 		public override uint? ClassCRC => 0x39406FA0;

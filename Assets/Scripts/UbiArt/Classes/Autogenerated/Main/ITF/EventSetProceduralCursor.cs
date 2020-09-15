@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class EventSetProceduralCursor : Event {
-		[Serialize("proceduralCursor")] public float proceduralCursor;
-		[Serialize("animName"        )] public StringID animName;
-		[Serialize("isAdditive"      )] public bool isAdditive;
+		public float proceduralCursor;
+		public StringID animName;
+		public bool isAdditive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(proceduralCursor));
-			SerializeField(s, nameof(animName));
-			SerializeField(s, nameof(isAdditive));
+			proceduralCursor = s.Serialize<float>(proceduralCursor, name: "proceduralCursor");
+			animName = s.SerializeObject<StringID>(animName, name: "animName");
+			isAdditive = s.Serialize<bool>(isAdditive, name: "isAdditive");
 		}
 		public override uint? ClassCRC => 0x884E9D1F;
 	}

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PloufComponent_Template : ActorComponent_Template {
-		[Serialize("waterTime"      )] public float waterTime;
-		[Serialize("ploufAlteration")] public float ploufAlteration;
+		public float waterTime;
+		public float ploufAlteration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(waterTime));
-			SerializeField(s, nameof(ploufAlteration));
+			waterTime = s.Serialize<float>(waterTime, name: "waterTime");
+			ploufAlteration = s.Serialize<float>(ploufAlteration, name: "ploufAlteration");
 		}
 		public override uint? ClassCRC => 0xF60E18A8;
 	}

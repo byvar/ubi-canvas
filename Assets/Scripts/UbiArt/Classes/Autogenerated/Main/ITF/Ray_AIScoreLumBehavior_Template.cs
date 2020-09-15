@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIScoreLumBehavior_Template : TemplateAIBehavior {
-		[Serialize("maxTimeBeforeExplosion_RedMode")] public float maxTimeBeforeExplosion_RedMode;
-		[Serialize("yellowLumValue"                )] public uint yellowLumValue;
-		[Serialize("redLumValue"                   )] public uint redLumValue;
-		[Serialize("lumKingValue"                  )] public uint lumKingValue;
-		[Serialize("startKingMusicEvent"           )] public Generic<Event> startKingMusicEvent;
-		[Serialize("stopKingMusicEvent"            )] public Generic<Event> stopKingMusicEvent;
+		public float maxTimeBeforeExplosion_RedMode;
+		public uint yellowLumValue;
+		public uint redLumValue;
+		public uint lumKingValue;
+		public Generic<Event> startKingMusicEvent;
+		public Generic<Event> stopKingMusicEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(maxTimeBeforeExplosion_RedMode));
-			SerializeField(s, nameof(yellowLumValue));
-			SerializeField(s, nameof(redLumValue));
-			SerializeField(s, nameof(lumKingValue));
-			SerializeField(s, nameof(startKingMusicEvent));
-			SerializeField(s, nameof(stopKingMusicEvent));
+			maxTimeBeforeExplosion_RedMode = s.Serialize<float>(maxTimeBeforeExplosion_RedMode, name: "maxTimeBeforeExplosion_RedMode");
+			yellowLumValue = s.Serialize<uint>(yellowLumValue, name: "yellowLumValue");
+			redLumValue = s.Serialize<uint>(redLumValue, name: "redLumValue");
+			lumKingValue = s.Serialize<uint>(lumKingValue, name: "lumKingValue");
+			startKingMusicEvent = s.SerializeObject<Generic<Event>>(startKingMusicEvent, name: "startKingMusicEvent");
+			stopKingMusicEvent = s.SerializeObject<Generic<Event>>(stopKingMusicEvent, name: "stopKingMusicEvent");
 		}
 		public override uint? ClassCRC => 0xA74D72A1;
 	}

@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_LightPuzzleComponent : CSerializable {
-		[Serialize("drawDebug"      )] public bool drawDebug;
-		[Serialize("ordered"        )] public bool ordered;
-		[Serialize("failCooldown"   )] public float failCooldown;
-		[Serialize("inRangeCoolDown")] public float inRangeCoolDown;
-		[Serialize("failEvent"      )] public Placeholder failEvent;
-		[Serialize("isSolved"       )] public int isSolved;
+		public bool drawDebug;
+		public bool ordered;
+		public float failCooldown;
+		public float inRangeCoolDown;
+		public Placeholder failEvent;
+		public int isSolved;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(drawDebug), boolAsByte: true);
-			SerializeField(s, nameof(ordered), boolAsByte: true);
-			SerializeField(s, nameof(failCooldown));
-			SerializeField(s, nameof(inRangeCoolDown));
-			SerializeField(s, nameof(failEvent));
+			drawDebug = s.Serialize<bool>(drawDebug, name: "drawDebug", options: CSerializerObject.Options.BoolAsByte);
+			ordered = s.Serialize<bool>(ordered, name: "ordered", options: CSerializerObject.Options.BoolAsByte);
+			failCooldown = s.Serialize<float>(failCooldown, name: "failCooldown");
+			inRangeCoolDown = s.Serialize<float>(inRangeCoolDown, name: "inRangeCoolDown");
+			failEvent = s.SerializeObject<Placeholder>(failEvent, name: "failEvent");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(isSolved));
+				isSolved = s.Serialize<int>(isSolved, name: "isSolved");
 			}
 		}
 		public override uint? ClassCRC => 0x1D019BC4;

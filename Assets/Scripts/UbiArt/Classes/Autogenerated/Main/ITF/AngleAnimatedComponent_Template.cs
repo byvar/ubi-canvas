@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AngleAnimatedComponent_Template : ActorComponent_Template {
-		[Serialize("CounterClockWise")] public bool CounterClockWise;
-		[Serialize("AnimRotationName")] public StringID AnimRotationName;
-		[Serialize("bool__0"         )] public bool bool__0;
+		public bool CounterClockWise;
+		public StringID AnimRotationName;
+		public bool bool__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(bool__0));
+				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 			} else {
-				SerializeField(s, nameof(CounterClockWise));
-				SerializeField(s, nameof(AnimRotationName));
+				CounterClockWise = s.Serialize<bool>(CounterClockWise, name: "CounterClockWise");
+				AnimRotationName = s.SerializeObject<StringID>(AnimRotationName, name: "AnimRotationName");
 			}
 		}
 		public override uint? ClassCRC => 0x132C748D;

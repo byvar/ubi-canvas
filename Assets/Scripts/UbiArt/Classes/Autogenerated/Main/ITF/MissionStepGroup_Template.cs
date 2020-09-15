@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class MissionStepGroup_Template : CSerializable {
-		[Serialize("concurrent")] public bool concurrent;
-		[Serialize("operator"  )] public Enum_operator _operator;
-		[Serialize("count"     )] public uint count;
+		public bool concurrent;
+		public Enum_operator _operator;
+		public uint count;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(concurrent), boolAsByte: true);
-			SerializeField(s, nameof(_operator));
-			SerializeField(s, nameof(count));
+			concurrent = s.Serialize<bool>(concurrent, name: "concurrent", options: CSerializerObject.Options.BoolAsByte);
+			_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
+			count = s.Serialize<uint>(count, name: "count");
 		}
 		public enum Enum_operator {
 			[Serialize("Value_0")] Value_0 = 0,

@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class BoxInterpolatorComponent : InterpolatorComponent {
-		[Serialize("innerBox")] public AABB innerBox;
-		[Serialize("outerBox")] public AABB outerBox;
+		public AABB innerBox;
+		public AABB outerBox;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(innerBox));
-				SerializeField(s, nameof(outerBox));
+				innerBox = s.SerializeObject<AABB>(innerBox, name: "innerBox");
+				outerBox = s.SerializeObject<AABB>(outerBox, name: "outerBox");
 			}
 		}
 		public override uint? ClassCRC => 0xF51360DA;

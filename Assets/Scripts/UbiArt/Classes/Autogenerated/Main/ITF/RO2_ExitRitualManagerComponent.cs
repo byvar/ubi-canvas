@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ExitRitualManagerComponent : ActorComponent {
-		[Serialize("ritualType"    )] public RitualType ritualType;
-		[Serialize("canBeClosed"   )] public bool canBeClosed;
-		[Serialize("canDisplayTuto")] public bool canDisplayTuto;
+		public RitualType ritualType;
+		public bool canBeClosed;
+		public bool canDisplayTuto;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(ritualType));
-					SerializeField(s, nameof(canBeClosed), boolAsByte: true);
-					SerializeField(s, nameof(canDisplayTuto), boolAsByte: true);
+					ritualType = s.Serialize<RitualType>(ritualType, name: "ritualType");
+					canBeClosed = s.Serialize<bool>(canBeClosed, name: "canBeClosed", options: CSerializerObject.Options.BoolAsByte);
+					canDisplayTuto = s.Serialize<bool>(canDisplayTuto, name: "canDisplayTuto", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(ritualType));
-					SerializeField(s, nameof(canBeClosed));
-					SerializeField(s, nameof(canDisplayTuto));
+					ritualType = s.Serialize<RitualType>(ritualType, name: "ritualType");
+					canBeClosed = s.Serialize<bool>(canBeClosed, name: "canBeClosed");
+					canDisplayTuto = s.Serialize<bool>(canDisplayTuto, name: "canDisplayTuto");
 				}
 			}
 		}

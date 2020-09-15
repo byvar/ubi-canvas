@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CrankComponent_Template : ActorComponent_Template {
-		[Serialize("textPath"          )] public Path textPath;
-		[Serialize("tvoffTextPath"     )] public Path tvoffTextPath;
-		[Serialize("registerToCamera"  )] public bool registerToCamera;
-		[Serialize("hideTvoffTutoAngle")] public float hideTvoffTutoAngle;
+		public Path textPath;
+		public Path tvoffTextPath;
+		public bool registerToCamera;
+		public float hideTvoffTutoAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(textPath));
-				SerializeField(s, nameof(tvoffTextPath));
-				SerializeField(s, nameof(registerToCamera));
-				SerializeField(s, nameof(hideTvoffTutoAngle));
+				textPath = s.SerializeObject<Path>(textPath, name: "textPath");
+				tvoffTextPath = s.SerializeObject<Path>(tvoffTextPath, name: "tvoffTextPath");
+				registerToCamera = s.Serialize<bool>(registerToCamera, name: "registerToCamera");
+				hideTvoffTutoAngle = s.Serialize<float>(hideTvoffTutoAngle, name: "hideTvoffTutoAngle");
 			} else {
-				SerializeField(s, nameof(textPath));
-				SerializeField(s, nameof(tvoffTextPath));
-				SerializeField(s, nameof(registerToCamera));
+				textPath = s.SerializeObject<Path>(textPath, name: "textPath");
+				tvoffTextPath = s.SerializeObject<Path>(tvoffTextPath, name: "tvoffTextPath");
+				registerToCamera = s.Serialize<bool>(registerToCamera, name: "registerToCamera");
 			}
 		}
 		public override uint? ClassCRC => 0xC33A43A1;

@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_ColorSettingParam : CSerializable {
-		[Serialize("use"            )] public bool use;
-		[Serialize("saturation"     )] public float saturation;
-		[Serialize("contrast"       )] public float contrast;
-		[Serialize("contrastScale"  )] public float contrastScale;
-		[Serialize("bright"         )] public float bright;
-		[Serialize("colorCorrection")] public Color colorCorrection;
+		public bool use;
+		public float saturation;
+		public float contrast;
+		public float contrastScale;
+		public float bright;
+		public Color colorCorrection;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(use), boolAsByte: true);
+				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(use));
+				use = s.Serialize<bool>(use, name: "use");
 			}
-			SerializeField(s, nameof(saturation));
-			SerializeField(s, nameof(contrast));
-			SerializeField(s, nameof(contrastScale));
-			SerializeField(s, nameof(bright));
-			SerializeField(s, nameof(colorCorrection));
+			saturation = s.Serialize<float>(saturation, name: "saturation");
+			contrast = s.Serialize<float>(contrast, name: "contrast");
+			contrastScale = s.Serialize<float>(contrastScale, name: "contrastScale");
+			bright = s.Serialize<float>(bright, name: "bright");
+			colorCorrection = s.SerializeObject<Color>(colorCorrection, name: "colorCorrection");
 		}
 	}
 }

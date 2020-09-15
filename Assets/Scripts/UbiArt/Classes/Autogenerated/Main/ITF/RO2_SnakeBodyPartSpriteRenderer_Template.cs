@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeBodyPartSpriteRenderer_Template : RO2_SnakeBodyPartRenderer_Template {
-		[Serialize("anim"         )] public AnimationAtlas anim;
-		[Serialize("drawAABB"     )] public AABB drawAABB;
-		[Serialize("color"        )] public Color color;
-		[Serialize("polyline"     )] public Placeholder polyline;
-		[Serialize("otherPolyline")] public Placeholder otherPolyline;
+		public AnimationAtlas anim;
+		public AABB drawAABB;
+		public Color color;
+		public Placeholder polyline;
+		public Placeholder otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(drawAABB));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(polyline));
-				SerializeField(s, nameof(otherPolyline));
+				anim = s.SerializeObject<AnimationAtlas>(anim, name: "anim");
+				drawAABB = s.SerializeObject<AABB>(drawAABB, name: "drawAABB");
+				color = s.SerializeObject<Color>(color, name: "color");
+				polyline = s.SerializeObject<Placeholder>(polyline, name: "polyline");
+				otherPolyline = s.SerializeObject<Placeholder>(otherPolyline, name: "otherPolyline");
 			} else {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(drawAABB));
-				SerializeField(s, nameof(color));
+				anim = s.SerializeObject<AnimationAtlas>(anim, name: "anim");
+				drawAABB = s.SerializeObject<AABB>(drawAABB, name: "drawAABB");
+				color = s.SerializeObject<Color>(color, name: "color");
 			}
 		}
 		public override uint? ClassCRC => 0x56D9502D;

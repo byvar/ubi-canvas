@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class PrisonerData : CSerializable {
-		[Serialize("path"      )] public Path path;
-		[Serialize("isFree"    )] public bool isFree;
-		[Serialize("indexType" )] public Index indexType;
-		[Serialize("visualType")] public Prisoner visualType;
+		public Path path;
+		public bool isFree;
+		public Index indexType;
+		public Prisoner visualType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(path));
-			SerializeField(s, nameof(isFree));
-			SerializeField(s, nameof(indexType));
-			SerializeField(s, nameof(visualType));
+			path = s.SerializeObject<Path>(path, name: "path");
+			isFree = s.Serialize<bool>(isFree, name: "isFree");
+			indexType = s.Serialize<Index>(indexType, name: "indexType");
+			visualType = s.Serialize<Prisoner>(visualType, name: "visualType");
 		}
 		public enum Index {
 			[Serialize("Index_Map1")] Map1 = 0,

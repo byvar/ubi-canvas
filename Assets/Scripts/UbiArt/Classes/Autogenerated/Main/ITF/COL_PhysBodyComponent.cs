@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_PhysBodyComponent : CSerializable {
-		[Serialize("isStatic"         )] public int isStatic;
-		[Serialize("collisionGroup"   )] public Enum_collisionGroup collisionGroup;
-		[Serialize("weight"           )] public float weight;
-		[Serialize("gravity"          )] public Vec2d gravity;
-		[Serialize("gravityMultiplier")] public float gravityMultiplier;
+		public int isStatic;
+		public Enum_collisionGroup collisionGroup;
+		public float weight;
+		public Vec2d gravity;
+		public float gravityMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(isStatic));
-			SerializeField(s, nameof(collisionGroup));
-			SerializeField(s, nameof(weight));
-			SerializeField(s, nameof(gravity));
-			SerializeField(s, nameof(gravityMultiplier));
+			isStatic = s.Serialize<int>(isStatic, name: "isStatic");
+			collisionGroup = s.Serialize<Enum_collisionGroup>(collisionGroup, name: "collisionGroup");
+			weight = s.Serialize<float>(weight, name: "weight");
+			gravity = s.SerializeObject<Vec2d>(gravity, name: "gravity");
+			gravityMultiplier = s.Serialize<float>(gravityMultiplier, name: "gravityMultiplier");
 		}
 		public enum Enum_collisionGroup {
 			[Serialize("Value_1" )] Value_1 = 1,

@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_38759_sub_A04790 : CSerializable {
-		[Serialize("type")] public Enum_type type;
-		[Serialize("duration")] public float duration;
-		[Serialize("additionalSpeed")] public Vec2d additionalSpeed;
-		[Serialize("notifyPlayerDelay")] public float notifyPlayerDelay;
+		public Enum_type type;
+		public float duration;
+		public Vec2d additionalSpeed;
+		public float notifyPlayerDelay;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(duration));
-			SerializeField(s, nameof(additionalSpeed));
-			SerializeField(s, nameof(notifyPlayerDelay));
+			type = s.Serialize<Enum_type>(type, name: "type");
+			duration = s.Serialize<float>(duration, name: "duration");
+			additionalSpeed = s.SerializeObject<Vec2d>(additionalSpeed, name: "additionalSpeed");
+			notifyPlayerDelay = s.Serialize<float>(notifyPlayerDelay, name: "notifyPlayerDelay");
 		}
 		public enum Enum_type {
 			[Serialize("Value_0")] Value_0 = 0,

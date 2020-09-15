@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_Pad2TouchInput : CSerializable {
-		[Serialize("InputType"     )] public Enum_InputType InputType;
-		[Serialize("forcePosition" )] public bool forcePosition;
-		[Serialize("position"      )] public Vec2d position;
-		[Serialize("offSet"        )] public Vec2d offSet;
-		[Serialize("swipeRandomDir")] public bool swipeRandomDir;
+		public Enum_InputType InputType;
+		public bool forcePosition;
+		public Vec2d position;
+		public Vec2d offSet;
+		public bool swipeRandomDir;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(InputType));
-			SerializeField(s, nameof(forcePosition));
-			SerializeField(s, nameof(position));
-			SerializeField(s, nameof(offSet));
+			InputType = s.Serialize<Enum_InputType>(InputType, name: "InputType");
+			forcePosition = s.Serialize<bool>(forcePosition, name: "forcePosition");
+			position = s.SerializeObject<Vec2d>(position, name: "position");
+			offSet = s.SerializeObject<Vec2d>(offSet, name: "offSet");
 			if (s.HasFlags(SerializeFlags.Flags1)) {
-				SerializeField(s, nameof(swipeRandomDir));
-				SerializeField(s, nameof(swipeRandomDir));
+				swipeRandomDir = s.Serialize<bool>(swipeRandomDir, name: "swipeRandomDir");
+				swipeRandomDir = s.Serialize<bool>(swipeRandomDir, name: "swipeRandomDir");
 			}
 		}
 		public enum Enum_InputType {

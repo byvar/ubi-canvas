@@ -4,14 +4,14 @@ namespace UbiArt.ITF {
 	public partial class RO2_BTActionThrowObject_Tools : CSerializable {
 		[Games(GameFlags.RL | GameFlags.RA)]
 		public partial class LaunchData : CSerializable {
-			[Serialize("angle"          )] public Angle angle;
-			[Serialize("force"          )] public float force;
-			[Serialize("gravityModifier")] public float gravityModifier;
+			public Angle angle;
+			public float force;
+			public float gravityModifier;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(angle));
-				SerializeField(s, nameof(force));
-				SerializeField(s, nameof(gravityModifier));
+				angle = s.SerializeObject<Angle>(angle, name: "angle");
+				force = s.Serialize<float>(force, name: "force");
+				gravityModifier = s.Serialize<float>(gravityModifier, name: "gravityModifier");
 			}
 		}
 	}

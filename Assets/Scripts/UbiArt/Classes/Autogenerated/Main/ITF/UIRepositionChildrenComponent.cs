@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class UIRepositionChildrenComponent : UIItem {
-		[Serialize("spaceBetweenChildren")] public int spaceBetweenChildren;
-		[Serialize("verticalOffset"      )] public int verticalOffset;
+		public int spaceBetweenChildren;
+		public int verticalOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(spaceBetweenChildren));
-			SerializeField(s, nameof(verticalOffset));
+			spaceBetweenChildren = s.Serialize<int>(spaceBetweenChildren, name: "spaceBetweenChildren");
+			verticalOffset = s.Serialize<int>(verticalOffset, name: "verticalOffset");
 		}
 		public override uint? ClassCRC => 0xB4A5EA86;
 	}

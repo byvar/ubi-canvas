@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class FeedbackFXManager_Template : TemplateObj {
-		[Serialize("soundDescriptors")] public CList<SoundDescriptor_Template> soundDescriptors;
-		[Serialize("FxDescriptors"   )] public CList<FxDescriptor_Template> FxDescriptors;
-		[Serialize("actors"          )] public CMap<StringID, Target> actors;
-		[Serialize("busList"         )] public CList<FeedbackFXManager_Template.buses> busList;
+		public CList<SoundDescriptor_Template> soundDescriptors;
+		public CList<FxDescriptor_Template> FxDescriptors;
+		public CMap<StringID, Target> actors;
+		public CList<FeedbackFXManager_Template.buses> busList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(soundDescriptors));
-				SerializeField(s, nameof(FxDescriptors));
+				soundDescriptors = s.SerializeObject<CList<SoundDescriptor_Template>>(soundDescriptors, name: "soundDescriptors");
+				FxDescriptors = s.SerializeObject<CList<FxDescriptor_Template>>(FxDescriptors, name: "FxDescriptors");
 			} else {
-				SerializeField(s, nameof(soundDescriptors));
-				SerializeField(s, nameof(FxDescriptors));
-				SerializeField(s, nameof(actors));
-				SerializeField(s, nameof(busList));
+				soundDescriptors = s.SerializeObject<CList<SoundDescriptor_Template>>(soundDescriptors, name: "soundDescriptors");
+				FxDescriptors = s.SerializeObject<CList<FxDescriptor_Template>>(FxDescriptors, name: "FxDescriptors");
+				actors = s.SerializeObject<CMap<StringID, Target>>(actors, name: "actors");
+				busList = s.SerializeObject<CList<FeedbackFXManager_Template.buses>>(busList, name: "busList");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class buses : CSerializable {
-			[Serialize("actorType")] public StringID actorType;
-			[Serialize("bus"      )] public StringID bus;
+			public StringID actorType;
+			public StringID bus;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(actorType));
-				SerializeField(s, nameof(bus));
+				actorType = s.SerializeObject<StringID>(actorType, name: "actorType");
+				bus = s.SerializeObject<StringID>(bus, name: "bus");
 			}
 		}
 		public override uint? ClassCRC => 0x0918E8D3;

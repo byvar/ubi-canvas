@@ -3,17 +3,17 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ShooterCameraComponent : BaseCameraComponent {
-		[Serialize("Pos"            )] public Vec3d Pos;
-		[Serialize("useInitModifier")] public bool useInitModifier;
-		[Serialize("initModifier"   )] public Ray_ShooterCameraModifierComponent.ShooterCameraModifier initModifier;
+		public Vec3d Pos;
+		public bool useInitModifier;
+		public Ray_ShooterCameraModifierComponent.ShooterCameraModifier initModifier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(Pos));
+				Pos = s.SerializeObject<Vec3d>(Pos, name: "Pos");
 			}
-			SerializeField(s, nameof(useInitModifier));
+			useInitModifier = s.Serialize<bool>(useInitModifier, name: "useInitModifier");
 			if (useInitModifier) {
-				SerializeField(s, nameof(initModifier));
+				initModifier = s.SerializeObject<Ray_ShooterCameraModifierComponent.ShooterCameraModifier>(initModifier, name: "initModifier");
 			}
 		}
 		public override uint? ClassCRC => 0x69A494EA;

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Mesh3dConfig : CSerializable {
-		[Serialize("texureTileSize")] public float texureTileSize;
-		[Serialize("random"        )] public bool random;
-		[Serialize("mesh3dList"    )] public CList<Mesh3dData> mesh3dList;
+		public float texureTileSize;
+		public bool random;
+		public CList<Mesh3dData> mesh3dList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(texureTileSize));
-			SerializeField(s, nameof(random));
-			SerializeField(s, nameof(mesh3dList));
+			texureTileSize = s.Serialize<float>(texureTileSize, name: "texureTileSize");
+			random = s.Serialize<bool>(random, name: "random");
+			mesh3dList = s.SerializeObject<CList<Mesh3dData>>(mesh3dList, name: "mesh3dList");
 		}
 	}
 }

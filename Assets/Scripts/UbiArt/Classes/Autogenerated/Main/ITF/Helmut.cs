@@ -3,59 +3,59 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class Helmut : Npc {
-		[Serialize("bool__0"           )] public bool bool__0_;
-		[Serialize("bool__1"           )] public bool bool__1;
-		[Serialize("Enum_VH_0__2"      )] public Enum_VH_0_ Enum_VH_0__2;
-		[Serialize("bool__3"           )] public bool bool__3;
-		[Serialize("float__4"          )] public float float__4;
-		[Serialize("float__5"          )] public float float__5;
-		[Serialize("float__6"          )] public float float__6;
-		[Serialize("float__7"          )] public float float__7;
-		[Serialize("float__8"          )] public float float__8;
-		[Serialize("Path__9"           )] public Path Path__9;
-		[Serialize("bool__10"          )] public bool bool__10;
-		[Serialize("bool__11"          )] public bool bool__11;
-		[Serialize("float__12"         )] public float float__12;
-		[Serialize("StringID__13"      )] public StringID StringID__13;
-		[Serialize("Generic<Event>__14")] public Generic<Event> Generic_Event__14;
-		[Serialize("Generic<Event>__15")] public Generic<Event> Generic_Event__15;
-		[Serialize("Generic<Event>__16")] public Generic<Event> Generic_Event__16;
-		[Serialize("Generic<Event>__17")] public Generic<Event> Generic_Event__17;
-		[Serialize("Generic<Event>__18")] public Generic<Event> Generic_Event__18;
-		[Serialize("Generic<Event>__19")] public Generic<Event> Generic_Event__19;
-		[Serialize("Generic<Event>__20")] public Generic<Event> Generic_Event__20;
-		[Serialize("Generic<Event>__21")] public Generic<Event> Generic_Event__21;
-		[Serialize("Generic<Event>__22")] public Generic<Event> Generic_Event__22;
-		[Serialize("Generic<Event>__23")] public Generic<Event> Generic_Event__23;
+		public bool bool__0_;
+		public bool bool__1;
+		public Enum_VH_0_ Enum_VH_0__2;
+		public bool bool__3;
+		public float float__4;
+		public float float__5;
+		public float float__6;
+		public float float__7;
+		public float float__8;
+		public Path Path__9;
+		public bool bool__10;
+		public bool bool__11;
+		public float float__12;
+		public StringID StringID__13;
+		public Generic<Event> Generic_Event__14;
+		public Generic<Event> Generic_Event__15;
+		public Generic<Event> Generic_Event__16;
+		public Generic<Event> Generic_Event__17;
+		public Generic<Event> Generic_Event__18;
+		public Generic<Event> Generic_Event__19;
+		public Generic<Event> Generic_Event__20;
+		public Generic<Event> Generic_Event__21;
+		public Generic<Event> Generic_Event__22;
+		public Generic<Event> Generic_Event__23;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(bool__1));
-				SerializeField(s, nameof(Enum_VH_0__2));
-				SerializeField(s, nameof(bool__3));
-				SerializeField(s, nameof(float__4));
-				SerializeField(s, nameof(float__5));
-				SerializeField(s, nameof(float__6));
-				SerializeField(s, nameof(float__7));
-				SerializeField(s, nameof(float__8));
-				SerializeField(s, nameof(Path__9));
-				SerializeField(s, nameof(bool__10));
-				SerializeField(s, nameof(bool__11));
-				SerializeField(s, nameof(float__12));
-				SerializeField(s, nameof(StringID__13));
-				SerializeField(s, nameof(Generic_Event__14));
-				SerializeField(s, nameof(Generic_Event__15));
-				SerializeField(s, nameof(Generic_Event__16));
-				SerializeField(s, nameof(Generic_Event__17));
-				SerializeField(s, nameof(Generic_Event__18));
-				SerializeField(s, nameof(Generic_Event__19));
-				SerializeField(s, nameof(Generic_Event__20));
-				SerializeField(s, nameof(Generic_Event__21));
-				SerializeField(s, nameof(Generic_Event__22));
-				SerializeField(s, nameof(Generic_Event__23));
+				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
+				Enum_VH_0__2 = s.Serialize<Enum_VH_0_>(Enum_VH_0__2, name: "Enum_VH_0__2");
+				bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
+				float__4 = s.Serialize<float>(float__4, name: "float__4");
+				float__5 = s.Serialize<float>(float__5, name: "float__5");
+				float__6 = s.Serialize<float>(float__6, name: "float__6");
+				float__7 = s.Serialize<float>(float__7, name: "float__7");
+				float__8 = s.Serialize<float>(float__8, name: "float__8");
+				Path__9 = s.SerializeObject<Path>(Path__9, name: "Path__9");
+				bool__10 = s.Serialize<bool>(bool__10, name: "bool__10");
+				bool__11 = s.Serialize<bool>(bool__11, name: "bool__11");
+				float__12 = s.Serialize<float>(float__12, name: "float__12");
+				StringID__13 = s.SerializeObject<StringID>(StringID__13, name: "StringID__13");
+				Generic_Event__14 = s.SerializeObject<Generic<Event>>(Generic_Event__14, name: "Generic_Event__14");
+				Generic_Event__15 = s.SerializeObject<Generic<Event>>(Generic_Event__15, name: "Generic_Event__15");
+				Generic_Event__16 = s.SerializeObject<Generic<Event>>(Generic_Event__16, name: "Generic_Event__16");
+				Generic_Event__17 = s.SerializeObject<Generic<Event>>(Generic_Event__17, name: "Generic_Event__17");
+				Generic_Event__18 = s.SerializeObject<Generic<Event>>(Generic_Event__18, name: "Generic_Event__18");
+				Generic_Event__19 = s.SerializeObject<Generic<Event>>(Generic_Event__19, name: "Generic_Event__19");
+				Generic_Event__20 = s.SerializeObject<Generic<Event>>(Generic_Event__20, name: "Generic_Event__20");
+				Generic_Event__21 = s.SerializeObject<Generic<Event>>(Generic_Event__21, name: "Generic_Event__21");
+				Generic_Event__22 = s.SerializeObject<Generic<Event>>(Generic_Event__22, name: "Generic_Event__22");
+				Generic_Event__23 = s.SerializeObject<Generic<Event>>(Generic_Event__23, name: "Generic_Event__23");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(bool__0_));
+				bool__0_ = s.Serialize<bool>(bool__0_, name: "bool__0_");
 			}
 		}
 		public enum Enum_VH_0_ {

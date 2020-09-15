@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class RewardTrigger_Sum : RewardTrigger_Base {
-		[Serialize("typeToGet"         )] public StringID typeToGet;
-		[Serialize("amountToGet"       )] public uint amountToGet;
-		[Serialize("currentSessionOnly")] public bool currentSessionOnly;
-		[Serialize("strictlyEqual"     )] public bool strictlyEqual;
+		public StringID typeToGet;
+		public uint amountToGet;
+		public bool currentSessionOnly;
+		public bool strictlyEqual;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(typeToGet));
-			SerializeField(s, nameof(amountToGet));
-			SerializeField(s, nameof(currentSessionOnly));
-			SerializeField(s, nameof(strictlyEqual));
+			typeToGet = s.SerializeObject<StringID>(typeToGet, name: "typeToGet");
+			amountToGet = s.Serialize<uint>(amountToGet, name: "amountToGet");
+			currentSessionOnly = s.Serialize<bool>(currentSessionOnly, name: "currentSessionOnly");
+			strictlyEqual = s.Serialize<bool>(strictlyEqual, name: "strictlyEqual");
 		}
 		public override uint? ClassCRC => 0x9ED03AF7;
 	}

@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SimpleAIComponent_Template : RO2_AIComponent_Template {
-		[Serialize("genericBehavior"   )] public Generic<TemplateAIBehavior> genericBehavior;
-		[Serialize("receiveHitBehavior")] public Generic<AIReceiveHitBehavior_Template> receiveHitBehavior;
-		[Serialize("deathBehavior"     )] public Generic<TemplateAIBehavior> deathBehavior;
-		[Serialize("allowMultiHit"     )] public bool allowMultiHit;
+		public Generic<TemplateAIBehavior> genericBehavior;
+		public Generic<AIReceiveHitBehavior_Template> receiveHitBehavior;
+		public Generic<TemplateAIBehavior> deathBehavior;
+		public bool allowMultiHit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(genericBehavior));
-			SerializeField(s, nameof(receiveHitBehavior));
-			SerializeField(s, nameof(deathBehavior));
-			SerializeField(s, nameof(allowMultiHit));
+			genericBehavior = s.SerializeObject<Generic<TemplateAIBehavior>>(genericBehavior, name: "genericBehavior");
+			receiveHitBehavior = s.SerializeObject<Generic<AIReceiveHitBehavior_Template>>(receiveHitBehavior, name: "receiveHitBehavior");
+			deathBehavior = s.SerializeObject<Generic<TemplateAIBehavior>>(deathBehavior, name: "deathBehavior");
+			allowMultiHit = s.Serialize<bool>(allowMultiHit, name: "allowMultiHit");
 		}
 		public override uint? ClassCRC => 0x18121265;
 	}

@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicalBossComponent : ActorComponent {
-		[Serialize("bpm"                )] public float bpm;
-		[Serialize("triggerDistance"    )] public float triggerDistance;
-		[Serialize("volume"             )] public float volume;
-		[Serialize("fadeAfterCheckpoint")] public float fadeAfterCheckpoint;
-		[Serialize("currentNodeIndex"   )] public uint currentNodeIndex;
+		public float bpm;
+		public float triggerDistance;
+		public float volume;
+		public float fadeAfterCheckpoint;
+		public uint currentNodeIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(bpm));
-				SerializeField(s, nameof(triggerDistance));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(fadeAfterCheckpoint));
+				bpm = s.Serialize<float>(bpm, name: "bpm");
+				triggerDistance = s.Serialize<float>(triggerDistance, name: "triggerDistance");
+				volume = s.Serialize<float>(volume, name: "volume");
+				fadeAfterCheckpoint = s.Serialize<float>(fadeAfterCheckpoint, name: "fadeAfterCheckpoint");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(currentNodeIndex));
+				currentNodeIndex = s.Serialize<uint>(currentNodeIndex, name: "currentNodeIndex");
 			}
 		}
 		public override uint? ClassCRC => 0x0C488105;

@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class BoolEventList : CSerializable {
-		[Serialize("Keys")] public CList<BoolEventList.BoolEvent> Keys;
+		public CList<BoolEventList.BoolEvent> Keys;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Keys));
+			Keys = s.SerializeObject<CList<BoolEventList.BoolEvent>>(Keys, name: "Keys");
 		}
 		[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 		public partial class BoolEvent : CSerializable {
-			[Serialize("value")] public bool value;
-			[Serialize("Frame")] public int Frame;
+			public bool value;
+			public int Frame;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(value));
-				SerializeField(s, nameof(Frame));
+				value = s.Serialize<bool>(value, name: "value");
+				Frame = s.Serialize<int>(Frame, name: "Frame");
 			}
 		}
 	}

@@ -3,86 +3,86 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TweenComponent : ActorComponent {
-		[Serialize("trigOnCheckPoint"                       )] public bool trigOnCheckPoint;
-		[Serialize("instanceTemplate"                       )] public Nullable<TweenComponent_Template> instanceTemplate;
-		[Serialize("syncOffset"                             )] public float syncOffset;
-		[Serialize("skipInstructionSetSyncOffset"           )] public bool skipInstructionSetSyncOffset;
-		[Serialize("autoStart"                              )] public bool autoStart;
-		[Serialize("groupIndex"                             )] public uint groupIndex;
-		[Serialize("startSet"                               )] public StringID startSet;
-		[Serialize("instructionSets"                        )] public CList<TweenComponent.InstructionSet> instructionSets;
+		public bool trigOnCheckPoint;
+		public Nullable<TweenComponent_Template> instanceTemplate;
+		public float syncOffset;
+		public bool skipInstructionSetSyncOffset;
+		public bool autoStart;
+		public uint groupIndex;
+		public StringID startSet;
+		public CList<TweenComponent.InstructionSet> instructionSets;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(syncOffset));
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
 					} else {
-						SerializeField(s, nameof(startSet));
+						startSet = s.SerializeObject<StringID>(startSet, name: "startSet");
 					}
-					SerializeField(s, nameof(instructionSets));
+					instructionSets = s.SerializeObject<CList<TweenComponent.InstructionSet>>(instructionSets, name: "instructionSets");
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(trigOnCheckPoint));
+					trigOnCheckPoint = s.Serialize<bool>(trigOnCheckPoint, name: "trigOnCheckPoint");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(instanceTemplate));
-					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(skipInstructionSetSyncOffset), boolAsByte: true);
-					SerializeField(s, nameof(autoStart), boolAsByte: true);
-					SerializeField(s, nameof(groupIndex));
+					instanceTemplate = s.SerializeObject<Nullable<TweenComponent_Template>>(instanceTemplate, name: "instanceTemplate");
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+					skipInstructionSetSyncOffset = s.Serialize<bool>(skipInstructionSetSyncOffset, name: "skipInstructionSetSyncOffset", options: CSerializerObject.Options.BoolAsByte);
+					autoStart = s.Serialize<bool>(autoStart, name: "autoStart", options: CSerializerObject.Options.BoolAsByte);
+					groupIndex = s.Serialize<uint>(groupIndex, name: "groupIndex");
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
 					} else {
-						SerializeField(s, nameof(startSet));
+						startSet = s.SerializeObject<StringID>(startSet, name: "startSet");
 					}
-					SerializeField(s, nameof(instructionSets));
+					instructionSets = s.SerializeObject<CList<TweenComponent.InstructionSet>>(instructionSets, name: "instructionSets");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(trigOnCheckPoint), boolAsByte: true);
+					trigOnCheckPoint = s.Serialize<bool>(trigOnCheckPoint, name: "trigOnCheckPoint", options: CSerializerObject.Options.BoolAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(skipInstructionSetSyncOffset), boolAsByte: true);
-					SerializeField(s, nameof(autoStart), boolAsByte: true);
-					SerializeField(s, nameof(groupIndex));
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+					skipInstructionSetSyncOffset = s.Serialize<bool>(skipInstructionSetSyncOffset, name: "skipInstructionSetSyncOffset", options: CSerializerObject.Options.BoolAsByte);
+					autoStart = s.Serialize<bool>(autoStart, name: "autoStart", options: CSerializerObject.Options.BoolAsByte);
+					groupIndex = s.Serialize<uint>(groupIndex, name: "groupIndex");
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
 					} else {
-						SerializeField(s, nameof(startSet));
+						startSet = s.SerializeObject<StringID>(startSet, name: "startSet");
 					}
-					SerializeField(s, nameof(instructionSets));
+					instructionSets = s.SerializeObject<CList<TweenComponent.InstructionSet>>(instructionSets, name: "instructionSets");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(trigOnCheckPoint));
+					trigOnCheckPoint = s.Serialize<bool>(trigOnCheckPoint, name: "trigOnCheckPoint");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(instanceTemplate));
-					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(skipInstructionSetSyncOffset));
-					SerializeField(s, nameof(autoStart));
-					SerializeField(s, nameof(groupIndex));
+					instanceTemplate = s.SerializeObject<Nullable<TweenComponent_Template>>(instanceTemplate, name: "instanceTemplate");
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+					skipInstructionSetSyncOffset = s.Serialize<bool>(skipInstructionSetSyncOffset, name: "skipInstructionSetSyncOffset");
+					autoStart = s.Serialize<bool>(autoStart, name: "autoStart");
+					groupIndex = s.Serialize<uint>(groupIndex, name: "groupIndex");
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						SerializeFieldAsChoiceList(s, nameof(startSet), "- None -");
 					} else {
-						SerializeField(s, nameof(startSet));
+						startSet = s.SerializeObject<StringID>(startSet, name: "startSet");
 					}
-					SerializeField(s, nameof(instructionSets));
+					instructionSets = s.SerializeObject<CList<TweenComponent.InstructionSet>>(instructionSets, name: "instructionSets");
 				}
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class InstructionSet : CSerializable {
-			[Serialize("name"        )] public StringID name;
-			[Serialize("instructions")] public CArray<Generic<TweenInstruction>> instructions;
+			public StringID name;
+			public CArray<Generic<TweenInstruction>> instructions;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(instructions));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				instructions = s.SerializeObject<CArray<Generic<TweenInstruction>>>(instructions, name: "instructions");
 			}
 		}
 		public override uint? ClassCRC => 0xB5A9E174;

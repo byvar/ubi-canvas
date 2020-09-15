@@ -4,24 +4,24 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_BattleCharacterSpawnSetupComponent : CSerializable {
 		[Description("Spawn index")]
-		[Serialize("spawnIndex"             )] public int spawnIndex;
-		[Serialize("spawnFlipped"           )] public bool spawnFlipped;
+		public int spawnIndex;
+		public bool spawnFlipped;
 		[Description("The team of the associated character")]
-		[Serialize("teamType"               )] public Enum_teamType teamType;
+		public Enum_teamType teamType;
 		[Description("ObjectId of the associated spotlight used for action/target selection")]
-		[Serialize("spotlightID"            )] public Placeholder spotlightID;
+		public Placeholder spotlightID;
 		[Description("ObjectId of the associated platform intro sequence")]
-		[Serialize("platformIntroSequenceID")] public Placeholder platformIntroSequenceID;
+		public Placeholder platformIntroSequenceID;
 		[Description("ObjectId of the associated platform death sequence")]
-		[Serialize("platformDeathSequenceID")] public Placeholder platformDeathSequenceID;
+		public Placeholder platformDeathSequenceID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(spawnIndex));
-			SerializeField(s, nameof(spawnFlipped), boolAsByte: true);
-			SerializeField(s, nameof(teamType));
-			SerializeField(s, nameof(spotlightID));
-			SerializeField(s, nameof(platformIntroSequenceID));
-			SerializeField(s, nameof(platformDeathSequenceID));
+			spawnIndex = s.Serialize<int>(spawnIndex, name: "spawnIndex");
+			spawnFlipped = s.Serialize<bool>(spawnFlipped, name: "spawnFlipped", options: CSerializerObject.Options.BoolAsByte);
+			teamType = s.Serialize<Enum_teamType>(teamType, name: "teamType");
+			spotlightID = s.SerializeObject<Placeholder>(spotlightID, name: "spotlightID");
+			platformIntroSequenceID = s.SerializeObject<Placeholder>(platformIntroSequenceID, name: "platformIntroSequenceID");
+			platformDeathSequenceID = s.SerializeObject<Placeholder>(platformDeathSequenceID, name: "platformDeathSequenceID");
 		}
 		public enum Enum_teamType {
 			[Serialize("Value_0")] Value_0 = 0,

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_DarkArenaDoorComponent_Template : Ray_DarktoonTrapHoleComponent_Template {
-		[Serialize("hitAnim" )] public StringID hitAnim;
-		[Serialize("idleAnim")] public StringID idleAnim;
+		public StringID hitAnim;
+		public StringID idleAnim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hitAnim));
-			SerializeField(s, nameof(idleAnim));
+			hitAnim = s.SerializeObject<StringID>(hitAnim, name: "hitAnim");
+			idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 		}
 		public override uint? ClassCRC => 0x1B483F47;
 	}

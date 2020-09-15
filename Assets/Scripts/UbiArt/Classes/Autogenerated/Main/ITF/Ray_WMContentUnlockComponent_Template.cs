@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_WMContentUnlockComponent_Template : CSerializable {
-		[Serialize("fairyLocId"     )] public LocalisationId fairyLocId;
-		[Serialize("chestLocId"     )] public LocalisationId chestLocId;
-		[Serialize("costumeLocId"   )] public LocalisationId costumeLocId;
-		[Serialize("deadLandLocId"  )] public LocalisationId deadLandLocId;
-		[Serialize("bossJungleLocId")] public LocalisationId bossJungleLocId;
-		[Serialize("bossMusicLocId" )] public LocalisationId bossMusicLocId;
-		[Serialize("bossFoodLocId"  )] public LocalisationId bossFoodLocId;
-		[Serialize("bossOceanLocId" )] public LocalisationId bossOceanLocId;
-		[Serialize("animSize"       )] public Vec2d animSize;
-		[Serialize("iconPath"       )] public Path iconPath;
-		[Serialize("iconPoint"      )] public StringID iconPoint;
-		[Serialize("iconAnimSize"   )] public Vec2d iconAnimSize;
+		public LocalisationId fairyLocId;
+		public LocalisationId chestLocId;
+		public LocalisationId costumeLocId;
+		public LocalisationId deadLandLocId;
+		public LocalisationId bossJungleLocId;
+		public LocalisationId bossMusicLocId;
+		public LocalisationId bossFoodLocId;
+		public LocalisationId bossOceanLocId;
+		public Vec2d animSize;
+		public Path iconPath;
+		public StringID iconPoint;
+		public Vec2d iconAnimSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fairyLocId));
-			SerializeField(s, nameof(chestLocId));
-			SerializeField(s, nameof(costumeLocId));
-			SerializeField(s, nameof(deadLandLocId));
-			SerializeField(s, nameof(bossJungleLocId));
-			SerializeField(s, nameof(bossMusicLocId));
-			SerializeField(s, nameof(bossFoodLocId));
-			SerializeField(s, nameof(bossOceanLocId));
-			SerializeField(s, nameof(animSize));
-			SerializeField(s, nameof(iconPath));
-			SerializeField(s, nameof(iconPoint));
-			SerializeField(s, nameof(iconAnimSize));
+			fairyLocId = s.SerializeObject<LocalisationId>(fairyLocId, name: "fairyLocId");
+			chestLocId = s.SerializeObject<LocalisationId>(chestLocId, name: "chestLocId");
+			costumeLocId = s.SerializeObject<LocalisationId>(costumeLocId, name: "costumeLocId");
+			deadLandLocId = s.SerializeObject<LocalisationId>(deadLandLocId, name: "deadLandLocId");
+			bossJungleLocId = s.SerializeObject<LocalisationId>(bossJungleLocId, name: "bossJungleLocId");
+			bossMusicLocId = s.SerializeObject<LocalisationId>(bossMusicLocId, name: "bossMusicLocId");
+			bossFoodLocId = s.SerializeObject<LocalisationId>(bossFoodLocId, name: "bossFoodLocId");
+			bossOceanLocId = s.SerializeObject<LocalisationId>(bossOceanLocId, name: "bossOceanLocId");
+			animSize = s.SerializeObject<Vec2d>(animSize, name: "animSize");
+			iconPath = s.SerializeObject<Path>(iconPath, name: "iconPath");
+			iconPoint = s.SerializeObject<StringID>(iconPoint, name: "iconPoint");
+			iconAnimSize = s.SerializeObject<Vec2d>(iconAnimSize, name: "iconAnimSize");
 		}
 		public override uint? ClassCRC => 0x4494AEB3;
 	}

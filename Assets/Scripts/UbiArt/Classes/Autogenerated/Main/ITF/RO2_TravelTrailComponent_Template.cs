@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TravelTrailComponent_Template : ActorComponent_Template {
-		[Serialize("accelType"            )] public AccelType accelType;
-		[Serialize("destroyOnEnd"         )] public bool destroyOnEnd;
-		[Serialize("durationBeforeDisable")] public float durationBeforeDisable;
+		public AccelType accelType;
+		public bool destroyOnEnd;
+		public float durationBeforeDisable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(accelType));
-			SerializeField(s, nameof(destroyOnEnd));
-			SerializeField(s, nameof(durationBeforeDisable));
+			accelType = s.Serialize<AccelType>(accelType, name: "accelType");
+			destroyOnEnd = s.Serialize<bool>(destroyOnEnd, name: "destroyOnEnd");
+			durationBeforeDisable = s.Serialize<float>(durationBeforeDisable, name: "durationBeforeDisable");
 		}
 		public enum AccelType {
 			[Serialize("AccelType_Linear")] Linear = 0,

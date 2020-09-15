@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchEyeTriggerComponent_Template : ShapeComponent_Template {
-		[Serialize("eyeInput"       )] public StringID eyeInput;
-		[Serialize("mode"           )] public TouchEyeMode mode;
-		[Serialize("touchPriority"  )] public uint touchPriority;
-		[Serialize("activateOnSlide")] public bool activateOnSlide;
+		public StringID eyeInput;
+		public TouchEyeMode mode;
+		public uint touchPriority;
+		public bool activateOnSlide;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(eyeInput));
-			SerializeField(s, nameof(mode));
-			SerializeField(s, nameof(touchPriority));
-			SerializeField(s, nameof(activateOnSlide));
+			eyeInput = s.SerializeObject<StringID>(eyeInput, name: "eyeInput");
+			mode = s.Serialize<TouchEyeMode>(mode, name: "mode");
+			touchPriority = s.Serialize<uint>(touchPriority, name: "touchPriority");
+			activateOnSlide = s.Serialize<bool>(activateOnSlide, name: "activateOnSlide");
 		}
 		public enum TouchEyeMode {
 			[Serialize("TouchEyeMode_AlwaysOpen")] AlwaysOpen = 0,

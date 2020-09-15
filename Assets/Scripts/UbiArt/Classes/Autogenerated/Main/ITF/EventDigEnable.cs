@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class EventDigEnable : Event {
-		[Serialize("enable")] public bool enable;
-		[Serialize("radius")] public float radius;
+		public bool enable;
+		public float radius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enable));
-			SerializeField(s, nameof(radius));
+			enable = s.Serialize<bool>(enable, name: "enable");
+			radius = s.Serialize<float>(radius, name: "radius");
 		}
 		public override uint? ClassCRC => 0xAD06DCD9;
 	}

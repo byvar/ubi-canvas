@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TweenLine_Template : TweenTranslation_Template {
-		[Serialize("movement"  )] public Vec3d movement;
-		[Serialize("CosinusOnX")] public bool CosinusOnX;
+		public Vec3d movement;
+		public bool CosinusOnX;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(movement));
+				movement = s.SerializeObject<Vec3d>(movement, name: "movement");
 			} else {
-				SerializeField(s, nameof(movement));
-				SerializeField(s, nameof(CosinusOnX));
+				movement = s.SerializeObject<Vec3d>(movement, name: "movement");
+				CosinusOnX = s.Serialize<bool>(CosinusOnX, name: "CosinusOnX");
 			}
 		}
 		public override uint? ClassCRC => 0x6A97A07E;

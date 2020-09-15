@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PushButtonComponent : CSerializable {
-		[Serialize("activator"   )] public uint activator;
-		[Serialize("triggerCount")] public Enum_triggerCount triggerCount;
+		public uint activator;
+		public Enum_triggerCount triggerCount;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(activator));
-				SerializeField(s, nameof(triggerCount));
+				activator = s.Serialize<uint>(activator, name: "activator");
+				triggerCount = s.Serialize<Enum_triggerCount>(triggerCount, name: "triggerCount");
 			}
 		}
 		public enum Enum_triggerCount {

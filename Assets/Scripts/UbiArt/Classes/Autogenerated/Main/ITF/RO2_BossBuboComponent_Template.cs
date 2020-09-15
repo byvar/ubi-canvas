@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossBuboComponent_Template : ActorComponent_Template {
-		[Serialize("invisibleAnim" )] public StringID invisibleAnim;
-		[Serialize("appearAnim"    )] public StringID appearAnim;
-		[Serialize("disappearAnim" )] public StringID disappearAnim;
-		[Serialize("hitAnim"       )] public StringID hitAnim;
-		[Serialize("deathAnim"     )] public StringID deathAnim;
-		[Serialize("allowedFaction")] public uint allowedFaction;
+		public StringID invisibleAnim;
+		public StringID appearAnim;
+		public StringID disappearAnim;
+		public StringID hitAnim;
+		public StringID deathAnim;
+		public uint allowedFaction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(invisibleAnim));
-			SerializeField(s, nameof(appearAnim));
-			SerializeField(s, nameof(disappearAnim));
-			SerializeField(s, nameof(hitAnim));
-			SerializeField(s, nameof(deathAnim));
-			SerializeField(s, nameof(allowedFaction));
+			invisibleAnim = s.SerializeObject<StringID>(invisibleAnim, name: "invisibleAnim");
+			appearAnim = s.SerializeObject<StringID>(appearAnim, name: "appearAnim");
+			disappearAnim = s.SerializeObject<StringID>(disappearAnim, name: "disappearAnim");
+			hitAnim = s.SerializeObject<StringID>(hitAnim, name: "hitAnim");
+			deathAnim = s.SerializeObject<StringID>(deathAnim, name: "deathAnim");
+			allowedFaction = s.Serialize<uint>(allowedFaction, name: "allowedFaction");
 		}
 		public override uint? ClassCRC => 0x8F4BA3FD;
 	}

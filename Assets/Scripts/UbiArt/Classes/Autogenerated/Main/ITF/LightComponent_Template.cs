@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class LightComponent_Template : ActorComponent_Template {
-		[Serialize("near"      )] public float near;
-		[Serialize("far"       )] public float far;
-		[Serialize("shape"     )] public string shape;
-		[Serialize("box"       )] public AABB box;
-		[Serialize("boxRange"  )] public float boxRange;
-		[Serialize("lightColor")] public Color lightColor;
+		public float near;
+		public float far;
+		public string shape;
+		public AABB box;
+		public float boxRange;
+		public Color lightColor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(near));
-			SerializeField(s, nameof(far));
-			SerializeField(s, nameof(shape));
-			SerializeField(s, nameof(box));
-			SerializeField(s, nameof(boxRange));
-			SerializeField(s, nameof(lightColor));
+			near = s.Serialize<float>(near, name: "near");
+			far = s.Serialize<float>(far, name: "far");
+			shape = s.Serialize<string>(shape, name: "shape");
+			box = s.SerializeObject<AABB>(box, name: "box");
+			boxRange = s.Serialize<float>(boxRange, name: "boxRange");
+			lightColor = s.SerializeObject<Color>(lightColor, name: "lightColor");
 		}
 		public override uint? ClassCRC => 0x3A1DD43F;
 	}

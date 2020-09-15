@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GyroSpikyComponent_Template : RO2_RailComponent_Template {
-		[Serialize("acceleration"           )] public float acceleration;
-		[Serialize("drcAcceleration"        )] public float drcAcceleration;
-		[Serialize("gyroMode"               )] public bool gyroMode;
-		[Serialize("drcMode"                )] public bool drcMode;
-		[Serialize("frictionMin"            )] public float frictionMin;
-		[Serialize("frictionMax"            )] public float frictionMax;
-		[Serialize("angleFrictionMax"       )] public Angle angleFrictionMax;
-		[Serialize("angleFrictionMin"       )] public Angle angleFrictionMin;
-		[Serialize("drcSwipeValidationSpeed")] public float drcSwipeValidationSpeed;
-		[Serialize("drcSwipeValidationAngle")] public Angle drcSwipeValidationAngle;
-		[Serialize("drcStiffness"           )] public float drcStiffness;
-		[Serialize("drcDamping"             )] public float drcDamping;
-		[Serialize("oneShotValidationTime"  )] public float oneShotValidationTime;
+		public float acceleration;
+		public float drcAcceleration;
+		public bool gyroMode;
+		public bool drcMode;
+		public float frictionMin;
+		public float frictionMax;
+		public Angle angleFrictionMax;
+		public Angle angleFrictionMin;
+		public float drcSwipeValidationSpeed;
+		public Angle drcSwipeValidationAngle;
+		public float drcStiffness;
+		public float drcDamping;
+		public float oneShotValidationTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(acceleration));
-			SerializeField(s, nameof(drcAcceleration));
-			SerializeField(s, nameof(gyroMode));
-			SerializeField(s, nameof(drcMode));
-			SerializeField(s, nameof(frictionMin));
-			SerializeField(s, nameof(frictionMax));
-			SerializeField(s, nameof(angleFrictionMax));
-			SerializeField(s, nameof(angleFrictionMin));
-			SerializeField(s, nameof(drcSwipeValidationSpeed));
-			SerializeField(s, nameof(drcSwipeValidationAngle));
-			SerializeField(s, nameof(drcStiffness));
-			SerializeField(s, nameof(drcDamping));
-			SerializeField(s, nameof(oneShotValidationTime));
+			acceleration = s.Serialize<float>(acceleration, name: "acceleration");
+			drcAcceleration = s.Serialize<float>(drcAcceleration, name: "drcAcceleration");
+			gyroMode = s.Serialize<bool>(gyroMode, name: "gyroMode");
+			drcMode = s.Serialize<bool>(drcMode, name: "drcMode");
+			frictionMin = s.Serialize<float>(frictionMin, name: "frictionMin");
+			frictionMax = s.Serialize<float>(frictionMax, name: "frictionMax");
+			angleFrictionMax = s.SerializeObject<Angle>(angleFrictionMax, name: "angleFrictionMax");
+			angleFrictionMin = s.SerializeObject<Angle>(angleFrictionMin, name: "angleFrictionMin");
+			drcSwipeValidationSpeed = s.Serialize<float>(drcSwipeValidationSpeed, name: "drcSwipeValidationSpeed");
+			drcSwipeValidationAngle = s.SerializeObject<Angle>(drcSwipeValidationAngle, name: "drcSwipeValidationAngle");
+			drcStiffness = s.Serialize<float>(drcStiffness, name: "drcStiffness");
+			drcDamping = s.Serialize<float>(drcDamping, name: "drcDamping");
+			oneShotValidationTime = s.Serialize<float>(oneShotValidationTime, name: "oneShotValidationTime");
 		}
 		public override uint? ClassCRC => 0x3EC5A53C;
 	}

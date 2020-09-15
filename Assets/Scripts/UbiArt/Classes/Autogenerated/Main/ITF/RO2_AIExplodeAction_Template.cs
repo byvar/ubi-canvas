@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIExplodeAction_Template : AIAction_Template {
-		[Serialize("minRadius"               )] public float minRadius;
-		[Serialize("maxRadius"               )] public float maxRadius;
-		[Serialize("duration"                )] public float duration;
-		[Serialize("checkEnv"                )] public bool checkEnv;
-		[Serialize("hitType"                 )] public RECEIVEDHITTYPE hitType;
-		[Serialize("hitLevel"                )] public uint hitLevel;
-		[Serialize("destroyAtEnd"            )] public bool destroyAtEnd;
-		[Serialize("fxName"                  )] public StringID fxName;
-		[Serialize("spawnFragmentsPath"      )] public Path spawnFragmentsPath;
-		[Serialize("spawnFragmentsNb"        )] public uint spawnFragmentsNb;
-		[Serialize("spawnFragmentsDeltaAngle")] public Angle spawnFragmentsDeltaAngle;
-		[Serialize("spawnFragmentsStartAngle")] public Angle spawnFragmentsStartAngle;
-		[Serialize("reward"                  )] public Generic<RO2_EventSpawnReward> reward;
-		[Serialize("numRewards"              )] public CList<uint> numRewards;
+		public float minRadius;
+		public float maxRadius;
+		public float duration;
+		public bool checkEnv;
+		public RECEIVEDHITTYPE hitType;
+		public uint hitLevel;
+		public bool destroyAtEnd;
+		public StringID fxName;
+		public Path spawnFragmentsPath;
+		public uint spawnFragmentsNb;
+		public Angle spawnFragmentsDeltaAngle;
+		public Angle spawnFragmentsStartAngle;
+		public Generic<RO2_EventSpawnReward> reward;
+		public CList<uint> numRewards;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(minRadius));
-			SerializeField(s, nameof(maxRadius));
-			SerializeField(s, nameof(duration));
-			SerializeField(s, nameof(checkEnv));
-			SerializeField(s, nameof(hitType));
-			SerializeField(s, nameof(hitLevel));
-			SerializeField(s, nameof(destroyAtEnd));
-			SerializeField(s, nameof(fxName));
-			SerializeField(s, nameof(spawnFragmentsPath));
-			SerializeField(s, nameof(spawnFragmentsNb));
-			SerializeField(s, nameof(spawnFragmentsDeltaAngle));
-			SerializeField(s, nameof(spawnFragmentsStartAngle));
-			SerializeField(s, nameof(reward));
-			SerializeField(s, nameof(numRewards));
+			minRadius = s.Serialize<float>(minRadius, name: "minRadius");
+			maxRadius = s.Serialize<float>(maxRadius, name: "maxRadius");
+			duration = s.Serialize<float>(duration, name: "duration");
+			checkEnv = s.Serialize<bool>(checkEnv, name: "checkEnv");
+			hitType = s.Serialize<RECEIVEDHITTYPE>(hitType, name: "hitType");
+			hitLevel = s.Serialize<uint>(hitLevel, name: "hitLevel");
+			destroyAtEnd = s.Serialize<bool>(destroyAtEnd, name: "destroyAtEnd");
+			fxName = s.SerializeObject<StringID>(fxName, name: "fxName");
+			spawnFragmentsPath = s.SerializeObject<Path>(spawnFragmentsPath, name: "spawnFragmentsPath");
+			spawnFragmentsNb = s.Serialize<uint>(spawnFragmentsNb, name: "spawnFragmentsNb");
+			spawnFragmentsDeltaAngle = s.SerializeObject<Angle>(spawnFragmentsDeltaAngle, name: "spawnFragmentsDeltaAngle");
+			spawnFragmentsStartAngle = s.SerializeObject<Angle>(spawnFragmentsStartAngle, name: "spawnFragmentsStartAngle");
+			reward = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward, name: "reward");
+			numRewards = s.SerializeObject<CList<uint>>(numRewards, name: "numRewards");
 		}
 		public enum RECEIVEDHITTYPE {
 			[Serialize("RECEIVEDHITTYPE_UNKNOWN"    )] UNKNOWN = -1,

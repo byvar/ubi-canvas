@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfigRunnerOverride : RLC_AmbianceConfig {
-		[Serialize("MapPath")] public Path MapPath;
+		public Path MapPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(MapPath));
+			MapPath = s.SerializeObject<Path>(MapPath, name: "MapPath");
 		}
 		public override uint? ClassCRC => 0xCE6FB512;
 	}

@@ -3,45 +3,45 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_BreakableAIComponent_Template : Ray_AIComponent_Template {
-		[Serialize("reward"                 )] public Generic<Ray_EventSpawnReward> reward2;
-		[Serialize("crushAttackDamage"      )] public uint crushAttackDamage;
-		[Serialize("frontDamage"            )] public uint frontDamage;
-		[Serialize("backDamage"             )] public uint backDamage;
-		[Serialize("hitAngleOffset"         )] public Angle hitAngleOffset;
-		[Serialize("hitAngleMinIncidence"   )] public Angle hitAngleMinIncidence;
-		[Serialize("restoreAnim"            )] public StringID restoreAnim;
-		[Serialize("checkHitSenderDirection")] public int checkHitSenderDirection;
-		[Serialize("destructionStages"      )] public CArray<Ray_BreakableAIComponent_Template.DestructionStage> destructionStages;
-		[Serialize("openAnim"               )] public StringID openAnim;
-		[Serialize("openAnimReverse"        )] public StringID openAnimReverse;
-		[Serialize("resetOnCheckpoint"      )] public int resetOnCheckpoint;
+		public Generic<Ray_EventSpawnReward> reward2;
+		public uint crushAttackDamage;
+		public uint frontDamage;
+		public uint backDamage;
+		public Angle hitAngleOffset;
+		public Angle hitAngleMinIncidence;
+		public StringID restoreAnim;
+		public int checkHitSenderDirection;
+		public CArray<Ray_BreakableAIComponent_Template.DestructionStage> destructionStages;
+		public StringID openAnim;
+		public StringID openAnimReverse;
+		public int resetOnCheckpoint;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(reward2));
-			SerializeField(s, nameof(crushAttackDamage));
-			SerializeField(s, nameof(frontDamage));
-			SerializeField(s, nameof(backDamage));
-			SerializeField(s, nameof(hitAngleOffset));
-			SerializeField(s, nameof(hitAngleMinIncidence));
-			SerializeField(s, nameof(restoreAnim));
-			SerializeField(s, nameof(checkHitSenderDirection));
-			SerializeField(s, nameof(destructionStages));
-			SerializeField(s, nameof(openAnim));
-			SerializeField(s, nameof(openAnimReverse));
-			SerializeField(s, nameof(resetOnCheckpoint));
+			reward2 = s.SerializeObject<Generic<Ray_EventSpawnReward>>(reward2, name: "reward2");
+			crushAttackDamage = s.Serialize<uint>(crushAttackDamage, name: "crushAttackDamage");
+			frontDamage = s.Serialize<uint>(frontDamage, name: "frontDamage");
+			backDamage = s.Serialize<uint>(backDamage, name: "backDamage");
+			hitAngleOffset = s.SerializeObject<Angle>(hitAngleOffset, name: "hitAngleOffset");
+			hitAngleMinIncidence = s.SerializeObject<Angle>(hitAngleMinIncidence, name: "hitAngleMinIncidence");
+			restoreAnim = s.SerializeObject<StringID>(restoreAnim, name: "restoreAnim");
+			checkHitSenderDirection = s.Serialize<int>(checkHitSenderDirection, name: "checkHitSenderDirection");
+			destructionStages = s.SerializeObject<CArray<Ray_BreakableAIComponent_Template.DestructionStage>>(destructionStages, name: "destructionStages");
+			openAnim = s.SerializeObject<StringID>(openAnim, name: "openAnim");
+			openAnimReverse = s.SerializeObject<StringID>(openAnimReverse, name: "openAnimReverse");
+			resetOnCheckpoint = s.Serialize<int>(resetOnCheckpoint, name: "resetOnCheckpoint");
 		}
 		[Games(GameFlags.RJR | GameFlags.RFR)]
 		public partial class DestructionStage : CSerializable {
-			[Serialize("StringID__0")] public StringID StringID__0;
-			[Serialize("StringID__1")] public StringID StringID__1;
-			[Serialize("StringID__2")] public StringID StringID__2;
-			[Serialize("StringID__3")] public StringID StringID__3;
+			public StringID StringID__0;
+			public StringID StringID__1;
+			public StringID StringID__2;
+			public StringID StringID__3;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(StringID__0));
-				SerializeField(s, nameof(StringID__1));
-				SerializeField(s, nameof(StringID__2));
-				SerializeField(s, nameof(StringID__3));
+				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
+				StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
+				StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
+				StringID__3 = s.SerializeObject<StringID>(StringID__3, name: "StringID__3");
 			}
 		}
 		public override uint? ClassCRC => 0x4ABB0FC9;

@@ -3,42 +3,42 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIMenuScroll_Template : UIMenuBasic_Template {
-		[Serialize("modelSperatorIndex"        )] public int modelSperatorIndex;
-		[Serialize("movingSelectionDelay"      )] public float movingSelectionDelay;
-		[Serialize("movingSelectionNormMax"    )] public float movingSelectionNormMax;
-		[Serialize("movingBounceTime"          )] public float movingBounceTime;
-		[Serialize("movingBounceNorm"          )] public float movingBounceNorm;
-		[Serialize("movingSnapOnItem"          )] public bool movingSnapOnItem;
-		[Serialize("movingMomentumFriction"    )] public float movingMomentumFriction;
-		[Serialize("movingMomentumDeceleration")] public float movingMomentumDeceleration;
-		[Serialize("extendSpeed"               )] public Vec2d extendSpeed;
-		[Serialize("colapseSpeed"              )] public Vec2d colapseSpeed;
-		[Serialize("modelActorPaths"           )] public CArray<Path> modelActorPaths;
+		public int modelSperatorIndex;
+		public float movingSelectionDelay;
+		public float movingSelectionNormMax;
+		public float movingBounceTime;
+		public float movingBounceNorm;
+		public bool movingSnapOnItem;
+		public float movingMomentumFriction;
+		public float movingMomentumDeceleration;
+		public Vec2d extendSpeed;
+		public Vec2d colapseSpeed;
+		public CArray<Path> modelActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(modelActorPaths));
-				SerializeField(s, nameof(modelSperatorIndex));
-				SerializeField(s, nameof(movingSelectionDelay));
-				SerializeField(s, nameof(movingSelectionNormMax));
-				SerializeField(s, nameof(movingBounceTime));
-				SerializeField(s, nameof(movingBounceNorm));
-				SerializeField(s, nameof(movingSnapOnItem));
-				SerializeField(s, nameof(movingMomentumFriction));
-				SerializeField(s, nameof(movingMomentumDeceleration));
-				SerializeField(s, nameof(extendSpeed));
-				SerializeField(s, nameof(colapseSpeed));
+				modelActorPaths = s.SerializeObject<CArray<Path>>(modelActorPaths, name: "modelActorPaths");
+				modelSperatorIndex = s.Serialize<int>(modelSperatorIndex, name: "modelSperatorIndex");
+				movingSelectionDelay = s.Serialize<float>(movingSelectionDelay, name: "movingSelectionDelay");
+				movingSelectionNormMax = s.Serialize<float>(movingSelectionNormMax, name: "movingSelectionNormMax");
+				movingBounceTime = s.Serialize<float>(movingBounceTime, name: "movingBounceTime");
+				movingBounceNorm = s.Serialize<float>(movingBounceNorm, name: "movingBounceNorm");
+				movingSnapOnItem = s.Serialize<bool>(movingSnapOnItem, name: "movingSnapOnItem");
+				movingMomentumFriction = s.Serialize<float>(movingMomentumFriction, name: "movingMomentumFriction");
+				movingMomentumDeceleration = s.Serialize<float>(movingMomentumDeceleration, name: "movingMomentumDeceleration");
+				extendSpeed = s.SerializeObject<Vec2d>(extendSpeed, name: "extendSpeed");
+				colapseSpeed = s.SerializeObject<Vec2d>(colapseSpeed, name: "colapseSpeed");
 			} else {
-				SerializeField(s, nameof(modelSperatorIndex));
-				SerializeField(s, nameof(movingSelectionDelay));
-				SerializeField(s, nameof(movingSelectionNormMax));
-				SerializeField(s, nameof(movingBounceTime));
-				SerializeField(s, nameof(movingBounceNorm));
-				SerializeField(s, nameof(movingSnapOnItem));
-				SerializeField(s, nameof(movingMomentumFriction));
-				SerializeField(s, nameof(movingMomentumDeceleration));
-				SerializeField(s, nameof(extendSpeed));
-				SerializeField(s, nameof(colapseSpeed));
+				modelSperatorIndex = s.Serialize<int>(modelSperatorIndex, name: "modelSperatorIndex");
+				movingSelectionDelay = s.Serialize<float>(movingSelectionDelay, name: "movingSelectionDelay");
+				movingSelectionNormMax = s.Serialize<float>(movingSelectionNormMax, name: "movingSelectionNormMax");
+				movingBounceTime = s.Serialize<float>(movingBounceTime, name: "movingBounceTime");
+				movingBounceNorm = s.Serialize<float>(movingBounceNorm, name: "movingBounceNorm");
+				movingSnapOnItem = s.Serialize<bool>(movingSnapOnItem, name: "movingSnapOnItem");
+				movingMomentumFriction = s.Serialize<float>(movingMomentumFriction, name: "movingMomentumFriction");
+				movingMomentumDeceleration = s.Serialize<float>(movingMomentumDeceleration, name: "movingMomentumDeceleration");
+				extendSpeed = s.SerializeObject<Vec2d>(extendSpeed, name: "extendSpeed");
+				colapseSpeed = s.SerializeObject<Vec2d>(colapseSpeed, name: "colapseSpeed");
 			}
 		}
 		public override uint? ClassCRC => 0x38BA4835;

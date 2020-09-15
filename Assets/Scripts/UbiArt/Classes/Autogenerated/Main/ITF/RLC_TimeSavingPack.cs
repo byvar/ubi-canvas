@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TimeSavingPack : RLC_DynamicStoreItem {
-		[Serialize("offerIndex"        )] public uint offerIndex;
-		[Serialize("timeSavingDuration")] public online.TimeInterval timeSavingDuration;
+		public uint offerIndex;
+		public online.TimeInterval timeSavingDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(offerIndex));
-			SerializeField(s, nameof(timeSavingDuration));
+			offerIndex = s.Serialize<uint>(offerIndex, name: "offerIndex");
+			timeSavingDuration = s.SerializeObject<online.TimeInterval>(timeSavingDuration, name: "timeSavingDuration");
 		}
 		public override uint? ClassCRC => 0x2A9A352A;
 	}

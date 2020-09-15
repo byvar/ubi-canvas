@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIDeathBehavior_Template : AIPlayActionsBehavior_Template {
-		[Serialize("pauseComponentWhenDone")] public bool pauseComponentWhenDone;
-		[Serialize("pauseActorWhenDone"    )] public bool pauseActorWhenDone;
-		[Serialize("destroyActorWhenDone"  )] public bool destroyActorWhenDone;
-		[Serialize("deactivatePhysics"     )] public bool deactivatePhysics;
-		[Serialize("nullWeight"            )] public bool nullWeight;
+		public bool pauseComponentWhenDone;
+		public bool pauseActorWhenDone;
+		public bool destroyActorWhenDone;
+		public bool deactivatePhysics;
+		public bool nullWeight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(pauseComponentWhenDone));
-			SerializeField(s, nameof(pauseActorWhenDone));
-			SerializeField(s, nameof(destroyActorWhenDone));
-			SerializeField(s, nameof(deactivatePhysics));
-			SerializeField(s, nameof(nullWeight));
+			pauseComponentWhenDone = s.Serialize<bool>(pauseComponentWhenDone, name: "pauseComponentWhenDone");
+			pauseActorWhenDone = s.Serialize<bool>(pauseActorWhenDone, name: "pauseActorWhenDone");
+			destroyActorWhenDone = s.Serialize<bool>(destroyActorWhenDone, name: "destroyActorWhenDone");
+			deactivatePhysics = s.Serialize<bool>(deactivatePhysics, name: "deactivatePhysics");
+			nullWeight = s.Serialize<bool>(nullWeight, name: "nullWeight");
 		}
 		public override uint? ClassCRC => 0x961AB13C;
 	}

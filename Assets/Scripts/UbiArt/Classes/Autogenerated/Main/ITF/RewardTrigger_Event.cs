@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class RewardTrigger_Event : RewardTrigger_Base {
-		[Serialize("eventID"         )] public StringID eventID;
-		[Serialize("conditionType"   )] public Enum_conditionType conditionType;
-		[Serialize("floatValue"      )] public float floatValue;
-		[Serialize("stringValue"     )] public StringID stringValue;
-		[Serialize("stringArrayValue")] public CArray<StringID> stringArrayValue;
+		public StringID eventID;
+		public Enum_conditionType conditionType;
+		public float floatValue;
+		public StringID stringValue;
+		public CArray<StringID> stringArrayValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(eventID));
-			SerializeField(s, nameof(conditionType));
-			SerializeField(s, nameof(floatValue));
-			SerializeField(s, nameof(stringValue));
-			SerializeField(s, nameof(stringArrayValue));
+			eventID = s.SerializeObject<StringID>(eventID, name: "eventID");
+			conditionType = s.Serialize<Enum_conditionType>(conditionType, name: "conditionType");
+			floatValue = s.Serialize<float>(floatValue, name: "floatValue");
+			stringValue = s.SerializeObject<StringID>(stringValue, name: "stringValue");
+			stringArrayValue = s.SerializeObject<CArray<StringID>>(stringArrayValue, name: "stringArrayValue");
 		}
 		public enum Enum_conditionType {
 			[Serialize("Triggered"       )] Triggered = 0,

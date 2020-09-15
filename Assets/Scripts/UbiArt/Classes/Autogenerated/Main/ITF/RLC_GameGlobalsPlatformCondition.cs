@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsPlatformCondition : online.GameGlobalsCondition {
-		[Serialize("platform")] public GGPlatform platform;
+		public GGPlatform platform;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(platform));
+			platform = s.Serialize<GGPlatform>(platform, name: "platform");
 		}
 		public enum GGPlatform {
 			[Serialize("GGPlatform_iOS"    )] iOS = 0,

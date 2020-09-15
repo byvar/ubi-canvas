@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class MusicManager_Template : CSerializable {
-		[Serialize("musicPartSet")] public MusicPartSet_Template musicPartSet;
-		[Serialize("musicTree"   )] public MusicTree_Template musicTree;
-		[Serialize("inputs"      )] public CArray<InputDesc> inputs;
+		public MusicPartSet_Template musicPartSet;
+		public MusicTree_Template musicTree;
+		public CArray<InputDesc> inputs;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(musicPartSet));
-			SerializeField(s, nameof(musicTree));
-			SerializeField(s, nameof(inputs));
+			musicPartSet = s.SerializeObject<MusicPartSet_Template>(musicPartSet, name: "musicPartSet");
+			musicTree = s.SerializeObject<MusicTree_Template>(musicTree, name: "musicTree");
+			inputs = s.SerializeObject<CArray<InputDesc>>(inputs, name: "inputs");
 		}
 		public override uint? ClassCRC => 0x7B4F583E;
 	}

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SubRenderParam_Misc : SubRenderParam {
-		[Serialize("ZPassOverride")] public GFX_VIEW_ZPASS ZPassOverride;
+		public GFX_VIEW_ZPASS ZPassOverride;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ZPassOverride));
+			ZPassOverride = s.Serialize<GFX_VIEW_ZPASS>(ZPassOverride, name: "ZPassOverride");
 		}
 		public enum GFX_VIEW_ZPASS {
 			[Serialize("GFX_VIEW_ZPASS_DEFAULT"        )] DEFAULT = 0,

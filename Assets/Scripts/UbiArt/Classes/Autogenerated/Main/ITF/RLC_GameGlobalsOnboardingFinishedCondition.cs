@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsOnboardingFinishedCondition : online.GameGlobalsCondition {
-		[Serialize("finished")] public bool finished;
+		public bool finished;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(finished));
+			finished = s.Serialize<bool>(finished, name: "finished");
 		}
 		public override uint? ClassCRC => 0x15D3A4AB;
 	}

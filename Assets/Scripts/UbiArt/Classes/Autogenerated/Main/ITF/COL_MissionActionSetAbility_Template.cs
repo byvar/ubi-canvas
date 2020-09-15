@@ -4,12 +4,12 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_MissionActionSetAbility_Template : CSerializable {
 		[Description("Ability type to unlock")]
-		[Serialize("abilityType")] public Enum_abilityType abilityType;
-		[Serialize("unlock"     )] public bool unlock;
+		public Enum_abilityType abilityType;
+		public bool unlock;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(abilityType));
-			SerializeField(s, nameof(unlock), boolAsByte: true);
+			abilityType = s.Serialize<Enum_abilityType>(abilityType, name: "abilityType");
+			unlock = s.Serialize<bool>(unlock, name: "unlock", options: CSerializerObject.Options.BoolAsByte);
 		}
 		public enum Enum_abilityType {
 			[Serialize("Value_0")] Value_0 = 0,

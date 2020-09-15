@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureRarityWeight : CSerializable {
-		[Serialize("rarity")] public Creature_Rarity rarity;
-		[Serialize("weight")] public uint weight;
+		public Creature_Rarity rarity;
+		public uint weight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(rarity));
-			SerializeField(s, nameof(weight));
+			rarity = s.Serialize<Creature_Rarity>(rarity, name: "rarity");
+			weight = s.Serialize<uint>(weight, name: "weight");
 		}
 		public enum Creature_Rarity {
 			[Serialize("Creature_Rarity::common"   )] common = 0,

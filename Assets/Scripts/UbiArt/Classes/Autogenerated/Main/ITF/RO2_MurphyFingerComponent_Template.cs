@@ -3,45 +3,45 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MurphyFingerComponent_Template : ActorComponent_Template {
-		[Serialize("speedMax"                   )] public float speedMax;
-		[Serialize("acceleration"               )] public float acceleration;
-		[Serialize("friction"                   )] public float friction;
-		[Serialize("controlAcceleration"        )] public float controlAcceleration;
-		[Serialize("controlAngle"               )] public Angle controlAngle;
-		[Serialize("clampInputMoveMax"          )] public uint clampInputMoveMax;
-		[Serialize("screenSoftColThresholdUp"   )] public float screenSoftColThresholdUp;
-		[Serialize("screenSoftColThresholdDown" )] public float screenSoftColThresholdDown;
-		[Serialize("screenSoftColThresholdLeft" )] public float screenSoftColThresholdLeft;
-		[Serialize("screenSoftColThresholdRight")] public float screenSoftColThresholdRight;
-		[Serialize("screenSoftColForce"         )] public float screenSoftColForce;
-		[Serialize("scratchAnimDuration"        )] public float scratchAnimDuration;
+		public float speedMax;
+		public float acceleration;
+		public float friction;
+		public float controlAcceleration;
+		public Angle controlAngle;
+		public uint clampInputMoveMax;
+		public float screenSoftColThresholdUp;
+		public float screenSoftColThresholdDown;
+		public float screenSoftColThresholdLeft;
+		public float screenSoftColThresholdRight;
+		public float screenSoftColForce;
+		public float scratchAnimDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(speedMax));
-				SerializeField(s, nameof(acceleration));
-				SerializeField(s, nameof(friction));
-				SerializeField(s, nameof(controlAcceleration));
-				SerializeField(s, nameof(controlAngle));
-				SerializeField(s, nameof(clampInputMoveMax));
-				SerializeField(s, nameof(screenSoftColThresholdUp));
-				SerializeField(s, nameof(screenSoftColThresholdDown));
-				SerializeField(s, nameof(screenSoftColThresholdLeft));
-				SerializeField(s, nameof(screenSoftColThresholdRight));
-				SerializeField(s, nameof(screenSoftColForce));
-				SerializeField(s, nameof(scratchAnimDuration));
+				speedMax = s.Serialize<float>(speedMax, name: "speedMax");
+				acceleration = s.Serialize<float>(acceleration, name: "acceleration");
+				friction = s.Serialize<float>(friction, name: "friction");
+				controlAcceleration = s.Serialize<float>(controlAcceleration, name: "controlAcceleration");
+				controlAngle = s.SerializeObject<Angle>(controlAngle, name: "controlAngle");
+				clampInputMoveMax = s.Serialize<uint>(clampInputMoveMax, name: "clampInputMoveMax");
+				screenSoftColThresholdUp = s.Serialize<float>(screenSoftColThresholdUp, name: "screenSoftColThresholdUp");
+				screenSoftColThresholdDown = s.Serialize<float>(screenSoftColThresholdDown, name: "screenSoftColThresholdDown");
+				screenSoftColThresholdLeft = s.Serialize<float>(screenSoftColThresholdLeft, name: "screenSoftColThresholdLeft");
+				screenSoftColThresholdRight = s.Serialize<float>(screenSoftColThresholdRight, name: "screenSoftColThresholdRight");
+				screenSoftColForce = s.Serialize<float>(screenSoftColForce, name: "screenSoftColForce");
+				scratchAnimDuration = s.Serialize<float>(scratchAnimDuration, name: "scratchAnimDuration");
 			} else {
-				SerializeField(s, nameof(speedMax));
-				SerializeField(s, nameof(acceleration));
-				SerializeField(s, nameof(friction));
-				SerializeField(s, nameof(controlAcceleration));
-				SerializeField(s, nameof(controlAngle));
-				SerializeField(s, nameof(clampInputMoveMax));
-				SerializeField(s, nameof(screenSoftColThresholdUp));
-				SerializeField(s, nameof(screenSoftColThresholdDown));
-				SerializeField(s, nameof(screenSoftColThresholdLeft));
-				SerializeField(s, nameof(screenSoftColThresholdRight));
-				SerializeField(s, nameof(screenSoftColForce));
+				speedMax = s.Serialize<float>(speedMax, name: "speedMax");
+				acceleration = s.Serialize<float>(acceleration, name: "acceleration");
+				friction = s.Serialize<float>(friction, name: "friction");
+				controlAcceleration = s.Serialize<float>(controlAcceleration, name: "controlAcceleration");
+				controlAngle = s.SerializeObject<Angle>(controlAngle, name: "controlAngle");
+				clampInputMoveMax = s.Serialize<uint>(clampInputMoveMax, name: "clampInputMoveMax");
+				screenSoftColThresholdUp = s.Serialize<float>(screenSoftColThresholdUp, name: "screenSoftColThresholdUp");
+				screenSoftColThresholdDown = s.Serialize<float>(screenSoftColThresholdDown, name: "screenSoftColThresholdDown");
+				screenSoftColThresholdLeft = s.Serialize<float>(screenSoftColThresholdLeft, name: "screenSoftColThresholdLeft");
+				screenSoftColThresholdRight = s.Serialize<float>(screenSoftColThresholdRight, name: "screenSoftColThresholdRight");
+				screenSoftColForce = s.Serialize<float>(screenSoftColForce, name: "screenSoftColForce");
 			}
 		}
 		public override uint? ClassCRC => 0x7ACCEF2A;

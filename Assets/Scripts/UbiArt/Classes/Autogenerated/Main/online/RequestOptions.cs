@@ -3,55 +3,55 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class RequestOptions : CSerializable {
-		[Serialize("connectModule"      )] public bool connectModule;
-		[Serialize("retryIfDisconnected")] public bool retryIfDisconnected;
-		[Serialize("maxAutoRetry"       )] public uint maxAutoRetry;
-		[Serialize("autoRetryDelay"     )] public float autoRetryDelay;
-		[Serialize("notifyErrorRetry"   )] public bool notifyErrorRetry;
-		[Serialize("inProgressPopup"    )] public RequestOptions.PopupOptions inProgressPopup;
-		[Serialize("errorPopup"         )] public RequestOptions.ErrorPopupOptions errorPopup;
-		[Serialize("errorRetryPopup"    )] public RequestOptions.ErrorPopupOptions errorRetryPopup;
-		[Serialize("successPopup"       )] public RequestOptions.PopupOptions successPopup;
-		[Serialize("silentConnection"   )] public bool silentConnection;
-		[Serialize("needPid"            )] public bool needPid;
-		[Serialize("timeout"            )] public float timeout;
+		public bool connectModule;
+		public bool retryIfDisconnected;
+		public uint maxAutoRetry;
+		public float autoRetryDelay;
+		public bool notifyErrorRetry;
+		public RequestOptions.PopupOptions inProgressPopup;
+		public RequestOptions.ErrorPopupOptions errorPopup;
+		public RequestOptions.ErrorPopupOptions errorRetryPopup;
+		public RequestOptions.PopupOptions successPopup;
+		public bool silentConnection;
+		public bool needPid;
+		public float timeout;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(connectModule));
-			SerializeField(s, nameof(retryIfDisconnected));
-			SerializeField(s, nameof(maxAutoRetry));
-			SerializeField(s, nameof(autoRetryDelay));
-			SerializeField(s, nameof(notifyErrorRetry));
-			SerializeField(s, nameof(inProgressPopup));
-			SerializeField(s, nameof(errorPopup));
-			SerializeField(s, nameof(errorRetryPopup));
-			SerializeField(s, nameof(successPopup));
-			SerializeField(s, nameof(silentConnection));
-			SerializeField(s, nameof(needPid));
-			SerializeField(s, nameof(timeout));
+			connectModule = s.Serialize<bool>(connectModule, name: "connectModule");
+			retryIfDisconnected = s.Serialize<bool>(retryIfDisconnected, name: "retryIfDisconnected");
+			maxAutoRetry = s.Serialize<uint>(maxAutoRetry, name: "maxAutoRetry");
+			autoRetryDelay = s.Serialize<float>(autoRetryDelay, name: "autoRetryDelay");
+			notifyErrorRetry = s.Serialize<bool>(notifyErrorRetry, name: "notifyErrorRetry");
+			inProgressPopup = s.SerializeObject<RequestOptions.PopupOptions>(inProgressPopup, name: "inProgressPopup");
+			errorPopup = s.SerializeObject<RequestOptions.ErrorPopupOptions>(errorPopup, name: "errorPopup");
+			errorRetryPopup = s.SerializeObject<RequestOptions.ErrorPopupOptions>(errorRetryPopup, name: "errorRetryPopup");
+			successPopup = s.SerializeObject<RequestOptions.PopupOptions>(successPopup, name: "successPopup");
+			silentConnection = s.Serialize<bool>(silentConnection, name: "silentConnection");
+			needPid = s.Serialize<bool>(needPid, name: "needPid");
+			timeout = s.Serialize<float>(timeout, name: "timeout");
 		}
 		[Games(GameFlags.RA)]
 		public partial class PopupOptions : CSerializable {
-			[Serialize("show"      )] public bool show;
-			[Serialize("trcContext")] public Enum_trcContext trcContext;
-			[Serialize("delay"     )] public float delay;
+			public bool show;
+			public Enum_trcContext trcContext;
+			public float delay;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(show));
-				SerializeField(s, nameof(trcContext));
-				SerializeField(s, nameof(delay));
+				show = s.Serialize<bool>(show, name: "show");
+				trcContext = s.Serialize<Enum_trcContext>(trcContext, name: "trcContext");
+				delay = s.Serialize<float>(delay, name: "delay");
 			}
 			public enum Enum_trcContext {
 			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class ErrorPopupOptions : CSerializable {
-			[Serialize("default" )] public RequestOptions.PopupOptions _default;
-			[Serialize("specific")] public CMap<Error.GameServerError, RequestOptions.PopupOptions> specific;
+			public RequestOptions.PopupOptions _default;
+			public CMap<Error.GameServerError, RequestOptions.PopupOptions> specific;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(_default));
-				SerializeField(s, nameof(specific));
+				_default = s.SerializeObject<RequestOptions.PopupOptions>(_default, name: "_default");
+				specific = s.SerializeObject<CMap<Error.GameServerError, RequestOptions.PopupOptions>>(specific, name: "specific");
 			}
 		}
 	}

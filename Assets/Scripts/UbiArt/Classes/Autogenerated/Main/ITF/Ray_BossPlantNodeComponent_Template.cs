@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_BossPlantNodeComponent_Template : CSerializable {
-		[Serialize("anim"        )] public StringID anim;
-		[Serialize("animPlayRate")] public float animPlayRate;
-		[Serialize("cycleVector" )] public Vec2d cycleVector;
-		[Serialize("triggerEvent")] public Placeholder triggerEvent;
+		public StringID anim;
+		public float animPlayRate;
+		public Vec2d cycleVector;
+		public Placeholder triggerEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(animPlayRate));
-				SerializeField(s, nameof(cycleVector));
-				SerializeField(s, nameof(triggerEvent));
+				anim = s.SerializeObject<StringID>(anim, name: "anim");
+				animPlayRate = s.Serialize<float>(animPlayRate, name: "animPlayRate");
+				cycleVector = s.SerializeObject<Vec2d>(cycleVector, name: "cycleVector");
+				triggerEvent = s.SerializeObject<Placeholder>(triggerEvent, name: "triggerEvent");
 			} else {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(animPlayRate));
-				SerializeField(s, nameof(cycleVector));
+				anim = s.SerializeObject<StringID>(anim, name: "anim");
+				animPlayRate = s.Serialize<float>(animPlayRate, name: "animPlayRate");
+				cycleVector = s.SerializeObject<Vec2d>(cycleVector, name: "cycleVector");
 			}
 		}
 		public override uint? ClassCRC => 0x4237FE9C;

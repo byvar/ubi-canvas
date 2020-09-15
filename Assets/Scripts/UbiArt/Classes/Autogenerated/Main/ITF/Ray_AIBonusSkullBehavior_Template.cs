@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIBonusSkullBehavior_Template : TemplateAIBehavior {
-		[Serialize("defaultSizePercent")] public float defaultSizePercent;
-		[Serialize("maxSizePercent"    )] public float maxSizePercent;
-		[Serialize("pulseDuration"     )] public float pulseDuration;
-		[Serialize("maxSizeDuration"   )] public float maxSizeDuration;
-		[Serialize("standDuration"     )] public float standDuration;
+		public float defaultSizePercent;
+		public float maxSizePercent;
+		public float pulseDuration;
+		public float maxSizeDuration;
+		public float standDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(defaultSizePercent));
-			SerializeField(s, nameof(maxSizePercent));
-			SerializeField(s, nameof(pulseDuration));
-			SerializeField(s, nameof(maxSizeDuration));
-			SerializeField(s, nameof(standDuration));
+			defaultSizePercent = s.Serialize<float>(defaultSizePercent, name: "defaultSizePercent");
+			maxSizePercent = s.Serialize<float>(maxSizePercent, name: "maxSizePercent");
+			pulseDuration = s.Serialize<float>(pulseDuration, name: "pulseDuration");
+			maxSizeDuration = s.Serialize<float>(maxSizeDuration, name: "maxSizeDuration");
+			standDuration = s.Serialize<float>(standDuration, name: "standDuration");
 		}
 		public override uint? ClassCRC => 0xE3BED5A2;
 	}

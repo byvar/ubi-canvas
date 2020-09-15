@@ -37,5 +37,9 @@ namespace UbiArt {
 		public static implicit operator UnityEngine.Vector3(Vec3d v) {
 			return new UnityEngine.Vector3(v.x, v.y, v.z);
 		}
+
+		public override string ToString() {
+			return $"Vec3d({x}, {y}, {z})";
+		}
 	}
 }

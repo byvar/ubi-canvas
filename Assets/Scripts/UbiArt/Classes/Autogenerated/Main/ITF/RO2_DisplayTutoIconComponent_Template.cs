@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DisplayTutoIconComponent_Template : ActorComponent_Template {
-		[Serialize("tutos3d"            )] public SpawnActorPathList tutos3d;
-		[Serialize("tutos2d"            )] public SpawnActorPathList tutos2d;
-		[Serialize("autoHideCount"      )] public uint autoHideCount;
-		[Serialize("animIdle"           )] public StringID animIdle;
-		[Serialize("animIdleWithInfo"   )] public StringID animIdleWithInfo;
-		[Serialize("idleTime"           )] public float idleTime;
-		[Serialize("idleWithInfoNbTimes")] public uint idleWithInfoNbTimes;
-		[Serialize("successfulEvent"    )] public Generic<Event> successfulEvent;
-		[Serialize("fadeTotalTime"      )] public float fadeTotalTime;
-		[Serialize("tutoScale"          )] public Vec2d tutoScale;
+		public SpawnActorPathList tutos3d;
+		public SpawnActorPathList tutos2d;
+		public uint autoHideCount;
+		public StringID animIdle;
+		public StringID animIdleWithInfo;
+		public float idleTime;
+		public uint idleWithInfoNbTimes;
+		public Generic<Event> successfulEvent;
+		public float fadeTotalTime;
+		public Vec2d tutoScale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(tutos3d));
-			SerializeField(s, nameof(tutos2d));
-			SerializeField(s, nameof(autoHideCount));
-			SerializeField(s, nameof(animIdle));
-			SerializeField(s, nameof(animIdleWithInfo));
-			SerializeField(s, nameof(idleTime));
-			SerializeField(s, nameof(idleWithInfoNbTimes));
-			SerializeField(s, nameof(successfulEvent));
-			SerializeField(s, nameof(fadeTotalTime));
-			SerializeField(s, nameof(tutoScale));
+			tutos3d = s.SerializeObject<SpawnActorPathList>(tutos3d, name: "tutos3d");
+			tutos2d = s.SerializeObject<SpawnActorPathList>(tutos2d, name: "tutos2d");
+			autoHideCount = s.Serialize<uint>(autoHideCount, name: "autoHideCount");
+			animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");
+			animIdleWithInfo = s.SerializeObject<StringID>(animIdleWithInfo, name: "animIdleWithInfo");
+			idleTime = s.Serialize<float>(idleTime, name: "idleTime");
+			idleWithInfoNbTimes = s.Serialize<uint>(idleWithInfoNbTimes, name: "idleWithInfoNbTimes");
+			successfulEvent = s.SerializeObject<Generic<Event>>(successfulEvent, name: "successfulEvent");
+			fadeTotalTime = s.Serialize<float>(fadeTotalTime, name: "fadeTotalTime");
+			tutoScale = s.SerializeObject<Vec2d>(tutoScale, name: "tutoScale");
 		}
 		public override uint? ClassCRC => 0xC26BEEB1;
 	}

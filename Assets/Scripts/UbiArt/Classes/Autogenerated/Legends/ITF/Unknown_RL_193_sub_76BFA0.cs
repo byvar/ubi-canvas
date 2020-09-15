@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)] // Used for challenge historic (e.g. dailyhistoric)
 	public partial class Unknown_RL_193_sub_76BFA0 : Unknown_RL_219_sub_A763E0 {
-		[Serialize("nodePaintingOffsetY")] public float nodePaintingOffsetY;
-		[Serialize("frequency"          )] public Enum_frequency frequency;
-		[Serialize("currentOffset"      )] public Vec3d currentOffset;
+		public float nodePaintingOffsetY;
+		public Enum_frequency frequency;
+		public Vec3d currentOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(nodePaintingOffsetY));
-			SerializeField(s, nameof(frequency));
+			nodePaintingOffsetY = s.Serialize<float>(nodePaintingOffsetY, name: "nodePaintingOffsetY");
+			frequency = s.Serialize<Enum_frequency>(frequency, name: "frequency");
 			if (s.HasFlags(SerializeFlags.Editor)) {
-				SerializeField(s, nameof(currentOffset));
+				currentOffset = s.SerializeObject<Vec3d>(currentOffset, name: "currentOffset");
 			}
 		}
 		public enum Enum_frequency {

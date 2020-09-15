@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_BezierNode : CSerializable {
-		[Serialize("pos"                    )] public Vec3d pos;
-		[Serialize("tangent"                )] public Vec2d tangent;
-		[Serialize("scale"                  )] public float scale;
-		[Serialize("tween"                  )] public Nullable<RO2_BezierTween> tween;
-		[Serialize("lumChainSpeedMultiplier")] public float lumChainSpeedMultiplier;
+		public Vec3d pos;
+		public Vec2d tangent;
+		public float scale;
+		public Nullable<RO2_BezierTween> tween;
+		public float lumChainSpeedMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(pos));
-			SerializeField(s, nameof(tangent));
-			SerializeField(s, nameof(scale));
-			SerializeField(s, nameof(tween));
-			SerializeField(s, nameof(lumChainSpeedMultiplier));
+			pos = s.SerializeObject<Vec3d>(pos, name: "pos");
+			tangent = s.SerializeObject<Vec2d>(tangent, name: "tangent");
+			scale = s.Serialize<float>(scale, name: "scale");
+			tween = s.SerializeObject<Nullable<RO2_BezierTween>>(tween, name: "tween");
+			lumChainSpeedMultiplier = s.Serialize<float>(lumChainSpeedMultiplier, name: "lumChainSpeedMultiplier");
 		}
 	}
 }

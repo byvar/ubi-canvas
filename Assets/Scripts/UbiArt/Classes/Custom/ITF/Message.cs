@@ -1,74 +1,74 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Message : CSerializable {
-		[Serialize("message_handle"     )] public uint message_handle;
-		[Serialize("type"               )] public uint type;
-		[Serialize("onlinedate"         )] public online.DateTime onlinedate;
-		[Serialize("localDate"          )] public online.DateTime localDate;
-		[Serialize("persistentSeconds"  )] public uint persistentSeconds;
-		[Serialize("title"              )] public SmartLocId title;
-		[Serialize("body"               )] public SmartLocId body;
-		[Serialize("isPrompt"           )] public bool isPrompt;
-		[Serialize("isDrc"              )] public bool isDrc;
-		[Serialize("hasBeenRead"        )] public bool hasBeenRead;
-		[Serialize("isOnline"           )] public bool isOnline;
-		[Serialize("removeAfterRead"    )] public bool removeAfterRead;
-		[Serialize("hasBeenInteract"    )] public bool hasBeenInteract;
-		[Serialize("removeAfterInteract")] public bool removeAfterInteract;
-		[Serialize("lockedAfterInteract")] public bool lockedAfterInteract;
-		[Serialize("buttons"            )] public CList<SmartLocId> buttons;
-		[Serialize("attributes"         )] public CList<Attribute> attributes;
-		[Serialize("markers"            )] public CList<Marker> markers;
+		public uint message_handle;
+		public uint type;
+		public online.DateTime onlinedate;
+		public online.DateTime localDate;
+		public uint persistentSeconds;
+		public SmartLocId title;
+		public SmartLocId body;
+		public bool isPrompt;
+		public bool isDrc;
+		public bool hasBeenRead;
+		public bool isOnline;
+		public bool removeAfterRead;
+		public bool hasBeenInteract;
+		public bool removeAfterInteract;
+		public bool lockedAfterInteract;
+		public CList<SmartLocId> buttons;
+		public CList<Attribute> attributes;
+		public CList<Marker> markers;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(message_handle));
-				SerializeField(s, nameof(type));
-				SerializeField(s, nameof(onlinedate));
-				SerializeField(s, nameof(localDate));
-				SerializeField(s, nameof(persistentSeconds));
-				SerializeField(s, nameof(title));
-				SerializeField(s, nameof(body));
-				SerializeField(s, nameof(isPrompt), boolAsByte: true);
-				SerializeField(s, nameof(isDrc), boolAsByte: true);
-				SerializeField(s, nameof(hasBeenRead), boolAsByte: true);
-				SerializeField(s, nameof(isOnline), boolAsByte: true);
-				SerializeField(s, nameof(removeAfterRead), boolAsByte: true);
-				SerializeField(s, nameof(hasBeenInteract), boolAsByte: true);
-				SerializeField(s, nameof(removeAfterInteract), boolAsByte: true);
-				SerializeField(s, nameof(lockedAfterInteract), boolAsByte: true);
-				SerializeField(s, nameof(buttons));
-				SerializeField(s, nameof(attributes));
-				SerializeField(s, nameof(markers));
+				message_handle = s.Serialize<uint>(message_handle, name: "message_handle");
+				type = s.Serialize<uint>(type, name: "type");
+				onlinedate = s.SerializeObject<online.DateTime>(onlinedate, name: "onlinedate");
+				localDate = s.SerializeObject<online.DateTime>(localDate, name: "localDate");
+				persistentSeconds = s.Serialize<uint>(persistentSeconds, name: "persistentSeconds");
+				title = s.SerializeObject<SmartLocId>(title, name: "title");
+				body = s.SerializeObject<SmartLocId>(body, name: "body");
+				isPrompt = s.Serialize<bool>(isPrompt, name: "isPrompt", options: CSerializerObject.Options.BoolAsByte);
+				isDrc = s.Serialize<bool>(isDrc, name: "isDrc", options: CSerializerObject.Options.BoolAsByte);
+				hasBeenRead = s.Serialize<bool>(hasBeenRead, name: "hasBeenRead", options: CSerializerObject.Options.BoolAsByte);
+				isOnline = s.Serialize<bool>(isOnline, name: "isOnline", options: CSerializerObject.Options.BoolAsByte);
+				removeAfterRead = s.Serialize<bool>(removeAfterRead, name: "removeAfterRead", options: CSerializerObject.Options.BoolAsByte);
+				hasBeenInteract = s.Serialize<bool>(hasBeenInteract, name: "hasBeenInteract", options: CSerializerObject.Options.BoolAsByte);
+				removeAfterInteract = s.Serialize<bool>(removeAfterInteract, name: "removeAfterInteract", options: CSerializerObject.Options.BoolAsByte);
+				lockedAfterInteract = s.Serialize<bool>(lockedAfterInteract, name: "lockedAfterInteract", options: CSerializerObject.Options.BoolAsByte);
+				buttons = s.SerializeObject<CList<SmartLocId>>(buttons, name: "buttons");
+				attributes = s.SerializeObject<CList<Attribute>>(attributes, name: "attributes");
+				markers = s.SerializeObject<CList<Marker>>(markers, name: "markers");
 			}
 		}
 
 		[Games(GameFlags.RL)]
 		public partial class Marker : CSerializable {
-			[Serialize("locId"   )] public SmartLocId locId;
-			[Serialize("color"   )] public uint color;
-			[Serialize("fontSize")] public float fontSize;
+			public SmartLocId locId;
+			public uint color;
+			public float fontSize;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(locId));
-					SerializeField(s, nameof(color));
-					SerializeField(s, nameof(fontSize));
+					locId = s.SerializeObject<SmartLocId>(locId, name: "locId");
+					color = s.Serialize<uint>(color, name: "color");
+					fontSize = s.Serialize<float>(fontSize, name: "fontSize");
 				}
 			}
 		}
 
 		[Games(GameFlags.RL)]
 		public partial class Attribute : CSerializable {
-			[Serialize("type" )] public uint type;
-			[Serialize("value")] public uint value;
+			public uint type;
+			public uint value;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(type));
-					SerializeField(s, nameof(value));
+					type = s.Serialize<uint>(type, name: "type");
+					value = s.Serialize<uint>(value, name: "value");
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-﻿namespace UbiArt.online {
+namespace UbiArt.online {
 	public enum SNSType {
 		[Serialize("SNSType_Unknown")] SNSType_Unknown = 0,
 		[Serialize("SNSType_Facebook")] SNSType_Facebook = 1,

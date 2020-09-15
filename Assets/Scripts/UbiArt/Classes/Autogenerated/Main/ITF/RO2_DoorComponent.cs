@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DoorComponent : ActorComponent {
-		[Serialize("detectRange"     )] public float detectRange;
-		[Serialize("automaticOpening")] public bool automaticOpening;
-		[Serialize("openCursor"      )] public float openCursor;
-		[Serialize("isLocked"        )] public bool isLocked;
+		public float detectRange;
+		public bool automaticOpening;
+		public float openCursor;
+		public bool isLocked;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(detectRange));
-				SerializeField(s, nameof(automaticOpening));
+				detectRange = s.Serialize<float>(detectRange, name: "detectRange");
+				automaticOpening = s.Serialize<bool>(automaticOpening, name: "automaticOpening");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(openCursor));
-				SerializeField(s, nameof(isLocked));
+				openCursor = s.Serialize<float>(openCursor, name: "openCursor");
+				isLocked = s.Serialize<bool>(isLocked, name: "isLocked");
 			}
 		}
 		public override uint? ClassCRC => 0x45E0160D;

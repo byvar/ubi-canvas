@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class SequenceTrackInfo_Template : CSerializable {
-		[Serialize("isEnable"   )] public bool isEnable;
-		[Serialize("selected"   )] public bool selected;
-		[Serialize("isGroup"    )] public bool isGroup;
-		[Serialize("parentGroup")] public uint parentGroup;
-		[Serialize("name"       )] public string name;
-		[Serialize("fold"       )] public bool fold;
+		public bool isEnable;
+		public bool selected;
+		public bool isGroup;
+		public uint parentGroup;
+		public string name;
+		public bool fold;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(isEnable));
-			SerializeField(s, nameof(selected));
-			SerializeField(s, nameof(isGroup));
-			SerializeField(s, nameof(parentGroup));
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(fold));
+			isEnable = s.Serialize<bool>(isEnable, name: "isEnable");
+			selected = s.Serialize<bool>(selected, name: "selected");
+			isGroup = s.Serialize<bool>(isGroup, name: "isGroup");
+			parentGroup = s.Serialize<uint>(parentGroup, name: "parentGroup");
+			name = s.Serialize<string>(name, name: "name");
+			fold = s.Serialize<bool>(fold, name: "fold");
 		}
 	}
 }

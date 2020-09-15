@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CauldronLidComponent : ActorComponent {
-		[Serialize("touchHandler"          )] public RO2_TouchHandler touchHandler;
-		[Serialize("speedFactor"           )] public float speedFactor;
-		[Serialize("smoothFactor"          )] public float smoothFactor;
-		[Serialize("targetSmoothFactor"    )] public float targetSmoothFactor;
-		[Serialize("attachmentBone"        )] public StringID attachmentBone;
-		[Serialize("cauldronAttachmentBone")] public StringID cauldronAttachmentBone;
+		public RO2_TouchHandler touchHandler;
+		public float speedFactor;
+		public float smoothFactor;
+		public float targetSmoothFactor;
+		public StringID attachmentBone;
+		public StringID cauldronAttachmentBone;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(touchHandler));
-				SerializeField(s, nameof(speedFactor));
-				SerializeField(s, nameof(smoothFactor));
-				SerializeField(s, nameof(targetSmoothFactor));
-				SerializeField(s, nameof(attachmentBone));
-				SerializeField(s, nameof(cauldronAttachmentBone));
+				touchHandler = s.SerializeObject<RO2_TouchHandler>(touchHandler, name: "touchHandler");
+				speedFactor = s.Serialize<float>(speedFactor, name: "speedFactor");
+				smoothFactor = s.Serialize<float>(smoothFactor, name: "smoothFactor");
+				targetSmoothFactor = s.Serialize<float>(targetSmoothFactor, name: "targetSmoothFactor");
+				attachmentBone = s.SerializeObject<StringID>(attachmentBone, name: "attachmentBone");
+				cauldronAttachmentBone = s.SerializeObject<StringID>(cauldronAttachmentBone, name: "cauldronAttachmentBone");
 			}
 		}
 		public override uint? ClassCRC => 0xEE8704C7;

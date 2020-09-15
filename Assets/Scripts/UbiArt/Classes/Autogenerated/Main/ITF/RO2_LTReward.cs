@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_LTReward : CSerializable {
-		[Serialize("id"        )] public uint id;
-		[Serialize("rewardType")] public uint rewardType;
-		[Serialize("permut"    )] public uint permut;
+		public uint id;
+		public uint rewardType;
+		public uint permut;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(id));
-			SerializeField(s, nameof(rewardType));
-			SerializeField(s, nameof(permut));
+			id = s.Serialize<uint>(id, name: "id");
+			rewardType = s.Serialize<uint>(rewardType, name: "rewardType");
+			permut = s.Serialize<uint>(permut, name: "permut");
 		}
 	}
 }

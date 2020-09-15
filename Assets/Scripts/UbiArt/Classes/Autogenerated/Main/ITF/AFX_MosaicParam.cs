@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_MosaicParam : CSerializable {
-		[Serialize("use"      )] public bool use;
-		[Serialize("pixelSize")] public float pixelSize;
+		public bool use;
+		public float pixelSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(use), boolAsByte: true);
+				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(use));
+				use = s.Serialize<bool>(use, name: "use");
 			}
-			SerializeField(s, nameof(pixelSize));
+			pixelSize = s.Serialize<float>(pixelSize, name: "pixelSize");
 		}
 	}
 }

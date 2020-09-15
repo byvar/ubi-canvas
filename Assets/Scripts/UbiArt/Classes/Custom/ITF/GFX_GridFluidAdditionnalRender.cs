@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class GFX_GridFluidAdditionnalRender : CSerializable {
-		[Serialize("RenderOffset"     )] public Vec3d RenderOffset;
-		[Serialize("FluidCol"         )] public Color FluidCol;
-		[Serialize("ColorTex"         )] public Path ColorTex;
-		[Serialize("BlendMode"        )] public GFX_BLEND BlendMode;
-		[Serialize("FlowTexture"      )] public GFX_GridFluidFlowTex FlowTexture;
-		[Serialize("DuDvTexture"      )] public GFX_GridFluidDuDvTex DuDvTexture;
+		public Vec3d RenderOffset;
+		public Color FluidCol;
+		public Path ColorTex;
+		public GFX_BLEND BlendMode;
+		public GFX_GridFluidFlowTex FlowTexture;
+		public GFX_GridFluidDuDvTex DuDvTexture;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(RenderOffset));
-				SerializeField(s, nameof(FluidCol));
-				SerializeField(s, nameof(ColorTex));
-				SerializeField(s, nameof(BlendMode));
-				SerializeField(s, nameof(FlowTexture));
-				SerializeField(s, nameof(DuDvTexture));
+				RenderOffset = s.SerializeObject<Vec3d>(RenderOffset, name: "RenderOffset");
+				FluidCol = s.SerializeObject<Color>(FluidCol, name: "FluidCol");
+				ColorTex = s.SerializeObject<Path>(ColorTex, name: "ColorTex");
+				BlendMode = s.Serialize<GFX_BLEND>(BlendMode, name: "BlendMode");
+				FlowTexture = s.SerializeObject<GFX_GridFluidFlowTex>(FlowTexture, name: "FlowTexture");
+				DuDvTexture = s.SerializeObject<GFX_GridFluidDuDvTex>(DuDvTexture, name: "DuDvTexture");
 			}
 		}
 	

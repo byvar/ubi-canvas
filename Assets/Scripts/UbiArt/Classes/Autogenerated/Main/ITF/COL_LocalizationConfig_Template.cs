@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_LocalizationConfig_Template : CSerializable {
-		[Serialize("locCharacterIDMap")] public Placeholder locCharacterIDMap;
-		[Serialize("characterNames"   )] public Placeholder characterNames;
-		[Serialize("skills"           )] public Placeholder skills;
-		[Serialize("levelUpPopUp"     )] public Placeholder levelUpPopUp;
-		[Serialize("inventory"        )] public Placeholder inventory;
-		[Serialize("uplay"            )] public Placeholder uplay;
-		[Serialize("trc"              )] public Placeholder trc;
+		public Placeholder locCharacterIDMap;
+		public Placeholder characterNames;
+		public Placeholder skills;
+		public Placeholder levelUpPopUp;
+		public Placeholder inventory;
+		public Placeholder uplay;
+		public Placeholder trc;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(locCharacterIDMap));
-			SerializeField(s, nameof(characterNames));
-			SerializeField(s, nameof(skills));
-			SerializeField(s, nameof(levelUpPopUp));
-			SerializeField(s, nameof(inventory));
-			SerializeField(s, nameof(uplay));
-			SerializeField(s, nameof(trc));
+			locCharacterIDMap = s.SerializeObject<Placeholder>(locCharacterIDMap, name: "locCharacterIDMap");
+			characterNames = s.SerializeObject<Placeholder>(characterNames, name: "characterNames");
+			skills = s.SerializeObject<Placeholder>(skills, name: "skills");
+			levelUpPopUp = s.SerializeObject<Placeholder>(levelUpPopUp, name: "levelUpPopUp");
+			inventory = s.SerializeObject<Placeholder>(inventory, name: "inventory");
+			uplay = s.SerializeObject<Placeholder>(uplay, name: "uplay");
+			trc = s.SerializeObject<Placeholder>(trc, name: "trc");
 		}
 		public override uint? ClassCRC => 0xF6DD4359;
 	}

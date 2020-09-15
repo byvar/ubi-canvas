@@ -37,5 +37,9 @@ namespace UbiArt {
 
 		public static readonly Color black = new Color(0, 0, 0, 1f);
 		public static readonly Color white = new Color(1, 1, 1, 1f);
+
+		public override string ToString() {
+			return $"Color({r}, {g}, {b}, {a})";
+		}
 	}
 }

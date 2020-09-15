@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_TurnipComponent : RO2_AIComponent {
-		[Serialize("actorSpawnedPath")] public Path actorSpawnedPath;
+		public Path actorSpawnedPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(actorSpawnedPath));
+			actorSpawnedPath = s.SerializeObject<Path>(actorSpawnedPath, name: "actorSpawnedPath");
 		}
 		public override uint? ClassCRC => 0x1EBE455E;
 	}

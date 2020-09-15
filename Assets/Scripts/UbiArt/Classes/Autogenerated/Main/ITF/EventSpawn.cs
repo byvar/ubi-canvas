@@ -3,44 +3,44 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventSpawn : Event {
-		[Serialize("spawnMode"              )] public EventSpawn__e spawnMode;
-		[Serialize("waveDelay"              )] public float waveDelay;
-		[Serialize("waveGroupDelay"         )] public float waveGroupDelay;
-		[Serialize("minSimultaneousPerGroup")] public int minSimultaneousPerGroup;
-		[Serialize("totalStock"             )] public int totalStock;
-		[Serialize("minRespawnDelay"        )] public float minRespawnDelay;
-		[Serialize("maxRespawnDelay"        )] public float maxRespawnDelay;
-		[Serialize("waveType"               )] public EventSpawn__eWaveType waveType;
-		[Serialize("waveCount"              )] public int waveCount;
-		[Serialize("useTarget"              )] public bool useTarget;
-		[Serialize("BindToParent"           )] public bool BindToParent;
-		[Serialize("Enum_VH_0__0"           )] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("int__1"                 )] public int int__1;
-		[Serialize("float__2"               )] public float float__2;
-		[Serialize("float__3"               )] public float float__3;
-		[Serialize("bool__4"                )] public bool bool__4;
+		public EventSpawn__e spawnMode;
+		public float waveDelay;
+		public float waveGroupDelay;
+		public int minSimultaneousPerGroup;
+		public int totalStock;
+		public float minRespawnDelay;
+		public float maxRespawnDelay;
+		public EventSpawn__eWaveType waveType;
+		public int waveCount;
+		public bool useTarget;
+		public bool BindToParent;
+		public Enum_VH_0 Enum_VH_0__0;
+		public int int__1;
+		public float float__2;
+		public float float__3;
+		public bool bool__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(Enum_VH_0__0));
-				SerializeField(s, nameof(int__1));
-				SerializeField(s, nameof(float__2));
-				SerializeField(s, nameof(float__3));
-				SerializeField(s, nameof(bool__4));
+				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
+				int__1 = s.Serialize<int>(int__1, name: "int__1");
+				float__2 = s.Serialize<float>(float__2, name: "float__2");
+				float__3 = s.Serialize<float>(float__3, name: "float__3");
+				bool__4 = s.Serialize<bool>(bool__4, name: "bool__4");
 			} else {
-				SerializeField(s, nameof(spawnMode));
-				SerializeField(s, nameof(waveDelay));
-				SerializeField(s, nameof(waveGroupDelay));
+				spawnMode = s.Serialize<EventSpawn__e>(spawnMode, name: "spawnMode");
+				waveDelay = s.Serialize<float>(waveDelay, name: "waveDelay");
+				waveGroupDelay = s.Serialize<float>(waveGroupDelay, name: "waveGroupDelay");
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(minSimultaneousPerGroup));
-					SerializeField(s, nameof(totalStock));
-					SerializeField(s, nameof(minRespawnDelay));
-					SerializeField(s, nameof(maxRespawnDelay));
-					SerializeField(s, nameof(waveType));
-					SerializeField(s, nameof(waveCount));
+					minSimultaneousPerGroup = s.Serialize<int>(minSimultaneousPerGroup, name: "minSimultaneousPerGroup");
+					totalStock = s.Serialize<int>(totalStock, name: "totalStock");
+					minRespawnDelay = s.Serialize<float>(minRespawnDelay, name: "minRespawnDelay");
+					maxRespawnDelay = s.Serialize<float>(maxRespawnDelay, name: "maxRespawnDelay");
+					waveType = s.Serialize<EventSpawn__eWaveType>(waveType, name: "waveType");
+					waveCount = s.Serialize<int>(waveCount, name: "waveCount");
 				}
-				SerializeField(s, nameof(useTarget));
-				SerializeField(s, nameof(BindToParent));
+				useTarget = s.Serialize<bool>(useTarget, name: "useTarget");
+				BindToParent = s.Serialize<bool>(BindToParent, name: "BindToParent");
 			}
 		}
 		public enum EventSpawn__e {

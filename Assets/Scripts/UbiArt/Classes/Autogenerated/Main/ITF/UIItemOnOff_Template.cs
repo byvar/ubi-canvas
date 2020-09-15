@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIItemOnOff_Template : UIItemBasic_Template {
-		[Serialize("animOn"        )] public StringID animOn;
-		[Serialize("animOff"       )] public StringID animOff;
-		[Serialize("animActivating")] public StringID animActivating;
-		[Serialize("animActive"    )] public StringID animActive;
+		public StringID animOn;
+		public StringID animOff;
+		public StringID animActivating;
+		public StringID animActive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animOn));
-			SerializeField(s, nameof(animOff));
-			SerializeField(s, nameof(animActivating));
-			SerializeField(s, nameof(animActive));
+			animOn = s.SerializeObject<StringID>(animOn, name: "animOn");
+			animOff = s.SerializeObject<StringID>(animOff, name: "animOff");
+			animActivating = s.SerializeObject<StringID>(animActivating, name: "animActivating");
+			animActive = s.SerializeObject<StringID>(animActive, name: "animActive");
 		}
 		public override uint? ClassCRC => 0x5961CA34;
 	}

@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BubbleSpawnerComponent : ActorComponent {
-		[Serialize("bubbleLifetime"   )] public float bubbleLifetime;
-		[Serialize("bubbleFloatForceX")] public float bubbleFloatForceX;
+		public float bubbleLifetime;
+		public float bubbleFloatForceX;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(bubbleLifetime));
-				SerializeField(s, nameof(bubbleFloatForceX));
+				bubbleLifetime = s.Serialize<float>(bubbleLifetime, name: "bubbleLifetime");
+				bubbleFloatForceX = s.Serialize<float>(bubbleFloatForceX, name: "bubbleFloatForceX");
 			}
 		}
 		public override uint? ClassCRC => 0xE98D7883;

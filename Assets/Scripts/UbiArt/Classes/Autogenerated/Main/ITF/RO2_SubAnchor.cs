@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_SubAnchor : CSerializable {
-		[Serialize("name")] public StringID name;
-		[Serialize("pos" )] public Vec3d pos;
+		public StringID name;
+		public Vec3d pos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(pos));
+			name = s.SerializeObject<StringID>(name, name: "name");
+			pos = s.SerializeObject<Vec3d>(pos, name: "pos");
 		}
 	}
 }

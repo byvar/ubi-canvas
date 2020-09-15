@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class CupInfos : CSerializable {
-		[Serialize("actorPath"  )] public Path actorPath;
-		[Serialize("actorPath3D")] public Path actorPath3D;
-		[Serialize("name"       )] public SmartLocId name;
-		[Serialize("color"      )] public Color color;
+		public Path actorPath;
+		public Path actorPath3D;
+		public SmartLocId name;
+		public Color color;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(actorPath));
-			SerializeField(s, nameof(actorPath3D));
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(color));
+			actorPath = s.SerializeObject<Path>(actorPath, name: "actorPath");
+			actorPath3D = s.SerializeObject<Path>(actorPath3D, name: "actorPath3D");
+			name = s.SerializeObject<SmartLocId>(name, name: "name");
+			color = s.SerializeObject<Color>(color, name: "color");
 		}
 	}
 }

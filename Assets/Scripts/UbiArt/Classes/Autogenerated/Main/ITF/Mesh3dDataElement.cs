@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Mesh3dDataElement : CSerializable {
-		[Serialize("path"        )] public Path path;
-		[Serialize("dummyPath"   )] public Path dummyPath;
-		[Serialize("textureIndex")] public uint textureIndex;
-		[Serialize("family"      )] public StringID family;
-		[Serialize("familyIndex" )] public int familyIndex;
+		public Path path;
+		public Path dummyPath;
+		public uint textureIndex;
+		public StringID family;
+		public int familyIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(path));
-			SerializeField(s, nameof(dummyPath));
-			SerializeField(s, nameof(textureIndex));
-			SerializeField(s, nameof(family));
-			SerializeField(s, nameof(familyIndex));
+			path = s.SerializeObject<Path>(path, name: "path");
+			dummyPath = s.SerializeObject<Path>(dummyPath, name: "dummyPath");
+			textureIndex = s.Serialize<uint>(textureIndex, name: "textureIndex");
+			family = s.SerializeObject<StringID>(family, name: "family");
+			familyIndex = s.Serialize<int>(familyIndex, name: "familyIndex");
 		}
 	}
 }

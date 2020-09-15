@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class SendMetronomedEvent : Event {
-		[Serialize("WwiseMetronomeID")] public METRONOME_TYPE WwiseMetronomeID;
-		[Serialize("WwisePlayAt"     )] public AUDIO_SYNC_PLAY WwisePlayAt;
-		[Serialize("WwisePlayAtCue"  )] public StringID WwisePlayAtCue;
-		[Serialize("onPlayEvent"     )] public Generic<Event> onPlayEvent;
-		[Serialize("SendTo"          )] public ObjectPath SendTo;
+		public METRONOME_TYPE WwiseMetronomeID;
+		public AUDIO_SYNC_PLAY WwisePlayAt;
+		public StringID WwisePlayAtCue;
+		public Generic<Event> onPlayEvent;
+		public ObjectPath SendTo;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game != Settings.Game.COL) {
-				SerializeField(s, nameof(WwiseMetronomeID));
-				SerializeField(s, nameof(WwisePlayAt));
-				SerializeField(s, nameof(WwisePlayAtCue));
-				SerializeField(s, nameof(onPlayEvent));
-				SerializeField(s, nameof(SendTo));
+				WwiseMetronomeID = s.Serialize<METRONOME_TYPE>(WwiseMetronomeID, name: "WwiseMetronomeID");
+				WwisePlayAt = s.Serialize<AUDIO_SYNC_PLAY>(WwisePlayAt, name: "WwisePlayAt");
+				WwisePlayAtCue = s.SerializeObject<StringID>(WwisePlayAtCue, name: "WwisePlayAtCue");
+				onPlayEvent = s.SerializeObject<Generic<Event>>(onPlayEvent, name: "onPlayEvent");
+				SendTo = s.SerializeObject<ObjectPath>(SendTo, name: "SendTo");
 			}
 		}
 		public enum METRONOME_TYPE {

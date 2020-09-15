@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class RO2_ShooterCameraComponent_Template : BaseCameraComponent_Template {
-		[Serialize("defaultSpeed"  )] public Vec2d defaultSpeed;
-		[Serialize("defaultZOffset")] public float defaultZOffset;
+		public Vec2d defaultSpeed;
+		public float defaultZOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(defaultSpeed));
-			SerializeField(s, nameof(defaultZOffset));
+			defaultSpeed = s.SerializeObject<Vec2d>(defaultSpeed, name: "defaultSpeed");
+			defaultZOffset = s.Serialize<float>(defaultZOffset, name: "defaultZOffset");
 		}
 		public override uint? ClassCRC => 0x5ACC2440;
 	}

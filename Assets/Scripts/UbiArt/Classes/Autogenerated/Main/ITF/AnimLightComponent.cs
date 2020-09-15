@@ -3,102 +3,102 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AnimLightComponent : GraphicComponent {
-		[Serialize("syncOffset"          )] public float syncOffset;
-		[Serialize("startOffset"         )] public float startOffset;
-		[Serialize("subAnimInfo"         )] public SubAnimSet subAnimInfo;
-		[Serialize("MatShader"           )] public Path MatShader;
-		[Serialize("subSkeleton"         )] public StringID subSkeleton;
-		[Serialize("defaultAnim"         )] public StringID defaultAnim;
-		[Serialize("useZOffset"          )] public bool useZOffset;
-		[Serialize("EmitFluid"           )] public bool EmitFluid;
-		[Serialize("BasicRender"         )] public bool BasicRender;
-		[Serialize("lastAnim"            )] public StringID lastAnim;
-		[Serialize("playAnim"            )] public StringID playAnim;
-		[Serialize("playAnimFrames"      )] public uint playAnimFrames;
-		[Serialize("currentFrameSubAnims")] public CList<AnimLightFrameInfo> currentFrameSubAnims;
-		[Serialize("animInstance"        )] public Path animInstance;
-		[Serialize("bool__5"             )] public bool bool__5;
-		[Serialize("bool__6"             )] public bool bool__6;
-		[Serialize("bool__7"             )] public bool bool__7;
+		public float syncOffset;
+		public float startOffset;
+		public SubAnimSet subAnimInfo;
+		public Path MatShader;
+		public StringID subSkeleton;
+		public StringID defaultAnim;
+		public bool useZOffset;
+		public bool EmitFluid;
+		public bool BasicRender;
+		public StringID lastAnim;
+		public StringID playAnim;
+		public uint playAnimFrames;
+		public CList<AnimLightFrameInfo> currentFrameSubAnims;
+		public Path animInstance;
+		public bool bool__5;
+		public bool bool__6;
+		public bool bool__7;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(animInstance));
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+					animInstance = s.SerializeObject<Path>(animInstance, name: "animInstance");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(playAnim));
-					SerializeField(s, nameof(playAnimFrames));
-					SerializeField(s, nameof(currentFrameSubAnims));
+					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
+					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
+					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(startOffset));
-					SerializeField(s, nameof(subAnimInfo));
-					SerializeField(s, nameof(MatShader));
-					SerializeField(s, nameof(subSkeleton));
-					SerializeField(s, nameof(defaultAnim));
-					SerializeField(s, nameof(useZOffset));
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+					startOffset = s.Serialize<float>(startOffset, name: "startOffset");
+					subAnimInfo = s.SerializeObject<SubAnimSet>(subAnimInfo, name: "subAnimInfo");
+					MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
+					subSkeleton = s.SerializeObject<StringID>(subSkeleton, name: "subSkeleton");
+					defaultAnim = s.SerializeObject<StringID>(defaultAnim, name: "defaultAnim");
+					useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(playAnim));
-					SerializeField(s, nameof(playAnimFrames));
-					SerializeField(s, nameof(currentFrameSubAnims));
+					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
+					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
+					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(startOffset));
-					SerializeField(s, nameof(MatShader));
-					SerializeField(s, nameof(subSkeleton));
-					SerializeField(s, nameof(defaultAnim));
-					SerializeField(s, nameof(useZOffset), boolAsByte: true);
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+					startOffset = s.Serialize<float>(startOffset, name: "startOffset");
+					MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
+					subSkeleton = s.SerializeObject<StringID>(subSkeleton, name: "subSkeleton");
+					defaultAnim = s.SerializeObject<StringID>(defaultAnim, name: "defaultAnim");
+					useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset", options: CSerializerObject.Options.BoolAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(playAnim));
-					SerializeField(s, nameof(playAnimFrames));
-					SerializeField(s, nameof(currentFrameSubAnims));
+					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
+					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
+					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(startOffset));
-					SerializeField(s, nameof(subAnimInfo));
-					SerializeField(s, nameof(MatShader));
-					SerializeField(s, nameof(subSkeleton));
-					SerializeField(s, nameof(bool__5));
-					SerializeField(s, nameof(bool__6));
-					SerializeField(s, nameof(bool__7));
-					SerializeField(s, nameof(defaultAnim));
-					SerializeField(s, nameof(useZOffset));
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+					startOffset = s.Serialize<float>(startOffset, name: "startOffset");
+					subAnimInfo = s.SerializeObject<SubAnimSet>(subAnimInfo, name: "subAnimInfo");
+					MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
+					subSkeleton = s.SerializeObject<StringID>(subSkeleton, name: "subSkeleton");
+					bool__5 = s.Serialize<bool>(bool__5, name: "bool__5");
+					bool__6 = s.Serialize<bool>(bool__6, name: "bool__6");
+					bool__7 = s.Serialize<bool>(bool__7, name: "bool__7");
+					defaultAnim = s.SerializeObject<StringID>(defaultAnim, name: "defaultAnim");
+					useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(lastAnim));
-					SerializeField(s, nameof(playAnim));
-					SerializeField(s, nameof(playAnimFrames));
-					SerializeField(s, nameof(currentFrameSubAnims));
+					lastAnim = s.SerializeObject<StringID>(lastAnim, name: "lastAnim");
+					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
+					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
+					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(syncOffset));
-					SerializeField(s, nameof(startOffset));
-					SerializeField(s, nameof(subAnimInfo));
-					SerializeField(s, nameof(MatShader));
-					SerializeField(s, nameof(subSkeleton));
-					SerializeField(s, nameof(defaultAnim));
-					SerializeField(s, nameof(useZOffset));
+					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
+					startOffset = s.Serialize<float>(startOffset, name: "startOffset");
+					subAnimInfo = s.SerializeObject<SubAnimSet>(subAnimInfo, name: "subAnimInfo");
+					MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
+					subSkeleton = s.SerializeObject<StringID>(subSkeleton, name: "subSkeleton");
+					defaultAnim = s.SerializeObject<StringID>(defaultAnim, name: "defaultAnim");
+					useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset");
 				}
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(EmitFluid));
-					SerializeField(s, nameof(BasicRender));
+					EmitFluid = s.Serialize<bool>(EmitFluid, name: "EmitFluid");
+					BasicRender = s.Serialize<bool>(BasicRender, name: "BasicRender");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(lastAnim));
-					SerializeField(s, nameof(playAnim));
-					SerializeField(s, nameof(playAnimFrames));
-					SerializeField(s, nameof(currentFrameSubAnims));
+					lastAnim = s.SerializeObject<StringID>(lastAnim, name: "lastAnim");
+					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
+					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
+					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			}
 		}

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakPointDesc : CSerializable {
-		[Serialize("DephtNodeID"  )] public string DephtNodeID;
-		[Serialize("BreakOnDecide")] public int BreakOnDecide;
-		[Serialize("BreakOnUpdate")] public int BreakOnUpdate;
+		public string DephtNodeID;
+		public int BreakOnDecide;
+		public int BreakOnUpdate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(DephtNodeID));
-			SerializeField(s, nameof(BreakOnDecide));
-			SerializeField(s, nameof(BreakOnUpdate));
+			DephtNodeID = s.Serialize<string>(DephtNodeID, name: "DephtNodeID");
+			BreakOnDecide = s.Serialize<int>(BreakOnDecide, name: "BreakOnDecide");
+			BreakOnUpdate = s.Serialize<int>(BreakOnUpdate, name: "BreakOnUpdate");
 		}
 	}
 }

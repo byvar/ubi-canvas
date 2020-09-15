@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class TrackingConfig_Template : ITF.TemplateObj {
-		[Serialize("Rewriter")] public ITF.StatRewriter Rewriter;
+		public ITF.StatRewriter Rewriter;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Rewriter));
+			Rewriter = s.SerializeObject<ITF.StatRewriter>(Rewriter, name: "Rewriter");
 		}
 		public override uint? ClassCRC => 0x26F34891;
 	}

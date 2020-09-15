@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LumsCounterComponent : ActorComponent {
-		[Serialize("IsHelpMenuIcon")] public bool IsHelpMenuIcon;
+		public bool IsHelpMenuIcon;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(IsHelpMenuIcon));
+			IsHelpMenuIcon = s.Serialize<bool>(IsHelpMenuIcon, name: "IsHelpMenuIcon");
 		}
 		public override uint? ClassCRC => 0x9CF92AE1;
 	}

@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AISendEventAction_Template : AIAction_Template {
-		[Serialize("eventToSend"    )] public Generic<Event> eventToSend;
-		[Serialize("triggerSelf"    )] public bool triggerSelf;
-		[Serialize("triggerChildren")] public bool triggerChildren;
-		[Serialize("triggerBinded"  )] public bool triggerBinded;
-		[Serialize("broadcast"      )] public bool broadcast;
-		[Serialize("virtualChild"   )] public StringID virtualChild;
+		public Generic<Event> eventToSend;
+		public bool triggerSelf;
+		public bool triggerChildren;
+		public bool triggerBinded;
+		public bool broadcast;
+		public StringID virtualChild;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(eventToSend));
-			SerializeField(s, nameof(triggerSelf));
-			SerializeField(s, nameof(triggerChildren));
-			SerializeField(s, nameof(triggerBinded));
-			SerializeField(s, nameof(broadcast));
-			SerializeField(s, nameof(virtualChild));
+			eventToSend = s.SerializeObject<Generic<Event>>(eventToSend, name: "eventToSend");
+			triggerSelf = s.Serialize<bool>(triggerSelf, name: "triggerSelf");
+			triggerChildren = s.Serialize<bool>(triggerChildren, name: "triggerChildren");
+			triggerBinded = s.Serialize<bool>(triggerBinded, name: "triggerBinded");
+			broadcast = s.Serialize<bool>(broadcast, name: "broadcast");
+			virtualChild = s.SerializeObject<StringID>(virtualChild, name: "virtualChild");
 		}
 		public override uint? ClassCRC => 0xF053FC8A;
 	}

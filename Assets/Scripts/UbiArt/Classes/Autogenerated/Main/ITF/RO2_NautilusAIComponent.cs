@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_NautilusAIComponent : ActorComponent {
-		[Serialize("minAngle"        )] public AngleAmount minAngle;
-		[Serialize("maxAngle"        )] public AngleAmount maxAngle;
-		[Serialize("mode"            )] public Mode mode;
-		[Serialize("lockOnMinReached")] public bool lockOnMinReached;
-		[Serialize("lockOnMaxReached")] public bool lockOnMaxReached;
+		public AngleAmount minAngle;
+		public AngleAmount maxAngle;
+		public Mode mode;
+		public bool lockOnMinReached;
+		public bool lockOnMaxReached;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(minAngle));
-					SerializeField(s, nameof(maxAngle));
-					SerializeField(s, nameof(mode));
-					SerializeField(s, nameof(lockOnMinReached), boolAsByte: true);
-					SerializeField(s, nameof(lockOnMaxReached), boolAsByte: true);
+					minAngle = s.SerializeObject<AngleAmount>(minAngle, name: "minAngle");
+					maxAngle = s.SerializeObject<AngleAmount>(maxAngle, name: "maxAngle");
+					mode = s.Serialize<Mode>(mode, name: "mode");
+					lockOnMinReached = s.Serialize<bool>(lockOnMinReached, name: "lockOnMinReached", options: CSerializerObject.Options.BoolAsByte);
+					lockOnMaxReached = s.Serialize<bool>(lockOnMaxReached, name: "lockOnMaxReached", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(minAngle));
-					SerializeField(s, nameof(maxAngle));
-					SerializeField(s, nameof(mode));
-					SerializeField(s, nameof(lockOnMinReached));
-					SerializeField(s, nameof(lockOnMaxReached));
+					minAngle = s.SerializeObject<AngleAmount>(minAngle, name: "minAngle");
+					maxAngle = s.SerializeObject<AngleAmount>(maxAngle, name: "maxAngle");
+					mode = s.Serialize<Mode>(mode, name: "mode");
+					lockOnMinReached = s.Serialize<bool>(lockOnMinReached, name: "lockOnMinReached");
+					lockOnMaxReached = s.Serialize<bool>(lockOnMaxReached, name: "lockOnMaxReached");
 				}
 			}
 		}

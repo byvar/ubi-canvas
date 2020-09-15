@@ -3,25 +3,25 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_BattleTriggerComponent : CSerializable {
-		[Serialize("battleSetupsConfigOverride"    )] public Placeholder battleSetupsConfigOverride;
+		public Placeholder battleSetupsConfigOverride;
 		[Description("Ally CharacterId to force on the first spawn setup")]
-		[Serialize("forcedCharacterId_1"           )] public StringID forcedCharacterId_1;
+		public StringID forcedCharacterId_1;
 		[Description("Ally CharacterId to force on the second spawn setup")]
-		[Serialize("forcedCharacterId_2"           )] public StringID forcedCharacterId_2;
+		public StringID forcedCharacterId_2;
 		[Description("Item reward for boss enemy")]
-		[Serialize("bossItemReward"                )] public StringID bossItemReward;
-		[Serialize("forcedInitiativeType"          )] public Enum_forcedInitiativeType forcedInitiativeType;
-		[Serialize("fleeBattlePosOffsetOverride"   )] public Vec2d fleeBattlePosOffsetOverride;
-		[Serialize("useFleeBattlePosOffsetOverride")] public bool useFleeBattlePosOffsetOverride;
+		public StringID bossItemReward;
+		public Enum_forcedInitiativeType forcedInitiativeType;
+		public Vec2d fleeBattlePosOffsetOverride;
+		public bool useFleeBattlePosOffsetOverride;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(battleSetupsConfigOverride));
-			SerializeField(s, nameof(forcedCharacterId_1));
-			SerializeField(s, nameof(forcedCharacterId_2));
-			SerializeField(s, nameof(bossItemReward));
-			SerializeField(s, nameof(forcedInitiativeType));
-			SerializeField(s, nameof(fleeBattlePosOffsetOverride));
-			SerializeField(s, nameof(useFleeBattlePosOffsetOverride), boolAsByte: true);
+			battleSetupsConfigOverride = s.SerializeObject<Placeholder>(battleSetupsConfigOverride, name: "battleSetupsConfigOverride");
+			forcedCharacterId_1 = s.SerializeObject<StringID>(forcedCharacterId_1, name: "forcedCharacterId_1");
+			forcedCharacterId_2 = s.SerializeObject<StringID>(forcedCharacterId_2, name: "forcedCharacterId_2");
+			bossItemReward = s.SerializeObject<StringID>(bossItemReward, name: "bossItemReward");
+			forcedInitiativeType = s.Serialize<Enum_forcedInitiativeType>(forcedInitiativeType, name: "forcedInitiativeType");
+			fleeBattlePosOffsetOverride = s.SerializeObject<Vec2d>(fleeBattlePosOffsetOverride, name: "fleeBattlePosOffsetOverride");
+			useFleeBattlePosOffsetOverride = s.Serialize<bool>(useFleeBattlePosOffsetOverride, name: "useFleeBattlePosOffsetOverride", options: CSerializerObject.Options.BoolAsByte);
 		}
 		public enum Enum_forcedInitiativeType {
 			[Serialize("Value_0")] Value_0 = 0,

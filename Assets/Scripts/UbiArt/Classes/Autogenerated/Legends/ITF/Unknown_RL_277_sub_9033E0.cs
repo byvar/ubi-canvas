@@ -3,57 +3,57 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_277_sub_9033E0 : ActorComponent {
-		[Serialize("forcedAction"            )] public Enum_forcedAction forcedAction;
-		[Serialize("followPlayer"            )] public bool followPlayer;
-		[Serialize("followPlayerUseCamDir"   )] public bool followPlayerUseCamDir;
-		[Serialize("autoAction"              )] public bool autoAction;
-		[Serialize("useToTargetTravel"       )] public bool useToTargetTravel;
-		[Serialize("toTargetTravel"          )] public RO2_TravelData toTargetTravel;
-		[Serialize("gyroData"                )] public GyroData gyroData;
-		[Serialize("holdToggleMode"          )] public bool holdToggleMode;
-		[Serialize("holdDuringToTargetTravel")] public bool holdDuringToTargetTravel;
-		[Serialize("canBackward"             )] public bool canBackward;
-		[Serialize("canBackwardAnytime"      )] public bool canBackwardAnytime;
-		[Serialize("actionTravel"            )] public RO2_TravelData actionTravel;
-		[Serialize("activationData"          )] public ActivationData activationData;
-		[Serialize("backward"                )] public int backward;
-		[Serialize("enabled"                 )] public int enabled;
+		public Enum_forcedAction forcedAction;
+		public bool followPlayer;
+		public bool followPlayerUseCamDir;
+		public bool autoAction;
+		public bool useToTargetTravel;
+		public RO2_TravelData toTargetTravel;
+		public GyroData gyroData;
+		public bool holdToggleMode;
+		public bool holdDuringToTargetTravel;
+		public bool canBackward;
+		public bool canBackwardAnytime;
+		public RO2_TravelData actionTravel;
+		public ActivationData activationData;
+		public int backward;
+		public int enabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(forcedAction));
+				forcedAction = s.Serialize<Enum_forcedAction>(forcedAction, name: "forcedAction");
 				if (forcedAction == Enum_forcedAction.Value_1) {
-					SerializeField(s, nameof(followPlayer), boolAsByte: true);
+					followPlayer = s.Serialize<bool>(followPlayer, name: "followPlayer", options: CSerializerObject.Options.BoolAsByte);
 					if (followPlayer) {
-						SerializeField(s, nameof(followPlayerUseCamDir), boolAsByte: true);
+						followPlayerUseCamDir = s.Serialize<bool>(followPlayerUseCamDir, name: "followPlayerUseCamDir", options: CSerializerObject.Options.BoolAsByte);
 					}
 				} else {
-					SerializeField(s, nameof(autoAction), boolAsByte: true);
-					SerializeField(s, nameof(useToTargetTravel), boolAsByte: true);
+					autoAction = s.Serialize<bool>(autoAction, name: "autoAction", options: CSerializerObject.Options.BoolAsByte);
+					useToTargetTravel = s.Serialize<bool>(useToTargetTravel, name: "useToTargetTravel", options: CSerializerObject.Options.BoolAsByte);
 					if (useToTargetTravel) {
-						SerializeField(s, nameof(toTargetTravel));
+						toTargetTravel = s.SerializeObject<RO2_TravelData>(toTargetTravel, name: "toTargetTravel");
 					}
 					if (forcedAction == Enum_forcedAction.Value_4) {
-						SerializeField(s, nameof(gyroData));
+						gyroData = s.SerializeObject<GyroData>(gyroData, name: "gyroData");
 					} else if (forcedAction == Enum_forcedAction.Value_3) {
-						SerializeField(s, nameof(holdToggleMode), boolAsByte: true);
+						holdToggleMode = s.Serialize<bool>(holdToggleMode, name: "holdToggleMode", options: CSerializerObject.Options.BoolAsByte);
 						if (useToTargetTravel) {
-							SerializeField(s, nameof(holdDuringToTargetTravel), boolAsByte: true);
+							holdDuringToTargetTravel = s.Serialize<bool>(holdDuringToTargetTravel, name: "holdDuringToTargetTravel", options: CSerializerObject.Options.BoolAsByte);
 						}
 					}
 				}
 				if (forcedAction != Enum_forcedAction.Value_4) {
-					SerializeField(s, nameof(canBackward), boolAsByte: true);
+					canBackward = s.Serialize<bool>(canBackward, name: "canBackward", options: CSerializerObject.Options.BoolAsByte);
 					if (canBackward) {
-						SerializeField(s, nameof(canBackwardAnytime), boolAsByte: true);
+						canBackwardAnytime = s.Serialize<bool>(canBackwardAnytime, name: "canBackwardAnytime", options: CSerializerObject.Options.BoolAsByte);
 					}
-					SerializeField(s, nameof(actionTravel));
+					actionTravel = s.SerializeObject<RO2_TravelData>(actionTravel, name: "actionTravel");
 				}
-				SerializeField(s, nameof(activationData));
+				activationData = s.SerializeObject<ActivationData>(activationData, name: "activationData");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(backward));
-				SerializeField(s, nameof(enabled));
+				backward = s.Serialize<int>(backward, name: "backward");
+				enabled = s.Serialize<int>(enabled, name: "enabled");
 			}
 		}
 		public enum Enum_forcedAction {
@@ -68,40 +68,40 @@ namespace UbiArt.ITF {
 
 		[Games(GameFlags.RL)]
 		public partial class GyroData : CSerializable {
-			[Serialize("speed")] public Angle speed;
-			[Serialize("accel")] public Angle accel;
-			[Serialize("decel")] public Angle decel;
-			[Serialize("invertRotation")] public bool invertRotation;
+			public Angle speed;
+			public Angle accel;
+			public Angle decel;
+			public bool invertRotation;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(speed));
-				SerializeField(s, nameof(accel));
-				SerializeField(s, nameof(decel));
-				SerializeField(s, nameof(invertRotation), boolAsByte: true);
+				speed = s.SerializeObject<Angle>(speed, name: "speed");
+				accel = s.SerializeObject<Angle>(accel, name: "accel");
+				decel = s.SerializeObject<Angle>(decel, name: "decel");
+				invertRotation = s.Serialize<bool>(invertRotation, name: "invertRotation", options: CSerializerObject.Options.BoolAsByte);
 			}
 		}
 
 		[Games(GameFlags.RL)]
 		public partial class ActivationData : CSerializable {
-			[Serialize("activationMode"          )] public Enum_activationMode activationMode;
-			[Serialize("stopOnZoneExit"          )] public bool stopOnZoneExit;
-			[Serialize("canRestartAction"        )] public bool canRestartAction;
-			[Serialize("cutPreviousAction"       )] public bool cutPreviousAction;
-			[Serialize("priority"                )] public uint priority;
-			[Serialize("saveBackward"            )] public bool saveBackward;
-			[Serialize("saveBackwardOnActionExit")] public bool saveBackwardOnActionExit;
-			[Serialize("stopOnActionDone"        )] public bool stopOnActionDone;
+			public Enum_activationMode activationMode;
+			public bool stopOnZoneExit;
+			public bool canRestartAction;
+			public bool cutPreviousAction;
+			public uint priority;
+			public bool saveBackward;
+			public bool saveBackwardOnActionExit;
+			public bool stopOnActionDone;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(activationMode));
-				SerializeField(s, nameof(stopOnZoneExit), boolAsByte: true);
-				SerializeField(s, nameof(canRestartAction), boolAsByte: true);
-				SerializeField(s, nameof(cutPreviousAction), boolAsByte: true);
-				SerializeField(s, nameof(priority));
-				SerializeField(s, nameof(saveBackward), boolAsByte: true);
-				SerializeField(s, nameof(saveBackwardOnActionExit), boolAsByte: true);
+				activationMode = s.Serialize<Enum_activationMode>(activationMode, name: "activationMode");
+				stopOnZoneExit = s.Serialize<bool>(stopOnZoneExit, name: "stopOnZoneExit", options: CSerializerObject.Options.BoolAsByte);
+				canRestartAction = s.Serialize<bool>(canRestartAction, name: "canRestartAction", options: CSerializerObject.Options.BoolAsByte);
+				cutPreviousAction = s.Serialize<bool>(cutPreviousAction, name: "cutPreviousAction", options: CSerializerObject.Options.BoolAsByte);
+				priority = s.Serialize<uint>(priority, name: "priority");
+				saveBackward = s.Serialize<bool>(saveBackward, name: "saveBackward", options: CSerializerObject.Options.BoolAsByte);
+				saveBackwardOnActionExit = s.Serialize<bool>(saveBackwardOnActionExit, name: "saveBackwardOnActionExit", options: CSerializerObject.Options.BoolAsByte);
 				if (!canRestartAction) {
-					SerializeField(s, nameof(stopOnActionDone), boolAsByte: true);
+					stopOnActionDone = s.Serialize<bool>(stopOnActionDone, name: "stopOnActionDone", options: CSerializerObject.Options.BoolAsByte);
 				}
 			}
 			public enum Enum_activationMode {

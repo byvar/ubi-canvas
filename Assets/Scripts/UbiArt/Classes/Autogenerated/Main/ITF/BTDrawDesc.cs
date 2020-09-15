@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTDrawDesc : CSerializable {
-		[Serialize("StepX"         )] public float StepX;
-		[Serialize("StepY"         )] public float StepY;
-		[Serialize("FirstLefPosX"  )] public float FirstLefPosX;
-		[Serialize("nodeRaduis"    )] public float nodeRaduis;
-		[Serialize("DetailRootPosX")] public float DetailRootPosX;
-		[Serialize("DetailRootPosY")] public float DetailRootPosY;
-		[Serialize("DisplayDetail" )] public bool DisplayDetail;
-		[Serialize("NodeTitleColor")] public Color NodeTitleColor;
-		[Serialize("ClampTitle"    )] public bool ClampTitle;
-		[Serialize("NodeTitle"     )] public NODE_TITLE NodeTitle;
+		public float StepX;
+		public float StepY;
+		public float FirstLefPosX;
+		public float nodeRaduis;
+		public float DetailRootPosX;
+		public float DetailRootPosY;
+		public bool DisplayDetail;
+		public Color NodeTitleColor;
+		public bool ClampTitle;
+		public NODE_TITLE NodeTitle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(StepX));
-			SerializeField(s, nameof(StepY));
-			SerializeField(s, nameof(FirstLefPosX));
-			SerializeField(s, nameof(nodeRaduis));
-			SerializeField(s, nameof(DetailRootPosX));
-			SerializeField(s, nameof(DetailRootPosY));
-			SerializeField(s, nameof(DisplayDetail));
-			SerializeField(s, nameof(NodeTitleColor));
-			SerializeField(s, nameof(ClampTitle));
-			SerializeField(s, nameof(NodeTitle));
+			StepX = s.Serialize<float>(StepX, name: "StepX");
+			StepY = s.Serialize<float>(StepY, name: "StepY");
+			FirstLefPosX = s.Serialize<float>(FirstLefPosX, name: "FirstLefPosX");
+			nodeRaduis = s.Serialize<float>(nodeRaduis, name: "nodeRaduis");
+			DetailRootPosX = s.Serialize<float>(DetailRootPosX, name: "DetailRootPosX");
+			DetailRootPosY = s.Serialize<float>(DetailRootPosY, name: "DetailRootPosY");
+			DisplayDetail = s.Serialize<bool>(DisplayDetail, name: "DisplayDetail");
+			NodeTitleColor = s.SerializeObject<Color>(NodeTitleColor, name: "NodeTitleColor");
+			ClampTitle = s.Serialize<bool>(ClampTitle, name: "ClampTitle");
+			NodeTitle = s.Serialize<NODE_TITLE>(NodeTitle, name: "NodeTitle");
 		}
 		public enum NODE_TITLE {
 			[Serialize("NODE_TITLE_None"     )] None = 0,

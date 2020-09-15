@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTDeciderRopeCut_Template : BTDecider_Template {
-		[Serialize("invert"   )] public bool invert;
-		[Serialize("factActor")] public StringID factActor;
-		[Serialize("checkAll" )] public bool checkAll;
+		public bool invert;
+		public StringID factActor;
+		public bool checkAll;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(invert));
-			SerializeField(s, nameof(factActor));
-			SerializeField(s, nameof(checkAll));
+			invert = s.Serialize<bool>(invert, name: "invert");
+			factActor = s.SerializeObject<StringID>(factActor, name: "factActor");
+			checkAll = s.Serialize<bool>(checkAll, name: "checkAll");
 		}
 		public override uint? ClassCRC => 0x97097C82;
 	}

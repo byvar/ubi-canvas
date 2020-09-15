@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class ActorAttachedToBoneComponent : ActorComponent {
-		[Serialize("boneName"    )] public StringID boneName;
-		[Serialize("posOffset"   )] public Vec2d posOffset;
-		[Serialize("useBoneScale")] public bool useBoneScale;
-		[Serialize("useBoneAngle")] public bool useBoneAngle;
+		public StringID boneName;
+		public Vec2d posOffset;
+		public bool useBoneScale;
+		public bool useBoneAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(boneName));
-			SerializeField(s, nameof(posOffset));
-			SerializeField(s, nameof(useBoneScale));
-			SerializeField(s, nameof(useBoneAngle));
+			boneName = s.SerializeObject<StringID>(boneName, name: "boneName");
+			posOffset = s.SerializeObject<Vec2d>(posOffset, name: "posOffset");
+			useBoneScale = s.Serialize<bool>(useBoneScale, name: "useBoneScale");
+			useBoneAngle = s.Serialize<bool>(useBoneAngle, name: "useBoneAngle");
 		}
 		public override uint? ClassCRC => 0x72CD9667;
 	}

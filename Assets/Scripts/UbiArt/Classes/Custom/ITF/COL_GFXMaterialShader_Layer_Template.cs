@@ -1,22 +1,22 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_GFXMaterialShader_Layer_Template : CSerializable {
-		[Serialize("Enabled")] public int Enabled;
-		[Serialize("TexAdressingModeU")] public Enum_TexAdressingMode TexAdressingModeU;
-		[Serialize("TexAdressingModeV")] public Enum_TexAdressingMode TexAdressingModeV;
-		[Serialize("Filtering")] public int Filtering;
-		[Serialize("DiffuseColor")] public Color DiffuseColor;
-		[Serialize("TextureUsage")] public Enum_TextureUsage TextureUsage;
+		public int Enabled;
+		public Enum_TexAdressingMode TexAdressingModeU;
+		public Enum_TexAdressingMode TexAdressingModeV;
+		public int Filtering;
+		public Color DiffuseColor;
+		public Enum_TextureUsage TextureUsage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Enabled));
-			SerializeField(s, nameof(TexAdressingModeU));
-			SerializeField(s, nameof(TexAdressingModeV));
-			SerializeField(s, nameof(Filtering));
-			SerializeField(s, nameof(DiffuseColor));
-			SerializeField(s, nameof(TextureUsage));
+			Enabled = s.Serialize<int>(Enabled, name: "Enabled");
+			TexAdressingModeU = s.Serialize<Enum_TexAdressingMode>(TexAdressingModeU, name: "TexAdressingModeU");
+			TexAdressingModeV = s.Serialize<Enum_TexAdressingMode>(TexAdressingModeV, name: "TexAdressingModeV");
+			Filtering = s.Serialize<int>(Filtering, name: "Filtering");
+			DiffuseColor = s.SerializeObject<Color>(DiffuseColor, name: "DiffuseColor");
+			TextureUsage = s.Serialize<Enum_TextureUsage>(TextureUsage, name: "TextureUsage");
 		}
 		public enum Enum_TexAdressingMode {
 			[Serialize("Value_0")] Value_0 = 0,

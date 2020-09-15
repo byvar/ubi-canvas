@@ -3,31 +3,31 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PushButtonComponent : ActorComponent {
-		[Serialize("triggerOnStick")] public bool triggerOnStick;
-		[Serialize("triggerOnHit"  )] public bool triggerOnHit;
-		[Serialize("triggerOnDRC"  )] public bool triggerOnDRC;
-		[Serialize("triggerCount"  )] public uint triggerCount;
-		[Serialize("activator"     )] public uint activator;
+		public bool triggerOnStick;
+		public bool triggerOnHit;
+		public bool triggerOnDRC;
+		public uint triggerCount;
+		public uint activator;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(triggerOnStick));
-					SerializeField(s, nameof(triggerOnHit));
-					SerializeField(s, nameof(triggerOnDRC));
+					triggerOnStick = s.Serialize<bool>(triggerOnStick, name: "triggerOnStick");
+					triggerOnHit = s.Serialize<bool>(triggerOnHit, name: "triggerOnHit");
+					triggerOnDRC = s.Serialize<bool>(triggerOnDRC, name: "triggerOnDRC");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(activator));
-					SerializeField(s, nameof(triggerCount));
+					activator = s.Serialize<uint>(activator, name: "activator");
+					triggerCount = s.Serialize<uint>(triggerCount, name: "triggerCount");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(triggerOnStick));
-					SerializeField(s, nameof(triggerOnHit));
-					SerializeField(s, nameof(triggerOnDRC));
+					triggerOnStick = s.Serialize<bool>(triggerOnStick, name: "triggerOnStick");
+					triggerOnHit = s.Serialize<bool>(triggerOnHit, name: "triggerOnHit");
+					triggerOnDRC = s.Serialize<bool>(triggerOnDRC, name: "triggerOnDRC");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(triggerCount));
+					triggerCount = s.Serialize<uint>(triggerCount, name: "triggerCount");
 				}
 			}
 		}

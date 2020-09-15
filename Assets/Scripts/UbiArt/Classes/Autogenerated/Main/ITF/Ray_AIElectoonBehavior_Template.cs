@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIElectoonBehavior_Template : TemplateAIBehavior {
-		[Serialize("walk"                                 )] public Placeholder walk;
-		[Serialize("minTimeBeforeWalking"                 )] public float minTimeBeforeWalking;
-		[Serialize("maxTimeBeforeWalking"                 )] public float maxTimeBeforeWalking;
-		[Serialize("minTimeWalking"                       )] public float minTimeWalking;
-		[Serialize("maxTimeWalking"                       )] public float maxTimeWalking;
-		[Serialize("walkSpeed"                            )] public float walkSpeed;
-		[Serialize("minEjectionSpeed"                     )] public float minEjectionSpeed;
-		[Serialize("maxEjectionSpeed"                     )] public float maxEjectionSpeed;
-		[Serialize("lovePlayerDistance"                   )] public float lovePlayerDistance;
-		[Serialize("timeBeforeCanStopWalkingAndStandAgain")] public float timeBeforeCanStopWalkingAndStandAgain;
-		[Serialize("mustStay"                             )] public int mustStay;
-		[Serialize("maxDeltaYToFollow"                    )] public float maxDeltaYToFollow;
+		public Placeholder walk;
+		public float minTimeBeforeWalking;
+		public float maxTimeBeforeWalking;
+		public float minTimeWalking;
+		public float maxTimeWalking;
+		public float walkSpeed;
+		public float minEjectionSpeed;
+		public float maxEjectionSpeed;
+		public float lovePlayerDistance;
+		public float timeBeforeCanStopWalkingAndStandAgain;
+		public int mustStay;
+		public float maxDeltaYToFollow;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(walk));
-			SerializeField(s, nameof(minTimeBeforeWalking));
-			SerializeField(s, nameof(maxTimeBeforeWalking));
-			SerializeField(s, nameof(minTimeWalking));
-			SerializeField(s, nameof(maxTimeWalking));
-			SerializeField(s, nameof(walkSpeed));
-			SerializeField(s, nameof(minEjectionSpeed));
-			SerializeField(s, nameof(maxEjectionSpeed));
-			SerializeField(s, nameof(lovePlayerDistance));
-			SerializeField(s, nameof(timeBeforeCanStopWalkingAndStandAgain));
-			SerializeField(s, nameof(mustStay));
-			SerializeField(s, nameof(maxDeltaYToFollow));
+			walk = s.SerializeObject<Placeholder>(walk, name: "walk");
+			minTimeBeforeWalking = s.Serialize<float>(minTimeBeforeWalking, name: "minTimeBeforeWalking");
+			maxTimeBeforeWalking = s.Serialize<float>(maxTimeBeforeWalking, name: "maxTimeBeforeWalking");
+			minTimeWalking = s.Serialize<float>(minTimeWalking, name: "minTimeWalking");
+			maxTimeWalking = s.Serialize<float>(maxTimeWalking, name: "maxTimeWalking");
+			walkSpeed = s.Serialize<float>(walkSpeed, name: "walkSpeed");
+			minEjectionSpeed = s.Serialize<float>(minEjectionSpeed, name: "minEjectionSpeed");
+			maxEjectionSpeed = s.Serialize<float>(maxEjectionSpeed, name: "maxEjectionSpeed");
+			lovePlayerDistance = s.Serialize<float>(lovePlayerDistance, name: "lovePlayerDistance");
+			timeBeforeCanStopWalkingAndStandAgain = s.Serialize<float>(timeBeforeCanStopWalkingAndStandAgain, name: "timeBeforeCanStopWalkingAndStandAgain");
+			mustStay = s.Serialize<int>(mustStay, name: "mustStay");
+			maxDeltaYToFollow = s.Serialize<float>(maxDeltaYToFollow, name: "maxDeltaYToFollow");
 		}
 		public override uint? ClassCRC => 0x7A99DE01;
 	}

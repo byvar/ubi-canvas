@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTActionActorOverlapSetFact_Template : BTAction_Template {
-		[Serialize("factWithActor")] public StringID factWithActor;
-		[Serialize("factOnOff"    )] public StringID factOnOff;
-		[Serialize("invertTest"   )] public bool invertTest;
-		[Serialize("overlapType"  )] public EOverlapType overlapType;
+		public StringID factWithActor;
+		public StringID factOnOff;
+		public bool invertTest;
+		public EOverlapType overlapType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(factWithActor));
-			SerializeField(s, nameof(factOnOff));
-			SerializeField(s, nameof(invertTest));
-			SerializeField(s, nameof(overlapType));
+			factWithActor = s.SerializeObject<StringID>(factWithActor, name: "factWithActor");
+			factOnOff = s.SerializeObject<StringID>(factOnOff, name: "factOnOff");
+			invertTest = s.Serialize<bool>(invertTest, name: "invertTest");
+			overlapType = s.Serialize<EOverlapType>(overlapType, name: "overlapType");
 		}
 		public enum EOverlapType {
 			[Serialize("EOverlapType_Zone" )] Zone = 0,

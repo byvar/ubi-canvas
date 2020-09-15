@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL | GameFlags.VH)]
 	public partial class EventPlayWwiseEvent : SendMetronomedEvent {
-		[Serialize("WwiseEventGUID"              )] public StringID WwiseEventGUID;
-		[Serialize("EventGUIDBackupSerialization")] public StringID EventGUIDBackupSerialization;
-		[Serialize("soundPlayAfterdestroy"       )] public bool soundPlayAfterdestroy;
-		[Serialize("WwiseMetronomeID"            )] public Enum_WwiseMetronomeID WwiseMetronomeID2;
-		[Serialize("StopOnDestroy"               )] public int StopOnDestroy;
+		public StringID WwiseEventGUID;
+		public StringID EventGUIDBackupSerialization;
+		public bool soundPlayAfterdestroy;
+		public Enum_WwiseMetronomeID WwiseMetronomeID2;
+		public int StopOnDestroy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(WwiseEventGUID));
-				SerializeField(s, nameof(WwiseMetronomeID2));
-				SerializeField(s, nameof(StopOnDestroy));
+				WwiseEventGUID = s.SerializeObject<StringID>(WwiseEventGUID, name: "WwiseEventGUID");
+				WwiseMetronomeID2 = s.Serialize<Enum_WwiseMetronomeID>(WwiseMetronomeID2, name: "WwiseMetronomeID2");
+				StopOnDestroy = s.Serialize<int>(StopOnDestroy, name: "StopOnDestroy");
 			} else if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(WwiseEventGUID));
-				SerializeField(s, nameof(soundPlayAfterdestroy));
+				WwiseEventGUID = s.SerializeObject<StringID>(WwiseEventGUID, name: "WwiseEventGUID");
+				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");
 			} else {
-				SerializeField(s, nameof(WwiseEventGUID));
-				SerializeField(s, nameof(EventGUIDBackupSerialization));
-				SerializeField(s, nameof(soundPlayAfterdestroy));
+				WwiseEventGUID = s.SerializeObject<StringID>(WwiseEventGUID, name: "WwiseEventGUID");
+				EventGUIDBackupSerialization = s.SerializeObject<StringID>(EventGUIDBackupSerialization, name: "EventGUIDBackupSerialization");
+				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");
 			}
 		}
 		public enum Enum_WwiseMetronomeID {

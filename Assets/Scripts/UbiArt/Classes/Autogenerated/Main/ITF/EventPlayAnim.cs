@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventPlayAnim : Event {
-		[Serialize("AnimToPlay"      )] public StringID AnimToPlay;
-		[Serialize("isAdditive"      )] public bool isAdditive;
-		[Serialize("AdditiveWeight"  )] public float AdditiveWeight;
-		[Serialize("AdditiveUsePatch")] public bool AdditiveUsePatch;
-		[Serialize("NbBlendFrame"    )] public uint NbBlendFrame;
-		[Serialize("ResetAnim"       )] public bool ResetAnim;
-		[Serialize("AnimPriority"    )] public uint AnimPriority;
+		public StringID AnimToPlay;
+		public bool isAdditive;
+		public float AdditiveWeight;
+		public bool AdditiveUsePatch;
+		public uint NbBlendFrame;
+		public bool ResetAnim;
+		public uint AnimPriority;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(AnimToPlay));
-				SerializeField(s, nameof(NbBlendFrame));
-				SerializeField(s, nameof(ResetAnim));
-				SerializeField(s, nameof(AnimPriority));
+				AnimToPlay = s.SerializeObject<StringID>(AnimToPlay, name: "AnimToPlay");
+				NbBlendFrame = s.Serialize<uint>(NbBlendFrame, name: "NbBlendFrame");
+				ResetAnim = s.Serialize<bool>(ResetAnim, name: "ResetAnim");
+				AnimPriority = s.Serialize<uint>(AnimPriority, name: "AnimPriority");
 			} else {
-				SerializeField(s, nameof(AnimToPlay));
-				SerializeField(s, nameof(isAdditive));
-				SerializeField(s, nameof(AdditiveWeight));
-				SerializeField(s, nameof(AdditiveUsePatch));
-				SerializeField(s, nameof(NbBlendFrame));
-				SerializeField(s, nameof(ResetAnim));
-				SerializeField(s, nameof(AnimPriority));
+				AnimToPlay = s.SerializeObject<StringID>(AnimToPlay, name: "AnimToPlay");
+				isAdditive = s.Serialize<bool>(isAdditive, name: "isAdditive");
+				AdditiveWeight = s.Serialize<float>(AdditiveWeight, name: "AdditiveWeight");
+				AdditiveUsePatch = s.Serialize<bool>(AdditiveUsePatch, name: "AdditiveUsePatch");
+				NbBlendFrame = s.Serialize<uint>(NbBlendFrame, name: "NbBlendFrame");
+				ResetAnim = s.Serialize<bool>(ResetAnim, name: "ResetAnim");
+				AnimPriority = s.Serialize<uint>(AnimPriority, name: "AnimPriority");
 			}
 		}
 		public override uint? ClassCRC => 0x546A94AF;

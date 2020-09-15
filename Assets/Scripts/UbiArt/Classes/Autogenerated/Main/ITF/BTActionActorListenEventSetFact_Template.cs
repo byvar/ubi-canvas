@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTActionActorListenEventSetFact_Template : BTAction_Template {
-		[Serialize("factOnOff"  )] public StringID factOnOff;
-		[Serialize("ListenEvent")] public Generic<Event> ListenEvent;
-		[Serialize("value"      )] public string value;
-		[Serialize("type"       )] public EValueType type;
+		public StringID factOnOff;
+		public Generic<Event> ListenEvent;
+		public string value;
+		public EValueType type;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(factOnOff));
-			SerializeField(s, nameof(ListenEvent));
-			SerializeField(s, nameof(value));
-			SerializeField(s, nameof(type));
+			factOnOff = s.SerializeObject<StringID>(factOnOff, name: "factOnOff");
+			ListenEvent = s.SerializeObject<Generic<Event>>(ListenEvent, name: "ListenEvent");
+			value = s.Serialize<string>(value, name: "value");
+			type = s.Serialize<EValueType>(type, name: "type");
 		}
 		public enum EValueType {
 			[Serialize("EValueType_Unknown"   )] Unknown = 0,

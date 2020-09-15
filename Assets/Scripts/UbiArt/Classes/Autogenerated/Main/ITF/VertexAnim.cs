@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class VertexAnim : CSerializable {
-		[Serialize("animGlobalSpeed"   )] public float animGlobalSpeed;
-		[Serialize("animGlobalRotSpeed")] public Angle animGlobalRotSpeed;
-		[Serialize("animSpeedX"        )] public float animSpeedX;
-		[Serialize("animSpeedY"        )] public float animSpeedY;
-		[Serialize("animSyncX"         )] public float animSyncX;
-		[Serialize("animSyncY"         )] public float animSyncY;
-		[Serialize("animAmplitudeX"    )] public float animAmplitudeX;
-		[Serialize("animAmplitudeY"    )] public float animAmplitudeY;
-		[Serialize("animSync"          )] public float animSync;
-		[Serialize("animAngleUsed"     )] public bool animAngleUsed;
-		[Serialize("animAngle"         )] public Angle animAngle;
+		public float animGlobalSpeed;
+		public Angle animGlobalRotSpeed;
+		public float animSpeedX;
+		public float animSpeedY;
+		public float animSyncX;
+		public float animSyncY;
+		public float animAmplitudeX;
+		public float animAmplitudeY;
+		public float animSync;
+		public bool animAngleUsed;
+		public Angle animAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animGlobalSpeed));
-			SerializeField(s, nameof(animGlobalRotSpeed));
-			SerializeField(s, nameof(animSpeedX));
-			SerializeField(s, nameof(animSpeedY));
-			SerializeField(s, nameof(animSyncX));
-			SerializeField(s, nameof(animSyncY));
-			SerializeField(s, nameof(animAmplitudeX));
-			SerializeField(s, nameof(animAmplitudeY));
-			SerializeField(s, nameof(animSync));
+			animGlobalSpeed = s.Serialize<float>(animGlobalSpeed, name: "animGlobalSpeed");
+			animGlobalRotSpeed = s.SerializeObject<Angle>(animGlobalRotSpeed, name: "animGlobalRotSpeed");
+			animSpeedX = s.Serialize<float>(animSpeedX, name: "animSpeedX");
+			animSpeedY = s.Serialize<float>(animSpeedY, name: "animSpeedY");
+			animSyncX = s.Serialize<float>(animSyncX, name: "animSyncX");
+			animSyncY = s.Serialize<float>(animSyncY, name: "animSyncY");
+			animAmplitudeX = s.Serialize<float>(animAmplitudeX, name: "animAmplitudeX");
+			animAmplitudeY = s.Serialize<float>(animAmplitudeY, name: "animAmplitudeY");
+			animSync = s.Serialize<float>(animSync, name: "animSync");
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(animAngleUsed), boolAsByte: true);
+				animAngleUsed = s.Serialize<bool>(animAngleUsed, name: "animAngleUsed", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(animAngleUsed));
+				animAngleUsed = s.Serialize<bool>(animAngleUsed, name: "animAngleUsed");
 			}
-			SerializeField(s, nameof(animAngle));
+			animAngle = s.SerializeObject<Angle>(animAngle, name: "animAngle");
 		}
 	}
 }

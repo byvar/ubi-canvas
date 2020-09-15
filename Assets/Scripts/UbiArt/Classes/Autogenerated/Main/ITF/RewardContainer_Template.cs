@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class RewardContainer_Template : TemplateObj {
-		[Serialize("rewards"     )] public CList<RewardDetail> rewards;
-		[Serialize("statsHandler")] public RewardStatHandler statsHandler;
-		[Serialize("isSilent"    )] public bool isSilent;
+		public CList<RewardDetail> rewards;
+		public RewardStatHandler statsHandler;
+		public bool isSilent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(rewards));
-				SerializeField(s, nameof(isSilent));
+				rewards = s.SerializeObject<CList<RewardDetail>>(rewards, name: "rewards");
+				isSilent = s.Serialize<bool>(isSilent, name: "isSilent");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(isSilent));
+				isSilent = s.Serialize<bool>(isSilent, name: "isSilent");
 			} else {
-				SerializeField(s, nameof(rewards));
-				SerializeField(s, nameof(statsHandler));
-				SerializeField(s, nameof(isSilent));
+				rewards = s.SerializeObject<CList<RewardDetail>>(rewards, name: "rewards");
+				statsHandler = s.SerializeObject<RewardStatHandler>(statsHandler, name: "statsHandler");
+				isSilent = s.Serialize<bool>(isSilent, name: "isSilent");
 			}
 		}
 		public override uint? ClassCRC => 0x3ABE1DA8;

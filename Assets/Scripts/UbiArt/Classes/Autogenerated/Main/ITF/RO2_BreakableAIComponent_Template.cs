@@ -3,47 +3,47 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BreakableAIComponent_Template : RO2_AIComponent_Template {
-		[Serialize("reward"                 )] public Generic<RO2_EventSpawnReward> reward2;
-		[Serialize("crushAttackDamage"      )] public uint crushAttackDamage;
-		[Serialize("frontDamage"            )] public uint frontDamage;
-		[Serialize("backDamage"             )] public uint backDamage;
-		[Serialize("hitAngleOffset"         )] public Angle hitAngleOffset;
-		[Serialize("hitAngleMinIncidence"   )] public Angle hitAngleMinIncidence;
-		[Serialize("restoreAnim"            )] public StringID restoreAnim;
-		[Serialize("checkHitSenderDirection")] public bool checkHitSenderDirection;
-		[Serialize("destructionStages"      )] public CList<RO2_BreakableAIComponent_Template.DestructionStage> destructionStages;
-		[Serialize("openAnim"               )] public StringID openAnim;
-		[Serialize("openAnimReverse"        )] public StringID openAnimReverse;
-		[Serialize("resetOnCheckpoint"      )] public bool resetOnCheckpoint;
-		[Serialize("isTouchTapSensitive"    )] public bool isTouchTapSensitive;
+		public Generic<RO2_EventSpawnReward> reward2;
+		public uint crushAttackDamage;
+		public uint frontDamage;
+		public uint backDamage;
+		public Angle hitAngleOffset;
+		public Angle hitAngleMinIncidence;
+		public StringID restoreAnim;
+		public bool checkHitSenderDirection;
+		public CList<RO2_BreakableAIComponent_Template.DestructionStage> destructionStages;
+		public StringID openAnim;
+		public StringID openAnimReverse;
+		public bool resetOnCheckpoint;
+		public bool isTouchTapSensitive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(reward2));
-			SerializeField(s, nameof(crushAttackDamage));
-			SerializeField(s, nameof(frontDamage));
-			SerializeField(s, nameof(backDamage));
-			SerializeField(s, nameof(hitAngleOffset));
-			SerializeField(s, nameof(hitAngleMinIncidence));
-			SerializeField(s, nameof(restoreAnim));
-			SerializeField(s, nameof(checkHitSenderDirection));
-			SerializeField(s, nameof(destructionStages));
-			SerializeField(s, nameof(openAnim));
-			SerializeField(s, nameof(openAnimReverse));
-			SerializeField(s, nameof(resetOnCheckpoint));
-			SerializeField(s, nameof(isTouchTapSensitive));
+			reward2 = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward2, name: "reward2");
+			crushAttackDamage = s.Serialize<uint>(crushAttackDamage, name: "crushAttackDamage");
+			frontDamage = s.Serialize<uint>(frontDamage, name: "frontDamage");
+			backDamage = s.Serialize<uint>(backDamage, name: "backDamage");
+			hitAngleOffset = s.SerializeObject<Angle>(hitAngleOffset, name: "hitAngleOffset");
+			hitAngleMinIncidence = s.SerializeObject<Angle>(hitAngleMinIncidence, name: "hitAngleMinIncidence");
+			restoreAnim = s.SerializeObject<StringID>(restoreAnim, name: "restoreAnim");
+			checkHitSenderDirection = s.Serialize<bool>(checkHitSenderDirection, name: "checkHitSenderDirection");
+			destructionStages = s.SerializeObject<CList<RO2_BreakableAIComponent_Template.DestructionStage>>(destructionStages, name: "destructionStages");
+			openAnim = s.SerializeObject<StringID>(openAnim, name: "openAnim");
+			openAnimReverse = s.SerializeObject<StringID>(openAnimReverse, name: "openAnimReverse");
+			resetOnCheckpoint = s.Serialize<bool>(resetOnCheckpoint, name: "resetOnCheckpoint");
+			isTouchTapSensitive = s.Serialize<bool>(isTouchTapSensitive, name: "isTouchTapSensitive");
 		}
 		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class DestructionStage : CSerializable {
-			[Serialize("rumble"        )] public StringID rumble;
-			[Serialize("destroy"       )] public StringID destroy;
-			[Serialize("destroyReverse")] public StringID destroyReverse;
-			[Serialize("stand"         )] public StringID stand;
+			public StringID rumble;
+			public StringID destroy;
+			public StringID destroyReverse;
+			public StringID stand;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(rumble));
-				SerializeField(s, nameof(destroy));
-				SerializeField(s, nameof(destroyReverse));
-				SerializeField(s, nameof(stand));
+				rumble = s.SerializeObject<StringID>(rumble, name: "rumble");
+				destroy = s.SerializeObject<StringID>(destroy, name: "destroy");
+				destroyReverse = s.SerializeObject<StringID>(destroyReverse, name: "destroyReverse");
+				stand = s.SerializeObject<StringID>(stand, name: "stand");
 			}
 		}
 		public override uint? ClassCRC => 0x093BDC7B;

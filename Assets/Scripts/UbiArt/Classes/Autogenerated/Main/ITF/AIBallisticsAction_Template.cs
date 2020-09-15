@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RL | GameFlags.VH)]
 	public partial class AIBallisticsAction_Template : AIAction_Template {
-		[Serialize("duration")] public float duration;
-		[Serialize("speed"   )] public float speed;
+		public float duration;
+		public float speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(duration));
-			SerializeField(s, nameof(speed));
+			duration = s.Serialize<float>(duration, name: "duration");
+			speed = s.Serialize<float>(speed, name: "speed");
 		}
 		public override uint? ClassCRC => 0x60637C23;
 	}

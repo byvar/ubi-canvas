@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_217_sub_818240 : CSerializable {
-		[Serialize("teamEnabled"    )] public int teamEnabled;
-		[Serialize("teamMaxMember"  )] public uint teamMaxMember;
-		[Serialize("scoreIsIn3D"    )] public int scoreIsIn3D;
-		[Serialize("colorRayman"    )] public Color colorRayman;
-		[Serialize("colorGlobox"    )] public Color colorGlobox;
-		[Serialize("colorTeensy"    )] public Color colorTeensy;
-		[Serialize("colorTeensyMago")] public Color colorTeensyMago;
+		public int teamEnabled;
+		public uint teamMaxMember;
+		public int scoreIsIn3D;
+		public Color colorRayman;
+		public Color colorGlobox;
+		public Color colorTeensy;
+		public Color colorTeensyMago;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(teamEnabled));
-			SerializeField(s, nameof(teamMaxMember));
-			SerializeField(s, nameof(scoreIsIn3D));
-			SerializeField(s, nameof(colorRayman));
-			SerializeField(s, nameof(colorGlobox));
-			SerializeField(s, nameof(colorTeensy));
-			SerializeField(s, nameof(colorTeensyMago));
+			teamEnabled = s.Serialize<int>(teamEnabled, name: "teamEnabled");
+			teamMaxMember = s.Serialize<uint>(teamMaxMember, name: "teamMaxMember");
+			scoreIsIn3D = s.Serialize<int>(scoreIsIn3D, name: "scoreIsIn3D");
+			colorRayman = s.SerializeObject<Color>(colorRayman, name: "colorRayman");
+			colorGlobox = s.SerializeObject<Color>(colorGlobox, name: "colorGlobox");
+			colorTeensy = s.SerializeObject<Color>(colorTeensy, name: "colorTeensy");
+			colorTeensyMago = s.SerializeObject<Color>(colorTeensyMago, name: "colorTeensyMago");
 		}
 		public override uint? ClassCRC => 0x9B8A06A2;
 	}

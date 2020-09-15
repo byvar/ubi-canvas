@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CamModeMoverComponent : ActorComponent {
-		[Serialize("TimeToMove")] public float TimeToMove;
-		[Serialize("BlendCoeff")] public float BlendCoeff;
+		public float TimeToMove;
+		public float BlendCoeff;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(TimeToMove));
-				SerializeField(s, nameof(BlendCoeff));
+				TimeToMove = s.Serialize<float>(TimeToMove, name: "TimeToMove");
+				BlendCoeff = s.Serialize<float>(BlendCoeff, name: "BlendCoeff");
 			}
 		}
 		public override uint? ClassCRC => 0xD2957F2A;

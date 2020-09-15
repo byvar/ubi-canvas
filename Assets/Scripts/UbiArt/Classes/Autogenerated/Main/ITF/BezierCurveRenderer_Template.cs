@@ -3,70 +3,70 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.ROVersion)]
 	public partial class BezierCurveRenderer_Template : CSerializable {
-		[Serialize("beginLength"        )] public float beginLength;
-		[Serialize("endLength"          )] public float endLength;
-		[Serialize("beginWidth"         )] public float beginWidth;
-		[Serialize("midWidth"           )] public float midWidth;
-		[Serialize("endWidth"           )] public float endWidth;
-		[Serialize("beginAlpha"         )] public float beginAlpha;
-		[Serialize("midAlpha"           )] public float midAlpha;
-		[Serialize("endAlpha"           )] public float endAlpha;
-		[Serialize("beginColor"         )] public Color beginColor;
-		[Serialize("midColor"           )] public Color midColor;
-		[Serialize("endColor"           )] public Color endColor;
-		[Serialize("tileLength"         )] public float tileLength;
-		[Serialize("stretchTexture"     )] public bool stretchTexture;
-		[Serialize("tessellationLength" )] public float tessellationLength;
-		[Serialize("primitiveParameters")] public GFXPrimitiveParam primitiveParameters;
-		[Serialize("texture"            )] public Path texture;
-		[Serialize("material"           )] public GFXMaterialSerializable material;
-		[Serialize("divMode"            )] public BezierDivMode divMode;
-		[Serialize("startUV"            )] public float startUV;
-		[Serialize("color"              )] public Color color;
-		[Serialize("fogColor"           )] public Color fogColor;
-		[Serialize("uvMode"             )] public UV_MODE uvMode;
+		public float beginLength;
+		public float endLength;
+		public float beginWidth;
+		public float midWidth;
+		public float endWidth;
+		public float beginAlpha;
+		public float midAlpha;
+		public float endAlpha;
+		public Color beginColor;
+		public Color midColor;
+		public Color endColor;
+		public float tileLength;
+		public bool stretchTexture;
+		public float tessellationLength;
+		public GFXPrimitiveParam primitiveParameters;
+		public Path texture;
+		public GFXMaterialSerializable material;
+		public BezierDivMode divMode;
+		public float startUV;
+		public Color color;
+		public Color fogColor;
+		public UV_MODE uvMode;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(beginLength));
-				SerializeField(s, nameof(endLength));
-				SerializeField(s, nameof(beginWidth));
-				SerializeField(s, nameof(midWidth));
-				SerializeField(s, nameof(endWidth));
-				SerializeField(s, nameof(beginAlpha));
-				SerializeField(s, nameof(midAlpha));
-				SerializeField(s, nameof(endAlpha));
-				SerializeField(s, nameof(startUV));
-				SerializeField(s, nameof(tileLength));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(fogColor));
-				SerializeField(s, nameof(texture));
-				SerializeField(s, nameof(uvMode));
-				SerializeField(s, nameof(tessellationLength));
+				beginLength = s.Serialize<float>(beginLength, name: "beginLength");
+				endLength = s.Serialize<float>(endLength, name: "endLength");
+				beginWidth = s.Serialize<float>(beginWidth, name: "beginWidth");
+				midWidth = s.Serialize<float>(midWidth, name: "midWidth");
+				endWidth = s.Serialize<float>(endWidth, name: "endWidth");
+				beginAlpha = s.Serialize<float>(beginAlpha, name: "beginAlpha");
+				midAlpha = s.Serialize<float>(midAlpha, name: "midAlpha");
+				endAlpha = s.Serialize<float>(endAlpha, name: "endAlpha");
+				startUV = s.Serialize<float>(startUV, name: "startUV");
+				tileLength = s.Serialize<float>(tileLength, name: "tileLength");
+				color = s.SerializeObject<Color>(color, name: "color");
+				fogColor = s.SerializeObject<Color>(fogColor, name: "fogColor");
+				texture = s.SerializeObject<Path>(texture, name: "texture");
+				uvMode = s.Serialize<UV_MODE>(uvMode, name: "uvMode");
+				tessellationLength = s.Serialize<float>(tessellationLength, name: "tessellationLength");
 			} else {
-				SerializeField(s, nameof(beginLength));
-				SerializeField(s, nameof(endLength));
-				SerializeField(s, nameof(beginWidth));
-				SerializeField(s, nameof(midWidth));
-				SerializeField(s, nameof(endWidth));
+				beginLength = s.Serialize<float>(beginLength, name: "beginLength");
+				endLength = s.Serialize<float>(endLength, name: "endLength");
+				beginWidth = s.Serialize<float>(beginWidth, name: "beginWidth");
+				midWidth = s.Serialize<float>(midWidth, name: "midWidth");
+				endWidth = s.Serialize<float>(endWidth, name: "endWidth");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(beginAlpha));
-					SerializeField(s, nameof(midAlpha));
-					SerializeField(s, nameof(endAlpha));
+					beginAlpha = s.Serialize<float>(beginAlpha, name: "beginAlpha");
+					midAlpha = s.Serialize<float>(midAlpha, name: "midAlpha");
+					endAlpha = s.Serialize<float>(endAlpha, name: "endAlpha");
 				}
-				SerializeField(s, nameof(beginColor));
-				SerializeField(s, nameof(midColor));
-				SerializeField(s, nameof(endColor));
-				SerializeField(s, nameof(tileLength));
-				SerializeField(s, nameof(stretchTexture));
-				SerializeField(s, nameof(tessellationLength));
-				SerializeField(s, nameof(primitiveParameters));
+				beginColor = s.SerializeObject<Color>(beginColor, name: "beginColor");
+				midColor = s.SerializeObject<Color>(midColor, name: "midColor");
+				endColor = s.SerializeObject<Color>(endColor, name: "endColor");
+				tileLength = s.Serialize<float>(tileLength, name: "tileLength");
+				stretchTexture = s.Serialize<bool>(stretchTexture, name: "stretchTexture");
+				tessellationLength = s.Serialize<float>(tessellationLength, name: "tessellationLength");
+				primitiveParameters = s.SerializeObject<GFXPrimitiveParam>(primitiveParameters, name: "primitiveParameters");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(divMode));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				divMode = s.Serialize<BezierDivMode>(divMode, name: "divMode");
 			}
 		}
 		public enum BezierDivMode {

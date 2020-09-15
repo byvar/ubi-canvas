@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class BezierBone : CSerializable {
-		[Serialize("id"           )] public StringID id;
-		[Serialize("distance"     )] public float distance;
-		[Serialize("offset"       )] public float offset;
-		[Serialize("followTangent")] public bool followTangent;
+		public StringID id;
+		public float distance;
+		public float offset;
+		public bool followTangent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(id));
-			SerializeField(s, nameof(distance));
-			SerializeField(s, nameof(offset));
-			SerializeField(s, nameof(followTangent));
+			id = s.SerializeObject<StringID>(id, name: "id");
+			distance = s.Serialize<float>(distance, name: "distance");
+			offset = s.Serialize<float>(offset, name: "offset");
+			followTangent = s.Serialize<bool>(followTangent, name: "followTangent");
 		}
 	}
 }

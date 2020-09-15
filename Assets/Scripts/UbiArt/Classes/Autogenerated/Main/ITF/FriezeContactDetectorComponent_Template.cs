@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class FriezeContactDetectorComponent_Template : DetectorComponent_Template {
-		[Serialize("factionToDetect"  )] public uint factionToDetect;
-		[Serialize("allowDeadActors"  )] public bool allowDeadActors;
-		[Serialize("detectHang"       )] public bool detectHang;
+		public uint factionToDetect;
+		public bool allowDeadActors;
+		public bool detectHang;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(factionToDetect));
-			SerializeField(s, nameof(allowDeadActors));
-			SerializeField(s, nameof(detectHang));
+			factionToDetect = s.Serialize<uint>(factionToDetect, name: "factionToDetect");
+			allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
+			detectHang = s.Serialize<bool>(detectHang, name: "detectHang");
 		}
 		public override uint? ClassCRC => 0xF0860387;
 	}

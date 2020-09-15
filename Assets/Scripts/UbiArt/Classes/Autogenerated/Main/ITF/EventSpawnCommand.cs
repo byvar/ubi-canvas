@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventSpawnCommand : Event {
-		[Serialize("Command" )] public EventSpawnCommand_Enum Command;
-		[Serialize("duration")] public float duration;
+		public EventSpawnCommand_Enum Command;
+		public float duration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Command));
+			Command = s.Serialize<EventSpawnCommand_Enum>(Command, name: "Command");
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(duration));
+				duration = s.Serialize<float>(duration, name: "duration");
 			}
 		}
 		public enum EventSpawnCommand_Enum {

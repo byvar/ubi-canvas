@@ -3,38 +3,38 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.COL)]
 	public partial class PolyLine : CSerializable {
-		[Serialize("PolyPointList")] public PolyPointList PolyPointList;
-		[Serialize("AABB"         )] public AABB AABB;
-		[Serialize("Connection"   )] public PolyLine.Connection connection;
-		[Serialize("POINTS"       )] public CList<PolyLineEdge> POINTS;
+		public PolyPointList PolyPointList;
+		public AABB AABB;
+		public PolyLine.Connection connection;
+		public CList<PolyLineEdge> POINTS;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
-					SerializeField(s, nameof(POINTS));
+					POINTS = s.SerializeObject<CList<PolyLineEdge>>(POINTS, name: "POINTS");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(PolyPointList));
-				SerializeField(s, nameof(AABB));
+				PolyPointList = s.SerializeObject<PolyPointList>(PolyPointList, name: "PolyPointList");
+				AABB = s.SerializeObject<AABB>(AABB, name: "AABB");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(AABB));
+					AABB = s.SerializeObject<AABB>(AABB, name: "AABB");
 				}
 			} else {
-				SerializeField(s, nameof(PolyPointList));
-				SerializeField(s, nameof(AABB));
+				PolyPointList = s.SerializeObject<PolyPointList>(PolyPointList, name: "PolyPointList");
+				AABB = s.SerializeObject<AABB>(AABB, name: "AABB");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(connection));
+					connection = s.SerializeObject<PolyLine.Connection>(connection, name: "connection");
 				}
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class Connection : CSerializable {
-			[Serialize("PreviousId")] public uint PreviousId;
-			[Serialize("PosInit"   )] public Vec2d PosInit;
+			public uint PreviousId;
+			public Vec2d PosInit;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(PreviousId));
-				SerializeField(s, nameof(PosInit));
+				PreviousId = s.Serialize<uint>(PreviousId, name: "PreviousId");
+				PosInit = s.SerializeObject<Vec2d>(PosInit, name: "PosInit");
 			}
 		}
 		public override uint? ClassCRC => 0x732A7AA3;

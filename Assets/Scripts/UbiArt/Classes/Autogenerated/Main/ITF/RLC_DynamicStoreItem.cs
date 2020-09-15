@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_DynamicStoreItem : CSerializable {
-		[Serialize("msdkItemId")] public uint msdkItemId;
-		[Serialize("locId"     )] public uint locId;
-		[Serialize("version"   )] public uint version;
+		public uint msdkItemId;
+		public uint locId;
+		public uint version;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(msdkItemId));
-			SerializeField(s, nameof(locId));
-			SerializeField(s, nameof(version));
+			msdkItemId = s.Serialize<uint>(msdkItemId, name: "msdkItemId");
+			locId = s.Serialize<uint>(locId, name: "locId");
+			version = s.Serialize<uint>(version, name: "version");
 		}
 		public override uint? ClassCRC => 0x5161A81E;
 	}

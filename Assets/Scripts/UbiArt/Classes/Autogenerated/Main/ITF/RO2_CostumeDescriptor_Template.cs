@@ -4,26 +4,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CostumeDescriptor_Template : TemplateObj {
-		[Serialize("decorationBrickPath")] public Path decorationBrickPath;
-		[Serialize("priority"           )] public int priority;
-		[Serialize("costumeTag"         )] public StringID costumeTag;
-		[Serialize("costumetype"        )] public CostumeType costumetype;
-		[Serialize("costumetype"        )] public CostumeType2 costumetype2;
-		[Serialize("unlockable"         )] public bool unlockable;
+		public Path decorationBrickPath;
+		public int priority;
+		public StringID costumeTag;
+		public CostumeType costumetype;
+		public CostumeType2 costumetype2;
+		public bool unlockable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(decorationBrickPath));
-				SerializeField(s, nameof(priority));
-				SerializeField(s, nameof(costumeTag));
-				SerializeField(s, nameof(costumetype2));
-				SerializeField(s, nameof(unlockable));
+				decorationBrickPath = s.SerializeObject<Path>(decorationBrickPath, name: "decorationBrickPath");
+				priority = s.Serialize<int>(priority, name: "priority");
+				costumeTag = s.SerializeObject<StringID>(costumeTag, name: "costumeTag");
+				costumetype2 = s.Serialize<CostumeType2>(costumetype2, name: "costumetype2");
+				unlockable = s.Serialize<bool>(unlockable, name: "unlockable");
 			} else {
-				SerializeField(s, nameof(decorationBrickPath));
-				SerializeField(s, nameof(priority));
-				SerializeField(s, nameof(costumeTag));
-				SerializeField(s, nameof(costumetype));
-				SerializeField(s, nameof(unlockable));
+				decorationBrickPath = s.SerializeObject<Path>(decorationBrickPath, name: "decorationBrickPath");
+				priority = s.Serialize<int>(priority, name: "priority");
+				costumeTag = s.SerializeObject<StringID>(costumeTag, name: "costumeTag");
+				costumetype = s.Serialize<CostumeType>(costumetype, name: "costumetype");
+				unlockable = s.Serialize<bool>(unlockable, name: "unlockable");
 			}
 		}
 		[Flags]

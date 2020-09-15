@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIShooterVacuumBehavior_Template : TemplateAIBehavior {
-		[Serialize("vacuumSkill"      )] public VacuumSkill_Template vacuumSkill;
-		[Serialize("waitAction"       )] public Generic<AIAction_Template> waitAction;
-		[Serialize("vacuumAction"     )] public Generic<AIAction_Template> vacuumAction;
-		[Serialize("spitAction"       )] public Generic<AIAction_Template> spitAction;
-		[Serialize("spitMarker"       )] public StringID spitMarker;
-		[Serialize("spitBoneName"     )] public StringID spitBoneName;
-		[Serialize("spitForce"        )] public Vec2d spitForce;
-		[Serialize("startVacuumMarker")] public StringID startVacuumMarker;
+		public VacuumSkill_Template vacuumSkill;
+		public Generic<AIAction_Template> waitAction;
+		public Generic<AIAction_Template> vacuumAction;
+		public Generic<AIAction_Template> spitAction;
+		public StringID spitMarker;
+		public StringID spitBoneName;
+		public Vec2d spitForce;
+		public StringID startVacuumMarker;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(vacuumSkill));
-			SerializeField(s, nameof(waitAction));
-			SerializeField(s, nameof(vacuumAction));
-			SerializeField(s, nameof(spitAction));
-			SerializeField(s, nameof(spitMarker));
-			SerializeField(s, nameof(spitBoneName));
-			SerializeField(s, nameof(spitForce));
-			SerializeField(s, nameof(startVacuumMarker));
+			vacuumSkill = s.SerializeObject<VacuumSkill_Template>(vacuumSkill, name: "vacuumSkill");
+			waitAction = s.SerializeObject<Generic<AIAction_Template>>(waitAction, name: "waitAction");
+			vacuumAction = s.SerializeObject<Generic<AIAction_Template>>(vacuumAction, name: "vacuumAction");
+			spitAction = s.SerializeObject<Generic<AIAction_Template>>(spitAction, name: "spitAction");
+			spitMarker = s.SerializeObject<StringID>(spitMarker, name: "spitMarker");
+			spitBoneName = s.SerializeObject<StringID>(spitBoneName, name: "spitBoneName");
+			spitForce = s.SerializeObject<Vec2d>(spitForce, name: "spitForce");
+			startVacuumMarker = s.SerializeObject<StringID>(startVacuumMarker, name: "startVacuumMarker");
 		}
 		public override uint? ClassCRC => 0xBBE22808;
 	}

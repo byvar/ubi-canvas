@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FairyNodeComponent : RO2_SnakeNetworkNodeComponent {
-		[Serialize("lumsCount"       )] public uint lumsCount;
-		[Serialize("lumsDropMinDist" )] public float lumsDropMinDist;
-		[Serialize("lumsDropStepDist")] public float lumsDropStepDist;
+		public uint lumsCount;
+		public float lumsDropMinDist;
+		public float lumsDropStepDist;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(lumsCount));
-			SerializeField(s, nameof(lumsDropMinDist));
-			SerializeField(s, nameof(lumsDropStepDist));
+			lumsCount = s.Serialize<uint>(lumsCount, name: "lumsCount");
+			lumsDropMinDist = s.Serialize<float>(lumsDropMinDist, name: "lumsDropMinDist");
+			lumsDropStepDist = s.Serialize<float>(lumsDropStepDist, name: "lumsDropStepDist");
 		}
 		public override uint? ClassCRC => 0x3B569C33;
 	}

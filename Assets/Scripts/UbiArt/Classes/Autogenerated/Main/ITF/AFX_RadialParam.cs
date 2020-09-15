@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_RadialParam : CSerializable {
-		[Serialize("use"         )] public bool use;
-		[Serialize("centerOffset")] public Vec2d centerOffset;
-		[Serialize("strength"    )] public float strength;
-		[Serialize("size"        )] public float size;
+		public bool use;
+		public Vec2d centerOffset;
+		public float strength;
+		public float size;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(use), boolAsByte: true);
+				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(use));
+				use = s.Serialize<bool>(use, name: "use");
 			}
-			SerializeField(s, nameof(centerOffset));
-			SerializeField(s, nameof(strength));
-			SerializeField(s, nameof(size));
+			centerOffset = s.SerializeObject<Vec2d>(centerOffset, name: "centerOffset");
+			strength = s.Serialize<float>(strength, name: "strength");
+			size = s.Serialize<float>(size, name: "size");
 		}
 	}
 }

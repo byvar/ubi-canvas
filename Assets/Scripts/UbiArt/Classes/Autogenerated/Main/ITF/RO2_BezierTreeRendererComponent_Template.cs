@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_BezierTreeRendererComponent_Template : GraphicComponent_Template {
-		[Serialize("bezierRenderer"     )] public BezierCurveRenderer_Template bezierRenderer;
-		[Serialize("tileSpriteIndex"    )] public uint tileSpriteIndex;
-		[Serialize("tileSpriteSubDiv"   )] public float tileSpriteSubDiv;
-		[Serialize("startSpriteIndex"   )] public uint startSpriteIndex;
-		[Serialize("startSpriteLength"  )] public float startSpriteLength;
-		[Serialize("endSpriteIndex"     )] public uint endSpriteIndex;
-		[Serialize("endSpriteLength"    )] public float endSpriteLength;
-		[Serialize("spriteCyclePlayRate")] public float spriteCyclePlayRate;
-		[Serialize("uvStretch"          )] public bool uvStretch;
-		[Serialize("uvAttachToHead"     )] public bool uvAttachToHead;
-		[Serialize("uvScaleAdaptive"    )] public bool uvScaleAdaptive;
-		[Serialize("uvScrollSpeed"      )] public float uvScrollSpeed;
-		[Serialize("zOffset"            )] public float zOffset;
+		public BezierCurveRenderer_Template bezierRenderer;
+		public uint tileSpriteIndex;
+		public float tileSpriteSubDiv;
+		public uint startSpriteIndex;
+		public float startSpriteLength;
+		public uint endSpriteIndex;
+		public float endSpriteLength;
+		public float spriteCyclePlayRate;
+		public bool uvStretch;
+		public bool uvAttachToHead;
+		public bool uvScaleAdaptive;
+		public float uvScrollSpeed;
+		public float zOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bezierRenderer));
-			SerializeField(s, nameof(tileSpriteIndex));
-			SerializeField(s, nameof(tileSpriteSubDiv));
-			SerializeField(s, nameof(startSpriteIndex));
-			SerializeField(s, nameof(startSpriteLength));
-			SerializeField(s, nameof(endSpriteIndex));
-			SerializeField(s, nameof(endSpriteLength));
-			SerializeField(s, nameof(spriteCyclePlayRate));
-			SerializeField(s, nameof(uvStretch));
-			SerializeField(s, nameof(uvAttachToHead));
-			SerializeField(s, nameof(uvScaleAdaptive));
-			SerializeField(s, nameof(uvScrollSpeed));
-			SerializeField(s, nameof(zOffset));
+			bezierRenderer = s.SerializeObject<BezierCurveRenderer_Template>(bezierRenderer, name: "bezierRenderer");
+			tileSpriteIndex = s.Serialize<uint>(tileSpriteIndex, name: "tileSpriteIndex");
+			tileSpriteSubDiv = s.Serialize<float>(tileSpriteSubDiv, name: "tileSpriteSubDiv");
+			startSpriteIndex = s.Serialize<uint>(startSpriteIndex, name: "startSpriteIndex");
+			startSpriteLength = s.Serialize<float>(startSpriteLength, name: "startSpriteLength");
+			endSpriteIndex = s.Serialize<uint>(endSpriteIndex, name: "endSpriteIndex");
+			endSpriteLength = s.Serialize<float>(endSpriteLength, name: "endSpriteLength");
+			spriteCyclePlayRate = s.Serialize<float>(spriteCyclePlayRate, name: "spriteCyclePlayRate");
+			uvStretch = s.Serialize<bool>(uvStretch, name: "uvStretch");
+			uvAttachToHead = s.Serialize<bool>(uvAttachToHead, name: "uvAttachToHead");
+			uvScaleAdaptive = s.Serialize<bool>(uvScaleAdaptive, name: "uvScaleAdaptive");
+			uvScrollSpeed = s.Serialize<float>(uvScrollSpeed, name: "uvScrollSpeed");
+			zOffset = s.Serialize<float>(zOffset, name: "zOffset");
 		}
 		public override uint? ClassCRC => 0x174A6BDD;
 	}

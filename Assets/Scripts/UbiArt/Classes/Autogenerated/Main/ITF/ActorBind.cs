@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class ActorBind : CSerializable {
-		[Serialize("parentPath"      )] public ObjectPath parentPath;
-		[Serialize("offsetPos"       )] public Vec3d offsetPos;
-		[Serialize("offsetAngle"     )] public float offsetAngle;
-		[Serialize("type"            )] public Type type;
-		[Serialize("typeData"        )] public uint typeData;
-		[Serialize("useParentFlip"   )] public bool useParentFlip;
-		[Serialize("useParentScale"  )] public bool useParentScale;
-		[Serialize("removeWithParent")] public bool removeWithParent;
+		public ObjectPath parentPath;
+		public Vec3d offsetPos;
+		public float offsetAngle;
+		public Type type;
+		public uint typeData;
+		public bool useParentFlip;
+		public bool useParentScale;
+		public bool removeWithParent;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(parentPath));
-				SerializeField(s, nameof(offsetPos));
-				SerializeField(s, nameof(offsetAngle));
-				SerializeField(s, nameof(type));
-				SerializeField(s, nameof(typeData));
+				parentPath = s.SerializeObject<ObjectPath>(parentPath, name: "parentPath");
+				offsetPos = s.SerializeObject<Vec3d>(offsetPos, name: "offsetPos");
+				offsetAngle = s.Serialize<float>(offsetAngle, name: "offsetAngle");
+				type = s.Serialize<Type>(type, name: "type");
+				typeData = s.Serialize<uint>(typeData, name: "typeData");
 			}
 			if(s.HasFlags((SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0 | SerializeFlags.Editor))) {
-				SerializeField(s, nameof(useParentFlip));
-				SerializeField(s, nameof(useParentScale));
-				SerializeField(s, nameof(removeWithParent));
+				useParentFlip = s.Serialize<bool>(useParentFlip, name: "useParentFlip");
+				useParentScale = s.Serialize<bool>(useParentScale, name: "useParentScale");
+				removeWithParent = s.Serialize<bool>(removeWithParent, name: "removeWithParent");
 			}
 		}
 		public enum Type {

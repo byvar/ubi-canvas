@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIDarktoonTrapBehavior_Template : TemplateAIBehavior {
-		[Serialize("startsHidden"     )] public int startsHidden;
-		[Serialize("heightFactor"     )] public float heightFactor;
-		[Serialize("attackRate"       )] public float attackRate;
-		[Serialize("coolDownDuration" )] public float coolDownDuration;
-		[Serialize("returnHitMaxLevel")] public uint returnHitMaxLevel;
-		[Serialize("outerShape"       )] public Placeholder outerShape;
-		[Serialize("innerShape"       )] public Placeholder innerShape;
-		[Serialize("idle"             )] public Placeholder idle;
-		[Serialize("attack"           )] public Placeholder attack;
+		public int startsHidden;
+		public float heightFactor;
+		public float attackRate;
+		public float coolDownDuration;
+		public uint returnHitMaxLevel;
+		public Placeholder outerShape;
+		public Placeholder innerShape;
+		public Placeholder idle;
+		public Placeholder attack;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(startsHidden));
-			SerializeField(s, nameof(heightFactor));
-			SerializeField(s, nameof(attackRate));
-			SerializeField(s, nameof(coolDownDuration));
-			SerializeField(s, nameof(returnHitMaxLevel));
-			SerializeField(s, nameof(outerShape));
-			SerializeField(s, nameof(innerShape));
-			SerializeField(s, nameof(idle));
-			SerializeField(s, nameof(attack));
+			startsHidden = s.Serialize<int>(startsHidden, name: "startsHidden");
+			heightFactor = s.Serialize<float>(heightFactor, name: "heightFactor");
+			attackRate = s.Serialize<float>(attackRate, name: "attackRate");
+			coolDownDuration = s.Serialize<float>(coolDownDuration, name: "coolDownDuration");
+			returnHitMaxLevel = s.Serialize<uint>(returnHitMaxLevel, name: "returnHitMaxLevel");
+			outerShape = s.SerializeObject<Placeholder>(outerShape, name: "outerShape");
+			innerShape = s.SerializeObject<Placeholder>(innerShape, name: "innerShape");
+			idle = s.SerializeObject<Placeholder>(idle, name: "idle");
+			attack = s.SerializeObject<Placeholder>(attack, name: "attack");
 		}
 		public override uint? ClassCRC => 0xED2F49D6;
 	}

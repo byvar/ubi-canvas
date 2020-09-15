@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_EventAIOrderBT : Event {
-		[Serialize("type")] public BTAIORDER type;
+		public BTAIORDER type;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
+			type = s.Serialize<BTAIORDER>(type, name: "type");
 		}
 		public enum BTAIORDER {
 			[Serialize("BTAIORDER_WAITFORPLAYER"       )] WAITFORPLAYER = 1,

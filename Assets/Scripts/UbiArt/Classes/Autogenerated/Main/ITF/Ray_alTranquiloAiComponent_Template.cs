@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_alTranquiloAiComponent_Template : AIComponent_Template {
-		[Serialize("idleAnim"        )] public StringID idleAnim;
-		[Serialize("squashedAnim"    )] public StringID squashedAnim;
-		[Serialize("staySquashedAnim")] public StringID staySquashedAnim;
-		[Serialize("staySquashedTime")] public float staySquashedTime;
-		[Serialize("autoBounce"      )] public int autoBounce;
-		[Serialize("bouncePos"       )] public Vec2d bouncePos;
-		[Serialize("isMini"          )] public int isMini;
-		[Serialize("bubblePath"      )] public Path bubblePath;
-		[Serialize("spawnBone"       )] public StringID spawnBone;
-		[Serialize("respawnTime"     )] public float respawnTime;
-		[Serialize("bounceAngle"     )] public Angle bounceAngle;
-		[Serialize("bounceType"      )] public Enum_RFR_0 bounceType;
+		public StringID idleAnim;
+		public StringID squashedAnim;
+		public StringID staySquashedAnim;
+		public float staySquashedTime;
+		public int autoBounce;
+		public Vec2d bouncePos;
+		public int isMini;
+		public Path bubblePath;
+		public StringID spawnBone;
+		public float respawnTime;
+		public Angle bounceAngle;
+		public Enum_RFR_0 bounceType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idleAnim));
-			SerializeField(s, nameof(squashedAnim));
-			SerializeField(s, nameof(staySquashedAnim));
-			SerializeField(s, nameof(staySquashedTime));
-			SerializeField(s, nameof(autoBounce));
-			SerializeField(s, nameof(bouncePos));
-			SerializeField(s, nameof(isMini));
-			SerializeField(s, nameof(bubblePath));
-			SerializeField(s, nameof(spawnBone));
-			SerializeField(s, nameof(respawnTime));
-			SerializeField(s, nameof(bounceAngle));
-			SerializeField(s, nameof(bounceType));
+			idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
+			squashedAnim = s.SerializeObject<StringID>(squashedAnim, name: "squashedAnim");
+			staySquashedAnim = s.SerializeObject<StringID>(staySquashedAnim, name: "staySquashedAnim");
+			staySquashedTime = s.Serialize<float>(staySquashedTime, name: "staySquashedTime");
+			autoBounce = s.Serialize<int>(autoBounce, name: "autoBounce");
+			bouncePos = s.SerializeObject<Vec2d>(bouncePos, name: "bouncePos");
+			isMini = s.Serialize<int>(isMini, name: "isMini");
+			bubblePath = s.SerializeObject<Path>(bubblePath, name: "bubblePath");
+			spawnBone = s.SerializeObject<StringID>(spawnBone, name: "spawnBone");
+			respawnTime = s.Serialize<float>(respawnTime, name: "respawnTime");
+			bounceAngle = s.SerializeObject<Angle>(bounceAngle, name: "bounceAngle");
+			bounceType = s.Serialize<Enum_RFR_0>(bounceType, name: "bounceType");
 		}
 		public enum Enum_RFR_0 {
 		}

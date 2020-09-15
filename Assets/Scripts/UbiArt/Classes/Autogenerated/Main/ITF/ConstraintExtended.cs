@@ -3,17 +3,17 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class ConstraintExtended : CSerializable {
-		[Serialize("offset"                  )] public float offset;
-		[Serialize("timeToIncrease"          )] public float timeToIncrease;
-		[Serialize("timeToWaitBeforeDecrease")] public float timeToWaitBeforeDecrease;
-		[Serialize("timeToDecrease"          )] public float timeToDecrease;
+		public float offset;
+		public float timeToIncrease;
+		public float timeToWaitBeforeDecrease;
+		public float timeToDecrease;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(timeToIncrease));
-				SerializeField(s, nameof(timeToWaitBeforeDecrease));
-				SerializeField(s, nameof(timeToDecrease));
+				offset = s.Serialize<float>(offset, name: "offset");
+				timeToIncrease = s.Serialize<float>(timeToIncrease, name: "timeToIncrease");
+				timeToWaitBeforeDecrease = s.Serialize<float>(timeToWaitBeforeDecrease, name: "timeToWaitBeforeDecrease");
+				timeToDecrease = s.Serialize<float>(timeToDecrease, name: "timeToDecrease");
 			}
 		}
 	}

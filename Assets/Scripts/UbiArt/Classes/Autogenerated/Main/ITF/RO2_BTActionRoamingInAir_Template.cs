@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionRoamingInAir_Template : BTAction_Template {
-		[Serialize("animFly"      )] public StringID animFly;
-		[Serialize("uTurnToPlayer")] public bool uTurnToPlayer;
-		[Serialize("safeDistance" )] public float safeDistance;
+		public StringID animFly;
+		public bool uTurnToPlayer;
+		public float safeDistance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animFly));
-			SerializeField(s, nameof(uTurnToPlayer));
-			SerializeField(s, nameof(safeDistance));
+			animFly = s.SerializeObject<StringID>(animFly, name: "animFly");
+			uTurnToPlayer = s.Serialize<bool>(uTurnToPlayer, name: "uTurnToPlayer");
+			safeDistance = s.Serialize<float>(safeDistance, name: "safeDistance");
 		}
 		public override uint? ClassCRC => 0xB2037A0D;
 	}

@@ -3,33 +3,33 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIOceanSpiderBehavior_Template : TemplateAIBehavior {
-		[Serialize("Actions"             )] public CList<RO2_AIOceanSpiderBehavior_Template.ActionTemplate> Actions;
-		[Serialize("Instructions"        )] public CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> Instructions;
-		[Serialize("InactiveInstructions")] public CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> InactiveInstructions;
+		public CList<RO2_AIOceanSpiderBehavior_Template.ActionTemplate> Actions;
+		public CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> Instructions;
+		public CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> InactiveInstructions;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Actions));
-			SerializeField(s, nameof(Instructions));
-			SerializeField(s, nameof(InactiveInstructions));
+			Actions = s.SerializeObject<CList<RO2_AIOceanSpiderBehavior_Template.ActionTemplate>>(Actions, name: "Actions");
+			Instructions = s.SerializeObject<CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate>>(Instructions, name: "Instructions");
+			InactiveInstructions = s.SerializeObject<CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate>>(InactiveInstructions, name: "InactiveInstructions");
 		}
 		[Games(GameFlags.RA)]
 		public partial class InstructionTemplate : CSerializable {
-			[Serialize("actionName")] public StringID actionName;
-			[Serialize("playCount" )] public uint playCount;
+			public StringID actionName;
+			public uint playCount;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(actionName));
-				SerializeField(s, nameof(playCount));
+				actionName = s.SerializeObject<StringID>(actionName, name: "actionName");
+				playCount = s.Serialize<uint>(playCount, name: "playCount");
 			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class ActionTemplate : CSerializable {
-			[Serialize("name"  )] public StringID name;
-			[Serialize("action")] public Generic<AIAction_Template> action;
+			public StringID name;
+			public Generic<AIAction_Template> action;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(action));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				action = s.SerializeObject<Generic<AIAction_Template>>(action, name: "action");
 			}
 		}
 		public override uint? ClassCRC => 0x56166679;

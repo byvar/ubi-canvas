@@ -3,64 +3,64 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_GameConfigExtended_Template : GameConfigExtended_Template {
-		[Serialize("test"                      )] public uint test;
-		[Serialize("PreviewGlobox"             )] public Path PreviewGlobox;
-		[Serialize("PreviewTeensy"             )] public Path PreviewTeensy;
-		[Serialize("LeaderboardMap"            )] public Path LeaderboardMap;
-		[Serialize("LeaderboardPlayerFace"     )] public Path LeaderboardPlayerFace;
-		[Serialize("LeaderboardPlayerBubble"   )] public Path LeaderboardPlayerBubble;
-		[Serialize("LeaderboardPlayerYou"      )] public Path LeaderboardPlayerYou;
-		[Serialize("LeaderboardFlag"           )] public Path LeaderboardFlag;
-		[Serialize("LeaderboardGodRay"         )] public Path LeaderboardGodRay;
-		[Serialize("LeaderboardPannel"         )] public Path LeaderboardPannel;
-		[Serialize("PlayerProfileFlag"         )] public Path PlayerProfileFlag;
-		[Serialize("LeaderboardPlayerName"     )] public Path LeaderboardPlayerName;
-		[Serialize("SideGreenToadPath"         )] public Path SideGreenToadPath;
-		[Serialize("SideSplinterToadPath"      )] public Path SideSplinterToadPath;
-		[Serialize("SideMinotaursPath"         )] public Path SideMinotaursPath;
-		[Serialize("SideDevilBobPath"          )] public Path SideDevilBobPath;
-		[Serialize("SideSwordmanPath"          )] public Path SideSwordmanPath;
-		[Serialize("SideGreenToadOffset"       )] public Vec2d SideGreenToadOffset;
-		[Serialize("SideSplinterToadOffset"    )] public Vec2d SideSplinterToadOffset;
-		[Serialize("SideMinotaursOffset"       )] public Vec2d SideMinotaursOffset;
-		[Serialize("SideDevilBobOffset"        )] public Vec2d SideDevilBobOffset;
-		[Serialize("SideSwordmanOffset"        )] public Vec2d SideSwordmanOffset;
-		[Serialize("CountryAtlasList"          )] public CMap<string, uint> CountryAtlasList;
-		[Serialize("regionBackgrounds"         )] public CMap<RLC_GraphicalFamily, RegionPathList> regionBackgrounds;
-		[Serialize("eventBackgrounds"          )] public CMap<uint, Path> eventBackgrounds;
-		[Serialize("shareConfigScreenShotType" )] public CMap<RLC_SocialManager.eScreenShotType, RO2_GameConfigExtended_Template.ShareConfig> shareConfigScreenShotType;
-		[Serialize("shareConfigFamilyShowcase" )] public CMap<uint, RO2_GameConfigExtended_Template.ShareConfig> shareConfigFamilyShowcase;
-		[Serialize("shareConfigCostumeShowcase")] public CMap<StringID, RO2_GameConfigExtended_Template.ShareConfig> shareConfigCostumeShowcase;
+		public uint test;
+		public Path PreviewGlobox;
+		public Path PreviewTeensy;
+		public Path LeaderboardMap;
+		public Path LeaderboardPlayerFace;
+		public Path LeaderboardPlayerBubble;
+		public Path LeaderboardPlayerYou;
+		public Path LeaderboardFlag;
+		public Path LeaderboardGodRay;
+		public Path LeaderboardPannel;
+		public Path PlayerProfileFlag;
+		public Path LeaderboardPlayerName;
+		public Path SideGreenToadPath;
+		public Path SideSplinterToadPath;
+		public Path SideMinotaursPath;
+		public Path SideDevilBobPath;
+		public Path SideSwordmanPath;
+		public Vec2d SideGreenToadOffset;
+		public Vec2d SideSplinterToadOffset;
+		public Vec2d SideMinotaursOffset;
+		public Vec2d SideDevilBobOffset;
+		public Vec2d SideSwordmanOffset;
+		public CMap<string, uint> CountryAtlasList;
+		public CMap<RLC_GraphicalFamily, RegionPathList> regionBackgrounds;
+		public CMap<uint, Path> eventBackgrounds;
+		public CMap<RLC_SocialManager.eScreenShotType, RO2_GameConfigExtended_Template.ShareConfig> shareConfigScreenShotType;
+		public CMap<uint, RO2_GameConfigExtended_Template.ShareConfig> shareConfigFamilyShowcase;
+		public CMap<StringID, RO2_GameConfigExtended_Template.ShareConfig> shareConfigCostumeShowcase;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(test));
-			SerializeField(s, nameof(PreviewGlobox));
-			SerializeField(s, nameof(PreviewTeensy));
-			SerializeField(s, nameof(LeaderboardMap));
-			SerializeField(s, nameof(LeaderboardPlayerFace));
-			SerializeField(s, nameof(LeaderboardPlayerBubble));
-			SerializeField(s, nameof(LeaderboardPlayerYou));
-			SerializeField(s, nameof(LeaderboardFlag));
-			SerializeField(s, nameof(LeaderboardGodRay));
-			SerializeField(s, nameof(LeaderboardPannel));
-			SerializeField(s, nameof(PlayerProfileFlag));
-			SerializeField(s, nameof(LeaderboardPlayerName));
-			SerializeField(s, nameof(SideGreenToadPath));
-			SerializeField(s, nameof(SideSplinterToadPath));
-			SerializeField(s, nameof(SideMinotaursPath));
-			SerializeField(s, nameof(SideDevilBobPath));
-			SerializeField(s, nameof(SideSwordmanPath));
-			SerializeField(s, nameof(SideGreenToadOffset));
-			SerializeField(s, nameof(SideSplinterToadOffset));
-			SerializeField(s, nameof(SideMinotaursOffset));
-			SerializeField(s, nameof(SideDevilBobOffset));
-			SerializeField(s, nameof(SideSwordmanOffset));
-			SerializeField(s, nameof(CountryAtlasList));
-			SerializeField(s, nameof(regionBackgrounds));
-			SerializeField(s, nameof(eventBackgrounds));
-			SerializeField(s, nameof(shareConfigScreenShotType));
-			SerializeField(s, nameof(shareConfigFamilyShowcase));
-			SerializeField(s, nameof(shareConfigCostumeShowcase));
+			test = s.Serialize<uint>(test, name: "test");
+			PreviewGlobox = s.SerializeObject<Path>(PreviewGlobox, name: "PreviewGlobox");
+			PreviewTeensy = s.SerializeObject<Path>(PreviewTeensy, name: "PreviewTeensy");
+			LeaderboardMap = s.SerializeObject<Path>(LeaderboardMap, name: "LeaderboardMap");
+			LeaderboardPlayerFace = s.SerializeObject<Path>(LeaderboardPlayerFace, name: "LeaderboardPlayerFace");
+			LeaderboardPlayerBubble = s.SerializeObject<Path>(LeaderboardPlayerBubble, name: "LeaderboardPlayerBubble");
+			LeaderboardPlayerYou = s.SerializeObject<Path>(LeaderboardPlayerYou, name: "LeaderboardPlayerYou");
+			LeaderboardFlag = s.SerializeObject<Path>(LeaderboardFlag, name: "LeaderboardFlag");
+			LeaderboardGodRay = s.SerializeObject<Path>(LeaderboardGodRay, name: "LeaderboardGodRay");
+			LeaderboardPannel = s.SerializeObject<Path>(LeaderboardPannel, name: "LeaderboardPannel");
+			PlayerProfileFlag = s.SerializeObject<Path>(PlayerProfileFlag, name: "PlayerProfileFlag");
+			LeaderboardPlayerName = s.SerializeObject<Path>(LeaderboardPlayerName, name: "LeaderboardPlayerName");
+			SideGreenToadPath = s.SerializeObject<Path>(SideGreenToadPath, name: "SideGreenToadPath");
+			SideSplinterToadPath = s.SerializeObject<Path>(SideSplinterToadPath, name: "SideSplinterToadPath");
+			SideMinotaursPath = s.SerializeObject<Path>(SideMinotaursPath, name: "SideMinotaursPath");
+			SideDevilBobPath = s.SerializeObject<Path>(SideDevilBobPath, name: "SideDevilBobPath");
+			SideSwordmanPath = s.SerializeObject<Path>(SideSwordmanPath, name: "SideSwordmanPath");
+			SideGreenToadOffset = s.SerializeObject<Vec2d>(SideGreenToadOffset, name: "SideGreenToadOffset");
+			SideSplinterToadOffset = s.SerializeObject<Vec2d>(SideSplinterToadOffset, name: "SideSplinterToadOffset");
+			SideMinotaursOffset = s.SerializeObject<Vec2d>(SideMinotaursOffset, name: "SideMinotaursOffset");
+			SideDevilBobOffset = s.SerializeObject<Vec2d>(SideDevilBobOffset, name: "SideDevilBobOffset");
+			SideSwordmanOffset = s.SerializeObject<Vec2d>(SideSwordmanOffset, name: "SideSwordmanOffset");
+			CountryAtlasList = s.SerializeObject<CMap<string, uint>>(CountryAtlasList, name: "CountryAtlasList");
+			regionBackgrounds = s.SerializeObject<CMap<RLC_GraphicalFamily, RegionPathList>>(regionBackgrounds, name: "regionBackgrounds");
+			eventBackgrounds = s.SerializeObject<CMap<uint, Path>>(eventBackgrounds, name: "eventBackgrounds");
+			shareConfigScreenShotType = s.SerializeObject<CMap<RLC_SocialManager.eScreenShotType, RO2_GameConfigExtended_Template.ShareConfig>>(shareConfigScreenShotType, name: "shareConfigScreenShotType");
+			shareConfigFamilyShowcase = s.SerializeObject<CMap<uint, RO2_GameConfigExtended_Template.ShareConfig>>(shareConfigFamilyShowcase, name: "shareConfigFamilyShowcase");
+			shareConfigCostumeShowcase = s.SerializeObject<CMap<StringID, RO2_GameConfigExtended_Template.ShareConfig>>(shareConfigCostumeShowcase, name: "shareConfigCostumeShowcase");
 		}
 		public enum RLC_GraphicalFamily {
 			[Serialize("RLC_GraphicalFamily_Unknown"      )] Unknown = 0,
@@ -78,16 +78,16 @@ namespace UbiArt.ITF {
 
 		[Games(GameFlags.RA)]
 		public partial class ShareConfig : CSerializable {
-			[Serialize("snsUrl" )] public CMap<online.SNSType, string> snsUrl;
-			[Serialize("url"    )] public string url;
-			[Serialize("anim"   )] public string anim;
-			[Serialize("preview")] public Path preview;
+			public CMap<online.SNSType, string> snsUrl;
+			public string url;
+			public string anim;
+			public Path preview;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(snsUrl));
-				SerializeField(s, nameof(url));
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(preview));
+				snsUrl = s.SerializeObject<CMap<online.SNSType, string>>(snsUrl, name: "snsUrl");
+				url = s.Serialize<string>(url, name: "url");
+				anim = s.Serialize<string>(anim, name: "anim");
+				preview = s.SerializeObject<Path>(preview, name: "preview");
 			}
 
 		}

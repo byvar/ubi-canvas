@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventAIOrder : EventGeneric {
-		[Serialize("targetReachedRadius")] public float targetReachedRadius;
-		[Serialize("playerDetectRadius" )] public float playerDetectRadius;
-		[Serialize("orderType"          )] public ORDERTYPE orderType;
+		public float targetReachedRadius;
+		public float playerDetectRadius;
+		public ORDERTYPE orderType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(targetReachedRadius));
-			SerializeField(s, nameof(playerDetectRadius));
-			SerializeField(s, nameof(orderType));
+			targetReachedRadius = s.Serialize<float>(targetReachedRadius, name: "targetReachedRadius");
+			playerDetectRadius = s.Serialize<float>(playerDetectRadius, name: "playerDetectRadius");
+			orderType = s.Serialize<ORDERTYPE>(orderType, name: "orderType");
 		}
 		public enum ORDERTYPE {
 			[Serialize("ORDERTYPE_Unknown"       )] Unknown = 0,

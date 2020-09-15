@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossLuchadoreComponent : ActorComponent {
-		[Serialize("testedPhaseTag"  )] public StringID testedPhaseTag;
-		[Serialize("nextPhaseIndex"  )] public int nextPhaseIndex;
-		[Serialize("sequenceHitCount")] public uint sequenceHitCount;
+		public StringID testedPhaseTag;
+		public int nextPhaseIndex;
+		public uint sequenceHitCount;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(testedPhaseTag));
+			testedPhaseTag = s.SerializeObject<StringID>(testedPhaseTag, name: "testedPhaseTag");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(nextPhaseIndex));
-				SerializeField(s, nameof(sequenceHitCount));
+				nextPhaseIndex = s.Serialize<int>(nextPhaseIndex, name: "nextPhaseIndex");
+				sequenceHitCount = s.Serialize<uint>(sequenceHitCount, name: "sequenceHitCount");
 			}
 		}
 		public override uint? ClassCRC => 0x4A4CDA29;

@@ -22,6 +22,10 @@ namespace UbiArt {
 			s.Serialize<float>(ref y);
 		}
 
+		public override string ToString() {
+			return $"Vec2d({x}, {y})";
+		}
+
 		public static readonly Vec2d zero = new Vec2d();
 		public static readonly Vec2d one = new Vec2d(1f, 1f);
 

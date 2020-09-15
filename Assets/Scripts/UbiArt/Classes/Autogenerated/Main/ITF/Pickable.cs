@@ -3,140 +3,140 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class Pickable : BaseObject {
-		[Serialize("globalPos"                )] public Vec3d globalPos;
-		[Serialize("RELATIVEZ"                )] public float RELATIVEZ;
-		[Serialize("USERFRIENDLY"             )] public string USERFRIENDLY;
-		[Serialize("UPDATEDEPENDENCYLIST"     )] public CArray<ObjectPath> UPDATEDEPENDENCYLIST;
-		[Serialize("STARTPAUSE"               )] public bool STARTPAUSE;
-		[Serialize("isEnabled"                )] public bool isEnabled;
-		[Serialize("POS2D"                    )] public Vec2d POS2D;
-		[Serialize("ObjectDeviceSpeed"        )] public DeviceInfo__Device_Speed ObjectDeviceSpeed;
-		[Serialize("ObjectDeviceSpeed_L2"     )] public DeviceInfo__Device_Speed ObjectDeviceSpeed_L2;
-		[Serialize("INSTANCEDATAFILE"         )] public Path INSTANCEDATAFILE;
-		[Serialize("persistenceId"            )] public uint persistenceId;
-		[Serialize("USEVIEWFRUSTUMFLAG"       )] public bool USEVIEWFRUSTUMFLAG;
-		[Serialize("SCALE"                    )] public Vec2d SCALE;
-		[Serialize("OFFSCREEN_UPDATE_OVERRIDE")] public int OFFSCREEN_UPDATE_OVERRIDE;
-		[Serialize("UPDATE_TYPE"              )] public UpdateType UPDATE_TYPE;
-		[Serialize("AABB_RELATIVE"            )] public AABB AABB_RELATIVE;
-		[Serialize("CURPOS"                   )] public Vec3d CURPOS;
-		[Serialize("CURANGLE"                 )] public float CURANGLE;
-		[Serialize("CURSCALE"                 )] public Vec2d CURSCALE;
-		[Serialize("ISALLOWEDFORCELL"         )] public int ISALLOWEDFORCELL;
-		[Serialize("ANGLE"                    )] public Angle ANGLE;
-		[Serialize("xFLIPPED"                 )] public bool xFLIPPED;
+		public Vec3d globalPos;
+		public float RELATIVEZ;
+		public string USERFRIENDLY;
+		public CArray<ObjectPath> UPDATEDEPENDENCYLIST;
+		public bool STARTPAUSE;
+		public bool isEnabled;
+		public Vec2d POS2D;
+		public DeviceInfo__Device_Speed ObjectDeviceSpeed;
+		public DeviceInfo__Device_Speed ObjectDeviceSpeed_L2;
+		public Path INSTANCEDATAFILE;
+		public uint persistenceId;
+		public bool USEVIEWFRUSTUMFLAG;
+		public Vec2d SCALE;
+		public int OFFSCREEN_UPDATE_OVERRIDE;
+		public UpdateType UPDATE_TYPE;
+		public AABB AABB_RELATIVE;
+		public Vec3d CURPOS;
+		public float CURANGLE;
+		public Vec2d CURSCALE;
+		public int ISALLOWEDFORCELL;
+		public Angle ANGLE;
+		public bool xFLIPPED;
 
-		[Serialize("Enum_VH_0__22"            )] public Enum_VH_0 Enum_VH_0__22;
+		public Enum_VH_0 Enum_VH_0__22;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(POS2D));
-					SerializeField(s, nameof(RELATIVEZ));
-					SerializeField(s, nameof(ANGLE), type: typeof(float));
-					SerializeField(s, nameof(SCALE));
-					SerializeField(s, nameof(USERFRIENDLY));
-					SerializeField(s, nameof(OFFSCREEN_UPDATE_OVERRIDE));
-					SerializeField(s, nameof(UPDATE_TYPE));
+					POS2D = s.SerializeObject<Vec2d>(POS2D, name: "POS2D");
+					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
+					ANGLE = (Angle)s.Serialize<float>((float)ANGLE, name: "ANGLE");
+					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
+					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
+					OFFSCREEN_UPDATE_OVERRIDE = s.Serialize<int>(OFFSCREEN_UPDATE_OVERRIDE, name: "OFFSCREEN_UPDATE_OVERRIDE");
+					UPDATE_TYPE = s.Serialize<UpdateType>(UPDATE_TYPE, name: "UPDATE_TYPE");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(AABB_RELATIVE));
+					AABB_RELATIVE = s.SerializeObject<AABB>(AABB_RELATIVE, name: "AABB_RELATIVE");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30)) {
-					SerializeField(s, nameof(CURPOS));
-					SerializeField(s, nameof(CURANGLE));
-					SerializeField(s, nameof(CURSCALE));
+					CURPOS = s.SerializeObject<Vec3d>(CURPOS, name: "CURPOS");
+					CURANGLE = s.Serialize<float>(CURANGLE, name: "CURANGLE");
+					CURSCALE = s.SerializeObject<Vec2d>(CURSCALE, name: "CURSCALE");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(ISALLOWEDFORCELL));
-					SerializeField(s, nameof(isEnabled));
+					ISALLOWEDFORCELL = s.Serialize<int>(ISALLOWEDFORCELL, name: "ISALLOWEDFORCELL");
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled");
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(RELATIVEZ));
-					SerializeField(s, nameof(SCALE));
-					SerializeField(s, nameof(xFLIPPED));
-					SerializeField(s, nameof(USERFRIENDLY));
-					SerializeField(s, nameof(UPDATEDEPENDENCYLIST));
+					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
+					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
+					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED");
+					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
+					UPDATEDEPENDENCYLIST = s.SerializeObject<CArray<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 				}
 				if (Settings.s.isCatchThemAll) {
-					SerializeField(s, nameof(isEnabled), boolAsByte: true);
-					SerializeField(s, nameof(isEnabled), boolAsByte: true);
-					SerializeField(s, nameof(isEnabled), boolAsByte: true);
-					SerializeField(s, nameof(isEnabled), boolAsByte: true);
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(isEnabled), boolAsByte: true);
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(POS2D));
-					SerializeField(s, nameof(ANGLE));
-					SerializeField(s, nameof(INSTANCEDATAFILE));
+					POS2D = s.SerializeObject<Vec2d>(POS2D, name: "POS2D");
+					ANGLE = s.SerializeObject<Angle>(ANGLE, name: "ANGLE");
+					INSTANCEDATAFILE = s.SerializeObject<Path>(INSTANCEDATAFILE, name: "INSTANCEDATAFILE");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(RELATIVEZ));
-					SerializeField(s, nameof(SCALE));
-					SerializeField(s, nameof(xFLIPPED), boolAsByte: true);
-					SerializeField(s, nameof(USERFRIENDLY));
-					SerializeField(s, nameof(UPDATEDEPENDENCYLIST));
+					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
+					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
+					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED", options: CSerializerObject.Options.BoolAsByte);
+					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
+					UPDATEDEPENDENCYLIST = s.SerializeObject<CArray<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(isEnabled), boolAsByte: true);
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(POS2D));
-					SerializeField(s, nameof(ANGLE));
-					SerializeField(s, nameof(INSTANCEDATAFILE));
-					SerializeField(s, nameof(OBJECTID));
+					POS2D = s.SerializeObject<Vec2d>(POS2D, name: "POS2D");
+					ANGLE = s.SerializeObject<Angle>(ANGLE, name: "ANGLE");
+					INSTANCEDATAFILE = s.SerializeObject<Path>(INSTANCEDATAFILE, name: "INSTANCEDATAFILE");
+					OBJECTID = s.SerializeObject<ObjectId>(OBJECTID, name: "OBJECTID");
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Flags16)) {
-					SerializeField(s, nameof(globalPos));
+					globalPos = s.SerializeObject<Vec3d>(globalPos, name: "globalPos");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(RELATIVEZ));
-					SerializeField(s, nameof(SCALE));
-					SerializeField(s, nameof(xFLIPPED));
-					SerializeField(s, nameof(USERFRIENDLY));
-					SerializeField(s, nameof(UPDATEDEPENDENCYLIST));
-					SerializeField(s, nameof(STARTPAUSE));
+					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
+					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
+					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED");
+					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
+					UPDATEDEPENDENCYLIST = s.SerializeObject<CArray<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
+					STARTPAUSE = s.Serialize<bool>(STARTPAUSE, name: "STARTPAUSE");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(isEnabled));
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(POS2D));
-					SerializeField(s, nameof(ANGLE));
-					SerializeField(s, nameof(Enum_VH_0__22));
-					SerializeField(s, nameof(INSTANCEDATAFILE));
+					POS2D = s.SerializeObject<Vec2d>(POS2D, name: "POS2D");
+					ANGLE = s.SerializeObject<Angle>(ANGLE, name: "ANGLE");
+					Enum_VH_0__22 = s.Serialize<Enum_VH_0>(Enum_VH_0__22, name: "Enum_VH_0__22");
+					INSTANCEDATAFILE = s.SerializeObject<Path>(INSTANCEDATAFILE, name: "INSTANCEDATAFILE");
 				}
-				SerializeField(s, nameof(persistenceId));
+				persistenceId = s.Serialize<uint>(persistenceId, name: "persistenceId");
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags16)) {
-					SerializeField(s, nameof(globalPos));
+					globalPos = s.SerializeObject<Vec3d>(globalPos, name: "globalPos");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(RELATIVEZ));
-					SerializeField(s, nameof(ANGLE));
-					SerializeField(s, nameof(SCALE));
-					SerializeField(s, nameof(xFLIPPED));
-					SerializeField(s, nameof(USERFRIENDLY));
-					SerializeField(s, nameof(UPDATEDEPENDENCYLIST));
-					SerializeField(s, nameof(STARTPAUSE));
+					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
+					ANGLE = s.SerializeObject<Angle>(ANGLE, name: "ANGLE");
+					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
+					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED");
+					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
+					UPDATEDEPENDENCYLIST = s.SerializeObject<CArray<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
+					STARTPAUSE = s.Serialize<bool>(STARTPAUSE, name: "STARTPAUSE");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(isEnabled));
+					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(POS2D));
-					SerializeField(s, nameof(ObjectDeviceSpeed));
-					SerializeField(s, nameof(ObjectDeviceSpeed_L2));
-					SerializeField(s, nameof(INSTANCEDATAFILE));
+					POS2D = s.SerializeObject<Vec2d>(POS2D, name: "POS2D");
+					ObjectDeviceSpeed = s.Serialize<DeviceInfo__Device_Speed>(ObjectDeviceSpeed, name: "ObjectDeviceSpeed");
+					ObjectDeviceSpeed_L2 = s.Serialize<DeviceInfo__Device_Speed>(ObjectDeviceSpeed_L2, name: "ObjectDeviceSpeed_L2");
+					INSTANCEDATAFILE = s.SerializeObject<Path>(INSTANCEDATAFILE, name: "INSTANCEDATAFILE");
 				}
-				SerializeField(s, nameof(persistenceId));
-				SerializeField(s, nameof(USEVIEWFRUSTUMFLAG));
+				persistenceId = s.Serialize<uint>(persistenceId, name: "persistenceId");
+				USEVIEWFRUSTUMFLAG = s.Serialize<bool>(USEVIEWFRUSTUMFLAG, name: "USEVIEWFRUSTUMFLAG");
 			}
 		}
 		public enum DeviceInfo__Device_Speed {

@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class RotatingPolylineComponent_Template : PolylineComponent_Template {
-		[Serialize("rotatingPolys")] public CList<RotatingPolylineComponent_Template.RotatingPoly> rotatingPolys;
+		public CList<RotatingPolylineComponent_Template.RotatingPoly> rotatingPolys;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(rotatingPolys));
+			rotatingPolys = s.SerializeObject<CList<RotatingPolylineComponent_Template.RotatingPoly>>(rotatingPolys, name: "rotatingPolys");
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class RotatingPoly : CSerializable {
-			[Serialize("brake"          )] public float brake;
-			[Serialize("forceMultiplier")] public float forceMultiplier;
-			[Serialize("bone"           )] public StringID bone;
-			[Serialize("polylines"      )] public CList<StringID> polylines;
+			public float brake;
+			public float forceMultiplier;
+			public StringID bone;
+			public CList<StringID> polylines;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(brake));
-				SerializeField(s, nameof(forceMultiplier));
-				SerializeField(s, nameof(bone));
-				SerializeField(s, nameof(polylines));
+				brake = s.Serialize<float>(brake, name: "brake");
+				forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
+				bone = s.SerializeObject<StringID>(bone, name: "bone");
+				polylines = s.SerializeObject<CList<StringID>>(polylines, name: "polylines");
 			}
 		}
 		public override uint? ClassCRC => 0x94C84C69;

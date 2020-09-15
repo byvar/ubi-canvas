@@ -23,6 +23,10 @@ namespace UbiArt {
 		public abstract void Serialize(ref object obj, Type type, string name = null);
 		public abstract void Serialize(object o, FieldInfo f, Type type = null, string name = null, int? index = null);
 		public abstract void Serialize(object o, FieldInfo f, SerializeAttribute a, Type type = null);
+
+		public abstract T Serialize<T>(T obj, string name = null, Options options = Options.None);
+		public abstract T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, Options options = Options.None) where T : ICSerializable, new();
+
 		public abstract void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null);
 		public abstract void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null);
 		public abstract void SerializeBytes(ref byte[] obj, int numBytes);
@@ -217,6 +221,13 @@ namespace UbiArt {
 			Flags29 = 1 << 29,
 			Flags30 = 1 << 30,
 			Flags31 = 1 << 31,
+		}
+
+		[Flags]
+		public enum Options {
+			None		= 0,
+			BoolAsByte	= 1,
+			ForceAsByte = 1 << 1,
 		}
 
 		public enum UAFTag {

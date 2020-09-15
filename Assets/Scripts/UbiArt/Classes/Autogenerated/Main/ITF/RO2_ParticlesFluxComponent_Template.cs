@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ParticlesFluxComponent_Template : ActorComponent_Template {
-		[Serialize("standAnim"            )] public StringID standAnim;
-		[Serialize("offsetRange"          )] public float offsetRange;
-		[Serialize("scale"                )] public float scale;
-		[Serialize("startAlpha"           )] public float startAlpha;
-		[Serialize("endAlpha"             )] public float endAlpha;
-		[Serialize("m_alphaTransitionTime")] public float m_alphaTransitionTime;
+		public StringID standAnim;
+		public float offsetRange;
+		public float scale;
+		public float startAlpha;
+		public float endAlpha;
+		public float m_alphaTransitionTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(standAnim));
-			SerializeField(s, nameof(offsetRange));
-			SerializeField(s, nameof(scale));
-			SerializeField(s, nameof(startAlpha));
-			SerializeField(s, nameof(endAlpha));
-			SerializeField(s, nameof(m_alphaTransitionTime));
+			standAnim = s.SerializeObject<StringID>(standAnim, name: "standAnim");
+			offsetRange = s.Serialize<float>(offsetRange, name: "offsetRange");
+			scale = s.Serialize<float>(scale, name: "scale");
+			startAlpha = s.Serialize<float>(startAlpha, name: "startAlpha");
+			endAlpha = s.Serialize<float>(endAlpha, name: "endAlpha");
+			m_alphaTransitionTime = s.Serialize<float>(m_alphaTransitionTime, name: "m_alphaTransitionTime");
 		}
 		public override uint? ClassCRC => 0x620E7978;
 	}

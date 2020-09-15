@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RO | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
 	public partial class TweenBallistic_Template : TweenTranslation_Template {
-		[Serialize("movement"         )] public Vec3d movement;
-		[Serialize("tangentMode"      )] public TangentMode tangentMode;
-		[Serialize("startTangent"     )] public Vec3d startTangent;
-		[Serialize("disableCollisions")] public bool disableCollisions;
+		public Vec3d movement;
+		public TangentMode tangentMode;
+		public Vec3d startTangent;
+		public bool disableCollisions;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(movement));
-				SerializeField(s, nameof(tangentMode));
-				SerializeField(s, nameof(startTangent));
-				SerializeField(s, nameof(disableCollisions));
-				SerializeField(s, nameof(speed));
+				movement = s.SerializeObject<Vec3d>(movement, name: "movement");
+				tangentMode = s.Serialize<TangentMode>(tangentMode, name: "tangentMode");
+				startTangent = s.SerializeObject<Vec3d>(startTangent, name: "startTangent");
+				disableCollisions = s.Serialize<bool>(disableCollisions, name: "disableCollisions");
+				speed = s.Serialize<float>(speed, name: "speed");
 			} else {
-				SerializeField(s, nameof(movement));
-				SerializeField(s, nameof(tangentMode));
-				SerializeField(s, nameof(startTangent));
-				SerializeField(s, nameof(disableCollisions));
+				movement = s.SerializeObject<Vec3d>(movement, name: "movement");
+				tangentMode = s.Serialize<TangentMode>(tangentMode, name: "tangentMode");
+				startTangent = s.SerializeObject<Vec3d>(startTangent, name: "startTangent");
+				disableCollisions = s.Serialize<bool>(disableCollisions, name: "disableCollisions");
 			}
 		}
 		public enum TangentMode {

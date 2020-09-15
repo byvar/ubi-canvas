@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PersistentGameData_Universe : CSerializable {
-		[Serialize("Levels"             )] public CMapGeneric<StringID, PersistentGameData_Level> Levels;
-		[Serialize("Rewards"            )] public GameStatsManager.SaveSession Rewards;
-		[Serialize("sequenceAlreadySeen")] public CArray<ObjectPath> sequenceAlreadySeen;
+		public CMapGeneric<StringID, PersistentGameData_Level> Levels;
+		public GameStatsManager.SaveSession Rewards;
+		public CArray<ObjectPath> sequenceAlreadySeen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(Levels));
+				Levels = s.SerializeObject<CMapGeneric<StringID, PersistentGameData_Level>>(Levels, name: "Levels");
 			} else if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(Levels));
-				SerializeField(s, nameof(Rewards));
-				SerializeField(s, nameof(sequenceAlreadySeen));
+				Levels = s.SerializeObject<CMapGeneric<StringID, PersistentGameData_Level>>(Levels, name: "Levels");
+				Rewards = s.SerializeObject<GameStatsManager.SaveSession>(Rewards, name: "Rewards");
+				sequenceAlreadySeen = s.SerializeObject<CArray<ObjectPath>>(sequenceAlreadySeen, name: "sequenceAlreadySeen");
 			} else {
-				SerializeField(s, nameof(Levels));
-				SerializeField(s, nameof(Rewards));
+				Levels = s.SerializeObject<CMapGeneric<StringID, PersistentGameData_Level>>(Levels, name: "Levels");
+				Rewards = s.SerializeObject<GameStatsManager.SaveSession>(Rewards, name: "Rewards");
 			}
 		}
 		public override uint? ClassCRC => 0x8864664E;

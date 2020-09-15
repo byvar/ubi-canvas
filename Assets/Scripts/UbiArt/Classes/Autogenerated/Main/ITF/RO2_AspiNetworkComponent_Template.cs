@@ -3,33 +3,33 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AspiNetworkComponent_Template : ActorComponent_Template {
-		[Serialize("enterDuration"        )] public float enterDuration;
-		[Serialize("enterBezierMultiplier")] public float enterBezierMultiplier;
-		[Serialize("speed"                )] public float speed;
-		[Serialize("exitSpeed"            )] public float exitSpeed;
-		[Serialize("exitDist"             )] public float exitDist;
-		[Serialize("exitRestoreZDist"     )] public float exitRestoreZDist;
-		[Serialize("fxData"               )] public CList<RO2_AspiNetworkComponent_Template.FxDataNet> fxData;
+		public float enterDuration;
+		public float enterBezierMultiplier;
+		public float speed;
+		public float exitSpeed;
+		public float exitDist;
+		public float exitRestoreZDist;
+		public CList<RO2_AspiNetworkComponent_Template.FxDataNet> fxData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enterDuration));
-			SerializeField(s, nameof(enterBezierMultiplier));
-			SerializeField(s, nameof(speed));
-			SerializeField(s, nameof(exitSpeed));
-			SerializeField(s, nameof(exitDist));
-			SerializeField(s, nameof(exitRestoreZDist));
-			SerializeField(s, nameof(fxData));
+			enterDuration = s.Serialize<float>(enterDuration, name: "enterDuration");
+			enterBezierMultiplier = s.Serialize<float>(enterBezierMultiplier, name: "enterBezierMultiplier");
+			speed = s.Serialize<float>(speed, name: "speed");
+			exitSpeed = s.Serialize<float>(exitSpeed, name: "exitSpeed");
+			exitDist = s.Serialize<float>(exitDist, name: "exitDist");
+			exitRestoreZDist = s.Serialize<float>(exitRestoreZDist, name: "exitRestoreZDist");
+			fxData = s.SerializeObject<CList<RO2_AspiNetworkComponent_Template.FxDataNet>>(fxData, name: "fxData");
 		}
 		[Games(GameFlags.RA)]
 		public partial class FxDataNet : CSerializable {
-			[Serialize("playerFamily")] public string playerFamily;
-			[Serialize("fxIn"        )] public StringID fxIn;
-			[Serialize("fxOut"       )] public StringID fxOut;
+			public string playerFamily;
+			public StringID fxIn;
+			public StringID fxOut;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(playerFamily));
-				SerializeField(s, nameof(fxIn));
-				SerializeField(s, nameof(fxOut));
+				playerFamily = s.Serialize<string>(playerFamily, name: "playerFamily");
+				fxIn = s.SerializeObject<StringID>(fxIn, name: "fxIn");
+				fxOut = s.SerializeObject<StringID>(fxOut, name: "fxOut");
 			}
 		}
 		public override uint? ClassCRC => 0x650F47CC;

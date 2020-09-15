@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MazeRoomComponent : ActorComponent {
-		[Serialize("startOnInstance")] public bool startOnInstance;
-		[Serialize("startOn"        )] public bool startOn;
+		public bool startOnInstance;
+		public bool startOn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(startOnInstance));
+				startOnInstance = s.Serialize<bool>(startOnInstance, name: "startOnInstance");
 			}
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(startOn));
+				startOn = s.Serialize<bool>(startOn, name: "startOn");
 			}
 		}
 		public override uint? ClassCRC => 0xED53265B;

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_RegionGfxConfig : CSerializable {
-		[Serialize("Family"                )] public Enum_Family Family;
-		[Serialize("LineRootPrimitiveParam")] public GFXPrimitiveParam LineRootPrimitiveParam;
+		public Enum_Family Family;
+		public GFXPrimitiveParam LineRootPrimitiveParam;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Family));
-			SerializeField(s, nameof(LineRootPrimitiveParam));
+			Family = s.Serialize<Enum_Family>(Family, name: "Family");
+			LineRootPrimitiveParam = s.SerializeObject<GFXPrimitiveParam>(LineRootPrimitiveParam, name: "LineRootPrimitiveParam");
 		}
 		public enum Enum_Family {
 			[Serialize("_unknown"     )] _unknown = 0,

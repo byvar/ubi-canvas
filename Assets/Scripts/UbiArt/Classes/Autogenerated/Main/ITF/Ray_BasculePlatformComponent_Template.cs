@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_BasculePlatformComponent_Template : CSerializable {
-		[Serialize("stiff"           )] public float stiff;
-		[Serialize("damp"            )] public float damp;
-		[Serialize("weightToAngle"   )] public float weightToAngle;
-		[Serialize("maxAngle"        )] public Angle maxAngle;
-		[Serialize("weightMultiplier")] public float weightMultiplier;
-		[Serialize("forceMultiplier" )] public float forceMultiplier;
-		[Serialize("crushMultiplier" )] public float crushMultiplier;
+		public float stiff;
+		public float damp;
+		public float weightToAngle;
+		public Angle maxAngle;
+		public float weightMultiplier;
+		public float forceMultiplier;
+		public float crushMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(stiff));
-			SerializeField(s, nameof(damp));
-			SerializeField(s, nameof(weightToAngle));
-			SerializeField(s, nameof(maxAngle));
-			SerializeField(s, nameof(weightMultiplier));
-			SerializeField(s, nameof(forceMultiplier));
-			SerializeField(s, nameof(crushMultiplier));
+			stiff = s.Serialize<float>(stiff, name: "stiff");
+			damp = s.Serialize<float>(damp, name: "damp");
+			weightToAngle = s.Serialize<float>(weightToAngle, name: "weightToAngle");
+			maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+			weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
+			forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
+			crushMultiplier = s.Serialize<float>(crushMultiplier, name: "crushMultiplier");
 		}
 		public override uint? ClassCRC => 0xD51FD646;
 	}

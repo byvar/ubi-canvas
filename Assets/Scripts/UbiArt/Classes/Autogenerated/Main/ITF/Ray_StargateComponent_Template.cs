@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_StargateComponent_Template : CSerializable {
-		[Serialize("speed"       )] public float speed;
-		[Serialize("boneStart"   )] public StringID boneStart;
-		[Serialize("teleportArea")] public StringID teleportArea;
+		public float speed;
+		public StringID boneStart;
+		public StringID teleportArea;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(speed));
-			SerializeField(s, nameof(boneStart));
-			SerializeField(s, nameof(teleportArea));
+			speed = s.Serialize<float>(speed, name: "speed");
+			boneStart = s.SerializeObject<StringID>(boneStart, name: "boneStart");
+			teleportArea = s.SerializeObject<StringID>(teleportArea, name: "teleportArea");
 		}
 		public override uint? ClassCRC => 0xB26BD4F9;
 	}

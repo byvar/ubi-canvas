@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class ColorEventList : CSerializable {
-		[Serialize("Keys")] public CList<ColorEventList.ColorEvent> Keys;
+		public CList<ColorEventList.ColorEvent> Keys;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Keys));
+			Keys = s.SerializeObject<CList<ColorEventList.ColorEvent>>(Keys, name: "Keys");
 		}
 		[Games(GameFlags.RA)]
 		public partial class ColorEvent : CSerializable {
-			[Serialize("value")] public uint value;
-			[Serialize("Frame")] public int Frame;
+			public uint value;
+			public int Frame;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(value));
-				SerializeField(s, nameof(Frame));
+				value = s.Serialize<uint>(value, name: "value");
+				Frame = s.Serialize<int>(Frame, name: "Frame");
 			}
 		}
 	}

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ActivationSequenceTriggerComponent_Template : CSerializable {
-		[Serialize("fx"         )] public Path fx;
-		[Serialize("fxBone"     )] public StringID fxBone;
-		[Serialize("canActivate")] public int canActivate;
+		public Path fx;
+		public StringID fxBone;
+		public int canActivate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fx));
-			SerializeField(s, nameof(fxBone));
-			SerializeField(s, nameof(canActivate));
+			fx = s.SerializeObject<Path>(fx, name: "fx");
+			fxBone = s.SerializeObject<StringID>(fxBone, name: "fxBone");
+			canActivate = s.Serialize<int>(canActivate, name: "canActivate");
 		}
 		public override uint? ClassCRC => 0xF8367EB7;
 	}

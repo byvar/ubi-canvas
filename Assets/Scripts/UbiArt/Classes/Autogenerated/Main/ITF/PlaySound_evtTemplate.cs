@@ -3,35 +3,35 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class PlaySound_evtTemplate : SequenceEventWithActor_Template {
-		[Serialize("Sound"   )] public Path Sound;
-		[Serialize("Params"  )] public SoundParams Params;
-		[Serialize("Volume"  )] public float Volume;
-		[Serialize("Category")] public string Category;
-		[Serialize("IsStrem" )] public int IsStrem;
-		[Serialize("Category")] public StringID Category2;
-		[Serialize("IsStream")] public int IsStream;
-		[Serialize("Sound"   )] public string Sound2;
+		public Path Sound;
+		public SoundParams Params;
+		public float Volume;
+		public string Category;
+		public int IsStrem;
+		public StringID Category2;
+		public int IsStream;
+		public string Sound2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(Sound));
-				SerializeField(s, nameof(Params));
-				SerializeField(s, nameof(Volume));
-				SerializeField(s, nameof(Category));
-				SerializeField(s, nameof(IsStrem));
+				Sound = s.SerializeObject<Path>(Sound, name: "Sound");
+				Params = s.SerializeObject<SoundParams>(Params, name: "Params");
+				Volume = s.Serialize<float>(Volume, name: "Volume");
+				Category = s.Serialize<string>(Category, name: "Category");
+				IsStrem = s.Serialize<int>(IsStrem, name: "IsStrem");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(Sound));
-				SerializeField(s, nameof(Params));
-				SerializeField(s, nameof(Volume));
-				SerializeField(s, nameof(Category2));
-				SerializeField(s, nameof(IsStream));
+				Sound = s.SerializeObject<Path>(Sound, name: "Sound");
+				Params = s.SerializeObject<SoundParams>(Params, name: "Params");
+				Volume = s.Serialize<float>(Volume, name: "Volume");
+				Category2 = s.SerializeObject<StringID>(Category2, name: "Category2");
+				IsStream = s.Serialize<int>(IsStream, name: "IsStream");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(Sound2));
-				SerializeField(s, nameof(Volume));
-				SerializeField(s, nameof(Category2));
-				SerializeField(s, nameof(IsStream));
+				Sound2 = s.Serialize<string>(Sound2, name: "Sound2");
+				Volume = s.Serialize<float>(Volume, name: "Volume");
+				Category2 = s.SerializeObject<StringID>(Category2, name: "Category2");
+				IsStream = s.Serialize<int>(IsStream, name: "IsStream");
 			} else {
-				SerializeField(s, nameof(Sound));
+				Sound = s.SerializeObject<Path>(Sound, name: "Sound");
 			}
 		}
 		public override uint? ClassCRC => 0x8AD848D9;

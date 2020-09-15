@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class CurveComponent : ActorComponent {
-		[Serialize("points")] public CList<CurveComponent.TrajectoryNode> points;
+		public CList<CurveComponent.TrajectoryNode> points;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(points));
+				points = s.SerializeObject<CList<CurveComponent.TrajectoryNode>>(points, name: "points");
 			}
 		}
 		[Games(GameFlags.ROVersion)]
 		public partial class TrajectoryNode : CSerializable {
-			[Serialize("pos"  )] public Vec3d pos;
-			[Serialize("tangA")] public Vec3d tangA;
-			[Serialize("tangB")] public Vec3d tangB;
+			public Vec3d pos;
+			public Vec3d tangA;
+			public Vec3d tangB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(pos));
-					SerializeField(s, nameof(tangA));
-					SerializeField(s, nameof(tangB));
+					pos = s.SerializeObject<Vec3d>(pos, name: "pos");
+					tangA = s.SerializeObject<Vec3d>(tangA, name: "tangA");
+					tangB = s.SerializeObject<Vec3d>(tangB, name: "tangB");
 				}
 			}
 		}

@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class BezierBranchGrowComponent : BezierBranchComponent {
-		[Serialize("startCursor"  )] public float startCursor;
-		[Serialize("minCursor"    )] public float minCursor;
-		[Serialize("maxCursor"    )] public float maxCursor;
-		[Serialize("reinitTime"   )] public float reinitTime;
-		[Serialize("autoStartTime")] public float autoStartTime;
-		[Serialize("growSpeed"    )] public float growSpeed;
-		[Serialize("easeMode"     )] public EaseMode easeMode;
+		public float startCursor;
+		public float minCursor;
+		public float maxCursor;
+		public float reinitTime;
+		public float autoStartTime;
+		public float growSpeed;
+		public EaseMode easeMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(startCursor));
-				SerializeField(s, nameof(growSpeed));
-				SerializeField(s, nameof(easeMode));
+				startCursor = s.Serialize<float>(startCursor, name: "startCursor");
+				growSpeed = s.Serialize<float>(growSpeed, name: "growSpeed");
+				easeMode = s.Serialize<EaseMode>(easeMode, name: "easeMode");
 			} else {
-				SerializeField(s, nameof(startCursor));
-				SerializeField(s, nameof(minCursor));
-				SerializeField(s, nameof(maxCursor));
-				SerializeField(s, nameof(reinitTime));
-				SerializeField(s, nameof(autoStartTime));
-				SerializeField(s, nameof(growSpeed));
-				SerializeField(s, nameof(easeMode));
+				startCursor = s.Serialize<float>(startCursor, name: "startCursor");
+				minCursor = s.Serialize<float>(minCursor, name: "minCursor");
+				maxCursor = s.Serialize<float>(maxCursor, name: "maxCursor");
+				reinitTime = s.Serialize<float>(reinitTime, name: "reinitTime");
+				autoStartTime = s.Serialize<float>(autoStartTime, name: "autoStartTime");
+				growSpeed = s.Serialize<float>(growSpeed, name: "growSpeed");
+				easeMode = s.Serialize<EaseMode>(easeMode, name: "easeMode");
 			}
 		}
 		public enum EaseMode {

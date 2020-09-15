@@ -3,41 +3,41 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR)]
 	public partial class Spline : CSerializable {
-		[Serialize("Points"      )] public CList<Spline.SplinePoint> Points;
-		[Serialize("TimeLoopMode")] public uint TimeLoopMode;
-		[Serialize("TimeLoop"    )] public float TimeLoop;
+		public CList<Spline.SplinePoint> Points;
+		public uint TimeLoopMode;
+		public float TimeLoop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(Points));
+				Points = s.SerializeObject<CList<Spline.SplinePoint>>(Points, name: "Points");
 			} else {
-				SerializeField(s, nameof(Points));
-				SerializeField(s, nameof(TimeLoopMode));
-				SerializeField(s, nameof(TimeLoop));
+				Points = s.SerializeObject<CList<Spline.SplinePoint>>(Points, name: "Points");
+				TimeLoopMode = s.Serialize<uint>(TimeLoopMode, name: "TimeLoopMode");
+				TimeLoop = s.Serialize<float>(TimeLoop, name: "TimeLoop");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 		public partial class SplinePoint : CSerializable {
-			[Serialize("Point"        )] public Vec3d Point;
-			[Serialize("Time"         )] public float Time;
-			[Serialize("NormalIn"     )] public Vec3d NormalIn;
-			[Serialize("NormalInTime" )] public Vec3d NormalInTime;
-			[Serialize("NormalOut"    )] public Vec3d NormalOut;
-			[Serialize("NormalOutTime")] public Vec3d NormalOutTime;
-			[Serialize("Interpolation")] public interp Interpolation;
-			[Serialize("Interpolation")] public interp_RO Interpolation_RO;
+			public Vec3d Point;
+			public float Time;
+			public Vec3d NormalIn;
+			public Vec3d NormalInTime;
+			public Vec3d NormalOut;
+			public Vec3d NormalOutTime;
+			public interp Interpolation;
+			public interp_RO Interpolation_RO;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(Point));
-				SerializeField(s, nameof(Time));
-				SerializeField(s, nameof(NormalIn));
-				SerializeField(s, nameof(NormalInTime));
-				SerializeField(s, nameof(NormalOut));
-				SerializeField(s, nameof(NormalOutTime));
+				Point = s.SerializeObject<Vec3d>(Point, name: "Point");
+				Time = s.Serialize<float>(Time, name: "Time");
+				NormalIn = s.SerializeObject<Vec3d>(NormalIn, name: "NormalIn");
+				NormalInTime = s.SerializeObject<Vec3d>(NormalInTime, name: "NormalInTime");
+				NormalOut = s.SerializeObject<Vec3d>(NormalOut, name: "NormalOut");
+				NormalOutTime = s.SerializeObject<Vec3d>(NormalOutTime, name: "NormalOutTime");
 				if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-					SerializeField(s, nameof(Interpolation_RO));
+					Interpolation_RO = s.Serialize<interp_RO>(Interpolation_RO, name: "Interpolation_RO");
 				} else {
-					SerializeField(s, nameof(Interpolation));
+					Interpolation = s.Serialize<interp>(Interpolation, name: "Interpolation");
 				}
 			}
 			public enum interp_RO {

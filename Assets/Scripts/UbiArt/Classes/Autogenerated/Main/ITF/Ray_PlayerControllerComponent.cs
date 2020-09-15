@@ -8,56 +8,56 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.ROVersion)]
 		public partial class StateDeadSoul_Template : CSerializable {
-			[Serialize("phantomShape"                 )] public Generic<PhysShape> phantomShape;
-			[Serialize("softCollisionRadiusMultiplier")] public float softCollisionRadiusMultiplier;
-			[Serialize("ignoreCollisions"             )] public int ignoreCollisions;
-			[Serialize("minLocalSpeed"                )] public float minLocalSpeed;
-			[Serialize("maxLocalSpeed"                )] public float maxLocalSpeed;
-			[Serialize("maxLocalSpeedWithBoost"       )] public float maxLocalSpeedWithBoost;
-			[Serialize("inputInertia"                 )] public float inputInertia;
-			[Serialize("camSpeedInfluence"            )] public float camSpeedInfluence;
-			[Serialize("ejectFromBorderForce"         )] public float ejectFromBorderForce;
-			[Serialize("ejectMargin"                  )] public Vec2d ejectMargin;
-			[Serialize("minInputForRotation"          )] public float minInputForRotation;
-			[Serialize("maxAngle"                     )] public Angle maxAngle;
-			[Serialize("angularSmoothMinSpeed"        )] public float angularSmoothMinSpeed;
-			[Serialize("angularSmoothMaxSpeed"        )] public float angularSmoothMaxSpeed;
-			[Serialize("angularSmoothMinValue"        )] public float angularSmoothMinValue;
-			[Serialize("angularSmoothMaxValue"        )] public float angularSmoothMaxValue;
-			[Serialize("useTrail"                     )] public int useTrail;
+			public Generic<PhysShape> phantomShape;
+			public float softCollisionRadiusMultiplier;
+			public int ignoreCollisions;
+			public float minLocalSpeed;
+			public float maxLocalSpeed;
+			public float maxLocalSpeedWithBoost;
+			public float inputInertia;
+			public float camSpeedInfluence;
+			public float ejectFromBorderForce;
+			public Vec2d ejectMargin;
+			public float minInputForRotation;
+			public Angle maxAngle;
+			public float angularSmoothMinSpeed;
+			public float angularSmoothMaxSpeed;
+			public float angularSmoothMinValue;
+			public float angularSmoothMaxValue;
+			public int useTrail;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(phantomShape));
-				SerializeField(s, nameof(softCollisionRadiusMultiplier));
-				SerializeField(s, nameof(ignoreCollisions));
-				SerializeField(s, nameof(minLocalSpeed));
-				SerializeField(s, nameof(maxLocalSpeed));
-				SerializeField(s, nameof(maxLocalSpeedWithBoost));
-				SerializeField(s, nameof(inputInertia));
-				SerializeField(s, nameof(camSpeedInfluence));
-				SerializeField(s, nameof(ejectFromBorderForce));
-				SerializeField(s, nameof(ejectMargin));
-				SerializeField(s, nameof(minInputForRotation));
-				SerializeField(s, nameof(maxAngle));
-				SerializeField(s, nameof(angularSmoothMinSpeed));
-				SerializeField(s, nameof(angularSmoothMaxSpeed));
-				SerializeField(s, nameof(angularSmoothMinValue));
-				SerializeField(s, nameof(angularSmoothMaxValue));
-				SerializeField(s, nameof(useTrail));
+				phantomShape = s.SerializeObject<Generic<PhysShape>>(phantomShape, name: "phantomShape");
+				softCollisionRadiusMultiplier = s.Serialize<float>(softCollisionRadiusMultiplier, name: "softCollisionRadiusMultiplier");
+				ignoreCollisions = s.Serialize<int>(ignoreCollisions, name: "ignoreCollisions");
+				minLocalSpeed = s.Serialize<float>(minLocalSpeed, name: "minLocalSpeed");
+				maxLocalSpeed = s.Serialize<float>(maxLocalSpeed, name: "maxLocalSpeed");
+				maxLocalSpeedWithBoost = s.Serialize<float>(maxLocalSpeedWithBoost, name: "maxLocalSpeedWithBoost");
+				inputInertia = s.Serialize<float>(inputInertia, name: "inputInertia");
+				camSpeedInfluence = s.Serialize<float>(camSpeedInfluence, name: "camSpeedInfluence");
+				ejectFromBorderForce = s.Serialize<float>(ejectFromBorderForce, name: "ejectFromBorderForce");
+				ejectMargin = s.SerializeObject<Vec2d>(ejectMargin, name: "ejectMargin");
+				minInputForRotation = s.Serialize<float>(minInputForRotation, name: "minInputForRotation");
+				maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+				angularSmoothMinSpeed = s.Serialize<float>(angularSmoothMinSpeed, name: "angularSmoothMinSpeed");
+				angularSmoothMaxSpeed = s.Serialize<float>(angularSmoothMaxSpeed, name: "angularSmoothMaxSpeed");
+				angularSmoothMinValue = s.Serialize<float>(angularSmoothMinValue, name: "angularSmoothMinValue");
+				angularSmoothMaxValue = s.Serialize<float>(angularSmoothMaxValue, name: "angularSmoothMaxValue");
+				useTrail = s.Serialize<int>(useTrail, name: "useTrail");
 			}
 		}
 		[Games(GameFlags.ROVersion)]
 		public partial class StateRevive_Template : CSerializable {
-			[Serialize("duration"           )] public float duration;
-			[Serialize("bezierHitMultiplier")] public float bezierHitMultiplier;
-			[Serialize("bezierMidRadius"    )] public float bezierMidRadius;
-			[Serialize("bezierMidInfluence" )] public float bezierMidInfluence;
+			public float duration;
+			public float bezierHitMultiplier;
+			public float bezierMidRadius;
+			public float bezierMidInfluence;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(duration));
-				SerializeField(s, nameof(bezierHitMultiplier));
-				SerializeField(s, nameof(bezierMidRadius));
-				SerializeField(s, nameof(bezierMidInfluence));
+				duration = s.Serialize<float>(duration, name: "duration");
+				bezierHitMultiplier = s.Serialize<float>(bezierHitMultiplier, name: "bezierHitMultiplier");
+				bezierMidRadius = s.Serialize<float>(bezierMidRadius, name: "bezierMidRadius");
+				bezierMidInfluence = s.Serialize<float>(bezierMidInfluence, name: "bezierMidInfluence");
 			}
 		}
 		[Games(GameFlags.RO | GameFlags.RL)]

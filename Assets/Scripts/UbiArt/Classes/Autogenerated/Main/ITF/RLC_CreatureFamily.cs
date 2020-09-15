@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureFamily : CSerializable {
-		[Serialize("id"             )] public Creature_Family id;
-		[Serialize("locId"          )] public uint locId;
-		[Serialize("DescId"         )] public uint DescId;
-		[Serialize("comic"          )] public StringID comic;
-		[Serialize("powerUp"        )] public StringID powerUp;
-		[Serialize("rewardCompleted")] public StringID rewardCompleted;
-		[Serialize("versionNb"      )] public string versionNb;
-		[Serialize("regionList"     )] public CList<RLC_GraphicalFamily> regionList;
+		public Creature_Family id;
+		public uint locId;
+		public uint DescId;
+		public StringID comic;
+		public StringID powerUp;
+		public StringID rewardCompleted;
+		public string versionNb;
+		public CList<RLC_GraphicalFamily> regionList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(id));
-			SerializeField(s, nameof(locId));
-			SerializeField(s, nameof(DescId));
-			SerializeField(s, nameof(comic));
-			SerializeField(s, nameof(powerUp));
-			SerializeField(s, nameof(rewardCompleted));
-			SerializeField(s, nameof(versionNb));
-			SerializeField(s, nameof(regionList));
+			id = s.Serialize<Creature_Family>(id, name: "id");
+			locId = s.Serialize<uint>(locId, name: "locId");
+			DescId = s.Serialize<uint>(DescId, name: "DescId");
+			comic = s.SerializeObject<StringID>(comic, name: "comic");
+			powerUp = s.SerializeObject<StringID>(powerUp, name: "powerUp");
+			rewardCompleted = s.SerializeObject<StringID>(rewardCompleted, name: "rewardCompleted");
+			versionNb = s.Serialize<string>(versionNb, name: "versionNb");
+			regionList = s.SerializeObject<CList<RLC_GraphicalFamily>>(regionList, name: "regionList");
 		}
 		public enum Creature_Family {
 			[Serialize("Creature_Family::none"                 )] none = 0,

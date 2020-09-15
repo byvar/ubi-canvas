@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTActionOnInputSetFact_Template : BTAction_Template {
-		[Serialize("fact"        )] public StringID fact;
-		[Serialize("DeviceCheck" )] public eDeviceCheck DeviceCheck;
-		[Serialize("PlayerID"    )] public uint PlayerID;
-		[Serialize("ActionName"  )] public StringID ActionName;
-		[Serialize("StringID__0" )] public StringID StringID__0;
-		[Serialize("Enum_VH_0__1")] public Enum_VH_0 Enum_VH_0__1;
-		[Serialize("uint__2"     )] public uint uint__2;
-		[Serialize("StringID__3" )] public StringID StringID__3;
-		[Serialize("bool__4"     )] public bool bool__4;
+		public StringID fact;
+		public eDeviceCheck DeviceCheck;
+		public uint PlayerID;
+		public StringID ActionName;
+		public StringID StringID__0;
+		public Enum_VH_0 Enum_VH_0__1;
+		public uint uint__2;
+		public StringID StringID__3;
+		public bool bool__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(StringID__0));
-				SerializeField(s, nameof(Enum_VH_0__1));
-				SerializeField(s, nameof(uint__2));
-				SerializeField(s, nameof(StringID__3));
-				SerializeField(s, nameof(bool__4));
+				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
+				Enum_VH_0__1 = s.Serialize<Enum_VH_0>(Enum_VH_0__1, name: "Enum_VH_0__1");
+				uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");
+				StringID__3 = s.SerializeObject<StringID>(StringID__3, name: "StringID__3");
+				bool__4 = s.Serialize<bool>(bool__4, name: "bool__4");
 			} else {
-				SerializeField(s, nameof(fact));
-				SerializeField(s, nameof(DeviceCheck));
-				SerializeField(s, nameof(PlayerID));
-				SerializeField(s, nameof(ActionName));
+				fact = s.SerializeObject<StringID>(fact, name: "fact");
+				DeviceCheck = s.Serialize<eDeviceCheck>(DeviceCheck, name: "DeviceCheck");
+				PlayerID = s.Serialize<uint>(PlayerID, name: "PlayerID");
+				ActionName = s.SerializeObject<StringID>(ActionName, name: "ActionName");
 			}
 		}
 		public enum eDeviceCheck {

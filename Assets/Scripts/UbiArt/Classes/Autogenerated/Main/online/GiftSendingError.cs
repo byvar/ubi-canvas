@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class GiftSendingError : CSerializable {
-		[Serialize("cause")] public Enum_cause cause;
-		[Serialize("time" )] public online.DateTime time;
-		[Serialize("pool" )] public StringID pool;
+		public Enum_cause cause;
+		public online.DateTime time;
+		public StringID pool;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(cause));
-			SerializeField(s, nameof(time));
-			SerializeField(s, nameof(pool));
+			cause = s.Serialize<Enum_cause>(cause, name: "cause");
+			time = s.SerializeObject<online.DateTime>(time, name: "time");
+			pool = s.SerializeObject<StringID>(pool, name: "pool");
 		}
 		public enum Enum_cause {
 			[Serialize("Unknown"                    )] Unknown = 0,

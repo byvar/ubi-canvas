@@ -3,38 +3,38 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class BasculePlatformComponent_Template : CSerializable {
-		[Serialize("animPivotBone"          )] public StringID animPivotBone;
-		[Serialize("animAddInput"           )] public StringID animAddInput;
-		[Serialize("animMaxAngle"           )] public Angle animMaxAngle;
-		[Serialize("stiff"                  )] public float stiff;
-		[Serialize("damp"                   )] public float damp;
-		[Serialize("weightToAngle"          )] public float weightToAngle;
-		[Serialize("maxAngle"               )] public Angle maxAngle;
-		[Serialize("weightMultiplier"       )] public float weightMultiplier;
-		[Serialize("forceMultiplier"        )] public float forceMultiplier;
-		[Serialize("crushMultiplier"        )] public float crushMultiplier;
-		[Serialize("onStartRotatingFX"      )] public StringID onStartRotatingFX;
-		[Serialize("rotatingClockwiseFX"    )] public StringID rotatingClockwiseFX;
-		[Serialize("rotatingAntiClockwiseFX")] public StringID rotatingAntiClockwiseFX;
-		[Serialize("onStopRotatingFX"       )] public StringID onStopRotatingFX;
-		[Serialize("playStopFXDeltaAngle"   )] public Angle playStopFXDeltaAngle;
+		public StringID animPivotBone;
+		public StringID animAddInput;
+		public Angle animMaxAngle;
+		public float stiff;
+		public float damp;
+		public float weightToAngle;
+		public Angle maxAngle;
+		public float weightMultiplier;
+		public float forceMultiplier;
+		public float crushMultiplier;
+		public StringID onStartRotatingFX;
+		public StringID rotatingClockwiseFX;
+		public StringID rotatingAntiClockwiseFX;
+		public StringID onStopRotatingFX;
+		public Angle playStopFXDeltaAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animPivotBone));
-			SerializeField(s, nameof(animAddInput));
-			SerializeField(s, nameof(animMaxAngle));
-			SerializeField(s, nameof(stiff));
-			SerializeField(s, nameof(damp));
-			SerializeField(s, nameof(weightToAngle));
-			SerializeField(s, nameof(maxAngle));
-			SerializeField(s, nameof(weightMultiplier));
-			SerializeField(s, nameof(forceMultiplier));
-			SerializeField(s, nameof(crushMultiplier));
-			SerializeField(s, nameof(onStartRotatingFX));
-			SerializeField(s, nameof(rotatingClockwiseFX));
-			SerializeField(s, nameof(rotatingAntiClockwiseFX));
-			SerializeField(s, nameof(onStopRotatingFX));
-			SerializeField(s, nameof(playStopFXDeltaAngle));
+			animPivotBone = s.SerializeObject<StringID>(animPivotBone, name: "animPivotBone");
+			animAddInput = s.SerializeObject<StringID>(animAddInput, name: "animAddInput");
+			animMaxAngle = s.SerializeObject<Angle>(animMaxAngle, name: "animMaxAngle");
+			stiff = s.Serialize<float>(stiff, name: "stiff");
+			damp = s.Serialize<float>(damp, name: "damp");
+			weightToAngle = s.Serialize<float>(weightToAngle, name: "weightToAngle");
+			maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+			weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
+			forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
+			crushMultiplier = s.Serialize<float>(crushMultiplier, name: "crushMultiplier");
+			onStartRotatingFX = s.SerializeObject<StringID>(onStartRotatingFX, name: "onStartRotatingFX");
+			rotatingClockwiseFX = s.SerializeObject<StringID>(rotatingClockwiseFX, name: "rotatingClockwiseFX");
+			rotatingAntiClockwiseFX = s.SerializeObject<StringID>(rotatingAntiClockwiseFX, name: "rotatingAntiClockwiseFX");
+			onStopRotatingFX = s.SerializeObject<StringID>(onStopRotatingFX, name: "onStopRotatingFX");
+			playStopFXDeltaAngle = s.SerializeObject<Angle>(playStopFXDeltaAngle, name: "playStopFXDeltaAngle");
 		}
 		public override uint? ClassCRC => 0xB16627BB;
 	}

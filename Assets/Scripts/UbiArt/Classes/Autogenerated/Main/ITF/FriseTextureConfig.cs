@@ -3,44 +3,44 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class FriseTextureConfig : CSerializable {
-		[Serialize("path"         )] public Path path;
-		[Serialize("material"     )] public GFXMaterialSerializable material;
-		[Serialize("friendly"     )] public StringID friendly;
-		[Serialize("gameMaterial" )] public Path gameMaterial;
-		[Serialize("color"        )] public ColorInteger color;
-		[Serialize("fillingOffset")] public float fillingOffset;
-		[Serialize("collision"    )] public CollisionTexture collision;
-		[Serialize("scrollUV"     )] public Vec2d scrollUV;
-		[Serialize("scrollAngle"  )] public float scrollAngle;
-		[Serialize("useUV2"       )] public bool useUV2;
-		[Serialize("scaleUV2"     )] public Vec2d scaleUV2;
-		[Serialize("scrollUV2"    )] public Vec2d scrollUV2;
-		[Serialize("scrollAngle2" )] public float scrollAngle2;
-		[Serialize("alphaBorder"  )] public byte alphaBorder;
-		[Serialize("alphaUp"      )] public byte alphaUp;
+		public Path path;
+		public GFXMaterialSerializable material;
+		public StringID friendly;
+		public Path gameMaterial;
+		public ColorInteger color;
+		public float fillingOffset;
+		public CollisionTexture collision;
+		public Vec2d scrollUV;
+		public float scrollAngle;
+		public bool useUV2;
+		public Vec2d scaleUV2;
+		public Vec2d scrollUV2;
+		public float scrollAngle2;
+		public byte alphaBorder;
+		public byte alphaUp;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(path));
+				path = s.SerializeObject<Path>(path, name: "path");
 			}
-			SerializeField(s, nameof(material));
-			SerializeField(s, nameof(friendly));
-			SerializeField(s, nameof(gameMaterial));
-			SerializeField(s, nameof(color));
-			SerializeField(s, nameof(fillingOffset));
-			SerializeField(s, nameof(collision));
-			SerializeField(s, nameof(scrollUV));
-			SerializeField(s, nameof(scrollAngle));
+			material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+			friendly = s.SerializeObject<StringID>(friendly, name: "friendly");
+			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+			color = s.SerializeObject<ColorInteger>(color, name: "color");
+			fillingOffset = s.Serialize<float>(fillingOffset, name: "fillingOffset");
+			collision = s.SerializeObject<CollisionTexture>(collision, name: "collision");
+			scrollUV = s.SerializeObject<Vec2d>(scrollUV, name: "scrollUV");
+			scrollAngle = s.Serialize<float>(scrollAngle, name: "scrollAngle");
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(useUV2), boolAsByte: true);
+				useUV2 = s.Serialize<bool>(useUV2, name: "useUV2", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(useUV2));
+				useUV2 = s.Serialize<bool>(useUV2, name: "useUV2");
 			}
-			SerializeField(s, nameof(scaleUV2));
-			SerializeField(s, nameof(scrollUV2));
-			SerializeField(s, nameof(scrollAngle2));
-			SerializeField(s, nameof(alphaBorder));
-			SerializeField(s, nameof(alphaUp));
+			scaleUV2 = s.SerializeObject<Vec2d>(scaleUV2, name: "scaleUV2");
+			scrollUV2 = s.SerializeObject<Vec2d>(scrollUV2, name: "scrollUV2");
+			scrollAngle2 = s.Serialize<float>(scrollAngle2, name: "scrollAngle2");
+			alphaBorder = s.Serialize<byte>(alphaBorder, name: "alphaBorder");
+			alphaUp = s.Serialize<byte>(alphaUp, name: "alphaUp");
 		}
 	}
 }

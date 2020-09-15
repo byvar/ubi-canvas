@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class MissionStepCoordinator_Template : CSerializable {
-		[Serialize("coordinatorName")] public StringID coordinatorName;
+		public StringID coordinatorName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(coordinatorName));
+			coordinatorName = s.SerializeObject<StringID>(coordinatorName, name: "coordinatorName");
 		}
 		public override uint? ClassCRC => 0x7F982FA2;
 	}

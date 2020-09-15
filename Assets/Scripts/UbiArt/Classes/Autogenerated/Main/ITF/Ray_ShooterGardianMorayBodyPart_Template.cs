@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_ShooterGardianMorayBodyPart_Template : BodyPart_Template {
-		[Serialize("leftBubonBoneName"         )] public StringID leftBubonBoneName;
-		[Serialize("rightBubonBoneName"        )] public StringID rightBubonBoneName;
-		[Serialize("bubonPhantomSize"          )] public float bubonPhantomSize;
-		[Serialize("bubonRewardSpawnPath"      )] public Path bubonRewardSpawnPath;
-		[Serialize("bubonHealth"               )] public int bubonHealth;
-		[Serialize("rewardNumber"              )] public uint rewardNumber;
-		[Serialize("destroyRewardNumber"       )] public uint destroyRewardNumber;
-		[Serialize("bubonReward"               )] public Generic<Ray_EventSpawnReward> bubonReward;
-		[Serialize("faction"                   )] public Enum_RFR_0 faction;
-		[Serialize("hitType"                   )] public Enum_RFR_1 hitType;
-		[Serialize("hitLevel"                  )] public uint hitLevel;
-		[Serialize("tailPath"                  )] public Path tailPath;
-		[Serialize("transfoTotailAnim"         )] public StringID transfoTotailAnim;
-		[Serialize("multiPlayerLifePointFactor")] public float multiPlayerLifePointFactor;
+		public StringID leftBubonBoneName;
+		public StringID rightBubonBoneName;
+		public float bubonPhantomSize;
+		public Path bubonRewardSpawnPath;
+		public int bubonHealth;
+		public uint rewardNumber;
+		public uint destroyRewardNumber;
+		public Generic<Ray_EventSpawnReward> bubonReward;
+		public Enum_RFR_0 faction;
+		public Enum_RFR_1 hitType;
+		public uint hitLevel;
+		public Path tailPath;
+		public StringID transfoTotailAnim;
+		public float multiPlayerLifePointFactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(leftBubonBoneName));
-			SerializeField(s, nameof(rightBubonBoneName));
-			SerializeField(s, nameof(bubonPhantomSize));
-			SerializeField(s, nameof(bubonRewardSpawnPath));
-			SerializeField(s, nameof(bubonHealth));
-			SerializeField(s, nameof(rewardNumber));
-			SerializeField(s, nameof(destroyRewardNumber));
-			SerializeField(s, nameof(bubonReward));
-			SerializeField(s, nameof(faction));
-			SerializeField(s, nameof(hitType));
-			SerializeField(s, nameof(hitLevel));
-			SerializeField(s, nameof(tailPath));
-			SerializeField(s, nameof(transfoTotailAnim));
-			SerializeField(s, nameof(multiPlayerLifePointFactor));
+			leftBubonBoneName = s.SerializeObject<StringID>(leftBubonBoneName, name: "leftBubonBoneName");
+			rightBubonBoneName = s.SerializeObject<StringID>(rightBubonBoneName, name: "rightBubonBoneName");
+			bubonPhantomSize = s.Serialize<float>(bubonPhantomSize, name: "bubonPhantomSize");
+			bubonRewardSpawnPath = s.SerializeObject<Path>(bubonRewardSpawnPath, name: "bubonRewardSpawnPath");
+			bubonHealth = s.Serialize<int>(bubonHealth, name: "bubonHealth");
+			rewardNumber = s.Serialize<uint>(rewardNumber, name: "rewardNumber");
+			destroyRewardNumber = s.Serialize<uint>(destroyRewardNumber, name: "destroyRewardNumber");
+			bubonReward = s.SerializeObject<Generic<Ray_EventSpawnReward>>(bubonReward, name: "bubonReward");
+			faction = s.Serialize<Enum_RFR_0>(faction, name: "faction");
+			hitType = s.Serialize<Enum_RFR_1>(hitType, name: "hitType");
+			hitLevel = s.Serialize<uint>(hitLevel, name: "hitLevel");
+			tailPath = s.SerializeObject<Path>(tailPath, name: "tailPath");
+			transfoTotailAnim = s.SerializeObject<StringID>(transfoTotailAnim, name: "transfoTotailAnim");
+			multiPlayerLifePointFactor = s.Serialize<float>(multiPlayerLifePointFactor, name: "multiPlayerLifePointFactor");
 		}
 		public enum Enum_RFR_0 {
 			[Serialize("Value__1")] Value__1 = -1,

@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_UITimerComponent : UIComponent {
-		[Serialize("displayIcon"        )] public bool displayIcon;
-		[Serialize("inTextIntgration"   )] public SmartLocId inTextIntgration;
-		[Serialize("counterType"        )] public CounterType counterType;
-		[Serialize("isHudEventSensitive")] public bool isHudEventSensitive;
+		public bool displayIcon;
+		public SmartLocId inTextIntgration;
+		public CounterType counterType;
+		public bool isHudEventSensitive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(displayIcon));
-				SerializeField(s, nameof(inTextIntgration));
-				SerializeField(s, nameof(counterType));
+				displayIcon = s.Serialize<bool>(displayIcon, name: "displayIcon");
+				inTextIntgration = s.SerializeObject<SmartLocId>(inTextIntgration, name: "inTextIntgration");
+				counterType = s.Serialize<CounterType>(counterType, name: "counterType");
 			} else {
-				SerializeField(s, nameof(displayIcon));
-				SerializeField(s, nameof(inTextIntgration));
-				SerializeField(s, nameof(counterType));
+				displayIcon = s.Serialize<bool>(displayIcon, name: "displayIcon");
+				inTextIntgration = s.SerializeObject<SmartLocId>(inTextIntgration, name: "inTextIntgration");
+				counterType = s.Serialize<CounterType>(counterType, name: "counterType");
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(isHudEventSensitive));
+					isHudEventSensitive = s.Serialize<bool>(isHudEventSensitive, name: "isHudEventSensitive");
 				}
 			}
 		}

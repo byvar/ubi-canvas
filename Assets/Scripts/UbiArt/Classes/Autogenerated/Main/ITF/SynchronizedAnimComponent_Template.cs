@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class SynchronizedAnimComponent_Template : CSerializable {
-		[Serialize("inactiveAnim")] public StringID inactiveAnim;
-		[Serialize("activeAnim"  )] public StringID activeAnim;
+		public StringID inactiveAnim;
+		public StringID activeAnim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(inactiveAnim));
-			SerializeField(s, nameof(activeAnim));
+			inactiveAnim = s.SerializeObject<StringID>(inactiveAnim, name: "inactiveAnim");
+			activeAnim = s.SerializeObject<StringID>(activeAnim, name: "activeAnim");
 		}
 		public override uint? ClassCRC => 0x6BEF11CB;
 	}

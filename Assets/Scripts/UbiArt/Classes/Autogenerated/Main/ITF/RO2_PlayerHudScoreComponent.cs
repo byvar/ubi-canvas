@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerHudScoreComponent : GraphicComponent {
-		[Serialize("characterTexture" )] public Path characterTexture;
-		[Serialize("characterMaterial")] public Placeholder characterMaterial;
+		public Path characterTexture;
+		public Placeholder characterMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(characterTexture));
+					characterTexture = s.SerializeObject<Path>(characterTexture, name: "characterTexture");
 				}
-				SerializeField(s, nameof(characterMaterial));
+				characterMaterial = s.SerializeObject<Placeholder>(characterMaterial, name: "characterMaterial");
 			} else {
 			}
 		}

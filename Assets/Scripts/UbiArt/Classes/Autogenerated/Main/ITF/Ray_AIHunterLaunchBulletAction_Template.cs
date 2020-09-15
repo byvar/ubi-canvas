@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIHunterLaunchBulletAction_Template : Ray_AIPerformHitAction_Template {
-		[Serialize("endMarker"         )] public StringID endMarker_;
-		[Serialize("bulletExitBone"    )] public StringID bulletExitBone;
-		[Serialize("bullet"            )] public Path bullet;
-		[Serialize("offset"            )] public float offset;
-		[Serialize("useBoneOrientation")] public int useBoneOrientation;
-		[Serialize("launchSpeed"       )] public float launchSpeed;
-		[Serialize("Path__3"           )] public Path Path__3;
-		[Serialize("int__7"            )] public int int__7;
+		public StringID endMarker_;
+		public StringID bulletExitBone;
+		public Path bullet;
+		public float offset;
+		public int useBoneOrientation;
+		public float launchSpeed;
+		public Path Path__3;
+		public int int__7;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(endMarker_));
-				SerializeField(s, nameof(bulletExitBone));
-				SerializeField(s, nameof(bullet));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(useBoneOrientation));
-				SerializeField(s, nameof(launchSpeed));
+				endMarker_ = s.SerializeObject<StringID>(endMarker_, name: "endMarker_");
+				bulletExitBone = s.SerializeObject<StringID>(bulletExitBone, name: "bulletExitBone");
+				bullet = s.SerializeObject<Path>(bullet, name: "bullet");
+				offset = s.Serialize<float>(offset, name: "offset");
+				useBoneOrientation = s.Serialize<int>(useBoneOrientation, name: "useBoneOrientation");
+				launchSpeed = s.Serialize<float>(launchSpeed, name: "launchSpeed");
 			} else {
-				SerializeField(s, nameof(endMarker_));
-				SerializeField(s, nameof(bulletExitBone));
-				SerializeField(s, nameof(bullet));
-				SerializeField(s, nameof(Path__3));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(useBoneOrientation));
-				SerializeField(s, nameof(launchSpeed));
-				SerializeField(s, nameof(int__7));
+				endMarker_ = s.SerializeObject<StringID>(endMarker_, name: "endMarker_");
+				bulletExitBone = s.SerializeObject<StringID>(bulletExitBone, name: "bulletExitBone");
+				bullet = s.SerializeObject<Path>(bullet, name: "bullet");
+				Path__3 = s.SerializeObject<Path>(Path__3, name: "Path__3");
+				offset = s.Serialize<float>(offset, name: "offset");
+				useBoneOrientation = s.Serialize<int>(useBoneOrientation, name: "useBoneOrientation");
+				launchSpeed = s.Serialize<float>(launchSpeed, name: "launchSpeed");
+				int__7 = s.Serialize<int>(int__7, name: "int__7");
 			}
 		}
 		public override uint? ClassCRC => 0xF6BCF9F5;

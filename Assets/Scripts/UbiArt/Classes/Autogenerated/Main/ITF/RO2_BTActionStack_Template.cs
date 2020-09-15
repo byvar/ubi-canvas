@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionStack_Template : BTAction_Template {
-		[Serialize("animStack"   )] public StringID animStack;
-		[Serialize("animStackTop")] public StringID animStackTop;
-		[Serialize("snapBoneName")] public StringID snapBoneName;
+		public StringID animStack;
+		public StringID animStackTop;
+		public StringID snapBoneName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animStack));
-			SerializeField(s, nameof(animStackTop));
-			SerializeField(s, nameof(snapBoneName));
+			animStack = s.SerializeObject<StringID>(animStack, name: "animStack");
+			animStackTop = s.SerializeObject<StringID>(animStackTop, name: "animStackTop");
+			snapBoneName = s.SerializeObject<StringID>(snapBoneName, name: "snapBoneName");
 		}
 		public override uint? ClassCRC => 0xC97C3B69;
 	}

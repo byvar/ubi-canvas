@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_117_sub_6A9150 : CSerializable {
-		[Serialize("active"     )] public int active;
-		[Serialize("offset"     )] public Vec3d offset;
-		[Serialize("applyAlways")] public int applyAlways;
+		public int active;
+		public Vec3d offset;
+		public int applyAlways;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(active));
-			SerializeField(s, nameof(offset));
-			SerializeField(s, nameof(applyAlways));
+			active = s.Serialize<int>(active, name: "active");
+			offset = s.SerializeObject<Vec3d>(offset, name: "offset");
+			applyAlways = s.Serialize<int>(applyAlways, name: "applyAlways");
 		}
 		public override uint? ClassCRC => 0xA8C26DDA;
 	}

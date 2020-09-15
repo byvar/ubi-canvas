@@ -4,10 +4,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_MissionActionSetIdleAnimVariation_Template : CSerializable {
 		[Description("Idle anim variation")]
-		[Serialize("idleAnimVariation")] public Enum_idleAnimVariation idleAnimVariation;
+		public Enum_idleAnimVariation idleAnimVariation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idleAnimVariation));
+			idleAnimVariation = s.Serialize<Enum_idleAnimVariation>(idleAnimVariation, name: "idleAnimVariation");
 		}
 		public enum Enum_idleAnimVariation {
 			[Serialize("Value_0")] Value_0 = 0,

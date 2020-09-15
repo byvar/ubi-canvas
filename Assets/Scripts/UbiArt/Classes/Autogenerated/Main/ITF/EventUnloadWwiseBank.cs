@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventUnloadWwiseBank : Event {
-		[Serialize("WwiseBankList")] public CList<PathRef> WwiseBankList;
+		public CList<PathRef> WwiseBankList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(WwiseBankList));
+			WwiseBankList = s.SerializeObject<CList<PathRef>>(WwiseBankList, name: "WwiseBankList");
 		}
 		public override uint? ClassCRC => 0xCB5AA558;
 	}

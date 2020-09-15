@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LevelIndicatorComponent_Template : ActorComponent_Template {
-		[Serialize("levels"            )] public CList<SmartLocId> levels;
-		[Serialize("displayDuration"   )] public float displayDuration;
-		[Serialize("transitionDuration")] public float transitionDuration;
-		[Serialize("nbRebound"         )] public uint nbRebound;
-		[Serialize("startOffset"       )] public Vec2d startOffset;
+		public CList<SmartLocId> levels;
+		public float displayDuration;
+		public float transitionDuration;
+		public uint nbRebound;
+		public Vec2d startOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(levels));
-			SerializeField(s, nameof(displayDuration));
-			SerializeField(s, nameof(transitionDuration));
-			SerializeField(s, nameof(nbRebound));
-			SerializeField(s, nameof(startOffset));
+			levels = s.SerializeObject<CList<SmartLocId>>(levels, name: "levels");
+			displayDuration = s.Serialize<float>(displayDuration, name: "displayDuration");
+			transitionDuration = s.Serialize<float>(transitionDuration, name: "transitionDuration");
+			nbRebound = s.Serialize<uint>(nbRebound, name: "nbRebound");
+			startOffset = s.SerializeObject<Vec2d>(startOffset, name: "startOffset");
 		}
 		public override uint? ClassCRC => 0xAC2A915C;
 	}

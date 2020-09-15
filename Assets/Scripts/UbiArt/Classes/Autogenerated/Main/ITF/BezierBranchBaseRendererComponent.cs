@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class BezierBranchBaseRendererComponent : BezierBranchComponent {
-		[Serialize("flipTexture")] public bool flipTexture;
+		public bool flipTexture;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(flipTexture));
+			flipTexture = s.Serialize<bool>(flipTexture, name: "flipTexture");
 		}
 		public override uint? ClassCRC => 0x5EB81DE3;
 	}

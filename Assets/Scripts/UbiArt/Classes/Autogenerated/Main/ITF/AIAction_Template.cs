@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH)]
 	public partial class AIAction_Template : CSerializable {
-		[Serialize("action"               )] public StringID action;
-		[Serialize("endMarker"            )] public StringID endMarker;
-		[Serialize("useRootPos"           )] public bool useRootPos;
-		[Serialize("finishOnContact"      )] public bool finishOnContact;
-		[Serialize("rootPosScale"         )] public Vec2d rootPosScale;
-		[Serialize("ignoreContactDuration")] public float ignoreContactDuration;
+		public StringID action;
+		public StringID endMarker;
+		public bool useRootPos;
+		public bool finishOnContact;
+		public Vec2d rootPosScale;
+		public float ignoreContactDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
 				if (this is AIDestroyAction_Template) return;
 			}
-			SerializeField(s, nameof(action));
-			SerializeField(s, nameof(endMarker));
-			SerializeField(s, nameof(useRootPos));
-			SerializeField(s, nameof(finishOnContact));
-			SerializeField(s, nameof(rootPosScale));
-			SerializeField(s, nameof(ignoreContactDuration));
+			action = s.SerializeObject<StringID>(action, name: "action");
+			endMarker = s.SerializeObject<StringID>(endMarker, name: "endMarker");
+			useRootPos = s.Serialize<bool>(useRootPos, name: "useRootPos");
+			finishOnContact = s.Serialize<bool>(finishOnContact, name: "finishOnContact");
+			rootPosScale = s.SerializeObject<Vec2d>(rootPosScale, name: "rootPosScale");
+			ignoreContactDuration = s.Serialize<float>(ignoreContactDuration, name: "ignoreContactDuration");
 		}
 		public override uint? ClassCRC => 0xA6F57F72;
 	}

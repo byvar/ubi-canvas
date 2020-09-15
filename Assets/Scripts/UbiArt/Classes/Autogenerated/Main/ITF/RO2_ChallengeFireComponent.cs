@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeFireComponent : ActorComponent {
-		[Serialize("distanceFromCheckpoint")] public float distanceFromCheckpoint;
-		[Serialize("speedFactor"           )] public float speedFactor;
-		[Serialize("hasMoved"              )] public bool hasMoved;
+		public float distanceFromCheckpoint;
+		public float speedFactor;
+		public bool hasMoved;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(distanceFromCheckpoint));
-					SerializeField(s, nameof(speedFactor));
+					distanceFromCheckpoint = s.Serialize<float>(distanceFromCheckpoint, name: "distanceFromCheckpoint");
+					speedFactor = s.Serialize<float>(speedFactor, name: "speedFactor");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(hasMoved), boolAsByte: true);
+					hasMoved = s.Serialize<bool>(hasMoved, name: "hasMoved", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(distanceFromCheckpoint));
-					SerializeField(s, nameof(speedFactor));
+					distanceFromCheckpoint = s.Serialize<float>(distanceFromCheckpoint, name: "distanceFromCheckpoint");
+					speedFactor = s.Serialize<float>(speedFactor, name: "speedFactor");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(hasMoved));
+					hasMoved = s.Serialize<bool>(hasMoved, name: "hasMoved");
 				}
 			}
 		}

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class GameGlobalsDayOfWeekCondition : GameGlobalsCondition {
-		[Serialize("utc" )] public bool utc;
-		[Serialize("week")] public uint week;
+		public bool utc;
+		public uint week;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(utc));
-			SerializeField(s, nameof(week));
+			utc = s.Serialize<bool>(utc, name: "utc");
+			week = s.Serialize<uint>(week, name: "week");
 		}
 		public override uint? ClassCRC => 0xEF90E84B;
 	}

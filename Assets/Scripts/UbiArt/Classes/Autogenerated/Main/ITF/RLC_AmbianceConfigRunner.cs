@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfigRunner : RLC_AmbianceConfig {
-		[Serialize("GraphicalFamily")] public Enum_GraphicalFamily GraphicalFamily;
-		[Serialize("GraphicalKit"   )] public Enum_GraphicalKit GraphicalKit;
-		[Serialize("MapType"        )] public Enum_MapType MapType;
+		public Enum_GraphicalFamily GraphicalFamily;
+		public Enum_GraphicalKit GraphicalKit;
+		public Enum_MapType MapType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(GraphicalFamily));
-			SerializeField(s, nameof(GraphicalKit));
-			SerializeField(s, nameof(MapType));
+			GraphicalFamily = s.Serialize<Enum_GraphicalFamily>(GraphicalFamily, name: "GraphicalFamily");
+			GraphicalKit = s.Serialize<Enum_GraphicalKit>(GraphicalKit, name: "GraphicalKit");
+			MapType = s.Serialize<Enum_MapType>(MapType, name: "MapType");
 		}
 		public enum Enum_GraphicalFamily {
 			[Serialize("_unknown"     )] _unknown = 0,

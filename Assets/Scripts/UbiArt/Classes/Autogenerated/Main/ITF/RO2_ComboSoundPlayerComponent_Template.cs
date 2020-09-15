@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ComboSoundPlayerComponent_Template : ActorComponent_Template {
-		[Serialize("comboSound"         )] public StringID comboSound;
-		[Serialize("maxTimeBetweenCombo")] public float maxTimeBetweenCombo;
+		public StringID comboSound;
+		public float maxTimeBetweenCombo;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(comboSound));
-			SerializeField(s, nameof(maxTimeBetweenCombo));
+			comboSound = s.SerializeObject<StringID>(comboSound, name: "comboSound");
+			maxTimeBetweenCombo = s.Serialize<float>(maxTimeBetweenCombo, name: "maxTimeBetweenCombo");
 		}
 		public override uint? ClassCRC => 0x0D6F6344;
 	}

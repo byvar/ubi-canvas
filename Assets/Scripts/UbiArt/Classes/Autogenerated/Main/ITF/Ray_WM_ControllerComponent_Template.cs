@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_WM_ControllerComponent_Template : CSerializable {
-		[Serialize("moveX"               )] public float moveX;
-		[Serialize("moveFactorMultiplier")] public float moveFactorMultiplier;
-		[Serialize("standAnim"           )] public StringID standAnim;
-		[Serialize("walkAnim"            )] public StringID walkAnim;
-		[Serialize("jumpAnim"            )] public StringID jumpAnim;
-		[Serialize("swimAnim"            )] public StringID swimAnim;
-		[Serialize("flyAnim"             )] public StringID flyAnim;
-		[Serialize("leadAbility"         )] public Placeholder leadAbility;
-		[Serialize("followAbility"       )] public Placeholder followAbility;
-		[Serialize("heartShield"         )] public Placeholder heartShield;
+		public float moveX;
+		public float moveFactorMultiplier;
+		public StringID standAnim;
+		public StringID walkAnim;
+		public StringID jumpAnim;
+		public StringID swimAnim;
+		public StringID flyAnim;
+		public Placeholder leadAbility;
+		public Placeholder followAbility;
+		public Placeholder heartShield;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(moveX));
-			SerializeField(s, nameof(moveFactorMultiplier));
-			SerializeField(s, nameof(standAnim));
-			SerializeField(s, nameof(walkAnim));
-			SerializeField(s, nameof(jumpAnim));
-			SerializeField(s, nameof(swimAnim));
-			SerializeField(s, nameof(flyAnim));
-			SerializeField(s, nameof(leadAbility));
-			SerializeField(s, nameof(followAbility));
-			SerializeField(s, nameof(heartShield));
+			moveX = s.Serialize<float>(moveX, name: "moveX");
+			moveFactorMultiplier = s.Serialize<float>(moveFactorMultiplier, name: "moveFactorMultiplier");
+			standAnim = s.SerializeObject<StringID>(standAnim, name: "standAnim");
+			walkAnim = s.SerializeObject<StringID>(walkAnim, name: "walkAnim");
+			jumpAnim = s.SerializeObject<StringID>(jumpAnim, name: "jumpAnim");
+			swimAnim = s.SerializeObject<StringID>(swimAnim, name: "swimAnim");
+			flyAnim = s.SerializeObject<StringID>(flyAnim, name: "flyAnim");
+			leadAbility = s.SerializeObject<Placeholder>(leadAbility, name: "leadAbility");
+			followAbility = s.SerializeObject<Placeholder>(followAbility, name: "followAbility");
+			heartShield = s.SerializeObject<Placeholder>(heartShield, name: "heartShield");
 		}
 		public override uint? ClassCRC => 0x2B26168C;
 	}

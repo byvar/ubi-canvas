@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_SpawnerComponent_Template : CSerializable {
-		[Serialize("actor"              )] public Path actor;
-		[Serialize("numToSpawn"         )] public uint numToSpawn;
-		[Serialize("ejectionForce"      )] public float ejectionForce;
-		[Serialize("ejectionRandomForce")] public float ejectionRandomForce;
-		[Serialize("ejectionAngle"      )] public Angle ejectionAngle;
-		[Serialize("ejectionRandomAngle")] public Angle ejectionRandomAngle;
-		[Serialize("ejectionFrequency"  )] public float ejectionFrequency;
+		public Path actor;
+		public uint numToSpawn;
+		public float ejectionForce;
+		public float ejectionRandomForce;
+		public Angle ejectionAngle;
+		public Angle ejectionRandomAngle;
+		public float ejectionFrequency;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(actor));
-			SerializeField(s, nameof(numToSpawn));
-			SerializeField(s, nameof(ejectionForce));
-			SerializeField(s, nameof(ejectionRandomForce));
-			SerializeField(s, nameof(ejectionAngle));
-			SerializeField(s, nameof(ejectionRandomAngle));
-			SerializeField(s, nameof(ejectionFrequency));
+			actor = s.SerializeObject<Path>(actor, name: "actor");
+			numToSpawn = s.Serialize<uint>(numToSpawn, name: "numToSpawn");
+			ejectionForce = s.Serialize<float>(ejectionForce, name: "ejectionForce");
+			ejectionRandomForce = s.Serialize<float>(ejectionRandomForce, name: "ejectionRandomForce");
+			ejectionAngle = s.SerializeObject<Angle>(ejectionAngle, name: "ejectionAngle");
+			ejectionRandomAngle = s.SerializeObject<Angle>(ejectionRandomAngle, name: "ejectionRandomAngle");
+			ejectionFrequency = s.Serialize<float>(ejectionFrequency, name: "ejectionFrequency");
 		}
 		public override uint? ClassCRC => 0x674A77AA;
 	}

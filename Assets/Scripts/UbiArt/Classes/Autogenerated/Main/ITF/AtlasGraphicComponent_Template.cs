@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AtlasGraphicComponent_Template : GraphicComponent_Template {
-		[Serialize("texture"     )] public Path texture;
-		[Serialize("material"    )] public GFXMaterialSerializable material;
-		[Serialize("textureLayer")] public TEXSET_ID textureLayer;
-		[Serialize("texelRatio"  )] public Vec2d texelRatio;
+		public Path texture;
+		public GFXMaterialSerializable material;
+		public TEXSET_ID textureLayer;
+		public Vec2d texelRatio;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(texture));
+				texture = s.SerializeObject<Path>(texture, name: "texture");
 			}
-			SerializeField(s, nameof(material));
-			SerializeField(s, nameof(textureLayer));
-			SerializeField(s, nameof(texelRatio));
+			material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+			textureLayer = s.Serialize<TEXSET_ID>(textureLayer, name: "textureLayer");
+			texelRatio = s.SerializeObject<Vec2d>(texelRatio, name: "texelRatio");
 		}
 		public enum TEXSET_ID {
 			[Serialize("TEXSET_ID_DIFFUSE"       )] DIFFUSE = 0,

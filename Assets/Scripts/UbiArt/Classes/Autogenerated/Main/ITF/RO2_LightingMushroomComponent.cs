@@ -3,69 +3,69 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LightingMushroomComponent : ActorComponent {
-		[Serialize("IsMoving"            )] public bool IsMoving;
-		[Serialize("ScaleMin"            )] public float ScaleMin;
-		[Serialize("ScaleMax"            )] public float ScaleMax;
-		[Serialize("StayLightingAfterHit")] public bool StayLightingAfterHit;
-		[Serialize("AlwaysLighting"      )] public bool AlwaysLighting;
-		[Serialize("ExplosionRadius"     )] public Size ExplosionRadius;
-		[Serialize("RocketNb"            )] public uint RocketNb;
-		[Serialize("SteadyExplosion"     )] public bool SteadyExplosion;
-		[Serialize("TimeToStartFalling"  )] public float TimeToStartFalling;
-		[Serialize("MushroomTargets"     )] public CList<RO2_LightingMushroomComponent.MushroomTarget> MushroomTargets;
-		[Serialize("GPEColor"            )] public uint GPEColor;
-		[Serialize("fireOnce"            )] public bool fireOnce;
-		[Serialize("triggerSpawn"        )] public bool triggerSpawn;
+		public bool IsMoving;
+		public float ScaleMin;
+		public float ScaleMax;
+		public bool StayLightingAfterHit;
+		public bool AlwaysLighting;
+		public Size ExplosionRadius;
+		public uint RocketNb;
+		public bool SteadyExplosion;
+		public float TimeToStartFalling;
+		public CList<RO2_LightingMushroomComponent.MushroomTarget> MushroomTargets;
+		public uint GPEColor;
+		public bool fireOnce;
+		public bool triggerSpawn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(IsMoving));
-					SerializeField(s, nameof(ScaleMin));
-					SerializeField(s, nameof(ScaleMax));
-					SerializeField(s, nameof(StayLightingAfterHit));
-					SerializeField(s, nameof(AlwaysLighting));
-					SerializeField(s, nameof(ExplosionRadius));
-					SerializeField(s, nameof(RocketNb));
-					SerializeField(s, nameof(SteadyExplosion));
-					SerializeField(s, nameof(TimeToStartFalling));
-					SerializeField(s, nameof(MushroomTargets));
+					IsMoving = s.Serialize<bool>(IsMoving, name: "IsMoving");
+					ScaleMin = s.Serialize<float>(ScaleMin, name: "ScaleMin");
+					ScaleMax = s.Serialize<float>(ScaleMax, name: "ScaleMax");
+					StayLightingAfterHit = s.Serialize<bool>(StayLightingAfterHit, name: "StayLightingAfterHit");
+					AlwaysLighting = s.Serialize<bool>(AlwaysLighting, name: "AlwaysLighting");
+					ExplosionRadius = s.Serialize<Size>(ExplosionRadius, name: "ExplosionRadius");
+					RocketNb = s.Serialize<uint>(RocketNb, name: "RocketNb");
+					SteadyExplosion = s.Serialize<bool>(SteadyExplosion, name: "SteadyExplosion");
+					TimeToStartFalling = s.Serialize<float>(TimeToStartFalling, name: "TimeToStartFalling");
+					MushroomTargets = s.SerializeObject<CList<RO2_LightingMushroomComponent.MushroomTarget>>(MushroomTargets, name: "MushroomTargets");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(IsMoving));
-					SerializeField(s, nameof(ScaleMin));
-					SerializeField(s, nameof(ScaleMax));
-					SerializeField(s, nameof(StayLightingAfterHit));
-					SerializeField(s, nameof(AlwaysLighting));
-					SerializeField(s, nameof(ExplosionRadius));
-					SerializeField(s, nameof(RocketNb));
-					SerializeField(s, nameof(SteadyExplosion));
-					SerializeField(s, nameof(TimeToStartFalling));
-					SerializeField(s, nameof(MushroomTargets));
-					SerializeField(s, nameof(GPEColor));
-					SerializeField(s, nameof(fireOnce));
-					SerializeField(s, nameof(triggerSpawn));
+					IsMoving = s.Serialize<bool>(IsMoving, name: "IsMoving");
+					ScaleMin = s.Serialize<float>(ScaleMin, name: "ScaleMin");
+					ScaleMax = s.Serialize<float>(ScaleMax, name: "ScaleMax");
+					StayLightingAfterHit = s.Serialize<bool>(StayLightingAfterHit, name: "StayLightingAfterHit");
+					AlwaysLighting = s.Serialize<bool>(AlwaysLighting, name: "AlwaysLighting");
+					ExplosionRadius = s.Serialize<Size>(ExplosionRadius, name: "ExplosionRadius");
+					RocketNb = s.Serialize<uint>(RocketNb, name: "RocketNb");
+					SteadyExplosion = s.Serialize<bool>(SteadyExplosion, name: "SteadyExplosion");
+					TimeToStartFalling = s.Serialize<float>(TimeToStartFalling, name: "TimeToStartFalling");
+					MushroomTargets = s.SerializeObject<CList<RO2_LightingMushroomComponent.MushroomTarget>>(MushroomTargets, name: "MushroomTargets");
+					GPEColor = s.Serialize<uint>(GPEColor, name: "GPEColor");
+					fireOnce = s.Serialize<bool>(fireOnce, name: "fireOnce");
+					triggerSpawn = s.Serialize<bool>(triggerSpawn, name: "triggerSpawn");
 				}
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class MushroomTarget : CSerializable {
-			[Serialize("Position"      )] public Vec3d Position;
-			[Serialize("ExplosionTimer")] public float ExplosionTimer;
-			[Serialize("flareSpeed"    )] public float flareSpeed;
+			public Vec3d Position;
+			public float ExplosionTimer;
+			public float flareSpeed;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (Settings.s.game == Settings.Game.RL) {
 					if (s.HasFlags(SerializeFlags.Default)) {
-						SerializeField(s, nameof(Position));
-						SerializeField(s, nameof(ExplosionTimer));
+						Position = s.SerializeObject<Vec3d>(Position, name: "Position");
+						ExplosionTimer = s.Serialize<float>(ExplosionTimer, name: "ExplosionTimer");
 					}
 				} else {
 					if (s.HasFlags(SerializeFlags.Default)) {
-						SerializeField(s, nameof(Position));
-						SerializeField(s, nameof(ExplosionTimer));
-						SerializeField(s, nameof(flareSpeed));
+						Position = s.SerializeObject<Vec3d>(Position, name: "Position");
+						ExplosionTimer = s.Serialize<float>(ExplosionTimer, name: "ExplosionTimer");
+						flareSpeed = s.Serialize<float>(flareSpeed, name: "flareSpeed");
 					}
 				}
 			}

@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class BezierTreeFollowComponent : CSerializable {
-		[Serialize("isLooping"       )] public bool isLooping;
-		[Serialize("moveSpeed"       )] public float moveSpeed;
-		[Serialize("maxAngle"        )] public Angle maxAngle;
-		[Serialize("sinFactor"       )] public float sinFactor;
-		[Serialize("useSinAngle"     )] public bool useSinAngle;
-		[Serialize("followCurveAngle")] public bool followCurveAngle;
-		[Serialize("updateFlip"      )] public bool updateFlip;
+		public bool isLooping;
+		public float moveSpeed;
+		public Angle maxAngle;
+		public float sinFactor;
+		public bool useSinAngle;
+		public bool followCurveAngle;
+		public bool updateFlip;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(isLooping), boolAsByte: true);
-			SerializeField(s, nameof(moveSpeed));
-			SerializeField(s, nameof(maxAngle));
-			SerializeField(s, nameof(sinFactor));
-			SerializeField(s, nameof(useSinAngle), boolAsByte: true);
-			SerializeField(s, nameof(followCurveAngle), boolAsByte: true);
-			SerializeField(s, nameof(updateFlip), boolAsByte: true);
+			isLooping = s.Serialize<bool>(isLooping, name: "isLooping", options: CSerializerObject.Options.BoolAsByte);
+			moveSpeed = s.Serialize<float>(moveSpeed, name: "moveSpeed");
+			maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+			sinFactor = s.Serialize<float>(sinFactor, name: "sinFactor");
+			useSinAngle = s.Serialize<bool>(useSinAngle, name: "useSinAngle", options: CSerializerObject.Options.BoolAsByte);
+			followCurveAngle = s.Serialize<bool>(followCurveAngle, name: "followCurveAngle", options: CSerializerObject.Options.BoolAsByte);
+			updateFlip = s.Serialize<bool>(updateFlip, name: "updateFlip", options: CSerializerObject.Options.BoolAsByte);
 		}
 		public override uint? ClassCRC => 0x83B6061E;
 	}

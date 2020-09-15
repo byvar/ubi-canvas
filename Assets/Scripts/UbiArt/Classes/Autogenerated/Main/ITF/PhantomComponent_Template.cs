@@ -4,14 +4,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RO | GameFlags.VH | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
 	public partial class PhantomComponent_Template : ShapeComponent_Template {
-		[Serialize("collisionGroup")] public Enum_collisionGroup collisionGroup;
-		[Serialize("collisionGroup")] public uint collisionGroup2;
+		public Enum_collisionGroup collisionGroup;
+		public uint collisionGroup2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(collisionGroup2));
+				collisionGroup2 = s.Serialize<uint>(collisionGroup2, name: "collisionGroup2");
 			} else {
-				SerializeField(s, nameof(collisionGroup));
+				collisionGroup = s.Serialize<Enum_collisionGroup>(collisionGroup, name: "collisionGroup");
 			}
 		}
 		[Flags]

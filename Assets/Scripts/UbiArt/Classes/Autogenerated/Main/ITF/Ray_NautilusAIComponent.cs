@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_NautilusAIComponent : CSerializable {
-		[Serialize("minAngle"        )] public AngleAmount minAngle;
-		[Serialize("maxAngle"        )] public AngleAmount maxAngle;
-		[Serialize("mode"            )] public Mode mode;
-		[Serialize("lockOnMinReached")] public int lockOnMinReached;
-		[Serialize("lockOnMaxReached")] public int lockOnMaxReached;
+		public AngleAmount minAngle;
+		public AngleAmount maxAngle;
+		public Mode mode;
+		public int lockOnMinReached;
+		public int lockOnMaxReached;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(minAngle));
-				SerializeField(s, nameof(maxAngle));
-				SerializeField(s, nameof(mode));
-				SerializeField(s, nameof(lockOnMinReached));
-				SerializeField(s, nameof(lockOnMaxReached));
+				minAngle = s.SerializeObject<AngleAmount>(minAngle, name: "minAngle");
+				maxAngle = s.SerializeObject<AngleAmount>(maxAngle, name: "maxAngle");
+				mode = s.Serialize<Mode>(mode, name: "mode");
+				lockOnMinReached = s.Serialize<int>(lockOnMinReached, name: "lockOnMinReached");
+				lockOnMaxReached = s.Serialize<int>(lockOnMaxReached, name: "lockOnMaxReached");
 			}
 		}
 		public enum Mode {

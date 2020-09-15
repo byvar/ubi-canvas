@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_JalapenoKingAiComponent_Template : AIComponent_Template {
-		[Serialize("idleAnim"      )] public StringID idleAnim;
-		[Serialize("hitAnim"       )] public StringID hitAnim;
-		[Serialize("receiveHitAnim")] public StringID receiveHitAnim;
-		[Serialize("stunAnim"      )] public StringID stunAnim;
-		[Serialize("stunAnimLoop"  )] public StringID stunAnimLoop;
-		[Serialize("unstunAnim"    )] public StringID unstunAnim;
-		[Serialize("stunDuration"  )] public float stunDuration;
-		[Serialize("deathReward"   )] public Generic<RO2_EventSpawnReward> deathReward;
+		public StringID idleAnim;
+		public StringID hitAnim;
+		public StringID receiveHitAnim;
+		public StringID stunAnim;
+		public StringID stunAnimLoop;
+		public StringID unstunAnim;
+		public float stunDuration;
+		public Generic<RO2_EventSpawnReward> deathReward;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idleAnim));
-			SerializeField(s, nameof(hitAnim));
-			SerializeField(s, nameof(receiveHitAnim));
-			SerializeField(s, nameof(stunAnim));
-			SerializeField(s, nameof(stunAnimLoop));
-			SerializeField(s, nameof(unstunAnim));
-			SerializeField(s, nameof(stunDuration));
-			SerializeField(s, nameof(deathReward));
+			idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
+			hitAnim = s.SerializeObject<StringID>(hitAnim, name: "hitAnim");
+			receiveHitAnim = s.SerializeObject<StringID>(receiveHitAnim, name: "receiveHitAnim");
+			stunAnim = s.SerializeObject<StringID>(stunAnim, name: "stunAnim");
+			stunAnimLoop = s.SerializeObject<StringID>(stunAnimLoop, name: "stunAnimLoop");
+			unstunAnim = s.SerializeObject<StringID>(unstunAnim, name: "unstunAnim");
+			stunDuration = s.Serialize<float>(stunDuration, name: "stunDuration");
+			deathReward = s.SerializeObject<Generic<RO2_EventSpawnReward>>(deathReward, name: "deathReward");
 		}
 		public override uint? ClassCRC => 0x5661ED7A;
 	}

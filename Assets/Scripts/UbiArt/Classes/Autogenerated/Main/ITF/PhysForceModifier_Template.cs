@@ -3,42 +3,42 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class PhysForceModifier_Template : CSerializable {
-		[Serialize("isRadial"           )] public bool isRadial;
-		[Serialize("force"              )] public Vec2d force;
-		[Serialize("forceVariationRange")] public float forceVariationRange;
-		[Serialize("gradientPercentage" )] public float gradientPercentage;
-		[Serialize("isInverted"         )] public bool isInverted;
-		[Serialize("centerForce"        )] public float centerForce;
-		[Serialize("centerForceMaxSpeed")] public float centerForceMaxSpeed;
-		[Serialize("speedMultiplierX"   )] public float speedMultiplierX;
-		[Serialize("speedMultiplierY"   )] public float speedMultiplierY;
-		[Serialize("posOffset"          )] public Vec2d posOffset;
-		[Serialize("angleOffset"        )] public Angle angleOffset;
+		public bool isRadial;
+		public Vec2d force;
+		public float forceVariationRange;
+		public float gradientPercentage;
+		public bool isInverted;
+		public float centerForce;
+		public float centerForceMaxSpeed;
+		public float speedMultiplierX;
+		public float speedMultiplierY;
+		public Vec2d posOffset;
+		public Angle angleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(isRadial));
-				SerializeField(s, nameof(force));
-				SerializeField(s, nameof(gradientPercentage));
-				SerializeField(s, nameof(isInverted));
-				SerializeField(s, nameof(centerForce));
-				SerializeField(s, nameof(centerForceMaxSpeed));
-				SerializeField(s, nameof(speedMultiplierX));
-				SerializeField(s, nameof(speedMultiplierY));
-				SerializeField(s, nameof(posOffset));
-				SerializeField(s, nameof(angleOffset));
+				isRadial = s.Serialize<bool>(isRadial, name: "isRadial");
+				force = s.SerializeObject<Vec2d>(force, name: "force");
+				gradientPercentage = s.Serialize<float>(gradientPercentage, name: "gradientPercentage");
+				isInverted = s.Serialize<bool>(isInverted, name: "isInverted");
+				centerForce = s.Serialize<float>(centerForce, name: "centerForce");
+				centerForceMaxSpeed = s.Serialize<float>(centerForceMaxSpeed, name: "centerForceMaxSpeed");
+				speedMultiplierX = s.Serialize<float>(speedMultiplierX, name: "speedMultiplierX");
+				speedMultiplierY = s.Serialize<float>(speedMultiplierY, name: "speedMultiplierY");
+				posOffset = s.SerializeObject<Vec2d>(posOffset, name: "posOffset");
+				angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
 			} else {
-				SerializeField(s, nameof(isRadial));
-				SerializeField(s, nameof(force));
-				SerializeField(s, nameof(forceVariationRange));
-				SerializeField(s, nameof(gradientPercentage));
-				SerializeField(s, nameof(isInverted));
-				SerializeField(s, nameof(centerForce));
-				SerializeField(s, nameof(centerForceMaxSpeed));
-				SerializeField(s, nameof(speedMultiplierX));
-				SerializeField(s, nameof(speedMultiplierY));
-				SerializeField(s, nameof(posOffset));
-				SerializeField(s, nameof(angleOffset));
+				isRadial = s.Serialize<bool>(isRadial, name: "isRadial");
+				force = s.SerializeObject<Vec2d>(force, name: "force");
+				forceVariationRange = s.Serialize<float>(forceVariationRange, name: "forceVariationRange");
+				gradientPercentage = s.Serialize<float>(gradientPercentage, name: "gradientPercentage");
+				isInverted = s.Serialize<bool>(isInverted, name: "isInverted");
+				centerForce = s.Serialize<float>(centerForce, name: "centerForce");
+				centerForceMaxSpeed = s.Serialize<float>(centerForceMaxSpeed, name: "centerForceMaxSpeed");
+				speedMultiplierX = s.Serialize<float>(speedMultiplierX, name: "speedMultiplierX");
+				speedMultiplierY = s.Serialize<float>(speedMultiplierY, name: "speedMultiplierY");
+				posOffset = s.SerializeObject<Vec2d>(posOffset, name: "posOffset");
+				angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
 			}
 		}
 		public override uint? ClassCRC => 0x5E8F2A1D;

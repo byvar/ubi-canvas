@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_BezierBranchPolylineComponent : RO2_BezierBranchComponent {
-		[Serialize("polylineMode"        )] public RO2_PolylineMode polylineMode;
-		[Serialize("polylineMode"        )] public RO2_PolylineMode2 polylineMode2;
-		[Serialize("polylineTessellation")] public float polylineTessellation;
+		public RO2_PolylineMode polylineMode;
+		public RO2_PolylineMode2 polylineMode2;
+		public float polylineTessellation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(polylineMode2));
+					polylineMode2 = s.Serialize<RO2_PolylineMode2>(polylineMode2, name: "polylineMode2");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(polylineMode));
-					SerializeField(s, nameof(polylineTessellation));
+					polylineMode = s.Serialize<RO2_PolylineMode>(polylineMode, name: "polylineMode");
+					polylineTessellation = s.Serialize<float>(polylineTessellation, name: "polylineTessellation");
 				}
 			}
 		}

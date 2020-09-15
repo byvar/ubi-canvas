@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class DynModifier_ColliderRayTrace : AbstractDynModifier {
-		[Serialize("OffSet"       )] public Vec2d OffSet;
-		[Serialize("Size"         )] public float Size;
-		[Serialize("CollisionMask")] public ECOLLISIONFILTER CollisionMask;
-		[Serialize("IgnoreGMat"   )] public CList<StringID> IgnoreGMat;
+		public Vec2d OffSet;
+		public float Size;
+		public ECOLLISIONFILTER CollisionMask;
+		public CList<StringID> IgnoreGMat;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(OffSet));
-			SerializeField(s, nameof(Size));
-			SerializeField(s, nameof(CollisionMask));
-			SerializeField(s, nameof(IgnoreGMat));
+			OffSet = s.SerializeObject<Vec2d>(OffSet, name: "OffSet");
+			Size = s.Serialize<float>(Size, name: "Size");
+			CollisionMask = s.Serialize<ECOLLISIONFILTER>(CollisionMask, name: "CollisionMask");
+			IgnoreGMat = s.SerializeObject<CList<StringID>>(IgnoreGMat, name: "IgnoreGMat");
 		}
 		public enum ECOLLISIONFILTER {
 			[Serialize("ECOLLISIONFILTER_NONE"       )] NONE = 0,

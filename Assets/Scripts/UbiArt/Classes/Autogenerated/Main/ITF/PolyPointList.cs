@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PolyPointList : CSerializable {
-		[Serialize("LocalPoints")] public CList<PolyLineEdge> LocalPoints;
-		[Serialize("Loop"       )] public bool Loop;
-		[Serialize("Length"     )] public float Length;
+		public CList<PolyLineEdge> LocalPoints;
+		public bool Loop;
+		public float Length;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(LocalPoints));
-			SerializeField(s, nameof(Loop));
+			LocalPoints = s.SerializeObject<CList<PolyLineEdge>>(LocalPoints, name: "LocalPoints");
+			Loop = s.Serialize<bool>(Loop, name: "Loop");
 			if (s.HasFlags(SerializeFlags.Flags10)) {
-				SerializeField(s, nameof(Length));
+				Length = s.Serialize<float>(Length, name: "Length");
 			}
 		}
 	}

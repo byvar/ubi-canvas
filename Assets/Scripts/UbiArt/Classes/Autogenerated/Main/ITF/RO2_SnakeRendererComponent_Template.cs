@@ -3,55 +3,55 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeRendererComponent_Template : GraphicComponent_Template {
-		[Serialize("bodyParts"           )] public CArray<Generic<RO2_SnakeBodyPart_Template>> bodyParts;
-		[Serialize("bodyPartsZSpacing"   )] public float bodyPartsZSpacing;
-		[Serialize("drawHeadBelow"       )] public bool drawHeadBelow;
-		[Serialize("broadcastEventToPart")] public bool broadcastEventToPart;
-		[Serialize("trajectoryOffset"    )] public float trajectoryOffset;
-		[Serialize("sampleLength"        )] public float sampleLength;
-		[Serialize("gameMaterial"        )] public Path gameMaterial;
-		[Serialize("usePolylinePhantom"  )] public bool usePolylinePhantom;
-		[Serialize("gfxMaterial"         )] public GFXMaterialSerializable gfxMaterial;
-		[Serialize("amvPath"             )] public Path amvPath;
-		[Serialize("fxStart"             )] public StringID fxStart;
-		[Serialize("fxLoop"              )] public StringID fxLoop;
-		[Serialize("fxStop"              )] public StringID fxStop;
-		[Serialize("inputSpeed"          )] public StringID inputSpeed;
-		[Serialize("tapPerturbator"      )] public RO2_SnakeRendererComponent_Template.Perturbator tapPerturbator;
-		[Serialize("hitPerturbators"     )] public CList<RO2_SnakeRendererComponent_Template.Perturbator> hitPerturbators;
+		public CArray<Generic<RO2_SnakeBodyPart_Template>> bodyParts;
+		public float bodyPartsZSpacing;
+		public bool drawHeadBelow;
+		public bool broadcastEventToPart;
+		public float trajectoryOffset;
+		public float sampleLength;
+		public Path gameMaterial;
+		public bool usePolylinePhantom;
+		public GFXMaterialSerializable gfxMaterial;
+		public Path amvPath;
+		public StringID fxStart;
+		public StringID fxLoop;
+		public StringID fxStop;
+		public StringID inputSpeed;
+		public RO2_SnakeRendererComponent_Template.Perturbator tapPerturbator;
+		public CList<RO2_SnakeRendererComponent_Template.Perturbator> hitPerturbators;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bodyParts));
-			SerializeField(s, nameof(bodyPartsZSpacing));
-			SerializeField(s, nameof(drawHeadBelow));
-			SerializeField(s, nameof(broadcastEventToPart));
-			SerializeField(s, nameof(trajectoryOffset));
-			SerializeField(s, nameof(sampleLength));
-			SerializeField(s, nameof(gameMaterial));
-			SerializeField(s, nameof(usePolylinePhantom));
-			SerializeField(s, nameof(gfxMaterial));
-			SerializeField(s, nameof(amvPath));
-			SerializeField(s, nameof(fxStart));
-			SerializeField(s, nameof(fxLoop));
-			SerializeField(s, nameof(fxStop));
-			SerializeField(s, nameof(inputSpeed));
-			SerializeField(s, nameof(tapPerturbator));
-			SerializeField(s, nameof(hitPerturbators));
+			bodyParts = s.SerializeObject<CArray<Generic<RO2_SnakeBodyPart_Template>>>(bodyParts, name: "bodyParts");
+			bodyPartsZSpacing = s.Serialize<float>(bodyPartsZSpacing, name: "bodyPartsZSpacing");
+			drawHeadBelow = s.Serialize<bool>(drawHeadBelow, name: "drawHeadBelow");
+			broadcastEventToPart = s.Serialize<bool>(broadcastEventToPart, name: "broadcastEventToPart");
+			trajectoryOffset = s.Serialize<float>(trajectoryOffset, name: "trajectoryOffset");
+			sampleLength = s.Serialize<float>(sampleLength, name: "sampleLength");
+			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+			usePolylinePhantom = s.Serialize<bool>(usePolylinePhantom, name: "usePolylinePhantom");
+			gfxMaterial = s.SerializeObject<GFXMaterialSerializable>(gfxMaterial, name: "gfxMaterial");
+			amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");
+			fxStart = s.SerializeObject<StringID>(fxStart, name: "fxStart");
+			fxLoop = s.SerializeObject<StringID>(fxLoop, name: "fxLoop");
+			fxStop = s.SerializeObject<StringID>(fxStop, name: "fxStop");
+			inputSpeed = s.SerializeObject<StringID>(inputSpeed, name: "inputSpeed");
+			tapPerturbator = s.SerializeObject<RO2_SnakeRendererComponent_Template.Perturbator>(tapPerturbator, name: "tapPerturbator");
+			hitPerturbators = s.SerializeObject<CList<RO2_SnakeRendererComponent_Template.Perturbator>>(hitPerturbators, name: "hitPerturbators");
 		}
 		[Games(GameFlags.RA)]
 		public partial class Perturbator : CSerializable {
-			[Serialize("range"    )] public uint range;
-			[Serialize("duration" )] public float duration;
-			[Serialize("amplitude")] public float amplitude;
-			[Serialize("frequency")] public float frequency;
-			[Serialize("fx"       )] public StringID fx;
+			public uint range;
+			public float duration;
+			public float amplitude;
+			public float frequency;
+			public StringID fx;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(range));
-				SerializeField(s, nameof(duration));
-				SerializeField(s, nameof(amplitude));
-				SerializeField(s, nameof(frequency));
-				SerializeField(s, nameof(fx));
+				range = s.Serialize<uint>(range, name: "range");
+				duration = s.Serialize<float>(duration, name: "duration");
+				amplitude = s.Serialize<float>(amplitude, name: "amplitude");
+				frequency = s.Serialize<float>(frequency, name: "frequency");
+				fx = s.SerializeObject<StringID>(fx, name: "fx");
 			}
 		}
 		public override uint? ClassCRC => 0x4E721589;

@@ -3,66 +3,66 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class ShapeComponent_Template : ActorComponent_Template {
-		[Serialize("AnimPolylineList"             )] public CList<StringID> AnimPolylineList;
-		[Serialize("shape"                        )] public Generic<PhysShape> shape;
-		[Serialize("offset"                       )] public Vec2d offset;
-		[Serialize("attachPolyline"               )] public StringID attachPolyline;
-		[Serialize("proceduralBone"               )] public StringID proceduralBone;
-		[Serialize("shapes"                       )] public CList<ShapeData_Template> shapes;
-		[Serialize("useAABBShape"                 )] public bool useAABBShape;
-		[Serialize("bone"                         )] public StringID bone;
-		[Serialize("bone3D"                       )] public StringID bone3D;
-		[Serialize("polyline"                     )] public StringID polyline;
-		[Serialize("drawDebug"                    )] public int drawDebug;
+		public CList<StringID> AnimPolylineList;
+		public Generic<PhysShape> shape;
+		public Vec2d offset;
+		public StringID attachPolyline;
+		public StringID proceduralBone;
+		public CList<ShapeData_Template> shapes;
+		public bool useAABBShape;
+		public StringID bone;
+		public StringID bone3D;
+		public StringID polyline;
+		public int drawDebug;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(polyline));
-				SerializeField(s, nameof(shape));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(attachPolyline));
-				SerializeField(s, nameof(shapes));
-				SerializeField(s, nameof(useAABBShape));
+				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
+				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
+				shapes = s.SerializeObject<CList<ShapeData_Template>>(shapes, name: "shapes");
+				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 			} else if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(polyline));
-				SerializeField(s, nameof(shape));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(attachPolyline));
+				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
+				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
 				if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0) && s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(drawDebug));
+					drawDebug = s.Serialize<int>(drawDebug, name: "drawDebug");
 				}
-				SerializeField(s, nameof(shapes));
-				SerializeField(s, nameof(useAABBShape));
+				shapes = s.SerializeObject<CList<ShapeData_Template>>(shapes, name: "shapes");
+				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(polyline));
-				SerializeField(s, nameof(shape));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(attachPolyline));
-				SerializeField(s, nameof(proceduralBone));
-				SerializeField(s, nameof(shapes));
-				SerializeField(s, nameof(useAABBShape));
-				SerializeField(s, nameof(bone));
-				SerializeField(s, nameof(bone3D));
+				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
+				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
+				proceduralBone = s.SerializeObject<StringID>(proceduralBone, name: "proceduralBone");
+				shapes = s.SerializeObject<CList<ShapeData_Template>>(shapes, name: "shapes");
+				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
+				bone = s.SerializeObject<StringID>(bone, name: "bone");
+				bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(polyline));
-				SerializeField(s, nameof(shape));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(attachPolyline));
-				SerializeField(s, nameof(proceduralBone));
-				SerializeField(s, nameof(useAABBShape), boolAsByte: true);
-				SerializeField(s, nameof(bone));
-				SerializeField(s, nameof(bone3D));
+				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
+				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
+				proceduralBone = s.SerializeObject<StringID>(proceduralBone, name: "proceduralBone");
+				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape", options: CSerializerObject.Options.BoolAsByte);
+				bone = s.SerializeObject<StringID>(bone, name: "bone");
+				bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
 			} else {
-				SerializeField(s, nameof(AnimPolylineList));
-				SerializeField(s, nameof(shape));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(attachPolyline));
-				SerializeField(s, nameof(proceduralBone));
-				SerializeField(s, nameof(shapes));
-				SerializeField(s, nameof(useAABBShape));
-				SerializeField(s, nameof(bone));
-				SerializeField(s, nameof(bone3D));
+				AnimPolylineList = s.SerializeObject<CList<StringID>>(AnimPolylineList, name: "AnimPolylineList");
+				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
+				proceduralBone = s.SerializeObject<StringID>(proceduralBone, name: "proceduralBone");
+				shapes = s.SerializeObject<CList<ShapeData_Template>>(shapes, name: "shapes");
+				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
+				bone = s.SerializeObject<StringID>(bone, name: "bone");
+				bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
 			}
 		}
 		public override uint? ClassCRC => 0x06B15761;

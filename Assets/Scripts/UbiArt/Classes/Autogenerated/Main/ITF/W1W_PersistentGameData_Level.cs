@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_PersistentGameData_Level : PersistentGameData_Level {
-		[Serialize("uint__0"            )] public uint uint__0;
-		[Serialize("uint__1"            )] public uint uint__1;
-		[Serialize("bool__2"            )] public bool bool__2;
-		[Serialize("bool__3"            )] public bool bool__3;
-		[Serialize("uint__4"            )] public uint uint__4;
-		[Serialize("CArray<WikiItem>__5")] public CArray<WikiItem> CArray_WikiItem__5;
-		[Serialize("CArray<WikiItem>__6")] public CArray<WikiItem> CArray_WikiItem__6;
+		public uint uint__0;
+		public uint uint__1;
+		public bool bool__2;
+		public bool bool__3;
+		public uint uint__4;
+		public CArray<WikiItem> CArray_WikiItem__5;
+		public CArray<WikiItem> CArray_WikiItem__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(uint__0));
-			SerializeField(s, nameof(uint__1));
-			SerializeField(s, nameof(bool__2));
-			SerializeField(s, nameof(bool__3));
-			SerializeField(s, nameof(uint__4));
-			SerializeField(s, nameof(CArray_WikiItem__5));
-			SerializeField(s, nameof(CArray_WikiItem__6));
+			uint__0 = s.Serialize<uint>(uint__0, name: "uint__0");
+			uint__1 = s.Serialize<uint>(uint__1, name: "uint__1");
+			bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
+			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
+			uint__4 = s.Serialize<uint>(uint__4, name: "uint__4");
+			CArray_WikiItem__5 = s.SerializeObject<CArray<WikiItem>>(CArray_WikiItem__5, name: "CArray_WikiItem__5");
+			CArray_WikiItem__6 = s.SerializeObject<CArray<WikiItem>>(CArray_WikiItem__6, name: "CArray_WikiItem__6");
 		}
 		public override uint? ClassCRC => 0xFB573729;
 	}

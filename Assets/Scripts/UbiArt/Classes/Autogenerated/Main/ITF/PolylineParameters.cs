@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class PolylineParameters : CSerializable {
-		[Serialize("speedLoss"          )] public float speedLoss;
-		[Serialize("weightMultiplier"   )] public float weightMultiplier;
-		[Serialize("landSpeedMultiplier")] public float landSpeedMultiplier;
-		[Serialize("hitForceMultiplier" )] public float hitForceMultiplier;
-		[Serialize("impulseMultiplier"  )] public float impulseMultiplier;
-		[Serialize("windMultiplier"     )] public float windMultiplier;
-		[Serialize("gameMaterial"       )] public Path gameMaterial;
-		[Serialize("environment"        )] public bool environment;
-		[Serialize("usePhantom"         )] public bool usePhantom;
-		[Serialize("useMovingPolyline"  )] public bool useMovingPolyline;
-		[Serialize("regionType"         )] public StringID regionType;
-		[Serialize("forceNoBlockHit"    )] public bool forceNoBlockHit;
-		[Serialize("polylines"          )] public CList<StringID> polylines;
-		[Serialize("points"             )] public CList<StringID> points;
+		public float speedLoss;
+		public float weightMultiplier;
+		public float landSpeedMultiplier;
+		public float hitForceMultiplier;
+		public float impulseMultiplier;
+		public float windMultiplier;
+		public Path gameMaterial;
+		public bool environment;
+		public bool usePhantom;
+		public bool useMovingPolyline;
+		public StringID regionType;
+		public bool forceNoBlockHit;
+		public CList<StringID> polylines;
+		public CList<StringID> points;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(speedLoss));
-			SerializeField(s, nameof(weightMultiplier));
-			SerializeField(s, nameof(landSpeedMultiplier));
-			SerializeField(s, nameof(hitForceMultiplier));
-			SerializeField(s, nameof(impulseMultiplier));
-			SerializeField(s, nameof(windMultiplier));
-			SerializeField(s, nameof(gameMaterial));
-			SerializeField(s, nameof(environment));
-			SerializeField(s, nameof(usePhantom));
-			SerializeField(s, nameof(useMovingPolyline));
-			SerializeField(s, nameof(regionType));
-			SerializeField(s, nameof(forceNoBlockHit));
-			SerializeField(s, nameof(polylines));
-			SerializeField(s, nameof(points));
+			speedLoss = s.Serialize<float>(speedLoss, name: "speedLoss");
+			weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
+			landSpeedMultiplier = s.Serialize<float>(landSpeedMultiplier, name: "landSpeedMultiplier");
+			hitForceMultiplier = s.Serialize<float>(hitForceMultiplier, name: "hitForceMultiplier");
+			impulseMultiplier = s.Serialize<float>(impulseMultiplier, name: "impulseMultiplier");
+			windMultiplier = s.Serialize<float>(windMultiplier, name: "windMultiplier");
+			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+			environment = s.Serialize<bool>(environment, name: "environment");
+			usePhantom = s.Serialize<bool>(usePhantom, name: "usePhantom");
+			useMovingPolyline = s.Serialize<bool>(useMovingPolyline, name: "useMovingPolyline");
+			regionType = s.SerializeObject<StringID>(regionType, name: "regionType");
+			forceNoBlockHit = s.Serialize<bool>(forceNoBlockHit, name: "forceNoBlockHit");
+			polylines = s.SerializeObject<CList<StringID>>(polylines, name: "polylines");
+			points = s.SerializeObject<CList<StringID>>(points, name: "points");
 		}
 	}
 }

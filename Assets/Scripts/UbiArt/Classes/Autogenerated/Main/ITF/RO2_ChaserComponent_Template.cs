@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChaserComponent_Template : ActorComponent_Template {
-		[Serialize("waitAnim"           )] public StringID waitAnim;
-		[Serialize("runAnim"            )] public StringID runAnim;
-		[Serialize("jumpAnim"           )] public StringID jumpAnim;
-		[Serialize("digAnim"            )] public StringID digAnim;
-		[Serialize("dieAnim"            )] public StringID dieAnim;
-		[Serialize("shape"              )] public Generic<PhysShape> shape;
-		[Serialize("faction"            )] public uint faction;
-		[Serialize("minFramesDigging"   )] public uint minFramesDigging;
-		[Serialize("useKillingOffset"   )] public bool useKillingOffset;
-		[Serialize("killingOffset"      )] public float killingOffset;
-		[Serialize("killingOffsetRadius")] public float killingOffsetRadius;
+		public StringID waitAnim;
+		public StringID runAnim;
+		public StringID jumpAnim;
+		public StringID digAnim;
+		public StringID dieAnim;
+		public Generic<PhysShape> shape;
+		public uint faction;
+		public uint minFramesDigging;
+		public bool useKillingOffset;
+		public float killingOffset;
+		public float killingOffsetRadius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(waitAnim));
-			SerializeField(s, nameof(runAnim));
-			SerializeField(s, nameof(jumpAnim));
-			SerializeField(s, nameof(digAnim));
-			SerializeField(s, nameof(dieAnim));
-			SerializeField(s, nameof(shape));
-			SerializeField(s, nameof(faction));
-			SerializeField(s, nameof(minFramesDigging));
-			SerializeField(s, nameof(useKillingOffset));
-			SerializeField(s, nameof(killingOffset));
-			SerializeField(s, nameof(killingOffsetRadius));
+			waitAnim = s.SerializeObject<StringID>(waitAnim, name: "waitAnim");
+			runAnim = s.SerializeObject<StringID>(runAnim, name: "runAnim");
+			jumpAnim = s.SerializeObject<StringID>(jumpAnim, name: "jumpAnim");
+			digAnim = s.SerializeObject<StringID>(digAnim, name: "digAnim");
+			dieAnim = s.SerializeObject<StringID>(dieAnim, name: "dieAnim");
+			shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+			faction = s.Serialize<uint>(faction, name: "faction");
+			minFramesDigging = s.Serialize<uint>(minFramesDigging, name: "minFramesDigging");
+			useKillingOffset = s.Serialize<bool>(useKillingOffset, name: "useKillingOffset");
+			killingOffset = s.Serialize<float>(killingOffset, name: "killingOffset");
+			killingOffsetRadius = s.Serialize<float>(killingOffsetRadius, name: "killingOffsetRadius");
 		}
 		public override uint? ClassCRC => 0x187901B1;
 	}

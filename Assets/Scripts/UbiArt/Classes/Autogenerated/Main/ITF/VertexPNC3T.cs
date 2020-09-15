@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class VertexPNC3T : CSerializable {
-		[Serialize("pos"  )] public Vec3d pos;
-		[Serialize("color")] public ColorInteger color;
-		[Serialize("uv1"  )] public Vec2d uv1;
-		[Serialize("uv2"  )] public GFX_Vector4 uv2;
-		[Serialize("uv3"  )] public GFX_Vector4 uv3;
-		[Serialize("uv4"  )] public Vec2d uv4;
+		public Vec3d pos;
+		public ColorInteger color;
+		public Vec2d uv1;
+		public GFX_Vector4 uv2;
+		public GFX_Vector4 uv3;
+		public Vec2d uv4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(pos));
-			SerializeField(s, nameof(color));
-			SerializeField(s, nameof(uv1));
-			SerializeField(s, nameof(uv2));
-			SerializeField(s, nameof(uv3));
-			SerializeField(s, nameof(uv4));
+			pos = s.SerializeObject<Vec3d>(pos, name: "pos");
+			color = s.SerializeObject<ColorInteger>(color, name: "color");
+			uv1 = s.SerializeObject<Vec2d>(uv1, name: "uv1");
+			uv2 = s.SerializeObject<GFX_Vector4>(uv2, name: "uv2");
+			uv3 = s.SerializeObject<GFX_Vector4>(uv3, name: "uv3");
+			uv4 = s.SerializeObject<Vec2d>(uv4, name: "uv4");
 		}
 	}
 }

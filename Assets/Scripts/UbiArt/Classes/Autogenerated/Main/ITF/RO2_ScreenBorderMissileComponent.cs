@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ScreenBorderMissileComponent : ActorComponent {
-		[Serialize("border"            )] public ScreenBorder border;
-		[Serialize("borderOffset"      )] public float borderOffset;
-		[Serialize("corridorWidth"     )] public float corridorWidth;
-		[Serialize("corridorSmooth"    )] public float corridorSmooth;
-		[Serialize("waitingMaxDuration")] public float waitingMaxDuration;
-		[Serialize("fireShakeDuration" )] public float fireShakeDuration;
-		[Serialize("fireShakeAmplitude")] public float fireShakeAmplitude;
-		[Serialize("fireShakeCount"    )] public uint fireShakeCount;
-		[Serialize("fireSpeed"         )] public float fireSpeed;
+		public ScreenBorder border;
+		public float borderOffset;
+		public float corridorWidth;
+		public float corridorSmooth;
+		public float waitingMaxDuration;
+		public float fireShakeDuration;
+		public float fireShakeAmplitude;
+		public uint fireShakeCount;
+		public float fireSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(border));
-			SerializeField(s, nameof(borderOffset));
-			SerializeField(s, nameof(corridorWidth));
-			SerializeField(s, nameof(corridorSmooth));
-			SerializeField(s, nameof(waitingMaxDuration));
-			SerializeField(s, nameof(fireShakeDuration));
-			SerializeField(s, nameof(fireShakeAmplitude));
-			SerializeField(s, nameof(fireShakeCount));
-			SerializeField(s, nameof(fireSpeed));
+			border = s.Serialize<ScreenBorder>(border, name: "border");
+			borderOffset = s.Serialize<float>(borderOffset, name: "borderOffset");
+			corridorWidth = s.Serialize<float>(corridorWidth, name: "corridorWidth");
+			corridorSmooth = s.Serialize<float>(corridorSmooth, name: "corridorSmooth");
+			waitingMaxDuration = s.Serialize<float>(waitingMaxDuration, name: "waitingMaxDuration");
+			fireShakeDuration = s.Serialize<float>(fireShakeDuration, name: "fireShakeDuration");
+			fireShakeAmplitude = s.Serialize<float>(fireShakeAmplitude, name: "fireShakeAmplitude");
+			fireShakeCount = s.Serialize<uint>(fireShakeCount, name: "fireShakeCount");
+			fireSpeed = s.Serialize<float>(fireSpeed, name: "fireSpeed");
 		}
 		public enum ScreenBorder {
 			[Serialize("ScreenBorder_Left"  )] Left = 0,

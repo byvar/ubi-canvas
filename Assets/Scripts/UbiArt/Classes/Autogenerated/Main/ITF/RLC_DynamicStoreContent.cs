@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_DynamicStoreContent : CSerializable {
-		[Serialize("storeItems")] public CArray<Generic<RLC_DynamicStoreItem>> storeItems;
+		public CArray<Generic<RLC_DynamicStoreItem>> storeItems;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(storeItems));
+			storeItems = s.SerializeObject<CArray<Generic<RLC_DynamicStoreItem>>>(storeItems, name: "storeItems");
 		}
 	}
 }

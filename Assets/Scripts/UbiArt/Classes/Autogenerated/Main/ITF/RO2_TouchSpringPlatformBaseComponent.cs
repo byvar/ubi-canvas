@@ -3,74 +3,74 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TouchSpringPlatformBaseComponent : ActorComponent {
-		[Serialize("saveOnCheckpoint"       )] public bool saveOnCheckpoint;
-		[Serialize("touchDetectCooldown"    )] public uint touchDetectCooldown;
-		[Serialize("speed"                  )] public float speed;
-		[Serialize("bounce"                 )] public float bounce;
-		[Serialize("smoothTarget"           )] public float smoothTarget;
-		[Serialize("holdSpeed"              )] public float holdSpeed;
-		[Serialize("holdBounce"             )] public float holdBounce;
-		[Serialize("holdSmoothTarget"       )] public float holdSmoothTarget;
-		[Serialize("move"                   )] public Generic<TouchSpringMoveBase> move;
-		[Serialize("oneShotSwipe"           )] public bool oneShotSwipe;
-		[Serialize("oneShotSwipeAxisMin"    )] public Angle oneShotSwipeAxisMin;
-		[Serialize("oneShotSwipeAxisMax"    )] public Angle oneShotSwipeAxisMax;
-		[Serialize("oneShotSwipeAngleToler" )] public Angle oneShotSwipeAngleToler;
-		[Serialize("oneShotTap"             )] public bool oneShotTap;
-		[Serialize("proceduralAnimMaxCursor")] public float proceduralAnimMaxCursor;
-		[Serialize("shape"                  )] public EditableShape shape;
-		[Serialize("moveSavedCurrentCursor" )] public float moveSavedCurrentCursor;
+		public bool saveOnCheckpoint;
+		public uint touchDetectCooldown;
+		public float speed;
+		public float bounce;
+		public float smoothTarget;
+		public float holdSpeed;
+		public float holdBounce;
+		public float holdSmoothTarget;
+		public Generic<TouchSpringMoveBase> move;
+		public bool oneShotSwipe;
+		public Angle oneShotSwipeAxisMin;
+		public Angle oneShotSwipeAxisMax;
+		public Angle oneShotSwipeAngleToler;
+		public bool oneShotTap;
+		public float proceduralAnimMaxCursor;
+		public EditableShape shape;
+		public float moveSavedCurrentCursor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(saveOnCheckpoint));
-					SerializeField(s, nameof(touchDetectCooldown));
-					SerializeField(s, nameof(speed));
-					SerializeField(s, nameof(bounce));
-					SerializeField(s, nameof(smoothTarget));
-					SerializeField(s, nameof(holdSpeed));
-					SerializeField(s, nameof(holdBounce));
-					SerializeField(s, nameof(holdSmoothTarget));
-					SerializeField(s, nameof(move));
-					SerializeField(s, nameof(oneShotSwipe), boolAsByte: true);
+					saveOnCheckpoint = s.Serialize<bool>(saveOnCheckpoint, name: "saveOnCheckpoint");
+					touchDetectCooldown = s.Serialize<uint>(touchDetectCooldown, name: "touchDetectCooldown");
+					speed = s.Serialize<float>(speed, name: "speed");
+					bounce = s.Serialize<float>(bounce, name: "bounce");
+					smoothTarget = s.Serialize<float>(smoothTarget, name: "smoothTarget");
+					holdSpeed = s.Serialize<float>(holdSpeed, name: "holdSpeed");
+					holdBounce = s.Serialize<float>(holdBounce, name: "holdBounce");
+					holdSmoothTarget = s.Serialize<float>(holdSmoothTarget, name: "holdSmoothTarget");
+					move = s.SerializeObject<Generic<TouchSpringMoveBase>>(move, name: "move");
+					oneShotSwipe = s.Serialize<bool>(oneShotSwipe, name: "oneShotSwipe", options: CSerializerObject.Options.BoolAsByte);
 					if (oneShotSwipe) {
-						SerializeField(s, nameof(oneShotSwipeAxisMin));
-						SerializeField(s, nameof(oneShotSwipeAxisMax));
-						SerializeField(s, nameof(oneShotSwipeAngleToler));
+						oneShotSwipeAxisMin = s.SerializeObject<Angle>(oneShotSwipeAxisMin, name: "oneShotSwipeAxisMin");
+						oneShotSwipeAxisMax = s.SerializeObject<Angle>(oneShotSwipeAxisMax, name: "oneShotSwipeAxisMax");
+						oneShotSwipeAngleToler = s.SerializeObject<Angle>(oneShotSwipeAngleToler, name: "oneShotSwipeAngleToler");
 					} else {
-						SerializeField(s, nameof(oneShotTap), boolAsByte: true);
+						oneShotTap = s.Serialize<bool>(oneShotTap, name: "oneShotTap", options: CSerializerObject.Options.BoolAsByte);
 					}
-					SerializeField(s, nameof(proceduralAnimMaxCursor));
-					SerializeField(s, nameof(shape));
+					proceduralAnimMaxCursor = s.Serialize<float>(proceduralAnimMaxCursor, name: "proceduralAnimMaxCursor");
+					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(moveSavedCurrentCursor));
+					moveSavedCurrentCursor = s.Serialize<float>(moveSavedCurrentCursor, name: "moveSavedCurrentCursor");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(saveOnCheckpoint));
-					SerializeField(s, nameof(touchDetectCooldown));
-					SerializeField(s, nameof(speed));
-					SerializeField(s, nameof(bounce));
-					SerializeField(s, nameof(smoothTarget));
-					SerializeField(s, nameof(holdSpeed));
-					SerializeField(s, nameof(holdBounce));
-					SerializeField(s, nameof(holdSmoothTarget));
-					SerializeField(s, nameof(move));
-					SerializeField(s, nameof(oneShotSwipe));
+					saveOnCheckpoint = s.Serialize<bool>(saveOnCheckpoint, name: "saveOnCheckpoint");
+					touchDetectCooldown = s.Serialize<uint>(touchDetectCooldown, name: "touchDetectCooldown");
+					speed = s.Serialize<float>(speed, name: "speed");
+					bounce = s.Serialize<float>(bounce, name: "bounce");
+					smoothTarget = s.Serialize<float>(smoothTarget, name: "smoothTarget");
+					holdSpeed = s.Serialize<float>(holdSpeed, name: "holdSpeed");
+					holdBounce = s.Serialize<float>(holdBounce, name: "holdBounce");
+					holdSmoothTarget = s.Serialize<float>(holdSmoothTarget, name: "holdSmoothTarget");
+					move = s.SerializeObject<Generic<TouchSpringMoveBase>>(move, name: "move");
+					oneShotSwipe = s.Serialize<bool>(oneShotSwipe, name: "oneShotSwipe");
 					if (oneShotSwipe) {
-						SerializeField(s, nameof(oneShotSwipeAxisMin));
-						SerializeField(s, nameof(oneShotSwipeAxisMax));
-						SerializeField(s, nameof(oneShotSwipeAngleToler));
+						oneShotSwipeAxisMin = s.SerializeObject<Angle>(oneShotSwipeAxisMin, name: "oneShotSwipeAxisMin");
+						oneShotSwipeAxisMax = s.SerializeObject<Angle>(oneShotSwipeAxisMax, name: "oneShotSwipeAxisMax");
+						oneShotSwipeAngleToler = s.SerializeObject<Angle>(oneShotSwipeAngleToler, name: "oneShotSwipeAngleToler");
 					} else {
-						SerializeField(s, nameof(oneShotTap));
+						oneShotTap = s.Serialize<bool>(oneShotTap, name: "oneShotTap");
 					}
-					SerializeField(s, nameof(proceduralAnimMaxCursor));
-					SerializeField(s, nameof(shape));
+					proceduralAnimMaxCursor = s.Serialize<float>(proceduralAnimMaxCursor, name: "proceduralAnimMaxCursor");
+					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(moveSavedCurrentCursor));
+					moveSavedCurrentCursor = s.Serialize<float>(moveSavedCurrentCursor, name: "moveSavedCurrentCursor");
 				}
 			}
 		}

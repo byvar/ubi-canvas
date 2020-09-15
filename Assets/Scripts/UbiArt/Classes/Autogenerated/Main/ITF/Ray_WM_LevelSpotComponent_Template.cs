@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_WM_LevelSpotComponent_Template : Ray_WM_SpotComponent_Template {
-		[Serialize("textCageID")] public StringID textCageID;
-		[Serialize("textCoinID")] public StringID textCoinID;
-		[Serialize("textLumID" )] public StringID textLumID;
-		[Serialize("textTimeID")] public StringID textTimeID;
+		public StringID textCageID;
+		public StringID textCoinID;
+		public StringID textLumID;
+		public StringID textTimeID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(textCageID));
-			SerializeField(s, nameof(textCoinID));
-			SerializeField(s, nameof(textLumID));
-			SerializeField(s, nameof(textTimeID));
+			textCageID = s.SerializeObject<StringID>(textCageID, name: "textCageID");
+			textCoinID = s.SerializeObject<StringID>(textCoinID, name: "textCoinID");
+			textLumID = s.SerializeObject<StringID>(textLumID, name: "textLumID");
+			textTimeID = s.SerializeObject<StringID>(textTimeID, name: "textTimeID");
 		}
 		public override uint? ClassCRC => 0x27368CDF;
 	}

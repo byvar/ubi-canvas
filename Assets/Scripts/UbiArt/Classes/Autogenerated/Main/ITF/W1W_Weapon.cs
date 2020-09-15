@@ -3,33 +3,33 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Weapon : W1W_InteractiveGenComponent {
-		[Serialize("bool__0"      )] public bool bool__0;
-		[Serialize("bool__1"      )] public bool bool__1;
-		[Serialize("float__2"     )] public float float__2;
-		[Serialize("float__3"     )] public float float__3;
-		[Serialize("float__4"     )] public float float__4;
-		[Serialize("float__5"     )] public float float__5;
-		[Serialize("Path__6"      )] public Path Path__6;
-		[Serialize("Path__7"      )] public Path Path__7;
-		[Serialize("float__8"     )] public float float__8;
-		[Serialize("Enum_VH_0__9" )] public Enum_VH_0_ Enum_VH_0__9;
-		[Serialize("Enum_VH_1__10")] public Enum_VH_1_ Enum_VH_1__10;
-		[Serialize("bool__11"     )] public bool bool__11;
+		public bool bool__0;
+		public bool bool__1;
+		public float float__2;
+		public float float__3;
+		public float float__4;
+		public float float__5;
+		public Path Path__6;
+		public Path Path__7;
+		public float float__8;
+		public Enum_VH_0_ Enum_VH_0__9;
+		public Enum_VH_1_ Enum_VH_1__10;
+		public bool bool__11;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(bool__0));
-				SerializeField(s, nameof(bool__1));
-				SerializeField(s, nameof(float__2));
-				SerializeField(s, nameof(float__3));
-				SerializeField(s, nameof(float__4));
-				SerializeField(s, nameof(float__5));
-				SerializeField(s, nameof(Path__6));
-				SerializeField(s, nameof(Path__7));
-				SerializeField(s, nameof(float__8));
-				SerializeField(s, nameof(Enum_VH_0__9));
-				SerializeField(s, nameof(Enum_VH_1__10));
-				SerializeField(s, nameof(bool__11));
+				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
+				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
+				float__2 = s.Serialize<float>(float__2, name: "float__2");
+				float__3 = s.Serialize<float>(float__3, name: "float__3");
+				float__4 = s.Serialize<float>(float__4, name: "float__4");
+				float__5 = s.Serialize<float>(float__5, name: "float__5");
+				Path__6 = s.SerializeObject<Path>(Path__6, name: "Path__6");
+				Path__7 = s.SerializeObject<Path>(Path__7, name: "Path__7");
+				float__8 = s.Serialize<float>(float__8, name: "float__8");
+				Enum_VH_0__9 = s.Serialize<Enum_VH_0_>(Enum_VH_0__9, name: "Enum_VH_0__9");
+				Enum_VH_1__10 = s.Serialize<Enum_VH_1_>(Enum_VH_1__10, name: "Enum_VH_1__10");
+				bool__11 = s.Serialize<bool>(bool__11, name: "bool__11");
 			}
 		}
 		public enum Enum_VH_0_ {

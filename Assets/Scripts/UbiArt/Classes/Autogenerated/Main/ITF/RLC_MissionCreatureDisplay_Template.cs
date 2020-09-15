@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_MissionCreatureDisplay_Template : RLC_BasicCreatureDisplay_Template {
-		[Serialize("missionDifficulty")] public Mission_Difficulty missionDifficulty;
-		[Serialize("missionType"      )] public Mission_Type missionType;
-		[Serialize("missionId"        )] public StringID missionId;
+		public Mission_Difficulty missionDifficulty;
+		public Mission_Type missionType;
+		public StringID missionId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(missionDifficulty));
-			SerializeField(s, nameof(missionType));
-			SerializeField(s, nameof(missionId));
+			missionDifficulty = s.Serialize<Mission_Difficulty>(missionDifficulty, name: "missionDifficulty");
+			missionType = s.Serialize<Mission_Type>(missionType, name: "missionType");
+			missionId = s.SerializeObject<StringID>(missionId, name: "missionId");
 		}
 		public enum Mission_Difficulty {
 			[Serialize("Mission_Difficulty::easy")] easy = 0,

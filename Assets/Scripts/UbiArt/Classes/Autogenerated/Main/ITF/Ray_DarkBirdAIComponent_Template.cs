@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_DarkBirdAIComponent_Template : CSerializable {
-		[Serialize("appear3dOffset"       )] public Vec3d appear3dOffset;
-		[Serialize("detachOnDeath"        )] public int detachOnDeath;
-		[Serialize("disappear3dBehavior"  )] public Placeholder disappear3dBehavior;
-		[Serialize("triggerBounceBehavior")] public Placeholder triggerBounceBehavior;
+		public Vec3d appear3dOffset;
+		public int detachOnDeath;
+		public Placeholder disappear3dBehavior;
+		public Placeholder triggerBounceBehavior;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(appear3dOffset));
-			SerializeField(s, nameof(detachOnDeath));
-			SerializeField(s, nameof(disappear3dBehavior));
-			SerializeField(s, nameof(triggerBounceBehavior));
+			appear3dOffset = s.SerializeObject<Vec3d>(appear3dOffset, name: "appear3dOffset");
+			detachOnDeath = s.Serialize<int>(detachOnDeath, name: "detachOnDeath");
+			disappear3dBehavior = s.SerializeObject<Placeholder>(disappear3dBehavior, name: "disappear3dBehavior");
+			triggerBounceBehavior = s.SerializeObject<Placeholder>(triggerBounceBehavior, name: "triggerBounceBehavior");
 		}
 		public override uint? ClassCRC => 0x25D475DF;
 	}

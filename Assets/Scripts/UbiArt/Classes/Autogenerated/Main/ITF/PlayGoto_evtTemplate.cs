@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlayGoto_evtTemplate : SequenceEvent_Template {
-		[Serialize("Label"      )] public string Label;
-		[Serialize("WaitForFact")] public StringID WaitForFact;
-		[Serialize("value"      )] public string value;
-		[Serialize("type"       )] public EValueType type;
+		public string Label;
+		public StringID WaitForFact;
+		public string value;
+		public EValueType type;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Label));
-			SerializeField(s, nameof(WaitForFact));
-			SerializeField(s, nameof(value));
-			SerializeField(s, nameof(type));
+			Label = s.Serialize<string>(Label, name: "Label");
+			WaitForFact = s.SerializeObject<StringID>(WaitForFact, name: "WaitForFact");
+			value = s.Serialize<string>(value, name: "value");
+			type = s.Serialize<EValueType>(type, name: "type");
 		}
 		public enum EValueType {
 			[Serialize("EValueType_Unknown"   )] Unknown = 0,

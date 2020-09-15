@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_RegionTeaserButton : ActorComponent {
-		[Serialize("Region")] public Enum_Region Region;
+		public Enum_Region Region;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Region));
+			Region = s.Serialize<Enum_Region>(Region, name: "Region");
 		}
 		public enum Enum_Region {
 			[Serialize("_unknown"     )] _unknown = 0,

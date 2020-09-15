@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventTouchScreenMandatoryZone : Event {
-		[Serialize("enter"                   )] public bool enter;
-		[Serialize("unswapDRCPlayerIfSwapped")] public bool unswapDRCPlayerIfSwapped;
-		[Serialize("autoMurphy"              )] public bool autoMurphy;
+		public bool enter;
+		public bool unswapDRCPlayerIfSwapped;
+		public bool autoMurphy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enter));
-			SerializeField(s, nameof(unswapDRCPlayerIfSwapped));
-			SerializeField(s, nameof(autoMurphy));
+			enter = s.Serialize<bool>(enter, name: "enter");
+			unswapDRCPlayerIfSwapped = s.Serialize<bool>(unswapDRCPlayerIfSwapped, name: "unswapDRCPlayerIfSwapped");
+			autoMurphy = s.Serialize<bool>(autoMurphy, name: "autoMurphy");
 		}
 		public override uint? ClassCRC => 0xF9AD72C0;
 	}

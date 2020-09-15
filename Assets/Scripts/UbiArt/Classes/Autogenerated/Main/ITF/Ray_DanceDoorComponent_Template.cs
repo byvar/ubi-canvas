@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_DanceDoorComponent_Template : CSerializable {
-		[Serialize("animClosed"         )] public StringID animClosed;
-		[Serialize("animClosedWithMusic")] public StringID animClosedWithMusic;
-		[Serialize("animOpening"        )] public StringID animOpening;
-		[Serialize("danceTime"          )] public float danceTime;
-		[Serialize("warmupTime"         )] public float warmupTime;
+		public StringID animClosed;
+		public StringID animClosedWithMusic;
+		public StringID animOpening;
+		public float danceTime;
+		public float warmupTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animClosed));
-			SerializeField(s, nameof(animClosedWithMusic));
-			SerializeField(s, nameof(animOpening));
-			SerializeField(s, nameof(danceTime));
-			SerializeField(s, nameof(warmupTime));
+			animClosed = s.SerializeObject<StringID>(animClosed, name: "animClosed");
+			animClosedWithMusic = s.SerializeObject<StringID>(animClosedWithMusic, name: "animClosedWithMusic");
+			animOpening = s.SerializeObject<StringID>(animOpening, name: "animOpening");
+			danceTime = s.Serialize<float>(danceTime, name: "danceTime");
+			warmupTime = s.Serialize<float>(warmupTime, name: "warmupTime");
 		}
 		public override uint? ClassCRC => 0x7E2B72A9;
 	}

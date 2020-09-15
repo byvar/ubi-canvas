@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class StaticMeshVertexComponent : GraphicComponent {
-		[Serialize("staticMeshElements")] public CList<StaticMeshElement> staticMeshElements;
-		[Serialize("sortedMeshElements")] public CArray<uint> sortedMeshElements;
-		[Serialize("material"          )] public GFXMaterialSerializable material;
-		[Serialize("localAABB"         )] public AABB localAABB;
-		[Serialize("mergeRange"        )] public float mergeRange;
-		[Serialize("friseGroupPath"    )] public ObjectPath friseGroupPath;
-		[Serialize("forceMatrixUpdate" )] public int forceMatrixUpdate;
+		public CList<StaticMeshElement> staticMeshElements;
+		public CArray<uint> sortedMeshElements;
+		public GFXMaterialSerializable material;
+		public AABB localAABB;
+		public float mergeRange;
+		public ObjectPath friseGroupPath;
+		public int forceMatrixUpdate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(staticMeshElements));
-				SerializeField(s, nameof(sortedMeshElements));
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(localAABB));
-				SerializeField(s, nameof(mergeRange));
-				SerializeField(s, nameof(friseGroupPath));
-				SerializeField(s, nameof(forceMatrixUpdate));
+				staticMeshElements = s.SerializeObject<CList<StaticMeshElement>>(staticMeshElements, name: "staticMeshElements");
+				sortedMeshElements = s.SerializeObject<CArray<uint>>(sortedMeshElements, name: "sortedMeshElements");
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				localAABB = s.SerializeObject<AABB>(localAABB, name: "localAABB");
+				mergeRange = s.Serialize<float>(mergeRange, name: "mergeRange");
+				friseGroupPath = s.SerializeObject<ObjectPath>(friseGroupPath, name: "friseGroupPath");
+				forceMatrixUpdate = s.Serialize<int>(forceMatrixUpdate, name: "forceMatrixUpdate");
 			} else {
-				SerializeField(s, nameof(staticMeshElements));
-				SerializeField(s, nameof(sortedMeshElements));
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(localAABB));
-				SerializeField(s, nameof(mergeRange));
-				SerializeField(s, nameof(friseGroupPath));
+				staticMeshElements = s.SerializeObject<CList<StaticMeshElement>>(staticMeshElements, name: "staticMeshElements");
+				sortedMeshElements = s.SerializeObject<CArray<uint>>(sortedMeshElements, name: "sortedMeshElements");
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				localAABB = s.SerializeObject<AABB>(localAABB, name: "localAABB");
+				mergeRange = s.Serialize<float>(mergeRange, name: "mergeRange");
+				friseGroupPath = s.SerializeObject<ObjectPath>(friseGroupPath, name: "friseGroupPath");
 			}
 		}
 		public override uint? ClassCRC => 0x2A83720E;

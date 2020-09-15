@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR)]
 	public partial class PieceData : CSerializable {
-		[Serialize("Path__0"    )] public Path Path__0;
-		[Serialize("StringID__1")] public StringID StringID__1;
-		[Serialize("int__2"     )] public int int__2;
-		[Serialize("int__3"     )] public int int__3;
-		[Serialize("StringID__4")] public StringID StringID__4;
+		public Path Path__0;
+		public StringID StringID__1;
+		public int int__2;
+		public int int__3;
+		public StringID StringID__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Path__0));
-			SerializeField(s, nameof(StringID__1));
-			SerializeField(s, nameof(int__2));
-			SerializeField(s, nameof(int__3));
-			SerializeField(s, nameof(StringID__4));
+			Path__0 = s.SerializeObject<Path>(Path__0, name: "Path__0");
+			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
+			int__2 = s.Serialize<int>(int__2, name: "int__2");
+			int__3 = s.Serialize<int>(int__3, name: "int__3");
+			StringID__4 = s.SerializeObject<StringID>(StringID__4, name: "StringID__4");
 		}
 	}
 }

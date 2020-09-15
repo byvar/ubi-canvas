@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIComponent_Template : ActorComponent_Template {
-		[Serialize("registerToAIManager"  )] public bool registerToAIManager;
-		[Serialize("faction"              )] public uint faction;
-		[Serialize("health"               )] public int health;
-		[Serialize("damageLevels"         )] public CArray<uint> damageLevels;
-		[Serialize("scaleRandomFactor"    )] public float scaleRandomFactor;
-		[Serialize("listenToActivateEvent")] public int listenToActivateEvent;
+		public bool registerToAIManager;
+		public uint faction;
+		public int health;
+		public CArray<uint> damageLevels;
+		public float scaleRandomFactor;
+		public int listenToActivateEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
-				SerializeField(s, nameof(registerToAIManager));
-				SerializeField(s, nameof(faction));
-				SerializeField(s, nameof(health));
-				SerializeField(s, nameof(damageLevels));
-				SerializeField(s, nameof(scaleRandomFactor));
-				SerializeField(s, nameof(listenToActivateEvent));
+				registerToAIManager = s.Serialize<bool>(registerToAIManager, name: "registerToAIManager");
+				faction = s.Serialize<uint>(faction, name: "faction");
+				health = s.Serialize<int>(health, name: "health");
+				damageLevels = s.SerializeObject<CArray<uint>>(damageLevels, name: "damageLevels");
+				scaleRandomFactor = s.Serialize<float>(scaleRandomFactor, name: "scaleRandomFactor");
+				listenToActivateEvent = s.Serialize<int>(listenToActivateEvent, name: "listenToActivateEvent");
 			} else {
-				SerializeField(s, nameof(registerToAIManager));
-				SerializeField(s, nameof(faction));
-				SerializeField(s, nameof(health));
-				SerializeField(s, nameof(damageLevels));
-				SerializeField(s, nameof(scaleRandomFactor));
+				registerToAIManager = s.Serialize<bool>(registerToAIManager, name: "registerToAIManager");
+				faction = s.Serialize<uint>(faction, name: "faction");
+				health = s.Serialize<int>(health, name: "health");
+				damageLevels = s.SerializeObject<CArray<uint>>(damageLevels, name: "damageLevels");
+				scaleRandomFactor = s.Serialize<float>(scaleRandomFactor, name: "scaleRandomFactor");
 			}
 		}
 		public override uint? ClassCRC => 0xE8B7E500;

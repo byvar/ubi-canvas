@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SwarmChaseAIComponent_Template : RO2_AIComponent_Template {
-		[Serialize("atlasMaterial" )] public GFXMaterialSerializable atlasMaterial;
-		[Serialize("hitLevel"      )] public uint hitLevel;
-		[Serialize("hitType"       )] public RECEIVEDHITTYPE hitType;
-		[Serialize("smoothFactor"  )] public float smoothFactor;
-		[Serialize("leaderSpeedMin")] public float leaderSpeedMin;
-		[Serialize("leaderSpeedMax")] public float leaderSpeedMax;
-		[Serialize("distMaxFromCam")] public float distMaxFromCam;
-		[Serialize("countParticles")] public uint countParticles;
-		[Serialize("sizeParticles" )] public float sizeParticles;
+		public GFXMaterialSerializable atlasMaterial;
+		public uint hitLevel;
+		public RECEIVEDHITTYPE hitType;
+		public float smoothFactor;
+		public float leaderSpeedMin;
+		public float leaderSpeedMax;
+		public float distMaxFromCam;
+		public uint countParticles;
+		public float sizeParticles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(atlasMaterial));
-			SerializeField(s, nameof(hitLevel));
-			SerializeField(s, nameof(hitType));
-			SerializeField(s, nameof(smoothFactor));
-			SerializeField(s, nameof(leaderSpeedMin));
-			SerializeField(s, nameof(leaderSpeedMax));
-			SerializeField(s, nameof(distMaxFromCam));
-			SerializeField(s, nameof(countParticles));
-			SerializeField(s, nameof(sizeParticles));
+			atlasMaterial = s.SerializeObject<GFXMaterialSerializable>(atlasMaterial, name: "atlasMaterial");
+			hitLevel = s.Serialize<uint>(hitLevel, name: "hitLevel");
+			hitType = s.Serialize<RECEIVEDHITTYPE>(hitType, name: "hitType");
+			smoothFactor = s.Serialize<float>(smoothFactor, name: "smoothFactor");
+			leaderSpeedMin = s.Serialize<float>(leaderSpeedMin, name: "leaderSpeedMin");
+			leaderSpeedMax = s.Serialize<float>(leaderSpeedMax, name: "leaderSpeedMax");
+			distMaxFromCam = s.Serialize<float>(distMaxFromCam, name: "distMaxFromCam");
+			countParticles = s.Serialize<uint>(countParticles, name: "countParticles");
+			sizeParticles = s.Serialize<float>(sizeParticles, name: "sizeParticles");
 		}
 		public enum RECEIVEDHITTYPE {
 			[Serialize("RECEIVEDHITTYPE_UNKNOWN"    )] UNKNOWN = -1,

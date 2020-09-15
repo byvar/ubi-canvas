@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class EventSetSpeed : Event {
-		[Serialize("speed" )] public Vec2d speed;
+		public Vec2d speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(speed));
+			speed = s.SerializeObject<Vec2d>(speed, name: "speed");
 		}
 		public override uint? ClassCRC => 0xAE569AD3;
 	}

@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_MovableObject_Template : CSerializable {
-		[Serialize("anchorOffset"          )] public Vec2d anchorOffset;
-		[Serialize("noFxDelay"             )] public float noFxDelay;
-		[Serialize("impactFxSpeedThreshold")] public float impactFxSpeedThreshold;
-		[Serialize("moveFxSpeedThreshold"  )] public float moveFxSpeedThreshold;
-		[Serialize("impactFxID"            )] public StringID impactFxID;
-		[Serialize("startMovingFxID"       )] public StringID startMovingFxID;
-		[Serialize("stopMovingFxID"        )] public StringID stopMovingFxID;
-		[Serialize("avoidanceCheckDistance")] public float avoidanceCheckDistance;
-		[Serialize("avoidanceCheckRadius"  )] public float avoidanceCheckRadius;
-		[Serialize("avoidanceSpeed"        )] public float avoidanceSpeed;
+		public Vec2d anchorOffset;
+		public float noFxDelay;
+		public float impactFxSpeedThreshold;
+		public float moveFxSpeedThreshold;
+		public StringID impactFxID;
+		public StringID startMovingFxID;
+		public StringID stopMovingFxID;
+		public float avoidanceCheckDistance;
+		public float avoidanceCheckRadius;
+		public float avoidanceSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(anchorOffset));
-			SerializeField(s, nameof(noFxDelay));
-			SerializeField(s, nameof(impactFxSpeedThreshold));
-			SerializeField(s, nameof(moveFxSpeedThreshold));
-			SerializeField(s, nameof(impactFxID));
-			SerializeField(s, nameof(startMovingFxID));
-			SerializeField(s, nameof(stopMovingFxID));
-			SerializeField(s, nameof(avoidanceCheckDistance));
-			SerializeField(s, nameof(avoidanceCheckRadius));
-			SerializeField(s, nameof(avoidanceSpeed));
+			anchorOffset = s.SerializeObject<Vec2d>(anchorOffset, name: "anchorOffset");
+			noFxDelay = s.Serialize<float>(noFxDelay, name: "noFxDelay");
+			impactFxSpeedThreshold = s.Serialize<float>(impactFxSpeedThreshold, name: "impactFxSpeedThreshold");
+			moveFxSpeedThreshold = s.Serialize<float>(moveFxSpeedThreshold, name: "moveFxSpeedThreshold");
+			impactFxID = s.SerializeObject<StringID>(impactFxID, name: "impactFxID");
+			startMovingFxID = s.SerializeObject<StringID>(startMovingFxID, name: "startMovingFxID");
+			stopMovingFxID = s.SerializeObject<StringID>(stopMovingFxID, name: "stopMovingFxID");
+			avoidanceCheckDistance = s.Serialize<float>(avoidanceCheckDistance, name: "avoidanceCheckDistance");
+			avoidanceCheckRadius = s.Serialize<float>(avoidanceCheckRadius, name: "avoidanceCheckRadius");
+			avoidanceSpeed = s.Serialize<float>(avoidanceSpeed, name: "avoidanceSpeed");
 		}
 		public override uint? ClassCRC => 0x8F18F05D;
 	}

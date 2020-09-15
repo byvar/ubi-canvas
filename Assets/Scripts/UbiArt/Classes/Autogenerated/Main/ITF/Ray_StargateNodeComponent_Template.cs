@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_StargateNodeComponent_Template : CSerializable {
-		[Serialize("type"          )] public STARGATENODETYPE type;
-		[Serialize("fadeTime"      )] public float fadeTime;
-		[Serialize("fadeLength"    )] public float fadeLength;
-		[Serialize("timeMultiplier")] public float timeMultiplier;
+		public STARGATENODETYPE type;
+		public float fadeTime;
+		public float fadeLength;
+		public float timeMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(fadeTime));
-			SerializeField(s, nameof(fadeLength));
-			SerializeField(s, nameof(timeMultiplier));
+			type = s.Serialize<STARGATENODETYPE>(type, name: "type");
+			fadeTime = s.Serialize<float>(fadeTime, name: "fadeTime");
+			fadeLength = s.Serialize<float>(fadeLength, name: "fadeLength");
+			timeMultiplier = s.Serialize<float>(timeMultiplier, name: "timeMultiplier");
 		}
 		public enum STARGATENODETYPE {
 			[Serialize("STARGATENODETYPE_POINT"   )] POINT = 0,

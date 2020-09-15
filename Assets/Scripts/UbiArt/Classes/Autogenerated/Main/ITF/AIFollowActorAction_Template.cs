@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIFollowActorAction_Template : AIAction_Template {
-		[Serialize("aiFollowActorRelativPos"    )] public Vec3d aiFollowActorRelativPos;
-		[Serialize("aiFollowActorRelativPosNext")] public Vec3d aiFollowActorRelativPosNext;
-		[Serialize("aiFollowActorAcceleration"  )] public float aiFollowActorAcceleration;
-		[Serialize("aiFollowActorFriction"      )] public float aiFollowActorFriction;
-		[Serialize("aiFollowActorDoFlip"        )] public bool aiFollowActorDoFlip;
+		public Vec3d aiFollowActorRelativPos;
+		public Vec3d aiFollowActorRelativPosNext;
+		public float aiFollowActorAcceleration;
+		public float aiFollowActorFriction;
+		public bool aiFollowActorDoFlip;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(aiFollowActorRelativPos));
-			SerializeField(s, nameof(aiFollowActorRelativPosNext));
-			SerializeField(s, nameof(aiFollowActorAcceleration));
-			SerializeField(s, nameof(aiFollowActorFriction));
-			SerializeField(s, nameof(aiFollowActorDoFlip));
+			aiFollowActorRelativPos = s.SerializeObject<Vec3d>(aiFollowActorRelativPos, name: "aiFollowActorRelativPos");
+			aiFollowActorRelativPosNext = s.SerializeObject<Vec3d>(aiFollowActorRelativPosNext, name: "aiFollowActorRelativPosNext");
+			aiFollowActorAcceleration = s.Serialize<float>(aiFollowActorAcceleration, name: "aiFollowActorAcceleration");
+			aiFollowActorFriction = s.Serialize<float>(aiFollowActorFriction, name: "aiFollowActorFriction");
+			aiFollowActorDoFlip = s.Serialize<bool>(aiFollowActorDoFlip, name: "aiFollowActorDoFlip");
 		}
 		public override uint? ClassCRC => 0x4E176A36;
 	}

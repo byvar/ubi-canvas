@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class CamModifierOverride_Template : CSerializable {
-		[Serialize("modifierBlend"               )] public int modifierBlend;
-		[Serialize("modifierInertie"             )] public int modifierInertie;
-		[Serialize("constraintDelayToActivate"   )] public int constraintDelayToActivate;
-		[Serialize("constraintDelayToDisable"    )] public int constraintDelayToDisable;
-		[Serialize("cameraLookAtOffset"          )] public int cameraLookAtOffset;
-		[Serialize("cameraLookAtOffsetMaxInMulti")] public int cameraLookAtOffsetMaxInMulti;
-		[Serialize("focale"                      )] public int focale;
+		public int modifierBlend;
+		public int modifierInertie;
+		public int constraintDelayToActivate;
+		public int constraintDelayToDisable;
+		public int cameraLookAtOffset;
+		public int cameraLookAtOffsetMaxInMulti;
+		public int focale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(modifierBlend));
-			SerializeField(s, nameof(modifierInertie));
-			SerializeField(s, nameof(constraintDelayToActivate));
-			SerializeField(s, nameof(constraintDelayToDisable));
-			SerializeField(s, nameof(cameraLookAtOffset));
-			SerializeField(s, nameof(cameraLookAtOffsetMaxInMulti));
-			SerializeField(s, nameof(focale));
+			modifierBlend = s.Serialize<int>(modifierBlend, name: "modifierBlend");
+			modifierInertie = s.Serialize<int>(modifierInertie, name: "modifierInertie");
+			constraintDelayToActivate = s.Serialize<int>(constraintDelayToActivate, name: "constraintDelayToActivate");
+			constraintDelayToDisable = s.Serialize<int>(constraintDelayToDisable, name: "constraintDelayToDisable");
+			cameraLookAtOffset = s.Serialize<int>(cameraLookAtOffset, name: "cameraLookAtOffset");
+			cameraLookAtOffsetMaxInMulti = s.Serialize<int>(cameraLookAtOffsetMaxInMulti, name: "cameraLookAtOffsetMaxInMulti");
+			focale = s.Serialize<int>(focale, name: "focale");
 		}
 	}
 }

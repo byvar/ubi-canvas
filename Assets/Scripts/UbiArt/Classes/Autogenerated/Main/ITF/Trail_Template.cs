@@ -3,72 +3,72 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR)]
 	public partial class Trail_Template : CSerializable {
-		[Serialize("texture"           )] public Path texture;
-		[Serialize("material"          )] public GFXMaterialSerializable material;
-		[Serialize("nbFrames"          )] public uint nbFrames;
-		[Serialize("fixTrailLenght"    )] public uint fixTrailLenght;
-		[Serialize("trailFaidingTime"  )] public float trailFaidingTime;
-		[Serialize("thicknessBegin"    )] public float thicknessBegin;
-		[Serialize("thicknessEnd"      )] public float thicknessEnd;
-		[Serialize("alphaBegin"        )] public float alphaBegin;
-		[Serialize("alphaEnd"          )] public float alphaEnd;
-		[Serialize("trailBlending"     )] public float trailBlending;
-		[Serialize("fadeLength"        )] public float fadeLength;
-		[Serialize("tesselateMaxLength")] public float tesselateMaxLength;
-		[Serialize("tesselateMinLength")] public float tesselateMinLength;
-		[Serialize("color"             )] public Color color;
-		[Serialize("attachBone"        )] public StringID attachBone;
-		[Serialize("blendmode"         )] public GFX_BLEND blendmode;
+		public Path texture;
+		public GFXMaterialSerializable material;
+		public uint nbFrames;
+		public uint fixTrailLenght;
+		public float trailFaidingTime;
+		public float thicknessBegin;
+		public float thicknessEnd;
+		public float alphaBegin;
+		public float alphaEnd;
+		public float trailBlending;
+		public float fadeLength;
+		public float tesselateMaxLength;
+		public float tesselateMinLength;
+		public Color color;
+		public StringID attachBone;
+		public GFX_BLEND blendmode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(texture));
-				SerializeField(s, nameof(nbFrames));
-				SerializeField(s, nameof(trailFaidingTime));
-				SerializeField(s, nameof(thicknessBegin));
-				SerializeField(s, nameof(thicknessEnd));
-				SerializeField(s, nameof(alphaBegin));
-				SerializeField(s, nameof(alphaEnd));
-				SerializeField(s, nameof(trailBlending));
-				SerializeField(s, nameof(fadeLength));
-				SerializeField(s, nameof(blendmode));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(attachBone));
+				texture = s.SerializeObject<Path>(texture, name: "texture");
+				nbFrames = s.Serialize<uint>(nbFrames, name: "nbFrames");
+				trailFaidingTime = s.Serialize<float>(trailFaidingTime, name: "trailFaidingTime");
+				thicknessBegin = s.Serialize<float>(thicknessBegin, name: "thicknessBegin");
+				thicknessEnd = s.Serialize<float>(thicknessEnd, name: "thicknessEnd");
+				alphaBegin = s.Serialize<float>(alphaBegin, name: "alphaBegin");
+				alphaEnd = s.Serialize<float>(alphaEnd, name: "alphaEnd");
+				trailBlending = s.Serialize<float>(trailBlending, name: "trailBlending");
+				fadeLength = s.Serialize<float>(fadeLength, name: "fadeLength");
+				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
+				color = s.SerializeObject<Color>(color, name: "color");
+				attachBone = s.SerializeObject<StringID>(attachBone, name: "attachBone");
 			} else if(Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(nbFrames));
-				SerializeField(s, nameof(trailFaidingTime));
-				SerializeField(s, nameof(thicknessBegin));
-				SerializeField(s, nameof(thicknessEnd));
-				SerializeField(s, nameof(alphaBegin));
-				SerializeField(s, nameof(alphaEnd));
-				SerializeField(s, nameof(trailBlending));
-				SerializeField(s, nameof(fadeLength));
-				SerializeField(s, nameof(tesselateMaxLength));
-				SerializeField(s, nameof(tesselateMinLength));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(attachBone));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				nbFrames = s.Serialize<uint>(nbFrames, name: "nbFrames");
+				trailFaidingTime = s.Serialize<float>(trailFaidingTime, name: "trailFaidingTime");
+				thicknessBegin = s.Serialize<float>(thicknessBegin, name: "thicknessBegin");
+				thicknessEnd = s.Serialize<float>(thicknessEnd, name: "thicknessEnd");
+				alphaBegin = s.Serialize<float>(alphaBegin, name: "alphaBegin");
+				alphaEnd = s.Serialize<float>(alphaEnd, name: "alphaEnd");
+				trailBlending = s.Serialize<float>(trailBlending, name: "trailBlending");
+				fadeLength = s.Serialize<float>(fadeLength, name: "fadeLength");
+				tesselateMaxLength = s.Serialize<float>(tesselateMaxLength, name: "tesselateMaxLength");
+				tesselateMinLength = s.Serialize<float>(tesselateMinLength, name: "tesselateMinLength");
+				color = s.SerializeObject<Color>(color, name: "color");
+				attachBone = s.SerializeObject<StringID>(attachBone, name: "attachBone");
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(nbFrames));
-				SerializeField(s, nameof(fixTrailLenght));
-				SerializeField(s, nameof(trailFaidingTime));
-				SerializeField(s, nameof(thicknessBegin));
-				SerializeField(s, nameof(thicknessEnd));
-				SerializeField(s, nameof(alphaBegin));
-				SerializeField(s, nameof(alphaEnd));
-				SerializeField(s, nameof(trailBlending));
-				SerializeField(s, nameof(fadeLength));
-				SerializeField(s, nameof(tesselateMaxLength));
-				SerializeField(s, nameof(tesselateMinLength));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(attachBone));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				nbFrames = s.Serialize<uint>(nbFrames, name: "nbFrames");
+				fixTrailLenght = s.Serialize<uint>(fixTrailLenght, name: "fixTrailLenght");
+				trailFaidingTime = s.Serialize<float>(trailFaidingTime, name: "trailFaidingTime");
+				thicknessBegin = s.Serialize<float>(thicknessBegin, name: "thicknessBegin");
+				thicknessEnd = s.Serialize<float>(thicknessEnd, name: "thicknessEnd");
+				alphaBegin = s.Serialize<float>(alphaBegin, name: "alphaBegin");
+				alphaEnd = s.Serialize<float>(alphaEnd, name: "alphaEnd");
+				trailBlending = s.Serialize<float>(trailBlending, name: "trailBlending");
+				fadeLength = s.Serialize<float>(fadeLength, name: "fadeLength");
+				tesselateMaxLength = s.Serialize<float>(tesselateMaxLength, name: "tesselateMaxLength");
+				tesselateMinLength = s.Serialize<float>(tesselateMinLength, name: "tesselateMinLength");
+				color = s.SerializeObject<Color>(color, name: "color");
+				attachBone = s.SerializeObject<StringID>(attachBone, name: "attachBone");
 			}
 		}
 		

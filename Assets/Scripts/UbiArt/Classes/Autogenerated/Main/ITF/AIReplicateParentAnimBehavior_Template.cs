@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class AIReplicateParentAnimBehavior_Template : TemplateAIBehavior {
-		[Serialize("useParentBind")] public bool useParentBind;
-		[Serialize("defaultAnim"  )] public StringID defaultAnim;
-		[Serialize("animsToAvoid" )] public CList<StringID> animsToAvoid;
+		public bool useParentBind;
+		public StringID defaultAnim;
+		public CList<StringID> animsToAvoid;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(useParentBind));
-			SerializeField(s, nameof(defaultAnim));
-			SerializeField(s, nameof(animsToAvoid));
+			useParentBind = s.Serialize<bool>(useParentBind, name: "useParentBind");
+			defaultAnim = s.SerializeObject<StringID>(defaultAnim, name: "defaultAnim");
+			animsToAvoid = s.SerializeObject<CList<StringID>>(animsToAvoid, name: "animsToAvoid");
 		}
 		public override uint? ClassCRC => 0x445E5733;
 	}

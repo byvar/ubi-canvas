@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_OnlineEventTeamAllocation : Event {
-		[Serialize("playerOnlineID")] public uint playerOnlineID;
-		[Serialize("teamID"        )] public char teamID;
+		public uint playerOnlineID;
+		public char teamID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(playerOnlineID));
-			SerializeField(s, nameof(teamID));
+			playerOnlineID = s.Serialize<uint>(playerOnlineID, name: "playerOnlineID");
+			teamID = s.Serialize<char>(teamID, name: "teamID");
 		}
 		public override uint? ClassCRC => 0x3F76C504;
 	}

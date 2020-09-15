@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
 	public partial class FluidFriseLayer : CSerializable {
-		[Serialize("erosion"                      )] public uint erosion;
-		[Serialize("color"                        )] public Color color;
-		[Serialize("threshold"                    )] public float threshold;
-		[Serialize("gameMaterial"                 )] public Path gameMaterial;
-		[Serialize("backsideGameMaterial"         )] public Path backsideGameMaterial;
-		[Serialize("collisionHeight"              )] public float collisionHeight;
-		[Serialize("hasBacksideInversion"         )] public bool hasBacksideInversion;
-		[Serialize("forcedHeightWhenNotColored"   )] public float forcedHeightWhenNotColored;
-		[Serialize("hasForcedHeightWhenNotColored")] public bool hasForcedHeightWhenNotColored;
+		public uint erosion;
+		public Color color;
+		public float threshold;
+		public Path gameMaterial;
+		public Path backsideGameMaterial;
+		public float collisionHeight;
+		public bool hasBacksideInversion;
+		public float forcedHeightWhenNotColored;
+		public bool hasForcedHeightWhenNotColored;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(threshold));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(gameMaterial));
-				SerializeField(s, nameof(backsideGameMaterial));
-				SerializeField(s, nameof(forcedHeightWhenNotColored));
-				SerializeField(s, nameof(hasForcedHeightWhenNotColored));
+				threshold = s.Serialize<float>(threshold, name: "threshold");
+				color = s.SerializeObject<Color>(color, name: "color");
+				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+				backsideGameMaterial = s.SerializeObject<Path>(backsideGameMaterial, name: "backsideGameMaterial");
+				forcedHeightWhenNotColored = s.Serialize<float>(forcedHeightWhenNotColored, name: "forcedHeightWhenNotColored");
+				hasForcedHeightWhenNotColored = s.Serialize<bool>(hasForcedHeightWhenNotColored, name: "hasForcedHeightWhenNotColored");
 			} else {
-				SerializeField(s, nameof(erosion));
-				SerializeField(s, nameof(color));
-				SerializeField(s, nameof(threshold));
-				SerializeField(s, nameof(gameMaterial));
-				SerializeField(s, nameof(backsideGameMaterial));
-				SerializeField(s, nameof(collisionHeight));
-				SerializeField(s, nameof(hasBacksideInversion));
-				SerializeField(s, nameof(forcedHeightWhenNotColored));
-				SerializeField(s, nameof(hasForcedHeightWhenNotColored));
+				erosion = s.Serialize<uint>(erosion, name: "erosion");
+				color = s.SerializeObject<Color>(color, name: "color");
+				threshold = s.Serialize<float>(threshold, name: "threshold");
+				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+				backsideGameMaterial = s.SerializeObject<Path>(backsideGameMaterial, name: "backsideGameMaterial");
+				collisionHeight = s.Serialize<float>(collisionHeight, name: "collisionHeight");
+				hasBacksideInversion = s.Serialize<bool>(hasBacksideInversion, name: "hasBacksideInversion");
+				forcedHeightWhenNotColored = s.Serialize<float>(forcedHeightWhenNotColored, name: "forcedHeightWhenNotColored");
+				hasForcedHeightWhenNotColored = s.Serialize<bool>(hasForcedHeightWhenNotColored, name: "hasForcedHeightWhenNotColored");
 			}
 		}
 	}

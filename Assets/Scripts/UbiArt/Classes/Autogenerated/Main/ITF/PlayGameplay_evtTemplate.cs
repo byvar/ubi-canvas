@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PlayGameplay_evtTemplate : SequenceEventWithActor_Template {
-		[Serialize("onEnterEventName")] public string onEnterEventName;
-		[Serialize("onEnterEvent"    )] public Generic<Event> onEnterEvent;
-		[Serialize("onExitEventName" )] public string onExitEventName;
-		[Serialize("onExitEvent"     )] public Generic<Event> onExitEvent;
-		[Serialize("executeOnce"     )] public bool executeOnce;
-		[Serialize("broadcast"       )] public bool broadcast;
+		public string onEnterEventName;
+		public Generic<Event> onEnterEvent;
+		public string onExitEventName;
+		public Generic<Event> onExitEvent;
+		public bool executeOnce;
+		public bool broadcast;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(onEnterEventName));
-			SerializeField(s, nameof(onEnterEvent));
-			SerializeField(s, nameof(onExitEventName));
-			SerializeField(s, nameof(onExitEvent));
-			SerializeField(s, nameof(executeOnce));
-			SerializeField(s, nameof(broadcast));
+			onEnterEventName = s.Serialize<string>(onEnterEventName, name: "onEnterEventName");
+			onEnterEvent = s.SerializeObject<Generic<Event>>(onEnterEvent, name: "onEnterEvent");
+			onExitEventName = s.Serialize<string>(onExitEventName, name: "onExitEventName");
+			onExitEvent = s.SerializeObject<Generic<Event>>(onExitEvent, name: "onExitEvent");
+			executeOnce = s.Serialize<bool>(executeOnce, name: "executeOnce");
+			broadcast = s.Serialize<bool>(broadcast, name: "broadcast");
 		}
 		public override uint? ClassCRC => 0x58127C88;
 	}

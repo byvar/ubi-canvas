@@ -3,29 +3,29 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TeensyRecapComponent : ActorComponent {
-		[Serialize("teensies")] public CList<RO2_TeensyRecapComponent.Teensy> teensies;
-		[Serialize("level"   )] public StringID level;
+		public CList<RO2_TeensyRecapComponent.Teensy> teensies;
+		public StringID level;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(teensies));
-				SerializeField(s, nameof(level));
+				teensies = s.SerializeObject<CList<RO2_TeensyRecapComponent.Teensy>>(teensies, name: "teensies");
+				level = s.SerializeObject<StringID>(level, name: "level");
 			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class Teensy : CSerializable {
-			[Serialize("prisonerVisualType")] public Prisoner prisonerVisualType;
-			[Serialize("animVariation"     )] public uint animVariation;
-			[Serialize("flip"              )] public bool flip;
-			[Serialize("pos"               )] public Vec3d pos;
-			[Serialize("scale"             )] public Vec2d scale;
+			public Prisoner prisonerVisualType;
+			public uint animVariation;
+			public bool flip;
+			public Vec3d pos;
+			public Vec2d scale;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(prisonerVisualType));
-				SerializeField(s, nameof(animVariation));
-				SerializeField(s, nameof(flip));
-				SerializeField(s, nameof(pos));
-				SerializeField(s, nameof(scale));
+				prisonerVisualType = s.Serialize<Prisoner>(prisonerVisualType, name: "prisonerVisualType");
+				animVariation = s.Serialize<uint>(animVariation, name: "animVariation");
+				flip = s.Serialize<bool>(flip, name: "flip");
+				pos = s.SerializeObject<Vec3d>(pos, name: "pos");
+				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 			}
 			public enum Prisoner {
 				[Serialize("Prisoner_Soldier" )] Soldier = 0,

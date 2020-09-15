@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AILivingStoneStaticBehavior_Template : TemplateAIBehavior {
-		[Serialize("idle"                   )] public Generic<AIAction_Template> idle;
-		[Serialize("uturn"                  )] public Generic<AIAction_Template> uturn;
-		[Serialize("aggro"                  )] public Generic<AIAction_Template> aggro;
-		[Serialize("attack"                 )] public Generic<AIAction_Template> attack;
-		[Serialize("detectionRadius"        )] public float detectionRadius;
-		[Serialize("detectionHysteresisTime")] public float detectionHysteresisTime;
-		[Serialize("attackRange"            )] public AABB attackRange;
+		public Generic<AIAction_Template> idle;
+		public Generic<AIAction_Template> uturn;
+		public Generic<AIAction_Template> aggro;
+		public Generic<AIAction_Template> attack;
+		public float detectionRadius;
+		public float detectionHysteresisTime;
+		public AABB attackRange;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idle));
-			SerializeField(s, nameof(uturn));
-			SerializeField(s, nameof(aggro));
-			SerializeField(s, nameof(attack));
-			SerializeField(s, nameof(detectionRadius));
-			SerializeField(s, nameof(detectionHysteresisTime));
-			SerializeField(s, nameof(attackRange));
+			idle = s.SerializeObject<Generic<AIAction_Template>>(idle, name: "idle");
+			uturn = s.SerializeObject<Generic<AIAction_Template>>(uturn, name: "uturn");
+			aggro = s.SerializeObject<Generic<AIAction_Template>>(aggro, name: "aggro");
+			attack = s.SerializeObject<Generic<AIAction_Template>>(attack, name: "attack");
+			detectionRadius = s.Serialize<float>(detectionRadius, name: "detectionRadius");
+			detectionHysteresisTime = s.Serialize<float>(detectionHysteresisTime, name: "detectionHysteresisTime");
+			attackRange = s.SerializeObject<AABB>(attackRange, name: "attackRange");
 		}
 		public override uint? ClassCRC => 0xAD191865;
 	}

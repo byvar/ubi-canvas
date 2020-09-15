@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class FogBoxComponent : ActorComponent {
-		[Serialize("attenuationDist")] public Vec2d attenuationDist;
-		[Serialize("near"           )] public float near;
-		[Serialize("far"            )] public float far;
-		[Serialize("nearColor"      )] public Color nearColor;
-		[Serialize("farColor"       )] public Color farColor;
-		[Serialize("useNearOffset"  )] public bool useNearOffset;
-		[Serialize("ZWorldCliping"  )] public float ZWorldCliping;
+		public Vec2d attenuationDist;
+		public float near;
+		public float far;
+		public Color nearColor;
+		public Color farColor;
+		public bool useNearOffset;
+		public float ZWorldCliping;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(attenuationDist));
-				SerializeField(s, nameof(near));
-				SerializeField(s, nameof(far));
-				SerializeField(s, nameof(nearColor));
-				SerializeField(s, nameof(farColor));
-				SerializeField(s, nameof(useNearOffset));
-				SerializeField(s, nameof(ZWorldCliping));
+				attenuationDist = s.SerializeObject<Vec2d>(attenuationDist, name: "attenuationDist");
+				near = s.Serialize<float>(near, name: "near");
+				far = s.Serialize<float>(far, name: "far");
+				nearColor = s.SerializeObject<Color>(nearColor, name: "nearColor");
+				farColor = s.SerializeObject<Color>(farColor, name: "farColor");
+				useNearOffset = s.Serialize<bool>(useNearOffset, name: "useNearOffset");
+				ZWorldCliping = s.Serialize<float>(ZWorldCliping, name: "ZWorldCliping");
 			}
 		}
 		public override uint? ClassCRC => 0xA466E579;

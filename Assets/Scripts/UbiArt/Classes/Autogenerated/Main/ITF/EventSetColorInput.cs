@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class EventSetColorInput : Event {
-		[Serialize("inputName" )] public StringID inputName;
-		[Serialize("inputValue")] public Color inputValue;
+		public StringID inputName;
+		public Color inputValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(inputName));
-			SerializeField(s, nameof(inputValue));
+			inputName = s.SerializeObject<StringID>(inputName, name: "inputName");
+			inputValue = s.SerializeObject<Color>(inputValue, name: "inputValue");
 		}
 		public override uint? ClassCRC => 0xA0721B0A;
 	}

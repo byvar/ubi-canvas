@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_StargateComponent_Template : ActorComponent_Template {
-		[Serialize("detectShape" )] public Generic<PhysShape> detectShape;
-		[Serialize("pressUpShape")] public Generic<PhysShape> pressUpShape;
-		[Serialize("flashFX"     )] public Path flashFX;
-		[Serialize("flashFXStart")] public Path flashFXStart;
-		[Serialize("flashOffset" )] public Vec3d flashOffset;
+		public Generic<PhysShape> detectShape;
+		public Generic<PhysShape> pressUpShape;
+		public Path flashFX;
+		public Path flashFXStart;
+		public Vec3d flashOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(detectShape));
-			SerializeField(s, nameof(pressUpShape));
-			SerializeField(s, nameof(flashFX));
-			SerializeField(s, nameof(flashFXStart));
-			SerializeField(s, nameof(flashOffset));
+			detectShape = s.SerializeObject<Generic<PhysShape>>(detectShape, name: "detectShape");
+			pressUpShape = s.SerializeObject<Generic<PhysShape>>(pressUpShape, name: "pressUpShape");
+			flashFX = s.SerializeObject<Path>(flashFX, name: "flashFX");
+			flashFXStart = s.SerializeObject<Path>(flashFXStart, name: "flashFXStart");
+			flashOffset = s.SerializeObject<Vec3d>(flashOffset, name: "flashOffset");
 		}
 		public override uint? ClassCRC => 0x59B9970A;
 	}

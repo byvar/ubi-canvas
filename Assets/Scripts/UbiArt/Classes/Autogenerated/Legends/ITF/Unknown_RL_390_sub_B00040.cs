@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_390_sub_B00040 : CSerializable {
-		[Serialize("hideDistance")] public float hideDistance;
-		[Serialize("waitDistance")] public float waitDistance;
-		[Serialize("hysteresis"  )] public float hysteresis;
+		public float hideDistance;
+		public float waitDistance;
+		public float hysteresis;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hideDistance));
-			SerializeField(s, nameof(waitDistance));
-			SerializeField(s, nameof(hysteresis));
+			hideDistance = s.Serialize<float>(hideDistance, name: "hideDistance");
+			waitDistance = s.Serialize<float>(waitDistance, name: "waitDistance");
+			hysteresis = s.Serialize<float>(hysteresis, name: "hysteresis");
 		}
 		public override uint? ClassCRC => 0x960CE735;
 	}

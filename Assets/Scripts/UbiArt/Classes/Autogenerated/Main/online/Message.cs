@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class Message : CSerializable {
-		[Serialize("message_id"  )] public string message_id;
-		[Serialize("from"        )] public string from;
-		[Serialize("to"          )] public string to;
-		[Serialize("message_type")] public string message_type;
-		[Serialize("sentDate"    )] public online.DateTime sentDate;
-		[Serialize("title"       )] public string title;
-		[Serialize("text"        )] public string text;
-		[Serialize("data"        )] public CMap<string, string> data;
-		[Serialize("items"       )] public CMap<Items.ItemType, int> items;
-		[Serialize("ttl"         )] public uint ttl;
-		[Serialize("force"       )] public bool force;
-		[Serialize("silent"      )] public bool silent;
+		public string message_id;
+		public string from;
+		public string to;
+		public string message_type;
+		public online.DateTime sentDate;
+		public string title;
+		public string text;
+		public CMap<string, string> data;
+		public CMap<Items.ItemType, int> items;
+		public uint ttl;
+		public bool force;
+		public bool silent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(message_id));
-			SerializeField(s, nameof(from));
-			SerializeField(s, nameof(to));
-			SerializeField(s, nameof(message_type));
-			SerializeField(s, nameof(sentDate));
-			SerializeField(s, nameof(title));
-			SerializeField(s, nameof(text));
-			SerializeField(s, nameof(data));
-			SerializeField(s, nameof(items));
-			SerializeField(s, nameof(ttl));
-			SerializeField(s, nameof(force));
-			SerializeField(s, nameof(silent));
+			message_id = s.Serialize<string>(message_id, name: "message_id");
+			from = s.Serialize<string>(from, name: "from");
+			to = s.Serialize<string>(to, name: "to");
+			message_type = s.Serialize<string>(message_type, name: "message_type");
+			sentDate = s.SerializeObject<online.DateTime>(sentDate, name: "sentDate");
+			title = s.Serialize<string>(title, name: "title");
+			text = s.Serialize<string>(text, name: "text");
+			data = s.SerializeObject<CMap<string, string>>(data, name: "data");
+			items = s.SerializeObject<CMap<Items.ItemType, int>>(items, name: "items");
+			ttl = s.Serialize<uint>(ttl, name: "ttl");
+			force = s.Serialize<bool>(force, name: "force");
+			silent = s.Serialize<bool>(silent, name: "silent");
 		}
 	}
 }

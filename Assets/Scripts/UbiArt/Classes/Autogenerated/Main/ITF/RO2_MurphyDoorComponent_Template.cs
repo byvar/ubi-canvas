@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MurphyDoorComponent_Template : ActorComponent_Template {
-		[Serialize("cursorTapProgressValue"   )] public float cursorTapProgressValue;
-		[Serialize("cursorGlobalProgressSpeed")] public float cursorGlobalProgressSpeed;
-		[Serialize("PAL"                      )] public bool PAL;
-		[Serialize("PALModePlayerAABBRange"   )] public AABB PALModePlayerAABBRange;
+		public float cursorTapProgressValue;
+		public float cursorGlobalProgressSpeed;
+		public bool PAL;
+		public AABB PALModePlayerAABBRange;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(cursorTapProgressValue));
-			SerializeField(s, nameof(cursorGlobalProgressSpeed));
-			SerializeField(s, nameof(PAL));
-			SerializeField(s, nameof(PALModePlayerAABBRange));
+			cursorTapProgressValue = s.Serialize<float>(cursorTapProgressValue, name: "cursorTapProgressValue");
+			cursorGlobalProgressSpeed = s.Serialize<float>(cursorGlobalProgressSpeed, name: "cursorGlobalProgressSpeed");
+			PAL = s.Serialize<bool>(PAL, name: "PAL");
+			PALModePlayerAABBRange = s.SerializeObject<AABB>(PALModePlayerAABBRange, name: "PALModePlayerAABBRange");
 		}
 		public override uint? ClassCRC => 0x4E3C471D;
 	}

@@ -1,20 +1,20 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class MusicPart_Template : CSerializable {
-		[Serialize("name")] public StringID name;
-		[Serialize("path")] public Path path;
-		[Serialize("nbMeasures")] public uint nbMeasures;
-		[Serialize("beatsPerBar")] public uint beatsPerBar;
-		[Serialize("prefetch")] public int prefetch;
+		public StringID name;
+		public Path path;
+		public uint nbMeasures;
+		public uint beatsPerBar;
+		public int prefetch;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(path));
-			SerializeField(s, nameof(nbMeasures));
-			SerializeField(s, nameof(beatsPerBar));
-			SerializeField(s, nameof(prefetch));
+			name = s.SerializeObject<StringID>(name, name: "name");
+			path = s.SerializeObject<Path>(path, name: "path");
+			nbMeasures = s.Serialize<uint>(nbMeasures, name: "nbMeasures");
+			beatsPerBar = s.Serialize<uint>(beatsPerBar, name: "beatsPerBar");
+			prefetch = s.Serialize<int>(prefetch, name: "prefetch");
 		}
 	}
 }

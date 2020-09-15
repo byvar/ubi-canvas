@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class GameGlobalsHourOfDayCondition : GameGlobalsCondition {
-		[Serialize("startHour"  )] public uint startHour;
-		[Serialize("startMinute")] public uint startMinute;
-		[Serialize("endHour"    )] public uint endHour;
-		[Serialize("endMinute"  )] public uint endMinute;
-		[Serialize("utc"        )] public bool utc;
+		public uint startHour;
+		public uint startMinute;
+		public uint endHour;
+		public uint endMinute;
+		public bool utc;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(startHour));
-			SerializeField(s, nameof(startMinute));
-			SerializeField(s, nameof(endHour));
-			SerializeField(s, nameof(endMinute));
-			SerializeField(s, nameof(utc));
+			startHour = s.Serialize<uint>(startHour, name: "startHour");
+			startMinute = s.Serialize<uint>(startMinute, name: "startMinute");
+			endHour = s.Serialize<uint>(endHour, name: "endHour");
+			endMinute = s.Serialize<uint>(endMinute, name: "endMinute");
+			utc = s.Serialize<bool>(utc, name: "utc");
 		}
 		public override uint? ClassCRC => 0x67E5BF69;
 	}

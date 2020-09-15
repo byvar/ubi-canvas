@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIReceiveHitAction_Template : AIReceiveHitAction_Template {
-		[Serialize("reward"           )] public Generic<RO2_EventSpawnReward> reward;
-		[Serialize("playRateVariation")] public float playRateVariation;
-		[Serialize("faceHitDir"       )] public bool faceHitDir;
-		[Serialize("ignoreWind"       )] public bool ignoreWind;
+		public Generic<RO2_EventSpawnReward> reward;
+		public float playRateVariation;
+		public bool faceHitDir;
+		public bool ignoreWind;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(reward));
-			SerializeField(s, nameof(playRateVariation));
-			SerializeField(s, nameof(faceHitDir));
-			SerializeField(s, nameof(ignoreWind));
+			reward = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward, name: "reward");
+			playRateVariation = s.Serialize<float>(playRateVariation, name: "playRateVariation");
+			faceHitDir = s.Serialize<bool>(faceHitDir, name: "faceHitDir");
+			ignoreWind = s.Serialize<bool>(ignoreWind, name: "ignoreWind");
 		}
 		public override uint? ClassCRC => 0x4EE51604;
 	}

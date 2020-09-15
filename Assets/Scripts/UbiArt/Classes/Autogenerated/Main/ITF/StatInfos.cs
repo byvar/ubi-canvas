@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class StatInfos : CSerializable {
-		[Serialize("id"                  )] public StringID id;
-		[Serialize("color"               )] public Color color;
-		[Serialize("statName"            )] public SmartLocId statName;
-		[Serialize("name"                )] public SmartLocId name;
-		[Serialize("leaderboardTitle"    )] public SmartLocId leaderboardTitle;
-		[Serialize("leaderboardTitleIcon")] public StringID leaderboardTitleIcon;
+		public StringID id;
+		public Color color;
+		public SmartLocId statName;
+		public SmartLocId name;
+		public SmartLocId leaderboardTitle;
+		public StringID leaderboardTitleIcon;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(id));
-			SerializeField(s, nameof(color));
-			SerializeField(s, nameof(statName));
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(leaderboardTitle));
-			SerializeField(s, nameof(leaderboardTitleIcon));
+			id = s.SerializeObject<StringID>(id, name: "id");
+			color = s.SerializeObject<Color>(color, name: "color");
+			statName = s.SerializeObject<SmartLocId>(statName, name: "statName");
+			name = s.SerializeObject<SmartLocId>(name, name: "name");
+			leaderboardTitle = s.SerializeObject<SmartLocId>(leaderboardTitle, name: "leaderboardTitle");
+			leaderboardTitleIcon = s.SerializeObject<StringID>(leaderboardTitleIcon, name: "leaderboardTitleIcon");
 		}
 	}
 }

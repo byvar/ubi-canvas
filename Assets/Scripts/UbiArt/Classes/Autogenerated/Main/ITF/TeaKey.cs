@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class TeaKey : CSerializable {
-		[Serialize("Key1")] public uint Key1;
-		[Serialize("Key2")] public uint Key2;
-		[Serialize("Key3")] public uint Key3;
-		[Serialize("Key4")] public uint Key4;
+		public uint Key1;
+		public uint Key2;
+		public uint Key3;
+		public uint Key4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Key1));
-			SerializeField(s, nameof(Key2));
-			SerializeField(s, nameof(Key3));
-			SerializeField(s, nameof(Key4));
+			Key1 = s.Serialize<uint>(Key1, name: "Key1");
+			Key2 = s.Serialize<uint>(Key2, name: "Key2");
+			Key3 = s.Serialize<uint>(Key3, name: "Key3");
+			Key4 = s.Serialize<uint>(Key4, name: "Key4");
 		}
 	}
 }

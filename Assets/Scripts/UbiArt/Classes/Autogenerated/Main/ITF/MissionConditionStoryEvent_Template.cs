@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class MissionConditionStoryEvent_Template : CSerializable {
-		[Serialize("storyEvent")] public StringID storyEvent;
-		[Serialize("value"     )] public int value;
-		[Serialize("negated"   )] public bool negated;
+		public StringID storyEvent;
+		public int value;
+		public bool negated;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(storyEvent));
-			SerializeField(s, nameof(value));
-			SerializeField(s, nameof(negated), boolAsByte: true);
+			storyEvent = s.SerializeObject<StringID>(storyEvent, name: "storyEvent");
+			value = s.Serialize<int>(value, name: "value");
+			negated = s.Serialize<bool>(negated, name: "negated", options: CSerializerObject.Options.BoolAsByte);
 		}
 		public override uint? ClassCRC => 0x43B849B1;
 	}

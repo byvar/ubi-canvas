@@ -3,37 +3,37 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class GiftPoolConfig : CSerializable {
-		[Serialize("messageType"                            )] public string messageType;
-		[Serialize("messageAskType"                         )] public string messageAskType;
-		[Serialize("timeToGetAskGift"                       )] public online.TimeInterval timeToGetAskGift;
-		[Serialize("timeToGetGift"                          )] public online.TimeInterval timeToGetGift;
-		[Serialize("restrictAskDuration"                    )] public online.TimeInterval restrictAskDuration;
-		[Serialize("restrictDuration"                       )] public online.TimeInterval restrictDuration;
-		[Serialize("maxGiftSentPerRestrictInterval"         )] public uint maxGiftSentPerRestrictInterval;
-		[Serialize("maxGiftSentPerPlayerPerRestrictInterval")] public uint maxGiftSentPerPlayerPerRestrictInterval;
-		[Serialize("maxGiftSentPerPlayerPending"            )] public uint maxGiftSentPerPlayerPending;
-		[Serialize("maxGiftReceivedPerRestrictInterval"     )] public uint maxGiftReceivedPerRestrictInterval;
-		[Serialize("maxGiftReceivedPending"                 )] public uint maxGiftReceivedPending;
-		[Serialize("maxGiftAskPending"                      )] public uint maxGiftAskPending;
-		[Serialize("KEY"                                    )] public StringID KEY;
-		[Serialize("currentGiftKeyStringID"                 )] public StringID currentGiftKeyStringID;
+		public string messageType;
+		public string messageAskType;
+		public online.TimeInterval timeToGetAskGift;
+		public online.TimeInterval timeToGetGift;
+		public online.TimeInterval restrictAskDuration;
+		public online.TimeInterval restrictDuration;
+		public uint maxGiftSentPerRestrictInterval;
+		public uint maxGiftSentPerPlayerPerRestrictInterval;
+		public uint maxGiftSentPerPlayerPending;
+		public uint maxGiftReceivedPerRestrictInterval;
+		public uint maxGiftReceivedPending;
+		public uint maxGiftAskPending;
+		public StringID KEY;
+		public StringID currentGiftKeyStringID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(messageType));
-			SerializeField(s, nameof(messageAskType));
-			SerializeField(s, nameof(timeToGetAskGift));
-			SerializeField(s, nameof(timeToGetGift));
-			SerializeField(s, nameof(restrictAskDuration));
-			SerializeField(s, nameof(restrictDuration));
-			SerializeField(s, nameof(maxGiftSentPerRestrictInterval));
-			SerializeField(s, nameof(maxGiftSentPerPlayerPerRestrictInterval));
-			SerializeField(s, nameof(maxGiftSentPerPlayerPending));
-			SerializeField(s, nameof(maxGiftReceivedPerRestrictInterval));
-			SerializeField(s, nameof(maxGiftReceivedPending));
-			SerializeField(s, nameof(maxGiftAskPending));
-			SerializeField(s, nameof(KEY));
-			SerializeField(s, nameof(KEY));
-			SerializeField(s, nameof(currentGiftKeyStringID));
+			messageType = s.Serialize<string>(messageType, name: "messageType");
+			messageAskType = s.Serialize<string>(messageAskType, name: "messageAskType");
+			timeToGetAskGift = s.SerializeObject<online.TimeInterval>(timeToGetAskGift, name: "timeToGetAskGift");
+			timeToGetGift = s.SerializeObject<online.TimeInterval>(timeToGetGift, name: "timeToGetGift");
+			restrictAskDuration = s.SerializeObject<online.TimeInterval>(restrictAskDuration, name: "restrictAskDuration");
+			restrictDuration = s.SerializeObject<online.TimeInterval>(restrictDuration, name: "restrictDuration");
+			maxGiftSentPerRestrictInterval = s.Serialize<uint>(maxGiftSentPerRestrictInterval, name: "maxGiftSentPerRestrictInterval");
+			maxGiftSentPerPlayerPerRestrictInterval = s.Serialize<uint>(maxGiftSentPerPlayerPerRestrictInterval, name: "maxGiftSentPerPlayerPerRestrictInterval");
+			maxGiftSentPerPlayerPending = s.Serialize<uint>(maxGiftSentPerPlayerPending, name: "maxGiftSentPerPlayerPending");
+			maxGiftReceivedPerRestrictInterval = s.Serialize<uint>(maxGiftReceivedPerRestrictInterval, name: "maxGiftReceivedPerRestrictInterval");
+			maxGiftReceivedPending = s.Serialize<uint>(maxGiftReceivedPending, name: "maxGiftReceivedPending");
+			maxGiftAskPending = s.Serialize<uint>(maxGiftAskPending, name: "maxGiftAskPending");
+			KEY = s.SerializeObject<StringID>(KEY, name: "KEY");
+			KEY = s.SerializeObject<StringID>(KEY, name: "KEY");
+			currentGiftKeyStringID = s.SerializeObject<StringID>(currentGiftKeyStringID, name: "currentGiftKeyStringID");
 		}
 	}
 }

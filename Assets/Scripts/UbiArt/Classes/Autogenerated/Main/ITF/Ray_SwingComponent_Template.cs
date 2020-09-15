@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_SwingComponent_Template : ActorComponent_Template {
-		[Serialize("length"                  )] public float length;
-		[Serialize("angle"                   )] public Angle angle;
-		[Serialize("gravityMultiplier"       )] public float gravityMultiplier;
-		[Serialize("memoryTimer"             )] public float memoryTimer;
-		[Serialize("playerDetectRange"       )] public float playerDetectRange;
-		[Serialize("armsDistance"            )] public float armsDistance;
-		[Serialize("armsLengthStiff"         )] public float armsLengthStiff;
-		[Serialize("armsLengthDamp"          )] public float armsLengthDamp;
-		[Serialize("armsAngleStiff"          )] public float armsAngleStiff;
-		[Serialize("armsAngleDamp"           )] public float armsAngleDamp;
-		[Serialize("armsGraspInterpolateTime")] public float armsGraspInterpolateTime;
-		[Serialize("numArms"                 )] public uint numArms;
-		[Serialize("restAngles"              )] public CArray<Angle> restAngles;
+		public float length;
+		public Angle angle;
+		public float gravityMultiplier;
+		public float memoryTimer;
+		public float playerDetectRange;
+		public float armsDistance;
+		public float armsLengthStiff;
+		public float armsLengthDamp;
+		public float armsAngleStiff;
+		public float armsAngleDamp;
+		public float armsGraspInterpolateTime;
+		public uint numArms;
+		public CArray<Angle> restAngles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(length));
-			SerializeField(s, nameof(angle));
-			SerializeField(s, nameof(gravityMultiplier));
-			SerializeField(s, nameof(memoryTimer));
-			SerializeField(s, nameof(playerDetectRange));
-			SerializeField(s, nameof(armsDistance));
-			SerializeField(s, nameof(armsLengthStiff));
-			SerializeField(s, nameof(armsLengthDamp));
-			SerializeField(s, nameof(armsAngleStiff));
-			SerializeField(s, nameof(armsAngleDamp));
-			SerializeField(s, nameof(armsGraspInterpolateTime));
-			SerializeField(s, nameof(numArms));
-			SerializeField(s, nameof(restAngles));
+			length = s.Serialize<float>(length, name: "length");
+			angle = s.SerializeObject<Angle>(angle, name: "angle");
+			gravityMultiplier = s.Serialize<float>(gravityMultiplier, name: "gravityMultiplier");
+			memoryTimer = s.Serialize<float>(memoryTimer, name: "memoryTimer");
+			playerDetectRange = s.Serialize<float>(playerDetectRange, name: "playerDetectRange");
+			armsDistance = s.Serialize<float>(armsDistance, name: "armsDistance");
+			armsLengthStiff = s.Serialize<float>(armsLengthStiff, name: "armsLengthStiff");
+			armsLengthDamp = s.Serialize<float>(armsLengthDamp, name: "armsLengthDamp");
+			armsAngleStiff = s.Serialize<float>(armsAngleStiff, name: "armsAngleStiff");
+			armsAngleDamp = s.Serialize<float>(armsAngleDamp, name: "armsAngleDamp");
+			armsGraspInterpolateTime = s.Serialize<float>(armsGraspInterpolateTime, name: "armsGraspInterpolateTime");
+			numArms = s.Serialize<uint>(numArms, name: "numArms");
+			restAngles = s.SerializeObject<CArray<Angle>>(restAngles, name: "restAngles");
 		}
 		public override uint? ClassCRC => 0x0B59F293;
 	}

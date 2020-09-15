@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIStickBoneAction_Template : AIAction_Template {
-		[Serialize("aiStickBoneName")] public StringID aiStickBoneName;
-		[Serialize("aiStickBoneEnd" )] public bool aiStickBoneEnd;
-		[Serialize("aiStickBoneTime")] public float aiStickBoneTime;
+		public StringID aiStickBoneName;
+		public bool aiStickBoneEnd;
+		public float aiStickBoneTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(aiStickBoneName));
-			SerializeField(s, nameof(aiStickBoneEnd));
-			SerializeField(s, nameof(aiStickBoneTime));
+			aiStickBoneName = s.SerializeObject<StringID>(aiStickBoneName, name: "aiStickBoneName");
+			aiStickBoneEnd = s.Serialize<bool>(aiStickBoneEnd, name: "aiStickBoneEnd");
+			aiStickBoneTime = s.Serialize<float>(aiStickBoneTime, name: "aiStickBoneTime");
 		}
 		public override uint? ClassCRC => 0x3C459074;
 	}

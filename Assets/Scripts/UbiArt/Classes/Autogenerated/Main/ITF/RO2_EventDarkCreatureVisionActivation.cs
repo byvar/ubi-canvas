@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventDarkCreatureVisionActivation : Event {
-		[Serialize("DetectionDistance")] public float DetectionDistance;
-		[Serialize("AttackDistance"   )] public float AttackDistance;
+		public float DetectionDistance;
+		public float AttackDistance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(DetectionDistance));
-			SerializeField(s, nameof(AttackDistance));
+			DetectionDistance = s.Serialize<float>(DetectionDistance, name: "DetectionDistance");
+			AttackDistance = s.Serialize<float>(AttackDistance, name: "AttackDistance");
 		}
 		public override uint? ClassCRC => 0xE63E044A;
 	}

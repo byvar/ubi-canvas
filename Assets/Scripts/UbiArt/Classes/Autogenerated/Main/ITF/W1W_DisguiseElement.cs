@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_DisguiseElement : W1W_InteractiveGenComponent {
-		[Serialize("Enum_VH_0__0")] public Enum_VH_0_1 Enum_VH_0__0_;
-		[Serialize("StringID__1" )] public StringID StringID__1_;
+		public Enum_VH_0_1 Enum_VH_0__0_;
+		public StringID StringID__1_;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Enum_VH_0__0_));
-			SerializeField(s, nameof(StringID__1_));
+			Enum_VH_0__0_ = s.Serialize<Enum_VH_0_1>(Enum_VH_0__0_, name: "Enum_VH_0__0_");
+			StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1_");
 		}
 		public enum Enum_VH_0_1 {
 			[Serialize("Value_1")] Value_1 = 1,

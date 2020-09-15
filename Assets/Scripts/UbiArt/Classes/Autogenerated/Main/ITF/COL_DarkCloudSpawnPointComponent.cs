@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_DarkCloudSpawnPointComponent : CSerializable {
-		[Serialize("spawnRadius")] public float spawnRadius;
+		public float spawnRadius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(spawnRadius));
+			spawnRadius = s.Serialize<float>(spawnRadius, name: "spawnRadius");
 		}
 		public override uint? ClassCRC => 0x4B5D3BDB;
 	}

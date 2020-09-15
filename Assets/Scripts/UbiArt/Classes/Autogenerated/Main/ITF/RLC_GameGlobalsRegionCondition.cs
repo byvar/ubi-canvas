@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_GameGlobalsRegionCondition : online.GameGlobalsCondition {
-		[Serialize("region")] public RLC_GraphicalFamily region;
+		public RLC_GraphicalFamily region;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(region));
+			region = s.Serialize<RLC_GraphicalFamily>(region, name: "region");
 		}
 		public enum RLC_GraphicalFamily {
 			[Serialize("RLC_GraphicalFamily_Unknown"      )] Unknown = 0,

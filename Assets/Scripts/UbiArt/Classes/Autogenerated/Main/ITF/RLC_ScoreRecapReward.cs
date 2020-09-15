@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_ScoreRecapReward : CSerializable {
-		[Serialize("Type" )] public Enum_Type Type;
-		[Serialize("Count")] public uint Count;
+		public Enum_Type Type;
+		public uint Count;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Type));
-			SerializeField(s, nameof(Count));
+			Type = s.Serialize<Enum_Type>(Type, name: "Type");
+			Count = s.Serialize<uint>(Count, name: "Count");
 		}
 		public enum Enum_Type {
 			[Serialize("_unknown"             )] _unknown = 0,

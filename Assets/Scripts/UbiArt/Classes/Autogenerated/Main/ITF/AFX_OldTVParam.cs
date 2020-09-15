@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_OldTVParam : CSerializable {
-		[Serialize("use"          )] public bool use;
-		[Serialize("lineFade"     )] public float lineFade;
-		[Serialize("useScanLine"  )] public bool useScanLine;
-		[Serialize("scanLineFade" )] public float scanLineFade;
-		[Serialize("scanLineSpeed")] public float scanLineSpeed;
-		[Serialize("scanLineSize" )] public float scanLineSize;
+		public bool use;
+		public float lineFade;
+		public bool useScanLine;
+		public float scanLineFade;
+		public float scanLineSpeed;
+		public float scanLineSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(use), boolAsByte: true);
-				SerializeField(s, nameof(lineFade));
-				SerializeField(s, nameof(useScanLine), boolAsByte: true);
-				SerializeField(s, nameof(scanLineFade));
-				SerializeField(s, nameof(scanLineSpeed));
-				SerializeField(s, nameof(scanLineSize));
+				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
+				lineFade = s.Serialize<float>(lineFade, name: "lineFade");
+				useScanLine = s.Serialize<bool>(useScanLine, name: "useScanLine", options: CSerializerObject.Options.BoolAsByte);
+				scanLineFade = s.Serialize<float>(scanLineFade, name: "scanLineFade");
+				scanLineSpeed = s.Serialize<float>(scanLineSpeed, name: "scanLineSpeed");
+				scanLineSize = s.Serialize<float>(scanLineSize, name: "scanLineSize");
 			} else {
-				SerializeField(s, nameof(use));
-				SerializeField(s, nameof(lineFade));
-				SerializeField(s, nameof(useScanLine));
-				SerializeField(s, nameof(scanLineFade));
-				SerializeField(s, nameof(scanLineSpeed));
-				SerializeField(s, nameof(scanLineSize));
+				use = s.Serialize<bool>(use, name: "use");
+				lineFade = s.Serialize<float>(lineFade, name: "lineFade");
+				useScanLine = s.Serialize<bool>(useScanLine, name: "useScanLine");
+				scanLineFade = s.Serialize<float>(scanLineFade, name: "scanLineFade");
+				scanLineSpeed = s.Serialize<float>(scanLineSpeed, name: "scanLineSpeed");
+				scanLineSize = s.Serialize<float>(scanLineSize, name: "scanLineSize");
 			}
 		}
 	}

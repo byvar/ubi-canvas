@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_DynamicFogComponent_Template : CSerializable {
-		[Serialize("useDynamicFog"         )] public int useDynamicFog;
-		[Serialize("dynamicFogDefaultColor")] public Color dynamicFogDefaultColor;
-		[Serialize("dynamicFogMaxDepth"    )] public float dynamicFogMaxDepth;
-		[Serialize("isDataOnly"            )] public int isDataOnly;
-		[Serialize("isModifier"            )] public int isModifier;
+		public int useDynamicFog;
+		public Color dynamicFogDefaultColor;
+		public float dynamicFogMaxDepth;
+		public int isDataOnly;
+		public int isModifier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(useDynamicFog));
-			SerializeField(s, nameof(dynamicFogDefaultColor));
-			SerializeField(s, nameof(dynamicFogMaxDepth));
-			SerializeField(s, nameof(isDataOnly));
-			SerializeField(s, nameof(isModifier));
+			useDynamicFog = s.Serialize<int>(useDynamicFog, name: "useDynamicFog");
+			dynamicFogDefaultColor = s.SerializeObject<Color>(dynamicFogDefaultColor, name: "dynamicFogDefaultColor");
+			dynamicFogMaxDepth = s.Serialize<float>(dynamicFogMaxDepth, name: "dynamicFogMaxDepth");
+			isDataOnly = s.Serialize<int>(isDataOnly, name: "isDataOnly");
+			isModifier = s.Serialize<int>(isModifier, name: "isModifier");
 		}
 		public override uint? ClassCRC => 0x7C8B6190;
 	}

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventChangeOnePlayerGameMode : Event {
-		[Serialize("mode")] public Enum_mode mode;
+		public Enum_mode mode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(mode));
+			mode = s.Serialize<Enum_mode>(mode, name: "mode");
 		}
 		public enum Enum_mode {
 			[Serialize("GAMEMODE_UNKNOWN"       )] GAMEMODE_UNKNOWN = -1,

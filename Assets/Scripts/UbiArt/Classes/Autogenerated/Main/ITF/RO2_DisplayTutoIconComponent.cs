@@ -3,68 +3,68 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DisplayTutoIconComponent : ActorComponent {
-		[Serialize("tutoType"            )] public TutoType tutoType;
-		[Serialize("tutoType"            )] public TutoType2 tutoType2;
-		[Serialize("scale"               )] public float scale;
-		[Serialize("offset"              )] public Vec3d offset;
-		[Serialize("offsetUseActorFlip"  )] public bool offsetUseActorFlip;
-		[Serialize("angleOffset"         )] public Angle angleOffset;
-		[Serialize("holdMinTime"         )] public float holdMinTime;
-		[Serialize("pos"                 )] public Vec3d pos;
-		[Serialize("displayTuto"         )] public bool displayTuto;
-		[Serialize("flip"                )] public bool flip;
-		[Serialize("isPos2D"             )] public bool isPos2D;
-		[Serialize("activateByTrigger"   )] public bool activateByTrigger;
-		[Serialize("cyclePauseDuration"  )] public float cyclePauseDuration;
-		[Serialize("cycleDisplayDuration")] public float cycleDisplayDuration;
-		[Serialize("testSceneDepthRef"   )] public bool testSceneDepthRef;
-		[Serialize("AMActionCountMax"    )] public int AMActionCountMax;
-		[Serialize("tutoSucceeded"       )] public bool tutoSucceeded;
+		public TutoType tutoType;
+		public TutoType2 tutoType2;
+		public float scale;
+		public Vec3d offset;
+		public bool offsetUseActorFlip;
+		public Angle angleOffset;
+		public float holdMinTime;
+		public Vec3d pos;
+		public bool displayTuto;
+		public bool flip;
+		public bool isPos2D;
+		public bool activateByTrigger;
+		public float cyclePauseDuration;
+		public float cycleDisplayDuration;
+		public bool testSceneDepthRef;
+		public int AMActionCountMax;
+		public bool tutoSucceeded;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(tutoType2));
-					SerializeField(s, nameof(scale));
-					SerializeField(s, nameof(offset));
-					SerializeField(s, nameof(offsetUseActorFlip));
-					SerializeField(s, nameof(angleOffset));
-					SerializeField(s, nameof(holdMinTime));
-					SerializeField(s, nameof(pos));
-					SerializeField(s, nameof(displayTuto), boolAsByte: true);
-					SerializeField(s, nameof(flip), boolAsByte: true);
-					SerializeField(s, nameof(isPos2D), boolAsByte: true);
-					SerializeField(s, nameof(activateByTrigger));
-					SerializeField(s, nameof(cyclePauseDuration));
-					SerializeField(s, nameof(cycleDisplayDuration));
-					SerializeField(s, nameof(testSceneDepthRef), boolAsByte: true);
+					tutoType2 = s.Serialize<TutoType2>(tutoType2, name: "tutoType2");
+					scale = s.Serialize<float>(scale, name: "scale");
+					offset = s.SerializeObject<Vec3d>(offset, name: "offset");
+					offsetUseActorFlip = s.Serialize<bool>(offsetUseActorFlip, name: "offsetUseActorFlip");
+					angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
+					holdMinTime = s.Serialize<float>(holdMinTime, name: "holdMinTime");
+					pos = s.SerializeObject<Vec3d>(pos, name: "pos");
+					displayTuto = s.Serialize<bool>(displayTuto, name: "displayTuto", options: CSerializerObject.Options.BoolAsByte);
+					flip = s.Serialize<bool>(flip, name: "flip", options: CSerializerObject.Options.BoolAsByte);
+					isPos2D = s.Serialize<bool>(isPos2D, name: "isPos2D", options: CSerializerObject.Options.BoolAsByte);
+					activateByTrigger = s.Serialize<bool>(activateByTrigger, name: "activateByTrigger");
+					cyclePauseDuration = s.Serialize<float>(cyclePauseDuration, name: "cyclePauseDuration");
+					cycleDisplayDuration = s.Serialize<float>(cycleDisplayDuration, name: "cycleDisplayDuration");
+					testSceneDepthRef = s.Serialize<bool>(testSceneDepthRef, name: "testSceneDepthRef", options: CSerializerObject.Options.BoolAsByte);
 					if (!Settings.s.isCatchThemAll) {
-						SerializeField(s, nameof(AMActionCountMax));
+						AMActionCountMax = s.Serialize<int>(AMActionCountMax, name: "AMActionCountMax");
 					}
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(tutoSucceeded));
+					tutoSucceeded = s.Serialize<bool>(tutoSucceeded, name: "tutoSucceeded");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(tutoType));
-					SerializeField(s, nameof(scale));
-					SerializeField(s, nameof(offset));
-					SerializeField(s, nameof(offsetUseActorFlip));
-					SerializeField(s, nameof(angleOffset));
-					SerializeField(s, nameof(holdMinTime));
-					SerializeField(s, nameof(pos));
-					SerializeField(s, nameof(displayTuto));
-					SerializeField(s, nameof(flip));
-					SerializeField(s, nameof(isPos2D));
-					SerializeField(s, nameof(activateByTrigger));
-					SerializeField(s, nameof(cyclePauseDuration));
-					SerializeField(s, nameof(cycleDisplayDuration));
-					SerializeField(s, nameof(testSceneDepthRef));
-					SerializeField(s, nameof(AMActionCountMax));
+					tutoType = s.Serialize<TutoType>(tutoType, name: "tutoType");
+					scale = s.Serialize<float>(scale, name: "scale");
+					offset = s.SerializeObject<Vec3d>(offset, name: "offset");
+					offsetUseActorFlip = s.Serialize<bool>(offsetUseActorFlip, name: "offsetUseActorFlip");
+					angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
+					holdMinTime = s.Serialize<float>(holdMinTime, name: "holdMinTime");
+					pos = s.SerializeObject<Vec3d>(pos, name: "pos");
+					displayTuto = s.Serialize<bool>(displayTuto, name: "displayTuto");
+					flip = s.Serialize<bool>(flip, name: "flip");
+					isPos2D = s.Serialize<bool>(isPos2D, name: "isPos2D");
+					activateByTrigger = s.Serialize<bool>(activateByTrigger, name: "activateByTrigger");
+					cyclePauseDuration = s.Serialize<float>(cyclePauseDuration, name: "cyclePauseDuration");
+					cycleDisplayDuration = s.Serialize<float>(cycleDisplayDuration, name: "cycleDisplayDuration");
+					testSceneDepthRef = s.Serialize<bool>(testSceneDepthRef, name: "testSceneDepthRef");
+					AMActionCountMax = s.Serialize<int>(AMActionCountMax, name: "AMActionCountMax");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(tutoSucceeded));
+					tutoSucceeded = s.Serialize<bool>(tutoSucceeded, name: "tutoSucceeded");
 				}
 			}
 		}

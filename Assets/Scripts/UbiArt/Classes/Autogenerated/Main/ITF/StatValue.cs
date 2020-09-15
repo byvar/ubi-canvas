@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class StatValue : CSerializable {
-		[Serialize("type"         )] public Enum_type type;
-		[Serialize("stringValue"  )] public string stringValue;
-		[Serialize("stringIdValue")] public StringID stringIdValue;
-		[Serialize("floatValue"   )] public float floatValue;
-		[Serialize("intValue"     )] public int intValue;
-		[Serialize("boolValue"    )] public bool boolValue;
-		[Serialize("arrayValue"   )] public CList<StatValue> arrayValue;
-		[Serialize("objectValue"  )] public CMap<string, StatValue> objectValue;
+		public Enum_type type;
+		public string stringValue;
+		public StringID stringIdValue;
+		public float floatValue;
+		public int intValue;
+		public bool boolValue;
+		public CList<StatValue> arrayValue;
+		public CMap<string, StatValue> objectValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(stringValue));
-			SerializeField(s, nameof(stringIdValue));
-			SerializeField(s, nameof(floatValue));
-			SerializeField(s, nameof(intValue));
-			SerializeField(s, nameof(boolValue));
-			SerializeField(s, nameof(arrayValue));
-			SerializeField(s, nameof(objectValue));
+			type = s.Serialize<Enum_type>(type, name: "type");
+			stringValue = s.Serialize<string>(stringValue, name: "stringValue");
+			stringIdValue = s.SerializeObject<StringID>(stringIdValue, name: "stringIdValue");
+			floatValue = s.Serialize<float>(floatValue, name: "floatValue");
+			intValue = s.Serialize<int>(intValue, name: "intValue");
+			boolValue = s.Serialize<bool>(boolValue, name: "boolValue");
+			arrayValue = s.SerializeObject<CList<StatValue>>(arrayValue, name: "arrayValue");
+			objectValue = s.SerializeObject<CMap<string, StatValue>>(objectValue, name: "objectValue");
 		}
 		public enum Enum_type {
 			[Serialize("Null"    )] Null = 0,

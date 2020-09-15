@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_BubblePrizeSpawnerComponent_Template : CSerializable {
-		[Serialize("bubblePath"          )] public Path bubblePath;
-		[Serialize("bubbleCount"         )] public uint bubbleCount;
-		[Serialize("timeBetweenBubble"   )] public float timeBetweenBubble;
-		[Serialize("spawnBubbleOnDeath"  )] public int spawnBubbleOnDeath;
-		[Serialize("internalRewardNumber")] public uint internalRewardNumber;
+		public Path bubblePath;
+		public uint bubbleCount;
+		public float timeBetweenBubble;
+		public int spawnBubbleOnDeath;
+		public uint internalRewardNumber;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bubblePath));
-			SerializeField(s, nameof(bubbleCount));
-			SerializeField(s, nameof(timeBetweenBubble));
-			SerializeField(s, nameof(spawnBubbleOnDeath));
-			SerializeField(s, nameof(internalRewardNumber));
+			bubblePath = s.SerializeObject<Path>(bubblePath, name: "bubblePath");
+			bubbleCount = s.Serialize<uint>(bubbleCount, name: "bubbleCount");
+			timeBetweenBubble = s.Serialize<float>(timeBetweenBubble, name: "timeBetweenBubble");
+			spawnBubbleOnDeath = s.Serialize<int>(spawnBubbleOnDeath, name: "spawnBubbleOnDeath");
+			internalRewardNumber = s.Serialize<uint>(internalRewardNumber, name: "internalRewardNumber");
 		}
 		public override uint? ClassCRC => 0x7F0B9BAA;
 	}

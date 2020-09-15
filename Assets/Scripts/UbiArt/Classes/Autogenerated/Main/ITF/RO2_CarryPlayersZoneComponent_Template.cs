@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CarryPlayersZoneComponent_Template : ActorComponent_Template {
-		[Serialize("regionID"                         )] public StringID regionID;
-		[Serialize("carryMinParticulePercent"         )] public float carryMinParticulePercent;
-		[Serialize("leaveMinCollidingParticulePercent")] public float leaveMinCollidingParticulePercent;
+		public StringID regionID;
+		public float carryMinParticulePercent;
+		public float leaveMinCollidingParticulePercent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(regionID));
-			SerializeField(s, nameof(carryMinParticulePercent));
-			SerializeField(s, nameof(leaveMinCollidingParticulePercent));
+			regionID = s.SerializeObject<StringID>(regionID, name: "regionID");
+			carryMinParticulePercent = s.Serialize<float>(carryMinParticulePercent, name: "carryMinParticulePercent");
+			leaveMinCollidingParticulePercent = s.Serialize<float>(leaveMinCollidingParticulePercent, name: "leaveMinCollidingParticulePercent");
 		}
 		public override uint? ClassCRC => 0x2527120E;
 	}

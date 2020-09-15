@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class HelmutEnhancedRoamingLimit : ActorComponent {
-		[Serialize("StringID__0" )] public StringID StringID__0;
-		[Serialize("StringID__1" )] public StringID StringID__1;
-		[Serialize("float__2"    )] public float float__2;
-		[Serialize("Enum_VH_0__3")] public Enum_VH_0 Enum_VH_0__3;
-		[Serialize("uint__4"     )] public uint uint__4;
+		public StringID StringID__0;
+		public StringID StringID__1;
+		public float float__2;
+		public Enum_VH_0 Enum_VH_0__3;
+		public uint uint__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(StringID__0));
-			SerializeField(s, nameof(StringID__1));
-			SerializeField(s, nameof(float__2));
-			SerializeField(s, nameof(Enum_VH_0__3));
-			SerializeField(s, nameof(uint__4));
+			StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
+			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
+			float__2 = s.Serialize<float>(float__2, name: "float__2");
+			Enum_VH_0__3 = s.Serialize<Enum_VH_0>(Enum_VH_0__3, name: "Enum_VH_0__3");
+			uint__4 = s.Serialize<uint>(uint__4, name: "uint__4");
 		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_0")] Value_0 = 0,

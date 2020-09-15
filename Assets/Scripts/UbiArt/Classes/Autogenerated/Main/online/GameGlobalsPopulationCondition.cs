@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class GameGlobalsPopulationCondition : GameGlobalsCondition {
-		[Serialize("kind")] public StringID kind;
-		[Serialize("type")] public StringID type;
+		public StringID kind;
+		public StringID type;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(kind));
-			SerializeField(s, nameof(type));
+			kind = s.SerializeObject<StringID>(kind, name: "kind");
+			type = s.SerializeObject<StringID>(type, name: "type");
 		}
 		public override uint? ClassCRC => 0xC5A0F7D6;
 	}

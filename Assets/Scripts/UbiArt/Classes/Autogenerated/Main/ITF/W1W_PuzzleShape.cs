@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_PuzzleShape : ActorComponent {
-		[Serialize("CArray<Path>__0")] public CArray<Path> CArray_Path__0;
-		[Serialize("Enum_VH_0__1"   )] public Enum_VH_0 Enum_VH_0__1;
-		[Serialize("StringID__2"    )] public StringID StringID__2;
-		[Serialize("uint__3"        )] public uint uint__3;
-		[Serialize("float__4"       )] public float float__4;
+		public CArray<Path> CArray_Path__0;
+		public Enum_VH_0 Enum_VH_0__1;
+		public StringID StringID__2;
+		public uint uint__3;
+		public float float__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(CArray_Path__0));
-			SerializeField(s, nameof(Enum_VH_0__1));
-			SerializeField(s, nameof(StringID__2));
-			SerializeField(s, nameof(uint__3));
-			SerializeField(s, nameof(float__4));
+			CArray_Path__0 = s.SerializeObject<CArray<Path>>(CArray_Path__0, name: "CArray_Path__0");
+			Enum_VH_0__1 = s.Serialize<Enum_VH_0>(Enum_VH_0__1, name: "Enum_VH_0__1");
+			StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
+			uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
+			float__4 = s.Serialize<float>(float__4, name: "float__4");
 		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_0" )] Value_0 = 0,

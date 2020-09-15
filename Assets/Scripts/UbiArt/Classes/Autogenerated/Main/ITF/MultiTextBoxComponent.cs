@@ -3,79 +3,79 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class MultiTextBoxComponent : ActorComponent {
-		[Serialize("textBoxList")] public CList<MultiTextBoxComponent.TextBox> textBoxList;
+		public CList<MultiTextBoxComponent.TextBox> textBoxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(textBoxList));
+					textBoxList = s.SerializeObject<CList<MultiTextBoxComponent.TextBox>>(textBoxList, name: "textBoxList");
 				}
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class TextBox : CSerializable {
-			[Serialize("text"                )] public SmartLocId text;
-			[Serialize("area"                )] public Vec2d area;
-			[Serialize("offset"              )] public Vec3d offset;
-			[Serialize("scale"               )] public Vec2d scale;
-			[Serialize("style"               )] public uint style;
-			[Serialize("scaleToMatchWithArea")] public bool scaleToMatchWithArea;
-			[Serialize("maxWidth"            )] public float maxWidth;
-			[Serialize("autoScrollSpeed"     )] public float autoScrollSpeed;
-			[Serialize("autoScrollWaitTime"  )] public float autoScrollWaitTime;
-			[Serialize("overridingColor"     )] public Color overridingColor;
-			[Serialize("overridingHAlignment")] public FONT_ALIGN overridingHAlignment;
-			[Serialize("overridingVAlignment")] public FONT overridingVAlignment;
-			[Serialize("overridingAnchor"    )] public AREA_ANCHOR overridingAnchor;
-			[Serialize("unsecureSource"      )] public bool unsecureSource;
-			[Serialize("SmartLocId__0"       )] public SmartLocId SmartLocId__0;
-			[Serialize("Vector2__1"          )] public Vec2d Vector2__1;
-			[Serialize("Vector3__2"          )] public Vec3d Vector3__2;
-			[Serialize("Vector2__3"          )] public Vec2d Vector2__3;
-			[Serialize("uint__4"             )] public uint uint__4;
-			[Serialize("bool__5"             )] public bool bool__5;
-			[Serialize("float__6"            )] public float float__6;
-			[Serialize("float__7"            )] public float float__7;
-			[Serialize("float__8"            )] public float float__8;
-			[Serialize("Color__9"            )] public Color Color__9;
-			[Serialize("Enum_VH_0__10"       )] public Enum_VH_0 Enum_VH_0__10;
-			[Serialize("Enum_VH_1__11"       )] public Enum_VH_1 Enum_VH_1__11;
-			[Serialize("Enum_VH_2__12"       )] public Enum_VH_2 Enum_VH_2__12;
+			public SmartLocId text;
+			public Vec2d area;
+			public Vec3d offset;
+			public Vec2d scale;
+			public uint style;
+			public bool scaleToMatchWithArea;
+			public float maxWidth;
+			public float autoScrollSpeed;
+			public float autoScrollWaitTime;
+			public Color overridingColor;
+			public FONT_ALIGN overridingHAlignment;
+			public FONT overridingVAlignment;
+			public AREA_ANCHOR overridingAnchor;
+			public bool unsecureSource;
+			public SmartLocId SmartLocId__0;
+			public Vec2d Vector2__1;
+			public Vec3d Vector3__2;
+			public Vec2d Vector2__3;
+			public uint uint__4;
+			public bool bool__5;
+			public float float__6;
+			public float float__7;
+			public float float__8;
+			public Color Color__9;
+			public Enum_VH_0 Enum_VH_0__10;
+			public Enum_VH_1 Enum_VH_1__11;
+			public Enum_VH_2 Enum_VH_2__12;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (Settings.s.game == Settings.Game.VH) {
 					if (s.HasFlags(SerializeFlags.Default)) {
-						SerializeField(s, nameof(SmartLocId__0));
-						SerializeField(s, nameof(Vector2__1));
-						SerializeField(s, nameof(Vector3__2));
-						SerializeField(s, nameof(Vector2__3));
-						SerializeField(s, nameof(uint__4));
-						SerializeField(s, nameof(bool__5));
-						SerializeField(s, nameof(float__6));
-						SerializeField(s, nameof(float__7));
-						SerializeField(s, nameof(float__8));
-						SerializeField(s, nameof(Color__9));
-						SerializeField(s, nameof(Enum_VH_0__10));
-						SerializeField(s, nameof(Enum_VH_1__11));
-						SerializeField(s, nameof(Enum_VH_2__12));
+						SmartLocId__0 = s.SerializeObject<SmartLocId>(SmartLocId__0, name: "SmartLocId__0");
+						Vector2__1 = s.SerializeObject<Vec2d>(Vector2__1, name: "Vector2__1");
+						Vector3__2 = s.SerializeObject<Vec3d>(Vector3__2, name: "Vector3__2");
+						Vector2__3 = s.SerializeObject<Vec2d>(Vector2__3, name: "Vector2__3");
+						uint__4 = s.Serialize<uint>(uint__4, name: "uint__4");
+						bool__5 = s.Serialize<bool>(bool__5, name: "bool__5");
+						float__6 = s.Serialize<float>(float__6, name: "float__6");
+						float__7 = s.Serialize<float>(float__7, name: "float__7");
+						float__8 = s.Serialize<float>(float__8, name: "float__8");
+						Color__9 = s.SerializeObject<Color>(Color__9, name: "Color__9");
+						Enum_VH_0__10 = s.Serialize<Enum_VH_0>(Enum_VH_0__10, name: "Enum_VH_0__10");
+						Enum_VH_1__11 = s.Serialize<Enum_VH_1>(Enum_VH_1__11, name: "Enum_VH_1__11");
+						Enum_VH_2__12 = s.Serialize<Enum_VH_2>(Enum_VH_2__12, name: "Enum_VH_2__12");
 					}
 				} else {
 					if (s.HasFlags(SerializeFlags.Default)) {
-						SerializeField(s, nameof(text));
-						SerializeField(s, nameof(area));
-						SerializeField(s, nameof(offset));
-						SerializeField(s, nameof(scale));
-						SerializeField(s, nameof(style));
-						SerializeField(s, nameof(scaleToMatchWithArea));
-						SerializeField(s, nameof(maxWidth));
-						SerializeField(s, nameof(autoScrollSpeed));
-						SerializeField(s, nameof(autoScrollWaitTime));
-						SerializeField(s, nameof(overridingColor));
-						SerializeField(s, nameof(overridingHAlignment));
-						SerializeField(s, nameof(overridingVAlignment));
-						SerializeField(s, nameof(overridingAnchor));
-						SerializeField(s, nameof(unsecureSource));
+						text = s.SerializeObject<SmartLocId>(text, name: "text");
+						area = s.SerializeObject<Vec2d>(area, name: "area");
+						offset = s.SerializeObject<Vec3d>(offset, name: "offset");
+						scale = s.SerializeObject<Vec2d>(scale, name: "scale");
+						style = s.Serialize<uint>(style, name: "style");
+						scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
+						maxWidth = s.Serialize<float>(maxWidth, name: "maxWidth");
+						autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
+						autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
+						overridingColor = s.SerializeObject<Color>(overridingColor, name: "overridingColor");
+						overridingHAlignment = s.Serialize<FONT_ALIGN>(overridingHAlignment, name: "overridingHAlignment");
+						overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
+						overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
+						unsecureSource = s.Serialize<bool>(unsecureSource, name: "unsecureSource");
 					}
 				}
 			}

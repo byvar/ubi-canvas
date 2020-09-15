@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_AnimCurveComponent : CSerializable {
-		[Serialize("animDuration")] public float animDuration;
-		[Serialize("posXCurve"   )] public Placeholder posXCurve;
-		[Serialize("posXMaxValue")] public float posXMaxValue;
-		[Serialize("posYCurve"   )] public Placeholder posYCurve;
-		[Serialize("posYMaxValue")] public float posYMaxValue;
-		[Serialize("posZCurve"   )] public Placeholder posZCurve;
-		[Serialize("posZMaxValue")] public float posZMaxValue;
-		[Serialize("rotCurve"    )] public Placeholder rotCurve;
+		public float animDuration;
+		public Placeholder posXCurve;
+		public float posXMaxValue;
+		public Placeholder posYCurve;
+		public float posYMaxValue;
+		public Placeholder posZCurve;
+		public float posZMaxValue;
+		public Placeholder rotCurve;
 		[Description("Max rotation value in degrees")]
-		[Serialize("rotMaxValue" )] public float rotMaxValue;
+		public float rotMaxValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animDuration));
-			SerializeField(s, nameof(posXCurve));
-			SerializeField(s, nameof(posXMaxValue));
-			SerializeField(s, nameof(posYCurve));
-			SerializeField(s, nameof(posYMaxValue));
-			SerializeField(s, nameof(posZCurve));
-			SerializeField(s, nameof(posZMaxValue));
-			SerializeField(s, nameof(rotCurve));
-			SerializeField(s, nameof(rotMaxValue));
+			animDuration = s.Serialize<float>(animDuration, name: "animDuration");
+			posXCurve = s.SerializeObject<Placeholder>(posXCurve, name: "posXCurve");
+			posXMaxValue = s.Serialize<float>(posXMaxValue, name: "posXMaxValue");
+			posYCurve = s.SerializeObject<Placeholder>(posYCurve, name: "posYCurve");
+			posYMaxValue = s.Serialize<float>(posYMaxValue, name: "posYMaxValue");
+			posZCurve = s.SerializeObject<Placeholder>(posZCurve, name: "posZCurve");
+			posZMaxValue = s.Serialize<float>(posZMaxValue, name: "posZMaxValue");
+			rotCurve = s.SerializeObject<Placeholder>(rotCurve, name: "rotCurve");
+			rotMaxValue = s.Serialize<float>(rotMaxValue, name: "rotMaxValue");
 		}
 		public override uint? ClassCRC => 0x797485E6;
 	}

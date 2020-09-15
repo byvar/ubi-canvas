@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR)]
 	public partial class InfoElement : CSerializable {
-		[Serialize("isOccupied"       )] public bool isOccupied;
-		[Serialize("reward"           )] public uint reward;
-		[Serialize("anim"             )] public AnimationAtlas anim;
-		[Serialize("animBreak"        )] public AnimationAtlas animBreak;
-		[Serialize("fragments"        )] public FragmentsList fragments;
-		[Serialize("int__0"           )] public int int__0;
-		[Serialize("uint__1"          )] public uint uint__1;
-		[Serialize("AnimationAtlas__2")] public AnimationAtlas AnimationAtlas__2;
-		[Serialize("AnimationAtlas__3")] public AnimationAtlas AnimationAtlas__3;
-		[Serialize("FragmentsList__4" )] public FragmentsList FragmentsList__4;
-		[Serialize("AnimationAtlas__5")] public AnimationAtlas AnimationAtlas__5;
-		[Serialize("AnimationAtlas__6")] public AnimationAtlas AnimationAtlas__6;
+		public bool isOccupied;
+		public uint reward;
+		public AnimationAtlas anim;
+		public AnimationAtlas animBreak;
+		public FragmentsList fragments;
+		public int int__0;
+		public uint uint__1;
+		public AnimationAtlas AnimationAtlas__2;
+		public AnimationAtlas AnimationAtlas__3;
+		public FragmentsList FragmentsList__4;
+		public AnimationAtlas AnimationAtlas__5;
+		public AnimationAtlas AnimationAtlas__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(int__0));
-				SerializeField(s, nameof(uint__1));
-				SerializeField(s, nameof(AnimationAtlas__2));
-				SerializeField(s, nameof(AnimationAtlas__3));
-				SerializeField(s, nameof(FragmentsList__4));
-				SerializeField(s, nameof(AnimationAtlas__5));
-				SerializeField(s, nameof(AnimationAtlas__6));
+				int__0 = s.Serialize<int>(int__0, name: "int__0");
+				uint__1 = s.Serialize<uint>(uint__1, name: "uint__1");
+				AnimationAtlas__2 = s.SerializeObject<AnimationAtlas>(AnimationAtlas__2, name: "AnimationAtlas__2");
+				AnimationAtlas__3 = s.SerializeObject<AnimationAtlas>(AnimationAtlas__3, name: "AnimationAtlas__3");
+				FragmentsList__4 = s.SerializeObject<FragmentsList>(FragmentsList__4, name: "FragmentsList__4");
+				AnimationAtlas__5 = s.SerializeObject<AnimationAtlas>(AnimationAtlas__5, name: "AnimationAtlas__5");
+				AnimationAtlas__6 = s.SerializeObject<AnimationAtlas>(AnimationAtlas__6, name: "AnimationAtlas__6");
 			} else {
-				SerializeField(s, nameof(isOccupied));
-				SerializeField(s, nameof(reward));
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(animBreak));
-				SerializeField(s, nameof(fragments));
+				isOccupied = s.Serialize<bool>(isOccupied, name: "isOccupied");
+				reward = s.Serialize<uint>(reward, name: "reward");
+				anim = s.SerializeObject<AnimationAtlas>(anim, name: "anim");
+				animBreak = s.SerializeObject<AnimationAtlas>(animBreak, name: "animBreak");
+				fragments = s.SerializeObject<FragmentsList>(fragments, name: "fragments");
 			}
 		}
 	}

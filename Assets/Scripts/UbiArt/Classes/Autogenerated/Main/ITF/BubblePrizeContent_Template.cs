@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR)]
 	public partial class BubblePrizeContent_Template : CSerializable {
-		[Serialize("popEvent"                )] public Generic<Event> popEvent;
-		[Serialize("popEventPainted"         )] public Generic<Event> popEventPainted;
-		[Serialize("popSpawn"                )] public Path popSpawn;
-		[Serialize("rewardNumberChangeEnable")] public bool rewardNumberChangeEnable;
-		[Serialize("contentPopType"          )] public ContentPopType contentPopType;
-		[Serialize("bankState"               )] public BubblePrizeBankState bankState;
+		public Generic<Event> popEvent;
+		public Generic<Event> popEventPainted;
+		public Path popSpawn;
+		public bool rewardNumberChangeEnable;
+		public ContentPopType contentPopType;
+		public BubblePrizeBankState bankState;
 		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(popEvent));
-				SerializeField(s, nameof(popSpawn));
-				SerializeField(s, nameof(bankState));
-				SerializeField(s, nameof(rewardNumberChangeEnable));
+				popEvent = s.SerializeObject<Generic<Event>>(popEvent, name: "popEvent");
+				popSpawn = s.SerializeObject<Path>(popSpawn, name: "popSpawn");
+				bankState = s.Serialize<BubblePrizeBankState>(bankState, name: "bankState");
+				rewardNumberChangeEnable = s.Serialize<bool>(rewardNumberChangeEnable, name: "rewardNumberChangeEnable");
 			} else {
-				SerializeField(s, nameof(popEvent));
-				SerializeField(s, nameof(popEventPainted));
-				SerializeField(s, nameof(popSpawn));
-				SerializeField(s, nameof(rewardNumberChangeEnable));
-				SerializeField(s, nameof(contentPopType));
+				popEvent = s.SerializeObject<Generic<Event>>(popEvent, name: "popEvent");
+				popEventPainted = s.SerializeObject<Generic<Event>>(popEventPainted, name: "popEventPainted");
+				popSpawn = s.SerializeObject<Path>(popSpawn, name: "popSpawn");
+				rewardNumberChangeEnable = s.Serialize<bool>(rewardNumberChangeEnable, name: "rewardNumberChangeEnable");
+				contentPopType = s.Serialize<ContentPopType>(contentPopType, name: "contentPopType");
 			}
 		}
 		public enum ContentPopType {

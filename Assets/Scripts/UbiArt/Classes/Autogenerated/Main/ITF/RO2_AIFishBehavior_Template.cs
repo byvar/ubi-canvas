@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIFishBehavior_Template : RO2_AIGroundBaseBehavior_Template {
-		[Serialize("struggle"               )] public Generic<AIAction_Template> struggle;
-		[Serialize("release"                )] public Generic<AIAction_Template> release;
-		[Serialize("spikeHit"               )] public Generic<RO2_AIReceiveCameraEjectHitAction_Template> spikeHit;
-		[Serialize("releaseSpeed"           )] public float releaseSpeed;
-		[Serialize("releaseAccel"           )] public float releaseAccel;
-		[Serialize("rotateOnRelease"        )] public bool rotateOnRelease;
-		[Serialize("rotationSpeed"          )] public Angle rotationSpeed;
-		[Serialize("struggleOffsetAmplitude")] public float struggleOffsetAmplitude;
-		[Serialize("struggleOffsetFrequency")] public float struggleOffsetFrequency;
+		public Generic<AIAction_Template> struggle;
+		public Generic<AIAction_Template> release;
+		public Generic<RO2_AIReceiveCameraEjectHitAction_Template> spikeHit;
+		public float releaseSpeed;
+		public float releaseAccel;
+		public bool rotateOnRelease;
+		public Angle rotationSpeed;
+		public float struggleOffsetAmplitude;
+		public float struggleOffsetFrequency;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(struggle));
-			SerializeField(s, nameof(release));
-			SerializeField(s, nameof(spikeHit));
-			SerializeField(s, nameof(releaseSpeed));
-			SerializeField(s, nameof(releaseAccel));
-			SerializeField(s, nameof(rotateOnRelease));
-			SerializeField(s, nameof(rotationSpeed));
-			SerializeField(s, nameof(struggleOffsetAmplitude));
-			SerializeField(s, nameof(struggleOffsetFrequency));
+			struggle = s.SerializeObject<Generic<AIAction_Template>>(struggle, name: "struggle");
+			release = s.SerializeObject<Generic<AIAction_Template>>(release, name: "release");
+			spikeHit = s.SerializeObject<Generic<RO2_AIReceiveCameraEjectHitAction_Template>>(spikeHit, name: "spikeHit");
+			releaseSpeed = s.Serialize<float>(releaseSpeed, name: "releaseSpeed");
+			releaseAccel = s.Serialize<float>(releaseAccel, name: "releaseAccel");
+			rotateOnRelease = s.Serialize<bool>(rotateOnRelease, name: "rotateOnRelease");
+			rotationSpeed = s.SerializeObject<Angle>(rotationSpeed, name: "rotationSpeed");
+			struggleOffsetAmplitude = s.Serialize<float>(struggleOffsetAmplitude, name: "struggleOffsetAmplitude");
+			struggleOffsetFrequency = s.Serialize<float>(struggleOffsetFrequency, name: "struggleOffsetFrequency");
 		}
 		public override uint? ClassCRC => 0x93980974;
 	}

@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CupCounterComponent_Template : ActorComponent_Template {
-		[Serialize("locID"          )] public LocalisationId locID;
-		[Serialize("bronzeCup"      )] public Path bronzeCup;
-		[Serialize("silverCup"      )] public Path silverCup;
-		[Serialize("goldCup"        )] public Path goldCup;
-		[Serialize("bronzetextColor")] public string bronzetextColor;
-		[Serialize("silvertextColor")] public string silvertextColor;
-		[Serialize("goldTextColor"  )] public string goldTextColor;
+		public LocalisationId locID;
+		public Path bronzeCup;
+		public Path silverCup;
+		public Path goldCup;
+		public string bronzetextColor;
+		public string silvertextColor;
+		public string goldTextColor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(locID));
-			SerializeField(s, nameof(bronzeCup));
-			SerializeField(s, nameof(silverCup));
-			SerializeField(s, nameof(goldCup));
-			SerializeField(s, nameof(bronzetextColor));
-			SerializeField(s, nameof(silvertextColor));
-			SerializeField(s, nameof(goldTextColor));
+			locID = s.SerializeObject<LocalisationId>(locID, name: "locID");
+			bronzeCup = s.SerializeObject<Path>(bronzeCup, name: "bronzeCup");
+			silverCup = s.SerializeObject<Path>(silverCup, name: "silverCup");
+			goldCup = s.SerializeObject<Path>(goldCup, name: "goldCup");
+			bronzetextColor = s.Serialize<string>(bronzetextColor, name: "bronzetextColor");
+			silvertextColor = s.Serialize<string>(silvertextColor, name: "silvertextColor");
+			goldTextColor = s.Serialize<string>(goldTextColor, name: "goldTextColor");
 		}
 		public override uint? ClassCRC => 0xDAAB883A;
 	}

@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIAlInfernoWaiterBehavior_Template : Ray_AIGroundBaseMovementBehavior_Template {
-		[Serialize("fall"                         )] public Generic<AIAction_Template> fall;
-		[Serialize("patrol"                       )] public Generic<AIAction_Template> patrol;
-		[Serialize("longRangeAttack"              )] public Generic<AIAction_Template> longRangeAttack;
-		[Serialize("crushed"                      )] public Generic<AIAction_Template> crushed;
-		[Serialize("uturn_walk"                   )] public Generic<AIAction_Template> uturn_walk;
-		[Serialize("longRangeAttackDetectionRange")] public AABB longRangeAttackDetectionRange;
-		[Serialize("flamesFXName"                 )] public StringID flamesFXName;
-		[Serialize("catchWalkAnimation"           )] public StringID catchWalkAnimation;
-		[Serialize("crushedVerticalSpeedThreshold")] public float crushedVerticalSpeedThreshold;
-		[Serialize("attackTimeThreshold"          )] public float attackTimeThreshold;
-		[Serialize("brakingForce"                 )] public float brakingForce;
+		public Generic<AIAction_Template> fall;
+		public Generic<AIAction_Template> patrol;
+		public Generic<AIAction_Template> longRangeAttack;
+		public Generic<AIAction_Template> crushed;
+		public Generic<AIAction_Template> uturn_walk;
+		public AABB longRangeAttackDetectionRange;
+		public StringID flamesFXName;
+		public StringID catchWalkAnimation;
+		public float crushedVerticalSpeedThreshold;
+		public float attackTimeThreshold;
+		public float brakingForce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fall));
-			SerializeField(s, nameof(patrol));
-			SerializeField(s, nameof(longRangeAttack));
-			SerializeField(s, nameof(crushed));
-			SerializeField(s, nameof(uturn_walk));
-			SerializeField(s, nameof(longRangeAttackDetectionRange));
-			SerializeField(s, nameof(flamesFXName));
-			SerializeField(s, nameof(catchWalkAnimation));
-			SerializeField(s, nameof(crushedVerticalSpeedThreshold));
-			SerializeField(s, nameof(attackTimeThreshold));
-			SerializeField(s, nameof(brakingForce));
+			fall = s.SerializeObject<Generic<AIAction_Template>>(fall, name: "fall");
+			patrol = s.SerializeObject<Generic<AIAction_Template>>(patrol, name: "patrol");
+			longRangeAttack = s.SerializeObject<Generic<AIAction_Template>>(longRangeAttack, name: "longRangeAttack");
+			crushed = s.SerializeObject<Generic<AIAction_Template>>(crushed, name: "crushed");
+			uturn_walk = s.SerializeObject<Generic<AIAction_Template>>(uturn_walk, name: "uturn_walk");
+			longRangeAttackDetectionRange = s.SerializeObject<AABB>(longRangeAttackDetectionRange, name: "longRangeAttackDetectionRange");
+			flamesFXName = s.SerializeObject<StringID>(flamesFXName, name: "flamesFXName");
+			catchWalkAnimation = s.SerializeObject<StringID>(catchWalkAnimation, name: "catchWalkAnimation");
+			crushedVerticalSpeedThreshold = s.Serialize<float>(crushedVerticalSpeedThreshold, name: "crushedVerticalSpeedThreshold");
+			attackTimeThreshold = s.Serialize<float>(attackTimeThreshold, name: "attackTimeThreshold");
+			brakingForce = s.Serialize<float>(brakingForce, name: "brakingForce");
 		}
 		public override uint? ClassCRC => 0xC586D512;
 	}

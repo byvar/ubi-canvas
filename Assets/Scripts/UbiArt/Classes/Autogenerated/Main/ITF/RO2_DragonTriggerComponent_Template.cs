@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DragonTriggerComponent_Template : ActorComponent_Template {
-		[Serialize("OnEnterEvent")] public Generic<Event> OnEnterEvent;
+		public Generic<Event> OnEnterEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(OnEnterEvent));
+			OnEnterEvent = s.SerializeObject<Generic<Event>>(OnEnterEvent, name: "OnEnterEvent");
 		}
 		public override uint? ClassCRC => 0x7E4ADEF0;
 	}

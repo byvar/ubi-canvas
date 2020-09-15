@@ -3,31 +3,31 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class SaveInfo : CSerializable {
-		[Serialize("pid"                  )] public string pid;
-		[Serialize("slot"                 )] public uint slot;
-		[Serialize("saveUniqueId"         )] public uint saveUniqueId;
-		[Serialize("forceNewGame"         )] public bool forceNewGame;
-		[Serialize("save"                 )] public string save;
-		[Serialize("msdkData"             )] public string msdkData;
-		[Serialize("saveGameVersionFormat")] public uint saveGameVersionFormat;
-		[Serialize("populations"          )] public CMap<StringID, StringID> populations;
-		[Serialize("iap"                  )] public bool iap;
-		[Serialize("iapPrediction"        )] public float iapPrediction;
-		[Serialize("reco"                 )] public CArray<string> reco;
+		public string pid;
+		public uint slot;
+		public uint saveUniqueId;
+		public bool forceNewGame;
+		public string save;
+		public string msdkData;
+		public uint saveGameVersionFormat;
+		public CMap<StringID, StringID> populations;
+		public bool iap;
+		public float iapPrediction;
+		public CArray<string> reco;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(pid));
-			SerializeField(s, nameof(slot));
-			SerializeField(s, nameof(saveUniqueId));
-			SerializeField(s, nameof(forceNewGame));
-			SerializeField(s, nameof(save));
-			SerializeField(s, nameof(msdkData));
-			SerializeField(s, nameof(saveGameVersionFormat));
-			SerializeField(s, nameof(populations));
-			SerializeField(s, nameof(iap));
-			SerializeField(s, nameof(iapPrediction));
-			SerializeField(s, nameof(reco));
-			SerializeField(s, nameof(reco));
+			pid = s.Serialize<string>(pid, name: "pid");
+			slot = s.Serialize<uint>(slot, name: "slot");
+			saveUniqueId = s.Serialize<uint>(saveUniqueId, name: "saveUniqueId");
+			forceNewGame = s.Serialize<bool>(forceNewGame, name: "forceNewGame");
+			save = s.Serialize<string>(save, name: "save");
+			msdkData = s.Serialize<string>(msdkData, name: "msdkData");
+			saveGameVersionFormat = s.Serialize<uint>(saveGameVersionFormat, name: "saveGameVersionFormat");
+			populations = s.SerializeObject<CMap<StringID, StringID>>(populations, name: "populations");
+			iap = s.Serialize<bool>(iap, name: "iap");
+			iapPrediction = s.Serialize<float>(iapPrediction, name: "iapPrediction");
+			reco = s.SerializeObject<CArray<string>>(reco, name: "reco");
+			reco = s.SerializeObject<CArray<string>>(reco, name: "reco");
 		}
 	}
 }

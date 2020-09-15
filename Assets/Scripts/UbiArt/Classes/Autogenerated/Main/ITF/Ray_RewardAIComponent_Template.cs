@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_RewardAIComponent_Template : AIComponent_Template {
-		[Serialize("idleBehavior"   )] public Generic<TemplateAIBehavior> idleBehavior;
-		[Serialize("carriedBehavior")] public Generic<TemplateAIBehavior> carriedBehavior;
-		[Serialize("pickupBehavior" )] public Generic<TemplateAIBehavior> pickupBehavior;
-		[Serialize("snapBehavior"   )] public Generic<TemplateAIBehavior> snapBehavior;
-		[Serialize("fallbackReward" )] public Generic<Ray_EventSpawnReward> fallbackReward;
-		[Serialize("addHp"          )] public uint addHp;
-		[Serialize("addMaxHp"       )] public uint addMaxHp;
-		[Serialize("snapFactor"     )] public float snapFactor;
-		[Serialize("snapMinDistance")] public float snapMinDistance;
+		public Generic<TemplateAIBehavior> idleBehavior;
+		public Generic<TemplateAIBehavior> carriedBehavior;
+		public Generic<TemplateAIBehavior> pickupBehavior;
+		public Generic<TemplateAIBehavior> snapBehavior;
+		public Generic<Ray_EventSpawnReward> fallbackReward;
+		public uint addHp;
+		public uint addMaxHp;
+		public float snapFactor;
+		public float snapMinDistance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idleBehavior));
-			SerializeField(s, nameof(carriedBehavior));
-			SerializeField(s, nameof(pickupBehavior));
-			SerializeField(s, nameof(snapBehavior));
-			SerializeField(s, nameof(fallbackReward));
-			SerializeField(s, nameof(addHp));
-			SerializeField(s, nameof(addMaxHp));
-			SerializeField(s, nameof(snapFactor));
-			SerializeField(s, nameof(snapMinDistance));
+			idleBehavior = s.SerializeObject<Generic<TemplateAIBehavior>>(idleBehavior, name: "idleBehavior");
+			carriedBehavior = s.SerializeObject<Generic<TemplateAIBehavior>>(carriedBehavior, name: "carriedBehavior");
+			pickupBehavior = s.SerializeObject<Generic<TemplateAIBehavior>>(pickupBehavior, name: "pickupBehavior");
+			snapBehavior = s.SerializeObject<Generic<TemplateAIBehavior>>(snapBehavior, name: "snapBehavior");
+			fallbackReward = s.SerializeObject<Generic<Ray_EventSpawnReward>>(fallbackReward, name: "fallbackReward");
+			addHp = s.Serialize<uint>(addHp, name: "addHp");
+			addMaxHp = s.Serialize<uint>(addMaxHp, name: "addMaxHp");
+			snapFactor = s.Serialize<float>(snapFactor, name: "snapFactor");
+			snapMinDistance = s.Serialize<float>(snapMinDistance, name: "snapMinDistance");
 		}
 		public override uint? ClassCRC => 0x10C2BCF9;
 	}

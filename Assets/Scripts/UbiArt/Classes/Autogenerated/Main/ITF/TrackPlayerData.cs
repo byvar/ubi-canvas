@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR)]
 	public partial class TrackPlayerData : CSerializable {
-		[Serialize("Enum_RFR_0__0")] public Enum_RFR_0 Enum_RFR_0__0;
-		[Serialize("int__1"       )] public int int__1;
-		[Serialize("int__2"       )] public int int__2;
-		[Serialize("Vector3__3"   )] public Vec3d Vector3__3;
-		[Serialize("float__4"     )] public float float__4;
-		[Serialize("float__5"     )] public float float__5;
-		[Serialize("Vector3__6"   )] public Vec3d Vector3__6;
+		public Enum_RFR_0 Enum_RFR_0__0;
+		public int int__1;
+		public int int__2;
+		public Vec3d Vector3__3;
+		public float float__4;
+		public float float__5;
+		public Vec3d Vector3__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Enum_RFR_0__0));
-			SerializeField(s, nameof(int__1));
-			SerializeField(s, nameof(int__2));
-			SerializeField(s, nameof(Vector3__3));
-			SerializeField(s, nameof(float__4));
-			SerializeField(s, nameof(float__5));
-			SerializeField(s, nameof(Vector3__6));
+			Enum_RFR_0__0 = s.Serialize<Enum_RFR_0>(Enum_RFR_0__0, name: "Enum_RFR_0__0");
+			int__1 = s.Serialize<int>(int__1, name: "int__1");
+			int__2 = s.Serialize<int>(int__2, name: "int__2");
+			Vector3__3 = s.SerializeObject<Vec3d>(Vector3__3, name: "Vector3__3");
+			float__4 = s.Serialize<float>(float__4, name: "float__4");
+			float__5 = s.Serialize<float>(float__5, name: "float__5");
+			Vector3__6 = s.SerializeObject<Vec3d>(Vector3__6, name: "Vector3__6");
 		}
 		public enum Enum_RFR_0 {
 			[Serialize("Value_1" )] Value_1 = 1,

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class EventPostComponent : Event {
-		[Serialize("componentID")] public uint componentID;
+		public uint componentID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(componentID));
+			componentID = s.Serialize<uint>(componentID, name: "componentID");
 		}
 		public override uint? ClassCRC => 0x88EACC5A;
 	}

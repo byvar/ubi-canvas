@@ -2,24 +2,24 @@ using UnityEngine;
 
 namespace UbiArt.online {
 	public partial class incubationStatusResult : CSerializable {
-		[Serialize("hatchingEnd")] public DateTime hatchingEnd;
-		[Serialize("timeLeft")] public float timeLeft;
-		[Serialize("creatureId")] public StringID creatureId;
-		[Serialize("eggAdventureSequence")] public uint eggAdventureSequence;
-		[Serialize("eggAdventureRegion")] public uint eggAdventureRegion;
-		[Serialize("autoHatch")] public bool autoHatch;
-		[Serialize("decoyRewardType")] public uint decoyRewardType;
-		[Serialize("decoyReward")] public ITF.RLC_LuckyTicketReward decoyReward;
+		public DateTime hatchingEnd;
+		public float timeLeft;
+		public StringID creatureId;
+		public uint eggAdventureSequence;
+		public uint eggAdventureRegion;
+		public bool autoHatch;
+		public uint decoyRewardType;
+		public ITF.RLC_LuckyTicketReward decoyReward;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hatchingEnd));
-			SerializeField(s, nameof(timeLeft));
-			SerializeField(s, nameof(creatureId));
-			SerializeField(s, nameof(eggAdventureSequence));
-			SerializeField(s, nameof(eggAdventureRegion));
-			SerializeField(s, nameof(autoHatch));
-			SerializeField(s, nameof(decoyRewardType));
+			hatchingEnd = s.SerializeObject<DateTime>(hatchingEnd, name: "hatchingEnd");
+			timeLeft = s.Serialize<float>(timeLeft, name: "timeLeft");
+			creatureId = s.SerializeObject<StringID>(creatureId, name: "creatureId");
+			eggAdventureSequence = s.Serialize<uint>(eggAdventureSequence, name: "eggAdventureSequence");
+			eggAdventureRegion = s.Serialize<uint>(eggAdventureRegion, name: "eggAdventureRegion");
+			autoHatch = s.Serialize<bool>(autoHatch, name: "autoHatch");
+			decoyRewardType = s.Serialize<uint>(decoyRewardType, name: "decoyRewardType");
 		}
 	}
 }

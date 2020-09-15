@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionWalkToTargetCloseToPlayer_Template : BTActionWalkToTarget_Template {
-		[Serialize("checkIntervals")] public float checkIntervals;
-		[Serialize("rangeMin"      )] public float rangeMin;
-		[Serialize("rangeMax"      )] public float rangeMax;
-		[Serialize("maxSpeed"      )] public float maxSpeed;
-		[Serialize("minSpeed"      )] public float minSpeed;
+		public float checkIntervals;
+		public float rangeMin;
+		public float rangeMax;
+		public float maxSpeed;
+		public float minSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(checkIntervals));
-			SerializeField(s, nameof(rangeMin));
-			SerializeField(s, nameof(rangeMax));
-			SerializeField(s, nameof(maxSpeed));
-			SerializeField(s, nameof(minSpeed));
+			checkIntervals = s.Serialize<float>(checkIntervals, name: "checkIntervals");
+			rangeMin = s.Serialize<float>(rangeMin, name: "rangeMin");
+			rangeMax = s.Serialize<float>(rangeMax, name: "rangeMax");
+			maxSpeed = s.Serialize<float>(maxSpeed, name: "maxSpeed");
+			minSpeed = s.Serialize<float>(minSpeed, name: "minSpeed");
 		}
 		public override uint? ClassCRC => 0xA5041CD8;
 	}

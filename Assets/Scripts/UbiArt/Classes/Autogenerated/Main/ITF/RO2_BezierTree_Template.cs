@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_BezierTree_Template : CSerializable {
-		[Serialize("sampleCount"      )] public uint sampleCount;
-		[Serialize("widthForAABB"     )] public float widthForAABB;
-		[Serialize("linkMainBranch"   )] public LinkMode linkMainBranch;
-		[Serialize("branchComponents" )] public CArray<Generic<RO2_BezierBranchComponent_Template>> branchComponents;
-		[Serialize("tweenInterpreter" )] public TweenInterpreter_Template tweenInterpreter;
-		[Serialize("lengthCursorInput")] public StringID lengthCursorInput;
+		public uint sampleCount;
+		public float widthForAABB;
+		public LinkMode linkMainBranch;
+		public CArray<Generic<RO2_BezierBranchComponent_Template>> branchComponents;
+		public TweenInterpreter_Template tweenInterpreter;
+		public StringID lengthCursorInput;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sampleCount));
-			SerializeField(s, nameof(widthForAABB));
-			SerializeField(s, nameof(linkMainBranch));
-			SerializeField(s, nameof(branchComponents));
-			SerializeField(s, nameof(tweenInterpreter));
-			SerializeField(s, nameof(lengthCursorInput));
+			sampleCount = s.Serialize<uint>(sampleCount, name: "sampleCount");
+			widthForAABB = s.Serialize<float>(widthForAABB, name: "widthForAABB");
+			linkMainBranch = s.Serialize<LinkMode>(linkMainBranch, name: "linkMainBranch");
+			branchComponents = s.SerializeObject<CArray<Generic<RO2_BezierBranchComponent_Template>>>(branchComponents, name: "branchComponents");
+			tweenInterpreter = s.SerializeObject<TweenInterpreter_Template>(tweenInterpreter, name: "tweenInterpreter");
+			lengthCursorInput = s.SerializeObject<StringID>(lengthCursorInput, name: "lengthCursorInput");
 		}
 		public enum LinkMode {
 			[Serialize("LinkMode_None"          )] None = 0,

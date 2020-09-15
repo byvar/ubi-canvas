@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RuleStat : CSerializable {
-		[Serialize("action"     )] public Enum_action action;
-		[Serialize("actionName" )] public string actionName;
-		[Serialize("valueType"  )] public Enum_valueType valueType;
-		[Serialize("intValue"   )] public int intValue;
-		[Serialize("floatValue" )] public float floatValue;
-		[Serialize("stringValue")] public string stringValue;
-		[Serialize("boolValue"  )] public bool boolValue;
+		public Enum_action action;
+		public string actionName;
+		public Enum_valueType valueType;
+		public int intValue;
+		public float floatValue;
+		public string stringValue;
+		public bool boolValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(action));
-			SerializeField(s, nameof(actionName));
-			SerializeField(s, nameof(valueType));
-			SerializeField(s, nameof(intValue));
-			SerializeField(s, nameof(floatValue));
-			SerializeField(s, nameof(stringValue));
-			SerializeField(s, nameof(boolValue));
+			action = s.Serialize<Enum_action>(action, name: "action");
+			actionName = s.Serialize<string>(actionName, name: "actionName");
+			valueType = s.Serialize<Enum_valueType>(valueType, name: "valueType");
+			intValue = s.Serialize<int>(intValue, name: "intValue");
+			floatValue = s.Serialize<float>(floatValue, name: "floatValue");
+			stringValue = s.Serialize<string>(stringValue, name: "stringValue");
+			boolValue = s.Serialize<bool>(boolValue, name: "boolValue");
 		}
 		public enum Enum_action {
 			[Serialize("Custom" )] Custom = 0,

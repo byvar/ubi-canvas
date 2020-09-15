@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class GameConfigExtended_Template : TemplateObj {
-		[Serialize("doSomething" )] public uint doSomething;
-		[Serialize("playerIDInfo")] public CList<PlayerIDInfo> playerIDInfo;
+		public uint doSomething;
+		public CList<PlayerIDInfo> playerIDInfo;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(doSomething));
-			SerializeField(s, nameof(playerIDInfo));
+			doSomething = s.Serialize<uint>(doSomething, name: "doSomething");
+			playerIDInfo = s.SerializeObject<CList<PlayerIDInfo>>(playerIDInfo, name: "playerIDInfo");
 		}
 		public override uint? ClassCRC => 0x16EDCE2E;
 	}

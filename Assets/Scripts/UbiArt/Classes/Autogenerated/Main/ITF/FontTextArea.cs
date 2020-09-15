@@ -3,141 +3,141 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class FontTextArea : CSerializable {
-		[Serialize("FontTextArea.FontSet__0")] public FontTextArea.FontSet FontTextArea_FontSet__0;
-		[Serialize("FontTextArea.Style__1"  )] public FontTextArea.Style FontTextArea_Style__1;
+		public FontTextArea.FontSet FontTextArea_FontSet__0;
+		public FontTextArea.Style FontTextArea_Style__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(FontTextArea_FontSet__0));
-				SerializeField(s, nameof(FontTextArea_Style__1));
+				FontTextArea_FontSet__0 = s.SerializeObject<FontTextArea.FontSet>(FontTextArea_FontSet__0, name: "FontTextArea_FontSet__0");
+				FontTextArea_Style__1 = s.SerializeObject<FontTextArea.Style>(FontTextArea_Style__1, name: "FontTextArea_Style__1");
 			} else {
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 		public partial class FontSet : CSerializable {
-			[Serialize("default"      )] public Path _default;
-			[Serialize("japanese"     )] public Path japanese;
-			[Serialize("korean"       )] public Path korean;
-			[Serialize("tradChinese"  )] public Path tradChinese;
-			[Serialize("simpleChinese")] public Path simpleChinese;
-			[Serialize("russian"      )] public Path russian;
-			[Serialize("arabic"       )] public Path arabic;
-			[Serialize("thai"         )] public Path thai;
+			public Path _default;
+			public Path japanese;
+			public Path korean;
+			public Path tradChinese;
+			public Path simpleChinese;
+			public Path russian;
+			public Path arabic;
+			public Path thai;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-					SerializeField(s, nameof(_default));
-					SerializeField(s, nameof(japanese));
-					SerializeField(s, nameof(korean));
-					SerializeField(s, nameof(tradChinese));
-					SerializeField(s, nameof(simpleChinese));
-					SerializeField(s, nameof(russian));
+					_default = s.SerializeObject<Path>(_default, name: "_default");
+					japanese = s.SerializeObject<Path>(japanese, name: "japanese");
+					korean = s.SerializeObject<Path>(korean, name: "korean");
+					tradChinese = s.SerializeObject<Path>(tradChinese, name: "tradChinese");
+					simpleChinese = s.SerializeObject<Path>(simpleChinese, name: "simpleChinese");
+					russian = s.SerializeObject<Path>(russian, name: "russian");
 				} else {
-					SerializeField(s, nameof(_default));
-					SerializeField(s, nameof(japanese));
-					SerializeField(s, nameof(korean));
-					SerializeField(s, nameof(tradChinese));
-					SerializeField(s, nameof(simpleChinese));
-					SerializeField(s, nameof(russian));
-					SerializeField(s, nameof(arabic));
-					SerializeField(s, nameof(thai));
+					_default = s.SerializeObject<Path>(_default, name: "_default");
+					japanese = s.SerializeObject<Path>(japanese, name: "japanese");
+					korean = s.SerializeObject<Path>(korean, name: "korean");
+					tradChinese = s.SerializeObject<Path>(tradChinese, name: "tradChinese");
+					simpleChinese = s.SerializeObject<Path>(simpleChinese, name: "simpleChinese");
+					russian = s.SerializeObject<Path>(russian, name: "russian");
+					arabic = s.SerializeObject<Path>(arabic, name: "arabic");
+					thai = s.SerializeObject<Path>(thai, name: "thai");
 				}
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
 		public partial class Style : CSerializable {
-			[Serialize("fontPath"               )] public Path fontPath;
-			[Serialize("fontSet"                )] public FontTextArea.FontSet fontSet;
-			[Serialize("fontSize"               )] public float fontSize;
-			[Serialize("color"                  )] public Color color;
-			[Serialize("shadowOffset"           )] public Vec2d shadowOffset;
-			[Serialize("shadowColor"            )] public Color shadowColor;
-			[Serialize("lineSpacing"            )] public float lineSpacing;
-			[Serialize("paragraphSpacing"       )] public float paragraphSpacing;
-			[Serialize("anchor"                 )] public AREA_ANCHOR anchor;
-			[Serialize("hAlignment"             )] public FONT_ALIGN hAlignment;
-			[Serialize("hAlignment"             )] public FONT_ALIGN2 hAlignment2;
-			[Serialize("vAlignment"             )] public FONT vAlignment;
-			[Serialize("useGradient"            )] public bool useGradient;
-			[Serialize("gradientSize"           )] public float gradientSize;
-			[Serialize("gradientOffset"         )] public float gradientOffset;
-			[Serialize("gradientColor"          )] public Color gradientColor;
-			[Serialize("charSpacing"            )] public float charSpacing;
+			public Path fontPath;
+			public FontTextArea.FontSet fontSet;
+			public float fontSize;
+			public Color color;
+			public Vec2d shadowOffset;
+			public Color shadowColor;
+			public float lineSpacing;
+			public float paragraphSpacing;
+			public AREA_ANCHOR anchor;
+			public FONT_ALIGN hAlignment;
+			public FONT_ALIGN2 hAlignment2;
+			public FONT vAlignment;
+			public bool useGradient;
+			public float gradientSize;
+			public float gradientOffset;
+			public Color gradientColor;
+			public float charSpacing;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (Settings.s.game == Settings.Game.COL) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(fontPath));
+						fontPath = s.SerializeObject<Path>(fontPath, name: "fontPath");
 					}
-					SerializeField(s, nameof(fontSet));
-					SerializeField(s, nameof(fontSize));
-					SerializeField(s, nameof(color));
-					SerializeField(s, nameof(shadowOffset));
-					SerializeField(s, nameof(shadowColor));
-					SerializeField(s, nameof(lineSpacing));
-					SerializeField(s, nameof(paragraphSpacing));
-					SerializeField(s, nameof(anchor));
-					SerializeField(s, nameof(hAlignment2));
-					SerializeField(s, nameof(vAlignment));
-					SerializeField(s, nameof(useGradient), boolAsByte: true);
-					SerializeField(s, nameof(gradientSize));
-					SerializeField(s, nameof(gradientOffset));
-					SerializeField(s, nameof(gradientColor));
-					SerializeField(s, nameof(charSpacing));
+					fontSet = s.SerializeObject<FontTextArea.FontSet>(fontSet, name: "fontSet");
+					fontSize = s.Serialize<float>(fontSize, name: "fontSize");
+					color = s.SerializeObject<Color>(color, name: "color");
+					shadowOffset = s.SerializeObject<Vec2d>(shadowOffset, name: "shadowOffset");
+					shadowColor = s.SerializeObject<Color>(shadowColor, name: "shadowColor");
+					lineSpacing = s.Serialize<float>(lineSpacing, name: "lineSpacing");
+					paragraphSpacing = s.Serialize<float>(paragraphSpacing, name: "paragraphSpacing");
+					anchor = s.Serialize<AREA_ANCHOR>(anchor, name: "anchor");
+					hAlignment2 = s.Serialize<FONT_ALIGN2>(hAlignment2, name: "hAlignment2");
+					vAlignment = s.Serialize<FONT>(vAlignment, name: "vAlignment");
+					useGradient = s.Serialize<bool>(useGradient, name: "useGradient", options: CSerializerObject.Options.BoolAsByte);
+					gradientSize = s.Serialize<float>(gradientSize, name: "gradientSize");
+					gradientOffset = s.Serialize<float>(gradientOffset, name: "gradientOffset");
+					gradientColor = s.SerializeObject<Color>(gradientColor, name: "gradientColor");
+					charSpacing = s.Serialize<float>(charSpacing, name: "charSpacing");
 				} else if (Settings.s.game == Settings.Game.RL) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(fontPath));
+						fontPath = s.SerializeObject<Path>(fontPath, name: "fontPath");
 					}
-					SerializeField(s, nameof(fontSet));
-					SerializeField(s, nameof(fontSize));
-					SerializeField(s, nameof(color));
-					SerializeField(s, nameof(shadowOffset));
-					SerializeField(s, nameof(shadowColor));
-					SerializeField(s, nameof(lineSpacing));
-					SerializeField(s, nameof(paragraphSpacing));
-					SerializeField(s, nameof(anchor));
-					SerializeField(s, nameof(hAlignment2));
-					SerializeField(s, nameof(vAlignment));
-					SerializeField(s, nameof(useGradient));
-					SerializeField(s, nameof(gradientSize));
-					SerializeField(s, nameof(gradientOffset));
-					SerializeField(s, nameof(gradientColor));
-					SerializeField(s, nameof(charSpacing));
+					fontSet = s.SerializeObject<FontTextArea.FontSet>(fontSet, name: "fontSet");
+					fontSize = s.Serialize<float>(fontSize, name: "fontSize");
+					color = s.SerializeObject<Color>(color, name: "color");
+					shadowOffset = s.SerializeObject<Vec2d>(shadowOffset, name: "shadowOffset");
+					shadowColor = s.SerializeObject<Color>(shadowColor, name: "shadowColor");
+					lineSpacing = s.Serialize<float>(lineSpacing, name: "lineSpacing");
+					paragraphSpacing = s.Serialize<float>(paragraphSpacing, name: "paragraphSpacing");
+					anchor = s.Serialize<AREA_ANCHOR>(anchor, name: "anchor");
+					hAlignment2 = s.Serialize<FONT_ALIGN2>(hAlignment2, name: "hAlignment2");
+					vAlignment = s.Serialize<FONT>(vAlignment, name: "vAlignment");
+					useGradient = s.Serialize<bool>(useGradient, name: "useGradient");
+					gradientSize = s.Serialize<float>(gradientSize, name: "gradientSize");
+					gradientOffset = s.Serialize<float>(gradientOffset, name: "gradientOffset");
+					gradientColor = s.SerializeObject<Color>(gradientColor, name: "gradientColor");
+					charSpacing = s.Serialize<float>(charSpacing, name: "charSpacing");
 				} else if (Settings.s.game == Settings.Game.VH) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(fontPath));
+						fontPath = s.SerializeObject<Path>(fontPath, name: "fontPath");
 					}
-					SerializeField(s, nameof(fontSet));
-					SerializeField(s, nameof(fontSize));
-					SerializeField(s, nameof(color));
-					SerializeField(s, nameof(shadowOffset));
-					SerializeField(s, nameof(shadowColor));
-					SerializeField(s, nameof(lineSpacing));
-					SerializeField(s, nameof(paragraphSpacing));
-					SerializeField(s, nameof(anchor));
-					SerializeField(s, nameof(hAlignment));
-					SerializeField(s, nameof(vAlignment));
-					SerializeField(s, nameof(useGradient));
-					SerializeField(s, nameof(gradientSize));
-					SerializeField(s, nameof(gradientOffset));
-					SerializeField(s, nameof(gradientColor));
-					SerializeField(s, nameof(charSpacing));
+					fontSet = s.SerializeObject<FontTextArea.FontSet>(fontSet, name: "fontSet");
+					fontSize = s.Serialize<float>(fontSize, name: "fontSize");
+					color = s.SerializeObject<Color>(color, name: "color");
+					shadowOffset = s.SerializeObject<Vec2d>(shadowOffset, name: "shadowOffset");
+					shadowColor = s.SerializeObject<Color>(shadowColor, name: "shadowColor");
+					lineSpacing = s.Serialize<float>(lineSpacing, name: "lineSpacing");
+					paragraphSpacing = s.Serialize<float>(paragraphSpacing, name: "paragraphSpacing");
+					anchor = s.Serialize<AREA_ANCHOR>(anchor, name: "anchor");
+					hAlignment = s.Serialize<FONT_ALIGN>(hAlignment, name: "hAlignment");
+					vAlignment = s.Serialize<FONT>(vAlignment, name: "vAlignment");
+					useGradient = s.Serialize<bool>(useGradient, name: "useGradient");
+					gradientSize = s.Serialize<float>(gradientSize, name: "gradientSize");
+					gradientOffset = s.Serialize<float>(gradientOffset, name: "gradientOffset");
+					gradientColor = s.SerializeObject<Color>(gradientColor, name: "gradientColor");
+					charSpacing = s.Serialize<float>(charSpacing, name: "charSpacing");
 				} else {
-					SerializeField(s, nameof(fontSet));
-					SerializeField(s, nameof(fontSize));
-					SerializeField(s, nameof(color));
-					SerializeField(s, nameof(shadowOffset));
-					SerializeField(s, nameof(shadowColor));
-					SerializeField(s, nameof(lineSpacing));
-					SerializeField(s, nameof(paragraphSpacing));
-					SerializeField(s, nameof(anchor));
-					SerializeField(s, nameof(hAlignment));
-					SerializeField(s, nameof(vAlignment));
-					SerializeField(s, nameof(useGradient));
-					SerializeField(s, nameof(gradientSize));
-					SerializeField(s, nameof(gradientOffset));
-					SerializeField(s, nameof(gradientColor));
-					SerializeField(s, nameof(charSpacing));
+					fontSet = s.SerializeObject<FontTextArea.FontSet>(fontSet, name: "fontSet");
+					fontSize = s.Serialize<float>(fontSize, name: "fontSize");
+					color = s.SerializeObject<Color>(color, name: "color");
+					shadowOffset = s.SerializeObject<Vec2d>(shadowOffset, name: "shadowOffset");
+					shadowColor = s.SerializeObject<Color>(shadowColor, name: "shadowColor");
+					lineSpacing = s.Serialize<float>(lineSpacing, name: "lineSpacing");
+					paragraphSpacing = s.Serialize<float>(paragraphSpacing, name: "paragraphSpacing");
+					anchor = s.Serialize<AREA_ANCHOR>(anchor, name: "anchor");
+					hAlignment = s.Serialize<FONT_ALIGN>(hAlignment, name: "hAlignment");
+					vAlignment = s.Serialize<FONT>(vAlignment, name: "vAlignment");
+					useGradient = s.Serialize<bool>(useGradient, name: "useGradient");
+					gradientSize = s.Serialize<float>(gradientSize, name: "gradientSize");
+					gradientOffset = s.Serialize<float>(gradientOffset, name: "gradientOffset");
+					gradientColor = s.SerializeObject<Color>(gradientColor, name: "gradientColor");
+					charSpacing = s.Serialize<float>(charSpacing, name: "charSpacing");
 				}
 			}
 			public enum AREA_ANCHOR {

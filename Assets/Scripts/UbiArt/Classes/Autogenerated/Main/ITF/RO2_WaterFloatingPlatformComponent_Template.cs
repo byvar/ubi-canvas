@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_WaterFloatingPlatformComponent_Template : ActorComponent_Template {
-		[Serialize("stiff"           )] public float stiff;
-		[Serialize("damp"            )] public float damp;
-		[Serialize("weightToAngle"   )] public float weightToAngle;
-		[Serialize("weightToHeight"  )] public float weightToHeight;
-		[Serialize("maxAngle"        )] public Angle maxAngle;
-		[Serialize("maxHeight"       )] public float maxHeight;
-		[Serialize("weightMultiplier")] public float weightMultiplier;
-		[Serialize("forceMultiplier" )] public float forceMultiplier;
-		[Serialize("floatMinHeight"  )] public float floatMinHeight;
-		[Serialize("floatMaxHeight"  )] public float floatMaxHeight;
-		[Serialize("floatMinAngle"   )] public Angle floatMinAngle;
-		[Serialize("floatMaxAngle"   )] public Angle floatMaxAngle;
+		public float stiff;
+		public float damp;
+		public float weightToAngle;
+		public float weightToHeight;
+		public Angle maxAngle;
+		public float maxHeight;
+		public float weightMultiplier;
+		public float forceMultiplier;
+		public float floatMinHeight;
+		public float floatMaxHeight;
+		public Angle floatMinAngle;
+		public Angle floatMaxAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(stiff));
-			SerializeField(s, nameof(damp));
-			SerializeField(s, nameof(weightToAngle));
-			SerializeField(s, nameof(weightToHeight));
-			SerializeField(s, nameof(maxAngle));
-			SerializeField(s, nameof(maxHeight));
-			SerializeField(s, nameof(weightMultiplier));
-			SerializeField(s, nameof(forceMultiplier));
-			SerializeField(s, nameof(floatMinHeight));
-			SerializeField(s, nameof(floatMaxHeight));
-			SerializeField(s, nameof(floatMinAngle));
-			SerializeField(s, nameof(floatMaxAngle));
+			stiff = s.Serialize<float>(stiff, name: "stiff");
+			damp = s.Serialize<float>(damp, name: "damp");
+			weightToAngle = s.Serialize<float>(weightToAngle, name: "weightToAngle");
+			weightToHeight = s.Serialize<float>(weightToHeight, name: "weightToHeight");
+			maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+			maxHeight = s.Serialize<float>(maxHeight, name: "maxHeight");
+			weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
+			forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
+			floatMinHeight = s.Serialize<float>(floatMinHeight, name: "floatMinHeight");
+			floatMaxHeight = s.Serialize<float>(floatMaxHeight, name: "floatMaxHeight");
+			floatMinAngle = s.SerializeObject<Angle>(floatMinAngle, name: "floatMinAngle");
+			floatMaxAngle = s.SerializeObject<Angle>(floatMaxAngle, name: "floatMaxAngle");
 		}
 		public override uint? ClassCRC => 0xD79CDCBB;
 	}

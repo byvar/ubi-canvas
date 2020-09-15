@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class DataFluid : CSerializable {
-		[Serialize("EdgeFluidList"      )] public CList<EdgeFluid> EdgeFluidList;
-		[Serialize("EdgeFluidListLevels")] public CList<EdgeFluidLevel> EdgeFluidListLevels;
-		[Serialize("IsCushion"          )] public bool IsCushion;
-		[Serialize("WeightMultiplier"   )] public float WeightMultiplier;
-		[Serialize("LayerInfos"         )] public CList<FluidFriseLayer> LayerInfos;
+		public CList<EdgeFluid> EdgeFluidList;
+		public CList<EdgeFluidLevel> EdgeFluidListLevels;
+		public bool IsCushion;
+		public float WeightMultiplier;
+		public CList<FluidFriseLayer> LayerInfos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags10)) {
-				SerializeField(s, nameof(EdgeFluidList));
-				SerializeField(s, nameof(EdgeFluidListLevels));
-				SerializeField(s, nameof(IsCushion));
-				SerializeField(s, nameof(WeightMultiplier));
-				SerializeField(s, nameof(LayerInfos));
+				EdgeFluidList = s.SerializeObject<CList<EdgeFluid>>(EdgeFluidList, name: "EdgeFluidList");
+				EdgeFluidListLevels = s.SerializeObject<CList<EdgeFluidLevel>>(EdgeFluidListLevels, name: "EdgeFluidListLevels");
+				IsCushion = s.Serialize<bool>(IsCushion, name: "IsCushion");
+				WeightMultiplier = s.Serialize<float>(WeightMultiplier, name: "WeightMultiplier");
+				LayerInfos = s.SerializeObject<CList<FluidFriseLayer>>(LayerInfos, name: "LayerInfos");
 			}
 		}
 	}

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ElevatorMonsterAIComponent_Template : CSerializable {
-		[Serialize("ratioSpeed"     )] public float ratioSpeed;
-		[Serialize("distanceForHit" )] public float distanceForHit;
-		[Serialize("countDownAttack")] public float countDownAttack;
+		public float ratioSpeed;
+		public float distanceForHit;
+		public float countDownAttack;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ratioSpeed));
-			SerializeField(s, nameof(distanceForHit));
-			SerializeField(s, nameof(countDownAttack));
+			ratioSpeed = s.Serialize<float>(ratioSpeed, name: "ratioSpeed");
+			distanceForHit = s.Serialize<float>(distanceForHit, name: "distanceForHit");
+			countDownAttack = s.Serialize<float>(countDownAttack, name: "countDownAttack");
 		}
 		public override uint? ClassCRC => 0x49F8D32A;
 	}

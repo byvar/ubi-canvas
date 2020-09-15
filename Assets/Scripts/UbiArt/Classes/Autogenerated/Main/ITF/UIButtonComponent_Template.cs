@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class UIButtonComponent_Template : UIComponent_Template {
-		[Serialize("speed"                     )] public float speed;
-		[Serialize("path"                      )] public Path path;
-		[Serialize("idleSelectedScale"         )] public float idleSelectedScale;
-		[Serialize("idleSelectedPulseFrequency")] public float idleSelectedPulseFrequency;
-		[Serialize("is2dActor"                 )] public int is2dActor;
-		[Serialize("actorScaleSmoothFactor"    )] public float actorScaleSmoothFactor;
-		[Serialize("minActorScale"             )] public float minActorScale;
+		public float speed;
+		public Path path;
+		public float idleSelectedScale;
+		public float idleSelectedPulseFrequency;
+		public int is2dActor;
+		public float actorScaleSmoothFactor;
+		public float minActorScale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(speed));
-			SerializeField(s, nameof(path));
-			SerializeField(s, nameof(idleSelectedScale));
-			SerializeField(s, nameof(idleSelectedPulseFrequency));
-			SerializeField(s, nameof(is2dActor));
-			SerializeField(s, nameof(actorScaleSmoothFactor));
-			SerializeField(s, nameof(minActorScale));
+			speed = s.Serialize<float>(speed, name: "speed");
+			path = s.SerializeObject<Path>(path, name: "path");
+			idleSelectedScale = s.Serialize<float>(idleSelectedScale, name: "idleSelectedScale");
+			idleSelectedPulseFrequency = s.Serialize<float>(idleSelectedPulseFrequency, name: "idleSelectedPulseFrequency");
+			is2dActor = s.Serialize<int>(is2dActor, name: "is2dActor");
+			actorScaleSmoothFactor = s.Serialize<float>(actorScaleSmoothFactor, name: "actorScaleSmoothFactor");
+			minActorScale = s.Serialize<float>(minActorScale, name: "minActorScale");
 		}
 		public override uint? ClassCRC => 0x28D297A0;
 	}

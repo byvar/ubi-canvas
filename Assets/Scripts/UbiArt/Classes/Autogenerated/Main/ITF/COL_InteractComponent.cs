@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_InteractComponent : CSerializable {
-		[Serialize("triggerMode"       )] public Enum_triggerMode triggerMode;
-		[Serialize("softSaveOnTrigger" )] public bool softSaveOnTrigger;
-		[Serialize("triggered"         )] public int triggered;
-		[Serialize("onInteractEvent"   )] public Placeholder onInteractEvent;
-		[Serialize("onEndInteractEvent")] public Placeholder onEndInteractEvent;
+		public Enum_triggerMode triggerMode;
+		public bool softSaveOnTrigger;
+		public int triggered;
+		public Placeholder onInteractEvent;
+		public Placeholder onEndInteractEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(triggerMode));
-			SerializeField(s, nameof(softSaveOnTrigger), boolAsByte: true);
+			triggerMode = s.Serialize<Enum_triggerMode>(triggerMode, name: "triggerMode");
+			softSaveOnTrigger = s.Serialize<bool>(softSaveOnTrigger, name: "softSaveOnTrigger", options: CSerializerObject.Options.BoolAsByte);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(triggered));
+				triggered = s.Serialize<int>(triggered, name: "triggered");
 			}
-			SerializeField(s, nameof(onInteractEvent));
-			SerializeField(s, nameof(onEndInteractEvent));
+			onInteractEvent = s.SerializeObject<Placeholder>(onInteractEvent, name: "onInteractEvent");
+			onEndInteractEvent = s.SerializeObject<Placeholder>(onEndInteractEvent, name: "onEndInteractEvent");
 		}
 		public enum Enum_triggerMode {
 			[Serialize("Value_1")] Value_1 = 1,

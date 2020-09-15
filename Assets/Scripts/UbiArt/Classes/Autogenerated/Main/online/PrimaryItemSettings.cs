@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class PrimaryItemSettings : CSerializable {
-		[Serialize("amount"   )] public uint amount;
-		[Serialize("reduction")] public float reduction;
+		public uint amount;
+		public float reduction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(amount));
-			SerializeField(s, nameof(reduction));
+			amount = s.Serialize<uint>(amount, name: "amount");
+			reduction = s.Serialize<float>(reduction, name: "reduction");
 		}
 	}
 }

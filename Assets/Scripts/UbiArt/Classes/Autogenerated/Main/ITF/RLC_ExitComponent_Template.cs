@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_ExitComponent_Template : ActorComponent_Template {
-		[Serialize("shakeFlagsDistance")] public float shakeFlagsDistance;
+		public float shakeFlagsDistance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(shakeFlagsDistance));
+			shakeFlagsDistance = s.Serialize<float>(shakeFlagsDistance, name: "shakeFlagsDistance");
 		}
 		public override uint? ClassCRC => 0x0101F5DF;
 	}

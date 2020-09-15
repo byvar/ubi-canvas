@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_DLCSkinContent : CSerializable {
-		[Serialize("feedbacksTemplatePath")] public Path feedbacksTemplatePath;
-		[Serialize("actor"                )] public string actor;
-		[Serialize("skinFamily"           )] public StringID skinFamily;
-		[Serialize("skin"                 )] public StringID skin;
-		[Serialize("hairFeedback"         )] public StringID hairFeedback;
-		[Serialize("name"                 )] public Placeholder name;
+		public Path feedbacksTemplatePath;
+		public string actor;
+		public StringID skinFamily;
+		public StringID skin;
+		public StringID hairFeedback;
+		public Placeholder name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(feedbacksTemplatePath));
-			SerializeField(s, nameof(actor));
-			SerializeField(s, nameof(skinFamily));
-			SerializeField(s, nameof(skin));
-			SerializeField(s, nameof(hairFeedback));
-			SerializeField(s, nameof(name));
+			feedbacksTemplatePath = s.SerializeObject<Path>(feedbacksTemplatePath, name: "feedbacksTemplatePath");
+			actor = s.Serialize<string>(actor, name: "actor");
+			skinFamily = s.SerializeObject<StringID>(skinFamily, name: "skinFamily");
+			skin = s.SerializeObject<StringID>(skin, name: "skin");
+			hairFeedback = s.SerializeObject<StringID>(hairFeedback, name: "hairFeedback");
+			name = s.SerializeObject<Placeholder>(name, name: "name");
 		}
 		public override uint? ClassCRC => 0x73B9A851;
 	}

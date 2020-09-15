@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FakeDynamicFogComponent : ActorComponent {
-		[Serialize("hasMesh3D"                )] public bool hasMesh3D;
-		[Serialize("iActivatedInit"           )] public bool iActivatedInit;
-		[Serialize("DistanceLocalToSceneDepth")] public bool DistanceLocalToSceneDepth;
-		[Serialize("foreGroundColor"          )] public Color foreGroundColor;
-		[Serialize("foreGroundColor_ZStart"   )] public float foreGroundColor_ZStart;
-		[Serialize("foreGroundColor_ZEnd"     )] public float foreGroundColor_ZEnd;
-		[Serialize("fogColor"                 )] public Color fogColor;
-		[Serialize("fogZStart"                )] public float fogZStart;
-		[Serialize("fogZEnd"                  )] public float fogZEnd;
+		public bool hasMesh3D;
+		public bool iActivatedInit;
+		public bool DistanceLocalToSceneDepth;
+		public Color foreGroundColor;
+		public float foreGroundColor_ZStart;
+		public float foreGroundColor_ZEnd;
+		public Color fogColor;
+		public float fogZStart;
+		public float fogZEnd;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hasMesh3D));
-			SerializeField(s, nameof(iActivatedInit));
-			SerializeField(s, nameof(DistanceLocalToSceneDepth));
-			SerializeField(s, nameof(foreGroundColor));
-			SerializeField(s, nameof(foreGroundColor_ZStart));
-			SerializeField(s, nameof(foreGroundColor_ZEnd));
-			SerializeField(s, nameof(fogColor));
-			SerializeField(s, nameof(fogZStart));
-			SerializeField(s, nameof(fogZEnd));
+			hasMesh3D = s.Serialize<bool>(hasMesh3D, name: "hasMesh3D");
+			iActivatedInit = s.Serialize<bool>(iActivatedInit, name: "iActivatedInit");
+			DistanceLocalToSceneDepth = s.Serialize<bool>(DistanceLocalToSceneDepth, name: "DistanceLocalToSceneDepth");
+			foreGroundColor = s.SerializeObject<Color>(foreGroundColor, name: "foreGroundColor");
+			foreGroundColor_ZStart = s.Serialize<float>(foreGroundColor_ZStart, name: "foreGroundColor_ZStart");
+			foreGroundColor_ZEnd = s.Serialize<float>(foreGroundColor_ZEnd, name: "foreGroundColor_ZEnd");
+			fogColor = s.SerializeObject<Color>(fogColor, name: "fogColor");
+			fogZStart = s.Serialize<float>(fogZStart, name: "fogZStart");
+			fogZEnd = s.Serialize<float>(fogZEnd, name: "fogZEnd");
 		}
 		public override uint? ClassCRC => 0x5BA9FA05;
 	}

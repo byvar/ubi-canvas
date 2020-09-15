@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RewardHasCostume : RewardTrigger_Base {
-		[Serialize("costumeTags")] public Placeholder costumeTags;
+		public Placeholder costumeTags;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(costumeTags));
+				costumeTags = s.SerializeObject<Placeholder>(costumeTags, name: "costumeTags");
 			} else {
 			}
 		}

@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BreakablePropsManagerComponent : ActorComponent {
-		[Serialize("lumsGiven"          )] public uint lumsGiven;
-		[Serialize("lumsDrcGiven"       )] public uint lumsDrcGiven;
-		[Serialize("breakablePropsState")] public CList<uint> breakablePropsState;
-		[Serialize("breakablePropsPaint")] public CArray<bool> breakablePropsPaint;
+		public uint lumsGiven;
+		public uint lumsDrcGiven;
+		public CList<uint> breakablePropsState;
+		public CArray<bool> breakablePropsPaint;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(lumsGiven));
-				SerializeField(s, nameof(lumsDrcGiven));
+				lumsGiven = s.Serialize<uint>(lumsGiven, name: "lumsGiven");
+				lumsDrcGiven = s.Serialize<uint>(lumsDrcGiven, name: "lumsDrcGiven");
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(breakablePropsState));
-					SerializeField(s, nameof(breakablePropsPaint));
+					breakablePropsState = s.SerializeObject<CList<uint>>(breakablePropsState, name: "breakablePropsState");
+					breakablePropsPaint = s.SerializeObject<CArray<bool>>(breakablePropsPaint, name: "breakablePropsPaint");
 				}
 			} else {
-				SerializeField(s, nameof(lumsGiven));
-				SerializeField(s, nameof(lumsDrcGiven));
+				lumsGiven = s.Serialize<uint>(lumsGiven, name: "lumsGiven");
+				lumsDrcGiven = s.Serialize<uint>(lumsDrcGiven, name: "lumsDrcGiven");
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(breakablePropsState));
+					breakablePropsState = s.SerializeObject<CList<uint>>(breakablePropsState, name: "breakablePropsState");
 				}
-				SerializeField(s, nameof(breakablePropsPaint));
-				SerializeField(s, nameof(breakablePropsPaint));
+				breakablePropsPaint = s.SerializeObject<CArray<bool>>(breakablePropsPaint, name: "breakablePropsPaint");
+				breakablePropsPaint = s.SerializeObject<CArray<bool>>(breakablePropsPaint, name: "breakablePropsPaint");
 			}
 		}
 		public override uint? ClassCRC => 0xF2DC9CA7;

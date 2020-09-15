@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionAppearSplinterCell_Template : BTAction_Template {
-		[Serialize("animSwimUp"      )] public StringID animSwimUp;
-		[Serialize("speedLimitToStop")] public float speedLimitToStop;
-		[Serialize("antiBounceFactor")] public float antiBounceFactor;
+		public StringID animSwimUp;
+		public float speedLimitToStop;
+		public float antiBounceFactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animSwimUp));
-			SerializeField(s, nameof(speedLimitToStop));
-			SerializeField(s, nameof(antiBounceFactor));
+			animSwimUp = s.SerializeObject<StringID>(animSwimUp, name: "animSwimUp");
+			speedLimitToStop = s.Serialize<float>(speedLimitToStop, name: "speedLimitToStop");
+			antiBounceFactor = s.Serialize<float>(antiBounceFactor, name: "antiBounceFactor");
 		}
 		public override uint? ClassCRC => 0x9D54B652;
 	}

@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class RO2_AIWaterFloatingBehavior_Template : RO2_AIWaterBaseBehavior_Template {
-		[Serialize("minSpeed"            )] public float minSpeed;
-		[Serialize("maxSpeed"            )] public float maxSpeed;
-		[Serialize("minForce"            )] public float minForce;
-		[Serialize("maxForce"            )] public float maxForce;
-		[Serialize("speedScaleMin"       )] public float speedScaleMin;
-		[Serialize("speedScaleMax"       )] public float speedScaleMax;
-		[Serialize("landForceMultiplier" )] public float landForceMultiplier;
-		[Serialize("landXForceMultiplier")] public float landXForceMultiplier;
-		[Serialize("float"               )] public Generic<AIAction_Template> _float;
+		public float minSpeed;
+		public float maxSpeed;
+		public float minForce;
+		public float maxForce;
+		public float speedScaleMin;
+		public float speedScaleMax;
+		public float landForceMultiplier;
+		public float landXForceMultiplier;
+		public Generic<AIAction_Template> _float;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(minSpeed));
-			SerializeField(s, nameof(maxSpeed));
-			SerializeField(s, nameof(minForce));
-			SerializeField(s, nameof(maxForce));
-			SerializeField(s, nameof(speedScaleMin));
-			SerializeField(s, nameof(speedScaleMax));
-			SerializeField(s, nameof(landForceMultiplier));
-			SerializeField(s, nameof(landXForceMultiplier));
-			SerializeField(s, nameof(_float));
+			minSpeed = s.Serialize<float>(minSpeed, name: "minSpeed");
+			maxSpeed = s.Serialize<float>(maxSpeed, name: "maxSpeed");
+			minForce = s.Serialize<float>(minForce, name: "minForce");
+			maxForce = s.Serialize<float>(maxForce, name: "maxForce");
+			speedScaleMin = s.Serialize<float>(speedScaleMin, name: "speedScaleMin");
+			speedScaleMax = s.Serialize<float>(speedScaleMax, name: "speedScaleMax");
+			landForceMultiplier = s.Serialize<float>(landForceMultiplier, name: "landForceMultiplier");
+			landXForceMultiplier = s.Serialize<float>(landXForceMultiplier, name: "landXForceMultiplier");
+			_float = s.SerializeObject<Generic<AIAction_Template>>(_float, name: "_float");
 		}
 		public override uint? ClassCRC => 0xEA40458D;
 	}

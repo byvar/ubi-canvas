@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_BattleVisualManagerComponent : CSerializable {
-		[Serialize("frontResolverId"     )] public Placeholder frontResolverId;
-		[Serialize("initialStateColor"   )] public Color initialStateColor;
-		[Serialize("idleStateColor"      )] public Color idleStateColor;
-		[Serialize("selectionStateColor" )] public Color selectionStateColor;
-		[Serialize("actionStateColor"    )] public Color actionStateColor;
-		[Serialize("idleToSelectDuration")] public float idleToSelectDuration;
-		[Serialize("idleToActionDuration")] public float idleToActionDuration;
-		[Serialize("selectToIdleDuration")] public float selectToIdleDuration;
-		[Serialize("actionToIdleDuration")] public float actionToIdleDuration;
-		[Serialize("transitionCurve"     )] public Placeholder transitionCurve;
+		public Placeholder frontResolverId;
+		public Color initialStateColor;
+		public Color idleStateColor;
+		public Color selectionStateColor;
+		public Color actionStateColor;
+		public float idleToSelectDuration;
+		public float idleToActionDuration;
+		public float selectToIdleDuration;
+		public float actionToIdleDuration;
+		public Placeholder transitionCurve;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(frontResolverId));
-			SerializeField(s, nameof(initialStateColor));
-			SerializeField(s, nameof(idleStateColor));
-			SerializeField(s, nameof(selectionStateColor));
-			SerializeField(s, nameof(actionStateColor));
-			SerializeField(s, nameof(idleToSelectDuration));
-			SerializeField(s, nameof(idleToActionDuration));
-			SerializeField(s, nameof(selectToIdleDuration));
-			SerializeField(s, nameof(actionToIdleDuration));
-			SerializeField(s, nameof(transitionCurve));
+			frontResolverId = s.SerializeObject<Placeholder>(frontResolverId, name: "frontResolverId");
+			initialStateColor = s.SerializeObject<Color>(initialStateColor, name: "initialStateColor");
+			idleStateColor = s.SerializeObject<Color>(idleStateColor, name: "idleStateColor");
+			selectionStateColor = s.SerializeObject<Color>(selectionStateColor, name: "selectionStateColor");
+			actionStateColor = s.SerializeObject<Color>(actionStateColor, name: "actionStateColor");
+			idleToSelectDuration = s.Serialize<float>(idleToSelectDuration, name: "idleToSelectDuration");
+			idleToActionDuration = s.Serialize<float>(idleToActionDuration, name: "idleToActionDuration");
+			selectToIdleDuration = s.Serialize<float>(selectToIdleDuration, name: "selectToIdleDuration");
+			actionToIdleDuration = s.Serialize<float>(actionToIdleDuration, name: "actionToIdleDuration");
+			transitionCurve = s.SerializeObject<Placeholder>(transitionCurve, name: "transitionCurve");
 		}
 		public override uint? ClassCRC => 0x2C3BBFD4;
 	}

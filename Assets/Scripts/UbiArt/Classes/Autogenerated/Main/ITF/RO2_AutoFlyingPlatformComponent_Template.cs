@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AutoFlyingPlatformComponent_Template : ActorComponent_Template {
-		[Serialize("prevNodeCount"             )] public uint prevNodeCount;
-		[Serialize("speedMultiplierMinValue"   )] public float speedMultiplierMinValue;
-		[Serialize("speedMultiplierMaxValue"   )] public float speedMultiplierMaxValue;
-		[Serialize("speedMultiplierMinDistance")] public float speedMultiplierMinDistance;
-		[Serialize("speedMultiplierMaxDistance")] public float speedMultiplierMaxDistance;
-		[Serialize("targetEvaluationOffset"    )] public Vec2d targetEvaluationOffset;
-		[Serialize("bezierRenderEnabled"       )] public bool bezierRenderEnabled;
-		[Serialize("bezierRenderer"            )] public BezierCurveRenderer_Template bezierRenderer;
-		[Serialize("uvScrollSpeed"             )] public float uvScrollSpeed;
-		[Serialize("useInputs"                 )] public bool useInputs;
-		[Serialize("stopOnEnd"                 )] public bool stopOnEnd;
+		public uint prevNodeCount;
+		public float speedMultiplierMinValue;
+		public float speedMultiplierMaxValue;
+		public float speedMultiplierMinDistance;
+		public float speedMultiplierMaxDistance;
+		public Vec2d targetEvaluationOffset;
+		public bool bezierRenderEnabled;
+		public BezierCurveRenderer_Template bezierRenderer;
+		public float uvScrollSpeed;
+		public bool useInputs;
+		public bool stopOnEnd;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(prevNodeCount));
-			SerializeField(s, nameof(speedMultiplierMinValue));
-			SerializeField(s, nameof(speedMultiplierMaxValue));
-			SerializeField(s, nameof(speedMultiplierMinDistance));
-			SerializeField(s, nameof(speedMultiplierMaxDistance));
-			SerializeField(s, nameof(targetEvaluationOffset));
-			SerializeField(s, nameof(bezierRenderEnabled));
-			SerializeField(s, nameof(bezierRenderer));
-			SerializeField(s, nameof(uvScrollSpeed));
-			SerializeField(s, nameof(useInputs));
-			SerializeField(s, nameof(stopOnEnd));
+			prevNodeCount = s.Serialize<uint>(prevNodeCount, name: "prevNodeCount");
+			speedMultiplierMinValue = s.Serialize<float>(speedMultiplierMinValue, name: "speedMultiplierMinValue");
+			speedMultiplierMaxValue = s.Serialize<float>(speedMultiplierMaxValue, name: "speedMultiplierMaxValue");
+			speedMultiplierMinDistance = s.Serialize<float>(speedMultiplierMinDistance, name: "speedMultiplierMinDistance");
+			speedMultiplierMaxDistance = s.Serialize<float>(speedMultiplierMaxDistance, name: "speedMultiplierMaxDistance");
+			targetEvaluationOffset = s.SerializeObject<Vec2d>(targetEvaluationOffset, name: "targetEvaluationOffset");
+			bezierRenderEnabled = s.Serialize<bool>(bezierRenderEnabled, name: "bezierRenderEnabled");
+			bezierRenderer = s.SerializeObject<BezierCurveRenderer_Template>(bezierRenderer, name: "bezierRenderer");
+			uvScrollSpeed = s.Serialize<float>(uvScrollSpeed, name: "uvScrollSpeed");
+			useInputs = s.Serialize<bool>(useInputs, name: "useInputs");
+			stopOnEnd = s.Serialize<bool>(stopOnEnd, name: "stopOnEnd");
 		}
 		public override uint? ClassCRC => 0xBB414DE3;
 	}

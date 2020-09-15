@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_EventHurt : Event {
-		[Serialize("damageType")] public Enum_damageType damageType;
+		public Enum_damageType damageType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(damageType));
+			damageType = s.Serialize<Enum_damageType>(damageType, name: "damageType");
 		}
 		public enum Enum_damageType {
 			[Serialize("Value_0")] Value_0 = 0,

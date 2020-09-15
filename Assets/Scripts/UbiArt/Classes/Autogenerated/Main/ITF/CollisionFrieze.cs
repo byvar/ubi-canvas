@@ -3,40 +3,40 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class CollisionFrieze : CSerializable {
-		[Serialize("build"                    )] public bool build;
-		[Serialize("offset"                   )] public float offset;
-		[Serialize("extremity"                )] public Vec2d extremity;
-		[Serialize("extremity2"               )] public Vec2d extremity2;
-		[Serialize("flip"                     )] public bool flip;
-		[Serialize("methode"                  )] public uint methode;
-		[Serialize("distMaxToSkipParallelEdge")] public float distMaxToSkipParallelEdge;
-		[Serialize("smoothFactor"             )] public float smoothFactor;
-		[Serialize("isSmooth"                 )] public bool isSmooth;
+		public bool build;
+		public float offset;
+		public Vec2d extremity;
+		public Vec2d extremity2;
+		public bool flip;
+		public uint methode;
+		public float distMaxToSkipParallelEdge;
+		public float smoothFactor;
+		public bool isSmooth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(build));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(extremity));
-				SerializeField(s, nameof(extremity2));
-				SerializeField(s, nameof(flip), boolAsByte: true);
-				SerializeField(s, nameof(methode));
-				SerializeField(s, nameof(distMaxToSkipParallelEdge));
-				SerializeField(s, nameof(smoothFactor));
+				build = s.Serialize<bool>(build, name: "build");
+				offset = s.Serialize<float>(offset, name: "offset");
+				extremity = s.SerializeObject<Vec2d>(extremity, name: "extremity");
+				extremity2 = s.SerializeObject<Vec2d>(extremity2, name: "extremity2");
+				flip = s.Serialize<bool>(flip, name: "flip", options: CSerializerObject.Options.BoolAsByte);
+				methode = s.Serialize<uint>(methode, name: "methode");
+				distMaxToSkipParallelEdge = s.Serialize<float>(distMaxToSkipParallelEdge, name: "distMaxToSkipParallelEdge");
+				smoothFactor = s.Serialize<float>(smoothFactor, name: "smoothFactor");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(isSmooth), boolAsByte: true);
+					isSmooth = s.Serialize<bool>(isSmooth, name: "isSmooth", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
-				SerializeField(s, nameof(build));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(extremity));
-				SerializeField(s, nameof(extremity2));
-				SerializeField(s, nameof(flip));
-				SerializeField(s, nameof(methode));
-				SerializeField(s, nameof(distMaxToSkipParallelEdge));
-				SerializeField(s, nameof(smoothFactor));
+				build = s.Serialize<bool>(build, name: "build");
+				offset = s.Serialize<float>(offset, name: "offset");
+				extremity = s.SerializeObject<Vec2d>(extremity, name: "extremity");
+				extremity2 = s.SerializeObject<Vec2d>(extremity2, name: "extremity2");
+				flip = s.Serialize<bool>(flip, name: "flip");
+				methode = s.Serialize<uint>(methode, name: "methode");
+				distMaxToSkipParallelEdge = s.Serialize<float>(distMaxToSkipParallelEdge, name: "distMaxToSkipParallelEdge");
+				smoothFactor = s.Serialize<float>(smoothFactor, name: "smoothFactor");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					SerializeField(s, nameof(isSmooth));
+					isSmooth = s.Serialize<bool>(isSmooth, name: "isSmooth");
 				}
 			}
 		}

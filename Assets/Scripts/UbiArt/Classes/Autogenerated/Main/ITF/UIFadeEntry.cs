@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIFadeEntry : CSerializable {
-		[Serialize("id"          )] public StringID id;
-		[Serialize("duration"    )] public float duration;
-		[Serialize("color"       )] public Color color;
-		[Serialize("anim"        )] public StringID anim;
-		[Serialize("fadeInSound" )] public StringID fadeInSound;
-		[Serialize("fadeOutSound")] public StringID fadeOutSound;
+		public StringID id;
+		public float duration;
+		public Color color;
+		public StringID anim;
+		public StringID fadeInSound;
+		public StringID fadeOutSound;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(id));
-			SerializeField(s, nameof(duration));
-			SerializeField(s, nameof(color));
-			SerializeField(s, nameof(anim));
+			id = s.SerializeObject<StringID>(id, name: "id");
+			duration = s.Serialize<float>(duration, name: "duration");
+			color = s.SerializeObject<Color>(color, name: "color");
+			anim = s.SerializeObject<StringID>(anim, name: "anim");
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(fadeInSound));
-				SerializeField(s, nameof(fadeOutSound));
+				fadeInSound = s.SerializeObject<StringID>(fadeInSound, name: "fadeInSound");
+				fadeOutSound = s.SerializeObject<StringID>(fadeOutSound, name: "fadeOutSound");
 			}
 		}
 	}

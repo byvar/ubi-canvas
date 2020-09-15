@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_FoodStock : RLC_InventoryItem {
-		[Serialize("foodType")] public Creature_Food foodType;
+		public Creature_Food foodType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(foodType));
+			foodType = s.Serialize<Creature_Food>(foodType, name: "foodType");
 		}
 		public enum Creature_Food {
 			[Serialize("Creature_Food::cookie" )] cookie = 0,

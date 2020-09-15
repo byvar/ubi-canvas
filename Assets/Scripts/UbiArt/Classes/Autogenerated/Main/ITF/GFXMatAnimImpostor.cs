@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class GFXMatAnimImpostor : CSerializable {
-		[Serialize("animTranslationX"   )] public float animTranslationX;
-		[Serialize("animTranslationY"   )] public float animTranslationY;
-		[Serialize("animScaleX"         )] public float animScaleX;
-		[Serialize("animScaleY"         )] public float animScaleY;
-		[Serialize("animRot"            )] public float animRot;
-		[Serialize("animIndex"          )] public int animIndex;
-		[Serialize("animTexSizeX"       )] public int animTexSizeX;
-		[Serialize("animTexSizeY"       )] public int animTexSizeY;
-		[Serialize("animBackgroundColor")] public ColorInteger animBackgroundColor;
-		[Serialize("animAABB"           )] public AABB animAABB;
-		[Serialize("animPhase"          )] public float animPhase;
+		public float animTranslationX;
+		public float animTranslationY;
+		public float animScaleX;
+		public float animScaleY;
+		public float animRot;
+		public int animIndex;
+		public int animTexSizeX;
+		public int animTexSizeY;
+		public ColorInteger animBackgroundColor;
+		public AABB animAABB;
+		public float animPhase;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animTranslationX));
-			SerializeField(s, nameof(animTranslationY));
-			SerializeField(s, nameof(animScaleX));
-			SerializeField(s, nameof(animScaleY));
-			SerializeField(s, nameof(animRot));
-			SerializeField(s, nameof(animIndex));
-			SerializeField(s, nameof(animTexSizeX));
-			SerializeField(s, nameof(animTexSizeY));
-			SerializeField(s, nameof(animBackgroundColor));
-			SerializeField(s, nameof(animAABB));
-			SerializeField(s, nameof(animPhase));
+			animTranslationX = s.Serialize<float>(animTranslationX, name: "animTranslationX");
+			animTranslationY = s.Serialize<float>(animTranslationY, name: "animTranslationY");
+			animScaleX = s.Serialize<float>(animScaleX, name: "animScaleX");
+			animScaleY = s.Serialize<float>(animScaleY, name: "animScaleY");
+			animRot = s.Serialize<float>(animRot, name: "animRot");
+			animIndex = s.Serialize<int>(animIndex, name: "animIndex");
+			animTexSizeX = s.Serialize<int>(animTexSizeX, name: "animTexSizeX");
+			animTexSizeY = s.Serialize<int>(animTexSizeY, name: "animTexSizeY");
+			animBackgroundColor = s.SerializeObject<ColorInteger>(animBackgroundColor, name: "animBackgroundColor");
+			animAABB = s.SerializeObject<AABB>(animAABB, name: "animAABB");
+			animPhase = s.Serialize<float>(animPhase, name: "animPhase");
 		}
 	}
 }

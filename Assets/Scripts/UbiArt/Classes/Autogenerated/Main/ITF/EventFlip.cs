@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventFlip : Event {
-		[Serialize("ForceDirection")] public EventFlip__eFlip ForceDirection;
+		public EventFlip__eFlip ForceDirection;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ForceDirection));
+			ForceDirection = s.Serialize<EventFlip__eFlip>(ForceDirection, name: "ForceDirection");
 		}
 		public enum EventFlip__eFlip {
 			[Serialize("EventFlip::eFlip_Right"  )] Right = 0,

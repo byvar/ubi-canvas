@@ -3,107 +3,107 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class HingePlatformComponent_Template : PolylineComponent_Template {
-		[Serialize("hingeBones"     )] public CList<HingePlatformComponent_Template.HingeBoneData> hingeBones;
-		[Serialize("platforms"      )] public CList<HingePlatformComponent_Template.PlatformData> platforms;
-		[Serialize("movingPolylines")] public CList<HingePlatformComponent_Template.MovingPolylineData> movingPolylines;
+		public CList<HingePlatformComponent_Template.HingeBoneData> hingeBones;
+		public CList<HingePlatformComponent_Template.PlatformData> platforms;
+		public CList<HingePlatformComponent_Template.MovingPolylineData> movingPolylines;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hingeBones));
-			SerializeField(s, nameof(platforms));
-			SerializeField(s, nameof(movingPolylines));
+			hingeBones = s.SerializeObject<CList<HingePlatformComponent_Template.HingeBoneData>>(hingeBones, name: "hingeBones");
+			platforms = s.SerializeObject<CList<HingePlatformComponent_Template.PlatformData>>(platforms, name: "platforms");
+			movingPolylines = s.SerializeObject<CList<HingePlatformComponent_Template.MovingPolylineData>>(movingPolylines, name: "movingPolylines");
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class MovingPolylineData : CSerializable {
-			[Serialize("polyline"       )] public StringID polyline;
-			[Serialize("resistance"     )] public float resistance;
-			[Serialize("forceMultiplier")] public float forceMultiplier;
+			public StringID polyline;
+			public float resistance;
+			public float forceMultiplier;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(polyline));
-				SerializeField(s, nameof(resistance));
-				SerializeField(s, nameof(forceMultiplier));
+				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
+				resistance = s.Serialize<float>(resistance, name: "resistance");
+				forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class HingeBoneData : CSerializable {
-			[Serialize("name"                         )] public StringID name;
-			[Serialize("polyline"                     )] public StringID polyline;
-			[Serialize("minAngle"                     )] public Angle minAngle;
-			[Serialize("maxAngle"                     )] public Angle maxAngle;
-			[Serialize("weight"                       )] public float weight;
-			[Serialize("resistance"                   )] public float resistance;
-			[Serialize("hitForce"                     )] public float hitForce;
-			[Serialize("windMultiplier"               )] public float windMultiplier;
-			[Serialize("weightMultiplier"             )] public float weightMultiplier;
-			[Serialize("branchStiff"                  )] public float branchStiff;
-			[Serialize("branchDamping"                )] public float branchDamping;
-			[Serialize("branchDelayMultiplier"        )] public float branchDelayMultiplier;
-			[Serialize("disableScale"                 )] public bool disableScale;
-			[Serialize("disableCollision"             )] public bool disableCollision;
-			[Serialize("useDynamicBranchStiff"        )] public bool useDynamicBranchStiff;
-			[Serialize("dynamicBranchStiffMinAngle"   )] public Angle dynamicBranchStiffMinAngle;
-			[Serialize("dynamicBranchStiffMaxAngle"   )] public Angle dynamicBranchStiffMaxAngle;
-			[Serialize("dynamicBranchStiffMultiplier" )] public float dynamicBranchStiffMultiplier;
-			[Serialize("dynamicBranchStiffOnlyWayBack")] public bool dynamicBranchStiffOnlyWayBack;
-			[Serialize("alwaysApplyAngleLimitation"   )] public bool alwaysApplyAngleLimitation;
+			public StringID name;
+			public StringID polyline;
+			public Angle minAngle;
+			public Angle maxAngle;
+			public float weight;
+			public float resistance;
+			public float hitForce;
+			public float windMultiplier;
+			public float weightMultiplier;
+			public float branchStiff;
+			public float branchDamping;
+			public float branchDelayMultiplier;
+			public bool disableScale;
+			public bool disableCollision;
+			public bool useDynamicBranchStiff;
+			public Angle dynamicBranchStiffMinAngle;
+			public Angle dynamicBranchStiffMaxAngle;
+			public float dynamicBranchStiffMultiplier;
+			public bool dynamicBranchStiffOnlyWayBack;
+			public bool alwaysApplyAngleLimitation;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(polyline));
-				SerializeField(s, nameof(minAngle));
-				SerializeField(s, nameof(maxAngle));
-				SerializeField(s, nameof(weight));
-				SerializeField(s, nameof(resistance));
-				SerializeField(s, nameof(hitForce));
-				SerializeField(s, nameof(windMultiplier));
-				SerializeField(s, nameof(weightMultiplier));
-				SerializeField(s, nameof(branchStiff));
-				SerializeField(s, nameof(branchDamping));
-				SerializeField(s, nameof(branchDelayMultiplier));
-				SerializeField(s, nameof(disableScale));
-				SerializeField(s, nameof(disableCollision));
-				SerializeField(s, nameof(useDynamicBranchStiff));
-				SerializeField(s, nameof(dynamicBranchStiffMinAngle));
-				SerializeField(s, nameof(dynamicBranchStiffMaxAngle));
-				SerializeField(s, nameof(dynamicBranchStiffMultiplier));
-				SerializeField(s, nameof(dynamicBranchStiffOnlyWayBack));
-				SerializeField(s, nameof(alwaysApplyAngleLimitation));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
+				minAngle = s.SerializeObject<Angle>(minAngle, name: "minAngle");
+				maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+				weight = s.Serialize<float>(weight, name: "weight");
+				resistance = s.Serialize<float>(resistance, name: "resistance");
+				hitForce = s.Serialize<float>(hitForce, name: "hitForce");
+				windMultiplier = s.Serialize<float>(windMultiplier, name: "windMultiplier");
+				weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
+				branchStiff = s.Serialize<float>(branchStiff, name: "branchStiff");
+				branchDamping = s.Serialize<float>(branchDamping, name: "branchDamping");
+				branchDelayMultiplier = s.Serialize<float>(branchDelayMultiplier, name: "branchDelayMultiplier");
+				disableScale = s.Serialize<bool>(disableScale, name: "disableScale");
+				disableCollision = s.Serialize<bool>(disableCollision, name: "disableCollision");
+				useDynamicBranchStiff = s.Serialize<bool>(useDynamicBranchStiff, name: "useDynamicBranchStiff");
+				dynamicBranchStiffMinAngle = s.SerializeObject<Angle>(dynamicBranchStiffMinAngle, name: "dynamicBranchStiffMinAngle");
+				dynamicBranchStiffMaxAngle = s.SerializeObject<Angle>(dynamicBranchStiffMaxAngle, name: "dynamicBranchStiffMaxAngle");
+				dynamicBranchStiffMultiplier = s.Serialize<float>(dynamicBranchStiffMultiplier, name: "dynamicBranchStiffMultiplier");
+				dynamicBranchStiffOnlyWayBack = s.Serialize<bool>(dynamicBranchStiffOnlyWayBack, name: "dynamicBranchStiffOnlyWayBack");
+				alwaysApplyAngleLimitation = s.Serialize<bool>(alwaysApplyAngleLimitation, name: "alwaysApplyAngleLimitation");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class PlatformData : CSerializable {
-			[Serialize("poly"              )] public StringID poly;
-			[Serialize("scale"             )] public StringID scale;
-			[Serialize("link"              )] public StringID link;
-			[Serialize("maxPitch"          )] public Angle maxPitch;
-			[Serialize("minWeight"         )] public float minWeight;
-			[Serialize("minWeightScale"    )] public float minWeightScale;
-			[Serialize("maxWeight"         )] public float maxWeight;
-			[Serialize("maxWeightScale"    )] public float maxWeightScale;
-			[Serialize("MinScale"          )] public float MinScale;
-			[Serialize("scaleStiff"        )] public float scaleStiff;
-			[Serialize("scaleDamping"      )] public float scaleDamping;
-			[Serialize("minWeightHinge"    )] public float minWeightHinge;
-			[Serialize("disableCollision"  )] public bool disableCollision;
-			[Serialize("hitForceMultiplier")] public float hitForceMultiplier;
-			[Serialize("onlyCrushAttack"   )] public bool onlyCrushAttack;
+			public StringID poly;
+			public StringID scale;
+			public StringID link;
+			public Angle maxPitch;
+			public float minWeight;
+			public float minWeightScale;
+			public float maxWeight;
+			public float maxWeightScale;
+			public float MinScale;
+			public float scaleStiff;
+			public float scaleDamping;
+			public float minWeightHinge;
+			public bool disableCollision;
+			public float hitForceMultiplier;
+			public bool onlyCrushAttack;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(poly));
-				SerializeField(s, nameof(scale));
-				SerializeField(s, nameof(link));
-				SerializeField(s, nameof(maxPitch));
-				SerializeField(s, nameof(minWeight));
-				SerializeField(s, nameof(minWeightScale));
-				SerializeField(s, nameof(maxWeight));
-				SerializeField(s, nameof(maxWeightScale));
-				SerializeField(s, nameof(MinScale));
-				SerializeField(s, nameof(scaleStiff));
-				SerializeField(s, nameof(scaleDamping));
-				SerializeField(s, nameof(minWeightHinge));
-				SerializeField(s, nameof(disableCollision));
-				SerializeField(s, nameof(hitForceMultiplier));
-				SerializeField(s, nameof(onlyCrushAttack));
+				poly = s.SerializeObject<StringID>(poly, name: "poly");
+				scale = s.SerializeObject<StringID>(scale, name: "scale");
+				link = s.SerializeObject<StringID>(link, name: "link");
+				maxPitch = s.SerializeObject<Angle>(maxPitch, name: "maxPitch");
+				minWeight = s.Serialize<float>(minWeight, name: "minWeight");
+				minWeightScale = s.Serialize<float>(minWeightScale, name: "minWeightScale");
+				maxWeight = s.Serialize<float>(maxWeight, name: "maxWeight");
+				maxWeightScale = s.Serialize<float>(maxWeightScale, name: "maxWeightScale");
+				MinScale = s.Serialize<float>(MinScale, name: "MinScale");
+				scaleStiff = s.Serialize<float>(scaleStiff, name: "scaleStiff");
+				scaleDamping = s.Serialize<float>(scaleDamping, name: "scaleDamping");
+				minWeightHinge = s.Serialize<float>(minWeightHinge, name: "minWeightHinge");
+				disableCollision = s.Serialize<bool>(disableCollision, name: "disableCollision");
+				hitForceMultiplier = s.Serialize<float>(hitForceMultiplier, name: "hitForceMultiplier");
+				onlyCrushAttack = s.Serialize<bool>(onlyCrushAttack, name: "onlyCrushAttack");
 			}
 		}
 		public override uint? ClassCRC => 0x0B2FF7DB;

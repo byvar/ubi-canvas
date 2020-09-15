@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TrunkComponent_Template : ActorComponent_Template {
-		[Serialize("height"           )] public float height;
-		[Serialize("length"           )] public float length;
-		[Serialize("angularAccel"     )] public Angle angularAccel;
-		[Serialize("angularSpeedMax"  )] public Angle angularSpeedMax;
-		[Serialize("angularFriction"  )] public float angularFriction;
-		[Serialize("bounceFactor"     )] public float bounceFactor;
-		[Serialize("bounceFallFactor" )] public float bounceFallFactor;
-		[Serialize("fallAccel"        )] public float fallAccel;
-		[Serialize("fallSpeedMax"     )] public float fallSpeedMax;
-		[Serialize("debugDraw"        )] public bool debugDraw;
-		[Serialize("angularSpeedStart")] public Angle angularSpeedStart;
-		[Serialize("fakeFreedom"      )] public bool fakeFreedom;
-		[Serialize("collisionShape"   )] public Generic<PhysShape> collisionShape;
+		public float height;
+		public float length;
+		public Angle angularAccel;
+		public Angle angularSpeedMax;
+		public float angularFriction;
+		public float bounceFactor;
+		public float bounceFallFactor;
+		public float fallAccel;
+		public float fallSpeedMax;
+		public bool debugDraw;
+		public Angle angularSpeedStart;
+		public bool fakeFreedom;
+		public Generic<PhysShape> collisionShape;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(height));
-			SerializeField(s, nameof(length));
-			SerializeField(s, nameof(angularAccel));
-			SerializeField(s, nameof(angularSpeedMax));
-			SerializeField(s, nameof(angularFriction));
-			SerializeField(s, nameof(bounceFactor));
-			SerializeField(s, nameof(bounceFallFactor));
-			SerializeField(s, nameof(fallAccel));
-			SerializeField(s, nameof(fallSpeedMax));
-			SerializeField(s, nameof(debugDraw));
-			SerializeField(s, nameof(angularSpeedStart));
-			SerializeField(s, nameof(fakeFreedom));
-			SerializeField(s, nameof(collisionShape));
+			height = s.Serialize<float>(height, name: "height");
+			length = s.Serialize<float>(length, name: "length");
+			angularAccel = s.SerializeObject<Angle>(angularAccel, name: "angularAccel");
+			angularSpeedMax = s.SerializeObject<Angle>(angularSpeedMax, name: "angularSpeedMax");
+			angularFriction = s.Serialize<float>(angularFriction, name: "angularFriction");
+			bounceFactor = s.Serialize<float>(bounceFactor, name: "bounceFactor");
+			bounceFallFactor = s.Serialize<float>(bounceFallFactor, name: "bounceFallFactor");
+			fallAccel = s.Serialize<float>(fallAccel, name: "fallAccel");
+			fallSpeedMax = s.Serialize<float>(fallSpeedMax, name: "fallSpeedMax");
+			debugDraw = s.Serialize<bool>(debugDraw, name: "debugDraw");
+			angularSpeedStart = s.SerializeObject<Angle>(angularSpeedStart, name: "angularSpeedStart");
+			fakeFreedom = s.Serialize<bool>(fakeFreedom, name: "fakeFreedom");
+			collisionShape = s.SerializeObject<Generic<PhysShape>>(collisionShape, name: "collisionShape");
 		}
 		public override uint? ClassCRC => 0xC4BDF2E2;
 	}

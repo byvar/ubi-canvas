@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PaintSnakeComponent_Template : ActorComponent_Template {
-		[Serialize("BubonBoneL"       )] public StringID BubonBoneL;
-		[Serialize("BubonBoneR"       )] public StringID BubonBoneR;
-		[Serialize("RadiusTouchScreen")] public float RadiusTouchScreen;
+		public StringID BubonBoneL;
+		public StringID BubonBoneR;
+		public float RadiusTouchScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(BubonBoneL));
-			SerializeField(s, nameof(BubonBoneR));
-			SerializeField(s, nameof(RadiusTouchScreen));
+			BubonBoneL = s.SerializeObject<StringID>(BubonBoneL, name: "BubonBoneL");
+			BubonBoneR = s.SerializeObject<StringID>(BubonBoneR, name: "BubonBoneR");
+			RadiusTouchScreen = s.Serialize<float>(RadiusTouchScreen, name: "RadiusTouchScreen");
 		}
 		public override uint? ClassCRC => 0xC89B8AA0;
 	}

@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PersistentGameData_WorldMap : CSerializable {
-		[Serialize("worldsInfo"     )] public CMap<StringID, WorldInfo> worldsInfo;
-		[Serialize("currentWorld"   )] public ObjectPath currentWorld;
-		[Serialize("currentWorldTag")] public StringID currentWorldTag;
-		[Serialize("currentLevel"   )] public ObjectPath currentLevel;
-		[Serialize("currentLevelTag")] public StringID currentLevelTag;
+		public CMap<StringID, WorldInfo> worldsInfo;
+		public ObjectPath currentWorld;
+		public StringID currentWorldTag;
+		public ObjectPath currentLevel;
+		public StringID currentLevelTag;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(worldsInfo));
-			SerializeField(s, nameof(currentWorld));
-			SerializeField(s, nameof(currentWorldTag));
-			SerializeField(s, nameof(currentLevel));
-			SerializeField(s, nameof(currentLevelTag));
+			worldsInfo = s.SerializeObject<CMap<StringID, WorldInfo>>(worldsInfo, name: "worldsInfo");
+			currentWorld = s.SerializeObject<ObjectPath>(currentWorld, name: "currentWorld");
+			currentWorldTag = s.SerializeObject<StringID>(currentWorldTag, name: "currentWorldTag");
+			currentLevel = s.SerializeObject<ObjectPath>(currentLevel, name: "currentLevel");
+			currentLevelTag = s.SerializeObject<StringID>(currentLevelTag, name: "currentLevelTag");
 		}
 		
 		[Games(GameFlags.RO)]
 		public partial class WorldInfo : CSerializable {
-			[Serialize("state"     )] public SPOT_STATE state;
-			[Serialize("hasWarning")] public bool hasWarning;
+			public SPOT_STATE state;
+			public bool hasWarning;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(state));
-				SerializeField(s, nameof(hasWarning));
+				state = s.Serialize<SPOT_STATE>(state, name: "state");
+				hasWarning = s.Serialize<bool>(hasWarning, name: "hasWarning");
 			}
 			public enum SPOT_STATE {
 				[Serialize("SPOT_STATE_CLOSED"      )] CLOSED = 0,

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIRedWizardRoamBehavior_Template : Ray_AIGroundRoamBehavior_Template {
-		[Serialize("greet"        )] public Placeholder greet;
-		[Serialize("greetRange"   )] public float greetRange;
-		[Serialize("greetCooldown")] public float greetCooldown;
+		public Placeholder greet;
+		public float greetRange;
+		public float greetCooldown;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(greet));
-			SerializeField(s, nameof(greetRange));
-			SerializeField(s, nameof(greetCooldown));
+			greet = s.SerializeObject<Placeholder>(greet, name: "greet");
+			greetRange = s.Serialize<float>(greetRange, name: "greetRange");
+			greetCooldown = s.Serialize<float>(greetCooldown, name: "greetCooldown");
 		}
 		public override uint? ClassCRC => 0xC9B3A832;
 	}

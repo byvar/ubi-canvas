@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LoadingTitleComponent_Template : ActorComponent_Template {
-		[Serialize("textPath" )] public Path textPath;
-		[Serialize("screenPos")] public Vec2d screenPos;
-		[Serialize("locId"    )] public SmartLocId locId;
-		[Serialize("homeLocId")] public SmartLocId homeLocId;
+		public Path textPath;
+		public Vec2d screenPos;
+		public SmartLocId locId;
+		public SmartLocId homeLocId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(textPath));
-			SerializeField(s, nameof(screenPos));
-			SerializeField(s, nameof(locId));
-			SerializeField(s, nameof(homeLocId));
+			textPath = s.SerializeObject<Path>(textPath, name: "textPath");
+			screenPos = s.SerializeObject<Vec2d>(screenPos, name: "screenPos");
+			locId = s.SerializeObject<SmartLocId>(locId, name: "locId");
+			homeLocId = s.SerializeObject<SmartLocId>(homeLocId, name: "homeLocId");
 		}
 		public override uint? ClassCRC => 0xB755C5E7;
 	}

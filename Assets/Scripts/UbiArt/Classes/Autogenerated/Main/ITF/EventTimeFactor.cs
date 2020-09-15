@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventTimeFactor : Event {
-		[Serialize("ActorFactorValue")] public EventFlip__eFlip ActorFactorValue;
-		[Serialize("WorldFactorValue")] public EventFlip__eFlip WorldFactorValue;
+		public EventFlip__eFlip ActorFactorValue;
+		public EventFlip__eFlip WorldFactorValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ActorFactorValue));
-			SerializeField(s, nameof(WorldFactorValue));
+			ActorFactorValue = s.Serialize<EventFlip__eFlip>(ActorFactorValue, name: "ActorFactorValue");
+			WorldFactorValue = s.Serialize<EventFlip__eFlip>(WorldFactorValue, name: "WorldFactorValue");
 		}
 		public enum EventFlip__eFlip {
 			[Serialize("EventFlip::eFlip_Right"  )] Right = 0,

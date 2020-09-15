@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_ElixirPack : RLC_DynamicStoreItem {
-		[Serialize("Type"         )] public Enum_Type Type;
-		[Serialize("Price"        )] public uint Price;
-		[Serialize("Amount"       )] public uint Amount;
-		[Serialize("AllElixirPack")] public bool AllElixirPack;
+		public Enum_Type Type;
+		public uint Price;
+		public uint Amount;
+		public bool AllElixirPack;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Type));
-			SerializeField(s, nameof(Price));
-			SerializeField(s, nameof(Amount));
-			SerializeField(s, nameof(AllElixirPack));
+			Type = s.Serialize<Enum_Type>(Type, name: "Type");
+			Price = s.Serialize<uint>(Price, name: "Price");
+			Amount = s.Serialize<uint>(Amount, name: "Amount");
+			AllElixirPack = s.Serialize<bool>(AllElixirPack, name: "AllElixirPack");
 		}
 		public enum Enum_Type {
 			[Serialize("_unknown"         )] _unknown = 0,

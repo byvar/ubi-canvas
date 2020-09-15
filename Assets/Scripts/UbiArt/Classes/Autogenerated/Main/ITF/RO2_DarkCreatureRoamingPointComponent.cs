@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DarkCreatureRoamingPointComponent : ActorComponent {
-		[Serialize("TimerMin")] public float TimerMin;
-		[Serialize("TimerMax")] public float TimerMax;
+		public float TimerMin;
+		public float TimerMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(TimerMin));
-				SerializeField(s, nameof(TimerMax));
+				TimerMin = s.Serialize<float>(TimerMin, name: "TimerMin");
+				TimerMax = s.Serialize<float>(TimerMax, name: "TimerMax");
 			}
 		}
 		public override uint? ClassCRC => 0xC3E02D49;

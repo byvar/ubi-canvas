@@ -3,53 +3,53 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class FXControllerComponent_Template : ActorComponent_Template {
-		[Serialize("feedbackTags" )] public CList<StringID> feedbackTags;
-		[Serialize("fxControlList")] public CList<FXControl> fxControlList;
-		[Serialize("triggerFx"    )] public StringID triggerFx;
-		[Serialize("defaultFx"    )] public StringID defaultFx;
-		[Serialize("FXSwitch"     )] public CMap<StringID, FXControllerComponent_Template.sFXSwitch> FXSwitch;
-		[Serialize("defaultFxList")] public Placeholder defaultFxList;
+		public CList<StringID> feedbackTags;
+		public CList<FXControl> fxControlList;
+		public StringID triggerFx;
+		public StringID defaultFx;
+		public CMap<StringID, FXControllerComponent_Template.sFXSwitch> FXSwitch;
+		public Placeholder defaultFxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(fxControlList));
-				SerializeField(s, nameof(triggerFx));
-				SerializeField(s, nameof(defaultFx));
+				fxControlList = s.SerializeObject<CList<FXControl>>(fxControlList, name: "fxControlList");
+				triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
+				defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(feedbackTags));
-				SerializeField(s, nameof(fxControlList));
-				SerializeField(s, nameof(triggerFx));
-				SerializeField(s, nameof(defaultFx));
+				feedbackTags = s.SerializeObject<CList<StringID>>(feedbackTags, name: "feedbackTags");
+				fxControlList = s.SerializeObject<CList<FXControl>>(fxControlList, name: "fxControlList");
+				triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
+				defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(feedbackTags));
-				SerializeField(s, nameof(triggerFx));
-				SerializeField(s, nameof(defaultFx));
-				SerializeField(s, nameof(defaultFxList));
+				feedbackTags = s.SerializeObject<CList<StringID>>(feedbackTags, name: "feedbackTags");
+				triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
+				defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
+				defaultFxList = s.SerializeObject<Placeholder>(defaultFxList, name: "defaultFxList");
 			} else {
-				SerializeField(s, nameof(feedbackTags));
-				SerializeField(s, nameof(fxControlList));
-				SerializeField(s, nameof(triggerFx));
-				SerializeField(s, nameof(defaultFx));
-				SerializeField(s, nameof(FXSwitch));
+				feedbackTags = s.SerializeObject<CList<StringID>>(feedbackTags, name: "feedbackTags");
+				fxControlList = s.SerializeObject<CList<FXControl>>(fxControlList, name: "fxControlList");
+				triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
+				defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
+				FXSwitch = s.SerializeObject<CMap<StringID, FXControllerComponent_Template.sFXSwitch>>(FXSwitch, name: "FXSwitch");
 			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class sFXSwitchRules : CSerializable {
-			[Serialize("KEY"  )] public StringID KEY;
-			[Serialize("FXout")] public StringID FXout;
+			public StringID KEY;
+			public StringID FXout;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(KEY));
-				SerializeField(s, nameof(KEY));
-				SerializeField(s, nameof(FXout));
+				KEY = s.SerializeObject<StringID>(KEY, name: "KEY");
+				KEY = s.SerializeObject<StringID>(KEY, name: "KEY");
+				FXout = s.SerializeObject<StringID>(FXout, name: "FXout");
 			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class sFXSwitch : CSerializable {
-			[Serialize("Rules")] public CList<FXControllerComponent_Template.sFXSwitchRules> Rules;
+			public CList<FXControllerComponent_Template.sFXSwitchRules> Rules;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(Rules));
+				Rules = s.SerializeObject<CList<FXControllerComponent_Template.sFXSwitchRules>>(Rules, name: "Rules");
 			}
 		}
 		public override uint? ClassCRC => 0x0E355C68;

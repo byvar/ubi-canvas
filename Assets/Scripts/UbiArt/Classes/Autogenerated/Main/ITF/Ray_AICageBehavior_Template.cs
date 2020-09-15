@@ -3,38 +3,38 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AICageBehavior_Template : TemplateAIBehavior {
-		[Serialize("electoonCount"               )] public uint electoonCount;
-		[Serialize("electoonAppearRadius"        )] public float electoonAppearRadius;
-		[Serialize("cageSpawnerYOffset"          )] public float cageSpawnerYOffset;
-		[Serialize("electoonPath"                )] public Path electoonPath;
-		[Serialize("stayElectoonPath"            )] public Path stayElectoonPath;
-		[Serialize("durationBeforeFadeOut"       )] public float durationBeforeFadeOut;
-		[Serialize("stillHeartPath"              )] public Path stillHeartPath;
-		[Serialize("broken_generatedRewardRadius")] public float broken_generatedRewardRadius;
-		[Serialize("broken_generatedRewards"     )] public CArray<uint> broken_generatedRewards;
-		[Serialize("heartOffset"                 )] public Vec3d heartOffset;
-		[Serialize("lastCageIndex"               )] public int lastCageIndex;
-		[Serialize("alreadyOpenAlpha"            )] public float alreadyOpenAlpha;
-		[Serialize("stayElectoonXOffset"         )] public float stayElectoonXOffset;
-		[Serialize("cinePath"                    )] public Path cinePath;
-		[Serialize("endCinePath"                 )] public Path endCinePath;
+		public uint electoonCount;
+		public float electoonAppearRadius;
+		public float cageSpawnerYOffset;
+		public Path electoonPath;
+		public Path stayElectoonPath;
+		public float durationBeforeFadeOut;
+		public Path stillHeartPath;
+		public float broken_generatedRewardRadius;
+		public CArray<uint> broken_generatedRewards;
+		public Vec3d heartOffset;
+		public int lastCageIndex;
+		public float alreadyOpenAlpha;
+		public float stayElectoonXOffset;
+		public Path cinePath;
+		public Path endCinePath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(electoonCount));
-			SerializeField(s, nameof(electoonAppearRadius));
-			SerializeField(s, nameof(cageSpawnerYOffset));
-			SerializeField(s, nameof(electoonPath));
-			SerializeField(s, nameof(stayElectoonPath));
-			SerializeField(s, nameof(durationBeforeFadeOut));
-			SerializeField(s, nameof(stillHeartPath));
-			SerializeField(s, nameof(broken_generatedRewardRadius));
-			SerializeField(s, nameof(broken_generatedRewards));
-			SerializeField(s, nameof(heartOffset));
-			SerializeField(s, nameof(lastCageIndex));
-			SerializeField(s, nameof(alreadyOpenAlpha));
-			SerializeField(s, nameof(stayElectoonXOffset));
-			SerializeField(s, nameof(cinePath));
-			SerializeField(s, nameof(endCinePath));
+			electoonCount = s.Serialize<uint>(electoonCount, name: "electoonCount");
+			electoonAppearRadius = s.Serialize<float>(electoonAppearRadius, name: "electoonAppearRadius");
+			cageSpawnerYOffset = s.Serialize<float>(cageSpawnerYOffset, name: "cageSpawnerYOffset");
+			electoonPath = s.SerializeObject<Path>(electoonPath, name: "electoonPath");
+			stayElectoonPath = s.SerializeObject<Path>(stayElectoonPath, name: "stayElectoonPath");
+			durationBeforeFadeOut = s.Serialize<float>(durationBeforeFadeOut, name: "durationBeforeFadeOut");
+			stillHeartPath = s.SerializeObject<Path>(stillHeartPath, name: "stillHeartPath");
+			broken_generatedRewardRadius = s.Serialize<float>(broken_generatedRewardRadius, name: "broken_generatedRewardRadius");
+			broken_generatedRewards = s.SerializeObject<CArray<uint>>(broken_generatedRewards, name: "broken_generatedRewards");
+			heartOffset = s.SerializeObject<Vec3d>(heartOffset, name: "heartOffset");
+			lastCageIndex = s.Serialize<int>(lastCageIndex, name: "lastCageIndex");
+			alreadyOpenAlpha = s.Serialize<float>(alreadyOpenAlpha, name: "alreadyOpenAlpha");
+			stayElectoonXOffset = s.Serialize<float>(stayElectoonXOffset, name: "stayElectoonXOffset");
+			cinePath = s.SerializeObject<Path>(cinePath, name: "cinePath");
+			endCinePath = s.SerializeObject<Path>(endCinePath, name: "endCinePath");
 		}
 		public override uint? ClassCRC => 0xD6C8FF86;
 	}

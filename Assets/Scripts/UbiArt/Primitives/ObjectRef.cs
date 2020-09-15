@@ -12,7 +12,7 @@ namespace UbiArt {
 			s.Serialize<uint>(ref objectRef);
 		}
 		public static implicit operator uint(ObjectRef o) {
-			return o.objectRef;
+			return o?.objectRef ?? 0;
 		}
 		public static implicit operator ObjectRef(uint o) {
 			return new ObjectRef { objectRef = o };

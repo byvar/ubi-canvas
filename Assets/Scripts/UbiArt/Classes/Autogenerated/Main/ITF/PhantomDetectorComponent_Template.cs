@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PhantomDetectorComponent_Template : ShapeDetectorComponent_Template {
-		[Serialize("allowDeadActors")] public bool allowDeadActors;
-		[Serialize("factionToDetect")] public uint factionToDetect;
-		[Serialize("Enum_VH_0__2"   )] public Enum_VH_0 Enum_VH_0__2;
+		public bool allowDeadActors;
+		public uint factionToDetect;
+		public Enum_VH_0 Enum_VH_0__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(factionToDetect));
-				SerializeField(s, nameof(allowDeadActors));
+				factionToDetect = s.Serialize<uint>(factionToDetect, name: "factionToDetect");
+				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
 			} else if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(factionToDetect));
-				SerializeField(s, nameof(allowDeadActors));
-				SerializeField(s, nameof(Enum_VH_0__2));
+				factionToDetect = s.Serialize<uint>(factionToDetect, name: "factionToDetect");
+				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
+				Enum_VH_0__2 = s.Serialize<Enum_VH_0>(Enum_VH_0__2, name: "Enum_VH_0__2");
 			} else {
-				SerializeField(s, nameof(allowDeadActors));
+				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
 			}
 		}
 		public enum Enum_VH_0 {

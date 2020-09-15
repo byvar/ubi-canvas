@@ -3,17 +3,17 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LeafScrewComponent : RO2_AIComponent {
-		[Serialize("actorSpawnedPath")] public Path actorSpawnedPath;
-		[Serialize("terminated"      )] public bool terminated;
-		[Serialize("actorSpawnType"  )] public SpawnActorType actorSpawnType;
+		public Path actorSpawnedPath;
+		public bool terminated;
+		public SpawnActorType actorSpawnType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(actorSpawnedPath));
+			actorSpawnedPath = s.SerializeObject<Path>(actorSpawnedPath, name: "actorSpawnedPath");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(terminated));
+				terminated = s.Serialize<bool>(terminated, name: "terminated");
 			}
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(actorSpawnType));
+				actorSpawnType = s.Serialize<SpawnActorType>(actorSpawnType, name: "actorSpawnType");
 			}
 		}
 		public enum SpawnActorType {

@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TreeReward : CSerializable {
-		[Serialize("RewardType"     )] public Enum_RewardType RewardType;
-		[Serialize("RequiredStarsNb")] public uint RequiredStarsNb;
-		[Serialize("RewardCount"    )] public uint RewardCount;
-		[Serialize("RewardName"     )] public string RewardName;
-		[Serialize("RewardRegion"   )] public Enum_RewardRegion RewardRegion;
-		[Serialize("RewardFamilly"  )] public Creature_Family RewardFamilly;
+		public Enum_RewardType RewardType;
+		public uint RequiredStarsNb;
+		public uint RewardCount;
+		public string RewardName;
+		public Enum_RewardRegion RewardRegion;
+		public Creature_Family RewardFamilly;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(RewardType));
-			SerializeField(s, nameof(RequiredStarsNb));
-			SerializeField(s, nameof(RewardCount));
-			SerializeField(s, nameof(RewardName));
-			SerializeField(s, nameof(RewardRegion));
-			SerializeField(s, nameof(RewardFamilly));
+			RewardType = s.Serialize<Enum_RewardType>(RewardType, name: "RewardType");
+			RequiredStarsNb = s.Serialize<uint>(RequiredStarsNb, name: "RequiredStarsNb");
+			RewardCount = s.Serialize<uint>(RewardCount, name: "RewardCount");
+			RewardName = s.Serialize<string>(RewardName, name: "RewardName");
+			RewardRegion = s.Serialize<Enum_RewardRegion>(RewardRegion, name: "RewardRegion");
+			RewardFamilly = s.Serialize<Creature_Family>(RewardFamilly, name: "RewardFamilly");
 		}
 		public enum Enum_RewardType {
 			[Serialize("_unknown"             )] _unknown = 0,

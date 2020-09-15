@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class EventSetBusReverb : Event {
-		[Serialize("bus"             )] public StringID bus;
-		[Serialize("changeActivation")] public int changeActivation;
-		[Serialize("activate"        )] public int activate;
-		[Serialize("changePreset"    )] public int changePreset;
-		[Serialize("preset"          )] public ReverbPreset preset;
+		public StringID bus;
+		public int changeActivation;
+		public int activate;
+		public int changePreset;
+		public ReverbPreset preset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bus));
-			SerializeField(s, nameof(changeActivation));
-			SerializeField(s, nameof(activate));
-			SerializeField(s, nameof(changePreset));
-			SerializeField(s, nameof(preset));
+			bus = s.SerializeObject<StringID>(bus, name: "bus");
+			changeActivation = s.Serialize<int>(changeActivation, name: "changeActivation");
+			activate = s.Serialize<int>(activate, name: "activate");
+			changePreset = s.Serialize<int>(changePreset, name: "changePreset");
+			preset = s.Serialize<ReverbPreset>(preset, name: "preset");
 		}
 		public enum ReverbPreset {
 			[Serialize("ReverbPreset_DEFAULT"        )] DEFAULT = 0,

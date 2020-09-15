@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_WaterPerturbationComponent_Template : ActorComponent_Template {
-		[Serialize("fxFile"             )] public Path fxFile;
-		[Serialize("noiseAmplitudeX"    )] public float noiseAmplitudeX;
-		[Serialize("noiseFrequencyX"    )] public float noiseFrequencyX;
-		[Serialize("noisePersistenceX"  )] public float noisePersistenceX;
-		[Serialize("noiseNbOctaveX"     )] public uint noiseNbOctaveX;
-		[Serialize("noiseAmplitudeY"    )] public float noiseAmplitudeY;
-		[Serialize("noiseFrequencyY"    )] public float noiseFrequencyY;
-		[Serialize("noisePersistenceY"  )] public float noisePersistenceY;
-		[Serialize("noiseNbOctaveY"     )] public uint noiseNbOctaveY;
-		[Serialize("noiseTimeMultiplier")] public float noiseTimeMultiplier;
-		[Serialize("radius"             )] public float radius;
-		[Serialize("waterMultiplier"    )] public float waterMultiplier;
-		[Serialize("weight"             )] public float weight;
-		[Serialize("queryPosition"      )] public bool queryPosition;
+		public Path fxFile;
+		public float noiseAmplitudeX;
+		public float noiseFrequencyX;
+		public float noisePersistenceX;
+		public uint noiseNbOctaveX;
+		public float noiseAmplitudeY;
+		public float noiseFrequencyY;
+		public float noisePersistenceY;
+		public uint noiseNbOctaveY;
+		public float noiseTimeMultiplier;
+		public float radius;
+		public float waterMultiplier;
+		public float weight;
+		public bool queryPosition;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fxFile));
-			SerializeField(s, nameof(noiseAmplitudeX));
-			SerializeField(s, nameof(noiseFrequencyX));
-			SerializeField(s, nameof(noisePersistenceX));
-			SerializeField(s, nameof(noiseNbOctaveX));
-			SerializeField(s, nameof(noiseAmplitudeY));
-			SerializeField(s, nameof(noiseFrequencyY));
-			SerializeField(s, nameof(noisePersistenceY));
-			SerializeField(s, nameof(noiseNbOctaveY));
-			SerializeField(s, nameof(noiseTimeMultiplier));
-			SerializeField(s, nameof(radius));
-			SerializeField(s, nameof(waterMultiplier));
-			SerializeField(s, nameof(weight));
-			SerializeField(s, nameof(queryPosition));
+			fxFile = s.SerializeObject<Path>(fxFile, name: "fxFile");
+			noiseAmplitudeX = s.Serialize<float>(noiseAmplitudeX, name: "noiseAmplitudeX");
+			noiseFrequencyX = s.Serialize<float>(noiseFrequencyX, name: "noiseFrequencyX");
+			noisePersistenceX = s.Serialize<float>(noisePersistenceX, name: "noisePersistenceX");
+			noiseNbOctaveX = s.Serialize<uint>(noiseNbOctaveX, name: "noiseNbOctaveX");
+			noiseAmplitudeY = s.Serialize<float>(noiseAmplitudeY, name: "noiseAmplitudeY");
+			noiseFrequencyY = s.Serialize<float>(noiseFrequencyY, name: "noiseFrequencyY");
+			noisePersistenceY = s.Serialize<float>(noisePersistenceY, name: "noisePersistenceY");
+			noiseNbOctaveY = s.Serialize<uint>(noiseNbOctaveY, name: "noiseNbOctaveY");
+			noiseTimeMultiplier = s.Serialize<float>(noiseTimeMultiplier, name: "noiseTimeMultiplier");
+			radius = s.Serialize<float>(radius, name: "radius");
+			waterMultiplier = s.Serialize<float>(waterMultiplier, name: "waterMultiplier");
+			weight = s.Serialize<float>(weight, name: "weight");
+			queryPosition = s.Serialize<bool>(queryPosition, name: "queryPosition");
 		}
 		public override uint? ClassCRC => 0x2FA610E3;
 	}

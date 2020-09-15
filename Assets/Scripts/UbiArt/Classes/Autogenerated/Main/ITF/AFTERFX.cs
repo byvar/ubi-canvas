@@ -3,54 +3,54 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class AFTERFX : CSerializable {
-		[Serialize("Type"               )] public AFX Type;
-		[Serialize("paramF"             )] public CArray<float> paramF;
-		[Serialize("paramI"             )] public CArray<int> paramI;
-		[Serialize("paramC"             )] public CArray<Color> paramC;
-		[Serialize("lifeTime"           )] public float lifeTime;
-		[Serialize("colorTarget"        )] public Color colorTarget;
-		[Serialize("Enum_RFR_0__0"      )] public Enum_RFR_0 Enum_RFR_0__0;
-		[Serialize("CArray<float>__1"   )] public CArray<float> CArray_float__1;
-		[Serialize("CArray<int>__2"     )] public CArray<int> CArray_int__2;
-		[Serialize("CArray<Vector3>__3" )] public CArray<Vec3d> CArray_Vector3__3;
-		[Serialize("CArray<Color>__4"   )] public CArray<Color> CArray_Color__4;
-		[Serialize("float__5"           )] public float float__5;
-		[Serialize("Color__6"           )] public Color Color__6;
-		[Serialize("Enum_VH_0__7"       )] public Enum_VH_0 Enum_VH_0__7;
-		[Serialize("CArray<float>__8"   )] public CArray<float> CArray_float__8;
-		[Serialize("CArray<int>__9"     )] public CArray<int> CArray_int__9;
-		[Serialize("CArray<Vector3>__10")] public CArray<Vec3d> CArray_Vector3__10;
-		[Serialize("CArray<Color>__11"  )] public CArray<Color> CArray_Color__11;
-		[Serialize("float__12"          )] public float float__12;
-		[Serialize("Color__13"          )] public Color Color__13;
+		public AFX Type;
+		public CArray<float> paramF;
+		public CArray<int> paramI;
+		public CArray<Color> paramC;
+		public float lifeTime;
+		public Color colorTarget;
+		public Enum_RFR_0 Enum_RFR_0__0;
+		public CArray<float> CArray_float__1;
+		public CArray<int> CArray_int__2;
+		public CArray<Vec3d> CArray_Vector3__3;
+		public CArray<Color> CArray_Color__4;
+		public float float__5;
+		public Color Color__6;
+		public Enum_VH_0 Enum_VH_0__7;
+		public CArray<float> CArray_float__8;
+		public CArray<int> CArray_int__9;
+		public CArray<Vec3d> CArray_Vector3__10;
+		public CArray<Color> CArray_Color__11;
+		public float float__12;
+		public Color Color__13;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(Enum_RFR_0__0));
-				SerializeField(s, nameof(CArray_float__1));
-				SerializeField(s, nameof(CArray_int__2));
-				SerializeField(s, nameof(CArray_Vector3__3));
-				SerializeField(s, nameof(CArray_Color__4));
-				SerializeField(s, nameof(float__5));
-				SerializeField(s, nameof(Color__6));
+				Enum_RFR_0__0 = s.Serialize<Enum_RFR_0>(Enum_RFR_0__0, name: "Enum_RFR_0__0");
+				CArray_float__1 = s.SerializeObject<CArray<float>>(CArray_float__1, name: "CArray_float__1");
+				CArray_int__2 = s.SerializeObject<CArray<int>>(CArray_int__2, name: "CArray_int__2");
+				CArray_Vector3__3 = s.SerializeObject<CArray<Vec3d>>(CArray_Vector3__3, name: "CArray_Vector3__3");
+				CArray_Color__4 = s.SerializeObject<CArray<Color>>(CArray_Color__4, name: "CArray_Color__4");
+				float__5 = s.Serialize<float>(float__5, name: "float__5");
+				Color__6 = s.SerializeObject<Color>(Color__6, name: "Color__6");
 			} else if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(Enum_VH_0__7));
-				SerializeField(s, nameof(CArray_float__8));
-				SerializeField(s, nameof(CArray_int__9));
-				SerializeField(s, nameof(CArray_Vector3__10));
-				SerializeField(s, nameof(CArray_Color__11));
-				SerializeField(s, nameof(float__12));
-				SerializeField(s, nameof(Color__13));
+				Enum_VH_0__7 = s.Serialize<Enum_VH_0>(Enum_VH_0__7, name: "Enum_VH_0__7");
+				CArray_float__8 = s.SerializeObject<CArray<float>>(CArray_float__8, name: "CArray_float__8");
+				CArray_int__9 = s.SerializeObject<CArray<int>>(CArray_int__9, name: "CArray_int__9");
+				CArray_Vector3__10 = s.SerializeObject<CArray<Vec3d>>(CArray_Vector3__10, name: "CArray_Vector3__10");
+				CArray_Color__11 = s.SerializeObject<CArray<Color>>(CArray_Color__11, name: "CArray_Color__11");
+				float__12 = s.Serialize<float>(float__12, name: "float__12");
+				Color__13 = s.SerializeObject<Color>(Color__13, name: "Color__13");
 			} else {
-				SerializeField(s, nameof(Type));
-				SerializeField(s, nameof(paramF));
-				SerializeField(s, nameof(paramF));
-				SerializeField(s, nameof(paramI));
-				SerializeField(s, nameof(paramI));
-				SerializeField(s, nameof(paramC));
-				SerializeField(s, nameof(paramC));
-				SerializeField(s, nameof(lifeTime));
-				SerializeField(s, nameof(colorTarget));
+				Type = s.Serialize<AFX>(Type, name: "Type");
+				paramF = s.SerializeObject<CArray<float>>(paramF, name: "paramF");
+				paramF = s.SerializeObject<CArray<float>>(paramF, name: "paramF");
+				paramI = s.SerializeObject<CArray<int>>(paramI, name: "paramI");
+				paramI = s.SerializeObject<CArray<int>>(paramI, name: "paramI");
+				paramC = s.SerializeObject<CArray<Color>>(paramC, name: "paramC");
+				paramC = s.SerializeObject<CArray<Color>>(paramC, name: "paramC");
+				lifeTime = s.Serialize<float>(lifeTime, name: "lifeTime");
+				colorTarget = s.SerializeObject<Color>(colorTarget, name: "colorTarget");
 			}
 		}
 		public enum AFX {

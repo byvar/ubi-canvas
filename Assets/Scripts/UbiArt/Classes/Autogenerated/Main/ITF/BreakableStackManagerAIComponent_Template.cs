@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableStackManagerAIComponent_Template : AIComponent_Template {
-		[Serialize("timeShakeBeforeFall"   )] public float timeShakeBeforeFall;
-		[Serialize("countDownHit"          )] public float countDownHit;
-		[Serialize("gravityBallistics"     )] public float gravityBallistics;
-		[Serialize("timeExpulse"           )] public float timeExpulse;
-		[Serialize("atlasPath"             )] public Path atlasPath;
-		[Serialize("atlasParticlesPath"    )] public Path atlasParticlesPath;
-		[Serialize("atlasMaterial"         )] public GFXMaterialSerializable atlasMaterial;
-		[Serialize("atlasParticlesMaterial")] public GFXMaterialSerializable atlasParticlesMaterial;
-		[Serialize("edgeSize"              )] public float edgeSize;
-		[Serialize("breakFaction"          )] public uint breakFaction;
+		public float timeShakeBeforeFall;
+		public float countDownHit;
+		public float gravityBallistics;
+		public float timeExpulse;
+		public Path atlasPath;
+		public Path atlasParticlesPath;
+		public GFXMaterialSerializable atlasMaterial;
+		public GFXMaterialSerializable atlasParticlesMaterial;
+		public float edgeSize;
+		public uint breakFaction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(timeShakeBeforeFall));
-			SerializeField(s, nameof(countDownHit));
-			SerializeField(s, nameof(gravityBallistics));
-			SerializeField(s, nameof(timeExpulse));
+			timeShakeBeforeFall = s.Serialize<float>(timeShakeBeforeFall, name: "timeShakeBeforeFall");
+			countDownHit = s.Serialize<float>(countDownHit, name: "countDownHit");
+			gravityBallistics = s.Serialize<float>(gravityBallistics, name: "gravityBallistics");
+			timeExpulse = s.Serialize<float>(timeExpulse, name: "timeExpulse");
 			if (s.HasFlags(SerializeFlags.Flags8)) {
-				SerializeField(s, nameof(atlasPath));
-				SerializeField(s, nameof(atlasParticlesPath));
+				atlasPath = s.SerializeObject<Path>(atlasPath, name: "atlasPath");
+				atlasParticlesPath = s.SerializeObject<Path>(atlasParticlesPath, name: "atlasParticlesPath");
 			}
-			SerializeField(s, nameof(atlasMaterial));
-			SerializeField(s, nameof(atlasParticlesMaterial));
-			SerializeField(s, nameof(edgeSize));
-			SerializeField(s, nameof(breakFaction));
+			atlasMaterial = s.SerializeObject<GFXMaterialSerializable>(atlasMaterial, name: "atlasMaterial");
+			atlasParticlesMaterial = s.SerializeObject<GFXMaterialSerializable>(atlasParticlesMaterial, name: "atlasParticlesMaterial");
+			edgeSize = s.Serialize<float>(edgeSize, name: "edgeSize");
+			breakFaction = s.Serialize<uint>(breakFaction, name: "breakFaction");
 		}
 		public override uint? ClassCRC => 0x943399E1;
 	}

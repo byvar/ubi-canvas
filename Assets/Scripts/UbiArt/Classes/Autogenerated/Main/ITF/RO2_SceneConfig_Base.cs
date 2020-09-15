@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SceneConfig_Base : SceneConfig {
-		[Serialize("DRCGameplayMode"  )] public Enum_DRCGameplayMode DRCGameplayMode;
-		[Serialize("fade"             )] public StringID fade;
-		[Serialize("packageDescriptor")] public RO2_PackageDescriptor_Template packageDescriptor;
-		[Serialize("istouchScreenMap" )] public bool istouchScreenMap;
+		public Enum_DRCGameplayMode DRCGameplayMode;
+		public StringID fade;
+		public RO2_PackageDescriptor_Template packageDescriptor;
+		public bool istouchScreenMap;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(DRCGameplayMode));
-			SerializeField(s, nameof(fade));
-			SerializeField(s, nameof(packageDescriptor));
-			SerializeField(s, nameof(istouchScreenMap));
+			DRCGameplayMode = s.Serialize<Enum_DRCGameplayMode>(DRCGameplayMode, name: "DRCGameplayMode");
+			fade = s.SerializeObject<StringID>(fade, name: "fade");
+			packageDescriptor = s.SerializeObject<RO2_PackageDescriptor_Template>(packageDescriptor, name: "packageDescriptor");
+			istouchScreenMap = s.Serialize<bool>(istouchScreenMap, name: "istouchScreenMap");
 		}
 		public enum Enum_DRCGameplayMode {
 			[Serialize("Normal"        )] Normal = 0,

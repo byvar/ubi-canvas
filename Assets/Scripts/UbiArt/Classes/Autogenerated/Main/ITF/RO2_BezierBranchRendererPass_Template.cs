@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_BezierBranchRendererPass_Template : CSerializable {
-		[Serialize("name"    )] public StringID name;
-		[Serialize("renderer")] public BezierCurveRenderer_Template renderer;
-		[Serialize("segments")] public CList<RO2_BezierBranchRendererSegment_Template> segments;
-		[Serialize("zOffset" )] public float zOffset;
+		public StringID name;
+		public BezierCurveRenderer_Template renderer;
+		public CList<RO2_BezierBranchRendererSegment_Template> segments;
+		public float zOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(renderer));
-			SerializeField(s, nameof(segments));
-			SerializeField(s, nameof(zOffset));
+			name = s.SerializeObject<StringID>(name, name: "name");
+			renderer = s.SerializeObject<BezierCurveRenderer_Template>(renderer, name: "renderer");
+			segments = s.SerializeObject<CList<RO2_BezierBranchRendererSegment_Template>>(segments, name: "segments");
+			zOffset = s.Serialize<float>(zOffset, name: "zOffset");
 		}
 	}
 }

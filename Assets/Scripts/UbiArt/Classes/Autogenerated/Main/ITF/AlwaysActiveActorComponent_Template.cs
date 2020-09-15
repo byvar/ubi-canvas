@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AlwaysActiveActorComponent_Template : ActorComponent_Template {
-		[Serialize("safeTimeOutDuration")] public float safeTimeOutDuration;
-		[Serialize("stopOnScreenLeaving")] public bool stopOnScreenLeaving;
-		[Serialize("startEvent"         )] public Generic<Event> startEvent;
-		[Serialize("stopEvent"          )] public Generic<Event> stopEvent;
+		public float safeTimeOutDuration;
+		public bool stopOnScreenLeaving;
+		public Generic<Event> startEvent;
+		public Generic<Event> stopEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(safeTimeOutDuration));
-			SerializeField(s, nameof(stopOnScreenLeaving));
-			SerializeField(s, nameof(startEvent));
-			SerializeField(s, nameof(stopEvent));
+			safeTimeOutDuration = s.Serialize<float>(safeTimeOutDuration, name: "safeTimeOutDuration");
+			stopOnScreenLeaving = s.Serialize<bool>(stopOnScreenLeaving, name: "stopOnScreenLeaving");
+			startEvent = s.SerializeObject<Generic<Event>>(startEvent, name: "startEvent");
+			stopEvent = s.SerializeObject<Generic<Event>>(stopEvent, name: "stopEvent");
 		}
 		public override uint? ClassCRC => 0x555E08BF;
 	}

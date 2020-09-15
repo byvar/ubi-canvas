@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_DarkToonAIComponent_Template : Ray_GroundAIComponent_Template {
-		[Serialize("windBehavior"  )] public Placeholder windBehavior;
-		[Serialize("waterBehavior" )] public Placeholder waterBehavior;
-		[Serialize("launchBehavior")] public Placeholder launchBehavior;
+		public Placeholder windBehavior;
+		public Placeholder waterBehavior;
+		public Placeholder launchBehavior;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(windBehavior));
-			SerializeField(s, nameof(waterBehavior));
-			SerializeField(s, nameof(launchBehavior));
+			windBehavior = s.SerializeObject<Placeholder>(windBehavior, name: "windBehavior");
+			waterBehavior = s.SerializeObject<Placeholder>(waterBehavior, name: "waterBehavior");
+			launchBehavior = s.SerializeObject<Placeholder>(launchBehavior, name: "launchBehavior");
 		}
 		public override uint? ClassCRC => 0xF3A80B9B;
 	}

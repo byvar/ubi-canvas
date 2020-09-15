@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class Creature_Food : CSerializable {
-		[Serialize("type"       )] public Creature_Food_Type type;
-		[Serialize("actor2DPath")] public Path actor2DPath;
-		[Serialize("actor3DPath")] public Path actor3DPath;
+		public Creature_Food_Type type;
+		public Path actor2DPath;
+		public Path actor3DPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(actor2DPath));
-			SerializeField(s, nameof(actor3DPath));
+			type = s.Serialize<Creature_Food_Type>(type, name: "type");
+			actor2DPath = s.SerializeObject<Path>(actor2DPath, name: "actor2DPath");
+			actor3DPath = s.SerializeObject<Path>(actor3DPath, name: "actor3DPath");
 		}
 		public enum Creature_Food_Type {
 			[Serialize("Creature_Food::cookie" )] cookie = 0,

@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_Mission_Guard_Hatch_CheckCreature : RLC_Mission_Guard {
-		[Serialize("creatureID" )] public StringID creatureID;
-		[Serialize("powerup"    )] public StringID powerup;
-		[Serialize("new"        )] public bool _new;
-		[Serialize("duplicate"  )] public bool duplicate;
-		[Serialize("family"     )] public Creature_Family family;
-		[Serialize("rarity"     )] public Creature_Rarity rarity;
-		[Serialize("acquisition")] public uint acquisition;
+		public StringID creatureID;
+		public StringID powerup;
+		public bool _new;
+		public bool duplicate;
+		public Creature_Family family;
+		public Creature_Rarity rarity;
+		public uint acquisition;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(creatureID));
-			SerializeField(s, nameof(powerup));
-			SerializeField(s, nameof(_new));
-			SerializeField(s, nameof(duplicate));
-			SerializeField(s, nameof(family));
-			SerializeField(s, nameof(rarity));
-			SerializeField(s, nameof(acquisition));
+			creatureID = s.SerializeObject<StringID>(creatureID, name: "creatureID");
+			powerup = s.SerializeObject<StringID>(powerup, name: "powerup");
+			_new = s.Serialize<bool>(_new, name: "_new");
+			duplicate = s.Serialize<bool>(duplicate, name: "duplicate");
+			family = s.Serialize<Creature_Family>(family, name: "family");
+			rarity = s.Serialize<Creature_Rarity>(rarity, name: "rarity");
+			acquisition = s.Serialize<uint>(acquisition, name: "acquisition");
 		}
 		public enum Creature_Family {
 			[Serialize("Creature_Family::none"                 )] none = 0,

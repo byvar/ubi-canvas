@@ -3,45 +3,45 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RLVersion)]
 	public partial class BusDef : CSerializable {
-		[Serialize("name"           )] public StringID name;
-		[Serialize("outputs"        )] public CList<StringID> outputs;
-		[Serialize("volume"         )] public Volume volume;
-		[Serialize("filterFrequency")] public float filterFrequency;
-		[Serialize("filterQ"        )] public float filterQ;
-		[Serialize("filterType"     )] public FilterType filterType;
-		[Serialize("hasReverb"      )] public bool hasReverb;
-		[Serialize("reverbActive"   )] public int reverbActive;
-		[Serialize("reverbPreset"   )] public ReverbPreset reverbPreset;
-		[Serialize("modifiers"      )] public CArray<Generic<SoundModifier>> modifiers;
-		[Serialize("pauseSensitive" )] public int pauseSensitive;
+		public StringID name;
+		public CList<StringID> outputs;
+		public Volume volume;
+		public float filterFrequency;
+		public float filterQ;
+		public FilterType filterType;
+		public bool hasReverb;
+		public int reverbActive;
+		public ReverbPreset reverbPreset;
+		public CArray<Generic<SoundModifier>> modifiers;
+		public int pauseSensitive;
 
 		
-		[Serialize("filterType"     )] public FilterType2 filterType2;
-		[Serialize("outDevices"     )] public uint outDevices;
+		public FilterType2 filterType2;
+		public uint outDevices;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
 			} else if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(outputs));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(filterFrequency));
-				SerializeField(s, nameof(filterQ));
-				SerializeField(s, nameof(filterType));
-				SerializeField(s, nameof(hasReverb));
-				SerializeField(s, nameof(reverbActive));
-				SerializeField(s, nameof(reverbPreset));
-				SerializeField(s, nameof(modifiers));
-				SerializeField(s, nameof(pauseSensitive));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				outputs = s.SerializeObject<CList<StringID>>(outputs, name: "outputs");
+				volume = s.SerializeObject<Volume>(volume, name: "volume");
+				filterFrequency = s.Serialize<float>(filterFrequency, name: "filterFrequency");
+				filterQ = s.Serialize<float>(filterQ, name: "filterQ");
+				filterType = s.Serialize<FilterType>(filterType, name: "filterType");
+				hasReverb = s.Serialize<bool>(hasReverb, name: "hasReverb");
+				reverbActive = s.Serialize<int>(reverbActive, name: "reverbActive");
+				reverbPreset = s.Serialize<ReverbPreset>(reverbPreset, name: "reverbPreset");
+				modifiers = s.SerializeObject<CArray<Generic<SoundModifier>>>(modifiers, name: "modifiers");
+				pauseSensitive = s.Serialize<int>(pauseSensitive, name: "pauseSensitive");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(outputs));
-				SerializeField(s, nameof(volume));
-				SerializeField(s, nameof(filterFrequency));
-				SerializeField(s, nameof(filterType2));
-				SerializeField(s, nameof(modifiers));
-				SerializeField(s, nameof(outDevices));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				outputs = s.SerializeObject<CList<StringID>>(outputs, name: "outputs");
+				volume = s.SerializeObject<Volume>(volume, name: "volume");
+				filterFrequency = s.Serialize<float>(filterFrequency, name: "filterFrequency");
+				filterType2 = s.Serialize<FilterType2>(filterType2, name: "filterType2");
+				modifiers = s.SerializeObject<CArray<Generic<SoundModifier>>>(modifiers, name: "modifiers");
+				outDevices = s.Serialize<uint>(outDevices, name: "outDevices");
 			}
 		}
 		public enum FilterType {

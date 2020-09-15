@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class WwiseItem : CSerializable {
-		[Serialize("name")] public StringID name;
-		[Serialize("GUID")] public StringID GUID;
-		[Serialize("ID"  )] public uint ID;
-		[Serialize("Type")] public AUDIO_ITEM_WWISE Type;
+		public StringID name;
+		public StringID GUID;
+		public uint ID;
+		public AUDIO_ITEM_WWISE Type;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(GUID));
-			SerializeField(s, nameof(ID));
-			SerializeField(s, nameof(Type));
+			name = s.SerializeObject<StringID>(name, name: "name");
+			GUID = s.SerializeObject<StringID>(GUID, name: "GUID");
+			ID = s.Serialize<uint>(ID, name: "ID");
+			Type = s.Serialize<AUDIO_ITEM_WWISE>(Type, name: "Type");
 		}
 		public enum AUDIO_ITEM_WWISE {
 			[Serialize("AUDIO_ITEM_WWISE_EVENT"         )] EVENT = 0,

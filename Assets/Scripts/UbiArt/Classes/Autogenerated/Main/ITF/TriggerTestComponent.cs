@@ -3,54 +3,54 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerTestComponent : ActorComponent {
-		[Serialize("AutoStart"                                   )] public bool AutoStart;
-		[Serialize("Detection"                                   )] public CList<Generic<TriggerSelectionAbstract>> Detection;
-		[Serialize("DetectionOperator"                           )] public Operator DetectionOperator;
-		[Serialize("Test"                                        )] public CList<Generic<TriggerTestAbstract>> Test;
-		[Serialize("TestOperator"                                )] public Operator TestOperator;
-		[Serialize("PlayMode"                                    )] public Enum_PlayMode PlayMode;
-		[Serialize("OnActivate"                                  )] public CList<sEventData> OnActivate;
-		[Serialize("OnDeactivate"                                )] public CList<sEventData> OnDeactivate;
-		[Serialize("OnStayActive"                                )] public CList<sEventData> OnStayActive;
-		[Serialize("StayActiveDelay"                             )] public float StayActiveDelay;
+		public bool AutoStart;
+		public CList<Generic<TriggerSelectionAbstract>> Detection;
+		public Operator DetectionOperator;
+		public CList<Generic<TriggerTestAbstract>> Test;
+		public Operator TestOperator;
+		public Enum_PlayMode PlayMode;
+		public CList<sEventData> OnActivate;
+		public CList<sEventData> OnDeactivate;
+		public CList<sEventData> OnStayActive;
+		public float StayActiveDelay;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(AutoStart));
+				AutoStart = s.Serialize<bool>(AutoStart, name: "AutoStart");
 				if (!s.HasFlags(SerializeFlags.Editor)) {
-					SerializeField(s, nameof(Detection));
-					SerializeField(s, nameof(DetectionOperator));
-					SerializeField(s, nameof(Test));
-					SerializeField(s, nameof(TestOperator));
+					Detection = s.SerializeObject<CList<Generic<TriggerSelectionAbstract>>>(Detection, name: "Detection");
+					DetectionOperator = s.Serialize<Operator>(DetectionOperator, name: "DetectionOperator");
+					Test = s.SerializeObject<CList<Generic<TriggerTestAbstract>>>(Test, name: "Test");
+					TestOperator = s.Serialize<Operator>(TestOperator, name: "TestOperator");
 				} else if (!AutoStart) {
-					SerializeField(s, nameof(Detection));
-					if (Detection.Count > 1) SerializeField(s, nameof(DetectionOperator));
-					SerializeField(s, nameof(Test));
-					if (Test.Count > 1) SerializeField(s, nameof(TestOperator));
+					Detection = s.SerializeObject<CList<Generic<TriggerSelectionAbstract>>>(Detection, name: "Detection");
+					if (Detection.Count > 1) DetectionOperator = s.Serialize<Operator>(DetectionOperator, name: "DetectionOperator");
+					Test = s.SerializeObject<CList<Generic<TriggerTestAbstract>>>(Test, name: "Test");
+					if (Test.Count > 1) TestOperator = s.Serialize<Operator>(TestOperator, name: "TestOperator");
 				}
-				SerializeField(s, nameof(OnActivate));
-				SerializeField(s, nameof(OnDeactivate));
-				SerializeField(s, nameof(OnStayActive));
+				OnActivate = s.SerializeObject<CList<sEventData>>(OnActivate, name: "OnActivate");
+				OnDeactivate = s.SerializeObject<CList<sEventData>>(OnDeactivate, name: "OnDeactivate");
+				OnStayActive = s.SerializeObject<CList<sEventData>>(OnStayActive, name: "OnStayActive");
 			} else {
-				SerializeField(s, nameof(AutoStart));
+				AutoStart = s.Serialize<bool>(AutoStart, name: "AutoStart");
 				if (!s.HasFlags(SerializeFlags.Editor)) {
-					SerializeField(s, nameof(Detection));
-					SerializeField(s, nameof(DetectionOperator));
-					SerializeField(s, nameof(Test));
-					SerializeField(s, nameof(TestOperator));
-					SerializeField(s, nameof(PlayMode));
+					Detection = s.SerializeObject<CList<Generic<TriggerSelectionAbstract>>>(Detection, name: "Detection");
+					DetectionOperator = s.Serialize<Operator>(DetectionOperator, name: "DetectionOperator");
+					Test = s.SerializeObject<CList<Generic<TriggerTestAbstract>>>(Test, name: "Test");
+					TestOperator = s.Serialize<Operator>(TestOperator, name: "TestOperator");
+					PlayMode = s.Serialize<Enum_PlayMode>(PlayMode, name: "PlayMode");
 				} else if(!AutoStart) {
-					SerializeField(s, nameof(Detection));
-					if (Detection.Count > 1) SerializeField(s, nameof(DetectionOperator));
-					SerializeField(s, nameof(Test));
-					if (Test.Count > 1) SerializeField(s, nameof(TestOperator));
+					Detection = s.SerializeObject<CList<Generic<TriggerSelectionAbstract>>>(Detection, name: "Detection");
+					if (Detection.Count > 1) DetectionOperator = s.Serialize<Operator>(DetectionOperator, name: "DetectionOperator");
+					Test = s.SerializeObject<CList<Generic<TriggerTestAbstract>>>(Test, name: "Test");
+					if (Test.Count > 1) TestOperator = s.Serialize<Operator>(TestOperator, name: "TestOperator");
 				}
-				SerializeField(s, nameof(OnActivate));
-				SerializeField(s, nameof(OnDeactivate));
-				SerializeField(s, nameof(OnStayActive));
+				OnActivate = s.SerializeObject<CList<sEventData>>(OnActivate, name: "OnActivate");
+				OnDeactivate = s.SerializeObject<CList<sEventData>>(OnDeactivate, name: "OnDeactivate");
+				OnStayActive = s.SerializeObject<CList<sEventData>>(OnStayActive, name: "OnStayActive");
 				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeField(s, nameof(StayActiveDelay));
+					StayActiveDelay = s.Serialize<float>(StayActiveDelay, name: "StayActiveDelay");
 				}
 			}
 		}

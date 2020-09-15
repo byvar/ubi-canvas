@@ -32,5 +32,9 @@ namespace UbiArt {
 		public static implicit operator Vector4(Vec4d v) {
 			return new Vector4(v.x, v.y, v.z, v.w);
 		}
+
+		public override string ToString() {
+			return $"Vec4d({x}, {y}, {z}, {w})";
+		}
 	}
 }

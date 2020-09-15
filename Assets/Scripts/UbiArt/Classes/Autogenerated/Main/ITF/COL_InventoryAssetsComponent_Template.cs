@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_InventoryAssetsComponent_Template : CSerializable {
-		[Serialize("spawnEquippedItems"   )] public bool spawnEquippedItems;
-		[Serialize("renderToParentTexture")] public bool renderToParentTexture;
-		[Serialize("wingsMeshName"        )] public string wingsMeshName;
-		[Serialize("defaultItems"         )] public Placeholder defaultItems;
+		public bool spawnEquippedItems;
+		public bool renderToParentTexture;
+		public string wingsMeshName;
+		public Placeholder defaultItems;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(spawnEquippedItems), boolAsByte: true);
-			SerializeField(s, nameof(renderToParentTexture), boolAsByte: true);
-			SerializeField(s, nameof(wingsMeshName));
-			SerializeField(s, nameof(defaultItems));
+			spawnEquippedItems = s.Serialize<bool>(spawnEquippedItems, name: "spawnEquippedItems", options: CSerializerObject.Options.BoolAsByte);
+			renderToParentTexture = s.Serialize<bool>(renderToParentTexture, name: "renderToParentTexture", options: CSerializerObject.Options.BoolAsByte);
+			wingsMeshName = s.Serialize<string>(wingsMeshName, name: "wingsMeshName");
+			defaultItems = s.SerializeObject<Placeholder>(defaultItems, name: "defaultItems");
 		}
 		public override uint? ClassCRC => 0x01CA259F;
 	}

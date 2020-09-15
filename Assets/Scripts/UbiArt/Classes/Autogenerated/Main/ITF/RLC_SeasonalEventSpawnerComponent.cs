@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_SeasonalEventSpawnerComponent : ActorComponent {
-		[Serialize("selectedPathIndex")] public uint selectedPathIndex;
-		[Serialize("weight"           )] public uint weight;
-		[Serialize("GFXParam"         )] public GFXPrimitiveParam GFXParam;
-		[Serialize("triggerSpawn"     )] public bool triggerSpawn;
-		[Serialize("spawneeCanDrown"  )] public bool spawneeCanDrown;
+		public uint selectedPathIndex;
+		public uint weight;
+		public GFXPrimitiveParam GFXParam;
+		public bool triggerSpawn;
+		public bool spawneeCanDrown;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(selectedPathIndex));
-			SerializeField(s, nameof(weight));
-			SerializeField(s, nameof(GFXParam));
-			SerializeField(s, nameof(triggerSpawn));
-			SerializeField(s, nameof(spawneeCanDrown));
+			selectedPathIndex = s.Serialize<uint>(selectedPathIndex, name: "selectedPathIndex");
+			weight = s.Serialize<uint>(weight, name: "weight");
+			GFXParam = s.SerializeObject<GFXPrimitiveParam>(GFXParam, name: "GFXParam");
+			triggerSpawn = s.Serialize<bool>(triggerSpawn, name: "triggerSpawn");
+			spawneeCanDrown = s.Serialize<bool>(spawneeCanDrown, name: "spawneeCanDrown");
 		}
 		public override uint? ClassCRC => 0xD33156E5;
 	}

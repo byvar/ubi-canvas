@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeFireWallComponent : ActorComponent {
-		[Serialize("screenPosition"          )] public Vec2d screenPosition;
-		[Serialize("actorPosAtCheckpointSave")] public Vec3d actorPosAtCheckpointSave;
-		[Serialize("state"                   )] public State state;
-		[Serialize("useScreenPos"            )] public bool useScreenPos;
+		public Vec2d screenPosition;
+		public Vec3d actorPosAtCheckpointSave;
+		public State state;
+		public bool useScreenPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(screenPosition));
-				SerializeField(s, nameof(actorPosAtCheckpointSave));
-				SerializeField(s, nameof(useScreenPos));
+				screenPosition = s.SerializeObject<Vec2d>(screenPosition, name: "screenPosition");
+				actorPosAtCheckpointSave = s.SerializeObject<Vec3d>(actorPosAtCheckpointSave, name: "actorPosAtCheckpointSave");
+				useScreenPos = s.Serialize<bool>(useScreenPos, name: "useScreenPos");
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(state));
+					state = s.Serialize<State>(state, name: "state");
 				}
 			} else {
-				SerializeField(s, nameof(screenPosition));
-				SerializeField(s, nameof(actorPosAtCheckpointSave));
+				screenPosition = s.SerializeObject<Vec2d>(screenPosition, name: "screenPosition");
+				actorPosAtCheckpointSave = s.SerializeObject<Vec3d>(actorPosAtCheckpointSave, name: "actorPosAtCheckpointSave");
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(state));
+					state = s.Serialize<State>(state, name: "state");
 				}
 			}
 		}

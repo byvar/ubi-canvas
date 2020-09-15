@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_276_sub_902FB0 : ActorComponent_Template {
-		[Serialize("dbgSplineMaterial"                )] public GFXMaterialSerializable dbgSplineMaterial;
-		[Serialize("shieldDragDistance"               )] public float shieldDragDistance;
-		[Serialize("allowMultiPlayerMode"             )] public int allowMultiPlayerMode;
-		[Serialize("allowAutoGyroActivation"          )] public int allowAutoGyroActivation;
-		[Serialize("autoStartMode"                    )] public int autoStartMode;
-		[Serialize("multiPlayerActionValidationDelay" )] public float multiPlayerActionValidationDelay;
-		[Serialize("multiPlayerManageTargetVisibility")] public int multiPlayerManageTargetVisibility;
+		public GFXMaterialSerializable dbgSplineMaterial;
+		public float shieldDragDistance;
+		public int allowMultiPlayerMode;
+		public int allowAutoGyroActivation;
+		public int autoStartMode;
+		public float multiPlayerActionValidationDelay;
+		public int multiPlayerManageTargetVisibility;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(dbgSplineMaterial));
-			SerializeField(s, nameof(shieldDragDistance));
-			SerializeField(s, nameof(allowMultiPlayerMode));
-			SerializeField(s, nameof(allowAutoGyroActivation));
-			SerializeField(s, nameof(autoStartMode));
-			SerializeField(s, nameof(multiPlayerActionValidationDelay));
-			SerializeField(s, nameof(multiPlayerManageTargetVisibility));
+			dbgSplineMaterial = s.SerializeObject<GFXMaterialSerializable>(dbgSplineMaterial, name: "dbgSplineMaterial");
+			shieldDragDistance = s.Serialize<float>(shieldDragDistance, name: "shieldDragDistance");
+			allowMultiPlayerMode = s.Serialize<int>(allowMultiPlayerMode, name: "allowMultiPlayerMode");
+			allowAutoGyroActivation = s.Serialize<int>(allowAutoGyroActivation, name: "allowAutoGyroActivation");
+			autoStartMode = s.Serialize<int>(autoStartMode, name: "autoStartMode");
+			multiPlayerActionValidationDelay = s.Serialize<float>(multiPlayerActionValidationDelay, name: "multiPlayerActionValidationDelay");
+			multiPlayerManageTargetVisibility = s.Serialize<int>(multiPlayerManageTargetVisibility, name: "multiPlayerManageTargetVisibility");
 		}
 		public override uint? ClassCRC => 0xF7FD920D;
 	}

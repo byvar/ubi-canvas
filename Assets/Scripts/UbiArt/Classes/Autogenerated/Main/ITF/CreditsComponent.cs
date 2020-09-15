@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class CreditsComponent : ActorComponent {
-		[Serialize("width"          )] public float width;
-		[Serialize("height"         )] public float height;
-		[Serialize("scrollSpeed"    )] public float scrollSpeed;
-		[Serialize("globalFontScale")] public float globalFontScale;
-		[Serialize("interline"      )] public float interline;
+		public float width;
+		public float height;
+		public float scrollSpeed;
+		public float globalFontScale;
+		public float interline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(width));
-			SerializeField(s, nameof(height));
-			SerializeField(s, nameof(scrollSpeed));
-			SerializeField(s, nameof(globalFontScale));
-			SerializeField(s, nameof(interline));
+			width = s.Serialize<float>(width, name: "width");
+			height = s.Serialize<float>(height, name: "height");
+			scrollSpeed = s.Serialize<float>(scrollSpeed, name: "scrollSpeed");
+			globalFontScale = s.Serialize<float>(globalFontScale, name: "globalFontScale");
+			interline = s.Serialize<float>(interline, name: "interline");
 		}
 		public override uint? ClassCRC => 0xA9BC1BE5;
 	}

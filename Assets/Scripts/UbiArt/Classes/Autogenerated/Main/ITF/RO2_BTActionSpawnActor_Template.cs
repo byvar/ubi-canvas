@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionSpawnActor_Template : BTAction_Template {
-		[Serialize("ActorPath")] public Path ActorPath;
-		[Serialize("Offset"   )] public Vec2d Offset;
+		public Path ActorPath;
+		public Vec2d Offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ActorPath));
-			SerializeField(s, nameof(Offset));
+			ActorPath = s.SerializeObject<Path>(ActorPath, name: "ActorPath");
+			Offset = s.SerializeObject<Vec2d>(Offset, name: "Offset");
 		}
 		public override uint? ClassCRC => 0x25E52449;
 	}

@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class ConvertibleElement_Template : CSerializable {
-		[Serialize("name"               )] public StringID name;
-		[Serialize("animSpiky"          )] public StringID animSpiky;
-		[Serialize("animSpikyToFriendly")] public StringID animSpikyToFriendly;
-		[Serialize("animFriendly"       )] public StringID animFriendly;
-		[Serialize("flip"               )] public bool flip;
-		[Serialize("grow"               )] public bool grow;
-		[Serialize("delayMin"           )] public float delayMin;
-		[Serialize("delayMax"           )] public float delayMax;
-		[Serialize("density"            )] public float density;
-		[Serialize("fx"                 )] public StringID fx;
+		public StringID name;
+		public StringID animSpiky;
+		public StringID animSpikyToFriendly;
+		public StringID animFriendly;
+		public bool flip;
+		public bool grow;
+		public float delayMin;
+		public float delayMax;
+		public float density;
+		public StringID fx;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(animSpiky));
-			SerializeField(s, nameof(animSpikyToFriendly));
-			SerializeField(s, nameof(animFriendly));
-			SerializeField(s, nameof(flip));
+			name = s.SerializeObject<StringID>(name, name: "name");
+			animSpiky = s.SerializeObject<StringID>(animSpiky, name: "animSpiky");
+			animSpikyToFriendly = s.SerializeObject<StringID>(animSpikyToFriendly, name: "animSpikyToFriendly");
+			animFriendly = s.SerializeObject<StringID>(animFriendly, name: "animFriendly");
+			flip = s.Serialize<bool>(flip, name: "flip");
 			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(grow));
-				SerializeField(s, nameof(delayMin));
-				SerializeField(s, nameof(delayMax));
-				SerializeField(s, nameof(density));
+				grow = s.Serialize<bool>(grow, name: "grow");
+				delayMin = s.Serialize<float>(delayMin, name: "delayMin");
+				delayMax = s.Serialize<float>(delayMax, name: "delayMax");
+				density = s.Serialize<float>(density, name: "density");
 			}
-			SerializeField(s, nameof(fx));
+			fx = s.SerializeObject<StringID>(fx, name: "fx");
 		}
 	}
 }

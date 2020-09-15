@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class GenericDetectorComponent : ShapeDetectorComponent {
-		[Serialize("Enum_VH_0__0"                                  )] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("Enum_VH_1__1"                                  )] public Enum_VH_1 Enum_VH_1__1;
-		[Serialize("Enum_VH_1__2"                                  )] public Enum_VH_1 Enum_VH_1__2;
-		[Serialize("bool__3"                                       )] public bool bool__3;
-		[Serialize("CArray<Generic<GenericDetectorConditioner>>__4")] public CArray<Generic<GenericDetectorConditioner>> CArray_Generic_GenericDetectorConditioner__4;
+		public Enum_VH_0 Enum_VH_0__0;
+		public Enum_VH_1 Enum_VH_1__1;
+		public Enum_VH_1 Enum_VH_1__2;
+		public bool bool__3;
+		public CArray<Generic<GenericDetectorConditioner>> CArray_Generic_GenericDetectorConditioner__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Enum_VH_0__0));
-			SerializeField(s, nameof(Enum_VH_1__1));
-			SerializeField(s, nameof(Enum_VH_1__2));
-			SerializeField(s, nameof(bool__3));
-			SerializeField(s, nameof(CArray_Generic_GenericDetectorConditioner__4));
+			Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
+			Enum_VH_1__1 = s.Serialize<Enum_VH_1>(Enum_VH_1__1, name: "Enum_VH_1__1");
+			Enum_VH_1__2 = s.Serialize<Enum_VH_1>(Enum_VH_1__2, name: "Enum_VH_1__2");
+			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
+			CArray_Generic_GenericDetectorConditioner__4 = s.SerializeObject<CArray<Generic<GenericDetectorConditioner>>>(CArray_Generic_GenericDetectorConditioner__4, name: "CArray_Generic_GenericDetectorConditioner__4");
 		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_0" )] Value_0 = 0,

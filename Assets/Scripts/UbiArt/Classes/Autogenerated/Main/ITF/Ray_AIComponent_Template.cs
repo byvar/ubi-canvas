@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIComponent_Template : AIComponent_Template {
-		[Serialize("reactivateOnCheckpoint"               )] public int reactivateOnCheckpoint;
-		[Serialize("customCheckpointHandling"             )] public int customCheckpointHandling;
-		[Serialize("softCollisionRadius"                  )] public float softCollisionRadius;
-		[Serialize("reward"                               )] public Generic<Ray_EventSpawnReward> reward;
-		[Serialize("invincibleToDangerousMaterial"        )] public int invincibleToDangerousMaterial;
-		[Serialize("alsoCheckEncroachedDangerousMaterials")] public int alsoCheckEncroachedDangerousMaterials;
+		public int reactivateOnCheckpoint;
+		public int customCheckpointHandling;
+		public float softCollisionRadius;
+		public Generic<Ray_EventSpawnReward> reward;
+		public int invincibleToDangerousMaterial;
+		public int alsoCheckEncroachedDangerousMaterials;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(reactivateOnCheckpoint));
-			SerializeField(s, nameof(customCheckpointHandling));
-			SerializeField(s, nameof(softCollisionRadius));
-			SerializeField(s, nameof(reward));
-			SerializeField(s, nameof(invincibleToDangerousMaterial));
-			SerializeField(s, nameof(alsoCheckEncroachedDangerousMaterials));
+			reactivateOnCheckpoint = s.Serialize<int>(reactivateOnCheckpoint, name: "reactivateOnCheckpoint");
+			customCheckpointHandling = s.Serialize<int>(customCheckpointHandling, name: "customCheckpointHandling");
+			softCollisionRadius = s.Serialize<float>(softCollisionRadius, name: "softCollisionRadius");
+			reward = s.SerializeObject<Generic<Ray_EventSpawnReward>>(reward, name: "reward");
+			invincibleToDangerousMaterial = s.Serialize<int>(invincibleToDangerousMaterial, name: "invincibleToDangerousMaterial");
+			alsoCheckEncroachedDangerousMaterials = s.Serialize<int>(alsoCheckEncroachedDangerousMaterials, name: "alsoCheckEncroachedDangerousMaterials");
 		}
 		public override uint? ClassCRC => 0xF7791A7F;
 	}

@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PushedAIComponent_Template : Ray_AIComponent_Template {
-		[Serialize("faction"             )] public uint faction2;
-		[Serialize("forceMultiplier"     )] public float forceMultiplier;
-		[Serialize("maxSpeed"            )] public float maxSpeed;
-		[Serialize("bounceMultiplier"    )] public float bounceMultiplier;
-		[Serialize("weakHitForce"        )] public float weakHitForce;
-		[Serialize("strongHitForce"      )] public float strongHitForce;
-		[Serialize("landForceMultiplier" )] public float landForceMultiplier;
-		[Serialize("landXForceMultiplier")] public float landXForceMultiplier;
+		public uint faction2;
+		public float forceMultiplier;
+		public float maxSpeed;
+		public float bounceMultiplier;
+		public float weakHitForce;
+		public float strongHitForce;
+		public float landForceMultiplier;
+		public float landXForceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(faction2));
-			SerializeField(s, nameof(forceMultiplier));
-			SerializeField(s, nameof(maxSpeed));
-			SerializeField(s, nameof(bounceMultiplier));
-			SerializeField(s, nameof(weakHitForce));
-			SerializeField(s, nameof(strongHitForce));
-			SerializeField(s, nameof(landForceMultiplier));
-			SerializeField(s, nameof(landXForceMultiplier));
+			faction2 = s.Serialize<uint>(faction2, name: "faction2");
+			forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
+			maxSpeed = s.Serialize<float>(maxSpeed, name: "maxSpeed");
+			bounceMultiplier = s.Serialize<float>(bounceMultiplier, name: "bounceMultiplier");
+			weakHitForce = s.Serialize<float>(weakHitForce, name: "weakHitForce");
+			strongHitForce = s.Serialize<float>(strongHitForce, name: "strongHitForce");
+			landForceMultiplier = s.Serialize<float>(landForceMultiplier, name: "landForceMultiplier");
+			landXForceMultiplier = s.Serialize<float>(landXForceMultiplier, name: "landXForceMultiplier");
 		}
 		public override uint? ClassCRC => 0x1FE64923;
 	}

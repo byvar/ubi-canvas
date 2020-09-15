@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FriendlyGrannyBTAIComponent_Template : RO2_FriendlyBTAIComponent_Template {
-		[Serialize("health"                     )] public int health;
-		[Serialize("hitHealthMalus"             )] public int hitHealthMalus;
-		[Serialize("ignoreRehit"                )] public bool ignoreRehit;
-		[Serialize("earthquakeBounceMultiplier" )] public float earthquakeBounceMultiplier;
-		[Serialize("crushBounceMultiplier"      )] public float crushBounceMultiplier;
-		[Serialize("softCollision"              )] public RO2_SoftCollision_Template softCollision;
-		[Serialize("enableAutoSpawnOnCheckpoint")] public bool enableAutoSpawnOnCheckpoint;
+		public int health;
+		public int hitHealthMalus;
+		public bool ignoreRehit;
+		public float earthquakeBounceMultiplier;
+		public float crushBounceMultiplier;
+		public RO2_SoftCollision_Template softCollision;
+		public bool enableAutoSpawnOnCheckpoint;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(health));
-			SerializeField(s, nameof(hitHealthMalus));
-			SerializeField(s, nameof(ignoreRehit));
-			SerializeField(s, nameof(earthquakeBounceMultiplier));
-			SerializeField(s, nameof(crushBounceMultiplier));
-			SerializeField(s, nameof(softCollision));
-			SerializeField(s, nameof(enableAutoSpawnOnCheckpoint));
+			health = s.Serialize<int>(health, name: "health");
+			hitHealthMalus = s.Serialize<int>(hitHealthMalus, name: "hitHealthMalus");
+			ignoreRehit = s.Serialize<bool>(ignoreRehit, name: "ignoreRehit");
+			earthquakeBounceMultiplier = s.Serialize<float>(earthquakeBounceMultiplier, name: "earthquakeBounceMultiplier");
+			crushBounceMultiplier = s.Serialize<float>(crushBounceMultiplier, name: "crushBounceMultiplier");
+			softCollision = s.SerializeObject<RO2_SoftCollision_Template>(softCollision, name: "softCollision");
+			enableAutoSpawnOnCheckpoint = s.Serialize<bool>(enableAutoSpawnOnCheckpoint, name: "enableAutoSpawnOnCheckpoint");
 		}
 		public override uint? ClassCRC => 0x8CCD6E30;
 	}

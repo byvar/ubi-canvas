@@ -2,19 +2,19 @@ using UnityEngine;
 
 namespace UbiArt.online {
 	public partial class DeviceUIDInfo : CSerializable {
-		[Serialize("uid"         )] public string uid;
-		[Serialize("mdl"         )] public string mdl;
-		[Serialize("lastuse"     )] public string lastuse;
-		[Serialize("token"       )] public string token;
-		[Serialize("federated_id")] public string federated_id;
+		public string uid;
+		public string mdl;
+		public string lastuse;
+		public string token;
+		public string federated_id;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(uid));
-			SerializeField(s, nameof(mdl));
-			SerializeField(s, nameof(lastuse));
-			SerializeField(s, nameof(token));
-			SerializeField(s, nameof(federated_id));
+			uid = s.Serialize<string>(uid, name: "uid");
+			mdl = s.Serialize<string>(mdl, name: "mdl");
+			lastuse = s.Serialize<string>(lastuse, name: "lastuse");
+			token = s.Serialize<string>(token, name: "token");
+			federated_id = s.Serialize<string>(federated_id, name: "federated_id");
 		}
 	}
 }

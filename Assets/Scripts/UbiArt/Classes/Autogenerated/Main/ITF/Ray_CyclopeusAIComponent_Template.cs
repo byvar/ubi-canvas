@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_CyclopeusAIComponent_Template : Ray_SimpleAIComponent_Template {
-		[Serialize("hurtBehavior")] public Placeholder hurtBehavior;
-		[Serialize("hitMax"      )] public uint hitMax;
+		public Placeholder hurtBehavior;
+		public uint hitMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hurtBehavior));
-			SerializeField(s, nameof(hitMax));
+			hurtBehavior = s.SerializeObject<Placeholder>(hurtBehavior, name: "hurtBehavior");
+			hitMax = s.Serialize<uint>(hitMax, name: "hitMax");
 		}
 		public override uint? ClassCRC => 0xBF9B3E0C;
 	}

@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class EditableShape : CSerializable {
-		[Serialize("shape")] public Generic<PhysShape> shape;
-		[Serialize("bindedBoneName")] public StringID bindedBoneName;
-		[Serialize("localOffset"   )] public Vec2d localOffset;
-		[Serialize("applyRotation" )] public bool applyRotation;
+		public Generic<PhysShape> shape;
+		public StringID bindedBoneName;
+		public Vec2d localOffset;
+		public bool applyRotation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(shape));
+				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-					SerializeField(s, nameof(bindedBoneName));
-					SerializeField(s, nameof(localOffset));
-					SerializeField(s, nameof(applyRotation));
+					bindedBoneName = s.SerializeObject<StringID>(bindedBoneName, name: "bindedBoneName");
+					localOffset = s.SerializeObject<Vec2d>(localOffset, name: "localOffset");
+					applyRotation = s.Serialize<bool>(applyRotation, name: "applyRotation");
 				}
 			}
 		}

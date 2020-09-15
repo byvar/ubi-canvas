@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_141_sub_73CC00 : CSerializable {
-		[Serialize("costumeTransitionTime")] public float costumeTransitionTime;
-		[Serialize("messageInfos"         )] public Placeholder messageInfos;
-		[Serialize("unlockMessageButtons" )] public Placeholder unlockMessageButtons;
-		[Serialize("newContentPath"       )] public Path newContentPath;
-		[Serialize("rumble_name"          )] public StringID rumble_name;
-		[Serialize("rumble_cycleDelay"    )] public float rumble_cycleDelay;
+		public float costumeTransitionTime;
+		public Placeholder messageInfos;
+		public Placeholder unlockMessageButtons;
+		public Path newContentPath;
+		public StringID rumble_name;
+		public float rumble_cycleDelay;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(costumeTransitionTime));
-			SerializeField(s, nameof(messageInfos));
-			SerializeField(s, nameof(unlockMessageButtons));
-			SerializeField(s, nameof(newContentPath));
-			SerializeField(s, nameof(rumble_name));
-			SerializeField(s, nameof(rumble_cycleDelay));
+			costumeTransitionTime = s.Serialize<float>(costumeTransitionTime, name: "costumeTransitionTime");
+			messageInfos = s.SerializeObject<Placeholder>(messageInfos, name: "messageInfos");
+			unlockMessageButtons = s.SerializeObject<Placeholder>(unlockMessageButtons, name: "unlockMessageButtons");
+			newContentPath = s.SerializeObject<Path>(newContentPath, name: "newContentPath");
+			rumble_name = s.SerializeObject<StringID>(rumble_name, name: "rumble_name");
+			rumble_cycleDelay = s.Serialize<float>(rumble_cycleDelay, name: "rumble_cycleDelay");
 		}
 		public override uint? ClassCRC => 0x7F8B4E1C;
 	}

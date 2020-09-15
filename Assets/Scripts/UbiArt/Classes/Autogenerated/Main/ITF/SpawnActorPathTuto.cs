@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class SpawnActorPathTuto : CSerializable {
-		[Serialize("tutoType"    )] public uint tutoType;
-		[Serialize("tutoCycle"   )] public uint tutoCycle;
-		[Serialize("isDrc"       )] public bool isDrc;
-		[Serialize("defaultActor")] public Path defaultActor;
-		[Serialize("DRC"         )] public Path DRC;
-		[Serialize("Pad"         )] public Path Pad;
-		[Serialize("WiiRemote"   )] public Path WiiRemote;
-		[Serialize("ClassicPad"  )] public Path ClassicPad;
-		[Serialize("NunChuk"     )] public Path NunChuk;
-		[Serialize("X360"        )] public Path X360;
-		[Serialize("Ps3"         )] public Path Ps3;
+		public uint tutoType;
+		public uint tutoCycle;
+		public bool isDrc;
+		public Path defaultActor;
+		public Path DRC;
+		public Path Pad;
+		public Path WiiRemote;
+		public Path ClassicPad;
+		public Path NunChuk;
+		public Path X360;
+		public Path Ps3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(tutoType));
-			SerializeField(s, nameof(tutoCycle));
-			SerializeField(s, nameof(isDrc));
-			SerializeField(s, nameof(defaultActor));
-			SerializeField(s, nameof(DRC));
-			SerializeField(s, nameof(Pad));
-			SerializeField(s, nameof(WiiRemote));
-			SerializeField(s, nameof(ClassicPad));
-			SerializeField(s, nameof(NunChuk));
-			SerializeField(s, nameof(X360));
-			SerializeField(s, nameof(Ps3));
+			tutoType = s.Serialize<uint>(tutoType, name: "tutoType");
+			tutoCycle = s.Serialize<uint>(tutoCycle, name: "tutoCycle");
+			isDrc = s.Serialize<bool>(isDrc, name: "isDrc");
+			defaultActor = s.SerializeObject<Path>(defaultActor, name: "defaultActor");
+			DRC = s.SerializeObject<Path>(DRC, name: "DRC");
+			Pad = s.SerializeObject<Path>(Pad, name: "Pad");
+			WiiRemote = s.SerializeObject<Path>(WiiRemote, name: "WiiRemote");
+			ClassicPad = s.SerializeObject<Path>(ClassicPad, name: "ClassicPad");
+			NunChuk = s.SerializeObject<Path>(NunChuk, name: "NunChuk");
+			X360 = s.SerializeObject<Path>(X360, name: "X360");
+			Ps3 = s.SerializeObject<Path>(Ps3, name: "Ps3");
 		}
 	}
 }

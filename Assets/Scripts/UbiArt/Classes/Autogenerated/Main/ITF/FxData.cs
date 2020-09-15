@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class FxData : CSerializable {
-		[Serialize("fxFall"      )] public StringID fxFall;
-		[Serialize("fxHit"       )] public StringID fxHit;
-		[Serialize("fxSteam"     )] public StringID fxSteam;
-		[Serialize("soundFall"   )] public StringID soundFall;
-		[Serialize("soundHit"    )] public StringID soundHit;
-		[Serialize("soundDestroy")] public StringID soundDestroy;
+		public StringID fxFall;
+		public StringID fxHit;
+		public StringID fxSteam;
+		public StringID soundFall;
+		public StringID soundHit;
+		public StringID soundDestroy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fxFall));
-			SerializeField(s, nameof(fxHit));
-			SerializeField(s, nameof(fxSteam));
-			SerializeField(s, nameof(soundFall));
-			SerializeField(s, nameof(soundHit));
-			SerializeField(s, nameof(soundDestroy));
+			fxFall = s.SerializeObject<StringID>(fxFall, name: "fxFall");
+			fxHit = s.SerializeObject<StringID>(fxHit, name: "fxHit");
+			fxSteam = s.SerializeObject<StringID>(fxSteam, name: "fxSteam");
+			soundFall = s.SerializeObject<StringID>(soundFall, name: "soundFall");
+			soundHit = s.SerializeObject<StringID>(soundHit, name: "soundHit");
+			soundDestroy = s.SerializeObject<StringID>(soundDestroy, name: "soundDestroy");
 		}
 	}
 }

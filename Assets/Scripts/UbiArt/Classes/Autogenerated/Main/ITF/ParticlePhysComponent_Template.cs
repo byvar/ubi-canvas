@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class ParticlePhysComponent_Template : PhysComponent_Template {
-		[Serialize("physFriction"                          )] public float physFriction;
-		[Serialize("physAngularSpeedMinLinear"             )] public float physAngularSpeedMinLinear;
-		[Serialize("physAngularSpeedMaxLinear"             )] public float physAngularSpeedMaxLinear;
-		[Serialize("physAngularSpeedMinAngular"            )] public Angle physAngularSpeedMinAngular;
-		[Serialize("physAngularSpeedMaxAngular"            )] public Angle physAngularSpeedMaxAngular;
+		public float physFriction;
+		public float physAngularSpeedMinLinear;
+		public float physAngularSpeedMaxLinear;
+		public Angle physAngularSpeedMinAngular;
+		public Angle physAngularSpeedMaxAngular;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(physFriction));
-				SerializeField(s, nameof(physAngularSpeedMinLinear));
-				SerializeField(s, nameof(physAngularSpeedMaxLinear));
-				SerializeField(s, nameof(physAngularSpeedMinAngular));
-				SerializeField(s, nameof(physAngularSpeedMaxAngular));
+				physFriction = s.Serialize<float>(physFriction, name: "physFriction");
+				physAngularSpeedMinLinear = s.Serialize<float>(physAngularSpeedMinLinear, name: "physAngularSpeedMinLinear");
+				physAngularSpeedMaxLinear = s.Serialize<float>(physAngularSpeedMaxLinear, name: "physAngularSpeedMaxLinear");
+				physAngularSpeedMinAngular = s.SerializeObject<Angle>(physAngularSpeedMinAngular, name: "physAngularSpeedMinAngular");
+				physAngularSpeedMaxAngular = s.SerializeObject<Angle>(physAngularSpeedMaxAngular, name: "physAngularSpeedMaxAngular");
 			} else {
-				SerializeField(s, nameof(physFriction));
-				SerializeField(s, nameof(physAngularSpeedMinLinear));
-				SerializeField(s, nameof(physAngularSpeedMaxLinear));
-				SerializeField(s, nameof(physAngularSpeedMinAngular));
-				SerializeField(s, nameof(physAngularSpeedMaxAngular));
-				SerializeField(s, nameof(physWindMultiplier));
-				SerializeField(s, nameof(physForce2Speed));
-				SerializeField(s, nameof(physWindSpeedLimit));
-				SerializeField(s, nameof(physWindScaleFactorWhenSpeedIsOpposite));
-				SerializeField(s, nameof(physFanForceMultiplier));
+				physFriction = s.Serialize<float>(physFriction, name: "physFriction");
+				physAngularSpeedMinLinear = s.Serialize<float>(physAngularSpeedMinLinear, name: "physAngularSpeedMinLinear");
+				physAngularSpeedMaxLinear = s.Serialize<float>(physAngularSpeedMaxLinear, name: "physAngularSpeedMaxLinear");
+				physAngularSpeedMinAngular = s.SerializeObject<Angle>(physAngularSpeedMinAngular, name: "physAngularSpeedMinAngular");
+				physAngularSpeedMaxAngular = s.SerializeObject<Angle>(physAngularSpeedMaxAngular, name: "physAngularSpeedMaxAngular");
+				physWindMultiplier = s.Serialize<float>(physWindMultiplier, name: "physWindMultiplier");
+				physForce2Speed = s.Serialize<float>(physForce2Speed, name: "physForce2Speed");
+				physWindSpeedLimit = s.Serialize<float>(physWindSpeedLimit, name: "physWindSpeedLimit");
+				physWindScaleFactorWhenSpeedIsOpposite = s.Serialize<float>(physWindScaleFactorWhenSpeedIsOpposite, name: "physWindScaleFactorWhenSpeedIsOpposite");
+				physFanForceMultiplier = s.Serialize<float>(physFanForceMultiplier, name: "physFanForceMultiplier");
 			}
 		}
 		public override uint? ClassCRC => 0xC53BC898;

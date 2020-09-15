@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LumsCounterComponent_Template : ActorComponent_Template {
-		[Serialize("smartLocID"        )] public SmartLocId smartLocID;
-		[Serialize("displayDuration"   )] public float displayDuration;
-		[Serialize("transitionDuration")] public float transitionDuration;
-		[Serialize("nbRebound"         )] public uint nbRebound;
-		[Serialize("startOffset"       )] public Vec2d startOffset;
-		[Serialize("maxIncreaseTime"   )] public float maxIncreaseTime;
-		[Serialize("maxValueRef"       )] public float maxValueRef;
-		[Serialize("minIncreaseTime"   )] public float minIncreaseTime;
-		[Serialize("minValueRef"       )] public float minValueRef;
-		[Serialize("loopingSound"      )] public StringID loopingSound;
-		[Serialize("endSound"          )] public StringID endSound;
+		public SmartLocId smartLocID;
+		public float displayDuration;
+		public float transitionDuration;
+		public uint nbRebound;
+		public Vec2d startOffset;
+		public float maxIncreaseTime;
+		public float maxValueRef;
+		public float minIncreaseTime;
+		public float minValueRef;
+		public StringID loopingSound;
+		public StringID endSound;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(smartLocID));
-			SerializeField(s, nameof(displayDuration));
-			SerializeField(s, nameof(transitionDuration));
-			SerializeField(s, nameof(nbRebound));
-			SerializeField(s, nameof(startOffset));
-			SerializeField(s, nameof(maxIncreaseTime));
-			SerializeField(s, nameof(maxValueRef));
-			SerializeField(s, nameof(minIncreaseTime));
-			SerializeField(s, nameof(minValueRef));
-			SerializeField(s, nameof(loopingSound));
-			SerializeField(s, nameof(endSound));
+			smartLocID = s.SerializeObject<SmartLocId>(smartLocID, name: "smartLocID");
+			displayDuration = s.Serialize<float>(displayDuration, name: "displayDuration");
+			transitionDuration = s.Serialize<float>(transitionDuration, name: "transitionDuration");
+			nbRebound = s.Serialize<uint>(nbRebound, name: "nbRebound");
+			startOffset = s.SerializeObject<Vec2d>(startOffset, name: "startOffset");
+			maxIncreaseTime = s.Serialize<float>(maxIncreaseTime, name: "maxIncreaseTime");
+			maxValueRef = s.Serialize<float>(maxValueRef, name: "maxValueRef");
+			minIncreaseTime = s.Serialize<float>(minIncreaseTime, name: "minIncreaseTime");
+			minValueRef = s.Serialize<float>(minValueRef, name: "minValueRef");
+			loopingSound = s.SerializeObject<StringID>(loopingSound, name: "loopingSound");
+			endSound = s.SerializeObject<StringID>(endSound, name: "endSound");
 		}
 		public override uint? ClassCRC => 0x73483516;
 	}

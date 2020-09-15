@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class UIElementDisplay : Event {
-		[Serialize("elementName")] public StringID elementName;
-		[Serialize("display"    )] public bool display;
+		public StringID elementName;
+		public bool display;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(elementName));
-			SerializeField(s, nameof(display));
+			elementName = s.SerializeObject<StringID>(elementName, name: "elementName");
+			display = s.Serialize<bool>(display, name: "display");
 		}
 		public override uint? ClassCRC => 0x3251B708;
 	}

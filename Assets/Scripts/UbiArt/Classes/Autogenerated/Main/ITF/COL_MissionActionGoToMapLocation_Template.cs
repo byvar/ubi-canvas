@@ -4,16 +4,16 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_MissionActionGoToMapLocation_Template : CSerializable {
 		[Description("location to go to")]
-		[Serialize("mapLocationId" )] public StringID mapLocationId;
-		[Serialize("unlock"        )] public bool unlock;
-		[Serialize("save"          )] public bool save;
-		[Serialize("transitionType")] public Enum_transitionType transitionType;
+		public StringID mapLocationId;
+		public bool unlock;
+		public bool save;
+		public Enum_transitionType transitionType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(mapLocationId));
-			SerializeField(s, nameof(unlock), boolAsByte: true);
-			SerializeField(s, nameof(save), boolAsByte: true);
-			SerializeField(s, nameof(transitionType));
+			mapLocationId = s.SerializeObject<StringID>(mapLocationId, name: "mapLocationId");
+			unlock = s.Serialize<bool>(unlock, name: "unlock", options: CSerializerObject.Options.BoolAsByte);
+			save = s.Serialize<bool>(save, name: "save", options: CSerializerObject.Options.BoolAsByte);
+			transitionType = s.Serialize<Enum_transitionType>(transitionType, name: "transitionType");
 		}
 		public enum Enum_transitionType {
 			[Serialize("Value_0")] Value_0 = 0,

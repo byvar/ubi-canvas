@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_137_sub_737400 : CSerializable {
-		[Serialize("upMargin"      )] public float upMargin;
-		[Serialize("rightMargin"   )] public float rightMargin;
-		[Serialize("appear"        )] public StringID appear;
-		[Serialize("prisonerAppear")] public StringID prisonerAppear;
-		[Serialize("stand"         )] public StringID stand;
-		[Serialize("disappear"     )] public StringID disappear;
+		public float upMargin;
+		public float rightMargin;
+		public StringID appear;
+		public StringID prisonerAppear;
+		public StringID stand;
+		public StringID disappear;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(upMargin));
-			SerializeField(s, nameof(rightMargin));
-			SerializeField(s, nameof(appear));
-			SerializeField(s, nameof(prisonerAppear));
-			SerializeField(s, nameof(stand));
-			SerializeField(s, nameof(disappear));
+			upMargin = s.Serialize<float>(upMargin, name: "upMargin");
+			rightMargin = s.Serialize<float>(rightMargin, name: "rightMargin");
+			appear = s.SerializeObject<StringID>(appear, name: "appear");
+			prisonerAppear = s.SerializeObject<StringID>(prisonerAppear, name: "prisonerAppear");
+			stand = s.SerializeObject<StringID>(stand, name: "stand");
+			disappear = s.SerializeObject<StringID>(disappear, name: "disappear");
 		}
 		public override uint? ClassCRC => 0x222209E0;
 	}

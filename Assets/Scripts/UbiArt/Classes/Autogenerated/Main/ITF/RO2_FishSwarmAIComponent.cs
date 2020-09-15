@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_FishSwarmAIComponent : RO2_AIComponent {
-		[Serialize("numFishPerColumn")] public uint numFishPerColumn;
-		[Serialize("numColumn"       )] public uint numColumn;
-		[Serialize("borderForceUp"   )] public float borderForceUp;
-		[Serialize("borderForceDown" )] public float borderForceDown;
-		[Serialize("borderForceRight")] public float borderForceRight;
-		[Serialize("borderForceLeft" )] public float borderForceLeft;
+		public uint numFishPerColumn;
+		public uint numColumn;
+		public float borderForceUp;
+		public float borderForceDown;
+		public float borderForceRight;
+		public float borderForceLeft;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(numFishPerColumn));
-				SerializeField(s, nameof(numColumn));
-				SerializeField(s, nameof(borderForceUp));
-				SerializeField(s, nameof(borderForceDown));
-				SerializeField(s, nameof(borderForceRight));
-				SerializeField(s, nameof(borderForceLeft));
+				numFishPerColumn = s.Serialize<uint>(numFishPerColumn, name: "numFishPerColumn");
+				numColumn = s.Serialize<uint>(numColumn, name: "numColumn");
+				borderForceUp = s.Serialize<float>(borderForceUp, name: "borderForceUp");
+				borderForceDown = s.Serialize<float>(borderForceDown, name: "borderForceDown");
+				borderForceRight = s.Serialize<float>(borderForceRight, name: "borderForceRight");
+				borderForceLeft = s.Serialize<float>(borderForceLeft, name: "borderForceLeft");
 			}
 		}
 		public override uint? ClassCRC => 0x07764263;

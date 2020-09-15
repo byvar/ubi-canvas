@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionAppearFromGround_Template : BTAction_Template {
-		[Serialize("anim")] public StringID anim;
+		public StringID anim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(anim));
+			anim = s.SerializeObject<StringID>(anim, name: "anim");
 		}
 		public override uint? ClassCRC => 0x9262847B;
 	}

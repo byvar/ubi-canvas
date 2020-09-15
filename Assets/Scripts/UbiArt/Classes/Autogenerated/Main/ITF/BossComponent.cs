@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class BossComponent : ActorComponent {
-		[Serialize("Enum_VH_0__0"        )] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("Enum_VH_1__1"        )] public Enum_VH_1 Enum_VH_1__1;
-		[Serialize("CArray<PhaseData>__2")] public CArray<PhaseData> CArray_PhaseData__2;
-		[Serialize("Path__3"             )] public Path Path__3;
-		[Serialize("Path__4"             )] public Path Path__4;
-		[Serialize("Path__5"             )] public Path Path__5;
-		[Serialize("Path__6"             )] public Path Path__6;
+		public Enum_VH_0 Enum_VH_0__0;
+		public Enum_VH_1 Enum_VH_1__1;
+		public CArray<PhaseData> CArray_PhaseData__2;
+		public Path Path__3;
+		public Path Path__4;
+		public Path Path__5;
+		public Path Path__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Enum_VH_0__0));
-			SerializeField(s, nameof(Enum_VH_1__1));
-			SerializeField(s, nameof(CArray_PhaseData__2));
-			SerializeField(s, nameof(Path__3));
-			SerializeField(s, nameof(Path__4));
-			SerializeField(s, nameof(Path__5));
-			SerializeField(s, nameof(Path__6));
+			Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
+			Enum_VH_1__1 = s.Serialize<Enum_VH_1>(Enum_VH_1__1, name: "Enum_VH_1__1");
+			CArray_PhaseData__2 = s.SerializeObject<CArray<PhaseData>>(CArray_PhaseData__2, name: "CArray_PhaseData__2");
+			Path__3 = s.SerializeObject<Path>(Path__3, name: "Path__3");
+			Path__4 = s.SerializeObject<Path>(Path__4, name: "Path__4");
+			Path__5 = s.SerializeObject<Path>(Path__5, name: "Path__5");
+			Path__6 = s.SerializeObject<Path>(Path__6, name: "Path__6");
 		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_0" )] Value_0 = 0,

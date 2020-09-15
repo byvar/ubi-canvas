@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_WM_FootpathComponent_Template : GraphicComponent_Template {
-		[Serialize("speed"               )] public float speed;
-		[Serialize("zOffset"             )] public float zOffset;
-		[Serialize("tangentStretch"      )] public float tangentStretch;
-		[Serialize("visualFadeInDuration")] public float visualFadeInDuration;
-		[Serialize("fxFadeInDuration"    )] public float fxFadeInDuration;
-		[Serialize("cameraFollowDistance")] public float cameraFollowDistance;
-		[Serialize("samplePerEdge"       )] public uint samplePerEdge;
-		[Serialize("connectFxName"       )] public StringID connectFxName;
-		[Serialize("bezierRenderer"      )] public Placeholder bezierRenderer;
+		public float speed;
+		public float zOffset;
+		public float tangentStretch;
+		public float visualFadeInDuration;
+		public float fxFadeInDuration;
+		public float cameraFollowDistance;
+		public uint samplePerEdge;
+		public StringID connectFxName;
+		public Placeholder bezierRenderer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(speed));
-			SerializeField(s, nameof(zOffset));
-			SerializeField(s, nameof(tangentStretch));
-			SerializeField(s, nameof(visualFadeInDuration));
-			SerializeField(s, nameof(fxFadeInDuration));
-			SerializeField(s, nameof(cameraFollowDistance));
-			SerializeField(s, nameof(samplePerEdge));
-			SerializeField(s, nameof(connectFxName));
-			SerializeField(s, nameof(bezierRenderer));
+			speed = s.Serialize<float>(speed, name: "speed");
+			zOffset = s.Serialize<float>(zOffset, name: "zOffset");
+			tangentStretch = s.Serialize<float>(tangentStretch, name: "tangentStretch");
+			visualFadeInDuration = s.Serialize<float>(visualFadeInDuration, name: "visualFadeInDuration");
+			fxFadeInDuration = s.Serialize<float>(fxFadeInDuration, name: "fxFadeInDuration");
+			cameraFollowDistance = s.Serialize<float>(cameraFollowDistance, name: "cameraFollowDistance");
+			samplePerEdge = s.Serialize<uint>(samplePerEdge, name: "samplePerEdge");
+			connectFxName = s.SerializeObject<StringID>(connectFxName, name: "connectFxName");
+			bezierRenderer = s.SerializeObject<Placeholder>(bezierRenderer, name: "bezierRenderer");
 		}
 		public override uint? ClassCRC => 0x86786731;
 	}

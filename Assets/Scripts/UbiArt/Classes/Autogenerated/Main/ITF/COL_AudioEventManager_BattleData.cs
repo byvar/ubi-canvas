@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_AudioEventManager_BattleData : CSerializable {
-		[Serialize("startBattleNormal"       )] public Placeholder startBattleNormal;
-		[Serialize("startBattlePreemptive"   )] public Placeholder startBattlePreemptive;
-		[Serialize("startBattleAmbushed"     )] public Placeholder startBattleAmbushed;
-		[Serialize("gameOverSfx"             )] public Placeholder gameOverSfx;
-		[Serialize("musicStateBattleDefault" )] public StringID musicStateBattleDefault;
-		[Serialize("musicStateBattleWin"     )] public StringID musicStateBattleWin;
-		[Serialize("musicStateBattleLose"    )] public StringID musicStateBattleLose;
-		[Serialize("musicStateBattleLevelUp" )] public StringID musicStateBattleLevelUp;
-		[Serialize("musicStateBattleFlee"    )] public StringID musicStateBattleFlee;
-		[Serialize("musicStateBattleMiniBoss")] public StringID musicStateBattleMiniBoss;
-		[Serialize("musicStateBattleWinBoss" )] public StringID musicStateBattleWinBoss;
+		public Placeholder startBattleNormal;
+		public Placeholder startBattlePreemptive;
+		public Placeholder startBattleAmbushed;
+		public Placeholder gameOverSfx;
+		public StringID musicStateBattleDefault;
+		public StringID musicStateBattleWin;
+		public StringID musicStateBattleLose;
+		public StringID musicStateBattleLevelUp;
+		public StringID musicStateBattleFlee;
+		public StringID musicStateBattleMiniBoss;
+		public StringID musicStateBattleWinBoss;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(startBattleNormal));
-			SerializeField(s, nameof(startBattlePreemptive));
-			SerializeField(s, nameof(startBattleAmbushed));
-			SerializeField(s, nameof(gameOverSfx));
-			SerializeField(s, nameof(musicStateBattleDefault));
-			SerializeField(s, nameof(musicStateBattleWin));
-			SerializeField(s, nameof(musicStateBattleLose));
-			SerializeField(s, nameof(musicStateBattleLevelUp));
-			SerializeField(s, nameof(musicStateBattleFlee));
-			SerializeField(s, nameof(musicStateBattleMiniBoss));
-			SerializeField(s, nameof(musicStateBattleWinBoss));
+			startBattleNormal = s.SerializeObject<Placeholder>(startBattleNormal, name: "startBattleNormal");
+			startBattlePreemptive = s.SerializeObject<Placeholder>(startBattlePreemptive, name: "startBattlePreemptive");
+			startBattleAmbushed = s.SerializeObject<Placeholder>(startBattleAmbushed, name: "startBattleAmbushed");
+			gameOverSfx = s.SerializeObject<Placeholder>(gameOverSfx, name: "gameOverSfx");
+			musicStateBattleDefault = s.SerializeObject<StringID>(musicStateBattleDefault, name: "musicStateBattleDefault");
+			musicStateBattleWin = s.SerializeObject<StringID>(musicStateBattleWin, name: "musicStateBattleWin");
+			musicStateBattleLose = s.SerializeObject<StringID>(musicStateBattleLose, name: "musicStateBattleLose");
+			musicStateBattleLevelUp = s.SerializeObject<StringID>(musicStateBattleLevelUp, name: "musicStateBattleLevelUp");
+			musicStateBattleFlee = s.SerializeObject<StringID>(musicStateBattleFlee, name: "musicStateBattleFlee");
+			musicStateBattleMiniBoss = s.SerializeObject<StringID>(musicStateBattleMiniBoss, name: "musicStateBattleMiniBoss");
+			musicStateBattleWinBoss = s.SerializeObject<StringID>(musicStateBattleWinBoss, name: "musicStateBattleWinBoss");
 		}
 		public override uint? ClassCRC => 0xC62F093D;
 	}

@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeBonusTextComponent_Template : ActorComponent_Template {
-		[Serialize("rulesAnim"    )] public StringID rulesAnim;
-		[Serialize("rulesHideAnim")] public StringID rulesHideAnim;
-		[Serialize("looseAnim"    )] public StringID looseAnim;
-		[Serialize("winAnim"      )] public StringID winAnim;
+		public StringID rulesAnim;
+		public StringID rulesHideAnim;
+		public StringID looseAnim;
+		public StringID winAnim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(rulesAnim));
-			SerializeField(s, nameof(rulesHideAnim));
-			SerializeField(s, nameof(looseAnim));
-			SerializeField(s, nameof(winAnim));
+			rulesAnim = s.SerializeObject<StringID>(rulesAnim, name: "rulesAnim");
+			rulesHideAnim = s.SerializeObject<StringID>(rulesHideAnim, name: "rulesHideAnim");
+			looseAnim = s.SerializeObject<StringID>(looseAnim, name: "looseAnim");
+			winAnim = s.SerializeObject<StringID>(winAnim, name: "winAnim");
 		}
 		public override uint? ClassCRC => 0xA5BF10DA;
 	}

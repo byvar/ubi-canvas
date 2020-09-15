@@ -3,114 +3,114 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIComponent : ActorComponent {
-		[Serialize("transition"               )] public bool transition;
-		[Serialize("display"                  )] public bool display;
-		[Serialize("leftComponentID"          )] public StringID leftComponentID;
-		[Serialize("rightComponentID"         )] public StringID rightComponentID;
-		[Serialize("upComponentID"            )] public StringID upComponentID;
-		[Serialize("downComponentID"          )] public StringID downComponentID;
-		[Serialize("buggyLine"                )] public bool buggyLine;
-		[Serialize("showingFadeDuration"      )] public float showingFadeDuration;
-		[Serialize("hidingFadeDuration"       )] public float hidingFadeDuration;
-		[Serialize("displayMask"              )] public View displayMask;
-		[Serialize("screenSpace"              )] public Vec2d screenSpace;
-		[Serialize("UIState"                  )] public int UIState;
-		[Serialize("needsAspectRatioFix"      )] public bool needsAspectRatioFix;
-		[Serialize("needsAspectRatioFixLocal" )] public bool needsAspectRatioFixLocal;
-		[Serialize("RELATIVEPOSX"             )] public float RELATIVEPOSX;
-		[Serialize("RELATIVEPOSY"             )] public float RELATIVEPOSY;
-		[Serialize("friendly"                 )] public string friendly;
-		[Serialize("id"                       )] public StringID id;
-		[Serialize("menuBaseName"             )] public string menuBaseName;
-		[Serialize("menuSonBaseName"          )] public string menuSonBaseName;
-		[Serialize("locFileName"              )] public string locFileName;
-		[Serialize("defaultSelectedByInstance")] public int defaultSelectedByInstance;
-		[Serialize("align"                    )] public Align align;
-		[Serialize("leftComponent"            )] public string leftComponent;
-		[Serialize("rightComponent"           )] public string rightComponent;
-		[Serialize("upComponent"              )] public string upComponent;
-		[Serialize("downComponent"            )] public string downComponent;
-		[Serialize("Vector2__6"               )] public Vec2d Vector2__6;
-		[Serialize("Vector2__7"               )] public Vec2d Vector2__7;
-		[Serialize("float__8"                 )] public float float__8;
+		public bool transition;
+		public bool display;
+		public StringID leftComponentID;
+		public StringID rightComponentID;
+		public StringID upComponentID;
+		public StringID downComponentID;
+		public bool buggyLine;
+		public float showingFadeDuration;
+		public float hidingFadeDuration;
+		public View displayMask;
+		public Vec2d screenSpace;
+		public int UIState;
+		public bool needsAspectRatioFix;
+		public bool needsAspectRatioFixLocal;
+		public float RELATIVEPOSX;
+		public float RELATIVEPOSY;
+		public string friendly;
+		public StringID id;
+		public string menuBaseName;
+		public string menuSonBaseName;
+		public string locFileName;
+		public int defaultSelectedByInstance;
+		public Align align;
+		public string leftComponent;
+		public string rightComponent;
+		public string upComponent;
+		public string downComponent;
+		public Vec2d Vector2__6;
+		public Vec2d Vector2__7;
+		public float float__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
 				if (this is UITextBox) return;
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(RELATIVEPOSX));
-					SerializeField(s, nameof(RELATIVEPOSY));
-					SerializeField(s, nameof(friendly));
-					SerializeField(s, nameof(id));
-					SerializeField(s, nameof(menuBaseName));
-					SerializeField(s, nameof(menuSonBaseName));
-					SerializeField(s, nameof(locFileName));
-					SerializeField(s, nameof(defaultSelectedByInstance));
-					SerializeField(s, nameof(align));
+					RELATIVEPOSX = s.Serialize<float>(RELATIVEPOSX, name: "RELATIVEPOSX");
+					RELATIVEPOSY = s.Serialize<float>(RELATIVEPOSY, name: "RELATIVEPOSY");
+					friendly = s.Serialize<string>(friendly, name: "friendly");
+					id = s.SerializeObject<StringID>(id, name: "id");
+					menuBaseName = s.Serialize<string>(menuBaseName, name: "menuBaseName");
+					menuSonBaseName = s.Serialize<string>(menuSonBaseName, name: "menuSonBaseName");
+					locFileName = s.Serialize<string>(locFileName, name: "locFileName");
+					defaultSelectedByInstance = s.Serialize<int>(defaultSelectedByInstance, name: "defaultSelectedByInstance");
+					align = s.Serialize<Align>(align, name: "align");
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(transition));
-					SerializeField(s, nameof(display));
-					SerializeField(s, nameof(leftComponent));
-					SerializeField(s, nameof(rightComponent));
-					SerializeField(s, nameof(upComponent));
-					SerializeField(s, nameof(downComponent));
-					SerializeField(s, nameof(displayMask));
+					transition = s.Serialize<bool>(transition, name: "transition");
+					display = s.Serialize<bool>(display, name: "display");
+					leftComponent = s.Serialize<string>(leftComponent, name: "leftComponent");
+					rightComponent = s.Serialize<string>(rightComponent, name: "rightComponent");
+					upComponent = s.Serialize<string>(upComponent, name: "upComponent");
+					downComponent = s.Serialize<string>(downComponent, name: "downComponent");
+					displayMask = s.Serialize<View>(displayMask, name: "displayMask");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(screenSpace));
+					screenSpace = s.SerializeObject<Vec2d>(screenSpace, name: "screenSpace");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(transition));
-					SerializeField(s, nameof(display));
-					SerializeField(s, nameof(displayMask));
+					transition = s.Serialize<bool>(transition, name: "transition");
+					display = s.Serialize<bool>(display, name: "display");
+					displayMask = s.Serialize<View>(displayMask, name: "displayMask");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(screenSpace));
+					screenSpace = s.SerializeObject<Vec2d>(screenSpace, name: "screenSpace");
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(transition));
-					SerializeField(s, nameof(display));
-					SerializeField(s, nameof(leftComponentID));
-					SerializeField(s, nameof(rightComponentID));
-					SerializeField(s, nameof(upComponentID));
-					SerializeField(s, nameof(downComponentID));
-					SerializeField(s, nameof(Vector2__6));
-					SerializeField(s, nameof(Vector2__7));
-					SerializeField(s, nameof(float__8));
-					SerializeField(s, nameof(displayMask));
+					transition = s.Serialize<bool>(transition, name: "transition");
+					display = s.Serialize<bool>(display, name: "display");
+					leftComponentID = s.SerializeObject<StringID>(leftComponentID, name: "leftComponentID");
+					rightComponentID = s.SerializeObject<StringID>(rightComponentID, name: "rightComponentID");
+					upComponentID = s.SerializeObject<StringID>(upComponentID, name: "upComponentID");
+					downComponentID = s.SerializeObject<StringID>(downComponentID, name: "downComponentID");
+					Vector2__6 = s.SerializeObject<Vec2d>(Vector2__6, name: "Vector2__6");
+					Vector2__7 = s.SerializeObject<Vec2d>(Vector2__7, name: "Vector2__7");
+					float__8 = s.Serialize<float>(float__8, name: "float__8");
+					displayMask = s.Serialize<View>(displayMask, name: "displayMask");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(transition));
-					SerializeField(s, nameof(display));
+					transition = s.Serialize<bool>(transition, name: "transition");
+					display = s.Serialize<bool>(display, name: "display");
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						SerializeFieldAsChoiceList(s, nameof(leftComponentID), "Empty");
 						SerializeFieldAsChoiceList(s, nameof(rightComponentID), "Empty");
 						SerializeFieldAsChoiceList(s, nameof(upComponentID), "Empty");
 						SerializeFieldAsChoiceList(s, nameof(downComponentID), "Empty");
 					} else {
-						SerializeField(s, nameof(leftComponentID));
-						SerializeField(s, nameof(rightComponentID));
-						SerializeField(s, nameof(upComponentID));
-						SerializeField(s, nameof(downComponentID));
+						leftComponentID = s.SerializeObject<StringID>(leftComponentID, name: "leftComponentID");
+						rightComponentID = s.SerializeObject<StringID>(rightComponentID, name: "rightComponentID");
+						upComponentID = s.SerializeObject<StringID>(upComponentID, name: "upComponentID");
+						downComponentID = s.SerializeObject<StringID>(downComponentID, name: "downComponentID");
 					}
-					SerializeField(s, nameof(buggyLine));
-					SerializeField(s, nameof(showingFadeDuration));
-					SerializeField(s, nameof(hidingFadeDuration));
-					SerializeField(s, nameof(displayMask));
+					buggyLine = s.Serialize<bool>(buggyLine, name: "buggyLine");
+					showingFadeDuration = s.Serialize<float>(showingFadeDuration, name: "showingFadeDuration");
+					hidingFadeDuration = s.Serialize<float>(hidingFadeDuration, name: "hidingFadeDuration");
+					displayMask = s.Serialize<View>(displayMask, name: "displayMask");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(screenSpace));
+					screenSpace = s.SerializeObject<Vec2d>(screenSpace, name: "screenSpace");
 				}
 				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeField(s, nameof(UIState));
+					UIState = s.Serialize<int>(UIState, name: "UIState");
 				}
-				SerializeField(s, nameof(needsAspectRatioFix));
-				SerializeField(s, nameof(needsAspectRatioFixLocal));
+				needsAspectRatioFix = s.Serialize<bool>(needsAspectRatioFix, name: "needsAspectRatioFix");
+				needsAspectRatioFixLocal = s.Serialize<bool>(needsAspectRatioFixLocal, name: "needsAspectRatioFixLocal");
 			}
 		}
 		public enum View {

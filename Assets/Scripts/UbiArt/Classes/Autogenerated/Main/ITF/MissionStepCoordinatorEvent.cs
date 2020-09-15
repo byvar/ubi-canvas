@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class MissionStepCoordinatorEvent : CSerializable {
-		[Serialize("sender"   )] public uint sender;
-		[Serialize("completed")] public int completed;
+		public uint sender;
+		public int completed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
-			SerializeField(s, nameof(completed));
+			sender = s.Serialize<uint>(sender, name: "sender");
+			completed = s.Serialize<int>(completed, name: "completed");
 		}
 		public override uint? ClassCRC => 0xB60A591F;
 	}

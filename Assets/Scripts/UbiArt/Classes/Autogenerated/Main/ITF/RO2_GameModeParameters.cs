@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_GameModeParameters : GameModeParameters {
-		[Serialize("gameMode")] public GameMode gameMode;
-		[Serialize("gameMode")] public GameMode2 gameMode2;
+		public GameMode gameMode;
+		public GameMode2 gameMode2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(gameMode2));
+				gameMode2 = s.Serialize<GameMode2>(gameMode2, name: "gameMode2");
 			} else {
-				SerializeField(s, nameof(gameMode));
+				gameMode = s.Serialize<GameMode>(gameMode, name: "gameMode");
 			}
 		}
 		public enum GameMode {

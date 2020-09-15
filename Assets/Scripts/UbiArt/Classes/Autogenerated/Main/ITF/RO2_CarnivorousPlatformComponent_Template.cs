@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CarnivorousPlatformComponent_Template : RO2_PlatformAIComponent_Template {
-		[Serialize("closedDuration"                )] public float closedDuration;
-		[Serialize("hitLevel"                      )] public uint hitLevel;
-		[Serialize("mouthOpened"                   )] public StringID mouthOpened;
-		[Serialize("mouthClosed"                   )] public StringID mouthClosed;
-		[Serialize("mouthClosingStart"             )] public StringID mouthClosingStart;
-		[Serialize("mouthClosing"                  )] public StringID mouthClosing;
-		[Serialize("mouthOpening"                  )] public StringID mouthOpening;
-		[Serialize("mouthOpeningEnd"               )] public StringID mouthOpeningEnd;
-		[Serialize("mouthBump"                     )] public StringID mouthBump;
-		[Serialize("mouthHit"                      )] public StringID mouthHit;
-		[Serialize("platformPolylineParameterIndex")] public uint platformPolylineParameterIndex;
-		[Serialize("spikesPolylineParameterIndex"  )] public uint spikesPolylineParameterIndex;
+		public float closedDuration;
+		public uint hitLevel;
+		public StringID mouthOpened;
+		public StringID mouthClosed;
+		public StringID mouthClosingStart;
+		public StringID mouthClosing;
+		public StringID mouthOpening;
+		public StringID mouthOpeningEnd;
+		public StringID mouthBump;
+		public StringID mouthHit;
+		public uint platformPolylineParameterIndex;
+		public uint spikesPolylineParameterIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(closedDuration));
-			SerializeField(s, nameof(hitLevel));
-			SerializeField(s, nameof(mouthOpened));
-			SerializeField(s, nameof(mouthClosed));
-			SerializeField(s, nameof(mouthClosingStart));
-			SerializeField(s, nameof(mouthClosing));
-			SerializeField(s, nameof(mouthOpening));
-			SerializeField(s, nameof(mouthOpeningEnd));
-			SerializeField(s, nameof(mouthBump));
-			SerializeField(s, nameof(mouthHit));
-			SerializeField(s, nameof(platformPolylineParameterIndex));
-			SerializeField(s, nameof(spikesPolylineParameterIndex));
+			closedDuration = s.Serialize<float>(closedDuration, name: "closedDuration");
+			hitLevel = s.Serialize<uint>(hitLevel, name: "hitLevel");
+			mouthOpened = s.SerializeObject<StringID>(mouthOpened, name: "mouthOpened");
+			mouthClosed = s.SerializeObject<StringID>(mouthClosed, name: "mouthClosed");
+			mouthClosingStart = s.SerializeObject<StringID>(mouthClosingStart, name: "mouthClosingStart");
+			mouthClosing = s.SerializeObject<StringID>(mouthClosing, name: "mouthClosing");
+			mouthOpening = s.SerializeObject<StringID>(mouthOpening, name: "mouthOpening");
+			mouthOpeningEnd = s.SerializeObject<StringID>(mouthOpeningEnd, name: "mouthOpeningEnd");
+			mouthBump = s.SerializeObject<StringID>(mouthBump, name: "mouthBump");
+			mouthHit = s.SerializeObject<StringID>(mouthHit, name: "mouthHit");
+			platformPolylineParameterIndex = s.Serialize<uint>(platformPolylineParameterIndex, name: "platformPolylineParameterIndex");
+			spikesPolylineParameterIndex = s.Serialize<uint>(spikesPolylineParameterIndex, name: "spikesPolylineParameterIndex");
 		}
 		public override uint? ClassCRC => 0x4EEC810A;
 	}

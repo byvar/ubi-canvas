@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_StringWaveFaderComponent_Template : ActorComponent_Template {
-		[Serialize("minBounceSpeed"      )] public float minBounceSpeed;
-		[Serialize("maxDownwardSpeed"    )] public float maxDownwardSpeed;
-		[Serialize("maxUpwardSpeed"      )] public float maxUpwardSpeed;
-		[Serialize("upwardAcceleration"  )] public float upwardAcceleration;
-		[Serialize("downwardAcceleration")] public float downwardAcceleration;
-		[Serialize("bounceFactor"        )] public float bounceFactor;
-		[Serialize("thresholdPosition"   )] public float thresholdPosition;
-		[Serialize("linkeeScaleForOff"   )] public float linkeeScaleForOff;
-		[Serialize("linkeeScaleForOn"    )] public float linkeeScaleForOn;
-		[Serialize("crushSpeed"          )] public float crushSpeed;
-		[Serialize("bounceOnEndFX"       )] public StringID bounceOnEndFX;
-		[Serialize("goDownwardFX"        )] public StringID goDownwardFX;
-		[Serialize("minSpeedForSound"    )] public float minSpeedForSound;
+		public float minBounceSpeed;
+		public float maxDownwardSpeed;
+		public float maxUpwardSpeed;
+		public float upwardAcceleration;
+		public float downwardAcceleration;
+		public float bounceFactor;
+		public float thresholdPosition;
+		public float linkeeScaleForOff;
+		public float linkeeScaleForOn;
+		public float crushSpeed;
+		public StringID bounceOnEndFX;
+		public StringID goDownwardFX;
+		public float minSpeedForSound;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(minBounceSpeed));
-			SerializeField(s, nameof(maxDownwardSpeed));
-			SerializeField(s, nameof(maxUpwardSpeed));
-			SerializeField(s, nameof(upwardAcceleration));
-			SerializeField(s, nameof(downwardAcceleration));
-			SerializeField(s, nameof(bounceFactor));
-			SerializeField(s, nameof(thresholdPosition));
-			SerializeField(s, nameof(linkeeScaleForOff));
-			SerializeField(s, nameof(linkeeScaleForOn));
-			SerializeField(s, nameof(crushSpeed));
-			SerializeField(s, nameof(bounceOnEndFX));
-			SerializeField(s, nameof(goDownwardFX));
-			SerializeField(s, nameof(minSpeedForSound));
+			minBounceSpeed = s.Serialize<float>(minBounceSpeed, name: "minBounceSpeed");
+			maxDownwardSpeed = s.Serialize<float>(maxDownwardSpeed, name: "maxDownwardSpeed");
+			maxUpwardSpeed = s.Serialize<float>(maxUpwardSpeed, name: "maxUpwardSpeed");
+			upwardAcceleration = s.Serialize<float>(upwardAcceleration, name: "upwardAcceleration");
+			downwardAcceleration = s.Serialize<float>(downwardAcceleration, name: "downwardAcceleration");
+			bounceFactor = s.Serialize<float>(bounceFactor, name: "bounceFactor");
+			thresholdPosition = s.Serialize<float>(thresholdPosition, name: "thresholdPosition");
+			linkeeScaleForOff = s.Serialize<float>(linkeeScaleForOff, name: "linkeeScaleForOff");
+			linkeeScaleForOn = s.Serialize<float>(linkeeScaleForOn, name: "linkeeScaleForOn");
+			crushSpeed = s.Serialize<float>(crushSpeed, name: "crushSpeed");
+			bounceOnEndFX = s.SerializeObject<StringID>(bounceOnEndFX, name: "bounceOnEndFX");
+			goDownwardFX = s.SerializeObject<StringID>(goDownwardFX, name: "goDownwardFX");
+			minSpeedForSound = s.Serialize<float>(minSpeedForSound, name: "minSpeedForSound");
 		}
 		public override uint? ClassCRC => 0x7A6DD69D;
 	}

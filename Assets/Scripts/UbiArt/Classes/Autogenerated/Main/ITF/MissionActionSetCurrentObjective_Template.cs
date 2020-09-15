@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class MissionActionSetCurrentObjective_Template : CSerializable {
-		[Serialize("objective")] public Placeholder objective;
-		[Serialize("primary"  )] public bool primary;
-		[Serialize("reset"    )] public bool reset;
+		public Placeholder objective;
+		public bool primary;
+		public bool reset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(objective));
-			SerializeField(s, nameof(primary), boolAsByte: true);
-			SerializeField(s, nameof(reset), boolAsByte: true);
+			objective = s.SerializeObject<Placeholder>(objective, name: "objective");
+			primary = s.Serialize<bool>(primary, name: "primary", options: CSerializerObject.Options.BoolAsByte);
+			reset = s.Serialize<bool>(reset, name: "reset", options: CSerializerObject.Options.BoolAsByte);
 		}
 		public override uint? ClassCRC => 0xE356C1F4;
 	}

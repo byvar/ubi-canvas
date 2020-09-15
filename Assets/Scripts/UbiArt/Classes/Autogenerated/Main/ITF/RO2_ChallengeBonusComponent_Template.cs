@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeBonusComponent_Template : ActorComponent_Template {
-		[Serialize("waitTimeBeforeTeleporting")] public float waitTimeBeforeTeleporting;
-		[Serialize("pulsatingFrequency"       )] public float pulsatingFrequency;
-		[Serialize("pulsatingAmplitude"       )] public float pulsatingAmplitude;
-		[Serialize("pulsatingStartTime"       )] public float pulsatingStartTime;
-		[Serialize("pulsatingTimerColor"      )] public Color pulsatingTimerColor;
-		[Serialize("startMusicEvent"          )] public Generic<Event> startMusicEvent;
-		[Serialize("stopMusicEvent"           )] public Generic<Event> stopMusicEvent;
+		public float waitTimeBeforeTeleporting;
+		public float pulsatingFrequency;
+		public float pulsatingAmplitude;
+		public float pulsatingStartTime;
+		public Color pulsatingTimerColor;
+		public Generic<Event> startMusicEvent;
+		public Generic<Event> stopMusicEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(waitTimeBeforeTeleporting));
-			SerializeField(s, nameof(pulsatingFrequency));
-			SerializeField(s, nameof(pulsatingAmplitude));
-			SerializeField(s, nameof(pulsatingStartTime));
-			SerializeField(s, nameof(pulsatingTimerColor));
-			SerializeField(s, nameof(startMusicEvent));
-			SerializeField(s, nameof(stopMusicEvent));
+			waitTimeBeforeTeleporting = s.Serialize<float>(waitTimeBeforeTeleporting, name: "waitTimeBeforeTeleporting");
+			pulsatingFrequency = s.Serialize<float>(pulsatingFrequency, name: "pulsatingFrequency");
+			pulsatingAmplitude = s.Serialize<float>(pulsatingAmplitude, name: "pulsatingAmplitude");
+			pulsatingStartTime = s.Serialize<float>(pulsatingStartTime, name: "pulsatingStartTime");
+			pulsatingTimerColor = s.SerializeObject<Color>(pulsatingTimerColor, name: "pulsatingTimerColor");
+			startMusicEvent = s.SerializeObject<Generic<Event>>(startMusicEvent, name: "startMusicEvent");
+			stopMusicEvent = s.SerializeObject<Generic<Event>>(stopMusicEvent, name: "stopMusicEvent");
 		}
 		public override uint? ClassCRC => 0x766EA9FE;
 	}

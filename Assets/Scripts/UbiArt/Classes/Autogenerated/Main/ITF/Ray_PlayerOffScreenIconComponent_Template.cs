@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PlayerOffScreenIconComponent_Template : CSerializable {
-		[Serialize("arrowBoneName"  )] public StringID arrowBoneName;
-		[Serialize("screenBorder"   )] public Vec2d screenBorder;
-		[Serialize("fadeInDelay"    )] public float fadeInDelay;
-		[Serialize("fadeInDuration" )] public float fadeInDuration;
-		[Serialize("fadeOutDelay"   )] public float fadeOutDelay;
-		[Serialize("fadeOutDuration")] public float fadeOutDuration;
+		public StringID arrowBoneName;
+		public Vec2d screenBorder;
+		public float fadeInDelay;
+		public float fadeInDuration;
+		public float fadeOutDelay;
+		public float fadeOutDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(arrowBoneName));
-			SerializeField(s, nameof(screenBorder));
-			SerializeField(s, nameof(fadeInDelay));
-			SerializeField(s, nameof(fadeInDuration));
-			SerializeField(s, nameof(fadeOutDelay));
-			SerializeField(s, nameof(fadeOutDuration));
+			arrowBoneName = s.SerializeObject<StringID>(arrowBoneName, name: "arrowBoneName");
+			screenBorder = s.SerializeObject<Vec2d>(screenBorder, name: "screenBorder");
+			fadeInDelay = s.Serialize<float>(fadeInDelay, name: "fadeInDelay");
+			fadeInDuration = s.Serialize<float>(fadeInDuration, name: "fadeInDuration");
+			fadeOutDelay = s.Serialize<float>(fadeOutDelay, name: "fadeOutDelay");
+			fadeOutDuration = s.Serialize<float>(fadeOutDuration, name: "fadeOutDuration");
 		}
 		public override uint? ClassCRC => 0xA0E2BBBE;
 	}

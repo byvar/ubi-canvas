@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AnimMeshVertexManagerComponent_Template : ActorComponent_Template {
-		[Serialize("startingFrameEnabled")] public bool startingFrameEnabled;
-		[Serialize("startingFrame"       )] public uint startingFrame;
+		public bool startingFrameEnabled;
+		public uint startingFrame;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(startingFrameEnabled));
-			SerializeField(s, nameof(startingFrame));
+			startingFrameEnabled = s.Serialize<bool>(startingFrameEnabled, name: "startingFrameEnabled");
+			startingFrame = s.Serialize<uint>(startingFrame, name: "startingFrame");
 		}
 		public override uint? ClassCRC => 0x636D6C7B;
 	}

@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class Quote : CSerializable {
-		[Serialize("Appear"   )] public QuoteCondition Appear;
-		[Serialize("Disappear")] public QuoteCondition Disappear;
-		[Serialize("IconScale")] public float IconScale;
-		[Serialize("Idx"      )] public LocalisationId Idx;
-		[Serialize("ArrayIdx" )] public uint ArrayIdx;
+		public QuoteCondition Appear;
+		public QuoteCondition Disappear;
+		public float IconScale;
+		public LocalisationId Idx;
+		public uint ArrayIdx;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Appear));
-			SerializeField(s, nameof(Disappear));
-			SerializeField(s, nameof(IconScale));
-			SerializeField(s, nameof(Idx));
-			SerializeField(s, nameof(ArrayIdx));
+			Appear = s.SerializeObject<QuoteCondition>(Appear, name: "Appear");
+			Disappear = s.SerializeObject<QuoteCondition>(Disappear, name: "Disappear");
+			IconScale = s.Serialize<float>(IconScale, name: "IconScale");
+			Idx = s.SerializeObject<LocalisationId>(Idx, name: "Idx");
+			ArrayIdx = s.Serialize<uint>(ArrayIdx, name: "ArrayIdx");
 		}
 	}
 }

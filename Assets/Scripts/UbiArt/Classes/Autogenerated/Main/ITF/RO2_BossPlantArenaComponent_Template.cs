@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossPlantArenaComponent_Template : ActorComponent_Template {
-		[Serialize("isMecha"  )] public bool isMecha;
-		[Serialize("buboBones")] public CList<RO2_BossPlantArenaComponent_Template.BuboBone> buboBones;
-		[Serialize("musics"   )] public Placeholder musics;
+		public bool isMecha;
+		public CList<RO2_BossPlantArenaComponent_Template.BuboBone> buboBones;
+		public Placeholder musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(isMecha));
-				SerializeField(s, nameof(buboBones));
-				SerializeField(s, nameof(musics));
+				isMecha = s.Serialize<bool>(isMecha, name: "isMecha");
+				buboBones = s.SerializeObject<CList<RO2_BossPlantArenaComponent_Template.BuboBone>>(buboBones, name: "buboBones");
+				musics = s.SerializeObject<Placeholder>(musics, name: "musics");
 			} else {
-				SerializeField(s, nameof(isMecha));
-				SerializeField(s, nameof(buboBones));
+				isMecha = s.Serialize<bool>(isMecha, name: "isMecha");
+				buboBones = s.SerializeObject<CList<RO2_BossPlantArenaComponent_Template.BuboBone>>(buboBones, name: "buboBones");
 			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class BuboBone : CSerializable {
-			[Serialize("bone")] public StringID bone;
+			public StringID bone;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(bone));
+				bone = s.SerializeObject<StringID>(bone, name: "bone");
 			}
 		}
 		public override uint? ClassCRC => 0xD8EEB546;

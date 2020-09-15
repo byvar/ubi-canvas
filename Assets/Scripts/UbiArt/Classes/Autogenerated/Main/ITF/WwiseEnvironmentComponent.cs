@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class WwiseEnvironmentComponent : BoxInterpolatorComponent {
-		[Serialize("WwiseAuxBusGUID")] public StringID WwiseAuxBusGUID;
-		[Serialize("ZoneType"       )] public ZONE ZoneType;
+		public StringID WwiseAuxBusGUID;
+		public ZONE ZoneType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(WwiseAuxBusGUID));
-			SerializeField(s, nameof(ZoneType));
+			WwiseAuxBusGUID = s.SerializeObject<StringID>(WwiseAuxBusGUID, name: "WwiseAuxBusGUID");
+			ZoneType = s.Serialize<ZONE>(ZoneType, name: "ZoneType");
 		}
 		public enum ZONE {
 			[Serialize("ZONE_CIRCLE"   )] CIRCLE = 0,

@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIBTOrderComponent_Template : ActorComponent_Template {
-		[Serialize("type"         )] public BTAIORDER type;
-		[Serialize("detectionArea")] public StringID detectionArea;
-		[Serialize("removeOnExit" )] public bool removeOnExit;
+		public BTAIORDER type;
+		public StringID detectionArea;
+		public bool removeOnExit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(detectionArea));
-			SerializeField(s, nameof(removeOnExit));
+			type = s.Serialize<BTAIORDER>(type, name: "type");
+			detectionArea = s.SerializeObject<StringID>(detectionArea, name: "detectionArea");
+			removeOnExit = s.Serialize<bool>(removeOnExit, name: "removeOnExit");
 		}
 		public enum BTAIORDER {
 			[Serialize("BTAIORDER_WAITFORPLAYER"                    )] WAITFORPLAYER = 1,

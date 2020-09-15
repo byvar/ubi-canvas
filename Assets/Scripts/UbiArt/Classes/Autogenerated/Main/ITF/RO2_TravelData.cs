@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_TravelData : CSerializable {
-		[Serialize("duration" )] public float duration;
-		[Serialize("accelType")] public AccelType accelType;
-		[Serialize("speedType")] public SpeedType speedType;
+		public float duration;
+		public AccelType accelType;
+		public SpeedType speedType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(duration));
-			SerializeField(s, nameof(accelType));
-			SerializeField(s, nameof(speedType));
+			duration = s.Serialize<float>(duration, name: "duration");
+			accelType = s.Serialize<AccelType>(accelType, name: "accelType");
+			speedType = s.Serialize<SpeedType>(speedType, name: "speedType");
 		}
 		public enum AccelType {
 			[Serialize("AccelType_Linear")] Linear = 0,

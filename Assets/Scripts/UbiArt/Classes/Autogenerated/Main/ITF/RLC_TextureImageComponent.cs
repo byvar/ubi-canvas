@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TextureImageComponent : TextureGraphicComponent {
-		[Serialize("offsetAfterLoading"          )] public Vec2d offsetAfterLoading;
-		[Serialize("AllowDeloadTextureOnInactive")] public bool AllowDeloadTextureOnInactive;
-		[Serialize("AllowAutomaticShow"          )] public bool AllowAutomaticShow;
+		public Vec2d offsetAfterLoading;
+		public bool AllowDeloadTextureOnInactive;
+		public bool AllowAutomaticShow;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(offsetAfterLoading));
-			SerializeField(s, nameof(AllowDeloadTextureOnInactive));
-			SerializeField(s, nameof(AllowAutomaticShow));
+			offsetAfterLoading = s.SerializeObject<Vec2d>(offsetAfterLoading, name: "offsetAfterLoading");
+			AllowDeloadTextureOnInactive = s.Serialize<bool>(AllowDeloadTextureOnInactive, name: "AllowDeloadTextureOnInactive");
+			AllowAutomaticShow = s.Serialize<bool>(AllowAutomaticShow, name: "AllowAutomaticShow");
 		}
 		public override uint? ClassCRC => 0x2B83E1A7;
 	}

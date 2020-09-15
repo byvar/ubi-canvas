@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_UIItemCompetitorsComponent_Template : UIComponent_Template {
-		[Serialize("competitorActorPath"         )] public Path competitorActorPath;
-		[Serialize("competitorOffset"            )] public float competitorOffset;
-		[Serialize("countryActorPath"            )] public Path countryActorPath;
-		[Serialize("levelActorPath"              )] public Path levelActorPath;
-		[Serialize("countryOffset"               )] public Vec3d countryOffset;
-		[Serialize("levelOffset"                 )] public Vec3d levelOffset;
-		[Serialize("backgroundBaseWidth"         )] public float backgroundBaseWidth;
-		[Serialize("maxNameWidth"                )] public float maxNameWidth;
-		[Serialize("beatenActorPath"             )] public Path beatenActorPath;
-		[Serialize("beatenActorAngle"            )] public float beatenActorAngle;
-		[Serialize("currentPlayerBackgroundColor")] public Color currentPlayerBackgroundColor;
-		[Serialize("timeBetweenAnim"             )] public float timeBetweenAnim;
-		[Serialize("beatenAnimTime"              )] public float beatenAnimTime;
-		[Serialize("beatenAnimMaxScale"          )] public float beatenAnimMaxScale;
+		public Path competitorActorPath;
+		public float competitorOffset;
+		public Path countryActorPath;
+		public Path levelActorPath;
+		public Vec3d countryOffset;
+		public Vec3d levelOffset;
+		public float backgroundBaseWidth;
+		public float maxNameWidth;
+		public Path beatenActorPath;
+		public float beatenActorAngle;
+		public Color currentPlayerBackgroundColor;
+		public float timeBetweenAnim;
+		public float beatenAnimTime;
+		public float beatenAnimMaxScale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(competitorActorPath));
-			SerializeField(s, nameof(competitorOffset));
-			SerializeField(s, nameof(countryActorPath));
-			SerializeField(s, nameof(levelActorPath));
-			SerializeField(s, nameof(countryOffset));
-			SerializeField(s, nameof(levelOffset));
-			SerializeField(s, nameof(backgroundBaseWidth));
-			SerializeField(s, nameof(maxNameWidth));
-			SerializeField(s, nameof(beatenActorPath));
-			SerializeField(s, nameof(beatenActorAngle));
-			SerializeField(s, nameof(currentPlayerBackgroundColor));
-			SerializeField(s, nameof(timeBetweenAnim));
-			SerializeField(s, nameof(beatenAnimTime));
-			SerializeField(s, nameof(beatenAnimMaxScale));
+			competitorActorPath = s.SerializeObject<Path>(competitorActorPath, name: "competitorActorPath");
+			competitorOffset = s.Serialize<float>(competitorOffset, name: "competitorOffset");
+			countryActorPath = s.SerializeObject<Path>(countryActorPath, name: "countryActorPath");
+			levelActorPath = s.SerializeObject<Path>(levelActorPath, name: "levelActorPath");
+			countryOffset = s.SerializeObject<Vec3d>(countryOffset, name: "countryOffset");
+			levelOffset = s.SerializeObject<Vec3d>(levelOffset, name: "levelOffset");
+			backgroundBaseWidth = s.Serialize<float>(backgroundBaseWidth, name: "backgroundBaseWidth");
+			maxNameWidth = s.Serialize<float>(maxNameWidth, name: "maxNameWidth");
+			beatenActorPath = s.SerializeObject<Path>(beatenActorPath, name: "beatenActorPath");
+			beatenActorAngle = s.Serialize<float>(beatenActorAngle, name: "beatenActorAngle");
+			currentPlayerBackgroundColor = s.SerializeObject<Color>(currentPlayerBackgroundColor, name: "currentPlayerBackgroundColor");
+			timeBetweenAnim = s.Serialize<float>(timeBetweenAnim, name: "timeBetweenAnim");
+			beatenAnimTime = s.Serialize<float>(beatenAnimTime, name: "beatenAnimTime");
+			beatenAnimMaxScale = s.Serialize<float>(beatenAnimMaxScale, name: "beatenAnimMaxScale");
 		}
 		public override uint? ClassCRC => 0xCD08B3F9;
 	}

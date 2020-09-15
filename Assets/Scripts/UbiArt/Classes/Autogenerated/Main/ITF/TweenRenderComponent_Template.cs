@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TweenRenderComponent_Template : GraphicComponent_Template {
-		[Serialize("trail")] public Trail_Template trail;
+		public Trail_Template trail;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(trail));
+			trail = s.SerializeObject<Trail_Template>(trail, name: "trail");
 		}
 		public override uint? ClassCRC => 0x117F0373;
 	}

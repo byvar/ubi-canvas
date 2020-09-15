@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BehaviorTree_Template : CSerializable {
-		[Serialize("root" )] public BTNodeTemplate_Ref root;
-		[Serialize("nodes")] public CArray<Generic<BTNode_Template>> nodes;
+		public BTNodeTemplate_Ref root;
+		public CArray<Generic<BTNode_Template>> nodes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(root));
-			SerializeField(s, nameof(nodes));
+			root = s.SerializeObject<BTNodeTemplate_Ref>(root, name: "root");
+			nodes = s.SerializeObject<CArray<Generic<BTNode_Template>>>(nodes, name: "nodes");
 		}
 	}
 }

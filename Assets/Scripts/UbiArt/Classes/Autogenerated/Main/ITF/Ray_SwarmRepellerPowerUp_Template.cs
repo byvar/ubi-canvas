@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_SwarmRepellerPowerUp_Template : Ray_PowerUpDisplay_Template {
-		[Serialize("repellerActor"     )] public Path repellerActor;
-		[Serialize("playerFollowOffset")] public Vec2d playerFollowOffset;
-		[Serialize("speedBlend"        )] public float speedBlend;
-		[Serialize("speedMin"          )] public float speedMin;
-		[Serialize("speedMax"          )] public float speedMax;
-		[Serialize("blendAtSpeedMin"   )] public float blendAtSpeedMin;
-		[Serialize("blendAtSpeedMax"   )] public float blendAtSpeedMax;
+		public Path repellerActor;
+		public Vec2d playerFollowOffset;
+		public float speedBlend;
+		public float speedMin;
+		public float speedMax;
+		public float blendAtSpeedMin;
+		public float blendAtSpeedMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(repellerActor));
-			SerializeField(s, nameof(playerFollowOffset));
-			SerializeField(s, nameof(speedBlend));
-			SerializeField(s, nameof(speedMin));
-			SerializeField(s, nameof(speedMax));
-			SerializeField(s, nameof(blendAtSpeedMin));
-			SerializeField(s, nameof(blendAtSpeedMax));
+			repellerActor = s.SerializeObject<Path>(repellerActor, name: "repellerActor");
+			playerFollowOffset = s.SerializeObject<Vec2d>(playerFollowOffset, name: "playerFollowOffset");
+			speedBlend = s.Serialize<float>(speedBlend, name: "speedBlend");
+			speedMin = s.Serialize<float>(speedMin, name: "speedMin");
+			speedMax = s.Serialize<float>(speedMax, name: "speedMax");
+			blendAtSpeedMin = s.Serialize<float>(blendAtSpeedMin, name: "blendAtSpeedMin");
+			blendAtSpeedMax = s.Serialize<float>(blendAtSpeedMax, name: "blendAtSpeedMax");
 		}
 		public override uint? ClassCRC => 0xB98D4052;
 	}

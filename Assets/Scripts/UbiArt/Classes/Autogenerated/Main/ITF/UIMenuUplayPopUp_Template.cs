@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIMenuUplayPopUp_Template : UIItem_Template {
-		[Serialize("translationTime")] public float translationTime;
-		[Serialize("noTextTime"     )] public float noTextTime;
-		[Serialize("textTime"       )] public float textTime;
+		public float translationTime;
+		public float noTextTime;
+		public float textTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(translationTime));
-			SerializeField(s, nameof(noTextTime));
-			SerializeField(s, nameof(textTime));
+			translationTime = s.Serialize<float>(translationTime, name: "translationTime");
+			noTextTime = s.Serialize<float>(noTextTime, name: "noTextTime");
+			textTime = s.Serialize<float>(textTime, name: "textTime");
 		}
 		public override uint? ClassCRC => 0x2E88EB2A;
 	}

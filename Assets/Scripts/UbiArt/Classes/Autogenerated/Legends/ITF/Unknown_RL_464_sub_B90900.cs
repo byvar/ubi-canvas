@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_464_sub_B90900 : CSerializable {
-		[Serialize("bulletExitBone")] public StringID bulletExitBone;
-		[Serialize("useBonesEnd"   )] public int useBonesEnd;
-		[Serialize("bullet"        )] public Path bullet;
-		[Serialize("offset"        )] public float offset;
+		public StringID bulletExitBone;
+		public int useBonesEnd;
+		public Path bullet;
+		public float offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bulletExitBone));
-			SerializeField(s, nameof(useBonesEnd));
-			SerializeField(s, nameof(bullet));
-			SerializeField(s, nameof(offset));
+			bulletExitBone = s.SerializeObject<StringID>(bulletExitBone, name: "bulletExitBone");
+			useBonesEnd = s.Serialize<int>(useBonesEnd, name: "useBonesEnd");
+			bullet = s.SerializeObject<Path>(bullet, name: "bullet");
+			offset = s.Serialize<float>(offset, name: "offset");
 		}
 		public override uint? ClassCRC => 0x507D7FA2;
 	}

@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class AnimFXEvent : AnimMarkerEvent {
-		[Serialize("Action"  )] public FX Action;
+		public FX Action;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(Action));
+				Action = s.Serialize<FX>(Action, name: "Action");
 			}
 		}
 		public enum FX {

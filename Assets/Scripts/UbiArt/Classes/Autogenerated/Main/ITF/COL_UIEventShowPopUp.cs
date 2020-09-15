@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_UIEventShowPopUp : CSerializable {
-		[Serialize("sender"         )] public uint sender;
-		[Serialize("menuSceneID"    )] public StringID menuSceneID;
-		[Serialize("titleLocID"     )] public Placeholder titleLocID;
-		[Serialize("msgLocID"       )] public Placeholder msgLocID;
-		[Serialize("validateLocID"  )] public Placeholder validateLocID;
-		[Serialize("declineLocID"   )] public Placeholder declineLocID;
-		[Serialize("openSoundGUID"  )] public StringID openSoundGUID;
-		[Serialize("iconTexturePath")] public Path iconTexturePath;
-		[Serialize("iconSpriteIndex")] public uint iconSpriteIndex;
+		public uint sender;
+		public StringID menuSceneID;
+		public Placeholder titleLocID;
+		public Placeholder msgLocID;
+		public Placeholder validateLocID;
+		public Placeholder declineLocID;
+		public StringID openSoundGUID;
+		public Path iconTexturePath;
+		public uint iconSpriteIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
-			SerializeField(s, nameof(menuSceneID));
-			SerializeField(s, nameof(titleLocID));
-			SerializeField(s, nameof(msgLocID));
-			SerializeField(s, nameof(validateLocID));
-			SerializeField(s, nameof(declineLocID));
-			SerializeField(s, nameof(openSoundGUID));
-			SerializeField(s, nameof(iconTexturePath));
-			SerializeField(s, nameof(iconSpriteIndex));
+			sender = s.Serialize<uint>(sender, name: "sender");
+			menuSceneID = s.SerializeObject<StringID>(menuSceneID, name: "menuSceneID");
+			titleLocID = s.SerializeObject<Placeholder>(titleLocID, name: "titleLocID");
+			msgLocID = s.SerializeObject<Placeholder>(msgLocID, name: "msgLocID");
+			validateLocID = s.SerializeObject<Placeholder>(validateLocID, name: "validateLocID");
+			declineLocID = s.SerializeObject<Placeholder>(declineLocID, name: "declineLocID");
+			openSoundGUID = s.SerializeObject<StringID>(openSoundGUID, name: "openSoundGUID");
+			iconTexturePath = s.SerializeObject<Path>(iconTexturePath, name: "iconTexturePath");
+			iconSpriteIndex = s.Serialize<uint>(iconSpriteIndex, name: "iconSpriteIndex");
 		}
 		public override uint? ClassCRC => 0x356AF464;
 	}

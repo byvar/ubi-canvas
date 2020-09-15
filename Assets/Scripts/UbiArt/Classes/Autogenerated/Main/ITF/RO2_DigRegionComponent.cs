@@ -3,122 +3,122 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_DigRegionComponent : ActorComponent {
-		[Serialize("Brush_State"            )] public Action Brush_State;
-		[Serialize("Brush_Action"           )] public Action Brush_Action;
-		[Serialize("BoxCountX"              )] public uint BoxCountX;
-		[Serialize("BoxCountY"              )] public uint BoxCountY;
-		[Serialize("BrushRadiusGrid"        )] public int BrushRadiusGrid;
-		[Serialize("LightDir"               )] public Vec2d LightDir;
-		[Serialize("MergeCount"             )] public int MergeCount;
-		[Serialize("Vecto_LengthMax"        )] public float Vecto_LengthMax;
-		[Serialize("Smooth_LengthMax"       )] public float Smooth_LengthMax;
-		[Serialize("Smooth_ShapeMinSize"    )] public float Smooth_ShapeMinSize;
-		[Serialize("Collision_Build"        )] public int Collision_Build;
-		[Serialize("Light_Angle"            )] public Angle Light_Angle;
-		[Serialize("Grid_Width"             )] public float Grid_Width;
-		[Serialize("Grid_Heigth"            )] public float Grid_Heigth;
-		[Serialize("Grid_Unity"             )] public float Grid_Unity;
-		[Serialize("Grid_VisualOffset"      )] public float Grid_VisualOffset;
-		[Serialize("Particles_Spacing"      )] public float Particles_Spacing;
-		[Serialize("Particles_NbPerLocation")] public int Particles_NbPerLocation;
-		[Serialize("Regeneration_Speed"     )] public float Regeneration_Speed;
-		[Serialize("Regeneration_StartDelay")] public float Regeneration_StartDelay;
-		[Serialize("Regeneration_EndDelay"  )] public float Regeneration_EndDelay;
-		[Serialize("Regeneration_AccDist"   )] public float Regeneration_AccDist;
-		[Serialize("Regeneration_TimeMaxDRC")] public float Regeneration_TimeMaxDRC;
-		[Serialize("Uv_Fill"                )] public RO2_DigRegionComponent.ParamUV Uv_Fill;
-		[Serialize("Uv_Hole"                )] public RO2_DigRegionComponent.ParamUV Uv_Hole;
-		[Serialize("Brush_Radius"           )] public float Brush_Radius;
-		[Serialize("Brush_ActionFill"       )] public bool Brush_ActionFill;
-		[Serialize("PrimitiveParameters"    )] public GFXPrimitiveParam PrimitiveParameters;
-		[Serialize("Brush_Enabled"          )] public bool Brush_Enabled;
-		[Serialize("IsDiggable"             )] public bool IsDiggable;
+		public Action Brush_State;
+		public Action Brush_Action;
+		public uint BoxCountX;
+		public uint BoxCountY;
+		public int BrushRadiusGrid;
+		public Vec2d LightDir;
+		public int MergeCount;
+		public float Vecto_LengthMax;
+		public float Smooth_LengthMax;
+		public float Smooth_ShapeMinSize;
+		public int Collision_Build;
+		public Angle Light_Angle;
+		public float Grid_Width;
+		public float Grid_Heigth;
+		public float Grid_Unity;
+		public float Grid_VisualOffset;
+		public float Particles_Spacing;
+		public int Particles_NbPerLocation;
+		public float Regeneration_Speed;
+		public float Regeneration_StartDelay;
+		public float Regeneration_EndDelay;
+		public float Regeneration_AccDist;
+		public float Regeneration_TimeMaxDRC;
+		public RO2_DigRegionComponent.ParamUV Uv_Fill;
+		public RO2_DigRegionComponent.ParamUV Uv_Hole;
+		public float Brush_Radius;
+		public bool Brush_ActionFill;
+		public GFXPrimitiveParam PrimitiveParameters;
+		public bool Brush_Enabled;
+		public bool IsDiggable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(Brush_State));
-					SerializeField(s, nameof(Brush_Action));
+					Brush_State = s.Serialize<Action>(Brush_State, name: "Brush_State");
+					Brush_Action = s.Serialize<Action>(Brush_Action, name: "Brush_Action");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(BoxCountX));
-					SerializeField(s, nameof(BoxCountY));
-					SerializeField(s, nameof(BrushRadiusGrid));
-					SerializeField(s, nameof(LightDir));
-					SerializeField(s, nameof(MergeCount));
+					BoxCountX = s.Serialize<uint>(BoxCountX, name: "BoxCountX");
+					BoxCountY = s.Serialize<uint>(BoxCountY, name: "BoxCountY");
+					BrushRadiusGrid = s.Serialize<int>(BrushRadiusGrid, name: "BrushRadiusGrid");
+					LightDir = s.SerializeObject<Vec2d>(LightDir, name: "LightDir");
+					MergeCount = s.Serialize<int>(MergeCount, name: "MergeCount");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(Vecto_LengthMax));
-					SerializeField(s, nameof(Smooth_LengthMax));
-					SerializeField(s, nameof(Smooth_ShapeMinSize));
-					SerializeField(s, nameof(Collision_Build));
-					SerializeField(s, nameof(Light_Angle));
-					SerializeField(s, nameof(Grid_Width));
-					SerializeField(s, nameof(Grid_Heigth));
-					SerializeField(s, nameof(Grid_Unity));
-					SerializeField(s, nameof(Grid_VisualOffset));
-					SerializeField(s, nameof(Particles_Spacing));
-					SerializeField(s, nameof(Particles_NbPerLocation));
-					SerializeField(s, nameof(Regeneration_Speed));
-					SerializeField(s, nameof(Regeneration_StartDelay));
-					SerializeField(s, nameof(Regeneration_EndDelay));
-					SerializeField(s, nameof(Regeneration_AccDist));
-					SerializeField(s, nameof(Regeneration_TimeMaxDRC));
-					SerializeField(s, nameof(Uv_Fill));
-					SerializeField(s, nameof(Uv_Hole));
-					SerializeField(s, nameof(Brush_Radius));
-					SerializeField(s, nameof(Brush_ActionFill));
-					SerializeField(s, nameof(PrimitiveParameters));
+					Vecto_LengthMax = s.Serialize<float>(Vecto_LengthMax, name: "Vecto_LengthMax");
+					Smooth_LengthMax = s.Serialize<float>(Smooth_LengthMax, name: "Smooth_LengthMax");
+					Smooth_ShapeMinSize = s.Serialize<float>(Smooth_ShapeMinSize, name: "Smooth_ShapeMinSize");
+					Collision_Build = s.Serialize<int>(Collision_Build, name: "Collision_Build");
+					Light_Angle = s.SerializeObject<Angle>(Light_Angle, name: "Light_Angle");
+					Grid_Width = s.Serialize<float>(Grid_Width, name: "Grid_Width");
+					Grid_Heigth = s.Serialize<float>(Grid_Heigth, name: "Grid_Heigth");
+					Grid_Unity = s.Serialize<float>(Grid_Unity, name: "Grid_Unity");
+					Grid_VisualOffset = s.Serialize<float>(Grid_VisualOffset, name: "Grid_VisualOffset");
+					Particles_Spacing = s.Serialize<float>(Particles_Spacing, name: "Particles_Spacing");
+					Particles_NbPerLocation = s.Serialize<int>(Particles_NbPerLocation, name: "Particles_NbPerLocation");
+					Regeneration_Speed = s.Serialize<float>(Regeneration_Speed, name: "Regeneration_Speed");
+					Regeneration_StartDelay = s.Serialize<float>(Regeneration_StartDelay, name: "Regeneration_StartDelay");
+					Regeneration_EndDelay = s.Serialize<float>(Regeneration_EndDelay, name: "Regeneration_EndDelay");
+					Regeneration_AccDist = s.Serialize<float>(Regeneration_AccDist, name: "Regeneration_AccDist");
+					Regeneration_TimeMaxDRC = s.Serialize<float>(Regeneration_TimeMaxDRC, name: "Regeneration_TimeMaxDRC");
+					Uv_Fill = s.SerializeObject<RO2_DigRegionComponent.ParamUV>(Uv_Fill, name: "Uv_Fill");
+					Uv_Hole = s.SerializeObject<RO2_DigRegionComponent.ParamUV>(Uv_Hole, name: "Uv_Hole");
+					Brush_Radius = s.Serialize<float>(Brush_Radius, name: "Brush_Radius");
+					Brush_ActionFill = s.Serialize<bool>(Brush_ActionFill, name: "Brush_ActionFill");
+					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(Brush_State));
-					SerializeField(s, nameof(Brush_Action));
+					Brush_State = s.Serialize<Action>(Brush_State, name: "Brush_State");
+					Brush_Action = s.Serialize<Action>(Brush_Action, name: "Brush_Action");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					SerializeField(s, nameof(BoxCountX));
-					SerializeField(s, nameof(BoxCountY));
-					SerializeField(s, nameof(BrushRadiusGrid));
-					SerializeField(s, nameof(LightDir));
-					SerializeField(s, nameof(MergeCount));
+					BoxCountX = s.Serialize<uint>(BoxCountX, name: "BoxCountX");
+					BoxCountY = s.Serialize<uint>(BoxCountY, name: "BoxCountY");
+					BrushRadiusGrid = s.Serialize<int>(BrushRadiusGrid, name: "BrushRadiusGrid");
+					LightDir = s.SerializeObject<Vec2d>(LightDir, name: "LightDir");
+					MergeCount = s.Serialize<int>(MergeCount, name: "MergeCount");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(Vecto_LengthMax));
-					SerializeField(s, nameof(Smooth_LengthMax));
-					SerializeField(s, nameof(Smooth_ShapeMinSize));
-					SerializeField(s, nameof(Collision_Build));
-					SerializeField(s, nameof(Light_Angle));
-					SerializeField(s, nameof(Grid_Width));
-					SerializeField(s, nameof(Grid_Heigth));
-					SerializeField(s, nameof(Grid_Unity));
-					SerializeField(s, nameof(Grid_VisualOffset));
-					SerializeField(s, nameof(Particles_Spacing));
-					SerializeField(s, nameof(Particles_NbPerLocation));
-					SerializeField(s, nameof(Regeneration_Speed));
-					SerializeField(s, nameof(Regeneration_StartDelay));
-					SerializeField(s, nameof(Regeneration_EndDelay));
-					SerializeField(s, nameof(Regeneration_AccDist));
-					SerializeField(s, nameof(Regeneration_TimeMaxDRC));
-					SerializeField(s, nameof(Uv_Fill));
-					SerializeField(s, nameof(Uv_Hole));
-					SerializeField(s, nameof(Brush_Radius));
-					SerializeField(s, nameof(Brush_ActionFill));
-					SerializeField(s, nameof(PrimitiveParameters));
-					SerializeField(s, nameof(Brush_Enabled));
+					Vecto_LengthMax = s.Serialize<float>(Vecto_LengthMax, name: "Vecto_LengthMax");
+					Smooth_LengthMax = s.Serialize<float>(Smooth_LengthMax, name: "Smooth_LengthMax");
+					Smooth_ShapeMinSize = s.Serialize<float>(Smooth_ShapeMinSize, name: "Smooth_ShapeMinSize");
+					Collision_Build = s.Serialize<int>(Collision_Build, name: "Collision_Build");
+					Light_Angle = s.SerializeObject<Angle>(Light_Angle, name: "Light_Angle");
+					Grid_Width = s.Serialize<float>(Grid_Width, name: "Grid_Width");
+					Grid_Heigth = s.Serialize<float>(Grid_Heigth, name: "Grid_Heigth");
+					Grid_Unity = s.Serialize<float>(Grid_Unity, name: "Grid_Unity");
+					Grid_VisualOffset = s.Serialize<float>(Grid_VisualOffset, name: "Grid_VisualOffset");
+					Particles_Spacing = s.Serialize<float>(Particles_Spacing, name: "Particles_Spacing");
+					Particles_NbPerLocation = s.Serialize<int>(Particles_NbPerLocation, name: "Particles_NbPerLocation");
+					Regeneration_Speed = s.Serialize<float>(Regeneration_Speed, name: "Regeneration_Speed");
+					Regeneration_StartDelay = s.Serialize<float>(Regeneration_StartDelay, name: "Regeneration_StartDelay");
+					Regeneration_EndDelay = s.Serialize<float>(Regeneration_EndDelay, name: "Regeneration_EndDelay");
+					Regeneration_AccDist = s.Serialize<float>(Regeneration_AccDist, name: "Regeneration_AccDist");
+					Regeneration_TimeMaxDRC = s.Serialize<float>(Regeneration_TimeMaxDRC, name: "Regeneration_TimeMaxDRC");
+					Uv_Fill = s.SerializeObject<RO2_DigRegionComponent.ParamUV>(Uv_Fill, name: "Uv_Fill");
+					Uv_Hole = s.SerializeObject<RO2_DigRegionComponent.ParamUV>(Uv_Hole, name: "Uv_Hole");
+					Brush_Radius = s.Serialize<float>(Brush_Radius, name: "Brush_Radius");
+					Brush_ActionFill = s.Serialize<bool>(Brush_ActionFill, name: "Brush_ActionFill");
+					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+					Brush_Enabled = s.Serialize<bool>(Brush_Enabled, name: "Brush_Enabled");
 				}
-				SerializeField(s, nameof(IsDiggable));
+				IsDiggable = s.Serialize<bool>(IsDiggable, name: "IsDiggable");
 			}
 		}
 		[Games(GameFlags.VH | GameFlags.RL)]
 		public partial class ParamUV : CSerializable {
-			[Serialize("UseWorldCoord")] public bool UseWorldCoord;
-			[Serialize("Offset"       )] public Vec2d Offset;
-			[Serialize("Scale"        )] public Vec2d Scale;
+			public bool UseWorldCoord;
+			public Vec2d Offset;
+			public Vec2d Scale;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(UseWorldCoord));
-				SerializeField(s, nameof(Offset));
-				SerializeField(s, nameof(Scale));
+				UseWorldCoord = s.Serialize<bool>(UseWorldCoord, name: "UseWorldCoord");
+				Offset = s.SerializeObject<Vec2d>(Offset, name: "Offset");
+				Scale = s.SerializeObject<Vec2d>(Scale, name: "Scale");
 			}
 		}
 		public enum Action {

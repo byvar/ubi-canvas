@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerSelection_Stick : TriggerSelectionAbstract {
-		[Serialize("Self"    )] public bool Self;
-		[Serialize("TagName" )] public StringID TagName;
-		[Serialize("TagValue")] public uint TagValue;
-		[Serialize("bool__0" )] public bool bool__0;
+		public bool Self;
+		public StringID TagName;
+		public uint TagValue;
+		public bool bool__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(bool__0));
+				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 			} else {
-				SerializeField(s, nameof(Self));
-				SerializeField(s, nameof(TagName));
-				SerializeField(s, nameof(TagValue));
+				Self = s.Serialize<bool>(Self, name: "Self");
+				TagName = s.SerializeObject<StringID>(TagName, name: "TagName");
+				TagValue = s.Serialize<uint>(TagValue, name: "TagValue");
 			}
 		}
 		public override uint? ClassCRC => 0x3A0A6EFE;

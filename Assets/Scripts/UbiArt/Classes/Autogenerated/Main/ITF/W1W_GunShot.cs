@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_GunShot : ActorComponent {
-		[Serialize("bool__0"     )] public bool bool__0;
-		[Serialize("Path__1"     )] public Path Path__1;
-		[Serialize("Enum_VH_0__2")] public Enum_VH_0 Enum_VH_0__2;
-		[Serialize("uint__3"     )] public uint uint__3;
-		[Serialize("uint__4"     )] public uint uint__4;
-		[Serialize("float__5"    )] public float float__5;
-		[Serialize("float__6"    )] public float float__6;
+		public bool bool__0;
+		public Path Path__1;
+		public Enum_VH_0 Enum_VH_0__2;
+		public uint uint__3;
+		public uint uint__4;
+		public float float__5;
+		public float float__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(bool__0));
-				SerializeField(s, nameof(Path__1));
-				SerializeField(s, nameof(Enum_VH_0__2));
-				SerializeField(s, nameof(uint__3));
-				SerializeField(s, nameof(uint__4));
-				SerializeField(s, nameof(float__5));
-				SerializeField(s, nameof(float__6));
+				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
+				Path__1 = s.SerializeObject<Path>(Path__1, name: "Path__1");
+				Enum_VH_0__2 = s.Serialize<Enum_VH_0>(Enum_VH_0__2, name: "Enum_VH_0__2");
+				uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
+				uint__4 = s.Serialize<uint>(uint__4, name: "uint__4");
+				float__5 = s.Serialize<float>(float__5, name: "float__5");
+				float__6 = s.Serialize<float>(float__6, name: "float__6");
 			}
 		}
 		public enum Enum_VH_0 {

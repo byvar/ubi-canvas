@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIGroundDarktoonedBehavior_Template : Ray_AIGroundRoamBehavior_Template {
-		[Serialize("stimEmissionSpeedLimit")] public float stimEmissionSpeedLimit;
-		[Serialize("stimEmissionOffset"    )] public Vec2d stimEmissionOffset;
-		[Serialize("stimEmissionOffsetEnd" )] public Vec2d stimEmissionOffsetEnd;
-		[Serialize("stimLevel"             )] public uint stimLevel;
-		[Serialize("stimType"              )] public RECEIVEDHITTYPE stimType;
+		public float stimEmissionSpeedLimit;
+		public Vec2d stimEmissionOffset;
+		public Vec2d stimEmissionOffsetEnd;
+		public uint stimLevel;
+		public RECEIVEDHITTYPE stimType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(stimEmissionSpeedLimit));
-			SerializeField(s, nameof(stimEmissionOffset));
-			SerializeField(s, nameof(stimEmissionOffsetEnd));
-			SerializeField(s, nameof(stimLevel));
-			SerializeField(s, nameof(stimType));
+			stimEmissionSpeedLimit = s.Serialize<float>(stimEmissionSpeedLimit, name: "stimEmissionSpeedLimit");
+			stimEmissionOffset = s.SerializeObject<Vec2d>(stimEmissionOffset, name: "stimEmissionOffset");
+			stimEmissionOffsetEnd = s.SerializeObject<Vec2d>(stimEmissionOffsetEnd, name: "stimEmissionOffsetEnd");
+			stimLevel = s.Serialize<uint>(stimLevel, name: "stimLevel");
+			stimType = s.Serialize<RECEIVEDHITTYPE>(stimType, name: "stimType");
 		}
 		public enum RECEIVEDHITTYPE {
 			[Serialize("RECEIVEDHITTYPE_UNKNOWN"    )] UNKNOWN = -1,

@@ -3,38 +3,38 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_170_sub_75A0A0 : CSerializable {
-		[Serialize("blinkScaleMin"                  )] public float blinkScaleMin;
-		[Serialize("blinkScale"                     )] public float blinkScale;
-		[Serialize("blinkPeriod"                    )] public float blinkPeriod;
-		[Serialize("blinkMinBlendSpeed"             )] public float blinkMinBlendSpeed;
-		[Serialize("hightlightAlphaMin"             )] public float hightlightAlphaMin;
-		[Serialize("hightlightAlpha"                )] public float hightlightAlpha;
-		[Serialize("hightlightPeriod"               )] public float hightlightPeriod;
-		[Serialize("hightlightMinBlendSpeed"        )] public float hightlightMinBlendSpeed;
-		[Serialize("margingIconX"                   )] public float margingIconX;
-		[Serialize("activatingDuration"             )] public float activatingDuration;
-		[Serialize("nameOffset"                     )] public float nameOffset;
-		[Serialize("mainPlayerBackgroundColorFactor")] public Color mainPlayerBackgroundColorFactor;
-		[Serialize("actorIconSelected"              )] public StringID actorIconSelected;
-		[Serialize("actorIconOffset"                )] public Vec2d actorIconOffset;
-		[Serialize("inverseShadowState"             )] public int inverseShadowState;
+		public float blinkScaleMin;
+		public float blinkScale;
+		public float blinkPeriod;
+		public float blinkMinBlendSpeed;
+		public float hightlightAlphaMin;
+		public float hightlightAlpha;
+		public float hightlightPeriod;
+		public float hightlightMinBlendSpeed;
+		public float margingIconX;
+		public float activatingDuration;
+		public float nameOffset;
+		public Color mainPlayerBackgroundColorFactor;
+		public StringID actorIconSelected;
+		public Vec2d actorIconOffset;
+		public int inverseShadowState;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(blinkScaleMin));
-			SerializeField(s, nameof(blinkScale));
-			SerializeField(s, nameof(blinkPeriod));
-			SerializeField(s, nameof(blinkMinBlendSpeed));
-			SerializeField(s, nameof(hightlightAlphaMin));
-			SerializeField(s, nameof(hightlightAlpha));
-			SerializeField(s, nameof(hightlightPeriod));
-			SerializeField(s, nameof(hightlightMinBlendSpeed));
-			SerializeField(s, nameof(margingIconX));
-			SerializeField(s, nameof(activatingDuration));
-			SerializeField(s, nameof(nameOffset));
-			SerializeField(s, nameof(mainPlayerBackgroundColorFactor));
-			SerializeField(s, nameof(actorIconSelected));
-			SerializeField(s, nameof(actorIconOffset));
-			SerializeField(s, nameof(inverseShadowState));
+			blinkScaleMin = s.Serialize<float>(blinkScaleMin, name: "blinkScaleMin");
+			blinkScale = s.Serialize<float>(blinkScale, name: "blinkScale");
+			blinkPeriod = s.Serialize<float>(blinkPeriod, name: "blinkPeriod");
+			blinkMinBlendSpeed = s.Serialize<float>(blinkMinBlendSpeed, name: "blinkMinBlendSpeed");
+			hightlightAlphaMin = s.Serialize<float>(hightlightAlphaMin, name: "hightlightAlphaMin");
+			hightlightAlpha = s.Serialize<float>(hightlightAlpha, name: "hightlightAlpha");
+			hightlightPeriod = s.Serialize<float>(hightlightPeriod, name: "hightlightPeriod");
+			hightlightMinBlendSpeed = s.Serialize<float>(hightlightMinBlendSpeed, name: "hightlightMinBlendSpeed");
+			margingIconX = s.Serialize<float>(margingIconX, name: "margingIconX");
+			activatingDuration = s.Serialize<float>(activatingDuration, name: "activatingDuration");
+			nameOffset = s.Serialize<float>(nameOffset, name: "nameOffset");
+			mainPlayerBackgroundColorFactor = s.SerializeObject<Color>(mainPlayerBackgroundColorFactor, name: "mainPlayerBackgroundColorFactor");
+			actorIconSelected = s.SerializeObject<StringID>(actorIconSelected, name: "actorIconSelected");
+			actorIconOffset = s.SerializeObject<Vec2d>(actorIconOffset, name: "actorIconOffset");
+			inverseShadowState = s.Serialize<int>(inverseShadowState, name: "inverseShadowState");
 		}
 		public override uint? ClassCRC => 0x0D055EDD;
 	}

@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_RailComponent_Template : ActorComponent_Template {
-		[Serialize("speedMax"       )] public float speedMax;
-		[Serialize("reboundFriction")] public float reboundFriction;
-		[Serialize("circleMode"     )] public bool circleMode;
-		[Serialize("radius"         )] public float radius;
-		[Serialize("initAngle"      )] public Angle initAngle;
-		[Serialize("useSnap"        )] public bool useSnap;
-		[Serialize("snapTolerance"  )] public float snapTolerance;
+		public float speedMax;
+		public float reboundFriction;
+		public bool circleMode;
+		public float radius;
+		public Angle initAngle;
+		public bool useSnap;
+		public float snapTolerance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(speedMax));
-			SerializeField(s, nameof(reboundFriction));
-			SerializeField(s, nameof(circleMode));
-			SerializeField(s, nameof(radius));
-			SerializeField(s, nameof(initAngle));
-			SerializeField(s, nameof(useSnap));
-			SerializeField(s, nameof(snapTolerance));
+			speedMax = s.Serialize<float>(speedMax, name: "speedMax");
+			reboundFriction = s.Serialize<float>(reboundFriction, name: "reboundFriction");
+			circleMode = s.Serialize<bool>(circleMode, name: "circleMode");
+			radius = s.Serialize<float>(radius, name: "radius");
+			initAngle = s.SerializeObject<Angle>(initAngle, name: "initAngle");
+			useSnap = s.Serialize<bool>(useSnap, name: "useSnap");
+			snapTolerance = s.Serialize<float>(snapTolerance, name: "snapTolerance");
 		}
 		public override uint? ClassCRC => 0x4C430640;
 	}

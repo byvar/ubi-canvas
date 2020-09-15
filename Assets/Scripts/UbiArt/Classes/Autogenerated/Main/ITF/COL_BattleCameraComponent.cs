@@ -4,71 +4,71 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_BattleCameraComponent : CSerializable {
 		[Description("Default fov.")]
-		[Serialize("defaultFov"             )] public float defaultFov;
+		public float defaultFov;
 		[Description("Offset applied to the initial position of the camera.")]
-		[Serialize("baseOffset"             )] public Vec3d baseOffset;
+		public Vec3d baseOffset;
 		[Description("Offset limit in X when moving the camera.")]
-		[Serialize("offsetLimitX"           )] public float offsetLimitX;
+		public float offsetLimitX;
 		[Description("Offset limit in Y when moving the camera.")]
-		[Serialize("offsetLimitY"           )] public float offsetLimitY;
+		public float offsetLimitY;
 		[Description("Delay before starting the camera move on action start.")]
-		[Serialize("actionStartDelay"       )] public float actionStartDelay;
+		public float actionStartDelay;
 		[Description("Curve in XY to move the camera when starting the action.")]
-		[Serialize("actionStartCurveXY"     )] public Placeholder actionStartCurveXY;
+		public Placeholder actionStartCurveXY;
 		[Description("Curve in Z to move the camera when starting the action.")]
-		[Serialize("actionStartCurveZ"      )] public Placeholder actionStartCurveZ;
+		public Placeholder actionStartCurveZ;
 		[Description("Fov curve to move the camera when starting the action.")]
-		[Serialize("actionStartCurveFov"    )] public Placeholder actionStartCurveFov;
+		public Placeholder actionStartCurveFov;
 		[Description("Zoom distance when starting the action.")]
-		[Serialize("actionStartZoom"        )] public float actionStartZoom;
+		public float actionStartZoom;
 		[Description("Fov when starting the action.")]
-		[Serialize("actionStartFov"         )] public float actionStartFov;
+		public float actionStartFov;
 		[Description("Duration of the camera move when starting the action.")]
-		[Serialize("actionStartDuration"    )] public float actionStartDuration;
+		public float actionStartDuration;
 		[Description("Curve in XY to move the camera when receiving the action.")]
-		[Serialize("actionReceptionCurveXY" )] public Placeholder actionReceptionCurveXY;
+		public Placeholder actionReceptionCurveXY;
 		[Description("Curve in Z to move the camera when receiving the action.")]
-		[Serialize("actionReceptionCurveZ"  )] public Placeholder actionReceptionCurveZ;
+		public Placeholder actionReceptionCurveZ;
 		[Description("Fov curve to move the camera when receiving the action.")]
-		[Serialize("actionReceptionCurveFov")] public Placeholder actionReceptionCurveFov;
+		public Placeholder actionReceptionCurveFov;
 		[Description("Zoom distance when receiving the action.")]
-		[Serialize("actionReceptionZoom"    )] public float actionReceptionZoom;
+		public float actionReceptionZoom;
 		[Description("Fov when receiving the action.")]
-		[Serialize("actionReceptionFov"     )] public float actionReceptionFov;
+		public float actionReceptionFov;
 		[Description("Duration of the camera move when receiving the action.")]
-		[Serialize("actionReceptionDuration")] public float actionReceptionDuration;
+		public float actionReceptionDuration;
 		[Description("Curve in XY to move the camera when ending the action.")]
-		[Serialize("actionEndCurveXY"       )] public Placeholder actionEndCurveXY;
+		public Placeholder actionEndCurveXY;
 		[Description("Curve in Z to move the camera when ending the action.")]
-		[Serialize("actionEndCurveZ"        )] public Placeholder actionEndCurveZ;
+		public Placeholder actionEndCurveZ;
 		[Description("Fov curve to move the camera when ending the action.")]
-		[Serialize("actionEndCurveFov"      )] public Placeholder actionEndCurveFov;
+		public Placeholder actionEndCurveFov;
 		[Description("Duration of the camera move when ending the action.")]
-		[Serialize("actionEndDuration"      )] public float actionEndDuration;
+		public float actionEndDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(defaultFov));
-				SerializeField(s, nameof(baseOffset));
-				SerializeField(s, nameof(offsetLimitX));
-				SerializeField(s, nameof(offsetLimitY));
-				SerializeField(s, nameof(actionStartDelay));
-				SerializeField(s, nameof(actionStartCurveXY));
-				SerializeField(s, nameof(actionStartCurveZ));
-				SerializeField(s, nameof(actionStartCurveFov));
-				SerializeField(s, nameof(actionStartZoom));
-				SerializeField(s, nameof(actionStartFov));
-				SerializeField(s, nameof(actionStartDuration));
-				SerializeField(s, nameof(actionReceptionCurveXY));
-				SerializeField(s, nameof(actionReceptionCurveZ));
-				SerializeField(s, nameof(actionReceptionCurveFov));
-				SerializeField(s, nameof(actionReceptionZoom));
-				SerializeField(s, nameof(actionReceptionFov));
-				SerializeField(s, nameof(actionReceptionDuration));
-				SerializeField(s, nameof(actionEndCurveXY));
-				SerializeField(s, nameof(actionEndCurveZ));
-				SerializeField(s, nameof(actionEndCurveFov));
-				SerializeField(s, nameof(actionEndDuration));
+				defaultFov = s.Serialize<float>(defaultFov, name: "defaultFov");
+				baseOffset = s.SerializeObject<Vec3d>(baseOffset, name: "baseOffset");
+				offsetLimitX = s.Serialize<float>(offsetLimitX, name: "offsetLimitX");
+				offsetLimitY = s.Serialize<float>(offsetLimitY, name: "offsetLimitY");
+				actionStartDelay = s.Serialize<float>(actionStartDelay, name: "actionStartDelay");
+				actionStartCurveXY = s.SerializeObject<Placeholder>(actionStartCurveXY, name: "actionStartCurveXY");
+				actionStartCurveZ = s.SerializeObject<Placeholder>(actionStartCurveZ, name: "actionStartCurveZ");
+				actionStartCurveFov = s.SerializeObject<Placeholder>(actionStartCurveFov, name: "actionStartCurveFov");
+				actionStartZoom = s.Serialize<float>(actionStartZoom, name: "actionStartZoom");
+				actionStartFov = s.Serialize<float>(actionStartFov, name: "actionStartFov");
+				actionStartDuration = s.Serialize<float>(actionStartDuration, name: "actionStartDuration");
+				actionReceptionCurveXY = s.SerializeObject<Placeholder>(actionReceptionCurveXY, name: "actionReceptionCurveXY");
+				actionReceptionCurveZ = s.SerializeObject<Placeholder>(actionReceptionCurveZ, name: "actionReceptionCurveZ");
+				actionReceptionCurveFov = s.SerializeObject<Placeholder>(actionReceptionCurveFov, name: "actionReceptionCurveFov");
+				actionReceptionZoom = s.Serialize<float>(actionReceptionZoom, name: "actionReceptionZoom");
+				actionReceptionFov = s.Serialize<float>(actionReceptionFov, name: "actionReceptionFov");
+				actionReceptionDuration = s.Serialize<float>(actionReceptionDuration, name: "actionReceptionDuration");
+				actionEndCurveXY = s.SerializeObject<Placeholder>(actionEndCurveXY, name: "actionEndCurveXY");
+				actionEndCurveZ = s.SerializeObject<Placeholder>(actionEndCurveZ, name: "actionEndCurveZ");
+				actionEndCurveFov = s.SerializeObject<Placeholder>(actionEndCurveFov, name: "actionEndCurveFov");
+				actionEndDuration = s.Serialize<float>(actionEndDuration, name: "actionEndDuration");
 			}
 		}
 		public override uint? ClassCRC => 0x6CEE05D6;

@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_BossPlantAIComponent_Template : AIComponent_Template {
-		[Serialize("targetEvaluationOffset"        )] public Vec2d targetEvaluationOffset;
-		[Serialize("playRateMultiplierMinDistance" )] public float playRateMultiplierMinDistance;
-		[Serialize("playRateMultiplierMaxDistance" )] public float playRateMultiplierMaxDistance;
-		[Serialize("playRateMultiplierMinValue"    )] public float playRateMultiplierMinValue;
-		[Serialize("playRateMultiplierMaxValue"    )] public float playRateMultiplierMaxValue;
-		[Serialize("playRateMultiplierAcceleration")] public float playRateMultiplierAcceleration;
-		[Serialize("playRateMultiplierDeceleration")] public float playRateMultiplierDeceleration;
+		public Vec2d targetEvaluationOffset;
+		public float playRateMultiplierMinDistance;
+		public float playRateMultiplierMaxDistance;
+		public float playRateMultiplierMinValue;
+		public float playRateMultiplierMaxValue;
+		public float playRateMultiplierAcceleration;
+		public float playRateMultiplierDeceleration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(targetEvaluationOffset));
-			SerializeField(s, nameof(playRateMultiplierMinDistance));
-			SerializeField(s, nameof(playRateMultiplierMaxDistance));
-			SerializeField(s, nameof(playRateMultiplierMinValue));
-			SerializeField(s, nameof(playRateMultiplierMaxValue));
-			SerializeField(s, nameof(playRateMultiplierAcceleration));
-			SerializeField(s, nameof(playRateMultiplierDeceleration));
+			targetEvaluationOffset = s.SerializeObject<Vec2d>(targetEvaluationOffset, name: "targetEvaluationOffset");
+			playRateMultiplierMinDistance = s.Serialize<float>(playRateMultiplierMinDistance, name: "playRateMultiplierMinDistance");
+			playRateMultiplierMaxDistance = s.Serialize<float>(playRateMultiplierMaxDistance, name: "playRateMultiplierMaxDistance");
+			playRateMultiplierMinValue = s.Serialize<float>(playRateMultiplierMinValue, name: "playRateMultiplierMinValue");
+			playRateMultiplierMaxValue = s.Serialize<float>(playRateMultiplierMaxValue, name: "playRateMultiplierMaxValue");
+			playRateMultiplierAcceleration = s.Serialize<float>(playRateMultiplierAcceleration, name: "playRateMultiplierAcceleration");
+			playRateMultiplierDeceleration = s.Serialize<float>(playRateMultiplierDeceleration, name: "playRateMultiplierDeceleration");
 		}
 		public override uint? ClassCRC => 0x75618729;
 	}

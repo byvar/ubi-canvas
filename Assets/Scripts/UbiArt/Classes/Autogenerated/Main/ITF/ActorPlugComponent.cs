@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class ActorPlugComponent : ActorComponent {
-		[Serialize("controllers")] public CArray<Generic<ActorPlugBaseController>> controllers;
+		public CArray<Generic<ActorPlugBaseController>> controllers;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(controllers));
+					controllers = s.SerializeObject<CArray<Generic<ActorPlugBaseController>>>(controllers, name: "controllers");
 				}
 			}
 		}

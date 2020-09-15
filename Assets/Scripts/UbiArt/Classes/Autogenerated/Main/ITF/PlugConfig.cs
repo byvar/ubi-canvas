@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlugConfig : CSerializable {
-		[Serialize("plugId"    )] public StringID plugId;
-		[Serialize("slotId"    )] public uint slotId;
-		[Serialize("snapConfig")] public Nullable<PlugSnapConfig> snapConfig;
+		public StringID plugId;
+		public uint slotId;
+		public Nullable<PlugSnapConfig> snapConfig;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(plugId));
-			SerializeField(s, nameof(slotId));
-			SerializeField(s, nameof(snapConfig));
+			plugId = s.SerializeObject<StringID>(plugId, name: "plugId");
+			slotId = s.Serialize<uint>(slotId, name: "slotId");
+			snapConfig = s.SerializeObject<Nullable<PlugSnapConfig>>(snapConfig, name: "snapConfig");
 		}
 	}
 }

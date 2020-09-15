@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BTDeciderFactCompare_Template : BTDecider_Template {
-		[Serialize("fact"   )] public StringID fact;
-		[Serialize("value"  )] public string value;
-		[Serialize("type"   )] public EValueType type;
-		[Serialize("compare")] public ECompareType compare;
+		public StringID fact;
+		public string value;
+		public EValueType type;
+		public ECompareType compare;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fact));
-			SerializeField(s, nameof(value));
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(compare));
+			fact = s.SerializeObject<StringID>(fact, name: "fact");
+			value = s.Serialize<string>(value, name: "value");
+			type = s.Serialize<EValueType>(type, name: "type");
+			compare = s.Serialize<ECompareType>(compare, name: "compare");
 		}
 		public enum EValueType {
 			[Serialize("EValueType_Unknown"   )] Unknown = 0,

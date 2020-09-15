@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AnimatedWithSubstitionTemplatesComponent : AnimatedComponent {
-		[Serialize("AnimSbustitionTemplates")] public CList<AnimatedWithSubstitionTemplatesComponent.AnimSubstsTemplate> AnimSbustitionTemplates;
+		public CList<AnimatedWithSubstitionTemplatesComponent.AnimSubstsTemplate> AnimSbustitionTemplates;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(AnimSbustitionTemplates));
+			AnimSbustitionTemplates = s.SerializeObject<CList<AnimatedWithSubstitionTemplatesComponent.AnimSubstsTemplate>>(AnimSbustitionTemplates, name: "AnimSbustitionTemplates");
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class AnimSubst : CSerializable {
-			[Serialize("original")] public StringID original;
-			[Serialize("final"   )] public StringID final;
+			public StringID original;
+			public StringID final;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(original));
-				SerializeField(s, nameof(final));
+				original = s.SerializeObject<StringID>(original, name: "original");
+				final = s.SerializeObject<StringID>(final, name: "final");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class AnimSubstsTemplate : CSerializable {
-			[Serialize("substitutedAnimsList")] public CList<AnimatedWithSubstitionTemplatesComponent.AnimSubst> substitutedAnimsList;
+			public CList<AnimatedWithSubstitionTemplatesComponent.AnimSubst> substitutedAnimsList;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(substitutedAnimsList));
+				substitutedAnimsList = s.SerializeObject<CList<AnimatedWithSubstitionTemplatesComponent.AnimSubst>>(substitutedAnimsList, name: "substitutedAnimsList");
 			}
 		}
 		public override uint? ClassCRC => 0x9D1DBAC6;

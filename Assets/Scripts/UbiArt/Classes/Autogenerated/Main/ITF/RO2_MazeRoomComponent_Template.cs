@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MazeRoomComponent_Template : ActorComponent_Template {
-		[Serialize("fadeInFactor" )] public float fadeInFactor;
-		[Serialize("fadeOutFactor")] public float fadeOutFactor;
-		[Serialize("portalTime"   )] public float portalTime;
+		public float fadeInFactor;
+		public float fadeOutFactor;
+		public float portalTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fadeInFactor));
-			SerializeField(s, nameof(fadeOutFactor));
-			SerializeField(s, nameof(portalTime));
+			fadeInFactor = s.Serialize<float>(fadeInFactor, name: "fadeInFactor");
+			fadeOutFactor = s.Serialize<float>(fadeOutFactor, name: "fadeOutFactor");
+			portalTime = s.Serialize<float>(portalTime, name: "portalTime");
 		}
 		public override uint? ClassCRC => 0xE953E8F1;
 	}

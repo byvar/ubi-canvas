@@ -3,40 +3,40 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RopeHookComponent : ActorComponent {
-		[Serialize("touchHandler"             )] public TouchHandler touchHandler;
-		[Serialize("torqueFriction"           )] public float torqueFriction;
-		[Serialize("attachmentDetectionRadius")] public float attachmentDetectionRadius;
-		[Serialize("hookingSmoothFactor"      )] public float hookingSmoothFactor;
-		[Serialize("hookOffset"               )] public Vec2d hookOffset;
-		[Serialize("angleOffset"              )] public Angle angleOffset;
-		[Serialize("angleSmoothingFactor"     )] public float angleSmoothingFactor;
-		[Serialize("snapDist"                 )] public float snapDist;
-		[Serialize("float__0"                 )] public float float__0;
-		[Serialize("float__1"                 )] public float float__1;
-		[Serialize("float__2"                 )] public float float__2;
-		[Serialize("Vector2__3"               )] public Vec2d Vector2__3;
-		[Serialize("Angle__4"                 )] public Angle Angle__4;
-		[Serialize("float__5"                 )] public float float__5;
-		[Serialize("float__6"                 )] public float float__6;
+		public TouchHandler touchHandler;
+		public float torqueFriction;
+		public float attachmentDetectionRadius;
+		public float hookingSmoothFactor;
+		public Vec2d hookOffset;
+		public Angle angleOffset;
+		public float angleSmoothingFactor;
+		public float snapDist;
+		public float float__0;
+		public float float__1;
+		public float float__2;
+		public Vec2d Vector2__3;
+		public Angle Angle__4;
+		public float float__5;
+		public float float__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(float__0));
-				SerializeField(s, nameof(float__1));
-				SerializeField(s, nameof(float__2));
-				SerializeField(s, nameof(Vector2__3));
-				SerializeField(s, nameof(Angle__4));
-				SerializeField(s, nameof(float__5));
-				SerializeField(s, nameof(float__6));
+				float__0 = s.Serialize<float>(float__0, name: "float__0");
+				float__1 = s.Serialize<float>(float__1, name: "float__1");
+				float__2 = s.Serialize<float>(float__2, name: "float__2");
+				Vector2__3 = s.SerializeObject<Vec2d>(Vector2__3, name: "Vector2__3");
+				Angle__4 = s.SerializeObject<Angle>(Angle__4, name: "Angle__4");
+				float__5 = s.Serialize<float>(float__5, name: "float__5");
+				float__6 = s.Serialize<float>(float__6, name: "float__6");
 			} else {
-				SerializeField(s, nameof(touchHandler));
-				SerializeField(s, nameof(torqueFriction));
-				SerializeField(s, nameof(attachmentDetectionRadius));
-				SerializeField(s, nameof(hookingSmoothFactor));
-				SerializeField(s, nameof(hookOffset));
-				SerializeField(s, nameof(angleOffset));
-				SerializeField(s, nameof(angleSmoothingFactor));
-				SerializeField(s, nameof(snapDist));
+				touchHandler = s.SerializeObject<TouchHandler>(touchHandler, name: "touchHandler");
+				torqueFriction = s.Serialize<float>(torqueFriction, name: "torqueFriction");
+				attachmentDetectionRadius = s.Serialize<float>(attachmentDetectionRadius, name: "attachmentDetectionRadius");
+				hookingSmoothFactor = s.Serialize<float>(hookingSmoothFactor, name: "hookingSmoothFactor");
+				hookOffset = s.SerializeObject<Vec2d>(hookOffset, name: "hookOffset");
+				angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
+				angleSmoothingFactor = s.Serialize<float>(angleSmoothingFactor, name: "angleSmoothingFactor");
+				snapDist = s.Serialize<float>(snapDist, name: "snapDist");
 			}
 		}
 		public override uint? ClassCRC => 0xB42762E7;

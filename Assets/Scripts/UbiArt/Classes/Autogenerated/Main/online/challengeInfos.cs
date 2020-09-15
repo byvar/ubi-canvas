@@ -3,33 +3,33 @@ using UnityEngine;
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class challengeInfos : CSerializable {
-		[Serialize("seed"                 )] public uint seed;
-		[Serialize("timeLeft"             )] public float timeLeft;
-		[Serialize("mapPath"              )] public string mapPath;
-		[Serialize("configPath"           )] public string configPath;
-		[Serialize("canCollect"           )] public bool canCollect;
-		[Serialize("challengeRank"        )] public uint challengeRank;
-		[Serialize("challengeDate"        )] public string challengeDate;
-		[Serialize("challengeTotalPlayers")] public uint challengeTotalPlayers;
-		[Serialize("disabledBricks"       )] public CArray<string> disabledBricks;
-		[Serialize("tokenCount"           )] public uint tokenCount;
-		[Serialize("tokenRechargeTimer"   )] public uint tokenRechargeTimer;
-		[Serialize("eventTimeLeft"        )] public float eventTimeLeft;
+		public uint seed;
+		public float timeLeft;
+		public string mapPath;
+		public string configPath;
+		public bool canCollect;
+		public uint challengeRank;
+		public string challengeDate;
+		public uint challengeTotalPlayers;
+		public CArray<string> disabledBricks;
+		public uint tokenCount;
+		public uint tokenRechargeTimer;
+		public float eventTimeLeft;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(seed));
-			SerializeField(s, nameof(timeLeft));
-			SerializeField(s, nameof(mapPath));
-			SerializeField(s, nameof(configPath));
-			SerializeField(s, nameof(canCollect));
-			SerializeField(s, nameof(challengeRank));
-			SerializeField(s, nameof(challengeDate));
-			SerializeField(s, nameof(challengeTotalPlayers));
-			SerializeField(s, nameof(disabledBricks));
-			SerializeField(s, nameof(disabledBricks));
-			SerializeField(s, nameof(tokenCount));
-			SerializeField(s, nameof(tokenRechargeTimer));
-			SerializeField(s, nameof(eventTimeLeft));
+			seed = s.Serialize<uint>(seed, name: "seed");
+			timeLeft = s.Serialize<float>(timeLeft, name: "timeLeft");
+			mapPath = s.Serialize<string>(mapPath, name: "mapPath");
+			configPath = s.Serialize<string>(configPath, name: "configPath");
+			canCollect = s.Serialize<bool>(canCollect, name: "canCollect");
+			challengeRank = s.Serialize<uint>(challengeRank, name: "challengeRank");
+			challengeDate = s.Serialize<string>(challengeDate, name: "challengeDate");
+			challengeTotalPlayers = s.Serialize<uint>(challengeTotalPlayers, name: "challengeTotalPlayers");
+			disabledBricks = s.SerializeObject<CArray<string>>(disabledBricks, name: "disabledBricks");
+			disabledBricks = s.SerializeObject<CArray<string>>(disabledBricks, name: "disabledBricks");
+			tokenCount = s.Serialize<uint>(tokenCount, name: "tokenCount");
+			tokenRechargeTimer = s.Serialize<uint>(tokenRechargeTimer, name: "tokenRechargeTimer");
+			eventTimeLeft = s.Serialize<float>(eventTimeLeft, name: "eventTimeLeft");
 		}
 	}
 }

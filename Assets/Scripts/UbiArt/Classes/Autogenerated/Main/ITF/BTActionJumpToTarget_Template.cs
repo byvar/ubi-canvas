@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
 	public partial class BTActionJumpToTarget_Template : BTAction_Template {
-		[Serialize("anim"              )] public StringID anim;
-		[Serialize("factTargetActor"   )] public StringID factTargetActor;
-		[Serialize("factTargetPos"     )] public StringID factTargetPos;
-		[Serialize("followMovingTarget")] public bool followMovingTarget;
-		[Serialize("usePhysicJump"     )] public bool usePhysicJump;
+		public StringID anim;
+		public StringID factTargetActor;
+		public StringID factTargetPos;
+		public bool followMovingTarget;
+		public bool usePhysicJump;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(factTargetActor));
-				SerializeField(s, nameof(factTargetPos));
+				anim = s.SerializeObject<StringID>(anim, name: "anim");
+				factTargetActor = s.SerializeObject<StringID>(factTargetActor, name: "factTargetActor");
+				factTargetPos = s.SerializeObject<StringID>(factTargetPos, name: "factTargetPos");
 			} else {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(factTargetActor));
-				SerializeField(s, nameof(factTargetPos));
-				SerializeField(s, nameof(followMovingTarget));
-				SerializeField(s, nameof(usePhysicJump));
+				anim = s.SerializeObject<StringID>(anim, name: "anim");
+				factTargetActor = s.SerializeObject<StringID>(factTargetActor, name: "factTargetActor");
+				factTargetPos = s.SerializeObject<StringID>(factTargetPos, name: "factTargetPos");
+				followMovingTarget = s.Serialize<bool>(followMovingTarget, name: "followMovingTarget");
+				usePhysicJump = s.Serialize<bool>(usePhysicJump, name: "usePhysicJump");
 			}
 		}
 		public override uint? ClassCRC => 0x5AE94BD1;

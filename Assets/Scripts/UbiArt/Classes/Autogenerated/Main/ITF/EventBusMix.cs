@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class EventBusMix : Event {
-		[Serialize("activate" )] public int activate;
-		[Serialize("busMix"   )] public BusMix busMix;
-		[Serialize("name"     )] public StringID name;
+		public int activate;
+		public BusMix busMix;
+		public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(activate));
-				SerializeField(s, nameof(busMix));
+				activate = s.Serialize<int>(activate, name: "activate");
+				busMix = s.SerializeObject<BusMix>(busMix, name: "busMix");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(activate));
-				SerializeField(s, nameof(busMix));
+				name = s.SerializeObject<StringID>(name, name: "name");
+				activate = s.Serialize<int>(activate, name: "activate");
+				busMix = s.SerializeObject<BusMix>(busMix, name: "busMix");
 			} else {
 			}
 		}

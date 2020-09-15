@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_LockCharacterEvent : CSerializable {
-		[Serialize("sender"     )] public uint sender;
-		[Serialize("lock"       )] public bool _lock;
-		[Serialize("characterID")] public StringID characterID;
+		public uint sender;
+		public bool _lock;
+		public StringID characterID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sender));
-			SerializeField(s, nameof(_lock), boolAsByte: true);
-			SerializeField(s, nameof(characterID));
+			sender = s.Serialize<uint>(sender, name: "sender");
+			_lock = s.Serialize<bool>(_lock, name: "_lock", options: CSerializerObject.Options.BoolAsByte);
+			characterID = s.SerializeObject<StringID>(characterID, name: "characterID");
 		}
 		public override uint? ClassCRC => 0x9043302F;
 	}

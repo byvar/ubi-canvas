@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossLuchadoreTriggerComponent : ActorComponent {
-		[Serialize("luchadoreEvent"         )] public LE luchadoreEvent;
-		[Serialize("phaseTag"               )] public StringID phaseTag;
-		[Serialize("instructionTag"         )] public StringID instructionTag;
-		[Serialize("neededFlags"            )] public LF neededFlags;
-		[Serialize("tweenSelection"         )] public LT tweenSelection;
-		[Serialize("secondaryTweenSelection")] public LT secondaryTweenSelection;
-		[Serialize("triggerOnce"            )] public bool triggerOnce;
-		[Serialize("tweenOffset"            )] public Vec2d tweenOffset;
-		[Serialize("tweenSelection"         )] public LTLegends tweenSelection2;
-		[Serialize("secondaryTweenSelection")] public LTLegends secondaryTweenSelection2;
+		public LE luchadoreEvent;
+		public StringID phaseTag;
+		public StringID instructionTag;
+		public LF neededFlags;
+		public LT tweenSelection;
+		public LT secondaryTweenSelection;
+		public bool triggerOnce;
+		public Vec2d tweenOffset;
+		public LTLegends tweenSelection2;
+		public LTLegends secondaryTweenSelection2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(luchadoreEvent));
-				SerializeField(s, nameof(phaseTag));
-				SerializeField(s, nameof(instructionTag));
-				SerializeField(s, nameof(neededFlags));
-				SerializeField(s, nameof(tweenSelection2));
-				SerializeField(s, nameof(secondaryTweenSelection2));
-				SerializeField(s, nameof(triggerOnce), boolAsByte: true);
-				SerializeField(s, nameof(tweenOffset));
+				luchadoreEvent = s.Serialize<LE>(luchadoreEvent, name: "luchadoreEvent");
+				phaseTag = s.SerializeObject<StringID>(phaseTag, name: "phaseTag");
+				instructionTag = s.SerializeObject<StringID>(instructionTag, name: "instructionTag");
+				neededFlags = s.Serialize<LF>(neededFlags, name: "neededFlags");
+				tweenSelection2 = s.Serialize<LTLegends>(tweenSelection2, name: "tweenSelection2");
+				secondaryTweenSelection2 = s.Serialize<LTLegends>(secondaryTweenSelection2, name: "secondaryTweenSelection2");
+				triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce", options: CSerializerObject.Options.BoolAsByte);
+				tweenOffset = s.SerializeObject<Vec2d>(tweenOffset, name: "tweenOffset");
 			} else {
-				SerializeField(s, nameof(luchadoreEvent));
-				SerializeField(s, nameof(phaseTag));
-				SerializeField(s, nameof(instructionTag));
-				SerializeField(s, nameof(neededFlags));
-				SerializeField(s, nameof(tweenSelection));
-				SerializeField(s, nameof(secondaryTweenSelection));
-				SerializeField(s, nameof(triggerOnce));
-				SerializeField(s, nameof(tweenOffset));
+				luchadoreEvent = s.Serialize<LE>(luchadoreEvent, name: "luchadoreEvent");
+				phaseTag = s.SerializeObject<StringID>(phaseTag, name: "phaseTag");
+				instructionTag = s.SerializeObject<StringID>(instructionTag, name: "instructionTag");
+				neededFlags = s.Serialize<LF>(neededFlags, name: "neededFlags");
+				tweenSelection = s.Serialize<LT>(tweenSelection, name: "tweenSelection");
+				secondaryTweenSelection = s.Serialize<LT>(secondaryTweenSelection, name: "secondaryTweenSelection");
+				triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce");
+				tweenOffset = s.SerializeObject<Vec2d>(tweenOffset, name: "tweenOffset");
 			}
 		}
 		public enum LE {

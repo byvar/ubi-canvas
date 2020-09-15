@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PushButtonComponent_Template : CSerializable {
-		[Serialize("onOffDuration"       )] public float onOffDuration;
-		[Serialize("delay"               )] public float delay;
-		[Serialize("activateChildren"    )] public int activateChildren;
-		[Serialize("triggerOnStick"      )] public int triggerOnStick;
-		[Serialize("triggerOnHit"        )] public int triggerOnHit;
-		[Serialize("isProgressive"       )] public int isProgressive;
-		[Serialize("progressiveSpeed"    )] public float progressiveSpeed;
-		[Serialize("progressiveHitLevels")] public Placeholder progressiveHitLevels;
-		[Serialize("stayOn"              )] public int stayOn;
+		public float onOffDuration;
+		public float delay;
+		public int activateChildren;
+		public int triggerOnStick;
+		public int triggerOnHit;
+		public int isProgressive;
+		public float progressiveSpeed;
+		public Placeholder progressiveHitLevels;
+		public int stayOn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(onOffDuration));
-			SerializeField(s, nameof(delay));
-			SerializeField(s, nameof(activateChildren));
-			SerializeField(s, nameof(triggerOnStick));
-			SerializeField(s, nameof(triggerOnHit));
-			SerializeField(s, nameof(isProgressive));
-			SerializeField(s, nameof(progressiveSpeed));
-			SerializeField(s, nameof(progressiveHitLevels));
-			SerializeField(s, nameof(stayOn));
+			onOffDuration = s.Serialize<float>(onOffDuration, name: "onOffDuration");
+			delay = s.Serialize<float>(delay, name: "delay");
+			activateChildren = s.Serialize<int>(activateChildren, name: "activateChildren");
+			triggerOnStick = s.Serialize<int>(triggerOnStick, name: "triggerOnStick");
+			triggerOnHit = s.Serialize<int>(triggerOnHit, name: "triggerOnHit");
+			isProgressive = s.Serialize<int>(isProgressive, name: "isProgressive");
+			progressiveSpeed = s.Serialize<float>(progressiveSpeed, name: "progressiveSpeed");
+			progressiveHitLevels = s.SerializeObject<Placeholder>(progressiveHitLevels, name: "progressiveHitLevels");
+			stayOn = s.Serialize<int>(stayOn, name: "stayOn");
 		}
 		public override uint? ClassCRC => 0x9308A6E7;
 	}

@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class AtlasAnimationComponent_Template : GraphicComponent_Template {
-		[Serialize("texture" )] public Path texture;
-		[Serialize("material")] public GFXMaterialSerializable material;
-		[Serialize("playRate")] public float playRate;
-		[Serialize("width"   )] public float width;
-		[Serialize("height"  )] public float height;
+		public Path texture;
+		public GFXMaterialSerializable material;
+		public float playRate;
+		public float width;
+		public float height;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(texture));
-				SerializeField(s, nameof(playRate));
-				SerializeField(s, nameof(width));
-				SerializeField(s, nameof(height));
+				texture = s.SerializeObject<Path>(texture, name: "texture");
+				playRate = s.Serialize<float>(playRate, name: "playRate");
+				width = s.Serialize<float>(width, name: "width");
+				height = s.Serialize<float>(height, name: "height");
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(playRate));
-				SerializeField(s, nameof(width));
-				SerializeField(s, nameof(height));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				playRate = s.Serialize<float>(playRate, name: "playRate");
+				width = s.Serialize<float>(width, name: "width");
+				height = s.Serialize<float>(height, name: "height");
 			}
 		}
 		public override uint? ClassCRC => 0x90B7EDA3;

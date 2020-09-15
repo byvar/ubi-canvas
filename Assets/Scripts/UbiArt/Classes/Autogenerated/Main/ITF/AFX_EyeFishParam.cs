@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_EyeFishParam : CSerializable {
-		[Serialize("use"   )] public bool use;
-		[Serialize("height")] public float height;
-		[Serialize("scale" )] public float scale;
+		public bool use;
+		public float height;
+		public float scale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(use), boolAsByte: true);
+				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(use));
+				use = s.Serialize<bool>(use, name: "use");
 			}
-			SerializeField(s, nameof(height));
-			SerializeField(s, nameof(scale));
+			height = s.Serialize<float>(height, name: "height");
+			scale = s.Serialize<float>(scale, name: "scale");
 		}
 	}
 }

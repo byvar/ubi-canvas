@@ -3,42 +3,42 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PickupManager_Template : TemplateObj {
-		[Serialize("scoreLumPath"               )] public Path scoreLumPath;
-		[Serialize("heartRainPath"              )] public Path heartRainPath;
-		[Serialize("heartNfcPath"               )] public Path heartNfcPath;
-		[Serialize("heartRainCooldown"          )] public float heartRainCooldown;
-		[Serialize("DRCItemHeartPath"           )] public Path DRCItemHeartPath;
-		[Serialize("DRCItemHeartWaitDurationMin")] public float DRCItemHeartWaitDurationMin;
-		[Serialize("DRCItemHeartWaitDurationMax")] public float DRCItemHeartWaitDurationMax;
-		[Serialize("DRCItemHeartMinDeathCount"  )] public uint DRCItemHeartMinDeathCount;
-		[Serialize("DRCItemHeartMaxDeathCount"  )] public uint DRCItemHeartMaxDeathCount;
-		[Serialize("DRCItemHeartMaxByCheckpoint")] public uint DRCItemHeartMaxByCheckpoint;
-		[Serialize("prisonerCounterPath"        )] public Path prisonerCounterPath;
+		public Path scoreLumPath;
+		public Path heartRainPath;
+		public Path heartNfcPath;
+		public float heartRainCooldown;
+		public Path DRCItemHeartPath;
+		public float DRCItemHeartWaitDurationMin;
+		public float DRCItemHeartWaitDurationMax;
+		public uint DRCItemHeartMinDeathCount;
+		public uint DRCItemHeartMaxDeathCount;
+		public uint DRCItemHeartMaxByCheckpoint;
+		public Path prisonerCounterPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(prisonerCounterPath));
-				SerializeField(s, nameof(scoreLumPath));
-				SerializeField(s, nameof(heartRainPath));
-				SerializeField(s, nameof(heartNfcPath));
-				SerializeField(s, nameof(heartRainCooldown));
-				SerializeField(s, nameof(DRCItemHeartPath));
-				SerializeField(s, nameof(DRCItemHeartWaitDurationMin));
-				SerializeField(s, nameof(DRCItemHeartWaitDurationMax));
-				SerializeField(s, nameof(DRCItemHeartMinDeathCount));
-				SerializeField(s, nameof(DRCItemHeartMaxDeathCount));
-				SerializeField(s, nameof(DRCItemHeartMaxByCheckpoint));
+				prisonerCounterPath = s.SerializeObject<Path>(prisonerCounterPath, name: "prisonerCounterPath");
+				scoreLumPath = s.SerializeObject<Path>(scoreLumPath, name: "scoreLumPath");
+				heartRainPath = s.SerializeObject<Path>(heartRainPath, name: "heartRainPath");
+				heartNfcPath = s.SerializeObject<Path>(heartNfcPath, name: "heartNfcPath");
+				heartRainCooldown = s.Serialize<float>(heartRainCooldown, name: "heartRainCooldown");
+				DRCItemHeartPath = s.SerializeObject<Path>(DRCItemHeartPath, name: "DRCItemHeartPath");
+				DRCItemHeartWaitDurationMin = s.Serialize<float>(DRCItemHeartWaitDurationMin, name: "DRCItemHeartWaitDurationMin");
+				DRCItemHeartWaitDurationMax = s.Serialize<float>(DRCItemHeartWaitDurationMax, name: "DRCItemHeartWaitDurationMax");
+				DRCItemHeartMinDeathCount = s.Serialize<uint>(DRCItemHeartMinDeathCount, name: "DRCItemHeartMinDeathCount");
+				DRCItemHeartMaxDeathCount = s.Serialize<uint>(DRCItemHeartMaxDeathCount, name: "DRCItemHeartMaxDeathCount");
+				DRCItemHeartMaxByCheckpoint = s.Serialize<uint>(DRCItemHeartMaxByCheckpoint, name: "DRCItemHeartMaxByCheckpoint");
 			} else {
-				SerializeField(s, nameof(scoreLumPath));
-				SerializeField(s, nameof(heartRainPath));
-				SerializeField(s, nameof(heartNfcPath));
-				SerializeField(s, nameof(heartRainCooldown));
-				SerializeField(s, nameof(DRCItemHeartPath));
-				SerializeField(s, nameof(DRCItemHeartWaitDurationMin));
-				SerializeField(s, nameof(DRCItemHeartWaitDurationMax));
-				SerializeField(s, nameof(DRCItemHeartMinDeathCount));
-				SerializeField(s, nameof(DRCItemHeartMaxDeathCount));
-				SerializeField(s, nameof(DRCItemHeartMaxByCheckpoint));
+				scoreLumPath = s.SerializeObject<Path>(scoreLumPath, name: "scoreLumPath");
+				heartRainPath = s.SerializeObject<Path>(heartRainPath, name: "heartRainPath");
+				heartNfcPath = s.SerializeObject<Path>(heartNfcPath, name: "heartNfcPath");
+				heartRainCooldown = s.Serialize<float>(heartRainCooldown, name: "heartRainCooldown");
+				DRCItemHeartPath = s.SerializeObject<Path>(DRCItemHeartPath, name: "DRCItemHeartPath");
+				DRCItemHeartWaitDurationMin = s.Serialize<float>(DRCItemHeartWaitDurationMin, name: "DRCItemHeartWaitDurationMin");
+				DRCItemHeartWaitDurationMax = s.Serialize<float>(DRCItemHeartWaitDurationMax, name: "DRCItemHeartWaitDurationMax");
+				DRCItemHeartMinDeathCount = s.Serialize<uint>(DRCItemHeartMinDeathCount, name: "DRCItemHeartMinDeathCount");
+				DRCItemHeartMaxDeathCount = s.Serialize<uint>(DRCItemHeartMaxDeathCount, name: "DRCItemHeartMaxDeathCount");
+				DRCItemHeartMaxByCheckpoint = s.Serialize<uint>(DRCItemHeartMaxByCheckpoint, name: "DRCItemHeartMaxByCheckpoint");
 			}
 		}
 		public override uint? ClassCRC => 0xD2C166E6;

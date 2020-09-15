@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class BezierCurve : CSerializable {
-		[Serialize("points")] public CList<BezierCurve.Point> points;
+		public CList<BezierCurve.Point> points;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(points));
+				points = s.SerializeObject<CList<BezierCurve.Point>>(points, name: "points");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class Point : CSerializable {
-			[Serialize("pos" )] public Vec3d pos;
-			[Serialize("tanA")] public Vec3d tanA;
-			[Serialize("tanB")] public Vec3d tanB;
+			public Vec3d pos;
+			public Vec3d tanA;
+			public Vec3d tanB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(pos));
-					SerializeField(s, nameof(tanA));
-					SerializeField(s, nameof(tanB));
+					pos = s.SerializeObject<Vec3d>(pos, name: "pos");
+					tanA = s.SerializeObject<Vec3d>(tanA, name: "tanA");
+					tanB = s.SerializeObject<Vec3d>(tanB, name: "tanB");
 				}
 			}
 		}

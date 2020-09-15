@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionFollowTarget_Template : BTActionWalkToTarget_Template {
-		[Serialize("range"       )] public float range;
-		[Serialize("followTarget")] public StringID followTarget;
+		public float range;
+		public StringID followTarget;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(range));
-			SerializeField(s, nameof(followTarget));
+			range = s.Serialize<float>(range, name: "range");
+			followTarget = s.SerializeObject<StringID>(followTarget, name: "followTarget");
 		}
 		public override uint? ClassCRC => 0xF2AB7917;
 	}

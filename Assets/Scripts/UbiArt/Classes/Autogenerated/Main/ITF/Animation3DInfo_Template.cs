@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Animation3DInfo_Template : CSerializable {
-		[Serialize("friendlyName"   )] public StringID friendlyName;
-		[Serialize("name"           )] public Path name;
-		[Serialize("playRate"       )] public float playRate;
-		[Serialize("loop"           )] public bool loop;
-		[Serialize("reverse"        )] public bool reverse;
-		[Serialize("procedural"     )] public bool procedural;
-		[Serialize("sync"           )] public bool sync;
-		[Serialize("syncRatio"      )] public float syncRatio;
-		[Serialize("allowSyncOffset")] public bool allowSyncOffset;
+		public StringID friendlyName;
+		public Path name;
+		public float playRate;
+		public bool loop;
+		public bool reverse;
+		public bool procedural;
+		public bool sync;
+		public float syncRatio;
+		public bool allowSyncOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(friendlyName));
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(playRate));
-			SerializeField(s, nameof(loop));
-			SerializeField(s, nameof(reverse));
-			SerializeField(s, nameof(procedural));
-			SerializeField(s, nameof(sync));
-			SerializeField(s, nameof(syncRatio));
-			SerializeField(s, nameof(allowSyncOffset));
+			friendlyName = s.SerializeObject<StringID>(friendlyName, name: "friendlyName");
+			name = s.SerializeObject<Path>(name, name: "name");
+			playRate = s.Serialize<float>(playRate, name: "playRate");
+			loop = s.Serialize<bool>(loop, name: "loop");
+			reverse = s.Serialize<bool>(reverse, name: "reverse");
+			procedural = s.Serialize<bool>(procedural, name: "procedural");
+			sync = s.Serialize<bool>(sync, name: "sync");
+			syncRatio = s.Serialize<float>(syncRatio, name: "syncRatio");
+			allowSyncOffset = s.Serialize<bool>(allowSyncOffset, name: "allowSyncOffset");
 		}
 	}
 }

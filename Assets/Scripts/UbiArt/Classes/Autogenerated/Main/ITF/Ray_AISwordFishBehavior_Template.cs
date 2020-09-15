@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AISwordFishBehavior_Template : TemplateAIBehavior {
-		[Serialize("idle"                )] public Placeholder idle;
-		[Serialize("anticipation"        )] public Placeholder anticipation;
-		[Serialize("attack"              )] public Placeholder attack;
-		[Serialize("stuck"               )] public Placeholder stuck;
-		[Serialize("detectionShape"      )] public Placeholder detectionShape;
-		[Serialize("anticipationDuration")] public float anticipationDuration;
-		[Serialize("force"               )] public float force;
-		[Serialize("maxSpeed"            )] public float maxSpeed;
-		[Serialize("minSpeed"            )] public float minSpeed;
-		[Serialize("offsetDist"          )] public float offsetDist;
+		public Placeholder idle;
+		public Placeholder anticipation;
+		public Placeholder attack;
+		public Placeholder stuck;
+		public Placeholder detectionShape;
+		public float anticipationDuration;
+		public float force;
+		public float maxSpeed;
+		public float minSpeed;
+		public float offsetDist;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idle));
-			SerializeField(s, nameof(anticipation));
-			SerializeField(s, nameof(attack));
-			SerializeField(s, nameof(stuck));
-			SerializeField(s, nameof(detectionShape));
-			SerializeField(s, nameof(anticipationDuration));
-			SerializeField(s, nameof(force));
-			SerializeField(s, nameof(maxSpeed));
-			SerializeField(s, nameof(minSpeed));
-			SerializeField(s, nameof(offsetDist));
+			idle = s.SerializeObject<Placeholder>(idle, name: "idle");
+			anticipation = s.SerializeObject<Placeholder>(anticipation, name: "anticipation");
+			attack = s.SerializeObject<Placeholder>(attack, name: "attack");
+			stuck = s.SerializeObject<Placeholder>(stuck, name: "stuck");
+			detectionShape = s.SerializeObject<Placeholder>(detectionShape, name: "detectionShape");
+			anticipationDuration = s.Serialize<float>(anticipationDuration, name: "anticipationDuration");
+			force = s.Serialize<float>(force, name: "force");
+			maxSpeed = s.Serialize<float>(maxSpeed, name: "maxSpeed");
+			minSpeed = s.Serialize<float>(minSpeed, name: "minSpeed");
+			offsetDist = s.Serialize<float>(offsetDist, name: "offsetDist");
 		}
 		public override uint? ClassCRC => 0xE0DE0498;
 	}

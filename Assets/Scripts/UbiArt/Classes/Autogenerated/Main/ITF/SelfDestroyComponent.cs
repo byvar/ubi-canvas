@@ -3,25 +3,25 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class SelfDestroyComponent : ActorComponent {
-		[Serialize("Delay"    )] public float Delay;
-		[Serialize("waitAnim" )] public eWait waitAnim;
-		[Serialize("AnimName" )] public StringID AnimName;
-		[Serialize("EventData")] public CList<SelfDestroyComponent.EventData> eventData;
+		public float Delay;
+		public eWait waitAnim;
+		public StringID AnimName;
+		public CList<SelfDestroyComponent.EventData> eventData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Delay));
-			SerializeField(s, nameof(waitAnim));
-			SerializeField(s, nameof(AnimName));
-			SerializeField(s, nameof(eventData));
+			Delay = s.Serialize<float>(Delay, name: "Delay");
+			waitAnim = s.Serialize<eWait>(waitAnim, name: "waitAnim");
+			AnimName = s.SerializeObject<StringID>(AnimName, name: "AnimName");
+			eventData = s.SerializeObject<CList<SelfDestroyComponent.EventData>>(eventData, name: "eventData");
 		}
 		[Games(GameFlags.RA)]
 		public partial class EventData : CSerializable {
-			[Serialize("matchValues")] public bool matchValues;
-			[Serialize("Event"      )] public Generic<Event> Event;
+			public bool matchValues;
+			public Generic<Event> Event;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(matchValues));
-				SerializeField(s, nameof(Event));
+				matchValues = s.Serialize<bool>(matchValues, name: "matchValues");
+				Event = s.SerializeObject<Generic<Event>>(Event, name: "Event");
 			}
 		}
 		public enum eWait {

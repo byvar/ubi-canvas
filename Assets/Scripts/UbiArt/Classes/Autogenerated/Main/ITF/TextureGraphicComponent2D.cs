@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TextureGraphicComponent2D : GraphicComponent {
-		[Serialize("ALIGN"            )] public align ALIGN;
-		[Serialize("SCREEN_POURCENT_X")] public float SCREEN_POURCENT_X;
-		[Serialize("SCREEN_POURCENT_Y")] public float SCREEN_POURCENT_Y;
-		[Serialize("texture"          )] public Path texture;
-		[Serialize("quadSize"         )] public Vec2d quadSize;
+		public align ALIGN;
+		public float SCREEN_POURCENT_X;
+		public float SCREEN_POURCENT_Y;
+		public Path texture;
+		public Vec2d quadSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(ALIGN));
-				SerializeField(s, nameof(SCREEN_POURCENT_X));
-				SerializeField(s, nameof(SCREEN_POURCENT_Y));
-				SerializeField(s, nameof(texture));
-				SerializeField(s, nameof(quadSize));
+				ALIGN = s.Serialize<align>(ALIGN, name: "ALIGN");
+				SCREEN_POURCENT_X = s.Serialize<float>(SCREEN_POURCENT_X, name: "SCREEN_POURCENT_X");
+				SCREEN_POURCENT_Y = s.Serialize<float>(SCREEN_POURCENT_Y, name: "SCREEN_POURCENT_Y");
+				texture = s.SerializeObject<Path>(texture, name: "texture");
+				quadSize = s.SerializeObject<Vec2d>(quadSize, name: "quadSize");
 			}
 		}
 		public enum align {

@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_StoreBundlePeriod : CSerializable {
-		[Serialize("OpeningTime"           )] public online.DateTime OpeningTime;
-		[Serialize("ClosingTime"           )] public online.DateTime ClosingTime;
-		[Serialize("DisplayIntervalSeconds")] public uint DisplayIntervalSeconds;
-		[Serialize("HideIntervalSeconds"   )] public uint HideIntervalSeconds;
+		public online.DateTime OpeningTime;
+		public online.DateTime ClosingTime;
+		public uint DisplayIntervalSeconds;
+		public uint HideIntervalSeconds;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(OpeningTime));
-			SerializeField(s, nameof(ClosingTime));
-			SerializeField(s, nameof(DisplayIntervalSeconds));
-			SerializeField(s, nameof(HideIntervalSeconds));
+			OpeningTime = s.SerializeObject<online.DateTime>(OpeningTime, name: "OpeningTime");
+			ClosingTime = s.SerializeObject<online.DateTime>(ClosingTime, name: "ClosingTime");
+			DisplayIntervalSeconds = s.Serialize<uint>(DisplayIntervalSeconds, name: "DisplayIntervalSeconds");
+			HideIntervalSeconds = s.Serialize<uint>(HideIntervalSeconds, name: "HideIntervalSeconds");
 		}
 	}
 }

@@ -3,38 +3,38 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ShooterCameraModifierComponent : ActorComponent {
-		[Serialize("camModifier" )] public ShooterCameraModifier camModifier;
-		[Serialize("transitionIN")] public ShooterCameraModifier_Transition transitionIN;
+		public ShooterCameraModifier camModifier;
+		public ShooterCameraModifier_Transition transitionIN;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(camModifier));
-			SerializeField(s, nameof(transitionIN));
+			camModifier = s.SerializeObject<ShooterCameraModifier>(camModifier, name: "camModifier");
+			transitionIN = s.SerializeObject<ShooterCameraModifier_Transition>(transitionIN, name: "transitionIN");
 		}
 		public override uint? ClassCRC => 0x70E0C28B;
 		
 		[Games(GameFlags.RO)]
 		public partial class ShooterCameraModifier : CSerializable {
-			[Serialize("moveSpeed")] public Vec2d moveSpeed;
-			[Serialize("zOffset"  )] public float zOffset;
+			public Vec2d moveSpeed;
+			public float zOffset;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(moveSpeed));
-				SerializeField(s, nameof(zOffset));
+				moveSpeed = s.SerializeObject<Vec2d>(moveSpeed, name: "moveSpeed");
+				zOffset = s.Serialize<float>(zOffset, name: "zOffset");
 			}
 		}
 
 		[Games(GameFlags.RO)]
 		public partial class ShooterCameraModifier_Transition : CSerializable {
-			[Serialize("type"             )] public Enum_type type;
-			[Serialize("duration"         )] public float duration;
-			[Serialize("additionalSpeed"  )] public Vec2d additionalSpeed;
-			[Serialize("notifyPlayerDelay")] public float notifyPlayerDelay;
+			public Enum_type type;
+			public float duration;
+			public Vec2d additionalSpeed;
+			public float notifyPlayerDelay;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(type));
-				SerializeField(s, nameof(duration));
-				SerializeField(s, nameof(additionalSpeed));
-				SerializeField(s, nameof(notifyPlayerDelay));
+				type = s.Serialize<Enum_type>(type, name: "type");
+				duration = s.Serialize<float>(duration, name: "duration");
+				additionalSpeed = s.SerializeObject<Vec2d>(additionalSpeed, name: "additionalSpeed");
+				notifyPlayerDelay = s.Serialize<float>(notifyPlayerDelay, name: "notifyPlayerDelay");
 			}
 			public enum Enum_type {
 				[Serialize("Linear"    )] Linear = 0,

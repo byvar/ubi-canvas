@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_InteractiveContainer : W1W_InteractiveGenComponent {
-		[Serialize("Path__0"       )] public Path Path__0;
-		[Serialize("Enum_VH_0__1"  )] public Enum_VH_0_ Enum_VH_0__1;
-		[Serialize("bool__2"       )] public bool bool__2;
-		[Serialize("EventSender__3")] public EventSender EventSender__3;
-		[Serialize("uint__4"       )] public uint uint__4;
+		public Path Path__0;
+		public Enum_VH_0_ Enum_VH_0__1;
+		public bool bool__2;
+		public EventSender EventSender__3;
+		public uint uint__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Path__0));
-			SerializeField(s, nameof(Enum_VH_0__1));
-			SerializeField(s, nameof(bool__2));
-			SerializeField(s, nameof(EventSender__3));
-			SerializeField(s, nameof(uint__4));
+			Path__0 = s.SerializeObject<Path>(Path__0, name: "Path__0");
+			Enum_VH_0__1 = s.Serialize<Enum_VH_0_>(Enum_VH_0__1, name: "Enum_VH_0__1");
+			bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
+			EventSender__3 = s.SerializeObject<EventSender>(EventSender__3, name: "EventSender__3");
+			uint__4 = s.Serialize<uint>(uint__4, name: "uint__4");
 		}
 		public enum Enum_VH_0_ {
 			[Serialize("Value_0" )] Value_0 = 0,

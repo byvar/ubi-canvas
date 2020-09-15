@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class EventZoneTrigger : EventTrigger {
-		[Serialize("zoneID")] public StringID zoneID;
-		[Serialize("radius")] public float radius;
+		public StringID zoneID;
+		public float radius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(zoneID));
-			SerializeField(s, nameof(radius));
+			zoneID = s.SerializeObject<StringID>(zoneID, name: "zoneID");
+			radius = s.Serialize<float>(radius, name: "radius");
 		}
 		public override uint? ClassCRC => 0x0A53E648;
 	}

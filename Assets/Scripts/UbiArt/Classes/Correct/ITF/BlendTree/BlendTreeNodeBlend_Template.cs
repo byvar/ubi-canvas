@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class BlendTreeNodeBlend_Template<T> : BlendTreeNodeTemplate<T> {
-		[Serialize("leafs"            )] public CList<Generic<BlendTreeNodeTemplate<T>>> leafs;
-		[Serialize("ignoreRuleChanges")] public bool ignoreRuleChanges;
+		public CList<Generic<BlendTreeNodeTemplate<T>>> leafs;
+		public bool ignoreRuleChanges;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(leafs));
+				leafs = s.SerializeObject<CList<Generic<BlendTreeNodeTemplate<T>>>>(leafs, name: "leafs");
 			}
-			SerializeField(s, nameof(ignoreRuleChanges));
+			ignoreRuleChanges = s.Serialize<bool>(ignoreRuleChanges, name: "ignoreRuleChanges");
 		}
 		public override uint? ClassCRC => 0x422981DB;
 	}

@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_PetModel : CSerializable {
-		[Serialize("familyID"        )] public int familyID;
-		[Serialize("animPetDataIndex")] public int animPetDataIndex;
-		[Serialize("randomCoef"      )] public uint randomCoef;
-		[Serialize("tag"             )] public StringID tag;
+		public int familyID;
+		public int animPetDataIndex;
+		public uint randomCoef;
+		public StringID tag;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(familyID));
-			SerializeField(s, nameof(animPetDataIndex));
-			SerializeField(s, nameof(randomCoef));
-			SerializeField(s, nameof(tag));
+			familyID = s.Serialize<int>(familyID, name: "familyID");
+			animPetDataIndex = s.Serialize<int>(animPetDataIndex, name: "animPetDataIndex");
+			randomCoef = s.Serialize<uint>(randomCoef, name: "randomCoef");
+			tag = s.SerializeObject<StringID>(tag, name: "tag");
 		}
 	}
 }

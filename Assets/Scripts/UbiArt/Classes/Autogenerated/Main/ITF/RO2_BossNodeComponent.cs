@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossNodeComponent : ActorComponent {
-		[Serialize("playerSpeed"       )] public float playerSpeed;
-		[Serialize("music"             )] public StringID music;
-		[Serialize("musicPart"         )] public StringID musicPart;
-		[Serialize("cameraFollowPlayer")] public bool cameraFollowPlayer;
-		[Serialize("fireMode"          )] public FireMode fireMode;
+		public float playerSpeed;
+		public StringID music;
+		public StringID musicPart;
+		public bool cameraFollowPlayer;
+		public FireMode fireMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(playerSpeed));
-				SerializeField(s, nameof(music));
-				SerializeField(s, nameof(musicPart));
-				SerializeField(s, nameof(cameraFollowPlayer));
-				SerializeField(s, nameof(fireMode));
+				playerSpeed = s.Serialize<float>(playerSpeed, name: "playerSpeed");
+				music = s.SerializeObject<StringID>(music, name: "music");
+				musicPart = s.SerializeObject<StringID>(musicPart, name: "musicPart");
+				cameraFollowPlayer = s.Serialize<bool>(cameraFollowPlayer, name: "cameraFollowPlayer");
+				fireMode = s.Serialize<FireMode>(fireMode, name: "fireMode");
 			}
 		}
 		public enum FireMode {

@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_Adventure : CSerializable {
-		[Serialize("Path"           )] public PathRef Path;
-		[Serialize("AdventureIdMin" )] public uint AdventureIdMin;
-		[Serialize("AdventureIdMax" )] public uint AdventureIdMax;
-		[Serialize("GraphicalFamily")] public Enum_GraphicalFamily GraphicalFamily;
-		[Serialize("Difficulty"     )] public uint Difficulty;
-		[Serialize("LuaIndex"       )] public uint LuaIndex;
+		public PathRef Path;
+		public uint AdventureIdMin;
+		public uint AdventureIdMax;
+		public Enum_GraphicalFamily GraphicalFamily;
+		public uint Difficulty;
+		public uint LuaIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Path));
-			SerializeField(s, nameof(AdventureIdMin));
-			SerializeField(s, nameof(AdventureIdMax));
-			SerializeField(s, nameof(GraphicalFamily));
-			SerializeField(s, nameof(Difficulty));
-			SerializeField(s, nameof(LuaIndex));
+			Path = s.SerializeObject<PathRef>(Path, name: "Path");
+			AdventureIdMin = s.Serialize<uint>(AdventureIdMin, name: "AdventureIdMin");
+			AdventureIdMax = s.Serialize<uint>(AdventureIdMax, name: "AdventureIdMax");
+			GraphicalFamily = s.Serialize<Enum_GraphicalFamily>(GraphicalFamily, name: "GraphicalFamily");
+			Difficulty = s.Serialize<uint>(Difficulty, name: "Difficulty");
+			LuaIndex = s.Serialize<uint>(LuaIndex, name: "LuaIndex");
 		}
 		public enum Enum_GraphicalFamily {
 			[Serialize("_unknown"     )] _unknown = 0,

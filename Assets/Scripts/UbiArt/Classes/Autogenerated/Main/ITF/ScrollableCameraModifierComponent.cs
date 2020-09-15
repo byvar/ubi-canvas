@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class ScrollableCameraModifierComponent : CameraModifierComponent {
-		[Serialize("cameraBrake"                        )] public float cameraBrake;
-		[Serialize("cameraBrakeMin"                     )] public float cameraBrakeMin;
-		[Serialize("zoomMaxRatio"                       )] public float zoomMaxRatio;
-		[Serialize("smartFocusZoomThreshold"            )] public float smartFocusZoomThreshold;
-		[Serialize("focusZoomRatio"                     )] public float focusZoomRatio;
-		[Serialize("cameraMaxSpeed"                     )] public float cameraMaxSpeed;
-		[Serialize("cameraInterpolateSpeed"             )] public float cameraInterpolateSpeed;
-		[Serialize("outOfBoundsSlowCoef"                )] public float outOfBoundsSlowCoef;
-		[Serialize("outOfBoundsForcePercentage"         )] public float outOfBoundsForcePercentage;
-		[Serialize("outOfBoundsForceMin"                )] public float outOfBoundsForceMin;
-		[Serialize("perpendicularInertiaSavedPercentage")] public float perpendicularInertiaSavedPercentage;
-		[Serialize("angularPanCamera"                   )] public float angularPanCamera;
+		public float cameraBrake;
+		public float cameraBrakeMin;
+		public float zoomMaxRatio;
+		public float smartFocusZoomThreshold;
+		public float focusZoomRatio;
+		public float cameraMaxSpeed;
+		public float cameraInterpolateSpeed;
+		public float outOfBoundsSlowCoef;
+		public float outOfBoundsForcePercentage;
+		public float outOfBoundsForceMin;
+		public float perpendicularInertiaSavedPercentage;
+		public float angularPanCamera;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(cameraBrake));
-			SerializeField(s, nameof(cameraBrakeMin));
-			SerializeField(s, nameof(zoomMaxRatio));
-			SerializeField(s, nameof(smartFocusZoomThreshold));
-			SerializeField(s, nameof(focusZoomRatio));
-			SerializeField(s, nameof(cameraMaxSpeed));
-			SerializeField(s, nameof(cameraInterpolateSpeed));
-			SerializeField(s, nameof(outOfBoundsSlowCoef));
-			SerializeField(s, nameof(outOfBoundsForcePercentage));
-			SerializeField(s, nameof(outOfBoundsForceMin));
-			SerializeField(s, nameof(perpendicularInertiaSavedPercentage));
-			SerializeField(s, nameof(angularPanCamera));
+			cameraBrake = s.Serialize<float>(cameraBrake, name: "cameraBrake");
+			cameraBrakeMin = s.Serialize<float>(cameraBrakeMin, name: "cameraBrakeMin");
+			zoomMaxRatio = s.Serialize<float>(zoomMaxRatio, name: "zoomMaxRatio");
+			smartFocusZoomThreshold = s.Serialize<float>(smartFocusZoomThreshold, name: "smartFocusZoomThreshold");
+			focusZoomRatio = s.Serialize<float>(focusZoomRatio, name: "focusZoomRatio");
+			cameraMaxSpeed = s.Serialize<float>(cameraMaxSpeed, name: "cameraMaxSpeed");
+			cameraInterpolateSpeed = s.Serialize<float>(cameraInterpolateSpeed, name: "cameraInterpolateSpeed");
+			outOfBoundsSlowCoef = s.Serialize<float>(outOfBoundsSlowCoef, name: "outOfBoundsSlowCoef");
+			outOfBoundsForcePercentage = s.Serialize<float>(outOfBoundsForcePercentage, name: "outOfBoundsForcePercentage");
+			outOfBoundsForceMin = s.Serialize<float>(outOfBoundsForceMin, name: "outOfBoundsForceMin");
+			perpendicularInertiaSavedPercentage = s.Serialize<float>(perpendicularInertiaSavedPercentage, name: "perpendicularInertiaSavedPercentage");
+			angularPanCamera = s.Serialize<float>(angularPanCamera, name: "angularPanCamera");
 		}
 		public override uint? ClassCRC => 0xC0FA5526;
 	}

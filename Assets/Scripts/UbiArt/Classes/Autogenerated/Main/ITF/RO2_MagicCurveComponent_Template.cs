@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MagicCurveComponent_Template : ActorComponent_Template {
-		[Serialize("bezierRenderer")] public BezierCurveRenderer_Template bezierRenderer;
-		[Serialize("debug"         )] public bool debug;
-		[Serialize("useOrientation")] public bool useOrientation;
-		[Serialize("distMin"       )] public float distMin;
-		[Serialize("uvScrollFactor")] public float uvScrollFactor;
-		[Serialize("extraLength"   )] public float extraLength;
-		[Serialize("offset"        )] public Vec2d offset;
+		public BezierCurveRenderer_Template bezierRenderer;
+		public bool debug;
+		public bool useOrientation;
+		public float distMin;
+		public float uvScrollFactor;
+		public float extraLength;
+		public Vec2d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(bezierRenderer));
-			SerializeField(s, nameof(debug));
-			SerializeField(s, nameof(useOrientation));
-			SerializeField(s, nameof(distMin));
-			SerializeField(s, nameof(uvScrollFactor));
-			SerializeField(s, nameof(extraLength));
-			SerializeField(s, nameof(offset));
+			bezierRenderer = s.SerializeObject<BezierCurveRenderer_Template>(bezierRenderer, name: "bezierRenderer");
+			debug = s.Serialize<bool>(debug, name: "debug");
+			useOrientation = s.Serialize<bool>(useOrientation, name: "useOrientation");
+			distMin = s.Serialize<float>(distMin, name: "distMin");
+			uvScrollFactor = s.Serialize<float>(uvScrollFactor, name: "uvScrollFactor");
+			extraLength = s.Serialize<float>(extraLength, name: "extraLength");
+			offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 		}
 		public override uint? ClassCRC => 0xCC65456C;
 	}

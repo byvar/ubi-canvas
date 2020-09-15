@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_BasicCreatureDisplay_Template : RO2_PowerUpDisplay_Template {
-		[Serialize("creatureActor" )] public PathRef creatureActor;
-		[Serialize("creatureFamily")] public Creature_Family creatureFamily;
-		[Serialize("creatureRarity")] public Creature_Rarity creatureRarity;
-		[Serialize("isForbidden"   )] public bool isForbidden;
-		[Serialize("locId"         )] public uint locId;
+		public PathRef creatureActor;
+		public Creature_Family creatureFamily;
+		public Creature_Rarity creatureRarity;
+		public bool isForbidden;
+		public uint locId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(creatureActor));
-			SerializeField(s, nameof(creatureFamily));
-			SerializeField(s, nameof(creatureRarity));
-			SerializeField(s, nameof(isForbidden));
-			SerializeField(s, nameof(locId));
+			creatureActor = s.SerializeObject<PathRef>(creatureActor, name: "creatureActor");
+			creatureFamily = s.Serialize<Creature_Family>(creatureFamily, name: "creatureFamily");
+			creatureRarity = s.Serialize<Creature_Rarity>(creatureRarity, name: "creatureRarity");
+			isForbidden = s.Serialize<bool>(isForbidden, name: "isForbidden");
+			locId = s.Serialize<uint>(locId, name: "locId");
 		}
 		public enum Creature_Family {
 			[Serialize("Creature_Family::none"                 )] none = 0,

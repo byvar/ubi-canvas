@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RenderSingleAnimData : SingleAnimData {
-		[Serialize("xMin" )] public float xMin;
-		[Serialize("yMin" )] public float yMin;
-		[Serialize("state")] public uint state;
+		public float xMin;
+		public float yMin;
+		public uint state;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(xMin));
-			SerializeField(s, nameof(yMin));
-			SerializeField(s, nameof(state));
+			xMin = s.Serialize<float>(xMin, name: "xMin");
+			yMin = s.Serialize<float>(yMin, name: "yMin");
+			state = s.Serialize<uint>(state, name: "state");
 		}
 		public override uint? ClassCRC => 0xAD846A09;
 	}

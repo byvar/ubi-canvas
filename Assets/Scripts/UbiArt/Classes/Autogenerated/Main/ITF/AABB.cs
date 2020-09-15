@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class AABB : CSerializable {
-		[Serialize("MIN")] public Vec2d MIN;
-		[Serialize("MAX")] public Vec2d MAX;
+		public Vec2d MIN;
+		public Vec2d MAX;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(MIN));
-			SerializeField(s, nameof(MAX));
+			MIN = s.SerializeObject<Vec2d>(MIN, name: "MIN");
+			MAX = s.SerializeObject<Vec2d>(MAX, name: "MAX");
 		}
 	}
 }

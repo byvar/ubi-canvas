@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_152_sub_746A70 : CSerializable {
-		[Serialize("cycleDisplayCountByMessage")] public uint cycleDisplayCountByMessage;
-		[Serialize("cycleDelay"                )] public float cycleDelay;
-		[Serialize("itemPath"                  )] public Path itemPath;
-		[Serialize("itemPoolSize"              )] public uint itemPoolSize;
-		[Serialize("itemSpace"                 )] public float itemSpace;
-		[Serialize("itemSpeed"                 )] public float itemSpeed;
-		[Serialize("iconeReferences"           )] public Placeholder iconeReferences;
+		public uint cycleDisplayCountByMessage;
+		public float cycleDelay;
+		public Path itemPath;
+		public uint itemPoolSize;
+		public float itemSpace;
+		public float itemSpeed;
+		public Placeholder iconeReferences;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(cycleDisplayCountByMessage));
-			SerializeField(s, nameof(cycleDelay));
-			SerializeField(s, nameof(itemPath));
-			SerializeField(s, nameof(itemPoolSize));
-			SerializeField(s, nameof(itemSpace));
-			SerializeField(s, nameof(itemSpeed));
-			SerializeField(s, nameof(iconeReferences));
+			cycleDisplayCountByMessage = s.Serialize<uint>(cycleDisplayCountByMessage, name: "cycleDisplayCountByMessage");
+			cycleDelay = s.Serialize<float>(cycleDelay, name: "cycleDelay");
+			itemPath = s.SerializeObject<Path>(itemPath, name: "itemPath");
+			itemPoolSize = s.Serialize<uint>(itemPoolSize, name: "itemPoolSize");
+			itemSpace = s.Serialize<float>(itemSpace, name: "itemSpace");
+			itemSpeed = s.Serialize<float>(itemSpeed, name: "itemSpeed");
+			iconeReferences = s.SerializeObject<Placeholder>(iconeReferences, name: "iconeReferences");
 		}
 		public override uint? ClassCRC => 0x28166084;
 	}

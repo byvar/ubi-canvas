@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureDetectorComponent_Template : ShapeDetectorComponent_Template {
-		[Serialize("ignoreZ"           )] public bool ignoreZ;
-		[Serialize("maxDetectionRadius")] public float maxDetectionRadius;
+		public bool ignoreZ;
+		public float maxDetectionRadius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(ignoreZ));
-			SerializeField(s, nameof(maxDetectionRadius));
+			ignoreZ = s.Serialize<bool>(ignoreZ, name: "ignoreZ");
+			maxDetectionRadius = s.Serialize<float>(maxDetectionRadius, name: "maxDetectionRadius");
 		}
 		public override uint? ClassCRC => 0xA94B3F0F;
 	}

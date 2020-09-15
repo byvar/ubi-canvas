@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIHarissaToggleBehavior_Template : TemplateAIBehavior {
-		[Serialize("drcCollisionShape"          )] public Generic<PhysShape> drcCollisionShape;
-		[Serialize("offAction"                  )] public Generic<AIAction_Template> offAction;
-		[Serialize("onAction"                   )] public Generic<AIAction_Template> onAction;
-		[Serialize("hitAction"                  )] public Generic<AIAction_Template> hitAction;
-		[Serialize("flameFXName"                )] public StringID flameFXName;
-		[Serialize("squashedInAnim"             )] public StringID squashedInAnim;
-		[Serialize("squashedLoopAnim"           )] public StringID squashedLoopAnim;
-		[Serialize("squashedOutAnim"            )] public StringID squashedOutAnim;
-		[Serialize("polylineName"               )] public StringID polylineName;
-		[Serialize("weightThreshold"            )] public float weightThreshold;
-		[Serialize("flamesDurationOnCrushAttack")] public float flamesDurationOnCrushAttack;
-		[Serialize("flamesDurationOnDRCStim"    )] public float flamesDurationOnDRCStim;
-		[Serialize("hitActionDuration"          )] public float hitActionDuration;
+		public Generic<PhysShape> drcCollisionShape;
+		public Generic<AIAction_Template> offAction;
+		public Generic<AIAction_Template> onAction;
+		public Generic<AIAction_Template> hitAction;
+		public StringID flameFXName;
+		public StringID squashedInAnim;
+		public StringID squashedLoopAnim;
+		public StringID squashedOutAnim;
+		public StringID polylineName;
+		public float weightThreshold;
+		public float flamesDurationOnCrushAttack;
+		public float flamesDurationOnDRCStim;
+		public float hitActionDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(drcCollisionShape));
-			SerializeField(s, nameof(offAction));
-			SerializeField(s, nameof(onAction));
-			SerializeField(s, nameof(hitAction));
-			SerializeField(s, nameof(flameFXName));
-			SerializeField(s, nameof(squashedInAnim));
-			SerializeField(s, nameof(squashedLoopAnim));
-			SerializeField(s, nameof(squashedOutAnim));
-			SerializeField(s, nameof(polylineName));
-			SerializeField(s, nameof(weightThreshold));
-			SerializeField(s, nameof(flamesDurationOnCrushAttack));
-			SerializeField(s, nameof(flamesDurationOnDRCStim));
-			SerializeField(s, nameof(hitActionDuration));
+			drcCollisionShape = s.SerializeObject<Generic<PhysShape>>(drcCollisionShape, name: "drcCollisionShape");
+			offAction = s.SerializeObject<Generic<AIAction_Template>>(offAction, name: "offAction");
+			onAction = s.SerializeObject<Generic<AIAction_Template>>(onAction, name: "onAction");
+			hitAction = s.SerializeObject<Generic<AIAction_Template>>(hitAction, name: "hitAction");
+			flameFXName = s.SerializeObject<StringID>(flameFXName, name: "flameFXName");
+			squashedInAnim = s.SerializeObject<StringID>(squashedInAnim, name: "squashedInAnim");
+			squashedLoopAnim = s.SerializeObject<StringID>(squashedLoopAnim, name: "squashedLoopAnim");
+			squashedOutAnim = s.SerializeObject<StringID>(squashedOutAnim, name: "squashedOutAnim");
+			polylineName = s.SerializeObject<StringID>(polylineName, name: "polylineName");
+			weightThreshold = s.Serialize<float>(weightThreshold, name: "weightThreshold");
+			flamesDurationOnCrushAttack = s.Serialize<float>(flamesDurationOnCrushAttack, name: "flamesDurationOnCrushAttack");
+			flamesDurationOnDRCStim = s.Serialize<float>(flamesDurationOnDRCStim, name: "flamesDurationOnDRCStim");
+			hitActionDuration = s.Serialize<float>(hitActionDuration, name: "hitActionDuration");
 		}
 		public override uint? ClassCRC => 0x2CA127FB;
 	}

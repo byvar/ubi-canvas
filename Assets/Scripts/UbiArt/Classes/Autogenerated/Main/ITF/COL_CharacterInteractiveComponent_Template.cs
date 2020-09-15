@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_CharacterInteractiveComponent_Template : CSerializable {
-		[Serialize("characterType")] public Enum_characterType characterType;
+		public Enum_characterType characterType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(characterType));
+			characterType = s.Serialize<Enum_characterType>(characterType, name: "characterType");
 		}
 		public enum Enum_characterType {
 			[Serialize("Value_0")] Value_0 = 0,

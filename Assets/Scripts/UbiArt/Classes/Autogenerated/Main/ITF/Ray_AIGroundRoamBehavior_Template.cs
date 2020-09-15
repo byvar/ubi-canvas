@@ -3,43 +3,43 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIGroundRoamBehavior_Template : Ray_AIGroundBaseMovementBehavior_Template {
-		[Serialize("fall"                             )] public Generic<AIAction_Template> fall;
-		[Serialize("jumpUp"                           )] public Generic<AIJumpAction_Template> jumpUp;
-		[Serialize("jumpDown"                         )] public Generic<AIJumpAction_Template> jumpDown;
-		[Serialize("roamPause"                        )] public Generic<AIAction_Template> roamPause;
-		[Serialize("slopePause"                       )] public Generic<AIAction_Template> slopePause;
-		[Serialize("obstaclePause"                    )] public Generic<AIAction_Template> obstaclePause;
-		[Serialize("wallPause"                        )] public Generic<AIAction_Template> wallPause;
-		[Serialize("defaultPause"                     )] public Generic<AIAction_Template> defaultPause;
-		[Serialize("slopeDetectionRange"              )] public float slopeDetectionRange;
-		[Serialize("maxSlopeAngleUp"                  )] public Angle maxSlopeAngleUp;
-		[Serialize("maxSlopeAngleDown"                )] public Angle maxSlopeAngleDown;
-		[Serialize("waypointID"                       )] public StringID waypointID;
-		[Serialize("startDelay"                       )] public float startDelay;
-		[Serialize("canPush"                          )] public int canPush;
-		[Serialize("pushForce"                        )] public float pushForce;
-		[Serialize("lowWallHeight"                    )] public float lowWallHeight;
-		[Serialize("drawDebug"                        )] public int drawDebug;
+		public Generic<AIAction_Template> fall;
+		public Generic<AIJumpAction_Template> jumpUp;
+		public Generic<AIJumpAction_Template> jumpDown;
+		public Generic<AIAction_Template> roamPause;
+		public Generic<AIAction_Template> slopePause;
+		public Generic<AIAction_Template> obstaclePause;
+		public Generic<AIAction_Template> wallPause;
+		public Generic<AIAction_Template> defaultPause;
+		public float slopeDetectionRange;
+		public Angle maxSlopeAngleUp;
+		public Angle maxSlopeAngleDown;
+		public StringID waypointID;
+		public float startDelay;
+		public int canPush;
+		public float pushForce;
+		public float lowWallHeight;
+		public int drawDebug;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fall));
-			SerializeField(s, nameof(jumpUp));
-			SerializeField(s, nameof(jumpDown));
-			SerializeField(s, nameof(roamPause));
-			SerializeField(s, nameof(slopePause));
-			SerializeField(s, nameof(obstaclePause));
-			SerializeField(s, nameof(wallPause));
-			SerializeField(s, nameof(defaultPause));
-			SerializeField(s, nameof(slopeDetectionRange));
-			SerializeField(s, nameof(maxSlopeAngleUp));
-			SerializeField(s, nameof(maxSlopeAngleDown));
-			SerializeField(s, nameof(waypointID));
-			SerializeField(s, nameof(startDelay));
-			SerializeField(s, nameof(canPush));
-			SerializeField(s, nameof(pushForce));
-			SerializeField(s, nameof(lowWallHeight));
+			fall = s.SerializeObject<Generic<AIAction_Template>>(fall, name: "fall");
+			jumpUp = s.SerializeObject<Generic<AIJumpAction_Template>>(jumpUp, name: "jumpUp");
+			jumpDown = s.SerializeObject<Generic<AIJumpAction_Template>>(jumpDown, name: "jumpDown");
+			roamPause = s.SerializeObject<Generic<AIAction_Template>>(roamPause, name: "roamPause");
+			slopePause = s.SerializeObject<Generic<AIAction_Template>>(slopePause, name: "slopePause");
+			obstaclePause = s.SerializeObject<Generic<AIAction_Template>>(obstaclePause, name: "obstaclePause");
+			wallPause = s.SerializeObject<Generic<AIAction_Template>>(wallPause, name: "wallPause");
+			defaultPause = s.SerializeObject<Generic<AIAction_Template>>(defaultPause, name: "defaultPause");
+			slopeDetectionRange = s.Serialize<float>(slopeDetectionRange, name: "slopeDetectionRange");
+			maxSlopeAngleUp = s.SerializeObject<Angle>(maxSlopeAngleUp, name: "maxSlopeAngleUp");
+			maxSlopeAngleDown = s.SerializeObject<Angle>(maxSlopeAngleDown, name: "maxSlopeAngleDown");
+			waypointID = s.SerializeObject<StringID>(waypointID, name: "waypointID");
+			startDelay = s.Serialize<float>(startDelay, name: "startDelay");
+			canPush = s.Serialize<int>(canPush, name: "canPush");
+			pushForce = s.Serialize<float>(pushForce, name: "pushForce");
+			lowWallHeight = s.Serialize<float>(lowWallHeight, name: "lowWallHeight");
 			if (Settings.s.game == Settings.Game.RO && s.HasFlags(SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(drawDebug));
+				drawDebug = s.Serialize<int>(drawDebug, name: "drawDebug");
 			}
 		}
 		public override uint? ClassCRC => 0xE69D7FA9;

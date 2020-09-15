@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventLumReachesScore : Event {
-		[Serialize("isAccrobatic")] public int isAccrobatic;
-		[Serialize("valueToAdd"  )] public uint valueToAdd;
-		[Serialize("playerIndex" )] public uint playerIndex;
+		public int isAccrobatic;
+		public uint valueToAdd;
+		public uint playerIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(isAccrobatic));
-			SerializeField(s, nameof(valueToAdd));
-			SerializeField(s, nameof(playerIndex));
+			isAccrobatic = s.Serialize<int>(isAccrobatic, name: "isAccrobatic");
+			valueToAdd = s.Serialize<uint>(valueToAdd, name: "valueToAdd");
+			playerIndex = s.Serialize<uint>(playerIndex, name: "playerIndex");
 		}
 		public override uint? ClassCRC => 0x70289424;
 	}

@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIReceiveCameraEjectHitAction_Template : RO2_AIReceiveHitAction_Template {
-		[Serialize("minStartSpeed"    )] public Vec3d minStartSpeed;
-		[Serialize("maxStartSpeed"    )] public Vec3d maxStartSpeed;
-		[Serialize("zMinSpeed"        )] public float zMinSpeed;
-		[Serialize("zAcceleration"    )] public float zAcceleration;
-		[Serialize("gravityMultiplier")] public float gravityMultiplier;
-		[Serialize("ejectDuration"    )] public float ejectDuration;
-		[Serialize("zForced"          )] public int zForced;
-		[Serialize("rotationSpeed"    )] public float rotationSpeed;
-		[Serialize("fixedEjectDir"    )] public Vec2d fixedEjectDir;
-		[Serialize("fadeDuration"     )] public float fadeDuration;
-		[Serialize("delayBeforeFade"  )] public float delayBeforeFade;
+		public Vec3d minStartSpeed;
+		public Vec3d maxStartSpeed;
+		public float zMinSpeed;
+		public float zAcceleration;
+		public float gravityMultiplier;
+		public float ejectDuration;
+		public int zForced;
+		public float rotationSpeed;
+		public Vec2d fixedEjectDir;
+		public float fadeDuration;
+		public float delayBeforeFade;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(minStartSpeed));
-			SerializeField(s, nameof(maxStartSpeed));
-			SerializeField(s, nameof(zMinSpeed));
-			SerializeField(s, nameof(zAcceleration));
-			SerializeField(s, nameof(gravityMultiplier));
-			SerializeField(s, nameof(ejectDuration));
-			SerializeField(s, nameof(zForced));
-			SerializeField(s, nameof(rotationSpeed));
-			SerializeField(s, nameof(fixedEjectDir));
-			SerializeField(s, nameof(fadeDuration));
-			SerializeField(s, nameof(delayBeforeFade));
+			minStartSpeed = s.SerializeObject<Vec3d>(minStartSpeed, name: "minStartSpeed");
+			maxStartSpeed = s.SerializeObject<Vec3d>(maxStartSpeed, name: "maxStartSpeed");
+			zMinSpeed = s.Serialize<float>(zMinSpeed, name: "zMinSpeed");
+			zAcceleration = s.Serialize<float>(zAcceleration, name: "zAcceleration");
+			gravityMultiplier = s.Serialize<float>(gravityMultiplier, name: "gravityMultiplier");
+			ejectDuration = s.Serialize<float>(ejectDuration, name: "ejectDuration");
+			zForced = s.Serialize<int>(zForced, name: "zForced");
+			rotationSpeed = s.Serialize<float>(rotationSpeed, name: "rotationSpeed");
+			fixedEjectDir = s.SerializeObject<Vec2d>(fixedEjectDir, name: "fixedEjectDir");
+			fadeDuration = s.Serialize<float>(fadeDuration, name: "fadeDuration");
+			delayBeforeFade = s.Serialize<float>(delayBeforeFade, name: "delayBeforeFade");
 		}
 		public override uint? ClassCRC => 0x21293E47;
 	}

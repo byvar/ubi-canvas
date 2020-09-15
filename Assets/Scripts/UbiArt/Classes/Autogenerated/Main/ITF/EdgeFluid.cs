@@ -3,43 +3,43 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class EdgeFluid : CSerializable {
-		[Serialize("PosList"           )] public CArray<Vec2d> PosList;
-		[Serialize("UVList"            )] public CArray<Vec2d> UVList;
-		[Serialize("Colors"            )] public CArray<ColorInteger> Colors;
-		[Serialize("UvAnimTrans"       )] public Vec2d UvAnimTrans;
-		[Serialize("MeshLevel"         )] public uint MeshLevel;
-		[Serialize("Depth"             )] public float Depth;
-		[Serialize("LastIndex"         )] public uint LastIndex;
-		[Serialize("LocalNorm"         )] public float LocalNorm;
-		[Serialize("WorldNorm"         )] public float WorldNorm;
-		[Serialize("WorldHeight"       )] public float WorldHeight;
-		[Serialize("WorldAngle"        )] public float WorldAngle;
-		[Serialize("Delta"             )] public Vec3d Delta;
-		[Serialize("DeltaUV"           )] public Vec2d DeltaUV;
-		[Serialize("CollisionProcesses")] public CList<EdgeProcessData> CollisionProcesses;
-		[Serialize("VisualProcess"     )] public EdgeProcessData VisualProcess;
-		[Serialize("LocalAABB"         )] public AABB LocalAABB;
-		[Serialize("WorldAABB"         )] public AABB WorldAABB;
+		public CArray<Vec2d> PosList;
+		public CArray<Vec2d> UVList;
+		public CArray<ColorInteger> Colors;
+		public Vec2d UvAnimTrans;
+		public uint MeshLevel;
+		public float Depth;
+		public uint LastIndex;
+		public float LocalNorm;
+		public float WorldNorm;
+		public float WorldHeight;
+		public float WorldAngle;
+		public Vec3d Delta;
+		public Vec2d DeltaUV;
+		public CList<EdgeProcessData> CollisionProcesses;
+		public EdgeProcessData VisualProcess;
+		public AABB LocalAABB;
+		public AABB WorldAABB;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(PosList));
-			SerializeField(s, nameof(UVList));
-			SerializeField(s, nameof(Colors));
-			SerializeField(s, nameof(UvAnimTrans));
-			SerializeField(s, nameof(MeshLevel));
-			SerializeField(s, nameof(Depth));
-			SerializeField(s, nameof(LastIndex));
-			SerializeField(s, nameof(LocalNorm));
-			SerializeField(s, nameof(WorldNorm));
-			SerializeField(s, nameof(WorldHeight));
-			SerializeField(s, nameof(WorldAngle));
-			SerializeField(s, nameof(Delta));
-			SerializeField(s, nameof(DeltaUV));
-			SerializeField(s, nameof(CollisionProcesses));
-			SerializeField(s, nameof(VisualProcess));
-			SerializeField(s, nameof(LocalAABB));
-			SerializeField(s, nameof(WorldAABB));
+			PosList = s.SerializeObject<CArray<Vec2d>>(PosList, name: "PosList");
+			UVList = s.SerializeObject<CArray<Vec2d>>(UVList, name: "UVList");
+			Colors = s.SerializeObject<CArray<ColorInteger>>(Colors, name: "Colors");
+			UvAnimTrans = s.SerializeObject<Vec2d>(UvAnimTrans, name: "UvAnimTrans");
+			MeshLevel = s.Serialize<uint>(MeshLevel, name: "MeshLevel");
+			Depth = s.Serialize<float>(Depth, name: "Depth");
+			LastIndex = s.Serialize<uint>(LastIndex, name: "LastIndex");
+			LocalNorm = s.Serialize<float>(LocalNorm, name: "LocalNorm");
+			WorldNorm = s.Serialize<float>(WorldNorm, name: "WorldNorm");
+			WorldHeight = s.Serialize<float>(WorldHeight, name: "WorldHeight");
+			WorldAngle = s.Serialize<float>(WorldAngle, name: "WorldAngle");
+			Delta = s.SerializeObject<Vec3d>(Delta, name: "Delta");
+			DeltaUV = s.SerializeObject<Vec2d>(DeltaUV, name: "DeltaUV");
+			CollisionProcesses = s.SerializeObject<CList<EdgeProcessData>>(CollisionProcesses, name: "CollisionProcesses");
+			VisualProcess = s.SerializeObject<EdgeProcessData>(VisualProcess, name: "VisualProcess");
+			LocalAABB = s.SerializeObject<AABB>(LocalAABB, name: "LocalAABB");
+			WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
 		}
 	}
 }

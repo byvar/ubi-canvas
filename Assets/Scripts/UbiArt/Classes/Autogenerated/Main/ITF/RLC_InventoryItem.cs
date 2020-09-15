@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_InventoryItem : CSerializable {
-		[Serialize("itemId")] public uint itemId;
-		[Serialize("amount")] public uint amount;
+		public uint itemId;
+		public uint amount;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(itemId));
-			SerializeField(s, nameof(amount));
+			itemId = s.Serialize<uint>(itemId, name: "itemId");
+			amount = s.Serialize<uint>(amount, name: "amount");
 		}
 		public override uint? ClassCRC => 0x24E8388C;
 	}

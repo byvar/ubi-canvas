@@ -3,31 +3,31 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_StimComponent_Template : ShapeComponent_Template {
-		[Serialize("faction"            )] public Enum_faction faction;
-		[Serialize("useFixedAngle"      )] public bool useFixedAngle;
-		[Serialize("fixedAngle"         )] public Angle fixedAngle;
-		[Serialize("localAngleOffset"   )] public Angle localAngleOffset;
-		[Serialize("hitType"            )] public RECEIVEDHITTYPE hitType;
-		[Serialize("hitLevel"           )] public uint hitLevel;
-		[Serialize("hitRadial"          )] public int hitRadial;
-		[Serialize("useNormal"          )] public int useNormal;
-		[Serialize("registerToAIManager")] public int registerToAIManager;
-		[Serialize("useOutOfScreenOptim")] public int useOutOfScreenOptim;
-		[Serialize("hitEnemiesOnce"     )] public int hitEnemiesOnce;
+		public Enum_faction faction;
+		public bool useFixedAngle;
+		public Angle fixedAngle;
+		public Angle localAngleOffset;
+		public RECEIVEDHITTYPE hitType;
+		public uint hitLevel;
+		public int hitRadial;
+		public int useNormal;
+		public int registerToAIManager;
+		public int useOutOfScreenOptim;
+		public int hitEnemiesOnce;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(faction));
-			SerializeField(s, nameof(useFixedAngle));
-			SerializeField(s, nameof(fixedAngle));
-			SerializeField(s, nameof(localAngleOffset));
-			SerializeField(s, nameof(hitType));
-			SerializeField(s, nameof(hitLevel));
-			SerializeField(s, nameof(hitRadial));
-			SerializeField(s, nameof(useNormal));
-			SerializeField(s, nameof(registerToAIManager));
-			SerializeField(s, nameof(useOutOfScreenOptim));
-			SerializeField(s, nameof(hitEnemiesOnce));
+			faction = s.Serialize<Enum_faction>(faction, name: "faction");
+			useFixedAngle = s.Serialize<bool>(useFixedAngle, name: "useFixedAngle");
+			fixedAngle = s.SerializeObject<Angle>(fixedAngle, name: "fixedAngle");
+			localAngleOffset = s.SerializeObject<Angle>(localAngleOffset, name: "localAngleOffset");
+			hitType = s.Serialize<RECEIVEDHITTYPE>(hitType, name: "hitType");
+			hitLevel = s.Serialize<uint>(hitLevel, name: "hitLevel");
+			hitRadial = s.Serialize<int>(hitRadial, name: "hitRadial");
+			useNormal = s.Serialize<int>(useNormal, name: "useNormal");
+			registerToAIManager = s.Serialize<int>(registerToAIManager, name: "registerToAIManager");
+			useOutOfScreenOptim = s.Serialize<int>(useOutOfScreenOptim, name: "useOutOfScreenOptim");
+			hitEnemiesOnce = s.Serialize<int>(hitEnemiesOnce, name: "hitEnemiesOnce");
 		}
 		public enum Enum_faction {
 			[Serialize("FACTION_UNKNOWN"                     )] FACTION_UNKNOWN = -1,

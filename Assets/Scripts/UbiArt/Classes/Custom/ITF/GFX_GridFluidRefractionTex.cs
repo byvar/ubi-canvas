@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class GFX_GridFluidRefractionTex : CSerializable {
-		[Serialize("Texture"       )] public Path Texture;
-		[Serialize("NoiseIntensity")] public float NoiseIntensity;
-		[Serialize("SpeedX1"       )] public float SpeedX1;
-		[Serialize("SpeedY1"       )] public float SpeedY1;
-		[Serialize("ScaleX1"       )] public float ScaleX1;
-		[Serialize("ScaleY1"       )] public float ScaleY1;
-		[Serialize("SpeedTexFactor")] public float SpeedTexFactor;
-		[Serialize("FlatenDensity" )] public float FlatenDensity;
-		[Serialize("FlatenSpeed"   )] public float FlatenSpeed;
+		public Path Texture;
+		public float NoiseIntensity;
+		public float SpeedX1;
+		public float SpeedY1;
+		public float ScaleX1;
+		public float ScaleY1;
+		public float SpeedTexFactor;
+		public float FlatenDensity;
+		public float FlatenSpeed;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(Texture));
-				SerializeField(s, nameof(NoiseIntensity));
-				SerializeField(s, nameof(SpeedX1));
-				SerializeField(s, nameof(SpeedY1));
-				SerializeField(s, nameof(ScaleX1));
-				SerializeField(s, nameof(ScaleY1));
-				SerializeField(s, nameof(SpeedTexFactor));
-				SerializeField(s, nameof(FlatenDensity));
-				SerializeField(s, nameof(FlatenSpeed));
+				Texture = s.SerializeObject<Path>(Texture, name: "Texture");
+				NoiseIntensity = s.Serialize<float>(NoiseIntensity, name: "NoiseIntensity");
+				SpeedX1 = s.Serialize<float>(SpeedX1, name: "SpeedX1");
+				SpeedY1 = s.Serialize<float>(SpeedY1, name: "SpeedY1");
+				ScaleX1 = s.Serialize<float>(ScaleX1, name: "ScaleX1");
+				ScaleY1 = s.Serialize<float>(ScaleY1, name: "ScaleY1");
+				SpeedTexFactor = s.Serialize<float>(SpeedTexFactor, name: "SpeedTexFactor");
+				FlatenDensity = s.Serialize<float>(FlatenDensity, name: "FlatenDensity");
+				FlatenSpeed = s.Serialize<float>(FlatenSpeed, name: "FlatenSpeed");
 			}
 		}
 	}

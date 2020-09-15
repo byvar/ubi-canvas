@@ -3,46 +3,46 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RewardDetail : CSerializable {
-		[Serialize("id"                                    )] public StringID id;
-		[Serialize("name"                                  )] public StringID name;
-		[Serialize("platformId"                            )] public uint platformId;
-		[Serialize("noRetroactiveUnlock"                   )] public bool noRetroactiveUnlock;
-		[Serialize("uplayId"                               )] public string uplayId;
-		[Serialize("snsIds"                                )] public CMap<online.SNSType, string> snsIds;
-		[Serialize("REWARD_TRIGGER"                        )] public CArray<Generic<RewardTrigger_Base>> REWARD_TRIGGER;
+		public StringID id;
+		public StringID name;
+		public uint platformId;
+		public bool noRetroactiveUnlock;
+		public string uplayId;
+		public CMap<online.SNSType, string> snsIds;
+		public CArray<Generic<RewardTrigger_Base>> REWARD_TRIGGER;
 
-		[Serialize("string__4"                             )] public string string__4;
-		[Serialize("string__5"                             )] public string string__5;
-		[Serialize("string__6"                             )] public string string__6;
-		[Serialize("string__7"                             )] public string string__7;
-		[Serialize("string__8"                             )] public string string__8;
+		public string string__4;
+		public string string__5;
+		public string string__6;
+		public string string__7;
+		public string string__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(id));
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(platformId));
-				SerializeField(s, nameof(noRetroactiveUnlock));
-				SerializeField(s, nameof(string__4));
-				SerializeField(s, nameof(string__5));
-				SerializeField(s, nameof(string__6));
-				SerializeField(s, nameof(string__7));
-				SerializeField(s, nameof(string__8));
-				SerializeField(s, nameof(REWARD_TRIGGER));
+				id = s.SerializeObject<StringID>(id, name: "id");
+				name = s.SerializeObject<StringID>(name, name: "name");
+				platformId = s.Serialize<uint>(platformId, name: "platformId");
+				noRetroactiveUnlock = s.Serialize<bool>(noRetroactiveUnlock, name: "noRetroactiveUnlock");
+				string__4 = s.Serialize<string>(string__4, name: "string__4");
+				string__5 = s.Serialize<string>(string__5, name: "string__5");
+				string__6 = s.Serialize<string>(string__6, name: "string__6");
+				string__7 = s.Serialize<string>(string__7, name: "string__7");
+				string__8 = s.Serialize<string>(string__8, name: "string__8");
+				REWARD_TRIGGER = s.SerializeObject<CArray<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(id));
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(platformId));
-				SerializeField(s, nameof(noRetroactiveUnlock));
-				SerializeField(s, nameof(REWARD_TRIGGER));
+				id = s.SerializeObject<StringID>(id, name: "id");
+				name = s.SerializeObject<StringID>(name, name: "name");
+				platformId = s.Serialize<uint>(platformId, name: "platformId");
+				noRetroactiveUnlock = s.Serialize<bool>(noRetroactiveUnlock, name: "noRetroactiveUnlock");
+				REWARD_TRIGGER = s.SerializeObject<CArray<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
 			} else {
-				SerializeField(s, nameof(id));
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(platformId));
-				SerializeField(s, nameof(noRetroactiveUnlock));
-				SerializeField(s, nameof(uplayId));
-				SerializeField(s, nameof(snsIds));
-				SerializeField(s, nameof(REWARD_TRIGGER));
+				id = s.SerializeObject<StringID>(id, name: "id");
+				name = s.SerializeObject<StringID>(name, name: "name");
+				platformId = s.Serialize<uint>(platformId, name: "platformId");
+				noRetroactiveUnlock = s.Serialize<bool>(noRetroactiveUnlock, name: "noRetroactiveUnlock");
+				uplayId = s.Serialize<string>(uplayId, name: "uplayId");
+				snsIds = s.SerializeObject<CMap<online.SNSType, string>>(snsIds, name: "snsIds");
+				REWARD_TRIGGER = s.SerializeObject<CArray<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
 			}
 		}
 	}

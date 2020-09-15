@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CarnivorousLianaComponent_Template : ActorComponent_Template {
-		[Serialize("defaultFxName"             )] public StringID defaultFxName;
-		[Serialize("minLength"                 )] public float minLength;
-		[Serialize("maxLength"                 )] public float maxLength;
-		[Serialize("extendSpeed"               )] public float extendSpeed;
-		[Serialize("colapseSpeed"              )] public float colapseSpeed;
-		[Serialize("angularSpeedMax"           )] public float angularSpeedMax;
-		[Serialize("angularRotationForSpeedMax")] public float angularRotationForSpeedMax;
-		[Serialize("shakeDelayMin"             )] public float shakeDelayMin;
-		[Serialize("shakeDelayMax"             )] public float shakeDelayMax;
-		[Serialize("attackFinalDistanceCursor" )] public float attackFinalDistanceCursor;
-		[Serialize("noUserExtendDelay"         )] public float noUserExtendDelay;
-		[Serialize("timeToReachColapseSpeed"   )] public float timeToReachColapseSpeed;
+		public StringID defaultFxName;
+		public float minLength;
+		public float maxLength;
+		public float extendSpeed;
+		public float colapseSpeed;
+		public float angularSpeedMax;
+		public float angularRotationForSpeedMax;
+		public float shakeDelayMin;
+		public float shakeDelayMax;
+		public float attackFinalDistanceCursor;
+		public float noUserExtendDelay;
+		public float timeToReachColapseSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(defaultFxName));
-			SerializeField(s, nameof(minLength));
-			SerializeField(s, nameof(maxLength));
-			SerializeField(s, nameof(extendSpeed));
-			SerializeField(s, nameof(colapseSpeed));
-			SerializeField(s, nameof(angularSpeedMax));
-			SerializeField(s, nameof(angularRotationForSpeedMax));
-			SerializeField(s, nameof(shakeDelayMin));
-			SerializeField(s, nameof(shakeDelayMax));
-			SerializeField(s, nameof(attackFinalDistanceCursor));
-			SerializeField(s, nameof(noUserExtendDelay));
-			SerializeField(s, nameof(timeToReachColapseSpeed));
+			defaultFxName = s.SerializeObject<StringID>(defaultFxName, name: "defaultFxName");
+			minLength = s.Serialize<float>(minLength, name: "minLength");
+			maxLength = s.Serialize<float>(maxLength, name: "maxLength");
+			extendSpeed = s.Serialize<float>(extendSpeed, name: "extendSpeed");
+			colapseSpeed = s.Serialize<float>(colapseSpeed, name: "colapseSpeed");
+			angularSpeedMax = s.Serialize<float>(angularSpeedMax, name: "angularSpeedMax");
+			angularRotationForSpeedMax = s.Serialize<float>(angularRotationForSpeedMax, name: "angularRotationForSpeedMax");
+			shakeDelayMin = s.Serialize<float>(shakeDelayMin, name: "shakeDelayMin");
+			shakeDelayMax = s.Serialize<float>(shakeDelayMax, name: "shakeDelayMax");
+			attackFinalDistanceCursor = s.Serialize<float>(attackFinalDistanceCursor, name: "attackFinalDistanceCursor");
+			noUserExtendDelay = s.Serialize<float>(noUserExtendDelay, name: "noUserExtendDelay");
+			timeToReachColapseSpeed = s.Serialize<float>(timeToReachColapseSpeed, name: "timeToReachColapseSpeed");
 		}
 		public override uint? ClassCRC => 0xD0923462;
 	}

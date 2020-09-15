@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableStackElementAIComponent : AIComponent {
-		[Serialize("managerPath"   )] public ObjectPath managerPath;
-		[Serialize("countSpawnMax" )] public uint countSpawnMax;
-		[Serialize("blockIsDestroy")] public bool blockIsDestroy;
-		[Serialize("checkPointRow" )] public uint checkPointRow;
-		[Serialize("checkPointCol" )] public uint checkPointCol;
-		[Serialize("blockState"    )] public uint blockState;
-		[Serialize("hasTuto"       )] public bool hasTuto;
+		public ObjectPath managerPath;
+		public uint countSpawnMax;
+		public bool blockIsDestroy;
+		public uint checkPointRow;
+		public uint checkPointCol;
+		public uint blockState;
+		public bool hasTuto;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-				SerializeField(s, nameof(managerPath));
+				managerPath = s.SerializeObject<ObjectPath>(managerPath, name: "managerPath");
 			}
-			SerializeField(s, nameof(countSpawnMax));
+			countSpawnMax = s.Serialize<uint>(countSpawnMax, name: "countSpawnMax");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(blockIsDestroy));
-				SerializeField(s, nameof(checkPointRow));
-				SerializeField(s, nameof(checkPointCol));
-				SerializeField(s, nameof(blockState));
+				blockIsDestroy = s.Serialize<bool>(blockIsDestroy, name: "blockIsDestroy");
+				checkPointRow = s.Serialize<uint>(checkPointRow, name: "checkPointRow");
+				checkPointCol = s.Serialize<uint>(checkPointCol, name: "checkPointCol");
+				blockState = s.Serialize<uint>(blockState, name: "blockState");
 			}
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(hasTuto));
+				hasTuto = s.Serialize<bool>(hasTuto, name: "hasTuto");
 			}
 		}
 		public override uint? ClassCRC => 0x2ECD38C3;

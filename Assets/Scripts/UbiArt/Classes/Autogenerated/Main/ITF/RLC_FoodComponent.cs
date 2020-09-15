@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_FoodComponent : ActorComponent {
-		[Serialize("powerupLifetime")] public float powerupLifetime;
+		public float powerupLifetime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(powerupLifetime));
+			powerupLifetime = s.Serialize<float>(powerupLifetime, name: "powerupLifetime");
 		}
 		public override uint? ClassCRC => 0x63F1C12E;
 	}

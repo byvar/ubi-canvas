@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_EventBossMorayNodeReached : EventTrigger {
-		[Serialize("speed"                 )] public float speed;
-		[Serialize("acceleration"          )] public float acceleration;
-		[Serialize("disableSpeedMultiplier")] public int disableSpeedMultiplier;
-		[Serialize("startDash"             )] public int startDash;
-		[Serialize("stopDash"              )] public int stopDash;
-		[Serialize("LeadCam"               )] public int LeadCam;
+		public float speed;
+		public float acceleration;
+		public int disableSpeedMultiplier;
+		public int startDash;
+		public int stopDash;
+		public int LeadCam;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(speed));
-				SerializeField(s, nameof(acceleration));
-				SerializeField(s, nameof(disableSpeedMultiplier));
-				SerializeField(s, nameof(startDash));
-				SerializeField(s, nameof(stopDash));
-				SerializeField(s, nameof(LeadCam));
+				speed = s.Serialize<float>(speed, name: "speed");
+				acceleration = s.Serialize<float>(acceleration, name: "acceleration");
+				disableSpeedMultiplier = s.Serialize<int>(disableSpeedMultiplier, name: "disableSpeedMultiplier");
+				startDash = s.Serialize<int>(startDash, name: "startDash");
+				stopDash = s.Serialize<int>(stopDash, name: "stopDash");
+				LeadCam = s.Serialize<int>(LeadCam, name: "LeadCam");
 			} else {
-				SerializeField(s, nameof(speed));
-				SerializeField(s, nameof(acceleration));
-				SerializeField(s, nameof(disableSpeedMultiplier));
-				SerializeField(s, nameof(startDash));
-				SerializeField(s, nameof(stopDash));
+				speed = s.Serialize<float>(speed, name: "speed");
+				acceleration = s.Serialize<float>(acceleration, name: "acceleration");
+				disableSpeedMultiplier = s.Serialize<int>(disableSpeedMultiplier, name: "disableSpeedMultiplier");
+				startDash = s.Serialize<int>(startDash, name: "startDash");
+				stopDash = s.Serialize<int>(stopDash, name: "stopDash");
 			}
 		}
 		public override uint? ClassCRC => 0x1D48A8B5;

@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_AIUtensilTrapBehavior_Template : TemplateAIBehavior {
-		[Serialize("stickOffset"            )] public float stickOffset;
-		[Serialize("speed"                  )] public float speed;
-		[Serialize("trapAction"             )] public Generic<AIAction_Template> trapAction;
-		[Serialize("launchAction"           )] public Generic<AIAction_Template> launchAction;
-		[Serialize("flyAction"              )] public Generic<AIAction_Template> flyAction;
-		[Serialize("stickAction"            )] public Generic<AIAction_Template> stickAction;
-		[Serialize("platformAction"         )] public Generic<AIAction_Template> platformAction;
-		[Serialize("assignRewardToActivator")] public int assignRewardToActivator;
+		public float stickOffset;
+		public float speed;
+		public Generic<AIAction_Template> trapAction;
+		public Generic<AIAction_Template> launchAction;
+		public Generic<AIAction_Template> flyAction;
+		public Generic<AIAction_Template> stickAction;
+		public Generic<AIAction_Template> platformAction;
+		public int assignRewardToActivator;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(stickOffset));
-			SerializeField(s, nameof(speed));
-			SerializeField(s, nameof(trapAction));
-			SerializeField(s, nameof(launchAction));
-			SerializeField(s, nameof(flyAction));
-			SerializeField(s, nameof(stickAction));
-			SerializeField(s, nameof(platformAction));
-			SerializeField(s, nameof(assignRewardToActivator));
+			stickOffset = s.Serialize<float>(stickOffset, name: "stickOffset");
+			speed = s.Serialize<float>(speed, name: "speed");
+			trapAction = s.SerializeObject<Generic<AIAction_Template>>(trapAction, name: "trapAction");
+			launchAction = s.SerializeObject<Generic<AIAction_Template>>(launchAction, name: "launchAction");
+			flyAction = s.SerializeObject<Generic<AIAction_Template>>(flyAction, name: "flyAction");
+			stickAction = s.SerializeObject<Generic<AIAction_Template>>(stickAction, name: "stickAction");
+			platformAction = s.SerializeObject<Generic<AIAction_Template>>(platformAction, name: "platformAction");
+			assignRewardToActivator = s.Serialize<int>(assignRewardToActivator, name: "assignRewardToActivator");
 		}
 		public override uint? ClassCRC => 0x555DE807;
 	}

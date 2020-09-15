@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_PlayerControllerComponent_Template : CSerializable {
-		[Serialize("clothWindForceMultiplier"        )] public float clothWindForceMultiplier;
-		[Serialize("clothWindEnvironmentalDensity"   )] public float clothWindEnvironmentalDensity;
-		[Serialize("clothWindMaterialDensity"        )] public float clothWindMaterialDensity;
-		[Serialize("poisonInvincibilityDuration"     )] public float poisonInvincibilityDuration;
-		[Serialize("maxWindForceForAnim"             )] public float maxWindForceForAnim;
-		[Serialize("gotoPositionThreshold"           )] public float gotoPositionThreshold;
-		[Serialize("gotoPositionTimeout"             )] public float gotoPositionTimeout;
-		[Serialize("blockingMovablesCheckExtraRadius")] public float blockingMovablesCheckExtraRadius;
-		[Serialize("flyingClampMargin"               )] public Vec2d flyingClampMargin;
+		public float clothWindForceMultiplier;
+		public float clothWindEnvironmentalDensity;
+		public float clothWindMaterialDensity;
+		public float poisonInvincibilityDuration;
+		public float maxWindForceForAnim;
+		public float gotoPositionThreshold;
+		public float gotoPositionTimeout;
+		public float blockingMovablesCheckExtraRadius;
+		public Vec2d flyingClampMargin;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(clothWindForceMultiplier));
-			SerializeField(s, nameof(clothWindEnvironmentalDensity));
-			SerializeField(s, nameof(clothWindMaterialDensity));
-			SerializeField(s, nameof(poisonInvincibilityDuration));
-			SerializeField(s, nameof(maxWindForceForAnim));
-			SerializeField(s, nameof(gotoPositionThreshold));
-			SerializeField(s, nameof(gotoPositionTimeout));
-			SerializeField(s, nameof(blockingMovablesCheckExtraRadius));
-			SerializeField(s, nameof(flyingClampMargin));
+			clothWindForceMultiplier = s.Serialize<float>(clothWindForceMultiplier, name: "clothWindForceMultiplier");
+			clothWindEnvironmentalDensity = s.Serialize<float>(clothWindEnvironmentalDensity, name: "clothWindEnvironmentalDensity");
+			clothWindMaterialDensity = s.Serialize<float>(clothWindMaterialDensity, name: "clothWindMaterialDensity");
+			poisonInvincibilityDuration = s.Serialize<float>(poisonInvincibilityDuration, name: "poisonInvincibilityDuration");
+			maxWindForceForAnim = s.Serialize<float>(maxWindForceForAnim, name: "maxWindForceForAnim");
+			gotoPositionThreshold = s.Serialize<float>(gotoPositionThreshold, name: "gotoPositionThreshold");
+			gotoPositionTimeout = s.Serialize<float>(gotoPositionTimeout, name: "gotoPositionTimeout");
+			blockingMovablesCheckExtraRadius = s.Serialize<float>(blockingMovablesCheckExtraRadius, name: "blockingMovablesCheckExtraRadius");
+			flyingClampMargin = s.SerializeObject<Vec2d>(flyingClampMargin, name: "flyingClampMargin");
 		}
 		public override uint? ClassCRC => 0x4FD21A5D;
 	}

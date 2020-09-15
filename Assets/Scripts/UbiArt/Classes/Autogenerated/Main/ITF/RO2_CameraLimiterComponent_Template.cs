@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_CameraLimiterComponent_Template : ActorComponent_Template {
-		[Serialize("useEjectMargin"                 )] public bool useEjectMargin;
-		[Serialize("ejectMargin"                    )] public Margin ejectMargin;
-		[Serialize("ejectMarginDeadPlayersOnly"     )] public bool ejectMarginDeadPlayersOnly;
-		[Serialize("ejectMarginDetachesPlayer"      )] public bool ejectMarginDetachesPlayer;
-		[Serialize("ejectForce"                     )] public float ejectForce;
-		[Serialize("useDeathMargin"                 )] public bool useDeathMargin;
-		[Serialize("deathMargin"                    )] public Margin deathMargin;
-		[Serialize("deathMarginWithBottomConstraint")] public float deathMarginWithBottomConstraint;
-		[Serialize("ignoreConstraint"               )] public bool ignoreConstraint;
-		[Serialize("timeOut"                        )] public float timeOut;
-		[Serialize("lastOnscreenPlayerKillsEveryone")] public bool lastOnscreenPlayerKillsEveryone;
+		public bool useEjectMargin;
+		public Margin ejectMargin;
+		public bool ejectMarginDeadPlayersOnly;
+		public bool ejectMarginDetachesPlayer;
+		public float ejectForce;
+		public bool useDeathMargin;
+		public Margin deathMargin;
+		public float deathMarginWithBottomConstraint;
+		public bool ignoreConstraint;
+		public float timeOut;
+		public bool lastOnscreenPlayerKillsEveryone;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(useEjectMargin));
-			SerializeField(s, nameof(ejectMargin));
-			SerializeField(s, nameof(ejectMarginDeadPlayersOnly));
-			SerializeField(s, nameof(ejectMarginDetachesPlayer));
-			SerializeField(s, nameof(ejectForce));
-			SerializeField(s, nameof(useDeathMargin));
-			SerializeField(s, nameof(deathMargin));
-			SerializeField(s, nameof(deathMarginWithBottomConstraint));
-			SerializeField(s, nameof(ignoreConstraint));
-			SerializeField(s, nameof(timeOut));
-			SerializeField(s, nameof(lastOnscreenPlayerKillsEveryone));
+			useEjectMargin = s.Serialize<bool>(useEjectMargin, name: "useEjectMargin");
+			ejectMargin = s.SerializeObject<Margin>(ejectMargin, name: "ejectMargin");
+			ejectMarginDeadPlayersOnly = s.Serialize<bool>(ejectMarginDeadPlayersOnly, name: "ejectMarginDeadPlayersOnly");
+			ejectMarginDetachesPlayer = s.Serialize<bool>(ejectMarginDetachesPlayer, name: "ejectMarginDetachesPlayer");
+			ejectForce = s.Serialize<float>(ejectForce, name: "ejectForce");
+			useDeathMargin = s.Serialize<bool>(useDeathMargin, name: "useDeathMargin");
+			deathMargin = s.SerializeObject<Margin>(deathMargin, name: "deathMargin");
+			deathMarginWithBottomConstraint = s.Serialize<float>(deathMarginWithBottomConstraint, name: "deathMarginWithBottomConstraint");
+			ignoreConstraint = s.Serialize<bool>(ignoreConstraint, name: "ignoreConstraint");
+			timeOut = s.Serialize<float>(timeOut, name: "timeOut");
+			lastOnscreenPlayerKillsEveryone = s.Serialize<bool>(lastOnscreenPlayerKillsEveryone, name: "lastOnscreenPlayerKillsEveryone");
 		}
 		public override uint? ClassCRC => 0x33A50127;
 	}

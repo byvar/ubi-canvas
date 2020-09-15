@@ -3,127 +3,127 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UITextBox : UIComponent {
-		[Serialize("style"                  )] public uint style;
-		[Serialize("offset"                 )] public Vec2d offset;
-		[Serialize("depth"                  )] public float depth;
-		[Serialize("scale"                  )] public Vec2d scale;
-		[Serialize("area"                   )] public Vec2d area;
-		[Serialize("maxWidth"               )] public float maxWidth;
-		[Serialize("rawText"                )] public string rawText;
-		[Serialize("locId"                  )] public LocalisationId locId;
-		[Serialize("unsecureSource"         )] public bool unsecureSource;
-		[Serialize("overridingColor"        )] public Color overridingColor;
-		[Serialize("GlobalScissor"          )] public Enum_GlobalScissor GlobalScissor;
-		[Serialize("scaleToMatchWithArea"   )] public bool scaleToMatchWithArea;
-		[Serialize("autoScrollSpeed"        )] public float autoScrollSpeed;
-		[Serialize("autoScrollWaitTime"     )] public float autoScrollWaitTime;
-		[Serialize("autoScrollFirstWaitTime")] public float autoScrollFirstWaitTime;
-		[Serialize("autoScrollLoop"         )] public bool autoScrollLoop;
-		[Serialize("autoScrollMode"         )] public AutoScroll autoScrollMode;
-		[Serialize("autoScrollUpdate"       )] public AutoScrollUpdate autoScrollUpdate;
-		[Serialize("autoScrollLoopGap"      )] public uint autoScrollLoopGap;
-		[Serialize("overridingHAlignment"   )] public FONT_ALIGN overridingHAlignment;
-		[Serialize("overridingHAlignment"   )] public FONT_ALIGN2 overridingHAlignment2;
-		[Serialize("overridingVAlignment"   )] public FONT overridingVAlignment;
-		[Serialize("overridingAnchor"       )] public AREA_ANCHOR overridingAnchor;
-		[Serialize("ViewportVisibility"     )] public uint ViewportVisibility;
-		[Serialize("AdaptToLangage"         )] public bool AdaptToLangage;
-		[Serialize("DontResizeForChinese"   )] public bool DontResizeForChinese;
+		public uint style;
+		public Vec2d offset;
+		public float depth;
+		public Vec2d scale;
+		public Vec2d area;
+		public float maxWidth;
+		public string rawText;
+		public LocalisationId locId;
+		public bool unsecureSource;
+		public Color overridingColor;
+		public Enum_GlobalScissor GlobalScissor;
+		public bool scaleToMatchWithArea;
+		public float autoScrollSpeed;
+		public float autoScrollWaitTime;
+		public float autoScrollFirstWaitTime;
+		public bool autoScrollLoop;
+		public AutoScroll autoScrollMode;
+		public AutoScrollUpdate autoScrollUpdate;
+		public uint autoScrollLoopGap;
+		public FONT_ALIGN overridingHAlignment;
+		public FONT_ALIGN2 overridingHAlignment2;
+		public FONT overridingVAlignment;
+		public AREA_ANCHOR overridingAnchor;
+		public uint ViewportVisibility;
+		public bool AdaptToLangage;
+		public bool DontResizeForChinese;
 
-		[Serialize("Enum_VH_0__9"           )] public Enum_VH_0 Enum_VH_0__9;
-		[Serialize("bool__12"               )] public bool bool__12;
+		public Enum_VH_0 Enum_VH_0__9;
+		public bool bool__12;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(style));
-					SerializeField(s, nameof(offset));
-					SerializeField(s, nameof(depth));
-					SerializeField(s, nameof(scale));
-					SerializeField(s, nameof(area));
-					SerializeField(s, nameof(maxWidth));
-					SerializeField(s, nameof(rawText));
-					SerializeField(s, nameof(locId));
-					SerializeField(s, nameof(overridingColor));
-					SerializeField(s, nameof(scaleToMatchWithArea));
-					SerializeField(s, nameof(autoScrollSpeed));
-					SerializeField(s, nameof(autoScrollWaitTime));
-					SerializeField(s, nameof(overridingHAlignment2));
-					SerializeField(s, nameof(overridingVAlignment));
-					SerializeField(s, nameof(overridingAnchor));
+					style = s.Serialize<uint>(style, name: "style");
+					offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+					depth = s.Serialize<float>(depth, name: "depth");
+					scale = s.SerializeObject<Vec2d>(scale, name: "scale");
+					area = s.SerializeObject<Vec2d>(area, name: "area");
+					maxWidth = s.Serialize<float>(maxWidth, name: "maxWidth");
+					rawText = s.Serialize<string>(rawText, name: "rawText");
+					locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
+					overridingColor = s.SerializeObject<Color>(overridingColor, name: "overridingColor");
+					scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
+					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
+					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
+					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment2");
+					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
+					overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(style));
-					SerializeField(s, nameof(offset));
-					SerializeField(s, nameof(depth));
-					SerializeField(s, nameof(scale));
-					SerializeField(s, nameof(area));
-					SerializeField(s, nameof(maxWidth));
-					SerializeField(s, nameof(rawText));
-					SerializeField(s, nameof(locId), type: typeof(StringID));
-					SerializeField(s, nameof(overridingColor));
-					SerializeField(s, nameof(scaleToMatchWithArea));
-					SerializeField(s, nameof(autoScrollSpeed));
-					SerializeField(s, nameof(autoScrollWaitTime));
-					SerializeField(s, nameof(overridingHAlignment2));
-					SerializeField(s, nameof(overridingVAlignment));
-					SerializeField(s, nameof(overridingAnchor));
+					style = s.Serialize<uint>(style, name: "style");
+					offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+					depth = s.Serialize<float>(depth, name: "depth");
+					scale = s.SerializeObject<Vec2d>(scale, name: "scale");
+					area = s.SerializeObject<Vec2d>(area, name: "area");
+					maxWidth = s.Serialize<float>(maxWidth, name: "maxWidth");
+					rawText = s.Serialize<string>(rawText, name: "rawText");
+					locId = (LocalisationId)s.SerializeObject<StringID>((StringID)locId, name: "locId");
+					overridingColor = s.SerializeObject<Color>(overridingColor, name: "overridingColor");
+					scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
+					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
+					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
+					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment2");
+					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
+					overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(style));
-					SerializeField(s, nameof(offset));
-					SerializeField(s, nameof(depth));
-					SerializeField(s, nameof(scale));
-					SerializeField(s, nameof(area));
-					SerializeField(s, nameof(maxWidth));
-					SerializeField(s, nameof(rawText));
-					SerializeField(s, nameof(locId));
-					SerializeField(s, nameof(overridingColor));
+					style = s.Serialize<uint>(style, name: "style");
+					offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+					depth = s.Serialize<float>(depth, name: "depth");
+					scale = s.SerializeObject<Vec2d>(scale, name: "scale");
+					area = s.SerializeObject<Vec2d>(area, name: "area");
+					maxWidth = s.Serialize<float>(maxWidth, name: "maxWidth");
+					rawText = s.Serialize<string>(rawText, name: "rawText");
+					locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
+					overridingColor = s.SerializeObject<Color>(overridingColor, name: "overridingColor");
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(scaleToMatchWithArea));
+						scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
 					}
-					SerializeField(s, nameof(Enum_VH_0__9));
-					SerializeField(s, nameof(autoScrollSpeed));
-					SerializeField(s, nameof(autoScrollWaitTime));
-					SerializeField(s, nameof(bool__12));
-					SerializeField(s, nameof(autoScrollLoopGap));
-					SerializeField(s, nameof(overridingHAlignment));
-					SerializeField(s, nameof(overridingVAlignment));
-					SerializeField(s, nameof(overridingAnchor));
+					Enum_VH_0__9 = s.Serialize<Enum_VH_0>(Enum_VH_0__9, name: "Enum_VH_0__9");
+					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
+					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
+					bool__12 = s.Serialize<bool>(bool__12, name: "bool__12");
+					autoScrollLoopGap = s.Serialize<uint>(autoScrollLoopGap, name: "autoScrollLoopGap");
+					overridingHAlignment = s.Serialize<FONT_ALIGN>(overridingHAlignment, name: "overridingHAlignment");
+					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
+					overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
 				}
 			} else {
-				SerializeField(s, nameof(style));
-				SerializeField(s, nameof(offset));
-				SerializeField(s, nameof(depth));
-				SerializeField(s, nameof(scale));
-				SerializeField(s, nameof(area));
-				SerializeField(s, nameof(maxWidth));
-				SerializeField(s, nameof(rawText));
-				SerializeField(s, nameof(locId));
-				SerializeField(s, nameof(unsecureSource));
-				SerializeField(s, nameof(overridingColor));
-				SerializeField(s, nameof(GlobalScissor));
+				style = s.Serialize<uint>(style, name: "style");
+				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
+				depth = s.Serialize<float>(depth, name: "depth");
+				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
+				area = s.SerializeObject<Vec2d>(area, name: "area");
+				maxWidth = s.Serialize<float>(maxWidth, name: "maxWidth");
+				rawText = s.Serialize<string>(rawText, name: "rawText");
+				locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
+				unsecureSource = s.Serialize<bool>(unsecureSource, name: "unsecureSource");
+				overridingColor = s.SerializeObject<Color>(overridingColor, name: "overridingColor");
+				GlobalScissor = s.Serialize<Enum_GlobalScissor>(GlobalScissor, name: "GlobalScissor");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(scaleToMatchWithArea));
+					scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
 				}
-				SerializeField(s, nameof(autoScrollSpeed));
-				SerializeField(s, nameof(autoScrollWaitTime));
-				SerializeField(s, nameof(autoScrollFirstWaitTime));
+				autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
+				autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
+				autoScrollFirstWaitTime = s.Serialize<float>(autoScrollFirstWaitTime, name: "autoScrollFirstWaitTime");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(autoScrollLoop));
+					autoScrollLoop = s.Serialize<bool>(autoScrollLoop, name: "autoScrollLoop");
 				}
-				SerializeField(s, nameof(autoScrollMode));
-				SerializeField(s, nameof(autoScrollUpdate));
-				SerializeField(s, nameof(autoScrollLoopGap));
-				SerializeField(s, nameof(overridingHAlignment));
-				SerializeField(s, nameof(overridingVAlignment));
-				SerializeField(s, nameof(overridingAnchor));
-				SerializeField(s, nameof(ViewportVisibility));
-				SerializeField(s, nameof(AdaptToLangage));
-				SerializeField(s, nameof(DontResizeForChinese));
+				autoScrollMode = s.Serialize<AutoScroll>(autoScrollMode, name: "autoScrollMode");
+				autoScrollUpdate = s.Serialize<AutoScrollUpdate>(autoScrollUpdate, name: "autoScrollUpdate");
+				autoScrollLoopGap = s.Serialize<uint>(autoScrollLoopGap, name: "autoScrollLoopGap");
+				overridingHAlignment = s.Serialize<FONT_ALIGN>(overridingHAlignment, name: "overridingHAlignment");
+				overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
+				overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
+				ViewportVisibility = s.Serialize<uint>(ViewportVisibility, name: "ViewportVisibility");
+				AdaptToLangage = s.Serialize<bool>(AdaptToLangage, name: "AdaptToLangage");
+				DontResizeForChinese = s.Serialize<bool>(DontResizeForChinese, name: "DontResizeForChinese");
 			}
 		}
 		public enum Enum_GlobalScissor {

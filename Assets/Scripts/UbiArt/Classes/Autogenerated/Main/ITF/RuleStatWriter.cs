@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RuleStatWriter : StatWriter {
-		[Serialize("Rules" )] public CMultiMap<StringID, RuleStat> Rules;
-		[Serialize("Writer")] public Generic<StatWriter> Writer;
+		public CMultiMap<StringID, RuleStat> Rules;
+		public Generic<StatWriter> Writer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Rules));
-			SerializeField(s, nameof(Writer));
+			Rules = s.SerializeObject<CMultiMap<StringID, RuleStat>>(Rules, name: "Rules");
+			Writer = s.SerializeObject<Generic<StatWriter>>(Writer, name: "Writer");
 		}
 		public override uint? ClassCRC => 0xB9491D4A;
 	}

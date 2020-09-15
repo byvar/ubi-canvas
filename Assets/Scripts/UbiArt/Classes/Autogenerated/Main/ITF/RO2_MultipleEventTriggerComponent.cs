@@ -3,23 +3,23 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MultipleEventTriggerComponent : ActorComponent {
-		[Serialize("eventConditionList")] public CList<RO2_MultipleEventTriggerComponent.EventCondition> eventConditionList;
-		[Serialize("validationEvent"   )] public Generic<Event> validationEvent;
+		public CList<RO2_MultipleEventTriggerComponent.EventCondition> eventConditionList;
+		public Generic<Event> validationEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(eventConditionList));
-			SerializeField(s, nameof(validationEvent));
+			eventConditionList = s.SerializeObject<CList<RO2_MultipleEventTriggerComponent.EventCondition>>(eventConditionList, name: "eventConditionList");
+			validationEvent = s.SerializeObject<Generic<Event>>(validationEvent, name: "validationEvent");
 		}
 		[Games(GameFlags.RA)]
 		public partial class EventCondition : CSerializable {
-			[Serialize("event"           )] public Generic<Event> _event;
-			[Serialize("operator"        )] public Enum_operator _operator;
-			[Serialize("validityDuration")] public float validityDuration;
+			public Generic<Event> _event;
+			public Enum_operator _operator;
+			public float validityDuration;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(_event));
-				SerializeField(s, nameof(_operator));
-				SerializeField(s, nameof(validityDuration));
+				_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
+				_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
+				validityDuration = s.Serialize<float>(validityDuration, name: "validityDuration");
 			}
 			public enum Enum_operator {
 				[Serialize("OR" )] OR = 0,

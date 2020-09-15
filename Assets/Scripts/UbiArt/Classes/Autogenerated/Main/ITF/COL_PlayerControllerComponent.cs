@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_PlayerControllerComponent : CSerializable {
-		[Serialize("displayDebug"  )] public bool displayDebug;
-		[Serialize("defaultStateId")] public Enum_defaultStateId defaultStateId;
+		public bool displayDebug;
+		public Enum_defaultStateId defaultStateId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(displayDebug), boolAsByte: true);
-			SerializeField(s, nameof(defaultStateId));
+			displayDebug = s.Serialize<bool>(displayDebug, name: "displayDebug", options: CSerializerObject.Options.BoolAsByte);
+			defaultStateId = s.Serialize<Enum_defaultStateId>(defaultStateId, name: "defaultStateId");
 		}
 		public enum Enum_defaultStateId {
 			[Serialize("Value_0" )] Value_0 = 0,

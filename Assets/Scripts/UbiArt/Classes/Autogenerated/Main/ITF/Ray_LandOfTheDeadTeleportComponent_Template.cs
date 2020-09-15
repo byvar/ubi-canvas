@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_LandOfTheDeadTeleportComponent_Template : CSerializable {
-		[Serialize("mapTag"     )] public StringID mapTag;
-		[Serialize("appearAnim" )] public StringID appearAnim;
-		[Serialize("idleAnim"   )] public StringID idleAnim;
-		[Serialize("shape"      )] public Placeholder shape;
-		[Serialize("shapeOffset")] public Vec2d shapeOffset;
+		public StringID mapTag;
+		public StringID appearAnim;
+		public StringID idleAnim;
+		public Placeholder shape;
+		public Vec2d shapeOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(mapTag));
-			SerializeField(s, nameof(appearAnim));
-			SerializeField(s, nameof(idleAnim));
-			SerializeField(s, nameof(shape));
-			SerializeField(s, nameof(shapeOffset));
+			mapTag = s.SerializeObject<StringID>(mapTag, name: "mapTag");
+			appearAnim = s.SerializeObject<StringID>(appearAnim, name: "appearAnim");
+			idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
+			shape = s.SerializeObject<Placeholder>(shape, name: "shape");
+			shapeOffset = s.SerializeObject<Vec2d>(shapeOffset, name: "shapeOffset");
 		}
 		public override uint? ClassCRC => 0x272D18EF;
 	}

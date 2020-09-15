@@ -3,36 +3,36 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_MapButton : RLC_BasicAdventureButton {
-		[Serialize("Path"                      )] public PathRef Path;
-		[Serialize("Type"                      )] public Enum_Type Type;
-		[Serialize("Kit"                       )] public Enum_Kit Kit;
-		[Serialize("isHardLevel"               )] public bool isHardLevel;
-		[Serialize("DBG_ReloadConfig"          )] public bool DBG_ReloadConfig;
-		[Serialize("DBG_AnimRewardValueEnabled")] public bool DBG_AnimRewardValueEnabled;
-		[Serialize("DBG_AnimRewardValue"       )] public uint DBG_AnimRewardValue;
-		[Serialize("currentPath"               )] public PathRef currentPath;
-		[Serialize("currentType"               )] public Enum_Type currentType;
-		[Serialize("currentKit"                )] public Enum_Kit currentKit;
-		[Serialize("currentDifficulty"         )] public uint currentDifficulty;
-		[Serialize("currentHistoryCpt"         )] public uint currentHistoryCpt;
-		[Serialize("eventSentWhenSpawned"      )] public Generic<Event> eventSentWhenSpawned;
+		public PathRef Path;
+		public Enum_Type Type;
+		public Enum_Kit Kit;
+		public bool isHardLevel;
+		public bool DBG_ReloadConfig;
+		public bool DBG_AnimRewardValueEnabled;
+		public uint DBG_AnimRewardValue;
+		public PathRef currentPath;
+		public Enum_Type currentType;
+		public Enum_Kit currentKit;
+		public uint currentDifficulty;
+		public uint currentHistoryCpt;
+		public Generic<Event> eventSentWhenSpawned;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Path));
-			SerializeField(s, nameof(Type));
-			SerializeField(s, nameof(Kit));
-			SerializeField(s, nameof(isHardLevel));
-			SerializeField(s, nameof(DBG_ReloadConfig));
-			SerializeField(s, nameof(DBG_AnimRewardValueEnabled));
-			SerializeField(s, nameof(DBG_AnimRewardValue));
+			Path = s.SerializeObject<PathRef>(Path, name: "Path");
+			Type = s.Serialize<Enum_Type>(Type, name: "Type");
+			Kit = s.Serialize<Enum_Kit>(Kit, name: "Kit");
+			isHardLevel = s.Serialize<bool>(isHardLevel, name: "isHardLevel");
+			DBG_ReloadConfig = s.Serialize<bool>(DBG_ReloadConfig, name: "DBG_ReloadConfig");
+			DBG_AnimRewardValueEnabled = s.Serialize<bool>(DBG_AnimRewardValueEnabled, name: "DBG_AnimRewardValueEnabled");
+			DBG_AnimRewardValue = s.Serialize<uint>(DBG_AnimRewardValue, name: "DBG_AnimRewardValue");
 			if (s.HasFlags(SerializeFlags.Flags16)) {
-				SerializeField(s, nameof(currentPath));
-				SerializeField(s, nameof(currentType));
-				SerializeField(s, nameof(currentKit));
-				SerializeField(s, nameof(currentDifficulty));
-				SerializeField(s, nameof(currentHistoryCpt));
+				currentPath = s.SerializeObject<PathRef>(currentPath, name: "currentPath");
+				currentType = s.Serialize<Enum_Type>(currentType, name: "currentType");
+				currentKit = s.Serialize<Enum_Kit>(currentKit, name: "currentKit");
+				currentDifficulty = s.Serialize<uint>(currentDifficulty, name: "currentDifficulty");
+				currentHistoryCpt = s.Serialize<uint>(currentHistoryCpt, name: "currentHistoryCpt");
 			}
-			SerializeField(s, nameof(eventSentWhenSpawned));
+			eventSentWhenSpawned = s.SerializeObject<Generic<Event>>(eventSentWhenSpawned, name: "eventSentWhenSpawned");
 		}
 		public enum Enum_Type {
 			[Serialize("_unknown"         )] _unknown = 0,

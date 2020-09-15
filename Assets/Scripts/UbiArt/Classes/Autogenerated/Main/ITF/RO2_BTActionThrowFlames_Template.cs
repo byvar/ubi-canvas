@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionThrowFlames_Template : BTAction_Template {
-		[Serialize("animation"    )] public StringID animation;
-		[Serialize("endAnimation" )] public StringID endAnimation;
-		[Serialize("fxNames"      )] public Placeholder fxNames;
-		[Serialize("fxMarkerStart")] public Placeholder fxMarkerStart;
-		[Serialize("fxMarkerStop" )] public Placeholder fxMarkerStop;
+		public StringID animation;
+		public StringID endAnimation;
+		public Placeholder fxNames;
+		public Placeholder fxMarkerStart;
+		public Placeholder fxMarkerStop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(animation));
-				SerializeField(s, nameof(endAnimation));
-				SerializeField(s, nameof(fxNames));
-				SerializeField(s, nameof(fxMarkerStart));
-				SerializeField(s, nameof(fxMarkerStop));
+				animation = s.SerializeObject<StringID>(animation, name: "animation");
+				endAnimation = s.SerializeObject<StringID>(endAnimation, name: "endAnimation");
+				fxNames = s.SerializeObject<Placeholder>(fxNames, name: "fxNames");
+				fxMarkerStart = s.SerializeObject<Placeholder>(fxMarkerStart, name: "fxMarkerStart");
+				fxMarkerStop = s.SerializeObject<Placeholder>(fxMarkerStop, name: "fxMarkerStop");
 			} else {
-				SerializeField(s, nameof(animation));
-				SerializeField(s, nameof(endAnimation));
+				animation = s.SerializeObject<StringID>(animation, name: "animation");
+				endAnimation = s.SerializeObject<StringID>(endAnimation, name: "endAnimation");
 			}
 		}
 		public override uint? ClassCRC => 0xB64EF794;

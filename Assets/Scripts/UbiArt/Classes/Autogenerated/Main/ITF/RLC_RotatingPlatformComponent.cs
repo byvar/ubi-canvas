@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_RotatingPlatformComponent : ActorComponent {
-		[Serialize("clockwiseRotationLocked"       )] public bool clockwiseRotationLocked;
-		[Serialize("counterClockwiseRotationLocked")] public bool counterClockwiseRotationLocked;
-		[Serialize("playerActivationOnly"          )] public bool playerActivationOnly;
+		public bool clockwiseRotationLocked;
+		public bool counterClockwiseRotationLocked;
+		public bool playerActivationOnly;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(clockwiseRotationLocked));
-			SerializeField(s, nameof(counterClockwiseRotationLocked));
-			SerializeField(s, nameof(playerActivationOnly));
+			clockwiseRotationLocked = s.Serialize<bool>(clockwiseRotationLocked, name: "clockwiseRotationLocked");
+			counterClockwiseRotationLocked = s.Serialize<bool>(counterClockwiseRotationLocked, name: "counterClockwiseRotationLocked");
+			playerActivationOnly = s.Serialize<bool>(playerActivationOnly, name: "playerActivationOnly");
 		}
 		public override uint? ClassCRC => 0xEB17959E;
 	}

@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL | GameFlags.RL)]
 	public partial class RedirectSymmetryPatch : CSerializable {
-		[Serialize("mainPatch")] public StringID mainPatch;
-		[Serialize("boneName")] public StringID boneName;
-		[Serialize("symmetryPatch")] public StringID symmetryPatch;
+		public StringID mainPatch;
+		public StringID boneName;
+		public StringID symmetryPatch;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(mainPatch));
-			SerializeField(s, nameof(boneName));
-			SerializeField(s, nameof(symmetryPatch));
+			mainPatch = s.SerializeObject<StringID>(mainPatch, name: "mainPatch");
+			boneName = s.SerializeObject<StringID>(boneName, name: "boneName");
+			symmetryPatch = s.SerializeObject<StringID>(symmetryPatch, name: "symmetryPatch");
 		}
 	}
 }

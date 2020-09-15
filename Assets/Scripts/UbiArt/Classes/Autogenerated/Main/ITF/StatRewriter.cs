@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class StatRewriter : CSerializable {
-		[Serialize("DefaultAccept")] public bool DefaultAccept;
-		[Serialize("Rejected"     )] public CList<StringID> Rejected;
-		[Serialize("Rules"        )] public CMap<StringID, StatRewriteRule> Rules;
+		public bool DefaultAccept;
+		public CList<StringID> Rejected;
+		public CMap<StringID, StatRewriteRule> Rules;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(DefaultAccept));
-			SerializeField(s, nameof(Rejected));
-			SerializeField(s, nameof(Rules));
+			DefaultAccept = s.Serialize<bool>(DefaultAccept, name: "DefaultAccept");
+			Rejected = s.SerializeObject<CList<StringID>>(Rejected, name: "Rejected");
+			Rules = s.SerializeObject<CMap<StringID, StatRewriteRule>>(Rules, name: "Rules");
 		}
 	}
 }

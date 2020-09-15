@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_194_sub_781AC0 : CSerializable {
-		[Serialize("trappedShape")] public Placeholder trappedShape;
-		[Serialize("animOff"     )] public StringID animOff;
-		[Serialize("animTrapped" )] public StringID animTrapped;
-		[Serialize("revealedFx"  )] public StringID revealedFx;
-		[Serialize("activatedFx" )] public StringID activatedFx;
+		public Placeholder trappedShape;
+		public StringID animOff;
+		public StringID animTrapped;
+		public StringID revealedFx;
+		public StringID activatedFx;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(trappedShape));
-			SerializeField(s, nameof(animOff));
-			SerializeField(s, nameof(animTrapped));
-			SerializeField(s, nameof(revealedFx));
-			SerializeField(s, nameof(activatedFx));
+			trappedShape = s.SerializeObject<Placeholder>(trappedShape, name: "trappedShape");
+			animOff = s.SerializeObject<StringID>(animOff, name: "animOff");
+			animTrapped = s.SerializeObject<StringID>(animTrapped, name: "animTrapped");
+			revealedFx = s.SerializeObject<StringID>(revealedFx, name: "revealedFx");
+			activatedFx = s.SerializeObject<StringID>(activatedFx, name: "activatedFx");
 		}
 		public override uint? ClassCRC => 0x94721363;
 	}

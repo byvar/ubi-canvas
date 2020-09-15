@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionPrisonerPole_Template : BTAction_Template {
-		[Serialize("animPrisoner"   )] public StringID animPrisoner;
-		[Serialize("animFree"       )] public StringID animFree;
-		[Serialize("animThank"      )] public StringID animThank;
-		[Serialize("animFreeFall"   )] public StringID animFreeFall;
-		[Serialize("countLumsReward")] public uint countLumsReward;
+		public StringID animPrisoner;
+		public StringID animFree;
+		public StringID animThank;
+		public StringID animFreeFall;
+		public uint countLumsReward;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animPrisoner));
-			SerializeField(s, nameof(animFree));
-			SerializeField(s, nameof(animThank));
-			SerializeField(s, nameof(animFreeFall));
-			SerializeField(s, nameof(countLumsReward));
+			animPrisoner = s.SerializeObject<StringID>(animPrisoner, name: "animPrisoner");
+			animFree = s.SerializeObject<StringID>(animFree, name: "animFree");
+			animThank = s.SerializeObject<StringID>(animThank, name: "animThank");
+			animFreeFall = s.SerializeObject<StringID>(animFreeFall, name: "animFreeFall");
+			countLumsReward = s.Serialize<uint>(countLumsReward, name: "countLumsReward");
 		}
 		public override uint? ClassCRC => 0x866D7FAA;
 	}

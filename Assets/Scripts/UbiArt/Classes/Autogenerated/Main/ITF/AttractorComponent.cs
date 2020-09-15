@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class AttractorComponent : ActorComponent {
-		[Serialize("valueOverDistance"    )] public Spline valueOverDistance;
-		[Serialize("valueOverSpeed"       )] public Spline valueOverSpeed;
-		[Serialize("valueOverAcceleration")] public Spline valueOverAcceleration;
-		[Serialize("valueOverTime"        )] public Spline valueOverTime;
+		public Spline valueOverDistance;
+		public Spline valueOverSpeed;
+		public Spline valueOverAcceleration;
+		public Spline valueOverTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(valueOverDistance));
-			SerializeField(s, nameof(valueOverSpeed));
-			SerializeField(s, nameof(valueOverAcceleration));
-			SerializeField(s, nameof(valueOverTime));
+			valueOverDistance = s.SerializeObject<Spline>(valueOverDistance, name: "valueOverDistance");
+			valueOverSpeed = s.SerializeObject<Spline>(valueOverSpeed, name: "valueOverSpeed");
+			valueOverAcceleration = s.SerializeObject<Spline>(valueOverAcceleration, name: "valueOverAcceleration");
+			valueOverTime = s.SerializeObject<Spline>(valueOverTime, name: "valueOverTime");
 		}
 		public override uint? ClassCRC => 0xF8EF1527;
 	}

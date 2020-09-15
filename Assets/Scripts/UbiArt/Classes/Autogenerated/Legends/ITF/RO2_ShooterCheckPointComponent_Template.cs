@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class RO2_ShooterCheckPointComponent_Template : CheckpointComponent_Template {
-		[Serialize("enterExit"                     )] public int enterExit;
-		[Serialize("exitOnly"                      )] public int exitOnly;
-		[Serialize("useCameraBorderSpawn"          )] public int useCameraBorderSpawn;
-		[Serialize("cameraBorderSpawnOffset"       )] public float cameraBorderSpawnOffset;
-		[Serialize("cameraBorderSpawnPlayersOffset")] public float cameraBorderSpawnPlayersOffset;
-		[Serialize("playersSpawnPosList"           )] public CList<PlayerSpawnPos> playersSpawnPosList;
-		[Serialize("visualScaleMultiplier"         )] public float visualScaleMultiplier;
-		[Serialize("checkpointIn"                  )] public int checkpointIn;
-		[Serialize("quickLanding"                  )] public int quickLanding;
+		public int enterExit;
+		public int exitOnly;
+		public int useCameraBorderSpawn;
+		public float cameraBorderSpawnOffset;
+		public float cameraBorderSpawnPlayersOffset;
+		public CList<PlayerSpawnPos> playersSpawnPosList;
+		public float visualScaleMultiplier;
+		public int checkpointIn;
+		public int quickLanding;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enterExit));
-			SerializeField(s, nameof(exitOnly));
-			SerializeField(s, nameof(useCameraBorderSpawn));
-			SerializeField(s, nameof(cameraBorderSpawnOffset));
-			SerializeField(s, nameof(cameraBorderSpawnPlayersOffset));
-			SerializeField(s, nameof(playersSpawnPosList));
-			SerializeField(s, nameof(visualScaleMultiplier));
-			SerializeField(s, nameof(checkpointIn));
-			SerializeField(s, nameof(quickLanding));
+			enterExit = s.Serialize<int>(enterExit, name: "enterExit");
+			exitOnly = s.Serialize<int>(exitOnly, name: "exitOnly");
+			useCameraBorderSpawn = s.Serialize<int>(useCameraBorderSpawn, name: "useCameraBorderSpawn");
+			cameraBorderSpawnOffset = s.Serialize<float>(cameraBorderSpawnOffset, name: "cameraBorderSpawnOffset");
+			cameraBorderSpawnPlayersOffset = s.Serialize<float>(cameraBorderSpawnPlayersOffset, name: "cameraBorderSpawnPlayersOffset");
+			playersSpawnPosList = s.SerializeObject<CList<PlayerSpawnPos>>(playersSpawnPosList, name: "playersSpawnPosList");
+			visualScaleMultiplier = s.Serialize<float>(visualScaleMultiplier, name: "visualScaleMultiplier");
+			checkpointIn = s.Serialize<int>(checkpointIn, name: "checkpointIn");
+			quickLanding = s.Serialize<int>(quickLanding, name: "quickLanding");
 		}
 		public override uint? ClassCRC => 0xFB860F4D;
 	}

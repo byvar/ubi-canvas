@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_BezierBranchWeightComponent_Template : RO2_BezierBranchComponent_Template {
-		[Serialize("minAngle"       )] public Angle minAngle;
-		[Serialize("maxAngle"       )] public Angle maxAngle;
-		[Serialize("bendingSpeed"   )] public float bendingSpeed;
-		[Serialize("weightInfluence")] public float weightInfluence;
-		[Serialize("weightMinValue" )] public float weightMinValue;
-		[Serialize("weightMaxValue" )] public float weightMaxValue;
-		[Serialize("forceInfluence" )] public float forceInfluence;
-		[Serialize("forceDuration"  )] public float forceDuration;
-		[Serialize("forceMinSpeed"  )] public float forceMinSpeed;
-		[Serialize("forceMaxSpeed"  )] public float forceMaxSpeed;
-		[Serialize("exclusiveForce" )] public bool exclusiveForce;
+		public Angle minAngle;
+		public Angle maxAngle;
+		public float bendingSpeed;
+		public float weightInfluence;
+		public float weightMinValue;
+		public float weightMaxValue;
+		public float forceInfluence;
+		public float forceDuration;
+		public float forceMinSpeed;
+		public float forceMaxSpeed;
+		public bool exclusiveForce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(minAngle));
-			SerializeField(s, nameof(maxAngle));
-			SerializeField(s, nameof(bendingSpeed));
-			SerializeField(s, nameof(weightInfluence));
-			SerializeField(s, nameof(weightMinValue));
-			SerializeField(s, nameof(weightMaxValue));
-			SerializeField(s, nameof(forceInfluence));
-			SerializeField(s, nameof(forceDuration));
-			SerializeField(s, nameof(forceMinSpeed));
-			SerializeField(s, nameof(forceMaxSpeed));
-			SerializeField(s, nameof(exclusiveForce));
+			minAngle = s.SerializeObject<Angle>(minAngle, name: "minAngle");
+			maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+			bendingSpeed = s.Serialize<float>(bendingSpeed, name: "bendingSpeed");
+			weightInfluence = s.Serialize<float>(weightInfluence, name: "weightInfluence");
+			weightMinValue = s.Serialize<float>(weightMinValue, name: "weightMinValue");
+			weightMaxValue = s.Serialize<float>(weightMaxValue, name: "weightMaxValue");
+			forceInfluence = s.Serialize<float>(forceInfluence, name: "forceInfluence");
+			forceDuration = s.Serialize<float>(forceDuration, name: "forceDuration");
+			forceMinSpeed = s.Serialize<float>(forceMinSpeed, name: "forceMinSpeed");
+			forceMaxSpeed = s.Serialize<float>(forceMaxSpeed, name: "forceMaxSpeed");
+			exclusiveForce = s.Serialize<bool>(exclusiveForce, name: "exclusiveForce");
 		}
 		public override uint? ClassCRC => 0xC7EDC0CE;
 	}

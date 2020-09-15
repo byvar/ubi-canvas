@@ -3,61 +3,61 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class TextureGraphicComponent_Template : GraphicComponent_Template {
-		[Serialize("texture"            )] public Path texture;
-		[Serialize("material"           )] public GFXMaterialSerializable material;
-		[Serialize("defaultColor"       )] public Color defaultColor;
-		[Serialize("angleX"             )] public Angle angleX;
-		[Serialize("angleY"             )] public Angle angleY;
-		[Serialize("angleZ"             )] public Angle angleZ;
-		[Serialize("speedRotX"          )] public float speedRotX;
-		[Serialize("speedRotY"          )] public float speedRotY;
-		[Serialize("speedRotZ"          )] public float speedRotZ;
-		[Serialize("size"               )] public Vec2d size;
-		[Serialize("zOffset"            )] public float zOffset;
-		[Serialize("draw2D"             )] public bool draw2D;
-		[Serialize("draw2DNoScreenRatio")] public bool draw2DNoScreenRatio;
+		public Path texture;
+		public GFXMaterialSerializable material;
+		public Color defaultColor;
+		public Angle angleX;
+		public Angle angleY;
+		public Angle angleZ;
+		public float speedRotX;
+		public float speedRotY;
+		public float speedRotZ;
+		public Vec2d size;
+		public float zOffset;
+		public bool draw2D;
+		public bool draw2DNoScreenRatio;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(texture));
-				SerializeField(s, nameof(defaultColor));
-				SerializeField(s, nameof(angleX));
-				SerializeField(s, nameof(angleY));
-				SerializeField(s, nameof(angleZ));
-				SerializeField(s, nameof(speedRotX));
-				SerializeField(s, nameof(speedRotY));
-				SerializeField(s, nameof(speedRotZ));
+				texture = s.SerializeObject<Path>(texture, name: "texture");
+				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
+				angleX = s.SerializeObject<Angle>(angleX, name: "angleX");
+				angleY = s.SerializeObject<Angle>(angleY, name: "angleY");
+				angleZ = s.SerializeObject<Angle>(angleZ, name: "angleZ");
+				speedRotX = s.Serialize<float>(speedRotX, name: "speedRotX");
+				speedRotY = s.Serialize<float>(speedRotY, name: "speedRotY");
+				speedRotZ = s.Serialize<float>(speedRotZ, name: "speedRotZ");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(defaultColor));
-				SerializeField(s, nameof(angleX));
-				SerializeField(s, nameof(angleY));
-				SerializeField(s, nameof(angleZ));
-				SerializeField(s, nameof(speedRotX));
-				SerializeField(s, nameof(speedRotY));
-				SerializeField(s, nameof(speedRotZ));
-				SerializeField(s, nameof(size));
-				SerializeField(s, nameof(zOffset));
-				SerializeField(s, nameof(draw2D));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
+				angleX = s.SerializeObject<Angle>(angleX, name: "angleX");
+				angleY = s.SerializeObject<Angle>(angleY, name: "angleY");
+				angleZ = s.SerializeObject<Angle>(angleZ, name: "angleZ");
+				speedRotX = s.Serialize<float>(speedRotX, name: "speedRotX");
+				speedRotY = s.Serialize<float>(speedRotY, name: "speedRotY");
+				speedRotZ = s.Serialize<float>(speedRotZ, name: "speedRotZ");
+				size = s.SerializeObject<Vec2d>(size, name: "size");
+				zOffset = s.Serialize<float>(zOffset, name: "zOffset");
+				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(defaultColor));
-				SerializeField(s, nameof(angleX));
-				SerializeField(s, nameof(angleY));
-				SerializeField(s, nameof(angleZ));
-				SerializeField(s, nameof(speedRotX));
-				SerializeField(s, nameof(speedRotY));
-				SerializeField(s, nameof(speedRotZ));
-				SerializeField(s, nameof(size));
-				SerializeField(s, nameof(zOffset));
-				SerializeField(s, nameof(draw2D));
-				SerializeField(s, nameof(draw2DNoScreenRatio));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
+				angleX = s.SerializeObject<Angle>(angleX, name: "angleX");
+				angleY = s.SerializeObject<Angle>(angleY, name: "angleY");
+				angleZ = s.SerializeObject<Angle>(angleZ, name: "angleZ");
+				speedRotX = s.Serialize<float>(speedRotX, name: "speedRotX");
+				speedRotY = s.Serialize<float>(speedRotY, name: "speedRotY");
+				speedRotZ = s.Serialize<float>(speedRotZ, name: "speedRotZ");
+				size = s.SerializeObject<Vec2d>(size, name: "size");
+				zOffset = s.Serialize<float>(zOffset, name: "zOffset");
+				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
+				draw2DNoScreenRatio = s.Serialize<bool>(draw2DNoScreenRatio, name: "draw2DNoScreenRatio");
 			}
 		}
 		public override uint? ClassCRC => 0x9CAE4325;

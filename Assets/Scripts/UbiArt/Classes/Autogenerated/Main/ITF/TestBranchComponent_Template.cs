@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class TestBranchComponent_Template : BezierBranchComponent_Template {
-		[Serialize("width"      )] public float width;
-		[Serialize("attachToEnd")] public bool attachToEnd;
-		[Serialize("tileLength" )] public float tileLength;
-		[Serialize("tileBones"  )] public CList<TestSpriteBone> tileBones;
-		[Serialize("endLength"  )] public float endLength;
-		[Serialize("endBones"   )] public CList<TestSpriteBone> endBones;
-		[Serialize("drawDebug"  )] public bool drawDebug;
-		[Serialize("debugMode"  )] public uint debugMode;
+		public float width;
+		public bool attachToEnd;
+		public float tileLength;
+		public CList<TestSpriteBone> tileBones;
+		public float endLength;
+		public CList<TestSpriteBone> endBones;
+		public bool drawDebug;
+		public uint debugMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(width));
-				SerializeField(s, nameof(attachToEnd), boolAsByte: true);
-				SerializeField(s, nameof(tileLength));
-				SerializeField(s, nameof(tileBones));
-				SerializeField(s, nameof(endLength));
-				SerializeField(s, nameof(endBones));
-				SerializeField(s, nameof(drawDebug));
-				SerializeField(s, nameof(debugMode));
+				width = s.Serialize<float>(width, name: "width");
+				attachToEnd = s.Serialize<bool>(attachToEnd, name: "attachToEnd", options: CSerializerObject.Options.BoolAsByte);
+				tileLength = s.Serialize<float>(tileLength, name: "tileLength");
+				tileBones = s.SerializeObject<CList<TestSpriteBone>>(tileBones, name: "tileBones");
+				endLength = s.Serialize<float>(endLength, name: "endLength");
+				endBones = s.SerializeObject<CList<TestSpriteBone>>(endBones, name: "endBones");
+				drawDebug = s.Serialize<bool>(drawDebug, name: "drawDebug");
+				debugMode = s.Serialize<uint>(debugMode, name: "debugMode");
 			} else {
-				SerializeField(s, nameof(width));
-				SerializeField(s, nameof(attachToEnd));
-				SerializeField(s, nameof(tileLength));
-				SerializeField(s, nameof(tileBones));
-				SerializeField(s, nameof(endLength));
-				SerializeField(s, nameof(endBones));
-				SerializeField(s, nameof(drawDebug));
-				SerializeField(s, nameof(debugMode));
+				width = s.Serialize<float>(width, name: "width");
+				attachToEnd = s.Serialize<bool>(attachToEnd, name: "attachToEnd");
+				tileLength = s.Serialize<float>(tileLength, name: "tileLength");
+				tileBones = s.SerializeObject<CList<TestSpriteBone>>(tileBones, name: "tileBones");
+				endLength = s.Serialize<float>(endLength, name: "endLength");
+				endBones = s.SerializeObject<CList<TestSpriteBone>>(endBones, name: "endBones");
+				drawDebug = s.Serialize<bool>(drawDebug, name: "drawDebug");
+				debugMode = s.Serialize<uint>(debugMode, name: "debugMode");
 			}
 		}
 		public override uint? ClassCRC => 0xC5630DE5;

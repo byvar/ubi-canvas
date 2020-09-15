@@ -3,32 +3,32 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class BTDeciderFactEqual_Template : BTDecider_Template {
-		[Serialize("fact"    )] public StringID fact;
-		[Serialize("value"   )] public string value;
-		[Serialize("type"    )] public EValueTypeRA typeRA;
-		[Serialize("type"    )] public EValueType type;
-		[Serialize("superior")] public bool superior;
-		[Serialize("inferior")] public bool inferior;
-		[Serialize("superior")] public EValueType superiorEnum;
-		[Serialize("inferior")] public EValueType inferiorEnum;
+		public StringID fact;
+		public string value;
+		public EValueTypeRA typeRA;
+		public EValueType type;
+		public bool superior;
+		public bool inferior;
+		public EValueType superiorEnum;
+		public EValueType inferiorEnum;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(fact));
-				SerializeField(s, nameof(value));
-				SerializeField(s, nameof(type));
+				fact = s.SerializeObject<StringID>(fact, name: "fact");
+				value = s.Serialize<string>(value, name: "value");
+				type = s.Serialize<EValueType>(type, name: "type");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(fact));
-				SerializeField(s, nameof(value));
-				SerializeField(s, nameof(type));
-				SerializeField(s, nameof(superiorEnum));
-				SerializeField(s, nameof(inferiorEnum));
+				fact = s.SerializeObject<StringID>(fact, name: "fact");
+				value = s.Serialize<string>(value, name: "value");
+				type = s.Serialize<EValueType>(type, name: "type");
+				superiorEnum = s.Serialize<EValueType>(superiorEnum, name: "superiorEnum");
+				inferiorEnum = s.Serialize<EValueType>(inferiorEnum, name: "inferiorEnum");
 			} else {
-				SerializeField(s, nameof(fact));
-				SerializeField(s, nameof(value));
-				SerializeField(s, nameof(typeRA));
-				SerializeField(s, nameof(superior));
-				SerializeField(s, nameof(inferior));
+				fact = s.SerializeObject<StringID>(fact, name: "fact");
+				value = s.Serialize<string>(value, name: "value");
+				typeRA = s.Serialize<EValueTypeRA>(typeRA, name: "typeRA");
+				superior = s.Serialize<bool>(superior, name: "superior");
+				inferior = s.Serialize<bool>(inferior, name: "inferior");
 			}
 		}
 		public enum EValueTypeRA {

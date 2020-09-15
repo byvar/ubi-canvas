@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TimedSpawnerComponent_Template : ActorComponent_Template {
-		[Serialize("actorToSpawn"      )] public Path actorToSpawn;
-		[Serialize("spawnDelay"        )] public float spawnDelay;
-		[Serialize("spawnRate"         )] public float spawnRate;
-		[Serialize("burstElementsCount")] public int burstElementsCount;
-		[Serialize("burstCount"        )] public int burstCount;
-		[Serialize("burstDelay"        )] public float burstDelay;
-		[Serialize("useInstanceValues" )] public bool useInstanceValues;
-		[Serialize("recycling"         )] public bool recycling;
-		[Serialize("startEvent"        )] public Generic<Event> startEvent;
-		[Serialize("stopEvent"         )] public Generic<Event> stopEvent;
-		[Serialize("onSpawnEvent"      )] public Generic<Event> onSpawnEvent;
+		public Path actorToSpawn;
+		public float spawnDelay;
+		public float spawnRate;
+		public int burstElementsCount;
+		public int burstCount;
+		public float burstDelay;
+		public bool useInstanceValues;
+		public bool recycling;
+		public Generic<Event> startEvent;
+		public Generic<Event> stopEvent;
+		public Generic<Event> onSpawnEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(actorToSpawn));
-			SerializeField(s, nameof(spawnDelay));
-			SerializeField(s, nameof(spawnRate));
-			SerializeField(s, nameof(burstElementsCount));
-			SerializeField(s, nameof(burstCount));
-			SerializeField(s, nameof(burstDelay));
-			SerializeField(s, nameof(useInstanceValues));
-			SerializeField(s, nameof(recycling));
-			SerializeField(s, nameof(startEvent));
-			SerializeField(s, nameof(stopEvent));
-			SerializeField(s, nameof(onSpawnEvent));
+			actorToSpawn = s.SerializeObject<Path>(actorToSpawn, name: "actorToSpawn");
+			spawnDelay = s.Serialize<float>(spawnDelay, name: "spawnDelay");
+			spawnRate = s.Serialize<float>(spawnRate, name: "spawnRate");
+			burstElementsCount = s.Serialize<int>(burstElementsCount, name: "burstElementsCount");
+			burstCount = s.Serialize<int>(burstCount, name: "burstCount");
+			burstDelay = s.Serialize<float>(burstDelay, name: "burstDelay");
+			useInstanceValues = s.Serialize<bool>(useInstanceValues, name: "useInstanceValues");
+			recycling = s.Serialize<bool>(recycling, name: "recycling");
+			startEvent = s.SerializeObject<Generic<Event>>(startEvent, name: "startEvent");
+			stopEvent = s.SerializeObject<Generic<Event>>(stopEvent, name: "stopEvent");
+			onSpawnEvent = s.SerializeObject<Generic<Event>>(onSpawnEvent, name: "onSpawnEvent");
 		}
 		public override uint? ClassCRC => 0x050E278A;
 	}

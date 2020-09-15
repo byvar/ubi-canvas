@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventHUDSetText : Event {
-		[Serialize("friendlyName")] public string friendlyName;
-		[Serialize("text"        )] public string text;
+		public string friendlyName;
+		public string text;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(friendlyName));
-			SerializeField(s, nameof(text));
+			friendlyName = s.Serialize<string>(friendlyName, name: "friendlyName");
+			text = s.Serialize<string>(text, name: "text");
 		}
 		public override uint? ClassCRC => 0x4FE65042;
 	}

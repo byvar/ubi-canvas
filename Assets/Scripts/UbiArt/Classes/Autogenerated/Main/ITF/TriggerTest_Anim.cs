@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class TriggerTest_Anim : TriggerTestAbstract {
-		[Serialize("AnimState"   )] public AnimState animState;
-		[Serialize("AnimName"    )] public StringID AnimName;
+		public AnimState animState;
+		public StringID AnimName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animState));
+			animState = s.Serialize<AnimState>(animState, name: "animState");
 			if (s.HasFlags(SerializeFlags.Editor)) {
 				SerializeFieldAsChoiceList(s, nameof(AnimName)); // No empty here
 			} else {
-				SerializeField(s, nameof(AnimName));
+				AnimName = s.SerializeObject<StringID>(AnimName, name: "AnimName");
 			}
 		}
 		public enum AnimState {

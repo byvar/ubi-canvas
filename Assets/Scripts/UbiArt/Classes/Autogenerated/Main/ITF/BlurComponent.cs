@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class BlurComponent : ActorComponent {
-		[Serialize("Primitive")] public GFX_BlurPrimitive Primitive;
+		public GFX_BlurPrimitive Primitive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Primitive));
+			Primitive = s.SerializeObject<GFX_BlurPrimitive>(Primitive, name: "Primitive");
 		}
 		public override uint? ClassCRC => 0x2A84C593;
 	}

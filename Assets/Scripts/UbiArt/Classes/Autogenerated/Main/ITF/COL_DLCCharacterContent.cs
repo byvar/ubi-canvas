@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_DLCCharacterContent : CSerializable {
-		[Serialize("characterstats"    )] public Path characterstats;
-		[Serialize("characterskills"   )] public Path characterskills;
-		[Serialize("characterassets"   )] public Path characterassets;
-		[Serialize("characterfeedbacks")] public Path characterfeedbacks;
-		[Serialize("charactermenus"    )] public Path charactermenus;
-		[Serialize("characterui"       )] public Path characterui;
-		[Serialize("characterskillsloc")] public Placeholder characterskillsloc;
-		[Serialize("characteridmap"    )] public Placeholder characteridmap;
-		[Serialize("characternames"    )] public Placeholder characternames;
+		public Path characterstats;
+		public Path characterskills;
+		public Path characterassets;
+		public Path characterfeedbacks;
+		public Path charactermenus;
+		public Path characterui;
+		public Placeholder characterskillsloc;
+		public Placeholder characteridmap;
+		public Placeholder characternames;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(characterstats));
-			SerializeField(s, nameof(characterskills));
-			SerializeField(s, nameof(characterassets));
-			SerializeField(s, nameof(characterfeedbacks));
-			SerializeField(s, nameof(charactermenus));
-			SerializeField(s, nameof(characterui));
-			SerializeField(s, nameof(characterskillsloc));
-			SerializeField(s, nameof(characteridmap));
-			SerializeField(s, nameof(characternames));
+			characterstats = s.SerializeObject<Path>(characterstats, name: "characterstats");
+			characterskills = s.SerializeObject<Path>(characterskills, name: "characterskills");
+			characterassets = s.SerializeObject<Path>(characterassets, name: "characterassets");
+			characterfeedbacks = s.SerializeObject<Path>(characterfeedbacks, name: "characterfeedbacks");
+			charactermenus = s.SerializeObject<Path>(charactermenus, name: "charactermenus");
+			characterui = s.SerializeObject<Path>(characterui, name: "characterui");
+			characterskillsloc = s.SerializeObject<Placeholder>(characterskillsloc, name: "characterskillsloc");
+			characteridmap = s.SerializeObject<Placeholder>(characteridmap, name: "characteridmap");
+			characternames = s.SerializeObject<Placeholder>(characternames, name: "characternames");
 		}
 		public override uint? ClassCRC => 0x1ADB9275;
 	}

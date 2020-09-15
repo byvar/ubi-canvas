@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_DigShapeComponent : ActorComponent {
-		[Serialize("Action")] public Enum_Action Action;
-		[Serialize("Radius")] public float Radius;
+		public Enum_Action Action;
+		public float Radius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(Action));
-				SerializeField(s, nameof(Radius));
+				Action = s.Serialize<Enum_Action>(Action, name: "Action");
+				Radius = s.Serialize<float>(Radius, name: "Radius");
 			}
 		}
 		public enum Enum_Action {

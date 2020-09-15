@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_AutoDiggerComponent : ActorComponent {
-		[Serialize("DigResistance"  )] public float DigResistance;
-		[Serialize("DigImpulsion"   )] public float DigImpulsion;
-		[Serialize("DigImpulsionMax")] public float DigImpulsionMax;
-		[Serialize("SpeedCurve"     )] public Spline SpeedCurve;
+		public float DigResistance;
+		public float DigImpulsion;
+		public float DigImpulsionMax;
+		public Spline SpeedCurve;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(DigResistance));
-			SerializeField(s, nameof(DigImpulsion));
-			SerializeField(s, nameof(DigImpulsionMax));
-			SerializeField(s, nameof(SpeedCurve));
+			DigResistance = s.Serialize<float>(DigResistance, name: "DigResistance");
+			DigImpulsion = s.Serialize<float>(DigImpulsion, name: "DigImpulsion");
+			DigImpulsionMax = s.Serialize<float>(DigImpulsionMax, name: "DigImpulsionMax");
+			SpeedCurve = s.SerializeObject<Spline>(SpeedCurve, name: "SpeedCurve");
 		}
 		public override uint? ClassCRC => 0x57D1D8D9;
 	}

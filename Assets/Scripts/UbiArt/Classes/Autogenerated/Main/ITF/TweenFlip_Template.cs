@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TweenFlip_Template : TweenInstruction_Template {
-		[Serialize("mode"    )] public TweenFlipMode mode;
+		public TweenFlipMode mode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(mode));
+			mode = s.Serialize<TweenFlipMode>(mode, name: "mode");
 		}
 		public enum TweenFlipMode {
 			[Serialize("TweenFlipMode_SetUnflipped")] SetUnflipped = 0,

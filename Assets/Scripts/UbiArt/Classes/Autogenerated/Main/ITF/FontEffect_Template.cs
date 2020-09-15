@@ -3,42 +3,42 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class FontEffect_Template : CSerializable {
-		[Serialize("name"            )] public StringID name;
-		[Serialize("flags"           )] public Enum_flags flags;
-		[Serialize("type"            )] public Enum_type type;
-		[Serialize("fadeinStart"     )] public float fadeinStart;
-		[Serialize("fadeinEnd"       )] public float fadeinEnd;
-		[Serialize("fadeoutStart"    )] public float fadeoutStart;
-		[Serialize("fadeoutEnd"      )] public float fadeoutEnd;
-		[Serialize("speedMin"        )] public float speedMin;
-		[Serialize("speedMax"        )] public float speedMax;
-		[Serialize("static"          )] public bool _static;
-		[Serialize("staticSeed"      )] public float staticSeed;
-		[Serialize("min"             )] public float min;
-		[Serialize("max"             )] public float max;
-		[Serialize("limit"           )] public float limit;
-		[Serialize("value"           )] public float value;
-		[Serialize("rotateCycle"     )] public float rotateCycle;
-		[Serialize("rotateSeedFactor")] public float rotateSeedFactor;
+		public StringID name;
+		public Enum_flags flags;
+		public Enum_type type;
+		public float fadeinStart;
+		public float fadeinEnd;
+		public float fadeoutStart;
+		public float fadeoutEnd;
+		public float speedMin;
+		public float speedMax;
+		public bool _static;
+		public float staticSeed;
+		public float min;
+		public float max;
+		public float limit;
+		public float value;
+		public float rotateCycle;
+		public float rotateSeedFactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(flags));
-			SerializeField(s, nameof(type));
-			SerializeField(s, nameof(fadeinStart));
-			SerializeField(s, nameof(fadeinEnd));
-			SerializeField(s, nameof(fadeoutStart));
-			SerializeField(s, nameof(fadeoutEnd));
-			SerializeField(s, nameof(speedMin));
-			SerializeField(s, nameof(speedMax));
-			SerializeField(s, nameof(_static));
-			SerializeField(s, nameof(staticSeed));
-			SerializeField(s, nameof(min));
-			SerializeField(s, nameof(max));
-			SerializeField(s, nameof(limit));
-			SerializeField(s, nameof(value));
-			SerializeField(s, nameof(rotateCycle));
-			SerializeField(s, nameof(rotateSeedFactor));
+			name = s.SerializeObject<StringID>(name, name: "name");
+			flags = s.Serialize<Enum_flags>(flags, name: "flags");
+			type = s.Serialize<Enum_type>(type, name: "type");
+			fadeinStart = s.Serialize<float>(fadeinStart, name: "fadeinStart");
+			fadeinEnd = s.Serialize<float>(fadeinEnd, name: "fadeinEnd");
+			fadeoutStart = s.Serialize<float>(fadeoutStart, name: "fadeoutStart");
+			fadeoutEnd = s.Serialize<float>(fadeoutEnd, name: "fadeoutEnd");
+			speedMin = s.Serialize<float>(speedMin, name: "speedMin");
+			speedMax = s.Serialize<float>(speedMax, name: "speedMax");
+			_static = s.Serialize<bool>(_static, name: "_static");
+			staticSeed = s.Serialize<float>(staticSeed, name: "staticSeed");
+			min = s.Serialize<float>(min, name: "min");
+			max = s.Serialize<float>(max, name: "max");
+			limit = s.Serialize<float>(limit, name: "limit");
+			value = s.Serialize<float>(value, name: "value");
+			rotateCycle = s.Serialize<float>(rotateCycle, name: "rotateCycle");
+			rotateSeedFactor = s.Serialize<float>(rotateSeedFactor, name: "rotateSeedFactor");
 		}
 		public enum Enum_flags {
 			[Serialize("none"                  )] none = 0,

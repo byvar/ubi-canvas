@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventMusicCustomCue : Event {
-		[Serialize("Metronome")] public METRONOME_TYPE Metronome;
-		[Serialize("Cue"      )] public StringID Cue;
+		public METRONOME_TYPE Metronome;
+		public StringID Cue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Metronome));
-			SerializeField(s, nameof(Cue));
+			Metronome = s.Serialize<METRONOME_TYPE>(Metronome, name: "Metronome");
+			Cue = s.SerializeObject<StringID>(Cue, name: "Cue");
 		}
 		public enum METRONOME_TYPE {
 			[Serialize("METRONOME_TYPE_DEFAULT" )] DEFAULT = 0,

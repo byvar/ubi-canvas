@@ -3,90 +3,90 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
 	public partial class RopeComponent : GraphicComponent {
-		[Serialize("useBeginTexture"          )] public bool useBeginTexture;
-		[Serialize("useEndTexture"            )] public bool useEndTexture;
-		[Serialize("rendererScaleMultiplier"  )] public float rendererScaleMultiplier;
-		[Serialize("flipTexture"              )] public bool flipTexture;
-		[Serialize("initIteration"            )] public bool initIteration;
-		[Serialize("ignoreStims"              )] public bool ignoreStims;
-		[Serialize("initLenth"                )] public float initLenth;
-		[Serialize("force"                    )] public float force;
-		[Serialize("rigidConstraintFactor"    )] public float rigidConstraintFactor;
-		[Serialize("lengthFactor"             )] public float lengthFactor;
-		[Serialize("edgeLength"               )] public float edgeLength;
-		[Serialize("bezierSampling"           )] public uint bezierSampling;
-		[Serialize("inverseCurveRenderer"     )] public bool inverseCurveRenderer;
-		[Serialize("fadeTime"                 )] public float fadeTime;
-		[Serialize("onCutEvent"               )] public Generic<Event> onCutEvent;
-		[Serialize("sendEventOnce"            )] public bool sendEventOnce;
-		[Serialize("beginBindType"            )] public RopeBind beginBindType;
-		[Serialize("beginBindName"            )] public StringID beginBindName;
-		[Serialize("snapEnd"                  )] public bool snapEnd;
-		[Serialize("safeMargin"               )] public float safeMargin;
-		[Serialize("resetOnCheckpoint"        )] public bool resetOnCheckpoint;
-		[Serialize("disableAfterFadeOnRelease")] public bool disableAfterFadeOnRelease;
-		[Serialize("wasCut"                   )] public bool wasCut;
-		[Serialize("cutLength"                )] public float cutLength;
-		[Serialize("cutSender"                )] public uint cutSender;
+		public bool useBeginTexture;
+		public bool useEndTexture;
+		public float rendererScaleMultiplier;
+		public bool flipTexture;
+		public bool initIteration;
+		public bool ignoreStims;
+		public float initLenth;
+		public float force;
+		public float rigidConstraintFactor;
+		public float lengthFactor;
+		public float edgeLength;
+		public uint bezierSampling;
+		public bool inverseCurveRenderer;
+		public float fadeTime;
+		public Generic<Event> onCutEvent;
+		public bool sendEventOnce;
+		public RopeBind beginBindType;
+		public StringID beginBindName;
+		public bool snapEnd;
+		public float safeMargin;
+		public bool resetOnCheckpoint;
+		public bool disableAfterFadeOnRelease;
+		public bool wasCut;
+		public float cutLength;
+		public uint cutSender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(useBeginTexture));
-					SerializeField(s, nameof(useEndTexture));
-					SerializeField(s, nameof(rendererScaleMultiplier));
-					SerializeField(s, nameof(flipTexture));
-					SerializeField(s, nameof(initIteration));
-					SerializeField(s, nameof(ignoreStims), boolAsByte: true);
-					SerializeField(s, nameof(initLenth));
-					SerializeField(s, nameof(force));
-					SerializeField(s, nameof(rigidConstraintFactor));
-					SerializeField(s, nameof(lengthFactor));
-					SerializeField(s, nameof(edgeLength));
-					SerializeField(s, nameof(bezierSampling));
-					SerializeField(s, nameof(inverseCurveRenderer));
-					SerializeField(s, nameof(fadeTime));
-					SerializeField(s, nameof(onCutEvent));
-					SerializeField(s, nameof(sendEventOnce));
-					SerializeField(s, nameof(beginBindType));
-					SerializeField(s, nameof(snapEnd));
-					SerializeField(s, nameof(safeMargin));
-					SerializeField(s, nameof(resetOnCheckpoint));
-					SerializeField(s, nameof(disableAfterFadeOnRelease));
+					useBeginTexture = s.Serialize<bool>(useBeginTexture, name: "useBeginTexture");
+					useEndTexture = s.Serialize<bool>(useEndTexture, name: "useEndTexture");
+					rendererScaleMultiplier = s.Serialize<float>(rendererScaleMultiplier, name: "rendererScaleMultiplier");
+					flipTexture = s.Serialize<bool>(flipTexture, name: "flipTexture");
+					initIteration = s.Serialize<bool>(initIteration, name: "initIteration");
+					ignoreStims = s.Serialize<bool>(ignoreStims, name: "ignoreStims", options: CSerializerObject.Options.BoolAsByte);
+					initLenth = s.Serialize<float>(initLenth, name: "initLenth");
+					force = s.Serialize<float>(force, name: "force");
+					rigidConstraintFactor = s.Serialize<float>(rigidConstraintFactor, name: "rigidConstraintFactor");
+					lengthFactor = s.Serialize<float>(lengthFactor, name: "lengthFactor");
+					edgeLength = s.Serialize<float>(edgeLength, name: "edgeLength");
+					bezierSampling = s.Serialize<uint>(bezierSampling, name: "bezierSampling");
+					inverseCurveRenderer = s.Serialize<bool>(inverseCurveRenderer, name: "inverseCurveRenderer");
+					fadeTime = s.Serialize<float>(fadeTime, name: "fadeTime");
+					onCutEvent = s.SerializeObject<Generic<Event>>(onCutEvent, name: "onCutEvent");
+					sendEventOnce = s.Serialize<bool>(sendEventOnce, name: "sendEventOnce");
+					beginBindType = s.Serialize<RopeBind>(beginBindType, name: "beginBindType");
+					snapEnd = s.Serialize<bool>(snapEnd, name: "snapEnd");
+					safeMargin = s.Serialize<float>(safeMargin, name: "safeMargin");
+					resetOnCheckpoint = s.Serialize<bool>(resetOnCheckpoint, name: "resetOnCheckpoint");
+					disableAfterFadeOnRelease = s.Serialize<bool>(disableAfterFadeOnRelease, name: "disableAfterFadeOnRelease");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(wasCut));
-					SerializeField(s, nameof(cutLength));
-					SerializeField(s, nameof(cutSender));
+					wasCut = s.Serialize<bool>(wasCut, name: "wasCut");
+					cutLength = s.Serialize<float>(cutLength, name: "cutLength");
+					cutSender = s.Serialize<uint>(cutSender, name: "cutSender");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(useBeginTexture));
-					SerializeField(s, nameof(useEndTexture));
-					SerializeField(s, nameof(rendererScaleMultiplier));
-					SerializeField(s, nameof(flipTexture));
-					SerializeField(s, nameof(initIteration));
-					SerializeField(s, nameof(ignoreStims));
-					SerializeField(s, nameof(initLenth));
-					SerializeField(s, nameof(force));
-					SerializeField(s, nameof(rigidConstraintFactor));
-					SerializeField(s, nameof(lengthFactor));
-					SerializeField(s, nameof(edgeLength));
-					SerializeField(s, nameof(bezierSampling));
-					SerializeField(s, nameof(inverseCurveRenderer));
-					SerializeField(s, nameof(fadeTime));
-					SerializeField(s, nameof(onCutEvent));
-					SerializeField(s, nameof(sendEventOnce));
-					SerializeField(s, nameof(beginBindType));
-					SerializeField(s, nameof(beginBindName));
-					SerializeField(s, nameof(snapEnd));
-					SerializeField(s, nameof(safeMargin));
-					SerializeField(s, nameof(resetOnCheckpoint));
-					SerializeField(s, nameof(disableAfterFadeOnRelease));
+					useBeginTexture = s.Serialize<bool>(useBeginTexture, name: "useBeginTexture");
+					useEndTexture = s.Serialize<bool>(useEndTexture, name: "useEndTexture");
+					rendererScaleMultiplier = s.Serialize<float>(rendererScaleMultiplier, name: "rendererScaleMultiplier");
+					flipTexture = s.Serialize<bool>(flipTexture, name: "flipTexture");
+					initIteration = s.Serialize<bool>(initIteration, name: "initIteration");
+					ignoreStims = s.Serialize<bool>(ignoreStims, name: "ignoreStims");
+					initLenth = s.Serialize<float>(initLenth, name: "initLenth");
+					force = s.Serialize<float>(force, name: "force");
+					rigidConstraintFactor = s.Serialize<float>(rigidConstraintFactor, name: "rigidConstraintFactor");
+					lengthFactor = s.Serialize<float>(lengthFactor, name: "lengthFactor");
+					edgeLength = s.Serialize<float>(edgeLength, name: "edgeLength");
+					bezierSampling = s.Serialize<uint>(bezierSampling, name: "bezierSampling");
+					inverseCurveRenderer = s.Serialize<bool>(inverseCurveRenderer, name: "inverseCurveRenderer");
+					fadeTime = s.Serialize<float>(fadeTime, name: "fadeTime");
+					onCutEvent = s.SerializeObject<Generic<Event>>(onCutEvent, name: "onCutEvent");
+					sendEventOnce = s.Serialize<bool>(sendEventOnce, name: "sendEventOnce");
+					beginBindType = s.Serialize<RopeBind>(beginBindType, name: "beginBindType");
+					beginBindName = s.SerializeObject<StringID>(beginBindName, name: "beginBindName");
+					snapEnd = s.Serialize<bool>(snapEnd, name: "snapEnd");
+					safeMargin = s.Serialize<float>(safeMargin, name: "safeMargin");
+					resetOnCheckpoint = s.Serialize<bool>(resetOnCheckpoint, name: "resetOnCheckpoint");
+					disableAfterFadeOnRelease = s.Serialize<bool>(disableAfterFadeOnRelease, name: "disableAfterFadeOnRelease");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
-					SerializeField(s, nameof(wasCut));
-					SerializeField(s, nameof(cutLength));
+					wasCut = s.Serialize<bool>(wasCut, name: "wasCut");
+					cutLength = s.Serialize<float>(cutLength, name: "cutLength");
 				}
 			}
 		}

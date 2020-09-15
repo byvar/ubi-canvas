@@ -3,28 +3,28 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_BoulderAIComponent_Template : Ray_FruitAIComponent_Template {
-		[Serialize("sentBackBehavior"                     )] public Placeholder sentBackBehavior;
-		[Serialize("maxSentBackDuration"                  )] public float maxSentBackDuration;
-		[Serialize("maxBouncesCount"                      )] public float maxBouncesCount;
-		[Serialize("timeAfterLastBounce"                  )] public float timeAfterLastBounce;
-		[Serialize("maxTimeWithoutBounce"                 )] public float maxTimeWithoutBounce;
-		[Serialize("maxTimeAfterSenderDeath"              )] public float maxTimeAfterSenderDeath;
-		[Serialize("immediateExplosionOnSenderDeathPeriod")] public float immediateExplosionOnSenderDeathPeriod;
-		[Serialize("noStimPeriod"                         )] public float noStimPeriod;
-		[Serialize("sentbackNormalSpeed"                  )] public float sentbackNormalSpeed;
-		[Serialize("sentbackTornadoSpeed"                 )] public float sentbackTornadoSpeed;
+		public Placeholder sentBackBehavior;
+		public float maxSentBackDuration;
+		public float maxBouncesCount;
+		public float timeAfterLastBounce;
+		public float maxTimeWithoutBounce;
+		public float maxTimeAfterSenderDeath;
+		public float immediateExplosionOnSenderDeathPeriod;
+		public float noStimPeriod;
+		public float sentbackNormalSpeed;
+		public float sentbackTornadoSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(sentBackBehavior));
-			SerializeField(s, nameof(maxSentBackDuration));
-			SerializeField(s, nameof(maxBouncesCount));
-			SerializeField(s, nameof(timeAfterLastBounce));
-			SerializeField(s, nameof(maxTimeWithoutBounce));
-			SerializeField(s, nameof(maxTimeAfterSenderDeath));
-			SerializeField(s, nameof(immediateExplosionOnSenderDeathPeriod));
-			SerializeField(s, nameof(noStimPeriod));
-			SerializeField(s, nameof(sentbackNormalSpeed));
-			SerializeField(s, nameof(sentbackTornadoSpeed));
+			sentBackBehavior = s.SerializeObject<Placeholder>(sentBackBehavior, name: "sentBackBehavior");
+			maxSentBackDuration = s.Serialize<float>(maxSentBackDuration, name: "maxSentBackDuration");
+			maxBouncesCount = s.Serialize<float>(maxBouncesCount, name: "maxBouncesCount");
+			timeAfterLastBounce = s.Serialize<float>(timeAfterLastBounce, name: "timeAfterLastBounce");
+			maxTimeWithoutBounce = s.Serialize<float>(maxTimeWithoutBounce, name: "maxTimeWithoutBounce");
+			maxTimeAfterSenderDeath = s.Serialize<float>(maxTimeAfterSenderDeath, name: "maxTimeAfterSenderDeath");
+			immediateExplosionOnSenderDeathPeriod = s.Serialize<float>(immediateExplosionOnSenderDeathPeriod, name: "immediateExplosionOnSenderDeathPeriod");
+			noStimPeriod = s.Serialize<float>(noStimPeriod, name: "noStimPeriod");
+			sentbackNormalSpeed = s.Serialize<float>(sentbackNormalSpeed, name: "sentbackNormalSpeed");
+			sentbackTornadoSpeed = s.Serialize<float>(sentbackTornadoSpeed, name: "sentbackTornadoSpeed");
 		}
 		public override uint? ClassCRC => 0x3C149C2F;
 	}

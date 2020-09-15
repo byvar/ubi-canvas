@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_FishSwarmAIComponent : Ray_BossPlantArenaAIComponent {
-		[Serialize("widthZone"    )] public float widthZone;
-		[Serialize("heightZone"   )] public float heightZone;
-		[Serialize("frontColor"   )] public Color frontColor;
-		[Serialize("frontFogColor")] public Color frontFogColor;
-		[Serialize("backColor"    )] public Color backColor;
-		[Serialize("backFogColor" )] public Color backFogColor;
+		public float widthZone;
+		public float heightZone;
+		public Color frontColor;
+		public Color frontFogColor;
+		public Color backColor;
+		public Color backFogColor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(widthZone));
-			SerializeField(s, nameof(heightZone));
-			SerializeField(s, nameof(frontColor));
-			SerializeField(s, nameof(frontFogColor));
-			SerializeField(s, nameof(backColor));
-			SerializeField(s, nameof(backFogColor));
+			widthZone = s.Serialize<float>(widthZone, name: "widthZone");
+			heightZone = s.Serialize<float>(heightZone, name: "heightZone");
+			frontColor = s.SerializeObject<Color>(frontColor, name: "frontColor");
+			frontFogColor = s.SerializeObject<Color>(frontFogColor, name: "frontFogColor");
+			backColor = s.SerializeObject<Color>(backColor, name: "backColor");
+			backFogColor = s.SerializeObject<Color>(backFogColor, name: "backFogColor");
 		}
 		public override uint? ClassCRC => 0x951EF777;
 	}

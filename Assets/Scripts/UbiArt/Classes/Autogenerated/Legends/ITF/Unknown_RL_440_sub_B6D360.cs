@@ -3,17 +3,17 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_440_sub_B6D360 : ActorComponent {
-		[Serialize("lockWithTeensy")] public int lockWithTeensy;
-		[Serialize("detectRange"   )] public float detectRange;
-		[Serialize("worldTag"      )] public StringID worldTag;
-		[Serialize("LockType"      )] public Enum_LockType LockType;
+		public int lockWithTeensy;
+		public float detectRange;
+		public StringID worldTag;
+		public Enum_LockType LockType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(lockWithTeensy));
-				SerializeField(s, nameof(detectRange));
-				SerializeField(s, nameof(worldTag));
-				SerializeField(s, nameof(LockType));
+				lockWithTeensy = s.Serialize<int>(lockWithTeensy, name: "lockWithTeensy");
+				detectRange = s.Serialize<float>(detectRange, name: "detectRange");
+				worldTag = s.SerializeObject<StringID>(worldTag, name: "worldTag");
+				LockType = s.Serialize<Enum_LockType>(LockType, name: "LockType");
 			}
 		}
 		public enum Enum_LockType {

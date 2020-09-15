@@ -3,53 +3,53 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.COL)]
 	public partial class ParticleGeneratorComponent_Template : GraphicComponent_Template {
-		[Serialize("ParticleGeneratorParams")] public ITF_ParticleGenerator_Template ParticleGeneratorParams;
-		[Serialize("startTime"              )] public float startTime;
-		[Serialize("stopTime"               )] public float stopTime;
-		[Serialize("texture"                )] public Path texture;
-		[Serialize("material"               )] public GFXMaterialSerializable material;
-		[Serialize("beginStart"             )] public bool beginStart;
-		[Serialize("inputs"                 )] public CList<InputDesc> inputs;
-		[Serialize("frequencyInput"         )] public ProceduralInputData frequencyInput;
-		[Serialize("emitCountInput"         )] public ProceduralInputData emitCountInput;
-		[Serialize("maxParticlesInput"      )] public ProceduralInputData maxParticlesInput;
+		public ITF_ParticleGenerator_Template ParticleGeneratorParams;
+		public float startTime;
+		public float stopTime;
+		public Path texture;
+		public GFXMaterialSerializable material;
+		public bool beginStart;
+		public CList<InputDesc> inputs;
+		public ProceduralInputData frequencyInput;
+		public ProceduralInputData emitCountInput;
+		public ProceduralInputData maxParticlesInput;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(ParticleGeneratorParams));
-				SerializeField(s, nameof(startTime));
-				SerializeField(s, nameof(stopTime));
-				SerializeField(s, nameof(texture));
-				SerializeField(s, nameof(beginStart));
-				SerializeField(s, nameof(inputs));
-				SerializeField(s, nameof(frequencyInput));
-				SerializeField(s, nameof(emitCountInput));
+				ParticleGeneratorParams = s.SerializeObject<ITF_ParticleGenerator_Template>(ParticleGeneratorParams, name: "ParticleGeneratorParams");
+				startTime = s.Serialize<float>(startTime, name: "startTime");
+				stopTime = s.Serialize<float>(stopTime, name: "stopTime");
+				texture = s.SerializeObject<Path>(texture, name: "texture");
+				beginStart = s.Serialize<bool>(beginStart, name: "beginStart");
+				inputs = s.SerializeObject<CList<InputDesc>>(inputs, name: "inputs");
+				frequencyInput = s.SerializeObject<ProceduralInputData>(frequencyInput, name: "frequencyInput");
+				emitCountInput = s.SerializeObject<ProceduralInputData>(emitCountInput, name: "emitCountInput");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(ParticleGeneratorParams));
-				SerializeField(s, nameof(startTime));
-				SerializeField(s, nameof(stopTime));
+				ParticleGeneratorParams = s.SerializeObject<ITF_ParticleGenerator_Template>(ParticleGeneratorParams, name: "ParticleGeneratorParams");
+				startTime = s.Serialize<float>(startTime, name: "startTime");
+				stopTime = s.Serialize<float>(stopTime, name: "stopTime");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(beginStart), boolAsByte: true);
-				SerializeField(s, nameof(frequencyInput));
-				SerializeField(s, nameof(emitCountInput));
-				SerializeField(s, nameof(maxParticlesInput));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				beginStart = s.Serialize<bool>(beginStart, name: "beginStart", options: CSerializerObject.Options.BoolAsByte);
+				frequencyInput = s.SerializeObject<ProceduralInputData>(frequencyInput, name: "frequencyInput");
+				emitCountInput = s.SerializeObject<ProceduralInputData>(emitCountInput, name: "emitCountInput");
+				maxParticlesInput = s.SerializeObject<ProceduralInputData>(maxParticlesInput, name: "maxParticlesInput");
 			} else {
-				SerializeField(s, nameof(ParticleGeneratorParams));
-				SerializeField(s, nameof(startTime));
-				SerializeField(s, nameof(stopTime));
+				ParticleGeneratorParams = s.SerializeObject<ITF_ParticleGenerator_Template>(ParticleGeneratorParams, name: "ParticleGeneratorParams");
+				startTime = s.Serialize<float>(startTime, name: "startTime");
+				stopTime = s.Serialize<float>(stopTime, name: "stopTime");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					SerializeField(s, nameof(texture));
+					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-				SerializeField(s, nameof(material));
-				SerializeField(s, nameof(beginStart));
-				SerializeField(s, nameof(inputs));
-				SerializeField(s, nameof(frequencyInput));
-				SerializeField(s, nameof(emitCountInput));
-				SerializeField(s, nameof(maxParticlesInput));
+				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
+				beginStart = s.Serialize<bool>(beginStart, name: "beginStart");
+				inputs = s.SerializeObject<CList<InputDesc>>(inputs, name: "inputs");
+				frequencyInput = s.SerializeObject<ProceduralInputData>(frequencyInput, name: "frequencyInput");
+				emitCountInput = s.SerializeObject<ProceduralInputData>(emitCountInput, name: "emitCountInput");
+				maxParticlesInput = s.SerializeObject<ProceduralInputData>(maxParticlesInput, name: "maxParticlesInput");
 			}
 		}
 		public override uint? ClassCRC => 0xEF03E2F5;

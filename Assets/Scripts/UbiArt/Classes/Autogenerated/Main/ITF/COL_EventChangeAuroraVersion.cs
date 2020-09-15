@@ -4,10 +4,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_EventChangeAuroraVersion : Event {
 		[Description("Aurora's version")]
-		[Serialize("version")] public Enum_version version;
+		public Enum_version version;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(version));
+			version = s.Serialize<Enum_version>(version, name: "version");
 		}
 		public enum Enum_version {
 			[Serialize("Value_0")] Value_0 = 0,

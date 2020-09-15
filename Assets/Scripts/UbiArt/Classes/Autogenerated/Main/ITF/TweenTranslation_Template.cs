@@ -3,50 +3,50 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RL)]
 	public partial class TweenTranslation_Template : TweenInstruction_Template {
-		[Serialize("startDuration"   )] public float startDuration;
-		[Serialize("endDuration"     )] public float endDuration;
-		[Serialize("startSpeed"      )] public float startSpeed;
-		[Serialize("endSpeed"        )] public float endSpeed;
-		[Serialize("rotateTrajectory")] public bool rotateTrajectory;
-		[Serialize("rotateActor"     )] public bool rotateActor;
-		[Serialize("angle"           )] public AngleAmount angle;
-		[Serialize("angleOffset"     )] public AngleAmount angleOffset;
-		[Serialize("scaleMultiplier" )] public Vec2d scaleMultiplier;
-		[Serialize("speed"           )] public float speed;
+		public float startDuration;
+		public float endDuration;
+		public float startSpeed;
+		public float endSpeed;
+		public bool rotateTrajectory;
+		public bool rotateActor;
+		public AngleAmount angle;
+		public AngleAmount angleOffset;
+		public Vec2d scaleMultiplier;
+		public float speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-				SerializeField(s, nameof(startDuration));
-				SerializeField(s, nameof(endDuration));
-				SerializeField(s, nameof(startSpeed));
-				SerializeField(s, nameof(endSpeed));
-				SerializeField(s, nameof(rotateTrajectory));
-				SerializeField(s, nameof(rotateActor));
-				SerializeField(s, nameof(angle));
-				SerializeField(s, nameof(angleOffset));
-				SerializeField(s, nameof(scaleMultiplier));
+				startDuration = s.Serialize<float>(startDuration, name: "startDuration");
+				endDuration = s.Serialize<float>(endDuration, name: "endDuration");
+				startSpeed = s.Serialize<float>(startSpeed, name: "startSpeed");
+				endSpeed = s.Serialize<float>(endSpeed, name: "endSpeed");
+				rotateTrajectory = s.Serialize<bool>(rotateTrajectory, name: "rotateTrajectory");
+				rotateActor = s.Serialize<bool>(rotateActor, name: "rotateActor");
+				angle = s.SerializeObject<AngleAmount>(angle, name: "angle");
+				angleOffset = s.SerializeObject<AngleAmount>(angleOffset, name: "angleOffset");
+				scaleMultiplier = s.SerializeObject<Vec2d>(scaleMultiplier, name: "scaleMultiplier");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				SerializeField(s, nameof(startDuration));
-				SerializeField(s, nameof(endDuration));
-				SerializeField(s, nameof(startSpeed));
-				SerializeField(s, nameof(endSpeed));
-				SerializeField(s, nameof(rotateTrajectory), boolAsByte: true);
-				SerializeField(s, nameof(rotateActor), boolAsByte: true);
-				SerializeField(s, nameof(angle));
-				SerializeField(s, nameof(angleOffset));
-				SerializeField(s, nameof(scaleMultiplier));
-				SerializeField(s, nameof(speed));
+				startDuration = s.Serialize<float>(startDuration, name: "startDuration");
+				endDuration = s.Serialize<float>(endDuration, name: "endDuration");
+				startSpeed = s.Serialize<float>(startSpeed, name: "startSpeed");
+				endSpeed = s.Serialize<float>(endSpeed, name: "endSpeed");
+				rotateTrajectory = s.Serialize<bool>(rotateTrajectory, name: "rotateTrajectory", options: CSerializerObject.Options.BoolAsByte);
+				rotateActor = s.Serialize<bool>(rotateActor, name: "rotateActor", options: CSerializerObject.Options.BoolAsByte);
+				angle = s.SerializeObject<AngleAmount>(angle, name: "angle");
+				angleOffset = s.SerializeObject<AngleAmount>(angleOffset, name: "angleOffset");
+				scaleMultiplier = s.SerializeObject<Vec2d>(scaleMultiplier, name: "scaleMultiplier");
+				speed = s.Serialize<float>(speed, name: "speed");
 			} else {
-				SerializeField(s, nameof(startDuration));
-				SerializeField(s, nameof(endDuration));
-				SerializeField(s, nameof(startSpeed));
-				SerializeField(s, nameof(endSpeed));
-				SerializeField(s, nameof(rotateTrajectory));
-				SerializeField(s, nameof(rotateActor));
-				SerializeField(s, nameof(angle));
-				SerializeField(s, nameof(angleOffset));
-				SerializeField(s, nameof(scaleMultiplier));
-				SerializeField(s, nameof(speed));
+				startDuration = s.Serialize<float>(startDuration, name: "startDuration");
+				endDuration = s.Serialize<float>(endDuration, name: "endDuration");
+				startSpeed = s.Serialize<float>(startSpeed, name: "startSpeed");
+				endSpeed = s.Serialize<float>(endSpeed, name: "endSpeed");
+				rotateTrajectory = s.Serialize<bool>(rotateTrajectory, name: "rotateTrajectory");
+				rotateActor = s.Serialize<bool>(rotateActor, name: "rotateActor");
+				angle = s.SerializeObject<AngleAmount>(angle, name: "angle");
+				angleOffset = s.SerializeObject<AngleAmount>(angleOffset, name: "angleOffset");
+				scaleMultiplier = s.SerializeObject<Vec2d>(scaleMultiplier, name: "scaleMultiplier");
+				speed = s.Serialize<float>(speed, name: "speed");
 			}
 		}
 		public override uint? ClassCRC => 0x889B12E1;

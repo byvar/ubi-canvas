@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HeartNfcComponent_Template : ActorComponent_Template {
-		[Serialize("zOffset"              )] public float zOffset;
-		[Serialize("smooth"               )] public float smooth;
-		[Serialize("doubleSmooth"         )] public float doubleSmooth;
-		[Serialize("spiralCount"          )] public float spiralCount;
-		[Serialize("spiralAmplitude"      )] public float spiralAmplitude;
-		[Serialize("targetReachedDistance")] public float targetReachedDistance;
-		[Serialize("fadeOutDuration"      )] public float fadeOutDuration;
+		public float zOffset;
+		public float smooth;
+		public float doubleSmooth;
+		public float spiralCount;
+		public float spiralAmplitude;
+		public float targetReachedDistance;
+		public float fadeOutDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(zOffset));
-			SerializeField(s, nameof(smooth));
-			SerializeField(s, nameof(doubleSmooth));
-			SerializeField(s, nameof(spiralCount));
-			SerializeField(s, nameof(spiralAmplitude));
-			SerializeField(s, nameof(targetReachedDistance));
-			SerializeField(s, nameof(fadeOutDuration));
+			zOffset = s.Serialize<float>(zOffset, name: "zOffset");
+			smooth = s.Serialize<float>(smooth, name: "smooth");
+			doubleSmooth = s.Serialize<float>(doubleSmooth, name: "doubleSmooth");
+			spiralCount = s.Serialize<float>(spiralCount, name: "spiralCount");
+			spiralAmplitude = s.Serialize<float>(spiralAmplitude, name: "spiralAmplitude");
+			targetReachedDistance = s.Serialize<float>(targetReachedDistance, name: "targetReachedDistance");
+			fadeOutDuration = s.Serialize<float>(fadeOutDuration, name: "fadeOutDuration");
 		}
 		public override uint? ClassCRC => 0xFA935954;
 	}

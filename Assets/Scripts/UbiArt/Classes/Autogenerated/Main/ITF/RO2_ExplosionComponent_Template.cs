@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_ExplosionComponent_Template : ActorComponent_Template {
-		[Serialize("fxName"  )] public StringID fxName;
-		[Serialize("shape"   )] public Generic<PhysShape> shape;
-		[Serialize("hitLevel")] public uint hitLevel;
-		[Serialize("faction" )] public uint faction;
-		[Serialize("sendStim")] public bool sendStim;
+		public StringID fxName;
+		public Generic<PhysShape> shape;
+		public uint hitLevel;
+		public uint faction;
+		public bool sendStim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(fxName));
-			SerializeField(s, nameof(shape));
-			SerializeField(s, nameof(hitLevel));
-			SerializeField(s, nameof(faction));
-			SerializeField(s, nameof(sendStim));
+			fxName = s.SerializeObject<StringID>(fxName, name: "fxName");
+			shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+			hitLevel = s.Serialize<uint>(hitLevel, name: "hitLevel");
+			faction = s.Serialize<uint>(faction, name: "faction");
+			sendStim = s.Serialize<bool>(sendStim, name: "sendStim");
 		}
 		public override uint? ClassCRC => 0xDABFA0CE;
 	}

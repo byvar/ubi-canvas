@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class BezierBranchPolylineComponent_Template : BezierBranchComponent_Template {
-		[Serialize("gameMaterial"      )] public Path gameMaterial;
-		[Serialize("beginLength"       )] public float beginLength;
-		[Serialize("endLength"         )] public float endLength;
-		[Serialize("beginWidth"        )] public float beginWidth;
-		[Serialize("midWidth"          )] public float midWidth;
-		[Serialize("endWidth"          )] public float endWidth;
-		[Serialize("startOffset"       )] public float startOffset;
-		[Serialize("endOffset"         )] public float endOffset;
-		[Serialize("tessellationLength")] public float tessellationLength;
-		[Serialize("usePolylinePhantom")] public bool usePolylinePhantom;
-		[Serialize("isJobable"         )] public bool isJobable;
+		public Path gameMaterial;
+		public float beginLength;
+		public float endLength;
+		public float beginWidth;
+		public float midWidth;
+		public float endWidth;
+		public float startOffset;
+		public float endOffset;
+		public float tessellationLength;
+		public bool usePolylinePhantom;
+		public bool isJobable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(gameMaterial));
-			SerializeField(s, nameof(beginLength));
-			SerializeField(s, nameof(endLength));
-			SerializeField(s, nameof(beginWidth));
-			SerializeField(s, nameof(midWidth));
-			SerializeField(s, nameof(endWidth));
-			SerializeField(s, nameof(startOffset));
-			SerializeField(s, nameof(endOffset));
-			SerializeField(s, nameof(tessellationLength));
-			SerializeField(s, nameof(usePolylinePhantom));
-			SerializeField(s, nameof(isJobable));
+			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+			beginLength = s.Serialize<float>(beginLength, name: "beginLength");
+			endLength = s.Serialize<float>(endLength, name: "endLength");
+			beginWidth = s.Serialize<float>(beginWidth, name: "beginWidth");
+			midWidth = s.Serialize<float>(midWidth, name: "midWidth");
+			endWidth = s.Serialize<float>(endWidth, name: "endWidth");
+			startOffset = s.Serialize<float>(startOffset, name: "startOffset");
+			endOffset = s.Serialize<float>(endOffset, name: "endOffset");
+			tessellationLength = s.Serialize<float>(tessellationLength, name: "tessellationLength");
+			usePolylinePhantom = s.Serialize<bool>(usePolylinePhantom, name: "usePolylinePhantom");
+			isJobable = s.Serialize<bool>(isJobable, name: "isJobable");
 		}
 		public override uint? ClassCRC => 0xA01092F1;
 	}

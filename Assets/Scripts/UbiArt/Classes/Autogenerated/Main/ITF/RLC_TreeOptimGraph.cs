@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TreeOptimGraph : CSerializable {
-		[Serialize("OptimPath"   )] public Path OptimPath;
-		[Serialize("OptimPos"    )] public Vec3d OptimPos;
-		[Serialize("OptimLoadMin")] public float OptimLoadMin;
-		[Serialize("OptimLoadMax")] public float OptimLoadMax;
+		public Path OptimPath;
+		public Vec3d OptimPos;
+		public float OptimLoadMin;
+		public float OptimLoadMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(OptimPath));
-			SerializeField(s, nameof(OptimPos));
-			SerializeField(s, nameof(OptimLoadMin));
-			SerializeField(s, nameof(OptimLoadMax));
+			OptimPath = s.SerializeObject<Path>(OptimPath, name: "OptimPath");
+			OptimPos = s.SerializeObject<Vec3d>(OptimPos, name: "OptimPos");
+			OptimLoadMin = s.Serialize<float>(OptimLoadMin, name: "OptimLoadMin");
+			OptimLoadMax = s.Serialize<float>(OptimLoadMax, name: "OptimLoadMax");
 		}
 		public override uint? ClassCRC => 0x6EF4AFC3;
 	}

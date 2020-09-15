@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_MirrorParam : CSerializable {
-		[Serialize("use"    )] public bool use;
-		[Serialize("offsetX")] public float offsetX;
-		[Serialize("offsetY")] public float offsetY;
+		public bool use;
+		public float offsetX;
+		public float offsetY;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(use), boolAsByte: true);
+				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(use));
+				use = s.Serialize<bool>(use, name: "use");
 			}
-			SerializeField(s, nameof(offsetX));
-			SerializeField(s, nameof(offsetY));
+			offsetX = s.Serialize<float>(offsetX, name: "offsetX");
+			offsetY = s.Serialize<float>(offsetY, name: "offsetY");
 		}
 	}
 }

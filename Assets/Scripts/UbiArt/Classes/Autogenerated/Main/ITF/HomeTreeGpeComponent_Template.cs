@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class HomeTreeGpeComponent_Template : ActorComponent_Template {
-		[Serialize("appearMode"           )] public AppearMode appearMode;
-		[Serialize("fadeDuration"         )] public float fadeDuration;
-		[Serialize("appearAnim"           )] public StringID appearAnim;
-		[Serialize("idleAnim"             )] public StringID idleAnim;
-		[Serialize("scaleActor"           )] public bool scaleActor;
-		[Serialize("trunkAttachCurveLimit")] public float trunkAttachCurveLimit;
-		[Serialize("trunkAttachCurveWidth")] public float trunkAttachCurveWidth;
+		public AppearMode appearMode;
+		public float fadeDuration;
+		public StringID appearAnim;
+		public StringID idleAnim;
+		public bool scaleActor;
+		public float trunkAttachCurveLimit;
+		public float trunkAttachCurveWidth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(appearMode));
-			SerializeField(s, nameof(fadeDuration));
-			SerializeField(s, nameof(appearAnim));
-			SerializeField(s, nameof(idleAnim));
-			SerializeField(s, nameof(scaleActor));
-			SerializeField(s, nameof(trunkAttachCurveLimit));
-			SerializeField(s, nameof(trunkAttachCurveWidth));
+			appearMode = s.Serialize<AppearMode>(appearMode, name: "appearMode");
+			fadeDuration = s.Serialize<float>(fadeDuration, name: "fadeDuration");
+			appearAnim = s.SerializeObject<StringID>(appearAnim, name: "appearAnim");
+			idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
+			scaleActor = s.Serialize<bool>(scaleActor, name: "scaleActor");
+			trunkAttachCurveLimit = s.Serialize<float>(trunkAttachCurveLimit, name: "trunkAttachCurveLimit");
+			trunkAttachCurveWidth = s.Serialize<float>(trunkAttachCurveWidth, name: "trunkAttachCurveWidth");
 		}
 		public enum AppearMode {
 			[Serialize("AppearMode_None"        )] None = 0,

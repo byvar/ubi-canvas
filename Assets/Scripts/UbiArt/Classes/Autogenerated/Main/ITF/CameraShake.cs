@@ -3,24 +3,24 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class CameraShake : CSerializable {
-		[Serialize("name"           )] public StringID name;
-		[Serialize("intensity"      )] public float intensity;
-		[Serialize("duration"       )] public float duration;
-		[Serialize("easeInDuration" )] public float easeInDuration;
-		[Serialize("easeOutDuration")] public float easeOutDuration;
-		[Serialize("shakeX"         )] public CameraShakeCurveParams shakeX;
-		[Serialize("shakeY"         )] public CameraShakeCurveParams shakeY;
-		[Serialize("shakeZ"         )] public CameraShakeCurveParams shakeZ;
+		public StringID name;
+		public float intensity;
+		public float duration;
+		public float easeInDuration;
+		public float easeOutDuration;
+		public CameraShakeCurveParams shakeX;
+		public CameraShakeCurveParams shakeY;
+		public CameraShakeCurveParams shakeZ;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(name));
-			SerializeField(s, nameof(intensity));
-			SerializeField(s, nameof(duration));
-			SerializeField(s, nameof(easeInDuration));
-			SerializeField(s, nameof(easeOutDuration));
-			SerializeField(s, nameof(shakeX));
-			SerializeField(s, nameof(shakeY));
-			SerializeField(s, nameof(shakeZ));
+			name = s.SerializeObject<StringID>(name, name: "name");
+			intensity = s.Serialize<float>(intensity, name: "intensity");
+			duration = s.Serialize<float>(duration, name: "duration");
+			easeInDuration = s.Serialize<float>(easeInDuration, name: "easeInDuration");
+			easeOutDuration = s.Serialize<float>(easeOutDuration, name: "easeOutDuration");
+			shakeX = s.SerializeObject<CameraShakeCurveParams>(shakeX, name: "shakeX");
+			shakeY = s.SerializeObject<CameraShakeCurveParams>(shakeY, name: "shakeY");
+			shakeZ = s.SerializeObject<CameraShakeCurveParams>(shakeZ, name: "shakeZ");
 		}
 	}
 }

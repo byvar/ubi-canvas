@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIRedWizardPedestalBehavior_Template : TemplateAIBehavior {
-		[Serialize("idle"        )] public Placeholder idle;
-		[Serialize("supportBone" )] public StringID supportBone;
-		[Serialize("gameMaterial")] public Path gameMaterial;
+		public Placeholder idle;
+		public StringID supportBone;
+		public Path gameMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(idle));
-			SerializeField(s, nameof(supportBone));
-			SerializeField(s, nameof(gameMaterial));
+			idle = s.SerializeObject<Placeholder>(idle, name: "idle");
+			supportBone = s.SerializeObject<StringID>(supportBone, name: "supportBone");
+			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 		}
 		public override uint? ClassCRC => 0x98A688C6;
 	}

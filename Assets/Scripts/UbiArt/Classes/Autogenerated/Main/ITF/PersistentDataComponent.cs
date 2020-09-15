@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PersistentDataComponent : ActorComponent {
-		[Serialize("i32Map"    )] public CMap<StringID, int> i32Map;
-		[Serialize("f32Map"    )] public CMap<StringID, float> f32Map;
-		[Serialize("string8Map")] public CMap<StringID, string> string8Map;
+		public CMap<StringID, int> i32Map;
+		public CMap<StringID, float> f32Map;
+		public CMap<StringID, string> string8Map;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(i32Map));
-			SerializeField(s, nameof(f32Map));
-			SerializeField(s, nameof(string8Map));
+			i32Map = s.SerializeObject<CMap<StringID, int>>(i32Map, name: "i32Map");
+			f32Map = s.SerializeObject<CMap<StringID, float>>(f32Map, name: "f32Map");
+			string8Map = s.SerializeObject<CMap<StringID, string>>(string8Map, name: "string8Map");
 		}
 		public override uint? ClassCRC => 0xDF1A0961;
 	}

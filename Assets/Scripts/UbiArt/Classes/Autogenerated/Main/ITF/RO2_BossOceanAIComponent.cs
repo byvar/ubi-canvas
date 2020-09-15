@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossOceanAIComponent : ActorComponent {
-		[Serialize("sequences"     )] public CList<RO2_BossOceanAIComponent.Sequence> sequences;
-		[Serialize("finalCinematic")] public ObjectPath finalCinematic;
+		public CList<RO2_BossOceanAIComponent.Sequence> sequences;
+		public ObjectPath finalCinematic;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(sequences));
-				SerializeField(s, nameof(finalCinematic));
+				sequences = s.SerializeObject<CList<RO2_BossOceanAIComponent.Sequence>>(sequences, name: "sequences");
+				finalCinematic = s.SerializeObject<ObjectPath>(finalCinematic, name: "finalCinematic");
 			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class Sequence : CSerializable {
-			[Serialize("tweenSet"              )] public StringID tweenSet;
-			[Serialize("buboId"                )] public StringID buboId;
-			[Serialize("objectToTriggerOnEnter")] public ObjectPath objectToTriggerOnEnter;
-			[Serialize("objectToTriggerOnExit" )] public ObjectPath objectToTriggerOnExit;
-			[Serialize("missileRegions"        )] public CArray<ObjectPath> missileRegions;
+			public StringID tweenSet;
+			public StringID buboId;
+			public ObjectPath objectToTriggerOnEnter;
+			public ObjectPath objectToTriggerOnExit;
+			public CArray<ObjectPath> missileRegions;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(tweenSet));
-				SerializeField(s, nameof(buboId));
-				SerializeField(s, nameof(objectToTriggerOnEnter));
-				SerializeField(s, nameof(objectToTriggerOnExit));
-				SerializeField(s, nameof(missileRegions));
-				SerializeField(s, nameof(missileRegions));
+				tweenSet = s.SerializeObject<StringID>(tweenSet, name: "tweenSet");
+				buboId = s.SerializeObject<StringID>(buboId, name: "buboId");
+				objectToTriggerOnEnter = s.SerializeObject<ObjectPath>(objectToTriggerOnEnter, name: "objectToTriggerOnEnter");
+				objectToTriggerOnExit = s.SerializeObject<ObjectPath>(objectToTriggerOnExit, name: "objectToTriggerOnExit");
+				missileRegions = s.SerializeObject<CArray<ObjectPath>>(missileRegions, name: "missileRegions");
+				missileRegions = s.SerializeObject<CArray<ObjectPath>>(missileRegions, name: "missileRegions");
 			}
 		}
 		public override uint? ClassCRC => 0x872E7CD7;

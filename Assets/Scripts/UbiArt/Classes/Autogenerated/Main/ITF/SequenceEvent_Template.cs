@@ -3,39 +3,39 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class SequenceEvent_Template : CSerializable {
-		[Serialize("StartFrame"        )] public int StartFrame;
-		[Serialize("Offset"            )] public int Offset;
-		[Serialize("Duration"          )] public int Duration;
-		[Serialize("TrackLine"         )] public uint TrackLine;
-		[Serialize("Channel"           )] public string Channel;
-		[Serialize("Selected"          )] public int Selected;
-		[Serialize("DisabledForTesting")] public bool DisabledForTesting;
-		[Serialize("uid"               )] public uint uid;
-		[Serialize("EventMode"         )] public event_mode EventMode;
+		public int StartFrame;
+		public int Offset;
+		public int Duration;
+		public uint TrackLine;
+		public string Channel;
+		public int Selected;
+		public bool DisabledForTesting;
+		public uint uid;
+		public event_mode EventMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(StartFrame));
-				SerializeField(s, nameof(Offset));
-				SerializeField(s, nameof(Duration));
-				SerializeField(s, nameof(TrackLine));
-				SerializeField(s, nameof(Channel));
+				StartFrame = s.Serialize<int>(StartFrame, name: "StartFrame");
+				Offset = s.Serialize<int>(Offset, name: "Offset");
+				Duration = s.Serialize<int>(Duration, name: "Duration");
+				TrackLine = s.Serialize<uint>(TrackLine, name: "TrackLine");
+				Channel = s.Serialize<string>(Channel, name: "Channel");
 				if (s.HasFlags(SerializeFlags.Flags_x30)) {
-					SerializeField(s, nameof(Selected));
-					SerializeField(s, nameof(DisabledForTesting));
+					Selected = s.Serialize<int>(Selected, name: "Selected");
+					DisabledForTesting = s.Serialize<bool>(DisabledForTesting, name: "DisabledForTesting");
 				}
 			} else {
-				SerializeField(s, nameof(StartFrame));
-				SerializeField(s, nameof(Offset));
-				SerializeField(s, nameof(Duration));
-				SerializeField(s, nameof(TrackLine));
-				SerializeField(s, nameof(Channel));
+				StartFrame = s.Serialize<int>(StartFrame, name: "StartFrame");
+				Offset = s.Serialize<int>(Offset, name: "Offset");
+				Duration = s.Serialize<int>(Duration, name: "Duration");
+				TrackLine = s.Serialize<uint>(TrackLine, name: "TrackLine");
+				Channel = s.Serialize<string>(Channel, name: "Channel");
 				if (s.HasFlags(SerializeFlags.Flags_x30)) {
-					SerializeField(s, nameof(Selected));
-					SerializeField(s, nameof(DisabledForTesting));
-					SerializeField(s, nameof(uid));
+					Selected = s.Serialize<int>(Selected, name: "Selected");
+					DisabledForTesting = s.Serialize<bool>(DisabledForTesting, name: "DisabledForTesting");
+					uid = s.Serialize<uint>(uid, name: "uid");
 				}
-				SerializeField(s, nameof(EventMode));
+				EventMode = s.Serialize<event_mode>(EventMode, name: "EventMode");
 			}
 		}
 		public enum event_mode {

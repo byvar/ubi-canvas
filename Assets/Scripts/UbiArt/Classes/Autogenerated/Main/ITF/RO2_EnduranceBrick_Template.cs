@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnduranceBrick_Template : RO2_Brick_Template {
-		[Serialize("inTags" )] public CList<StringID> inTags;
-		[Serialize("outTags")] public CList<StringID> outTags;
-		[Serialize("canFlip")] public bool canFlip;
-		[Serialize("size"   )] public Vec2d size;
-		[Serialize("inPos"  )] public Vec2d inPos;
-		[Serialize("inSide" )] public BrickSide inSide;
-		[Serialize("outPos" )] public Vec2d outPos;
-		[Serialize("outSide")] public BrickSide outSide;
-		[Serialize("length" )] public float length;
+		public CList<StringID> inTags;
+		public CList<StringID> outTags;
+		public bool canFlip;
+		public Vec2d size;
+		public Vec2d inPos;
+		public BrickSide inSide;
+		public Vec2d outPos;
+		public BrickSide outSide;
+		public float length;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(inTags));
-			SerializeField(s, nameof(outTags));
+			inTags = s.SerializeObject<CList<StringID>>(inTags, name: "inTags");
+			outTags = s.SerializeObject<CList<StringID>>(outTags, name: "outTags");
 			if (s.HasFlags(SerializeFlags.Flags10)) {
-				SerializeField(s, nameof(canFlip));
-				SerializeField(s, nameof(size));
-				SerializeField(s, nameof(inPos));
-				SerializeField(s, nameof(inSide));
-				SerializeField(s, nameof(outPos));
-				SerializeField(s, nameof(outSide));
-				SerializeField(s, nameof(length));
+				canFlip = s.Serialize<bool>(canFlip, name: "canFlip");
+				size = s.SerializeObject<Vec2d>(size, name: "size");
+				inPos = s.SerializeObject<Vec2d>(inPos, name: "inPos");
+				inSide = s.Serialize<BrickSide>(inSide, name: "inSide");
+				outPos = s.SerializeObject<Vec2d>(outPos, name: "outPos");
+				outSide = s.Serialize<BrickSide>(outSide, name: "outSide");
+				length = s.Serialize<float>(length, name: "length");
 			}
 		}
 		public enum BrickSide {

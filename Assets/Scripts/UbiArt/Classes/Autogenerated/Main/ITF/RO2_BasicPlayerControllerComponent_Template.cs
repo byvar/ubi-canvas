@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(deadSoulFaction));
-				SerializeField(s, nameof(touchReviveInteractionCircleRadius));
+				deadSoulFaction = s.Serialize<uint>(deadSoulFaction, name: "deadSoulFaction");
+				touchReviveInteractionCircleRadius = s.Serialize<float>(touchReviveInteractionCircleRadius, name: "touchReviveInteractionCircleRadius");
 			}
 		}
 		public override uint? ClassCRC => 0xAD13B185;

@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class GameStatsManager : CSerializable {
-		[Serialize("GameStatsManager.SaveSession__0")] public GameStatsManager.SaveSession GameStatsManager_SaveSession__0;
+		public GameStatsManager.SaveSession GameStatsManager_SaveSession__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(GameStatsManager_SaveSession__0));
+				GameStatsManager_SaveSession__0 = s.SerializeObject<GameStatsManager.SaveSession>(GameStatsManager_SaveSession__0, name: "GameStatsManager_SaveSession__0");
 			} else {
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 		public partial class SaveSession : CSerializable {
-			[Serialize("tags"             )] public CList<float> tags;
-			[Serialize("timers"           )] public CList<float> timers;
-			[Serialize("rewardsState"     )] public CMap<StringID, bool> rewardsState;
-			[Serialize("uplayRewardsState")] public CMap<StringID, bool> uplayRewardsState;
-			[Serialize("uplayActionsState")] public CMap<StringID, uint> uplayActionsState;
+			public CList<float> tags;
+			public CList<float> timers;
+			public CMap<StringID, bool> rewardsState;
+			public CMap<StringID, bool> uplayRewardsState;
+			public CMap<StringID, uint> uplayActionsState;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(tags));
-				SerializeField(s, nameof(timers));
+				tags = s.SerializeObject<CList<float>>(tags, name: "tags");
+				timers = s.SerializeObject<CList<float>>(timers, name: "timers");
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-					SerializeField(s, nameof(rewardsState));
+					rewardsState = s.SerializeObject<CMap<StringID, bool>>(rewardsState, name: "rewardsState");
 					if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
-						SerializeField(s, nameof(uplayRewardsState));
-						SerializeField(s, nameof(uplayActionsState));
+						uplayRewardsState = s.SerializeObject<CMap<StringID, bool>>(uplayRewardsState, name: "uplayRewardsState");
+						uplayActionsState = s.SerializeObject<CMap<StringID, uint>>(uplayActionsState, name: "uplayActionsState");
 					}
 				}
 			}

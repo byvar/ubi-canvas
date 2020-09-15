@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_AvatarSwapper : ActorComponent {
-		[Serialize("Enum_VH_0__0")] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("bool__1"     )] public bool bool__1;
+		public Enum_VH_0 Enum_VH_0__0;
+		public bool bool__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Enum_VH_0__0));
-			SerializeField(s, nameof(bool__1));
+			Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
+			bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
 		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_2" )] Value_2 = 2,

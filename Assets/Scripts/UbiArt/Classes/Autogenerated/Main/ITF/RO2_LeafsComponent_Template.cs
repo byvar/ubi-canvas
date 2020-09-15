@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LeafsComponent_Template : ActorComponent_Template {
-		[Serialize("standAnims"  )] public CList<StringID> standAnims;
-		[Serialize("explodeAnims")] public CList<StringID> explodeAnims;
-		[Serialize("randomDelay" )] public float randomDelay;
+		public CList<StringID> standAnims;
+		public CList<StringID> explodeAnims;
+		public float randomDelay;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(standAnims));
-			SerializeField(s, nameof(explodeAnims));
-			SerializeField(s, nameof(randomDelay));
+			standAnims = s.SerializeObject<CList<StringID>>(standAnims, name: "standAnims");
+			explodeAnims = s.SerializeObject<CList<StringID>>(explodeAnims, name: "explodeAnims");
+			randomDelay = s.Serialize<float>(randomDelay, name: "randomDelay");
 		}
 		public override uint? ClassCRC => 0xF375DAEE;
 	}

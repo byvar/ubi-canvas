@@ -3,17 +3,17 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
 	public partial class EventReceivePlayAnimComponent : ActorComponent {
-		[Serialize("startValue"    )] public float startValue;
-		[Serialize("displayPhantom")] public bool displayPhantom;
+		public float startValue;
+		public bool displayPhantom;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(startValue));
+				startValue = s.Serialize<float>(startValue, name: "startValue");
 				if (s.HasFlags(SerializeFlags.Editor)) {
-					SerializeField(s, nameof(displayPhantom));
+					displayPhantom = s.Serialize<bool>(displayPhantom, name: "displayPhantom");
 				}
 			} else {
-				SerializeField(s, nameof(startValue));
+				startValue = s.Serialize<float>(startValue, name: "startValue");
 			}
 		}
 		public override uint? ClassCRC => 0xD945CA93;

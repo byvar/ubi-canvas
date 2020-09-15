@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChildLaunchComponent : ActorComponent {
-		[Serialize("nextLaunchIndex")] public uint nextLaunchIndex;
-		[Serialize("hintFxEnabled"  )] public bool hintFxEnabled;
+		public uint nextLaunchIndex;
+		public bool hintFxEnabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(nextLaunchIndex));
+				nextLaunchIndex = s.Serialize<uint>(nextLaunchIndex, name: "nextLaunchIndex");
 			}
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(hintFxEnabled));
+				hintFxEnabled = s.Serialize<bool>(hintFxEnabled, name: "hintFxEnabled");
 			}
 		}
 		public override uint? ClassCRC => 0xDA6C4598;

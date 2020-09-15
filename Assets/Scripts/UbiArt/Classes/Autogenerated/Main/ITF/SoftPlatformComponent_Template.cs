@@ -3,83 +3,83 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class SoftPlatformComponent_Template : ActorComponent_Template {
-		[Serialize("softPlatformParticles"  )] public CList<SoftPlatformComponent_Template.BodyData> softPlatformParticles;
-		[Serialize("softPlatformConstraints")] public CList<SoftPlatformComponent_Template.ConstraintData> softPlatformConstraints;
-		[Serialize("weightMultiplier"       )] public float weightMultiplier;
-		[Serialize("landSpeedMultiplier"    )] public float landSpeedMultiplier;
-		[Serialize("hitForceMultiplier"     )] public float hitForceMultiplier;
-		[Serialize("impulseMultiplier"      )] public float impulseMultiplier;
-		[Serialize("movingPolylineForce"    )] public float movingPolylineForce;
-		[Serialize("gameMaterial"           )] public Path gameMaterial;
-		[Serialize("usePhantom"             )] public bool usePhantom;
-		[Serialize("precision"              )] public ConstraintSolverIterationPrecision precision;
+		public CList<SoftPlatformComponent_Template.BodyData> softPlatformParticles;
+		public CList<SoftPlatformComponent_Template.ConstraintData> softPlatformConstraints;
+		public float weightMultiplier;
+		public float landSpeedMultiplier;
+		public float hitForceMultiplier;
+		public float impulseMultiplier;
+		public float movingPolylineForce;
+		public Path gameMaterial;
+		public bool usePhantom;
+		public ConstraintSolverIterationPrecision precision;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(softPlatformParticles));
-				SerializeField(s, nameof(softPlatformConstraints));
-				SerializeField(s, nameof(weightMultiplier));
-				SerializeField(s, nameof(landSpeedMultiplier));
-				SerializeField(s, nameof(hitForceMultiplier));
-				SerializeField(s, nameof(impulseMultiplier));
-				SerializeField(s, nameof(movingPolylineForce));
-				SerializeField(s, nameof(gameMaterial));
-				SerializeField(s, nameof(usePhantom));
+				softPlatformParticles = s.SerializeObject<CList<SoftPlatformComponent_Template.BodyData>>(softPlatformParticles, name: "softPlatformParticles");
+				softPlatformConstraints = s.SerializeObject<CList<SoftPlatformComponent_Template.ConstraintData>>(softPlatformConstraints, name: "softPlatformConstraints");
+				weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
+				landSpeedMultiplier = s.Serialize<float>(landSpeedMultiplier, name: "landSpeedMultiplier");
+				hitForceMultiplier = s.Serialize<float>(hitForceMultiplier, name: "hitForceMultiplier");
+				impulseMultiplier = s.Serialize<float>(impulseMultiplier, name: "impulseMultiplier");
+				movingPolylineForce = s.Serialize<float>(movingPolylineForce, name: "movingPolylineForce");
+				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+				usePhantom = s.Serialize<bool>(usePhantom, name: "usePhantom");
 			} else {
-				SerializeField(s, nameof(softPlatformParticles));
-				SerializeField(s, nameof(softPlatformConstraints));
-				SerializeField(s, nameof(weightMultiplier));
-				SerializeField(s, nameof(landSpeedMultiplier));
-				SerializeField(s, nameof(hitForceMultiplier));
-				SerializeField(s, nameof(impulseMultiplier));
-				SerializeField(s, nameof(movingPolylineForce));
-				SerializeField(s, nameof(gameMaterial));
-				SerializeField(s, nameof(usePhantom));
-				SerializeField(s, nameof(precision));
+				softPlatformParticles = s.SerializeObject<CList<SoftPlatformComponent_Template.BodyData>>(softPlatformParticles, name: "softPlatformParticles");
+				softPlatformConstraints = s.SerializeObject<CList<SoftPlatformComponent_Template.ConstraintData>>(softPlatformConstraints, name: "softPlatformConstraints");
+				weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
+				landSpeedMultiplier = s.Serialize<float>(landSpeedMultiplier, name: "landSpeedMultiplier");
+				hitForceMultiplier = s.Serialize<float>(hitForceMultiplier, name: "hitForceMultiplier");
+				impulseMultiplier = s.Serialize<float>(impulseMultiplier, name: "impulseMultiplier");
+				movingPolylineForce = s.Serialize<float>(movingPolylineForce, name: "movingPolylineForce");
+				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+				usePhantom = s.Serialize<bool>(usePhantom, name: "usePhantom");
+				precision = s.Serialize<ConstraintSolverIterationPrecision>(precision, name: "precision");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class BodyData : CSerializable {
-			[Serialize("bone"             )] public string bone;
-			[Serialize("static"           )] public bool _static;
-			[Serialize("gravityMultiplier")] public float gravityMultiplier;
-			[Serialize("windMultiplier"   )] public float windMultiplier;
-			[Serialize("useStaticAngle"   )] public bool useStaticAngle;
-			[Serialize("setAngle"         )] public Angle setAngle;
+			public string bone;
+			public bool _static;
+			public float gravityMultiplier;
+			public float windMultiplier;
+			public bool useStaticAngle;
+			public Angle setAngle;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(bone));
-				SerializeField(s, nameof(_static));
-				SerializeField(s, nameof(gravityMultiplier));
-				SerializeField(s, nameof(windMultiplier));
-				SerializeField(s, nameof(useStaticAngle));
-				SerializeField(s, nameof(setAngle));
+				bone = s.Serialize<string>(bone, name: "bone");
+				_static = s.Serialize<bool>(_static, name: "_static");
+				gravityMultiplier = s.Serialize<float>(gravityMultiplier, name: "gravityMultiplier");
+				windMultiplier = s.Serialize<float>(windMultiplier, name: "windMultiplier");
+				useStaticAngle = s.Serialize<bool>(useStaticAngle, name: "useStaticAngle");
+				setAngle = s.SerializeObject<Angle>(setAngle, name: "setAngle");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class ConstraintData : CSerializable {
-			[Serialize("bodyA"      )] public string bodyA;
-			[Serialize("bodyB"      )] public string bodyB;
-			[Serialize("minAngle"   )] public Angle minAngle;
-			[Serialize("maxAngle"   )] public Angle maxAngle;
-			[Serialize("minLength"  )] public float minLength;
-			[Serialize("maxLength"  )] public float maxLength;
-			[Serialize("stiff"      )] public float stiff;
-			[Serialize("damp"       )] public float damp;
-			[Serialize("limitAngle" )] public bool limitAngle;
-			[Serialize("relaxLength")] public bool relaxLength;
+			public string bodyA;
+			public string bodyB;
+			public Angle minAngle;
+			public Angle maxAngle;
+			public float minLength;
+			public float maxLength;
+			public float stiff;
+			public float damp;
+			public bool limitAngle;
+			public bool relaxLength;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(bodyA));
-				SerializeField(s, nameof(bodyB));
-				SerializeField(s, nameof(minAngle));
-				SerializeField(s, nameof(maxAngle));
-				SerializeField(s, nameof(minLength));
-				SerializeField(s, nameof(maxLength));
-				SerializeField(s, nameof(stiff));
-				SerializeField(s, nameof(damp));
-				SerializeField(s, nameof(limitAngle));
-				SerializeField(s, nameof(relaxLength));
+				bodyA = s.Serialize<string>(bodyA, name: "bodyA");
+				bodyB = s.Serialize<string>(bodyB, name: "bodyB");
+				minAngle = s.SerializeObject<Angle>(minAngle, name: "minAngle");
+				maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
+				minLength = s.Serialize<float>(minLength, name: "minLength");
+				maxLength = s.Serialize<float>(maxLength, name: "maxLength");
+				stiff = s.Serialize<float>(stiff, name: "stiff");
+				damp = s.Serialize<float>(damp, name: "damp");
+				limitAngle = s.Serialize<bool>(limitAngle, name: "limitAngle");
+				relaxLength = s.Serialize<bool>(relaxLength, name: "relaxLength");
 			}
 		}
 		public enum ConstraintSolverIterationPrecision {

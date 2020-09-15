@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BuboBTAIComponent : BTAIComponent {
-		[Serialize("crushable"       )] public bool crushable;
-		[Serialize("triggerActivator")] public bool triggerActivator;
-		[Serialize("delayTrigger"    )] public bool delayTrigger;
+		public bool crushable;
+		public bool triggerActivator;
+		public bool delayTrigger;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(crushable));
-				SerializeField(s, nameof(triggerActivator));
-				SerializeField(s, nameof(delayTrigger));
+				crushable = s.Serialize<bool>(crushable, name: "crushable");
+				triggerActivator = s.Serialize<bool>(triggerActivator, name: "triggerActivator");
+				delayTrigger = s.Serialize<bool>(delayTrigger, name: "delayTrigger");
 			}
 		}
 		public override uint? ClassCRC => 0x80FD5DF4;

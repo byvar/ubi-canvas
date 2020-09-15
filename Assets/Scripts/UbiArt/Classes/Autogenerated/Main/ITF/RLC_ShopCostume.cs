@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_ShopCostume : RLC_DynamicStoreItem {
-		[Serialize("Id"         )] public StringID Id;
-		[Serialize("State"      )] public Enum_State State;
-		[Serialize("Price"      )] public uint Price;
-		[Serialize("costumeType")] public Enum_costumeType costumeType;
+		public StringID Id;
+		public Enum_State State;
+		public uint Price;
+		public Enum_costumeType costumeType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Id));
-			SerializeField(s, nameof(State));
-			SerializeField(s, nameof(Price));
-			SerializeField(s, nameof(costumeType));
+			Id = s.SerializeObject<StringID>(Id, name: "Id");
+			State = s.Serialize<Enum_State>(State, name: "State");
+			Price = s.Serialize<uint>(Price, name: "Price");
+			costumeType = s.Serialize<Enum_costumeType>(costumeType, name: "costumeType");
 		}
 		public enum Enum_State {
 			[Serialize("_unknown"         )] _unknown = 0,

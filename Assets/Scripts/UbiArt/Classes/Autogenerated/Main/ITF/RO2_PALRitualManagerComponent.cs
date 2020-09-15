@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PALRitualManagerComponent : ActorComponent {
-		[Serialize("ritualType"   )] public RitualType ritualType;
-		[Serialize("startSequence")] public bool startSequence;
+		public RitualType ritualType;
+		public bool startSequence;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(ritualType));
+				ritualType = s.Serialize<RitualType>(ritualType, name: "ritualType");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(startSequence));
+				startSequence = s.Serialize<bool>(startSequence, name: "startSequence");
 			}
 		}
 		public enum RitualType {

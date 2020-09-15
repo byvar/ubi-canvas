@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PaintBumperComponent_Template : ActorComponent_Template {
-		[Serialize("LumRewardNb"     )] public uint LumRewardNb;
-		[Serialize("AnimPaint"       )] public StringID AnimPaint;
-		[Serialize("AnimStand"       )] public StringID AnimStand;
-		[Serialize("useAdditive"     )] public bool useAdditive;
-		[Serialize("additiveInput"   )] public StringID additiveInput;
-		[Serialize("additiveDuration")] public float additiveDuration;
-		[Serialize("listenToStick"   )] public bool listenToStick;
+		public uint LumRewardNb;
+		public StringID AnimPaint;
+		public StringID AnimStand;
+		public bool useAdditive;
+		public StringID additiveInput;
+		public float additiveDuration;
+		public bool listenToStick;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(LumRewardNb));
-			SerializeField(s, nameof(AnimPaint));
-			SerializeField(s, nameof(AnimStand));
-			SerializeField(s, nameof(useAdditive));
-			SerializeField(s, nameof(additiveInput));
-			SerializeField(s, nameof(additiveDuration));
-			SerializeField(s, nameof(listenToStick));
+			LumRewardNb = s.Serialize<uint>(LumRewardNb, name: "LumRewardNb");
+			AnimPaint = s.SerializeObject<StringID>(AnimPaint, name: "AnimPaint");
+			AnimStand = s.SerializeObject<StringID>(AnimStand, name: "AnimStand");
+			useAdditive = s.Serialize<bool>(useAdditive, name: "useAdditive");
+			additiveInput = s.SerializeObject<StringID>(additiveInput, name: "additiveInput");
+			additiveDuration = s.Serialize<float>(additiveDuration, name: "additiveDuration");
+			listenToStick = s.Serialize<bool>(listenToStick, name: "listenToStick");
 		}
 		public override uint? ClassCRC => 0x715C8C35;
 	}

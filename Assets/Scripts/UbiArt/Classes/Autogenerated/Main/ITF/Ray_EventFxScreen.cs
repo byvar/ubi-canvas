@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventFxScreen : Event {
-		[Serialize("isStart" )] public uint isStart;
-		[Serialize("fadeType")] public StringID fadeType;
+		public uint isStart;
+		public StringID fadeType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(isStart));
-			SerializeField(s, nameof(fadeType));
+			isStart = s.Serialize<uint>(isStart, name: "isStart");
+			fadeType = s.SerializeObject<StringID>(fadeType, name: "fadeType");
 		}
 		public override uint? ClassCRC => 0x159E0C37;
 	}

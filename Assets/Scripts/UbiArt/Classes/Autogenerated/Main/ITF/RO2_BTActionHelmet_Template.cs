@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionHelmet_Template : BTAction_Template {
-		[Serialize("enemyDetectionRange")] public Generic<PhysShape> enemyDetectionRange;
-		[Serialize("anim"               )] public StringID anim;
-		[Serialize("useBone"            )] public bool useBone;
-		[Serialize("boneName"           )] public StringID boneName;
-		[Serialize("debug"              )] public bool debug;
+		public Generic<PhysShape> enemyDetectionRange;
+		public StringID anim;
+		public bool useBone;
+		public StringID boneName;
+		public bool debug;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(enemyDetectionRange));
-			SerializeField(s, nameof(anim));
-			SerializeField(s, nameof(useBone));
-			SerializeField(s, nameof(boneName));
-			SerializeField(s, nameof(debug));
+			enemyDetectionRange = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRange, name: "enemyDetectionRange");
+			anim = s.SerializeObject<StringID>(anim, name: "anim");
+			useBone = s.Serialize<bool>(useBone, name: "useBone");
+			boneName = s.SerializeObject<StringID>(boneName, name: "boneName");
+			debug = s.Serialize<bool>(debug, name: "debug");
 		}
 		public override uint? ClassCRC => 0xD074F292;
 	}

@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class RelayEventComponent : ActorComponent {
-		[Serialize("relays"              )] public CList<RelayData> relays;
-		[Serialize("receiveBroadcast"    )] public bool receiveBroadcast;
+		public CList<RelayData> relays;
+		public bool receiveBroadcast;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				SerializeField(s, nameof(relays));
+				relays = s.SerializeObject<CList<RelayData>>(relays, name: "relays");
 			} else if(Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(relays));
-				SerializeField(s, nameof(receiveBroadcast));
+				relays = s.SerializeObject<CList<RelayData>>(relays, name: "relays");
+				receiveBroadcast = s.Serialize<bool>(receiveBroadcast, name: "receiveBroadcast");
 			}
 		}
 		public override uint? ClassCRC => 0x7291EA2B;

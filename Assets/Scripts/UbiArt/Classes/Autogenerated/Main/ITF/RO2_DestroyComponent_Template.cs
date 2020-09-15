@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DestroyComponent_Template : ActorComponent_Template {
-		[Serialize("waitForFx"        )] public bool waitForFx;
-		[Serialize("timeBeforeDestroy")] public float timeBeforeDestroy;
+		public bool waitForFx;
+		public float timeBeforeDestroy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(waitForFx));
-			SerializeField(s, nameof(timeBeforeDestroy));
+			waitForFx = s.Serialize<bool>(waitForFx, name: "waitForFx");
+			timeBeforeDestroy = s.Serialize<float>(timeBeforeDestroy, name: "timeBeforeDestroy");
 		}
 		public override uint? ClassCRC => 0x22C1A57D;
 	}

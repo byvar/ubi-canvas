@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_CharacterStatsDebugComponent : CSerializable {
-		[Serialize("playerLevel"      )] public uint playerLevel;
-		[Serialize("refillHPOnLevelUp")] public bool refillHPOnLevelUp;
-		[Serialize("refillMPOnLevelUp")] public bool refillMPOnLevelUp;
+		public uint playerLevel;
+		public bool refillHPOnLevelUp;
+		public bool refillMPOnLevelUp;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(playerLevel));
-				SerializeField(s, nameof(refillHPOnLevelUp), boolAsByte: true);
-				SerializeField(s, nameof(refillMPOnLevelUp), boolAsByte: true);
+				playerLevel = s.Serialize<uint>(playerLevel, name: "playerLevel");
+				refillHPOnLevelUp = s.Serialize<bool>(refillHPOnLevelUp, name: "refillHPOnLevelUp", options: CSerializerObject.Options.BoolAsByte);
+				refillMPOnLevelUp = s.Serialize<bool>(refillMPOnLevelUp, name: "refillMPOnLevelUp", options: CSerializerObject.Options.BoolAsByte);
 			}
 		}
 		public override uint? ClassCRC => 0x0E325A03;

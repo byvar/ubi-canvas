@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class EventTweeningFullReset : Event {
-		[Serialize("resetSelectedSet")] public bool resetSelectedSet;
+		public bool resetSelectedSet;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(resetSelectedSet), boolAsByte: true);
+				resetSelectedSet = s.Serialize<bool>(resetSelectedSet, name: "resetSelectedSet", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 			}
 		}

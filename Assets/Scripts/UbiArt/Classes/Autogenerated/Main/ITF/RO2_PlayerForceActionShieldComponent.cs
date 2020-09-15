@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerForceActionShieldComponent : RO2_PlayerForceActionComponent {
-		[Serialize("testShieldInZone"     )] public bool testShieldInZone;
-		[Serialize("removeShieldCollision")] public bool removeShieldCollision;
-		[Serialize("testPlayerOnShield"   )] public bool testPlayerOnShield;
+		public bool testShieldInZone;
+		public bool removeShieldCollision;
+		public bool testPlayerOnShield;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(testShieldInZone), boolAsByte: true);
-					SerializeField(s, nameof(removeShieldCollision), boolAsByte: true);
-					SerializeField(s, nameof(testPlayerOnShield), boolAsByte: true);
+					testShieldInZone = s.Serialize<bool>(testShieldInZone, name: "testShieldInZone", options: CSerializerObject.Options.BoolAsByte);
+					removeShieldCollision = s.Serialize<bool>(removeShieldCollision, name: "removeShieldCollision", options: CSerializerObject.Options.BoolAsByte);
+					testPlayerOnShield = s.Serialize<bool>(testPlayerOnShield, name: "testPlayerOnShield", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(testShieldInZone));
-					SerializeField(s, nameof(removeShieldCollision));
-					SerializeField(s, nameof(testPlayerOnShield));
+					testShieldInZone = s.Serialize<bool>(testShieldInZone, name: "testShieldInZone");
+					removeShieldCollision = s.Serialize<bool>(removeShieldCollision, name: "removeShieldCollision");
+					testPlayerOnShield = s.Serialize<bool>(testPlayerOnShield, name: "testPlayerOnShield");
 				}
 			}
 		}

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DragSpringBTComponent_Template : BTAIComponent_Template {
-		[Serialize("disablePhysics")] public bool disablePhysics;
+		public bool disablePhysics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(disablePhysics));
+			disablePhysics = s.Serialize<bool>(disablePhysics, name: "disablePhysics");
 		}
 		public override uint? ClassCRC => 0x397DE58B;
 	}

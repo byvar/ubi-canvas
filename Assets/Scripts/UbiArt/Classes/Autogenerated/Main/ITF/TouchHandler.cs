@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class TouchHandler : CSerializable {
-		[Serialize("shape"             )] public Generic<PhysShape> shape;
-		[Serialize("endDragOnExitShape")] public bool endDragOnExitShape;
-		[Serialize("startDragOnSwipe"  )] public bool startDragOnSwipe;
-		[Serialize("clampToScreen"     )] public bool clampToScreen;
-		[Serialize("clampRadius"       )] public uint clampRadius;
+		public Generic<PhysShape> shape;
+		public bool endDragOnExitShape;
+		public bool startDragOnSwipe;
+		public bool clampToScreen;
+		public uint clampRadius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(shape));
-			SerializeField(s, nameof(endDragOnExitShape));
-			SerializeField(s, nameof(startDragOnSwipe));
-			SerializeField(s, nameof(clampToScreen));
-			SerializeField(s, nameof(clampRadius));
+			shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
+			endDragOnExitShape = s.Serialize<bool>(endDragOnExitShape, name: "endDragOnExitShape");
+			startDragOnSwipe = s.Serialize<bool>(startDragOnSwipe, name: "startDragOnSwipe");
+			clampToScreen = s.Serialize<bool>(clampToScreen, name: "clampToScreen");
+			clampRadius = s.Serialize<uint>(clampRadius, name: "clampRadius");
 		}
 	}
 }

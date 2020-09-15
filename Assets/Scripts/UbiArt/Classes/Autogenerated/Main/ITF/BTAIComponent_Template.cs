@@ -3,17 +3,17 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
 	public partial class BTAIComponent_Template : EntityComponent_Template {
-		[Serialize("behaviorTree"       )] public BehaviorTree_Template behaviorTree;
-		[Serialize("registerToAIManager")] public bool registerToAIManager;
-		[Serialize("faction"            )] public uint faction;
+		public BehaviorTree_Template behaviorTree;
+		public bool registerToAIManager;
+		public uint faction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(behaviorTree));
+				behaviorTree = s.SerializeObject<BehaviorTree_Template>(behaviorTree, name: "behaviorTree");
 			} else {
-				SerializeField(s, nameof(behaviorTree));
-				SerializeField(s, nameof(registerToAIManager));
-				SerializeField(s, nameof(faction));
+				behaviorTree = s.SerializeObject<BehaviorTree_Template>(behaviorTree, name: "behaviorTree");
+				registerToAIManager = s.Serialize<bool>(registerToAIManager, name: "registerToAIManager");
+				faction = s.Serialize<uint>(faction, name: "faction");
 			}
 		}
 		public override uint? ClassCRC => 0x90EB29DB;

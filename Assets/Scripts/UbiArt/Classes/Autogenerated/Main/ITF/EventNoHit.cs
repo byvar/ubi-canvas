@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventNoHit : Event {
-		[Serialize("activateNoHit")] public bool activateNoHit;
+		public bool activateNoHit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(activateNoHit));
+			activateNoHit = s.Serialize<bool>(activateNoHit, name: "activateNoHit");
 		}
 		public override uint? ClassCRC => 0x727932AF;
 	}

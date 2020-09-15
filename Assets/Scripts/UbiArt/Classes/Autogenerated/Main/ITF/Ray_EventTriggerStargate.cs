@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventTriggerStargate : Event {
-		[Serialize("start")] public Vec3d start;
-		[Serialize("speed")] public float speed;
+		public Vec3d start;
+		public float speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(start));
-			SerializeField(s, nameof(speed));
+			start = s.SerializeObject<Vec3d>(start, name: "start");
+			speed = s.Serialize<float>(speed, name: "speed");
 		}
 		public override uint? ClassCRC => 0xBA526589;
 	}

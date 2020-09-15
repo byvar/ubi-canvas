@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class ShadowZoneAIComponent : ActorComponent {
-		[Serialize("startOn"          )] public bool startOn;
-		[Serialize("pauseTween"       )] public bool pauseTween;
-		[Serialize("pauseTrajectory"  )] public bool pauseTrajectory;
-		[Serialize("pauseTime"        )] public float pauseTime;
-		[Serialize("UseLaserDetection")] public bool UseLaserDetection;
+		public bool startOn;
+		public bool pauseTween;
+		public bool pauseTrajectory;
+		public float pauseTime;
+		public bool UseLaserDetection;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(startOn));
-				SerializeField(s, nameof(pauseTween));
-				SerializeField(s, nameof(pauseTrajectory));
-				SerializeField(s, nameof(pauseTime));
-				SerializeField(s, nameof(UseLaserDetection));
+				startOn = s.Serialize<bool>(startOn, name: "startOn");
+				pauseTween = s.Serialize<bool>(pauseTween, name: "pauseTween");
+				pauseTrajectory = s.Serialize<bool>(pauseTrajectory, name: "pauseTrajectory");
+				pauseTime = s.Serialize<float>(pauseTime, name: "pauseTime");
+				UseLaserDetection = s.Serialize<bool>(UseLaserDetection, name: "UseLaserDetection");
 			}
 		}
 		public override uint? ClassCRC => 0x5CC11486;

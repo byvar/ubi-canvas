@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ShowPetComponent : GraphicComponent {
-		[Serialize("VisualID" )] public uint VisualID;
-		[Serialize("Animation")] public Enum_Animation Animation;
+		public uint VisualID;
+		public Enum_Animation Animation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(VisualID));
-				SerializeField(s, nameof(Animation));
+				VisualID = s.Serialize<uint>(VisualID, name: "VisualID");
+				Animation = s.Serialize<Enum_Animation>(Animation, name: "Animation");
 			}
 		}
 		public enum Enum_Animation {

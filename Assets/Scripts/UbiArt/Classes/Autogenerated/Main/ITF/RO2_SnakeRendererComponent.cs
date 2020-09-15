@@ -3,25 +3,25 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeRendererComponent : GraphicComponent {
-		[Serialize("alignOnTrajectoryOnStart")] public bool alignOnTrajectoryOnStart;
-		[Serialize("flipWithDirection"       )] public bool flipWithDirection;
-		[Serialize("disablePolyline"         )] public bool disablePolyline;
-		[Serialize("disableTopPolyline"      )] public bool disableTopPolyline;
-		[Serialize("disableBottomPolyline"   )] public bool disableBottomPolyline;
+		public bool alignOnTrajectoryOnStart;
+		public bool flipWithDirection;
+		public bool disablePolyline;
+		public bool disableTopPolyline;
+		public bool disableBottomPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(alignOnTrajectoryOnStart), boolAsByte: true);
-					SerializeField(s, nameof(flipWithDirection), boolAsByte: true);
+					alignOnTrajectoryOnStart = s.Serialize<bool>(alignOnTrajectoryOnStart, name: "alignOnTrajectoryOnStart", options: CSerializerObject.Options.BoolAsByte);
+					flipWithDirection = s.Serialize<bool>(flipWithDirection, name: "flipWithDirection", options: CSerializerObject.Options.BoolAsByte);
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					SerializeField(s, nameof(alignOnTrajectoryOnStart));
-					SerializeField(s, nameof(flipWithDirection));
-					SerializeField(s, nameof(disablePolyline));
-					SerializeField(s, nameof(disableTopPolyline));
-					SerializeField(s, nameof(disableBottomPolyline));
+					alignOnTrajectoryOnStart = s.Serialize<bool>(alignOnTrajectoryOnStart, name: "alignOnTrajectoryOnStart");
+					flipWithDirection = s.Serialize<bool>(flipWithDirection, name: "flipWithDirection");
+					disablePolyline = s.Serialize<bool>(disablePolyline, name: "disablePolyline");
+					disableTopPolyline = s.Serialize<bool>(disableTopPolyline, name: "disableTopPolyline");
+					disableBottomPolyline = s.Serialize<bool>(disableBottomPolyline, name: "disableBottomPolyline");
 				}
 			}
 		}

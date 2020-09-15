@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ObjectPath : CSerializable {
-		[Serialize("levels"  )] public CList<ObjectPath.Level> levels;
-		[Serialize("id"      )] public string id;
-		[Serialize("absolute")] public bool absolute;
+		public CList<ObjectPath.Level> levels;
+		public string id;
+		public bool absolute;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				SerializeField(s, nameof(levels));
-				SerializeField(s, nameof(id));
-				SerializeField(s, nameof(absolute));
+				levels = s.SerializeObject<CList<ObjectPath.Level>>(levels, name: "levels");
+				id = s.Serialize<string>(id, name: "id");
+				absolute = s.Serialize<bool>(absolute, name: "absolute");
 			} else {
-				SerializeField(s, nameof(id));
+				id = s.Serialize<string>(id, name: "id");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class Level : CSerializable {
-			[Serialize("name"  )] public string name;
-			[Serialize("parent")] public bool parent;
+			public string name;
+			public bool parent;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(name));
-				SerializeField(s, nameof(parent));
+				name = s.Serialize<string>(name, name: "name");
+				parent = s.Serialize<bool>(parent, name: "parent");
 			}
 		}
 	}

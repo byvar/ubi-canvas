@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class EventCrushed : Event {
-		[Serialize("characterSize"   )] public CHARACTERSIZE characterSize;
-		[Serialize("direction"       )] public Vec2d direction;
-		[Serialize("fxPos"           )] public Vec3d fxPos;
-		[Serialize("bounce"          )] public bool bounce;
-		[Serialize("bounceMultiplier")] public float bounceMultiplier;
+		public CHARACTERSIZE characterSize;
+		public Vec2d direction;
+		public Vec3d fxPos;
+		public bool bounce;
+		public float bounceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 			} else {
-				SerializeField(s, nameof(characterSize));
-				SerializeField(s, nameof(direction));
-				SerializeField(s, nameof(fxPos));
-				SerializeField(s, nameof(bounce));
-				SerializeField(s, nameof(bounceMultiplier));
+				characterSize = s.Serialize<CHARACTERSIZE>(characterSize, name: "characterSize");
+				direction = s.SerializeObject<Vec2d>(direction, name: "direction");
+				fxPos = s.SerializeObject<Vec3d>(fxPos, name: "fxPos");
+				bounce = s.Serialize<bool>(bounce, name: "bounce");
+				bounceMultiplier = s.Serialize<float>(bounceMultiplier, name: "bounceMultiplier");
 			}
 		}
 		public enum CHARACTERSIZE {

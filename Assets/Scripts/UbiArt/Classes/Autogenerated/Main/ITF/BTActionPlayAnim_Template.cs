@@ -3,25 +3,25 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
 	public partial class BTActionPlayAnim_Template : BTAction_Template {
-		[Serialize("anim"                 )] public StringID anim;
-		[Serialize("restartOnFact"        )] public StringID restartOnFact;
-		[Serialize("retOnFinish"          )] public bool retOnFinish;
-		[Serialize("playTime"             )] public float playTime;
-		[Serialize("useAnimationRootDelta")] public bool useAnimationRootDelta;
-		[Serialize("disablePhys"          )] public bool disablePhys;
+		public StringID anim;
+		public StringID restartOnFact;
+		public bool retOnFinish;
+		public float playTime;
+		public bool useAnimationRootDelta;
+		public bool disablePhys;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(restartOnFact));
-				SerializeField(s, nameof(retOnFinish));
+				anim = s.SerializeObject<StringID>(anim, name: "anim");
+				restartOnFact = s.SerializeObject<StringID>(restartOnFact, name: "restartOnFact");
+				retOnFinish = s.Serialize<bool>(retOnFinish, name: "retOnFinish");
 			} else {
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(restartOnFact));
-				SerializeField(s, nameof(retOnFinish));
-				SerializeField(s, nameof(playTime));
-				SerializeField(s, nameof(useAnimationRootDelta));
-				SerializeField(s, nameof(disablePhys));
+				anim = s.SerializeObject<StringID>(anim, name: "anim");
+				restartOnFact = s.SerializeObject<StringID>(restartOnFact, name: "restartOnFact");
+				retOnFinish = s.Serialize<bool>(retOnFinish, name: "retOnFinish");
+				playTime = s.Serialize<float>(playTime, name: "playTime");
+				useAnimationRootDelta = s.Serialize<bool>(useAnimationRootDelta, name: "useAnimationRootDelta");
+				disablePhys = s.Serialize<bool>(disablePhys, name: "disablePhys");
 			}
 		}
 		public override uint? ClassCRC => 0xAB33BDE8;

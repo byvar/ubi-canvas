@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_NoiseParam : CSerializable {
-		[Serialize("use"        )] public bool use;
-		[Serialize("blendFactor")] public float blendFactor;
-		[Serialize("size"       )] public float size;
+		public bool use;
+		public float blendFactor;
+		public float size;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				SerializeField(s, nameof(use), boolAsByte: true);
+				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				SerializeField(s, nameof(use));
+				use = s.Serialize<bool>(use, name: "use");
 			}
-			SerializeField(s, nameof(blendFactor));
-			SerializeField(s, nameof(size));
+			blendFactor = s.Serialize<float>(blendFactor, name: "blendFactor");
+			size = s.Serialize<float>(size, name: "size");
 		}
 	}
 }

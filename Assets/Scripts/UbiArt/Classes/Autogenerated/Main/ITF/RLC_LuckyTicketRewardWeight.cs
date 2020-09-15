@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_LuckyTicketRewardWeight : CSerializable {
-		[Serialize("luckyTicketReward")] public RLC_LuckyTicketReward luckyTicketReward;
-		[Serialize("weight"           )] public uint weight;
+		public RLC_LuckyTicketReward luckyTicketReward;
+		public uint weight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(luckyTicketReward));
-			SerializeField(s, nameof(weight));
+			luckyTicketReward = s.SerializeObject<RLC_LuckyTicketReward>(luckyTicketReward, name: "luckyTicketReward");
+			weight = s.Serialize<uint>(weight, name: "weight");
 		}
 	}
 }

@@ -3,34 +3,34 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class MultiTargetEvent : CSerializable {
-		[Serialize("triggerOnce"         )] public bool triggerOnce;
-		[Serialize("triggerSelf"         )] public bool triggerSelf;
-		[Serialize("triggerActivator"    )] public bool triggerActivator;
-		[Serialize("triggerBroadcast"    )] public bool triggerBroadcast;
-		[Serialize("triggerParent"       )] public bool triggerParent;
-		[Serialize("triggerChildren"     )] public bool triggerChildren;
-		[Serialize("childrenTagList"     )] public CList<ChildrenTagParam> childrenTagList;
-		[Serialize("triggerBoundParent"  )] public bool triggerBoundParent;
-		[Serialize("triggerBoundChildren")] public bool triggerBoundChildren;
-		[Serialize("modeAfterCP"         )] public Mode modeAfterCP;
-		[Serialize("triggerOnceDone"     )] public bool triggerOnceDone;
-		[Serialize("Events"              )] public CList<Event> Events;
+		public bool triggerOnce;
+		public bool triggerSelf;
+		public bool triggerActivator;
+		public bool triggerBroadcast;
+		public bool triggerParent;
+		public bool triggerChildren;
+		public CList<ChildrenTagParam> childrenTagList;
+		public bool triggerBoundParent;
+		public bool triggerBoundChildren;
+		public Mode modeAfterCP;
+		public bool triggerOnceDone;
+		public CList<Event> Events;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(triggerOnce));
-			SerializeField(s, nameof(triggerSelf));
-			SerializeField(s, nameof(triggerActivator));
-			SerializeField(s, nameof(triggerBroadcast));
-			SerializeField(s, nameof(triggerParent));
-			SerializeField(s, nameof(triggerChildren));
-			SerializeField(s, nameof(childrenTagList));
-			SerializeField(s, nameof(triggerBoundParent));
-			SerializeField(s, nameof(triggerBoundChildren));
-			SerializeField(s, nameof(modeAfterCP));
+			triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce");
+			triggerSelf = s.Serialize<bool>(triggerSelf, name: "triggerSelf");
+			triggerActivator = s.Serialize<bool>(triggerActivator, name: "triggerActivator");
+			triggerBroadcast = s.Serialize<bool>(triggerBroadcast, name: "triggerBroadcast");
+			triggerParent = s.Serialize<bool>(triggerParent, name: "triggerParent");
+			triggerChildren = s.Serialize<bool>(triggerChildren, name: "triggerChildren");
+			childrenTagList = s.SerializeObject<CList<ChildrenTagParam>>(childrenTagList, name: "childrenTagList");
+			triggerBoundParent = s.Serialize<bool>(triggerBoundParent, name: "triggerBoundParent");
+			triggerBoundChildren = s.Serialize<bool>(triggerBoundChildren, name: "triggerBoundChildren");
+			modeAfterCP = s.Serialize<Mode>(modeAfterCP, name: "modeAfterCP");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				SerializeField(s, nameof(triggerOnceDone));
+				triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
 			}
-			SerializeField(s, nameof(Events));
+			Events = s.SerializeObject<CList<Event>>(Events, name: "Events");
 		}
 		public enum Mode {
 			[Serialize("Mode_None"            )] None = 0,

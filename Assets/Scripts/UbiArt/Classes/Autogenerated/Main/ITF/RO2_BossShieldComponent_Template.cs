@@ -3,26 +3,26 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossShieldComponent_Template : ActorComponent_Template {
-		[Serialize("animOn"         )] public StringID animOn;
-		[Serialize("animOff"        )] public StringID animOff;
-		[Serialize("animDefaultOn"  )] public StringID animDefaultOn;
-		[Serialize("radius"         )] public float radius;
-		[Serialize("faction"        )] public uint faction;
-		[Serialize("factionToRepel" )] public uint factionToRepel;
-		[Serialize("factionToAccept")] public uint factionToAccept;
-		[Serialize("hitActorsInside")] public bool hitActorsInside;
-		[Serialize("centerBone"     )] public StringID centerBone;
+		public StringID animOn;
+		public StringID animOff;
+		public StringID animDefaultOn;
+		public float radius;
+		public uint faction;
+		public uint factionToRepel;
+		public uint factionToAccept;
+		public bool hitActorsInside;
+		public StringID centerBone;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(animOn));
-			SerializeField(s, nameof(animOff));
-			SerializeField(s, nameof(animDefaultOn));
-			SerializeField(s, nameof(radius));
-			SerializeField(s, nameof(faction));
-			SerializeField(s, nameof(factionToRepel));
-			SerializeField(s, nameof(factionToAccept));
-			SerializeField(s, nameof(hitActorsInside));
-			SerializeField(s, nameof(centerBone));
+			animOn = s.SerializeObject<StringID>(animOn, name: "animOn");
+			animOff = s.SerializeObject<StringID>(animOff, name: "animOff");
+			animDefaultOn = s.SerializeObject<StringID>(animDefaultOn, name: "animDefaultOn");
+			radius = s.Serialize<float>(radius, name: "radius");
+			faction = s.Serialize<uint>(faction, name: "faction");
+			factionToRepel = s.Serialize<uint>(factionToRepel, name: "factionToRepel");
+			factionToAccept = s.Serialize<uint>(factionToAccept, name: "factionToAccept");
+			hitActorsInside = s.Serialize<bool>(hitActorsInside, name: "hitActorsInside");
+			centerBone = s.SerializeObject<StringID>(centerBone, name: "centerBone");
 		}
 		public override uint? ClassCRC => 0x8A65DEDD;
 	}

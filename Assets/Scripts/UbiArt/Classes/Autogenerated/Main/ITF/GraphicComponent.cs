@@ -3,92 +3,92 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH)]
 	public partial class GraphicComponent : ActorComponent {
-		[Serialize("ColorFactor"                  )] public Color ColorFactor;
-		[Serialize("ColorFog"                     )] public Color ColorFog;
-		[Serialize("PrimitiveParameters"          )] public GFXPrimitiveParam PrimitiveParameters;
-		[Serialize("colorComputerTagId"           )] public uint colorComputerTagId;
-		[Serialize("renderInTarget"               )] public bool renderInTarget;
-		[Serialize("disableLight"                 )] public int disableLight;
-		[Serialize("disableShadow"                )] public int disableShadow;
-		[Serialize("depthOffset"                  )] public float depthOffset;
-		[Serialize("AlphaInit"                    )] public float AlphaInit;
-		[Serialize("highlightFrontLightBrightness")] public float highlightFrontLightBrightness;
-		[Serialize("highlightOutlineColor"        )] public Color highlightOutlineColor;
-		[Serialize("highlightOutlineWidth"        )] public float highlightOutlineWidth;
-		[Serialize("ColorFog_Red"                 )] public float ColorFog_Red;
-		[Serialize("ColorFog_Green"               )] public float ColorFog_Green;
-		[Serialize("ColorFog_Blu"                 )] public float ColorFog_Blu;
-		[Serialize("fogfactor"                    )] public float fogfactor;
-		[Serialize("useStaticFog"                 )] public int useStaticFog;
-		[Serialize("renderInReflection"           )] public int renderInReflection;
+		public Color ColorFactor;
+		public Color ColorFog;
+		public GFXPrimitiveParam PrimitiveParameters;
+		public uint colorComputerTagId;
+		public bool renderInTarget;
+		public int disableLight;
+		public int disableShadow;
+		public float depthOffset;
+		public float AlphaInit;
+		public float highlightFrontLightBrightness;
+		public Color highlightOutlineColor;
+		public float highlightOutlineWidth;
+		public float ColorFog_Red;
+		public float ColorFog_Green;
+		public float ColorFog_Blu;
+		public float fogfactor;
+		public int useStaticFog;
+		public int renderInReflection;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
-						SerializeField(s, nameof(ColorFog_Red));
-						SerializeField(s, nameof(ColorFog_Green));
-						SerializeField(s, nameof(ColorFog_Blu));
-						SerializeField(s, nameof(fogfactor));
+						ColorFog_Red = s.Serialize<float>(ColorFog_Red, name: "ColorFog_Red");
+						ColorFog_Green = s.Serialize<float>(ColorFog_Green, name: "ColorFog_Green");
+						ColorFog_Blu = s.Serialize<float>(ColorFog_Blu, name: "ColorFog_Blu");
+						fogfactor = s.Serialize<float>(fogfactor, name: "fogfactor");
 					}
-					SerializeField(s, nameof(ColorFactor));
-					SerializeField(s, nameof(ColorFog));
-					SerializeField(s, nameof(colorComputerTagId));
-					SerializeField(s, nameof(renderInTarget));
-					SerializeField(s, nameof(disableLight));
+					ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+					ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
+					colorComputerTagId = s.Serialize<uint>(colorComputerTagId, name: "colorComputerTagId");
+					renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
+					disableLight = s.Serialize<int>(disableLight, name: "disableLight");
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(ColorFactor));
-						SerializeField(s, nameof(ColorFog));
-						SerializeField(s, nameof(useStaticFog));
-						SerializeField(s, nameof(renderInReflection));
+						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+						ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
+						useStaticFog = s.Serialize<int>(useStaticFog, name: "useStaticFog");
+						renderInReflection = s.Serialize<int>(renderInReflection, name: "renderInReflection");
 					}
-					SerializeField(s, nameof(PrimitiveParameters));
-					SerializeField(s, nameof(colorComputerTagId));
+					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+					colorComputerTagId = s.Serialize<uint>(colorComputerTagId, name: "colorComputerTagId");
 					if (Settings.s.isCatchThemAll) {
-						SerializeField(s, nameof(renderInTarget));
-						SerializeField(s, nameof(renderInTarget), type: typeof(byte));
+						renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
+						renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget", options: CSerializerObject.Options.ForceAsByte);
 					}
-					SerializeField(s, nameof(renderInTarget));
-					SerializeField(s, nameof(disableLight));
-					SerializeField(s, nameof(disableShadow));
-					SerializeField(s, nameof(depthOffset));
+					renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
+					disableLight = s.Serialize<int>(disableLight, name: "disableLight");
+					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");
+					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(ColorFactor));
-						SerializeField(s, nameof(ColorFog));
-						SerializeField(s, nameof(useStaticFog));
-						SerializeField(s, nameof(renderInReflection));
+						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+						ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
+						useStaticFog = s.Serialize<int>(useStaticFog, name: "useStaticFog");
+						renderInReflection = s.Serialize<int>(renderInReflection, name: "renderInReflection");
 					}
-					SerializeField(s, nameof(PrimitiveParameters));
-					SerializeField(s, nameof(colorComputerTagId));
-					SerializeField(s, nameof(renderInTarget));
-					SerializeField(s, nameof(disableLight));
-					SerializeField(s, nameof(disableShadow));
-					SerializeField(s, nameof(depthOffset));
-					SerializeField(s, nameof(AlphaInit));
+					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+					colorComputerTagId = s.Serialize<uint>(colorComputerTagId, name: "colorComputerTagId");
+					renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
+					disableLight = s.Serialize<int>(disableLight, name: "disableLight");
+					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");
+					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
+					AlphaInit = s.Serialize<float>(AlphaInit, name: "AlphaInit");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
-						SerializeField(s, nameof(ColorFactor));
-						SerializeField(s, nameof(ColorFog));
+						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+						ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
 					}
-					SerializeField(s, nameof(PrimitiveParameters));
-					SerializeField(s, nameof(colorComputerTagId));
-					SerializeField(s, nameof(renderInTarget));
-					SerializeField(s, nameof(disableLight));
-					SerializeField(s, nameof(disableShadow));
-					SerializeField(s, nameof(depthOffset));
-					SerializeField(s, nameof(AlphaInit));
-					SerializeField(s, nameof(highlightFrontLightBrightness));
-					SerializeField(s, nameof(highlightOutlineColor));
-					SerializeField(s, nameof(highlightOutlineWidth));
+					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+					colorComputerTagId = s.Serialize<uint>(colorComputerTagId, name: "colorComputerTagId");
+					renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
+					disableLight = s.Serialize<int>(disableLight, name: "disableLight");
+					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");
+					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
+					AlphaInit = s.Serialize<float>(AlphaInit, name: "AlphaInit");
+					highlightFrontLightBrightness = s.Serialize<float>(highlightFrontLightBrightness, name: "highlightFrontLightBrightness");
+					highlightOutlineColor = s.SerializeObject<Color>(highlightOutlineColor, name: "highlightOutlineColor");
+					highlightOutlineWidth = s.Serialize<float>(highlightOutlineWidth, name: "highlightOutlineWidth");
 				}
 			}
 		}

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ActorPlugTransfoController_Template : ActorPlugPlayableController_Template {
-		[Serialize("autoUnplugDelay"  )] public float autoUnplugDelay;
-		[Serialize("autoUnplugWarning")] public float autoUnplugWarning;
+		public float autoUnplugDelay;
+		public float autoUnplugWarning;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(autoUnplugDelay));
-			SerializeField(s, nameof(autoUnplugWarning));
+			autoUnplugDelay = s.Serialize<float>(autoUnplugDelay, name: "autoUnplugDelay");
+			autoUnplugWarning = s.Serialize<float>(autoUnplugWarning, name: "autoUnplugWarning");
 		}
 		public override uint? ClassCRC => 0x9EEEA27C;
 	}

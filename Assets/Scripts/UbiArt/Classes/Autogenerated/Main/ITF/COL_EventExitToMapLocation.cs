@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_EventExitToMapLocation : Event {
-		[Serialize("unlock"            )] public bool unlock;
-		[Serialize("mapLocationId"     )] public StringID mapLocationId;
-		[Serialize("mapPath"           )] public PathRef mapPath;
-		[Serialize("checkpointIndex"   )] public uint checkpointIndex;
-		[Serialize("checkpointObjectId")] public Placeholder checkpointObjectId;
+		public bool unlock;
+		public StringID mapLocationId;
+		public PathRef mapPath;
+		public uint checkpointIndex;
+		public Placeholder checkpointObjectId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(unlock), boolAsByte: true);
-			SerializeField(s, nameof(mapLocationId));
-			SerializeField(s, nameof(mapPath));
-			SerializeField(s, nameof(checkpointIndex));
-			SerializeField(s, nameof(checkpointObjectId));
+			unlock = s.Serialize<bool>(unlock, name: "unlock", options: CSerializerObject.Options.BoolAsByte);
+			mapLocationId = s.SerializeObject<StringID>(mapLocationId, name: "mapLocationId");
+			mapPath = s.SerializeObject<PathRef>(mapPath, name: "mapPath");
+			checkpointIndex = s.Serialize<uint>(checkpointIndex, name: "checkpointIndex");
+			checkpointObjectId = s.SerializeObject<Placeholder>(checkpointObjectId, name: "checkpointObjectId");
 		}
 		public override uint? ClassCRC => 0xEDFEA31B;
 	}

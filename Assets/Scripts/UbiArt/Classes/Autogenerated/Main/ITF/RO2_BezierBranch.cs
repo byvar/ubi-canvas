@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RO2_BezierBranch : CSerializable {
-		[Serialize("nodes"            )] public CList<RO2_BezierNode> nodes;
-		[Serialize("subBranches"      )] public CList<RO2_BezierSubBranch> subBranches;
-		[Serialize("components"       )] public CArray<Generic<RO2_BezierBranchComponent>> components;
-		[Serialize("autoStartTweening")] public bool autoStartTweening;
+		public CList<RO2_BezierNode> nodes;
+		public CList<RO2_BezierSubBranch> subBranches;
+		public CArray<Generic<RO2_BezierBranchComponent>> components;
+		public bool autoStartTweening;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(nodes));
-			SerializeField(s, nameof(subBranches));
-			SerializeField(s, nameof(components));
-			SerializeField(s, nameof(autoStartTweening));
+			nodes = s.SerializeObject<CList<RO2_BezierNode>>(nodes, name: "nodes");
+			subBranches = s.SerializeObject<CList<RO2_BezierSubBranch>>(subBranches, name: "subBranches");
+			components = s.SerializeObject<CArray<Generic<RO2_BezierBranchComponent>>>(components, name: "components");
+			autoStartTweening = s.Serialize<bool>(autoStartTweening, name: "autoStartTweening");
 		}
 	}
 }

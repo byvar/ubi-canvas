@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_SnakeAIComponent : ActorComponent {
-		[Serialize("activeMode")] public Enum_RFR_0 activeMode;
+		public Enum_RFR_0 activeMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(activeMode));
+			activeMode = s.Serialize<Enum_RFR_0>(activeMode, name: "activeMode");
 		}
 		public enum Enum_RFR_0 {
 			[Serialize("Value_1")] Value_1 = 1,

@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DragonBossComponent : ActorComponent {
-		[Serialize("mode"            )] public Enum_mode mode;
-		[Serialize("anim"            )] public StringID anim;
-		[Serialize("secondAnim"      )] public StringID secondAnim;
-		[Serialize("speed"           )] public Vec2d speed;
-		[Serialize("showAttackSphere")] public bool showAttackSphere;
+		public Enum_mode mode;
+		public StringID anim;
+		public StringID secondAnim;
+		public Vec2d speed;
+		public bool showAttackSphere;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(mode));
-				SerializeField(s, nameof(anim));
-				SerializeField(s, nameof(secondAnim));
-				SerializeField(s, nameof(speed));
-				SerializeField(s, nameof(showAttackSphere));
+				mode = s.Serialize<Enum_mode>(mode, name: "mode");
+				anim = s.SerializeObject<StringID>(anim, name: "anim");
+				secondAnim = s.SerializeObject<StringID>(secondAnim, name: "secondAnim");
+				speed = s.SerializeObject<Vec2d>(speed, name: "speed");
+				showAttackSphere = s.Serialize<bool>(showAttackSphere, name: "showAttackSphere");
 			}
 		}
 		public enum Enum_mode {

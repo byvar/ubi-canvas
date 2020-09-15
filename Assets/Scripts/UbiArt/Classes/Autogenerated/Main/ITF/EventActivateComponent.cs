@@ -3,19 +3,19 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class EventActivateComponent : Event {
-		[Serialize("active"            )] public bool active;
-		[Serialize("SpecificComponents")] public CList<EventActivateComponent.sComponentName> SpecificComponents;
+		public bool active;
+		public CList<EventActivateComponent.sComponentName> SpecificComponents;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(active));
-			SerializeField(s, nameof(SpecificComponents));
+			active = s.Serialize<bool>(active, name: "active");
+			SpecificComponents = s.SerializeObject<CList<EventActivateComponent.sComponentName>>(SpecificComponents, name: "SpecificComponents");
 		}
 		[Games(GameFlags.RA)]
 		public partial class sComponentName : CSerializable {
-			[Serialize("ComponentCRC")] public StringID ComponentCRC;
+			public StringID ComponentCRC;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				SerializeField(s, nameof(ComponentCRC));
+				ComponentCRC = s.SerializeObject<StringID>(ComponentCRC, name: "ComponentCRC");
 			}
 		}
 		public override uint? ClassCRC => 0x65D8C476;

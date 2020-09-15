@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ActorComponent : CSerializable {
-		[Serialize("UpdateDisabled"   )] public bool UpdateDisabled;
-		[Serialize("ObjectDeviceSpeed")] public DeviceInfo__Device_Speed ObjectDeviceSpeed;
+		public bool UpdateDisabled;
+		public DeviceInfo__Device_Speed ObjectDeviceSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RA) {
-				SerializeField(s, nameof(UpdateDisabled));
-				SerializeField(s, nameof(ObjectDeviceSpeed));
+				UpdateDisabled = s.Serialize<bool>(UpdateDisabled, name: "UpdateDisabled");
+				ObjectDeviceSpeed = s.Serialize<DeviceInfo__Device_Speed>(ObjectDeviceSpeed, name: "ObjectDeviceSpeed");
 			}
 		}
 		public enum DeviceInfo__Device_Speed {

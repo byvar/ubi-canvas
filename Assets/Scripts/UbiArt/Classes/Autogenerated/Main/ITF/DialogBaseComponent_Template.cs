@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class DialogBaseComponent_Template : ActorComponent_Template {
-		[Serialize("useOasis"                  )] public bool useOasis;
-		[Serialize("replaceSpeakersByActivator")] public bool replaceSpeakersByActivator;
-		[Serialize("activeOnTrigger"           )] public bool activeOnTrigger;
+		public bool useOasis;
+		public bool replaceSpeakersByActivator;
+		public bool activeOnTrigger;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(useOasis));
-			SerializeField(s, nameof(replaceSpeakersByActivator));
-			SerializeField(s, nameof(activeOnTrigger));
+			useOasis = s.Serialize<bool>(useOasis, name: "useOasis");
+			replaceSpeakersByActivator = s.Serialize<bool>(replaceSpeakersByActivator, name: "replaceSpeakersByActivator");
+			activeOnTrigger = s.Serialize<bool>(activeOnTrigger, name: "activeOnTrigger");
 		}
 		public override uint? ClassCRC => 0x660B6720;
 	}

@@ -3,22 +3,22 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RO2_PlayerConfig_Template : CSerializable {
-		[Serialize("minHitPoints"                    )] public uint minHitPoints;
-		[Serialize("maxHitPoints"                    )] public uint maxHitPoints;
-		[Serialize("startHitPoints"                  )] public uint startHitPoints;
-		[Serialize("startHitPointsAfterDeath"        )] public uint startHitPointsAfterDeath;
-		[Serialize("maxHitPointsWithPet"             )] public uint maxHitPointsWithPet;
-		[Serialize("maxHitPointsWithPetProtector"    )] public uint maxHitPointsWithPetProtector;
-		[Serialize("maxHitPointsWithPetProtectorKing")] public uint maxHitPointsWithPetProtectorKing;
+		public uint minHitPoints;
+		public uint maxHitPoints;
+		public uint startHitPoints;
+		public uint startHitPointsAfterDeath;
+		public uint maxHitPointsWithPet;
+		public uint maxHitPointsWithPetProtector;
+		public uint maxHitPointsWithPetProtectorKing;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(minHitPoints));
-			SerializeField(s, nameof(maxHitPoints));
-			SerializeField(s, nameof(startHitPoints));
-			SerializeField(s, nameof(startHitPointsAfterDeath));
-			SerializeField(s, nameof(maxHitPointsWithPet));
-			SerializeField(s, nameof(maxHitPointsWithPetProtector));
-			SerializeField(s, nameof(maxHitPointsWithPetProtectorKing));
+			minHitPoints = s.Serialize<uint>(minHitPoints, name: "minHitPoints");
+			maxHitPoints = s.Serialize<uint>(maxHitPoints, name: "maxHitPoints");
+			startHitPoints = s.Serialize<uint>(startHitPoints, name: "startHitPoints");
+			startHitPointsAfterDeath = s.Serialize<uint>(startHitPointsAfterDeath, name: "startHitPointsAfterDeath");
+			maxHitPointsWithPet = s.Serialize<uint>(maxHitPointsWithPet, name: "maxHitPointsWithPet");
+			maxHitPointsWithPetProtector = s.Serialize<uint>(maxHitPointsWithPetProtector, name: "maxHitPointsWithPetProtector");
+			maxHitPointsWithPetProtectorKing = s.Serialize<uint>(maxHitPointsWithPetProtectorKing, name: "maxHitPointsWithPetProtectorKing");
 		}
 	}
 }

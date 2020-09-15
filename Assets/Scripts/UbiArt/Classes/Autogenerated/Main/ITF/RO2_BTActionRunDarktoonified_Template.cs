@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionRunDarktoonified_Template : BTAction_Template {
-		[Serialize("walkAnim"              )] public StringID walkAnim;
-		[Serialize("swimAnim"              )] public StringID swimAnim;
-		[Serialize("fallAnim"              )] public StringID fallAnim;
-		[Serialize("flyFallAnim"           )] public StringID flyFallAnim;
-		[Serialize("crashWallAnim"         )] public StringID crashWallAnim;
-		[Serialize("launchIdleMinTime"     )] public float launchIdleMinTime;
-		[Serialize("launchIdleMaxTime"     )] public float launchIdleMaxTime;
-		[Serialize("stayIdleMinTime"       )] public float stayIdleMinTime;
-		[Serialize("stayIdleMaxTime"       )] public float stayIdleMaxTime;
-		[Serialize("flyFallSpeedMultiplier")] public float flyFallSpeedMultiplier;
-		[Serialize("canRunInTheAir"        )] public bool canRunInTheAir;
+		public StringID walkAnim;
+		public StringID swimAnim;
+		public StringID fallAnim;
+		public StringID flyFallAnim;
+		public StringID crashWallAnim;
+		public float launchIdleMinTime;
+		public float launchIdleMaxTime;
+		public float stayIdleMinTime;
+		public float stayIdleMaxTime;
+		public float flyFallSpeedMultiplier;
+		public bool canRunInTheAir;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(walkAnim));
-			SerializeField(s, nameof(swimAnim));
-			SerializeField(s, nameof(fallAnim));
-			SerializeField(s, nameof(flyFallAnim));
-			SerializeField(s, nameof(crashWallAnim));
-			SerializeField(s, nameof(launchIdleMinTime));
-			SerializeField(s, nameof(launchIdleMaxTime));
-			SerializeField(s, nameof(stayIdleMinTime));
-			SerializeField(s, nameof(stayIdleMaxTime));
-			SerializeField(s, nameof(flyFallSpeedMultiplier));
-			SerializeField(s, nameof(canRunInTheAir));
+			walkAnim = s.SerializeObject<StringID>(walkAnim, name: "walkAnim");
+			swimAnim = s.SerializeObject<StringID>(swimAnim, name: "swimAnim");
+			fallAnim = s.SerializeObject<StringID>(fallAnim, name: "fallAnim");
+			flyFallAnim = s.SerializeObject<StringID>(flyFallAnim, name: "flyFallAnim");
+			crashWallAnim = s.SerializeObject<StringID>(crashWallAnim, name: "crashWallAnim");
+			launchIdleMinTime = s.Serialize<float>(launchIdleMinTime, name: "launchIdleMinTime");
+			launchIdleMaxTime = s.Serialize<float>(launchIdleMaxTime, name: "launchIdleMaxTime");
+			stayIdleMinTime = s.Serialize<float>(stayIdleMinTime, name: "stayIdleMinTime");
+			stayIdleMaxTime = s.Serialize<float>(stayIdleMaxTime, name: "stayIdleMaxTime");
+			flyFallSpeedMultiplier = s.Serialize<float>(flyFallSpeedMultiplier, name: "flyFallSpeedMultiplier");
+			canRunInTheAir = s.Serialize<bool>(canRunInTheAir, name: "canRunInTheAir");
 		}
 		public override uint? ClassCRC => 0xF1CACB88;
 	}

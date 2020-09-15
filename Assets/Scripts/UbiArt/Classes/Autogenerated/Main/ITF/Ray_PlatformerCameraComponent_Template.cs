@@ -3,30 +3,30 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_PlatformerCameraComponent_Template : InGameCameraComponent_Template {
-		[Serialize("useEjectMargin"                 )] public int useEjectMargin;
-		[Serialize("ejectMargin"                    )] public float ejectMargin;
-		[Serialize("ejectMarginDetachesPlayer"      )] public int ejectMarginDetachesPlayer;
-		[Serialize("ejectForce"                     )] public float ejectForce;
-		[Serialize("useDeathMargin"                 )] public int useDeathMargin;
-		[Serialize("deathMargin"                    )] public float deathMargin;
-		[Serialize("timeOut"                        )] public float timeOut;
-		[Serialize("lastOnscreenPlayerKillsEveryone")] public int lastOnscreenPlayerKillsEveryone;
-		[Serialize("pursuitUseDeathMargin"          )] public int pursuitUseDeathMargin;
-		[Serialize("pursuitDeathMargin"             )] public float pursuitDeathMargin;
-		[Serialize("pursuitTimeOut"                 )] public float pursuitTimeOut;
+		public int useEjectMargin;
+		public float ejectMargin;
+		public int ejectMarginDetachesPlayer;
+		public float ejectForce;
+		public int useDeathMargin;
+		public float deathMargin;
+		public float timeOut;
+		public int lastOnscreenPlayerKillsEveryone;
+		public int pursuitUseDeathMargin;
+		public float pursuitDeathMargin;
+		public float pursuitTimeOut;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(useEjectMargin));
-			SerializeField(s, nameof(ejectMargin));
-			SerializeField(s, nameof(ejectMarginDetachesPlayer));
-			SerializeField(s, nameof(ejectForce));
-			SerializeField(s, nameof(useDeathMargin));
-			SerializeField(s, nameof(deathMargin));
-			SerializeField(s, nameof(timeOut));
-			SerializeField(s, nameof(lastOnscreenPlayerKillsEveryone));
-			SerializeField(s, nameof(pursuitUseDeathMargin));
-			SerializeField(s, nameof(pursuitDeathMargin));
-			SerializeField(s, nameof(pursuitTimeOut));
+			useEjectMargin = s.Serialize<int>(useEjectMargin, name: "useEjectMargin");
+			ejectMargin = s.Serialize<float>(ejectMargin, name: "ejectMargin");
+			ejectMarginDetachesPlayer = s.Serialize<int>(ejectMarginDetachesPlayer, name: "ejectMarginDetachesPlayer");
+			ejectForce = s.Serialize<float>(ejectForce, name: "ejectForce");
+			useDeathMargin = s.Serialize<int>(useDeathMargin, name: "useDeathMargin");
+			deathMargin = s.Serialize<float>(deathMargin, name: "deathMargin");
+			timeOut = s.Serialize<float>(timeOut, name: "timeOut");
+			lastOnscreenPlayerKillsEveryone = s.Serialize<int>(lastOnscreenPlayerKillsEveryone, name: "lastOnscreenPlayerKillsEveryone");
+			pursuitUseDeathMargin = s.Serialize<int>(pursuitUseDeathMargin, name: "pursuitUseDeathMargin");
+			pursuitDeathMargin = s.Serialize<float>(pursuitDeathMargin, name: "pursuitDeathMargin");
+			pursuitTimeOut = s.Serialize<float>(pursuitTimeOut, name: "pursuitTimeOut");
 		}
 		public override uint? ClassCRC => 0x2A9ACB4C;
 	}

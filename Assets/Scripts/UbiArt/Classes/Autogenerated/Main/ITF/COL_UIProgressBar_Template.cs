@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_UIProgressBar_Template : CSerializable {
-		[Serialize("currentValueUpdateRate")] public float currentValueUpdateRate;
-		[Serialize("maxValueUpdateRate"    )] public float maxValueUpdateRate;
-		[Serialize("fullBarFX"             )] public StringID fullBarFX;
-		[Serialize("fxOffset"              )] public Vec2d fxOffset;
+		public float currentValueUpdateRate;
+		public float maxValueUpdateRate;
+		public StringID fullBarFX;
+		public Vec2d fxOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(currentValueUpdateRate));
-			SerializeField(s, nameof(maxValueUpdateRate));
-			SerializeField(s, nameof(fullBarFX));
-			SerializeField(s, nameof(fxOffset));
+			currentValueUpdateRate = s.Serialize<float>(currentValueUpdateRate, name: "currentValueUpdateRate");
+			maxValueUpdateRate = s.Serialize<float>(maxValueUpdateRate, name: "maxValueUpdateRate");
+			fullBarFX = s.SerializeObject<StringID>(fullBarFX, name: "fullBarFX");
+			fxOffset = s.SerializeObject<Vec2d>(fxOffset, name: "fxOffset");
 		}
 		public override uint? ClassCRC => 0x5354E297;
 	}

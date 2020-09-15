@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_TextBubbleBehavior_Template : CSerializable {
-		[Serialize("textBoneName")] public StringID textBoneName;
-		[Serialize("sleepAction" )] public Placeholder sleepAction;
-		[Serialize("openAction"  )] public Placeholder openAction;
-		[Serialize("idleAction"  )] public Placeholder idleAction;
-		[Serialize("closeAction" )] public Placeholder closeAction;
+		public StringID textBoneName;
+		public Placeholder sleepAction;
+		public Placeholder openAction;
+		public Placeholder idleAction;
+		public Placeholder closeAction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(textBoneName));
-			SerializeField(s, nameof(sleepAction));
-			SerializeField(s, nameof(openAction));
-			SerializeField(s, nameof(idleAction));
-			SerializeField(s, nameof(closeAction));
+			textBoneName = s.SerializeObject<StringID>(textBoneName, name: "textBoneName");
+			sleepAction = s.SerializeObject<Placeholder>(sleepAction, name: "sleepAction");
+			openAction = s.SerializeObject<Placeholder>(openAction, name: "openAction");
+			idleAction = s.SerializeObject<Placeholder>(idleAction, name: "idleAction");
+			closeAction = s.SerializeObject<Placeholder>(closeAction, name: "closeAction");
 		}
 		public override uint? ClassCRC => 0x11E52943;
 	}

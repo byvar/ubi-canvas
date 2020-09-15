@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class BTActionStayIdleLookAt_Template : BTActionStayIdle_Template {
-		[Serialize("pickableFact")] public StringID pickableFact;
-		[Serialize("posFact"     )] public StringID posFact;
+		public StringID pickableFact;
+		public StringID posFact;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(pickableFact));
-			SerializeField(s, nameof(posFact));
+			pickableFact = s.SerializeObject<StringID>(pickableFact, name: "pickableFact");
+			posFact = s.SerializeObject<StringID>(posFact, name: "posFact");
 		}
 		public override uint? ClassCRC => 0x2D50410F;
 	}

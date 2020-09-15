@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_OnlineEventProcessHit : Event {
-		[Serialize("hitType"  )] public PUNCHTYPE hitType;
-		[Serialize("wantedDir")] public Vec2d wantedDir;
+		public PUNCHTYPE hitType;
+		public Vec2d wantedDir;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(hitType));
-			SerializeField(s, nameof(wantedDir));
+			hitType = s.Serialize<PUNCHTYPE>(hitType, name: "hitType");
+			wantedDir = s.SerializeObject<Vec2d>(wantedDir, name: "wantedDir");
 		}
 		public enum PUNCHTYPE {
 			[Serialize("PUNCHTYPE_CHARGE"    )] CHARGE = 0,

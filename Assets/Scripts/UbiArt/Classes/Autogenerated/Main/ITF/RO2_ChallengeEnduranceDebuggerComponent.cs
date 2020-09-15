@@ -3,21 +3,21 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeEnduranceDebuggerComponent : ActorComponent {
-		[Serialize("modePath"                     )] public Path modePath;
-		[Serialize("startDifficulty"              )] public uint startDifficulty;
-		[Serialize("stressTestMinSeed"            )] public uint stressTestMinSeed;
-		[Serialize("stressTestMaxSeed"            )] public uint stressTestMaxSeed;
-		[Serialize("stressTestSpawnCount"         )] public uint stressTestSpawnCount;
-		[Serialize("stressTestCompetitionDistance")] public float stressTestCompetitionDistance;
+		public Path modePath;
+		public uint startDifficulty;
+		public uint stressTestMinSeed;
+		public uint stressTestMaxSeed;
+		public uint stressTestSpawnCount;
+		public float stressTestCompetitionDistance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				SerializeField(s, nameof(modePath));
-				SerializeField(s, nameof(startDifficulty));
-				SerializeField(s, nameof(stressTestMinSeed));
-				SerializeField(s, nameof(stressTestMaxSeed));
-				SerializeField(s, nameof(stressTestSpawnCount));
-				SerializeField(s, nameof(stressTestCompetitionDistance));
+				modePath = s.SerializeObject<Path>(modePath, name: "modePath");
+				startDifficulty = s.Serialize<uint>(startDifficulty, name: "startDifficulty");
+				stressTestMinSeed = s.Serialize<uint>(stressTestMinSeed, name: "stressTestMinSeed");
+				stressTestMaxSeed = s.Serialize<uint>(stressTestMaxSeed, name: "stressTestMaxSeed");
+				stressTestSpawnCount = s.Serialize<uint>(stressTestSpawnCount, name: "stressTestSpawnCount");
+				stressTestCompetitionDistance = s.Serialize<float>(stressTestCompetitionDistance, name: "stressTestCompetitionDistance");
 			}
 		}
 		public override uint? ClassCRC => 0x69C804F3;

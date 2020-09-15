@@ -3,16 +3,16 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class EventTreeNodeActivationChange : Event {
-		[Serialize("Active"  )] public bool Active;
-		[Serialize("NodeName")] public StringID NodeName;
-		[Serialize("EventID" )] public StringID EventID;
-		[Serialize("Value"   )] public int Value;
+		public bool Active;
+		public StringID NodeName;
+		public StringID EventID;
+		public int Value;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(Active));
-			SerializeField(s, nameof(NodeName));
-			SerializeField(s, nameof(EventID));
-			SerializeField(s, nameof(Value));
+			Active = s.Serialize<bool>(Active, name: "Active");
+			NodeName = s.SerializeObject<StringID>(NodeName, name: "NodeName");
+			EventID = s.SerializeObject<StringID>(EventID, name: "EventID");
+			Value = s.Serialize<int>(Value, name: "Value");
 		}
 		public override uint? ClassCRC => 0x76AAA10E;
 	}

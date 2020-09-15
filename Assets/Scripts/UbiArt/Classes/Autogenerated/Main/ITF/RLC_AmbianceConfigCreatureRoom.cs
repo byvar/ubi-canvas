@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_AmbianceConfigCreatureRoom : RLC_AmbianceConfig {
-		[Serialize("FamilyId")] public Creature_Family FamilyId;
+		public Creature_Family FamilyId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SerializeField(s, nameof(FamilyId));
+			FamilyId = s.Serialize<Creature_Family>(FamilyId, name: "FamilyId");
 		}
 		public enum Creature_Family {
 			[Serialize("Creature_Family::none"                 )] none = 0,
