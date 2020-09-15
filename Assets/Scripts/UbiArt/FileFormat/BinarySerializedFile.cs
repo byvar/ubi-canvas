@@ -41,5 +41,15 @@ namespace UbiArt.FileFormat {
         public override void CreateWriter() {
             return; // No writing support yet
         }
+
+        public override void WritePointer(Pointer pointer) {
+            if (writer != null) {
+                if (pointer == null) {
+                    writer.Write((uint)0);
+                } else {
+                    writer.Write(pointer.offset);
+                }
+            }
+        }
     }
 }

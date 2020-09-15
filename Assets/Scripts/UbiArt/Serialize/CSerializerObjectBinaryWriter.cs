@@ -39,14 +39,6 @@ namespace UbiArt {
 					case TypeCode.Int64: writer.Write((long)obj); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
-			} else if (type == typeof(Vector2)) {
-				writer.Write((Vector2)obj);
-			} else if (type == typeof(Vector3)) {
-				writer.Write((Vector3)obj);
-			} else if (type == typeof(Vector4)) {
-				writer.Write((Vector4)obj);
-			} else if (type == typeof(Color)) {
-				writer.Write((Color)obj);
 			} else if (type == typeof(CString)) {
 				writer.Write16(obj != null ? ((CString)obj).str : null);
 			} else if (type == typeof(byte[])) {

@@ -6,7 +6,6 @@ namespace UbiArt {
     public class Writer : BinaryWriter {
         bool isLittleEndian = true;
         byte? xorKey;
-        IChecksumCalculator checksumCalculator;
         uint bytesSinceAlignStart;
         bool autoAlignOn = false;
 
@@ -104,9 +103,6 @@ namespace UbiArt {
             
             var data = buffer;
 
-            if (checksumCalculator?.CalculateForDecryptedData == true)
-                checksumCalculator?.AddBytes(data);
-
             if (xorKey.HasValue) {
                 // Avoid changing data in array, so create a copy
                 data = new byte[buffer.Length];
@@ -116,9 +112,6 @@ namespace UbiArt {
                 }
             }
 
-            if (checksumCalculator?.CalculateForDecryptedData == false)
-                checksumCalculator?.AddBytes(data);
-
             base.Write(data);
             
             if (autoAlignOn) 
@@ -126,15 +119,8 @@ namespace UbiArt {
         }
 
         public override void Write(byte value) {
-
-            if (checksumCalculator?.CalculateForDecryptedData == true)
-                checksumCalculator?.AddByte(value);
-
             if (xorKey.HasValue)
                 value = (byte)(value ^ xorKey.Value);
-
-            if (checksumCalculator?.CalculateForDecryptedData == false)
-                checksumCalculator?.AddByte(value);
 
             base.Write(value);
             
@@ -187,14 +173,6 @@ namespace UbiArt {
         }
         public void EndXOR() {
             xorKey = null;
-        }
-        public void BeginCalculateChecksum(IChecksumCalculator checksumCalculator) {
-            this.checksumCalculator = checksumCalculator;
-        }
-        public T EndCalculateChecksum<T>() {
-            IChecksumCalculator c = checksumCalculator;
-            checksumCalculator = null;
-            return ((IChecksumCalculator<T>)c).ChecksumValue;
         }
         #endregion
     }

@@ -50,7 +50,7 @@ public class UnitySettings {
             if (Application.isEditor) {
                 foreach (Settings.Mode mode in modes) {
                     string dir = GameDirsWeb.ContainsKey(mode) ? GameDirsWeb[mode] : "";
-                    GameDirs[mode] = s.SerializeString("WebDirectory" + mode.ToString(), dir);
+                    GameDirsWeb[mode] = s.SerializeString("WebDirectory" + mode.ToString(), dir);
                 }
             }
         }
@@ -59,7 +59,7 @@ public class UnitySettings {
         if (cmdLine) {
             if (FileSystem.mode == FileSystem.Mode.Web) {
                 string dir = GameDirsWeb.ContainsKey(GameMode) ? GameDirsWeb[GameMode] : "";
-                GameDirsWeb[GameMode] = s.SerializeString("Directory", dir, "dir", "directory", "folder", "f", "d");
+                GameDirsWeb[GameMode] = s.SerializeString("WebDirectory", dir, "dir", "directory", "folder", "f", "d");
             } else {
                 string dir = GameDirs.ContainsKey(GameMode) ? GameDirs[GameMode] : "";
                 GameDirs[GameMode] = s.SerializeString("Directory", dir, "dir", "directory", "folder", "f", "d");

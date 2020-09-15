@@ -31,6 +31,12 @@ namespace UbiArt.FileFormat {
             }
         }
 
+        public virtual Pointer GetUnsafePointer(uint value) {
+            return new Pointer(value, this);
+        }
+
+        public abstract void WritePointer(Pointer pointer);
+
         public abstract void CreateWriter();
     }
 }

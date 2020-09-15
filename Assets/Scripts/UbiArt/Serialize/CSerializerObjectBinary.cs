@@ -51,14 +51,6 @@ namespace UbiArt {
 					case TypeCode.Int64: obj = (object)reader.ReadInt64(); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
-			} else if (type == typeof(Vector2)) {
-				obj = reader.ReadVector2();
-			} else if (type == typeof(Vector3)) {
-				obj = reader.ReadVector3();
-			} else if (type == typeof(Vector4)) {
-				obj = reader.ReadVector4();
-			} else if (type == typeof(Color)) {
-				obj = reader.ReadColor();
 			} else if(type == typeof(CString)) {
 				obj = new CString(reader.ReadString16());
 				AddToStringCache(obj);

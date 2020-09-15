@@ -10,7 +10,7 @@ namespace UbiArt {
         uint bytesSinceAlignStart = 0;
         bool autoAlignOn = false;
         byte? xorKey = null;
-        IChecksumCalculator checksumCalculator = null;
+
         public Reader(Stream stream) : base(stream) { isLittleEndian = true; }
         public Reader(Stream stream, bool isLittleEndian) : base(stream) { this.isLittleEndian = isLittleEndian; }
         public bool AutoAligning {
@@ -70,8 +70,6 @@ namespace UbiArt {
             if (autoAlignOn) 
                 bytesSinceAlignStart += (uint)bytes.Length;
 
-            if (checksumCalculator?.CalculateForDecryptedData == false)
-                checksumCalculator?.AddBytes(bytes);
 
             if (xorKey.HasValue) {
                 for (int i = 0; i < count; i++) {
@@ -79,8 +77,6 @@ namespace UbiArt {
                 }
             }
 
-            if (checksumCalculator?.CalculateForDecryptedData == true)
-                checksumCalculator?.AddBytes(bytes);
 
             return bytes;
         }
@@ -92,15 +88,11 @@ namespace UbiArt {
             
             if (autoAlignOn)
                 bytesSinceAlignStart++;
-            
-            if (checksumCalculator?.CalculateForDecryptedData == false)
-                checksumCalculator?.AddByte(result);
+
 
             if (xorKey.HasValue)
                 result = (byte)(result ^ xorKey.Value);
 
-            if (checksumCalculator?.CalculateForDecryptedData == true)
-                checksumCalculator?.AddByte(result);
 
             return result;
         }
@@ -189,14 +181,6 @@ namespace UbiArt {
         }
         public void EndXOR() {
             xorKey = null;
-        }
-        public void BeginCalculateChecksum(IChecksumCalculator checksumCalculator) {
-            this.checksumCalculator = checksumCalculator;
-        }
-        public T EndCalculateChecksum<T>() {
-            IChecksumCalculator c = checksumCalculator;
-            checksumCalculator = null;
-            return ((IChecksumCalculator<T>)c).ChecksumValue;
         }
         #endregion
     }

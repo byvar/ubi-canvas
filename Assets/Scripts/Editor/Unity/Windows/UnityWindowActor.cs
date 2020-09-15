@@ -15,7 +15,7 @@ public class UnityWindowActor : UnityWindow {
 		float yPos = 0f;
 		if (EditorApplication.isPlaying) {
 			if (controller == null) controller = FindObjectOfType<Controller>();
-			if (controller.LoadState == Controller.State.Finished) {
+			if (Controller.LoadState == Controller.State.Finished) {
 				string extension = "act" + (Settings.s.cooked ? ".ckd" : "");
 				if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
 					extension = "act_fake";

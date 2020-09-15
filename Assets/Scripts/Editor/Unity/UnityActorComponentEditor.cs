@@ -4,8 +4,8 @@ using UnityEngine;
 
 [CustomEditor(typeof(UnityActorComponent))]
 public class UnityActorComponentEditor : Editor {
-	Color proColor = (Color)new Color32(56, 56, 56, 255);
-	Color plebColor = (Color)new Color32(194, 194, 194, 255);
+	UnityEngine.Color proColor = (UnityEngine.Color)new Color32(56, 56, 56, 255);
+	UnityEngine.Color plebColor = (UnityEngine.Color)new Color32(194, 194, 194, 255);
 	protected override void OnHeaderGUI() {
 		var rect = EditorGUILayout.GetControlRect(false, 0f);
 		rect.height = EditorGUIUtility.singleLineHeight;

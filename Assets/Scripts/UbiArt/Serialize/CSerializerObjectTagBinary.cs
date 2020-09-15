@@ -59,14 +59,6 @@ namespace UbiArt {
 					case TypeCode.Int64: obj = (object)reader.ReadInt64(); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
-			} else if (type == typeof(Vector2)) {
-				obj = reader.ReadVector2();
-			} else if (type == typeof(Vector3)) {
-				obj = reader.ReadVector3();
-			} else if (type == typeof(Vector4)) {
-				obj = reader.ReadVector4();
-			} else if (type == typeof(Color)) {
-				obj = reader.ReadColor();
 			} else if (type == typeof(CString)) {
 				obj = new CString(reader.ReadString16());
 				AddToStringCache(obj);
@@ -122,10 +114,10 @@ namespace UbiArt {
 					case TypeCode.Int64: obj = default(long); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
-			} else if (type == typeof(Vector2)) {
-				obj = default(Vector2);
-			} else if (type == typeof(Vector3)) {
-				obj = default(Vector3);
+			} else if (type == typeof(Vec2d)) {
+				obj = default(Vec2d);
+			} else if (type == typeof(Vec3d)) {
+				obj = default(Vec3d);
 			} else if (type == typeof(Vector4)) {
 				obj = default(Vector4);
 			} else if (type == typeof(Color)) {

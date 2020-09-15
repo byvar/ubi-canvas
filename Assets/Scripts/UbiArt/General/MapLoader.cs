@@ -30,6 +30,7 @@ namespace UbiArt {
 		public bool blockyMode = false;
 		public bool logEnabled = false;
 		public bool loadAnimations = false;
+
 		public StringBuilder log = new StringBuilder();
 
 
@@ -73,10 +74,6 @@ namespace UbiArt {
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 		public Dictionary<StringID, Path> paths = new Dictionary<StringID, Path>();
 		public Dictionary<StringID, string> stringCache = new Dictionary<StringID, string>();
-		public Stopwatch stopwatch;
-
-		public Globals globals = null;
-		public Settings settings = null;
 
 		public ContainerFile<ITF.Scene> mainScene;
 
@@ -96,12 +93,11 @@ namespace UbiArt {
 			foreach (uint sid in ObjectFactory.classes.Keys) {
 				stringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
 			}
-			// Init stopwatch (for smoother loading)
-			stopwatch = new Stopwatch();
 		}
 
 		public async UniTask LoadInit() {
 			try {
+
 				Path pAtlas = new Path("", "atlascontainer.ckd");
 				Load(pAtlas, (CSerializerObject s) => {
 					s.Serialize(ref uvAtlasManager);
@@ -156,7 +152,7 @@ namespace UbiArt {
 		protected async UniTask LoadLoop() {
 			try {
 				string state = loadingState;
-				stopwatch.Start();
+				Controller.StartStopwatch();
 				while (pathsToLoad.Count > 0) {
 					ObjectPlaceHolder o = pathsToLoad.Dequeue();
 					if (o.path != null) {
@@ -169,7 +165,7 @@ namespace UbiArt {
 							if (FileSystem.FileExists(gameDataBinFolder + "/" + cookedFolder + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
 								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
 								loadingState = state + "\n" + o.path.FullPath;
-								await WaitFrame();
+								await Controller.WaitIfNecessary();
 							}
 						}
 						if (files.ContainsKey(id)) {
@@ -190,11 +186,11 @@ namespace UbiArt {
 							virtualFiles.Remove(t);
 						}
 					}
-					await WaitIfNecessary();
+					await Controller.WaitIfNecessary();
 					loadingState = state;
 				}
 			} finally {
-				stopwatch.Stop();
+				Controller.StopStopwatch();
 				foreach (KeyValuePair<StringID, FileWithPointers> kv in files) {
 					kv.Value.Dispose();
 				}
@@ -203,7 +199,7 @@ namespace UbiArt {
 			}
 		}
 
-		public void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref CSerializerObject.Flags ownFlags, string extension) {
+		public static void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref CSerializerObject.Flags ownFlags, string extension) {
 			switch (extension) {
 				case "isc":
 				case "tsc":
@@ -302,7 +298,9 @@ namespace UbiArt {
 			foreach (Pair<Path, ICSerializable> f in files) {
 				b.AddFile(f.Item1.CookedPath, f.Item2);
 			}
+			Controller.StartStopwatch();
 			await b.WriteBundle(path);
+			Controller.StopStopwatch();
 		}
 
 		public void LoadGenericFile(string path, Action<GenericFile<CSerializable>> onResult) {
@@ -342,12 +340,13 @@ namespace UbiArt {
 		}
 
 		public async UniTask WriteActor(string path, ITF.Actor act) {
+			Controller.StartStopwatch();
 			// Clone actor
 			CSerializable c = await Clone(act, "act");
 			ITF.Actor actClone = c as ITF.Actor;
 			// Reset clone transform
-			actClone.SCALE = Vector2.one;
-			actClone.POS2D = Vector2.zero;
+			actClone.SCALE = Vec2d.one;
+			actClone.POS2D = Vec2d.zero;
 			actClone.RELATIVEZ = 0;
 			actClone.xFLIPPED = false;
 			actClone.USERFRIENDLY = "";
@@ -361,15 +360,16 @@ namespace UbiArt {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
-					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "act");
+					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "act");
 					object toWrite = container;
 					w.Serialize(ref toWrite, container.GetType(), name: act.USERFRIENDLY);
 					serializedData = stream.ToArray();
 				}
 			}
-			await MapLoader.WaitFrame();
+			await Controller.WaitIfNecessary();
 			// Write serialized data to file
 			Util.ByteArrayToFile(path, serializedData);
+			Controller.StopStopwatch();
 		}
 
 		// Defining it this way, clicking the print will go straight to the code you want
@@ -377,19 +377,6 @@ namespace UbiArt {
 		public void Log(object obj) {
 			if(logEnabled)
 				log.AppendLine(obj != null ? obj.ToString() : "");
-		}
-
-		public static async UniTask WaitIfNecessary() {
-			if (loader.stopwatch.ElapsedMilliseconds > 16) {
-				await WaitFrame();
-			}
-		}
-
-		public static async UniTask WaitFrame() {
-			await UniTask.WaitForEndOfFrame();
-			if (loader != null && loader.stopwatch.IsRunning) {
-				loader.stopwatch.Restart();
-			}
 		}
 
 		public FileWithPointers GetFileByReader(Reader reader) {
