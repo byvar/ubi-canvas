@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("tweakJumpImpulse"          )] public float tweakJumpImpulse;
 		[Serialize("tweakBoostedJumpImpulse"   )] public float tweakBoostedJumpImpulse;
 		[Serialize("tweakBoostTolerance"       )] public float tweakBoostTolerance;
-		[Serialize("tweakAirControlSpeed"      )] public Vector2 tweakAirControlSpeed;
+		[Serialize("tweakAirControlSpeed"      )] public Vec2d tweakAirControlSpeed;
 		[Serialize("tweakAirControlBlendSpeed" )] public float tweakAirControlBlendSpeed;
 		[Serialize("tweakAirControlMaxForce"   )] public float tweakAirControlMaxForce;
 		[Serialize("tweakPhysGravityMultiplier")] public float tweakPhysGravityMultiplier;

@@ -10,10 +10,10 @@ namespace UbiArt.ITF {
 		[Serialize("podiumBoneList"      )] public CList<StringID> podiumBoneList;
 		[Serialize("podiumBoneTeensie"   )] public StringID podiumBoneTeensie;
 		[Serialize("cameraFX"            )] public StringID cameraFX;
-		[Serialize("murphyOnGroundOffset")] public Vector3 murphyOnGroundOffset;
-		[Serialize("murphyInAirOffset"   )] public Vector3 murphyInAirOffset;
-		[Serialize("cameraOffset"        )] public Vector3 cameraOffset;
-		[Serialize("cameraOffsetInAir"   )] public Vector3 cameraOffsetInAir;
+		[Serialize("murphyOnGroundOffset")] public Vec3d murphyOnGroundOffset;
+		[Serialize("murphyInAirOffset"   )] public Vec3d murphyInAirOffset;
+		[Serialize("cameraOffset"        )] public Vec3d cameraOffset;
+		[Serialize("cameraOffsetInAir"   )] public Vec3d cameraOffsetInAir;
 		[Serialize("cameraBlend"         )] public float cameraBlend;
 		[Serialize("maxPlayerSpeed"      )] public float maxPlayerSpeed;
 		[Serialize("musicEvent"          )] public Generic<Event> musicEvent;

@@ -7,14 +7,14 @@ namespace UbiArt.ITF {
 		[Serialize("torqueFriction"           )] public float torqueFriction;
 		[Serialize("attachmentDetectionRadius")] public float attachmentDetectionRadius;
 		[Serialize("hookingSmoothFactor"      )] public float hookingSmoothFactor;
-		[Serialize("hookOffset"               )] public Vector2 hookOffset;
+		[Serialize("hookOffset"               )] public Vec2d hookOffset;
 		[Serialize("angleOffset"              )] public Angle angleOffset;
 		[Serialize("angleSmoothingFactor"     )] public float angleSmoothingFactor;
 		[Serialize("snapDist"                 )] public float snapDist;
 		[Serialize("float__0"                 )] public float float__0;
 		[Serialize("float__1"                 )] public float float__1;
 		[Serialize("float__2"                 )] public float float__2;
-		[Serialize("Vector2__3"               )] public Vector2 Vector2__3;
+		[Serialize("Vector2__3"               )] public Vec2d Vector2__3;
 		[Serialize("Angle__4"                 )] public Angle Angle__4;
 		[Serialize("float__5"                 )] public float float__5;
 		[Serialize("float__6"                 )] public float float__6;

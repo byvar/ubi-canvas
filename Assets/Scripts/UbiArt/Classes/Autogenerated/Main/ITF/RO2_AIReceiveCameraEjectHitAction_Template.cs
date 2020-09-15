@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIReceiveCameraEjectHitAction_Template : RO2_AIReceiveHitAction_Template {
-		[Serialize("minStartSpeed"    )] public Vector3 minStartSpeed;
-		[Serialize("maxStartSpeed"    )] public Vector3 maxStartSpeed;
+		[Serialize("minStartSpeed"    )] public Vec3d minStartSpeed;
+		[Serialize("maxStartSpeed"    )] public Vec3d maxStartSpeed;
 		[Serialize("zMinSpeed"        )] public float zMinSpeed;
 		[Serialize("zAcceleration"    )] public float zAcceleration;
 		[Serialize("gravityMultiplier")] public float gravityMultiplier;
 		[Serialize("ejectDuration"    )] public float ejectDuration;
 		[Serialize("zForced"          )] public int zForced;
 		[Serialize("rotationSpeed"    )] public float rotationSpeed;
-		[Serialize("fixedEjectDir"    )] public Vector2 fixedEjectDir;
+		[Serialize("fixedEjectDir"    )] public Vec2d fixedEjectDir;
 		[Serialize("fadeDuration"     )] public float fadeDuration;
 		[Serialize("delayBeforeFade"  )] public float delayBeforeFade;
 		protected override void SerializeImpl(CSerializerObject s) {

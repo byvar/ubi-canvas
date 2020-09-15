@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventLumEjection : Event {
-		[Serialize("ejectionForce"       )] public Vector2 ejectionForce;
+		[Serialize("ejectionForce"       )] public Vec2d ejectionForce;
 		[Serialize("ejectionDuration"    )] public float ejectionDuration;
 		[Serialize("isAutoPickup"        )] public bool isAutoPickup;
 		[Serialize("ejectionGravityAngle")] public Angle ejectionGravityAngle;

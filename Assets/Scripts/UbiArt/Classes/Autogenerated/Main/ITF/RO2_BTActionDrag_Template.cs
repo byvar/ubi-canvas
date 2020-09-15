@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("animReceiveHitDrag"         )] public StringID animReceiveHitDrag;
 		[Serialize("bulletTouchDirNormThreshold")] public float bulletTouchDirNormThreshold;
 		[Serialize("DRCSpeedSmoothFactor"       )] public float DRCSpeedSmoothFactor;
-		[Serialize("offsetDrag"                 )] public Vector2 offsetDrag;
+		[Serialize("offsetDrag"                 )] public Vec2d offsetDrag;
 		[Serialize("speedBulletMultiplier"      )] public float speedBulletMultiplier;
 		[Serialize("smoothFactor"               )] public float smoothFactor;
 		[Serialize("smoothFactorOnPoly"         )] public float smoothFactorOnPoly;

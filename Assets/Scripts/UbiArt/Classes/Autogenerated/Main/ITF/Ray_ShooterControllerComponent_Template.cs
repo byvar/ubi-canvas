@@ -16,9 +16,9 @@ namespace UbiArt.ITF {
 		[Serialize("ejectFromBorderForce"               )] public float ejectFromBorderForce;
 		[Serialize("ejectFromHitForce"                  )] public float ejectFromHitForce;
 		[Serialize("ejectFromFriendlyHitForce"          )] public float ejectFromFriendlyHitForce;
-		[Serialize("ejectMarginX"                       )] public Vector2 ejectMarginX;
-		[Serialize("ejectMarginY"                       )] public Vector2 ejectMarginY;
-		[Serialize("deathMargin"                        )] public Vector2 deathMargin;
+		[Serialize("ejectMarginX"                       )] public Vec2d ejectMarginX;
+		[Serialize("ejectMarginY"                       )] public Vec2d ejectMarginY;
+		[Serialize("deathMargin"                        )] public Vec2d deathMargin;
 		[Serialize("outOfScreenDurationBeforeDeath"     )] public float outOfScreenDurationBeforeDeath;
 		[Serialize("hurtInvincibleDuration"             )] public float hurtInvincibleDuration;
 		[Serialize("reviveImmunityDuration"             )] public float reviveImmunityDuration;
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 		[Serialize("swallowBone"                        )] public StringID swallowBone;
 		[Serialize("invincibilityTime"                  )] public float invincibilityTime;
 		[Serialize("vacuumSkill"                        )] public Placeholder vacuumSkill;
-		[Serialize("spitObjSpeed"                       )] public Vector2 spitObjSpeed;
+		[Serialize("spitObjSpeed"                       )] public Vec2d spitObjSpeed;
 		[Serialize("baseSpawnBulletPath"                )] public Path baseSpawnBulletPath;
 		[Serialize("deathSpawnFXPath"                   )] public Path deathSpawnFXPath;
 		[Serialize("heartShield"                        )] public Placeholder heartShield;

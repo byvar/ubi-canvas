@@ -22,15 +22,15 @@ namespace UbiArt.ITF {
 		[Serialize("stargateWaitAngleOffset"          )] public float stargateWaitAngleOffset;
 		[Serialize("stargateWaitPointZOffset"         )] public float stargateWaitPointZOffset;
 		[Serialize("stargateStartToDoorTimeMultiplier")] public float stargateStartToDoorTimeMultiplier;
-		[Serialize("stargateCameraLookAtOffset"       )] public Vector3 stargateCameraLookAtOffset;
+		[Serialize("stargateCameraLookAtOffset"       )] public Vec3d stargateCameraLookAtOffset;
 		[Serialize("scaleDoorWaitDelay"               )] public float scaleDoorWaitDelay;
 		[Serialize("scaleDoorMoveK"                   )] public float scaleDoorMoveK;
 		[Serialize("scaleDoorMoveD"                   )] public float scaleDoorMoveD;
 		[Serialize("bounceToLayerOffsetDistFromTarget")] public float bounceToLayerOffsetDistFromTarget;
 		[Serialize("bounceToLayerAngleOffset"         )] public float bounceToLayerAngleOffset;
-		[Serialize("throwTeethSurpriseCameraOffset"   )] public Vector3 throwTeethSurpriseCameraOffset;
-		[Serialize("throwTeethThrowCameraOffset"      )] public Vector3 throwTeethThrowCameraOffset;
-		[Serialize("throwTeethPlayerOffset"           )] public Vector2 throwTeethPlayerOffset;
+		[Serialize("throwTeethSurpriseCameraOffset"   )] public Vec3d throwTeethSurpriseCameraOffset;
+		[Serialize("throwTeethThrowCameraOffset"      )] public Vec3d throwTeethThrowCameraOffset;
+		[Serialize("throwTeethPlayerOffset"           )] public Vec2d throwTeethPlayerOffset;
 		[Serialize("powerUps"                         )] public Ray_PowerUpManager_Template powerUps;
 		[Serialize("levelsInfo"                       )] public CList<Ray_GameManagerConfig_Template.MapConfig> levelsInfo;
 		[Serialize("missionTypes"                     )] public CList<Ray_GameManagerConfig_Template.MissionConfig> missionTypes;
@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 		[Serialize("loadingMinFrames"                 )] public uint loadingMinFrames;
 		[Serialize("nbDeathBeforeFirstSkip"           )] public uint nbDeathBeforeFirstSkip;
 		[Serialize("nbDeathBeforeSecondSkip"          )] public uint nbDeathBeforeSecondSkip;
-		[Serialize("endSequencePlayerPosition"        )] public Vector3 endSequencePlayerPosition;
+		[Serialize("endSequencePlayerPosition"        )] public Vec3d endSequencePlayerPosition;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(playerMinHitPoints));

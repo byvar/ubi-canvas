@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("StringID__0"             )] public StringID StringID__0;
 		[Serialize("StringID__1"             )] public StringID StringID__1_;
 		[Serialize("bool__2"                 )] public bool bool__2;
-		[Serialize("Vector2__3"              )] public Vector2 Vector2__3;
+		[Serialize("Vector2__3"              )] public Vec2d Vector2__3;
 		[Serialize("float__4"                )] public float float__4;
 		[Serialize("bool__5"                 )] public bool bool__5;
 		[Serialize("bool__6"                 )] public bool bool__6;

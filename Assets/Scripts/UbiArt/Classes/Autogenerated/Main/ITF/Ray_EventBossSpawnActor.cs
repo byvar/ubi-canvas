@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventBossSpawnActor : Event {
 		[Serialize("actorIndex")] public uint actorIndex;
-		[Serialize("offset"    )] public Vector3 offset;
+		[Serialize("offset"    )] public Vec3d offset;
 		[Serialize("flipped"   )] public int flipped;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

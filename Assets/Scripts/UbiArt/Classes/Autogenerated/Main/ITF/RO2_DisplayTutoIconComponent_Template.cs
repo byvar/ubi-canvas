@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("idleWithInfoNbTimes")] public uint idleWithInfoNbTimes;
 		[Serialize("successfulEvent"    )] public Generic<Event> successfulEvent;
 		[Serialize("fadeTotalTime"      )] public float fadeTotalTime;
-		[Serialize("tutoScale"          )] public Vector2 tutoScale;
+		[Serialize("tutoScale"          )] public Vec2d tutoScale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(tutos3d));

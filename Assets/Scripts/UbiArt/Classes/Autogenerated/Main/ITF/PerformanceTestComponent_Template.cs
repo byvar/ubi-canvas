@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PerformanceTestComponent_Template : ActorComponent_Template {
 		[Serialize("spawns")] public CArray<Path> spawns;
-		[Serialize("offset")] public Vector3 offset;
-		[Serialize("limits")] public Vector3 limits;
+		[Serialize("offset")] public Vec3d offset;
+		[Serialize("limits")] public Vec3d limits;
 		[Serialize("seed"  )] public uint seed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

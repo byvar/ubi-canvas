@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		[Serialize("safeZonePulseTime"        )] public float safeZonePulseTime;
 		[Serialize("minAlphaValue"            )] public float minAlphaValue;
 		[Serialize("maxAlphaValue"            )] public float maxAlphaValue;
-		[Serialize("safeZoneCenterOffset"     )] public Vector2 safeZoneCenterOffset;
+		[Serialize("safeZoneCenterOffset"     )] public Vec2d safeZoneCenterOffset;
 		[Serialize("pulseTexturePath"         )] public Path pulseTexturePath;
 		[Serialize("particleFxName"           )] public StringID particleFxName;
 		[Serialize("particleFXSizeRatio"      )] public float particleFXSizeRatio;

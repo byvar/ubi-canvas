@@ -41,8 +41,8 @@ namespace UbiArt.ITF {
 		[Serialize("explodeOnContact"                        )] public bool explodeOnContact;
 		[Serialize("useSleepingBehavior"                     )] public bool useSleepingBehavior;
 		[Serialize("useLifeTime"                             )] public bool useLifeTime;
-		[Serialize("dragOffsetLeft"                          )] public Vector2 dragOffsetLeft;
-		[Serialize("dragOffsetRight"                         )] public Vector2 dragOffsetRight;
+		[Serialize("dragOffsetLeft"                          )] public Vec2d dragOffsetLeft;
+		[Serialize("dragOffsetRight"                         )] public Vec2d dragOffsetRight;
 		[Serialize("dragOffsetUp"                            )] public float dragOffsetUp;
 		[Serialize("registerToCamera"                        )] public bool registerToCamera;
 		[Serialize("immuneToHit"                             )] public bool immuneToHit;

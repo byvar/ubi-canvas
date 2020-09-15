@@ -8,13 +8,13 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimBoneDyn::serialize
 	public class AnimBoneDyn : CSerializable {
-		[Serialize("vec0"    )] public Vector2 vec0;
+		[Serialize("vec0"    )] public Vec2d vec0;
 		[Serialize("flt1"    )] public float float1;
 		[Serialize("xOffset" )] public float xOffset;
-		[Serialize("position")] public Vector2 position;
+		[Serialize("position")] public Vec2d position;
 		[Serialize("angle"   )] public Angle angle;
 		[Serialize("flt4"    )] public float z;
-		[Serialize("scale"   )] public Vector2 scale;
+		[Serialize("scale"   )] public Vec2d scale;
 		[Serialize("flt6"    )] public float float6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

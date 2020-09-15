@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("fireAnim"         )] public StringID fireAnim;
 		[Serialize("runAnim"          )] public StringID runAnim;
 		[Serialize("MonkeyType"       )] public char MonkeyType;
-		[Serialize("initialSpeed"     )] public Vector2 initialSpeed;
+		[Serialize("initialSpeed"     )] public Vec2d initialSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(launchBone));

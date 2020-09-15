@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.VH | GameFlags.RL)]
 	public partial class BounceStim : EventStim {
 		[Serialize("bounceType"     )] public BOUNCETYPE bounceType;
-		[Serialize("direction"      )] public Vector2 direction;
+		[Serialize("direction"      )] public Vec2d direction;
 		[Serialize("radial"         )] public bool radial;
 		[Serialize("multiplier"     )] public float multiplier;
 		[Serialize("bounceReactType")] public uint bounceReactType;

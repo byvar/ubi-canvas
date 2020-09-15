@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RO)]
 	public partial class PlayerSpawnPos : CSerializable {
 		[Serialize("playerID")] public StringID playerID;
-		[Serialize("offset"  )] public Vector2 offset;
+		[Serialize("offset"  )] public Vec2d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(playerID));

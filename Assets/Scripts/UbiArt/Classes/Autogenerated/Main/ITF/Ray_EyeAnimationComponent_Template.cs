@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		[Serialize("eyeCursorSmoothFactor")] public float eyeCursorSmoothFactor;
 		[Serialize("eyeInputX"            )] public StringID eyeInputX;
 		[Serialize("eyeInputY"            )] public StringID eyeInputY;
-		[Serialize("eyeMin"               )] public Vector2 eyeMin;
-		[Serialize("eyeMax"               )] public Vector2 eyeMax;
-		[Serialize("targetOffset"         )] public Vector2 targetOffset;
-		[Serialize("eyeOffset"            )] public Vector2 eyeOffset;
+		[Serialize("eyeMin"               )] public Vec2d eyeMin;
+		[Serialize("eyeMax"               )] public Vec2d eyeMax;
+		[Serialize("targetOffset"         )] public Vec2d targetOffset;
+		[Serialize("eyeOffset"            )] public Vec2d eyeOffset;
 		[Serialize("distanceFactor"       )] public float distanceFactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

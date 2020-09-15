@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MusicScoreSnapComponent_Template : ActorComponent_Template {
-		[Serialize("drc_offset"                   )] public Vector2 drc_offset;
+		[Serialize("drc_offset"                   )] public Vec2d drc_offset;
 		[Serialize("drc_grabSmoothA"              )] public float drc_grabSmoothA;
 		[Serialize("drc_grabSmoothB"              )] public float drc_grabSmoothB;
 		[Serialize("drc_softCollisionRadius"      )] public float drc_softCollisionRadius;

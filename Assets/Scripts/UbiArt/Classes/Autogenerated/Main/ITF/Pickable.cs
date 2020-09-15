@@ -3,25 +3,25 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class Pickable : BaseObject {
-		[Serialize("globalPos"                )] public Vector3 globalPos;
+		[Serialize("globalPos"                )] public Vec3d globalPos;
 		[Serialize("RELATIVEZ"                )] public float RELATIVEZ;
 		[Serialize("USERFRIENDLY"             )] public string USERFRIENDLY;
 		[Serialize("UPDATEDEPENDENCYLIST"     )] public CArray<ObjectPath> UPDATEDEPENDENCYLIST;
 		[Serialize("STARTPAUSE"               )] public bool STARTPAUSE;
 		[Serialize("isEnabled"                )] public bool isEnabled;
-		[Serialize("POS2D"                    )] public Vector2 POS2D;
+		[Serialize("POS2D"                    )] public Vec2d POS2D;
 		[Serialize("ObjectDeviceSpeed"        )] public DeviceInfo__Device_Speed ObjectDeviceSpeed;
 		[Serialize("ObjectDeviceSpeed_L2"     )] public DeviceInfo__Device_Speed ObjectDeviceSpeed_L2;
 		[Serialize("INSTANCEDATAFILE"         )] public Path INSTANCEDATAFILE;
 		[Serialize("persistenceId"            )] public uint persistenceId;
 		[Serialize("USEVIEWFRUSTUMFLAG"       )] public bool USEVIEWFRUSTUMFLAG;
-		[Serialize("SCALE"                    )] public Vector2 SCALE;
+		[Serialize("SCALE"                    )] public Vec2d SCALE;
 		[Serialize("OFFSCREEN_UPDATE_OVERRIDE")] public int OFFSCREEN_UPDATE_OVERRIDE;
 		[Serialize("UPDATE_TYPE"              )] public UpdateType UPDATE_TYPE;
 		[Serialize("AABB_RELATIVE"            )] public AABB AABB_RELATIVE;
-		[Serialize("CURPOS"                   )] public Vector3 CURPOS;
+		[Serialize("CURPOS"                   )] public Vec3d CURPOS;
 		[Serialize("CURANGLE"                 )] public float CURANGLE;
-		[Serialize("CURSCALE"                 )] public Vector2 CURSCALE;
+		[Serialize("CURSCALE"                 )] public Vec2d CURSCALE;
 		[Serialize("ISALLOWEDFORCELL"         )] public int ISALLOWEDFORCELL;
 		[Serialize("ANGLE"                    )] public Angle ANGLE;
 		[Serialize("xFLIPPED"                 )] public bool xFLIPPED;

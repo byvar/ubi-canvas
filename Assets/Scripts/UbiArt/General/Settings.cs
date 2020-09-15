@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace UbiArt {
 	public class Settings {
@@ -41,6 +42,7 @@ namespace UbiArt {
 		public bool usesSerializeFlags = true;
 		public bool isCatchThemAll = false;
 		public bool cooked = true;
+		public static Encoding StringEncoding { get; set; } = Encoding.UTF8;
 
 		public bool IsLittleEndian {
 			get { return endian == Endian.Little; }

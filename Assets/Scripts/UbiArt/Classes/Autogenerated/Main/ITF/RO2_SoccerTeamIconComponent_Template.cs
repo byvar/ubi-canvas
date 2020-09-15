@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_SoccerTeamIconComponent_Template : GraphicComponent_Template {
 		[Serialize("transitionTime")] public float transitionTime;
 		[Serialize("frameMaterial" )] public GFXMaterialSerializable frameMaterial;
-		[Serialize("frameSize"     )] public Vector2 frameSize;
+		[Serialize("frameSize"     )] public Vec2d frameSize;
 		[Serialize("luigiMaterial" )] public GFXMaterialSerializable luigiMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

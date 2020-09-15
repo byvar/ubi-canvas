@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR)]
 	public partial class FriezeConnectionResult : CSerializable {
-		[Serialize("pos"          )] public Vector2 pos;
+		[Serialize("pos"          )] public Vec2d pos;
 		[Serialize("prevOwner"    )] public ObjectPath prevOwner;
 		[Serialize("prevColId"    )] public uint prevColId;
 		[Serialize("nextOwner"    )] public ObjectPath nextOwner;
 		[Serialize("nextColId"    )] public uint nextColId;
-		[Serialize("Vector2__0"   )] public Vector2 Vector2__0;
+		[Serialize("Vector2__0"   )] public Vec2d Vector2__0;
 		[Serialize("ObjectPath__1")] public ObjectPath ObjectPath__1;
 		[Serialize("uint__2"      )] public uint uint__2;
 		[Serialize("ObjectPath__3")] public ObjectPath ObjectPath__3;

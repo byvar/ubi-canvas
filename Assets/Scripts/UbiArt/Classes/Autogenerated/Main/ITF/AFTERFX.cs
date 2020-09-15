@@ -12,14 +12,14 @@ namespace UbiArt.ITF {
 		[Serialize("Enum_RFR_0__0"      )] public Enum_RFR_0 Enum_RFR_0__0;
 		[Serialize("CArray<float>__1"   )] public CArray<float> CArray_float__1;
 		[Serialize("CArray<int>__2"     )] public CArray<int> CArray_int__2;
-		[Serialize("CArray<Vector3>__3" )] public CArray<Vector3> CArray_Vector3__3;
+		[Serialize("CArray<Vector3>__3" )] public CArray<Vec3d> CArray_Vector3__3;
 		[Serialize("CArray<Color>__4"   )] public CArray<Color> CArray_Color__4;
 		[Serialize("float__5"           )] public float float__5;
 		[Serialize("Color__6"           )] public Color Color__6;
 		[Serialize("Enum_VH_0__7"       )] public Enum_VH_0 Enum_VH_0__7;
 		[Serialize("CArray<float>__8"   )] public CArray<float> CArray_float__8;
 		[Serialize("CArray<int>__9"     )] public CArray<int> CArray_int__9;
-		[Serialize("CArray<Vector3>__10")] public CArray<Vector3> CArray_Vector3__10;
+		[Serialize("CArray<Vector3>__10")] public CArray<Vec3d> CArray_Vector3__10;
 		[Serialize("CArray<Color>__11"  )] public CArray<Color> CArray_Color__11;
 		[Serialize("float__12"          )] public float float__12;
 		[Serialize("Color__13"          )] public Color Color__13;

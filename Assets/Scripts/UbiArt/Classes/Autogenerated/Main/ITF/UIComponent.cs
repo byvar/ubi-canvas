@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		[Serialize("showingFadeDuration"      )] public float showingFadeDuration;
 		[Serialize("hidingFadeDuration"       )] public float hidingFadeDuration;
 		[Serialize("displayMask"              )] public View displayMask;
-		[Serialize("screenSpace"              )] public Vector2 screenSpace;
+		[Serialize("screenSpace"              )] public Vec2d screenSpace;
 		[Serialize("UIState"                  )] public int UIState;
 		[Serialize("needsAspectRatioFix"      )] public bool needsAspectRatioFix;
 		[Serialize("needsAspectRatioFixLocal" )] public bool needsAspectRatioFixLocal;
@@ -30,8 +30,8 @@ namespace UbiArt.ITF {
 		[Serialize("rightComponent"           )] public string rightComponent;
 		[Serialize("upComponent"              )] public string upComponent;
 		[Serialize("downComponent"            )] public string downComponent;
-		[Serialize("Vector2__6"               )] public Vector2 Vector2__6;
-		[Serialize("Vector2__7"               )] public Vector2 Vector2__7;
+		[Serialize("Vector2__6"               )] public Vec2d Vector2__6;
+		[Serialize("Vector2__7"               )] public Vec2d Vector2__7;
 		[Serialize("float__8"                 )] public float float__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

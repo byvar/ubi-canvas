@@ -6,16 +6,16 @@ namespace UbiArt.ITF {
 		[Serialize("texture"                   )] public Path texture;
 		[Serialize("anchor"                    )] public TEXTURE_ANCHOR anchor;
 		[Serialize("material"                  )] public GFXMaterialSerializable material;
-		[Serialize("Scale"                     )] public Vector2 Scale;
+		[Serialize("Scale"                     )] public Vec2d Scale;
 		[Serialize("Width"                     )] public float Width;
 		[Serialize("Angle"                     )] public Angle Angle;
-		[Serialize("Offset"                    )] public Vector3 Offset;
-		[Serialize("UVScale"                   )] public Vector2 UVScale;
-		[Serialize("UVOffset"                  )] public Vector2 UVOffset;
+		[Serialize("Offset"                    )] public Vec3d Offset;
+		[Serialize("UVScale"                   )] public Vec2d UVScale;
+		[Serialize("UVOffset"                  )] public Vec2d UVOffset;
 		[Serialize("spriteIndex"               )] public uint spriteIndex;
-		[Serialize("uvRatio"                   )] public Vector2 uvRatio;
-		[Serialize("uvTranslationSpeed"        )] public Vector2 uvTranslationSpeed;
-		[Serialize("size"                      )] public Vector2 size;
+		[Serialize("uvRatio"                   )] public Vec2d uvRatio;
+		[Serialize("uvTranslationSpeed"        )] public Vec2d uvTranslationSpeed;
+		[Serialize("size"                      )] public Vec2d size;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {

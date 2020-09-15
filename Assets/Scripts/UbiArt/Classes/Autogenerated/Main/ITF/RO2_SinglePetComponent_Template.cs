@@ -13,8 +13,8 @@ namespace UbiArt.ITF {
 		[Serialize("numTurns"       )] public uint numTurns;
 		[Serialize("skullCoinPath"  )] public Path skullCoinPath;
 		[Serialize("redLumPath"     )] public Path redLumPath;
-		[Serialize("offsetSkullCoin")] public Vector2 offsetSkullCoin;
-		[Serialize("offsetLum"      )] public Vector2 offsetLum;
+		[Serialize("offsetSkullCoin")] public Vec2d offsetSkullCoin;
+		[Serialize("offsetLum"      )] public Vec2d offsetLum;
 		[Serialize("modelParams"    )] public CList<ModelParams> modelParams;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

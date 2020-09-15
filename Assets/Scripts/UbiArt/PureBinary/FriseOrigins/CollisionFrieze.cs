@@ -12,10 +12,10 @@ namespace UbiArt.FriseOrigins {
 		[Serialize("int1")] public int int1;
 		[Serialize("int2")] public int int2;
 		[Serialize("int3")] public int int3;
-		[Serialize("vec1")] public Vector2 vec1;
-		[Serialize("vec2")] public Vector2 vec2;
-		[Serialize("vec3")] public Vector2 vec3;
-		[Serialize("vec4")] public Vector2 vec4;
+		[Serialize("vec1")] public Vec2d vec1;
+		[Serialize("vec2")] public Vec2d vec2;
+		[Serialize("vec3")] public Vec2d vec3;
+		[Serialize("vec4")] public Vec2d vec4;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

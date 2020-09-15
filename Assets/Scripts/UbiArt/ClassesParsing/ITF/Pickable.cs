@@ -15,14 +15,14 @@ namespace UbiArt.ITF {
 
 		public Pickable() {
 			ANGLE = new Angle(0);
-			SCALE = Vector2.one;
+			SCALE = Vec2d.one;
 		}
 
 		protected virtual void InitGameObject() {
 			gao = new GameObject(USERFRIENDLY);
-			gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
-			gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
-			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
+			gao.transform.localPosition = new Vec3d(POS2D.x, POS2D.y, -RELATIVEZ);
+			gao.transform.localScale = new Vec3d((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
+			gao.transform.localEulerAngles = new Vec3d(0, 0, ANGLE.EulerAngle);
 			UnityPickable p = gao.AddComponent<UnityPickable>();
 			p.pickable = this;
 			//MapLoader.Loader.controller.zListManager.Register(this);
@@ -30,9 +30,9 @@ namespace UbiArt.ITF {
 		}
 		public void SetGameObjectParent(GameObject gp) {
 			Gao.transform.SetParent(gp.transform, false);
-			Gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
-			Gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
-			Gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
+			Gao.transform.localPosition = new Vec3d(POS2D.x, POS2D.y, -RELATIVEZ);
+			Gao.transform.localScale = new Vec3d((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
+			Gao.transform.localEulerAngles = new Vec3d(0, 0, ANGLE.EulerAngle);
 		}
 	}
 }

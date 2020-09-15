@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class ShapeData_Template : CSerializable {
 		[Serialize("name"          )] public StringID name;
 		[Serialize("shape"         )] public Generic<PhysShape> shape;
-		[Serialize("offset"        )] public Vector2 offset;
+		[Serialize("offset"        )] public Vec2d offset;
 		[Serialize("attachPolyline")] public StringID attachPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

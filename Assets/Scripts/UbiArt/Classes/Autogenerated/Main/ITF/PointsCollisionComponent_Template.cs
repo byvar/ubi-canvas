@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RJR | GameFlags.RFR)]
 		public partial class PolylineData : CSerializable {
-			[Serialize("CArray<Vector2>__0")] public CArray<Vector2> CArray_Vector2__0;
+			[Serialize("CArray<Vector2>__0")] public CArray<Vec2d> CArray_Vector2__0;
 			[Serialize("Path__1"           )] public Path Path__1;
 			[Serialize("StringID__2"       )] public StringID StringID__2;
 			[Serialize("int__3"            )] public int int__3;

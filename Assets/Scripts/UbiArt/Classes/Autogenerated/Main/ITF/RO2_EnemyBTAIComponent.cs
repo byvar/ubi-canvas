@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("useTrigger"              )] public bool useTrigger;
 		[Serialize("useRoaming"              )] public bool useRoaming;
 		[Serialize("distRoamingUnderWater"   )] public float distRoamingUnderWater;
-		[Serialize("distRoamingWhenFlying"   )] public Vector2 distRoamingWhenFlying;
+		[Serialize("distRoamingWhenFlying"   )] public Vec2d distRoamingWhenFlying;
 		[Serialize("useNightVision"          )] public bool useNightVision;
 		[Serialize("limitLeft"               )] public float limitLeft;
 		[Serialize("limitRight"              )] public float limitRight;

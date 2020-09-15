@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 	public partial class Unknown_RL_215_sub_7E8750 : ActorComponent_Template {
 		[Serialize("fxName"       )] public StringID fxName;
 		[Serialize("autoUpdatePos")] public int autoUpdatePos;
-		[Serialize("scaleFXGrab"  )] public Vector2 scaleFXGrab;
-		[Serialize("offsetFXGrab" )] public Vector2 offsetFXGrab;
+		[Serialize("scaleFXGrab"  )] public Vec2d scaleFXGrab;
+		[Serialize("offsetFXGrab" )] public Vec2d offsetFXGrab;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(fxName));

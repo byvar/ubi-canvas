@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 		[Serialize("tutoStopTime"             )] public float tutoStopTime;
 		[Serialize("isSpawnMode"              )] public bool isSpawnMode;
 		[Serialize("speedMinFastExtract"      )] public float speedMinFastExtract;
-		[Serialize("spawnOffset"              )] public Vector2 spawnOffset;
+		[Serialize("spawnOffset"              )] public Vec2d spawnOffset;
 		[Serialize("bounceMultiplier"         )] public float bounceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

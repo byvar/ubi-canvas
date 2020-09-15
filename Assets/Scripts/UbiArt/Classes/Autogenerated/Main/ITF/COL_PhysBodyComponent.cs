@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("isStatic"         )] public int isStatic;
 		[Serialize("collisionGroup"   )] public Enum_collisionGroup collisionGroup;
 		[Serialize("weight"           )] public float weight;
-		[Serialize("gravity"          )] public Vector2 gravity;
+		[Serialize("gravity"          )] public Vec2d gravity;
 		[Serialize("gravityMultiplier")] public float gravityMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

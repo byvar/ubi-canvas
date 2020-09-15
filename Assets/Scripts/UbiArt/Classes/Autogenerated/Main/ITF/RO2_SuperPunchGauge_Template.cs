@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 	public partial class RO2_SuperPunchGauge_Template : RO2_PowerUpDisplay_Template {
 		[Serialize("fxControl"            )] public StringID fxControl;
 		[Serialize("punchActor"           )] public Path punchActor;
-		[Serialize("playerFollowOffset"   )] public Vector2 playerFollowOffset;
-		[Serialize("othersFollowOffset"   )] public Vector2 othersFollowOffset;
+		[Serialize("playerFollowOffset"   )] public Vec2d playerFollowOffset;
+		[Serialize("othersFollowOffset"   )] public Vec2d othersFollowOffset;
 		[Serialize("launchDistance"       )] public float launchDistance;
 		[Serialize("launchYOffset"        )] public float launchYOffset;
 		[Serialize("reducedLaunchDistance")] public float reducedLaunchDistance;

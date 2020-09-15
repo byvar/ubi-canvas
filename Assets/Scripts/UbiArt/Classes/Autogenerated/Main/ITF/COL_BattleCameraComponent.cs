@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Description("Default fov.")]
 		[Serialize("defaultFov"             )] public float defaultFov;
 		[Description("Offset applied to the initial position of the camera.")]
-		[Serialize("baseOffset"             )] public Vector3 baseOffset;
+		[Serialize("baseOffset"             )] public Vec3d baseOffset;
 		[Description("Offset limit in X when moving the camera.")]
 		[Serialize("offsetLimitX"           )] public float offsetLimitX;
 		[Description("Offset limit in Y when moving the camera.")]

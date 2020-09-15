@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		[Serialize("fxControl"            )] public StringID fxControl;
 		[Serialize("particleGenerator"    )] public StringID particleGenerator;
 		[Serialize("punchActor"           )] public Path punchActor;
-		[Serialize("playerFollowOffset"   )] public Vector2 playerFollowOffset;
-		[Serialize("othersFollowOffset"   )] public Vector2 othersFollowOffset;
+		[Serialize("playerFollowOffset"   )] public Vec2d playerFollowOffset;
+		[Serialize("othersFollowOffset"   )] public Vec2d othersFollowOffset;
 		[Serialize("launchDistance"       )] public float launchDistance;
 		[Serialize("launchYOffset"        )] public float launchYOffset;
 		[Serialize("reducedLaunchDistance")] public float reducedLaunchDistance;
@@ -21,8 +21,8 @@ namespace UbiArt.ITF {
 		[Serialize("StringID__0"          )] public StringID StringID__0;
 		[Serialize("StringID__1"          )] public StringID StringID__1;
 		[Serialize("Path__2"              )] public Path Path__2;
-		[Serialize("Vector2__3"           )] public Vector2 Vector2__3;
-		[Serialize("Vector2__4"           )] public Vector2 Vector2__4;
+		[Serialize("Vector2__3"           )] public Vec2d Vector2__3;
+		[Serialize("Vector2__4"           )] public Vec2d Vector2__4;
 		[Serialize("float__5"             )] public float float__5;
 		[Serialize("float__6"             )] public float float__6;
 		[Serialize("float__7"             )] public float float__7;

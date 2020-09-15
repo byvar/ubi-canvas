@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA)]
 		public partial class HandSlot : CSerializable {
 			[Serialize("ckp_state"       )] public uint ckp_state;
-			[Serialize("ckp_pos"         )] public Vector2 ckp_pos;
+			[Serialize("ckp_pos"         )] public Vec2d ckp_pos;
 			[Serialize("ckp_branchCursor")] public float ckp_branchCursor;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

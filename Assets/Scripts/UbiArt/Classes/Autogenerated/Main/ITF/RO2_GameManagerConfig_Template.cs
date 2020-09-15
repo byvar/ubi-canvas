@@ -61,10 +61,10 @@ namespace UbiArt.ITF {
 		[Serialize("SideRocketTeensyPath"                   )] public Path SideRocketTeensyPath;
 		[Serialize("SideRocketTeensyFXPath"                 )] public Path SideRocketTeensyFXPath;
 		[Serialize("SideJacquouillePath"                    )] public Path SideJacquouillePath;
-		[Serialize("SideLumsOffset"                         )] public Vector2 SideLumsOffset;
-		[Serialize("SideTrappedTeensyOffset"                )] public Vector2 SideTrappedTeensyOffset;
-		[Serialize("SideRocketTeensyOffset"                 )] public Vector2 SideRocketTeensyOffset;
-		[Serialize("SideJacquouilleOffset"                  )] public Vector2 SideJacquouilleOffset;
+		[Serialize("SideLumsOffset"                         )] public Vec2d SideLumsOffset;
+		[Serialize("SideTrappedTeensyOffset"                )] public Vec2d SideTrappedTeensyOffset;
+		[Serialize("SideRocketTeensyOffset"                 )] public Vec2d SideRocketTeensyOffset;
+		[Serialize("SideJacquouilleOffset"                  )] public Vec2d SideJacquouilleOffset;
 		[Serialize("environmentBrickPath"                   )] public Path environmentBrickPath;
 		[Serialize("startBrickPath"                         )] public Path startBrickPath;
 		[Serialize("endBrickPath"                           )] public Path endBrickPath;

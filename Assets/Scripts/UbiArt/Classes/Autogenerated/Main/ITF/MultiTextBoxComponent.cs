@@ -16,9 +16,9 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class TextBox : CSerializable {
 			[Serialize("text"                )] public SmartLocId text;
-			[Serialize("area"                )] public Vector2 area;
-			[Serialize("offset"              )] public Vector3 offset;
-			[Serialize("scale"               )] public Vector2 scale;
+			[Serialize("area"                )] public Vec2d area;
+			[Serialize("offset"              )] public Vec3d offset;
+			[Serialize("scale"               )] public Vec2d scale;
 			[Serialize("style"               )] public uint style;
 			[Serialize("scaleToMatchWithArea")] public bool scaleToMatchWithArea;
 			[Serialize("maxWidth"            )] public float maxWidth;
@@ -30,9 +30,9 @@ namespace UbiArt.ITF {
 			[Serialize("overridingAnchor"    )] public AREA_ANCHOR overridingAnchor;
 			[Serialize("unsecureSource"      )] public bool unsecureSource;
 			[Serialize("SmartLocId__0"       )] public SmartLocId SmartLocId__0;
-			[Serialize("Vector2__1"          )] public Vector2 Vector2__1;
-			[Serialize("Vector3__2"          )] public Vector3 Vector3__2;
-			[Serialize("Vector2__3"          )] public Vector2 Vector2__3;
+			[Serialize("Vector2__1"          )] public Vec2d Vector2__1;
+			[Serialize("Vector3__2"          )] public Vec3d Vector3__2;
+			[Serialize("Vector2__3"          )] public Vec2d Vector2__3;
 			[Serialize("uint__4"             )] public uint uint__4;
 			[Serialize("bool__5"             )] public bool bool__5;
 			[Serialize("float__6"            )] public float float__6;

@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 	public partial class RLC_TutoTriggerComponent : ActorComponent {
 		[Serialize("displayToSpawn"             )] public Path displayToSpawn;
 		[Serialize("displayAnim"                )] public StringID displayAnim;
-		[Serialize("displayStartPos"            )] public Vector3 displayStartPos;
-		[Serialize("displayStartPosAppleTV"     )] public Vector3 displayStartPosAppleTV;
+		[Serialize("displayStartPos"            )] public Vec3d displayStartPos;
+		[Serialize("displayStartPosAppleTV"     )] public Vec3d displayStartPosAppleTV;
 		[Serialize("expectedCommand"            )] public Enum_expectedCommand expectedCommand;
 		[Serialize("successDisplay"             )] public Path successDisplay;
 		[Serialize("commandCheckOnly"           )] public bool commandCheckOnly;

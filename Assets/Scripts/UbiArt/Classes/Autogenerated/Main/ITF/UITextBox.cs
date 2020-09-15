@@ -4,10 +4,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UITextBox : UIComponent {
 		[Serialize("style"                  )] public uint style;
-		[Serialize("offset"                 )] public Vector2 offset;
+		[Serialize("offset"                 )] public Vec2d offset;
 		[Serialize("depth"                  )] public float depth;
-		[Serialize("scale"                  )] public Vector2 scale;
-		[Serialize("area"                   )] public Vector2 area;
+		[Serialize("scale"                  )] public Vec2d scale;
+		[Serialize("area"                   )] public Vec2d area;
 		[Serialize("maxWidth"               )] public float maxWidth;
 		[Serialize("rawText"                )] public string rawText;
 		[Serialize("locId"                  )] public LocalisationId locId;

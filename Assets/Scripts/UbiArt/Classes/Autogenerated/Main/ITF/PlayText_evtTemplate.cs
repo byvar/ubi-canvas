@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("Text"            )] public string Text;
 		[Serialize("wordTime"        )] public float wordTime;
 		[Serialize("mood"            )] public uint mood;
-		[Serialize("textOffset"      )] public Vector2 textOffset;
+		[Serialize("textOffset"      )] public Vec2d textOffset;
 		[Serialize("localisationId"  )] public LocalisationId localisationId;
 		[Serialize("sizeText"        )] public float sizeText;
 		[Serialize("Text"            )] public Path Text2;

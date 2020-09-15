@@ -35,7 +35,7 @@ namespace UbiArt.Bundle {
 				using (MemoryStream stream = new MemoryStream()) {
 					using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
 						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
-						MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
+						MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
 						object toWrite = kv.Value;
 						w.Serialize(ref toWrite, kv.Value.GetType(), name: kv.Key.filename);
 						serializedData = stream.ToArray();
@@ -51,29 +51,29 @@ namespace UbiArt.Bundle {
 				packMaster.files.Add(new Pair<FileHeaderRuntime, Path>(fhr, kv.Key));
 				data.Add(serializedData);
 				curOffset += (uint)serializedData.Length;
-				await MapLoader.WaitFrame();
+				await Controller.WaitIfNecessary();
 			}
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
-					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
+					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "Bundle");
 					serializedData = stream.ToArray();
 				}
 			}
-			await MapLoader.WaitFrame();
+			await Controller.WaitIfNecessary();
 			bootHeader.baseOffset = (uint)serializedData.Length;
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
-					MapLoader.Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
+					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "Bundle");
 					serializedData = stream.ToArray();
 				}
 			}
-			await MapLoader.WaitFrame();
+			await Controller.WaitIfNecessary();
 			using (BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create))) {
 				bw.Write(serializedData);
 				for (int i = 0; i < data.Count; i++) {

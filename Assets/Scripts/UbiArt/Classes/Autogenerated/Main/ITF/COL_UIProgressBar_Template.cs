@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("currentValueUpdateRate")] public float currentValueUpdateRate;
 		[Serialize("maxValueUpdateRate"    )] public float maxValueUpdateRate;
 		[Serialize("fullBarFX"             )] public StringID fullBarFX;
-		[Serialize("fxOffset"              )] public Vector2 fxOffset;
+		[Serialize("fxOffset"              )] public Vec2d fxOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(currentValueUpdateRate));

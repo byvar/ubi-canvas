@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TutorialTextComponent_Template : ActorComponent_Template {
-		[Serialize("animSize" )] public Vector2 animSize;
+		[Serialize("animSize" )] public Vec2d animSize;
 		[Serialize("iconPoint")] public StringID iconPoint;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

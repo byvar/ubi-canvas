@@ -7,7 +7,7 @@ namespace UbiArt.UV {
 		[Serialize("version")] public uint version;
 		[Serialize("uvData" )] public CMap<int, UVdata> uvData;
 		[Serialize("uvParams")] public CMap<int, UVparameters> uvParams;
-		[Serialize("uv3D"    )] public CMap<int, Vector3> uv3D;
+		[Serialize("uv3D"    )] public CMap<int, Vec3d> uv3D;
 		[Serialize("float0")] public float float0;
 		[Serialize("float1")] public float float1;
 

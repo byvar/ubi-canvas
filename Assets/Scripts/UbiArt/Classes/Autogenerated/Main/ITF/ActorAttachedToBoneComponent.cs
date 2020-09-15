@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class ActorAttachedToBoneComponent : ActorComponent {
 		[Serialize("boneName"    )] public StringID boneName;
-		[Serialize("posOffset"   )] public Vector2 posOffset;
+		[Serialize("posOffset"   )] public Vec2d posOffset;
 		[Serialize("useBoneScale")] public bool useBoneScale;
 		[Serialize("useBoneAngle")] public bool useBoneAngle;
 		protected override void SerializeImpl(CSerializerObject s) {

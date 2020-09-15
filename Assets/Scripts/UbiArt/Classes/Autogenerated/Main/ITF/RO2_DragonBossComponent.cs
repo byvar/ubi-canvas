@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("mode"            )] public Enum_mode mode;
 		[Serialize("anim"            )] public StringID anim;
 		[Serialize("secondAnim"      )] public StringID secondAnim;
-		[Serialize("speed"           )] public Vector2 speed;
+		[Serialize("speed"           )] public Vec2d speed;
 		[Serialize("showAttackSphere")] public bool showAttackSphere;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

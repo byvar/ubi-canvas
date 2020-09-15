@@ -21,8 +21,8 @@ namespace UbiArt.ITF {
 		[Serialize("m_string8"            )] public string m_string8;
 		[Serialize("m_path"               )] public Path m_path;
 		[Serialize("m_objectPath"         )] public ObjectPath m_objectPath;
-		[Serialize("m_vec2d"              )] public Vector2 m_vec2d;
-		[Serialize("m_vec3d"              )] public Vector3 m_vec3d;
+		[Serialize("m_vec2d"              )] public Vec2d m_vec2d;
+		[Serialize("m_vec3d"              )] public Vec3d m_vec3d;
 		[Serialize("m_matrix44"           )] public Matrix44 m_matrix44;
 		[Serialize("m_color"              )] public Color m_color;
 		[Serialize("m_colorInteger"       )] public ColorInteger m_colorInteger;
@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 		[Serialize("m_objectVector"       )] public CList<SerializationTestComponent.SubClass> m_objectVector;
 		[Serialize("m_stringVector"       )] public CArray<string> m_stringVector;
 		[Serialize("m_stringIdVector"     )] public CList<StringID> m_stringIdVector;
-		[Serialize("m_vec3Vector"         )] public CArray<Vector3> m_vec3Vector;
+		[Serialize("m_vec3Vector"         )] public CArray<Vec3d> m_vec3Vector;
 		[Serialize("m_U32ToU32Map"        )] public CMap<uint, uint> m_U32ToU32Map;
 		[Serialize("m_StringToStringMap"  )] public CMap<string, string> m_StringToStringMap;
 		[Serialize("m_StringToSubClassMap")] public CMap<string, SerializationTestComponent.SubClass> m_StringToSubClassMap;

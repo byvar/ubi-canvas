@@ -5,9 +5,9 @@ namespace UbiArt.ITF {
 	public partial class AFX_KaleiParam : CSerializable {
 		[Serialize("use"      )] public bool use;
 		[Serialize("pixelSize")] public float pixelSize;
-		[Serialize("UV1"      )] public Vector2 UV1;
-		[Serialize("UV2"      )] public Vector2 UV2;
-		[Serialize("UV3"      )] public Vector2 UV3;
+		[Serialize("UV1"      )] public Vec2d UV1;
+		[Serialize("UV2"      )] public Vec2d UV2;
+		[Serialize("UV3"      )] public Vec2d UV3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {

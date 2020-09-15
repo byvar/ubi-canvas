@@ -14,8 +14,8 @@ namespace UbiArt.ITF {
 		[Serialize("deathRewardSpawnPath"    )] public Path deathRewardSpawnPath;
 		[Serialize("deathRewardNumber"       )] public uint deathRewardNumber;
 		[Serialize("deathRewardSpawnDuration")] public float deathRewardSpawnDuration;
-		[Serialize("deathRewardSpawnDist"    )] public Vector2 deathRewardSpawnDist;
-		[Serialize("deathRewardSpawnAngle"   )] public Vector2 deathRewardSpawnAngle;
+		[Serialize("deathRewardSpawnDist"    )] public Vec2d deathRewardSpawnDist;
+		[Serialize("deathRewardSpawnAngle"   )] public Vec2d deathRewardSpawnAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(waterPerturbationForce));

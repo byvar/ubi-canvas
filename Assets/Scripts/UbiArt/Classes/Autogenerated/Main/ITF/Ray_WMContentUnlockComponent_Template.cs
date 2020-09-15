@@ -11,10 +11,10 @@ namespace UbiArt.ITF {
 		[Serialize("bossMusicLocId" )] public LocalisationId bossMusicLocId;
 		[Serialize("bossFoodLocId"  )] public LocalisationId bossFoodLocId;
 		[Serialize("bossOceanLocId" )] public LocalisationId bossOceanLocId;
-		[Serialize("animSize"       )] public Vector2 animSize;
+		[Serialize("animSize"       )] public Vec2d animSize;
 		[Serialize("iconPath"       )] public Path iconPath;
 		[Serialize("iconPoint"      )] public StringID iconPoint;
-		[Serialize("iconAnimSize"   )] public Vector2 iconAnimSize;
+		[Serialize("iconAnimSize"   )] public Vec2d iconAnimSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(fairyLocId));

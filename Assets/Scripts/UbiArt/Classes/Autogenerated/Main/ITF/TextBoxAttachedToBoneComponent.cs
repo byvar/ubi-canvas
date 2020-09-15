@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("useBoneAngle"              )] public bool useBoneAngle;
 		[Serialize("useBoneAlpha"              )] public bool useBoneAlpha;
 		[Serialize("applyActorTransform"       )] public bool applyActorTransform;
-		[Serialize("offset"                    )] public Vector2 offset;
+		[Serialize("offset"                    )] public Vec2d offset;
 		[Serialize("angleOffset"               )] public float angleOffset;
 		[Serialize("ForceSnappingExternalActor")] public bool ForceSnappingExternalActor;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -6,11 +6,11 @@ namespace UbiArt.ITF {
 		[Serialize("Id"        )] public int Id;
 		[Serialize("IndexStart")] public int IndexStart;
 		[Serialize("IndexEnd"  )] public int IndexEnd;
-		[Serialize("PosStart"  )] public Vector2 PosStart;
-		[Serialize("PosEnd"    )] public Vector2 PosEnd;
-		[Serialize("PosOffset" )] public Vector2 PosOffset;
+		[Serialize("PosStart"  )] public Vec2d PosStart;
+		[Serialize("PosEnd"    )] public Vec2d PosEnd;
+		[Serialize("PosOffset" )] public Vec2d PosOffset;
 		[Serialize("Count"     )] public int Count;
-		[Serialize("Normal"    )] public Vector2 Normal;
+		[Serialize("Normal"    )] public Vec2d Normal;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Id));

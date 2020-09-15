@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("spitAction"       )] public Placeholder spitAction;
 		[Serialize("spitMarker"       )] public StringID spitMarker;
 		[Serialize("spitBoneName"     )] public StringID spitBoneName;
-		[Serialize("spitForce"        )] public Vector2 spitForce;
+		[Serialize("spitForce"        )] public Vec2d spitForce;
 		[Serialize("startVacuumMarker")] public StringID startVacuumMarker;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

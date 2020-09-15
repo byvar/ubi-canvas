@@ -23,8 +23,8 @@ namespace UbiArt.ITF {
 		[Serialize("Blink_scaleMax"              )] public float Blink_scaleMax;
 		[Serialize("IconType_display_method"     )] public Enum_IconType_display_method IconType_display_method;
 		[Serialize("IconType_display_timer"      )] public float IconType_display_timer;
-		[Serialize("IconEffect_sourcePoint"      )] public Vector2 IconEffect_sourcePoint;
-		[Serialize("IconEffect_IntermediatePoint")] public Vector2 IconEffect_IntermediatePoint;
+		[Serialize("IconEffect_sourcePoint"      )] public Vec2d IconEffect_sourcePoint;
+		[Serialize("IconEffect_IntermediatePoint")] public Vec2d IconEffect_IntermediatePoint;
 		[Serialize("CostumeIcon_scale"           )] public float CostumeIcon_scale;
 		[Serialize("CostumeIcon_offsetY"         )] public float CostumeIcon_offsetY;
 		[Serialize("CostumeIcon_colorInactive"   )] public Color CostumeIcon_colorInactive;

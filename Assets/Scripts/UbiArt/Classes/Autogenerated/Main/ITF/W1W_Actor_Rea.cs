@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		[Serialize("bool__12"                              )] public bool bool__12;
 		[Serialize("bool__13"                              )] public bool bool__13;
 		[Serialize("float__14"                             )] public float float__14;
-		[Serialize("Vector2__15"                           )] public Vector2 Vector2__15;
+		[Serialize("Vector2__15"                           )] public Vec2d Vector2__15;
 		[Serialize("bool__16"                              )] public bool bool__16;
 		[Serialize("bool__17"                              )] public bool bool__17;
 		[Serialize("bool__18"                              )] public bool bool__18;
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 		[Serialize("EventSender__21"                       )] public EventSender EventSender__21;
 		[Serialize("Path__22"                              )] public Path Path__22;
 		[Serialize("CArray<W1W_Actor_Rea.spawnStruct>__23" )] public CArray<W1W_Actor_Rea.spawnStruct> CArray_W1W_Actor_Rea_spawnStruct__23;
-		[Serialize("Vector3__24"                           )] public Vector3 Vector3__24;
+		[Serialize("Vector3__24"                           )] public Vec3d Vector3__24;
 		[Serialize("StringID__25"                          )] public StringID StringID__25;
 		[Serialize("bool__26"                              )] public bool bool__26;
 		[Serialize("bool__27"                              )] public bool bool__27;

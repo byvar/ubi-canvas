@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RJR | GameFlags.RFR)]
 		public partial class Node : CSerializable {
-			[Serialize("Vector3__0" )] public Vector3 Vector3__0;
+			[Serialize("Vector3__0" )] public Vec3d Vector3__0;
 			[Serialize("float__1"   )] public float float__1;
 			[Serialize("float__2"   )] public float float__2;
 			[Serialize("float__3"   )] public float float__3;

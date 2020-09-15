@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		[Serialize("endFX"               )] public StringID endFX;
 		[Serialize("transitionDuration"  )] public float transitionDuration;
 		[Serialize("nbRebound"           )] public uint nbRebound;
-		[Serialize("startOffset"         )] public Vector2 startOffset;
+		[Serialize("startOffset"         )] public Vec2d startOffset;
 		[Serialize("displayDuration"     )] public float displayDuration;
 		[Serialize("pulseScaleMultiplier")] public float pulseScaleMultiplier;
 		[Serialize("pulseIncreaseTime"   )] public float pulseIncreaseTime;

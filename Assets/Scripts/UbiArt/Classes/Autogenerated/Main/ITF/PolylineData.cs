@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PolylineData : CSerializable {
-		[Serialize("points"        )] public CArray<Vector2> points;
+		[Serialize("points"        )] public CArray<Vec2d> points;
 		[Serialize("gameMaterial"  )] public Path gameMaterial;
 		[Serialize("regionType"    )] public StringID regionType;
 		[Serialize("loop"          )] public bool loop;
 		[Serialize("movingPolyline")] public bool movingPolyline;
-		[Serialize("Vector2__0"    )] public Vector2 Vector2__0;
+		[Serialize("Vector2__0"    )] public Vec2d Vector2__0;
 		[Serialize("Path__1"       )] public Path Path__1;
 		[Serialize("StringID__2"   )] public StringID StringID__2;
 		[Serialize("bool__3"       )] public bool bool__3;

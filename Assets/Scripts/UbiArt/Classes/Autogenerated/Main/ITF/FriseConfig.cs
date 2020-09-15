@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 		[Serialize("patchOriented"                 )] public bool patchOriented;
 		[Serialize("patchCornerFactorCollision"    )] public float patchCornerFactorCollision;
 		[Serialize("patchAngleMin"                 )] public Angle patchAngleMin;
-		[Serialize("ExtremityScale"                )] public Vector2 ExtremityScale;
+		[Serialize("ExtremityScale"                )] public Vec2d ExtremityScale;
 		[Serialize("selfIllumColor"                )] public ColorInteger selfIllumColor;
 		[Serialize("textureConfigs"                )] public CList<FriseTextureConfig> textureConfigs;
 		[Serialize("gameMaterials"                 )] public CMap<StringID, Path> gameMaterials;

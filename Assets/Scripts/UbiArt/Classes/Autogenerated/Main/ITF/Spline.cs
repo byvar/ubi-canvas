@@ -18,12 +18,12 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 		public partial class SplinePoint : CSerializable {
-			[Serialize("Point"        )] public Vector3 Point;
+			[Serialize("Point"        )] public Vec3d Point;
 			[Serialize("Time"         )] public float Time;
-			[Serialize("NormalIn"     )] public Vector3 NormalIn;
-			[Serialize("NormalInTime" )] public Vector3 NormalInTime;
-			[Serialize("NormalOut"    )] public Vector3 NormalOut;
-			[Serialize("NormalOutTime")] public Vector3 NormalOutTime;
+			[Serialize("NormalIn"     )] public Vec3d NormalIn;
+			[Serialize("NormalInTime" )] public Vec3d NormalInTime;
+			[Serialize("NormalOut"    )] public Vec3d NormalOut;
+			[Serialize("NormalOutTime")] public Vec3d NormalOutTime;
 			[Serialize("Interpolation")] public interp Interpolation;
 			[Serialize("Interpolation")] public interp_RO Interpolation_RO;
 			protected override void SerializeImpl(CSerializerObject s) {

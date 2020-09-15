@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class BezierNode : CSerializable {
-		[Serialize("pos"                    )] public Vector3 pos;
-		[Serialize("tangent"                )] public Vector2 tangent;
+		[Serialize("pos"                    )] public Vec3d pos;
+		[Serialize("tangent"                )] public Vec2d tangent;
 		[Serialize("scale"                  )] public float scale;
 		[Serialize("tween"                  )] public Nullable<BezierTween> tween;
 		[Serialize("lumChainSpeedMultiplier")] public float lumChainSpeedMultiplier;

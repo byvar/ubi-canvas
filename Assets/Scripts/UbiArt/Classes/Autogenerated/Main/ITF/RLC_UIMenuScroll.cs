@@ -15,10 +15,10 @@ namespace UbiArt.ITF {
 		[Serialize("contactToScrollBlendSpeed" )] public float contactToScrollBlendSpeed;
 		[Serialize("minItemsDisplayed"         )] public float minItemsDisplayed;
 		[Serialize("lineItemCount"             )] public uint lineItemCount;
-		[Serialize("forceItemSpacing"          )] public Vector2 forceItemSpacing;
-		[Serialize("forceLineSpacing"          )] public Vector2 forceLineSpacing;
-		[Serialize("padTouchZoneMargin"        )] public Vector2 padTouchZoneMargin;
-		[Serialize("forceStartPos"             )] public Vector2 forceStartPos;
+		[Serialize("forceItemSpacing"          )] public Vec2d forceItemSpacing;
+		[Serialize("forceLineSpacing"          )] public Vec2d forceLineSpacing;
+		[Serialize("padTouchZoneMargin"        )] public Vec2d padTouchZoneMargin;
+		[Serialize("forceStartPos"             )] public Vec2d forceStartPos;
 		[Serialize("centerXIfNotEnoughElements")] public float centerXIfNotEnoughElements;
 		[Serialize("repositionTop"             )] public CList<ObjectPath> repositionTop;
 		[Serialize("repositionBottom"          )] public CList<ObjectPath> repositionBottom;

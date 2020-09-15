@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_EventShooterVacuumBhvChangeState : Event {
 		[Serialize("state"    )] public uint state;
-		[Serialize("spitForce")] public Vector2 spitForce;
+		[Serialize("spitForce")] public Vec2d spitForce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {

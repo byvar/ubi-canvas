@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_146_sub_73FC80 : CSerializable {
 		[Serialize("useSwitchChallenge")] public int useSwitchChallenge;
-		[Serialize("blockerOffset"     )] public Vector2 blockerOffset;
+		[Serialize("blockerOffset"     )] public Vec2d blockerOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(useSwitchChallenge));

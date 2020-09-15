@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("bonePosName"             )] public StringID bonePosName;
 		[Serialize("onSpawnEvent"            )] public Generic<Event> onSpawnEvent;
 		[Serialize("nbSpawns"                )] public uint nbSpawns;
-		[Serialize("spawnPosOffset"          )] public Vector2 spawnPosOffset;
+		[Serialize("spawnPosOffset"          )] public Vec2d spawnPosOffset;
 		[Serialize("clampAnglesList"         )] public CArray<Angle> clampAnglesList;
 		[Serialize("spawnAngleOffset"        )] public Angle spawnAngleOffset;
 		[Serialize("transmitAlwaysActive"    )] public bool transmitAlwaysActive;

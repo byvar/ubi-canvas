@@ -51,7 +51,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA | GameFlags.RL)]
 		public partial class MushroomTarget : CSerializable {
-			[Serialize("Position"      )] public Vector3 Position;
+			[Serialize("Position"      )] public Vec3d Position;
 			[Serialize("ExplosionTimer")] public float ExplosionTimer;
 			[Serialize("flareSpeed"    )] public float flareSpeed;
 			protected override void SerializeImpl(CSerializerObject s) {

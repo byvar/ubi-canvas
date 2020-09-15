@@ -19,8 +19,8 @@ namespace UbiArt.ITF {
 		[Serialize("useGlow"        )] public bool useGlow;
 		[Serialize("glowColor"      )] public Color glowColor;
 		[Serialize("glowSize"       )] public float glowSize;
-		[Serialize("innerSize"      )] public Vector2 innerSize;
-		[Serialize("outerSize"      )] public Vector2 outerSize;
+		[Serialize("innerSize"      )] public Vec2d innerSize;
+		[Serialize("outerSize"      )] public Vec2d outerSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

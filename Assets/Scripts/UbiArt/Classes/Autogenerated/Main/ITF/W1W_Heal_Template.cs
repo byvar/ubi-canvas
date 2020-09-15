@@ -80,7 +80,7 @@ namespace UbiArt.ITF {
 		public partial class InputDisplay : CSerializable {
 			[Serialize("StringID__0")] public StringID StringID__0;
 			[Serialize("StringID__1")] public StringID StringID__1;
-			[Serialize("Vector2__2" )] public Vector2 Vector2__2;
+			[Serialize("Vector2__2" )] public Vec2d Vector2__2;
 			[Serialize("float__3"   )] public float float__3;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

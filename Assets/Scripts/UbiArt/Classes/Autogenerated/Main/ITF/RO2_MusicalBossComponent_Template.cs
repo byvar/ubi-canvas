@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("faction"               )] public uint faction;
 		[Serialize("metronomeType"         )] public uint metronomeType;
 		[Serialize("tutoPath"              )] public Path tutoPath;
-		[Serialize("tutoPos"               )] public Vector3 tutoPos;
+		[Serialize("tutoPos"               )] public Vec3d tutoPos;
 		[Serialize("tutoDuration"          )] public float tutoDuration;
 		[Serialize("tutoDisplayCount"      )] public uint tutoDisplayCount;
 		[Serialize("pulseFactor"           )] public uint pulseFactor;

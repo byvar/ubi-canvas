@@ -13,8 +13,8 @@ namespace UbiArt.ITF {
 		[Serialize("viewportDefinitionRight"   )] public float viewportDefinitionRight;
 		[Serialize("viewportDefinitionTop"     )] public float viewportDefinitionTop;
 		[Serialize("viewportDefinitionBottom"  )] public float viewportDefinitionBottom;
-		[Serialize("viewportPosition"          )] public Vector2 viewportPosition;
-		[Serialize("viewportSize"              )] public Vector2 viewportSize;
+		[Serialize("viewportPosition"          )] public Vec2d viewportPosition;
+		[Serialize("viewportSize"              )] public Vec2d viewportSize;
 		[Serialize("viewportRotation"          )] public float viewportRotation;
 		[Serialize("frameTexturePath"          )] public Path frameTexturePath;
 		[Serialize("frameShiftOutLeft"         )] public int frameShiftOutLeft;

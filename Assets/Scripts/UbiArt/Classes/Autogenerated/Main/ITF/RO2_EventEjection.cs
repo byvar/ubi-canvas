@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_EventEjection : Event {
-		[Serialize("speed"     )] public Vector2 speed;
+		[Serialize("speed"     )] public Vec2d speed;
 		[Serialize("immuneDrag")] public bool immuneDrag;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -3,9 +3,9 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class TextAnimScaleComponent_Template : ActorComponent_Template {
-		[Serialize("baseSize"   )] public Vector2 baseSize;
-		[Serialize("baseSizeMax")] public Vector2 baseSizeMax;
-		[Serialize("margeSize"  )] public Vector2 margeSize;
+		[Serialize("baseSize"   )] public Vec2d baseSize;
+		[Serialize("baseSizeMax")] public Vec2d baseSizeMax;
+		[Serialize("margeSize"  )] public Vec2d margeSize;
 		[Serialize("animInputX" )] public StringID animInputX;
 		[Serialize("animInputY" )] public StringID animInputY;
 		protected override void SerializeImpl(CSerializerObject s) {

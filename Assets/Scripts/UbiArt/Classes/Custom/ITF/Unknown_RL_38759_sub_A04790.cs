@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Unknown_RL_38759_sub_A04790 : CSerializable {
 		[Serialize("type")] public Enum_type type;
 		[Serialize("duration")] public float duration;
-		[Serialize("additionalSpeed")] public Vector2 additionalSpeed;
+		[Serialize("additionalSpeed")] public Vec2d additionalSpeed;
 		[Serialize("notifyPlayerDelay")] public float notifyPlayerDelay;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

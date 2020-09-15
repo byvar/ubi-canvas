@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class PolyLineEdge : CSerializable {
-		[Serialize("POS"             )] public Vector2 POS;
+		[Serialize("POS"             )] public Vec2d POS;
 		[Serialize("Scale"           )] public float Scale;
 		[Serialize("SwitchTexture"   )] public bool SwitchTexture;
 		[Serialize("GMatOverride"    )] public StringID GMatOverride;
 		[Serialize("HoleMode"        )] public Hole HoleMode;
-		[Serialize("Vector"          )] public Vector2 Vector;
-		[Serialize("NormalizedVector")] public Vector2 NormalizedVector;
+		[Serialize("Vector"          )] public Vec2d Vector;
+		[Serialize("NormalizedVector")] public Vec2d NormalizedVector;
 		[Serialize("Length"          )] public float Length;
 		[Serialize("GameMaterial"    )] public StringID GameMaterial;
 

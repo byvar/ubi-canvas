@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Description("Item reward for boss enemy")]
 		[Serialize("bossItemReward"                )] public StringID bossItemReward;
 		[Serialize("forcedInitiativeType"          )] public Enum_forcedInitiativeType forcedInitiativeType;
-		[Serialize("fleeBattlePosOffsetOverride"   )] public Vector2 fleeBattlePosOffsetOverride;
+		[Serialize("fleeBattlePosOffsetOverride"   )] public Vec2d fleeBattlePosOffsetOverride;
 		[Serialize("useFleeBattlePosOffsetOverride")] public bool useFleeBattlePosOffsetOverride;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

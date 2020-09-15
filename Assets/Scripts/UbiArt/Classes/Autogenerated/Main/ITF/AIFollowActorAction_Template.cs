@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AIFollowActorAction_Template : AIAction_Template {
-		[Serialize("aiFollowActorRelativPos"    )] public Vector3 aiFollowActorRelativPos;
-		[Serialize("aiFollowActorRelativPosNext")] public Vector3 aiFollowActorRelativPosNext;
+		[Serialize("aiFollowActorRelativPos"    )] public Vec3d aiFollowActorRelativPos;
+		[Serialize("aiFollowActorRelativPosNext")] public Vec3d aiFollowActorRelativPosNext;
 		[Serialize("aiFollowActorAcceleration"  )] public float aiFollowActorAcceleration;
 		[Serialize("aiFollowActorFriction"      )] public float aiFollowActorFriction;
 		[Serialize("aiFollowActorDoFlip"        )] public bool aiFollowActorDoFlip;

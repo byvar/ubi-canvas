@@ -54,7 +54,7 @@ namespace UbiArt.ITF {
 		[Serialize("appearSequenceDuration"         )] public float appearSequenceDuration;
 		[Serialize("appearSequenceTravelType"       )] public Enum_appearSequenceTravelType appearSequenceTravelType;
 		[Serialize("appearSequenceFXName"           )] public StringID appearSequenceFXName;
-		[Serialize("appearSequenceDestPosOffset"    )] public Vector2 appearSequenceDestPosOffset;
+		[Serialize("appearSequenceDestPosOffset"    )] public Vec2d appearSequenceDestPosOffset;
 		[Serialize("appearSequenceFXPosBoneName"    )] public StringID appearSequenceFXPosBoneName;
 		[Serialize("timeHysteresisGrab"             )] public float timeHysteresisGrab;
 		[Serialize("trailPath"                      )] public Path trailPath;

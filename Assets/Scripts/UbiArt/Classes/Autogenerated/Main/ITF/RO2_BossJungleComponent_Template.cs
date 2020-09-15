@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 		[Serialize("TailMaxAngleByBone"    )] public Angle TailMaxAngleByBone;
 		[Serialize("TailStepNb"            )] public uint TailStepNb;
 		[Serialize("AABBSize"              )] public float AABBSize;
-		[Serialize("flameFXScale"          )] public Vector2 flameFXScale;
+		[Serialize("flameFXScale"          )] public Vec2d flameFXScale;
 		[Serialize("CamShakeType"          )] public StringID CamShakeType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

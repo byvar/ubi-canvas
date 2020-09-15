@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("WaitType"              )] public Enum_WaitType WaitType;
 		[Serialize("eventToListen"         )] public Generic<Event> eventToListen;
 		[Serialize("waitSpecificAngle"     )] public bool waitSpecificAngle;
-		[Serialize("waitSpecificAngleRange")] public Vector2 waitSpecificAngleRange;
+		[Serialize("waitSpecificAngleRange")] public Vec2d waitSpecificAngleRange;
 		[Serialize("checkEventOnlyInZone"  )] public bool checkEventOnlyInZone;
 		[Serialize("actorUpdateInfo"       )] public RO2_PlayerForceActionComponent.ActorUpdateInfoStruct actorUpdateInfo;
 		[Serialize("isEnabled"             )] public bool isEnabled;

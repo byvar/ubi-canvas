@@ -25,8 +25,8 @@ namespace UbiArt.Animation {
 			SerializeField(s, nameof(scaleY));
 		}
 
-		public Vector2 Position => new Vector2(posX * 0.000030518f, posY * 0.000030518f);
-		public Vector2 Scale => new Vector2(scaleX * 0.000030518f, scaleY * 0.000030518f);
+		public Vec2d Position => new Vec2d(posX * 0.000030518f, posY * 0.000030518f);
+		public Vec2d Scale => new Vec2d(scaleX * 0.000030518f, scaleY * 0.000030518f);
 		public Angle Rotation => angle * 0.000030518f;
 
 		/*

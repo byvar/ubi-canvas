@@ -22,9 +22,9 @@ namespace UbiArt.ITF {
 		[Serialize("rank"                 )] public int rank;
 		[Serialize("friendly"             )] public string friendly;
 		[Serialize("menuBaseName"         )] public string menuBaseName;
-		[Serialize("animSize"             )] public Vector2 animSize;
+		[Serialize("animSize"             )] public Vec2d animSize;
 		[Serialize("fontHeightSelected"   )] public float fontHeightSelected;
-		[Serialize("textShadowOffset"     )] public Vector2 textShadowOffset;
+		[Serialize("textShadowOffset"     )] public Vec2d textShadowOffset;
 		[Serialize("textShadowColor"      )] public Color textShadowColor;
 		[Serialize("lineSpacingFactor"    )] public float lineSpacingFactor;
 		[Serialize("forceUseAnimSize"     )] public int forceUseAnimSize;

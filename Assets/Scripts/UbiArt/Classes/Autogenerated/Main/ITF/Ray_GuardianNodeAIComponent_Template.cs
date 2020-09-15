@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("uint__1"   )] public uint uint__1;
 		[Serialize("float__2"  )] public float float__2;
 		[Serialize("float__3"  )] public float float__3;
-		[Serialize("Vector2__4")] public Vector2 Vector2__4;
+		[Serialize("Vector2__4")] public Vec2d Vector2__4;
 		[Serialize("float__5"  )] public float float__5;
 		[Serialize("float__6"  )] public float float__6;
 		[Serialize("float__7"  )] public float float__7;

@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class AnimMeshVertexPetComponent_Template : ActorComponent_Template {
 		[Serialize("allowUpdate")] public bool allowUpdate;
 		[Serialize("pets"       )] public CList<AnimMeshVertexPetData> pets;
-		[Serialize("randomPets" )] public CList<Vector3> randomPets;
+		[Serialize("randomPets" )] public CList<Vec3d> randomPets;
 		[Serialize("allPets"    )] public CList<AnimMeshVertexPetData> allPets;
 		[Serialize("baseParts"  )] public CArray<string> baseParts;
 		[Serialize("animList"   )] public CArray<string> animList;

@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("tweenSelection"         )] public LT tweenSelection;
 		[Serialize("secondaryTweenSelection")] public LT secondaryTweenSelection;
 		[Serialize("triggerOnce"            )] public bool triggerOnce;
-		[Serialize("tweenOffset"            )] public Vector2 tweenOffset;
+		[Serialize("tweenOffset"            )] public Vec2d tweenOffset;
 		[Serialize("tweenSelection"         )] public LTLegends tweenSelection2;
 		[Serialize("secondaryTweenSelection")] public LTLegends secondaryTweenSelection2;
 		protected override void SerializeImpl(CSerializerObject s) {

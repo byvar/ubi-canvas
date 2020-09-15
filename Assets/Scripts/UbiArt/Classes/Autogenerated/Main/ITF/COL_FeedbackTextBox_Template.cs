@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_FeedbackTextBox_Template : CSerializable {
-		[Serialize("spawnPosOffset" )] public Vector2 spawnPosOffset;
+		[Serialize("spawnPosOffset" )] public Vec2d spawnPosOffset;
 		[Serialize("timeBeforeShown")] public float timeBeforeShown;
 		[Serialize("displayTime"    )] public float displayTime;
 		[Serialize("fadeTime"       )] public float fadeTime;

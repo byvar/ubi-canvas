@@ -10,9 +10,9 @@ namespace UbiArt.ITF {
 		[Serialize("bool__4"           )] public bool bool__4;
 		[Serialize("bool__5"           )] public bool bool__5;
 		[Serialize("bool__6"           )] public bool bool__6;
-		[Serialize("Vector2__7"        )] public Vector2 Vector2__7;
-		[Serialize("Vector3__8"        )] public Vector3 Vector3__8;
-		[Serialize("Vector3__9"        )] public Vector3 Vector3__9;
+		[Serialize("Vector2__7"        )] public Vec2d Vector2__7;
+		[Serialize("Vector3__8"        )] public Vec3d Vector3__8;
+		[Serialize("Vector3__9"        )] public Vec3d Vector3__9;
 		[Serialize("bool__10"          )] public bool bool__10;
 		[Serialize("Enum_VH_1__11"     )] public Enum_VH_1 Enum_VH_1__11;
 		[Serialize("Generic<Event>__12")] public Generic<Event> Generic_Event__12;

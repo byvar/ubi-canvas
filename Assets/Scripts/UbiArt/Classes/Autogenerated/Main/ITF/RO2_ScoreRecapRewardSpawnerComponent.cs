@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ScoreRecapRewardSpawnerComponent : ActorComponent {
-		[Serialize("offset")] public Vector3 offset;
+		[Serialize("offset")] public Vec3d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(offset));

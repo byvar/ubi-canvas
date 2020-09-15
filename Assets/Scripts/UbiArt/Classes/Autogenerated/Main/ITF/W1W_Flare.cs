@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Flare : ActorComponent {
-		[Serialize("Vector2__0"        )] public Vector2 Vector2__0;
+		[Serialize("Vector2__0"        )] public Vec2d Vector2__0;
 		[Serialize("float__1"          )] public float float__1;
 		[Serialize("float__2"          )] public float float__2;
 		[Serialize("float__3"          )] public float float__3;
-		[Serialize("Vector2__4"        )] public Vector2 Vector2__4;
+		[Serialize("Vector2__4"        )] public Vec2d Vector2__4;
 		[Serialize("float__5"          )] public float float__5;
 		[Serialize("float__6"          )] public float float__6;
 		[Serialize("float__7"          )] public float float__7;

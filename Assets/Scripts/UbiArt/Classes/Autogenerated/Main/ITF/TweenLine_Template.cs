@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TweenLine_Template : TweenTranslation_Template {
-		[Serialize("movement"  )] public Vector3 movement;
+		[Serialize("movement"  )] public Vec3d movement;
 		[Serialize("CosinusOnX")] public bool CosinusOnX;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

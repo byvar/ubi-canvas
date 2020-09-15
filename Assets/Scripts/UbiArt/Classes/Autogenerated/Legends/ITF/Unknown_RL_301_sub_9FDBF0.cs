@@ -19,12 +19,12 @@ namespace UbiArt.ITF {
 		[Serialize("lightUVy0"               )] public float lightUVy0;
 		[Serialize("lightUVy1"               )] public float lightUVy1;
 		[Serialize("lightUVy2"               )] public float lightUVy2;
-		[Serialize("lightUVRatio"            )] public Vector2 lightUVRatio;
-		[Serialize("lightUVTranslation"      )] public Vector2 lightUVTranslation;
+		[Serialize("lightUVRatio"            )] public Vec2d lightUVRatio;
+		[Serialize("lightUVTranslation"      )] public Vec2d lightUVTranslation;
 		[Serialize("lightUVRotation"         )] public Angle lightUVRotation;
-		[Serialize("lightUVTranslationSpeed" )] public Vector2 lightUVTranslationSpeed;
+		[Serialize("lightUVTranslationSpeed" )] public Vec2d lightUVTranslationSpeed;
 		[Serialize("lightUVRotationSpeed"    )] public Angle lightUVRotationSpeed;
-		[Serialize("lightUVPivot"            )] public Vector2 lightUVPivot;
+		[Serialize("lightUVPivot"            )] public Vec2d lightUVPivot;
 		[Serialize("backLightTexture"        )] public Path backLightTexture;
 		[Serialize("backLightMaterial"       )] public GFXMaterialSerializable backLightMaterial;
 		[Serialize("backLightOffset"         )] public float backLightOffset;

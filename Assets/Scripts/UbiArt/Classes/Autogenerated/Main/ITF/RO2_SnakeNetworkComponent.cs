@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA)]
 		public partial class Node : CSerializable {
 			[Serialize("id"      )] public uint id;
-			[Serialize("pos"     )] public Vector3 pos;
+			[Serialize("pos"     )] public Vec3d pos;
 			[Serialize("childIds")] public CArray<uint> childIds;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

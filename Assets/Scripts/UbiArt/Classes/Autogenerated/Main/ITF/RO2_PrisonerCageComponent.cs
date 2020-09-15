@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("canTriggerMagnet"   )] public bool canTriggerMagnet;
 		[Serialize("isBroken"           )] public bool isBroken;
 		[Serialize("checkpointAngle"    )] public float checkpointAngle;
-		[Serialize("checkpointPos"      )] public Vector2 checkpointPos;
+		[Serialize("checkpointPos"      )] public Vec2d checkpointPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

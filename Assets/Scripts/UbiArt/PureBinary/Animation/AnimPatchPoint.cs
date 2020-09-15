@@ -10,8 +10,8 @@ namespace UbiArt.Animation {
 	public class AnimPatchPoint : CSerializable {
 		[Serialize("link"  )] public Link key;
 		[Serialize("index" )] public uint index;
-		[Serialize("uv"    )] public Vector2 uv;
-		[Serialize("normal")] public Vector2 normal;
+		[Serialize("uv"    )] public Vec2d uv;
+		[Serialize("normal")] public Vec2d normal;
 		[Serialize("sid"   )] public StringID sid;
 		[Serialize("local" )] public AnimPatchPointLocal local;
 

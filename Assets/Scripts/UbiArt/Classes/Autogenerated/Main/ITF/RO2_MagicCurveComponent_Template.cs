@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("distMin"       )] public float distMin;
 		[Serialize("uvScrollFactor")] public float uvScrollFactor;
 		[Serialize("extraLength"   )] public float extraLength;
-		[Serialize("offset"        )] public Vector2 offset;
+		[Serialize("offset"        )] public Vec2d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(bezierRenderer));

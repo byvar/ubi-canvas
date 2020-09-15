@@ -4,10 +4,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_SkipLevelComponent_Template : ActorComponent_Template {
 		[Serialize("textPath"       )] public Path textPath;
-		[Serialize("animSize"       )] public Vector2 animSize;
-		[Serialize("textAnimSize"   )] public Vector2 textAnimSize;
-		[Serialize("screenPos"      )] public Vector2 screenPos;
-		[Serialize("textScreenPos"  )] public Vector2 textScreenPos;
+		[Serialize("animSize"       )] public Vec2d animSize;
+		[Serialize("textAnimSize"   )] public Vec2d textAnimSize;
+		[Serialize("screenPos"      )] public Vec2d screenPos;
+		[Serialize("textScreenPos"  )] public Vec2d textScreenPos;
 		[Serialize("appearAnim"     )] public StringID appearAnim;
 		[Serialize("disappearAnim"  )] public StringID disappearAnim;
 		[Serialize("talkAnim"       )] public StringID talkAnim;

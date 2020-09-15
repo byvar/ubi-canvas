@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("flagIconPath"       )] public Path flagIconPath;
 		[Serialize("costumeIconPath"    )] public Path costumeIconPath;
 		[Serialize("playerActorPoolSize")] public uint playerActorPoolSize;
-		[Serialize("playerActorOffset"  )] public Vector2 playerActorOffset;
+		[Serialize("playerActorOffset"  )] public Vec2d playerActorOffset;
 		[Serialize("friendText"         )] public Placeholder friendText;
 		[Serialize("friendsText"        )] public Placeholder friendsText;
 		[Serialize("friends0Text"       )] public Placeholder friends0Text;

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_WM_PanelComponent_Template : CSerializable {
-		[Serialize("offset"      )] public Vector2 offset;
+		[Serialize("offset"      )] public Vec2d offset;
 		[Serialize("bone"        )] public StringID bone;
 		[Serialize("electoonPath")] public Path electoonPath;
 		protected override void SerializeImpl(CSerializerObject s) {

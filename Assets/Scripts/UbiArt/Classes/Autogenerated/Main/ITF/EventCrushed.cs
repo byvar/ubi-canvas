@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class EventCrushed : Event {
 		[Serialize("characterSize"   )] public CHARACTERSIZE characterSize;
-		[Serialize("direction"       )] public Vector2 direction;
-		[Serialize("fxPos"           )] public Vector3 fxPos;
+		[Serialize("direction"       )] public Vec2d direction;
+		[Serialize("fxPos"           )] public Vec3d fxPos;
 		[Serialize("bounce"          )] public bool bounce;
 		[Serialize("bounceMultiplier")] public float bounceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {

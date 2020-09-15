@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("lowLifeThreshold"     )] public float lowLifeThreshold;
 		[Serialize("dispenseDelay"        )] public float dispenseDelay;
 		[Serialize("shakeDelay"           )] public float shakeDelay;
-		[Serialize("spawnOffset"          )] public Vector3 spawnOffset;
+		[Serialize("spawnOffset"          )] public Vec3d spawnOffset;
 		[Serialize("ejectionAngleList"    )] public CArray<Angle> ejectionAngleList;
 		[Serialize("isChildLauncher"      )] public int isChildLauncher;
 		[Serialize("animIdle"             )] public StringID animIdle;

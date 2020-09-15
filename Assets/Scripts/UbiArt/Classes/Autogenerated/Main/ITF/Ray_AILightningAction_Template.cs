@@ -13,8 +13,8 @@ namespace UbiArt.ITF {
 		[Serialize("useDestStim"    )] public int useDestStim;
 		[Serialize("startStimRadius")] public float startStimRadius;
 		[Serialize("destStimRadius" )] public float destStimRadius;
-		[Serialize("startStimOffset")] public Vector2 startStimOffset;
-		[Serialize("destStimOffset" )] public Vector2 destStimOffset;
+		[Serialize("startStimOffset")] public Vec2d startStimOffset;
+		[Serialize("destStimOffset" )] public Vec2d destStimOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(startBoneName));

@@ -165,7 +165,7 @@ public class UnityAnimation : MonoBehaviour {
 					if (patchActive) {
 						int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
 						if (boneIndex != -1) {
-							patchMaterials[i].SetColor("_ColorFactor", new Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
+							patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
 							zman.zDict[patchMaterials[i]] = transform.position.z - bones[boneIndex].bindZ - bones[boneIndex].localZ;
 						}
 					} else {

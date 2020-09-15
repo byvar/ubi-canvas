@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_IphoneAdapter_Template : ActorComponent_Template {
-		[Serialize("Vector3__0" )] public Vector3 Vector3__0;
+		[Serialize("Vector3__0" )] public Vec3d Vector3__0;
 		[Serialize("StringID__1")] public StringID StringID__1;
 		[Serialize("bool__2"    )] public bool bool__2;
 		[Serialize("bool__3"    )] public bool bool__3;

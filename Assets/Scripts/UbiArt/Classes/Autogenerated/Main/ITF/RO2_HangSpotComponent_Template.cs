@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_HangSpotComponent_Template : ActorComponent_Template {
 		[Serialize("radius"                )] public float radius;
-		[Serialize("phantomOffset"         )] public Vector2 phantomOffset;
+		[Serialize("phantomOffset"         )] public Vec2d phantomOffset;
 		[Serialize("phantomRadius"         )] public float phantomRadius;
 		[Serialize("notifyToParentBind"    )] public bool notifyToParentBind;
 		[Serialize("allowOneHangOnly"      )] public bool allowOneHangOnly;

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_DraggableObject : W1W_InteractiveGenComponent {
-		[Serialize("Vector2__0"     )] public Vector2 Vector2__0;
+		[Serialize("Vector2__0"     )] public Vec2d Vector2__0;
 		[Serialize("bool__1"        )] public bool bool__1;
 		[Serialize("bool__2"        )] public bool bool__2;
 		[Serialize("bool__3"        )] public bool bool__3;

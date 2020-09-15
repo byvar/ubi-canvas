@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_24_sub_702B30 : CSerializable {
 		[Serialize("enterShape"           )] public Placeholder enterShape;
-		[Serialize("enterPoint0"          )] public Vector2 enterPoint0;
-		[Serialize("enterPoint1"          )] public Vector2 enterPoint1;
+		[Serialize("enterPoint0"          )] public Vec2d enterPoint0;
+		[Serialize("enterPoint1"          )] public Vec2d enterPoint1;
 		[Serialize("playerSpeedMultiplier")] public float playerSpeedMultiplier;
 		[Serialize("travelSpeed"          )] public float travelSpeed;
 		[Serialize("scale"                )] public float scale;

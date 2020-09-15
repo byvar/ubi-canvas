@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class EditableShape : CSerializable {
 		[Serialize("shape")] public Generic<PhysShape> shape;
 		[Serialize("bindedBoneName")] public StringID bindedBoneName;
-		[Serialize("localOffset"   )] public Vector2 localOffset;
+		[Serialize("localOffset"   )] public Vec2d localOffset;
 		[Serialize("applyRotation" )] public bool applyRotation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

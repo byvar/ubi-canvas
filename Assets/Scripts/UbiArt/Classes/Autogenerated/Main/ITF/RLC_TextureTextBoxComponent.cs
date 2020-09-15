@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		[Serialize("fontSize"                    )] public uint fontSize;
 		[Serialize("fontAutoScale"               )] public bool fontAutoScale;
 		[Serialize("fontAutoFit"                 )] public bool fontAutoFit;
-		[Serialize("shadowOffset"                )] public Vector2 shadowOffset;
-		[Serialize("textureSize"                 )] public Vector2 textureSize;
+		[Serialize("shadowOffset"                )] public Vec2d shadowOffset;
+		[Serialize("textureSize"                 )] public Vec2d textureSize;
 		[Serialize("textColor"                   )] public Color textColor;
 		[Serialize("textShadowColor"             )] public Color textShadowColor;
 		[Serialize("unsecureSource"              )] public bool unsecureSource;

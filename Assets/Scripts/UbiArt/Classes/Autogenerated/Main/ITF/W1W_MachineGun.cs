@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		[Serialize("float__1"          )] public float float__1;
 		[Serialize("float__2"          )] public float float__2;
 		[Serialize("Path__3"           )] public Path Path__3;
-		[Serialize("Vector2__4"        )] public Vector2 Vector2__4;
-		[Serialize("Vector2__5"        )] public Vector2 Vector2__5;
+		[Serialize("Vector2__4"        )] public Vec2d Vector2__4;
+		[Serialize("Vector2__5"        )] public Vec2d Vector2__5;
 		[Serialize("StringID__6"       )] public StringID StringID__6;
 		[Serialize("Generic<Event>__7" )] public Generic<Event> Generic_Event__7;
 		[Serialize("Generic<Event>__8" )] public Generic<Event> Generic_Event__8;

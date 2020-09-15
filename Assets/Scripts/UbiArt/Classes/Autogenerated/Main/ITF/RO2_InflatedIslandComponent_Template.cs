@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 		[Serialize("forceAngleReduction")] public float forceAngleReduction;
 		[Serialize("shakeReduction"     )] public float shakeReduction;
 		[Serialize("jumpFX"             )] public Path jumpFX;
-		[Serialize("jumpFXOffset"       )] public Vector2 jumpFXOffset;
+		[Serialize("jumpFXOffset"       )] public Vec2d jumpFXOffset;
 		[Serialize("jumpFXAngleLimit"   )] public Angle jumpFXAngleLimit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

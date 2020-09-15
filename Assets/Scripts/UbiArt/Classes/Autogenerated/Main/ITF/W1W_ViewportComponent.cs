@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_ViewportComponent : ViewportUIComponent {
 		[Serialize("Enum_VH_0__0")] public Enum_VH_0 Enum_VH_0__0;
-		[Serialize("Vector3__1"  )] public Vector3 Vector3__1;
+		[Serialize("Vector3__1"  )] public Vec3d Vector3__1;
 		[Serialize("bool__2"     )] public bool bool__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 		[Description("loss rate, units/second")]
 		[Serialize("maxFxScale"      )] public float maxFxScale;
 		[Description("spawned fx offset")]
-		[Serialize("fxOffset"        )] public Vector2 fxOffset;
+		[Serialize("fxOffset"        )] public Vec2d fxOffset;
 		[Description("spawned fx bone name")]
 		[Serialize("fxBoneName"      )] public StringID fxBoneName;
 		protected override void SerializeImpl(CSerializerObject s) {

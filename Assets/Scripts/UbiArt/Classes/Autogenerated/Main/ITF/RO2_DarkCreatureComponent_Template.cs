@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("RadiusMin"             )] public float RadiusMin;
 		[Serialize("RadiusMax"             )] public float RadiusMax;
 		[Serialize("SwarmCenterCoeff"      )] public float SwarmCenterCoeff;
-		[Serialize("MaxSpeedInLight"       )] public Vector2 MaxSpeedInLight;
+		[Serialize("MaxSpeedInLight"       )] public Vec2d MaxSpeedInLight;
 		[Serialize("Faction"               )] public uint Faction;
 		[Serialize("SkipPlayerInLight"     )] public bool SkipPlayerInLight;
 		[Serialize("SkipPlayerInLightTimer")] public float SkipPlayerInLightTimer;

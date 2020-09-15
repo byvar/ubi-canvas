@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 		[Serialize("physUnstickToOtherMaxDistance"           )] public float physUnstickToOtherMaxDistance;
 		[Serialize("windForceBlendCoef"                      )] public float windForceBlendCoef;
 		[Serialize("secondaryCollisionCheckRadius"           )] public float secondaryCollisionCheckRadius;
-		[Serialize("secondaryCollisionCheckPos"              )] public Vector2 secondaryCollisionCheckPos;
+		[Serialize("secondaryCollisionCheckPos"              )] public Vec2d secondaryCollisionCheckPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RO) {

@@ -37,8 +37,8 @@ namespace UbiArt.ITF {
 					Mesh mesh = new Mesh();
 					mesh.subMeshCount = meshBuildData.value.StaticIndexList.Count;
 					mesh.vertices = meshBuildData.value.StaticVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
-					mesh.uv = meshBuildData.value.StaticVertexList.Select(v => v.uv).ToArray();
-					mesh.colors = meshBuildData.value.StaticVertexList.Select(v => v.color.Color).ToArray();
+					mesh.uv = meshBuildData.value.StaticVertexList.Select(v => (Vector2)v.uv).ToArray();
+					mesh.colors = meshBuildData.value.StaticVertexList.Select(v => (UnityEngine.Color)v.color.Color).ToArray();
 					//mesh.SetUVs(4, meshBuildData.value.StaticVertexList.Select(v => v.color.Vector).ToList());
 					//MapLoader.Loader.print(meshBuildData.value.StaticVertexList[0].color.Vector);
 					MeshFilter mf = mesh_static.AddComponent<MeshFilter>();
@@ -91,7 +91,7 @@ namespace UbiArt.ITF {
 								if (sh.obj.renderFrontLight) mesh_static.layer |= LayerMask.NameToLayer("FrontLight");
 								if (sh.obj.renderBackLight) mesh_static.layer |= LayerMask.NameToLayer("BackLight");
 							}
-							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vector2.zero) {
+							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.zero) {
 								AnimatedTexture animTex = mesh_static.AddComponent<AnimatedTexture>();
 								animTex.ResetMaterial(config.obj.textureConfigs[idTexConfig], mat);
 							}
@@ -114,11 +114,11 @@ namespace UbiArt.ITF {
 					Mesh mesh = new Mesh();
 					mesh.subMeshCount = meshBuildData.value.AnimIndexList.Count;
 					mesh.vertices = meshBuildData.value.AnimVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
-					mesh.uv = meshBuildData.value.AnimVertexList.Select(v => v.uv1).ToArray();
+					mesh.uv = meshBuildData.value.AnimVertexList.Select(v => (Vector2)v.uv1).ToArray();
 					mesh.SetUVs(1, meshBuildData.value.AnimVertexList.Select(v => v.uv2.UnityVector).ToList());
 					mesh.SetUVs(2, meshBuildData.value.AnimVertexList.Select(v => v.uv3.UnityVector).ToList());
-					mesh.SetUVs(3, meshBuildData.value.AnimVertexList.Select(v => v.uv4).ToList());
-					mesh.colors = meshBuildData.value.AnimVertexList.Select(v => v.color.Color).ToArray();
+					mesh.SetUVs(3, meshBuildData.value.AnimVertexList.Select(v => (Vector2)v.uv4).ToList());
+					mesh.colors = meshBuildData.value.AnimVertexList.Select(v => (UnityEngine.Color)v.color.Color).ToArray();
 					//mesh.SetUVs(4, meshBuildData.value.AnimVertexList.Select(v => v.color.Vector).ToList());
 					//MapLoader.Loader.print(meshBuildData.value.StaticVertexList[0].color.Vector);
 					MeshFilter mf = mesh_anim.AddComponent<MeshFilter>();
@@ -171,7 +171,7 @@ namespace UbiArt.ITF {
 								if (sh.obj.renderFrontLight) mesh_anim.layer |= LayerMask.NameToLayer("FrontLight");
 								if (sh.obj.renderBackLight) mesh_anim.layer |= LayerMask.NameToLayer("BackLight");
 							}
-							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vector2.zero) {
+							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.zero) {
 								AnimatedTexture animTex = mesh_anim.AddComponent<AnimatedTexture>();
 								animTex.ResetMaterial(config.obj.textureConfigs[idTexConfig], mat);
 							}

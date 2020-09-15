@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
 	public partial class ShapeComponent : ActorComponent {
-		[Serialize("localOffset"      )] public Vector2 localOffset;
-		[Serialize("localScale"       )] public Vector2 localScale;
+		[Serialize("localOffset"      )] public Vec2d localOffset;
+		[Serialize("localScale"       )] public Vec2d localScale;
 		[Serialize("useShapeTransform")] public bool useShapeTransform;
 		[Serialize("AnimPolylineList" )] public CList<StringID> AnimPolylineList;
 		protected override void SerializeImpl(CSerializerObject s) {

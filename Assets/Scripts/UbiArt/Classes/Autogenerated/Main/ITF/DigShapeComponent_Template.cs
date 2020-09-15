@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class DigShapeComponent_Template : ActorComponent_Template {
 		[Serialize("digByDefault"   )] public bool digByDefault;
-		[Serialize("digOffset"      )] public Vector2 digOffset;
-		[Serialize("digScale"       )] public Vector2 digScale;
+		[Serialize("digOffset"      )] public Vec2d digOffset;
+		[Serialize("digScale"       )] public Vec2d digScale;
 		[Serialize("useActorAngle"  )] public bool useActorAngle;
 		[Serialize("sendEventToSelf")] public bool sendEventToSelf;
 		[Serialize("staticEnabled"  )] public bool staticEnabled;

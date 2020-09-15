@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Ray_BossPlantNodeComponent_Template : CSerializable {
 		[Serialize("anim"        )] public StringID anim;
 		[Serialize("animPlayRate")] public float animPlayRate;
-		[Serialize("cycleVector" )] public Vector2 cycleVector;
+		[Serialize("cycleVector" )] public Vec2d cycleVector;
 		[Serialize("triggerEvent")] public Placeholder triggerEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

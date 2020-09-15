@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("texture"             )] public Path texture;
 		[Serialize("material"            )] public GFXMaterialSerializable material;
 		[Serialize("name"                )] public StringID name;
-		[Serialize("orientation"         )] public Vector2 orientation;
+		[Serialize("orientation"         )] public Vec2d orientation;
 		[Serialize("orientationInfluence")] public float orientationInfluence;
 		[Serialize("allowStretch"        )] public bool allowStretch;
 		[Serialize("mode"                )] public FlexMode mode;

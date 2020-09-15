@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		[Serialize("nameOffset"                     )] public float nameOffset;
 		[Serialize("mainPlayerBackgroundColorFactor")] public Color mainPlayerBackgroundColorFactor;
 		[Serialize("actorIconSelected"              )] public StringID actorIconSelected;
-		[Serialize("actorIconOffset"                )] public Vector2 actorIconOffset;
+		[Serialize("actorIconOffset"                )] public Vec2d actorIconOffset;
 		[Serialize("inverseShadowState"             )] public int inverseShadowState;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

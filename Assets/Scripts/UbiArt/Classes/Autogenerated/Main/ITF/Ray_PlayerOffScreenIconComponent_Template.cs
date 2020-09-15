@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PlayerOffScreenIconComponent_Template : CSerializable {
 		[Serialize("arrowBoneName"  )] public StringID arrowBoneName;
-		[Serialize("screenBorder"   )] public Vector2 screenBorder;
+		[Serialize("screenBorder"   )] public Vec2d screenBorder;
 		[Serialize("fadeInDelay"    )] public float fadeInDelay;
 		[Serialize("fadeInDuration" )] public float fadeInDuration;
 		[Serialize("fadeOutDelay"   )] public float fadeOutDelay;

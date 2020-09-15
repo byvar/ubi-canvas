@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class ProceduralSoftPlatformComponent_Template : GraphicComponent_Template {
 		[Serialize("isSwing"                   )] public bool isSwing;
 		[Serialize("isLiana"                   )] public bool isLiana;
-		[Serialize("defaultEndPos"             )] public Vector3 defaultEndPos;
+		[Serialize("defaultEndPos"             )] public Vec3d defaultEndPos;
 		[Serialize("edgeLength"                )] public float edgeLength;
 		[Serialize("lengthFactor"              )] public float lengthFactor;
 		[Serialize("bezierSampling"            )] public uint bezierSampling;
@@ -16,8 +16,8 @@ namespace UbiArt.ITF {
 		[Serialize("endMaterial"               )] public GFXMaterialSerializable endMaterial;
 		[Serialize("bezierRenderer"            )] public BezierCurveRenderer_Template bezierRenderer;
 		[Serialize("bezierZOffset"             )] public float bezierZOffset;
-		[Serialize("beginTextureScale"         )] public Vector2 beginTextureScale;
-		[Serialize("endTextureScale"           )] public Vector2 endTextureScale;
+		[Serialize("beginTextureScale"         )] public Vec2d beginTextureScale;
+		[Serialize("endTextureScale"           )] public Vec2d endTextureScale;
 		[Serialize("gameMaterial"              )] public Path gameMaterial;
 		[Serialize("movingPolyForce"           )] public float movingPolyForce;
 		[Serialize("weightMultiplier"          )] public float weightMultiplier;

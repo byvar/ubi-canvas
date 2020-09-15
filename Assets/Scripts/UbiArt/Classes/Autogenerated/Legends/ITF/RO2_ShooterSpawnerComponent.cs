@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_ShooterSpawnerComponent : TimedSpawnerComponent {
 		[Serialize("tweenId"                    )] public StringID tweenId;
 		[Serialize("spawnActorId"               )] public StringID spawnActorId;
-		[Serialize("beforeCamRelativeInitialPos")] public Vector3 beforeCamRelativeInitialPos;
+		[Serialize("beforeCamRelativeInitialPos")] public Vec3d beforeCamRelativeInitialPos;
 		[Serialize("useTutoOnFirstSpawnee"      )] public bool useTutoOnFirstSpawnee;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

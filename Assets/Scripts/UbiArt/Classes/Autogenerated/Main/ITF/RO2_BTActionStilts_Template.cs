@@ -14,9 +14,9 @@ namespace UbiArt.ITF {
 		[Serialize("animReception_To_0" )] public StringID animReception_To_0;
 		[Serialize("animReception_To_1" )] public StringID animReception_To_1;
 		[Serialize("animReception_To_2" )] public StringID animReception_To_2;
-		[Serialize("offsetFxPos_Level_0")] public Vector2 offsetFxPos_Level_0;
-		[Serialize("offsetFxPos_Level_1")] public Vector2 offsetFxPos_Level_1;
-		[Serialize("offsetFxPos_Level_2")] public Vector2 offsetFxPos_Level_2;
+		[Serialize("offsetFxPos_Level_0")] public Vec2d offsetFxPos_Level_0;
+		[Serialize("offsetFxPos_Level_1")] public Vec2d offsetFxPos_Level_1;
+		[Serialize("offsetFxPos_Level_2")] public Vec2d offsetFxPos_Level_2;
 		[Serialize("animLanding"        )] public StringID animLanding;
 		[Serialize("breakFxName"        )] public StringID breakFxName;
 		[Serialize("break02FxName"      )] public StringID break02FxName;

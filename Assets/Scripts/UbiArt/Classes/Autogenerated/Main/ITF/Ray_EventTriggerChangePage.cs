@@ -3,9 +3,9 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventTriggerChangePage : Event {
-		[Serialize("enterPoint"     )] public Vector3 enterPoint;
-		[Serialize("exitPoint"      )] public Vector3 exitPoint;
-		[Serialize("finalPoint"     )] public Vector3 finalPoint;
+		[Serialize("enterPoint"     )] public Vec3d enterPoint;
+		[Serialize("exitPoint"      )] public Vec3d exitPoint;
+		[Serialize("finalPoint"     )] public Vec3d finalPoint;
 		[Serialize("verticalEject"  )] public int verticalEject;
 		[Serialize("destinationPage")] public uint destinationPage;
 		[Serialize("playerDuration" )] public float playerDuration;

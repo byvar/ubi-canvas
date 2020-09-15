@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__17"    )] public float float__17_;
 		[Serialize("StringID__18" )] public StringID StringID__18;
 		[Serialize("float__19"    )] public float float__19;
-		[Serialize("Vector2__20"  )] public Vector2 Vector2__20;
+		[Serialize("Vector2__20"  )] public Vec2d Vector2__20;
 		[Serialize("Enum_VH_0__21")] public Enum_VH_0_ Enum_VH_0__21;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

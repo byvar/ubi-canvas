@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("pressUpShape")] public Generic<PhysShape> pressUpShape;
 		[Serialize("flashFX"     )] public Path flashFX;
 		[Serialize("flashFXStart")] public Path flashFXStart;
-		[Serialize("flashOffset" )] public Vector3 flashOffset;
+		[Serialize("flashOffset" )] public Vec3d flashOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(detectShape));

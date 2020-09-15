@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class ShapeComponent_Template : ActorComponent_Template {
 		[Serialize("AnimPolylineList"             )] public CList<StringID> AnimPolylineList;
 		[Serialize("shape"                        )] public Generic<PhysShape> shape;
-		[Serialize("offset"                       )] public Vector2 offset;
+		[Serialize("offset"                       )] public Vec2d offset;
 		[Serialize("attachPolyline"               )] public StringID attachPolyline;
 		[Serialize("proceduralBone"               )] public StringID proceduralBone;
 		[Serialize("shapes"                       )] public CList<ShapeData_Template> shapes;

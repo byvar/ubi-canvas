@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class UIMenuPageComponent : CSerializable {
 		[Serialize("TriggerButton"        )] public uint TriggerButton;
-		[Serialize("RelativePosFromCamera")] public Vector3 RelativePosFromCamera;
+		[Serialize("RelativePosFromCamera")] public Vec3d RelativePosFromCamera;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

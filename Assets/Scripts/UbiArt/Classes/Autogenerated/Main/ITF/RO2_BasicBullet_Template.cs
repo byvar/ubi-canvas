@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		[Serialize("destroyOnEnvironment" )] public bool destroyOnEnvironment;
 		[Serialize("checkEnvironmentHit"  )] public bool checkEnvironmentHit;
 		[Serialize("checkEnvironment"     )] public bool checkEnvironment;
-		[Serialize("defaultSpeed"         )] public Vector2 defaultSpeed;
+		[Serialize("defaultSpeed"         )] public Vec2d defaultSpeed;
 		[Serialize("rotationSpeed"        )] public float rotationSpeed;
 		[Serialize("allowBounce"          )] public bool allowBounce;
 		[Serialize("bounceMaxNb"          )] public uint bounceMaxNb;

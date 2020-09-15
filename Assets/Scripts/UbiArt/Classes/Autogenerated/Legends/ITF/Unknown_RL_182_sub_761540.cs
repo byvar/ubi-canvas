@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("needFocusToActivate")] public int needFocusToActivate;
 		[Serialize("highlightText"      )] public LocalisationId highlightText;
 		[Serialize("highlightIcon"      )] public Path highlightIcon;
-		[Serialize("highlightOffset"    )] public Vector3 highlightOffset;
+		[Serialize("highlightOffset"    )] public Vec3d highlightOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

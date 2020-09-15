@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Ray_PhoenixGadget_Template : Ray_PowerUpDisplay_Template {
 		[Serialize("Path__0"    )] public Path Path__0;
 		[Serialize("StringID__1")] public StringID StringID__1;
-		[Serialize("Vector2__2" )] public Vector2 Vector2__2;
+		[Serialize("Vector2__2" )] public Vec2d Vector2__2;
 		[Serialize("float__3"   )] public float float__3;
 		[Serialize("float__4"   )] public float float__4;
 		[Serialize("float__5"   )] public float float__5;

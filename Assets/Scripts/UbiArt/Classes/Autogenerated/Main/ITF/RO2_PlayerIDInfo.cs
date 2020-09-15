@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_PlayerIDInfo : PlayerIDInfo {
 		[Serialize("iconTexturePath"  )] public Path iconTexturePath;
-		[Serialize("iconSizeInTexture")] public Vector2 iconSizeInTexture;
+		[Serialize("iconSizeInTexture")] public Vec2d iconSizeInTexture;
 		[Serialize("loadingPath"      )] public Path loadingPath;
 		[Serialize("treePath"         )] public Path treePath;
 		protected override void SerializeImpl(CSerializerObject s) {

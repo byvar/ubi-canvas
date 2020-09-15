@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("cameraOn"             )] public int cameraOn;
 		[Serialize("cameraOff"            )] public int cameraOff;
 		[Serialize("cameraZOffset"        )] public float cameraZOffset;
-		[Serialize("cameraOffset"         )] public Vector2 cameraOffset;
+		[Serialize("cameraOffset"         )] public Vec2d cameraOffset;
 		[Serialize("cameraZOffsetDuration")] public float cameraZOffsetDuration;
 		[Serialize("cameraOffsetDuration" )] public float cameraOffsetDuration;
 		[Serialize("cameraEjectMargin"    )] public Margin cameraEjectMargin;

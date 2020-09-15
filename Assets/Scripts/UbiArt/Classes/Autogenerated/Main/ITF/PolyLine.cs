@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class Connection : CSerializable {
 			[Serialize("PreviousId")] public uint PreviousId;
-			[Serialize("PosInit"   )] public Vector2 PosInit;
+			[Serialize("PosInit"   )] public Vec2d PosInit;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(PreviousId));

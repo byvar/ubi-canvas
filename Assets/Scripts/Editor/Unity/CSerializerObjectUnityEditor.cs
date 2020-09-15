@@ -65,14 +65,14 @@ namespace UbiArt {
 				LocalisationId locId = (LocalisationId)obj;
 				DrawLocId(name, ref locId);
 				obj = locId;
-			} else if (type == typeof(Vector2)) {
-				obj = EditorGUILayout.Vector2Field(name, (Vector2)obj);
-			} else if (type == typeof(Vector3)) {
-				obj = EditorGUILayout.Vector3Field(name, (Vector3)obj);
+			} else if (type == typeof(Vec2d)) {
+				obj = (Vec2d)EditorGUILayout.Vector2Field(name, (Vec2d)obj);
+			} else if (type == typeof(Vec3d)) {
+				obj = (Vec3d)EditorGUILayout.Vector3Field(name, (Vec3d)obj);
 			} else if (type == typeof(Vector4)) {
-				obj = EditorGUILayout.Vector4Field(name, (Vector4)obj);
+				obj = (Vector4)EditorGUILayout.Vector4Field(name, (Vector4)obj);
 			} else if (type == typeof(Color)) {
-				obj = EditorGUILayout.ColorField(name, (Color)obj);
+				obj = (Color)EditorGUILayout.ColorField(name, (Color)obj);
 			} else if (type == typeof(CString)) {
 				obj = new CString(EditorGUILayout.TextField(name, ((CString)obj).str));
 			} else {

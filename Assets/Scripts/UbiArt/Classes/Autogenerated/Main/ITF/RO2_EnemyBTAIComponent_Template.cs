@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 		[Serialize("immuneToPlayerHits"                   )] public bool immuneToPlayerHits;
 		[Serialize("alwaysCheckDangerousPol"              )] public bool alwaysCheckDangerousPol;
 		[Serialize("suspendedFreqSinus"                   )] public float suspendedFreqSinus;
-		[Serialize("suspendedForceSinus"                  )] public Vector2 suspendedForceSinus;
+		[Serialize("suspendedForceSinus"                  )] public Vec2d suspendedForceSinus;
 		[Serialize("disabledTweenOnHit"                   )] public bool disabledTweenOnHit;
 		[Serialize("nbFreeRehit"                          )] public uint nbFreeRehit;
 		[Serialize("canChangeColor"                       )] public bool canChangeColor;
@@ -161,7 +161,7 @@ namespace UbiArt.ITF {
 			[Serialize("softColCheckDistance"           )] public float softColCheckDistance;
 			[Serialize("softColForce"                   )] public float softColForce;
 			[Serialize("startLevel"                     )] public uint startLevel;
-			[Serialize("stiltsOriginCenter"             )] public Vector2 stiltsOriginCenter;
+			[Serialize("stiltsOriginCenter"             )] public Vec2d stiltsOriginCenter;
 			[Serialize("phantomShape"                   )] public StringID phantomShape;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

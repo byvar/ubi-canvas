@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_SwarmRepellerPowerUp_Template : Ray_PowerUpDisplay_Template {
 		[Serialize("repellerActor"     )] public Path repellerActor;
-		[Serialize("playerFollowOffset")] public Vector2 playerFollowOffset;
+		[Serialize("playerFollowOffset")] public Vec2d playerFollowOffset;
 		[Serialize("speedBlend"        )] public float speedBlend;
 		[Serialize("speedMin"          )] public float speedMin;
 		[Serialize("speedMax"          )] public float speedMax;

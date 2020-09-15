@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ShapeDetectorComponent : DetectorComponent {
-		[Serialize("localOffset"      )] public Vector2 localOffset;
-		[Serialize("localScale"       )] public Vector2 localScale;
+		[Serialize("localOffset"      )] public Vec2d localOffset;
+		[Serialize("localScale"       )] public Vec2d localScale;
 		[Serialize("useShapeTransform")] public bool useShapeTransform;
 		[Serialize("useEditableShape" )] public bool useEditableShape;
 		[Serialize("editableShape"    )] public EditableShape editableShape;

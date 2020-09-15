@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TrunkComponent : ActorComponent {
-		[Serialize("max"                   )] public Vector2 max;
+		[Serialize("max"                   )] public Vec2d max;
 		[Serialize("heightUnderLeftCorner" )] public float heightUnderLeftCorner;
 		[Serialize("heightUnderRightCorner")] public float heightUnderRightCorner;
 		[Serialize("hookLengthLeft"        )] public float hookLengthLeft;
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		[Serialize("cornerUpperLeft"       )] public RO2_TrunkComponent.RO2_TrunkCorner cornerUpperLeft;
 		[Serialize("cornerUpperRight"      )] public RO2_TrunkComponent.RO2_TrunkCorner cornerUpperRight;
 		[Serialize("checkpointAngle"       )] public float checkpointAngle;
-		[Serialize("checkpointPos"         )] public Vector2 checkpointPos;
+		[Serialize("checkpointPos"         )] public Vec2d checkpointPos;
 		[Serialize("isStill"               )] public bool isStill;
 		[Serialize("trunkIsStoped"         )] public bool trunkIsStoped;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -52,7 +52,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class RO2_TrunkCorner : CSerializable {
-			[Serialize("localPos"    )] public Vector2 localPos;
+			[Serialize("localPos"    )] public Vec2d localPos;
 			[Serialize("color"       )] public Color color;
 			[Serialize("isPined"     )] public bool isPined;
 			[Serialize("angularSpeed")] public Angle angularSpeed;

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RAVersion | GameFlags.RLVersion)]
 	public partial class StaticMeshElement : CSerializable {
-		[Serialize("pos"             )] public Vector3 pos;
+		[Serialize("pos"             )] public Vec3d pos;
 		[Serialize("color"           )] public Color color;
 		[Serialize("animated"        )] public bool animated;
 		[Serialize("frisePath"       )] public ObjectPath frisePath;

@@ -19,8 +19,8 @@ namespace UbiArt.ITF {
 		[Serialize("MaxDstInfluence"        )] public float MaxDstInfluence;
 		[Serialize("LevelsFront"            )] public uint LevelsFront;
 		[Serialize("LevelsBack"             )] public uint LevelsBack;
-		[Serialize("LevelDelta"             )] public Vector3 LevelDelta;
-		[Serialize("UVDelta"                )] public Vector2 UVDelta;
+		[Serialize("LevelDelta"             )] public Vec3d LevelDelta;
+		[Serialize("UVDelta"                )] public Vec2d UVDelta;
 		[Serialize("PerpendicularBack"      )] public uint PerpendicularBack;
 		[Serialize("PerpendicularBackZ"     )] public float PerpendicularBackZ;
 		[Serialize("PerpendicularBackScale" )] public float PerpendicularBackScale;

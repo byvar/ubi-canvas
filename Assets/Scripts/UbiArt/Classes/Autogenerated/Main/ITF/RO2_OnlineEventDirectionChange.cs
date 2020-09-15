@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_OnlineEventDirectionChange : Event {
-		[Serialize("speed"         )] public Vector2 speed;
-		[Serialize("position"      )] public Vector2 position;
+		[Serialize("speed"         )] public Vec2d speed;
+		[Serialize("position"      )] public Vec2d position;
 		[Serialize("bounceX"       )] public float bounceX;
 		[Serialize("bounceY"       )] public float bounceY;
 		[Serialize("reasonType"    )] public uint reasonType;

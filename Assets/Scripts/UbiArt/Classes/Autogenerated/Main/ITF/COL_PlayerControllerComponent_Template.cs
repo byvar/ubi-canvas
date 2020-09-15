@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("gotoPositionThreshold"           )] public float gotoPositionThreshold;
 		[Serialize("gotoPositionTimeout"             )] public float gotoPositionTimeout;
 		[Serialize("blockingMovablesCheckExtraRadius")] public float blockingMovablesCheckExtraRadius;
-		[Serialize("flyingClampMargin"               )] public Vector2 flyingClampMargin;
+		[Serialize("flyingClampMargin"               )] public Vec2d flyingClampMargin;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(clothWindForceMultiplier));

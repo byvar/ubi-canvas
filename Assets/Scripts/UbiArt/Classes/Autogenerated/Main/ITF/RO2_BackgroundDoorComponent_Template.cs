@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BackgroundDoorComponent_Template : RO2_DoorComponent_Template {
-		[Serialize("walkThroughDoorTarget")] public Vector3 walkThroughDoorTarget;
+		[Serialize("walkThroughDoorTarget")] public Vec3d walkThroughDoorTarget;
 		[Serialize("enterColor"           )] public Color enterColor;
 		[Serialize("walkOutDistance"      )] public float walkOutDistance;
 		protected override void SerializeImpl(CSerializerObject s) {

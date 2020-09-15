@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		[Serialize("animBullet"    )] public StringID animBullet;
 		[Serialize("coolDownMin"   )] public float coolDownMin;
 		[Serialize("coolDownMax"   )] public float coolDownMax;
-		[Serialize("dir"           )] public Vector2 dir;
-		[Serialize("startOffset"   )] public Vector2 startOffset;
+		[Serialize("dir"           )] public Vec2d dir;
+		[Serialize("startOffset"   )] public Vec2d startOffset;
 		[Serialize("speed"         )] public float speed;
 		[Serialize("distMax"       )] public float distMax;
 		[Serialize("bulletScale"   )] public float bulletScale;

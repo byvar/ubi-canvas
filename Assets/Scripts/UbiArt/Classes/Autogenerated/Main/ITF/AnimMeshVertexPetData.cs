@@ -4,9 +4,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class AnimMeshVertexPetData : CSerializable {
 		[Serialize("parts"   )] public CList<AnimMeshVertexPetPart> parts;
-		[Serialize("position")] public Vector3 position;
+		[Serialize("position")] public Vec3d position;
 		[Serialize("angle"   )] public float angle;
-		[Serialize("scale"   )] public Vector2 scale;
+		[Serialize("scale"   )] public Vec2d scale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(parts));

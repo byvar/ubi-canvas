@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_BossPlantNodeComponent_Template : ActorComponent_Template {
 		[Serialize("anim"        )] public StringID anim;
 		[Serialize("animPlayRate")] public float animPlayRate;
-		[Serialize("cycleVector" )] public Vector2 cycleVector;
+		[Serialize("cycleVector" )] public Vec2d cycleVector;
 		[Serialize("triggerEvent")] public RO2_EventNodeReached triggerEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

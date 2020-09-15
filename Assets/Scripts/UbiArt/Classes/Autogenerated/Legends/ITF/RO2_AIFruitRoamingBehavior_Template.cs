@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		[Serialize("canAttach"                             )] public int canAttach;
 		[Serialize("bounceSpeedAlongNormal"                )] public float bounceSpeedAlongNormal;
 		[Serialize("speedPerturbationWhenTooVertical"      )] public float speedPerturbationWhenTooVertical;
-		[Serialize("initialSpeed"                          )] public Vector2 initialSpeed;
+		[Serialize("initialSpeed"                          )] public Vec2d initialSpeed;
 		[Serialize("canBounceOnHead"                       )] public int canBounceOnHead;
 		[Serialize("minBounceDuration"                     )] public float minBounceDuration;
 		[Serialize("groundToVerticalBlendFactor"           )] public float groundToVerticalBlendFactor;

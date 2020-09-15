@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		[Serialize("phaseTime"       )] public float phaseTime;
 		[Serialize("colorMin"        )] public Color colorMin;
 		[Serialize("colorMax"        )] public Color colorMax;
-		[Serialize("sizeMin"         )] public Vector2 sizeMin;
-		[Serialize("sizeMax"         )] public Vector2 sizeMax;
+		[Serialize("sizeMin"         )] public Vec2d sizeMin;
+		[Serialize("sizeMax"         )] public Vec2d sizeMax;
 		[Serialize("animstart"       )] public int animstart;
 		[Serialize("animend"         )] public int animend;
 		[Serialize("animname"        )] public StringID animname;
@@ -18,8 +18,8 @@ namespace UbiArt.ITF {
 		[Serialize("float__0"        )] public float float__0;
 		[Serialize("Color__1"        )] public Color Color__1;
 		[Serialize("Color__2"        )] public Color Color__2;
-		[Serialize("Vector2__3"      )] public Vector2 Vector2__3;
-		[Serialize("Vector2__4"      )] public Vector2 Vector2__4;
+		[Serialize("Vector2__3"      )] public Vec2d Vector2__3;
+		[Serialize("Vector2__4"      )] public Vec2d Vector2__4;
 		[Serialize("int__5"          )] public int int__5;
 		[Serialize("int__6"          )] public int int__6;
 		[Serialize("float__7"        )] public float float__7;

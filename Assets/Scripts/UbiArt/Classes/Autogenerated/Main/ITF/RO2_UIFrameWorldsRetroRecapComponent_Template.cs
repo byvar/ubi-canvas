@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		[Serialize("locId"           )] public LocalisationId locId;
 		[Serialize("FXFirework"      )] public StringID FXFirework;
 		[Serialize("FXFireStream"    )] public StringID FXFireStream;
-		[Serialize("offsetFirework"  )] public Vector3 offsetFirework;
-		[Serialize("offsetFireStream")] public Vector3 offsetFireStream;
+		[Serialize("offsetFirework"  )] public Vec3d offsetFirework;
+		[Serialize("offsetFireStream")] public Vec3d offsetFireStream;
 		[Serialize("worldsList"      )] public CList<StringID> worldsList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -6,11 +6,11 @@ namespace UbiArt.ITF {
 		[Serialize("tutoType"            )] public TutoType tutoType;
 		[Serialize("tutoType"            )] public TutoType2 tutoType2;
 		[Serialize("scale"               )] public float scale;
-		[Serialize("offset"              )] public Vector3 offset;
+		[Serialize("offset"              )] public Vec3d offset;
 		[Serialize("offsetUseActorFlip"  )] public bool offsetUseActorFlip;
 		[Serialize("angleOffset"         )] public Angle angleOffset;
 		[Serialize("holdMinTime"         )] public float holdMinTime;
-		[Serialize("pos"                 )] public Vector3 pos;
+		[Serialize("pos"                 )] public Vec3d pos;
 		[Serialize("displayTuto"         )] public bool displayTuto;
 		[Serialize("flip"                )] public bool flip;
 		[Serialize("isPos2D"             )] public bool isPos2D;

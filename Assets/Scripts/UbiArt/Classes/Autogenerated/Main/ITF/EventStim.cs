@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.COL)]
 	public partial class EventStim : Event {
-		[Serialize("pos"    )] public Vector2 pos;
-		[Serialize("prevPos")] public Vector2 prevPos;
+		[Serialize("pos"    )] public Vec2d pos;
+		[Serialize("prevPos")] public Vec2d prevPos;
 		[Serialize("angle"  )] public float angle;
 		[Serialize("z"      )] public float z;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class W1W_Actor_Rea_Template : ActorComponent_Template {
 		[Serialize("StringID__0")] public StringID StringID__0;
 		[Serialize("float__1"   )] public float float__1;
-		[Serialize("Vector2__2" )] public Vector2 Vector2__2;
+		[Serialize("Vector2__2" )] public Vec2d Vector2__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(StringID__0));

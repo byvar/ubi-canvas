@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		[Serialize("cameraRampDownCoeff"          )] public float cameraRampDownCoeff;
 		[Serialize("cameraZOffset"                )] public float cameraZOffset;
 		[Serialize("TVOffcameraZOffset"           )] public float TVOffcameraZOffset;
-		[Serialize("TVOffcameraPosOffset"         )] public Vector2 TVOffcameraPosOffset;
+		[Serialize("TVOffcameraPosOffset"         )] public Vec2d TVOffcameraPosOffset;
 		[Serialize("TVOffcameraResetMultiplier"   )] public bool TVOffcameraResetMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

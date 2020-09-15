@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_FirePatchAIComponent : GraphicComponent {
-		[Serialize("Vector3__0"  )] public Vector3 Vector3__0;
+		[Serialize("Vector3__0"  )] public Vec3d Vector3__0;
 		[Serialize("float__1"    )] public float float__1;
 		[Serialize("float__2"    )] public float float__2;
 		[Serialize("Enum_VH_0__3")] public Enum_VH_0 Enum_VH_0__3;

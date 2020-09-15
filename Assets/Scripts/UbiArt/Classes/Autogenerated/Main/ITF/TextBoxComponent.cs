@@ -4,9 +4,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class TextBoxComponent : UIComponent {
 		[Serialize("style"               )] public uint style;
-		[Serialize("offset"              )] public Vector2 offset;
-		[Serialize("scale"               )] public Vector2 scale;
-		[Serialize("area"                )] public Vector2 area;
+		[Serialize("offset"              )] public Vec2d offset;
+		[Serialize("scale"               )] public Vec2d scale;
+		[Serialize("area"                )] public Vec2d area;
 		[Serialize("maxWidth"            )] public float maxWidth;
 		[Serialize("rawText"             )] public string rawText;
 		[Serialize("locId"               )] public LocalisationId locId;
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		[Serialize("depthOffset"         )] public float depthOffset;
 		[Serialize("ViewportVisibility"  )] public uint ViewportVisibility;
 		[Serialize("AdaptToLangage"      )] public bool AdaptToLangage;
-		[Serialize("offsetLangage"       )] public Vector2 offsetLangage;
+		[Serialize("offsetLangage"       )] public Vec2d offsetLangage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {

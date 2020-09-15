@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("battleSetupsConfig"           )] public Placeholder battleSetupsConfig;
 		[Serialize("battleType"                   )] public Enum_battleType battleType;
 		[Serialize("playSoundOnTrigger"           )] public bool playSoundOnTrigger;
-		[Serialize("fleeBattlePosOffset"          )] public Vector2 fleeBattlePosOffset;
+		[Serialize("fleeBattlePosOffset"          )] public Vec2d fleeBattlePosOffset;
 		[Serialize("preemptiveTimeWindowAfterStun")] public float preemptiveTimeWindowAfterStun;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

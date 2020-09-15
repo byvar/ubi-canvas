@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("boneNameSnap"            )] public StringID boneNameSnap;
 		[Serialize("useBoneOrientation"      )] public bool useBoneOrientation;
 		[Serialize("typeAttack"              )] public uint typeAttack;
-		[Serialize("defaultDir"              )] public Vector2 defaultDir;
+		[Serialize("defaultDir"              )] public Vec2d defaultDir;
 		[Serialize("projectilesPath"         )] public Path projectilesPath;
 		[Serialize("countProjectilesPrealloc")] public uint countProjectilesPrealloc;
 		[Serialize("countProjectilesMax"     )] public uint countProjectilesMax;

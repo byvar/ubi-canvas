@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("text"     )] public string text;
 		[Serialize("mood"     )] public uint mood;
 		[Serialize("sizeText" )] public float sizeText;
-		[Serialize("offset"   )] public Vector2 offset;
+		[Serialize("offset"   )] public Vec2d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(actorName));

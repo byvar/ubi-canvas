@@ -14,8 +14,8 @@ namespace UbiArt.ITF {
 		[Serialize("moveActionInitScale"    )] public float moveActionInitScale;
 		[Serialize("animationBankState"     )] public uint animationBankState;
 		[Serialize("explodeOnMoveActionsEnd")] public int explodeOnMoveActionsEnd;
-		[Serialize("moveActionVecOffsetMin" )] public Vector2 moveActionVecOffsetMin;
-		[Serialize("moveActionVecOffsetMax" )] public Vector2 moveActionVecOffsetMax;
+		[Serialize("moveActionVecOffsetMin" )] public Vec2d moveActionVecOffsetMin;
+		[Serialize("moveActionVecOffsetMax" )] public Vec2d moveActionVecOffsetMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(moveAction));

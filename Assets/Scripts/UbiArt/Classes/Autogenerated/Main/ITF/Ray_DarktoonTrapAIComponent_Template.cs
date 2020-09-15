@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_DarktoonTrapAIComponent_Template : Ray_AIComponent_Template {
 		[Serialize("holePath"          )] public Path holePath;
-		[Serialize("holeOffset"        )] public Vector3 holeOffset;
+		[Serialize("holeOffset"        )] public Vec3d holeOffset;
 		[Serialize("trapBehavior"      )] public Placeholder trapBehavior;
 		[Serialize("receiveHitBehavior")] public Placeholder receiveHitBehavior;
 		[Serialize("deathBehavior"     )] public Placeholder deathBehavior;

@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_183_sub_7628A0 : Unknown_RL_220_sub_A763E0 {
 		[Serialize("maxSpeedToFocusCostumeFrame"      )] public float maxSpeedToFocusCostumeFrame;
-		[Serialize("paintScale"                       )] public Vector2 paintScale;
+		[Serialize("paintScale"                       )] public Vec2d paintScale;
 		[Serialize("nodeDialogsDelay"                 )] public float nodeDialogsDelay;
 		[Serialize("challengersDialogSeparator"       )] public string challengersDialogSeparator;
 		[Serialize("challengersModeSeparator"         )] public string challengersModeSeparator;

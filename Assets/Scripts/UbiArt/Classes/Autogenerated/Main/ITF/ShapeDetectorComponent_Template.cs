@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class ShapeDetectorComponent_Template : DetectorComponent_Template {
 		[Serialize("shape"                )] public Generic<PhysShape> shape;
-		[Serialize("offset"               )] public Vector2 offset;
+		[Serialize("offset"               )] public Vec2d offset;
 		[Serialize("attachPolyline"       )] public StringID attachPolyline;
 		[Serialize("attachBone"           )] public StringID attachBone;
 		[Serialize("proceduralBone"       )] public StringID proceduralBone;

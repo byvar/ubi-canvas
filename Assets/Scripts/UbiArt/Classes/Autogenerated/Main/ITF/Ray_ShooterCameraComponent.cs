@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ShooterCameraComponent : BaseCameraComponent {
-		[Serialize("Pos"            )] public Vector3 Pos;
+		[Serialize("Pos"            )] public Vec3d Pos;
 		[Serialize("useInitModifier")] public bool useInitModifier;
 		[Serialize("initModifier"   )] public Ray_ShooterCameraModifierComponent.ShooterCameraModifier initModifier;
 		protected override void SerializeImpl(CSerializerObject s) {

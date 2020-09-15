@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		[Serialize("NbIter"           )] public uint NbIter;
 		[Serialize("PressureDiffusion")] public float PressureDiffusion;
 		[Serialize("PressureIntensity")] public float PressureIntensity;
-		[Serialize("BoxSize"          )] public Vector2 BoxSize;
-		[Serialize("PosOffset"        )] public Vector3 PosOffset;
+		[Serialize("BoxSize"          )] public Vec2d BoxSize;
+		[Serialize("PosOffset"        )] public Vec3d PosOffset;
 		[Serialize("Inertia"          )] public float Inertia;
-		[Serialize("RenderOffset"     )] public Vector3 RenderOffset;
+		[Serialize("RenderOffset"     )] public Vec3d RenderOffset;
 		[Serialize("Reinit"           )] public bool Reinit;
 		[Serialize("Active"           )] public bool Active;
 		[Serialize("Pause"            )] public bool Pause;

@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 			[Serialize("inputInertia"                 )] public float inputInertia;
 			[Serialize("camSpeedInfluence"            )] public float camSpeedInfluence;
 			[Serialize("ejectFromBorderForce"         )] public float ejectFromBorderForce;
-			[Serialize("ejectMargin"                  )] public Vector2 ejectMargin;
+			[Serialize("ejectMargin"                  )] public Vec2d ejectMargin;
 			[Serialize("minInputForRotation"          )] public float minInputForRotation;
 			[Serialize("maxAngle"                     )] public Angle maxAngle;
 			[Serialize("angularSmoothMinSpeed"        )] public float angularSmoothMinSpeed;

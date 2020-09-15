@@ -49,7 +49,7 @@ namespace UbiArt.Animation {
 					unityBones[i].xScaleMultiplier = skeleton.bonesDyn[boneIndex].xOffset / bonesDyn[i].xOffset;
 				}
 				//unityBones[i].bindRotation = bonesDyn[i].angle - unityBones[i].globalAngle;
-				unityBones[i].bindScale = bonesDyn[i].scale / unityBones[i].computedScale;
+				unityBones[i].bindScale = ((Vector2)bonesDyn[i].scale) / unityBones[i].computedScale;
 				unityBones[i].bindScale = new Vector3(
 					unityBones[i].bindScale.y,
 					unityBones[i].bindScale.x,
@@ -122,8 +122,8 @@ namespace UbiArt.Animation {
 				} else {
 					b.parent = null;
 				}
-				b.localPosition = bonesDyn[i].position;
-				b.localScale = bonesDyn[i].scale;
+				b.localPosition = (Vector2)bonesDyn[i].position;
+				b.localScale = (Vector2)bonesDyn[i].scale;
 				b.localRotation = bonesDyn[i].angle;
 				b.UpdateBone();
 			}
@@ -148,7 +148,7 @@ namespace UbiArt.Animation {
 			List<int> tris = new List<int>();
 			for (int i = 0; i < pointLinks.Count; i++) {
 				AnimPatchPoint pp = GetPointFromLink(pointLinks[i]);
-				verts[i] = pp.local.pos;
+				verts[i] = (Vector2)pp.local.pos;
 				uvs[i] = pp.uv;
 				AnimBone bone = GetBoneFromLink(pp.local.boneId);
 				if (bone != null) {

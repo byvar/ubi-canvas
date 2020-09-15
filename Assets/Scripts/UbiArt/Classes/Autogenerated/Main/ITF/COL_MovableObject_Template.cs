@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_MovableObject_Template : CSerializable {
-		[Serialize("anchorOffset"          )] public Vector2 anchorOffset;
+		[Serialize("anchorOffset"          )] public Vec2d anchorOffset;
 		[Serialize("noFxDelay"             )] public float noFxDelay;
 		[Serialize("impactFxSpeedThreshold")] public float impactFxSpeedThreshold;
 		[Serialize("moveFxSpeedThreshold"  )] public float moveFxSpeedThreshold;

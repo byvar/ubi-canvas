@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		[Serialize("takeMoveOrientation"      )] public int takeMoveOrientation;
 		[Serialize("takeMoveOrientationOffset")] public Angle takeMoveOrientationOffset;
 		[Serialize("useDynamicFog"            )] public int useDynamicFog;
-		[Serialize("dynamicFogDefaultColor"   )] public Vector3 dynamicFogDefaultColor;
+		[Serialize("dynamicFogDefaultColor"   )] public Vec3d dynamicFogDefaultColor;
 		[Serialize("dynamicFogMaxDepth"       )] public float dynamicFogMaxDepth;
 		[Serialize("canBeCrushed"             )] public int canBeCrushed;
 		[Serialize("disableOnBecomeInactive"  )] public int disableOnBecomeInactive;

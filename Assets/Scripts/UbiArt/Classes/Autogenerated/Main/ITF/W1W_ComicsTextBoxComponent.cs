@@ -4,9 +4,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_ComicsTextBoxComponent : UIComponent {
 		[Serialize("uint__0"          )] public uint uint__0;
-		[Serialize("Vector2__1"       )] public Vector2 Vector2__1;
-		[Serialize("Vector2__2"       )] public Vector2 Vector2__2;
-		[Serialize("Vector2__3"       )] public Vector2 Vector2__3;
+		[Serialize("Vector2__1"       )] public Vec2d Vector2__1;
+		[Serialize("Vector2__2"       )] public Vec2d Vector2__2;
+		[Serialize("Vector2__3"       )] public Vec2d Vector2__3;
 		[Serialize("float__4"         )] public float float__4;
 		[Serialize("string__5"        )] public string string__5;
 		[Serialize("LocalisationId__6")] public LocalisationId LocalisationId__6;

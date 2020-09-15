@@ -241,7 +241,7 @@ namespace UbiArt.ITF {
 					param.BackLightContrast));
 				mat.SetColor("_ColorFog", param.colorFog);
 			} else {
-				mat.SetColor("_ColorFactor", Color.white);
+				mat.SetColor("_ColorFactor", UnityEngine.Color.white);
 				mat.SetColor("_Lightonfig", new Vector4(1, 0, 1, 0));
 				mat.SetColor("_ColorFog", Vector4.zero);
 			}

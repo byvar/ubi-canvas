@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("friendlyActorInfo"       )] public GraphicActorInfo friendlyActorInfo;
 		[Serialize("darkActorInfo"           )] public GraphicActorInfo darkActorInfo;
 		[Serialize("rotationSpeed"           )] public float rotationSpeed;
-		[Serialize("posOffset"               )] public Vector2 posOffset;
+		[Serialize("posOffset"               )] public Vec2d posOffset;
 		[Serialize("rotatePosDist"           )] public float rotatePosDist;
 		[Serialize("rotatePosDistBlendFactor")] public float rotatePosDistBlendFactor;
 		[Serialize("deltaMove"               )] public float deltaMove;

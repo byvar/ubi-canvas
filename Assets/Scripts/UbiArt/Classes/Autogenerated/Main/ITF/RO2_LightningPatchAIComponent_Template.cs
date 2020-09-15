@@ -18,11 +18,11 @@ namespace UbiArt.ITF {
 		[Serialize("tailLoopStop"  )] public uint tailLoopStop;
 		[Serialize("bodyLoopStart" )] public uint bodyLoopStart;
 		[Serialize("bodyLoopStop"  )] public uint bodyLoopStop;
-		[Serialize("headSize"      )] public Vector2 headSize;
-		[Serialize("tailSize"      )] public Vector2 tailSize;
+		[Serialize("headSize"      )] public Vec2d headSize;
+		[Serialize("tailSize"      )] public Vec2d tailSize;
 		[Serialize("speed"         )] public float speed;
-		[Serialize("headCenter"    )] public Vector2 headCenter;
-		[Serialize("tailCenter"    )] public Vector2 tailCenter;
+		[Serialize("headCenter"    )] public Vec2d headCenter;
+		[Serialize("tailCenter"    )] public Vec2d tailCenter;
 		[Serialize("renderer"      )] public BezierCurveRenderer_Template renderer;
 		[Serialize("playRate"      )] public float playRate;
 		[Serialize("headZOffset"   )] public float headZOffset;

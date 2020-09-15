@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("appearAnim" )] public StringID appearAnim;
 		[Serialize("idleAnim"   )] public StringID idleAnim;
 		[Serialize("shape"      )] public Placeholder shape;
-		[Serialize("shapeOffset")] public Vector2 shapeOffset;
+		[Serialize("shapeOffset")] public Vec2d shapeOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(mapTag));

@@ -4,11 +4,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_169_sub_759A50 : CSerializable {
 		[Serialize("highlightTextStyle")] public uint highlightTextStyle;
-		[Serialize("flagIconOffset"    )] public Vector3 flagIconOffset;
-		[Serialize("costumeIconOffset" )] public Vector3 costumeIconOffset;
-		[Serialize("costumeIconScale"  )] public Vector2 costumeIconScale;
-		[Serialize("rankIconOffset"    )] public Vector3 rankIconOffset;
-		[Serialize("checkIconOffset"   )] public Vector3 checkIconOffset;
+		[Serialize("flagIconOffset"    )] public Vec3d flagIconOffset;
+		[Serialize("costumeIconOffset" )] public Vec3d costumeIconOffset;
+		[Serialize("costumeIconScale"  )] public Vec2d costumeIconScale;
+		[Serialize("rankIconOffset"    )] public Vec3d rankIconOffset;
+		[Serialize("checkIconOffset"   )] public Vec3d checkIconOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(highlightTextStyle));

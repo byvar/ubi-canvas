@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		[Serialize("SwitchTexturePipeExtremity"         )] public uint SwitchTexturePipeExtremity;
 		[Serialize("SwitchExtremityStart"               )] public bool SwitchExtremityStart;
 		[Serialize("SwitchExtremityStop"                )] public bool SwitchExtremityStop;
-		[Serialize("FillUVOrigin"                       )] public Vector2 FillUVOrigin;
+		[Serialize("FillUVOrigin"                       )] public Vec2d FillUVOrigin;
 		[Serialize("PreComputedForCook"                 )] public bool PreComputedForCook;
 		[Serialize("XfForCook"                          )] public Transform2d XfForCook;
 		[Serialize("DepthForCook"                       )] public float DepthForCook;
@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 		[Serialize("UvX_Flip"                           )] public bool UvX_Flip;
 		[Serialize("UvY_Flip"                           )] public bool UvY_Flip;
 		[Serialize("uvY_Tile"                           )] public float uvY_Tile;
-		[Serialize("Filling_OffSetUv"                   )] public Vector2 Filling_OffSetUv;
+		[Serialize("Filling_OffSetUv"                   )] public Vec2d Filling_OffSetUv;
 		[Serialize("Anim_SyncGlobal"                    )] public float Anim_SyncGlobal;
 		[Serialize("AtlasIndex"                         )] public uint AtlasIndex;
 		[Serialize("AtlasTessellationIndex"             )] public uint AtlasTessellationIndex;
@@ -55,7 +55,7 @@ namespace UbiArt.ITF {
 		[Serialize("highlightAmplitude"                 )] public float highlightAmplitude;
 		[Serialize("POINTS"                             )] public CList<PolyLineEdge> POINTS;
 		[Serialize("PivotMode"                          )] public PivotMode pivotMode;
-		[Serialize("USERPIVOT"                          )] public Vector2 USERPIVOT;
+		[Serialize("USERPIVOT"                          )] public Vec2d USERPIVOT;
 		[Serialize("ColorFactor_Red"                    )] public float ColorFactor_Red;
 		[Serialize("ColorFactor_Green"                  )] public float ColorFactor_Green;
 		[Serialize("ColorFactor_Blu"                    )] public float ColorFactor_Blu;

@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 		[Serialize("OffsetExtremityIntact"   )] public float OffsetExtremityIntact;
 		[Serialize("OffsetExtremityDamaged"  )] public float OffsetExtremityDamaged;
 		[Serialize("MergeCount"              )] public uint MergeCount;
-		[Serialize("LumsShapeOffset"         )] public Vector2 LumsShapeOffset;
+		[Serialize("LumsShapeOffset"         )] public Vec2d LumsShapeOffset;
 		[Serialize("LumsRadius"              )] public float LumsRadius;
 		[Serialize("LumsAnticipation"        )] public float LumsAnticipation;
 		[Serialize("LumsCountMaxByChain"     )] public uint LumsCountMaxByChain;

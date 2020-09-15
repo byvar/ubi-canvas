@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("maxHeight"                     )] public float maxHeight;
 		[Serialize("firstNodeSpace"                )] public float firstNodeSpace;
 		[Serialize("nodeSpace"                     )] public float nodeSpace;
-		[Serialize("nodeSpeed"                     )] public Vector3 nodeSpeed;
+		[Serialize("nodeSpeed"                     )] public Vec3d nodeSpeed;
 		[Serialize("segmentThickness"              )] public float segmentThickness;
 		[Serialize("rollOverOffset"                )] public float rollOverOffset;
 		[Serialize("rollOverSize"                  )] public float rollOverSize;

@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class CamModifier : CSerializable {
-		[Serialize("lookAtOffset"            )] public Vector3 lookAtOffset;
-		[Serialize("lookAtOffsetMax"         )] public Vector3 lookAtOffsetMax;
+		[Serialize("lookAtOffset"            )] public Vec3d lookAtOffset;
+		[Serialize("lookAtOffsetMax"         )] public Vec3d lookAtOffsetMax;
 		[Serialize("modifierPriority"        )] public int modifierPriority;
 		[Serialize("lookAtOffsetX"           )] public float lookAtOffsetX;
 		[Serialize("lookAtOffsetY"           )] public float lookAtOffsetY;
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("lookAtOffsetMaxZ"        )] public float lookAtOffsetMaxZ;
 		[Serialize("blendingZoneStart"       )] public float blendingZoneStart;
 		[Serialize("blendingZoneStop"        )] public float blendingZoneStop;
-		[Serialize("zoneNeutral"             )] public Vector2 zoneNeutral;
+		[Serialize("zoneNeutral"             )] public Vec2d zoneNeutral;
 		[Serialize("useRotationCurve"        )] public bool useRotationCurve;
 		[Serialize("rotationAngle"           )] public Angle rotationAngle;
 		[Serialize("UseDynamicRotation"      )] public bool UseDynamicRotation;
@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 		[Serialize("moveInertiaForZoomIn"    )] public float moveInertiaForZoomIn;
 		[Serialize("moveInertiaForZoomOut"   )] public float moveInertiaForZoomOut;
 		[Serialize("horizontalVersusVertical")] public float horizontalVersusVertical;
-		[Serialize("offsetHVS"               )] public Vector2 offsetHVS;
+		[Serialize("offsetHVS"               )] public Vec2d offsetHVS;
 		[Serialize("flipView"                )] public CameraFlip flipView;
 		[Serialize("constraintLeftIsActive"  )] public bool constraintLeftIsActive;
 		[Serialize("constraintRightIsActive" )] public bool constraintRightIsActive;

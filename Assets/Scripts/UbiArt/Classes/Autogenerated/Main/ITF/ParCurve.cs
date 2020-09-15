@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class ParCurve : CSerializable {
 		[Serialize("baseTime" )] public float baseTime;
-		[Serialize("outputMin")] public Vector3 outputMin;
-		[Serialize("outputMax")] public Vector3 outputMax;
+		[Serialize("outputMin")] public Vec3d outputMin;
+		[Serialize("outputMax")] public Vec3d outputMax;
 		[Serialize("curve"    )] public Spline curve;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

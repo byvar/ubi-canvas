@@ -12,9 +12,9 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.ROVersion)]
 		public partial class TrajectoryNode : CSerializable {
-			[Serialize("pos"  )] public Vector3 pos;
-			[Serialize("tangA")] public Vector3 tangA;
-			[Serialize("tangB")] public Vector3 tangB;
+			[Serialize("pos"  )] public Vec3d pos;
+			[Serialize("tangA")] public Vec3d tangA;
+			[Serialize("tangB")] public Vec3d tangB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (s.HasFlags(SerializeFlags.Default)) {

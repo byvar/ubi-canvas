@@ -10,9 +10,9 @@ namespace UbiArt.ITF {
 		[Serialize("spacing"              )] public float spacing;
 		[Serialize("fontName"             )] public Path fontName;
 		[Serialize("atlasPath"            )] public Path atlasPath;
-		[Serialize("electoonScorePos"     )] public Vector2 electoonScorePos;
+		[Serialize("electoonScorePos"     )] public Vec2d electoonScorePos;
 		[Serialize("electoonScoreHeight"  )] public float electoonScoreHeight;
-		[Serialize("toothScorePos"        )] public Vector2 toothScorePos;
+		[Serialize("toothScorePos"        )] public Vec2d toothScorePos;
 		[Serialize("toothScoreHeight"     )] public float toothScoreHeight;
 		[Serialize("scoreColor"           )] public Color scoreColor;
 		[Serialize("pulseDuration"        )] public float pulseDuration;

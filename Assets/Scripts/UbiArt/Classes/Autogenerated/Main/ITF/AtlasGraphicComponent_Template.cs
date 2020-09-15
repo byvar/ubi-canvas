@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("texture"     )] public Path texture;
 		[Serialize("material"    )] public GFXMaterialSerializable material;
 		[Serialize("textureLayer")] public TEXSET_ID textureLayer;
-		[Serialize("texelRatio"  )] public Vector2 texelRatio;
+		[Serialize("texelRatio"  )] public Vec2d texelRatio;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {

@@ -33,23 +33,13 @@ namespace UbiArt.FileFormat {
 			} else {
 				serializer = new CSerializerObjectBinary(reader);
 			}
-			l.ConfigureSerializeFlagsForExtension(ref serializer.flags, ref serializer.flagsOwn, extension);
+			MapLoader.ConfigureSerializeFlagsForExtension(ref serializer.flags, ref serializer.flagsOwn, extension);
 			baseOffset = -headerOffset;
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
         }
 
         public override void CreateWriter() {
             return; // No writing support yet
-        }
-
-        public override void WritePointer(Pointer pointer) {
-            if (writer != null) {
-                if (pointer == null) {
-                    writer.Write((uint)0);
-                } else {
-                    writer.Write(pointer.offset);
-                }
-            }
         }
     }
 }

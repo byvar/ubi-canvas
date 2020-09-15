@@ -19,10 +19,10 @@ namespace UbiArt.ITF {
 		[Serialize("ExplosionFX"            )] public StringID ExplosionFX;
 		[Serialize("LightRocketFX"          )] public StringID LightRocketFX;
 		[Serialize("LightSteadyFX"          )] public StringID LightSteadyFX;
-		[Serialize("FXScaleSmall"           )] public Vector2 FXScaleSmall;
-		[Serialize("FXScaleMedium"          )] public Vector2 FXScaleMedium;
-		[Serialize("FXScaleLarge"           )] public Vector2 FXScaleLarge;
-		[Serialize("FXScaleXLarge"          )] public Vector2 FXScaleXLarge;
+		[Serialize("FXScaleSmall"           )] public Vec2d FXScaleSmall;
+		[Serialize("FXScaleMedium"          )] public Vec2d FXScaleMedium;
+		[Serialize("FXScaleLarge"           )] public Vec2d FXScaleLarge;
+		[Serialize("FXScaleXLarge"          )] public Vec2d FXScaleXLarge;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(DisplayDebugCircle));

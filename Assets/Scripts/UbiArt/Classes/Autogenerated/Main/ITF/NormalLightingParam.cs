@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class NormalLightingParam : CSerializable {
 		[Serialize("LightBrightness"     )] public float LightBrightness;
 		[Serialize("LightContrast"       )] public float LightContrast;
-		[Serialize("Rotation"            )] public Vector3 Rotation;
+		[Serialize("Rotation"            )] public Vec3d Rotation;
 		[Serialize("UseNormalMapLighting")] public bool UseNormalMapLighting;
 		[Serialize("RimLightColor"       )] public Color RimLightColor;
 		[Serialize("RimLightPower"       )] public float RimLightPower;

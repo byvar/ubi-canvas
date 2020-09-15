@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		[Serialize("restoreStateAtCheckpoint")] public bool restoreStateAtCheckpoint;
 		[Serialize("disableVisiblePrediction")] public bool disableVisiblePrediction;
 		[Serialize("notifyAnimUpdate"        )] public bool notifyAnimUpdate;
-		[Serialize("scale"                   )] public Vector2 scale;
+		[Serialize("scale"                   )] public Vec2d scale;
 		[Serialize("useZOffset"              )] public bool useZOffset;
 		[Serialize("allowRenderInTexture"    )] public bool allowRenderInTexture;
 		[Serialize("renderInTectureSizeX"    )] public uint renderInTectureSizeX;

@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class PhysForceModifier_Template : CSerializable {
 		[Serialize("isRadial"           )] public bool isRadial;
-		[Serialize("force"              )] public Vector2 force;
+		[Serialize("force"              )] public Vec2d force;
 		[Serialize("forceVariationRange")] public float forceVariationRange;
 		[Serialize("gradientPercentage" )] public float gradientPercentage;
 		[Serialize("isInverted"         )] public bool isInverted;
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("centerForceMaxSpeed")] public float centerForceMaxSpeed;
 		[Serialize("speedMultiplierX"   )] public float speedMultiplierX;
 		[Serialize("speedMultiplierY"   )] public float speedMultiplierY;
-		[Serialize("posOffset"          )] public Vector2 posOffset;
+		[Serialize("posOffset"          )] public Vec2d posOffset;
 		[Serialize("angleOffset"        )] public Angle angleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

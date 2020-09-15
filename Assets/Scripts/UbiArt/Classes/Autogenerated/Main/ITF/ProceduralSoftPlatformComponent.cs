@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class ProceduralSoftPlatformComponent : GraphicComponent {
-		[Serialize("endPos"         )] public Vector3 endPos;
+		[Serialize("endPos"         )] public Vec3d endPos;
 		[Serialize("useBeginTexture")] public bool useBeginTexture;
 		[Serialize("useEndTexture"  )] public bool useEndTexture;
 		[Serialize("initIteration"  )] public bool initIteration;

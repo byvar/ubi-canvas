@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("phantomShape"        )] public Generic<PhysShape> phantomShape;
 		[Serialize("watchEvent"          )] public Generic<Event> watchEvent;
 		[Serialize("resetStartValueEvent")] public Generic<Event> resetStartValueEvent;
-		[Serialize("phantomOffset"       )] public Vector2 phantomOffset;
+		[Serialize("phantomOffset"       )] public Vec2d phantomOffset;
 		[Serialize("speedIncrease"       )] public float speedIncrease;
 		[Serialize("decrease"            )] public float decrease;
 		[Serialize("maxSpeed"            )] public float maxSpeed;

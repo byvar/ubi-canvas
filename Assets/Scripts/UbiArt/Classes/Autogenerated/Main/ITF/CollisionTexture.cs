@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 	public partial class CollisionTexture : CSerializable {
 		[Serialize("build"       )] public uint build;
 		[Serialize("offset"      )] public float offset;
-		[Serialize("cornerIn"    )] public Vector2 cornerIn;
-		[Serialize("cornerOut"   )] public Vector2 cornerOut;
+		[Serialize("cornerIn"    )] public Vec2d cornerIn;
+		[Serialize("cornerOut"   )] public Vec2d cornerOut;
 		[Serialize("cornerInCur" )] public bool cornerInCur;
 		[Serialize("cornerOutCur")] public bool cornerOutCur;
 		protected override void SerializeImpl(CSerializerObject s) {

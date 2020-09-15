@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("heartActor"           )] public Path heartActor;
 		[Serialize("heartDeathBhvName"    )] public StringID heartDeathBhvName;
 		[Serialize("heartAppearBhvName"   )] public StringID heartAppearBhvName;
-		[Serialize("playerFollowOffset"   )] public Vector2 playerFollowOffset;
+		[Serialize("playerFollowOffset"   )] public Vec2d playerFollowOffset;
 		[Serialize("speedBlend"           )] public float speedBlend;
 		[Serialize("speedMin"             )] public float speedMin;
 		[Serialize("speedMax"             )] public float speedMax;

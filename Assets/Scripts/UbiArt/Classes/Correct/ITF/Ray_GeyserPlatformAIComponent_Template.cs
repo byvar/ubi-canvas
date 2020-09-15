@@ -29,14 +29,14 @@ namespace UbiArt.ITF {
 		[Serialize("patchSwapXY"             )] public int patchSwapXY;
 		[Serialize("tileLength"              )] public float tileLength;
 		[Serialize("tileWidth"               )] public float tileWidth;
-		[Serialize("uvScrollSpeed"           )] public Vector2 uvScrollSpeed;
+		[Serialize("uvScrollSpeed"           )] public Vec2d uvScrollSpeed;
 		[Serialize("uvMode"                  )] public UV_MODE uvMode;
 		[Serialize("patchFadeInLength"       )] public float patchFadeInLength;
 		[Serialize("patchFadeOutLength"      )] public float patchFadeOutLength;
 		[Serialize("zOffset"                 )] public float zOffset;
 		[Serialize("tessellationLength"      )] public float tessellationLength;
 		[Serialize("forceModifier"           )] public PhysForceModifier forceModifier;
-		[Serialize("forceDirection"          )] public Vector2 forceDirection;
+		[Serialize("forceDirection"          )] public Vec2d forceDirection;
 		[Serialize("forceLengthOffset"       )] public float forceLengthOffset;
 		[Serialize("forceLengthMultiplier"   )] public float forceLengthMultiplier;
 		[Serialize("forceWidthBottom"        )] public float forceWidthBottom;

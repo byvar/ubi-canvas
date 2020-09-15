@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		[Serialize("checkMapForUnlock")] public StringID checkMapForUnlock;
 		[Serialize("textureFile"      )] public Path textureFile;
 		[Serialize("tileLen"          )] public float tileLen;
-		[Serialize("rayOffsetCrystal" )] public Vector3 rayOffsetCrystal;
-		[Serialize("rayOffsetStart"   )] public Vector3 rayOffsetStart;
+		[Serialize("rayOffsetCrystal" )] public Vec3d rayOffsetCrystal;
+		[Serialize("rayOffsetStart"   )] public Vec3d rayOffsetStart;
 		[Serialize("widthA"           )] public float widthA;
 		[Serialize("widthB"           )] public float widthB;
 		[Serialize("widthC"           )] public float widthC;

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class TweenTranslationCircle_Template : TweenTranslation_Template {
-		[Serialize("pivot"     )] public Vector3 pivot;
+		[Serialize("pivot"     )] public Vec3d pivot;
 		[Serialize("cycleCount")] public float cycleCount;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

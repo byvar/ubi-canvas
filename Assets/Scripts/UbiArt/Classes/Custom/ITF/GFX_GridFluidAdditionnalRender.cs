@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class GFX_GridFluidAdditionnalRender : CSerializable {
-		[Serialize("RenderOffset"     )] public Vector3 RenderOffset;
+		[Serialize("RenderOffset"     )] public Vec3d RenderOffset;
 		[Serialize("FluidCol"         )] public Color FluidCol;
 		[Serialize("ColorTex"         )] public Path ColorTex;
 		[Serialize("BlendMode"        )] public GFX_BLEND BlendMode;

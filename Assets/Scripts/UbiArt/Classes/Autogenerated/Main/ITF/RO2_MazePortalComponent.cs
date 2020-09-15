@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MazePortalComponent : ActorComponent {
-		[Serialize("wallPos"   )] public Vector2 wallPos;
-		[Serialize("wallExtent")] public Vector2 wallExtent;
+		[Serialize("wallPos"   )] public Vec2d wallPos;
+		[Serialize("wallExtent")] public Vec2d wallExtent;
 		[Serialize("debug"     )] public bool debug;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

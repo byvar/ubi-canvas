@@ -42,13 +42,13 @@ namespace UbiArt.ITF {
 		[Serialize("yUVToDistance"                    )] public float yUVToDistance;
 		[Serialize("zOffset"                          )] public float zOffset;
 		[Serialize("dynamicAMVMinimunBorderSize"      )] public float dynamicAMVMinimunBorderSize;
-		[Serialize("shadowOffset"                     )] public Vector3 shadowOffset;
+		[Serialize("shadowOffset"                     )] public Vec3d shadowOffset;
 		[Serialize("shadowAlpha"                      )] public float shadowAlpha;
 		[Serialize("shadowUseFrontTexture"            )] public bool shadowUseFrontTexture;
 		[Serialize("posShadowRelative"                )] public bool posShadowRelative;
-		[Serialize("highlightOffset"                  )] public Vector3 highlightOffset;
+		[Serialize("highlightOffset"                  )] public Vec3d highlightOffset;
 		[Serialize("highlightAlpha"                   )] public float highlightAlpha;
-		[Serialize("highlightScale"                   )] public Vector2 highlightScale;
+		[Serialize("highlightScale"                   )] public Vec2d highlightScale;
 		[Serialize("highlightTexture"                 )] public Path highlightTexture;
 		[Serialize("highlightMaterial"                )] public GFXMaterialSerializable highlightMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {

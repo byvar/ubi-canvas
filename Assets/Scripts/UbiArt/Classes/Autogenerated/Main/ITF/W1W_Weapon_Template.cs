@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Weapon_Template : W1W_InteractiveGenComponent_Template {
 		[Serialize("float__0"   )] public float float__0;
-		[Serialize("Vector2__1" )] public Vector2 Vector2__1;
+		[Serialize("Vector2__1" )] public Vec2d Vector2__1;
 		[Serialize("StringID__2")] public StringID StringID__2;
 		[Serialize("StringID__3")] public StringID StringID__3;
 		[Serialize("StringID__4")] public StringID StringID__4;

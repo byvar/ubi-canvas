@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ChangePageComponent : ActorComponent {
-		[Serialize("finalDefaultPos")] public Vector2 finalDefaultPos;
+		[Serialize("finalDefaultPos")] public Vec2d finalDefaultPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Persistent)) {

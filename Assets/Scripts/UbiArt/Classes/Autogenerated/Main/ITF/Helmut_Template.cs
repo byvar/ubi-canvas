@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__7"                        )] public float float__7;
 		[Serialize("float__8"                        )] public float float__8;
 		[Serialize("float__9"                        )] public float float__9;
-		[Serialize("Vector2__10"                     )] public Vector2 Vector2__10;
+		[Serialize("Vector2__10"                     )] public Vec2d Vector2__10;
 		[Serialize("float__11"                       )] public float float__11;
 		[Serialize("float__12"                       )] public float float__12;
 		[Serialize("float__13"                       )] public float float__13;

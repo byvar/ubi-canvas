@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 	public partial class RLC_Pad2TouchInput : CSerializable {
 		[Serialize("InputType"     )] public Enum_InputType InputType;
 		[Serialize("forcePosition" )] public bool forcePosition;
-		[Serialize("position"      )] public Vector2 position;
-		[Serialize("offSet"        )] public Vector2 offSet;
+		[Serialize("position"      )] public Vec2d position;
+		[Serialize("offSet"        )] public Vec2d offSet;
 		[Serialize("swipeRandomDir")] public bool swipeRandomDir;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

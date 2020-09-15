@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class ActorBind : CSerializable {
 		[Serialize("parentPath"      )] public ObjectPath parentPath;
-		[Serialize("offsetPos"       )] public Vector3 offsetPos;
+		[Serialize("offsetPos"       )] public Vec3d offsetPos;
 		[Serialize("offsetAngle"     )] public float offsetAngle;
 		[Serialize("type"            )] public Type type;
 		[Serialize("typeData"        )] public uint typeData;

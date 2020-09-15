@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		[Serialize("retriggerDelay"                   )] public float retriggerDelay;
 		[Serialize("idleAnim"                         )] public StringID idleAnim;
 		[Serialize("bounceAnim"                       )] public StringID bounceAnim;
-		[Serialize("direction"                        )] public Vector2 direction;
+		[Serialize("direction"                        )] public Vec2d direction;
 		[Serialize("useDirAsWorldAngle"               )] public int useDirAsWorldAngle;
 		[Serialize("stickFruit"                       )] public int stickFruit;
 		[Serialize("sendBounceOnHit"                  )] public int sendBounceOnHit;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		[Serialize("height2"                          )] public float height2;
 		[Serialize("speed"                            )] public float speed;
 		[Serialize("multiplier"                       )] public float multiplier;
-		[Serialize("offset"                           )] public Vector2 offset;
+		[Serialize("offset"                           )] public Vec2d offset;
 		[Serialize("detectRange"                      )] public Angle detectRange;
 		[Serialize("sendMoreThanOnce"                 )] public int sendMoreThanOnce;
 		[Serialize("useBounceToPickable"              )] public int useBounceToPickable;

@@ -5,10 +5,10 @@ namespace UbiArt.ITF {
 	public partial class RO2_SnakeBodyPartAmvRenderer_Template : RO2_SnakeBodyPartRenderer_Template {
 		[Serialize("anim"         )] public StringID anim;
 		[Serialize("startFrame"   )] public uint startFrame;
-		[Serialize("scale"        )] public Vector2 scale;
+		[Serialize("scale"        )] public Vec2d scale;
 		[Serialize("color"        )] public Color color;
-		[Serialize("polyline"     )] public CList<Vector2> polyline;
-		[Serialize("otherPolyline")] public CList<Vector2> otherPolyline;
+		[Serialize("polyline"     )] public CList<Vec2d> polyline;
+		[Serialize("otherPolyline")] public CList<Vec2d> otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

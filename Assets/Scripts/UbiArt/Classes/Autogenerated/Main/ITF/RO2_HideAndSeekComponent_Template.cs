@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		[Serialize("coefEndDownHide"       )] public float coefEndDownHide;
 		[Serialize("coefEndDownShow"       )] public float coefEndDownShow;
 		[Serialize("playerCrushShapeRadius")] public float playerCrushShapeRadius;
-		[Serialize("playerCrushShapeOffset")] public Vector2 playerCrushShapeOffset;
+		[Serialize("playerCrushShapeOffset")] public Vec2d playerCrushShapeOffset;
 		[Serialize("reverseBehaviour"      )] public bool reverseBehaviour;
 		[Serialize("forceMovePosition"     )] public bool forceMovePosition;
 		[Serialize("disableDrcInHide"      )] public bool disableDrcInHide;

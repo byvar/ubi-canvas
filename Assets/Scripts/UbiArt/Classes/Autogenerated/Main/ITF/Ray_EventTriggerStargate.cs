@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventTriggerStargate : Event {
-		[Serialize("start")] public Vector3 start;
+		[Serialize("start")] public Vec3d start;
 		[Serialize("speed")] public float speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

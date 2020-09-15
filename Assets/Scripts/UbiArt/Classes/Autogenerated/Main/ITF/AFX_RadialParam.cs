@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
 	public partial class AFX_RadialParam : CSerializable {
 		[Serialize("use"         )] public bool use;
-		[Serialize("centerOffset")] public Vector2 centerOffset;
+		[Serialize("centerOffset")] public Vec2d centerOffset;
 		[Serialize("strength"    )] public float strength;
 		[Serialize("size"        )] public float size;
 		protected override void SerializeImpl(CSerializerObject s) {

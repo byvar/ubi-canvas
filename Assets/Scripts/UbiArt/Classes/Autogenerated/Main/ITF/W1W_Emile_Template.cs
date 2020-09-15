@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__25"                       )] public float float__25;
 		[Serialize("float__26"                       )] public float float__26;
 		[Serialize("float__27"                       )] public float float__27;
-		[Serialize("Vector2__28"                     )] public Vector2 Vector2__28;
+		[Serialize("Vector2__28"                     )] public Vec2d Vector2__28;
 		[Serialize("float__29"                       )] public float float__29;
 		[Serialize("float__30"                       )] public float float__30;
 		[Serialize("float__31"                       )] public float float__31;
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 		[Serialize("Path__39"                        )] public Path Path__39;
 		[Serialize("Path__40"                        )] public Path Path__40;
 		[Serialize("Path__41"                        )] public Path Path__41;
-		[Serialize("Vector2__42"                     )] public Vector2 Vector2__42;
+		[Serialize("Vector2__42"                     )] public Vec2d Vector2__42;
 		[Serialize("Color__43"                       )] public Color Color__43;
 		[Serialize("Color__44"                       )] public Color Color__44;
 		[Serialize("float__45"                       )] public float float__45;
@@ -53,10 +53,10 @@ namespace UbiArt.ITF {
 		[Serialize("float__47"                       )] public float float__47;
 		[Serialize("float__48"                       )] public float float__48;
 		[Serialize("float__49"                       )] public float float__49;
-		[Serialize("Vector2__50"                     )] public Vector2 Vector2__50;
-		[Serialize("Vector2__51"                     )] public Vector2 Vector2__51;
+		[Serialize("Vector2__50"                     )] public Vec2d Vector2__50;
+		[Serialize("Vector2__51"                     )] public Vec2d Vector2__51;
 		[Serialize("float__52"                       )] public float float__52;
-		[Serialize("Vector2__53"                     )] public Vector2 Vector2__53;
+		[Serialize("Vector2__53"                     )] public Vec2d Vector2__53;
 		[Serialize("Path__54"                        )] public Path Path__54;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("animThank"      )] public StringID animThank;
 		[Serialize("animFreeFall"   )] public StringID animFreeFall;
 		[Serialize("speedMultiplier")] public float speedMultiplier;
-		[Serialize("forceSinus"     )] public Vector2 forceSinus;
+		[Serialize("forceSinus"     )] public Vec2d forceSinus;
 		[Serialize("freqSinus"      )] public float freqSinus;
 		[Serialize("countLumsReward")] public uint countLumsReward;
 		protected override void SerializeImpl(CSerializerObject s) {

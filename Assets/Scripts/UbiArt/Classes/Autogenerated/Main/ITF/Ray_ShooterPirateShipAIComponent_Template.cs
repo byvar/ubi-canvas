@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Ray_ShooterPirateShipAIComponent_Template : Ray_MultiPiecesActorAIComponent_Template {
 		[Serialize("bounceBallonInput"     )] public StringID bounceBallonInput;
 		[Serialize("useDynamicFog"         )] public int useDynamicFog;
-		[Serialize("dynamicFogDefaultColor")] public Vector3 dynamicFogDefaultColor;
+		[Serialize("dynamicFogDefaultColor")] public Vec3d dynamicFogDefaultColor;
 		[Serialize("dynamicFogMaxDepth"    )] public float dynamicFogMaxDepth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

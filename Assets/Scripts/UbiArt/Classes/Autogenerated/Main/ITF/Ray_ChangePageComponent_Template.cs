@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("useFadeOutIn"                      )] public int useFadeOutIn;
 		[Serialize("warpZone"                          )] public int warpZone;
 		[Serialize("warpZoneExit"                      )] public int warpZoneExit;
-		[Serialize("warpZoneExitScaleFactor"           )] public Vector2 warpZoneExitScaleFactor;
+		[Serialize("warpZoneExitScaleFactor"           )] public Vec2d warpZoneExitScaleFactor;
 		[Serialize("warpZoneExitArrivalFadeOutDuration")] public float warpZoneExitArrivalFadeOutDuration;
 		[Serialize("openingRadius"                     )] public float openingRadius;
 		[Serialize("openingTime"                       )] public float openingTime;

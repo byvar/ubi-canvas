@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		[Serialize("inTags" )] public CList<StringID> inTags;
 		[Serialize("outTags")] public CList<StringID> outTags;
 		[Serialize("canFlip")] public bool canFlip;
-		[Serialize("size"   )] public Vector2 size;
-		[Serialize("inPos"  )] public Vector2 inPos;
+		[Serialize("size"   )] public Vec2d size;
+		[Serialize("inPos"  )] public Vec2d inPos;
 		[Serialize("inSide" )] public BrickSide inSide;
-		[Serialize("outPos" )] public Vector2 outPos;
+		[Serialize("outPos" )] public Vec2d outPos;
 		[Serialize("outSide")] public BrickSide outSide;
 		[Serialize("length" )] public float length;
 		protected override void SerializeImpl(CSerializerObject s) {

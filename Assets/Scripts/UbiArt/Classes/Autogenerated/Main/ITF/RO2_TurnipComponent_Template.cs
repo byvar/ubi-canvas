@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("animCatchedHit"  )] public StringID animCatchedHit;
 		[Serialize("animStunHit"     )] public StringID animStunHit;
 		[Serialize("distMaxResist"   )] public float distMaxResist;
-		[Serialize("offsetDrag"      )] public Vector2 offsetDrag;
+		[Serialize("offsetDrag"      )] public Vec2d offsetDrag;
 		[Serialize("speedToLaunch"   )] public float speedToLaunch;
 		[Serialize("timeMinBeforeOut")] public float timeMinBeforeOut;
 		[Serialize("countLumsReward" )] public uint countLumsReward;

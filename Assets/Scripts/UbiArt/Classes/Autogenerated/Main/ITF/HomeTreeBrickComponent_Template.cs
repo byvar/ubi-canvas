@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class HomeTreeBrickComponent_Template : ActorComponent_Template {
 		[Serialize("editor_stepCount" )] public uint editor_stepCount;
 		[Serialize("editor_minGrowth" )] public float editor_minGrowth;
-		[Serialize("editor_brickSize" )] public Vector2 editor_brickSize;
+		[Serialize("editor_brickSize" )] public Vec2d editor_brickSize;
 		[Serialize("editor_trunkWidth")] public float editor_trunkWidth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

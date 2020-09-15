@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("BoxCountX"              )] public uint BoxCountX;
 		[Serialize("BoxCountY"              )] public uint BoxCountY;
 		[Serialize("BrushRadiusGrid"        )] public int BrushRadiusGrid;
-		[Serialize("LightDir"               )] public Vector2 LightDir;
+		[Serialize("LightDir"               )] public Vec2d LightDir;
 		[Serialize("MergeCount"             )] public int MergeCount;
 		[Serialize("Vecto_LengthMax"        )] public float Vecto_LengthMax;
 		[Serialize("Smooth_LengthMax"       )] public float Smooth_LengthMax;
@@ -79,8 +79,8 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA)]
 		public partial class ParamUV : CSerializable {
 			[Serialize("UseWorldCoord")] public bool UseWorldCoord;
-			[Serialize("Offset"       )] public Vector2 Offset;
-			[Serialize("Scale"        )] public Vector2 Scale;
+			[Serialize("Offset"       )] public Vec2d Offset;
+			[Serialize("Scale"        )] public Vec2d Scale;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(UseWorldCoord));

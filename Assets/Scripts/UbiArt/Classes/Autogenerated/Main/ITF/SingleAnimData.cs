@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		[Serialize("angle"   )] public Angle angle;
 		[Serialize("animName")] public StringID animName;
 		[Serialize("offset"  )] public uint offset;
-		[Serialize("pos"     )] public Vector3 pos;
-		[Serialize("scale"   )] public Vector2 scale;
+		[Serialize("pos"     )] public Vec3d pos;
+		[Serialize("scale"   )] public Vec2d scale;
 		[Serialize("color"   )] public Color color;
 		[Serialize("anim"    )] public uint anim;
 		protected override void SerializeImpl(CSerializerObject s) {

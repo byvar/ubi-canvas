@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("forceMinBeforeExit"  )] public float forceMinBeforeExit;
 		[Serialize("speedReturnSpring"   )] public float speedReturnSpring;
 		[Serialize("explode"             )] public bool explode;
-		[Serialize("offsetFollow"        )] public Vector2 offsetFollow;
+		[Serialize("offsetFollow"        )] public Vec2d offsetFollow;
 		[Serialize("smoothFactor"        )] public float smoothFactor;
 		[Serialize("followMaxDist"       )] public float followMaxDist;
 		[Serialize("followMaxTime"       )] public float followMaxTime;

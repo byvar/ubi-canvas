@@ -23,8 +23,8 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class ControllerLayout : CSerializable {
 			[Serialize("numControllers")] public uint numControllers;
-			[Serialize("positions"     )] public CList<Vector2> positions;
-			[Serialize("scales"        )] public CList<Vector2> scales;
+			[Serialize("positions"     )] public CList<Vec2d> positions;
+			[Serialize("scales"        )] public CList<Vec2d> scales;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(numControllers));

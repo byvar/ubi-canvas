@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		[Serialize("bounceHeight2"          )] public float bounceHeight2;
 		[Serialize("bounceSpeed"            )] public float bounceSpeed;
 		[Serialize("targetActor"            )] public ObjectRef targetActor;
-		[Serialize("targetPos"              )] public Vector3 targetPos;
-		[Serialize("targetOffset"           )] public Vector2 targetOffset;
+		[Serialize("targetPos"              )] public Vec3d targetPos;
+		[Serialize("targetOffset"           )] public Vec2d targetOffset;
 		[Serialize("hurt"                   )] public bool hurt;
 		[Serialize("skipped"                )] public bool skipped;
 		[Serialize("useTargetActorScenePosZ")] public bool useTargetActorScenePosZ;

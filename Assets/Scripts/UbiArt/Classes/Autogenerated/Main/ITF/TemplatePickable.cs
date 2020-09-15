@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("UPDATELAYER"       )] public WorldUpdateLayer2 UPDATELAYER2;
 		[Serialize("USEVIEWFRUSTUMFLAG")] public bool USEVIEWFRUSTUMFLAG;
 		[Serialize("ANGLE"             )] public Angle ANGLE;
-		[Serialize("SCALE"             )] public Vector2 SCALE;
+		[Serialize("SCALE"             )] public Vec2d SCALE;
 		[Serialize("ObjectFamily"      )] public uint ObjectFamily;
 		[Serialize("TAGS"              )] public CList<string> TAGS;
 		protected override void SerializeImpl(CSerializerObject s) {

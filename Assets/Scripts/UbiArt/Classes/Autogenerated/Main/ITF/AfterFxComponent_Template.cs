@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("colorRTarget"               )] public Color colorRTarget;
 		[Serialize("paramf"                     )] public CArray<float> paramf;
 		[Serialize("parami"                     )] public CArray<int> parami;
-		[Serialize("paramv"                     )] public CList<Vector3> paramv;
+		[Serialize("paramv"                     )] public CList<Vec3d> paramv;
 		[Serialize("paramc"                     )] public CArray<Color> paramc;
 		[Serialize("inputs"                     )] public CList<InputDesc> inputs;
 		[Serialize("ParamfProceduralInput"      )] public CList<ProceduralInputData> ParamfProceduralInput;

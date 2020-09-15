@@ -7,6 +7,8 @@ using System.Collections;
 using UbiArt;
 using System.Threading.Tasks;
 using UbiArt.ITF;
+using System.Diagnostics;
+using Cysharp.Threading.Tasks;
 
 public class Controller : MonoBehaviour {
 	public Material baseMaterial;
@@ -21,18 +23,36 @@ public class Controller : MonoBehaviour {
 	bool displayGizmos_ = false; public bool displayGizmos = false;
 	MapLoader loader = null;
 
+	private static readonly Stopwatch stopwatch = new Stopwatch();
+
 	public enum State {
 		None,
-		Downloading,
+		LoadingFiles,
 		Loading,
 		Initializing,
 		Error,
 		Finished
 	}
-	private State state = State.None;
-	private string detailedState = "None";
-	public State LoadState {
-		get { return state; }
+	public static State LoadState { get; set; }
+	public static string DetailedState { get; set; } = "Starting";
+
+	public static async UniTask WaitFrame() {
+		await UniTask.WaitForEndOfFrame();
+
+		if (stopwatch.IsRunning) stopwatch.Restart();
+	}
+
+	public static void StartStopwatch() {
+		stopwatch.Start();
+	}
+	public static void StopStopwatch() {
+		if (stopwatch.IsRunning) stopwatch.Stop();
+	}
+
+	public static async UniTask WaitIfNecessary() {
+		if (!stopwatch.IsRunning) stopwatch.Start();
+		if (stopwatch.ElapsedMilliseconds > 16)
+			await WaitFrame();
 	}
 
 	// Use this for initialization
@@ -86,7 +106,7 @@ public class Controller : MonoBehaviour {
 
 		if (Application.platform == RuntimePlatform.WebGLPlayer) {
 			//Application.logMessageReceived += communicator.WebLog;
-			Debug.unityLogger.logEnabled = false; // We don't need prints here
+			UnityEngine.Debug.unityLogger.logEnabled = false; // We don't need prints here
 			string url = Application.absoluteURL;
 			if (url.IndexOf('?') > 0) {
 				string urlArgsStr = url.Split('?')[1].Split('#')[0];
@@ -135,58 +155,58 @@ public class Controller : MonoBehaviour {
 	}
 
 	async Task Init() {
-		state = State.Loading;
-		await MapLoader.WaitFrame();
+		LoadState = State.Loading;
+		await Controller.WaitFrame();
 		await loader.LoadInit();
-		await MapLoader.WaitFrame();
-		if (state == State.Error) return;
-		state = State.Initializing;
+		await Controller.WaitFrame();
+		if (LoadState == State.Error) return;
+		LoadState = State.Initializing;
 		zListManager.Sort();
-		await MapLoader.WaitFrame();
-		detailedState = "Finished";
-		state = State.Finished;
+		await Controller.WaitFrame();
+		DetailedState = "Finished";
+		LoadState = State.Finished;
 		loadingScreen.Active = false;
 	}
 
 	public async Task LoadActor(Scene scene, string pathFile, string pathFolder) {
-		state = State.Loading;
+		LoadState = State.Loading;
 		loadingScreen.Active = true;
 		ContainerFile<Actor> act = await MapLoader.Loader.LoadExtraActor(pathFile, pathFolder);
 		if (act != null && act.obj != null) {
-			await MapLoader.WaitFrame();
+			await Controller.WaitFrame();
 			CSerializable c = await MapLoader.Loader.Clone(act.obj, "act");
-			state = State.Initializing;
+			LoadState = State.Initializing;
 			scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
 			MapLoader.Loader.controller.zListManager.Sort();
-			await MapLoader.WaitFrame();
+			await Controller.WaitFrame();
 		}
-		detailedState = "Finished";
-		state = State.Finished;
+		DetailedState = "Finished";
+		LoadState = State.Finished;
 		loadingScreen.Active = false;
 	}
 
 	public async Task ExportActor(Actor actor, string path) {
-		state = State.Loading;
+		LoadState = State.Loading;
 		loadingScreen.Active = true;
 		await MapLoader.Loader.WriteActor(path, actor);
-		detailedState = "Finished";
-		state = State.Finished;
+		DetailedState = "Finished";
+		LoadState = State.Finished;
 		loadingScreen.Active = false;
 	}
 
 	// Update is called once per frame
 	void Update() {
 		if (loadingScreen.Active) {
-			if (state == State.Error) {
-				loadingScreen.LoadingText = detailedState;
-				loadingScreen.LoadingtextColor = Color.red;
+			if (LoadState == State.Error) {
+				loadingScreen.LoadingText = DetailedState;
+				loadingScreen.LoadingtextColor = UnityEngine.Color.red;
 			} else {
-				if (state == State.Loading) {
+				if (LoadState == State.Loading) {
 					loadingScreen.LoadingText = loader.loadingState;
 				} else {
-					loadingScreen.LoadingText = detailedState;
+					loadingScreen.LoadingText = DetailedState;
 				}
-				loadingScreen.LoadingtextColor = Color.white;
+				loadingScreen.LoadingtextColor = UnityEngine.Color.white;
 			}
 		}
 		if (UnityEngine.Input.GetKeyDown(KeyCode.G)) {
@@ -207,14 +227,14 @@ public class Controller : MonoBehaviour {
 		switch (type) {
 			case LogType.Exception:
 			case LogType.Error:
-				if (state != State.Finished) {
+				if (LoadState != State.Finished) {
 					// Allowed exceptions
 					if (condition.Contains("cleaning the mesh failed")) break;
 
 					// Go to error state
-					state = State.Error;
+					LoadState = State.Error;
 					if (loadingScreen.Active) {
-						detailedState = condition;
+						DetailedState = condition;
 					}
 				}
 				break;

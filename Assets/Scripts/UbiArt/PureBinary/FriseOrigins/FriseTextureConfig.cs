@@ -20,15 +20,15 @@ namespace UbiArt.FriseOrigins {
 		[Serialize("int9")] public int int9;
 		[Serialize("int10")] public int int10;
 		[Serialize("color")] public ColorInteger color;
-		[Serialize("vecA")] public Vector2 vecA;
-		[Serialize("vecB")] public Vector2 vecB;
+		[Serialize("vecA")] public Vec2d vecA;
+		[Serialize("vecB")] public Vec2d vecB;
 		[Serialize("flt8")] public float flt8;
 		[Serialize("path")] public Path path;
 		[Serialize("str3")] public CString str3;
 		[Serialize("color2")] public ColorInteger color2;
 		[Serialize("collision1")] public CollisionFrieze collision1;
 		[Serialize("collision2")] public CollisionFrieze collision2;
-		[Serialize("scrollUV"     )] public Vector2 scrollUV;
+		[Serialize("scrollUV"     )] public Vec2d scrollUV;
 		[Serialize("scrollAngle"  )] public float scrollAngle;
 		[Serialize("alphaBorder"  )] public byte alphaBorder;
 		[Serialize("alphaUp"      )] public byte alphaUp;

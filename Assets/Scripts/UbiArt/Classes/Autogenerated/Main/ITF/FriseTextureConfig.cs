@@ -10,11 +10,11 @@ namespace UbiArt.ITF {
 		[Serialize("color"        )] public ColorInteger color;
 		[Serialize("fillingOffset")] public float fillingOffset;
 		[Serialize("collision"    )] public CollisionTexture collision;
-		[Serialize("scrollUV"     )] public Vector2 scrollUV;
+		[Serialize("scrollUV"     )] public Vec2d scrollUV;
 		[Serialize("scrollAngle"  )] public float scrollAngle;
 		[Serialize("useUV2"       )] public bool useUV2;
-		[Serialize("scaleUV2"     )] public Vector2 scaleUV2;
-		[Serialize("scrollUV2"    )] public Vector2 scrollUV2;
+		[Serialize("scaleUV2"     )] public Vec2d scaleUV2;
+		[Serialize("scrollUV2"    )] public Vec2d scrollUV2;
 		[Serialize("scrollAngle2" )] public float scrollAngle2;
 		[Serialize("alphaBorder"  )] public byte alphaBorder;
 		[Serialize("alphaUp"      )] public byte alphaUp;

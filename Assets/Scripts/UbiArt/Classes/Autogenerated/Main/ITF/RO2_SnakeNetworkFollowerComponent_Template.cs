@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("speedMultiplierMaxValue"   )] public float speedMultiplierMaxValue;
 		[Serialize("speedMultiplierMinDistance")] public float speedMultiplierMinDistance;
 		[Serialize("speedMultiplierMaxDistance")] public float speedMultiplierMaxDistance;
-		[Serialize("targetEvaluationOffset"    )] public Vector2 targetEvaluationOffset;
+		[Serialize("targetEvaluationOffset"    )] public Vec2d targetEvaluationOffset;
 		[Serialize("brakeValue"                )] public float brakeValue;
 		[Serialize("DBG_speed"                 )] public bool DBG_speed;
 		protected override void SerializeImpl(CSerializerObject s) {

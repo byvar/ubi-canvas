@@ -7,9 +7,9 @@ namespace UbiArt.ITF {
 		[Serialize("launchDuration"   )] public float launchDuration;
 		[Serialize("launchCameraShake")] public StringID launchCameraShake;
 		[Serialize("warnFx"           )] public Path warnFx;
-		[Serialize("warnFxOffset"     )] public Vector3 warnFxOffset;
+		[Serialize("warnFxOffset"     )] public Vec3d warnFxOffset;
 		[Serialize("launchFx"         )] public Path launchFx;
-		[Serialize("launchFxOffset"   )] public Vector3 launchFxOffset;
+		[Serialize("launchFxOffset"   )] public Vec3d launchFxOffset;
 		[Serialize("idleAnim"         )] public StringID idleAnim;
 		[Serialize("warnAnim"         )] public StringID warnAnim;
 		[Serialize("launchAnim"       )] public StringID launchAnim;

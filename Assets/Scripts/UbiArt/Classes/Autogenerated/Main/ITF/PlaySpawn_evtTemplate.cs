@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("Visible"    )] public bool Visible;
 		[Serialize("Stay"       )] public bool Stay;
 		[Serialize("FileName"   )] public Path FileName;
-		[Serialize("SpawnOffset")] public Vector2 SpawnOffset;
+		[Serialize("SpawnOffset")] public Vec2d SpawnOffset;
 		[Serialize("Flipped"    )] public bool Flipped;
 		[Serialize("IluFile"    )] public Path IluFile;
 		[Serialize("FileName"   )] public string FileName2;

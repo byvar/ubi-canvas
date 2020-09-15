@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		[Serialize("fontStyle"   )] public FontTextArea.Style fontStyle;
 		[Serialize("renderStep"  )] public uint renderStep;
 		[Serialize("text"        )] public string text;
-		[Serialize("size"        )] public Vector2 size;
-		[Serialize("logoPosition")] public Vector2 logoPosition;
-		[Serialize("logoSize"    )] public Vector2 logoSize;
-		[Serialize("textPosition")] public Vector2 textPosition;
+		[Serialize("size"        )] public Vec2d size;
+		[Serialize("logoPosition")] public Vec2d logoPosition;
+		[Serialize("logoSize"    )] public Vec2d logoSize;
+		[Serialize("textPosition")] public Vec2d textPosition;
 		[Serialize("material"    )] public GFXMaterialSerializable material;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

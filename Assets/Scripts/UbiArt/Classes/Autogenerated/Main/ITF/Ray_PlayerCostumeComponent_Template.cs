@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_PlayerCostumeComponent_Template : ActorComponent_Template {
 		[Serialize("newIconPath"  )] public Path newIconPath;
-		[Serialize("newIconOffset")] public Vector3 newIconOffset;
+		[Serialize("newIconOffset")] public Vec3d newIconOffset;
 		[Serialize("playerIDInfo" )] public StringID playerIDInfo;
 		[Serialize("animLocked"   )] public StringID animLocked;
 		[Serialize("animShown"    )] public StringID animShown;
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("animUsed"     )] public StringID animUsed;
 		[Serialize("fx"           )] public Path fx;
 		[Serialize("shape"        )] public Generic<PhysShape> shape;
-		[Serialize("shapeOffset"  )] public Vector2 shapeOffset;
+		[Serialize("shapeOffset"  )] public Vec2d shapeOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(newIconPath));

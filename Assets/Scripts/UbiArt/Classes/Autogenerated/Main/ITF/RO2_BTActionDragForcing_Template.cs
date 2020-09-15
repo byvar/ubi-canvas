@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("animSpring"             )] public StringID animSpring;
 		[Serialize("animReceiveHitDrag"     )] public StringID animReceiveHitDrag;
 		[Serialize("useAnimation"           )] public bool useAnimation;
-		[Serialize("offsetDrag"             )] public Vector2 offsetDrag;
+		[Serialize("offsetDrag"             )] public Vec2d offsetDrag;
 		[Serialize("smoothFactor"           )] public float smoothFactor;
 		[Serialize("orientToOrigin"         )] public bool orientToOrigin;
 		[Serialize("useRelativeScreenSpace" )] public bool useRelativeScreenSpace;

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_DarkBirdAIComponent_Template : CSerializable {
-		[Serialize("appear3dOffset"       )] public Vector3 appear3dOffset;
+		[Serialize("appear3dOffset"       )] public Vec3d appear3dOffset;
 		[Serialize("detachOnDeath"        )] public int detachOnDeath;
 		[Serialize("disappear3dBehavior"  )] public Placeholder disappear3dBehavior;
 		[Serialize("triggerBounceBehavior")] public Placeholder triggerBounceBehavior;

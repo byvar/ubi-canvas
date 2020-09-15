@@ -21,11 +21,11 @@ namespace UbiArt.Animation {
 		[Serialize("bones"      )] public CList<AnimTrackBonesList> bonesLists;
 		[Serialize("frameEvents")] public CList<AnimTrackFrameEvents> frameEvents;
 		[Serialize("soundEvents")] public CList<AnimTrackFrameSoundEvents> soundEvents;
-		[Serialize("vectors"    )] public CList<Vector2> vectors;
-		[Serialize("vec0"       )] public Vector2 vec0;
-		[Serialize("vec1"       )] public Vector2 vec1;
-		[Serialize("vec2"       )] public Vector2 vec2;
-		[Serialize("vec3"       )] public Vector2 vec3;
+		[Serialize("vectors"    )] public CList<Vec2d> vectors;
+		[Serialize("vec0"       )] public Vec2d vec0;
+		[Serialize("vec1"       )] public Vec2d vec1;
+		[Serialize("vec2"       )] public Vec2d vec2;
+		[Serialize("vec3"       )] public Vec2d vec3;
 		[Serialize("skeleton"   )] public Pair<StringID, Path> skeleton;
 		[Serialize("skeleton"   )] public Pair<StringID, CString> skeletonOrigins;
 		[Serialize("texturePathKeys")] public KeyArray<int> texturePathKeysOrigins;

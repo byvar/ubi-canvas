@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TreeOptimGraph : CSerializable {
 		[Serialize("OptimPath"   )] public Path OptimPath;
-		[Serialize("OptimPos"    )] public Vector3 OptimPos;
+		[Serialize("OptimPos"    )] public Vec3d OptimPos;
 		[Serialize("OptimLoadMin")] public float OptimLoadMin;
 		[Serialize("OptimLoadMax")] public float OptimLoadMax;
 		protected override void SerializeImpl(CSerializerObject s) {

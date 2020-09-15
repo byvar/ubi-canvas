@@ -152,9 +152,9 @@ namespace UbiArt.ITF {
 			[Serialize("timeBeforeDisappearing")] public float timeBeforeDisappearing;
 			[Serialize("frameToWait"           )] public uint frameToWait;
 			[Serialize("bitfield"              )] public uint bitfield;
-			[Serialize("pos"                   )] public Vector3 pos;
+			[Serialize("pos"                   )] public Vec3d pos;
 			[Serialize("angle"                 )] public Angle angle;
-			[Serialize("speed"                 )] public Vector2 speed;
+			[Serialize("speed"                 )] public Vec2d speed;
 			[Serialize("frameCount"            )] public uint frameCount;
 			[Serialize("frameOffset"           )] public uint frameOffset;
 			[Serialize("animState"             )] public ANIM animState;

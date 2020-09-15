@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("int__8"                )] public int int__8;
 		[Serialize("int__9"                )] public int int__9;
 		[Serialize("int__10"               )] public int int__10;
-		[Serialize("Vector2__11"           )] public Vector2 Vector2__11;
+		[Serialize("Vector2__11"           )] public Vec2d Vector2__11;
 		[Serialize("float__12"             )] public float float__12;
 		[Serialize("int__13"               )] public int int__13;
 		[Serialize("uint__14"              )] public uint uint__14;
@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 		[Serialize("int__34"               )] public int int__34;
 		[Serialize("int__35"               )] public int int__35;
 		[Serialize("int__36"               )] public int int__36;
-		[Serialize("Vector2__37"           )] public Vector2 Vector2__37;
+		[Serialize("Vector2__37"           )] public Vec2d Vector2__37;
 		[Serialize("float__38"             )] public float float__38;
 		[Serialize("int__39"               )] public int int__39;
 		[Serialize("uint__40"              )] public uint uint__40;

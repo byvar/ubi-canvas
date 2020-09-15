@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class TweenSine_Template : TweenTranslation_Template {
-		[Serialize("movement"   )] public Vector3 movement;
+		[Serialize("movement"   )] public Vec3d movement;
 		[Serialize("amplitude"  )] public float amplitude;
 		[Serialize("cycleCount" )] public float cycleCount;
 		[Serialize("cycleOffset")] public float cycleOffset;

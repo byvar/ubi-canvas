@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("pointerReachDampFactor"          )] public float pointerReachDampFactor;
 		[Serialize("pointerFollowDampFactor"         )] public float pointerFollowDampFactor;
 		[Serialize("pointerMovementDashAnimThreshold")] public float pointerMovementDashAnimThreshold;
-		[Serialize("dragSpeed"                       )] public Vector2 dragSpeed;
+		[Serialize("dragSpeed"                       )] public Vec2d dragSpeed;
 		[Serialize("accelDragFactor"                 )] public float accelDragFactor;
 		[Serialize("decelDragFactor"                 )] public float decelDragFactor;
 		[Serialize("dragSlowdownFactor"              )] public float dragSlowdownFactor;

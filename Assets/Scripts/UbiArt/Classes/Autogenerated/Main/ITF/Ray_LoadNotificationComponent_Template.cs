@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_LoadNotificationComponent_Template : ActorComponent_Template {
-		[Serialize("animSize")] public Vector2 animSize;
+		[Serialize("animSize")] public Vec2d animSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(animSize));

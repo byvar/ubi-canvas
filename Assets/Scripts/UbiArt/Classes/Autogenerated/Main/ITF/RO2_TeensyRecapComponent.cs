@@ -17,8 +17,8 @@ namespace UbiArt.ITF {
 			[Serialize("prisonerVisualType")] public Prisoner prisonerVisualType;
 			[Serialize("animVariation"     )] public uint animVariation;
 			[Serialize("flip"              )] public bool flip;
-			[Serialize("pos"               )] public Vector3 pos;
-			[Serialize("scale"             )] public Vector2 scale;
+			[Serialize("pos"               )] public Vec3d pos;
+			[Serialize("scale"             )] public Vec2d scale;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(prisonerVisualType));

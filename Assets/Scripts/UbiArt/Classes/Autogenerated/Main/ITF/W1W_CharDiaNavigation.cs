@@ -7,17 +7,17 @@ namespace UbiArt.ITF {
 		[Serialize("Path__1"    )] public Path Path__1;
 		[Serialize("Path__2"    )] public Path Path__2;
 		[Serialize("Path__3"    )] public Path Path__3;
-		[Serialize("Vector2__4" )] public Vector2 Vector2__4;
-		[Serialize("Vector2__5" )] public Vector2 Vector2__5;
+		[Serialize("Vector2__4" )] public Vec2d Vector2__4;
+		[Serialize("Vector2__5" )] public Vec2d Vector2__5;
 		[Serialize("float__6"   )] public float float__6;
-		[Serialize("Vector2__7" )] public Vector2 Vector2__7;
+		[Serialize("Vector2__7" )] public Vec2d Vector2__7;
 		[Serialize("Path__8"    )] public Path Path__8;
 		[Serialize("Path__9"    )] public Path Path__9;
 		[Serialize("Path__10"   )] public Path Path__10;
 		[Serialize("Path__11"   )] public Path Path__11;
 		[Serialize("Path__12"   )] public Path Path__12;
-		[Serialize("Vector2__13")] public Vector2 Vector2__13;
-		[Serialize("Vector2__14")] public Vector2 Vector2__14;
+		[Serialize("Vector2__13")] public Vec2d Vector2__13;
+		[Serialize("Vector2__14")] public Vec2d Vector2__14;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Path__0));

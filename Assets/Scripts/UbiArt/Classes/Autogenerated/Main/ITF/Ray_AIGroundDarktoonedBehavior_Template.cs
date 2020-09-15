@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIGroundDarktoonedBehavior_Template : Ray_AIGroundRoamBehavior_Template {
 		[Serialize("stimEmissionSpeedLimit")] public float stimEmissionSpeedLimit;
-		[Serialize("stimEmissionOffset"    )] public Vector2 stimEmissionOffset;
-		[Serialize("stimEmissionOffsetEnd" )] public Vector2 stimEmissionOffsetEnd;
+		[Serialize("stimEmissionOffset"    )] public Vec2d stimEmissionOffset;
+		[Serialize("stimEmissionOffsetEnd" )] public Vec2d stimEmissionOffsetEnd;
 		[Serialize("stimLevel"             )] public uint stimLevel;
 		[Serialize("stimType"              )] public RECEIVEDHITTYPE stimType;
 		protected override void SerializeImpl(CSerializerObject s) {

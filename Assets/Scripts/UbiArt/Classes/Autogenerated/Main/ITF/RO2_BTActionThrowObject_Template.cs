@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		[Serialize("customPhantomShape"        )] public StringID customPhantomShape;
 		[Serialize("customPhantomShapeEventOn" )] public StringID customPhantomShapeEventOn;
 		[Serialize("customPhantomShapeEventOff")] public StringID customPhantomShapeEventOff;
-		[Serialize("quickLaunchOffset"         )] public Vector2 quickLaunchOffset;
+		[Serialize("quickLaunchOffset"         )] public Vec2d quickLaunchOffset;
 		[Serialize("debug"                     )] public bool debug;
 		[Serialize("projectileData"            )] public Placeholder projectileData;
 		protected override void SerializeImpl(CSerializerObject s) {

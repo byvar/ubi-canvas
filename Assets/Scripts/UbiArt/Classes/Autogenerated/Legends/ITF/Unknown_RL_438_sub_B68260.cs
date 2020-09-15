@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_438_sub_B68260 : CSerializable {
 		[Serialize("depth"                         )] public float depth;
-		[Serialize("screenBorderScale"             )] public Vector2 screenBorderScale;
+		[Serialize("screenBorderScale"             )] public Vec2d screenBorderScale;
 		[Serialize("moveDirBlendFactor"            )] public float moveDirBlendFactor;
 		[Serialize("moveSpeed"                     )] public float moveSpeed;
 		[Serialize("moveDestDeltaDist"             )] public float moveDestDeltaDist;

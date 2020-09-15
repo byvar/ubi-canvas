@@ -12,8 +12,8 @@ namespace UbiArt.ITF {
 		[Serialize("visibleDuration"                     )] public float visibleDuration;
 		[Serialize("fadeOutDuration"                     )] public float fadeOutDuration;
 		[Serialize("fontName"                            )] public Path fontName;
-		[Serialize("scorePos"                            )] public Vector2 scorePos;
-		[Serialize("scoreSize"                           )] public Vector2 scoreSize;
+		[Serialize("scorePos"                            )] public Vec2d scorePos;
+		[Serialize("scoreSize"                           )] public Vec2d scoreSize;
 		[Serialize("scoreColor"                          )] public Color scoreColor;
 		[Serialize("lumBigIncreaseSpeed"                 )] public uint lumBigIncreaseSpeed;
 		[Serialize("lumProgressiveBigIncreaseThreshold"  )] public uint lumProgressiveBigIncreaseThreshold;
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 		[Serialize("scoreMultiplierParticleID"           )] public StringID scoreMultiplierParticleID;
 		[Serialize("scoreMultiplierValue"                )] public uint scoreMultiplierValue;
 		[Serialize("pressStartHeight"                    )] public float pressStartHeight;
-		[Serialize("pressStartPos"                       )] public Vector2 pressStartPos;
+		[Serialize("pressStartPos"                       )] public Vec2d pressStartPos;
 		[Serialize("pressStartFontName"                  )] public Path pressStartFontName;
 		[Serialize("grayedAlpha"                         )] public float grayedAlpha;
 		[Serialize("idleAlpha"                           )] public float idleAlpha;
@@ -43,9 +43,9 @@ namespace UbiArt.ITF {
 		[Serialize("pressStartTextID"                    )] public LocalisationId pressStartTextID;
 		[Serialize("lumTexture"                          )] public Path lumTexture;
 		[Serialize("characterTexture"                    )] public Path characterTexture;
-		[Serialize("lumBoxLocalPosition"                 )] public Vector2 lumBoxLocalPosition;
-		[Serialize("lumBoxLocalSize"                     )] public Vector2 lumBoxLocalSize;
-		[Serialize("headBoxLocalSize"                    )] public Vector2 headBoxLocalSize;
+		[Serialize("lumBoxLocalPosition"                 )] public Vec2d lumBoxLocalPosition;
+		[Serialize("lumBoxLocalSize"                     )] public Vec2d lumBoxLocalSize;
+		[Serialize("headBoxLocalSize"                    )] public Vec2d headBoxLocalSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(relativeWidth));

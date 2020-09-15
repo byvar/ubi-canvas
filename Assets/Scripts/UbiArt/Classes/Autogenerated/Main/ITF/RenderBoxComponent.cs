@@ -3,27 +3,27 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class RenderBoxComponent : GraphicComponent {
-		[Serialize("imageResolution"           )] public Vector2 imageResolution;
+		[Serialize("imageResolution"           )] public Vec2d imageResolution;
 		[Serialize("autoSize"                  )] public bool autoSize;
-		[Serialize("offset"                    )] public Vector2 offset;
-		[Serialize("uvPreTranslation"          )] public Vector2 uvPreTranslation;
-		[Serialize("uvRatio"                   )] public Vector2 uvRatio;
-		[Serialize("uvTranslation"             )] public Vector2 uvTranslation;
+		[Serialize("offset"                    )] public Vec2d offset;
+		[Serialize("uvPreTranslation"          )] public Vec2d uvPreTranslation;
+		[Serialize("uvRatio"                   )] public Vec2d uvRatio;
+		[Serialize("uvTranslation"             )] public Vec2d uvTranslation;
 		[Serialize("uvRotation"                )] public Angle uvRotation;
-		[Serialize("uvTranslationSpeed"        )] public Vector2 uvTranslationSpeed;
+		[Serialize("uvTranslationSpeed"        )] public Vec2d uvTranslationSpeed;
 		[Serialize("uvRotationSpeed"           )] public Angle uvRotationSpeed;
-		[Serialize("uvPivot"                   )] public Vector2 uvPivot;
+		[Serialize("uvPivot"                   )] public Vec2d uvPivot;
 		[Serialize("overwritematerial"         )] public GFXMaterialSerializable overwritematerial;
-		[Serialize("size"                      )] public Vector2 size;
-		[Serialize("Vector2__0"                )] public Vector2 Vector2__0;
+		[Serialize("size"                      )] public Vec2d size;
+		[Serialize("Vector2__0"                )] public Vec2d Vector2__0;
 		[Serialize("bool__1"                   )] public bool bool__1;
-		[Serialize("Vector2__2"                )] public Vector2 Vector2__2;
-		[Serialize("Vector2__3"                )] public Vector2 Vector2__3;
-		[Serialize("Vector2__4"                )] public Vector2 Vector2__4;
+		[Serialize("Vector2__2"                )] public Vec2d Vector2__2;
+		[Serialize("Vector2__3"                )] public Vec2d Vector2__3;
+		[Serialize("Vector2__4"                )] public Vec2d Vector2__4;
 		[Serialize("Angle__5"                  )] public Angle Angle__5;
-		[Serialize("Vector2__6"                )] public Vector2 Vector2__6;
+		[Serialize("Vector2__6"                )] public Vec2d Vector2__6;
 		[Serialize("Angle__7"                  )] public Angle Angle__7;
-		[Serialize("Vector2__8"                )] public Vector2 Vector2__8;
+		[Serialize("Vector2__8"                )] public Vec2d Vector2__8;
 		[Serialize("GFXMaterialSerializable__9")] public GFXMaterialSerializable GFXMaterialSerializable__9;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

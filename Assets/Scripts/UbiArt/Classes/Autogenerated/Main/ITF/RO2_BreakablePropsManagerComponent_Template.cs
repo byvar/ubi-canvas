@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		[Serialize("shakeShapeRadius"  )] public float shakeShapeRadius;
 		[Serialize("shakeTime"         )] public float shakeTime;
 		[Serialize("hitShapeRadius"    )] public float hitShapeRadius;
-		[Serialize("hitShapeOffset"    )] public Vector2 hitShapeOffset;
+		[Serialize("hitShapeOffset"    )] public Vec2d hitShapeOffset;
 		[Serialize("squashAnim"        )] public StringID squashAnim;
 		[Serialize("squashDrcAnim"     )] public StringID squashDrcAnim;
 		[Serialize("standBrokenAnim"   )] public StringID standBrokenAnim;

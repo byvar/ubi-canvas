@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("action"      )] public PlayerForcedAction action;
 		[Serialize("action"      )] public PlayerForcedAction2 action2;
 		[Serialize("enable"      )] public bool enable;
-		[Serialize("direction"   )] public Vector2 direction;
+		[Serialize("direction"   )] public Vec2d direction;
 		[Serialize("hold"        )] public bool hold;
 		[Serialize("waitDuration")] public float waitDuration;
 		[Serialize("sprint"      )] public bool sprint;

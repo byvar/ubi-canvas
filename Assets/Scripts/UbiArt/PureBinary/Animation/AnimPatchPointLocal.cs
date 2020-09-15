@@ -9,8 +9,8 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimPatchPointLocal::serialize
 	public class AnimPatchPointLocal : CSerializable {
 		[Serialize("boneId")] public Link boneId;
-		[Serialize("pos"   )] public Vector2 pos;
-		[Serialize("vec1"  )] public Vector2 vec1;
+		[Serialize("pos"   )] public Vec2d pos;
+		[Serialize("vec1"  )] public Vec2d vec1;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

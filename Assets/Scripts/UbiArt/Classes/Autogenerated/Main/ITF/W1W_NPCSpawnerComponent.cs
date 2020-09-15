@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("Path__0"     )] public Path Path__0;
 		[Serialize("uint__1"     )] public uint uint__1;
 		[Serialize("Enum_VH_0__2")] public Enum_VH_0 Enum_VH_0__2;
-		[Serialize("Vector2__3"  )] public Vector2 Vector2__3;
+		[Serialize("Vector2__3"  )] public Vec2d Vector2__3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Path__0));

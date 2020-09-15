@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		
 		[Games(GameFlags.RO)]
 		public partial class ShooterCameraModifier : CSerializable {
-			[Serialize("moveSpeed")] public Vector2 moveSpeed;
+			[Serialize("moveSpeed")] public Vec2d moveSpeed;
 			[Serialize("zOffset"  )] public float zOffset;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 		public partial class ShooterCameraModifier_Transition : CSerializable {
 			[Serialize("type"             )] public Enum_type type;
 			[Serialize("duration"         )] public float duration;
-			[Serialize("additionalSpeed"  )] public Vector2 additionalSpeed;
+			[Serialize("additionalSpeed"  )] public Vec2d additionalSpeed;
 			[Serialize("notifyPlayerDelay")] public float notifyPlayerDelay;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

@@ -15,8 +15,8 @@ namespace UbiArt.ITF {
 		[Serialize("boxPosition"         )] public BoxPosition boxPosition;
 		[Serialize("textBlock"           )] public CArray<StringID> textBlock;
 		[Serialize("texture"             )] public Path texture;
-		[Serialize("textureOffset2D"     )] public Vector2 textureOffset2D;
-		[Serialize("anchorOffset2D"      )] public Vector2 anchorOffset2D;
+		[Serialize("textureOffset2D"     )] public Vec2d textureOffset2D;
+		[Serialize("anchorOffset2D"      )] public Vec2d anchorOffset2D;
 		[Serialize("zOffset"             )] public float zOffset;
 		[Serialize("is2DText"            )] public int is2DText;
 		[Serialize("zOffsetActors"       )] public float zOffsetActors;

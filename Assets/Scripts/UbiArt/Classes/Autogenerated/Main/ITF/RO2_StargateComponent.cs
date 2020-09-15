@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_StargateComponent : ActorComponent {
-		[Serialize("doorOffset")] public Vector2 doorOffset;
+		[Serialize("doorOffset")] public Vec2d doorOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

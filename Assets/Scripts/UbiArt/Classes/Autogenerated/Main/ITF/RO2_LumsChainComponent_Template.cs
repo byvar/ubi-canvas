@@ -30,14 +30,14 @@ namespace UbiArt.ITF {
 		[Serialize("grabDampingFactor"                )] public float grabDampingFactor;
 		[Serialize("arrivalDuration"                  )] public float arrivalDuration;
 		[Serialize("timeBeforeTaken"                  )] public float timeBeforeTaken;
-		[Serialize("followingOffset"                  )] public Vector2 followingOffset;
+		[Serialize("followingOffset"                  )] public Vec2d followingOffset;
 		[Serialize("spawningEffectPath"               )] public Path spawningEffectPath;
 		[Serialize("timeBeforeStartDisappear"         )] public float timeBeforeStartDisappear;
 		[Serialize("interactiveActorPath"             )] public Path interactiveActorPath;
 		[Serialize("musicPerfectActivationDistance"   )] public float musicPerfectActivationDistance;
 		[Serialize("musicFailedActivationDistance"    )] public float musicFailedActivationDistance;
 		[Serialize("waitingTimeBeforePlayerActivation")] public float waitingTimeBeforePlayerActivation;
-		[Serialize("interactiveActorOffsets"          )] public CArray<Vector3> interactiveActorOffsets;
+		[Serialize("interactiveActorOffsets"          )] public CArray<Vec3d> interactiveActorOffsets;
 		[Serialize("interactiveActorBgList"           )] public CArray<Path> interactiveActorBgList;
 		[Serialize("bgZOffsets"                       )] public CList<float> bgZOffsets;
 		[Serialize("displayEyeOnlyOnDRC"              )] public bool displayEyeOnlyOnDRC;

@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("SCREEN_POURCENT_X")] public float SCREEN_POURCENT_X;
 		[Serialize("SCREEN_POURCENT_Y")] public float SCREEN_POURCENT_Y;
 		[Serialize("texture"          )] public Path texture;
-		[Serialize("quadSize"         )] public Vector2 quadSize;
+		[Serialize("quadSize"         )] public Vec2d quadSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

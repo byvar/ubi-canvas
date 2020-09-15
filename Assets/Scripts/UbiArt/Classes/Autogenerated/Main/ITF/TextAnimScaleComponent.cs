@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		[Serialize("repositionObjects"        )] public CList<ObjectPath> repositionObjects;
 		[Serialize("relRepositionObjects"     )] public CList<ObjectPath> relRepositionObjects;
 		[Serialize("borderRepositionedObjects")] public CList<AnimScaleRepositionedObject> borderRepositionedObjects;
-		[Serialize("minimumSize"              )] public Vector2 minimumSize;
+		[Serialize("minimumSize"              )] public Vec2d minimumSize;
 		[Serialize("aabb"                     )] public AABB aabb;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

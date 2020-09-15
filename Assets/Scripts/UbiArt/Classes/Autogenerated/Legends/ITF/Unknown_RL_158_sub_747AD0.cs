@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_158_sub_747AD0 : CSerializable {
 		[Serialize("highlightTextStyle")] public uint highlightTextStyle;
-		[Serialize("buttonIconOffset"  )] public Vector3 buttonIconOffset;
-		[Serialize("newContentOffset"  )] public Vector3 newContentOffset;
+		[Serialize("buttonIconOffset"  )] public Vec3d buttonIconOffset;
+		[Serialize("newContentOffset"  )] public Vec3d newContentOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(highlightTextStyle));

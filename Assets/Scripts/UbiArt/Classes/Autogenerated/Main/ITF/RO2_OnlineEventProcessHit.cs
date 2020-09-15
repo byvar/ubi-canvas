@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 	public partial class RO2_OnlineEventProcessHit : Event {
 		[Serialize("hitType"  )] public PUNCHTYPE hitType;
-		[Serialize("wantedDir")] public Vector2 wantedDir;
+		[Serialize("wantedDir")] public Vec2d wantedDir;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(hitType));

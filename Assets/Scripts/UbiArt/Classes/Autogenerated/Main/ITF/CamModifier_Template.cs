@@ -5,32 +5,32 @@ namespace UbiArt.ITF {
 	public partial class CamModifier_Template : CSerializable {
 		[Serialize("cameraLookAtOffsetYUp"                   )] public float cameraLookAtOffsetYUp;
 		[Serialize("cameraLookAtOffsetYDown"                 )] public float cameraLookAtOffsetYDown;
-		[Serialize("cameraLookAtOffset"                      )] public Vector3 cameraLookAtOffset;
-		[Serialize("cameraLookAtOffsetMaxInMulti"            )] public Vector3 cameraLookAtOffsetMaxInMulti;
+		[Serialize("cameraLookAtOffset"                      )] public Vec3d cameraLookAtOffset;
+		[Serialize("cameraLookAtOffsetMaxInMulti"            )] public Vec3d cameraLookAtOffsetMaxInMulti;
 		[Serialize("focale"                                  )] public Angle focale;
 		[Serialize("ignoreZ"                                 )] public bool ignoreZ;
 		[Serialize("zoneScaleDepthMin"                       )] public float zoneScaleDepthMin;
 		[Serialize("zoneScaleDepthMax"                       )] public float zoneScaleDepthMax;
-		[Serialize("zoneScaleAtDepthMin"                     )] public Vector2 zoneScaleAtDepthMin;
-		[Serialize("zoneScaleAtDepthMax"                     )] public Vector2 zoneScaleAtDepthMax;
+		[Serialize("zoneScaleAtDepthMin"                     )] public Vec2d zoneScaleAtDepthMin;
+		[Serialize("zoneScaleAtDepthMax"                     )] public Vec2d zoneScaleAtDepthMax;
 		[Serialize("zoneScaleSpeed"                          )] public float zoneScaleSpeed;
-		[Serialize("cameraDecenteringOffsetAtSpeedMin"       )] public Vector2 cameraDecenteringOffsetAtSpeedMin;
-		[Serialize("cameraDecenteringOffsetAtSpeedMax"       )] public Vector2 cameraDecenteringOffsetAtSpeedMax;
-		[Serialize("cameraDecenteringSpeedMin"               )] public Vector2 cameraDecenteringSpeedMin;
-		[Serialize("cameraDecenteringSpeedMax"               )] public Vector2 cameraDecenteringSpeedMax;
-		[Serialize("cameraDecenteringBlendAtSpeedMin"        )] public Vector2 cameraDecenteringBlendAtSpeedMin;
-		[Serialize("cameraDecenteringBlendAtSpeedMax"        )] public Vector2 cameraDecenteringBlendAtSpeedMax;
-		[Serialize("cameraDecenteringInertieAtSpeedMin"      )] public Vector2 cameraDecenteringInertieAtSpeedMin;
-		[Serialize("cameraDecenteringInertieAtSpeedMax"      )] public Vector2 cameraDecenteringInertieAtSpeedMax;
-		[Serialize("cameraDecenteringSmooth"                 )] public Vector2 cameraDecenteringSmooth;
-		[Serialize("cameraDecenteringSubjectLookDirWeight"   )] public Vector2 cameraDecenteringSubjectLookDirWeight;
+		[Serialize("cameraDecenteringOffsetAtSpeedMin"       )] public Vec2d cameraDecenteringOffsetAtSpeedMin;
+		[Serialize("cameraDecenteringOffsetAtSpeedMax"       )] public Vec2d cameraDecenteringOffsetAtSpeedMax;
+		[Serialize("cameraDecenteringSpeedMin"               )] public Vec2d cameraDecenteringSpeedMin;
+		[Serialize("cameraDecenteringSpeedMax"               )] public Vec2d cameraDecenteringSpeedMax;
+		[Serialize("cameraDecenteringBlendAtSpeedMin"        )] public Vec2d cameraDecenteringBlendAtSpeedMin;
+		[Serialize("cameraDecenteringBlendAtSpeedMax"        )] public Vec2d cameraDecenteringBlendAtSpeedMax;
+		[Serialize("cameraDecenteringInertieAtSpeedMin"      )] public Vec2d cameraDecenteringInertieAtSpeedMin;
+		[Serialize("cameraDecenteringInertieAtSpeedMax"      )] public Vec2d cameraDecenteringInertieAtSpeedMax;
+		[Serialize("cameraDecenteringSmooth"                 )] public Vec2d cameraDecenteringSmooth;
+		[Serialize("cameraDecenteringSubjectLookDirWeight"   )] public Vec2d cameraDecenteringSubjectLookDirWeight;
 		[Serialize("cameraDecenteringDepthMin"               )] public float cameraDecenteringDepthMin;
 		[Serialize("cameraDecenteringDepthMax"               )] public float cameraDecenteringDepthMax;
-		[Serialize("cameraMovingSpeedMin"                    )] public Vector2 cameraMovingSpeedMin;
-		[Serialize("cameraMovingSpeedMax"                    )] public Vector2 cameraMovingSpeedMax;
-		[Serialize("cameraMovingBlendAtSpeedMin"             )] public Vector2 cameraMovingBlendAtSpeedMin;
-		[Serialize("cameraMovingBlendAtSpeedMax"             )] public Vector2 cameraMovingBlendAtSpeedMax;
-		[Serialize("cameraMovingSmooth"                      )] public Vector2 cameraMovingSmooth;
+		[Serialize("cameraMovingSpeedMin"                    )] public Vec2d cameraMovingSpeedMin;
+		[Serialize("cameraMovingSpeedMax"                    )] public Vec2d cameraMovingSpeedMax;
+		[Serialize("cameraMovingBlendAtSpeedMin"             )] public Vec2d cameraMovingBlendAtSpeedMin;
+		[Serialize("cameraMovingBlendAtSpeedMax"             )] public Vec2d cameraMovingBlendAtSpeedMax;
+		[Serialize("cameraMovingSmooth"                      )] public Vec2d cameraMovingSmooth;
 		[Serialize("cameraMovingBlendAccelerationJustSticked")] public float cameraMovingBlendAccelerationJustSticked;
 		[Serialize("rayCastScaleMax"                         )] public float rayCastScaleMax;
 		[Serialize("lockPositionBlendOnEnter"                )] public float lockPositionBlendOnEnter;
@@ -39,8 +39,8 @@ namespace UbiArt.ITF {
 		[Serialize("screenLimitUpScale"                      )] public float screenLimitUpScale;
 		[Serialize("subjectWeightUnregisterDelay"            )] public float subjectWeightUnregisterDelay;
 		[Serialize("subjectWeightRegisterDelay"              )] public float subjectWeightRegisterDelay;
-		[Serialize("subjectMainVisibilityHorizontal"         )] public Vector2 subjectMainVisibilityHorizontal;
-		[Serialize("subjectMainVisibilityVertical"           )] public Vector2 subjectMainVisibilityVertical;
+		[Serialize("subjectMainVisibilityHorizontal"         )] public Vec2d subjectMainVisibilityHorizontal;
+		[Serialize("subjectMainVisibilityVertical"           )] public Vec2d subjectMainVisibilityVertical;
 		[Serialize("cameraMovingSmoothCoeffForLeader"        )] public float cameraMovingSmoothCoeffForLeader;
 		[Serialize("subjectMainVisibilitySwitchAxeSpeed"     )] public float subjectMainVisibilitySwitchAxeSpeed;
 		[Serialize("zoomBlendInMultiplayer"                  )] public float zoomBlendInMultiplayer;
@@ -52,11 +52,11 @@ namespace UbiArt.ITF {
 
 		[Serialize("modifierBlend"                           )] public float modifierBlend;
 		[Serialize("modifierInertie"                         )] public float modifierInertie;
-		[Serialize("constraintDelayToActivate"               )] public Vector3 constraintDelayToActivate;
-		[Serialize("constraintDelayToDisable"                )] public Vector3 constraintDelayToDisable;
-		[Serialize("constraintOverrideActivationDelay"       )] public Vector3 constraintOverrideActivationDelay;
+		[Serialize("constraintDelayToActivate"               )] public Vec3d constraintDelayToActivate;
+		[Serialize("constraintDelayToDisable"                )] public Vec3d constraintDelayToDisable;
+		[Serialize("constraintOverrideActivationDelay"       )] public Vec3d constraintOverrideActivationDelay;
 
-		[Serialize("cameraDecenteringDelay"                  )] public Vector2 cameraDecenteringDelay;
+		[Serialize("cameraDecenteringDelay"                  )] public Vec2d cameraDecenteringDelay;
 		
 		[Serialize("zoomInertieInMultiplayer"                )] public float zoomInertieInMultiplayer;
 		[Serialize("zoomDelayInMultiplayer"                  )] public float zoomDelayInMultiplayer;

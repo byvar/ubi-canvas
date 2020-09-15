@@ -11,8 +11,8 @@ namespace UbiArt.ITF {
 		[Serialize("movingSnapOnItem"          )] public bool movingSnapOnItem;
 		[Serialize("movingMomentumFriction"    )] public float movingMomentumFriction;
 		[Serialize("movingMomentumDeceleration")] public float movingMomentumDeceleration;
-		[Serialize("extendSpeed"               )] public Vector2 extendSpeed;
-		[Serialize("colapseSpeed"              )] public Vector2 colapseSpeed;
+		[Serialize("extendSpeed"               )] public Vec2d extendSpeed;
+		[Serialize("colapseSpeed"              )] public Vec2d colapseSpeed;
 		[Serialize("modelActorPaths"           )] public CArray<Path> modelActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

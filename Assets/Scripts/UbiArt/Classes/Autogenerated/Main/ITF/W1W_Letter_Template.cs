@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		[Serialize("float__0"  )] public float float__0;
 		[Serialize("float__1"  )] public float float__1;
 		[Serialize("bool__2"   )] public bool bool__2;
-		[Serialize("Vector2__3")] public Vector2 Vector2__3;
-		[Serialize("Vector2__4")] public Vector2 Vector2__4;
+		[Serialize("Vector2__3")] public Vec2d Vector2__3;
+		[Serialize("Vector2__4")] public Vec2d Vector2__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(float__0));

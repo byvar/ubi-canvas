@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class EdgeFluid : CSerializable {
-		[Serialize("PosList"           )] public CArray<Vector2> PosList;
-		[Serialize("UVList"            )] public CArray<Vector2> UVList;
+		[Serialize("PosList"           )] public CArray<Vec2d> PosList;
+		[Serialize("UVList"            )] public CArray<Vec2d> UVList;
 		[Serialize("Colors"            )] public CArray<ColorInteger> Colors;
-		[Serialize("UvAnimTrans"       )] public Vector2 UvAnimTrans;
+		[Serialize("UvAnimTrans"       )] public Vec2d UvAnimTrans;
 		[Serialize("MeshLevel"         )] public uint MeshLevel;
 		[Serialize("Depth"             )] public float Depth;
 		[Serialize("LastIndex"         )] public uint LastIndex;
@@ -14,8 +14,8 @@ namespace UbiArt.ITF {
 		[Serialize("WorldNorm"         )] public float WorldNorm;
 		[Serialize("WorldHeight"       )] public float WorldHeight;
 		[Serialize("WorldAngle"        )] public float WorldAngle;
-		[Serialize("Delta"             )] public Vector3 Delta;
-		[Serialize("DeltaUV"           )] public Vector2 DeltaUV;
+		[Serialize("Delta"             )] public Vec3d Delta;
+		[Serialize("DeltaUV"           )] public Vec2d DeltaUV;
 		[Serialize("CollisionProcesses")] public CList<EdgeProcessData> CollisionProcesses;
 		[Serialize("VisualProcess"     )] public EdgeProcessData VisualProcess;
 		[Serialize("LocalAABB"         )] public AABB LocalAABB;

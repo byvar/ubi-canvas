@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		[Serialize("upItem"               )] public StringID upItem;
 		[Serialize("downItem"             )] public StringID downItem;
 		[Serialize("cursorItem"           )] public StringID cursorItem;
-		[Serialize("cursorOffset"         )] public Vector2 cursorOffset;
+		[Serialize("cursorOffset"         )] public Vec2d cursorOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {

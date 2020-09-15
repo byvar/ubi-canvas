@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		[Serialize("maxScaleAtEnd"             )] public float maxScaleAtEnd;
 		[Serialize("linkPulsation"             )] public float linkPulsation;
 		[Serialize("linkAmplitude"             )] public float linkAmplitude;
-		[Serialize("playerFollowOffset"        )] public Vector2 playerFollowOffset;
+		[Serialize("playerFollowOffset"        )] public Vec2d playerFollowOffset;
 		[Serialize("speedBlend"                )] public float speedBlend;
 		[Serialize("speedMin"                  )] public float speedMin;
 		[Serialize("speedMax"                  )] public float speedMax;
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 		[Serialize("radius"                    )] public float radius;
 		[Serialize("minLinkThicknessFactor"    )] public float minLinkThicknessFactor;
 		[Serialize("lenghtForMinThickness"     )] public float lenghtForMinThickness;
-		[Serialize("uvAnimTrans"               )] public Vector2 uvAnimTrans;
+		[Serialize("uvAnimTrans"               )] public Vec2d uvAnimTrans;
 		[Serialize("startAlphaLen"             )] public float startAlphaLen;
 		[Serialize("endAlphaLen"               )] public float endAlphaLen;
 		[Serialize("linkAlphaMultiplier"       )] public float linkAlphaMultiplier;

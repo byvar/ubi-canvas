@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("weightThreshold"  )] public float weightThreshold;
 		[Serialize("flyBackDelay"     )] public float flyBackDelay;
 		[Serialize("fallBreakDelay"   )] public float fallBreakDelay;
-		[Serialize("appear3dOffset"   )] public Vector3 appear3dOffset;
+		[Serialize("appear3dOffset"   )] public Vec3d appear3dOffset;
 		[Serialize("isBumper"         )] public bool isBumper;
 		[Serialize("noteFxNames"      )] public CArray<StringID> noteFxNames;
 		[Serialize("standAction"      )] public Generic<AIAction_Template> standAction;

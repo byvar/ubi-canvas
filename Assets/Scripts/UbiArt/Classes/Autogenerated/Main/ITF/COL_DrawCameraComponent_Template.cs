@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class COL_DrawCameraComponent_Template : CSerializable {
 		[Serialize("focale")] public Angle focale;
 		[Serialize("depth" )] public float depth;
-		[Serialize("offset")] public Vector3 offset;
+		[Serialize("offset")] public Vec3d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(focale));

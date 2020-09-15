@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_190_sub_76A0E0 : Unknown_RL_183_sub_7628A0 {
-		[Serialize("mainNodeDefaultScale"        )] public Vector2 mainNodeDefaultScale;
-		[Serialize("mainNodeRollOverScale"       )] public Vector2 mainNodeRollOverScale;
-		[Serialize("defaultScale"                )] public Vector2 defaultScale;
-		[Serialize("rollOverScale"               )] public Vector2 rollOverScale;
+		[Serialize("mainNodeDefaultScale"        )] public Vec2d mainNodeDefaultScale;
+		[Serialize("mainNodeRollOverScale"       )] public Vec2d mainNodeRollOverScale;
+		[Serialize("defaultScale"                )] public Vec2d defaultScale;
+		[Serialize("rollOverScale"               )] public Vec2d rollOverScale;
 		[Serialize("focusColor"                  )] public Color focusColor;
-		[Serialize("paintingScale"               )] public Vector2 paintingScale;
+		[Serialize("paintingScale"               )] public Vec2d paintingScale;
 		[Serialize("pastilleActorPath"           )] public Path pastilleActorPath;
 		[Serialize("arrowActorPath"              )] public Path arrowActorPath;
 		[Serialize("paintingColorAnim"           )] public StringID paintingColorAnim;

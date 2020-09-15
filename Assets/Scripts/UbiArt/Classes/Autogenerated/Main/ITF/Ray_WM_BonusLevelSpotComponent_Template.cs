@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("bubblePath"  )] public Path bubblePath;
 		[Serialize("panelAct"    )] public Path panelAct;
 		[Serialize("panelBone"   )] public StringID panelBone;
-		[Serialize("panelOffset" )] public Vector3 panelOffset;
+		[Serialize("panelOffset" )] public Vec3d panelOffset;
 		[Serialize("blockedLines")] public Placeholder blockedLines;
 		[Serialize("openLines"   )] public Placeholder openLines;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -9,10 +9,10 @@ namespace UbiArt.ITF {
 		[Serialize("animClosed"           )] public StringID animClosed;
 		[Serialize("animLocked"           )] public StringID animLocked;
 		[Serialize("actorCounterPath"     )] public Path actorCounterPath;
-		[Serialize("counterOffset"        )] public Vector2 counterOffset;
+		[Serialize("counterOffset"        )] public Vec2d counterOffset;
 		[Serialize("actorNewIconPath"     )] public Path actorNewIconPath;
-		[Serialize("newIconOffset"        )] public Vector2 newIconOffset;
-		[Serialize("walkThroughDoorTarget")] public Vector3 walkThroughDoorTarget;
+		[Serialize("newIconOffset"        )] public Vec2d newIconOffset;
+		[Serialize("walkThroughDoorTarget")] public Vec3d walkThroughDoorTarget;
 		[Serialize("enterColor"           )] public Color enterColor;
 		[Serialize("walkOutDistance"      )] public float walkOutDistance;
 		protected override void SerializeImpl(CSerializerObject s) {

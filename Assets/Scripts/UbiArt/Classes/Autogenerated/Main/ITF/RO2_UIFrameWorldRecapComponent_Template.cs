@@ -7,9 +7,9 @@ namespace UbiArt.ITF {
 		[Serialize("FXFirework"           )] public StringID FXFirework;
 		[Serialize("FXFireStreamRight"    )] public StringID FXFireStreamRight;
 		[Serialize("FXFireStreamLeft"     )] public StringID FXFireStreamLeft;
-		[Serialize("offsetFirework"       )] public Vector3 offsetFirework;
-		[Serialize("offsetFireStreamRight")] public Vector3 offsetFireStreamRight;
-		[Serialize("offsetFireStreamLeft" )] public Vector3 offsetFireStreamLeft;
+		[Serialize("offsetFirework"       )] public Vec3d offsetFirework;
+		[Serialize("offsetFireStreamRight")] public Vec3d offsetFireStreamRight;
+		[Serialize("offsetFireStreamLeft" )] public Vec3d offsetFireStreamLeft;
 		[Serialize("standEmptyAnim"       )] public StringID standEmptyAnim;
 		[Serialize("standWithCupAnim"     )] public StringID standWithCupAnim;
 		[Serialize("waitDuration"         )] public float waitDuration;

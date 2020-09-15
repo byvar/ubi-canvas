@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR)]
 	public partial class PhysForceModifier : CSerializable {
-		[Serialize("force"                 )] public Vector2 force;
-		[Serialize("offset"                )] public Vector2 offset;
+		[Serialize("force"                 )] public Vec2d force;
+		[Serialize("offset"                )] public Vec2d offset;
 		[Serialize("rotation"              )] public Angle rotation;
 		[Serialize("centerForce"           )] public float centerForce;
 		[Serialize("centerForceMaxSpeed"   )] public float centerForceMaxSpeed;

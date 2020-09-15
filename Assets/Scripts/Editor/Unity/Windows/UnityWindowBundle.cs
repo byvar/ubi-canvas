@@ -17,8 +17,7 @@ public class UnityWindowBundle : UnityWindow {
 	async UniTaskVoid OnGUI() {
 		float yPos = 0f;
 		if (EditorApplication.isPlaying) {
-			if (controller == null) controller = FindObjectOfType<Controller>();
-			if (controller.LoadState == Controller.State.Finished) {
+			if (Controller.LoadState == Controller.State.Finished) {
 				if (totalyPos == 0f) totalyPos = position.height;
 				scrollbarShown = totalyPos > position.height;
 				scrollPosition = GUI.BeginScrollView(new Rect(0,0, EditorGUIUtility.currentViewWidth, position.height), scrollPosition, new Rect(0, 0, EditorGUIUtility.currentViewWidth - (scrollbarShown ? scrollbarWidth : 0f), totalyPos));
@@ -80,7 +79,6 @@ public class UnityWindowBundle : UnityWindow {
 
 	private float totalyPos = 0f;
 	private Vector2 scrollPosition = Vector2.zero;
-	private Controller controller;
 	private string path;
 	private Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
 	private Dictionary<StringID, bool> selectedPaths = new Dictionary<StringID, bool>();

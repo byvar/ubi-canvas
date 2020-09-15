@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("Alpha"               )] public float Alpha;
 		[Serialize("SpawnFlowBySec"      )] public uint SpawnFlowBySec;
 		[Serialize("SpawnForceCoeff"     )] public float SpawnForceCoeff;
-		[Serialize("SpawnRandom"         )] public Vector3 SpawnRandom;
+		[Serialize("SpawnRandom"         )] public Vec3d SpawnRandom;
 		[Serialize("IsLooping"           )] public int IsLooping;
 		[Serialize("DeactivateRoll"      )] public int DeactivateRoll;
 		[Serialize("SinusSpeedX"         )] public float SinusSpeedX;

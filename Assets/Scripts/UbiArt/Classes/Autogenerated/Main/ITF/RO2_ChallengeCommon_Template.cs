@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeCommon_Template : TemplateObj {
 		[Serialize("name"                            )] public StringID name;
-		[Serialize("unitSize"                        )] public Vector2 unitSize;
+		[Serialize("unitSize"                        )] public Vec2d unitSize;
 		[Serialize("gameplayBricks"                  )] public CArray<Generic<RO2_Brick_Template>> gameplayBricks;
 		[Serialize("initialSpawnCount"               )] public uint initialSpawnCount;
 		[Serialize("duplicateSpawnCooldown"          )] public uint duplicateSpawnCooldown;

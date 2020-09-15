@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		[Serialize("BasePath"          )] public Path BasePath;
 		[Serialize("BackgroundDistance")] public float BackgroundDistance;
 		[Serialize("BorderThreeshold"  )] public float BorderThreeshold;
-		[Serialize("murphyOffset"      )] public Vector3 murphyOffset;
-		[Serialize("SlingShotBase"     )] public Vector3 SlingShotBase;
+		[Serialize("murphyOffset"      )] public Vec3d murphyOffset;
+		[Serialize("SlingShotBase"     )] public Vec3d SlingShotBase;
 		[Serialize("SpringDepthOffset" )] public float SpringDepthOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

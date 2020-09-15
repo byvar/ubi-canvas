@@ -7,7 +7,6 @@ using System.Text;
 namespace UbiArt.FileFormat {
     public abstract class FileWithPointers : IDisposable {
         public string name = "Unknown";
-        public int fileID = 0;
         public Reader reader;
         public Writer writer;
 		public CSerializerObject serializer;
@@ -31,12 +30,6 @@ namespace UbiArt.FileFormat {
                 reader.BaseStream.Seek(headerOffset + baseOffset, SeekOrigin.Begin);
             }
         }
-
-        public virtual Pointer GetUnsafePointer(uint value) {
-            return new Pointer(value, this);
-        }
-
-        public abstract void WritePointer(Pointer pointer);
 
         public abstract void CreateWriter();
     }

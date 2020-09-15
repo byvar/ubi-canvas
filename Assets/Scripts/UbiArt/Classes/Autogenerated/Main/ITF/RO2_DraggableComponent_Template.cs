@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_DraggableComponent_Template : ActorComponent_Template {
-		[Serialize("offsetDrag"              )] public Vector2 offsetDrag;
+		[Serialize("offsetDrag"              )] public Vec2d offsetDrag;
 		[Serialize("smoothFactor"            )] public float smoothFactor;
 		[Serialize("smoothFactorOnPoly"      )] public float smoothFactorOnPoly;
 		[Serialize("smoothFactorOnDoublePoly")] public float smoothFactorOnDoublePoly;

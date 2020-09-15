@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("validateItemSounds"   )] public CList<ValidateItemSound> validateItemSounds;
 		[Serialize("nextItemMinAngle"     )] public float nextItemMinAngle;
 		[Serialize("nextItemMaxAngle"     )] public float nextItemMaxAngle;
-		[Serialize("nextItemMaxOffset"    )] public Vector2 nextItemMaxOffset;
+		[Serialize("nextItemMaxOffset"    )] public Vec2d nextItemMaxOffset;
 		[Serialize("isNextItemByMaxOffset")] public int isNextItemByMaxOffset;
 		[Serialize("useDiagonalNavigation")] public int useDiagonalNavigation;
 		protected override void SerializeImpl(CSerializerObject s) {

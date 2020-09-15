@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("Enum_RFR_0__0")] public Enum_RFR_0 Enum_RFR_0__0;
 		[Serialize("uint__1"      )] public uint uint__1;
 		[Serialize("string__2"    )] public string string__2;
-		[Serialize("Vector2__3"   )] public Vector2 Vector2__3;
+		[Serialize("Vector2__3"   )] public Vec2d Vector2__3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Enum_RFR_0__0));

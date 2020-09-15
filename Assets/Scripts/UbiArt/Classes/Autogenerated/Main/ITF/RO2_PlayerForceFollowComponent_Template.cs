@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_PlayerForceFollowComponent_Template : ActorComponent_Template {
 		[Serialize("sprintDistance"                    )] public float sprintDistance;
 		[Serialize("sprintDistanceHysteresis"          )] public float sprintDistanceHysteresis;
-		[Serialize("offset"                            )] public Vector2 offset;
+		[Serialize("offset"                            )] public Vec2d offset;
 		[Serialize("forcePositionMode"                 )] public bool forcePositionMode;
 		[Serialize("forcePositionModeDistanceThreshold")] public float forcePositionModeDistanceThreshold;
 		[Serialize("forcePositionModeSprintThreshold"  )] public float forcePositionModeSprintThreshold;

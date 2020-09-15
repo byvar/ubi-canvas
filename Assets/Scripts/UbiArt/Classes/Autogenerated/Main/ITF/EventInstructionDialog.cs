@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("text"            )] public SmartLocId text;
 		[Serialize("mood"            )] public uint mood;
 		[Serialize("sizeText"        )] public float sizeText;
-		[Serialize("offset"          )] public Vector2 offset;
+		[Serialize("offset"          )] public Vec2d offset;
 		[Serialize("durationMin"     )] public float durationMin;
 		[Serialize("actorScaleFactor")] public float actorScaleFactor;
 		[Serialize("text"            )] public string textStr;

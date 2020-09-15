@@ -53,7 +53,7 @@ namespace UbiArt.FriseOrigins {
 
 		[Serialize("flt9")] public float flt9;
 		[Serialize("flt10")] public float flt10;
-		[Serialize("vec0")] public Vector2 vec0;
+		[Serialize("vec0")] public Vec2d vec0;
 
 		[Serialize("VertexAnim"                    )] public ITF.VertexAnim VertexAnim;
 
@@ -79,7 +79,7 @@ namespace UbiArt.FriseOrigins {
 		[Serialize("flt26")] public float flt26;
 		[Serialize("flt27")] public float flt27;
 		[Serialize("flt28")] public float flt28;
-		[Serialize("vec1")] public Vector2 vec1;
+		[Serialize("vec1")] public Vec2d vec1;
 		[Serialize("uint4")] public uint uint4;
 		[Serialize("flt29")] public float flt29;
 		[Serialize("flt30")] public float flt30;

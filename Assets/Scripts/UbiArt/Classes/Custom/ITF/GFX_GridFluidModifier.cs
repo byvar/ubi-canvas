@@ -3,9 +3,9 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class GFX_GridFluidModifier : CSerializable {
-		[Serialize("BoxOffset"     )] public Vector3 BoxOffset;
-		[Serialize("BoxSize"       )] public Vector2 BoxSize;
-		[Serialize("Force"         )] public Vector2 Force;
+		[Serialize("BoxOffset"     )] public Vec3d BoxOffset;
+		[Serialize("BoxSize"       )] public Vec2d BoxSize;
+		[Serialize("Force"         )] public Vec2d Force;
 		[Serialize("ForceTexFactor")] public float ForceTexFactor;
 		[Serialize("Mode"          )] public GFX_GRID_MOD_MODE Mode;
 		[Serialize("Intensity"     )] public float Intensity;
@@ -17,11 +17,11 @@ namespace UbiArt.ITF {
 		[Serialize("StartDelay"    )] public float StartDelay;
 		[Serialize("FadeInLength"  )] public float FadeInLength;
 		[Serialize("FadeOutLength" )] public float FadeOutLength;
-		[Serialize("ScaleInit"     )] public Vector2 ScaleInit;
-		[Serialize("ScaleEnd"      )] public Vector2 ScaleEnd;
+		[Serialize("ScaleInit"     )] public Vec2d ScaleInit;
+		[Serialize("ScaleEnd"      )] public Vec2d ScaleEnd;
 		[Serialize("RotationInit"  )] public float RotationInit;
 		[Serialize("RotationEnd"   )] public float RotationEnd;
-		[Serialize("Speed"         )] public Vector2 Speed;
+		[Serialize("Speed"         )] public Vec2d Speed;
 		[Serialize("EmitterFilter" )] public uint EmitterFilter;
 		[Serialize("PulseMode"     )] public GFX_GRID_MOD_PULSE PulseMode;
 		[Serialize("PulseFreq"     )] public float PulseFreq;

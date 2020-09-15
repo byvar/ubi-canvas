@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		[Serialize("closeAnim"           )] public StringID closeAnim;
 		[Serialize("grabbedAnim"         )] public StringID grabbedAnim;
 		[Serialize("openTime"            )] public float openTime;
-		[Serialize("points"              )] public CArray<Vector2> points;
+		[Serialize("points"              )] public CArray<Vec2d> points;
 		[Serialize("regionType"          )] public StringID regionType;
 		[Serialize("gameMaterial"        )] public Path gameMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 			[Serialize("fontSet"                )] public FontTextArea.FontSet fontSet;
 			[Serialize("fontSize"               )] public float fontSize;
 			[Serialize("color"                  )] public Color color;
-			[Serialize("shadowOffset"           )] public Vector2 shadowOffset;
+			[Serialize("shadowOffset"           )] public Vec2d shadowOffset;
 			[Serialize("shadowColor"            )] public Color shadowColor;
 			[Serialize("lineSpacing"            )] public float lineSpacing;
 			[Serialize("paragraphSpacing"       )] public float paragraphSpacing;

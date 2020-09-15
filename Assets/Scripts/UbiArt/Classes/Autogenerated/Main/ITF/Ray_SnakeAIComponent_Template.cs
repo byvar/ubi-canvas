@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("prevNodeCount"                           )] public uint prevNodeCount;
 		[Serialize("sampleLength"                            )] public float sampleLength;
 		[Serialize("acceleration"                            )] public float acceleration;
-		[Serialize("targetEvaluationOffset"                  )] public Vector2 targetEvaluationOffset;
+		[Serialize("targetEvaluationOffset"                  )] public Vec2d targetEvaluationOffset;
 		[Serialize("speedMultiplierMinDistance"              )] public float speedMultiplierMinDistance;
 		[Serialize("speedMultiplierMaxDistance"              )] public float speedMultiplierMaxDistance;
 		[Serialize("speedMultiplierMinValue"                 )] public float speedMultiplierMinValue;

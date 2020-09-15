@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LuckyTicketComponent_Template : ActorComponent_Template {
 		[Serialize("regionPath"                    )] public Path regionPath;
-		[Serialize("startPos"                      )] public Vector2 startPos;
+		[Serialize("startPos"                      )] public Vec2d startPos;
 		[Serialize("lineHeight"                    )] public float lineHeight;
 		[Serialize("columnWidth"                   )] public float columnWidth;
 		[Serialize("revealedCoef"                  )] public float revealedCoef;
@@ -22,10 +22,10 @@ namespace UbiArt.ITF {
 		[Serialize("petIconPath"                   )] public Path petIconPath;
 		[Serialize("frameIconPath"                 )] public Path frameIconPath;
 		[Serialize("lumIconPath"                   )] public Path lumIconPath;
-		[Serialize("teensyIconOffset"              )] public Vector2 teensyIconOffset;
-		[Serialize("petIconOffset"                 )] public Vector2 petIconOffset;
-		[Serialize("frameIconOffset"               )] public Vector2 frameIconOffset;
-		[Serialize("lumIconOffset"                 )] public Vector2 lumIconOffset;
+		[Serialize("teensyIconOffset"              )] public Vec2d teensyIconOffset;
+		[Serialize("petIconOffset"                 )] public Vec2d petIconOffset;
+		[Serialize("frameIconOffset"               )] public Vec2d frameIconOffset;
+		[Serialize("lumIconOffset"                 )] public Vec2d lumIconOffset;
 		[Serialize("iconAnimStand"                 )] public StringID iconAnimStand;
 		[Serialize("iconAnimRevealed"              )] public StringID iconAnimRevealed;
 		[Serialize("hideMenuCoef"                  )] public float hideMenuCoef;
@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 		[Serialize("dalleFadeAlpha"                )] public float dalleFadeAlpha;
 		[Serialize("cameraFX"                      )] public StringID cameraFX;
 		[Serialize("fireworkFX"                    )] public StringID fireworkFX;
-		[Serialize("fireworksOffsets"              )] public CArray<Vector3> fireworksOffsets;
+		[Serialize("fireworksOffsets"              )] public CArray<Vec3d> fireworksOffsets;
 		[Serialize("minTimeBetweenFireworks"       )] public float minTimeBetweenFireworks;
 		[Serialize("maxTimeBetweenFireworks"       )] public float maxTimeBetweenFireworks;
 		[Serialize("iconFadeColor"                 )] public Color iconFadeColor;

@@ -4,12 +4,12 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class DialogActorComponent : ActorComponent {
 		[Serialize("enableDialog"      )] public bool enableDialog;
-		[Serialize("offset"            )] public Vector2 offset;
+		[Serialize("offset"            )] public Vec2d offset;
 		[Serialize("is3D"              )] public bool is3D;
 		[Serialize("widthTextAreaMax"  )] public float widthTextAreaMax;
-		[Serialize("offSetCorrectionPx")] public Vector2 offSetCorrectionPx;
-		[Serialize("managerOffsetDelta")] public Vector2 managerOffsetDelta;
-		[Serialize("textOffset"        )] public Vector2 textOffset;
+		[Serialize("offSetCorrectionPx")] public Vec2d offSetCorrectionPx;
+		[Serialize("managerOffsetDelta")] public Vec2d managerOffsetDelta;
+		[Serialize("textOffset"        )] public Vec2d textOffset;
 		[Serialize("snapToScreen"      )] public int snapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -5,16 +5,16 @@ namespace UbiArt.ITF {
 	public partial class W1W_Torchlight : ActorComponent {
 		[Serialize("bool__0"    )] public bool bool__0;
 		[Serialize("Path__1"    )] public Path Path__1;
-		[Serialize("Vector3__2" )] public Vector3 Vector3__2;
-		[Serialize("Vector2__3" )] public Vector2 Vector2__3;
+		[Serialize("Vector3__2" )] public Vec3d Vector3__2;
+		[Serialize("Vector2__3" )] public Vec2d Vector2__3;
 		[Serialize("Angle__4"   )] public Angle Angle__4;
 		[Serialize("Path__5"    )] public Path Path__5;
-		[Serialize("Vector3__6" )] public Vector3 Vector3__6;
-		[Serialize("Vector2__7" )] public Vector2 Vector2__7;
+		[Serialize("Vector3__6" )] public Vec3d Vector3__6;
+		[Serialize("Vector2__7" )] public Vec2d Vector2__7;
 		[Serialize("Angle__8"   )] public Angle Angle__8;
 		[Serialize("Path__9"    )] public Path Path__9;
-		[Serialize("Vector3__10")] public Vector3 Vector3__10;
-		[Serialize("Vector2__11")] public Vector2 Vector2__11;
+		[Serialize("Vector3__10")] public Vec3d Vector3__10;
+		[Serialize("Vector2__11")] public Vec2d Vector2__11;
 		[Serialize("Angle__12"  )] public Angle Angle__12;
 		[Serialize("bool__13"   )] public bool bool__13;
 		protected override void SerializeImpl(CSerializerObject s) {

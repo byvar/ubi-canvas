@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("textureLayer" )] public TEXSET_ID textureLayer;
 		[Serialize("atlasIndex"   )] public uint atlasIndex;
 		[Serialize("extrudeFactor")] public float extrudeFactor;
-		[Serialize("offset"       )] public Vector3 offset;
+		[Serialize("offset"       )] public Vec3d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {

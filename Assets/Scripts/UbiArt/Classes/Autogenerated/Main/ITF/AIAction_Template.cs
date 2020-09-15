@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("endMarker"            )] public StringID endMarker;
 		[Serialize("useRootPos"           )] public bool useRootPos;
 		[Serialize("finishOnContact"      )] public bool finishOnContact;
-		[Serialize("rootPosScale"         )] public Vector2 rootPosScale;
+		[Serialize("rootPosScale"         )] public Vec2d rootPosScale;
 		[Serialize("ignoreContactDuration")] public float ignoreContactDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

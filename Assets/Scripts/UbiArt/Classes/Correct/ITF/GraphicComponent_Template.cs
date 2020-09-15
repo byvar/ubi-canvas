@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("patchVLevel"                  )] public uint patchVLevel;
 		[Serialize("visualAABB"                   )] public AABB visualAABB;
 		[Serialize("renderintarget"               )] public bool renderintarget;
-		[Serialize("posOffset"                    )] public Vector2 posOffset;
+		[Serialize("posOffset"                    )] public Vec2d posOffset;
 		[Serialize("depthOffset"                  )] public float depthOffset;
 		[Serialize("angleOffset"                  )] public Angle angleOffset;
 		[Serialize("blendmode"                    )] public GFX_BLEND blendmode;
@@ -24,12 +24,12 @@ namespace UbiArt.ITF {
 		[Serialize("useNoColShadow"               )] public bool useNoColShadow;
 		[Serialize("useRootBone"                  )] public bool useRootBone;
 		[Serialize("shadowUseBase"                )] public bool shadowUseBase;
-		[Serialize("shadowSize"                   )] public Vector2 shadowSize;
+		[Serialize("shadowSize"                   )] public Vec2d shadowSize;
 		[Serialize("shadowTextureFile"            )] public Path shadowTextureFile;
 		[Serialize("shadowMaterial"               )] public GFXMaterialSerializable shadowMaterial;
 		[Serialize("shadowAttenuation"            )] public float shadowAttenuation;
 		[Serialize("shadowDist"                   )] public float shadowDist;
-		[Serialize("shadowOffsetPos"              )] public Vector3 shadowOffsetPos;
+		[Serialize("shadowOffsetPos"              )] public Vec3d shadowOffsetPos;
 		[Serialize("angleLimit"                   )] public float angleLimit;
 		[Serialize("curveSize0"                   )] public float curveSize0;
 		[Serialize("curveSize1"                   )] public float curveSize1;

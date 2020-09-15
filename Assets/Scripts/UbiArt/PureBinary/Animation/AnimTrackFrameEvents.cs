@@ -20,7 +20,7 @@ namespace UbiArt.Animation {
 		public class AnimMarkerEvent : CSerializable {
 			[Serialize("type"      )] public int type;
 			[Serialize("unk0"      )] public StringID unk0;
-			[Serialize("posLocal"  )] public Vector2 posLocal;
+			[Serialize("posLocal"  )] public Vec2d posLocal;
 			[Serialize("name"      )] public StringID name;
 			[Serialize("eventData0")] public uint eventData0;
 			[Serialize("eventData1")] public float eventData1;

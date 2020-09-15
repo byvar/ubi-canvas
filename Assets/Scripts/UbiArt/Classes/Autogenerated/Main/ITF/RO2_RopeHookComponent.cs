@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("torqueFriction"           )] public float torqueFriction;
 		[Serialize("attachmentDetectionRadius")] public float attachmentDetectionRadius;
 		[Serialize("hookingSmoothFactor"      )] public float hookingSmoothFactor;
-		[Serialize("hookOffset"               )] public Vector2 hookOffset;
+		[Serialize("hookOffset"               )] public Vec2d hookOffset;
 		[Serialize("angleOffset"              )] public Angle angleOffset;
 		[Serialize("angleSmoothingFactor"     )] public float angleSmoothingFactor;
 		[Serialize("snapDist"                 )] public float snapDist;

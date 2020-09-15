@@ -137,7 +137,7 @@ namespace UbiArt.ITF {
 		[Serialize("lastChallengeSeed"                            )] public uint lastChallengeSeed;
 		[Serialize("dailyChallengeBestScore"                      )] public uint dailyChallengeBestScore;
 		[Serialize("dailyChallengeBestDistance"                   )] public uint dailyChallengeBestDistance;
-		[Serialize("lastChallengeTombs"                           )] public CArray<Vector3> lastChallengeTombs;
+		[Serialize("lastChallengeTombs"                           )] public CArray<Vec3d> lastChallengeTombs;
 		[Serialize("dailyChallengeTicketPiecesState0"             )] public uint dailyChallengeTicketPiecesState0;
 		[Serialize("dailyChallengeTicketPiecesState1"             )] public uint dailyChallengeTicketPiecesState1;
 		[Serialize("dailyChallengeTicketPiecesState2"             )] public uint dailyChallengeTicketPiecesState2;
@@ -1129,7 +1129,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class RLC_NextRegionTravelMark : CSerializable {
-			[Serialize("pos"                               )] public Vector3 pos;
+			[Serialize("pos"                               )] public Vec3d pos;
 			[Serialize("adventureSequence"                 )] public uint adventureSequence;
 			[Serialize("adventureStartDate"                )] public online.DateTime adventureStartDate;
 			[Serialize("adventureLifeTimeInSec"            )] public ulong adventureLifeTimeInSec;
@@ -1239,7 +1239,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class RLC_NextRegionEggSelectionData : CSerializable {
-			[Serialize("pos"                               )] public Vector3 pos;
+			[Serialize("pos"                               )] public Vec3d pos;
 			[Serialize("adventureSequence"                 )] public uint adventureSequence;
 			[Serialize("adventureStartDate"                )] public online.DateTime adventureStartDate;
 			[Serialize("adventureLifeTimeInSec"            )] public ulong adventureLifeTimeInSec;

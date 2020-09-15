@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("xMax"        )] public float xMax;
 		[Serialize("lifeDuration")] public float lifeDuration;
 		[Serialize("yGround"     )] public float yGround;
-		[Serialize("initSpeed"   )] public Vector2 initSpeed;
+		[Serialize("initSpeed"   )] public Vec2d initSpeed;
 		[Serialize("speedRand"   )] public float speedRand;
 		[Serialize("rotation"    )] public float rotation;
 		[Serialize("xBreakFactor")] public float xBreakFactor;

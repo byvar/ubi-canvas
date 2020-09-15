@@ -3,9 +3,9 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RO | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
 	public partial class TweenBallistic_Template : TweenTranslation_Template {
-		[Serialize("movement"         )] public Vector3 movement;
+		[Serialize("movement"         )] public Vec3d movement;
 		[Serialize("tangentMode"      )] public TangentMode tangentMode;
-		[Serialize("startTangent"     )] public Vector3 startTangent;
+		[Serialize("startTangent"     )] public Vec3d startTangent;
 		[Serialize("disableCollisions")] public bool disableCollisions;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

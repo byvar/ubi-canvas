@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_HookComponent : ActorComponent {
 		[Serialize("CArray<W1W_HookComponent.CanBeHookedItem>__0")] public CArray<W1W_HookComponent.CanBeHookedItem> CArray_W1W_HookComponent_CanBeHookedItem__0;
-		[Serialize("Vector2__1"                                  )] public Vector2 Vector2__1;
+		[Serialize("Vector2__1"                                  )] public Vec2d Vector2__1;
 		[Serialize("StringID__2"                                 )] public StringID StringID__2;
 		[Serialize("StringID__3"                                 )] public StringID StringID__3;
 		protected override void SerializeImpl(CSerializerObject s) {

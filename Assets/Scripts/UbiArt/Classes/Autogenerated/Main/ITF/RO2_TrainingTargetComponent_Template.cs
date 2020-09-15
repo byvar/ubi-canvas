@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		[Serialize("fxBrickCompleted"  )] public StringID fxBrickCompleted;
 		[Serialize("sendStim"          )] public bool sendStim;
 		[Serialize("stimRadius"        )] public float stimRadius;
-		[Serialize("stimOffset"        )] public Vector2 stimOffset;
+		[Serialize("stimOffset"        )] public Vec2d stimOffset;
 		[Serialize("faction"           )] public uint faction;
 		[Serialize("offAlphaValue"     )] public float offAlphaValue;
 		[Serialize("alphaLerpFactor"   )] public float alphaLerpFactor;

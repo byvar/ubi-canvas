@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 		[Serialize("lookAtBlendFactor"             )] public float lookAtBlendFactor;
 		[Serialize("lookAtCapAngle"                )] public float lookAtCapAngle;
 		[Serialize("stunStarsActorPath"            )] public Path stunStarsActorPath;
-		[Serialize("stunStarsOffset"               )] public Vector3 stunStarsOffset;
+		[Serialize("stunStarsOffset"               )] public Vec3d stunStarsOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -135,7 +135,7 @@ namespace UbiArt.ITF {
 			[Serialize("activateTweenOnHole"         )] public bool activateTweenOnHole;
 			[Serialize("secondaryActivateTweenName"  )] public StringID secondaryActivateTweenName;
 			[Serialize("secondaryActivateTweenOnHole")] public bool secondaryActivateTweenOnHole;
-			[Serialize("handHitShapeOffset"          )] public Vector2 handHitShapeOffset;
+			[Serialize("handHitShapeOffset"          )] public Vec2d handHitShapeOffset;
 			[Serialize("handHitShapeScale"           )] public float handHitShapeScale;
 			[Serialize("flags"                       )] public LF flags;
 			protected override void SerializeImpl(CSerializerObject s) {

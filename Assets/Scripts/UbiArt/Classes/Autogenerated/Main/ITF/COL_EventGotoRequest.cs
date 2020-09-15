@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class COL_EventGotoRequest : Event {
 		[Serialize("gotoRequestType"   )] public Enum_gotoRequestType gotoRequestType;
 		[Serialize("gotoTargetObject"  )] public Placeholder gotoTargetObject;
-		[Serialize("gotoTargetPosition")] public Vector2 gotoTargetPosition;
+		[Serialize("gotoTargetPosition")] public Vec2d gotoTargetPosition;
 		[Serialize("gotoDuration"      )] public float gotoDuration;
 		[Serialize("run"               )] public bool run;
 		[Serialize("startOnGround"     )] public bool startOnGround;

@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("grabSoundFXName"         )] public StringID grabSoundFXName;
 		[Serialize("landFX"                  )] public StringID landFX;
 		[Serialize("speedMultiplier"         )] public float speedMultiplier;
-		[Serialize("forceSinus"              )] public Vector2 forceSinus;
+		[Serialize("forceSinus"              )] public Vec2d forceSinus;
 		[Serialize("freqSinus"               )] public float freqSinus;
 		[Serialize("isSpiky"                 )] public bool isSpiky;
 		[Serialize("isGrabable"              )] public bool isGrabable;

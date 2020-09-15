@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class VertexPCBT : CSerializable {
-		[Serialize("pos"         )] public Vector3 pos;
+		[Serialize("pos"         )] public Vec3d pos;
 		[Serialize("color"       )] public ColorInteger color;
 		[Serialize("blendIndices")] public uint blendIndices;
-		[Serialize("uv"          )] public Vector2 uv;
+		[Serialize("uv"          )] public Vec2d uv;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(pos));

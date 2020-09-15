@@ -3,9 +3,9 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class PhysShapePolygon : PhysShape {
-		[Serialize("Points"   )] public CList<Vector2> Points;
-		[Serialize("normals"  )] public CList<Vector2> normals;
-		[Serialize("edge"     )] public CList<Vector2> edge;
+		[Serialize("Points"   )] public CList<Vec2d> Points;
+		[Serialize("normals"  )] public CList<Vec2d> normals;
+		[Serialize("edge"     )] public CList<Vec2d> edge;
 		[Serialize("distances")] public CArray<float> distances;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("animJumpBack"     )] public StringID animJumpBack;
 		[Serialize("animAnticipFore"  )] public StringID animAnticipFore;
 		[Serialize("animJumpFore"     )] public StringID animJumpFore;
-		[Serialize("offsetDefaultJump")] public Vector3 offsetDefaultJump;
+		[Serialize("offsetDefaultJump")] public Vec3d offsetDefaultJump;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(animAnticipBack));

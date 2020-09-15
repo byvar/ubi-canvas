@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class ZInput : CSerializable {
 		[Serialize("control"      )] public StringID control;
 		[Serialize("query"        )] public StringID query;
-		[Serialize("axis_range"   )] public Vector2 axis_range;
+		[Serialize("axis_range"   )] public Vec2d axis_range;
 		[Serialize("threshold"    )] public float threshold;
 		[Serialize("delay"        )] public float delay;
 		[Serialize("decreaseSpeed")] public float decreaseSpeed;

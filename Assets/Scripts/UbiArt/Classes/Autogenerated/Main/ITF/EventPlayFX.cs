@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("Action"           )] public FX_St Action;
 		[Serialize("BoneParent"       )] public StringID BoneParent;
 		[Serialize("UseGlobalPosition")] public bool UseGlobalPosition;
-		[Serialize("GlobalPosition"   )] public Vector3 GlobalPosition;
+		[Serialize("GlobalPosition"   )] public Vec3d GlobalPosition;
 		[Serialize("StopImmediate"    )] public bool StopImmediate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -4,9 +4,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TutoBallComponent : ActorComponent {
 		[Serialize("tutoEnabled"        )] public bool tutoEnabled;
-		[Serialize("tutoSwipeLeftPos"   )] public Vector2 tutoSwipeLeftPos;
-		[Serialize("tutoSwipeRightPos"  )] public Vector2 tutoSwipeRightPos;
-		[Serialize("tutoTapPos"         )] public Vector2 tutoTapPos;
+		[Serialize("tutoSwipeLeftPos"   )] public Vec2d tutoSwipeLeftPos;
+		[Serialize("tutoSwipeRightPos"  )] public Vec2d tutoSwipeRightPos;
+		[Serialize("tutoTapPos"         )] public Vec2d tutoTapPos;
 		[Serialize("distanceFar"        )] public float distanceFar;
 		[Serialize("distanceCloseEnough")] public float distanceCloseEnough;
 		[Serialize("ActionsToResume"    )] public CMultiMap<RLC_TutorialCommandType, RLC_TutoBallComponent.ActionToUnpause> ActionsToResume;

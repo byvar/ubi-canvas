@@ -7,9 +7,9 @@ namespace UbiArt.ITF {
 		[Serialize("fxStilts1"                     )] public StringID fxStilts1;
 		[Serialize("fxStilts2"                     )] public StringID fxStilts2;
 		[Serialize("fxStilts3"                     )] public StringID fxStilts3;
-		[Serialize("fxStiltsOffset1"               )] public Vector2 fxStiltsOffset1;
-		[Serialize("fxStiltsOffset2"               )] public Vector2 fxStiltsOffset2;
-		[Serialize("fxStiltsOffset3"               )] public Vector2 fxStiltsOffset3;
+		[Serialize("fxStiltsOffset1"               )] public Vec2d fxStiltsOffset1;
+		[Serialize("fxStiltsOffset2"               )] public Vec2d fxStiltsOffset2;
+		[Serialize("fxStiltsOffset3"               )] public Vec2d fxStiltsOffset3;
 		[Serialize("punchFrontWeakForceUp"         )] public float punchFrontWeakForceUp;
 		[Serialize("punchFrontStrongForceUp"       )] public float punchFrontStrongForceUp;
 		[Serialize("punchFrontMegaForceUp"         )] public float punchFrontMegaForceUp;

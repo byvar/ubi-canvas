@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 		public partial class AnchorDataStruct : CSerializable {
 			[Serialize("anchorRefBoneName")] public StringID anchorRefBoneName;
 			[Serialize("pivotRefBoneName" )] public StringID pivotRefBoneName;
-			[Serialize("pivotPos"         )] public Vector2 pivotPos;
+			[Serialize("pivotPos"         )] public Vec2d pivotPos;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(anchorRefBoneName));

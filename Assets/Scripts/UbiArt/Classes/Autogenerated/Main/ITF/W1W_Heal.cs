@@ -17,8 +17,8 @@ namespace UbiArt.ITF {
 		[Serialize("StringID__11"          )] public StringID StringID__11;
 		[Serialize("Enum_VH_0__12"         )] public Enum_VH_0_2 Enum_VH_0__12;
 		[Serialize("bool__13"              )] public bool bool__13;
-		[Serialize("Vector2__14"           )] public Vector2 Vector2__14;
-		[Serialize("Vector2__15"           )] public Vector2 Vector2__15;
+		[Serialize("Vector2__14"           )] public Vec2d Vector2__14;
+		[Serialize("Vector2__15"           )] public Vec2d Vector2__15;
 		[Serialize("float__16"             )] public float float__16;
 		[Serialize("float__17"             )] public float float__17_2;
 		[Serialize("float__18"             )] public float float__18;

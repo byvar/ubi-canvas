@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_TouchControllerComponent : ActorComponent {
 		[Serialize("duration"                )] public float duration;
 		[Serialize("swipe"                   )] public bool swipe;
-		[Serialize("swipeDirection"          )] public Vector2 swipeDirection;
+		[Serialize("swipeDirection"          )] public Vec2d swipeDirection;
 		[Serialize("swipeAngleTolerance"     )] public Angle swipeAngleTolerance;
 		[Serialize("swipeMinLength"          )] public float swipeMinLength;
 		[Serialize("swipeThrough"            )] public bool swipeThrough;
@@ -13,8 +13,8 @@ namespace UbiArt.ITF {
 		[Serialize("instructionBackward"     )] public StringID instructionBackward;
 		[Serialize("relativeMode"            )] public bool relativeMode;
 		[Serialize("screenSpaceMode"         )] public bool screenSpaceMode;
-		[Serialize("screenSpaceBeginPos"     )] public Vector2 screenSpaceBeginPos;
-		[Serialize("screenSpaceEndPos"       )] public Vector2 screenSpaceEndPos;
+		[Serialize("screenSpaceBeginPos"     )] public Vec2d screenSpaceBeginPos;
+		[Serialize("screenSpaceEndPos"       )] public Vec2d screenSpaceEndPos;
 		[Serialize("forward"                 )] public bool forward;
 		[Serialize("cursorInitPos"           )] public float cursorInitPos;
 		[Serialize("returnToInitPos"         )] public bool returnToInitPos;

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_TextureImageComponent : TextureGraphicComponent {
-		[Serialize("offsetAfterLoading"          )] public Vector2 offsetAfterLoading;
+		[Serialize("offsetAfterLoading"          )] public Vec2d offsetAfterLoading;
 		[Serialize("AllowDeloadTextureOnInactive")] public bool AllowDeloadTextureOnInactive;
 		[Serialize("AllowAutomaticShow"          )] public bool AllowAutomaticShow;
 		protected override void SerializeImpl(CSerializerObject s) {

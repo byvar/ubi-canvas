@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 		[Serialize("actorIconSelected"        )] public StringID actorIconSelected;
 		[Serialize("actorIconUnselected"      )] public StringID actorIconUnselected;
 		[Serialize("inverseShadowState"       )] public bool inverseShadowState;
-		[Serialize("actorIconOffset"          )] public Vector2 actorIconOffset;
+		[Serialize("actorIconOffset"          )] public Vec2d actorIconOffset;
 		[Serialize("float__0"                 )] public float float__0;
 		[Serialize("float__1"                 )] public float float__1;
 		[Serialize("float__2"                 )] public float float__2;

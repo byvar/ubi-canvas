@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		[Serialize("speedRotX"          )] public float speedRotX;
 		[Serialize("speedRotY"          )] public float speedRotY;
 		[Serialize("speedRotZ"          )] public float speedRotZ;
-		[Serialize("size"               )] public Vector2 size;
+		[Serialize("size"               )] public Vec2d size;
 		[Serialize("zOffset"            )] public float zOffset;
 		[Serialize("draw2D"             )] public bool draw2D;
 		[Serialize("draw2DNoScreenRatio")] public bool draw2DNoScreenRatio;

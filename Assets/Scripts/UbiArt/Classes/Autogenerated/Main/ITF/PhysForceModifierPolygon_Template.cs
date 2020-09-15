@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class PhysForceModifierPolygon_Template : PhysForceModifier_Template {
 		[Serialize("polygon"      )] public PhysShapePolygon polygon;
-		[Serialize("direction"    )] public Vector2 direction;
-		[Serialize("centre"       )] public Vector2 centre;
+		[Serialize("direction"    )] public Vec2d direction;
+		[Serialize("centre"       )] public Vec2d centre;
 		[Serialize("fallOffStart" )] public float fallOffStart;
 		[Serialize("fallOffEnd"   )] public float fallOffEnd;
 		[Serialize("gradientStart")] public float gradientStart;

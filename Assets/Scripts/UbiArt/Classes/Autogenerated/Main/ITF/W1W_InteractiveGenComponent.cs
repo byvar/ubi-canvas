@@ -64,7 +64,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__58"         )] public float float__58;
 		[Serialize("float__59"         )] public float float__59;
 		[Serialize("Enum_VH_5__60"     )] public Enum_VH_5 Enum_VH_5__60;
-		[Serialize("Vector2__61"       )] public Vector2 Vector2__61;
+		[Serialize("Vector2__61"       )] public Vec2d Vector2__61;
 		[Serialize("bool__62"          )] public bool bool__62;
 		[Serialize("Enum_VH_6__63"     )] public Enum_VH_6 Enum_VH_6__63;
 		[Serialize("bool__64"          )] public bool bool__64;
@@ -77,7 +77,7 @@ namespace UbiArt.ITF {
 		[Serialize("float__71"         )] public float float__71;
 		[Serialize("float__72"         )] public float float__72;
 		[Serialize("float__73"         )] public float float__73;
-		[Serialize("Vector2__74"       )] public Vector2 Vector2__74;
+		[Serialize("Vector2__74"       )] public Vec2d Vector2__74;
 		[Serialize("float__75"         )] public float float__75;
 		[Serialize("Enum_VH_8__76"     )] public Enum_VH_8 Enum_VH_8__76;
 		[Serialize("Enum_VH_9__77"     )] public Enum_VH_9 Enum_VH_9__77;

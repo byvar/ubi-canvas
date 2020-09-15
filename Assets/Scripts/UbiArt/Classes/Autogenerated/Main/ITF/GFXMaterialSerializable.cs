@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		[Serialize("stencilRef"                )] public char stencilRef;
 		[Serialize("stencilMode"               )] public Enum_stencilMode stencilMode;
 		[Serialize("depthBias"                 )] public float depthBias;
-		[Serialize("generateBackBrightContrast")] public Vector2 generateBackBrightContrast;
+		[Serialize("generateBackBrightContrast")] public Vec2d generateBackBrightContrast;
 		[Serialize("backfaceModulation"        )] public uint backfaceModulation;
 
 		protected override void SerializeImpl(CSerializerObject s) {

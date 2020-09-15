@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_MamaEyesAIComponent_Template : Ray_AIComponent_Template {
-		[Serialize("initSpeed")] public Vector3 initSpeed;
+		[Serialize("initSpeed")] public Vec3d initSpeed;
 		[Serialize("gravity"  )] public float gravity;
 		[Serialize("rotation" )] public float rotation;
 		[Serialize("scaleMin" )] public float scaleMin;

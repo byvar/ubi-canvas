@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class MetaFriezeParams : CSerializable {
 		[Serialize("path"       )] public Path path;
-		[Serialize("worldOffset")] public Vector3 worldOffset;
+		[Serialize("worldOffset")] public Vec3d worldOffset;
 		[Serialize("localOffset")] public float localOffset;
 		[Serialize("scale"      )] public float scale;
 		protected override void SerializeImpl(CSerializerObject s) {

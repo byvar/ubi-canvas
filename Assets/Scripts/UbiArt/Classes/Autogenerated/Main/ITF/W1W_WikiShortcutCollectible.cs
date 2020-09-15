@@ -5,14 +5,14 @@ namespace UbiArt.ITF {
 	public partial class W1W_WikiShortcutCollectible : ActorComponent {
 		[Serialize("Path__0"   )] public Path Path__0;
 		[Serialize("uint__1"   )] public uint uint__1;
-		[Serialize("Vector2__2")] public Vector2 Vector2__2;
-		[Serialize("Vector2__3")] public Vector2 Vector2__3;
+		[Serialize("Vector2__2")] public Vec2d Vector2__2;
+		[Serialize("Vector2__3")] public Vec2d Vector2__3;
 		[Serialize("uint__4"   )] public uint uint__4;
 		[Serialize("Path__5"   )] public Path Path__5;
-		[Serialize("Vector2__6")] public Vector2 Vector2__6;
+		[Serialize("Vector2__6")] public Vec2d Vector2__6;
 		[Serialize("float__7"  )] public float float__7;
 		[Serialize("Path__8"   )] public Path Path__8;
-		[Serialize("Vector2__9")] public Vector2 Vector2__9;
+		[Serialize("Vector2__9")] public Vec2d Vector2__9;
 		[Serialize("bool__10"  )] public bool bool__10;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

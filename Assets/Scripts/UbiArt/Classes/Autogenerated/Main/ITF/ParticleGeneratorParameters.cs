@@ -12,13 +12,13 @@ namespace UbiArt.ITF {
 		[Serialize("dieFadeTime"                    )] public float dieFadeTime;
 		[Serialize("emitterMaxLifeTime"             )] public float emitterMaxLifeTime;
 		[Serialize("behaviorOnEnd"                  )] public OnEnd behaviorOnEnd;
-		[Serialize("pos"                            )] public Vector3 pos;
-		[Serialize("pivot"                          )] public Vector2 pivot;
+		[Serialize("pos"                            )] public Vec3d pos;
+		[Serialize("pivot"                          )] public Vec2d pivot;
 		[Serialize("velNorm"                        )] public float velNorm;
 		[Serialize("velAngle"                       )] public float velAngle;
 		[Serialize("velAngleDelta"                  )] public float velAngleDelta;
-		[Serialize("grav"                           )] public Vector3 grav;
-		[Serialize("acc"                            )] public Vector3 acc;
+		[Serialize("grav"                           )] public Vec3d grav;
+		[Serialize("acc"                            )] public Vec3d acc;
 		[Serialize("depth"                          )] public float depth;
 		[Serialize("useZAsDepth"                    )] public bool useZAsDepth;
 		[Serialize("velocityVar"                    )] public float velocityVar;
@@ -40,8 +40,8 @@ namespace UbiArt.ITF {
 		[Serialize("initLifeTime"                   )] public float initLifeTime;
 		[Serialize("circleRadius"                   )] public float circleRadius;
 		[Serialize("innerCircleRadius"              )] public float innerCircleRadius;
-		[Serialize("scaleShape"                     )] public Vector3 scaleShape;
-		[Serialize("rotateShape"                    )] public Vector3 rotateShape;
+		[Serialize("scaleShape"                     )] public Vec3d scaleShape;
+		[Serialize("rotateShape"                    )] public Vec3d rotateShape;
 		[Serialize("randomizeDirection"             )] public bool randomizeDirection;
 		[Serialize("followBezier"                   )] public int followBezier;
 		[Serialize("getAtlasSize"                   )] public bool getAtlasSize;
@@ -73,7 +73,7 @@ namespace UbiArt.ITF {
 		[Serialize("attractorPowerDependsOnDistance")] public bool attractorPowerDependsOnDistance;
 		[Serialize("useAttractorMinDistance"        )] public bool useAttractorMinDistance;
 		[Serialize("attractorMinDistance"           )] public float attractorMinDistance;
-		[Serialize("attractorOffset"                )] public Vector3 attractorOffset;
+		[Serialize("attractorOffset"                )] public Vec3d attractorOffset;
 		[Serialize("useImpulseSpeed"                )] public bool useImpulseSpeed;
 		[Serialize("canFlipAngleOffset"             )] public bool canFlipAngleOffset;
 		[Serialize("canFlipInitAngle"               )] public bool canFlipInitAngle;
@@ -93,7 +93,7 @@ namespace UbiArt.ITF {
 		[Serialize("scaleGenBox"                    )] public BOOL2 scaleGenBox2;
 		[Serialize("usePhasesColorAndSize"          )] public bool usePhasesColorAndSize;
 		[Serialize("useActorTranslation"            )] public bool useActorTranslation;
-		[Serialize("actorTranslationOffset"         )] public Vector2 actorTranslationOffset;
+		[Serialize("actorTranslationOffset"         )] public Vec2d actorTranslationOffset;
 		[Serialize("disableLight"                   )] public bool disableLight;
 		[Serialize("phases"                         )] public CList<ParPhase> phases;
 
@@ -255,7 +255,7 @@ namespace UbiArt.ITF {
 		[Serialize("UseGenPrimitiveParam"           )] public bool UseGenPrimitiveParam;
 		
 		// Origins mode (RJR and RFR too):
-		[Serialize("vel"                   )] public Vector3 vel;
+		[Serialize("vel"                   )] public Vec3d vel;
 		[Serialize("emitInterval"          )] public float emitInterval;		
 		[Serialize("uniformscale"          )] public int uniformscale2;
 		[Serialize("cartoonrendering"      )] public int cartoonrendering;

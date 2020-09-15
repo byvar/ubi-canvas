@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		[Serialize("reflexAttackSpeed"          )] public float reflexAttackSpeed;
 		[Serialize("reflexAttackDuration"       )] public float reflexAttackDuration;
 		[Serialize("reflexAttackInertiaDist"    )] public float reflexAttackInertiaDist;
-		[Serialize("eatPos"                     )] public Vector2 eatPos;
+		[Serialize("eatPos"                     )] public Vec2d eatPos;
 		[Serialize("useEatAnim"                 )] public bool useEatAnim;
 		[Serialize("timeAnticip"                )] public float timeAnticip;
 		[Serialize("timeWaitOnPlayerEscape"     )] public float timeWaitOnPlayerEscape;
@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 		[Serialize("sinYMin"                    )] public float sinYMin;
 		[Serialize("sinYMax"                    )] public float sinYMax;
 		[Serialize("childBone"                  )] public StringID childBone;
-		[Serialize("childAttachOffset"          )] public Vector2 childAttachOffset;
+		[Serialize("childAttachOffset"          )] public Vec2d childAttachOffset;
 		[Serialize("parentBones"                )] public CList<StringID> parentBones;
 		[Serialize("handOffset"                 )] public float handOffset;
 		[Serialize("collisionRadiusWhileMoving" )] public float collisionRadiusWhileMoving;

@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class DetectedPhantom : DetectedObject {
 		[Serialize("PhantomDetectorID")] public StringID PhantomDetectorID;
 		[Serialize("PhantomID"        )] public StringID PhantomID;
-		[Serialize("ContactPoint"     )] public Vector2 ContactPoint;
+		[Serialize("ContactPoint"     )] public Vec2d ContactPoint;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags0)) {

@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("helico"      )] public bool helico;
 		[Serialize("attack"      )] public bool attack;
 		[Serialize("sprint"      )] public bool sprint;
-		[Serialize("hitWantedDir")] public Vector2 hitWantedDir;
+		[Serialize("hitWantedDir")] public Vec2d hitWantedDir;
 		[Serialize("moveDir"     )] public char moveDir;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		[Serialize("isUIFruityListener"        )] public bool isUIFruityListener;
 		[Serialize("isDisplayedWithPad"        )] public bool isDisplayedWithPad;
 		[Serialize("isDisplayedWithTouch"      )] public bool isDisplayedWithTouch;
-		[Serialize("padPointerOffset"          )] public Vector2 padPointerOffset;
+		[Serialize("padPointerOffset"          )] public Vec2d padPointerOffset;
 
 		[Serialize("EventSender__3"            )] public EventSender EventSender__3;
 		[Serialize("EventSender__4"            )] public EventSender EventSender__4;

@@ -12,9 +12,9 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class Point : CSerializable {
-			[Serialize("pos" )] public Vector3 pos;
-			[Serialize("tanA")] public Vector3 tanA;
-			[Serialize("tanB")] public Vector3 tanB;
+			[Serialize("pos" )] public Vec3d pos;
+			[Serialize("tanA")] public Vec3d tanA;
+			[Serialize("tanB")] public Vec3d tanB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (s.HasFlags(SerializeFlags.Default)) {

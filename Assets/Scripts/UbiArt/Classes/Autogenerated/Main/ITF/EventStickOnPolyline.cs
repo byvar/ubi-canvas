@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class EventStickOnPolyline : Event {
 		[Serialize("sticked"    )] public bool sticked;
-		[Serialize("speed"      )] public Vector2 speed;
+		[Serialize("speed"      )] public Vec2d speed;
 		[Serialize("polylineRef")] public uint polylineRef;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

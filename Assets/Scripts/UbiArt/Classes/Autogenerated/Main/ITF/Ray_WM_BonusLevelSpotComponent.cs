@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_WM_BonusLevelSpotComponent : Ray_WM_LevelSpotComponent {
-		[Serialize("bubbleOffset" )] public Vector2 bubbleOffset;
+		[Serialize("bubbleOffset" )] public Vec2d bubbleOffset;
 		[Serialize("bubbleZOffset")] public float bubbleZOffset;
 		[Serialize("blockedLines" )] public Placeholder blockedLines;
 		[Serialize("openLines"    )] public Placeholder openLines;

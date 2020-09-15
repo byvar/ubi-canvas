@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_LoadingTitleComponent_Template : ActorComponent_Template {
 		[Serialize("textPath" )] public Path textPath;
-		[Serialize("screenPos")] public Vector2 screenPos;
+		[Serialize("screenPos")] public Vec2d screenPos;
 		[Serialize("locId"    )] public SmartLocId locId;
 		[Serialize("homeLocId")] public SmartLocId homeLocId;
 		protected override void SerializeImpl(CSerializerObject s) {

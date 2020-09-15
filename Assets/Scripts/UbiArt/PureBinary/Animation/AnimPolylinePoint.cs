@@ -8,7 +8,7 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimPolylinePoint::serialize
 	public class AnimPolylinePoint : CSerializable {
-		[Serialize("pos" )] public Vector2 pos;
+		[Serialize("pos" )] public Vec2d pos;
 		[Serialize("name")] public StringID name;
 
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Vehicle_Template : W1W_InteractiveGenComponent_Template {
-		[Serialize("Vector2__0"  )] public Vector2 Vector2__0;
+		[Serialize("Vector2__0"  )] public Vec2d Vector2__0;
 		[Serialize("StringID__1" )] public StringID StringID__1_;
 		[Serialize("Path__2"     )] public Path Path__2;
 		[Serialize("float__3"    )] public float float__3;
 		[Serialize("float__4"    )] public float float__4;
-		[Serialize("Vector2__5"  )] public Vector2 Vector2__5;
-		[Serialize("Vector2__6"  )] public Vector2 Vector2__6;
+		[Serialize("Vector2__5"  )] public Vec2d Vector2__5;
+		[Serialize("Vector2__6"  )] public Vec2d Vector2__6;
 		[Serialize("float__7"    )] public float float__7;
 		[Serialize("float__8"    )] public float float__8;
 		[Serialize("float__9"    )] public float float__9;

@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 	public partial class CollisionFrieze : CSerializable {
 		[Serialize("build"                    )] public bool build;
 		[Serialize("offset"                   )] public float offset;
-		[Serialize("extremity"                )] public Vector2 extremity;
-		[Serialize("extremity2"               )] public Vector2 extremity2;
+		[Serialize("extremity"                )] public Vec2d extremity;
+		[Serialize("extremity2"               )] public Vec2d extremity2;
 		[Serialize("flip"                     )] public bool flip;
 		[Serialize("methode"                  )] public uint methode;
 		[Serialize("distMaxToSkipParallelEdge")] public float distMaxToSkipParallelEdge;

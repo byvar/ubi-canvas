@@ -10,14 +10,14 @@ namespace UbiArt.ITF {
 		[Serialize("boneNameSnap"            )] public StringID boneNameSnap;
 		[Serialize("anticipFxName"           )] public StringID anticipFxName;
 		[Serialize("typeAttack"              )] public uint typeAttack;
-		[Serialize("defaultDir"              )] public Vector2 defaultDir;
+		[Serialize("defaultDir"              )] public Vec2d defaultDir;
 		[Serialize("projectilesPath"         )] public Path projectilesPath;
 		[Serialize("countProjectilesPrealloc")] public uint countProjectilesPrealloc;
 		[Serialize("countProjectilesMax"     )] public uint countProjectilesMax;
 		[Serialize("smoothFactorAngle"       )] public float smoothFactorAngle;
 		[Serialize("timeAim"                 )] public float timeAim;
 		[Serialize("timeAnticip"             )] public float timeAnticip;
-		[Serialize("aimOffset"               )] public Vector2 aimOffset;
+		[Serialize("aimOffset"               )] public Vec2d aimOffset;
 		[Serialize("debug"                   )] public bool debug;
 		[Serialize("useDetection"            )] public bool useDetection;
 		[Serialize("scaleDetectionRange"     )] public bool scaleDetectionRange;

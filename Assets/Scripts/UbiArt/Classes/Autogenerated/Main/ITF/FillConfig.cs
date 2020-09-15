@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		[Serialize("smoothFactor")] public float smoothFactor;
 		[Serialize("offset"      )] public float offset;
 		[Serialize("angle"       )] public Angle angle;
-		[Serialize("scale"       )] public Vector2 scale;
+		[Serialize("scale"       )] public Vec2d scale;
 		[Serialize("tex"         )] public StringID tex;
 		[Serialize("zExtrude"    )] public float zExtrude;
 		[Serialize("isSmooth"    )] public bool isSmooth;

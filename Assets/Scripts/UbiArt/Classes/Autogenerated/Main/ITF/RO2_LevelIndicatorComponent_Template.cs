@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		[Serialize("displayDuration"   )] public float displayDuration;
 		[Serialize("transitionDuration")] public float transitionDuration;
 		[Serialize("nbRebound"         )] public uint nbRebound;
-		[Serialize("startOffset"       )] public Vector2 startOffset;
+		[Serialize("startOffset"       )] public Vec2d startOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(levels));

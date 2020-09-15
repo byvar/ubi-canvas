@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("durationReturnSpring"    )] public float durationReturnSpring;
 		[Serialize("forceMinBeforeExit"      )] public float forceMinBeforeExit;
 		[Serialize("speedReturnSpring"       )] public float speedReturnSpring;
-		[Serialize("offsetDrag"              )] public Vector2 offsetDrag;
+		[Serialize("offsetDrag"              )] public Vec2d offsetDrag;
 		[Serialize("smoothFactor"            )] public float smoothFactor;
 		[Serialize("smoothFactorOnPoly"      )] public float smoothFactorOnPoly;
 		[Serialize("smoothFactorOnDoublePoly")] public float smoothFactorOnDoublePoly;

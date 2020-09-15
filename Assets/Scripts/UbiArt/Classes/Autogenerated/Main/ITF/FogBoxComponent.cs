@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class FogBoxComponent : ActorComponent {
-		[Serialize("attenuationDist")] public Vector2 attenuationDist;
+		[Serialize("attenuationDist")] public Vec2d attenuationDist;
 		[Serialize("near"           )] public float near;
 		[Serialize("far"            )] public float far;
 		[Serialize("nearColor"      )] public Color nearColor;

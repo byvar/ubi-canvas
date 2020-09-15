@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_EventPowerUp : Event {
 		[Serialize("id"         )] public StringID id;
 		[Serialize("enable"     )] public bool enable;
-		[Serialize("startingPos")] public Vector3 startingPos;
+		[Serialize("startingPos")] public Vec3d startingPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(id));

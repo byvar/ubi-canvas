@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		[Serialize("RadiusAdditive"                )] public float RadiusAdditive;
 		[Serialize("RadiusRegenerationSafe"        )] public float RadiusRegenerationSafe;
 		[Serialize("TruncateRadiusRegenerationSafe")] public float TruncateRadiusRegenerationSafe;
-		[Serialize("OffsetRegenerationSafe"        )] public Vector2 OffsetRegenerationSafe;
+		[Serialize("OffsetRegenerationSafe"        )] public Vec2d OffsetRegenerationSafe;
 		[Serialize("RadiusFillingSafe"             )] public float RadiusFillingSafe;
-		[Serialize("OffsetFillingSafe"             )] public Vector2 OffsetFillingSafe;
+		[Serialize("OffsetFillingSafe"             )] public Vec2d OffsetFillingSafe;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {

@@ -19,15 +19,15 @@ namespace UbiArt.ITF {
 		[Serialize("float__13"                 )] public float float__13;
 		[Serialize("float__14"                 )] public float float__14;
 		[Serialize("float__15"                 )] public float float__15;
-		[Serialize("Vector2__16"               )] public Vector2 Vector2__16;
-		[Serialize("Vector2__17"               )] public Vector2 Vector2__17;
+		[Serialize("Vector2__16"               )] public Vec2d Vector2__16;
+		[Serialize("Vector2__17"               )] public Vec2d Vector2__17;
 		[Serialize("float__18"                 )] public float float__18;
 		[Serialize("float__19"                 )] public float float__19;
 		[Serialize("float__20"                 )] public float float__20;
 		[Serialize("float__21"                 )] public float float__21;
 		[Serialize("float__22"                 )] public float float__22;
 		[Serialize("ushort__23"                )] public ushort ushort__23;
-		[Serialize("Vector2__24"               )] public Vector2 Vector2__24;
+		[Serialize("Vector2__24"               )] public Vec2d Vector2__24;
 		[Serialize("float__25"                 )] public float float__25;
 		[Serialize("float__26"                 )] public float float__26;
 		[Serialize("Path__27"                  )] public Path Path__27;

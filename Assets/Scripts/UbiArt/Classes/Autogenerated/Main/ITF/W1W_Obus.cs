@@ -22,8 +22,8 @@ namespace UbiArt.ITF {
 		[Serialize("float__16"    )] public float float__16;
 		[Serialize("float__17"    )] public float float__17;
 		[Serialize("float__18"    )] public float float__18;
-		[Serialize("Vector2__19"  )] public Vector2 Vector2__19;
-		[Serialize("Vector2__20"  )] public Vector2 Vector2__20;
+		[Serialize("Vector2__19"  )] public Vec2d Vector2__19;
+		[Serialize("Vector2__20"  )] public Vec2d Vector2__20;
 		[Serialize("Enum_VH_0__21")] public Enum_VH_0 Enum_VH_0__21;
 		[Serialize("Enum_VH_1__22")] public Enum_VH_1 Enum_VH_1__22;
 		[Serialize("Enum_VH_2__23")] public Enum_VH_2 Enum_VH_2__23;

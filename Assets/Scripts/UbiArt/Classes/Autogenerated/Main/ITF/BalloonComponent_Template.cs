@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class BalloonComponent_Template : ActorComponent_Template {
-		[Serialize("aabbMin"        )] public Vector2 aabbMin;
+		[Serialize("aabbMin"        )] public Vec2d aabbMin;
 		[Serialize("is3D"           )] public bool is3D;
 		[Serialize("appearSoundGuid")] public SoundGUID appearSoundGuid;
 		protected override void SerializeImpl(CSerializerObject s) {

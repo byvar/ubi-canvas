@@ -6,11 +6,11 @@ namespace UbiArt.ITF {
 		[Serialize("cycleEnabled"       )] public bool cycleEnabled;
 		[Serialize("cycleStartIndex"    )] public uint cycleStartIndex;
 		[Serialize("moveList"           )] public CList<RO2_moveData> moveList;
-		[Serialize("wakeUpDir"          )] public Vector2 wakeUpDir;
+		[Serialize("wakeUpDir"          )] public Vec2d wakeUpDir;
 		[Serialize("wakeUpPeriod"       )] public float wakeUpPeriod;
 		[Serialize("wakeUpCycleCount"   )] public float wakeUpCycleCount;
 		[Serialize("waitPeriod"         )] public float waitPeriod;
-		[Serialize("waitDir"            )] public Vector2 waitDir;
+		[Serialize("waitDir"            )] public Vec2d waitDir;
 		[Serialize("slowDuration"       )] public float slowDuration;
 		[Serialize("stationaryDuration" )] public float stationaryDuration;
 		[Serialize("fallDuration"       )] public float fallDuration;

@@ -9,9 +9,9 @@ namespace UbiArt.ITF {
 		[Serialize("animWallJump"     )] public StringID animWallJump;
 		[Serialize("animReception"    )] public StringID animReception;
 		[Serialize("jumpImpulse"      )] public float jumpImpulse;
-		[Serialize("jumpDir"          )] public Vector2 jumpDir;
+		[Serialize("jumpDir"          )] public Vec2d jumpDir;
 		[Serialize("wallJumpImpulse"  )] public float wallJumpImpulse;
-		[Serialize("wallJumpDir"      )] public Vector2 wallJumpDir;
+		[Serialize("wallJumpDir"      )] public Vec2d wallJumpDir;
 		[Serialize("jumpGravityMult"  )] public float jumpGravityMult;
 		[Serialize("holeDetectionDist")] public float holeDetectionDist;
 		[Serialize("wallDetectionDist")] public float wallDetectionDist;

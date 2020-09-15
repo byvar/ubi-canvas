@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		[Serialize("staySquashedAnim")] public StringID staySquashedAnim;
 		[Serialize("staySquashedTime")] public float staySquashedTime;
 		[Serialize("autoBounce"      )] public bool autoBounce;
-		[Serialize("bouncePos"       )] public Vector2 bouncePos;
+		[Serialize("bouncePos"       )] public Vec2d bouncePos;
 		[Serialize("isMini"          )] public bool isMini;
 		[Serialize("bubblePath"      )] public Path bubblePath;
 		[Serialize("spawnBone"       )] public StringID spawnBone;

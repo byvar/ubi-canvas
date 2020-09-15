@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		[Serialize("eyeMaxX"                )] public float eyeMaxX;
 		[Serialize("eyeMinY"                )] public float eyeMinY;
 		[Serialize("eyeMaxY"                )] public float eyeMaxY;
-		[Serialize("relativeNeutralEyePos"  )] public Vector2 relativeNeutralEyePos;
+		[Serialize("relativeNeutralEyePos"  )] public Vec2d relativeNeutralEyePos;
 		[Serialize("distanceToEyeFactor"    )] public float distanceToEyeFactor;
 		[Serialize("typicalPlayerHeadY"     )] public float typicalPlayerHeadY;
 		[Serialize("breakFx"                )] public Path breakFx;

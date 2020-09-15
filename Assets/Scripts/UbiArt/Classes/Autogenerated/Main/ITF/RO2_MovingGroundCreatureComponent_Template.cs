@@ -10,20 +10,20 @@ namespace UbiArt.ITF {
 		[Serialize("rightBoneName"        )] public StringID rightBoneName;
 		[Serialize("leftLianaBoneName"    )] public StringID leftLianaBoneName;
 		[Serialize("rightLianaBoneName"   )] public StringID rightLianaBoneName;
-		[Serialize("leftRingPosOffset"    )] public Vector2 leftRingPosOffset;
+		[Serialize("leftRingPosOffset"    )] public Vec2d leftRingPosOffset;
 		[Serialize("leftRingAngleOffset"  )] public Angle leftRingAngleOffset;
-		[Serialize("rightRingPosOffset"   )] public Vector2 rightRingPosOffset;
+		[Serialize("rightRingPosOffset"   )] public Vec2d rightRingPosOffset;
 		[Serialize("rightRingAngleOffset" )] public Angle rightRingAngleOffset;
-		[Serialize("leftLianaPosOffset"   )] public Vector2 leftLianaPosOffset;
+		[Serialize("leftLianaPosOffset"   )] public Vec2d leftLianaPosOffset;
 		[Serialize("leftLianaAngleOffset" )] public Angle leftLianaAngleOffset;
-		[Serialize("rightLianaPosOffset"  )] public Vector2 rightLianaPosOffset;
+		[Serialize("rightLianaPosOffset"  )] public Vec2d rightLianaPosOffset;
 		[Serialize("rightLianaAngleOffset")] public Angle rightLianaAngleOffset;
 		[Serialize("speedInput"           )] public StringID speedInput;
 		[Serialize("ploufDuration"        )] public float ploufDuration;
 		[Serialize("ploufAlteration"      )] public float ploufAlteration;
 		[Serialize("pendouillePath"       )] public Path pendouillePath;
 		[Serialize("pendouilleBoneName"   )] public StringID pendouilleBoneName;
-		[Serialize("pendouillePosOffset"  )] public Vector2 pendouillePosOffset;
+		[Serialize("pendouillePosOffset"  )] public Vec2d pendouillePosOffset;
 		[Serialize("pendouilleAngleOffset")] public Angle pendouilleAngleOffset;
 		[Serialize("pendouilleAnims"      )] public CList<StringID> pendouilleAnims;
 		protected override void SerializeImpl(CSerializerObject s) {

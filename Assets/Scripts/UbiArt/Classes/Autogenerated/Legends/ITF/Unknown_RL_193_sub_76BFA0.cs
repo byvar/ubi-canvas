@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Unknown_RL_193_sub_76BFA0 : Unknown_RL_219_sub_A763E0 {
 		[Serialize("nodePaintingOffsetY")] public float nodePaintingOffsetY;
 		[Serialize("frequency"          )] public Enum_frequency frequency;
-		[Serialize("currentOffset"      )] public Vector3 currentOffset;
+		[Serialize("currentOffset"      )] public Vec3d currentOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(nodePaintingOffsetY));

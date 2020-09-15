@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA)]
 		public partial class BoneData : CSerializable {
 			[Serialize("boneName")] public StringID boneName;
-			[Serialize("offset"  )] public Vector2 offset;
+			[Serialize("offset"  )] public Vec2d offset;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				SerializeField(s, nameof(boneName));

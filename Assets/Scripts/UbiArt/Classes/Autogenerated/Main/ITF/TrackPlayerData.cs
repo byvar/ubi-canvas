@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		[Serialize("Enum_RFR_0__0")] public Enum_RFR_0 Enum_RFR_0__0;
 		[Serialize("int__1"       )] public int int__1;
 		[Serialize("int__2"       )] public int int__2;
-		[Serialize("Vector3__3"   )] public Vector3 Vector3__3;
+		[Serialize("Vector3__3"   )] public Vec3d Vector3__3;
 		[Serialize("float__4"     )] public float float__4;
 		[Serialize("float__5"     )] public float float__5;
-		[Serialize("Vector3__6"   )] public Vector3 Vector3__6;
+		[Serialize("Vector3__6"   )] public Vec3d Vector3__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			SerializeField(s, nameof(Enum_RFR_0__0));

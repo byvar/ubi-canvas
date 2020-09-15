@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		[Serialize("bool__11"   )] public bool bool__11;
 		[Serialize("bool__12"   )] public bool bool__12;
 		[Serialize("bool__13"   )] public bool bool__13;
-		[Serialize("Vector2__14")] public Vector2 Vector2__14;
+		[Serialize("Vector2__14")] public Vec2d Vector2__14;
 		[Serialize("bool__15"   )] public bool bool__15;
 		[Serialize("bool__16"   )] public bool bool__16;
 		protected override void SerializeImpl(CSerializerObject s) {

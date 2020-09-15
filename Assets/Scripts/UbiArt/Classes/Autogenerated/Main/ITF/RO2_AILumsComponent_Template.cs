@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		[Serialize("grabRepulsionRadius"            )] public float grabRepulsionRadius;
 		[Serialize("grabDampingFactor"              )] public float grabDampingFactor;
 		[Serialize("timeBeforeTaken"                )] public float timeBeforeTaken;
-		[Serialize("followingOffset"                )] public Vector2 followingOffset;
+		[Serialize("followingOffset"                )] public Vec2d followingOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {

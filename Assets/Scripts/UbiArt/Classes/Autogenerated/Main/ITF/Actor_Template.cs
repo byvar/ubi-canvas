@@ -9,9 +9,9 @@ namespace UbiArt.ITF {
 		[Serialize("FORCEALWAYSACTIVE"                           )] public bool FORCEALWAYSACTIVE;
 		[Serialize("UPDATEFREQUENCE"                             )] public uint UPDATEFREQUENCE;
 		[Serialize("COMPONENTS"                                  )] public CArray<Generic<ActorComponent_Template>> COMPONENTS;
-		[Serialize("scaleForced"                                 )] public Vector2 scaleForced;
-		[Serialize("scaleMin"                                    )] public Vector2 scaleMin;
-		[Serialize("scaleMax"                                    )] public Vector2 scaleMax;
+		[Serialize("scaleForced"                                 )] public Vec2d scaleForced;
+		[Serialize("scaleMin"                                    )] public Vec2d scaleMin;
+		[Serialize("scaleMax"                                    )] public Vec2d scaleMax;
 		[Serialize("xFLIPPED"                                    )] public int xFLIPPED;
 		[Serialize("zForced"                                     )] public float zForced;
 		[Serialize("useZForced"                                  )] public int useZForced;

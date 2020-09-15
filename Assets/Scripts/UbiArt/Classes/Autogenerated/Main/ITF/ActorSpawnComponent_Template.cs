@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 			[Serialize("useParentScale"         )] public bool useParentScale;
 			[Serialize("useParentFlip"          )] public bool useParentFlip;
 			[Serialize("useParentAngle"         )] public bool useParentAngle;
-			[Serialize("offset"                 )] public Vector3 offset;
+			[Serialize("offset"                 )] public Vec3d offset;
 			[Serialize("keepSpawneeInitialDepth")] public bool keepSpawneeInitialDepth;
 			[Serialize("BasicString__1"         )] public BasicString spawnActorBoneNameB;
 			protected override void SerializeImpl(CSerializerObject s) {

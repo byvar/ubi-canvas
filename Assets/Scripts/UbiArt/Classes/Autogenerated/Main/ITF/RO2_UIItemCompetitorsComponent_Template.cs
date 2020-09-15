@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		[Serialize("competitorOffset"            )] public float competitorOffset;
 		[Serialize("countryActorPath"            )] public Path countryActorPath;
 		[Serialize("levelActorPath"              )] public Path levelActorPath;
-		[Serialize("countryOffset"               )] public Vector3 countryOffset;
-		[Serialize("levelOffset"                 )] public Vector3 levelOffset;
+		[Serialize("countryOffset"               )] public Vec3d countryOffset;
+		[Serialize("levelOffset"                 )] public Vec3d levelOffset;
 		[Serialize("backgroundBaseWidth"         )] public float backgroundBaseWidth;
 		[Serialize("maxNameWidth"                )] public float maxNameWidth;
 		[Serialize("beatenActorPath"             )] public Path beatenActorPath;

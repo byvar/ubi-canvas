@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossPlantAIComponent_Template : AIComponent_Template {
-		[Serialize("targetEvaluationOffset"        )] public Vector2 targetEvaluationOffset;
+		[Serialize("targetEvaluationOffset"        )] public Vec2d targetEvaluationOffset;
 		[Serialize("playRateMultiplierMinDistance" )] public float playRateMultiplierMinDistance;
 		[Serialize("playRateMultiplierMaxDistance" )] public float playRateMultiplierMaxDistance;
 		[Serialize("playRateMultiplierMinValue"    )] public float playRateMultiplierMinValue;

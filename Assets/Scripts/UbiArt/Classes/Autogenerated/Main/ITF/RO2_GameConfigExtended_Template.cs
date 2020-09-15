@@ -20,11 +20,11 @@ namespace UbiArt.ITF {
 		[Serialize("SideMinotaursPath"         )] public Path SideMinotaursPath;
 		[Serialize("SideDevilBobPath"          )] public Path SideDevilBobPath;
 		[Serialize("SideSwordmanPath"          )] public Path SideSwordmanPath;
-		[Serialize("SideGreenToadOffset"       )] public Vector2 SideGreenToadOffset;
-		[Serialize("SideSplinterToadOffset"    )] public Vector2 SideSplinterToadOffset;
-		[Serialize("SideMinotaursOffset"       )] public Vector2 SideMinotaursOffset;
-		[Serialize("SideDevilBobOffset"        )] public Vector2 SideDevilBobOffset;
-		[Serialize("SideSwordmanOffset"        )] public Vector2 SideSwordmanOffset;
+		[Serialize("SideGreenToadOffset"       )] public Vec2d SideGreenToadOffset;
+		[Serialize("SideSplinterToadOffset"    )] public Vec2d SideSplinterToadOffset;
+		[Serialize("SideMinotaursOffset"       )] public Vec2d SideMinotaursOffset;
+		[Serialize("SideDevilBobOffset"        )] public Vec2d SideDevilBobOffset;
+		[Serialize("SideSwordmanOffset"        )] public Vec2d SideSwordmanOffset;
 		[Serialize("CountryAtlasList"          )] public CMap<string, uint> CountryAtlasList;
 		[Serialize("regionBackgrounds"         )] public CMap<RLC_GraphicalFamily, RegionPathList> regionBackgrounds;
 		[Serialize("eventBackgrounds"          )] public CMap<uint, Path> eventBackgrounds;

@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_ChallengeFireWallComponent : ActorComponent {
-		[Serialize("screenPosition"          )] public Vector2 screenPosition;
-		[Serialize("actorPosAtCheckpointSave")] public Vector3 actorPosAtCheckpointSave;
+		[Serialize("screenPosition"          )] public Vec2d screenPosition;
+		[Serialize("actorPosAtCheckpointSave")] public Vec3d actorPosAtCheckpointSave;
 		[Serialize("state"                   )] public State state;
 		[Serialize("useScreenPos"            )] public bool useScreenPos;
 		protected override void SerializeImpl(CSerializerObject s) {

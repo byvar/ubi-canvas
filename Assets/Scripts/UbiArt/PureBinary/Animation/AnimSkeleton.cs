@@ -124,12 +124,12 @@ namespace UbiArt.Animation {
 				} else {
 					unityBones[i].parent = null;
 				}
-				unityBones[i].bindPosition = bonesDyn[i].position;
-				unityBones[i].bindScale = bonesDyn[i].scale;
+				unityBones[i].bindPosition = (Vector2)bonesDyn[i].position;
+				unityBones[i].bindScale = (Vector2)bonesDyn[i].scale;
 				unityBones[i].bindRotation = bonesDyn[i].angle;
 				//unityBones[i].xOffset = bonesDyn[i].float1;
-				unityBones[i].localPosition = Vector3.zero;
-				unityBones[i].localScale = Vector3.one;
+				unityBones[i].localPosition = Vec3d.zero;
+				unityBones[i].localScale = Vec3d.one;
 				unityBones[i].localRotation = 0;
 				unityBones[i].bindZ = bonesDyn[i].z;
 				unityBones[i].localZ = 0;
@@ -182,8 +182,8 @@ namespace UbiArt.Animation {
 			for (int i = 0; i < bones.Count; i++) {
 				UnityBone b = unityBones[i].GetComponent<UnityBone>();
 				b.parent = null;
-				b.localPosition = Vector3.zero;
-				b.localScale = Vector3.one;
+				b.localPosition = Vec3d.zero;
+				b.localScale = Vec3d.one;
 				b.localRotation = new Angle(0);
 				b.UpdateBone();
 				/*b.bindPosition = bonesDyn[i].position;

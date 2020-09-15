@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		[Serialize("rotateActor"     )] public bool rotateActor;
 		[Serialize("angle"           )] public AngleAmount angle;
 		[Serialize("angleOffset"     )] public AngleAmount angleOffset;
-		[Serialize("scaleMultiplier" )] public Vector2 scaleMultiplier;
+		[Serialize("scaleMultiplier" )] public Vec2d scaleMultiplier;
 		[Serialize("speed"           )] public float speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

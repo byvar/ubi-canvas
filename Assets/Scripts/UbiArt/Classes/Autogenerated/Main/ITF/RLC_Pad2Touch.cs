@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_Pad2Touch : ActorComponent {
-		[Serialize("OffSet"      )] public Vector2 OffSet;
+		[Serialize("OffSet"      )] public Vec2d OffSet;
 		[Serialize("viewportName")] public string viewportName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

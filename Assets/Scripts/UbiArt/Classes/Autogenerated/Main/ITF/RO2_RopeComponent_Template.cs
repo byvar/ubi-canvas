@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		[Serialize("beginMaterial"                  )] public GFXMaterialSerializable beginMaterial;
 		[Serialize("endMaterial"                    )] public GFXMaterialSerializable endMaterial;
 		[Serialize("gameMaterial"                   )] public Path gameMaterial;
-		[Serialize("beginTextureScale"              )] public Vector2 beginTextureScale;
-		[Serialize("endTextureScale"                )] public Vector2 endTextureScale;
+		[Serialize("beginTextureScale"              )] public Vec2d beginTextureScale;
+		[Serialize("endTextureScale"                )] public Vec2d endTextureScale;
 		[Serialize("useSwingRope"                   )] public bool useSwingRope;
 		[Serialize("elastic"                        )] public bool elastic;
 		[Serialize("oneEventoneChild"               )] public bool oneEventoneChild;
