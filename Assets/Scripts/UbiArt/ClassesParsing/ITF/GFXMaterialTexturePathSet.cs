@@ -35,7 +35,9 @@ namespace UbiArt.ITF {
 					TextureCooked tex = (TextureCooked)f.GetValue(this);
 					tex.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
 					l.tex[path.stringID] = tex;
-					l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+					if (extS.Position != extS.Length) {
+						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+					}
 				}
 			});
 		}

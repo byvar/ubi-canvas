@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace UbiArt.ITF {
@@ -18,9 +20,18 @@ namespace UbiArt.ITF {
 				});
 			}
 		}
+		protected Dictionary<GFXMaterialShader_Template, Material> materials = new Dictionary<GFXMaterialShader_Template, Material>();
+		protected Material materialShaderNull = null;
 
 		public Material GetUnityMaterial(GFXMaterialShader_Template shader = null) {
 			if (shader == null) shader = (this.shader != null ? this.shader.obj : null);
+			if (shader == null) {
+				if (materialShaderNull != null) {
+					return new Material(materialShaderNull);
+				}
+			} else if (materials.ContainsKey(shader)) {
+				return new Material(materials[shader]);
+			}
 			//Shader sh = Shader.Find("Custom/UbiArtAlpha");
 			Material mat = new Material(MapLoader.Loader.baseTransparentMaterial);
 			if (shader != null) {
@@ -79,7 +90,10 @@ namespace UbiArt.ITF {
 				if (textureSet.tex_diffuse != null) mat.SetTexture("_Diffuse", textureSet.tex_diffuse.Texture);
 				if (textureSet.tex_back_light != null) mat.SetTexture("_BackLight", textureSet.tex_back_light.Texture);
 			}
-			return mat;
+			if (shader != null) {
+				materials[shader] = mat;
+			} else materialShaderNull = mat;
+			return new Material(mat);
 		}
 
 		private enum ZWrite {

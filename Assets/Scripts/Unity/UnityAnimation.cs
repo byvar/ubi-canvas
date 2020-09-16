@@ -19,6 +19,7 @@ public class UnityAnimation : MonoBehaviour {
 	public AnimPatchBank pbk;
 	public GameObject[] patches;
 	public Material[] patchMaterials;
+	public SkinnedMeshRenderer[] patchRenderers;
 	public bool playAnimation = true;
 	public float animationSpeed = 30f;
 	public int zValue = 0;
@@ -41,8 +42,8 @@ public class UnityAnimation : MonoBehaviour {
 	}
 
 	public void Update() {
-		if (loaded && animTrack != null) {
-			currentFrame += Time.deltaTime * animationSpeed;
+		if (Controller.LoadState == Controller.State.Finished && loaded && animTrack != null) {
+			if(playAnimation) currentFrame += Time.deltaTime * animationSpeed;
 			UpdateAnimation();
 		}
 	}
@@ -163,20 +164,70 @@ public class UnityAnimation : MonoBehaviour {
 					if (patches[i] == null || pbk.templates[i].bones.Count == 0) continue;
 					bool patchActive = indexes.Contains(i);
 					if (patchActive) {
-						int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
-						if (boneIndex != -1) {
-							patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
-							zman.zDict[patchMaterials[i]] = transform.position.z - bones[boneIndex].bindZ - bones[boneIndex].localZ;
+						//int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
+						int[] boneIndices = pbk.templates[i].bones.Select(b => skeleton.GetBoneIndexFromTag(b.tag)).ToArray();
+						List<float> alphas = new List<float>();
+						List<float> zs = new List<float>();
+						for (int b = 0; b < boneIndices.Length; b++) {
+							if (boneIndices[b] != -1) {
+								int boneIndex = boneIndices[b];
+								alphas.Add(bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha);
+								zs.Add(bones[boneIndex].bindZ + bones[boneIndex].localZ);
+							}
 						}
+						if (alphas.Count > 0) {
+							patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, alphas.Average()));
+						}
+						if (zs.Count > 0) {
+							zman.zDict[patchRenderers[i]] = transform.position.z - zs.Average() / 10000f;
+							//patchRenderers[i].transform.localPosition = new Vector3(0,0,zs.Average() / 10000f);
+						} else {
+							zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+						}
+						/*if (boneIndex != -1) {
+							patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
+							//zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+							zman.zDict[patchRenderers[i]] = transform.position.z - (bones[boneIndex].bindZ + bones[boneIndex].localZ) / 100f;
+
+							if (anims.Count > 0 && anims[animIndex].Item1.filename.Contains("stand_back")) {
+								print(i + " - " + pbk.templates[i].bones[0].tag);
+							}
+						} else {
+							zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+						}*/
 					} else {
-						if (zman.zDict.ContainsKey(patchMaterials[i])) {
-							zman.zDict.Remove(patchMaterials[i]);
+						if (zman.zDict.ContainsKey(patchRenderers[i])) {
+							zman.zDict.Remove(patchRenderers[i]);
 						}
 					}
 				}
 			}
 		}
 	}
+
+	/*private void SortPatchZ(List<int> indexes) {
+		Dictionary<int, float> patchZ = new Dictionary<int, float>();
+		for (int i = 0; i < patches.Length; i++) {
+			if (patches[i] == null || pbk.templates[i].bones.Count == 0) continue;
+			bool patchActive = indexes.Contains(i);
+			if (patchActive) {
+				int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
+				if (boneIndex != -1) {
+					patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
+					//zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+					zman.zDict[patchRenderers[i]] = transform.position.z - (bones[boneIndex].bindZ + bones[boneIndex].localZ) / 100f;
+				} else {
+					zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+				}
+			} else {
+				if (zman.zDict.ContainsKey(patchRenderers[i])) {
+					zman.zDict.Remove(patchRenderers[i]);
+				}
+			}
+		}
+		List<KeyValuePair<int, float>> list = patchZ.ToList();
+		list.Sort((k1, k2) => k2.Value.CompareTo(k1.Value));
+	}*/
 
 	private void SetMaterialTextureOrigins(Material mat, TextureCooked tex) {
 		if (mat != null && tex != null) {

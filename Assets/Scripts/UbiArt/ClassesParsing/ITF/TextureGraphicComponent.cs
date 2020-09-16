@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace UbiArt.ITF {
 	public partial class TextureGraphicComponent {
 		public UnityTextureGraphicComponent tex_gao_component;
 		public Material tex_mat;
+		public MeshRenderer tex_renderer;
 
 		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
 			base.InitUnityComponent(act, gao, template, index);
@@ -32,6 +34,7 @@ namespace UbiArt.ITF {
 			MeshRenderer mr = tex_gao.AddComponent<MeshRenderer>();
 			mf.sharedMesh = CreateMesh(material.textureSet.tex_diffuse);
 			tex_mat = material.GetUnityMaterial();
+			tex_renderer = mr;
 			FillMaterialParams(tex_mat);
 			mr.sharedMaterial = tex_mat;
 		}

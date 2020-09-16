@@ -7,15 +7,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ZListManager : MonoBehaviour {
-	public Dictionary<Material, float> zDict = new Dictionary<Material, float>();
+	public Dictionary<Renderer, float> zDict = new Dictionary<Renderer, float>();
+	//public Dictionary<Renderer 
 	//private List<Pickable> zList = new List<Pickable>();
 
 	// Use this for initialization
 	void Start() {
 	}
 
-    // Update is called once per frame
-    void Update() {
+	// Update is called once per frame
+	void Update() {
 		/*Renderer[] zList = FindObjectsOfType<Renderer>();
 		if (zList.Length < 5000) {
 			for (int i = 0; i < zList.Length; i++) {
@@ -45,14 +46,22 @@ public class ZListManager : MonoBehaviour {
 		if(printMessages) print("ZSort count: " + zList.Count + " - Done zsorting");
 	}*/
 	public void Sort(bool printMessages = true) {
-		List<KeyValuePair<Material, float>> list = zDict.ToList();
+		/*if (Controller.LoadState == Controller.State.Finished) {
+			List<Renderer> zList = FindObjectsOfType<Renderer>().ToList();
+			zList.Sort((p1, p2) => (p2.transform.position.z.CompareTo(p1.transform.position.z)));
+			for (int i = 0; i < zList.Count; i++) {
+				zList[i].sortingOrder = i;
+			}
+			if (printMessages) print("ZSort count: " + zList.Count + " - Done zsorting");
+		}*/
+		List<KeyValuePair<Renderer, float>> list = zDict.ToList();
 		list.Sort((k1, k2) => k2.Value.CompareTo(k1.Value));
 		for (int i = 0; i < list.Count; i++) {
-			list[i].Key.renderQueue = i;
-			if (i >= 5000) {
-				print("Too many renderers for zsort: " + list.Count);
-				break;
+			if (list[i].Key == null || list[i].Key.gameObject == null) {
+				zDict.Remove(list[i].Key);
+				continue;
 			}
+			list[i].Key.sortingOrder = i;
 		}
 		if (printMessages) print("ZSort count: " + list.Count + " - Done zsorting");
 	}

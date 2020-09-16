@@ -17,7 +17,9 @@ namespace UbiArt.ITF {
 							extS.log = l.logEnabled;
 							extS.Serialize(ref skel);
 							l.skl[skeleton.stringID] = skel;
-							l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+							if (extS.Position != extS.Length) {
+								l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+							}
 						}
 					});
 				}

@@ -7,12 +7,13 @@ public class UnityTextureGraphicComponent : MonoBehaviour {
 	float prevZ = -99999;
 
 	private void Update() {
-		if (tgc != null && tgc.tex_mat != null) {
+		if (tgc != null && tgc.tex_renderer != null) {
 			float z = transform.position.z;
 			if (z != prevZ) {
 				prevZ = z;
 				ZListManager zman = MapLoader.Loader.controller.zListManager;
-				zman.zDict[tgc.tex_mat] = z;
+				zman.zDict[tgc.tex_renderer] = z;
+				//zman.zDict[tgc.tex_mat] = z;
 			}
 		}
 	}

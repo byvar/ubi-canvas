@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ namespace UbiArt.ITF {
 				if (meshBuildData.value.StaticIndexList.Count > 0) {
 					mesh_static = new GameObject("Static");
 					mesh_static.transform.SetParent(gao.transform, false);
-					mesh_static.transform.localPosition = Vector3.zero;
+					mesh_static.transform.localPosition = new Vector3(0, 0, 0.005f);// Vector3.zero;
 					mesh_static.transform.localRotation = Quaternion.identity;
 					mesh_static.transform.localScale = Vector3.one;
 					Mesh mesh = new Mesh();

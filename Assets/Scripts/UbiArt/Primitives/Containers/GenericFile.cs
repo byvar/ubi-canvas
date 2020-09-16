@@ -69,7 +69,7 @@ namespace UbiArt {
 				if (s.Position != s.Length) {
 					throw new Exception("File reading check failed. Position:" + s.Position + " - Length:" + s.Length);
 				} else if (s.Position.file != null) {
-					MapLoader.Loader.print("Finished reading file: " + s.Position.file.name);
+					//MapLoader.Loader.print("Finished reading file: " + s.Position.file.name);
 				}
 			}
 		}

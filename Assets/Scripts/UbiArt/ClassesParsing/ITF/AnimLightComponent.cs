@@ -10,6 +10,7 @@ namespace UbiArt.ITF {
 		private AnimLightComponent_Template tpl;
 		private GameObject[] patches = new GameObject[0];
 		private Material[] patchMaterials = new Material[0];
+		private SkinnedMeshRenderer[] patchRenderers = new SkinnedMeshRenderer[0];
 		private GameObject skeleton_gao;
 		private UnityBone[] bones;
 		//private int zValue = 0;
@@ -43,6 +44,7 @@ namespace UbiArt.ITF {
 		// v GameObject
 
 		private void CreateGameObjects(GameObject gao) {
+			if (!MapLoader.Loader.loadAnimations) return;
 			Material tex_mat = GetUnityMaterial();
 			FillMaterialParams(tex_mat);
 			bool createdOne = false;
@@ -72,6 +74,7 @@ namespace UbiArt.ITF {
 			if (pbk == null || skeleton == null) return;
 			patches = new GameObject[pbk.templates.Count];
 			patchMaterials = new Material[patches.Length];
+			patchRenderers = new SkinnedMeshRenderer[patches.Length];
 			skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
 			skeleton_gao.transform.SetParent(gao.transform, false);
 			skeleton_gao.transform.localPosition = Vector3.zero;
@@ -105,6 +108,7 @@ namespace UbiArt.ITF {
 				if (roots.Count > 0) mr.rootBone = mr.bones[roots[0]];
 				patches[i] = patch_gao;
 				patchMaterials[i] = patch_mat;
+				patchRenderers[i] = mr;
 			}
 			skeleton.ResetBones(bones);
 			ua = skeleton_gao.AddComponent<UnityAnimation>();
@@ -113,6 +117,7 @@ namespace UbiArt.ITF {
 			ua.anims = new List<System.Tuple<Path, AnimTrack>>();
 			ua.patches = patches;
 			ua.patchMaterials = patchMaterials;
+			ua.patchRenderers = patchRenderers;
 			ua.pbk = pbk;
 			/*List<Path> animPaths = new List<Path>();
 			foreach (SubAnim_Template sat in tpl.animSet.animations) {
@@ -138,6 +143,7 @@ namespace UbiArt.ITF {
 				if (bp.pbk != null) {
 					patches = new GameObject[bp.pbk.templates.Count];
 					patchMaterials = new Material[patches.Length];
+					patchRenderers = new SkinnedMeshRenderer[patches.Length];
 					skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
 					skeleton_gao.transform.SetParent(gao.transform, false);
 					skeleton_gao.transform.localPosition = Vector3.zero;
@@ -168,6 +174,7 @@ namespace UbiArt.ITF {
 						mr.sharedMesh = mesh;
 						patches[i] = patch_gao;
 						patchMaterials[i] = patch_mat;
+						patchRenderers[i] = mr;
 					}
 					skeleton.ResetBones(bones);
 					ua = skeleton_gao.AddComponent<UnityAnimation>();
@@ -177,6 +184,7 @@ namespace UbiArt.ITF {
 					ua.anims = new List<System.Tuple<Path, AnimTrack>>();
 					ua.patches = patches;
 					ua.patchMaterials = patchMaterials;
+					ua.patchRenderers = patchRenderers;
 					ua.pbk = bp.pbk;
 					foreach (SubAnim_Template sat in tpl.animSet.animations) {
 						animPaths.Add(sat.name);

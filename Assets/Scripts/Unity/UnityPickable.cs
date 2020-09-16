@@ -111,6 +111,7 @@ public class UnityPickable : MonoBehaviour {
 
 	void CreateMesh() {
 		sr = gameObject.AddComponent<SpriteRenderer>();
+		sr.sortingLayerName = "Gizmo";
 		sr.drawMode = SpriteDrawMode.Sliced;
 		//sr.sharedMaterial = new Material(Shader.Find("Custom/Gizmo"));
 		/*mr.sharedMaterial = unityMat;

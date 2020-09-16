@@ -48,10 +48,12 @@ public class Controller : MonoBehaviour {
 	public static void StopStopwatch() {
 		if (stopwatch.IsRunning) stopwatch.Stop();
 	}
-
 	public static async UniTask WaitIfNecessary() {
 		if (!stopwatch.IsRunning) stopwatch.Start();
-		if (stopwatch.ElapsedMilliseconds > 16)
+		/*if (stopwatch.ElapsedMilliseconds > 100) {
+			print(stopwatch.ElapsedMilliseconds + " - " + Environment.StackTrace);
+		}*/
+		if (stopwatch.ElapsedMilliseconds > 64)
 			await WaitFrame();
 	}
 
@@ -155,6 +157,8 @@ public class Controller : MonoBehaviour {
 	}
 
 	async Task Init() {
+		Stopwatch w = new Stopwatch();
+		w.Start();
 		LoadState = State.Loading;
 		await Controller.WaitFrame();
 		await loader.LoadInit();
@@ -162,6 +166,8 @@ public class Controller : MonoBehaviour {
 		if (LoadState == State.Error) return;
 		LoadState = State.Initializing;
 		zListManager.Sort();
+		print("Loading finished after " + w.ElapsedMilliseconds + "ms.");
+		w.Stop();
 		await Controller.WaitFrame();
 		DetailedState = "Finished";
 		LoadState = State.Finished;
