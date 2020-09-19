@@ -20,7 +20,7 @@ namespace UbiArt {
 			} else if (typeof(T) == typeof(StringID)) {
 				invalidString = "Empty";
 			}
-			s.Serialize(ref Item, typeof(T), name: name);
+			Item = s.SerializeGeneric<T>(Item, name: name);
 		}
 
 		public static implicit operator FakeEnum<T>(T s) {

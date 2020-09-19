@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,8 +24,8 @@ namespace UbiArt {
 		public abstract void Serialize(ref object obj, Type type, string name = null);
 		public abstract void Serialize(object o, FieldInfo f, Type type = null, string name = null, int? index = null);
 
-		public abstract T Serialize<T>(T obj, string name = null, Options options = Options.None);
-		public abstract T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, Options options = Options.None) where T : ICSerializable, new();
+		public abstract T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None);
+		public abstract T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) where T : ICSerializable, new();
 		
 		public virtual T SerializeChoiceList<T>(T obj, string name = null, Options options = Options.None, string empty = null, List<Tuple<string, StringID>> choices = null) {
 			return Serialize<T>(obj, name: name, options: options);
@@ -33,7 +34,9 @@ namespace UbiArt {
 			return SerializeObject<T>(obj, onPreSerialize: onPreSerialize, name: name, options: options);
 		}
 
-		public abstract void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null);
+		public virtual async UniTask FillCacheForRead(long byteCount) { await UniTask.CompletedTask; }
+
+		public abstract T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null);
 		public abstract void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null);
 		public abstract void SerializeBytes(ref byte[] obj, int numBytes);
 		public abstract void SerializeFileSize(ref uint obj);

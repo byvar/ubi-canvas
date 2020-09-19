@@ -21,18 +21,18 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				s.Serialize(ref read, name: "read");
+				read = s.Serialize<bool>(read, name: "read");
 				if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)
 					&& !s.Embedded
 					&& Settings.s.engineVersion > Settings.EngineVersion.RO
 					&& !(s is CSerializerObjectTagBinary)) {
-					s.Serialize(ref sizeOf, name: "sizeof");
+					sizeOf = s.Serialize<uint>(sizeOf, name: "sizeof");
 				}
 				Pointer pos = s.Position;
 				if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
-					s.Serialize(ref className, name: "NAME");
+					className = s.SerializeObject<StringID>(className, name: "NAME");
 				} else {
-					s.Serialize(ref className, name: "$ClassName$");
+					className = s.SerializeObject<StringID>(className, name: "$ClassName$");
 				}
 				/*s.Serialize(this, GetType().GetField(nameof(className)),
 					(SerializeAttribute)GetType().GetField(nameof(className)).GetCustomAttributes(typeof(SerializeAttribute), false).First());*/
@@ -51,7 +51,7 @@ namespace UbiArt {
 							}
 							type = type.MakeGenericType(typeof(T).GetGenericArguments());
 						}
-						s.Serialize(ref obj, type);
+						obj = s.SerializeGeneric<T>(obj, type);
 					} else {
 						Debug.LogError("CRC " + className.stringID.ToString("X8")
 							+ " found at " + s.Position
@@ -63,7 +63,7 @@ namespace UbiArt {
 				}
 			} else {
 				Type type = typeof(T);
-				s.Serialize(ref obj, type);
+				obj = s.SerializeGeneric<T>(obj, type);
 			}
 			if (s.Length != null) {
 				if (s.Position != s.Length) {

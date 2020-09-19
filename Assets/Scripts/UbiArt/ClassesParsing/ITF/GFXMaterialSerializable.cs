@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 					if (l.msh.ContainsKey(shaderPath.stringID)) {
 						shader = l.msh[shaderPath.stringID];
 					} else {
-						extS.Serialize(ref shader);
+						shader = extS.SerializeObject<GenericFile<GFXMaterialShader_Template>>(shader);
 						l.msh[shaderPath.stringID] = shader;
 					}
 				});

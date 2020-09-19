@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.IO;
+using Cysharp.Threading.Tasks;
+using Ionic.Zlib;
 
 namespace UbiArt.Bundle {
 	public class BundleFile : ICSerializable {
@@ -13,20 +15,65 @@ namespace UbiArt.Bundle {
 		public FilePackMaster packMaster;
 		private Dictionary<Path, ICSerializable> files = new Dictionary<Path, ICSerializable>();
 
+		private Dictionary<Path, byte[]> readFileData = new Dictionary<Path, byte[]>();
+
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref bootHeader);
-			s.Serialize(ref packMaster);
+			bootHeader = s.SerializeObject<BundleBootHeader>(bootHeader, name: nameof(bootHeader));
+			packMaster = s.SerializeObject<FilePackMaster>(packMaster, name: nameof(packMaster));
+		}
+
+		public async UniTask SerializeAsync(CSerializerObject s, string name) {
+			await s.FillCacheForRead(11 * 4);
+			bootHeader = s.SerializeObject<BundleBootHeader>(bootHeader, name: nameof(bootHeader));
+			await s.FillCacheForRead(bootHeader.baseOffset);
+			packMaster = s.SerializeObject<FilePackMaster>(packMaster, name: nameof(packMaster));
 		}
 
 		public BundleFile() {
 			bootHeader = new BundleBootHeader();
 			packMaster = new FilePackMaster();
 		}
+		public Stream GetFileStream(Path path) {
+			if (readFileData.ContainsKey(path)) return new MemoryStream(readFileData[path]);
+			return null;
+		}
+
+		public async UniTask<byte[]> GetFile(Reader reader, Path path) {
+			if (readFileData.ContainsKey(path)) return readFileData[path];
+			if (packMaster != null) {
+				FileHeaderRuntime h = packMaster.files.FirstOrDefault(f => f.Item2 == path)?.Item1;
+				if (h != null) {
+					ulong off = h.offsets[0];
+					uint size = h.zSize != 0 ? h.zSize : h.size;
+					reader.BaseStream.Position = (long)off + bootHeader.baseOffset;
+					if (reader.BaseStream is PartialHttpStream p) {
+						await p.FillCacheForRead((int)size);
+					}
+					byte[] fileBytes = reader.ReadBytes((int)size);
+					if (fileBytes != null) {
+						if (h.zSize != 0) {
+							using (MemoryStream ms = new MemoryStream()) {
+								using (var zlibStream = new ZlibStream(new MemoryStream(fileBytes), CompressionMode.Decompress))
+									zlibStream.CopyTo(ms);
+								fileBytes = ms.ToArray();
+							}
+						}
+						readFileData[path] = fileBytes;
+					}
+					return fileBytes;
+				}
+			}
+			return null;
+		}
+
+		public bool HasReadFile(Path path) {
+			return readFileData.ContainsKey(path);
+		}
 
 		public void AddFile(Path path, ICSerializable data) {
 			files[path] = data;
 		}
-		public async Task WriteBundle(string path) {
+		public async UniTask WriteBundle(string path) {
 			bootHeader.numFiles = (uint)files.Keys.Count;
 			List<byte[]> data = new List<byte[]>();
 			uint curOffset = 0;

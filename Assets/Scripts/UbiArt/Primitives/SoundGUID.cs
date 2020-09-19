@@ -11,7 +11,7 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			Debug.LogError(s.Position + ": Figure out SoundGUID format");
-			s.Serialize<uint>(ref id);
+			id = s.Serialize<uint>(id);
 		}
 
 		public const int Invalid = -1;

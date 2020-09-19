@@ -9,7 +9,7 @@ namespace UbiArt {
 		public uint objectRef;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<uint>(ref objectRef);
+			objectRef = s.Serialize<uint>(objectRef);
 		}
 		public static implicit operator uint(ObjectRef o) {
 			return o?.objectRef ?? 0;

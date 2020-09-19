@@ -216,7 +216,7 @@ namespace UbiArt.ITF {
 					if (l.msh.ContainsKey(MatShader.stringID)) {
 						shader = l.msh[MatShader.stringID];
 					} else {
-						extS.Serialize(ref shader);
+						shader = extS.SerializeObject<GenericFile<GFXMaterialShader_Template>>(shader);
 						l.msh[MatShader.stringID] = shader;
 					}
 				});
@@ -225,7 +225,7 @@ namespace UbiArt.ITF {
 						if (l.fcg.ContainsKey(ConfigName.stringID)) {
 							config = l.fcg[ConfigName.stringID];
 						} else {
-							extS.Serialize(ref config);
+							config = extS.SerializeObject<GenericFile<FriseConfig>>(config);
 							l.fcg[ConfigName.stringID] = config;
 						}
 						if (config != null) {
@@ -236,7 +236,7 @@ namespace UbiArt.ITF {
 						if (l.fcgOrigins.ContainsKey(ConfigName.stringID)) {
 							configOrigins = l.fcgOrigins[ConfigName.stringID];
 						} else {
-							extS.Serialize(ref configOrigins);
+							configOrigins = extS.SerializeObject<FriseOrigins.FriseConfigOrigins>(configOrigins);
 							l.fcgOrigins[ConfigName.stringID] = configOrigins;
 						}
 					}

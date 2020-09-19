@@ -33,9 +33,9 @@ namespace UbiArt {
 
 		public void SerializeClassName(CSerializerObject s) {
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
-				s.Serialize(ref className, name: "NAME");
+				className = s.SerializeObject<StringID>(className, name: "NAME");
 			} else {
-				s.Serialize(ref className, name: "$ClassName$");
+				className = s.SerializeObject<StringID>(className, name: "$ClassName$");
 			}
 		}
 
@@ -61,7 +61,7 @@ namespace UbiArt {
 						}
 						type = type.MakeGenericType(typeof(T).GetGenericArguments());
 					}
-					s.Serialize(ref obj, type);
+					obj = s.SerializeGeneric<T>(obj, type);
 				} else {
 					if (s is CSerializerObjectTagBinary) {
 						Debug.LogWarning("CRC " + className.stringID.ToString("X8")

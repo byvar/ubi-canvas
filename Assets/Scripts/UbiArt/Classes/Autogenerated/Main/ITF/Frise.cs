@@ -128,7 +128,7 @@ namespace UbiArt.ITF {
 					VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
 					if (Settings.s.isCatchThemAll) {
 						meshBuildData = new Nullable<MeshBuildData>();
-						s.Serialize(ref meshBuildData.value, name: "MeshBuildData");
+						meshBuildData.value = s.SerializeObject<MeshBuildData>(meshBuildData.value, name: "MeshBuildData");
 					} else {
 						meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "meshBuildData");
 					}

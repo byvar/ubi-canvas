@@ -107,10 +107,10 @@ namespace UbiArt {
 			f.SetValue(containerObj, obj);
 		}
 
-		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+		public override T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null) {
 			object obj2 = obj;
 			Serialize(ref obj2, type ?? typeof(T), name: name);
-			obj = (T)obj2;
+			return (T)obj2;
 		}
 
 		public override void SerializeBytes(ref byte[] obj, int numBytes) {
@@ -172,14 +172,14 @@ namespace UbiArt {
 		}
 
 		public override void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null) {
-			Serialize<T>(ref obj, type: type, name: name, index: index);
+			obj = SerializeGeneric<T>(obj, type: type, name: name, index: index);
 		}
 
-		public override T Serialize<T>(T obj, string name = null, Options options = Options.None) {
+		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {
 			throw new NotImplementedException();
 		}
 
-		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, Options options = Options.None) {
+		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
 			throw new NotImplementedException();
 		}
 	}

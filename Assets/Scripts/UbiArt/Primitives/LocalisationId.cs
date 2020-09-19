@@ -12,7 +12,7 @@ namespace UbiArt {
 		public LocalisationId(uint id) { this.id = id; }
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<uint>(ref id);
+			id = s.Serialize<uint>(id);
 		}
 
 		public const int Invalid = -1;

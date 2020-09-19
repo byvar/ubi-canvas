@@ -57,6 +57,9 @@ public class UnitySettings {
         string modeString = s.SerializeString(nameof(GameMode), GameMode.ToString(), "mode", "m");
         GameMode = Enum.TryParse<Settings.Mode>(modeString, out Settings.Mode gameMode) ? gameMode : GameMode;
         if (cmdLine) {
+            if (Settings.cmdModeNameDict.ContainsKey(modeString)) {
+                GameMode = Settings.cmdModeNameDict[modeString];
+            }
             if (FileSystem.mode == FileSystem.Mode.Web) {
                 string dir = GameDirsWeb.ContainsKey(GameMode) ? GameDirsWeb[GameMode] : "";
                 GameDirsWeb[GameMode] = s.SerializeString("WebDirectory", dir, "dir", "directory", "folder", "f", "d");

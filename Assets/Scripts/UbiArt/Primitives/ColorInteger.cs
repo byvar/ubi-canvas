@@ -31,7 +31,7 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<uint>(ref colorBytes);
+			colorBytes = s.Serialize<uint>(colorBytes);
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace UbiArt {
 		public float angle;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<float>(ref angle);
+			angle = s.Serialize<float>(angle);
 		}
 
 		// Constructors

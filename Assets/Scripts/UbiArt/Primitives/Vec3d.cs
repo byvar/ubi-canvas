@@ -20,9 +20,9 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<float>(ref x);
-			s.Serialize<float>(ref y);
-			s.Serialize<float>(ref z);
+			x = s.Serialize<float>(x);
+			y = s.Serialize<float>(y);
+			z = s.Serialize<float>(z);
 		}
 		public static Vec3d Zero => new Vec3d();
 		public static Vec3d One => new Vec3d() { x = 1f, y = 1f, z = 1f };

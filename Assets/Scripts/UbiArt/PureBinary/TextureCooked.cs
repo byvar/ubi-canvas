@@ -32,24 +32,24 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				s.Serialize(ref version);
-				s.Serialize(ref signature);
-				s.Serialize(ref hdrSize);
-				s.Serialize(ref texSize);
-				s.Serialize(ref width);
-				s.Serialize(ref height);
-				s.Serialize(ref unk_x);
-				s.Serialize(ref unk_y);
+				version = s.Serialize<uint>(version);
+				signature = s.Serialize<uint>(signature);
+				hdrSize = s.Serialize<uint>(hdrSize);
+				texSize = s.Serialize<uint>(texSize);
+				width = s.Serialize<ushort>(width);
+				height = s.Serialize<ushort>(height);
+				unk_x = s.Serialize<ushort>(unk_x);
+				unk_y = s.Serialize<ushort>(unk_y);
 				if (Settings.s.game == Settings.Game.RA) {
-					s.Serialize(ref unkAdventures);
+					unkAdventures = s.Serialize<uint>(unkAdventures);
 				}
-				s.Serialize(ref texSize2);
-				s.Serialize(ref unk0);
-				s.Serialize(ref unk1);
-				s.Serialize(ref unk2);
-				s.Serialize(ref unk3);
-				s.Serialize(ref unk4);
-				s.Serialize(ref unk5);
+				texSize2 = s.Serialize<uint>(texSize2);
+				unk0 = s.Serialize<uint>(unk0);
+				unk1 = s.Serialize<uint>(unk1);
+				unk2 = s.Serialize<uint>(unk2);
+				unk3 = s.Serialize<uint>(unk3);
+				unk4 = s.Serialize<uint>(unk4);
+				unk5 = s.Serialize<uint>(unk5);
 			} else {
 				s.SerializeFileSize(ref texSize);
 			}

@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 					if (l.msh.ContainsKey(MatShader.stringID)) {
 						shader = l.msh[MatShader.stringID];
 					} else {
-						extS.Serialize(ref shader);
+						shader = extS.SerializeObject<GenericFile<GFXMaterialShader_Template>>(shader);
 						l.msh[MatShader.stringID] = shader;
 					}
 				});

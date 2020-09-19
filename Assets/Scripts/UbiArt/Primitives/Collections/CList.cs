@@ -13,7 +13,7 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)container.Count;
-			s.Serialize<uint>(ref count, name: name);
+			count = s.Serialize<uint>(count, name: name);
 			if(count != container.Count) Resize((int)count);
 			string typeName = "VAL";
 			if (count > 0 && s.GetTagCode(typeof(T)) == 200) {
@@ -22,7 +22,7 @@ namespace UbiArt {
 			for (int i = 0; i < count; i++) {
 				T obj = container[i];
 				if (s.ArrayEntryStart(name: name, index: i)) {
-					s.Serialize<T>(ref obj, name: typeName);
+					obj = s.SerializeGeneric<T>(obj, name: typeName);
 					s.ArrayEntryStop();
 				}
 				container[i] = obj;

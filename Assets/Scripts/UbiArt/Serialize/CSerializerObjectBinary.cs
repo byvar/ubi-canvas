@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -182,7 +183,7 @@ namespace UbiArt {
 			}
 		}
 
-		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+		public override T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null) {
 			Pointer pos = log && name != null ? Position : null;
 			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && name != null && isBigObject) {
@@ -196,6 +197,7 @@ namespace UbiArt {
 			if (log && name != null && !isBigObject) {
 				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 			}
+			return obj;
 		}
 
 		public override void SerializeBytes(ref byte[] obj, int numBytes) {
@@ -214,10 +216,10 @@ namespace UbiArt {
 		}
 
 		public override void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null) {
-			Serialize<T>(ref obj, type: type, name: name, index: index);
+			obj = SerializeGeneric<T>(obj, type: type, name: name, index: index);
 		}
 
-		public override T Serialize<T>(T obj, string name = null, Options options = Options.None) {
+		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {
 			Pointer pos = log && name != null ? Position : null;
 
 			T t = (T)ReadPrimitiveAsObject<T>(name: name, options: options);
@@ -228,7 +230,7 @@ namespace UbiArt {
 			return t;
 		}
 
-		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, Options options = Options.None) {
+		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
 			Pointer pos = log ? Position : null;
 			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && isBigObject && name != null) {
@@ -250,6 +252,13 @@ namespace UbiArt {
 				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + newObj);
 			}
 			return newObj;
+		}
+
+		public override async UniTask FillCacheForRead(long byteCount) {
+			await base.FillCacheForRead(byteCount);
+			if (reader.BaseStream is PartialHttpStream p) {
+				await p.FillCacheForRead(byteCount);
+			}
 		}
 	}
 }

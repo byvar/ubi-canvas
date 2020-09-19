@@ -22,9 +22,9 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			s.SerializeBytes(ref header, 0x210);
-			s.Serialize(ref read, name: "read");
+			read = s.Serialize<bool>(read, name: "read");
 			if (read) { // Read scene
-				s.Serialize(ref CONTENT);
+				CONTENT = s.SerializeObject<RO2_PersistentGameData_Universe>(CONTENT);
 			}
 			s.SerializeBytes(ref footer, 0x190);
 			if (s.Length != null) {

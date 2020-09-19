@@ -202,7 +202,7 @@ namespace UbiArt {
 			}
 		}
 
-		public override void Serialize<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+		public override T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null) {
 			/*Pointer pos = log && index.HasValue ? Position : null;
 			bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && index.HasValue && isBigObject) {
@@ -262,6 +262,7 @@ namespace UbiArt {
 					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
 				}
 			}
+			return obj;
 
 			/*if (log && index.HasValue && !isBigObject) {
 				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
@@ -346,11 +347,11 @@ namespace UbiArt {
 			}
 		}
 
-		public override T Serialize<T>(T obj, string name = null, Options options = Options.None) {
+		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {
 			throw new NotImplementedException();
 		}
 
-		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, Options options = Options.None) {
+		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
 			throw new NotImplementedException();
 		}
 	}

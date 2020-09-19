@@ -33,7 +33,7 @@ namespace UbiArt.Localisation {
 			}
 			for (int i = 0; i < count; i++) {
 				if (s.ArrayEntryStart(name: nameof(unk), index: i)) {
-					s.Serialize<uint>(ref unk[i], name: nameof(unk), index: i);
+					unk[i] = s.Serialize<uint>(unk[i], name: nameof(unk), index: i);
 					s.ArrayEntryStop();
 				}
 			}

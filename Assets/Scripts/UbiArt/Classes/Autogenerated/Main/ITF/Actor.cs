@@ -23,9 +23,9 @@ namespace UbiArt.ITF {
 				if (this is Frise) return;
 				if (Settings.s.isCatchThemAll) {
 					uint lol = 0;
-					s.Serialize<uint>(ref lol, name: "placeholder");
-					s.Serialize<uint>(ref lol, name: "placeholder");
-					s.Serialize<uint>(ref lol, name: "placeholder");
+					lol = s.Serialize<uint>(lol, name: "placeholder");
+					lol = s.Serialize<uint>(lol, name: "placeholder");
+					lol = s.Serialize<uint>(lol, name: "placeholder");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
 					LUA = s.SerializeObject<Path>(LUA, name: "LUA");

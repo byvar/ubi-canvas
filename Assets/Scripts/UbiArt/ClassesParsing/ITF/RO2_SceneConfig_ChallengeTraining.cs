@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 						mode = l.isg[modePath.stringID];
 					} else {
 						extS.log = l.logEnabled;
-						extS.Serialize(ref mode);
+						mode = extS.SerializeObject<GenericFile<CSerializable>>(mode);
 						l.isg[modePath.stringID] = mode;
 					}
 				});

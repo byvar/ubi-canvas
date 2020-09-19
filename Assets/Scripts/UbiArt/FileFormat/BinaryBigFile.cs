@@ -5,24 +5,18 @@ using System.Linq;
 using System.Text;
 
 namespace UbiArt.FileFormat {
-    public class BinarySerializedFile : FileWithPointers {
-		bool ckd;
+    public class BinaryBigFile : FileWithPointers {
 		Path path;
         long length;
-        byte[] data = null;
 
-        public BinarySerializedFile(string name, Path path, bool ckd) : this(name, MapLoader.Loader.GetGameFileStream(path, ckd)) {
+        public BinaryBigFile(string name, Path path) : this(name, FileSystem.GetFileReadStream((MapLoader.Loader.gameDataBinFolder + "/" + path.folder + path.filename))) {
             this.path = path;
-			this.ckd = ckd;
         }
 
-        public BinarySerializedFile(string name, Stream stream) {
+        public BinaryBigFile(string name, Stream stream) {
             this.name = name;
             length = stream.Length;
-            using (Reader fileReader = new Reader(stream, Settings.s.IsLittleEndian)) {
-                data = fileReader.ReadBytes((int)stream.Length);
-            }
-            reader = new Reader(new MemoryStream(data), Settings.s.IsLittleEndian);
+            reader = new Reader(stream, Settings.s.IsLittleEndian);
 			string extension = null;
 			if (name.Contains(".")) {
 				extension = name.Substring(name.LastIndexOf(".") + 1);

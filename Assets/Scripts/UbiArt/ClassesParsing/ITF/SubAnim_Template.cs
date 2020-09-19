@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 							anim = l.anm[name.stringID];
 						} else {
 							extS.log = l.logEnabled;
-							extS.Serialize(ref anim);
+							anim = extS.SerializeObject<AnimTrack>(anim);
 							l.anm[name.stringID] = anim;
 							if (extS.Position != extS.Length) {
 								l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));

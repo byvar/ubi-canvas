@@ -9,7 +9,7 @@ namespace UbiArt {
 		public long id;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<long>(ref id);
+			id = s.Serialize<long>(id);
 		}
 
 		public const int Invalid = -1;

@@ -11,7 +11,7 @@ namespace UbiArt.Bundle {
 		public CList<Pair<FileHeaderRuntime, Path>> files;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref files);
+			files = s.SerializeObject<CList<Pair<FileHeaderRuntime, Path>>>(files);
 		}
 
 		public FilePackMaster() {

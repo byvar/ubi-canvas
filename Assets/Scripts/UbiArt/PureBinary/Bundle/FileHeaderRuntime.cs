@@ -15,17 +15,17 @@ namespace UbiArt.Bundle {
 		public ulong[] offsets;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(ref numOffsets);
-			s.Serialize(ref size);
-			s.Serialize(ref zSize);
-			s.Serialize(ref timeStamp);
+			numOffsets = s.Serialize<uint>(numOffsets);
+			size = s.Serialize<uint>(size);
+			zSize = s.Serialize<uint>(zSize);
+			timeStamp = s.Serialize<ulong>(timeStamp);
 			if (offsets != null && offsets.Length != numOffsets) {
 				Array.Resize(ref offsets, (int)numOffsets);
 			} else if (offsets == null) {
 				offsets = new ulong[numOffsets];
 			}
 			for (int i = 0; i < numOffsets; i++) {
-				s.Serialize(ref offsets[i]);
+				offsets[i] = s.Serialize<ulong>(offsets[i]);
 			}
 		}
 	}

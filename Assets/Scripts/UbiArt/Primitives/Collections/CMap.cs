@@ -14,7 +14,7 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)Count;
-			s.Serialize<uint>(ref count, name: name);
+			count = s.Serialize<uint>(count, name: name);
 			List<KeyValuePair<TKey, TValue>> copy = new Dictionary<TKey, TValue>(container).ToList();
 			//copy.Sort(
 			container.Clear();
@@ -26,8 +26,8 @@ namespace UbiArt {
 					val = copy[i].Value;
 				}
 				if (s.ArrayEntryStart(name: name, index: i)) {
-					s.Serialize(ref key, name: "KEY");
-					s.Serialize(ref val, name: "VAL");
+					key = s.SerializeGeneric(key, name: "KEY");
+					val = s.SerializeGeneric(val, name: "VAL");
 					s.ArrayEntryStop();
 				}
 				Add(key, val);

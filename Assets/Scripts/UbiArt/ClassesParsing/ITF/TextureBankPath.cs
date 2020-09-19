@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 					if (l.msh.ContainsKey(materialShader.stringID)) {
 						shader = l.msh[materialShader.stringID];
 					} else {
-						extS.Serialize(ref shader);
+						shader = extS.SerializeObject<GenericFile<GFXMaterialShader_Template>>(shader);
 						l.msh[materialShader.stringID] = shader;
 					}
 				});
@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 							pbk = l.pbk[patchBank.stringID];
 						} else {
 							extS.log = l.logEnabled;
-							extS.Serialize(ref pbk);
+							pbk = extS.SerializeObject<AnimPatchBank>(pbk);
 							l.pbk[patchBank.stringID] = pbk;
 							if (extS.Position != extS.Length) {
 								l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));

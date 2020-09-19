@@ -14,7 +14,7 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)Count;
-			s.Serialize<uint>(ref count, name: name);
+			count = s.Serialize<uint>(count, name: name);
 			List<KeyValuePair<TKey, Generic<TValue>>> copy = new Dictionary<TKey, Generic<TValue>>(container).ToList();
 			//copy.Sort(
 			container.Clear();
@@ -28,14 +28,14 @@ namespace UbiArt {
 				if (s.ArrayEntryStart(name: name, index: i)) {
 					if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 						val.SerializeClassName(s);
-						s.Serialize(ref key, name: "KEY");
+						key = s.SerializeGeneric(key, name: "KEY");
 						val.serializeClassName = false;
-						s.Serialize(ref val, name: "VAL");
+						val = s.SerializeGeneric(val, name: "VAL");
 						val.serializeClassName = true;
 					} else {
 						// Class name is serialized after key in origins, so like a normal CMap<TKey, Generic<TValue>>
-						s.Serialize(ref key, name: "key");
-						s.Serialize(ref val, name: "VAL");
+						key = s.SerializeGeneric(key, name: "KEY");
+						val = s.SerializeGeneric(val, name: "VAL");
 					}
 					s.ArrayEntryStop();
 				}

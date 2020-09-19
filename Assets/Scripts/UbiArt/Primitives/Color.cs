@@ -22,10 +22,10 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<float>(ref b);
-			s.Serialize<float>(ref g);
-			s.Serialize<float>(ref r);
-			s.Serialize<float>(ref a);
+			b = s.Serialize<float>(b);
+			g = s.Serialize<float>(g);
+			r = s.Serialize<float>(r);
+			a = s.Serialize<float>(a);
 		}
 
 		public static implicit operator Color(UnityEngine.Color v) {

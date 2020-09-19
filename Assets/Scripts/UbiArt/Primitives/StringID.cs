@@ -9,7 +9,7 @@ namespace UbiArt {
 		public uint stringID;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<uint>(ref stringID);
+			stringID = s.Serialize<uint>(stringID);
 		}
 
 		public bool IsNull {

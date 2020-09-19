@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 				MapLoader l = MapLoader.Loader;
 				l.Load(archive, path.filename, (extS) => {
 					extS.log = l.logEnabled;
-					extS.Serialize(ref sceneFile);
+					sceneFile = extS.SerializeObject<ContainerFile<Scene>>(sceneFile);
 				});
 			}
 		}

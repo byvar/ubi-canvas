@@ -29,7 +29,7 @@ public class UnityWindowActor : UnityWindow {
 				}
 				rect = EditorGUI.PrefixLabel(rect, new GUIContent("Actor file"));
 				if (EditorGUI.DropdownButton(rect, new GUIContent(buttonString), FocusType.Passive)) {
-					string directory = (MapLoader.Loader.gameDataBinFolder + "/" + Settings.s.ITFDirectory).Replace(System.IO.Path.DirectorySeparatorChar, '/');
+					string directory = (MapLoader.Loader.gameDataBinFolder + Settings.s.ITFDirectory).Replace(System.IO.Path.DirectorySeparatorChar, '/');
 					if (!directory.EndsWith("/")) directory += "/";
 					while (directory.Contains("//")) directory = directory.Replace("//", "/");
 

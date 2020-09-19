@@ -18,8 +18,8 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<float>(ref x);
-			s.Serialize<float>(ref y);
+			x = s.Serialize<float>(x);
+			y = s.Serialize<float>(y);
 		}
 
 		public override string ToString() {

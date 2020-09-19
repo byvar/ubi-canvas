@@ -13,10 +13,10 @@ namespace UbiArt {
 		public float w;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize<float>(ref x);
-			s.Serialize<float>(ref y);
-			s.Serialize<float>(ref z);
-			s.Serialize<float>(ref w);
+			x = s.Serialize<float>(x);
+			y = s.Serialize<float>(y);
+			z = s.Serialize<float>(z);
+			w = s.Serialize<float>(w);
 		}
 		public static Vec4d Zero => new Vec4d();
 		public static Vec4d One => new Vec4d() { x = 1f, y = 1f, z = 1f, w = 1f };

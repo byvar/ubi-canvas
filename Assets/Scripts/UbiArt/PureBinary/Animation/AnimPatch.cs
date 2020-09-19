@@ -24,7 +24,7 @@ namespace UbiArt.Animation {
 			}
 			for (int i = 0; i < numPoints; i++) {
 				if (s.ArrayEntryStart(name: "points", index: i)) {
-					s.Serialize<Link>(ref points[i], name: "VAL");
+					points[i] = s.SerializeObject<Link>(points[i], name: "VAL");
 					s.ArrayEntryStop();
 				}
 			}

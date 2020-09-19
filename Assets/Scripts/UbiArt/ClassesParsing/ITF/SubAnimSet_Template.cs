@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 										resources[j] = l.tex[path.stringID];
 									} else {
 										TextureCooked temp = null;
-										extS.Serialize(ref temp);
+										temp = extS.SerializeObject<TextureCooked>(temp);
 										l.tex[path.stringID] = temp;
 										temp.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
 										resources[j] = temp;
@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 									} else {
 										extS.log = l.logEnabled;
 										AnimTrack temp = null;
-										extS.Serialize(ref temp);
+										temp = extS.SerializeObject<AnimTrack>(temp);
 										l.anm[path.stringID] = temp;
 										resources[j] = temp;
 										l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
@@ -51,7 +51,7 @@ namespace UbiArt.ITF {
 									} else {
 										extS.log = l.logEnabled;
 										AnimSkeleton temp = null;
-										extS.Serialize(ref temp);
+										temp = extS.SerializeObject<AnimSkeleton>(temp);
 										l.skl[path.stringID] = temp;
 										resources[j] = temp;
 										l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
@@ -65,7 +65,7 @@ namespace UbiArt.ITF {
 									} else {
 										extS.log = l.logEnabled;
 										AnimPatchBank temp = null;
-										extS.Serialize(ref temp);
+										temp = extS.SerializeObject<AnimPatchBank>(temp);
 										l.pbk[path.stringID] = temp;
 										resources[j] = temp;
 										l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));

@@ -88,12 +88,12 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			// null path: 0, 0, -1, 0
-			s.Serialize<string>(ref folder);
-			s.Serialize<string>(ref filename);
-			s.Serialize<StringID>(ref stringID);
+			folder = s.Serialize<string>(folder);
+			filename = s.Serialize<string>(filename);
+			stringID = s.SerializeObject<StringID>(stringID);
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				s.Serialize<uint>(ref flags);
-				if (flags != 0) MapLoader.Loader.print("Path with nonzero flags: " + this + " - " + flags);
+				flags = s.Serialize<uint>(flags);
+				//if (flags != 0) MapLoader.Loader.print("Path with nonzero flags: " + this + " - " + flags);
 			}
 		}
 

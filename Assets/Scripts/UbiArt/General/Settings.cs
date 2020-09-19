@@ -42,7 +42,9 @@ namespace UbiArt {
 		public bool usesSerializeFlags = true;
 		public bool isCatchThemAll = false;
 		public bool cooked = true;
+		public bool loadFromIPK = true;
 		public static Encoding StringEncoding { get; set; } = Encoding.UTF8;
+		public string[] bundles;
 
 		public bool IsLittleEndian {
 			get { return endian == Endian.Little; }
@@ -50,7 +52,7 @@ namespace UbiArt {
 		public string PlatformString {
 			get {
 				switch (platform) {
-					case Platform.PC: return "pc";
+					case Platform.PC: return "PC";
 					case Platform.Android: return "android";
 					case Platform.MacOS: return "macos";
 					default: return null;
@@ -61,9 +63,9 @@ namespace UbiArt {
 			get {
 				if (cooked) {
 					if (engineVersion > EngineVersion.RO) {
-						return "cache/itf_cooked/" + PlatformString + "/";
+						return "cache/itf_cooked/" + PlatformString.ToLower() + "/";
 					} else {
-						return "itf_cooked/" + PlatformString + "/";
+						return "itf_cooked/" + PlatformString.ToLower() + "/";
 					}
 				} else {
 					return "";
@@ -86,14 +88,18 @@ namespace UbiArt {
 			platform = Platform.PC,
 			endian = Endian.Big,
 			versionFlags = VersionFlags.Origins,
-			usesSerializeFlags = false
+			usesSerializeFlags = false,
+			bundles = new string[] { "bundle" }
 		};
 		public static Settings RLPC = new Settings() {
 			engineVersion = EngineVersion.RL,
 			game = Game.RL,
 			platform = Platform.PC,
 			endian = Endian.Big,
-			versionFlags = VersionFlags.Legends
+			versionFlags = VersionFlags.Legends,
+			bundles = new string[] {
+				"persistentLoading", "Bundle"
+			}
 		};
 		public static Settings RAIOS = new Settings() {
 			engineVersion = EngineVersion.RL,
@@ -109,7 +115,36 @@ namespace UbiArt {
 			platform = Platform.Android,
 			endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures,
-			serializerType = SerializerType.TagBinary
+			serializerType = SerializerType.TagBinary,
+			bundles = new string[] {
+				"bundle",
+				"bundlemain",
+				"bundleonboardingadv1",
+				"bundleonboardingadv2",
+				"bundleonboardingadv3",
+				"bundlepersonal",
+				"bundlemedieval",
+				"bundleshaolin",
+				"bundletoadstory",
+				"bundleunderwater",
+				"bundledesert",
+				"bundlegreece",
+				"bundlelod",
+				"fulllogic",
+				"fulllogicmain",
+				"fulllogiconboardingadv1",
+				"fulllogiconboardingadv2",
+				"fulllogiconboardingadv3",
+				"fulllogicpersonal",
+				"fulllogicmedieval",
+				"fulllogicshaolin",
+				"fulllogictoadstory",
+				"fulllogicunderwater",
+				"fulllogicdesert",
+				"fulllogicgreece",
+				"fulllogiclod"
+
+			}
 		};
 		public static Settings RMMac = new Settings() {
 			engineVersion = EngineVersion.RL,
@@ -117,7 +152,8 @@ namespace UbiArt {
 			platform = Platform.MacOS,
 			endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures,
-			serializerType = SerializerType.TagBinary
+			serializerType = SerializerType.TagBinary,
+			bundles = new string[] { "bundle" }
 		};
 		public static Settings RLVita = new Settings() {
 			engineVersion = EngineVersion.RL,

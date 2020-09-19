@@ -9,6 +9,9 @@ using System.Collections;
 using System.Text;
 using System.Diagnostics;
 using Cysharp.Threading.Tasks;
+using UbiArt.Bundle;
+using JetBrains.Annotations;
+using UbiArt.UV;
 
 namespace UbiArt {
 	public class MapLoader {
@@ -43,6 +46,7 @@ namespace UbiArt {
 		public Localisation.Localisation_Template localisation;
 		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
 		public List<Tuple<string, FileWithPointers>> virtualFiles = new List<Tuple<string, FileWithPointers>>();
+
 		public delegate void SerializeAction(CSerializerObject s);
 		public struct ObjectPlaceHolder {
 			public Path path;
@@ -60,6 +64,12 @@ namespace UbiArt {
 			}
 		}
 		public Queue<ObjectPlaceHolder> pathsToLoad = new Queue<ObjectPlaceHolder>();
+
+		// Load from IPK
+		public Dictionary<string, BinaryBigFile> bigFiles = new Dictionary<string, BinaryBigFile>();
+		public Dictionary<string, BundleFile> bundles = new Dictionary<string, BundleFile>();
+
+		// Types
 
 		public Dictionary<StringID, GenericFile<ITF.Actor_Template>> tpl = new Dictionary<StringID, GenericFile<ITF.Actor_Template>>();
 		public Dictionary<StringID, GenericFile<ITF.FriseConfig>> fcg = new Dictionary<StringID, GenericFile<ITF.FriseConfig>>();
@@ -95,17 +105,87 @@ namespace UbiArt {
 			}
 		}
 
+		protected bool GameFileExists(Path p, bool ckd) {
+			string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
+			if (Settings.s.loadFromIPK && Settings.s.bundles != null) {
+				Path path = ckd ? new Path(cookedFolder + p.folder, p.filename + (ckd ? ".ckd" : ""), cooked: true) : p;
+				string[] bnames = Settings.s.bundles;
+				foreach (var bname in bnames) {
+					if (bundles.ContainsKey(bname) && bundles[bname].HasReadFile(path)) return true;
+				}
+				return false;
+			} else {
+				return FileSystem.FileExists(gameDataBinFolder + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+			}
+		}
+		public Stream GetGameFileStream(Path p, bool ckd) {
+			string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
+			if (Settings.s.loadFromIPK && Settings.s.bundles != null) {
+				Path path = ckd ? new Path(cookedFolder + p.folder, p.filename + (ckd ? ".ckd" : ""), cooked: true) : p;
+				string[] bnames = Settings.s.bundles;
+				foreach (var bname in bnames) {
+					if (bundles.ContainsKey(bname) && bundles[bname].HasReadFile(path)) return bundles[bname].GetFileStream(path);
+				}
+				return null;
+			} else {
+				return FileSystem.GetFileReadStream(gameDataBinFolder + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+			}
+		}
+		protected async UniTask PrepareGameFile(Path p, bool ckd) {
+			string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
+			if (Settings.s.loadFromIPK && Settings.s.bundles != null) {
+				string s = loadingState;
+				loadingState = "Downloading\n" + p.FullPath;
+				await PrepareGameFile_Internal();
+				loadingState = s;
+
+				async UniTask PrepareGameFile_Internal() {
+					Path path = ckd ? new Path(cookedFolder + p.folder, p.filename + (ckd ? ".ckd" : ""), cooked: true) : p;
+					string[] bnames = Settings.s.bundles;
+					// Loop 1: try to find an already loaded bundle and an already loaded file
+					foreach (var bname in bnames) {
+						if (bundles.ContainsKey(bname) && bundles[bname].HasReadFile(path)) return;
+					}
+					// Loop 2: try to find an already loaded bundle and an already loaded file
+					foreach (var bname in bnames) {
+						if (bundles.ContainsKey(bname)) {
+							byte[] data = await bundles[bname].GetFile(bigFiles[bname].reader, path);
+							if (data != null) return;
+						}
+					}
+					// Loop 3: load new bundles until you find the file
+					foreach (var bname in bnames) {
+						if (!bundles.ContainsKey(bname)) {
+							string fullbname = gameDataBinFolder + bname + "_" + Settings.s.PlatformString + ".ipk";
+							await PrepareBigFile(fullbname, 1024);
+							if (!FileSystem.FileExists(fullbname)) continue;
+							bigFiles[bname] = new BinaryBigFile(bname, FileSystem.GetFileReadStream(fullbname));
+							bundles[bname] = new BundleFile();
+							await bundles[bname].SerializeAsync(bigFiles[bname].serializer, bname);
+						}
+						if (bundles.ContainsKey(bname)) {
+							byte[] data = await bundles[bname].GetFile(bigFiles[bname].reader, path);
+							if (data != null) return;
+						}
+					}
+				}
+			} else {
+				await PrepareFile(gameDataBinFolder + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+			}
+		}
+
 		public async UniTask LoadInit() {
+			if (!gameDataBinFolder.EndsWith("/")) gameDataBinFolder += "/";
 			try {
 
 				Path pAtlas = new Path("", "atlascontainer.ckd");
 				Load(pAtlas, (CSerializerObject s) => {
-					s.Serialize(ref uvAtlasManager);
+					uvAtlasManager = s.SerializeObject<UVAtlasManager>(uvAtlasManager);
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 				});
 				Path pLoc = new Path("enginedata/localisation/", "localisation.loc8") { specialUncooked = true };
 				Load(pLoc, (CSerializerObject s) => {
-					s.Serialize(ref localisation);
+					localisation = s.SerializeObject<Localisation.Localisation_Template>(localisation);
 					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 
 				});
@@ -135,7 +215,7 @@ namespace UbiArt {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
 						s.log = logEnabled;
-						s.Serialize(ref mainScene);
+						mainScene = s.SerializeObject<ContainerFile<ITF.Scene>>(mainScene);
 						isc[p.stringID] = mainScene;
 						Settings.s.isCatchThemAll = false;
 					});
@@ -144,9 +224,7 @@ namespace UbiArt {
 				if (mainScene != null && mainScene.obj != null) {
 					GameObject sceneGao = await mainScene.obj.GetGameObject();
 				}
-			} catch (Exception ex) {
-				UnityEngine.Debug.LogError(ex.ToString());
-				throw;
+			} finally {
 			}
 		}
 		protected async UniTask LoadLoop() {
@@ -161,8 +239,8 @@ namespace UbiArt {
 						if (!files.ContainsKey(id)) {
 							bool ckd = Settings.s.cooked && !o.path.specialUncooked;
 							string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
-							await PrepareFile(gameDataBinFolder + "/" + cookedFolder + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""));
-							if (FileSystem.FileExists(gameDataBinFolder + "/" + cookedFolder + o.path.folder + o.path.filename + (ckd ? ".ckd" : ""))) {
+							await PrepareGameFile(o.path, ckd);
+							if (GameFileExists(o.path, ckd)) {
 								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
 								loadingState = state + "\n" + o.path.FullPath;
 								await Controller.WaitIfNecessary();
@@ -231,6 +309,7 @@ namespace UbiArt {
 				case "tga":
 				case "png":
 				case "loc8":
+				case "ipk":
 				case null:
 					return true;
 				default:
@@ -277,7 +356,7 @@ namespace UbiArt {
 						a = l.act[p.stringID];
 					} else {
 						extS.log = l.logEnabled;
-						extS.Serialize(ref a);
+						a = extS.SerializeObject<ContainerFile<ITF.Actor>>(a);
 						l.act[p.stringID] = a;
 					}
 				});
@@ -311,7 +390,7 @@ namespace UbiArt {
 					curIsg = isg[pGeneric.stringID];
 				} else {
 					s.log = logEnabled;
-					s.Serialize(ref curIsg);
+					curIsg = s.SerializeObject<GenericFile<CSerializable>>(curIsg);
 					isg[pGeneric.stringID] = curIsg;
 				}
 				onResult(curIsg);
@@ -323,7 +402,7 @@ namespace UbiArt {
 			Load(pGeneric, (CSerializerObject s) => {
 				RO2_SaveData saveData = null;
 				s.log = logEnabled;
-				s.Serialize(ref saveData);
+				saveData = s.SerializeObject<RO2_SaveData>(saveData);
 				onResult?.Invoke(saveData);
 				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 			});
@@ -333,7 +412,7 @@ namespace UbiArt {
 			Load(pGeneric, (CSerializerObject s) => {
 				Ray_SaveData saveData = null;
 				s.log = logEnabled;
-				s.Serialize(ref saveData);
+				saveData = s.SerializeObject<Ray_SaveData>(saveData);
 				onResult?.Invoke(saveData);
 				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
 			});

@@ -86,7 +86,7 @@ namespace UbiArt.Animation {
 							skel = l.skl[skeleton.Item2.stringID];
 						} else {
 							extS.log = l.logEnabled;
-							extS.Serialize(ref skel);
+							skel = extS.SerializeObject<AnimSkeleton>(skel);
 							l.skl[skeleton.Item2.stringID] = skel;
 							l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 						}
@@ -107,7 +107,7 @@ namespace UbiArt.Animation {
 							skel = l.skl[p.stringID];
 						} else {
 							extS.log = l.logEnabled;
-							extS.Serialize(ref skel);
+							skel = extS.SerializeObject<AnimSkeleton>(skel);
 							l.skl[p.stringID] = skel;
 							l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 						}
@@ -128,7 +128,7 @@ namespace UbiArt.Animation {
 				if (l.tex.ContainsKey(path.stringID)) {
 					texs[index] = l.tex[path.stringID];
 				} else {
-					extS.Serialize(ref texs[index]);
+					texs[index] = extS.SerializeObject<TextureCooked>(texs[index]);
 					TextureCooked tex = texs[index];
 					tex.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
 					l.tex[path.stringID] = tex;
