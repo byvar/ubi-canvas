@@ -200,8 +200,8 @@ namespace UbiArt {
 			return obj;
 		}
 
-		public override void SerializeBytes(ref byte[] obj, int numBytes) {
-			obj = reader.ReadBytes(numBytes);
+		public override byte[] SerializeBytes(byte[] obj, int numBytes) {
+			return reader.ReadBytes(numBytes);
 		}
 
 		public override bool ArrayEntryStart(string name, int index) {
@@ -211,12 +211,12 @@ namespace UbiArt {
 			return base.ArrayEntryStart(name, index);
 		}
 
-		public override void SerializeFileSize(ref uint obj) {
-			obj = (uint)reader.BaseStream.Length;
+		public override uint SerializeFileSize(uint obj) {
+			return (uint)reader.BaseStream.Length;
 		}
 
-		public override void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null) {
-			obj = SerializeGeneric<T>(obj, type: type, name: name, index: index);
+		public override T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null) {
+			return SerializeGeneric<T>(obj, type: type, name: name, index: index);
 		}
 
 		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {

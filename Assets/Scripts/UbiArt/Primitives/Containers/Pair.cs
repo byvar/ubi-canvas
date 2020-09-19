@@ -13,8 +13,8 @@ namespace UbiArt {
 		public T2 Item2;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Serialize(this, GetType().GetField(nameof(Item1)), name: name, index: 0);
-			s.Serialize(this, GetType().GetField(nameof(Item2)), name: name, index: 1);
+			Item1 = s.SerializeGeneric<T1>(Item1, name: name, index: 0);
+			Item2 = s.SerializeGeneric<T2>(Item2, name: name, index: 1);
 		}
 		public Pair() { }
 		public Pair(T1 Item1, T2 Item2) {

@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -123,7 +122,7 @@ namespace UbiArt.ITF {
 					mesh.SetUVs(1, meshBuildData.value.AnimVertexList.Select(v => v.uv2.UnityVector).ToList());
 					mesh.SetUVs(2, meshBuildData.value.AnimVertexList.Select(v => v.uv3.UnityVector).ToList());
 					mesh.SetUVs(3, meshBuildData.value.AnimVertexList.Select(v => (Vector2)v.uv4).ToList());
-					mesh.colors = meshBuildData.value.AnimVertexList.Select(v => (UnityEngine.Color)v.color.Color).ToArray();
+					mesh.colors = meshBuildData.value.AnimVertexList.Select(v => v.color.Color).ToArray();
 					//mesh.SetUVs(4, meshBuildData.value.AnimVertexList.Select(v => v.color.Vector).ToList());
 					//MapLoader.Loader.print(meshBuildData.value.StaticVertexList[0].color.Vector);
 					MeshFilter mf = mesh_anim.AddComponent<MeshFilter>();

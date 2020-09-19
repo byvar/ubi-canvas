@@ -37,9 +37,9 @@ namespace UbiArt {
 		public virtual async UniTask FillCacheForRead(long byteCount) { await UniTask.CompletedTask; }
 
 		public abstract T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null);
-		public abstract void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null);
-		public abstract void SerializeBytes(ref byte[] obj, int numBytes);
-		public abstract void SerializeFileSize(ref uint obj);
+		public abstract T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null);
+		public abstract byte[] SerializeBytes(byte[] obj, int numBytes);
+		public abstract uint SerializeFileSize(uint obj);
 		public abstract Pointer Position {
 			get;
 		}

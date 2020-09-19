@@ -21,12 +21,12 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.SerializeBytes(ref header, 0x210);
+			header = s.SerializeBytes(header, 0x210);
 			read = s.Serialize<bool>(read, name: "read");
 			if (read) { // Read scene
 				CONTENT = s.SerializeObject<Ray_PersistentGameData_Universe>(CONTENT);
 			}
-			s.SerializeBytes(ref footer, 0x190);
+			footer = s.SerializeBytes(footer, 0x190);
 			if (s.Length != null) {
 				if (s.Position != s.Length) {
 					throw new Exception("File reading check failed. Position:" + s.Position + " - Length:" + s.Length);

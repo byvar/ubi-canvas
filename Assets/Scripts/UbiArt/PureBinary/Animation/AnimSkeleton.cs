@@ -54,7 +54,7 @@ namespace UbiArt.Animation {
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				byteArray = s.SerializeObject<CArray<CArray<byte>>>(byteArray, name: "byteArray");
 			} else {
-				s.SerializeBytes(ref byteArrayOrigins, 8);
+				byteArrayOrigins = s.SerializeBytes(byteArrayOrigins, 8);
 			}
 			if (Settings.s.game == Settings.Game.RL) {
 				bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");

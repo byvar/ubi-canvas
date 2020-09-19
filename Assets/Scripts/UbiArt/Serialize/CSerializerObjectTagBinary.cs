@@ -269,9 +269,9 @@ namespace UbiArt {
 			}*/
 		}
 
-		public override void SerializeBytes(ref byte[] obj, int numBytes) {
-			if (fakeSerializeMode) return;
-			obj = reader.ReadBytes(numBytes);
+		public override byte[] SerializeBytes(byte[] obj, int numBytes) {
+			if (fakeSerializeMode) return obj;
+			return reader.ReadBytes(numBytes);
 		}
 
 		public override bool ArrayEntryStart(string name, int index) {
@@ -327,11 +327,11 @@ namespace UbiArt {
 			}
 		}
 
-		public override void SerializeFileSize(ref uint obj) {
-			obj = (uint)reader.BaseStream.Length;
+		public override uint SerializeFileSize(uint obj) {
+			return (uint)reader.BaseStream.Length;
 		}
 
-		public override void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null) {
+		public override T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null) {
 			Pointer pos = log && name != null ? Position : null;
 			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && name != null && isBigObject) {
@@ -345,6 +345,7 @@ namespace UbiArt {
 			if (log && name != null && !isBigObject) {
 				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 			}
+			return obj;
 		}
 
 		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {

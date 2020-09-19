@@ -9,9 +9,9 @@ namespace UbiArt {
 	public class ColorInteger : ICSerializable {
 		public uint colorBytes;
 
-		public Color Color {
+		public UnityEngine.Color Color {
 			get {
-				return new Color(
+				return new UnityEngine.Color(
 					((colorBytes >> 0) & 0xFF) / 255f,
 					((colorBytes >> 8) & 0xFF) / 255f,
 					((colorBytes >> 16) & 0xFF) / 255f,

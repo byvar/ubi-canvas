@@ -90,20 +90,22 @@ namespace UbiArt {
 			throw new NotImplementedException();
 		}
 
-		public override void SerializeBytes(ref byte[] obj, int numBytes) {
+		public override byte[] SerializeBytes(byte[] obj, int numBytes) {
 			writer.Write(obj);
+			return obj;
 		}
 
-		public override void SerializeFileSize(ref uint obj) {
+		public override uint SerializeFileSize(uint obj) {
 			//throw new NotImplementedException();
+			return obj;
 		}
 
 		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
 			throw new NotImplementedException();
 		}
 
-		public override void SerializePureBinary<T>(ref T obj, Type type = null, string name = null, int? index = null) {
-			obj = SerializeGeneric<T>(obj, type: type, name: name, index: index);
+		public override T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null) {
+			return SerializeGeneric<T>(obj, type: type, name: name, index: index);
 		}
 	}
 }

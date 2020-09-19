@@ -31,8 +31,9 @@ namespace UbiArt.ITF {
 				if (l.tex.ContainsKey(path.stringID)) {
 					f.SetValue(this, l.tex[path.stringID]);
 				} else {
-					extS.Serialize(this, f);
 					TextureCooked tex = (TextureCooked)f.GetValue(this);
+					tex = extS.SerializeObject<TextureCooked>(tex);
+					f.SetValue(this, tex);
 					tex.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
 					l.tex[path.stringID] = tex;
 					if (extS.Position != extS.Length) {

@@ -51,9 +51,9 @@ namespace UbiArt {
 				unk4 = s.Serialize<uint>(unk4);
 				unk5 = s.Serialize<uint>(unk5);
 			} else {
-				s.SerializeFileSize(ref texSize);
+				texSize = s.SerializeFileSize(texSize);
 			}
-			s.SerializeBytes(ref texData, (int)texSize);
+			texData = s.SerializeBytes(texData, (int)texSize);
 		}
 
 		private Texture2D texture;
@@ -62,13 +62,25 @@ namespace UbiArt {
 		public Texture2D Texture {
 			get {
 				if (texture == null && texData != null) {
-					//texture = new Texture2D(width, height);
-					using (DDSImage dds = new DDSImage(texData)) {
-						texture = dds.BitmapImage;
-						/*if (texture.width != width || texture.height != height) {
-							MapLoader.Loader.print("Width: " + texture.width + " - " + width);
-							MapLoader.Loader.print("Height: " + texture.height + " - " + height);
-						}*/
+					// For jpg & png:
+					/*texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+					texture.LoadImage(texData);
+					texture.Apply();*/
+					// Other formats:
+					/*using (var img = new MagickImage(texData, MagickFormat.Dds)) {
+						var pixels = img.GetPixels().GetValues();
+						texture = new Texture2D(img.Width, img.Height, TextureFormat.ARGB32, false);
+						texture.LoadImage(img.ToByteArray(MagickFormat.Png32));
+						texture.Apply();
+					}*/
+					if (texture == null) {
+						using (DDSImage dds = new DDSImage(texData)) {
+							texture = dds.BitmapImage;
+							/*if (texture.width != width || texture.height != height) {
+								MapLoader.Loader.print("Width: " + texture.width + " - " + width);
+								MapLoader.Loader.print("Height: " + texture.height + " - " + height);
+							}*/
+						}
 					}
 					//texture = LoadTextureDXT(texData);
 				}

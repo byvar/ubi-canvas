@@ -16,8 +16,7 @@ namespace UbiArt.FileFormat.Texture {
 			if (ddsImage == null) return;
 			if (ddsImage.Length == 0) return;
 
-			using (MemoryStream stream = new MemoryStream(ddsImage.Length)) {
-				stream.Write(ddsImage, 0, ddsImage.Length);
+			using (MemoryStream stream = new MemoryStream(ddsImage)) {
 				stream.Seek(0, SeekOrigin.Begin);
 
 				using (BinaryReader reader = new BinaryReader(stream)) {
@@ -78,7 +77,8 @@ namespace UbiArt.FileFormat.Texture {
 			} else {
 				uint bps = header.width * header.pixelformat.rgbbitcount / 8;
 				compsize = bps * header.height * header.depth;
-				compdata = new byte[compsize];
+				compdata = reader.ReadBytes((int)compsize);
+				/*compdata = new byte[compsize];
 
 				MemoryStream mem = new MemoryStream((int)compsize);
 
@@ -92,7 +92,7 @@ namespace UbiArt.FileFormat.Texture {
 				mem.Seek(0, SeekOrigin.Begin);
 
 				mem.Read(compdata, 0, compdata.Length);
-				mem.Close();
+				mem.Close();*/
 			}
 
 			return compdata;
