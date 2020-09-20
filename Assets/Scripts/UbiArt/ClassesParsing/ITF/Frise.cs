@@ -58,6 +58,7 @@ namespace UbiArt.ITF {
 						}*/
 						int trisCount = meshBuildData.value.StaticIndexList[m].List.Count;
 						int[] tris = new int[trisCount];
+						//tris = meshBuildData.value.StaticIndexList[m].List.Select(us => (int)us).ToArray();
 						for (int i = 0; i < trisCount / 3; i++) {
 							tris[(i * 3) + 0] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 0];
 							tris[(i * 3) + 1] = meshBuildData.value.StaticIndexList[m].List[(i * 3) + 1];
@@ -104,7 +105,7 @@ namespace UbiArt.ITF {
 						}
 						mats[m] = mat;
 					}
-					mf.mesh = mesh;
+					mf.sharedMesh = mesh;
 					mr.sharedMaterials = mats;
 					mr_static = mr;
 				}
@@ -186,7 +187,7 @@ namespace UbiArt.ITF {
 						}
 						mats[m] = mat;
 					}
-					mf.mesh = mesh;
+					mf.sharedMesh = mesh;
 					mr.sharedMaterials = mats;
 					mr_anim = mr;
 				}

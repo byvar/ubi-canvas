@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using UbiArt;
-using UnityEditor;
 using UnityEngine;
 
 /// <summary>
 /// Settings for UbiCanvas
 /// </summary>
-[InitializeOnLoad]
+#if UNITY_EDITOR
+[UnityEditor.InitializeOnLoad]
+#endif
 public class UnitySettings {
 	private const string editorPrefsPrefix = "UbiCanvas.";
 	private const string settingsFile = "Settings.txt";

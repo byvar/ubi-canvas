@@ -32,27 +32,27 @@ namespace UbiArt {
 		#region List Interface
 		public T this[int index] {
 			get {
-				return ((IList<T>)container)[index];
+				return container[index];
 			}
 			set {
-				((IList<T>)container)[index] = value;
+				container[index] = value;
 			}
 		}
 
-		public int Count => ((IList<T>)container).Count;
+		public int Count => container.Count;
 
 		public bool IsReadOnly => ((IList<T>)container).IsReadOnly;
 
 		public void Add(T item) {
-			((IList<T>)container).Add(item);
+			container.Add(item);
 		}
 
 		public void Clear() {
-			((IList<T>)container).Clear();
+			container.Clear();
 		}
 
 		public bool Contains(T item) {
-			return ((IList<T>)container).Contains(item);
+			return container.Contains(item);
 		}
 
 		public void CopyTo(T[] array, int arrayIndex) {
@@ -90,7 +90,7 @@ namespace UbiArt {
 		}
 
 		IEnumerator IEnumerable.GetEnumerator() {
-			return ((IList<T>)container).GetEnumerator();
+			return container.GetEnumerator();
 		}
 		#endregion
 	}

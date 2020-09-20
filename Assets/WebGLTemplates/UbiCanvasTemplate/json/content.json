@@ -1,0 +1,51 @@
+{
+	"categories": [
+		{
+			"name": "Rayman series",
+			"games": [
+				{
+					"title": "Rayman Legends",
+					"viewer": "ubi-canvas",
+					"json": "rl",
+					"image": ".\/img\/logo\/rl.png",
+					"versions": [
+						{
+							"json": "pc",
+							"image": ".\/img\/version\/pc.png",
+							"name": "PC",
+							"folder": "rl_pc"
+						}
+					]
+				},
+				{
+					"title": "Rayman Adventures",
+					"viewer": "ubi-canvas",
+					"json": "ra",
+					"image": ".\/img\/logo\/ra.png",
+					"versions": [
+						{
+							"json": "android",
+							"image": ".\/img\/version\/android.png",
+							"name": "Android",
+							"folder": "ra_android"
+						}
+					]
+				},
+				{
+					"title": "Rayman Mini",
+					"viewer": "ubi-canvas",
+					"json": "rm",
+					"image": ".\/img\/logo\/rm.png",
+					"versions": [
+						{
+							"json": "macos",
+							"image": ".\/img\/version\/macos.png",
+							"name": "Mac OS",
+							"folder": "rm_macos"
+						}
+					]
+				}
+			]
+		}
+	]
+}
