@@ -16,13 +16,7 @@ namespace UbiArt.FileFormat.Texture {
 			if (ddsImage == null) return;
 			if (ddsImage.Length == 0) return;
 
-			using (MemoryStream stream = new MemoryStream(ddsImage)) {
-				stream.Seek(0, SeekOrigin.Begin);
-
-				using (BinaryReader reader = new BinaryReader(stream)) {
-					this.Parse(reader);
-				}
-			}
+			this.Parse(ddsImage);
 		}
 
 		public DDSImage(Stream ddsImage) {
@@ -60,6 +54,34 @@ namespace UbiArt.FileFormat.Texture {
 				}
 
 				data = this.ReadData(reader, header);
+				if (data != null) {
+					byte[] rawData = this.DecompressData(header, data, pixelFormat);
+					this.m_bitmap = this.CreateBitmap((int)header.width, (int)header.height, rawData);
+				}
+			}
+		}
+		private void Parse(byte[] data) {
+			DDSStruct header = new DDSStruct();
+			PixelFormat pixelFormat = PixelFormat.UNKNOWN;
+			bool goodHeader = false;
+
+			using (MemoryStream stream = new MemoryStream(data)) {
+				stream.Seek(0, SeekOrigin.Begin);
+
+				using (BinaryReader reader = new BinaryReader(stream)) {
+					goodHeader = this.ReadHeader(reader, ref header);
+				}
+			}
+			if (goodHeader) {
+				this.m_isValid = true;
+				// patches for stuff
+				if (header.depth == 0) header.depth = 1;
+
+				uint blocksize = 0;
+				pixelFormat = this.GetFormat(header, ref blocksize);
+				if (pixelFormat == PixelFormat.UNKNOWN) {
+					throw new InvalidFileHeaderException();
+				}
 				if (data != null) {
 					byte[] rawData = this.DecompressData(header, data, pixelFormat);
 					this.m_bitmap = this.CreateBitmap((int)header.width, (int)header.height, rawData);
@@ -521,43 +543,43 @@ namespace UbiArt.FileFormat.Texture {
 		#endregion
 
 		#region Decompress Methods
-		private byte[] DecompressData(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private byte[] DecompressData(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 32*4) {
 			//Debug.WriteLine(pixelFormat);
 			// allocate bitmap
 			byte[] rawData = null;
 
 			switch (pixelFormat) {
 				case PixelFormat.RGBA:
-					rawData = this.DecompressRGBA(header, data, pixelFormat);
+					rawData = this.DecompressRGBA(header, data, pixelFormat, pos: pos);
 					break;
 
 				case PixelFormat.RGB:
-					rawData = this.DecompressRGB(header, data, pixelFormat);
+					rawData = this.DecompressRGB(header, data, pixelFormat, pos: pos);
 					break;
 
 				case PixelFormat.LUMINANCE:
 				case PixelFormat.LUMINANCE_ALPHA:
-					rawData = this.DecompressLum(header, data, pixelFormat);
+					rawData = this.DecompressLum(header, data, pixelFormat, pos: pos);
 					break;
 
 				case PixelFormat.DXT1:
-					rawData = this.DecompressDXT1(header, data, pixelFormat);
+					rawData = this.DecompressDXT1(header, data, pixelFormat, pos: pos);
 					break;
 
 				case PixelFormat.DXT2:
-					rawData = this.DecompressDXT2(header, data, pixelFormat);
+					rawData = this.DecompressDXT2(header, data, pixelFormat, pos: pos);
 					break;
 
 				case PixelFormat.DXT3:
-					rawData = this.DecompressDXT3(header, data, pixelFormat);
+					rawData = this.DecompressDXT3(header, data, pixelFormat, pos: pos);
 					break;
 
 				case PixelFormat.DXT4:
-					rawData = this.DecompressDXT4(header, data, pixelFormat);
+					rawData = this.DecompressDXT4(header, data, pixelFormat, pos: pos);
 					break;
 
 				case PixelFormat.DXT5:
-					rawData = this.DecompressDXT5(header, data, pixelFormat);
+					rawData = this.DecompressDXT5(header, data, pixelFormat, pos: pos);
 					break;
 
 				/*case PixelFormat.THREEDC:
@@ -588,7 +610,7 @@ namespace UbiArt.FileFormat.Texture {
 			return rawData;
 		}
 
-		private byte[] DecompressDXT1(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private byte[] DecompressDXT1(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 0) {
 			// allocate bitmap
 			int bpp = (int)(PixelFormatToBpp(pixelFormat, header.pixelformat.rgbbitcount));
 			int bps = (int)(header.width * bpp * PixelFormatToBpc(pixelFormat));
@@ -605,16 +627,16 @@ namespace UbiArt.FileFormat.Texture {
 			colours[1].alpha = 0xFF;
 			colours[2].alpha = 0xFF;
 			
-			int temp = 0;
+			int temp = pos;
 			for (int z = 0; z < depth; z++) {
 				for (int y = 0; y < height; y += 4) {
 					for (int x = 0; x < width; x += 4) {
-						ushort colour0 = BitConverter.ToUInt16(data, temp);
-						ushort colour1 = BitConverter.ToUInt16(data, temp+2);
+						ushort colour0 = ToUInt16(data, temp);
+						ushort colour1 = ToUInt16(data, temp+2);
 						DxtcReadColor(colour0, ref colours[0]);
 						DxtcReadColor(colour1, ref colours[1]);
 
-						uint bitmask = BitConverter.ToUInt32(data, temp+4);
+						uint bitmask = ToUInt32(data, temp+4);
 						temp += 8;
 
 						if (colour0 > colour1) {
@@ -668,7 +690,7 @@ namespace UbiArt.FileFormat.Texture {
 			return rawData;
 		}
 
-		private byte[] DecompressDXT2(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private byte[] DecompressDXT2(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 0) {
 			// allocate bitmap
 			int width = (int)header.width;
 			int height = (int)header.height;
@@ -676,13 +698,21 @@ namespace UbiArt.FileFormat.Texture {
 
 			// Can do color & alpha same as dxt3, but color is pre-multiplied
 			// so the result will be wrong unless corrected.
-			byte[] rawData = DecompressDXT3(header, data, pixelFormat);
+			byte[] rawData = DecompressDXT3(header, data, pixelFormat, pos: pos);
 			CorrectPremult((uint)(width * height * depth), ref rawData);
 
 			return rawData;
 		}
 
-		private byte[] DecompressDXT3(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private ushort ToUInt16(byte[] data, int temp) {
+			return (ushort)((data[temp + 1] << 8) | data[temp]);
+		}
+
+		private uint ToUInt32(byte[] data, int temp) {
+			return (uint)((data[temp + 3] << 24) | (data[temp + 2] << 16) | (data[temp + 1] << 8) | data[temp]);
+		}
+
+		private byte[] DecompressDXT3(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 0) {
 			// allocate bitmap
 			int bpp = (int)(PixelFormatToBpp(pixelFormat, header.pixelformat.rgbbitcount));
 			int bps = (int)(header.width * bpp * PixelFormatToBpc(pixelFormat));
@@ -695,7 +725,7 @@ namespace UbiArt.FileFormat.Texture {
 			byte[] rawData = new byte[depth * sizeofplane + height * bps + width * bpp];
 			Colour8888[] colours = new Colour8888[4];
 			
-			int temp = 0;
+			int temp = pos;
 			for (int z = 0; z < depth; z++) {
 				for (int y = 0; y < height; y += 4) {
 					for (int x = 0; x < width; x += 4) {
@@ -707,7 +737,7 @@ namespace UbiArt.FileFormat.Texture {
 						
 						uint bitmask;
 						try {
-							bitmask = BitConverter.ToUInt32(data, temp);
+							bitmask = ToUInt32(data, temp);
 							temp += 4;
 						} catch (Exception ex) {
 							MapLoader.Loader.print("StartIndex: " + (temp + 4) + " - Size: " + data.Length);
@@ -759,7 +789,7 @@ namespace UbiArt.FileFormat.Texture {
 			return rawData;
 		}
 
-		private byte[] DecompressDXT4(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private byte[] DecompressDXT4(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 0) {
 			// allocate bitmap
 			int width = (int)header.width;
 			int height = (int)header.height;
@@ -767,13 +797,13 @@ namespace UbiArt.FileFormat.Texture {
 
 			// Can do color & alpha same as dxt5, but color is pre-multiplied
 			// so the result will be wrong unless corrected.
-			byte[] rawData = DecompressDXT5(header, data, pixelFormat);
+			byte[] rawData = DecompressDXT5(header, data, pixelFormat, pos: pos);
 			CorrectPremult((uint)(width * height * depth), ref rawData);
 
 			return rawData;
 		}
 
-		private byte[] DecompressDXT5(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private byte[] DecompressDXT5(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 0) {
 			// allocate bitmap
 			int bpp = (int)(PixelFormatToBpp(pixelFormat, header.pixelformat.rgbbitcount));
 			int bps = (int)(header.width * bpp * PixelFormatToBpc(pixelFormat));
@@ -786,7 +816,7 @@ namespace UbiArt.FileFormat.Texture {
 			Colour8888[] colours = new Colour8888[4];
 			ushort[] alphas = new ushort[8];
 			
-			int temp = 0;
+			int temp = pos;
 			for (int z = 0; z < depth; z++) {
 				for (int y = 0; y < height; y += 4) {
 					for (int x = 0; x < width; x += 4) {
@@ -799,7 +829,7 @@ namespace UbiArt.FileFormat.Texture {
 						temp += 8;
 
 						DxtcReadColors(data, temp, ref colours);
-						uint bitmask = BitConverter.ToUInt32(data, temp + 4);
+						uint bitmask = ToUInt32(data, temp + 4);
 						temp += 8;
 
 						// Four-color block: derive the other two colors.
@@ -889,7 +919,7 @@ namespace UbiArt.FileFormat.Texture {
 			return rawData;
 		}
 
-		private byte[] DecompressRGB(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private byte[] DecompressRGB(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 0) {
 			// allocate bitmap
 			int bpp = (int)(this.PixelFormatToBpp(pixelFormat, header.pixelformat.rgbbitcount));
 			int bps = (int)(header.width * bpp * this.PixelFormatToBpc(pixelFormat));
@@ -911,9 +941,9 @@ namespace UbiArt.FileFormat.Texture {
 
 			int offset = 0;
 			int pixnum = width * height * depth;
-			int temp = 0;
+			int temp = pos;
 			while (pixnum-- > 0) {
-				uint px = BitConverter.ToUInt32(data,temp) & valMask;
+				uint px = ToUInt32(data,temp) & valMask;
 				temp += (int)pixSize;
 				uint pxc = px & header.pixelformat.rbitmask;
 				rawData[offset + 0] = (byte)(((pxc >> rShift1) * rMul) >> rShift2);
@@ -927,7 +957,7 @@ namespace UbiArt.FileFormat.Texture {
 			return rawData;
 		}
 
-		private byte[] DecompressRGBA(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private byte[] DecompressRGBA(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 0) {
 			// allocate bitmap
 			int bpp = (int)(this.PixelFormatToBpp(pixelFormat, header.pixelformat.rgbbitcount));
 			int bps = (int)(header.width * bpp * this.PixelFormatToBpc(pixelFormat));
@@ -952,10 +982,10 @@ namespace UbiArt.FileFormat.Texture {
 
 			int offset = 0;
 			int pixnum = width * height * depth;
-			int temp = 0;
+			int temp = pos;
 
 			while (pixnum-- > 0) {
-				uint px = BitConverter.ToUInt32(data,temp) & valMask;
+				uint px = ToUInt32(data,temp) & valMask;
 				temp += (int)pixSize;
 				uint pxc = px & header.pixelformat.rbitmask;
 				rawData[offset + 0] = (byte)(((pxc >> rShift1) * rMul) >> rShift2);
@@ -971,7 +1001,7 @@ namespace UbiArt.FileFormat.Texture {
 		}
 
 
-		private byte[] DecompressLum(DDSStruct header, byte[] data, PixelFormat pixelFormat) {
+		private byte[] DecompressLum(DDSStruct header, byte[] data, PixelFormat pixelFormat, int pos = 0) {
 			// allocate bitmap
 			int bpp = (int)(this.PixelFormatToBpp(pixelFormat, header.pixelformat.rgbbitcount));
 			int bps = (int)(header.width * bpp * this.PixelFormatToBpc(pixelFormat));
@@ -987,7 +1017,7 @@ namespace UbiArt.FileFormat.Texture {
 
 			int offset = 0;
 			int pixnum = width * height * depth;
-			int temp = 0;
+			int temp = pos;
 			while (pixnum-- > 0) {
 				byte px = data[temp++];
 				rawData[offset + 0] = (byte)(((px >> lShift1) * lMul) >> lShift2);

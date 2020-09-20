@@ -6,13 +6,17 @@ using System.Linq;
 public class UnityPickable : MonoBehaviour {
 	public Pickable pickable;
 	private SpriteRenderer sr;
+	private bool inited = false;
 
-	private void Start() {
+	private void Init() {
+		inited = true;
 		CreateMesh();
 		UpdateGizmo();
 	}
 
 	private void Update() {
+		if (Controller.LoadState != Controller.State.Finished) return;
+		if (!inited) Init();
 		if (sr != null) {
 			sr.enabled = MapLoader.Loader.controller.displayGizmos;
 			if (sr.enabled) {

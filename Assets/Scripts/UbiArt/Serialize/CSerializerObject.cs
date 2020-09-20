@@ -17,6 +17,7 @@ namespace UbiArt {
 		protected Stack<int> embeddedLevels = new Stack<int>();
 		protected bool embedded = false;
 		public bool Embedded => embeddedLevels.Count > 0 && embeddedLevels.Peek() == indent;
+		public bool Disposed { get; set; }
 
 		public CSerializerObject() {
 		}

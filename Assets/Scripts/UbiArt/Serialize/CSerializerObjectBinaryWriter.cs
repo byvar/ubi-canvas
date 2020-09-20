@@ -19,7 +19,9 @@ namespace UbiArt {
 		public override Pointer Length => new Pointer((uint)writer.BaseStream.Length, Pointer.Current(writer).file);
 
 		public override void ResetPosition() {
-			writer.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+			if (!Disposed) {
+				writer.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+			}
 		}
 
 		public override void Serialize(ref object obj, Type type, string name = null) {

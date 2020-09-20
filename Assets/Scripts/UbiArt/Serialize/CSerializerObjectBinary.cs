@@ -21,7 +21,9 @@ namespace UbiArt {
 		public override Pointer Length => new Pointer((uint)reader.BaseStream.Length, Pointer.Current(reader).file);
 
 		public override void ResetPosition() {
-			reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+			if (!Disposed) {
+				reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+			}
 		}
 
 

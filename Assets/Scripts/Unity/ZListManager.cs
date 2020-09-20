@@ -27,7 +27,9 @@ public class ZListManager : MonoBehaviour {
 		Shader.SetGlobalTexture("_LightsBackLight", backLight);*/
 	}
 	private void LateUpdate() {
-		Sort(printMessages: false);
+		if (Controller.LoadState == Controller.State.Finished) {
+			Sort(printMessages: false);
+		}
 	}
 	/*public void Register(Pickable p) {
 		zList.Add(p);

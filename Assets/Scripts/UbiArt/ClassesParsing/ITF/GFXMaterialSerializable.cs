@@ -20,20 +20,21 @@ namespace UbiArt.ITF {
 				});
 			}
 		}
-		protected Dictionary<GFXMaterialShader_Template, Material> materials = new Dictionary<GFXMaterialShader_Template, Material>();
-		protected Material materialShaderNull = null;
+		/*protected Dictionary<GFXMaterialShader_Template, Material> materials = new Dictionary<GFXMaterialShader_Template, Material>();
+		protected Material materialShaderNull = null;*/
 
 		public Material GetUnityMaterial(GFXMaterialShader_Template shader = null) {
 			if (shader == null) shader = (this.shader != null ? this.shader.obj : null);
-			if (shader == null) {
+			/*if (shader == null) {
 				if (materialShaderNull != null) {
 					return new Material(materialShaderNull);
 				}
 			} else if (materials.ContainsKey(shader)) {
 				return new Material(materials[shader]);
-			}
-			//Shader sh = Shader.Find("Custom/UbiArtAlpha");
-			Material mat = new Material(MapLoader.Loader.baseTransparentMaterial);
+			}*/
+			Shader sh = Shader.Find("Custom/UbiArtAlpha");
+			Material mat = new Material(sh);
+			//Material mat = new Material(MapLoader.Loader.baseTransparentMaterial);
 			if (shader != null) {
 				mat.SetVector("_ShaderParams", new Vector4(
 					shader.renderRegular ? 1f : 0f,
@@ -90,10 +91,11 @@ namespace UbiArt.ITF {
 				if (textureSet.tex_diffuse != null) mat.SetTexture("_Diffuse", textureSet.tex_diffuse.Texture);
 				if (textureSet.tex_back_light != null) mat.SetTexture("_BackLight", textureSet.tex_back_light.Texture);
 			}
-			if (shader != null) {
+			/*if (shader != null) {
 				materials[shader] = mat;
 			} else materialShaderNull = mat;
-			return new Material(mat);
+			return new Material(mat);*/
+			return mat;
 		}
 
 		private enum ZWrite {

@@ -19,10 +19,10 @@ namespace UbiArt.FileFormat {
         public BinarySerializedFile(string name, Stream stream) {
             this.name = name;
             length = stream.Length;
-            using (Reader fileReader = new Reader(stream, Settings.s.IsLittleEndian)) {
+            /*using (Reader fileReader = new Reader(stream, Settings.s.IsLittleEndian)) {
                 data = fileReader.ReadBytes((int)stream.Length);
-            }
-            reader = new Reader(new MemoryStream(data), Settings.s.IsLittleEndian);
+            }*/
+            reader = new Reader(stream/*new MemoryStream(data)*/, Settings.s.IsLittleEndian);
 			string extension = null;
 			if (name.Contains(".")) {
 				extension = name.Substring(name.LastIndexOf(".") + 1);

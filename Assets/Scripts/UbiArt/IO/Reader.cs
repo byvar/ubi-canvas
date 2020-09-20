@@ -8,20 +8,21 @@ namespace UbiArt {
         public delegate void ReadAction(Reader reader, Pointer offset);
         bool isLittleEndian = true;
         uint bytesSinceAlignStart = 0;
-        bool autoAlignOn = false;
-        byte? xorKey = null;
 
         public Reader(Stream stream) : base(stream) { isLittleEndian = true; }
         public Reader(Stream stream, bool isLittleEndian) : base(stream) { this.isLittleEndian = isLittleEndian; }
-        public bool AutoAligning {
-            get { return autoAlignOn; }
-            set { autoAlignOn = value; bytesSinceAlignStart = 0; }
-        }
 
         public override int ReadInt32() {
-            var data = ReadBytes(4);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            return BitConverter.ToInt32(data, 0);
+            byte data0 = ReadByte();
+            byte data1 = ReadByte();
+            byte data2 = ReadByte();
+            byte data3 = ReadByte();
+
+            if (isLittleEndian != BitConverter.IsLittleEndian) {
+                return (int)((data0 << 24) | (data1 << 16) | (data2 << 8) | data3);
+            } else {
+                return (int)((data3 << 24) | (data2 << 16) | (data1 << 8) | data0);
+            }
         }
 
         public override float ReadSingle() {
@@ -31,71 +32,89 @@ namespace UbiArt {
         }
 
         public override Int16 ReadInt16() {
-            var data = ReadBytes(2);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            return BitConverter.ToInt16(data, 0);
+            byte data0 = ReadByte();
+            byte data1 = ReadByte();
+
+            if (isLittleEndian != BitConverter.IsLittleEndian) {
+                return (short)((data0 << 8) | data1);
+            } else {
+                return (short)((data1 << 8) | data0);
+            }
         }
 
         public override UInt16 ReadUInt16() {
-            var data = ReadBytes(2);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            return BitConverter.ToUInt16(data, 0);
+            byte data0 = ReadByte();
+            byte data1 = ReadByte();
+
+            if (isLittleEndian != BitConverter.IsLittleEndian) {
+                return (ushort)((data0 << 8) | data1);
+            } else {
+                return (ushort)((data1 << 8) | data0);
+            }
         }
 
         public override Int64 ReadInt64() {
-            var data = ReadBytes(8);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            return BitConverter.ToInt64(data, 0);
+            long data0 = ReadByte();
+            long data1 = ReadByte();
+            long data2 = ReadByte();
+            long data3 = ReadByte();
+            long data4 = ReadByte();
+            long data5 = ReadByte();
+            long data6 = ReadByte();
+            long data7 = ReadByte();
+
+            if (isLittleEndian != BitConverter.IsLittleEndian) {
+                return (long)((data0 << 56) | (data1 << 48) | (data2 << 40) | (data3 << 32) | (data4 << 24) | (data5 << 16) | (data6 << 8) | data7);
+            } else {
+                return (long)((data7 << 56) | (data6 << 48) | (data5 << 40) | (data4 << 32) | (data3 << 24) | (data2 << 16) | (data1 << 8) | data0);
+            }
         }
 
         public override UInt32 ReadUInt32() {
-            var data = ReadBytes(4);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            return BitConverter.ToUInt32(data, 0);
-		}
+            uint data0 = ReadByte();
+            uint data1 = ReadByte();
+            uint data2 = ReadByte();
+            uint data3 = ReadByte();
+
+            if (isLittleEndian != BitConverter.IsLittleEndian) {
+                return (uint)((data0 << 24) | (data1 << 16) | (data2 << 8) | data3);
+            } else {
+                return (uint)((data3 << 24) | (data2 << 16) | (data1 << 8) | data0);
+            }
+        }
 
 		public override UInt64 ReadUInt64() {
-			var data = ReadBytes(8);
-			if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-			return BitConverter.ToUInt64(data, 0);
+            ulong data0 = ReadByte();
+            ulong data1 = ReadByte();
+            ulong data2 = ReadByte();
+            ulong data3 = ReadByte();
+            ulong data4 = ReadByte();
+            ulong data5 = ReadByte();
+            ulong data6 = ReadByte();
+            ulong data7 = ReadByte();
+
+            if (isLittleEndian != BitConverter.IsLittleEndian) {
+                return (ulong)((data0 << 56) | (data1 << 48) | (data2 << 40) | (data3 << 32) | (data4 << 24) | (data5 << 16) | (data6 << 8) | data7);
+            } else {
+                return (ulong)((data7 << 56) | (data6 << 48) | (data5 << 40) | (data4 << 32) | (data3 << 24) | (data2 << 16) | (data1 << 8) | data0);
+            }
         }
 
         public override char ReadChar() {
             return Convert.ToChar(ReadByte());
         }
 
-        public override byte[] ReadBytes(int count) {
+        /*public override byte[] ReadBytes(int count) {
             byte[] bytes = base.ReadBytes(count);
-            
-            if (autoAlignOn) 
-                bytesSinceAlignStart += (uint)bytes.Length;
-
-
-            if (xorKey.HasValue) {
-                for (int i = 0; i < count; i++) {
-                    bytes[i] = (byte)(bytes[i] ^ xorKey.Value);
-                }
-            }
-
-
             return bytes;
-        }
+        }*/
 
         public override sbyte ReadSByte() => (sbyte)ReadByte();
 
-        public override byte ReadByte() {
+        /*public override byte ReadByte() {
             byte result = base.ReadByte();
-            
-            if (autoAlignOn)
-                bytesSinceAlignStart++;
-
-
-            if (xorKey.HasValue)
-                result = (byte)(result ^ xorKey.Value);
-
-
             return result;
-        }
+        }*/
 
         public string ReadNullDelimitedString(Encoding encoding = null) {
             List<byte> bytes = new List<byte>();
@@ -166,22 +185,6 @@ namespace UbiArt {
                 foreach (byte b in aligned) if (b != 0x0) throw new Exception("A data byte was skipped during alignment");
             }
         }
-        
-        public void AutoAlign(int alignBytes) {
-            if (bytesSinceAlignStart % alignBytes != 0) {
-                ReadBytes(alignBytes - (int)(bytesSinceAlignStart % alignBytes));
-            }
-            bytesSinceAlignStart = 0;
-        }
 		#endregion
-
-		#region XOR & Checksum
-		public void BeginXOR(byte xorKey) {
-            this.xorKey = xorKey;
-        }
-        public void EndXOR() {
-            xorKey = null;
-        }
-        #endregion
     }
 }

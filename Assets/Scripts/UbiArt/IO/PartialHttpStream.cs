@@ -26,8 +26,8 @@ namespace UbiArt {
 		public PartialHttpStream(string url, long cacheLen = CacheLen, long? length = null) {
 			if (string.IsNullOrEmpty(url))
 				throw new ArgumentException("url empty");
-			if (cacheLen <= 0)
-				throw new ArgumentException("cacheLen must be greater than 0");
+			if (cacheLen < 0)
+				throw new ArgumentException("cacheLen must not be less than 0");
 
 			Url = url;
 			this.cacheLen = cacheLen;
@@ -324,22 +324,23 @@ namespace UbiArt {
 				}
 				foreach (KeyValuePair<long, long> range in downloadRanges) {
 					//UnityEngine.Debug.Log("Download range: " + range.Key + " - " + range.Value);
-					if (range.Value > cacheLen) cacheLen = range.Value;
+					long curCacheLen = Math.Max(cacheLen, range.Value);
+					//if (range.Value > cacheLen) cacheLen = range.Value;
 					long rangePos = Position + range.Key;
 					IEnumerable<KeyValuePair<long, byte[]>> biggerCache = caches.Where(c => (c.Key >= rangePos + range.Value));
 					IEnumerable<KeyValuePair<long, byte[]>> smallerCache = caches.Where(c => (c.Key + c.Value.Length <= rangePos));
-					long newDataLength = Math.Min(cacheLen, Length - rangePos);
+					long newDataLength = Math.Min(curCacheLen, Length - rangePos);
 					long startPosition = rangePos;
 					long addLengthBefore = 0;
 					if (biggerCache.Count() > 0) {
-						newDataLength = Math.Min(cacheLen, biggerCache.First().Key - rangePos);
+						newDataLength = Math.Min(curCacheLen, biggerCache.First().Key - rangePos);
 					}
 					long addLengthAfter = newDataLength - range.Value;
-					if (newDataLength < cacheLen && rangePos > 0) {
+					if (newDataLength < curCacheLen && rangePos > 0) {
 						if (smallerCache.Count() > 0) {
-							addLengthBefore = Math.Min(cacheLen, rangePos - (smallerCache.Last().Key + smallerCache.Last().Value.Length));
+							addLengthBefore = Math.Min(curCacheLen, rangePos - (smallerCache.Last().Key + smallerCache.Last().Value.Length));
 						} else {
-							addLengthBefore = Math.Min(cacheLen, rangePos);
+							addLengthBefore = Math.Min(curCacheLen, rangePos);
 						}
 						startPosition -= addLengthBefore;
 						newDataLength += addLengthBefore;

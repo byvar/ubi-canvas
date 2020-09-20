@@ -19,6 +19,7 @@ namespace UbiArt.FileFormat {
         public void Dispose() {
             if (reader != null) reader.Close();
             if (writer != null) writer.Close();
+            if (serializer != null) serializer.Disposed = true;
         }
 
         public void AddPointer(uint offset, Pointer pointer) {

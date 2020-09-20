@@ -157,7 +157,7 @@ namespace UbiArt {
 					foreach (var bname in bnames) {
 						if (!bundles.ContainsKey(bname)) {
 							string fullbname = gameDataBinFolder + bname + "_" + Settings.s.PlatformString + ".ipk";
-							await PrepareBigFile(fullbname, 1024);
+							await PrepareBigFile(fullbname, 0);
 							if (!FileSystem.FileExists(fullbname)) continue;
 							bigFiles[bname] = new BinaryBigFile(bname, FileSystem.GetFileReadStream(fullbname));
 							bundles[bname] = new BundleFile();
@@ -251,6 +251,7 @@ namespace UbiArt {
 							CSerializerObject s = f.serializer;
 							s.ResetPosition();
 							o.action(s);
+							f.Dispose();
 						}
 					} else if (o.virtualFile != null) {
 						using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
