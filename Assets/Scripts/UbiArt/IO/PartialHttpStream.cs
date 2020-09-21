@@ -368,9 +368,9 @@ namespace UbiArt {
 		private async UniTask HttpRead(byte[] buffer, int offset, int count, long startPosition) {
 			HttpRequestsCount++;
 			UnityWebRequest www = UnityWebRequest.Get(Url);
-			string state = Controller.DetailedState;
+			string state = MapLoader.Loader.loadingState;
 			int totalSize = caches.Sum(c => c.Value.Length);
-			Controller.DetailedState = state + "\nDownloading part of bigfile: " + Url.Replace(FileSystem.serverAddress, "") + " (New size: " + Util.SizeSuffix(totalSize + count, 0) + "/" + Util.SizeSuffix(Length, 0) + ")";
+			MapLoader.Loader.loadingState = state + "\nDownloading part of bigfile: " + Url.Replace(FileSystem.serverAddress, "") + " (New size: " + Util.SizeSuffix(totalSize + count, 0) + "/" + Util.SizeSuffix(Length, 0) + ")";
 			UnityEngine.Debug.Log("Requesting range: " + string.Format("bytes={0}-{1}", startPosition, startPosition + count - 1) + " - " + Url);
 			www.SetRequestHeader("Range", string.Format("bytes={0}-{1}", startPosition, startPosition + count - 1));
 			try {
@@ -390,7 +390,7 @@ namespace UbiArt {
 				}
 			}
 
-			Controller.DetailedState = state;
+			MapLoader.Loader.loadingState = state;
 			/*using (BinaryReader sr = new BinaryReader(httpResponse.GetResponseStream(), Encoding.GetEncoding(httpResponse.CharacterSet))) {
 				sr.ReadBlock(buffer, offset, count);
 			}*/
