@@ -64,6 +64,7 @@ public class AnimatedTexture : MonoBehaviour {
 	}
 
 	public void Update() {
+		if (Controller.LoadState != Controller.State.Finished) return;
 		if (config != null && ren != null && mpb != null) {
 			if (config.scrollUV != Vector2.zero) {
 				time += Time.deltaTime * animationSpeed;

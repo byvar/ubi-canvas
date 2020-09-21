@@ -7,6 +7,7 @@ public class UnityFrise : MonoBehaviour {
 	float prevZ = -99999;
 
 	private void Update() {
+		if (Controller.LoadState != Controller.State.Finished) return;
 		if (frise != null) {
 			float z = transform.position.z;
 			if (z != prevZ) {
