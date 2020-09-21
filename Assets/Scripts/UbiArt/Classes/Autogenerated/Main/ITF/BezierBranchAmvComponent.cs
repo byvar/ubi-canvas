@@ -4,14 +4,14 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class BezierBranchAmvComponent : BezierBranchComponent {
 		public bool flipTexture;
-		public CList<BezierBranchAmvComponent.Zone> zones;
+		public CListO<BezierBranchAmvComponent.Zone> zones;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 				flipTexture = s.Serialize<bool>(flipTexture, name: "flipTexture", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 				flipTexture = s.Serialize<bool>(flipTexture, name: "flipTexture");
-				zones = s.SerializeObject<CList<BezierBranchAmvComponent.Zone>>(zones, name: "zones");
+				zones = s.SerializeObject<CListO<BezierBranchAmvComponent.Zone>>(zones, name: "zones");
 			}
 		}
 		[Games(GameFlags.RA)]

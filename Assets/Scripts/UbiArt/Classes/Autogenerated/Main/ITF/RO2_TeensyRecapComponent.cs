@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TeensyRecapComponent : ActorComponent {
-		public CList<RO2_TeensyRecapComponent.Teensy> teensies;
+		public CListO<RO2_TeensyRecapComponent.Teensy> teensies;
 		public StringID level;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				teensies = s.SerializeObject<CList<RO2_TeensyRecapComponent.Teensy>>(teensies, name: "teensies");
+				teensies = s.SerializeObject<CListO<RO2_TeensyRecapComponent.Teensy>>(teensies, name: "teensies");
 				level = s.SerializeObject<StringID>(level, name: "level");
 			}
 		}

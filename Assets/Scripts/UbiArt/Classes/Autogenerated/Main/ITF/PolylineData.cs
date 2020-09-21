@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PolylineData : CSerializable {
-		public CArray<Vec2d> points;
+		public CArrayO<Vec2d> points;
 		public Path gameMaterial;
 		public StringID regionType;
 		public bool loop;
@@ -22,8 +22,8 @@ namespace UbiArt.ITF {
 				bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
 				bool__4 = s.Serialize<bool>(bool__4, name: "bool__4");
 			} else {
-				points = s.SerializeObject<CArray<Vec2d>>(points, name: "points");
-				points = s.SerializeObject<CArray<Vec2d>>(points, name: "points");
+				points = s.SerializeObject<CArrayO<Vec2d>>(points, name: "points");
+				points = s.SerializeObject<CArrayO<Vec2d>>(points, name: "points");
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				regionType = s.SerializeObject<StringID>(regionType, name: "regionType");
 				loop = s.Serialize<bool>(loop, name: "loop");

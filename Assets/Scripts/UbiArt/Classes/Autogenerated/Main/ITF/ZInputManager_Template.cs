@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public StringID name;
 		public StringID config;
 		public uint category;
-		public CList<ZAction> actions;
+		public CListO<ZAction> actions;
 		public StringID mode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				config = s.SerializeObject<StringID>(config, name: "config");
 				category = s.Serialize<uint>(category, name: "category");
-				actions = s.SerializeObject<CList<ZAction>>(actions, name: "actions");
+				actions = s.SerializeObject<CListO<ZAction>>(actions, name: "actions");
 			}
 		}
 		public override uint? ClassCRC => 0xD63A5C7E;

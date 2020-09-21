@@ -73,20 +73,43 @@ namespace UbiArt {
 						texture.LoadImage(img.ToByteArray(MagickFormat.Png32));
 						texture.Apply();
 					}*/
+					texture = LoadTextureDXT(texData);
 					if (texture == null) {
 						using (DDSImage dds = new DDSImage(texData)) {
 							texture = dds.BitmapImage;
-							/*if (texture.width != width || texture.height != height) {
-								MapLoader.Loader.print("Width: " + texture.width + " - " + width);
-								MapLoader.Loader.print("Height: " + texture.height + " - " + height);
-							}*/
 						}
 					}
-					//texture = LoadTextureDXT(texData);
+					//texture = LoadDDS(texData);
 				}
 				return texture;
 			}
 		}
+
+		/*private Texture2D LoadDDS(byte[] ddsBytes, bool updateMipMaps = false, bool makeNoLongerReadable = true) {
+			PfimConfig pfimConfig = new PfimConfig();
+			Dds dds = Dds.Create(ddsBytes, pfimConfig);
+			dds.Decompress(); // Might not be needed, could do pfim config outside this in a Pfim class with Decompress set to true.
+			TextureFormat fmt = GetTextureFormat(dds);
+			Texture2D texture = new Texture2D(dds.Width, dds.Height, fmt, dds.Header.MipMapCount != 0);
+			
+			texture.LoadRawTextureData(dds.Data);
+			texture.Apply(updateMipMaps, makeNoLongerReadable);
+			return texture;
+		}
+
+		private TextureFormat GetTextureFormat(Dds dds) {
+			switch (dds.Format) {
+				case ImageFormat.Rgba16:
+					return TextureFormat.RGBAHalf;
+				case ImageFormat.Rgb24:
+					return TextureFormat.RGB24;
+				case ImageFormat.Rgba32:
+					return TextureFormat.RGBA32;
+				default:
+					throw new NotImplementedException("ImageFormat " + dds.Format.ToString() + " to TextureFormat is not implemented.");
+			}
+		}*/
+
 		public Texture2D SquareTexture {
 			get {
 				Texture2D tex = Texture;
@@ -120,8 +143,8 @@ namespace UbiArt {
 			if (ddsSizeCheck != 124)
 				throw new Exception("Invalid DDS DXTn texture. Unable to read");  //this header byte should be 124 for DDS image files
 
-			int height = ddsBytes[13] * 256 + ddsBytes[12];
-			int width = ddsBytes[17] * 256 + ddsBytes[16];
+			int height = ddsBytes[13] << 8 | ddsBytes[12];
+			int width = ddsBytes[17] << 8 | ddsBytes[16];
 
 			int DDS_HEADER_SIZE = 128;
 			byte[] dxtBytes = new byte[ddsBytes.Length - DDS_HEADER_SIZE];

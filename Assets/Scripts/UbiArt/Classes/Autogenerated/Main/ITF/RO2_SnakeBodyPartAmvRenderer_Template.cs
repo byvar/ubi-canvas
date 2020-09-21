@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		public uint startFrame;
 		public Vec2d scale;
 		public Color color;
-		public CList<Vec2d> polyline;
-		public CList<Vec2d> otherPolyline;
+		public CListO<Vec2d> polyline;
+		public CListO<Vec2d> otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -16,8 +16,8 @@ namespace UbiArt.ITF {
 				startFrame = s.Serialize<uint>(startFrame, name: "startFrame");
 				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 				color = s.SerializeObject<Color>(color, name: "color");
-				polyline = s.SerializeObject<CList<Vec2d>>(polyline, name: "polyline");
-				otherPolyline = s.SerializeObject<CList<Vec2d>>(otherPolyline, name: "otherPolyline");
+				polyline = s.SerializeObject<CListO<Vec2d>>(polyline, name: "polyline");
+				otherPolyline = s.SerializeObject<CListO<Vec2d>>(otherPolyline, name: "otherPolyline");
 			} else {
 				anim = s.SerializeObject<StringID>(anim, name: "anim");
 				startFrame = s.Serialize<uint>(startFrame, name: "startFrame");

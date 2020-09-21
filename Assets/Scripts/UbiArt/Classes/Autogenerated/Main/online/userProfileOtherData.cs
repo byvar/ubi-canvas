@@ -8,7 +8,7 @@ namespace UbiArt.online {
 		public int timeZoneOffset;
 		public string gameVersion;
 		public uint engineVersion;
-		public CList<ITF.RO2_PersistentGameData_Universe.RLC_CreatureData> creatures;
+		public CListO<ITF.RO2_PersistentGameData_Universe.RLC_CreatureData> creatures;
 		public uint currentAdvGraphicalFamily;
 		public string joinDate;
 		public string lastUpdate;
@@ -24,7 +24,7 @@ namespace UbiArt.online {
 			timeZoneOffset = s.Serialize<int>(timeZoneOffset, name: "timeZoneOffset");
 			gameVersion = s.Serialize<string>(gameVersion, name: "gameVersion");
 			engineVersion = s.Serialize<uint>(engineVersion, name: "engineVersion");
-			creatures = s.SerializeObject<CList<ITF.RO2_PersistentGameData_Universe.RLC_CreatureData>>(creatures, name: "creatures");
+			creatures = s.SerializeObject<CListO<ITF.RO2_PersistentGameData_Universe.RLC_CreatureData>>(creatures, name: "creatures");
 			currentAdvGraphicalFamily = s.Serialize<uint>(currentAdvGraphicalFamily, name: "currentAdvGraphicalFamily");
 			joinDate = s.Serialize<string>(joinDate, name: "joinDate");
 			lastUpdate = s.Serialize<string>(lastUpdate, name: "lastUpdate");

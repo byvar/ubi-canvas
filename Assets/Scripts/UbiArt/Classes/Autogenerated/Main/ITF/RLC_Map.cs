@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public bool PlayableOnce;
 		public uint Difficulty;
 		public Enum_ScoreRecapMode ScoreRecapMode;
-		public CList<uint> ScoreRecapThreshold;
+		public CListP<uint> ScoreRecapThreshold;
 		public StringID MissionId;
 		public Enum_Spec Spec;
 		public uint InviteLocId;
@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 			PlayableOnce = s.Serialize<bool>(PlayableOnce, name: "PlayableOnce");
 			Difficulty = s.Serialize<uint>(Difficulty, name: "Difficulty");
 			ScoreRecapMode = s.Serialize<Enum_ScoreRecapMode>(ScoreRecapMode, name: "ScoreRecapMode");
-			ScoreRecapThreshold = s.SerializeObject<CList<uint>>(ScoreRecapThreshold, name: "ScoreRecapThreshold");
+			ScoreRecapThreshold = s.SerializeObject<CListP<uint>>(ScoreRecapThreshold, name: "ScoreRecapThreshold");
 			MissionId = s.SerializeObject<StringID>(MissionId, name: "MissionId");
 			Spec = s.Serialize<Enum_Spec>(Spec, name: "Spec");
 			InviteLocId = s.Serialize<uint>(InviteLocId, name: "InviteLocId");

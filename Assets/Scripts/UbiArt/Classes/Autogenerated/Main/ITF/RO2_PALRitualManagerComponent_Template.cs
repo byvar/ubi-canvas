@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public StringID animVictoryPlayer;
 		public StringID animStandPlayer;
 		public float victoryTime;
-		public CList<StringID> podiumBoneList;
+		public CListO<StringID> podiumBoneList;
 		public StringID podiumBoneTeensie;
 		public StringID cameraFX;
 		public Vec3d murphyOnGroundOffset;
@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 			animVictoryPlayer = s.SerializeObject<StringID>(animVictoryPlayer, name: "animVictoryPlayer");
 			animStandPlayer = s.SerializeObject<StringID>(animStandPlayer, name: "animStandPlayer");
 			victoryTime = s.Serialize<float>(victoryTime, name: "victoryTime");
-			podiumBoneList = s.SerializeObject<CList<StringID>>(podiumBoneList, name: "podiumBoneList");
+			podiumBoneList = s.SerializeObject<CListO<StringID>>(podiumBoneList, name: "podiumBoneList");
 			podiumBoneTeensie = s.SerializeObject<StringID>(podiumBoneTeensie, name: "podiumBoneTeensie");
 			cameraFX = s.SerializeObject<StringID>(cameraFX, name: "cameraFX");
 			murphyOnGroundOffset = s.SerializeObject<Vec3d>(murphyOnGroundOffset, name: "murphyOnGroundOffset");

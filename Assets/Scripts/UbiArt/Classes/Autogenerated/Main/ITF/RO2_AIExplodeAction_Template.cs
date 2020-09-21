@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public Angle spawnFragmentsDeltaAngle;
 		public Angle spawnFragmentsStartAngle;
 		public Generic<RO2_EventSpawnReward> reward;
-		public CList<uint> numRewards;
+		public CListP<uint> numRewards;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			minRadius = s.Serialize<float>(minRadius, name: "minRadius");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 			spawnFragmentsDeltaAngle = s.SerializeObject<Angle>(spawnFragmentsDeltaAngle, name: "spawnFragmentsDeltaAngle");
 			spawnFragmentsStartAngle = s.SerializeObject<Angle>(spawnFragmentsStartAngle, name: "spawnFragmentsStartAngle");
 			reward = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward, name: "reward");
-			numRewards = s.SerializeObject<CList<uint>>(numRewards, name: "numRewards");
+			numRewards = s.SerializeObject<CListP<uint>>(numRewards, name: "numRewards");
 		}
 		public enum RECEIVEDHITTYPE {
 			[Serialize("RECEIVEDHITTYPE_UNKNOWN"    )] UNKNOWN = -1,

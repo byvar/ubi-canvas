@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class AxisPolylineComponent_Template : PolylineComponent_Template {
-		public CList<AxisPolylineComponent_Template.AxisPoly> axisPolylines;
+		public CListO<AxisPolylineComponent_Template.AxisPoly> axisPolylines;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			axisPolylines = s.SerializeObject<CList<AxisPolylineComponent_Template.AxisPoly>>(axisPolylines, name: "axisPolylines");
+			axisPolylines = s.SerializeObject<CListO<AxisPolylineComponent_Template.AxisPoly>>(axisPolylines, name: "axisPolylines");
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class AxisPoly : CSerializable {
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 			public StringID bone;
 			public float weightMultiplier;
 			public float forceMultiplier;
-			public CList<StringID> polylines;
+			public CListO<StringID> polylines;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				stiff = s.Serialize<float>(stiff, name: "stiff");
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 				bone = s.SerializeObject<StringID>(bone, name: "bone");
 				weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
 				forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
-				polylines = s.SerializeObject<CList<StringID>>(polylines, name: "polylines");
+				polylines = s.SerializeObject<CListO<StringID>>(polylines, name: "polylines");
 			}
 		}
 		public override uint? ClassCRC => 0x8B20CBD6;

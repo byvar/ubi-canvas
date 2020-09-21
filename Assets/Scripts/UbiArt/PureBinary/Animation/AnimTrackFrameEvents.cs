@@ -9,12 +9,12 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimTrackFrameEvents::serialize
 	public class AnimTrackFrameEvents : CSerializable {
 		public float unk;
-		public CList<AnimMarkerEvent> events;
+		public CListO<AnimMarkerEvent> events;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			unk = s.Serialize<float>(unk, name: "unk");
-			events = s.SerializeObject<CList<AnimMarkerEvent>>(events, name: "events");
+			events = s.SerializeObject<CListO<AnimMarkerEvent>>(events, name: "events");
 		}
 
 		public class AnimMarkerEvent : CSerializable {

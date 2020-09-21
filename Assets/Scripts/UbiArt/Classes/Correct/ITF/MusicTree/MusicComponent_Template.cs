@@ -5,13 +5,13 @@ namespace UbiArt.ITF {
 	public partial class MusicComponent_Template : ActorComponent_Template {
 		public MusicPartSet_Template musicPartSet;
 		public MusicTree_Template musicTree;
-		public CArray<InputDesc> inputs;
+		public CArrayO<InputDesc> inputs;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				musicPartSet = s.SerializeObject<MusicPartSet_Template>(musicPartSet, name: "musicPartSet");
 				musicTree = s.SerializeObject<MusicTree_Template>(musicTree, name: "musicTree");
-				inputs = s.SerializeObject<CArray<InputDesc>>(inputs, name: "inputs");
+				inputs = s.SerializeObject<CArrayO<InputDesc>>(inputs, name: "inputs");
 			} else {
 			}
 		}

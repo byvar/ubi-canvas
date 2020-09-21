@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Actor : Pickable {
 		public Path LUA;
 		public Nullable<Bind> parentBind;
-		public CArray<Generic<ActorComponent>> COMPONENTS;
+		public CArrayO<Generic<ActorComponent>> COMPONENTS;
 		public Nullable<ActorBind> parentBindOrigins;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 					parentBindOrigins = s.SerializeObject<Nullable<ActorBind>>(parentBindOrigins, name: "parentBindOrigins");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
+					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
 				if (this is Frise) return;
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 					parentBind = s.SerializeObject<Nullable<Bind>>(parentBind, name: "parentBind");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent | SerializeFlags.Default | SerializeFlags.Flags13 | SerializeFlags.Flags14)) {
-					COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
+					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (this is Frise) return;
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				}
 				if (s.HasFlags(SerializeFlags.Persistent | SerializeFlags.Default | SerializeFlags.Flags13 | SerializeFlags.Flags14
 					| SerializeFlags.Flags16 | SerializeFlags.Flags17)) {
-					COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
+					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 					parentBind = s.SerializeObject<Nullable<Bind>>(parentBind, name: "parentBind");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent | SerializeFlags.Default | SerializeFlags.Flags13 | SerializeFlags.Flags14)) {
-					COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
+					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
 				}
 			}
 		}

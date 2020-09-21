@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
 	public partial class Trail3DComponent_Template : GraphicComponent_Template {
-		public CList<Trail_Template> trailList;
+		public CListO<Trail_Template> trailList;
 		public bool startActive;
 		public bool draw2D;
 		public bool fixDepth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				trailList = s.SerializeObject<CList<Trail_Template>>(trailList, name: "trailList");
+				trailList = s.SerializeObject<CListO<Trail_Template>>(trailList, name: "trailList");
 				startActive = s.Serialize<bool>(startActive, name: "startActive");
 				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
 			} else if (Settings.s.game == Settings.Game.COL) {
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
 				fixDepth = s.Serialize<bool>(fixDepth, name: "fixDepth");
 			} else {
-				trailList = s.SerializeObject<CList<Trail_Template>>(trailList, name: "trailList");
+				trailList = s.SerializeObject<CListO<Trail_Template>>(trailList, name: "trailList");
 				startActive = s.Serialize<bool>(startActive, name: "startActive");
 				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
 				fixDepth = s.Serialize<bool>(fixDepth, name: "fixDepth");

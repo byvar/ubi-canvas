@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public Angle hitAngleMinIncidence;
 		public StringID restoreAnim;
 		public bool checkHitSenderDirection;
-		public CList<BreakableAIComponent_Template.DestructionStage> destructionStages;
+		public CListO<BreakableAIComponent_Template.DestructionStage> destructionStages;
 		public StringID openAnim;
 		public StringID openAnimReverse;
 		public bool resetOnCheckpoint;
@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 			hitAngleMinIncidence = s.SerializeObject<Angle>(hitAngleMinIncidence, name: "hitAngleMinIncidence");
 			restoreAnim = s.SerializeObject<StringID>(restoreAnim, name: "restoreAnim");
 			checkHitSenderDirection = s.Serialize<bool>(checkHitSenderDirection, name: "checkHitSenderDirection");
-			destructionStages = s.SerializeObject<CList<BreakableAIComponent_Template.DestructionStage>>(destructionStages, name: "destructionStages");
+			destructionStages = s.SerializeObject<CListO<BreakableAIComponent_Template.DestructionStage>>(destructionStages, name: "destructionStages");
 			openAnim = s.SerializeObject<StringID>(openAnim, name: "openAnim");
 			openAnimReverse = s.SerializeObject<StringID>(openAnimReverse, name: "openAnimReverse");
 			resetOnCheckpoint = s.Serialize<bool>(resetOnCheckpoint, name: "resetOnCheckpoint");

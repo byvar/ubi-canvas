@@ -5,15 +5,15 @@ namespace UbiArt.ITF {
 	public partial class RO2_ChallengeCommon_Template : TemplateObj {
 		public StringID name;
 		public Vec2d unitSize;
-		public CArray<Generic<RO2_Brick_Template>> gameplayBricks;
+		public CArrayO<Generic<RO2_Brick_Template>> gameplayBricks;
 		public uint initialSpawnCount;
 		public uint duplicateSpawnCooldown;
-		public CList<StringID> firstBricks;
-		public CList<StringID> continueStartBrick;
-		public CList<StringID> lastBricks;
-		public CList<RO2_ChallengeCommon_Template.DifficultyRange> difficultyRanges;
-		public CList<RO2_EnduranceRule_Template> gameplayRules;
-		public CList<string> filter;
+		public CListO<StringID> firstBricks;
+		public CListO<StringID> continueStartBrick;
+		public CListO<StringID> lastBricks;
+		public CListO<RO2_ChallengeCommon_Template.DifficultyRange> difficultyRanges;
+		public CListO<RO2_EnduranceRule_Template> gameplayRules;
+		public CListP<string> filter;
 		public StringID menuId;
 		public StringID debugMenuId;
 		public Path countdownPath;
@@ -21,22 +21,22 @@ namespace UbiArt.ITF {
 		public Nullable<EventPlayMusic> gameOverMusic;
 		public float ghostDistanceMax;
 		public float ghostOffsetDistanceTeleportation;
-		public CList<EventPlayMusic> difficultyChangeMusicEvents;
-		public CList<CList<string>> filterOrder;
+		public CListO<EventPlayMusic> difficultyChangeMusicEvents;
+		public CListO<CListP<string>> filterOrder;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				unitSize = s.SerializeObject<Vec2d>(unitSize, name: "unitSize");
-				gameplayBricks = s.SerializeObject<CArray<Generic<RO2_Brick_Template>>>(gameplayBricks, name: "gameplayBricks");
+				gameplayBricks = s.SerializeObject<CArrayO<Generic<RO2_Brick_Template>>>(gameplayBricks, name: "gameplayBricks");
 				initialSpawnCount = s.Serialize<uint>(initialSpawnCount, name: "initialSpawnCount");
 				duplicateSpawnCooldown = s.Serialize<uint>(duplicateSpawnCooldown, name: "duplicateSpawnCooldown");
-				firstBricks = s.SerializeObject<CList<StringID>>(firstBricks, name: "firstBricks");
-				lastBricks = s.SerializeObject<CList<StringID>>(lastBricks, name: "lastBricks");
-				difficultyRanges = s.SerializeObject<CList<RO2_ChallengeCommon_Template.DifficultyRange>>(difficultyRanges, name: "difficultyRanges");
-				gameplayRules = s.SerializeObject<CList<RO2_EnduranceRule_Template>>(gameplayRules, name: "gameplayRules");
-				filter = s.SerializeObject<CList<string>>(filter, name: "filter");
-				filterOrder = s.SerializeObject<CList<CList<string>>>(filterOrder, name: "filterOrder");
+				firstBricks = s.SerializeObject<CListO<StringID>>(firstBricks, name: "firstBricks");
+				lastBricks = s.SerializeObject<CListO<StringID>>(lastBricks, name: "lastBricks");
+				difficultyRanges = s.SerializeObject<CListO<RO2_ChallengeCommon_Template.DifficultyRange>>(difficultyRanges, name: "difficultyRanges");
+				gameplayRules = s.SerializeObject<CListO<RO2_EnduranceRule_Template>>(gameplayRules, name: "gameplayRules");
+				filter = s.SerializeObject<CListP<string>>(filter, name: "filter");
+				filterOrder = s.SerializeObject<CListO<CListP<string>>>(filterOrder, name: "filterOrder");
 				menuId = s.SerializeObject<StringID>(menuId, name: "menuId");
 				debugMenuId = s.SerializeObject<StringID>(debugMenuId, name: "debugMenuId");
 				countdownPath = s.SerializeObject<Path>(countdownPath, name: "countdownPath");
@@ -44,19 +44,19 @@ namespace UbiArt.ITF {
 				gameOverMusic = s.SerializeObject<Nullable<EventPlayMusic>>(gameOverMusic, name: "gameOverMusic");
 				ghostDistanceMax = s.Serialize<float>(ghostDistanceMax, name: "ghostDistanceMax");
 				ghostOffsetDistanceTeleportation = s.Serialize<float>(ghostOffsetDistanceTeleportation, name: "ghostOffsetDistanceTeleportation");
-				difficultyChangeMusicEvents = s.SerializeObject<CList<EventPlayMusic>>(difficultyChangeMusicEvents, name: "difficultyChangeMusicEvents");
+				difficultyChangeMusicEvents = s.SerializeObject<CListO<EventPlayMusic>>(difficultyChangeMusicEvents, name: "difficultyChangeMusicEvents");
 			} else {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				unitSize = s.SerializeObject<Vec2d>(unitSize, name: "unitSize");
-				gameplayBricks = s.SerializeObject<CArray<Generic<RO2_Brick_Template>>>(gameplayBricks, name: "gameplayBricks");
+				gameplayBricks = s.SerializeObject<CArrayO<Generic<RO2_Brick_Template>>>(gameplayBricks, name: "gameplayBricks");
 				initialSpawnCount = s.Serialize<uint>(initialSpawnCount, name: "initialSpawnCount");
 				duplicateSpawnCooldown = s.Serialize<uint>(duplicateSpawnCooldown, name: "duplicateSpawnCooldown");
-				firstBricks = s.SerializeObject<CList<StringID>>(firstBricks, name: "firstBricks");
-				continueStartBrick = s.SerializeObject<CList<StringID>>(continueStartBrick, name: "continueStartBrick");
-				lastBricks = s.SerializeObject<CList<StringID>>(lastBricks, name: "lastBricks");
-				difficultyRanges = s.SerializeObject<CList<RO2_ChallengeCommon_Template.DifficultyRange>>(difficultyRanges, name: "difficultyRanges");
-				gameplayRules = s.SerializeObject<CList<RO2_EnduranceRule_Template>>(gameplayRules, name: "gameplayRules");
-				filter = s.SerializeObject<CList<string>>(filter, name: "filter");
+				firstBricks = s.SerializeObject<CListO<StringID>>(firstBricks, name: "firstBricks");
+				continueStartBrick = s.SerializeObject<CListO<StringID>>(continueStartBrick, name: "continueStartBrick");
+				lastBricks = s.SerializeObject<CListO<StringID>>(lastBricks, name: "lastBricks");
+				difficultyRanges = s.SerializeObject<CListO<RO2_ChallengeCommon_Template.DifficultyRange>>(difficultyRanges, name: "difficultyRanges");
+				gameplayRules = s.SerializeObject<CListO<RO2_EnduranceRule_Template>>(gameplayRules, name: "gameplayRules");
+				filter = s.SerializeObject<CListP<string>>(filter, name: "filter");
 				menuId = s.SerializeObject<StringID>(menuId, name: "menuId");
 				debugMenuId = s.SerializeObject<StringID>(debugMenuId, name: "debugMenuId");
 				countdownPath = s.SerializeObject<Path>(countdownPath, name: "countdownPath");
@@ -64,7 +64,7 @@ namespace UbiArt.ITF {
 				gameOverMusic = s.SerializeObject<Nullable<EventPlayMusic>>(gameOverMusic, name: "gameOverMusic");
 				ghostDistanceMax = s.Serialize<float>(ghostDistanceMax, name: "ghostDistanceMax");
 				ghostOffsetDistanceTeleportation = s.Serialize<float>(ghostOffsetDistanceTeleportation, name: "ghostOffsetDistanceTeleportation");
-				difficultyChangeMusicEvents = s.SerializeObject<CList<EventPlayMusic>>(difficultyChangeMusicEvents, name: "difficultyChangeMusicEvents");
+				difficultyChangeMusicEvents = s.SerializeObject<CListO<EventPlayMusic>>(difficultyChangeMusicEvents, name: "difficultyChangeMusicEvents");
 			}
 		}
 		[Games(GameFlags.RA)]

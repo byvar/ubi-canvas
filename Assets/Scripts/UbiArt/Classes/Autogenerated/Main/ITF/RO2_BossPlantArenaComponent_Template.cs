@@ -4,17 +4,17 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossPlantArenaComponent_Template : ActorComponent_Template {
 		public bool isMecha;
-		public CList<RO2_BossPlantArenaComponent_Template.BuboBone> buboBones;
+		public CListO<RO2_BossPlantArenaComponent_Template.BuboBone> buboBones;
 		public Placeholder musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				isMecha = s.Serialize<bool>(isMecha, name: "isMecha");
-				buboBones = s.SerializeObject<CList<RO2_BossPlantArenaComponent_Template.BuboBone>>(buboBones, name: "buboBones");
+				buboBones = s.SerializeObject<CListO<RO2_BossPlantArenaComponent_Template.BuboBone>>(buboBones, name: "buboBones");
 				musics = s.SerializeObject<Placeholder>(musics, name: "musics");
 			} else {
 				isMecha = s.Serialize<bool>(isMecha, name: "isMecha");
-				buboBones = s.SerializeObject<CList<RO2_BossPlantArenaComponent_Template.BuboBone>>(buboBones, name: "buboBones");
+				buboBones = s.SerializeObject<CListO<RO2_BossPlantArenaComponent_Template.BuboBone>>(buboBones, name: "buboBones");
 			}
 		}
 		[Games(GameFlags.RA)]

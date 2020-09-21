@@ -4,11 +4,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class EventActivateComponent : Event {
 		public bool active;
-		public CList<EventActivateComponent.sComponentName> SpecificComponents;
+		public CListO<EventActivateComponent.sComponentName> SpecificComponents;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			active = s.Serialize<bool>(active, name: "active");
-			SpecificComponents = s.SerializeObject<CList<EventActivateComponent.sComponentName>>(SpecificComponents, name: "SpecificComponents");
+			SpecificComponents = s.SerializeObject<CListO<EventActivateComponent.sComponentName>>(SpecificComponents, name: "SpecificComponents");
 		}
 		[Games(GameFlags.RA)]
 		public partial class sComponentName : CSerializable {

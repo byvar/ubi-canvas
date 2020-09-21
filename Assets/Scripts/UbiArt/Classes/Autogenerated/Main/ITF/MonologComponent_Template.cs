@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class MonologComponent_Template : DialogBaseComponent_Template {
-		public CList<MonologComponent_Template.TextData> textDataList;
+		public CListO<MonologComponent_Template.TextData> textDataList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 			} else {
-				textDataList = s.SerializeObject<CList<MonologComponent_Template.TextData>>(textDataList, name: "textDataList");
+				textDataList = s.SerializeObject<CListO<MonologComponent_Template.TextData>>(textDataList, name: "textDataList");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]

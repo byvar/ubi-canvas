@@ -20,8 +20,8 @@ namespace UbiArt.ITF {
 		public Vec2d padTouchZoneMargin;
 		public Vec2d forceStartPos;
 		public float centerXIfNotEnoughElements;
-		public CList<ObjectPath> repositionTop;
-		public CList<ObjectPath> repositionBottom;
+		public CListO<ObjectPath> repositionTop;
+		public CListO<ObjectPath> repositionBottom;
 		public uint usedGlobalScissor;
 		public bool scaleTouchZone;
 		public bool textScrollingMode;
@@ -44,8 +44,8 @@ namespace UbiArt.ITF {
 			padTouchZoneMargin = s.SerializeObject<Vec2d>(padTouchZoneMargin, name: "padTouchZoneMargin");
 			forceStartPos = s.SerializeObject<Vec2d>(forceStartPos, name: "forceStartPos");
 			centerXIfNotEnoughElements = s.Serialize<float>(centerXIfNotEnoughElements, name: "centerXIfNotEnoughElements");
-			repositionTop = s.SerializeObject<CList<ObjectPath>>(repositionTop, name: "repositionTop");
-			repositionBottom = s.SerializeObject<CList<ObjectPath>>(repositionBottom, name: "repositionBottom");
+			repositionTop = s.SerializeObject<CListO<ObjectPath>>(repositionTop, name: "repositionTop");
+			repositionBottom = s.SerializeObject<CListO<ObjectPath>>(repositionBottom, name: "repositionBottom");
 			usedGlobalScissor = s.Serialize<uint>(usedGlobalScissor, name: "usedGlobalScissor");
 			scaleTouchZone = s.Serialize<bool>(scaleTouchZone, name: "scaleTouchZone");
 			textScrollingMode = s.Serialize<bool>(textScrollingMode, name: "textScrollingMode");

@@ -8,12 +8,12 @@ namespace UbiArt.ITF {
 		public StringID FXFireStream;
 		public Vec3d offsetFirework;
 		public Vec3d offsetFireStream;
-		public CList<StringID> worldsList;
+		public CListO<StringID> worldsList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
-				worldsList = s.SerializeObject<CList<StringID>>(worldsList, name: "worldsList");
+				worldsList = s.SerializeObject<CListO<StringID>>(worldsList, name: "worldsList");
 				FXFirework = s.SerializeObject<StringID>(FXFirework, name: "FXFirework");
 				FXFireStream = s.SerializeObject<StringID>(FXFireStream, name: "FXFireStream");
 				offsetFirework = s.SerializeObject<Vec3d>(offsetFirework, name: "offsetFirework");

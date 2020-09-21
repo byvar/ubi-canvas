@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		public float targetChangeTimeMin;
 		public float targetChangeTimeMax;
 		public float targetAnticipationMultiplier;
-		public CList<AABB> targetBoxes;
+		public CListO<AABB> targetBoxes;
 		public PerlinNoise_Template m_targetOffsetNoise;
 		public float targetBoxChangeProbability;
 		public StringID regionId;
@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 			targetChangeTimeMin = s.Serialize<float>(targetChangeTimeMin, name: "targetChangeTimeMin");
 			targetChangeTimeMax = s.Serialize<float>(targetChangeTimeMax, name: "targetChangeTimeMax");
 			targetAnticipationMultiplier = s.Serialize<float>(targetAnticipationMultiplier, name: "targetAnticipationMultiplier");
-			targetBoxes = s.SerializeObject<CList<AABB>>(targetBoxes, name: "targetBoxes");
+			targetBoxes = s.SerializeObject<CListO<AABB>>(targetBoxes, name: "targetBoxes");
 			m_targetOffsetNoise = s.SerializeObject<PerlinNoise_Template>(m_targetOffsetNoise, name: "m_targetOffsetNoise");
 			targetBoxChangeProbability = s.Serialize<float>(targetBoxChangeProbability, name: "targetBoxChangeProbability");
 			regionId = s.SerializeObject<StringID>(regionId, name: "regionId");

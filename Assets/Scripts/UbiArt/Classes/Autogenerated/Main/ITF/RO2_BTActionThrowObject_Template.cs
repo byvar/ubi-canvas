@@ -9,8 +9,8 @@ namespace UbiArt.ITF {
 		public StringID markerLaunch;
 		public StringID markerStartSpawneeDig;
 		public StringID boneSnap;
-		public CList<RO2_BTActionThrowObject_Template.ProjectileData> projectiles;
-		public CList<RO2_BTActionThrowObject_Tools.LaunchData> launchData;
+		public CListO<RO2_BTActionThrowObject_Template.ProjectileData> projectiles;
+		public CListO<RO2_BTActionThrowObject_Tools.LaunchData> launchData;
 		public StringID customPhantomShape;
 		public StringID customPhantomShapeEventOn;
 		public StringID customPhantomShapeEventOff;
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 				markerStartSpawneeDig = s.SerializeObject<StringID>(markerStartSpawneeDig, name: "markerStartSpawneeDig");
 				boneSnap = s.SerializeObject<StringID>(boneSnap, name: "boneSnap");
 				projectileData = s.SerializeObject<Placeholder>(projectileData, name: "projectileData");
-				launchData = s.SerializeObject<CList<RO2_BTActionThrowObject_Tools.LaunchData>>(launchData, name: "launchData");
+				launchData = s.SerializeObject<CListO<RO2_BTActionThrowObject_Tools.LaunchData>>(launchData, name: "launchData");
 				customPhantomShape = s.SerializeObject<StringID>(customPhantomShape, name: "customPhantomShape");
 				customPhantomShapeEventOn = s.SerializeObject<StringID>(customPhantomShapeEventOn, name: "customPhantomShapeEventOn");
 				customPhantomShapeEventOff = s.SerializeObject<StringID>(customPhantomShapeEventOff, name: "customPhantomShapeEventOff");
@@ -40,8 +40,8 @@ namespace UbiArt.ITF {
 				markerLaunch = s.SerializeObject<StringID>(markerLaunch, name: "markerLaunch");
 				markerStartSpawneeDig = s.SerializeObject<StringID>(markerStartSpawneeDig, name: "markerStartSpawneeDig");
 				boneSnap = s.SerializeObject<StringID>(boneSnap, name: "boneSnap");
-				projectiles = s.SerializeObject<CList<RO2_BTActionThrowObject_Template.ProjectileData>>(projectiles, name: "projectiles");
-				launchData = s.SerializeObject<CList<RO2_BTActionThrowObject_Tools.LaunchData>>(launchData, name: "launchData");
+				projectiles = s.SerializeObject<CListO<RO2_BTActionThrowObject_Template.ProjectileData>>(projectiles, name: "projectiles");
+				launchData = s.SerializeObject<CListO<RO2_BTActionThrowObject_Tools.LaunchData>>(launchData, name: "launchData");
 				customPhantomShape = s.SerializeObject<StringID>(customPhantomShape, name: "customPhantomShape");
 				customPhantomShapeEventOn = s.SerializeObject<StringID>(customPhantomShapeEventOn, name: "customPhantomShapeEventOn");
 				customPhantomShapeEventOff = s.SerializeObject<StringID>(customPhantomShapeEventOff, name: "customPhantomShapeEventOff");

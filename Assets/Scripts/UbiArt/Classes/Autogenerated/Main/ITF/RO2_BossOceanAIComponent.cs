@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossOceanAIComponent : ActorComponent {
-		public CList<RO2_BossOceanAIComponent.Sequence> sequences;
+		public CListO<RO2_BossOceanAIComponent.Sequence> sequences;
 		public ObjectPath finalCinematic;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				sequences = s.SerializeObject<CList<RO2_BossOceanAIComponent.Sequence>>(sequences, name: "sequences");
+				sequences = s.SerializeObject<CListO<RO2_BossOceanAIComponent.Sequence>>(sequences, name: "sequences");
 				finalCinematic = s.SerializeObject<ObjectPath>(finalCinematic, name: "finalCinematic");
 			}
 		}
@@ -18,15 +18,15 @@ namespace UbiArt.ITF {
 			public StringID buboId;
 			public ObjectPath objectToTriggerOnEnter;
 			public ObjectPath objectToTriggerOnExit;
-			public CArray<ObjectPath> missileRegions;
+			public CArrayO<ObjectPath> missileRegions;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				tweenSet = s.SerializeObject<StringID>(tweenSet, name: "tweenSet");
 				buboId = s.SerializeObject<StringID>(buboId, name: "buboId");
 				objectToTriggerOnEnter = s.SerializeObject<ObjectPath>(objectToTriggerOnEnter, name: "objectToTriggerOnEnter");
 				objectToTriggerOnExit = s.SerializeObject<ObjectPath>(objectToTriggerOnExit, name: "objectToTriggerOnExit");
-				missileRegions = s.SerializeObject<CArray<ObjectPath>>(missileRegions, name: "missileRegions");
-				missileRegions = s.SerializeObject<CArray<ObjectPath>>(missileRegions, name: "missileRegions");
+				missileRegions = s.SerializeObject<CArrayO<ObjectPath>>(missileRegions, name: "missileRegions");
+				missileRegions = s.SerializeObject<CArrayO<ObjectPath>>(missileRegions, name: "missileRegions");
 			}
 		}
 		public override uint? ClassCRC => 0x872E7CD7;

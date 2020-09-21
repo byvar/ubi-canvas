@@ -32,8 +32,8 @@ namespace UbiArt.ITF {
 		public Vec3d throwTeethThrowCameraOffset;
 		public Vec2d throwTeethPlayerOffset;
 		public Ray_PowerUpManager_Template powerUps;
-		public CList<Ray_GameManagerConfig_Template.MapConfig> levelsInfo;
-		public CList<Ray_GameManagerConfig_Template.MissionConfig> missionTypes;
+		public CListO<Ray_GameManagerConfig_Template.MapConfig> levelsInfo;
+		public CListO<Ray_GameManagerConfig_Template.MissionConfig> missionTypes;
 		public uint sprintTutorialFailureCount;
 		public float sprintTutorialRequiredDuration;
 		public StringID fadeDeath;
@@ -82,8 +82,8 @@ namespace UbiArt.ITF {
 			throwTeethThrowCameraOffset = s.SerializeObject<Vec3d>(throwTeethThrowCameraOffset, name: "throwTeethThrowCameraOffset");
 			throwTeethPlayerOffset = s.SerializeObject<Vec2d>(throwTeethPlayerOffset, name: "throwTeethPlayerOffset");
 			powerUps = s.SerializeObject<Ray_PowerUpManager_Template>(powerUps, name: "powerUps");
-			levelsInfo = s.SerializeObject<CList<Ray_GameManagerConfig_Template.MapConfig>>(levelsInfo, name: "levelsInfo");
-			missionTypes = s.SerializeObject<CList<Ray_GameManagerConfig_Template.MissionConfig>>(missionTypes, name: "missionTypes");
+			levelsInfo = s.SerializeObject<CListO<Ray_GameManagerConfig_Template.MapConfig>>(levelsInfo, name: "levelsInfo");
+			missionTypes = s.SerializeObject<CListO<Ray_GameManagerConfig_Template.MissionConfig>>(missionTypes, name: "missionTypes");
 			sprintTutorialFailureCount = s.Serialize<uint>(sprintTutorialFailureCount, name: "sprintTutorialFailureCount");
 			sprintTutorialRequiredDuration = s.Serialize<float>(sprintTutorialRequiredDuration, name: "sprintTutorialRequiredDuration");
 			fadeDeath = s.SerializeObject<StringID>(fadeDeath, name: "fadeDeath");
@@ -118,8 +118,8 @@ namespace UbiArt.ITF {
 			public Path loadingScreen;
 			public uint minTeeth;
 			public uint minElectoons;
-			public CList<StringID> unlock;
-			public CList<StringID> unlockedBy;
+			public CListO<StringID> unlock;
+			public CListO<StringID> unlockedBy;
 			public int lastLevel;
 			public int isDefaultLevel;
 			public Volume musicVolume;
@@ -146,8 +146,8 @@ namespace UbiArt.ITF {
 				loadingScreen = s.SerializeObject<Path>(loadingScreen, name: "loadingScreen");
 				minTeeth = s.Serialize<uint>(minTeeth, name: "minTeeth");
 				minElectoons = s.Serialize<uint>(minElectoons, name: "minElectoons");
-				unlock = s.SerializeObject<CList<StringID>>(unlock, name: "unlock");
-				unlockedBy = s.SerializeObject<CList<StringID>>(unlockedBy, name: "unlockedBy");
+				unlock = s.SerializeObject<CListO<StringID>>(unlock, name: "unlock");
+				unlockedBy = s.SerializeObject<CListO<StringID>>(unlockedBy, name: "unlockedBy");
 				lastLevel = s.Serialize<int>(lastLevel, name: "lastLevel");
 				isDefaultLevel = s.Serialize<int>(isDefaultLevel, name: "isDefaultLevel");
 				musicVolume = s.SerializeObject<Volume>(musicVolume, name: "musicVolume");
@@ -173,13 +173,13 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RO)]
 		public partial class MissionConfig : CSerializable {
 			public StringID type;
-			public CList<MedalSlotConfig> medalSlots;
+			public CListO<MedalSlotConfig> medalSlots;
 			public Path medalPath;
 			public int lumAttack3;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				type = s.SerializeObject<StringID>(type, name: "type");
-				medalSlots = s.SerializeObject<CList<MedalSlotConfig>>(medalSlots, name: "medalSlots");
+				medalSlots = s.SerializeObject<CListO<MedalSlotConfig>>(medalSlots, name: "medalSlots");
 				medalPath = s.SerializeObject<Path>(medalPath, name: "medalPath");
 				lumAttack3 = s.Serialize<int>(lumAttack3, name: "lumAttack3");
 			}

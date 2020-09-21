@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeRendererComponent_Template : GraphicComponent_Template {
-		public CArray<Generic<RO2_SnakeBodyPart_Template>> bodyParts;
+		public CArrayO<Generic<RO2_SnakeBodyPart_Template>> bodyParts;
 		public float bodyPartsZSpacing;
 		public bool drawHeadBelow;
 		public bool broadcastEventToPart;
@@ -18,10 +18,10 @@ namespace UbiArt.ITF {
 		public StringID fxStop;
 		public StringID inputSpeed;
 		public RO2_SnakeRendererComponent_Template.Perturbator tapPerturbator;
-		public CList<RO2_SnakeRendererComponent_Template.Perturbator> hitPerturbators;
+		public CListO<RO2_SnakeRendererComponent_Template.Perturbator> hitPerturbators;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			bodyParts = s.SerializeObject<CArray<Generic<RO2_SnakeBodyPart_Template>>>(bodyParts, name: "bodyParts");
+			bodyParts = s.SerializeObject<CArrayO<Generic<RO2_SnakeBodyPart_Template>>>(bodyParts, name: "bodyParts");
 			bodyPartsZSpacing = s.Serialize<float>(bodyPartsZSpacing, name: "bodyPartsZSpacing");
 			drawHeadBelow = s.Serialize<bool>(drawHeadBelow, name: "drawHeadBelow");
 			broadcastEventToPart = s.Serialize<bool>(broadcastEventToPart, name: "broadcastEventToPart");
@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 			fxStop = s.SerializeObject<StringID>(fxStop, name: "fxStop");
 			inputSpeed = s.SerializeObject<StringID>(inputSpeed, name: "inputSpeed");
 			tapPerturbator = s.SerializeObject<RO2_SnakeRendererComponent_Template.Perturbator>(tapPerturbator, name: "tapPerturbator");
-			hitPerturbators = s.SerializeObject<CList<RO2_SnakeRendererComponent_Template.Perturbator>>(hitPerturbators, name: "hitPerturbators");
+			hitPerturbators = s.SerializeObject<CListO<RO2_SnakeRendererComponent_Template.Perturbator>>(hitPerturbators, name: "hitPerturbators");
 		}
 		[Games(GameFlags.RA)]
 		public partial class Perturbator : CSerializable {

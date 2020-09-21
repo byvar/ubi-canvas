@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_CreditsManagerAIComponent_Template : ActorComponent_Template {
-		public CList<CreditsLine> creditsList;
+		public CListO<CreditsLine> creditsList;
 		public Path gmatPath;
 		public bool isTriggered;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			creditsList = s.SerializeObject<CList<CreditsLine>>(creditsList, name: "creditsList");
+			creditsList = s.SerializeObject<CListO<CreditsLine>>(creditsList, name: "creditsList");
 			gmatPath = s.SerializeObject<Path>(gmatPath, name: "gmatPath");
 			isTriggered = s.Serialize<bool>(isTriggered, name: "isTriggered");
 		}

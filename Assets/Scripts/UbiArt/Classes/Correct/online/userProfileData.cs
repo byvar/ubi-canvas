@@ -6,9 +6,9 @@ namespace UbiArt.online {
 		public string privateName;
 		public string save;
 		public string token;
-		public CList<SocialNetworkIdentity> snsIds;
+		public CListO<SocialNetworkIdentity> snsIds;
 		public string deviceLanguage;
-		public CArray<DeviceUIDInfo> deviceUID;
+		public CArrayO<DeviceUIDInfo> deviceUID;
 		public CMap<string, uint> hatchingParams;
 		public CMap<uint, ITF.RO2_PersistentGameData_Universe.SeasonalEventData> seasonalEventList;
 		public CMap<string, float> clusteringInfo;
@@ -33,9 +33,9 @@ namespace UbiArt.online {
 			privateName = s.Serialize<string>(privateName, name: "privateName");
 			save = s.Serialize<string>(save, name: "save");
 			token = s.Serialize<string>(token, name: "token");
-			snsIds = s.SerializeObject<CList<SocialNetworkIdentity>>(snsIds, name: "snsIds");
+			snsIds = s.SerializeObject<CListO<SocialNetworkIdentity>>(snsIds, name: "snsIds");
 			deviceLanguage = s.Serialize<string>(deviceLanguage, name: "deviceLanguage");
-			deviceUID = s.SerializeObject<CArray<DeviceUIDInfo>>(deviceUID, name: "deviceUID");
+			deviceUID = s.SerializeObject<CArrayO<DeviceUIDInfo>>(deviceUID, name: "deviceUID");
 			hatchingParams = s.SerializeObject<CMap<string, uint>>(hatchingParams, name: "hatchingParams");
 			seasonalEventList = s.SerializeObject<CMap<uint, ITF.RO2_PersistentGameData_Universe.SeasonalEventData>>(seasonalEventList, name: "seasonalEventList");
 			clusteringInfo = s.SerializeObject<CMap<string, float>>(clusteringInfo, name: "clusteringInfo");

@@ -15,13 +15,13 @@ namespace UbiArt.ITF {
 		public bool challengeMapActive;
 		public bool bonusMapActive;
 		public bool queenMapActive;
-		public CList<uint> findCharlieFrequency;
+		public CListP<uint> findCharlieFrequency;
 		public uint findCharlieIntroduction;
 		public float findCharlieSpawnChance;
 		public float findCharlieTeaseDuration;
 		public float findCharlieTeaseCountdownMin;
 		public float findCharlieTeaseCountdownMax;
-		public CArray<Generic<RLC_RegionGfxConfig>> RegionGfxConfig;
+		public CArrayO<Generic<RLC_RegionGfxConfig>> RegionGfxConfig;
 		public GFXPrimitiveParam defaultLineRootPrimitiveParam;
 		public bool useNextRegionSelection;
 		public bool nextRegionSelectionConfirmation;
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 		public bool travelMarkMultiplyScaleXtoY;
 		public bool travelMarksApplyRegionNameColor;
 		public uint travelMarksNbMaxToDisplay;
-		public CList<uint> travelMarksNbMaxToDisplayByUnlockedRegionsNb;
+		public CListP<uint> travelMarksNbMaxToDisplayByUnlockedRegionsNb;
 		public uint travelMarksCountdownNbFade;
 		public float travelMarksPctFade;
 		public float travelMarksAlphaMax;
@@ -60,7 +60,7 @@ namespace UbiArt.ITF {
 		public float cameraShowsEggCageSpawningDelay;
 		public bool cameraShowsEggCageRevealing;
 		public float cameraShowsEggCageRevealingDelay;
-		public CList<uint> nextRegionChoiceNb;
+		public CListP<uint> nextRegionChoiceNb;
 		public uint NextRegionRandom_NewRegionRevealedForcedEggCageSpawnNb;
 		public float NextRegionRandomWeight_NewRegionRevealed;
 		public float NextRegionRandomWeight_Default;
@@ -102,7 +102,7 @@ namespace UbiArt.ITF {
 		public Path TutoIconSinaWeiboSmallPath;
 		public float TreeHandOnMapButtonAppearTimer;
 		public float TreeHandOnMapButtonResetTimer;
-		public CList<RLC_EggVisualConfig> EggVisualConfigs;
+		public CListO<RLC_EggVisualConfig> EggVisualConfigs;
 		public CMap<RLC_GraphicalKit, string> EveryPlayMetaDataKits;
 		public CMap<RLC_MapType, string> EveryPlayMetaDataMapTypes;
 		public CMap<StringID, string> EveryPlayMetaDataCostumes;
@@ -143,13 +143,13 @@ namespace UbiArt.ITF {
 			challengeMapActive = s.Serialize<bool>(challengeMapActive, name: "challengeMapActive");
 			bonusMapActive = s.Serialize<bool>(bonusMapActive, name: "bonusMapActive");
 			queenMapActive = s.Serialize<bool>(queenMapActive, name: "queenMapActive");
-			findCharlieFrequency = s.SerializeObject<CList<uint>>(findCharlieFrequency, name: "findCharlieFrequency");
+			findCharlieFrequency = s.SerializeObject<CListP<uint>>(findCharlieFrequency, name: "findCharlieFrequency");
 			findCharlieIntroduction = s.Serialize<uint>(findCharlieIntroduction, name: "findCharlieIntroduction");
 			findCharlieSpawnChance = s.Serialize<float>(findCharlieSpawnChance, name: "findCharlieSpawnChance");
 			findCharlieTeaseDuration = s.Serialize<float>(findCharlieTeaseDuration, name: "findCharlieTeaseDuration");
 			findCharlieTeaseCountdownMin = s.Serialize<float>(findCharlieTeaseCountdownMin, name: "findCharlieTeaseCountdownMin");
 			findCharlieTeaseCountdownMax = s.Serialize<float>(findCharlieTeaseCountdownMax, name: "findCharlieTeaseCountdownMax");
-			RegionGfxConfig = s.SerializeObject<CArray<Generic<RLC_RegionGfxConfig>>>(RegionGfxConfig, name: "RegionGfxConfig");
+			RegionGfxConfig = s.SerializeObject<CArrayO<Generic<RLC_RegionGfxConfig>>>(RegionGfxConfig, name: "RegionGfxConfig");
 			defaultLineRootPrimitiveParam = s.SerializeObject<GFXPrimitiveParam>(defaultLineRootPrimitiveParam, name: "defaultLineRootPrimitiveParam");
 			useNextRegionSelection = s.Serialize<bool>(useNextRegionSelection, name: "useNextRegionSelection");
 			nextRegionSelectionConfirmation = s.Serialize<bool>(nextRegionSelectionConfirmation, name: "nextRegionSelectionConfirmation");
@@ -170,7 +170,7 @@ namespace UbiArt.ITF {
 			travelMarkMultiplyScaleXtoY = s.Serialize<bool>(travelMarkMultiplyScaleXtoY, name: "travelMarkMultiplyScaleXtoY");
 			travelMarksApplyRegionNameColor = s.Serialize<bool>(travelMarksApplyRegionNameColor, name: "travelMarksApplyRegionNameColor");
 			travelMarksNbMaxToDisplay = s.Serialize<uint>(travelMarksNbMaxToDisplay, name: "travelMarksNbMaxToDisplay");
-			travelMarksNbMaxToDisplayByUnlockedRegionsNb = s.SerializeObject<CList<uint>>(travelMarksNbMaxToDisplayByUnlockedRegionsNb, name: "travelMarksNbMaxToDisplayByUnlockedRegionsNb");
+			travelMarksNbMaxToDisplayByUnlockedRegionsNb = s.SerializeObject<CListP<uint>>(travelMarksNbMaxToDisplayByUnlockedRegionsNb, name: "travelMarksNbMaxToDisplayByUnlockedRegionsNb");
 			travelMarksCountdownNbFade = s.Serialize<uint>(travelMarksCountdownNbFade, name: "travelMarksCountdownNbFade");
 			travelMarksPctFade = s.Serialize<float>(travelMarksPctFade, name: "travelMarksPctFade");
 			travelMarksAlphaMax = s.Serialize<float>(travelMarksAlphaMax, name: "travelMarksAlphaMax");
@@ -188,7 +188,7 @@ namespace UbiArt.ITF {
 			cameraShowsEggCageSpawningDelay = s.Serialize<float>(cameraShowsEggCageSpawningDelay, name: "cameraShowsEggCageSpawningDelay");
 			cameraShowsEggCageRevealing = s.Serialize<bool>(cameraShowsEggCageRevealing, name: "cameraShowsEggCageRevealing");
 			cameraShowsEggCageRevealingDelay = s.Serialize<float>(cameraShowsEggCageRevealingDelay, name: "cameraShowsEggCageRevealingDelay");
-			nextRegionChoiceNb = s.SerializeObject<CList<uint>>(nextRegionChoiceNb, name: "nextRegionChoiceNb");
+			nextRegionChoiceNb = s.SerializeObject<CListP<uint>>(nextRegionChoiceNb, name: "nextRegionChoiceNb");
 			NextRegionRandom_NewRegionRevealedForcedEggCageSpawnNb = s.Serialize<uint>(NextRegionRandom_NewRegionRevealedForcedEggCageSpawnNb, name: "NextRegionRandom_NewRegionRevealedForcedEggCageSpawnNb");
 			NextRegionRandomWeight_NewRegionRevealed = s.Serialize<float>(NextRegionRandomWeight_NewRegionRevealed, name: "NextRegionRandomWeight_NewRegionRevealed");
 			NextRegionRandomWeight_Default = s.Serialize<float>(NextRegionRandomWeight_Default, name: "NextRegionRandomWeight_Default");
@@ -230,7 +230,7 @@ namespace UbiArt.ITF {
 			TutoIconSinaWeiboSmallPath = s.SerializeObject<Path>(TutoIconSinaWeiboSmallPath, name: "TutoIconSinaWeiboSmallPath");
 			TreeHandOnMapButtonAppearTimer = s.Serialize<float>(TreeHandOnMapButtonAppearTimer, name: "TreeHandOnMapButtonAppearTimer");
 			TreeHandOnMapButtonResetTimer = s.Serialize<float>(TreeHandOnMapButtonResetTimer, name: "TreeHandOnMapButtonResetTimer");
-			EggVisualConfigs = s.SerializeObject<CList<RLC_EggVisualConfig>>(EggVisualConfigs, name: "EggVisualConfigs");
+			EggVisualConfigs = s.SerializeObject<CListO<RLC_EggVisualConfig>>(EggVisualConfigs, name: "EggVisualConfigs");
 			EveryPlayMetaDataKits = s.SerializeObject<CMap<RLC_GraphicalKit, string>>(EveryPlayMetaDataKits, name: "EveryPlayMetaDataKits");
 			EveryPlayMetaDataMapTypes = s.SerializeObject<CMap<RLC_MapType, string>>(EveryPlayMetaDataMapTypes, name: "EveryPlayMetaDataMapTypes");
 			EveryPlayMetaDataCostumes = s.SerializeObject<CMap<StringID, string>>(EveryPlayMetaDataCostumes, name: "EveryPlayMetaDataCostumes");

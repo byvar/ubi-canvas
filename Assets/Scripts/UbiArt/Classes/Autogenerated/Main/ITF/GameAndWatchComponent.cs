@@ -11,9 +11,9 @@ namespace UbiArt.ITF {
 		public float float__5;
 		public uint uint__6;
 		public float float__7;
-		public CArray<GAWSpawnElement> CArray_GAWSpawnElement__8;
-		public CArray<GAWSpawnElement> CArray_GAWSpawnElement__9;
-		public CArray<GAWPattern> CArray_GAWPattern__10;
+		public CArrayO<GAWSpawnElement> CArray_GAWSpawnElement__8;
+		public CArrayO<GAWSpawnElement> CArray_GAWSpawnElement__9;
+		public CArrayO<GAWPattern> CArray_GAWPattern__10;
 		public Enum_VH_1 Enum_VH_1__11;
 		public float float__12;
 		public float float__13;
@@ -46,9 +46,9 @@ namespace UbiArt.ITF {
 				float__5 = s.Serialize<float>(float__5, name: "float__5");
 				uint__6 = s.Serialize<uint>(uint__6, name: "uint__6");
 				float__7 = s.Serialize<float>(float__7, name: "float__7");
-				CArray_GAWSpawnElement__8 = s.SerializeObject<CArray<GAWSpawnElement>>(CArray_GAWSpawnElement__8, name: "CArray_GAWSpawnElement__8");
-				CArray_GAWSpawnElement__9 = s.SerializeObject<CArray<GAWSpawnElement>>(CArray_GAWSpawnElement__9, name: "CArray_GAWSpawnElement__9");
-				CArray_GAWPattern__10 = s.SerializeObject<CArray<GAWPattern>>(CArray_GAWPattern__10, name: "CArray_GAWPattern__10");
+				CArray_GAWSpawnElement__8 = s.SerializeObject<CArrayO<GAWSpawnElement>>(CArray_GAWSpawnElement__8, name: "CArray_GAWSpawnElement__8");
+				CArray_GAWSpawnElement__9 = s.SerializeObject<CArrayO<GAWSpawnElement>>(CArray_GAWSpawnElement__9, name: "CArray_GAWSpawnElement__9");
+				CArray_GAWPattern__10 = s.SerializeObject<CArrayO<GAWPattern>>(CArray_GAWPattern__10, name: "CArray_GAWPattern__10");
 				Enum_VH_1__11 = s.Serialize<Enum_VH_1>(Enum_VH_1__11, name: "Enum_VH_1__11");
 				float__12 = s.Serialize<float>(float__12, name: "float__12");
 				float__13 = s.Serialize<float>(float__13, name: "float__13");

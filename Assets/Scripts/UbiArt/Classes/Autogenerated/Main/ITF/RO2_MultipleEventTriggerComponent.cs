@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MultipleEventTriggerComponent : ActorComponent {
-		public CList<RO2_MultipleEventTriggerComponent.EventCondition> eventConditionList;
+		public CListO<RO2_MultipleEventTriggerComponent.EventCondition> eventConditionList;
 		public Generic<Event> validationEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			eventConditionList = s.SerializeObject<CList<RO2_MultipleEventTriggerComponent.EventCondition>>(eventConditionList, name: "eventConditionList");
+			eventConditionList = s.SerializeObject<CListO<RO2_MultipleEventTriggerComponent.EventCondition>>(eventConditionList, name: "eventConditionList");
 			validationEvent = s.SerializeObject<Generic<Event>>(validationEvent, name: "validationEvent");
 		}
 		[Games(GameFlags.RA)]

@@ -7,16 +7,16 @@ using UnityEngine;
 
 namespace UbiArt.Animation {
 	public class KeyArray<T> : CSerializable {
-		public CArray<ulong> keys;
-		public CArray<StringID> keysLegends;
+		public CArrayP<ulong> keys;
+		public CArrayO<StringID> keysLegends;
 		public CArray<T> values;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RA) {
-				keys = s.SerializeObject<CArray<ulong>>(keys, name: "keys");
+				keys = s.SerializeObject<CArrayP<ulong>>(keys, name: "keys");
 			} else {
-				keysLegends = s.SerializeObject<CArray<StringID>>(keysLegends, name: "keysLegends");
+				keysLegends = s.SerializeObject<CArrayO<StringID>>(keysLegends, name: "keysLegends");
 			}
 			values = s.SerializeObject<CArray<T>>(values, name: "values");
 		}

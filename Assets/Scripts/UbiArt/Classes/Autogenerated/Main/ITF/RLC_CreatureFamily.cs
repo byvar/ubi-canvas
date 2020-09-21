@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public StringID powerUp;
 		public StringID rewardCompleted;
 		public string versionNb;
-		public CList<RLC_GraphicalFamily> regionList;
+		public CListP<RLC_GraphicalFamily> regionList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			id = s.Serialize<Creature_Family>(id, name: "id");
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			powerUp = s.SerializeObject<StringID>(powerUp, name: "powerUp");
 			rewardCompleted = s.SerializeObject<StringID>(rewardCompleted, name: "rewardCompleted");
 			versionNb = s.Serialize<string>(versionNb, name: "versionNb");
-			regionList = s.SerializeObject<CList<RLC_GraphicalFamily>>(regionList, name: "regionList");
+			regionList = s.SerializeObject<CListP<RLC_GraphicalFamily>>(regionList, name: "regionList");
 		}
 		public enum Creature_Family {
 			[Serialize("Creature_Family::none"                 )] none = 0,

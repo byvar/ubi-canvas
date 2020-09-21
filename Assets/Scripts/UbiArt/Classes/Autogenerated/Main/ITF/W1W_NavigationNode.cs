@@ -10,8 +10,8 @@ namespace UbiArt.ITF {
 		public bool bool__3;
 		public StringID StringID__4;
 		public Enum_VH_0 Enum_VH_0__5;
-		public CArray<EventSender> CArray_EventSender__6;
-		public CArray<EventSender> CArray_EventSender__7;
+		public CArrayO<EventSender> CArray_EventSender__6;
+		public CArrayO<EventSender> CArray_EventSender__7;
 		public Generic<Event> Generic_Event__8;
 		public StringID StringID__9;
 		public bool bool__10;
@@ -45,8 +45,8 @@ namespace UbiArt.ITF {
 			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
 			StringID__4 = s.SerializeObject<StringID>(StringID__4, name: "StringID__4");
 			Enum_VH_0__5 = s.Serialize<Enum_VH_0>(Enum_VH_0__5, name: "Enum_VH_0__5");
-			CArray_EventSender__6 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
-			CArray_EventSender__7 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__7, name: "CArray_EventSender__7");
+			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
+			CArray_EventSender__7 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__7, name: "CArray_EventSender__7");
 			Generic_Event__8 = s.SerializeObject<Generic<Event>>(Generic_Event__8, name: "Generic_Event__8");
 			StringID__9 = s.SerializeObject<StringID>(StringID__9, name: "StringID__9");
 			bool__10 = s.Serialize<bool>(bool__10, name: "bool__10");

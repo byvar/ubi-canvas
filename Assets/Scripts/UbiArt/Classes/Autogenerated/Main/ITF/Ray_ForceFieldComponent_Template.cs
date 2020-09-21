@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Ray_ForceFieldComponent_Template : GraphicComponent_Template {
 		public float softCollisionRadius;
 		public float bounceRadius;
-		public CList<Ray_ForceFieldComponent_Template.LinkEvent> linkEvents;
+		public CListO<Ray_ForceFieldComponent_Template.LinkEvent> linkEvents;
 		public float softCollisionExitSpeed;
 		public float softCollisionExitForce;
 		public StringID lockedFx;
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			softCollisionRadius = s.Serialize<float>(softCollisionRadius, name: "softCollisionRadius");
 			bounceRadius = s.Serialize<float>(bounceRadius, name: "bounceRadius");
-			linkEvents = s.SerializeObject<CList<Ray_ForceFieldComponent_Template.LinkEvent>>(linkEvents, name: "linkEvents");
+			linkEvents = s.SerializeObject<CListO<Ray_ForceFieldComponent_Template.LinkEvent>>(linkEvents, name: "linkEvents");
 			softCollisionExitSpeed = s.Serialize<float>(softCollisionExitSpeed, name: "softCollisionExitSpeed");
 			softCollisionExitForce = s.Serialize<float>(softCollisionExitForce, name: "softCollisionExitForce");
 			lockedFx = s.SerializeObject<StringID>(lockedFx, name: "lockedFx");

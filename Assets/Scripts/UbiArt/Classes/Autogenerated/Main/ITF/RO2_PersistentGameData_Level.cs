@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public uint bestLumsTaken;
 		public float bestDistance;
 		public float bestTime;
-		public CList<PrisonerData> freedPrisoners;
+		public CListO<PrisonerData> freedPrisoners;
 		public uint cups;
 		public uint medals;
 		public bool completed;
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		public uint historyOccurenceNb;
 		public online.DateTime historyDateTime;
 		public bool seasonalEnemyKilled;
-		public CArray<ObjectPath> sequenceAlreadySeen;
+		public CArrayO<ObjectPath> sequenceAlreadySeen;
 		public int onlineSynced;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 				bestLumsTaken = s.Serialize<uint>(bestLumsTaken, name: "bestLumsTaken");
 				bestDistance = s.Serialize<float>(bestDistance, name: "bestDistance");
 				bestTime = s.Serialize<float>(bestTime, name: "bestTime");
-				freedPrisoners = s.SerializeObject<CList<PrisonerData>>(freedPrisoners, name: "freedPrisoners");
+				freedPrisoners = s.SerializeObject<CListO<PrisonerData>>(freedPrisoners, name: "freedPrisoners");
 				cups = s.Serialize<uint>(cups, name: "cups");
 				medals = s.Serialize<uint>(medals, name: "medals");
 				completed = s.Serialize<bool>(completed, name: "completed");
@@ -33,13 +33,13 @@ namespace UbiArt.ITF {
 				bestTimeSent = s.Serialize<bool>(bestTimeSent, name: "bestTimeSent");
 				type = s.Serialize<uint>(type, name: "type");
 				luckyTicketsLeft = s.Serialize<uint>(luckyTicketsLeft, name: "luckyTicketsLeft");
-				sequenceAlreadySeen = s.SerializeObject<CArray<ObjectPath>>(sequenceAlreadySeen, name: "sequenceAlreadySeen");
+				sequenceAlreadySeen = s.SerializeObject<CArrayO<ObjectPath>>(sequenceAlreadySeen, name: "sequenceAlreadySeen");
 				onlineSynced = s.Serialize<int>(onlineSynced, name: "onlineSynced");
 			} else {
 				bestLumsTaken = s.Serialize<uint>(bestLumsTaken, name: "bestLumsTaken");
 				bestDistance = s.Serialize<float>(bestDistance, name: "bestDistance");
 				bestTime = s.Serialize<float>(bestTime, name: "bestTime");
-				freedPrisoners = s.SerializeObject<CList<PrisonerData>>(freedPrisoners, name: "freedPrisoners");
+				freedPrisoners = s.SerializeObject<CListO<PrisonerData>>(freedPrisoners, name: "freedPrisoners");
 				cups = s.Serialize<uint>(cups, name: "cups");
 				medals = s.Serialize<uint>(medals, name: "medals");
 				completed = s.Serialize<bool>(completed, name: "completed");

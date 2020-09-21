@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class UITextBox_Template : UIComponent_Template {
-		public CList<FontTextArea.Style> styles;
+		public CListO<FontTextArea.Style> styles;
 		public float depthOffset;
 		public bool is2DNoScreenRatio;
 		public float textHeight;
@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public Cropping croppingMode;
 		public int usePages;
 		public BoxPosition boxPosition;
-		public CArray<StringID> textBlock;
+		public CArrayO<StringID> textBlock;
 		public Path texture;
 		public Vec2d textureOffset2D;
 		public Vec2d anchorOffset2D;
@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		public int useActorPosition;
 		public int useActorScale;
 		public int useActorRotation;
-		public CList<Path> preSpawnedActorPaths;
+		public CListO<Path> preSpawnedActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 				croppingMode = s.Serialize<Cropping>(croppingMode, name: "croppingMode");
 				usePages = s.Serialize<int>(usePages, name: "usePages");
 				boxPosition = s.Serialize<BoxPosition>(boxPosition, name: "boxPosition");
-				textBlock = s.SerializeObject<CArray<StringID>>(textBlock, name: "textBlock");
+				textBlock = s.SerializeObject<CArrayO<StringID>>(textBlock, name: "textBlock");
 				texture = s.SerializeObject<Path>(texture, name: "texture");
 				textureOffset2D = s.SerializeObject<Vec2d>(textureOffset2D, name: "textureOffset2D");
 				anchorOffset2D = s.SerializeObject<Vec2d>(anchorOffset2D, name: "anchorOffset2D");
@@ -51,12 +51,12 @@ namespace UbiArt.ITF {
 				textShadowColor = s.SerializeObject<Color>(textShadowColor, name: "textShadowColor");
 				lineSpacingFactor = s.Serialize<float>(lineSpacingFactor, name: "lineSpacingFactor");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				styles = s.SerializeObject<CList<FontTextArea.Style>>(styles, name: "styles");
-				preSpawnedActorPaths = s.SerializeObject<CList<Path>>(preSpawnedActorPaths, name: "preSpawnedActorPaths");
+				styles = s.SerializeObject<CListO<FontTextArea.Style>>(styles, name: "styles");
+				preSpawnedActorPaths = s.SerializeObject<CListO<Path>>(preSpawnedActorPaths, name: "preSpawnedActorPaths");
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 			} else {
-				styles = s.SerializeObject<CList<FontTextArea.Style>>(styles, name: "styles");
-				preSpawnedActorPaths = s.SerializeObject<CList<Path>>(preSpawnedActorPaths, name: "preSpawnedActorPaths");
+				styles = s.SerializeObject<CListO<FontTextArea.Style>>(styles, name: "styles");
+				preSpawnedActorPaths = s.SerializeObject<CListO<Path>>(preSpawnedActorPaths, name: "preSpawnedActorPaths");
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				is2DNoScreenRatio = s.Serialize<bool>(is2DNoScreenRatio, name: "is2DNoScreenRatio");
 			}

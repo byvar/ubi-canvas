@@ -8,9 +8,9 @@ namespace UbiArt.ITF {
 		public uint uint__2;
 		public EventSender EventSender__3;
 		public EventSender EventSender__4;
-		public CArray<EventSender> CArray_EventSender__5;
-		public CArray<EventSender> CArray_EventSender__6;
-		public CArray<EventSender> CArray_EventSender__7;
+		public CArrayO<EventSender> CArray_EventSender__5;
+		public CArrayO<EventSender> CArray_EventSender__6;
+		public CArrayO<EventSender> CArray_EventSender__7;
 		public StringID StringID__8;
 		public StringID StringID__9;
 		public StringID StringID__10;
@@ -44,9 +44,9 @@ namespace UbiArt.ITF {
 			uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");
 			EventSender__3 = s.SerializeObject<EventSender>(EventSender__3, name: "EventSender__3");
 			EventSender__4 = s.SerializeObject<EventSender>(EventSender__4, name: "EventSender__4");
-			CArray_EventSender__5 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__5, name: "CArray_EventSender__5");
-			CArray_EventSender__6 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
-			CArray_EventSender__7 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__7, name: "CArray_EventSender__7");
+			CArray_EventSender__5 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__5, name: "CArray_EventSender__5");
+			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
+			CArray_EventSender__7 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__7, name: "CArray_EventSender__7");
 			StringID__8 = s.SerializeObject<StringID>(StringID__8, name: "StringID__8");
 			StringID__9 = s.SerializeObject<StringID>(StringID__9, name: "StringID__9");
 			StringID__10 = s.SerializeObject<StringID>(StringID__10, name: "StringID__10");

@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class UIMenuBasic : UIMenu {
-		public CList<UIMenuBasic.ValidateItemSound> validateItemSounds;
-		public CList<StringID> WwiseActivateSounds;
-		public CList<StringID> WwiseDeactivateSounds;
-		public CList<StringID> WwiseValidateSounds;
-		public CList<StringID> WwiseBackSounds;
+		public CListO<UIMenuBasic.ValidateItemSound> validateItemSounds;
+		public CListO<StringID> WwiseActivateSounds;
+		public CListO<StringID> WwiseDeactivateSounds;
+		public CListO<StringID> WwiseValidateSounds;
+		public CListO<StringID> WwiseBackSounds;
 		public StringID defaultItem;
 		public StringID defaultValidate;
 		public StringID defaultPadItem;
@@ -41,11 +41,11 @@ namespace UbiArt.ITF {
 					cursorOffset = s.SerializeObject<Vec2d>(cursorOffset, name: "cursorOffset");
 				}
 			} else {
-				validateItemSounds = s.SerializeObject<CList<UIMenuBasic.ValidateItemSound>>(validateItemSounds, name: "validateItemSounds");
-				WwiseActivateSounds = s.SerializeObject<CList<StringID>>(WwiseActivateSounds, name: "WwiseActivateSounds");
-				WwiseDeactivateSounds = s.SerializeObject<CList<StringID>>(WwiseDeactivateSounds, name: "WwiseDeactivateSounds");
-				WwiseValidateSounds = s.SerializeObject<CList<StringID>>(WwiseValidateSounds, name: "WwiseValidateSounds");
-				WwiseBackSounds = s.SerializeObject<CList<StringID>>(WwiseBackSounds, name: "WwiseBackSounds");
+				validateItemSounds = s.SerializeObject<CListO<UIMenuBasic.ValidateItemSound>>(validateItemSounds, name: "validateItemSounds");
+				WwiseActivateSounds = s.SerializeObject<CListO<StringID>>(WwiseActivateSounds, name: "WwiseActivateSounds");
+				WwiseDeactivateSounds = s.SerializeObject<CListO<StringID>>(WwiseDeactivateSounds, name: "WwiseDeactivateSounds");
+				WwiseValidateSounds = s.SerializeObject<CListO<StringID>>(WwiseValidateSounds, name: "WwiseValidateSounds");
+				WwiseBackSounds = s.SerializeObject<CListO<StringID>>(WwiseBackSounds, name: "WwiseBackSounds");
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						defaultItem = s.SerializeChoiceListObject<StringID>(defaultItem, name: "defaultItem", empty: "Empty");

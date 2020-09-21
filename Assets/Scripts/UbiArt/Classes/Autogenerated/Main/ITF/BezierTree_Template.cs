@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public uint sampleCount;
 		public float widthForAABB;
 		public LinkMode linkMainBranch;
-		public CArray<Generic<BezierBranchComponent_Template>> branchComponents;
+		public CArrayO<Generic<BezierBranchComponent_Template>> branchComponents;
 		public TweenInterpreter_Template tweenInterpreter;
 		public StringID lengthCursorInput;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			sampleCount = s.Serialize<uint>(sampleCount, name: "sampleCount");
 			widthForAABB = s.Serialize<float>(widthForAABB, name: "widthForAABB");
 			linkMainBranch = s.Serialize<LinkMode>(linkMainBranch, name: "linkMainBranch");
-			branchComponents = s.SerializeObject<CArray<Generic<BezierBranchComponent_Template>>>(branchComponents, name: "branchComponents");
+			branchComponents = s.SerializeObject<CArrayO<Generic<BezierBranchComponent_Template>>>(branchComponents, name: "branchComponents");
 			tweenInterpreter = s.SerializeObject<TweenInterpreter_Template>(tweenInterpreter, name: "tweenInterpreter");
 			lengthCursorInput = s.SerializeObject<StringID>(lengthCursorInput, name: "lengthCursorInput");
 		}

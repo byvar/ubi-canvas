@@ -31,14 +31,14 @@ namespace UbiArt.ITF {
 		public bool useFireflyCloud;
 		public bool displayLinks;
 		public bool tutoSucceeded;
-		public CList<RO2_LumsChainComponent.st_Particle> particles;
-		public CList<RO2_LumsChainComponent.st_cursors> links;
+		public CListO<RO2_LumsChainComponent.st_Particle> particles;
+		public CListO<RO2_LumsChainComponent.st_cursors> links;
 		public Enum_state state;
 		public Enum_state2 state2;
 		public bool isActivated;
 		public bool perfectActivation;
-		public CArray<uint> aliveParticles;
-		public CList<float> DuplicateLumChainsOffsets;
+		public CArrayP<uint> aliveParticles;
+		public CListP<float> DuplicateLumChainsOffsets;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -68,9 +68,9 @@ namespace UbiArt.ITF {
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					tutoSucceeded = s.Serialize<bool>(tutoSucceeded, name: "tutoSucceeded");
-					particles = s.SerializeObject<CList<RO2_LumsChainComponent.st_Particle>>(particles, name: "particles");
-					aliveParticles = s.SerializeObject<CArray<uint>>(aliveParticles, name: "aliveParticles");
-					links = s.SerializeObject<CList<RO2_LumsChainComponent.st_cursors>>(links, name: "links");
+					particles = s.SerializeObject<CListO<RO2_LumsChainComponent.st_Particle>>(particles, name: "particles");
+					aliveParticles = s.SerializeObject<CArrayP<uint>>(aliveParticles, name: "aliveParticles");
+					links = s.SerializeObject<CListO<RO2_LumsChainComponent.st_cursors>>(links, name: "links");
 					state2 = s.Serialize<Enum_state2>(state2, name: "state2");
 					isActivated = s.Serialize<bool>(isActivated, name: "isActivated");
 					perfectActivation = s.Serialize<bool>(perfectActivation, name: "perfectActivation");
@@ -107,15 +107,15 @@ namespace UbiArt.ITF {
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					tutoSucceeded = s.Serialize<bool>(tutoSucceeded, name: "tutoSucceeded");
-					particles = s.SerializeObject<CList<RO2_LumsChainComponent.st_Particle>>(particles, name: "particles");
-					links = s.SerializeObject<CList<RO2_LumsChainComponent.st_cursors>>(links, name: "links");
+					particles = s.SerializeObject<CListO<RO2_LumsChainComponent.st_Particle>>(particles, name: "particles");
+					links = s.SerializeObject<CListO<RO2_LumsChainComponent.st_cursors>>(links, name: "links");
 					state = s.Serialize<Enum_state>(state, name: "state");
 					isActivated = s.Serialize<bool>(isActivated, name: "isActivated");
 					perfectActivation = s.Serialize<bool>(perfectActivation, name: "perfectActivation");
-					aliveParticles = s.SerializeObject<CArray<uint>>(aliveParticles, name: "aliveParticles");
-					aliveParticles = s.SerializeObject<CArray<uint>>(aliveParticles, name: "aliveParticles");
+					aliveParticles = s.SerializeObject<CArrayP<uint>>(aliveParticles, name: "aliveParticles");
+					aliveParticles = s.SerializeObject<CArrayP<uint>>(aliveParticles, name: "aliveParticles");
 				}
-				DuplicateLumChainsOffsets = s.SerializeObject<CList<float>>(DuplicateLumChainsOffsets, name: "DuplicateLumChainsOffsets");
+				DuplicateLumChainsOffsets = s.SerializeObject<CListP<float>>(DuplicateLumChainsOffsets, name: "DuplicateLumChainsOffsets");
 			}
 		}
 		[Games(GameFlags.RA)]

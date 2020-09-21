@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Generic<BlendTreeNode<AnimTreeResult>> animOff;
 		public AnimTreeNodePlayAnim transOff;
 		public AnimTreeNodePlayAnim transOn;
-		public CList<Criteria> criterias;
+		public CListO<Criteria> criterias;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 				animOff = s.SerializeObject<Generic<BlendTreeNode<AnimTreeResult>>>(animOff, name: "animOff");
 				transOff = s.SerializeObject<AnimTreeNodePlayAnim>(transOff, name: "transOff");
 				transOn = s.SerializeObject<AnimTreeNodePlayAnim>(transOn, name: "transOn");
-				criterias = s.SerializeObject<CList<Criteria>>(criterias, name: "criterias");
+				criterias = s.SerializeObject<CListO<Criteria>>(criterias, name: "criterias");
 			}
 		}
 		public override uint? ClassCRC => 0x2F6D97A7;

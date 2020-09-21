@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RLVersion)]
 	public partial class BusDef : CSerializable {
 		public StringID name;
-		public CList<StringID> outputs;
+		public CListO<StringID> outputs;
 		public Volume volume;
 		public float filterFrequency;
 		public float filterQ;
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public bool hasReverb;
 		public int reverbActive;
 		public ReverbPreset reverbPreset;
-		public CArray<Generic<SoundModifier>> modifiers;
+		public CArrayO<Generic<SoundModifier>> modifiers;
 		public int pauseSensitive;
 
 		
@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
 			} else if (Settings.s.game == Settings.Game.RO) {
 				name = s.SerializeObject<StringID>(name, name: "name");
-				outputs = s.SerializeObject<CList<StringID>>(outputs, name: "outputs");
+				outputs = s.SerializeObject<CListO<StringID>>(outputs, name: "outputs");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				filterFrequency = s.Serialize<float>(filterFrequency, name: "filterFrequency");
 				filterQ = s.Serialize<float>(filterQ, name: "filterQ");
@@ -32,15 +32,15 @@ namespace UbiArt.ITF {
 				hasReverb = s.Serialize<bool>(hasReverb, name: "hasReverb");
 				reverbActive = s.Serialize<int>(reverbActive, name: "reverbActive");
 				reverbPreset = s.Serialize<ReverbPreset>(reverbPreset, name: "reverbPreset");
-				modifiers = s.SerializeObject<CArray<Generic<SoundModifier>>>(modifiers, name: "modifiers");
+				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");
 				pauseSensitive = s.Serialize<int>(pauseSensitive, name: "pauseSensitive");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
-				outputs = s.SerializeObject<CList<StringID>>(outputs, name: "outputs");
+				outputs = s.SerializeObject<CListO<StringID>>(outputs, name: "outputs");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				filterFrequency = s.Serialize<float>(filterFrequency, name: "filterFrequency");
 				filterType2 = s.Serialize<FilterType2>(filterType2, name: "filterType2");
-				modifiers = s.SerializeObject<CArray<Generic<SoundModifier>>>(modifiers, name: "modifiers");
+				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");
 				outDevices = s.Serialize<uint>(outDevices, name: "outDevices");
 			}
 		}

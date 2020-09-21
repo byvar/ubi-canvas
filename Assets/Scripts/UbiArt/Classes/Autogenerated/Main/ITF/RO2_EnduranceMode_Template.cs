@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnduranceMode_Template : RO2_ChallengeCommon_Template {
-		public CList<StringID> flippableTags;
+		public CListO<StringID> flippableTags;
 		public uint decoBrickCooldown;
 		public uint decoBrickMaxActiveCount;
-		public CList<RO2_DecoBrick_Template> decoBricks;
-		public CList<RO2_DecoBrick_Template> specialDecoBricks;
-		public CList<RO2_EnduranceMode_Template.DecoRange> decoRanges;
+		public CListO<RO2_DecoBrick_Template> decoBricks;
+		public CListO<RO2_DecoBrick_Template> specialDecoBricks;
+		public CListO<RO2_EnduranceMode_Template.DecoRange> decoRanges;
 		public uint treasureRopeCount;
 		public float treasureRopeInterval;
 		public uint treasureRopeHitLevel;
@@ -16,12 +16,12 @@ namespace UbiArt.ITF {
 		public Path treasureReachedFxPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			flippableTags = s.SerializeObject<CList<StringID>>(flippableTags, name: "flippableTags");
+			flippableTags = s.SerializeObject<CListO<StringID>>(flippableTags, name: "flippableTags");
 			decoBrickCooldown = s.Serialize<uint>(decoBrickCooldown, name: "decoBrickCooldown");
 			decoBrickMaxActiveCount = s.Serialize<uint>(decoBrickMaxActiveCount, name: "decoBrickMaxActiveCount");
-			decoBricks = s.SerializeObject<CList<RO2_DecoBrick_Template>>(decoBricks, name: "decoBricks");
-			specialDecoBricks = s.SerializeObject<CList<RO2_DecoBrick_Template>>(specialDecoBricks, name: "specialDecoBricks");
-			decoRanges = s.SerializeObject<CList<RO2_EnduranceMode_Template.DecoRange>>(decoRanges, name: "decoRanges");
+			decoBricks = s.SerializeObject<CListO<RO2_DecoBrick_Template>>(decoBricks, name: "decoBricks");
+			specialDecoBricks = s.SerializeObject<CListO<RO2_DecoBrick_Template>>(specialDecoBricks, name: "specialDecoBricks");
+			decoRanges = s.SerializeObject<CListO<RO2_EnduranceMode_Template.DecoRange>>(decoRanges, name: "decoRanges");
 			treasureRopeCount = s.Serialize<uint>(treasureRopeCount, name: "treasureRopeCount");
 			treasureRopeInterval = s.Serialize<float>(treasureRopeInterval, name: "treasureRopeInterval");
 			treasureRopeHitLevel = s.Serialize<uint>(treasureRopeHitLevel, name: "treasureRopeHitLevel");

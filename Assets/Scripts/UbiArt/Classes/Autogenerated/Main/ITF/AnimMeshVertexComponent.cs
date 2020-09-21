@@ -5,11 +5,11 @@ namespace UbiArt.ITF {
 	public partial class AnimMeshVertexComponent : GraphicComponent {
 		public float mergeRange;
 		public AABB aabb;
-		public CList<SingleAnimData> anims;
+		public CListO<SingleAnimData> anims;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {
-				anims = s.SerializeObject<CList<SingleAnimData>>(anims, name: "anims");
+				anims = s.SerializeObject<CListO<SingleAnimData>>(anims, name: "anims");
 				mergeRange = s.Serialize<float>(mergeRange, name: "mergeRange");
 				aabb = s.SerializeObject<AABB>(aabb, name: "aabb");
 			} else {

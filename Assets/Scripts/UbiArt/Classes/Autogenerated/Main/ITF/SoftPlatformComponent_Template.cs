@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class SoftPlatformComponent_Template : ActorComponent_Template {
-		public CList<SoftPlatformComponent_Template.BodyData> softPlatformParticles;
-		public CList<SoftPlatformComponent_Template.ConstraintData> softPlatformConstraints;
+		public CListO<SoftPlatformComponent_Template.BodyData> softPlatformParticles;
+		public CListO<SoftPlatformComponent_Template.ConstraintData> softPlatformConstraints;
 		public float weightMultiplier;
 		public float landSpeedMultiplier;
 		public float hitForceMultiplier;
@@ -16,8 +16,8 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				softPlatformParticles = s.SerializeObject<CList<SoftPlatformComponent_Template.BodyData>>(softPlatformParticles, name: "softPlatformParticles");
-				softPlatformConstraints = s.SerializeObject<CList<SoftPlatformComponent_Template.ConstraintData>>(softPlatformConstraints, name: "softPlatformConstraints");
+				softPlatformParticles = s.SerializeObject<CListO<SoftPlatformComponent_Template.BodyData>>(softPlatformParticles, name: "softPlatformParticles");
+				softPlatformConstraints = s.SerializeObject<CListO<SoftPlatformComponent_Template.ConstraintData>>(softPlatformConstraints, name: "softPlatformConstraints");
 				weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
 				landSpeedMultiplier = s.Serialize<float>(landSpeedMultiplier, name: "landSpeedMultiplier");
 				hitForceMultiplier = s.Serialize<float>(hitForceMultiplier, name: "hitForceMultiplier");
@@ -26,8 +26,8 @@ namespace UbiArt.ITF {
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				usePhantom = s.Serialize<bool>(usePhantom, name: "usePhantom");
 			} else {
-				softPlatformParticles = s.SerializeObject<CList<SoftPlatformComponent_Template.BodyData>>(softPlatformParticles, name: "softPlatformParticles");
-				softPlatformConstraints = s.SerializeObject<CList<SoftPlatformComponent_Template.ConstraintData>>(softPlatformConstraints, name: "softPlatformConstraints");
+				softPlatformParticles = s.SerializeObject<CListO<SoftPlatformComponent_Template.BodyData>>(softPlatformParticles, name: "softPlatformParticles");
+				softPlatformConstraints = s.SerializeObject<CListO<SoftPlatformComponent_Template.ConstraintData>>(softPlatformConstraints, name: "softPlatformConstraints");
 				weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
 				landSpeedMultiplier = s.Serialize<float>(landSpeedMultiplier, name: "landSpeedMultiplier");
 				hitForceMultiplier = s.Serialize<float>(hitForceMultiplier, name: "hitForceMultiplier");

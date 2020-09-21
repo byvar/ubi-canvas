@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public Nullable<Frise.MeshFluidData> meshFluidData;
 		public float AABB_MinZ;
 		public float AABB_MaxZ;
-		public CList<PolyLineEdge> LOCAL_POINTS;
+		public CListO<PolyLineEdge> LOCAL_POINTS;
 		public bool LOOP;
 		public PolyPointList PointsList;
 		public Path ConfigName;
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 		public LockTexture lockTexture;
 		public Path MatShader;
 		public uint Mesh3dSeed;
-		public CList<int> MeshManualySet;
+		public CListP<int> MeshManualySet;
 		public float animSpeedFactor;
 		public float animAmplitudeFactor;
 		public Color highlightOutlineColor;
@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 		public float highlightOutlineWidth;
 		public float highlightPeriod;
 		public float highlightAmplitude;
-		public CList<PolyLineEdge> POINTS;
+		public CListO<PolyLineEdge> POINTS;
 		public PivotMode pivotMode;
 		public Vec2d USERPIVOT;
 		public float ColorFactor_Red;
@@ -75,10 +75,10 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
-					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOCAL_POINTS = s.SerializeObject<CListO<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
 				}
 				if (s.HasFlags(SerializeFlags.Flags6 | SerializeFlags.Flags8)) {
-					POINTS = s.SerializeObject<CList<PolyLineEdge>>(POINTS, name: "POINTS");
+					POINTS = s.SerializeObject<CListO<PolyLineEdge>>(POINTS, name: "POINTS");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					pivotMode = s.Serialize<PivotMode>(pivotMode, name: "pivotMode");
@@ -137,7 +137,7 @@ namespace UbiArt.ITF {
 					AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				}
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOCAL_POINTS = s.SerializeObject<CListO<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
 					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
@@ -194,7 +194,7 @@ namespace UbiArt.ITF {
 					AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				}
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOCAL_POINTS = s.SerializeObject<CListO<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
 					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
@@ -252,7 +252,7 @@ namespace UbiArt.ITF {
 					AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				}
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOCAL_POINTS = s.SerializeObject<CListO<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
 					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
@@ -293,7 +293,7 @@ namespace UbiArt.ITF {
 					}
 				}
 				Mesh3dSeed = s.Serialize<uint>(Mesh3dSeed, name: "Mesh3dSeed");
-				MeshManualySet = s.SerializeObject<CList<int>>(MeshManualySet, name: "MeshManualySet");
+				MeshManualySet = s.SerializeObject<CListP<int>>(MeshManualySet, name: "MeshManualySet");
 				animSpeedFactor = s.Serialize<float>(animSpeedFactor, name: "animSpeedFactor");
 				animAmplitudeFactor = s.Serialize<float>(animAmplitudeFactor, name: "animAmplitudeFactor");
 			} else {
@@ -314,7 +314,7 @@ namespace UbiArt.ITF {
 				AABB_MinZ = s.Serialize<float>(AABB_MinZ, name: "AABB_MinZ");
 				AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
-					LOCAL_POINTS = s.SerializeObject<CList<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
+					LOCAL_POINTS = s.SerializeObject<CListO<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
 					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
@@ -353,7 +353,7 @@ namespace UbiArt.ITF {
 					}
 				}
 				Mesh3dSeed = s.Serialize<uint>(Mesh3dSeed, name: "Mesh3dSeed");
-				MeshManualySet = s.SerializeObject<CList<int>>(MeshManualySet, name: "MeshManualySet");
+				MeshManualySet = s.SerializeObject<CListP<int>>(MeshManualySet, name: "MeshManualySet");
 				animSpeedFactor = s.Serialize<float>(animSpeedFactor, name: "animSpeedFactor");
 				animAmplitudeFactor = s.Serialize<float>(animAmplitudeFactor, name: "animAmplitudeFactor");
 				highlightOutlineColor = s.SerializeObject<Color>(highlightOutlineColor, name: "highlightOutlineColor");
@@ -399,30 +399,30 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 		public partial class IndexList : CSerializable {
-			public CList<ushort> List;
+			public CListP<ushort> List;
 			public uint IdTexConfig;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				List = s.SerializeObject<CList<ushort>>(List, name: "List");
+				List = s.SerializeObject<CListP<ushort>>(List, name: "List");
 				IdTexConfig = s.Serialize<uint>(IdTexConfig, name: "IdTexConfig");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class MeshBuildData : CSerializable {
-			public CList<Frise.IndexList> AnimIndexList;
-			public CList<VertexPNC3T> AnimVertexList;
-			public CList<Frise.IndexList> StaticIndexList;
-			public CList<VertexPCT> StaticVertexList;
+			public CListO<Frise.IndexList> AnimIndexList;
+			public CListO<VertexPNC3T> AnimVertexList;
+			public CListO<Frise.IndexList> StaticIndexList;
+			public CListO<VertexPCT> StaticVertexList;
 			public Frise.IndexList OverlayIndexList;
-			public CList<VertexPCBT> OverlayVertexList;
+			public CListO<VertexPCBT> OverlayVertexList;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				AnimIndexList = s.SerializeObject<CList<Frise.IndexList>>(AnimIndexList, name: "AnimIndexList");
-				AnimVertexList = s.SerializeObject<CList<VertexPNC3T>>(AnimVertexList, name: "AnimVertexList");
-				StaticIndexList = s.SerializeObject<CList<Frise.IndexList>>(StaticIndexList, name: "StaticIndexList");
-				StaticVertexList = s.SerializeObject<CList<VertexPCT>>(StaticVertexList, name: "StaticVertexList");
+				AnimIndexList = s.SerializeObject<CListO<Frise.IndexList>>(AnimIndexList, name: "AnimIndexList");
+				AnimVertexList = s.SerializeObject<CListO<VertexPNC3T>>(AnimVertexList, name: "AnimVertexList");
+				StaticIndexList = s.SerializeObject<CListO<Frise.IndexList>>(StaticIndexList, name: "StaticIndexList");
+				StaticVertexList = s.SerializeObject<CListO<VertexPCT>>(StaticVertexList, name: "StaticVertexList");
 				OverlayIndexList = s.SerializeObject<Frise.IndexList>(OverlayIndexList, name: "OverlayIndexList");
-				OverlayVertexList = s.SerializeObject<CList<VertexPCBT>>(OverlayVertexList, name: "OverlayVertexList");
+				OverlayVertexList = s.SerializeObject<CListO<VertexPCBT>>(OverlayVertexList, name: "OverlayVertexList");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
@@ -439,12 +439,12 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class CollisionData : CSerializable {
-			public CList<PolyPointList> LocalCollisionList;
-			public CList<PolyLine> WorldCollisionList;
+			public CListO<PolyPointList> LocalCollisionList;
+			public CListO<PolyLine> WorldCollisionList;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				LocalCollisionList = s.SerializeObject<CList<PolyPointList>>(LocalCollisionList, name: "LocalCollisionList");
-				WorldCollisionList = s.SerializeObject<CList<PolyLine>>(WorldCollisionList, name: "WorldCollisionList");
+				LocalCollisionList = s.SerializeObject<CListO<PolyPointList>>(LocalCollisionList, name: "LocalCollisionList");
+				WorldCollisionList = s.SerializeObject<CListO<PolyLine>>(WorldCollisionList, name: "WorldCollisionList");
 			}
 		}
 		public enum LockTexture {

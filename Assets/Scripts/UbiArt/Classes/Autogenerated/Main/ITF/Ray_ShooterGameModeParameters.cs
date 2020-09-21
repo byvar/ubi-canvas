@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ShooterGameModeParameters : CSerializable {
-		public CArray<PlayerData> playersDataList;
+		public CArrayO<PlayerData> playersDataList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			playersDataList = s.SerializeObject<CArray<PlayerData>>(playersDataList, name: "playersDataList");
+			playersDataList = s.SerializeObject<CArrayO<PlayerData>>(playersDataList, name: "playersDataList");
 		}
 		public override uint? ClassCRC => 0x63E0A1F7;
 

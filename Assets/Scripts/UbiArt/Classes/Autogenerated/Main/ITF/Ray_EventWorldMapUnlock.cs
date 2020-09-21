@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_EventWorldMapUnlock : Event {
-		public CList<StringID> unlocks;
+		public CListO<StringID> unlocks;
 		public int changeCurrentLevelName;
 		public StringID levelName;
 		public int saveGameState;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			unlocks = s.SerializeObject<CList<StringID>>(unlocks, name: "unlocks");
+			unlocks = s.SerializeObject<CListO<StringID>>(unlocks, name: "unlocks");
 			changeCurrentLevelName = s.Serialize<int>(changeCurrentLevelName, name: "changeCurrentLevelName");
 			levelName = s.SerializeObject<StringID>(levelName, name: "levelName");
 			saveGameState = s.Serialize<int>(saveGameState, name: "saveGameState");

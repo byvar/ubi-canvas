@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public uint teensyLocksOpened;
 		public uint challengeLocksOpened;
 		public uint tutoCount;
-		public CArray<bool> DisplayQuoteStates;
+		public CArrayP<bool> DisplayQuoteStates;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			hasMet = s.Serialize<bool>(hasMet, name: "hasMet");
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			teensyLocksOpened = s.Serialize<uint>(teensyLocksOpened, name: "teensyLocksOpened");
 			challengeLocksOpened = s.Serialize<uint>(challengeLocksOpened, name: "challengeLocksOpened");
 			tutoCount = s.Serialize<uint>(tutoCount, name: "tutoCount");
-			DisplayQuoteStates = s.SerializeObject<CArray<bool>>(DisplayQuoteStates, name: "DisplayQuoteStates");
+			DisplayQuoteStates = s.SerializeObject<CArrayP<bool>>(DisplayQuoteStates, name: "DisplayQuoteStates");
 		}
 	}
 }

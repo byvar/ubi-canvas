@@ -9,9 +9,9 @@ namespace UbiArt.ITF {
 		public StringID attackAnim;
 		public float lookAtBlend;
 		public bool debug;
-		public CList<StringID> fxNames;
-		public CList<StringID> fxMarkerStart;
-		public CList<StringID> fxMarkerStop;
+		public CListO<StringID> fxNames;
+		public CListO<StringID> fxMarkerStart;
+		public CListO<StringID> fxMarkerStop;
 		public StringID lightningStart;
 		public StringID lightningStop;
 		public StringID lightningCharge;
@@ -23,9 +23,9 @@ namespace UbiArt.ITF {
 			attackAnim = s.SerializeObject<StringID>(attackAnim, name: "attackAnim");
 			lookAtBlend = s.Serialize<float>(lookAtBlend, name: "lookAtBlend");
 			debug = s.Serialize<bool>(debug, name: "debug");
-			fxNames = s.SerializeObject<CList<StringID>>(fxNames, name: "fxNames");
-			fxMarkerStart = s.SerializeObject<CList<StringID>>(fxMarkerStart, name: "fxMarkerStart");
-			fxMarkerStop = s.SerializeObject<CList<StringID>>(fxMarkerStop, name: "fxMarkerStop");
+			fxNames = s.SerializeObject<CListO<StringID>>(fxNames, name: "fxNames");
+			fxMarkerStart = s.SerializeObject<CListO<StringID>>(fxMarkerStart, name: "fxMarkerStart");
+			fxMarkerStop = s.SerializeObject<CListO<StringID>>(fxMarkerStop, name: "fxMarkerStop");
 			lightningStart = s.SerializeObject<StringID>(lightningStart, name: "lightningStart");
 			lightningStop = s.SerializeObject<StringID>(lightningStop, name: "lightningStop");
 			lightningCharge = s.SerializeObject<StringID>(lightningCharge, name: "lightningCharge");

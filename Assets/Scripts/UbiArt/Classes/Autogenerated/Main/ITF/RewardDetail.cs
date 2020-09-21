@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public bool noRetroactiveUnlock;
 		public string uplayId;
 		public CMap<online.SNSType, string> snsIds;
-		public CArray<Generic<RewardTrigger_Base>> REWARD_TRIGGER;
+		public CArrayO<Generic<RewardTrigger_Base>> REWARD_TRIGGER;
 
 		public string string__4;
 		public string string__5;
@@ -28,13 +28,13 @@ namespace UbiArt.ITF {
 				string__6 = s.Serialize<string>(string__6, name: "string__6");
 				string__7 = s.Serialize<string>(string__7, name: "string__7");
 				string__8 = s.Serialize<string>(string__8, name: "string__8");
-				REWARD_TRIGGER = s.SerializeObject<CArray<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
+				REWARD_TRIGGER = s.SerializeObject<CArrayO<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				id = s.SerializeObject<StringID>(id, name: "id");
 				name = s.SerializeObject<StringID>(name, name: "name");
 				platformId = s.Serialize<uint>(platformId, name: "platformId");
 				noRetroactiveUnlock = s.Serialize<bool>(noRetroactiveUnlock, name: "noRetroactiveUnlock");
-				REWARD_TRIGGER = s.SerializeObject<CArray<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
+				REWARD_TRIGGER = s.SerializeObject<CArrayO<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
 			} else {
 				id = s.SerializeObject<StringID>(id, name: "id");
 				name = s.SerializeObject<StringID>(name, name: "name");
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				noRetroactiveUnlock = s.Serialize<bool>(noRetroactiveUnlock, name: "noRetroactiveUnlock");
 				uplayId = s.Serialize<string>(uplayId, name: "uplayId");
 				snsIds = s.SerializeObject<CMap<online.SNSType, string>>(snsIds, name: "snsIds");
-				REWARD_TRIGGER = s.SerializeObject<CArray<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
+				REWARD_TRIGGER = s.SerializeObject<CArrayO<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
 			}
 		}
 	}

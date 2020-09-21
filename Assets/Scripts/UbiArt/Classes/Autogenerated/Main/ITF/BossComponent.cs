@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class BossComponent : ActorComponent {
 		public Enum_VH_0 Enum_VH_0__0;
 		public Enum_VH_1 Enum_VH_1__1;
-		public CArray<PhaseData> CArray_PhaseData__2;
+		public CArrayO<PhaseData> CArray_PhaseData__2;
 		public Path Path__3;
 		public Path Path__4;
 		public Path Path__5;
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
 			Enum_VH_1__1 = s.Serialize<Enum_VH_1>(Enum_VH_1__1, name: "Enum_VH_1__1");
-			CArray_PhaseData__2 = s.SerializeObject<CArray<PhaseData>>(CArray_PhaseData__2, name: "CArray_PhaseData__2");
+			CArray_PhaseData__2 = s.SerializeObject<CArrayO<PhaseData>>(CArray_PhaseData__2, name: "CArray_PhaseData__2");
 			Path__3 = s.SerializeObject<Path>(Path__3, name: "Path__3");
 			Path__4 = s.SerializeObject<Path>(Path__4, name: "Path__4");
 			Path__5 = s.SerializeObject<Path>(Path__5, name: "Path__5");

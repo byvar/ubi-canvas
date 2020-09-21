@@ -5,12 +5,12 @@ namespace UbiArt.ITF {
 	public partial class RO2_EnduranceRule_Template : CSerializable {
 		public float distanceOffset;
 		public float distanceRepeat;
-		public CList<StringID> tags;
+		public CListO<StringID> tags;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			distanceOffset = s.Serialize<float>(distanceOffset, name: "distanceOffset");
 			distanceRepeat = s.Serialize<float>(distanceRepeat, name: "distanceRepeat");
-			tags = s.SerializeObject<CList<StringID>>(tags, name: "tags");
+			tags = s.SerializeObject<CListO<StringID>>(tags, name: "tags");
 		}
 	}
 }

@@ -9,12 +9,12 @@ namespace UbiArt.ITF {
 		public bool triggerBroadcast;
 		public bool triggerParent;
 		public bool triggerChildren;
-		public CList<ChildrenTagParam> childrenTagList;
+		public CListO<ChildrenTagParam> childrenTagList;
 		public bool triggerBoundParent;
 		public bool triggerBoundChildren;
 		public Mode modeAfterCP;
 		public bool triggerOnceDone;
-		public CList<Event> Events;
+		public CListO<Event> Events;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce");
@@ -23,14 +23,14 @@ namespace UbiArt.ITF {
 			triggerBroadcast = s.Serialize<bool>(triggerBroadcast, name: "triggerBroadcast");
 			triggerParent = s.Serialize<bool>(triggerParent, name: "triggerParent");
 			triggerChildren = s.Serialize<bool>(triggerChildren, name: "triggerChildren");
-			childrenTagList = s.SerializeObject<CList<ChildrenTagParam>>(childrenTagList, name: "childrenTagList");
+			childrenTagList = s.SerializeObject<CListO<ChildrenTagParam>>(childrenTagList, name: "childrenTagList");
 			triggerBoundParent = s.Serialize<bool>(triggerBoundParent, name: "triggerBoundParent");
 			triggerBoundChildren = s.Serialize<bool>(triggerBoundChildren, name: "triggerBoundChildren");
 			modeAfterCP = s.Serialize<Mode>(modeAfterCP, name: "modeAfterCP");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
 				triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
 			}
-			Events = s.SerializeObject<CList<Event>>(Events, name: "Events");
+			Events = s.SerializeObject<CListO<Event>>(Events, name: "Events");
 		}
 		public enum Mode {
 			[Serialize("Mode_None"            )] None = 0,

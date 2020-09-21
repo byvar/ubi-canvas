@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_TeensyRecapComponent_Template : ActorComponent_Template {
 		public uint teensyCount;
-		public CList<RO2_TeensyRecapComponent_Template.Teensy> teensies;
+		public CListO<RO2_TeensyRecapComponent_Template.Teensy> teensies;
 		public Path trailPath;
 		public Path flashPath;
 		public StringID one;
@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			teensyCount = s.Serialize<uint>(teensyCount, name: "teensyCount");
-			teensies = s.SerializeObject<CList<RO2_TeensyRecapComponent_Template.Teensy>>(teensies, name: "teensies");
+			teensies = s.SerializeObject<CListO<RO2_TeensyRecapComponent_Template.Teensy>>(teensies, name: "teensies");
 			trailPath = s.SerializeObject<Path>(trailPath, name: "trailPath");
 			flashPath = s.SerializeObject<Path>(flashPath, name: "flashPath");
 			one = s.SerializeObject<StringID>(one, name: "one");
@@ -40,10 +40,10 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class Teensy : CSerializable {
-			public CList<RO2_TeensyRecapComponent_Template.AnimIndices> variationIndices;
+			public CListO<RO2_TeensyRecapComponent_Template.AnimIndices> variationIndices;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				variationIndices = s.SerializeObject<CList<RO2_TeensyRecapComponent_Template.AnimIndices>>(variationIndices, name: "variationIndices");
+				variationIndices = s.SerializeObject<CListO<RO2_TeensyRecapComponent_Template.AnimIndices>>(variationIndices, name: "variationIndices");
 			}
 		}
 		public override uint? ClassCRC => 0x63458400;

@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_EnduranceBrick_Template : RO2_Brick_Template {
-		public CList<StringID> inTags;
-		public CList<StringID> outTags;
+		public CListO<StringID> inTags;
+		public CListO<StringID> outTags;
 		public bool canFlip;
 		public Vec2d size;
 		public Vec2d inPos;
@@ -14,8 +14,8 @@ namespace UbiArt.ITF {
 		public float length;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			inTags = s.SerializeObject<CList<StringID>>(inTags, name: "inTags");
-			outTags = s.SerializeObject<CList<StringID>>(outTags, name: "outTags");
+			inTags = s.SerializeObject<CListO<StringID>>(inTags, name: "inTags");
+			outTags = s.SerializeObject<CListO<StringID>>(outTags, name: "outTags");
 			if (s.HasFlags(SerializeFlags.Flags10)) {
 				canFlip = s.Serialize<bool>(canFlip, name: "canFlip");
 				size = s.SerializeObject<Vec2d>(size, name: "size");

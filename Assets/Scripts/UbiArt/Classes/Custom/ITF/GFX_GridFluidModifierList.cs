@@ -6,14 +6,14 @@ namespace UbiArt.ITF {
 		public StringID Name;
 		public bool Active;
 		public bool IsExternal;
-		public CList<GFX_GridFluidModifier> ModifierList;
+		public CListO<GFX_GridFluidModifier> ModifierList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
 				Name = s.SerializeObject<StringID>(Name, name: "Name");
 				Active = s.Serialize<bool>(Active, name: "Active");
 				IsExternal = s.Serialize<bool>(IsExternal, name: "IsExternal");
-				ModifierList = s.SerializeObject<CList<GFX_GridFluidModifier>>(ModifierList, name: "ModifierList");
+				ModifierList = s.SerializeObject<CListO<GFX_GridFluidModifier>>(ModifierList, name: "ModifierList");
 			}
 		}
 	}

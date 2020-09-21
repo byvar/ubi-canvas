@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureManager_Template : TemplateObj {
 		public CMap<StringID, RLC_BasicCreatureDisplay_Template> creatures;
-		public CList<RLC_CreatureFamily> families;
-		public CArray<StringID> startingCreaturesId;
+		public CListO<RLC_CreatureFamily> families;
+		public CArrayO<StringID> startingCreaturesId;
 		public CMap<uint, RLC_DuplicateReward> duplicateRewards;
 		public float queenHatchPercentage;
 		public CMap<Creature_Rarity.Creature_Rarity_Enum, Creature_Rarity> rarityDefinitions;
@@ -38,9 +38,9 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			creatures = s.SerializeObject<CMap<StringID, RLC_BasicCreatureDisplay_Template>>(creatures, name: "creatures");
-			families = s.SerializeObject<CList<RLC_CreatureFamily>>(families, name: "families");
-			startingCreaturesId = s.SerializeObject<CArray<StringID>>(startingCreaturesId, name: "startingCreaturesId");
-			startingCreaturesId = s.SerializeObject<CArray<StringID>>(startingCreaturesId, name: "startingCreaturesId");
+			families = s.SerializeObject<CListO<RLC_CreatureFamily>>(families, name: "families");
+			startingCreaturesId = s.SerializeObject<CArrayO<StringID>>(startingCreaturesId, name: "startingCreaturesId");
+			startingCreaturesId = s.SerializeObject<CArrayO<StringID>>(startingCreaturesId, name: "startingCreaturesId");
 			duplicateRewards = s.SerializeObject<CMap<uint, RLC_DuplicateReward>>(duplicateRewards, name: "duplicateRewards");
 			queenHatchPercentage = s.Serialize<float>(queenHatchPercentage, name: "queenHatchPercentage");
 			rarityDefinitions = s.SerializeObject<CMap<Creature_Rarity.Creature_Rarity_Enum, Creature_Rarity>>(rarityDefinitions, name: "rarityDefinitions");

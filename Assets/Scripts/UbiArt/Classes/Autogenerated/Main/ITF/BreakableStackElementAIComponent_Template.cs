@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BreakableStackElementAIComponent_Template : AIComponent_Template {
-		public CList<InfoElementList> grid;
+		public CListO<InfoElementList> grid;
 		public uint width;
 		public uint height;
 		public FxData fxData;
@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 		public Path eye;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			grid = s.SerializeObject<CList<InfoElementList>>(grid, name: "grid");
+			grid = s.SerializeObject<CListO<InfoElementList>>(grid, name: "grid");
 			width = s.Serialize<uint>(width, name: "width");
 			height = s.Serialize<uint>(height, name: "height");
 			fxData = s.SerializeObject<FxData>(fxData, name: "fxData");

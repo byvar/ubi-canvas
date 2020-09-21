@@ -11,7 +11,7 @@ namespace UbiArt.online {
 		public uint challengeRank;
 		public string challengeDate;
 		public uint challengeTotalPlayers;
-		public CArray<string> disabledBricks;
+		public CArrayP<string> disabledBricks;
 		public uint tokenCount;
 		public uint tokenRechargeTimer;
 		public float eventTimeLeft;
@@ -25,8 +25,8 @@ namespace UbiArt.online {
 			challengeRank = s.Serialize<uint>(challengeRank, name: "challengeRank");
 			challengeDate = s.Serialize<string>(challengeDate, name: "challengeDate");
 			challengeTotalPlayers = s.Serialize<uint>(challengeTotalPlayers, name: "challengeTotalPlayers");
-			disabledBricks = s.SerializeObject<CArray<string>>(disabledBricks, name: "disabledBricks");
-			disabledBricks = s.SerializeObject<CArray<string>>(disabledBricks, name: "disabledBricks");
+			disabledBricks = s.SerializeObject<CArrayP<string>>(disabledBricks, name: "disabledBricks");
+			disabledBricks = s.SerializeObject<CArrayP<string>>(disabledBricks, name: "disabledBricks");
 			tokenCount = s.Serialize<uint>(tokenCount, name: "tokenCount");
 			tokenRechargeTimer = s.Serialize<uint>(tokenRechargeTimer, name: "tokenRechargeTimer");
 			eventTimeLeft = s.Serialize<float>(eventTimeLeft, name: "eventTimeLeft");

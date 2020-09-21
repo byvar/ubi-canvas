@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		public float width;
 		public bool attachToEnd;
 		public float tileLength;
-		public CList<SpriteBone> tileBones;
+		public CListO<SpriteBone> tileBones;
 		public float endLength;
-		public CList<SpriteBone> endBones;
+		public CListO<SpriteBone> endBones;
 		public Path amvPath;
 		public GFXMaterialSerializable amvMaterial;
 		public float zOffset;
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public Path convertedGameMaterial;
 		public float conversionOffset;
 		public float conversionOverlap;
-		public CList<ConvertibleElement_Template> elementTypes;
+		public CListO<ConvertibleElement_Template> elementTypes;
 		public float triggerDelay;
 		public float zSegmentation;
 		public bool drawDebug;
@@ -29,9 +29,9 @@ namespace UbiArt.ITF {
 				width = s.Serialize<float>(width, name: "width");
 				attachToEnd = s.Serialize<bool>(attachToEnd, name: "attachToEnd", options: CSerializerObject.Options.BoolAsByte);
 				tileLength = s.Serialize<float>(tileLength, name: "tileLength");
-				tileBones = s.SerializeObject<CList<SpriteBone>>(tileBones, name: "tileBones");
+				tileBones = s.SerializeObject<CListO<SpriteBone>>(tileBones, name: "tileBones");
 				endLength = s.Serialize<float>(endLength, name: "endLength");
-				endBones = s.SerializeObject<CList<SpriteBone>>(endBones, name: "endBones");
+				endBones = s.SerializeObject<CListO<SpriteBone>>(endBones, name: "endBones");
 				amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");
 				amvMaterial = s.SerializeObject<GFXMaterialSerializable>(amvMaterial, name: "amvMaterial");
 				zOffset = s.Serialize<float>(zOffset, name: "zOffset");
@@ -47,9 +47,9 @@ namespace UbiArt.ITF {
 				width = s.Serialize<float>(width, name: "width");
 				attachToEnd = s.Serialize<bool>(attachToEnd, name: "attachToEnd");
 				tileLength = s.Serialize<float>(tileLength, name: "tileLength");
-				tileBones = s.SerializeObject<CList<SpriteBone>>(tileBones, name: "tileBones");
+				tileBones = s.SerializeObject<CListO<SpriteBone>>(tileBones, name: "tileBones");
 				endLength = s.Serialize<float>(endLength, name: "endLength");
-				endBones = s.SerializeObject<CList<SpriteBone>>(endBones, name: "endBones");
+				endBones = s.SerializeObject<CListO<SpriteBone>>(endBones, name: "endBones");
 				amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");
 				amvMaterial = s.SerializeObject<GFXMaterialSerializable>(amvMaterial, name: "amvMaterial");
 				zOffset = s.Serialize<float>(zOffset, name: "zOffset");
@@ -59,7 +59,7 @@ namespace UbiArt.ITF {
 				convertedGameMaterial = s.SerializeObject<Path>(convertedGameMaterial, name: "convertedGameMaterial");
 				conversionOffset = s.Serialize<float>(conversionOffset, name: "conversionOffset");
 				conversionOverlap = s.Serialize<float>(conversionOverlap, name: "conversionOverlap");
-				elementTypes = s.SerializeObject<CList<ConvertibleElement_Template>>(elementTypes, name: "elementTypes");
+				elementTypes = s.SerializeObject<CListO<ConvertibleElement_Template>>(elementTypes, name: "elementTypes");
 				triggerDelay = s.Serialize<float>(triggerDelay, name: "triggerDelay");
 				zSegmentation = s.Serialize<float>(zSegmentation, name: "zSegmentation");
 				drawDebug = s.Serialize<bool>(drawDebug, name: "drawDebug");

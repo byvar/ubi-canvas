@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public Path texture;
 		public GFXMaterialSerializable material;
 		public bool beginStart;
-		public CList<InputDesc> inputs;
+		public CListO<InputDesc> inputs;
 		public ProceduralInputData frequencyInput;
 		public ProceduralInputData emitCountInput;
 		public ProceduralInputData maxParticlesInput;
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 				stopTime = s.Serialize<float>(stopTime, name: "stopTime");
 				texture = s.SerializeObject<Path>(texture, name: "texture");
 				beginStart = s.Serialize<bool>(beginStart, name: "beginStart");
-				inputs = s.SerializeObject<CList<InputDesc>>(inputs, name: "inputs");
+				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				frequencyInput = s.SerializeObject<ProceduralInputData>(frequencyInput, name: "frequencyInput");
 				emitCountInput = s.SerializeObject<ProceduralInputData>(emitCountInput, name: "emitCountInput");
 			} else if (Settings.s.game == Settings.Game.COL) {
@@ -46,7 +46,7 @@ namespace UbiArt.ITF {
 				}
 				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
 				beginStart = s.Serialize<bool>(beginStart, name: "beginStart");
-				inputs = s.SerializeObject<CList<InputDesc>>(inputs, name: "inputs");
+				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				frequencyInput = s.SerializeObject<ProceduralInputData>(frequencyInput, name: "frequencyInput");
 				emitCountInput = s.SerializeObject<ProceduralInputData>(emitCountInput, name: "emitCountInput");
 				maxParticlesInput = s.SerializeObject<ProceduralInputData>(maxParticlesInput, name: "maxParticlesInput");

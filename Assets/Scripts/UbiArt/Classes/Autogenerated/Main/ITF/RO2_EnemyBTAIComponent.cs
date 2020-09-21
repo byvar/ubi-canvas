@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 		public bool useQuickLaunch;
 		public bool canTriggerMagnet;
 		public bool noUturn;
-		public CArray<Angle> RA_anglesNoAim;
+		public CArrayO<Angle> RA_anglesNoAim;
 		public bool isDead;
 		public bool quickLaunchUsed;
 		public uint lifePoints;
@@ -60,7 +60,7 @@ namespace UbiArt.ITF {
 					RA_timeBetweenBullet = s.Serialize<float>(RA_timeBetweenBullet, name: "RA_timeBetweenBullet");
 					RA_timeBetweenSequence = s.Serialize<float>(RA_timeBetweenSequence, name: "RA_timeBetweenSequence");
 					RA_useAim = s.Serialize<bool>(RA_useAim, name: "RA_useAim");
-					RA_anglesNoAim = s.SerializeObject<CArray<Angle>>(RA_anglesNoAim, name: "RA_anglesNoAim");
+					RA_anglesNoAim = s.SerializeObject<CArrayO<Angle>>(RA_anglesNoAim, name: "RA_anglesNoAim");
 					parachuteStartRight = s.Serialize<bool>(parachuteStartRight, name: "parachuteStartRight");
 					isFishing = s.Serialize<bool>(isFishing, name: "isFishing");
 					sleep = s.Serialize<bool>(sleep, name: "sleep");
@@ -105,8 +105,8 @@ namespace UbiArt.ITF {
 					useQuickLaunch = s.Serialize<bool>(useQuickLaunch, name: "useQuickLaunch");
 					canTriggerMagnet = s.Serialize<bool>(canTriggerMagnet, name: "canTriggerMagnet");
 					noUturn = s.Serialize<bool>(noUturn, name: "noUturn");
-					RA_anglesNoAim = s.SerializeObject<CArray<Angle>>(RA_anglesNoAim, name: "RA_anglesNoAim");
-					RA_anglesNoAim = s.SerializeObject<CArray<Angle>>(RA_anglesNoAim, name: "RA_anglesNoAim");
+					RA_anglesNoAim = s.SerializeObject<CArrayO<Angle>>(RA_anglesNoAim, name: "RA_anglesNoAim");
+					RA_anglesNoAim = s.SerializeObject<CArrayO<Angle>>(RA_anglesNoAim, name: "RA_anglesNoAim");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					isDead = s.Serialize<bool>(isDead, name: "isDead");

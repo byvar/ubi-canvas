@@ -10,10 +10,10 @@ namespace UbiArt.Animation {
 	public class AnimTemplate : CSerializable {
 		public KeyArray<int> boneKeys;
 		public float unkfloat;
-		public CList<AnimBone> bones;
-		public CList<AnimBoneDyn> bonesDyn;
-		public CList<AnimPatchPoint> patchPoints;
-		public CList<AnimPatch> patches;
+		public CListO<AnimBone> bones;
+		public CListO<AnimBoneDyn> bonesDyn;
+		public CListO<AnimPatchPoint> patchPoints;
+		public CListO<AnimPatch> patches;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -21,10 +21,10 @@ namespace UbiArt.Animation {
 			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
 				unkfloat = s.Serialize<float>(unkfloat, name: "unkfloat");
 			}
-			bones = s.SerializeObject<CList<AnimBone>>(bones, name: "bones");
-			bonesDyn = s.SerializeObject<CList<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
-			patchPoints = s.SerializeObject<CList<AnimPatchPoint>>(patchPoints, name: "patchPoints");
-			patches = s.SerializeObject<CList<AnimPatch>>(patches, name: "patches");
+			bones = s.SerializeObject<CListO<AnimBone>>(bones, name: "bones");
+			bonesDyn = s.SerializeObject<CListO<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
+			patchPoints = s.SerializeObject<CListO<AnimPatchPoint>>(patchPoints, name: "patchPoints");
+			patches = s.SerializeObject<CListO<AnimPatch>>(patches, name: "patches");
 		}
 
 		public AnimPatchPoint GetPointFromLink(Link link) {

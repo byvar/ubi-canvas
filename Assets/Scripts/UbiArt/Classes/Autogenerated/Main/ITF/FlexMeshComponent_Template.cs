@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class FlexMeshComponent_Template : GraphicComponent_Template {
-		public CList<FlexMeshData> flexList;
+		public CListO<FlexMeshData> flexList;
 		public bool useActorFlip;
 		public bool useComponentAlpha;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 				useActorFlip = s.Serialize<bool>(useActorFlip, name: "useActorFlip", options: CSerializerObject.Options.BoolAsByte);
 				useComponentAlpha = s.Serialize<bool>(useComponentAlpha, name: "useComponentAlpha", options: CSerializerObject.Options.BoolAsByte);
 			} else {
-				flexList = s.SerializeObject<CList<FlexMeshData>>(flexList, name: "flexList");
+				flexList = s.SerializeObject<CListO<FlexMeshData>>(flexList, name: "flexList");
 				useActorFlip = s.Serialize<bool>(useActorFlip, name: "useActorFlip");
 				useComponentAlpha = s.Serialize<bool>(useComponentAlpha, name: "useComponentAlpha");
 			}

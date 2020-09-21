@@ -18,8 +18,8 @@ namespace UbiArt.ITF {
 		public SmartLocId invalidateText;
 		public SmartLocId scoreText;
 		public SmartLocId recordText;
-		public CList<CompetitionModeInfo.ThresholdText> successThresholdTitle;
-		public CList<CompetitionModeInfo.ThresholdText> failedThresholdTitle;
+		public CListO<CompetitionModeInfo.ThresholdText> successThresholdTitle;
+		public CListO<CompetitionModeInfo.ThresholdText> failedThresholdTitle;
 		public Path iconPath;
 		public uint iconSpriteIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -39,8 +39,8 @@ namespace UbiArt.ITF {
 			invalidateText = s.SerializeObject<SmartLocId>(invalidateText, name: "invalidateText");
 			scoreText = s.SerializeObject<SmartLocId>(scoreText, name: "scoreText");
 			recordText = s.SerializeObject<SmartLocId>(recordText, name: "recordText");
-			successThresholdTitle = s.SerializeObject<CList<CompetitionModeInfo.ThresholdText>>(successThresholdTitle, name: "successThresholdTitle");
-			failedThresholdTitle = s.SerializeObject<CList<CompetitionModeInfo.ThresholdText>>(failedThresholdTitle, name: "failedThresholdTitle");
+			successThresholdTitle = s.SerializeObject<CListO<CompetitionModeInfo.ThresholdText>>(successThresholdTitle, name: "successThresholdTitle");
+			failedThresholdTitle = s.SerializeObject<CListO<CompetitionModeInfo.ThresholdText>>(failedThresholdTitle, name: "failedThresholdTitle");
 			iconPath = s.SerializeObject<Path>(iconPath, name: "iconPath");
 			iconSpriteIndex = s.Serialize<uint>(iconSpriteIndex, name: "iconSpriteIndex");
 		}

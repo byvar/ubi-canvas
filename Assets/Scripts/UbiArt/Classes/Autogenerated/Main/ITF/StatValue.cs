@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public float floatValue;
 		public int intValue;
 		public bool boolValue;
-		public CList<StatValue> arrayValue;
+		public CListO<StatValue> arrayValue;
 		public CMap<string, StatValue> objectValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 			floatValue = s.Serialize<float>(floatValue, name: "floatValue");
 			intValue = s.Serialize<int>(intValue, name: "intValue");
 			boolValue = s.Serialize<bool>(boolValue, name: "boolValue");
-			arrayValue = s.SerializeObject<CList<StatValue>>(arrayValue, name: "arrayValue");
+			arrayValue = s.SerializeObject<CListO<StatValue>>(arrayValue, name: "arrayValue");
 			objectValue = s.SerializeObject<CMap<string, StatValue>>(objectValue, name: "objectValue");
 		}
 		public enum Enum_type {

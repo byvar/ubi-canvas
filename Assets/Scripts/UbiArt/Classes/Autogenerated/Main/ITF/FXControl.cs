@@ -15,9 +15,9 @@ namespace UbiArt.ITF {
 		public bool fxUseActorAlpha;
 		public StringID fxBoneName;
 		public BOOL fxUseBoneOrientation;
-		public CList<StringID> sounds;
-		public CList<StringID> particles;
-		public CList<StringID> fluids;
+		public CListO<StringID> sounds;
+		public CListO<StringID> particles;
+		public CListO<StringID> fluids;
 		public StringID music;
 		public StringID busMix;
 		public StringID owner;
@@ -49,8 +49,8 @@ namespace UbiArt.ITF {
 				sound = s.SerializeObject<StringID>(sound, name: "sound");
 				particle = s.SerializeObject<StringID>(particle, name: "particle");
 				playContact = s.Serialize<int>(playContact, name: "playContact");
-				sounds = s.SerializeObject<CList<StringID>>(sounds, name: "sounds");
-				particles = s.SerializeObject<CList<StringID>>(particles, name: "particles");
+				sounds = s.SerializeObject<CListO<StringID>>(sounds, name: "sounds");
+				particles = s.SerializeObject<CListO<StringID>>(particles, name: "particles");
 				owner = s.SerializeObject<StringID>(owner, name: "owner");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
@@ -63,8 +63,8 @@ namespace UbiArt.ITF {
 				fxUseActorAlpha = s.Serialize<bool>(fxUseActorAlpha, name: "fxUseActorAlpha");
 				fxBoneName = s.SerializeObject<StringID>(fxBoneName, name: "fxBoneName");
 				fxUseBoneOrientation = s.Serialize<BOOL>(fxUseBoneOrientation, name: "fxUseBoneOrientation");
-				sounds = s.SerializeObject<CList<StringID>>(sounds, name: "sounds");
-				particles = s.SerializeObject<CList<StringID>>(particles, name: "particles");
+				sounds = s.SerializeObject<CListO<StringID>>(sounds, name: "sounds");
+				particles = s.SerializeObject<CListO<StringID>>(particles, name: "particles");
 				music = s.SerializeObject<StringID>(music, name: "music");
 				busMix = s.SerializeObject<StringID>(busMix, name: "busMix");
 				owner = s.SerializeObject<StringID>(owner, name: "owner");
@@ -81,8 +81,8 @@ namespace UbiArt.ITF {
 				fxUseActorAlpha = s.Serialize<bool>(fxUseActorAlpha, name: "fxUseActorAlpha", options: CSerializerObject.Options.BoolAsByte);
 				fxBoneName = s.SerializeObject<StringID>(fxBoneName, name: "fxBoneName");
 				fxUseBoneOrientation = s.Serialize<BOOL>(fxUseBoneOrientation, name: "fxUseBoneOrientation");
-				sounds = s.SerializeObject<CList<StringID>>(sounds, name: "sounds");
-				particles = s.SerializeObject<CList<StringID>>(particles, name: "particles");
+				sounds = s.SerializeObject<CListO<StringID>>(sounds, name: "sounds");
+				particles = s.SerializeObject<CListO<StringID>>(particles, name: "particles");
 				music = s.SerializeObject<StringID>(music, name: "music");
 				busMix = s.SerializeObject<StringID>(busMix, name: "busMix");
 				owner = s.SerializeObject<StringID>(owner, name: "owner");
@@ -100,9 +100,9 @@ namespace UbiArt.ITF {
 				fxUseActorAlpha = s.Serialize<bool>(fxUseActorAlpha, name: "fxUseActorAlpha");
 				fxBoneName = s.SerializeObject<StringID>(fxBoneName, name: "fxBoneName");
 				fxUseBoneOrientation = s.Serialize<BOOL>(fxUseBoneOrientation, name: "fxUseBoneOrientation");
-				sounds = s.SerializeObject<CList<StringID>>(sounds, name: "sounds");
-				particles = s.SerializeObject<CList<StringID>>(particles, name: "particles");
-				fluids = s.SerializeObject<CList<StringID>>(fluids, name: "fluids");
+				sounds = s.SerializeObject<CListO<StringID>>(sounds, name: "sounds");
+				particles = s.SerializeObject<CListO<StringID>>(particles, name: "particles");
+				fluids = s.SerializeObject<CListO<StringID>>(fluids, name: "fluids");
 				music = s.SerializeObject<StringID>(music, name: "music");
 				busMix = s.SerializeObject<StringID>(busMix, name: "busMix");
 				owner = s.SerializeObject<StringID>(owner, name: "owner");
@@ -122,9 +122,9 @@ namespace UbiArt.ITF {
 				fxUseActorAlpha = s.Serialize<bool>(fxUseActorAlpha, name: "fxUseActorAlpha");
 				fxBoneName = s.SerializeObject<StringID>(fxBoneName, name: "fxBoneName");
 				fxUseBoneOrientation = s.Serialize<BOOL>(fxUseBoneOrientation, name: "fxUseBoneOrientation");
-				sounds = s.SerializeObject<CList<StringID>>(sounds, name: "sounds");
-				particles = s.SerializeObject<CList<StringID>>(particles, name: "particles");
-				fluids = s.SerializeObject<CList<StringID>>(fluids, name: "fluids");
+				sounds = s.SerializeObject<CListO<StringID>>(sounds, name: "sounds");
+				particles = s.SerializeObject<CListO<StringID>>(particles, name: "particles");
+				fluids = s.SerializeObject<CListO<StringID>>(fluids, name: "fluids");
 				music = s.SerializeObject<StringID>(music, name: "music");
 				busMix = s.SerializeObject<StringID>(busMix, name: "busMix");
 				owner = s.SerializeObject<StringID>(owner, name: "owner");

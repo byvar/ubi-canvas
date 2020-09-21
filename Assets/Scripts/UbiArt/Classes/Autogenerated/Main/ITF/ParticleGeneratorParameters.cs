@@ -95,7 +95,7 @@ namespace UbiArt.ITF {
 		public bool useActorTranslation;
 		public Vec2d actorTranslationOffset;
 		public bool disableLight;
-		public CList<ParPhase> phases;
+		public CListO<ParPhase> phases;
 
 		[DisplayName("Position")]
 		[SplineUsageMode(Spline.UsageMode.XY)]
@@ -346,7 +346,7 @@ namespace UbiArt.ITF {
 				useActorTranslation = s.Serialize<bool>(useActorTranslation, name: "useActorTranslation");
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
-				phases = s.SerializeObject<CList<ParPhase>>(phases, name: "phases");
+				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
 				blendMode = s.Serialize<GFX_BLEND>(blendMode, name: "blendMode");
 				genGenType2 = s.Serialize<PARGEN_GEN2>(genGenType2, name: "genGenType2");
 				genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
@@ -422,7 +422,7 @@ namespace UbiArt.ITF {
 				useActorTranslation = s.Serialize<bool>(useActorTranslation, name: "useActorTranslation");
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
-				phases = s.SerializeObject<CList<ParPhase>>(phases, name: "phases");
+				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
 				curveSize = s.SerializeObject<ParLifeTimeCurve>(curveSize, name: "curveSize");
 				curveSizeY = s.SerializeObject<ParLifeTimeCurve>(curveSizeY, name: "curveSizeY");
 				curveAlpha = s.SerializeObject<ParLifeTimeCurve>(curveAlpha, name: "curveAlpha");
@@ -528,7 +528,7 @@ namespace UbiArt.ITF {
 				useActorTranslation = s.Serialize<bool>(useActorTranslation, name: "useActorTranslation");
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
-				phases = s.SerializeObject<CList<ParPhase>>(phases, name: "phases");
+				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
 				curvePosition = s.SerializeObject<ParLifeTimeCurve>(curvePosition, name: "curvePosition");
 				curveAngle = s.SerializeObject<ParLifeTimeCurve>(curveAngle, name: "curveAngle");
 				curveAngularSpeed = s.SerializeObject<ParLifeTimeCurve>(curveAngularSpeed, name: "curveAngularSpeed");
@@ -645,7 +645,7 @@ namespace UbiArt.ITF {
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight", options: CSerializerObject.Options.BoolAsByte);
 				enableRemapAlpha = s.Serialize<bool>(enableRemapAlpha, name: "enableRemapAlpha", options: CSerializerObject.Options.BoolAsByte);
-				phases = s.SerializeObject<CList<ParPhase>>(phases, name: "phases");
+				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
 				curvePosition = s.SerializeObject<ParLifeTimeCurve>(curvePosition, name: "curvePosition");
 				curveAngle = s.SerializeObject<ParLifeTimeCurve>(curveAngle, name: "curveAngle");
 				curveVelocityMult = s.SerializeObject<ParLifeTimeCurve>(curveVelocityMult, name: "curveVelocityMult");
@@ -765,7 +765,7 @@ namespace UbiArt.ITF {
 				useActorTranslation = s.Serialize<bool>(useActorTranslation, name: "useActorTranslation");
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
-				phases = s.SerializeObject<CList<ParPhase>>(phases, name: "phases");
+				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
 				curvePosition = s.SerializeObject<ParLifeTimeCurve>(curvePosition, name: "curvePosition");
 				curveAngle = s.SerializeObject<ParLifeTimeCurve>(curveAngle, name: "curveAngle");
 				curveAngularSpeed = s.SerializeObject<ParLifeTimeCurve>(curveAngularSpeed, name: "curveAngularSpeed");

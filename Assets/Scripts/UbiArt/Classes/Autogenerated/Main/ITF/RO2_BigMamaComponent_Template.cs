@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public float ejectHeight1;
 		public float ejectHeight2;
 		public float ejectSpeed;
-		public CList<EventPlayMusic> musics;
+		public CListO<EventPlayMusic> musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 				ejectHeight1 = s.Serialize<float>(ejectHeight1, name: "ejectHeight1");
 				ejectHeight2 = s.Serialize<float>(ejectHeight2, name: "ejectHeight2");
 				ejectSpeed = s.Serialize<float>(ejectSpeed, name: "ejectSpeed");
-				musics = s.SerializeObject<CList<EventPlayMusic>>(musics, name: "musics");
+				musics = s.SerializeObject<CListO<EventPlayMusic>>(musics, name: "musics");
 			} else {
 				eyesHitPoints = s.Serialize<uint>(eyesHitPoints, name: "eyesHitPoints");
 				eyesPerHit = s.Serialize<uint>(eyesPerHit, name: "eyesPerHit");

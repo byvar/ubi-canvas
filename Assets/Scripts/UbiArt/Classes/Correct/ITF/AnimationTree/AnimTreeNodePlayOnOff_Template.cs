@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Generic<BlendTreeNodeTemplate<AnimTreeResult>> nodeOff;
 		public AnimTreeNodePlayAnim_Template transOn;
 		public AnimTreeNodePlayAnim_Template transOff;
-		public CList<CriteriaDesc> criteriasOn;
+		public CListO<CriteriaDesc> criteriasOn;
 		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 			nodeOff = s.SerializeObject<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>(nodeOff, name: "nodeOff");
 			transOn = s.SerializeObject<AnimTreeNodePlayAnim_Template>(transOn, name: "transOn");
 			transOff = s.SerializeObject<AnimTreeNodePlayAnim_Template>(transOff, name: "transOff");
-			criteriasOn = s.SerializeObject<CList<CriteriaDesc>>(criteriasOn, name: "criteriasOn");
+			criteriasOn = s.SerializeObject<CListO<CriteriaDesc>>(criteriasOn, name: "criteriasOn");
 		}
 		public override uint? ClassCRC => 0x3AAD7849;
 	}

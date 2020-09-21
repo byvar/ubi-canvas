@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public int useBoneScale;
 		public int useScreenRatio;
 		public int disableActiveSync;
-		public CArray<UITextField> textFields;
+		public CArrayO<UITextField> textFields;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			isDraw2d = s.Serialize<int>(isDraw2d, name: "isDraw2d");
@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			useBoneScale = s.Serialize<int>(useBoneScale, name: "useBoneScale");
 			useScreenRatio = s.Serialize<int>(useScreenRatio, name: "useScreenRatio");
 			disableActiveSync = s.Serialize<int>(disableActiveSync, name: "disableActiveSync");
-			textFields = s.SerializeObject<CArray<UITextField>>(textFields, name: "textFields");
+			textFields = s.SerializeObject<CArrayO<UITextField>>(textFields, name: "textFields");
 		}
 		public override uint? ClassCRC => 0x21B539FB;
 

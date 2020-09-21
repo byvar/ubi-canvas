@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public float minValueRef;
 		public StringID loopingSound;
 		public StringID endSound;
-		public CList<Unknown_RL_44131_sub_B029B0> tagColorSettings;
+		public CListO<Unknown_RL_44131_sub_B029B0> tagColorSettings;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			smartLocID = s.SerializeObject<SmartLocId>(smartLocID, name: "smartLocID");
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 			minValueRef = s.Serialize<float>(minValueRef, name: "minValueRef");
 			loopingSound = s.SerializeObject<StringID>(loopingSound, name: "loopingSound");
 			endSound = s.SerializeObject<StringID>(endSound, name: "endSound");
-			tagColorSettings = s.SerializeObject<CList<Unknown_RL_44131_sub_B029B0>>(tagColorSettings, name: "tagColorSettings");
+			tagColorSettings = s.SerializeObject<CListO<Unknown_RL_44131_sub_B029B0>>(tagColorSettings, name: "tagColorSettings");
 		}
 		public override uint? ClassCRC => 0x4FDE15AC;
 

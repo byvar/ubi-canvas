@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_BreakableStackElementAIComponent_Template : Ray_AIComponent_Template {
-		public CList<InfoElementList> grid;
+		public CListO<InfoElementList> grid;
 		public uint width;
 		public uint height;
 		public FxData fxData;
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		public float timeBeforeExplode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			grid = s.SerializeObject<CList<InfoElementList>>(grid, name: "grid");
+			grid = s.SerializeObject<CListO<InfoElementList>>(grid, name: "grid");
 			width = s.Serialize<uint>(width, name: "width");
 			height = s.Serialize<uint>(height, name: "height");
 			fxData = s.SerializeObject<FxData>(fxData, name: "fxData");

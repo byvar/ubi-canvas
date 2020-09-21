@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public BodyPartSpriteRenderer_Template spriteRenderer;
 		public int health;
 		public int destroyOnDeath;
-		public CArray<uint> damageLevels;
+		public CArrayP<uint> damageLevels;
 		public StringID leftHitAnim;
 		public StringID rightHitAnim;
 		public StringID deathAnim;
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 			spriteRenderer = s.SerializeObject<BodyPartSpriteRenderer_Template>(spriteRenderer, name: "spriteRenderer");
 			health = s.Serialize<int>(health, name: "health");
 			destroyOnDeath = s.Serialize<int>(destroyOnDeath, name: "destroyOnDeath");
-			damageLevels = s.SerializeObject<CArray<uint>>(damageLevels, name: "damageLevels");
+			damageLevels = s.SerializeObject<CArrayP<uint>>(damageLevels, name: "damageLevels");
 			leftHitAnim = s.SerializeObject<StringID>(leftHitAnim, name: "leftHitAnim");
 			rightHitAnim = s.SerializeObject<StringID>(rightHitAnim, name: "rightHitAnim");
 			deathAnim = s.SerializeObject<StringID>(deathAnim, name: "deathAnim");

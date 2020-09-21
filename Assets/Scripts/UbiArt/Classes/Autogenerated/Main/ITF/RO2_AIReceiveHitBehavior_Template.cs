@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIReceiveHitBehavior_Template : AIReceiveHitBehavior_Template {
-		public CList<RO2_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
+		public CListO<RO2_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
 		public bool canReceiveRehits;
 		public float hurtDuration;
 		public uint maxNumberOfSuccessiveHits;
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public StringID deathMarkerName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			receiveHits = s.SerializeObject<CList<RO2_AIReceiveHitBehavior_Template.ReceiveHitData>>(receiveHits, name: "receiveHits");
+			receiveHits = s.SerializeObject<CListO<RO2_AIReceiveHitBehavior_Template.ReceiveHitData>>(receiveHits, name: "receiveHits");
 			canReceiveRehits = s.Serialize<bool>(canReceiveRehits, name: "canReceiveRehits");
 			hurtDuration = s.Serialize<float>(hurtDuration, name: "hurtDuration");
 			maxNumberOfSuccessiveHits = s.Serialize<uint>(maxNumberOfSuccessiveHits, name: "maxNumberOfSuccessiveHits");
@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class ReceiveHitData : CSerializable {
-			public CList<uint> types;
+			public CListP<uint> types;
 			public uint level;
 			public bool useIfAlive;
 			public bool useIfDead;
@@ -46,7 +46,7 @@ namespace UbiArt.ITF {
 			public Generic<AIReceiveHitAction_Template> action;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				types = s.SerializeObject<CList<uint>>(types, name: "types");
+				types = s.SerializeObject<CListP<uint>>(types, name: "types");
 				level = s.Serialize<uint>(level, name: "level");
 				useIfAlive = s.Serialize<bool>(useIfAlive, name: "useIfAlive");
 				useIfDead = s.Serialize<bool>(useIfDead, name: "useIfDead");

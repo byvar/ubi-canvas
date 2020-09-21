@@ -22,11 +22,11 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.VH)]
 		public partial class stClueBatch : CSerializable {
-			public CArray<W1W_EventClue.stClueItem> CArray_W1W_EventClue_stClueItem__0;
+			public CArrayO<W1W_EventClue.stClueItem> CArray_W1W_EventClue_stClueItem__0;
 			public uint uint__1;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				CArray_W1W_EventClue_stClueItem__0 = s.SerializeObject<CArray<W1W_EventClue.stClueItem>>(CArray_W1W_EventClue_stClueItem__0, name: "CArray_W1W_EventClue_stClueItem__0");
+				CArray_W1W_EventClue_stClueItem__0 = s.SerializeObject<CArrayO<W1W_EventClue.stClueItem>>(CArray_W1W_EventClue_stClueItem__0, name: "CArray_W1W_EventClue_stClueItem__0");
 				uint__1 = s.Serialize<uint>(uint__1, name: "uint__1");
 			}
 		}

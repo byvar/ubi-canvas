@@ -13,15 +13,15 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
 		public partial class SaveSession : CSerializable {
-			public CList<float> tags;
-			public CList<float> timers;
+			public CListP<float> tags;
+			public CListP<float> timers;
 			public CMap<StringID, bool> rewardsState;
 			public CMap<StringID, bool> uplayRewardsState;
 			public CMap<StringID, uint> uplayActionsState;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				tags = s.SerializeObject<CList<float>>(tags, name: "tags");
-				timers = s.SerializeObject<CList<float>>(timers, name: "timers");
+				tags = s.SerializeObject<CListP<float>>(tags, name: "tags");
+				timers = s.SerializeObject<CListP<float>>(timers, name: "timers");
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 					rewardsState = s.SerializeObject<CMap<StringID, bool>>(rewardsState, name: "rewardsState");
 					if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {

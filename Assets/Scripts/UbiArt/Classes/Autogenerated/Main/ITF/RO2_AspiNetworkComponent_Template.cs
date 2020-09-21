@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public float exitSpeed;
 		public float exitDist;
 		public float exitRestoreZDist;
-		public CList<RO2_AspiNetworkComponent_Template.FxDataNet> fxData;
+		public CListO<RO2_AspiNetworkComponent_Template.FxDataNet> fxData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			enterDuration = s.Serialize<float>(enterDuration, name: "enterDuration");
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			exitSpeed = s.Serialize<float>(exitSpeed, name: "exitSpeed");
 			exitDist = s.Serialize<float>(exitDist, name: "exitDist");
 			exitRestoreZDist = s.Serialize<float>(exitRestoreZDist, name: "exitRestoreZDist");
-			fxData = s.SerializeObject<CList<RO2_AspiNetworkComponent_Template.FxDataNet>>(fxData, name: "fxData");
+			fxData = s.SerializeObject<CListO<RO2_AspiNetworkComponent_Template.FxDataNet>>(fxData, name: "fxData");
 		}
 		[Games(GameFlags.RA)]
 		public partial class FxDataNet : CSerializable {

@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 	public partial class BezierCurve : CSerializable {
-		public CList<BezierCurve.Point> points;
+		public CListO<BezierCurve.Point> points;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				points = s.SerializeObject<CList<BezierCurve.Point>>(points, name: "points");
+				points = s.SerializeObject<CListO<BezierCurve.Point>>(points, name: "points");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]

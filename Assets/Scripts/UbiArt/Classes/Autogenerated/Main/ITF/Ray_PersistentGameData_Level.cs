@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_PersistentGameData_Level : PersistentGameData_Level {
-		public CArray<PackedObjectPath> cageMapPassedDoors;
+		public CArrayO<PackedObjectPath> cageMapPassedDoors;
 		public uint wonChallenges;
 		public SPOT_STATE levelState;
 		public uint bestTimeAttack;
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			cageMapPassedDoors = s.SerializeObject<CArray<PackedObjectPath>>(cageMapPassedDoors, name: "cageMapPassedDoors");
+			cageMapPassedDoors = s.SerializeObject<CArrayO<PackedObjectPath>>(cageMapPassedDoors, name: "cageMapPassedDoors");
 			wonChallenges = s.Serialize<uint>(wonChallenges, name: "wonChallenges");
 			levelState = s.Serialize<SPOT_STATE>(levelState, name: "levelState");
 			bestTimeAttack = s.Serialize<uint>(bestTimeAttack, name: "bestTimeAttack");

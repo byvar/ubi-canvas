@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class UIMenuBasic_Template : UIItem_Template {
-		public CList<ValidateItemSound> validateItemSounds;
+		public CListO<ValidateItemSound> validateItemSounds;
 		public float nextItemMinAngle;
 		public float nextItemMaxAngle;
 		public Vec2d nextItemMaxOffset;
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				validateItemSounds = s.SerializeObject<CList<ValidateItemSound>>(validateItemSounds, name: "validateItemSounds");
+				validateItemSounds = s.SerializeObject<CListO<ValidateItemSound>>(validateItemSounds, name: "validateItemSounds");
 			} else if (Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
 				nextItemMinAngle = s.Serialize<float>(nextItemMinAngle, name: "nextItemMinAngle");
 				nextItemMaxAngle = s.Serialize<float>(nextItemMaxAngle, name: "nextItemMaxAngle");

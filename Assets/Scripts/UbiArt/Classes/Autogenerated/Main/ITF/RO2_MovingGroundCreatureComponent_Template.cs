@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 		public StringID pendouilleBoneName;
 		public Vec2d pendouillePosOffset;
 		public Angle pendouilleAngleOffset;
-		public CList<StringID> pendouilleAnims;
+		public CListO<StringID> pendouilleAnims;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			stepSize = s.Serialize<float>(stepSize, name: "stepSize");
@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 			pendouilleBoneName = s.SerializeObject<StringID>(pendouilleBoneName, name: "pendouilleBoneName");
 			pendouillePosOffset = s.SerializeObject<Vec2d>(pendouillePosOffset, name: "pendouillePosOffset");
 			pendouilleAngleOffset = s.SerializeObject<Angle>(pendouilleAngleOffset, name: "pendouilleAngleOffset");
-			pendouilleAnims = s.SerializeObject<CList<StringID>>(pendouilleAnims, name: "pendouilleAnims");
+			pendouilleAnims = s.SerializeObject<CListO<StringID>>(pendouilleAnims, name: "pendouilleAnims");
 		}
 		public override uint? ClassCRC => 0x518C14A2;
 	}

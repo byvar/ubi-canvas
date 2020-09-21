@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RL)]
 	public partial class ActorSpawnBank_Template : CSerializable {
-		public CList<ActorSpawnBank_Template.ActorSpawnData> list;
+		public CListO<ActorSpawnBank_Template.ActorSpawnData> list;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			list = s.SerializeObject<CList<ActorSpawnBank_Template.ActorSpawnData>>(list, name: "list");
+			list = s.SerializeObject<CListO<ActorSpawnBank_Template.ActorSpawnData>>(list, name: "list");
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RL)]
 		public partial class ActorSpawnData : CSerializable {

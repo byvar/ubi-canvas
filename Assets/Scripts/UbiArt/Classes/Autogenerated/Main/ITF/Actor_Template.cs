@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool FORCEISENVIRONMENT;
 		public bool FORCEALWAYSACTIVE;
 		public uint UPDATEFREQUENCE;
-		public CArray<Generic<ActorComponent_Template>> COMPONENTS;
+		public CArrayO<Generic<ActorComponent_Template>> COMPONENTS;
 		public Vec2d scaleForced;
 		public Vec2d scaleMin;
 		public Vec2d scaleMax;
@@ -35,28 +35,28 @@ namespace UbiArt.ITF {
 				type = s.SerializeObject<StringID>(type, name: "type");
 				updatetype = s.Serialize<Pickable.UpdateType>(updatetype, name: "updatetype");
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
+					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				if (this is FriseConfig) return;
 				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL", options: CSerializerObject.Options.BoolAsByte);
 				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED", options: CSerializerObject.Options.BoolAsByte);
 				FORCEISENVIRONMENT = s.Serialize<bool>(FORCEISENVIRONMENT, name: "FORCEISENVIRONMENT", options: CSerializerObject.Options.BoolAsByte);
-				COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
+				COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (this is FriseConfig) return;
 				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL");
 				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED");
 				FORCEISENVIRONMENT = s.Serialize<bool>(FORCEISENVIRONMENT, name: "FORCEISENVIRONMENT");
 				FORCEALWAYSACTIVE = s.Serialize<bool>(FORCEALWAYSACTIVE, name: "FORCEALWAYSACTIVE");
-				COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
+				COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 			} else {
 				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL");
 				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED");
 				FORCEISENVIRONMENT = s.Serialize<bool>(FORCEISENVIRONMENT, name: "FORCEISENVIRONMENT");
 				FORCEALWAYSACTIVE = s.Serialize<bool>(FORCEALWAYSACTIVE, name: "FORCEALWAYSACTIVE");
 				UPDATEFREQUENCE = s.Serialize<uint>(UPDATEFREQUENCE, name: "UPDATEFREQUENCE");
-				COMPONENTS = s.SerializeObject<CArray<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
+				COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 			}
 		}
 		public override uint? ClassCRC => 0x1B857BCE;

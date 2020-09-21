@@ -10,11 +10,11 @@ namespace UbiArt.ITF {
 		public float margingBottom;
 		public ScaleType scaleType;
 		public bool autoFillContained;
-		public CList<ObjectPath> ContainedChildren;
+		public CListO<ObjectPath> ContainedChildren;
 		public bool autoFillReposition;
-		public CList<ObjectPath> repositionObjects;
-		public CList<ObjectPath> relRepositionObjects;
-		public CList<AnimScaleRepositionedObject> borderRepositionedObjects;
+		public CListO<ObjectPath> repositionObjects;
+		public CListO<ObjectPath> relRepositionObjects;
+		public CListO<AnimScaleRepositionedObject> borderRepositionedObjects;
 		public Vec2d minimumSize;
 		public AABB aabb;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -28,10 +28,10 @@ namespace UbiArt.ITF {
 					margingBottom = s.Serialize<float>(margingBottom, name: "margingBottom");
 					scaleType = s.Serialize<ScaleType>(scaleType, name: "scaleType");
 					autoFillContained = s.Serialize<bool>(autoFillContained, name: "autoFillContained", options: CSerializerObject.Options.BoolAsByte);
-					ContainedChildren = s.SerializeObject<CList<ObjectPath>>(ContainedChildren, name: "ContainedChildren");
+					ContainedChildren = s.SerializeObject<CListO<ObjectPath>>(ContainedChildren, name: "ContainedChildren");
 					autoFillReposition = s.Serialize<bool>(autoFillReposition, name: "autoFillReposition", options: CSerializerObject.Options.BoolAsByte);
-					repositionObjects = s.SerializeObject<CList<ObjectPath>>(repositionObjects, name: "repositionObjects");
-					relRepositionObjects = s.SerializeObject<CList<ObjectPath>>(relRepositionObjects, name: "relRepositionObjects");
+					repositionObjects = s.SerializeObject<CListO<ObjectPath>>(repositionObjects, name: "repositionObjects");
+					relRepositionObjects = s.SerializeObject<CListO<ObjectPath>>(relRepositionObjects, name: "relRepositionObjects");
 					minimumSize = s.SerializeObject<Vec2d>(minimumSize, name: "minimumSize");
 					aabb = s.SerializeObject<AABB>(aabb, name: "aabb");
 				}
@@ -44,10 +44,10 @@ namespace UbiArt.ITF {
 					margingBottom = s.Serialize<float>(margingBottom, name: "margingBottom");
 					scaleType = s.Serialize<ScaleType>(scaleType, name: "scaleType");
 					autoFillContained = s.Serialize<bool>(autoFillContained, name: "autoFillContained", options: CSerializerObject.Options.BoolAsByte);
-					ContainedChildren = s.SerializeObject<CList<ObjectPath>>(ContainedChildren, name: "ContainedChildren");
+					ContainedChildren = s.SerializeObject<CListO<ObjectPath>>(ContainedChildren, name: "ContainedChildren");
 					autoFillReposition = s.Serialize<bool>(autoFillReposition, name: "autoFillReposition", options: CSerializerObject.Options.BoolAsByte);
-					repositionObjects = s.SerializeObject<CList<ObjectPath>>(repositionObjects, name: "repositionObjects");
-					relRepositionObjects = s.SerializeObject<CList<ObjectPath>>(relRepositionObjects, name: "relRepositionObjects");
+					repositionObjects = s.SerializeObject<CListO<ObjectPath>>(repositionObjects, name: "repositionObjects");
+					relRepositionObjects = s.SerializeObject<CListO<ObjectPath>>(relRepositionObjects, name: "relRepositionObjects");
 					minimumSize = s.SerializeObject<Vec2d>(minimumSize, name: "minimumSize");
 					aabb = s.SerializeObject<AABB>(aabb, name: "aabb");
 				}
@@ -60,11 +60,11 @@ namespace UbiArt.ITF {
 					margingBottom = s.Serialize<float>(margingBottom, name: "margingBottom");
 					scaleType = s.Serialize<ScaleType>(scaleType, name: "scaleType");
 					autoFillContained = s.Serialize<bool>(autoFillContained, name: "autoFillContained");
-					ContainedChildren = s.SerializeObject<CList<ObjectPath>>(ContainedChildren, name: "ContainedChildren");
+					ContainedChildren = s.SerializeObject<CListO<ObjectPath>>(ContainedChildren, name: "ContainedChildren");
 					autoFillReposition = s.Serialize<bool>(autoFillReposition, name: "autoFillReposition");
-					repositionObjects = s.SerializeObject<CList<ObjectPath>>(repositionObjects, name: "repositionObjects");
-					relRepositionObjects = s.SerializeObject<CList<ObjectPath>>(relRepositionObjects, name: "relRepositionObjects");
-					borderRepositionedObjects = s.SerializeObject<CList<AnimScaleRepositionedObject>>(borderRepositionedObjects, name: "borderRepositionedObjects");
+					repositionObjects = s.SerializeObject<CListO<ObjectPath>>(repositionObjects, name: "repositionObjects");
+					relRepositionObjects = s.SerializeObject<CListO<ObjectPath>>(relRepositionObjects, name: "relRepositionObjects");
+					borderRepositionedObjects = s.SerializeObject<CListO<AnimScaleRepositionedObject>>(borderRepositionedObjects, name: "borderRepositionedObjects");
 					minimumSize = s.SerializeObject<Vec2d>(minimumSize, name: "minimumSize");
 					aabb = s.SerializeObject<AABB>(aabb, name: "aabb");
 				}

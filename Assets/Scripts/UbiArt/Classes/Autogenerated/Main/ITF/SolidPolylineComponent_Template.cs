@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class SolidPolylineComponent_Template : PolylineComponent_Template {
-		public CList<SolidPolylineComponent_Template.SolidEdgeData> solidEdges;
+		public CListO<SolidPolylineComponent_Template.SolidEdgeData> solidEdges;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			solidEdges = s.SerializeObject<CList<SolidPolylineComponent_Template.SolidEdgeData>>(solidEdges, name: "solidEdges");
+			solidEdges = s.SerializeObject<CListO<SolidPolylineComponent_Template.SolidEdgeData>>(solidEdges, name: "solidEdges");
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class SolidEdgeData : CSerializable {

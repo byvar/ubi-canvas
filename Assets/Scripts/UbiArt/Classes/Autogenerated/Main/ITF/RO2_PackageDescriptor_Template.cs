@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public int priority;
 		public int alternatePriority;
 		public string mapName;
-		public CArray<string> subHubPaths;
+		public CArrayP<string> subHubPaths;
 		public PathRef mapPath;
 		public Path hubPath;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 				priority = s.Serialize<int>(priority, name: "priority");
 				alternatePriority = s.Serialize<int>(alternatePriority, name: "alternatePriority");
 				mapName = s.Serialize<string>(mapName, name: "mapName");
-				subHubPaths = s.SerializeObject<CArray<string>>(subHubPaths, name: "subHubPaths");
+				subHubPaths = s.SerializeObject<CArrayP<string>>(subHubPaths, name: "subHubPaths");
 				mapPath = s.SerializeObject<PathRef>(mapPath, name: "mapPath");
 				hubPath = s.SerializeObject<Path>(hubPath, name: "hubPath");
 			} else {
@@ -28,8 +28,8 @@ namespace UbiArt.ITF {
 				priority = s.Serialize<int>(priority, name: "priority");
 				alternatePriority = s.Serialize<int>(alternatePriority, name: "alternatePriority");
 				mapName = s.Serialize<string>(mapName, name: "mapName");
-				subHubPaths = s.SerializeObject<CArray<string>>(subHubPaths, name: "subHubPaths");
-				subHubPaths = s.SerializeObject<CArray<string>>(subHubPaths, name: "subHubPaths");
+				subHubPaths = s.SerializeObject<CArrayP<string>>(subHubPaths, name: "subHubPaths");
+				subHubPaths = s.SerializeObject<CArrayP<string>>(subHubPaths, name: "subHubPaths");
 				mapPath = s.SerializeObject<PathRef>(mapPath, name: "mapPath");
 				hubPath = s.SerializeObject<Path>(hubPath, name: "hubPath");
 			}

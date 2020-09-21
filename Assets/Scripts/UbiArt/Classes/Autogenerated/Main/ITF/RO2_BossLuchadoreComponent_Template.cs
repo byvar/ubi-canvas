@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BossLuchadoreComponent_Template : ActorComponent_Template {
-		public CList<RO2_BossLuchadoreComponent_Template.SequencePhase> phases;
+		public CListO<RO2_BossLuchadoreComponent_Template.SequencePhase> phases;
 		public float opportunityInputLockedDuration;
 		public float recoverTargetBlendSpeed;
 		public Angle minAdditiveAnimAngle;
@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				phases = s.SerializeObject<CList<RO2_BossLuchadoreComponent_Template.SequencePhase>>(phases, name: "phases");
+				phases = s.SerializeObject<CListO<RO2_BossLuchadoreComponent_Template.SequencePhase>>(phases, name: "phases");
 				opportunityInputLockedDuration = s.Serialize<float>(opportunityInputLockedDuration, name: "opportunityInputLockedDuration");
 				recoverTargetBlendSpeed = s.Serialize<float>(recoverTargetBlendSpeed, name: "recoverTargetBlendSpeed");
 				minAdditiveAnimAngle = s.SerializeObject<Angle>(minAdditiveAnimAngle, name: "minAdditiveAnimAngle");
@@ -81,7 +81,7 @@ namespace UbiArt.ITF {
 				stunStarsOffset = s.SerializeObject<Vec3d>(stunStarsOffset, name: "stunStarsOffset");
 				tweenEvent = s.SerializeObject<Generic<Event>>(tweenEvent, name: "tweenEvent");
 			} else {
-				phases = s.SerializeObject<CList<RO2_BossLuchadoreComponent_Template.SequencePhase>>(phases, name: "phases");
+				phases = s.SerializeObject<CListO<RO2_BossLuchadoreComponent_Template.SequencePhase>>(phases, name: "phases");
 				opportunityInputLockedDuration = s.Serialize<float>(opportunityInputLockedDuration, name: "opportunityInputLockedDuration");
 				recoverTargetBlendSpeed = s.Serialize<float>(recoverTargetBlendSpeed, name: "recoverTargetBlendSpeed");
 				minAdditiveAnimAngle = s.SerializeObject<Angle>(minAdditiveAnimAngle, name: "minAdditiveAnimAngle");
@@ -169,8 +169,8 @@ namespace UbiArt.ITF {
 			public StringID animStand;
 			public StringID animOnHead;
 			public StringID animHit;
-			public CList<RO2_BossLuchadoreComponent_Template.SequenceInstruction> instructions;
-			public CList<RO2_BossLuchadoreComponent_Template.ForbiddenZone> forbiddenZones;
+			public CListO<RO2_BossLuchadoreComponent_Template.SequenceInstruction> instructions;
+			public CListO<RO2_BossLuchadoreComponent_Template.ForbiddenZone> forbiddenZones;
 			public uint changedHitMaterialTarget;
 			public uint changedHitMaterialSource;
 			protected override void SerializeImpl(CSerializerObject s) {
@@ -179,8 +179,8 @@ namespace UbiArt.ITF {
 				animStand = s.SerializeObject<StringID>(animStand, name: "animStand");
 				animOnHead = s.SerializeObject<StringID>(animOnHead, name: "animOnHead");
 				animHit = s.SerializeObject<StringID>(animHit, name: "animHit");
-				instructions = s.SerializeObject<CList<RO2_BossLuchadoreComponent_Template.SequenceInstruction>>(instructions, name: "instructions");
-				forbiddenZones = s.SerializeObject<CList<RO2_BossLuchadoreComponent_Template.ForbiddenZone>>(forbiddenZones, name: "forbiddenZones");
+				instructions = s.SerializeObject<CListO<RO2_BossLuchadoreComponent_Template.SequenceInstruction>>(instructions, name: "instructions");
+				forbiddenZones = s.SerializeObject<CListO<RO2_BossLuchadoreComponent_Template.ForbiddenZone>>(forbiddenZones, name: "forbiddenZones");
 				if (Settings.s.game == Settings.Game.RL) {
 					changedHitMaterialTarget = s.Serialize<uint>(changedHitMaterialTarget, name: "changedHitMaterialTarget");
 					changedHitMaterialSource = s.Serialize<uint>(changedHitMaterialSource, name: "changedHitMaterialSource");

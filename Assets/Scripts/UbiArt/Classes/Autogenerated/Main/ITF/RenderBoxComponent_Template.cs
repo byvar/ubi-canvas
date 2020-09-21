@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		public bool is2D;
 		public bool addBorders;
 		public bool useAnimMeshVertex;
-		public CList<RenderSingleAnimData> anims;
+		public CListO<RenderSingleAnimData> anims;
 		public Path texture;
 		public GFXMaterialSerializable material;
-		public CList<GFXMaterialSerializable> AdditionalMaterials;
+		public CListO<GFXMaterialSerializable> AdditionalMaterials;
 		public Path frontTexture;
 		public GFXMaterialSerializable frontMaterial;
 		public float leftWidth;
@@ -57,7 +57,7 @@ namespace UbiArt.ITF {
 				is2D = s.Serialize<bool>(is2D, name: "is2D");
 				addBorders = s.Serialize<bool>(addBorders, name: "addBorders");
 				useAnimMeshVertex = s.Serialize<bool>(useAnimMeshVertex, name: "useAnimMeshVertex");
-				anims = s.SerializeObject<CList<RenderSingleAnimData>>(anims, name: "anims");
+				anims = s.SerializeObject<CListO<RenderSingleAnimData>>(anims, name: "anims");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
@@ -164,12 +164,12 @@ namespace UbiArt.ITF {
 				is2D = s.Serialize<bool>(is2D, name: "is2D");
 				addBorders = s.Serialize<bool>(addBorders, name: "addBorders");
 				useAnimMeshVertex = s.Serialize<bool>(useAnimMeshVertex, name: "useAnimMeshVertex");
-				anims = s.SerializeObject<CList<RenderSingleAnimData>>(anims, name: "anims");
+				anims = s.SerializeObject<CListO<RenderSingleAnimData>>(anims, name: "anims");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
 				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
-				AdditionalMaterials = s.SerializeObject<CList<GFXMaterialSerializable>>(AdditionalMaterials, name: "AdditionalMaterials");
+				AdditionalMaterials = s.SerializeObject<CListO<GFXMaterialSerializable>>(AdditionalMaterials, name: "AdditionalMaterials");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					frontTexture = s.SerializeObject<Path>(frontTexture, name: "frontTexture");
 				}

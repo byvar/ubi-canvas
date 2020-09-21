@@ -8,7 +8,7 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimPolyline::serialize
 	public class AnimPolyline : CSerializable {
-		public CList<AnimPolylinePoint> points;
+		public CListO<AnimPolylinePoint> points;
 		public KeyArray<int> keys;
 		public StringID name;
 		public bool unk;
@@ -16,7 +16,7 @@ namespace UbiArt.Animation {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			points = s.SerializeObject<CList<AnimPolylinePoint>>(points, name: "points");
+			points = s.SerializeObject<CListO<AnimPolylinePoint>>(points, name: "points");
 			keys = s.SerializeObject<KeyArray<int>>(keys, name: "keys");
 			name = s.SerializeObject<StringID>(name, name: "name");
 			unk = s.Serialize<bool>(unk, name: "unk");

@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public float durationBeforeFadeOut;
 		public Path stillHeartPath;
 		public float broken_generatedRewardRadius;
-		public CArray<uint> broken_generatedRewards;
+		public CArrayP<uint> broken_generatedRewards;
 		public Vec3d heartOffset;
 		public int lastCageIndex;
 		public float alreadyOpenAlpha;
@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 			durationBeforeFadeOut = s.Serialize<float>(durationBeforeFadeOut, name: "durationBeforeFadeOut");
 			stillHeartPath = s.SerializeObject<Path>(stillHeartPath, name: "stillHeartPath");
 			broken_generatedRewardRadius = s.Serialize<float>(broken_generatedRewardRadius, name: "broken_generatedRewardRadius");
-			broken_generatedRewards = s.SerializeObject<CArray<uint>>(broken_generatedRewards, name: "broken_generatedRewards");
+			broken_generatedRewards = s.SerializeObject<CArrayP<uint>>(broken_generatedRewards, name: "broken_generatedRewards");
 			heartOffset = s.SerializeObject<Vec3d>(heartOffset, name: "heartOffset");
 			lastCageIndex = s.Serialize<int>(lastCageIndex, name: "lastCageIndex");
 			alreadyOpenAlpha = s.Serialize<float>(alreadyOpenAlpha, name: "alreadyOpenAlpha");

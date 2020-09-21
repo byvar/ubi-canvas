@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public uint limitMode;
 		public uint maxInstances;
 		public int isStream;
-		public CList<Path> files;
+		public CListO<Path> files;
 		public SoundParams _params;
 		public SoundGUID spawnEvent;
 		public SoundGUID livingEvent;
@@ -26,11 +26,11 @@ namespace UbiArt.ITF {
 		public bool soundPlayAfterDestroy;
 		public Enum_limitMode limitModeEnum;
 		public int isPrefetched;
-		public CList<LocalizedPath> localizedFiles;
-		public CList<Path> filesIntro;
-		public CList<Path> filesBody;
-		public CList<Unknown_RL_12955_sub_591530> filesBodyOption;
-		public CList<Path> filesOutro;
+		public CListO<LocalizedPath> localizedFiles;
+		public CListO<Path> filesIntro;
+		public CListO<Path> filesBody;
+		public CListO<Unknown_RL_12955_sub_591530> filesBodyOption;
+		public CListO<Path> filesOutro;
 		public Enum_serialPlayingMode serialPlayingMode;
 		public Enum_serialStoppingMode serialStoppingMode;
 		public uint pauseInsensitiveFlags;
@@ -49,7 +49,7 @@ namespace UbiArt.ITF {
 				limitMode = s.Serialize<uint>(limitMode, name: "limitMode");
 				maxInstances = s.Serialize<uint>(maxInstances, name: "maxInstances");
 				isStream = s.Serialize<int>(isStream, name: "isStream");
-				files = s.SerializeObject<CList<Path>>(files, name: "files");
+				files = s.SerializeObject<CListO<Path>>(files, name: "files");
 				_params = s.SerializeObject<SoundParams>(_params, name: "_params");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
@@ -60,12 +60,12 @@ namespace UbiArt.ITF {
 				maxInstances = s.Serialize<uint>(maxInstances, name: "maxInstances");
 				isStream = s.Serialize<int>(isStream, name: "isStream");
 				isPrefetched = s.Serialize<int>(isPrefetched, name: "isPrefetched");
-				files = s.SerializeObject<CList<Path>>(files, name: "files");
-				localizedFiles = s.SerializeObject<CList<LocalizedPath>>(localizedFiles, name: "localizedFiles");
-				filesIntro = s.SerializeObject<CList<Path>>(filesIntro, name: "filesIntro");
-				filesBody = s.SerializeObject<CList<Path>>(filesBody, name: "filesBody");
-				filesBodyOption = s.SerializeObject<CList<Unknown_RL_12955_sub_591530>>(filesBodyOption, name: "filesBodyOption");
-				filesOutro = s.SerializeObject<CList<Path>>(filesOutro, name: "filesOutro");
+				files = s.SerializeObject<CListO<Path>>(files, name: "files");
+				localizedFiles = s.SerializeObject<CListO<LocalizedPath>>(localizedFiles, name: "localizedFiles");
+				filesIntro = s.SerializeObject<CListO<Path>>(filesIntro, name: "filesIntro");
+				filesBody = s.SerializeObject<CListO<Path>>(filesBody, name: "filesBody");
+				filesBodyOption = s.SerializeObject<CListO<Unknown_RL_12955_sub_591530>>(filesBodyOption, name: "filesBodyOption");
+				filesOutro = s.SerializeObject<CListO<Path>>(filesOutro, name: "filesOutro");
 				serialPlayingMode = s.Serialize<Enum_serialPlayingMode>(serialPlayingMode, name: "serialPlayingMode");
 				serialStoppingMode = s.Serialize<Enum_serialStoppingMode>(serialStoppingMode, name: "serialStoppingMode");
 				_params = s.SerializeObject<SoundParams>(_params, name: "_params");

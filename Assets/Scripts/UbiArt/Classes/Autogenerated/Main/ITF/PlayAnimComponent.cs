@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class PlayAnimComponent : ActorComponent {
-		public CList<PlayAnimComponent.strPlayAnimParams> SequenceList;
+		public CListO<PlayAnimComponent.strPlayAnimParams> SequenceList;
 		public bool isLooping;
 		public bool startActive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			SequenceList = s.SerializeObject<CList<PlayAnimComponent.strPlayAnimParams>>(SequenceList, name: "SequenceList");
+			SequenceList = s.SerializeObject<CListO<PlayAnimComponent.strPlayAnimParams>>(SequenceList, name: "SequenceList");
 			isLooping = s.Serialize<bool>(isLooping, name: "isLooping");
 			startActive = s.Serialize<bool>(startActive, name: "startActive");
 		}

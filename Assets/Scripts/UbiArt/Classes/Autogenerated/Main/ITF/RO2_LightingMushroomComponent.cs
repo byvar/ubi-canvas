@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public uint RocketNb;
 		public bool SteadyExplosion;
 		public float TimeToStartFalling;
-		public CList<RO2_LightingMushroomComponent.MushroomTarget> MushroomTargets;
+		public CListO<RO2_LightingMushroomComponent.MushroomTarget> MushroomTargets;
 		public uint GPEColor;
 		public bool fireOnce;
 		public bool triggerSpawn;
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 					RocketNb = s.Serialize<uint>(RocketNb, name: "RocketNb");
 					SteadyExplosion = s.Serialize<bool>(SteadyExplosion, name: "SteadyExplosion");
 					TimeToStartFalling = s.Serialize<float>(TimeToStartFalling, name: "TimeToStartFalling");
-					MushroomTargets = s.SerializeObject<CList<RO2_LightingMushroomComponent.MushroomTarget>>(MushroomTargets, name: "MushroomTargets");
+					MushroomTargets = s.SerializeObject<CListO<RO2_LightingMushroomComponent.MushroomTarget>>(MushroomTargets, name: "MushroomTargets");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 					RocketNb = s.Serialize<uint>(RocketNb, name: "RocketNb");
 					SteadyExplosion = s.Serialize<bool>(SteadyExplosion, name: "SteadyExplosion");
 					TimeToStartFalling = s.Serialize<float>(TimeToStartFalling, name: "TimeToStartFalling");
-					MushroomTargets = s.SerializeObject<CList<RO2_LightingMushroomComponent.MushroomTarget>>(MushroomTargets, name: "MushroomTargets");
+					MushroomTargets = s.SerializeObject<CListO<RO2_LightingMushroomComponent.MushroomTarget>>(MushroomTargets, name: "MushroomTargets");
 					GPEColor = s.Serialize<uint>(GPEColor, name: "GPEColor");
 					fireOnce = s.Serialize<bool>(fireOnce, name: "fireOnce");
 					triggerSpawn = s.Serialize<bool>(triggerSpawn, name: "triggerSpawn");

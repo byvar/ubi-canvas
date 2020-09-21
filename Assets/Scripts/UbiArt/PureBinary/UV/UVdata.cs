@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.UV {
 	public class UVdata : CSerializable {
-		public CArray<Vec2d> uvs;
+		public CArrayO<Vec2d> uvs;
 		public Vec2d uv0;
 		public Vec2d uv1;
 
@@ -11,7 +11,7 @@ namespace UbiArt.UV {
 				uv0 = s.SerializeObject<Vec2d>(uv0, name: "uv0");
 				uv1 = s.SerializeObject<Vec2d>(uv1, name: "uv1");
 			} else {
-				uvs = s.SerializeObject<CArray<Vec2d>>(uvs, name: "uvs");
+				uvs = s.SerializeObject<CArrayO<Vec2d>>(uvs, name: "uvs");
 			}
 		}
 	}

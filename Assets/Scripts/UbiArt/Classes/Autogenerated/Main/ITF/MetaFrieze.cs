@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class MetaFrieze : Pickable {
 		public PolyPointList PointsList;
-		public CList<GFXPrimitiveParam> PrimitiveParameters;
+		public CListO<GFXPrimitiveParam> PrimitiveParameters;
 		public uint ConfigCRC;
 		public Path ConfigName;
 		public bool SwitchExtremityStart;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					FriezePath = s.SerializeObject<Placeholder>(FriezePath, name: "FriezePath");
-					PrimitiveParameters = s.SerializeObject<CList<GFXPrimitiveParam>>(PrimitiveParameters, name: "PrimitiveParameters");
+					PrimitiveParameters = s.SerializeObject<CListO<GFXPrimitiveParam>>(PrimitiveParameters, name: "PrimitiveParameters");
 					ConfigCRC = s.Serialize<uint>(ConfigCRC, name: "ConfigCRC");
 				}
 				ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 					PointsList = s.SerializeObject<PolyPointList>(PointsList, name: "PointsList");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					PrimitiveParameters = s.SerializeObject<CList<GFXPrimitiveParam>>(PrimitiveParameters, name: "PrimitiveParameters");
+					PrimitiveParameters = s.SerializeObject<CListO<GFXPrimitiveParam>>(PrimitiveParameters, name: "PrimitiveParameters");
 					ConfigCRC = s.Serialize<uint>(ConfigCRC, name: "ConfigCRC");
 				}
 				ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");

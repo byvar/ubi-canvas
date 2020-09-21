@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class GameMaterial_Template : TemplateObj {
-		public CList<StringID> feedbackTags;
+		public CListO<StringID> feedbackTags;
 		public bool solid;
 		public uint filter;
 		public bool nostim;
@@ -46,7 +46,7 @@ namespace UbiArt.ITF {
 				amount = s.Serialize<uint>(amount, name: "amount");
 				fxkit = s.SerializeObject<Nullable<FxKit>>(fxkit, name: "fxkit");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				feedbackTags = s.SerializeObject<CList<StringID>>(feedbackTags, name: "feedbackTags");
+				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				solid = s.Serialize<bool>(solid, name: "solid");
 				nostim = s.Serialize<bool>(nostim, name: "nostim");
 				noStick = s.Serialize<bool>(noStick, name: "noStick");
@@ -62,7 +62,7 @@ namespace UbiArt.ITF {
 				amount = s.Serialize<uint>(amount, name: "amount");
 				collisionGroup = s.Serialize<uint>(collisionGroup, name: "collisionGroup");
 			} else if (Settings.s.game == Settings.Game.VH) {
-				feedbackTags = s.SerializeObject<CList<StringID>>(feedbackTags, name: "feedbackTags");
+				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				solid = s.Serialize<bool>(solid, name: "solid");
 				filter = s.Serialize<uint>(filter, name: "filter");
 				nostim = s.Serialize<bool>(nostim, name: "nostim");
@@ -80,7 +80,7 @@ namespace UbiArt.ITF {
 				collisionGroup = s.Serialize<uint>(collisionGroup, name: "collisionGroup");
 				StringID__16 = s.SerializeObject<StringID>(StringID__16, name: "StringID__16");
 			} else {
-				feedbackTags = s.SerializeObject<CList<StringID>>(feedbackTags, name: "feedbackTags");
+				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				solid = s.Serialize<bool>(solid, name: "solid");
 				filter = s.Serialize<uint>(filter, name: "filter");
 				nostim = s.Serialize<bool>(nostim, name: "nostim");

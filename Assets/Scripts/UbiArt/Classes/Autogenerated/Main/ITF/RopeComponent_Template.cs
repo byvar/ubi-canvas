@@ -51,7 +51,7 @@ namespace UbiArt.ITF {
 		public bool swingCanUseSmall;
 		public bool swingCanUseNormal;
 		public bool swingRepositionWithBones;
-		public CList<StringID> animMeshAnims;
+		public CListO<StringID> animMeshAnims;
 		public StringID animMeshEnding;
 		public Angle animMeshVertexAngleOffset;
 		public CutFade fullDisappearOnCut;
@@ -108,7 +108,7 @@ namespace UbiArt.ITF {
 				swingCanUseSmall = s.Serialize<bool>(swingCanUseSmall, name: "swingCanUseSmall");
 				swingCanUseNormal = s.Serialize<bool>(swingCanUseNormal, name: "swingCanUseNormal");
 				swingRepositionWithBones = s.Serialize<bool>(swingRepositionWithBones, name: "swingRepositionWithBones");
-				animMeshAnims = s.SerializeObject<CList<StringID>>(animMeshAnims, name: "animMeshAnims");
+				animMeshAnims = s.SerializeObject<CListO<StringID>>(animMeshAnims, name: "animMeshAnims");
 				animMeshEnding = s.SerializeObject<StringID>(animMeshEnding, name: "animMeshEnding");
 				animMeshVertexAngleOffset = s.SerializeObject<Angle>(animMeshVertexAngleOffset, name: "animMeshVertexAngleOffset");
 				fullDisappearOnCut = s.Serialize<CutFade>(fullDisappearOnCut, name: "fullDisappearOnCut");
@@ -163,7 +163,7 @@ namespace UbiArt.ITF {
 				swingCanUseSmall = s.Serialize<bool>(swingCanUseSmall, name: "swingCanUseSmall");
 				swingCanUseNormal = s.Serialize<bool>(swingCanUseNormal, name: "swingCanUseNormal");
 				swingRepositionWithBones = s.Serialize<bool>(swingRepositionWithBones, name: "swingRepositionWithBones");
-				animMeshAnims = s.SerializeObject<CList<StringID>>(animMeshAnims, name: "animMeshAnims");
+				animMeshAnims = s.SerializeObject<CListO<StringID>>(animMeshAnims, name: "animMeshAnims");
 				animMeshEnding = s.SerializeObject<StringID>(animMeshEnding, name: "animMeshEnding");
 				animMeshVertexAngleOffset = s.SerializeObject<Angle>(animMeshVertexAngleOffset, name: "animMeshVertexAngleOffset");
 				fullDisappearOnCut = s.Serialize<CutFade>(fullDisappearOnCut, name: "fullDisappearOnCut");

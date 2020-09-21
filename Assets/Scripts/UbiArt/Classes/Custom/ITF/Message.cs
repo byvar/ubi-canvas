@@ -18,9 +18,9 @@ namespace UbiArt.ITF {
 		public bool hasBeenInteract;
 		public bool removeAfterInteract;
 		public bool lockedAfterInteract;
-		public CList<SmartLocId> buttons;
-		public CList<Attribute> attributes;
-		public CList<Marker> markers;
+		public CListO<SmartLocId> buttons;
+		public CListO<Attribute> attributes;
+		public CListO<Marker> markers;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
@@ -39,9 +39,9 @@ namespace UbiArt.ITF {
 				hasBeenInteract = s.Serialize<bool>(hasBeenInteract, name: "hasBeenInteract", options: CSerializerObject.Options.BoolAsByte);
 				removeAfterInteract = s.Serialize<bool>(removeAfterInteract, name: "removeAfterInteract", options: CSerializerObject.Options.BoolAsByte);
 				lockedAfterInteract = s.Serialize<bool>(lockedAfterInteract, name: "lockedAfterInteract", options: CSerializerObject.Options.BoolAsByte);
-				buttons = s.SerializeObject<CList<SmartLocId>>(buttons, name: "buttons");
-				attributes = s.SerializeObject<CList<Attribute>>(attributes, name: "attributes");
-				markers = s.SerializeObject<CList<Marker>>(markers, name: "markers");
+				buttons = s.SerializeObject<CListO<SmartLocId>>(buttons, name: "buttons");
+				attributes = s.SerializeObject<CListO<Attribute>>(attributes, name: "attributes");
+				markers = s.SerializeObject<CListO<Marker>>(markers, name: "markers");
 			}
 		}
 

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_CreatureTreeManager_Template : TemplateObj {
-		public CList<RLC_CreatureTreeTier> TreeTierList;
+		public CListO<RLC_CreatureTreeTier> TreeTierList;
 		public float TreeTopShapeOffset;
 		public Path TreeTopPath;
 		public Path TreePatchPath;
@@ -43,9 +43,9 @@ namespace UbiArt.ITF {
 		public uint StarNeededToGrowBranches;
 		public uint SmallHouseMaxMember;
 		public CMap<int, RLC_TreeRewardList> RewardsList;
-		public CList<uint> LevelXPList;
-		public CList<Path> PropsTrunkMidList;
-		public CList<Path> PropsTrunkBorderList;
+		public CListP<uint> LevelXPList;
+		public CListO<Path> PropsTrunkMidList;
+		public CListO<Path> PropsTrunkBorderList;
 		public uint XPSpeed;
 		public uint XPMultiplier;
 		public float GrabCreatureTouchDuration;
@@ -64,7 +64,7 @@ namespace UbiArt.ITF {
 		public Path FX_LeaveRare;
 		public Path FX_LeaveQueen;
 		public Path FX_LeaveDeath;
-		public CList<RLC_TreeOptimGraph> TreeOptimGraphList;
+		public CListO<RLC_TreeOptimGraph> TreeOptimGraphList;
 		public Path FXGiftPath;
 		public Path FXGiftRegionPath;
 		public Path FXGiftCostumePath;
@@ -80,7 +80,7 @@ namespace UbiArt.ITF {
 		public uint TutoLeaderboardMinAdventure;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			TreeTierList = s.SerializeObject<CList<RLC_CreatureTreeTier>>(TreeTierList, name: "TreeTierList");
+			TreeTierList = s.SerializeObject<CListO<RLC_CreatureTreeTier>>(TreeTierList, name: "TreeTierList");
 			TreeTopShapeOffset = s.Serialize<float>(TreeTopShapeOffset, name: "TreeTopShapeOffset");
 			TreeTopPath = s.SerializeObject<Path>(TreeTopPath, name: "TreeTopPath");
 			TreePatchPath = s.SerializeObject<Path>(TreePatchPath, name: "TreePatchPath");
@@ -120,9 +120,9 @@ namespace UbiArt.ITF {
 			StarNeededToGrowBranches = s.Serialize<uint>(StarNeededToGrowBranches, name: "StarNeededToGrowBranches");
 			SmallHouseMaxMember = s.Serialize<uint>(SmallHouseMaxMember, name: "SmallHouseMaxMember");
 			RewardsList = s.SerializeObject<CMap<int, RLC_TreeRewardList>>(RewardsList, name: "RewardsList");
-			LevelXPList = s.SerializeObject<CList<uint>>(LevelXPList, name: "LevelXPList");
-			PropsTrunkMidList = s.SerializeObject<CList<Path>>(PropsTrunkMidList, name: "PropsTrunkMidList");
-			PropsTrunkBorderList = s.SerializeObject<CList<Path>>(PropsTrunkBorderList, name: "PropsTrunkBorderList");
+			LevelXPList = s.SerializeObject<CListP<uint>>(LevelXPList, name: "LevelXPList");
+			PropsTrunkMidList = s.SerializeObject<CListO<Path>>(PropsTrunkMidList, name: "PropsTrunkMidList");
+			PropsTrunkBorderList = s.SerializeObject<CListO<Path>>(PropsTrunkBorderList, name: "PropsTrunkBorderList");
 			XPSpeed = s.Serialize<uint>(XPSpeed, name: "XPSpeed");
 			XPMultiplier = s.Serialize<uint>(XPMultiplier, name: "XPMultiplier");
 			GrabCreatureTouchDuration = s.Serialize<float>(GrabCreatureTouchDuration, name: "GrabCreatureTouchDuration");
@@ -141,7 +141,7 @@ namespace UbiArt.ITF {
 			FX_LeaveRare = s.SerializeObject<Path>(FX_LeaveRare, name: "FX_LeaveRare");
 			FX_LeaveQueen = s.SerializeObject<Path>(FX_LeaveQueen, name: "FX_LeaveQueen");
 			FX_LeaveDeath = s.SerializeObject<Path>(FX_LeaveDeath, name: "FX_LeaveDeath");
-			TreeOptimGraphList = s.SerializeObject<CList<RLC_TreeOptimGraph>>(TreeOptimGraphList, name: "TreeOptimGraphList");
+			TreeOptimGraphList = s.SerializeObject<CListO<RLC_TreeOptimGraph>>(TreeOptimGraphList, name: "TreeOptimGraphList");
 			FXGiftPath = s.SerializeObject<Path>(FXGiftPath, name: "FXGiftPath");
 			FXGiftRegionPath = s.SerializeObject<Path>(FXGiftRegionPath, name: "FXGiftRegionPath");
 			FXGiftCostumePath = s.SerializeObject<Path>(FXGiftCostumePath, name: "FXGiftCostumePath");

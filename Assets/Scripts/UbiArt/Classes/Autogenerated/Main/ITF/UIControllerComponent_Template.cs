@@ -3,20 +3,20 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
 	public partial class UIControllerComponent_Template : UIComponent_Template {
-		public CList<UIControllerComponent_Template.ControllerTextObject> buttonActions;
+		public CListO<UIControllerComponent_Template.ControllerTextObject> buttonActions;
 		public Path textboxPath;
 		public float inputActorScaleFactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				buttonActions = s.SerializeObject<CList<UIControllerComponent_Template.ControllerTextObject>>(buttonActions, name: "buttonActions");
+				buttonActions = s.SerializeObject<CListO<UIControllerComponent_Template.ControllerTextObject>>(buttonActions, name: "buttonActions");
 				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
 				inputActorScaleFactor = s.Serialize<float>(inputActorScaleFactor, name: "inputActorScaleFactor");
 			} else if (Settings.s.game == Settings.Game.COL) {
 				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
 				inputActorScaleFactor = s.Serialize<float>(inputActorScaleFactor, name: "inputActorScaleFactor");
 			} else {
-				buttonActions = s.SerializeObject<CList<UIControllerComponent_Template.ControllerTextObject>>(buttonActions, name: "buttonActions");
+				buttonActions = s.SerializeObject<CListO<UIControllerComponent_Template.ControllerTextObject>>(buttonActions, name: "buttonActions");
 				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
 			}
 		}

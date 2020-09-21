@@ -11,7 +11,7 @@ namespace UbiArt.Animation {
 		public Link key;
 		public StringID tag;
 		public byte flags;
-		public CList<Link> pointLinks; // links to AnimPatchPoint?
+		public CListO<Link> pointLinks; // links to AnimPatchPoint?
 		public Link parentKey;
 
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -19,7 +19,7 @@ namespace UbiArt.Animation {
 			key = s.SerializeObject<Link>(key, name: "key");
 			tag = s.SerializeObject<StringID>(tag, name: "tag");
 			flags = s.Serialize<byte>(flags, name: "flags");
-			pointLinks = s.SerializeObject<CList<Link>>(pointLinks, name: "pointLinks");
+			pointLinks = s.SerializeObject<CListO<Link>>(pointLinks, name: "pointLinks");
 			parentKey = s.SerializeObject<Link>(parentKey, name: "parentKey");
 		}
 		/*

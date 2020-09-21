@@ -7,14 +7,14 @@ namespace UbiArt.ITF {
 		public EdgeData Data;
 		public Transform2d Xf;
 		public float Scale;
-		public CList<FluidFriseLayer> LayerInfos;
+		public CListO<FluidFriseLayer> LayerInfos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			IdEdgeFluid = s.Serialize<uint>(IdEdgeFluid, name: "IdEdgeFluid");
 			Data = s.SerializeObject<EdgeData>(Data, name: "Data");
 			Xf = s.SerializeObject<Transform2d>(Xf, name: "Xf");
 			Scale = s.Serialize<float>(Scale, name: "Scale");
-			LayerInfos = s.SerializeObject<CList<FluidFriseLayer>>(LayerInfos, name: "LayerInfos");
+			LayerInfos = s.SerializeObject<CListO<FluidFriseLayer>>(LayerInfos, name: "LayerInfos");
 		}
 	}
 }

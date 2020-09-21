@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR)]
 	public partial class Spline : CSerializable {
-		public CList<Spline.SplinePoint> Points;
+		public CListO<Spline.SplinePoint> Points;
 		public uint TimeLoopMode;
 		public float TimeLoop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-				Points = s.SerializeObject<CList<Spline.SplinePoint>>(Points, name: "Points");
+				Points = s.SerializeObject<CListO<Spline.SplinePoint>>(Points, name: "Points");
 			} else {
-				Points = s.SerializeObject<CList<Spline.SplinePoint>>(Points, name: "Points");
+				Points = s.SerializeObject<CListO<Spline.SplinePoint>>(Points, name: "Points");
 				TimeLoopMode = s.Serialize<uint>(TimeLoopMode, name: "TimeLoopMode");
 				TimeLoop = s.Serialize<float>(TimeLoop, name: "TimeLoop");
 			}

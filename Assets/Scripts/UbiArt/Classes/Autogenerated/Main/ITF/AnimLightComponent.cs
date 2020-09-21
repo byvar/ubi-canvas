@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public StringID lastAnim;
 		public StringID playAnim;
 		public uint playAnimFrames;
-		public CList<AnimLightFrameInfo> currentFrameSubAnims;
+		public CListO<AnimLightFrameInfo> currentFrameSubAnims;
 		public Path animInstance;
 		public bool bool__5;
 		public bool bool__6;
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
 					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
-					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
+					currentFrameSubAnims = s.SerializeObject<CListO<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
 					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
-					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
+					currentFrameSubAnims = s.SerializeObject<CListO<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			} else if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -59,7 +59,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
 					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
-					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
+					currentFrameSubAnims = s.SerializeObject<CListO<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			} else if (Settings.s.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -78,7 +78,7 @@ namespace UbiArt.ITF {
 					lastAnim = s.SerializeObject<StringID>(lastAnim, name: "lastAnim");
 					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
 					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
-					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
+					currentFrameSubAnims = s.SerializeObject<CListO<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -98,7 +98,7 @@ namespace UbiArt.ITF {
 					lastAnim = s.SerializeObject<StringID>(lastAnim, name: "lastAnim");
 					playAnim = s.SerializeObject<StringID>(playAnim, name: "playAnim");
 					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
-					currentFrameSubAnims = s.SerializeObject<CList<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
+					currentFrameSubAnims = s.SerializeObject<CListO<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
 			}
 		}

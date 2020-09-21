@@ -3,8 +3,8 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class TweenComponent_Template : ActorComponent_Template {
-		public CList<TweenComponent_Template.InstructionSet> preInstructionSets;
-		public CList<TweenComponent_Template.InstructionSet> instructionSets;
+		public CListO<TweenComponent_Template.InstructionSet> preInstructionSets;
+		public CListO<TweenComponent_Template.InstructionSet> instructionSets;
 		public bool playFirstSetIfNoStartSet;
 		public bool sync;
 		public METRONOME_TYPE metronome;
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public bool applyScale;
 		public bool applyFeedback;
 		public bool trigOnCheckPointEnabled;
-		public CList<InputDesc> inputs;
+		public CListO<InputDesc> inputs;
 		public bool autoStart;
 		
 		public StartMode startMode;
@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				instructionSets = s.SerializeObject<CList<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
+				instructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
 				sync = s.Serialize<bool>(sync, name: "sync");
 				metronome2 = s.Serialize<METRONOME_TYPE2>(metronome2, name: "metronome2");
 				syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
@@ -33,9 +33,9 @@ namespace UbiArt.ITF {
 				applyPosition = s.Serialize<bool>(applyPosition, name: "applyPosition");
 				applyRotation = s.Serialize<bool>(applyRotation, name: "applyRotation");
 				applyScale = s.Serialize<bool>(applyScale, name: "applyScale");
-				inputs = s.SerializeObject<CList<InputDesc>>(inputs, name: "inputs");
+				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				instructionSets = s.SerializeObject<CList<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
+				instructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
 				playFirstSetIfNoStartSet = s.Serialize<bool>(playFirstSetIfNoStartSet, name: "playFirstSetIfNoStartSet", options: CSerializerObject.Options.BoolAsByte);
 				sync = s.Serialize<bool>(sync, name: "sync", options: CSerializerObject.Options.BoolAsByte);
 				metronome = s.Serialize<METRONOME_TYPE>(metronome, name: "metronome");
@@ -44,10 +44,10 @@ namespace UbiArt.ITF {
 				applyScale = s.Serialize<bool>(applyScale, name: "applyScale", options: CSerializerObject.Options.BoolAsByte);
 				applyFeedback = s.Serialize<bool>(applyFeedback, name: "applyFeedback", options: CSerializerObject.Options.BoolAsByte);
 				trigOnCheckPointEnabled = s.Serialize<bool>(trigOnCheckPointEnabled, name: "trigOnCheckPointEnabled", options: CSerializerObject.Options.BoolAsByte);
-				inputs = s.SerializeObject<CList<InputDesc>>(inputs, name: "inputs");
+				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 			} else if (Settings.s.game == Settings.Game.VH) {
-				preInstructionSets = s.SerializeObject<CList<TweenComponent_Template.InstructionSet>>(preInstructionSets, name: "preInstructionSets");
-				instructionSets = s.SerializeObject<CList<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
+				preInstructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(preInstructionSets, name: "preInstructionSets");
+				instructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
 				playFirstSetIfNoStartSet = s.Serialize<bool>(playFirstSetIfNoStartSet, name: "playFirstSetIfNoStartSet");
 				sync = s.Serialize<bool>(sync, name: "sync");
 				metronome = s.Serialize<METRONOME_TYPE>(metronome, name: "metronome");
@@ -56,10 +56,10 @@ namespace UbiArt.ITF {
 				applyScale = s.Serialize<bool>(applyScale, name: "applyScale");
 				applyFeedback = s.Serialize<bool>(applyFeedback, name: "applyFeedback");
 				trigOnCheckPointEnabled = s.Serialize<bool>(trigOnCheckPointEnabled, name: "trigOnCheckPointEnabled");
-				inputs = s.SerializeObject<CList<InputDesc>>(inputs, name: "inputs");
+				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 			} else {
-				preInstructionSets = s.SerializeObject<CList<TweenComponent_Template.InstructionSet>>(preInstructionSets, name: "preInstructionSets");
-				instructionSets = s.SerializeObject<CList<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
+				preInstructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(preInstructionSets, name: "preInstructionSets");
+				instructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
 				playFirstSetIfNoStartSet = s.Serialize<bool>(playFirstSetIfNoStartSet, name: "playFirstSetIfNoStartSet");
 				sync = s.Serialize<bool>(sync, name: "sync");
 				metronome = s.Serialize<METRONOME_TYPE>(metronome, name: "metronome");
@@ -68,14 +68,14 @@ namespace UbiArt.ITF {
 				applyScale = s.Serialize<bool>(applyScale, name: "applyScale");
 				applyFeedback = s.Serialize<bool>(applyFeedback, name: "applyFeedback");
 				trigOnCheckPointEnabled = s.Serialize<bool>(trigOnCheckPointEnabled, name: "trigOnCheckPointEnabled");
-				inputs = s.SerializeObject<CList<InputDesc>>(inputs, name: "inputs");
+				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				autoStart = s.Serialize<bool>(autoStart, name: "autoStart");
 			}
 		}
 		[Games(GameFlags.All)]
 		public partial class InstructionSet : CSerializable {
 			public StringID name;
-			public CList<Generic<TweenInstruction_Template>> instructions;
+			public CListO<Generic<TweenInstruction_Template>> instructions;
 			public uint iterationCount;
 			public AngleAmount angleOffset;
 			public Generic<Event> startEvent;
@@ -88,7 +88,7 @@ namespace UbiArt.ITF {
 				base.SerializeImpl(s);
 				if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
 					name = s.SerializeObject<StringID>(name, name: "name");
-					instructions = s.SerializeObject<CList<Generic<TweenInstruction_Template>>>(instructions, name: "instructions");
+					instructions = s.SerializeObject<CListO<Generic<TweenInstruction_Template>>>(instructions, name: "instructions");
 					iterationCount = s.Serialize<uint>(iterationCount, name: "iterationCount");
 					angleOffset = s.SerializeObject<AngleAmount>(angleOffset, name: "angleOffset");
 					startEvent = s.SerializeObject<Generic<Event>>(startEvent, name: "startEvent");
@@ -99,7 +99,7 @@ namespace UbiArt.ITF {
 					proceduralInput = s.SerializeObject<ProceduralInputData>(proceduralInput, name: "proceduralInput");
 				} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 					name = s.SerializeObject<StringID>(name, name: "name");
-					instructions = s.SerializeObject<CList<Generic<TweenInstruction_Template>>>(instructions, name: "instructions");
+					instructions = s.SerializeObject<CListO<Generic<TweenInstruction_Template>>>(instructions, name: "instructions");
 					iterationCount = s.Serialize<uint>(iterationCount, name: "iterationCount");
 					angleOffset = s.SerializeObject<AngleAmount>(angleOffset, name: "angleOffset");
 					startEvent = s.SerializeObject<Generic<Event>>(startEvent, name: "startEvent");
@@ -110,7 +110,7 @@ namespace UbiArt.ITF {
 					proceduralInput = s.SerializeObject<ProceduralInputData>(proceduralInput, name: "proceduralInput");
 				} else {
 					name = s.SerializeObject<StringID>(name, name: "name");
-					instructions = s.SerializeObject<CList<Generic<TweenInstruction_Template>>>(instructions, name: "instructions");
+					instructions = s.SerializeObject<CListO<Generic<TweenInstruction_Template>>>(instructions, name: "instructions");
 					iterationCount = s.Serialize<uint>(iterationCount, name: "iterationCount");
 					angleOffset = s.SerializeObject<AngleAmount>(angleOffset, name: "angleOffset");
 					startEvent = s.SerializeObject<Generic<Event>>(startEvent, name: "startEvent");

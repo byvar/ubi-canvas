@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public float armsAngleDamp;
 		public float armsGraspInterpolateTime;
 		public uint numArms;
-		public CArray<Angle> restAngles;
+		public CArrayO<Angle> restAngles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 				armsAngleDamp = s.Serialize<float>(armsAngleDamp, name: "armsAngleDamp");
 				armsGraspInterpolateTime = s.Serialize<float>(armsGraspInterpolateTime, name: "armsGraspInterpolateTime");
 				numArms = s.Serialize<uint>(numArms, name: "numArms");
-				restAngles = s.SerializeObject<CArray<Angle>>(restAngles, name: "restAngles");
+				restAngles = s.SerializeObject<CArrayO<Angle>>(restAngles, name: "restAngles");
 			} else {
 				length = s.Serialize<float>(length, name: "length");
 				angle = s.SerializeObject<Angle>(angle, name: "angle");
@@ -45,8 +45,8 @@ namespace UbiArt.ITF {
 				armsAngleDamp = s.Serialize<float>(armsAngleDamp, name: "armsAngleDamp");
 				armsGraspInterpolateTime = s.Serialize<float>(armsGraspInterpolateTime, name: "armsGraspInterpolateTime");
 				numArms = s.Serialize<uint>(numArms, name: "numArms");
-				restAngles = s.SerializeObject<CArray<Angle>>(restAngles, name: "restAngles");
-				restAngles = s.SerializeObject<CArray<Angle>>(restAngles, name: "restAngles");
+				restAngles = s.SerializeObject<CArrayO<Angle>>(restAngles, name: "restAngles");
+				restAngles = s.SerializeObject<CArrayO<Angle>>(restAngles, name: "restAngles");
 			}
 		}
 		public override uint? ClassCRC => 0x69030175;

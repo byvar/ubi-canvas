@@ -55,7 +55,7 @@ namespace UbiArt.ITF {
 		public StringID fx;
 		public bool fxUseTransform;
 		public GeneratorType fxGeneratorType;
-		public CList<StringID> fxGenerators;
+		public CListO<StringID> fxGenerators;
 		public float fxLengthOffset;
 		public float fxLengthMultiplier;
 		public float fxWidth;
@@ -72,7 +72,7 @@ namespace UbiArt.ITF {
 		public uint faction;
 		public bool registerToAIManager;
 		public uint windTunnelLevel;
-		public CList<RO2_GeyserPlatformAIComponent_Template.RegionData> regions;
+		public CListO<RO2_GeyserPlatformAIComponent_Template.RegionData> regions;
 		public bool isGeyserBehavior;
 		public float widthReductionSpeed;
 		public Angle minAngle;
@@ -135,7 +135,7 @@ namespace UbiArt.ITF {
 				fx = s.SerializeObject<StringID>(fx, name: "fx");
 				fxUseTransform = s.Serialize<bool>(fxUseTransform, name: "fxUseTransform", options: CSerializerObject.Options.BoolAsByte);
 				fxGeneratorType = s.Serialize<GeneratorType>(fxGeneratorType, name: "fxGeneratorType");
-				fxGenerators = s.SerializeObject<CList<StringID>>(fxGenerators, name: "fxGenerators");
+				fxGenerators = s.SerializeObject<CListO<StringID>>(fxGenerators, name: "fxGenerators");
 				fxLengthOffset = s.Serialize<float>(fxLengthOffset, name: "fxLengthOffset");
 				fxLengthMultiplier = s.Serialize<float>(fxLengthMultiplier, name: "fxLengthMultiplier");
 				fxWidth = s.Serialize<float>(fxWidth, name: "fxWidth");
@@ -152,7 +152,7 @@ namespace UbiArt.ITF {
 				faction = s.Serialize<uint>(faction, name: "faction");
 				registerToAIManager = s.Serialize<bool>(registerToAIManager, name: "registerToAIManager", options: CSerializerObject.Options.BoolAsByte);
 				windTunnelLevel = s.Serialize<uint>(windTunnelLevel, name: "windTunnelLevel");
-				regions = s.SerializeObject<CList<RO2_GeyserPlatformAIComponent_Template.RegionData>>(regions, name: "regions");
+				regions = s.SerializeObject<CListO<RO2_GeyserPlatformAIComponent_Template.RegionData>>(regions, name: "regions");
 				isGeyserBehavior = s.Serialize<bool>(isGeyserBehavior, name: "isGeyserBehavior", options: CSerializerObject.Options.BoolAsByte);
 				widthReductionSpeed = s.Serialize<float>(widthReductionSpeed, name: "widthReductionSpeed");
 				if (s.HasFlags(SerializeFlags.Flags9)) {
@@ -215,7 +215,7 @@ namespace UbiArt.ITF {
 				fx = s.SerializeObject<StringID>(fx, name: "fx");
 				fxUseTransform = s.Serialize<bool>(fxUseTransform, name: "fxUseTransform");
 				fxGeneratorType = s.Serialize<GeneratorType>(fxGeneratorType, name: "fxGeneratorType");
-				fxGenerators = s.SerializeObject<CList<StringID>>(fxGenerators, name: "fxGenerators");
+				fxGenerators = s.SerializeObject<CListO<StringID>>(fxGenerators, name: "fxGenerators");
 				fxLengthOffset = s.Serialize<float>(fxLengthOffset, name: "fxLengthOffset");
 				fxLengthMultiplier = s.Serialize<float>(fxLengthMultiplier, name: "fxLengthMultiplier");
 				fxWidth = s.Serialize<float>(fxWidth, name: "fxWidth");
@@ -232,7 +232,7 @@ namespace UbiArt.ITF {
 				faction = s.Serialize<uint>(faction, name: "faction");
 				registerToAIManager = s.Serialize<bool>(registerToAIManager, name: "registerToAIManager");
 				windTunnelLevel = s.Serialize<uint>(windTunnelLevel, name: "windTunnelLevel");
-				regions = s.SerializeObject<CList<RO2_GeyserPlatformAIComponent_Template.RegionData>>(regions, name: "regions");
+				regions = s.SerializeObject<CListO<RO2_GeyserPlatformAIComponent_Template.RegionData>>(regions, name: "regions");
 				isGeyserBehavior = s.Serialize<bool>(isGeyserBehavior, name: "isGeyserBehavior");
 				widthReductionSpeed = s.Serialize<float>(widthReductionSpeed, name: "widthReductionSpeed");
 			}

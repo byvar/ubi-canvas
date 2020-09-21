@@ -4,14 +4,14 @@ namespace UbiArt.UV {
 	public class UVparameters : CSerializable {
 		public float unkFloat;
 		public string unkString;
-		public CArray<Parameters> parameters;
-		public CArray<Triangle> triangles;
+		public CArrayO<Parameters> parameters;
+		public CArrayO<Triangle> triangles;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			unkFloat = s.Serialize<float>(unkFloat, name: "unkFloat");
 			unkString = s.Serialize<string>(unkString, name: "unkString");
-			parameters = s.SerializeObject<CArray<Parameters>>(parameters, name: "parameters");
-			triangles = s.SerializeObject<CArray<Triangle>>(triangles, name: "triangles");
+			parameters = s.SerializeObject<CArrayO<Parameters>>(parameters, name: "parameters");
+			triangles = s.SerializeObject<CArrayO<Triangle>>(triangles, name: "triangles");
 		}
 		public class Triangle : CSerializable {
 			public int vertex1;

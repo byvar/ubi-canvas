@@ -9,9 +9,9 @@ using UnityEngine;
 namespace UbiArt {
 	[SerializeEmbed]
 	public class CList<T> : IList<T>, ICSerializable, IObjectContainer {
-		List<T> container = new List<T>();
+		protected List<T> container = new List<T>();
 
-		public void Serialize(CSerializerObject s, string name) {
+		public virtual void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)container.Count;
 			count = s.Serialize<uint>(count, name: name);
 			if(count != container.Count) Resize((int)count);

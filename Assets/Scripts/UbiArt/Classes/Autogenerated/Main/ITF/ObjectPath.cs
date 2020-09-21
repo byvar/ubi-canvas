@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ObjectPath : CSerializable {
-		public CList<ObjectPath.Level> levels;
+		public CListO<ObjectPath.Level> levels;
 		public string id;
 		public bool absolute;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				levels = s.SerializeObject<CList<ObjectPath.Level>>(levels, name: "levels");
+				levels = s.SerializeObject<CListO<ObjectPath.Level>>(levels, name: "levels");
 				id = s.Serialize<string>(id, name: "id");
 				absolute = s.Serialize<bool>(absolute, name: "absolute");
 			} else {

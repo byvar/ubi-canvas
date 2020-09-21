@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_ShooterSpawnerComponent_Template : TimedSpawnerComponent_Template {
 		public ActorSpawnBank_Template bank;
-		public CList<StringID> tweenInstructionSetList;
+		public CListO<StringID> tweenInstructionSetList;
 		public int cameraRelative;
 		public int bindSpawnee;
 		public Path rewardSpawnPath;
@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			bank = s.SerializeObject<ActorSpawnBank_Template>(bank, name: "bank");
-			tweenInstructionSetList = s.SerializeObject<CList<StringID>>(tweenInstructionSetList, name: "tweenInstructionSetList");
+			tweenInstructionSetList = s.SerializeObject<CListO<StringID>>(tweenInstructionSetList, name: "tweenInstructionSetList");
 			cameraRelative = s.Serialize<int>(cameraRelative, name: "cameraRelative");
 			bindSpawnee = s.Serialize<int>(bindSpawnee, name: "bindSpawnee");
 			rewardSpawnPath = s.SerializeObject<Path>(rewardSpawnPath, name: "rewardSpawnPath");

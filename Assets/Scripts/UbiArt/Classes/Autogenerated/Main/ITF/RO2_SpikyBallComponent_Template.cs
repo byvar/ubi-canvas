@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SpikyBallComponent_Template : ActorComponent_Template {
-		public CList<RO2_SpikyBallComponent_Template.BoneData> bones;
+		public CListO<RO2_SpikyBallComponent_Template.BoneData> bones;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			bones = s.SerializeObject<CList<RO2_SpikyBallComponent_Template.BoneData>>(bones, name: "bones");
+			bones = s.SerializeObject<CListO<RO2_SpikyBallComponent_Template.BoneData>>(bones, name: "bones");
 		}
 		[Games(GameFlags.RA)]
 		public partial class BoneData : CSerializable {

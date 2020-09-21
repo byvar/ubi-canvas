@@ -5,16 +5,16 @@ namespace UbiArt.ITF {
 	public partial class FontTemplate : TemplateObj {
 		public FontTemplate.Info info;
 		public FontTemplate.Common common;
-		public CList<FontTemplate.Page> pages;
-		public CList<FontTemplate.Char> chars;
+		public CListO<FontTemplate.Page> pages;
+		public CListO<FontTemplate.Char> chars;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 			} else {
 				info = s.SerializeObject<FontTemplate.Info>(info, name: "info");
 				common = s.SerializeObject<FontTemplate.Common>(common, name: "common");
-				pages = s.SerializeObject<CList<FontTemplate.Page>>(pages, name: "pages");
-				chars = s.SerializeObject<CList<FontTemplate.Char>>(chars, name: "chars");
+				pages = s.SerializeObject<CListO<FontTemplate.Page>>(pages, name: "pages");
+				chars = s.SerializeObject<CListO<FontTemplate.Char>>(chars, name: "chars");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]

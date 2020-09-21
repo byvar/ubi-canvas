@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 		public uint LayerCount;
 		public float BlendFactor;
 		public Path FxActor;
-		public CList<FluidFriseLayer> Layers;
+		public CListO<FluidFriseLayer> Layers;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
@@ -82,7 +82,7 @@ namespace UbiArt.ITF {
 				LayerCount = s.Serialize<uint>(LayerCount, name: "LayerCount");
 				BlendFactor = s.Serialize<float>(BlendFactor, name: "BlendFactor");
 				FxActor = s.SerializeObject<Path>(FxActor, name: "FxActor");
-				Layers = s.SerializeObject<CList<FluidFriseLayer>>(Layers, name: "Layers");
+				Layers = s.SerializeObject<CListO<FluidFriseLayer>>(Layers, name: "Layers");
 			} else {
 				Elasticity = s.Serialize<float>(Elasticity, name: "Elasticity");
 				Velocity = s.Serialize<float>(Velocity, name: "Velocity");
@@ -122,7 +122,7 @@ namespace UbiArt.ITF {
 				LayerCount = s.Serialize<uint>(LayerCount, name: "LayerCount");
 				BlendFactor = s.Serialize<float>(BlendFactor, name: "BlendFactor");
 				FxActor = s.SerializeObject<Path>(FxActor, name: "FxActor");
-				Layers = s.SerializeObject<CList<FluidFriseLayer>>(Layers, name: "Layers");
+				Layers = s.SerializeObject<CListO<FluidFriseLayer>>(Layers, name: "Layers");
 			}
 		}
 	}

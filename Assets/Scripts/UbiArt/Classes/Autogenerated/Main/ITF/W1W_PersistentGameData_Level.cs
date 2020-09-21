@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		public bool bool__2;
 		public bool bool__3;
 		public uint uint__4;
-		public CArray<WikiItem> CArray_WikiItem__5;
-		public CArray<WikiItem> CArray_WikiItem__6;
+		public CArrayO<WikiItem> CArray_WikiItem__5;
+		public CArrayO<WikiItem> CArray_WikiItem__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			uint__0 = s.Serialize<uint>(uint__0, name: "uint__0");
@@ -17,8 +17,8 @@ namespace UbiArt.ITF {
 			bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
 			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
 			uint__4 = s.Serialize<uint>(uint__4, name: "uint__4");
-			CArray_WikiItem__5 = s.SerializeObject<CArray<WikiItem>>(CArray_WikiItem__5, name: "CArray_WikiItem__5");
-			CArray_WikiItem__6 = s.SerializeObject<CArray<WikiItem>>(CArray_WikiItem__6, name: "CArray_WikiItem__6");
+			CArray_WikiItem__5 = s.SerializeObject<CArrayO<WikiItem>>(CArray_WikiItem__5, name: "CArray_WikiItem__5");
+			CArray_WikiItem__6 = s.SerializeObject<CArrayO<WikiItem>>(CArray_WikiItem__6, name: "CArray_WikiItem__6");
 		}
 		public override uint? ClassCRC => 0xFB573729;
 	}

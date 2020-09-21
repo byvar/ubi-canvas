@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class ShapeComponent_Template : ActorComponent_Template {
-		public CList<StringID> AnimPolylineList;
+		public CListO<StringID> AnimPolylineList;
 		public Generic<PhysShape> shape;
 		public Vec2d offset;
 		public StringID attachPolyline;
 		public StringID proceduralBone;
-		public CList<ShapeData_Template> shapes;
+		public CListO<ShapeData_Template> shapes;
 		public bool useAABBShape;
 		public StringID bone;
 		public StringID bone3D;
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
-				shapes = s.SerializeObject<CList<ShapeData_Template>>(shapes, name: "shapes");
+				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 			} else if (Settings.s.game == Settings.Game.RO) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 				if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0) && s.HasFlags(SerializeFlags.Flags_xC0)) {
 					drawDebug = s.Serialize<int>(drawDebug, name: "drawDebug");
 				}
-				shapes = s.SerializeObject<CList<ShapeData_Template>>(shapes, name: "shapes");
+				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
 				proceduralBone = s.SerializeObject<StringID>(proceduralBone, name: "proceduralBone");
-				shapes = s.SerializeObject<CList<ShapeData_Template>>(shapes, name: "shapes");
+				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 				bone = s.SerializeObject<StringID>(bone, name: "bone");
 				bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
@@ -54,12 +54,12 @@ namespace UbiArt.ITF {
 				bone = s.SerializeObject<StringID>(bone, name: "bone");
 				bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
 			} else {
-				AnimPolylineList = s.SerializeObject<CList<StringID>>(AnimPolylineList, name: "AnimPolylineList");
+				AnimPolylineList = s.SerializeObject<CListO<StringID>>(AnimPolylineList, name: "AnimPolylineList");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
 				proceduralBone = s.SerializeObject<StringID>(proceduralBone, name: "proceduralBone");
-				shapes = s.SerializeObject<CList<ShapeData_Template>>(shapes, name: "shapes");
+				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 				bone = s.SerializeObject<StringID>(bone, name: "bone");
 				bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");

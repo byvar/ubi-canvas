@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 		public float alphaEnd;
 		public float zOffset;
 		public bool rotate;
-		public CList<StringID> flexBonesList;
+		public CListO<StringID> flexBonesList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
@@ -52,7 +52,7 @@ namespace UbiArt.ITF {
 			alphaEnd = s.Serialize<float>(alphaEnd, name: "alphaEnd");
 			zOffset = s.Serialize<float>(zOffset, name: "zOffset");
 			rotate = s.Serialize<bool>(rotate, name: "rotate");
-			flexBonesList = s.SerializeObject<CList<StringID>>(flexBonesList, name: "flexBonesList");
+			flexBonesList = s.SerializeObject<CListO<StringID>>(flexBonesList, name: "flexBonesList");
 		}
 		public enum FlexMode {
 			[Serialize("FlexMode_Actor"     )] Actor = 0,

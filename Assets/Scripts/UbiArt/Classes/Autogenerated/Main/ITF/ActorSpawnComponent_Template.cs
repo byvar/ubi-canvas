@@ -4,16 +4,16 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.COL)]
 	public partial class ActorSpawnComponent_Template : ActorComponent_Template {
 		public bool spawnDelayed;
-		public CList<ActorSpawnComponent_Template.SpawnData> spawnActors;
+		public CListO<ActorSpawnComponent_Template.SpawnData> spawnActors;
 		public bool transmitAlwaysActive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				spawnDelayed = s.Serialize<bool>(spawnDelayed, name: "spawnDelayed");
-				spawnActors = s.SerializeObject<CList<ActorSpawnComponent_Template.SpawnData>>(spawnActors, name: "spawnActors");
+				spawnActors = s.SerializeObject<CListO<ActorSpawnComponent_Template.SpawnData>>(spawnActors, name: "spawnActors");
 			} else {
 				spawnDelayed = s.Serialize<bool>(spawnDelayed, name: "spawnDelayed");
-				spawnActors = s.SerializeObject<CList<ActorSpawnComponent_Template.SpawnData>>(spawnActors, name: "spawnActors");
+				spawnActors = s.SerializeObject<CListO<ActorSpawnComponent_Template.SpawnData>>(spawnActors, name: "spawnActors");
 				transmitAlwaysActive = s.Serialize<bool>(transmitAlwaysActive, name: "transmitAlwaysActive");
 			}
 		}

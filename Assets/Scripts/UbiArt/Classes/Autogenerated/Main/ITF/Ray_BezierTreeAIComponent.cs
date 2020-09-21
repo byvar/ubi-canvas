@@ -7,12 +7,12 @@ namespace UbiArt.ITF {
 		public float branchSpeed;
 		public Enum_RJR_0 polylineMode;
 		public int flipTexture;
-		public CList<Ray_BezierTreeAIComponent.Branch> branches;
+		public CListO<Ray_BezierTreeAIComponent.Branch> branches;
 		public int int__0;
 		public float float__1;
 		public Enum_RFR_0 Enum_RFR_0__2;
 		public int int__3;
-		public CList<Ray_BezierTreeAIComponent.Branch> CList_Ray_BezierTreeAIComponent_Branch__4;
+		public CListO<Ray_BezierTreeAIComponent.Branch> CList_Ray_BezierTreeAIComponent_Branch__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {
@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 					float__1 = s.Serialize<float>(float__1, name: "float__1");
 					Enum_RFR_0__2 = s.Serialize<Enum_RFR_0>(Enum_RFR_0__2, name: "Enum_RFR_0__2");
 					int__3 = s.Serialize<int>(int__3, name: "int__3");
-					CList_Ray_BezierTreeAIComponent_Branch__4 = s.SerializeObject<CList<Ray_BezierTreeAIComponent.Branch>>(CList_Ray_BezierTreeAIComponent_Branch__4, name: "CList_Ray_BezierTreeAIComponent_Branch__4");
+					CList_Ray_BezierTreeAIComponent_Branch__4 = s.SerializeObject<CListO<Ray_BezierTreeAIComponent.Branch>>(CList_Ray_BezierTreeAIComponent_Branch__4, name: "CList_Ray_BezierTreeAIComponent_Branch__4");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 					branchSpeed = s.Serialize<float>(branchSpeed, name: "branchSpeed");
 					polylineMode = s.Serialize<Enum_RJR_0>(polylineMode, name: "polylineMode");
 					flipTexture = s.Serialize<int>(flipTexture, name: "flipTexture");
-					branches = s.SerializeObject<CList<Ray_BezierTreeAIComponent.Branch>>(branches, name: "branches");
+					branches = s.SerializeObject<CListO<Ray_BezierTreeAIComponent.Branch>>(branches, name: "branches");
 				}
 			}
 		}
@@ -55,10 +55,10 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RJR | GameFlags.RFR)]
 		public partial class Branch : CSerializable {
-			public CArray<Ray_BezierTreeAIComponent.Node> CArray_Ray_BezierTreeAIComponent_Node__0;
+			public CArrayO<Ray_BezierTreeAIComponent.Node> CArray_Ray_BezierTreeAIComponent_Node__0;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				CArray_Ray_BezierTreeAIComponent_Node__0 = s.SerializeObject<CArray<Ray_BezierTreeAIComponent.Node>>(CArray_Ray_BezierTreeAIComponent_Node__0, name: "CArray_Ray_BezierTreeAIComponent_Node__0");
+				CArray_Ray_BezierTreeAIComponent_Node__0 = s.SerializeObject<CArrayO<Ray_BezierTreeAIComponent.Node>>(CArray_Ray_BezierTreeAIComponent_Node__0, name: "CArray_Ray_BezierTreeAIComponent_Node__0");
 			}
 		}
 		public enum Enum_RJR_0 {

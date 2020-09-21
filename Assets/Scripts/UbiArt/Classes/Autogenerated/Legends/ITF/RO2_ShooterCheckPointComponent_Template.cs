@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public int useCameraBorderSpawn;
 		public float cameraBorderSpawnOffset;
 		public float cameraBorderSpawnPlayersOffset;
-		public CList<PlayerSpawnPos> playersSpawnPosList;
+		public CListO<PlayerSpawnPos> playersSpawnPosList;
 		public float visualScaleMultiplier;
 		public int checkpointIn;
 		public int quickLanding;
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 			useCameraBorderSpawn = s.Serialize<int>(useCameraBorderSpawn, name: "useCameraBorderSpawn");
 			cameraBorderSpawnOffset = s.Serialize<float>(cameraBorderSpawnOffset, name: "cameraBorderSpawnOffset");
 			cameraBorderSpawnPlayersOffset = s.Serialize<float>(cameraBorderSpawnPlayersOffset, name: "cameraBorderSpawnPlayersOffset");
-			playersSpawnPosList = s.SerializeObject<CList<PlayerSpawnPos>>(playersSpawnPosList, name: "playersSpawnPosList");
+			playersSpawnPosList = s.SerializeObject<CListO<PlayerSpawnPos>>(playersSpawnPosList, name: "playersSpawnPosList");
 			visualScaleMultiplier = s.Serialize<float>(visualScaleMultiplier, name: "visualScaleMultiplier");
 			checkpointIn = s.Serialize<int>(checkpointIn, name: "checkpointIn");
 			quickLanding = s.Serialize<int>(quickLanding, name: "quickLanding");

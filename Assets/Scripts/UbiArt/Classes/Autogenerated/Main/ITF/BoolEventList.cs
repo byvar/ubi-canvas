@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class BoolEventList : CSerializable {
-		public CList<BoolEventList.BoolEvent> Keys;
+		public CListO<BoolEventList.BoolEvent> Keys;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			Keys = s.SerializeObject<CList<BoolEventList.BoolEvent>>(Keys, name: "Keys");
+			Keys = s.SerializeObject<CListO<BoolEventList.BoolEvent>>(Keys, name: "Keys");
 		}
 		[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 		public partial class BoolEvent : CSerializable {

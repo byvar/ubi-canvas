@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class MultiTextBoxComponent : ActorComponent {
-		public CList<MultiTextBoxComponent.TextBox> textBoxList;
+		public CListO<MultiTextBoxComponent.TextBox> textBoxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					textBoxList = s.SerializeObject<CList<MultiTextBoxComponent.TextBox>>(textBoxList, name: "textBoxList");
+					textBoxList = s.SerializeObject<CListO<MultiTextBoxComponent.TextBox>>(textBoxList, name: "textBoxList");
 				}
 			}
 		}

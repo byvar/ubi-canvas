@@ -3,11 +3,11 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
 	public partial class CurveComponent : ActorComponent {
-		public CList<CurveComponent.TrajectoryNode> points;
+		public CListO<CurveComponent.TrajectoryNode> points;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				points = s.SerializeObject<CList<CurveComponent.TrajectoryNode>>(points, name: "points");
+				points = s.SerializeObject<CListO<CurveComponent.TrajectoryNode>>(points, name: "points");
 			}
 		}
 		[Games(GameFlags.ROVersion)]

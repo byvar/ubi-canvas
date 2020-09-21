@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public bool dieOnTrigger;
 		public bool retractOnTrigger;
 		public bool isDead;
-		public CList<RO2_CreatureWH_BulbComponent.HandSlot> slots;
+		public CListO<RO2_CreatureWH_BulbComponent.HandSlot> slots;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
 				isDead = s.Serialize<bool>(isDead, name: "isDead");
-				slots = s.SerializeObject<CList<RO2_CreatureWH_BulbComponent.HandSlot>>(slots, name: "slots");
+				slots = s.SerializeObject<CListO<RO2_CreatureWH_BulbComponent.HandSlot>>(slots, name: "slots");
 			}
 		}
 		[Games(GameFlags.RA)]

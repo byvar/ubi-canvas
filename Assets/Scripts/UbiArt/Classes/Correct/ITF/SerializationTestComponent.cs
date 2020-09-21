@@ -30,12 +30,12 @@ namespace UbiArt.ITF {
 		public AngleAmount m_angleAmount;
 		public Flag m_flags;
 		public SerializationTestComponent.SubClass m_object;
-		public CList<uint> m_u32Vector;
-		public CList<SerializationTestComponent.TestEnum> m_enumVector;
-		public CList<SerializationTestComponent.SubClass> m_objectVector;
-		public CArray<string> m_stringVector;
-		public CList<StringID> m_stringIdVector;
-		public CArray<Vec3d> m_vec3Vector;
+		public CListP<uint> m_u32Vector;
+		public CListP<SerializationTestComponent.TestEnum> m_enumVector;
+		public CListO<SerializationTestComponent.SubClass> m_objectVector;
+		public CArrayP<string> m_stringVector;
+		public CListO<StringID> m_stringIdVector;
+		public CArrayO<Vec3d> m_vec3Vector;
 		public CMap<uint, uint> m_U32ToU32Map;
 		public CMap<string, string> m_StringToStringMap;
 		public CMap<string, SerializationTestComponent.SubClass> m_StringToSubClassMap;
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 		public LocalisationId m_locId;
 		public Platform m_platform;
 		public Generic<BaseRttiTest> m_objectWithFactory;
-		public CArray<Generic<BaseRttiTest>> m_vectorWithFactory;
+		public CArrayO<Generic<BaseRttiTest>> m_vectorWithFactory;
 		public CMap<StringID, Generic<BaseRttiTest>> m_mapWithFactory;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -74,14 +74,14 @@ namespace UbiArt.ITF {
 			m_angleAmount = s.SerializeObject<AngleAmount>(m_angleAmount, name: "m_angleAmount");
 			m_flags = s.Serialize<Flag>(m_flags, name: "m_flags");
 			m_object = s.SerializeObject<SerializationTestComponent.SubClass>(m_object, name: "m_object");
-			m_u32Vector = s.SerializeObject<CList<uint>>(m_u32Vector, name: "m_u32Vector");
-			m_enumVector = s.SerializeObject<CList<SerializationTestComponent.TestEnum>>(m_enumVector, name: "m_enumVector");
-			m_objectVector = s.SerializeObject<CList<SerializationTestComponent.SubClass>>(m_objectVector, name: "m_objectVector");
-			m_stringVector = s.SerializeObject<CArray<string>>(m_stringVector, name: "m_stringVector");
-			m_stringVector = s.SerializeObject<CArray<string>>(m_stringVector, name: "m_stringVector");
-			m_stringIdVector = s.SerializeObject<CList<StringID>>(m_stringIdVector, name: "m_stringIdVector");
-			m_vec3Vector = s.SerializeObject<CArray<Vec3d>>(m_vec3Vector, name: "m_vec3Vector");
-			m_vec3Vector = s.SerializeObject<CArray<Vec3d>>(m_vec3Vector, name: "m_vec3Vector");
+			m_u32Vector = s.SerializeObject<CListP<uint>>(m_u32Vector, name: "m_u32Vector");
+			m_enumVector = s.SerializeObject<CListP<SerializationTestComponent.TestEnum>>(m_enumVector, name: "m_enumVector");
+			m_objectVector = s.SerializeObject<CListO<SerializationTestComponent.SubClass>>(m_objectVector, name: "m_objectVector");
+			m_stringVector = s.SerializeObject<CArrayP<string>>(m_stringVector, name: "m_stringVector");
+			m_stringVector = s.SerializeObject<CArrayP<string>>(m_stringVector, name: "m_stringVector");
+			m_stringIdVector = s.SerializeObject<CListO<StringID>>(m_stringIdVector, name: "m_stringIdVector");
+			m_vec3Vector = s.SerializeObject<CArrayO<Vec3d>>(m_vec3Vector, name: "m_vec3Vector");
+			m_vec3Vector = s.SerializeObject<CArrayO<Vec3d>>(m_vec3Vector, name: "m_vec3Vector");
 			m_U32ToU32Map = s.SerializeObject<CMap<uint, uint>>(m_U32ToU32Map, name: "m_U32ToU32Map");
 			m_StringToStringMap = s.SerializeObject<CMap<string, string>>(m_StringToStringMap, name: "m_StringToStringMap");
 			m_StringToSubClassMap = s.SerializeObject<CMap<string, SerializationTestComponent.SubClass>>(m_StringToSubClassMap, name: "m_StringToSubClassMap");
@@ -90,7 +90,7 @@ namespace UbiArt.ITF {
 			m_locId = s.SerializeObject<LocalisationId>(m_locId, name: "m_locId");
 			m_platform = s.SerializeObject<Platform>(m_platform, name: "m_platform");
 			m_objectWithFactory = s.SerializeObject<Generic<BaseRttiTest>>(m_objectWithFactory, name: "m_objectWithFactory");
-			m_vectorWithFactory = s.SerializeObject<CArray<Generic<BaseRttiTest>>>(m_vectorWithFactory, name: "m_vectorWithFactory");
+			m_vectorWithFactory = s.SerializeObject<CArrayO<Generic<BaseRttiTest>>>(m_vectorWithFactory, name: "m_vectorWithFactory");
 			m_mapWithFactory = s.SerializeObject<CMap<StringID, Generic<BaseRttiTest>>>(m_mapWithFactory, name: "m_mapWithFactory");
 		}
 		[Games(GameFlags.RA)]

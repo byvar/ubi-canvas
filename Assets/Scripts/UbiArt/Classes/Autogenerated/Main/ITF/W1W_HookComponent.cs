@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_HookComponent : ActorComponent {
-		public CArray<W1W_HookComponent.CanBeHookedItem> CArray_W1W_HookComponent_CanBeHookedItem__0;
+		public CArrayO<W1W_HookComponent.CanBeHookedItem> CArray_W1W_HookComponent_CanBeHookedItem__0;
 		public Vec2d Vector2__1;
 		public StringID StringID__2;
 		public StringID StringID__3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				CArray_W1W_HookComponent_CanBeHookedItem__0 = s.SerializeObject<CArray<W1W_HookComponent.CanBeHookedItem>>(CArray_W1W_HookComponent_CanBeHookedItem__0, name: "CArray_W1W_HookComponent_CanBeHookedItem__0");
+				CArray_W1W_HookComponent_CanBeHookedItem__0 = s.SerializeObject<CArrayO<W1W_HookComponent.CanBeHookedItem>>(CArray_W1W_HookComponent_CanBeHookedItem__0, name: "CArray_W1W_HookComponent_CanBeHookedItem__0");
 				Vector2__1 = s.SerializeObject<Vec2d>(Vector2__1, name: "Vector2__1");
 				StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
 				StringID__3 = s.SerializeObject<StringID>(StringID__3, name: "StringID__3");

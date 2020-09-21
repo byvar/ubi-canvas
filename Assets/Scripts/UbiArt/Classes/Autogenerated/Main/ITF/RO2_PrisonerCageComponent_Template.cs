@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public float freqSinus;
 		public bool isSpiky;
 		public bool isGrabable;
-		public CList<StringID> snapBones;
+		public CListO<StringID> snapBones;
 		public float slingShotDetectionRadius;
 		public bool enablePhysic;
 		public bool useAutoRaymanZone;
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 			freqSinus = s.Serialize<float>(freqSinus, name: "freqSinus");
 			isSpiky = s.Serialize<bool>(isSpiky, name: "isSpiky");
 			isGrabable = s.Serialize<bool>(isGrabable, name: "isGrabable");
-			snapBones = s.SerializeObject<CList<StringID>>(snapBones, name: "snapBones");
+			snapBones = s.SerializeObject<CListO<StringID>>(snapBones, name: "snapBones");
 			slingShotDetectionRadius = s.Serialize<float>(slingShotDetectionRadius, name: "slingShotDetectionRadius");
 			enablePhysic = s.Serialize<bool>(enablePhysic, name: "enablePhysic");
 			useAutoRaymanZone = s.Serialize<bool>(useAutoRaymanZone, name: "useAutoRaymanZone");

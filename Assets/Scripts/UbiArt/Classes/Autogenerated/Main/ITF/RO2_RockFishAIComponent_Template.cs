@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public StringID closeAnim;
 		public StringID grabbedAnim;
 		public float openTime;
-		public CArray<Vec2d> points;
+		public CArrayO<Vec2d> points;
 		public StringID regionType;
 		public Path gameMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 				closeAnim = s.SerializeObject<StringID>(closeAnim, name: "closeAnim");
 				grabbedAnim = s.SerializeObject<StringID>(grabbedAnim, name: "grabbedAnim");
 				openTime = s.Serialize<float>(openTime, name: "openTime");
-				points = s.SerializeObject<CArray<Vec2d>>(points, name: "points");
+				points = s.SerializeObject<CArrayO<Vec2d>>(points, name: "points");
 				regionType = s.SerializeObject<StringID>(regionType, name: "regionType");
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 			} else {
@@ -43,8 +43,8 @@ namespace UbiArt.ITF {
 				closeAnim = s.SerializeObject<StringID>(closeAnim, name: "closeAnim");
 				grabbedAnim = s.SerializeObject<StringID>(grabbedAnim, name: "grabbedAnim");
 				openTime = s.Serialize<float>(openTime, name: "openTime");
-				points = s.SerializeObject<CArray<Vec2d>>(points, name: "points");
-				points = s.SerializeObject<CArray<Vec2d>>(points, name: "points");
+				points = s.SerializeObject<CArrayO<Vec2d>>(points, name: "points");
+				points = s.SerializeObject<CArrayO<Vec2d>>(points, name: "points");
 				regionType = s.SerializeObject<StringID>(regionType, name: "regionType");
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 			}

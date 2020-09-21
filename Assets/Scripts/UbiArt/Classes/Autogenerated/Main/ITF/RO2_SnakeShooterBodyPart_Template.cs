@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeShooterBodyPart_Template : RO2_SnakeBodyPartSimple_Template {
 		public int health;
-		public CList<uint> damageLevels;
+		public CListP<uint> damageLevels;
 		public Generic<RO2_EventSpawnReward> reward;
 		public bool ejectOnDeath;
 		public Vec3d ejectMinStartSpeed;
@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			health = s.Serialize<int>(health, name: "health");
-			damageLevels = s.SerializeObject<CList<uint>>(damageLevels, name: "damageLevels");
+			damageLevels = s.SerializeObject<CListP<uint>>(damageLevels, name: "damageLevels");
 			reward = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward, name: "reward");
 			ejectOnDeath = s.Serialize<bool>(ejectOnDeath, name: "ejectOnDeath");
 			ejectMinStartSpeed = s.SerializeObject<Vec3d>(ejectMinStartSpeed, name: "ejectMinStartSpeed");

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_FlexMeshBranchComponent : RO2_BezierBranchComponent {
-		public CList<RO2_FlexMeshBranchComponent.FlexMesh> meshes;
+		public CListO<RO2_FlexMeshBranchComponent.FlexMesh> meshes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			meshes = s.SerializeObject<CList<RO2_FlexMeshBranchComponent.FlexMesh>>(meshes, name: "meshes");
+			meshes = s.SerializeObject<CListO<RO2_FlexMeshBranchComponent.FlexMesh>>(meshes, name: "meshes");
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class FlexMesh : CSerializable {

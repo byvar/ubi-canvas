@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 		}
 
 		private Mesh CreateMesh(TextureCooked tex) {
-			CArray<Vec2d> uvsArr = null;
+			CArrayO<Vec2d> uvsArr = null;
 			Mesh meshUnity = new Mesh();
 			if (spriteIndex != 0xFFFFFFFF && tex.atlas != null) {
 				if (tex.atlas.uvData.ContainsKey((int)spriteIndex)) {

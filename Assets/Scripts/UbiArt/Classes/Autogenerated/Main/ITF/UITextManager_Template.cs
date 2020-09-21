@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
 	public partial class UITextManager_Template : TemplateObj {
-		public CList<UITextManager_Template.ActorIcon> actorIcons;
+		public CListO<UITextManager_Template.ActorIcon> actorIcons;
 		public float iconSize;
 		public float iconYOffset;
 		public float iconXOffset;
@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 				gpeNames = s.SerializeObject<Placeholder>(gpeNames, name: "gpeNames");
 			} else if (Settings.s.game == Settings.Game.COL) {
 			} else {
-				actorIcons = s.SerializeObject<CList<UITextManager_Template.ActorIcon>>(actorIcons, name: "actorIcons");
+				actorIcons = s.SerializeObject<CListO<UITextManager_Template.ActorIcon>>(actorIcons, name: "actorIcons");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]

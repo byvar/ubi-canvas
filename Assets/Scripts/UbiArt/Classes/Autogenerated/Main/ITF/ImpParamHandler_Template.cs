@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class ImpParamHandler_Template : CSerializable {
-		public CList<ImpParamHandler_Template.ImpParamData> list;
+		public CListO<ImpParamHandler_Template.ImpParamData> list;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			list = s.SerializeObject<CList<ImpParamHandler_Template.ImpParamData>>(list, name: "list");
+			list = s.SerializeObject<CListO<ImpParamHandler_Template.ImpParamData>>(list, name: "list");
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class ImpParamData : CSerializable {

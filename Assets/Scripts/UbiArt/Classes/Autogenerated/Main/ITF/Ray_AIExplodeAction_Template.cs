@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 		public Angle Angle__10;
 		public Angle Angle__11;
 		public Generic<Ray_EventSpawnReward> Generic_Ray_EventSpawnReward__12;
-		public CArray<uint> CArray_uint__13;
+		public CArrayP<uint> CArray_uint__13;
 		public float float__14;
 		public float float__15;
 		public float float__16;
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 		public Angle Angle__24;
 		public Angle Angle__25;
 		public Generic<Ray_EventSpawnReward> Generic_Ray_EventSpawnReward__26;
-		public CArray<uint> CArray_uint__27;
+		public CArrayP<uint> CArray_uint__27;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {
@@ -62,7 +62,7 @@ namespace UbiArt.ITF {
 				Angle__24 = s.SerializeObject<Angle>(Angle__24, name: "Angle__24");
 				Angle__25 = s.SerializeObject<Angle>(Angle__25, name: "Angle__25");
 				Generic_Ray_EventSpawnReward__26 = s.SerializeObject<Generic<Ray_EventSpawnReward>>(Generic_Ray_EventSpawnReward__26, name: "Generic_Ray_EventSpawnReward__26");
-				CArray_uint__27 = s.SerializeObject<CArray<uint>>(CArray_uint__27, name: "CArray_uint__27");
+				CArray_uint__27 = s.SerializeObject<CArrayP<uint>>(CArray_uint__27, name: "CArray_uint__27");
 			} else if (Settings.s.game == Settings.Game.RO) {
 				minRadius = s.Serialize<float>(minRadius, name: "minRadius");
 				maxRadius = s.Serialize<float>(maxRadius, name: "maxRadius");
@@ -95,7 +95,7 @@ namespace UbiArt.ITF {
 				Angle__10 = s.SerializeObject<Angle>(Angle__10, name: "Angle__10");
 				Angle__11 = s.SerializeObject<Angle>(Angle__11, name: "Angle__11");
 				Generic_Ray_EventSpawnReward__12 = s.SerializeObject<Generic<Ray_EventSpawnReward>>(Generic_Ray_EventSpawnReward__12, name: "Generic_Ray_EventSpawnReward__12");
-				CArray_uint__13 = s.SerializeObject<CArray<uint>>(CArray_uint__13, name: "CArray_uint__13");
+				CArray_uint__13 = s.SerializeObject<CArrayP<uint>>(CArray_uint__13, name: "CArray_uint__13");
 			}
 		}
 		public enum Enum_RJR_0 {

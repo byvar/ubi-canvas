@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class GameManagerConfig_Template : TemplateObj {
-		public CArray<Path> debugMenuMapList;
+		public CArrayO<Path> debugMenuMapList;
 		public Path gameTextFilePath;
 		public Path loading;
-		public CList<Generic<PlayerIDInfo>> playerIDInfo;
-		public CList<PlayerIDInfo> playerIDInfoRO;
-		public CArray<string> familyList;
+		public CListO<Generic<PlayerIDInfo>> playerIDInfo;
+		public CListO<PlayerIDInfo> playerIDInfoRO;
+		public CArrayP<string> familyList;
 		public Path cameraShakeConfig;
 		public float cutSceneDefaultUnskippableDurationFirstTime;
 		public uint maxLocalPlayers;
@@ -17,12 +17,12 @@ namespace UbiArt.ITF {
 		public uint maxBonusTeensy;
 		public TeaKey key;
 		public Color textHighlightColor;
-		public CArray<CString> debugMenuMapListRO;
-		public CArray<CString> mapListPressConf;
-		public CArray<CString> menus;
-		public CArray<Path> luaIncludes;
-		public CArray<Path> inputs;
-		public CArray<MusicTheme> musicThemes;
+		public CArrayO<CString> debugMenuMapListRO;
+		public CArrayO<CString> mapListPressConf;
+		public CArrayO<CString> menus;
+		public CArrayO<Path> luaIncludes;
+		public CArrayO<Path> inputs;
+		public CArrayO<MusicTheme> musicThemes;
 		public Path baseMap;
 		public Path game2dWorld;
 		public CString gameTextFilePathOrigins;
@@ -46,12 +46,12 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				debugMenuMapListRO = s.SerializeObject<CArray<CString>>(debugMenuMapListRO, name: "debugMenuMapListRO");
-				mapListPressConf = s.SerializeObject<CArray<CString>>(mapListPressConf, name: "mapListPressConf");
-				menus = s.SerializeObject<CArray<CString>>(menus, name: "menus");
-				luaIncludes = s.SerializeObject<CArray<Path>>(luaIncludes, name: "luaIncludes");
-				inputs = s.SerializeObject<CArray<Path>>(inputs, name: "inputs");
-				musicThemes = s.SerializeObject<CArray<MusicTheme>>(musicThemes, name: "musicThemes");
+				debugMenuMapListRO = s.SerializeObject<CArrayO<CString>>(debugMenuMapListRO, name: "debugMenuMapListRO");
+				mapListPressConf = s.SerializeObject<CArrayO<CString>>(mapListPressConf, name: "mapListPressConf");
+				menus = s.SerializeObject<CArrayO<CString>>(menus, name: "menus");
+				luaIncludes = s.SerializeObject<CArrayO<Path>>(luaIncludes, name: "luaIncludes");
+				inputs = s.SerializeObject<CArrayO<Path>>(inputs, name: "inputs");
+				musicThemes = s.SerializeObject<CArrayO<MusicTheme>>(musicThemes, name: "musicThemes");
 				baseMap = s.SerializeObject<Path>(baseMap, name: "baseMap");
 				game2dWorld = s.SerializeObject<Path>(game2dWorld, name: "game2dWorld");
 				gameTextFilePathOrigins = s.Serialize<CString>(gameTextFilePathOrigins, name: "gameTextFilePathOrigins");
@@ -63,8 +63,8 @@ namespace UbiArt.ITF {
 				menuSoundMap = s.SerializeObject<Path>(menuSoundMap, name: "menuSoundMap");
 				loading = s.SerializeObject<Path>(loading, name: "loading");
 				usePressConfMenu = s.Serialize<int>(usePressConfMenu, name: "usePressConfMenu");
-				playerIDInfoRO = s.SerializeObject<CList<PlayerIDInfo>>(playerIDInfoRO, name: "playerIDInfoRO");
-				familyList = s.SerializeObject<CArray<string>>(familyList, name: "familyList");
+				playerIDInfoRO = s.SerializeObject<CListO<PlayerIDInfo>>(playerIDInfoRO, name: "playerIDInfoRO");
+				familyList = s.SerializeObject<CArrayP<string>>(familyList, name: "familyList");
 				cameraShakeConfig = s.SerializeObject<Path>(cameraShakeConfig, name: "cameraShakeConfig");
 				cutSceneDefaultUnskippableDurationFirstTime = s.Serialize<float>(cutSceneDefaultUnskippableDurationFirstTime, name: "cutSceneDefaultUnskippableDurationFirstTime");
 				TEMP_threshold = s.Serialize<float>(TEMP_threshold, name: "TEMP_threshold");
@@ -78,11 +78,11 @@ namespace UbiArt.ITF {
 				iconsButtonPath = s.SerializeObject<Path>(iconsButtonPath, name: "iconsButtonPath");
 				gpeIconsPath = s.SerializeObject<Path>(gpeIconsPath, name: "gpeIconsPath");
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {
-				debugMenuMapList = s.SerializeObject<CArray<Path>>(debugMenuMapList, name: "debugMenuMapList");
+				debugMenuMapList = s.SerializeObject<CArrayO<Path>>(debugMenuMapList, name: "debugMenuMapList");
 				gameTextFilePath = s.SerializeObject<Path>(gameTextFilePath, name: "gameTextFilePath");
 				loading = s.SerializeObject<Path>(loading, name: "loading");
-				playerIDInfo = s.SerializeObject<CList<Generic<PlayerIDInfo>>>(playerIDInfo, name: "playerIDInfo");
-				familyList = s.SerializeObject<CArray<string>>(familyList, name: "familyList");
+				playerIDInfo = s.SerializeObject<CListO<Generic<PlayerIDInfo>>>(playerIDInfo, name: "playerIDInfo");
+				familyList = s.SerializeObject<CArrayP<string>>(familyList, name: "familyList");
 				cameraShakeConfig = s.SerializeObject<Path>(cameraShakeConfig, name: "cameraShakeConfig");
 				cutSceneDefaultUnskippableDurationFirstTime = s.Serialize<float>(cutSceneDefaultUnskippableDurationFirstTime, name: "cutSceneDefaultUnskippableDurationFirstTime");
 				maxLocalPlayers = s.Serialize<uint>(maxLocalPlayers, name: "maxLocalPlayers");
@@ -90,11 +90,11 @@ namespace UbiArt.ITF {
 				DRCPlayerFamilyName = s.Serialize<string>(DRCPlayerFamilyName, name: "DRCPlayerFamilyName");
 				maxBonusTeensy = s.Serialize<uint>(maxBonusTeensy, name: "maxBonusTeensy");
 			} else {
-				debugMenuMapList = s.SerializeObject<CArray<Path>>(debugMenuMapList, name: "debugMenuMapList");
+				debugMenuMapList = s.SerializeObject<CArrayO<Path>>(debugMenuMapList, name: "debugMenuMapList");
 				gameTextFilePath = s.SerializeObject<Path>(gameTextFilePath, name: "gameTextFilePath");
 				loading = s.SerializeObject<Path>(loading, name: "loading");
-				playerIDInfo = s.SerializeObject<CList<Generic<PlayerIDInfo>>>(playerIDInfo, name: "playerIDInfo");
-				familyList = s.SerializeObject<CArray<string>>(familyList, name: "familyList");
+				playerIDInfo = s.SerializeObject<CListO<Generic<PlayerIDInfo>>>(playerIDInfo, name: "playerIDInfo");
+				familyList = s.SerializeObject<CArrayP<string>>(familyList, name: "familyList");
 				cameraShakeConfig = s.SerializeObject<Path>(cameraShakeConfig, name: "cameraShakeConfig");
 				cutSceneDefaultUnskippableDurationFirstTime = s.Serialize<float>(cutSceneDefaultUnskippableDurationFirstTime, name: "cutSceneDefaultUnskippableDurationFirstTime");
 				maxLocalPlayers = s.Serialize<uint>(maxLocalPlayers, name: "maxLocalPlayers");

@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
 	public partial class AnimationAtlas : CSerializable {
-		public CList<AnimationAtlas.Key> sequence;
+		public CListO<AnimationAtlas.Key> sequence;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			sequence = s.SerializeObject<CList<AnimationAtlas.Key>>(sequence, name: "sequence");
+			sequence = s.SerializeObject<CListO<AnimationAtlas.Key>>(sequence, name: "sequence");
 		}
 		[Games(GameFlags.RA | GameFlags.RL | GameFlags.RFR | GameFlags.VH)]
 		public partial class Key : CSerializable {

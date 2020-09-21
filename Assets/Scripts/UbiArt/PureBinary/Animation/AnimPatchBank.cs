@@ -13,7 +13,7 @@ namespace UbiArt.Animation {
 		public Link bankId;
 		public float unk;
 		public KeyArray<int> templateKeys;
-		public CList<AnimTemplate> templates;
+		public CListO<AnimTemplate> templates;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -21,7 +21,7 @@ namespace UbiArt.Animation {
 			bankId = s.SerializeObject<Link>(bankId, name: "bankId");
 			unk = s.Serialize<float>(unk, name: "unk");
 			templateKeys = s.SerializeObject<KeyArray<int>>(templateKeys, name: "templateKeys");
-			templates = s.SerializeObject<CList<AnimTemplate>>(templates, name: "templates");
+			templates = s.SerializeObject<CListO<AnimTemplate>>(templates, name: "templates");
 		}
 
 	}

@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public Vec3d globalPos;
 		public float RELATIVEZ;
 		public string USERFRIENDLY;
-		public CArray<ObjectPath> UPDATEDEPENDENCYLIST;
+		public CArrayO<ObjectPath> UPDATEDEPENDENCYLIST;
 		public bool STARTPAUSE;
 		public bool isEnabled;
 		public Vec2d POS2D;
@@ -58,7 +58,7 @@ namespace UbiArt.ITF {
 					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
 					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED");
 					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
-					UPDATEDEPENDENCYLIST = s.SerializeObject<CArray<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
+					UPDATEDEPENDENCYLIST = s.SerializeObject<CArrayO<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 				}
 				if (Settings.s.isCatchThemAll) {
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
@@ -80,7 +80,7 @@ namespace UbiArt.ITF {
 					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
 					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED", options: CSerializerObject.Options.BoolAsByte);
 					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
-					UPDATEDEPENDENCYLIST = s.SerializeObject<CArray<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
+					UPDATEDEPENDENCYLIST = s.SerializeObject<CArrayO<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
@@ -100,7 +100,7 @@ namespace UbiArt.ITF {
 					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
 					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED");
 					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
-					UPDATEDEPENDENCYLIST = s.SerializeObject<CArray<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
+					UPDATEDEPENDENCYLIST = s.SerializeObject<CArrayO<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 					STARTPAUSE = s.Serialize<bool>(STARTPAUSE, name: "STARTPAUSE");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
@@ -123,7 +123,7 @@ namespace UbiArt.ITF {
 					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
 					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED");
 					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
-					UPDATEDEPENDENCYLIST = s.SerializeObject<CArray<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
+					UPDATEDEPENDENCYLIST = s.SerializeObject<CArrayO<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 					STARTPAUSE = s.Serialize<bool>(STARTPAUSE, name: "STARTPAUSE");
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {

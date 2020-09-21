@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class UIMenuManager_Template : TemplateObj {
-		public CList<UIMenuManager_Template.MenuInfo> menuInfos;
+		public CListO<UIMenuManager_Template.MenuInfo> menuInfos;
 		public bool useRemoteUI;
 		public StringID defaultValidInput;
 		public StringID defaultActionInput;
@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
-				menuInfos = s.SerializeObject<CList<UIMenuManager_Template.MenuInfo>>(menuInfos, name: "menuInfos");
+				menuInfos = s.SerializeObject<CListO<UIMenuManager_Template.MenuInfo>>(menuInfos, name: "menuInfos");
 				useRemoteUI = s.Serialize<bool>(useRemoteUI, name: "useRemoteUI");
 				defaultValidInput = s.SerializeObject<StringID>(defaultValidInput, name: "defaultValidInput");
 				defaultBackInput = s.SerializeObject<StringID>(defaultBackInput, name: "defaultBackInput");
@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 				inputStickDeadZone = s.Serialize<float>(inputStickDeadZone, name: "inputStickDeadZone");
 				minimumDepthToHideDialogBalloons = s.Serialize<int>(minimumDepthToHideDialogBalloons, name: "minimumDepthToHideDialogBalloons");
 			} else {
-				menuInfos = s.SerializeObject<CList<UIMenuManager_Template.MenuInfo>>(menuInfos, name: "menuInfos");
+				menuInfos = s.SerializeObject<CListO<UIMenuManager_Template.MenuInfo>>(menuInfos, name: "menuInfos");
 				useRemoteUI = s.Serialize<bool>(useRemoteUI, name: "useRemoteUI");
 				defaultValidInput = s.SerializeObject<StringID>(defaultValidInput, name: "defaultValidInput");
 				defaultActionInput = s.SerializeObject<StringID>(defaultActionInput, name: "defaultActionInput");

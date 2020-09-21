@@ -57,7 +57,7 @@ namespace UbiArt.ITF {
 		public TweenInterpreter_Template TweenInterpreter_Template__22;
 		public Path Path__23;
 		public float float__24;
-		public CList<Spawnable> CList_Spawnable__25;
+		public CListO<Spawnable> CList_Spawnable__25;
 		public StringID StringID__26;
 		public int int__27;
 		public int int__28;
@@ -85,7 +85,7 @@ namespace UbiArt.ITF {
 		public TweenInterpreter_Template TweenInterpreter_Template__50;
 		public Path Path__51;
 		public float float__52;
-		public CList<Spawnable> CList_Spawnable__53;
+		public CListO<Spawnable> CList_Spawnable__53;
 		public StringID StringID__54;
 		public int int__55;
 		public int int__56;
@@ -120,7 +120,7 @@ namespace UbiArt.ITF {
 				TweenInterpreter_Template__50 = s.SerializeObject<TweenInterpreter_Template>(TweenInterpreter_Template__50, name: "TweenInterpreter_Template__50");
 				Path__51 = s.SerializeObject<Path>(Path__51, name: "Path__51");
 				float__52 = s.Serialize<float>(float__52, name: "float__52");
-				CList_Spawnable__53 = s.SerializeObject<CList<Spawnable>>(CList_Spawnable__53, name: "CList_Spawnable__53");
+				CList_Spawnable__53 = s.SerializeObject<CListO<Spawnable>>(CList_Spawnable__53, name: "CList_Spawnable__53");
 				StringID__54 = s.SerializeObject<StringID>(StringID__54, name: "StringID__54");
 				int__55 = s.Serialize<int>(int__55, name: "int__55");
 				int__56 = s.Serialize<int>(int__56, name: "int__56");
@@ -183,7 +183,7 @@ namespace UbiArt.ITF {
 				TweenInterpreter_Template__22 = s.SerializeObject<TweenInterpreter_Template>(TweenInterpreter_Template__22, name: "TweenInterpreter_Template__22");
 				Path__23 = s.SerializeObject<Path>(Path__23, name: "Path__23");
 				float__24 = s.Serialize<float>(float__24, name: "float__24");
-				CList_Spawnable__25 = s.SerializeObject<CList<Spawnable>>(CList_Spawnable__25, name: "CList_Spawnable__25");
+				CList_Spawnable__25 = s.SerializeObject<CListO<Spawnable>>(CList_Spawnable__25, name: "CList_Spawnable__25");
 				StringID__26 = s.SerializeObject<StringID>(StringID__26, name: "StringID__26");
 				int__27 = s.Serialize<int>(int__27, name: "int__27");
 			}

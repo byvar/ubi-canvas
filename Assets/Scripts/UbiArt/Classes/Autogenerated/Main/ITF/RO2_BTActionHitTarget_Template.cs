@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BTActionHitTarget_Template : BTAction_Template {
-		public CList<RO2_BTActionHitTarget_Template.AttackData> attacks;
+		public CListO<RO2_BTActionHitTarget_Template.AttackData> attacks;
 		public StringID fxBoneName;
 		public float forceJumpAttack;
 		public Angle angleJumpAttack;
-		public CList<StringID> fxNames;
-		public CList<StringID> fxMarkerStart;
-		public CList<StringID> fxMarkerStop;
+		public CListO<StringID> fxNames;
+		public CListO<StringID> fxMarkerStart;
+		public CListO<StringID> fxMarkerStop;
 		public StringID lightningStart;
 		public StringID lightningStop;
 		public StringID lightningCharge;
@@ -18,13 +18,13 @@ namespace UbiArt.ITF {
 		public float memorizeHitDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			attacks = s.SerializeObject<CList<RO2_BTActionHitTarget_Template.AttackData>>(attacks, name: "attacks");
+			attacks = s.SerializeObject<CListO<RO2_BTActionHitTarget_Template.AttackData>>(attacks, name: "attacks");
 			fxBoneName = s.SerializeObject<StringID>(fxBoneName, name: "fxBoneName");
 			forceJumpAttack = s.Serialize<float>(forceJumpAttack, name: "forceJumpAttack");
 			angleJumpAttack = s.SerializeObject<Angle>(angleJumpAttack, name: "angleJumpAttack");
-			fxNames = s.SerializeObject<CList<StringID>>(fxNames, name: "fxNames");
-			fxMarkerStart = s.SerializeObject<CList<StringID>>(fxMarkerStart, name: "fxMarkerStart");
-			fxMarkerStop = s.SerializeObject<CList<StringID>>(fxMarkerStop, name: "fxMarkerStop");
+			fxNames = s.SerializeObject<CListO<StringID>>(fxNames, name: "fxNames");
+			fxMarkerStart = s.SerializeObject<CListO<StringID>>(fxMarkerStart, name: "fxMarkerStart");
+			fxMarkerStop = s.SerializeObject<CListO<StringID>>(fxMarkerStop, name: "fxMarkerStop");
 			lightningStart = s.SerializeObject<StringID>(lightningStart, name: "lightningStart");
 			lightningStop = s.SerializeObject<StringID>(lightningStop, name: "lightningStop");
 			lightningCharge = s.SerializeObject<StringID>(lightningCharge, name: "lightningCharge");

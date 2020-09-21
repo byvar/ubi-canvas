@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		public TransitionFlag flagsEnum;
 		public uint flags;
 		public uint blendFromTransition;
-		public CArray<StringID> from;
-		public CArray<StringID> to;
+		public CArrayO<StringID> from;
+		public CArrayO<StringID> to;
 		public Generic<BlendTreeNodeTemplate<T>> node;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -20,8 +20,8 @@ namespace UbiArt.ITF {
 				flagsEnum = s.Serialize<TransitionFlag>(flagsEnum, name: "flagsEnum");
 			}
 			blendFromTransition = s.Serialize<uint>(blendFromTransition, name: "blendFromTransition");
-			from = s.SerializeObject<CArray<StringID>>(from, name: "from");
-			to = s.SerializeObject<CArray<StringID>>(to, name: "to");
+			from = s.SerializeObject<CArrayO<StringID>>(from, name: "from");
+			to = s.SerializeObject<CArrayO<StringID>>(to, name: "to");
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 				node = s.SerializeObject<Generic<BlendTreeNodeTemplate<T>>>(node, name: "node");
 			}

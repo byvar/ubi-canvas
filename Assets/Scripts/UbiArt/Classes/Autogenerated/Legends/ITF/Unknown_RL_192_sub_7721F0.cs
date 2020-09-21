@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 		public float tilesSize;
 		public string anchorLeft;
 		public string anchorRight;
-		public CList<Path> tilesPath;
+		public CListO<Path> tilesPath;
 		public Path friendActorPath;
 		public uint friendCountMax;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -56,7 +56,7 @@ namespace UbiArt.ITF {
 			tilesSize = s.Serialize<float>(tilesSize, name: "tilesSize");
 			anchorLeft = s.Serialize<string>(anchorLeft, name: "anchorLeft");
 			anchorRight = s.Serialize<string>(anchorRight, name: "anchorRight");
-			tilesPath = s.SerializeObject<CList<Path>>(tilesPath, name: "tilesPath");
+			tilesPath = s.SerializeObject<CListO<Path>>(tilesPath, name: "tilesPath");
 			friendActorPath = s.SerializeObject<Path>(friendActorPath, name: "friendActorPath");
 			friendCountMax = s.Serialize<uint>(friendCountMax, name: "friendCountMax");
 		}

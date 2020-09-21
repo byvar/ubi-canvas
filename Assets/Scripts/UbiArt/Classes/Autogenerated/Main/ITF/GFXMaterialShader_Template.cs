@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public bool separateAlpha;
 		public bool normalMapLighting;
 		public bool textureBlend;
-		public CList<GFXMatAnimImpostor> animInTex;
+		public CListO<GFXMatAnimImpostor> animInTex;
 		public GFX_MAT materialtype;
 		public GFX_MAT2 materialtype2;
 		public GFX_MAT3 materialtype3;
@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 				separateAlpha = s.Serialize<bool>(separateAlpha, name: "separateAlpha");
 				textureBlend = s.Serialize<bool>(textureBlend, name: "textureBlend");
 				renderToTexture = s.Serialize<int>(renderToTexture, name: "renderToTexture");
-				animInTex = s.SerializeObject<CList<GFXMatAnimImpostor>>(animInTex, name: "animInTex");
+				animInTex = s.SerializeObject<CListO<GFXMatAnimImpostor>>(animInTex, name: "animInTex");
 				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype2");
 				lightingType = s.Serialize<GFX_MAT_SHADER>(lightingType, name: "lightingType");
 				matParams = s.SerializeObject<GFX_MaterialParams>(matParams, name: "matParams");
@@ -77,7 +77,7 @@ namespace UbiArt.ITF {
 				separateAlpha = s.Serialize<bool>(separateAlpha, name: "separateAlpha");
 				normalMapLighting = s.Serialize<bool>(normalMapLighting, name: "normalMapLighting");
 				textureBlend = s.Serialize<bool>(textureBlend, name: "textureBlend");
-				animInTex = s.SerializeObject<CList<GFXMatAnimImpostor>>(animInTex, name: "animInTex");
+				animInTex = s.SerializeObject<CListO<GFXMatAnimImpostor>>(animInTex, name: "animInTex");
 				materialtype = s.Serialize<GFX_MAT>(materialtype, name: "materialtype");
 				lightingType = s.Serialize<GFX_MAT_SHADER>(lightingType, name: "lightingType");
 				matParams = s.SerializeObject<GFX_MaterialParams>(matParams, name: "matParams");

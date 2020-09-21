@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool isAlreadyCompute;
 		public uint NbItem;
 		public bool ForceRecompute;
-		public CList<strRandomPatchName> PatchNamesToRemove;
+		public CListO<strRandomPatchName> PatchNamesToRemove;
 		public bool bool__0;
 		public bool bool__1;
 		public bool bool__2;
@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 				isAlreadyCompute = s.Serialize<bool>(isAlreadyCompute, name: "isAlreadyCompute");
 				NbItem = s.Serialize<uint>(NbItem, name: "NbItem");
 				ForceRecompute = s.Serialize<bool>(ForceRecompute, name: "ForceRecompute");
-				PatchNamesToRemove = s.SerializeObject<CList<strRandomPatchName>>(PatchNamesToRemove, name: "PatchNamesToRemove");
+				PatchNamesToRemove = s.SerializeObject<CListO<strRandomPatchName>>(PatchNamesToRemove, name: "PatchNamesToRemove");
 			}
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]

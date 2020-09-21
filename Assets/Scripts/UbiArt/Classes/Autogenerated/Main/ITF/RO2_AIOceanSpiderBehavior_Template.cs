@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_AIOceanSpiderBehavior_Template : TemplateAIBehavior {
-		public CList<RO2_AIOceanSpiderBehavior_Template.ActionTemplate> Actions;
-		public CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> Instructions;
-		public CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> InactiveInstructions;
+		public CListO<RO2_AIOceanSpiderBehavior_Template.ActionTemplate> Actions;
+		public CListO<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> Instructions;
+		public CListO<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate> InactiveInstructions;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			Actions = s.SerializeObject<CList<RO2_AIOceanSpiderBehavior_Template.ActionTemplate>>(Actions, name: "Actions");
-			Instructions = s.SerializeObject<CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate>>(Instructions, name: "Instructions");
-			InactiveInstructions = s.SerializeObject<CList<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate>>(InactiveInstructions, name: "InactiveInstructions");
+			Actions = s.SerializeObject<CListO<RO2_AIOceanSpiderBehavior_Template.ActionTemplate>>(Actions, name: "Actions");
+			Instructions = s.SerializeObject<CListO<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate>>(Instructions, name: "Instructions");
+			InactiveInstructions = s.SerializeObject<CListO<RO2_AIOceanSpiderBehavior_Template.InstructionTemplate>>(InactiveInstructions, name: "InactiveInstructions");
 		}
 		[Games(GameFlags.RA)]
 		public partial class InstructionTemplate : CSerializable {

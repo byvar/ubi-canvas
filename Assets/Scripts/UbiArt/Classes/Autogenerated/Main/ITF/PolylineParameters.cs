@@ -15,8 +15,8 @@ namespace UbiArt.ITF {
 		public bool useMovingPolyline;
 		public StringID regionType;
 		public bool forceNoBlockHit;
-		public CList<StringID> polylines;
-		public CList<StringID> points;
+		public CListO<StringID> polylines;
+		public CListO<StringID> points;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			speedLoss = s.Serialize<float>(speedLoss, name: "speedLoss");
@@ -31,8 +31,8 @@ namespace UbiArt.ITF {
 			useMovingPolyline = s.Serialize<bool>(useMovingPolyline, name: "useMovingPolyline");
 			regionType = s.SerializeObject<StringID>(regionType, name: "regionType");
 			forceNoBlockHit = s.Serialize<bool>(forceNoBlockHit, name: "forceNoBlockHit");
-			polylines = s.SerializeObject<CList<StringID>>(polylines, name: "polylines");
-			points = s.SerializeObject<CList<StringID>>(points, name: "points");
+			polylines = s.SerializeObject<CListO<StringID>>(polylines, name: "polylines");
+			points = s.SerializeObject<CListO<StringID>>(points, name: "points");
 		}
 	}
 }

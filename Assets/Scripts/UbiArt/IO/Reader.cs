@@ -7,7 +7,6 @@ namespace UbiArt {
     public class Reader : BinaryReader {
         public delegate void ReadAction(Reader reader, Pointer offset);
         bool isLittleEndian = true;
-        uint bytesSinceAlignStart = 0;
 
         public Reader(Stream stream) : base(stream) { isLittleEndian = true; }
         public Reader(Stream stream, bool isLittleEndian) : base(stream) { this.isLittleEndian = isLittleEndian; }

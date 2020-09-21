@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public Path redLumPath;
 		public Vec2d offsetSkullCoin;
 		public Vec2d offsetLum;
-		public CList<ModelParams> modelParams;
+		public CListO<ModelParams> modelParams;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			aabb = s.SerializeObject<AABB>(aabb, name: "aabb");
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 			redLumPath = s.SerializeObject<Path>(redLumPath, name: "redLumPath");
 			offsetSkullCoin = s.SerializeObject<Vec2d>(offsetSkullCoin, name: "offsetSkullCoin");
 			offsetLum = s.SerializeObject<Vec2d>(offsetLum, name: "offsetLum");
-			modelParams = s.SerializeObject<CList<ModelParams>>(modelParams, name: "modelParams");
+			modelParams = s.SerializeObject<CListO<ModelParams>>(modelParams, name: "modelParams");
 		}
 		public override uint? ClassCRC => 0xDA20F8D6;
 	}

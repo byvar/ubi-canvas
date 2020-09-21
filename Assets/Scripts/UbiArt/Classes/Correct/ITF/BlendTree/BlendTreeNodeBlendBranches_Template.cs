@@ -3,13 +3,13 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class BlendTreeNodeBlendBranches_Template<T> : BlendTreeNodeBlend_Template<T> {
-		public CList<BlendLeaf> blendParams;
+		public CListO<BlendLeaf> blendParams;
 		public StringID blendInput;
 		public float blendInputInterpolation;
 		public float blendInputInterpoStartValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			blendParams = s.SerializeObject<CList<BlendLeaf>>(blendParams, name: "blendParams");
+			blendParams = s.SerializeObject<CListO<BlendLeaf>>(blendParams, name: "blendParams");
 			blendInput = s.SerializeObject<StringID>(blendInput, name: "blendInput");
 			if (Settings.s.game == Settings.Game.COL) {
 				blendInputInterpolation = s.Serialize<float>(blendInputInterpolation, name: "blendInputInterpolation");

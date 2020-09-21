@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public float retractOffset;
 		public float retractFinishedLimit;
 		public Path splashFX;
-		public CList<EventPlayMusic> musics;
+		public CListO<EventPlayMusic> musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			speedOnBuboHit = s.Serialize<float>(speedOnBuboHit, name: "speedOnBuboHit");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 			retractOffset = s.Serialize<float>(retractOffset, name: "retractOffset");
 			retractFinishedLimit = s.Serialize<float>(retractFinishedLimit, name: "retractFinishedLimit");
 			splashFX = s.SerializeObject<Path>(splashFX, name: "splashFX");
-			musics = s.SerializeObject<CList<EventPlayMusic>>(musics, name: "musics");
+			musics = s.SerializeObject<CListO<EventPlayMusic>>(musics, name: "musics");
 		}
 		public override uint? ClassCRC => 0x3D1385F1;
 	}

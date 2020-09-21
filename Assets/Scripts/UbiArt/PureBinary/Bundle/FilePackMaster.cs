@@ -8,14 +8,14 @@ using UnityEngine;
 
 namespace UbiArt.Bundle {
 	public class FilePackMaster : ICSerializable {
-		public CList<Pair<FileHeaderRuntime, Path>> files;
+		public CListO<Pair<FileHeaderRuntime, Path>> files;
 
 		public void Serialize(CSerializerObject s, string name) {
-			files = s.SerializeObject<CList<Pair<FileHeaderRuntime, Path>>>(files);
+			files = s.SerializeObject<CListO<Pair<FileHeaderRuntime, Path>>>(files);
 		}
 
 		public FilePackMaster() {
-			files = new CList<Pair<FileHeaderRuntime, Path>>();
+			files = new CListO<Pair<FileHeaderRuntime, Path>>();
 		}
 	}
 }

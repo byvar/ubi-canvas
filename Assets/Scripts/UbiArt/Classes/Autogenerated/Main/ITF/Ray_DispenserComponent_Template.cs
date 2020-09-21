@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public float dispenseDelay;
 		public float shakeDelay;
 		public Vec3d spawnOffset;
-		public CArray<Angle> ejectionAngleList;
+		public CArrayO<Angle> ejectionAngleList;
 		public int isChildLauncher;
 		public StringID animIdle;
 		public int canWiggle;
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 			dispenseDelay = s.Serialize<float>(dispenseDelay, name: "dispenseDelay");
 			shakeDelay = s.Serialize<float>(shakeDelay, name: "shakeDelay");
 			spawnOffset = s.SerializeObject<Vec3d>(spawnOffset, name: "spawnOffset");
-			ejectionAngleList = s.SerializeObject<CArray<Angle>>(ejectionAngleList, name: "ejectionAngleList");
+			ejectionAngleList = s.SerializeObject<CArrayO<Angle>>(ejectionAngleList, name: "ejectionAngleList");
 			isChildLauncher = s.Serialize<int>(isChildLauncher, name: "isChildLauncher");
 			animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");
 			canWiggle = s.Serialize<int>(canWiggle, name: "canWiggle");

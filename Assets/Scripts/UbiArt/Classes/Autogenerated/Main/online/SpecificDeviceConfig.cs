@@ -5,7 +5,7 @@ namespace UbiArt.online {
 	public partial class SpecificDeviceConfig : CSerializable {
 		public string configName;
 		public bool ignoreMe;
-		public CArray<string> models;
+		public CArrayP<string> models;
 		public float scale;
 		public uint deviceSpeed;
 		public bool enableTextureCompression;
@@ -15,8 +15,8 @@ namespace UbiArt.online {
 			base.SerializeImpl(s);
 			configName = s.Serialize<string>(configName, name: "configName");
 			ignoreMe = s.Serialize<bool>(ignoreMe, name: "ignoreMe");
-			models = s.SerializeObject<CArray<string>>(models, name: "models");
-			models = s.SerializeObject<CArray<string>>(models, name: "models");
+			models = s.SerializeObject<CArrayP<string>>(models, name: "models");
+			models = s.SerializeObject<CArrayP<string>>(models, name: "models");
 			scale = s.Serialize<float>(scale, name: "scale");
 			deviceSpeed = s.Serialize<uint>(deviceSpeed, name: "deviceSpeed");
 			enableTextureCompression = s.Serialize<bool>(enableTextureCompression, name: "enableTextureCompression");

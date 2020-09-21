@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RO)]
 	public partial class Ray_SnakeAIComponent_Template : ActorComponent_Template {
 		public StringID headPolyline;
-		public CList<Generic<BodyPartBase_Template>> bodyParts;
+		public CListO<Generic<BodyPartBase_Template>> bodyParts;
 		public float bodyPartsZSpacing;
 		public int drawHeadBelow;
 		public Path gameMaterial;
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 				int__1 = s.Serialize<int>(int__1, name: "int__1");
 			}
 			headPolyline = s.SerializeObject<StringID>(headPolyline, name: "headPolyline");
-			bodyParts = s.SerializeObject<CList<Generic<BodyPartBase_Template>>>(bodyParts, name: "bodyParts");
+			bodyParts = s.SerializeObject<CListO<Generic<BodyPartBase_Template>>>(bodyParts, name: "bodyParts");
 			bodyPartsZSpacing = s.Serialize<float>(bodyPartsZSpacing, name: "bodyPartsZSpacing");
 			drawHeadBelow = s.Serialize<int>(drawHeadBelow, name: "drawHeadBelow");
 			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");

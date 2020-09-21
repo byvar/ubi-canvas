@@ -13,11 +13,11 @@ namespace UbiArt.ITF {
 		public float movingMomentumDeceleration;
 		public Vec2d extendSpeed;
 		public Vec2d colapseSpeed;
-		public CArray<Path> modelActorPaths;
+		public CArrayO<Path> modelActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
-				modelActorPaths = s.SerializeObject<CArray<Path>>(modelActorPaths, name: "modelActorPaths");
+				modelActorPaths = s.SerializeObject<CArrayO<Path>>(modelActorPaths, name: "modelActorPaths");
 				modelSperatorIndex = s.Serialize<int>(modelSperatorIndex, name: "modelSperatorIndex");
 				movingSelectionDelay = s.Serialize<float>(movingSelectionDelay, name: "movingSelectionDelay");
 				movingSelectionNormMax = s.Serialize<float>(movingSelectionNormMax, name: "movingSelectionNormMax");

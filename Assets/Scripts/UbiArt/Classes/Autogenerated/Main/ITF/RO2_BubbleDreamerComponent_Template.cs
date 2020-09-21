@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_BubbleDreamerComponent_Template : ActorComponent_Template {
-		public CList<Quote> Quotes;
+		public CListO<Quote> Quotes;
 		public float QuoteMaxDuration;
 		public float TimeBeforeSleep;
 		public float DistToPopBubble;
@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public Color MapColor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			Quotes = s.SerializeObject<CList<Quote>>(Quotes, name: "Quotes");
+			Quotes = s.SerializeObject<CListO<Quote>>(Quotes, name: "Quotes");
 			QuoteMaxDuration = s.Serialize<float>(QuoteMaxDuration, name: "QuoteMaxDuration");
 			TimeBeforeSleep = s.Serialize<float>(TimeBeforeSleep, name: "TimeBeforeSleep");
 			DistToPopBubble = s.Serialize<float>(DistToPopBubble, name: "DistToPopBubble");

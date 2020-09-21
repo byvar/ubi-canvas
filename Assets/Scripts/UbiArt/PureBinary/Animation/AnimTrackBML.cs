@@ -9,12 +9,12 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimTrackBML::serialize
 	public class AnimTrackBML : CSerializable {
 		public float frame;
-		public CList<Entry> entries;
+		public CListO<Entry> entries;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			frame = s.Serialize<float>(frame, name: "frame");
-			entries = s.SerializeObject<CList<Entry>>(entries, name: "entries");
+			entries = s.SerializeObject<CListO<Entry>>(entries, name: "entries");
 		}
 
 		public class Entry : CSerializable {

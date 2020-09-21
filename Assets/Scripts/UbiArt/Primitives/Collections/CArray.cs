@@ -9,13 +9,9 @@ using UnityEngine;
 namespace UbiArt {
 	[SerializeEmbed]
 	public class CArray<T> : IList<T>, ICSerializable, IObjectContainer {
-		T[] container;
+		protected T[] container = new T[0];
 
-		public CArray() {
-			container = new T[0];
-		}
-
-		public void Serialize(CSerializerObject s, string name) {
+		public virtual void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)Count;
 			count = s.Serialize<uint>(count, name: name);
 			if (count != (uint)Count) {

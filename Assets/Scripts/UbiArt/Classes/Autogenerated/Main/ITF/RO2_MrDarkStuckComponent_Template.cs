@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_MrDarkStuckComponent_Template : ActorComponent_Template {
-		public CList<Generic<Event>> listenEvents;
+		public CListO<Generic<Event>> listenEvents;
 		public StringID idleAnim;
 		public StringID eventAnim;
 		public StringID eventIdleAnim;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		public float swipeNormMin;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			listenEvents = s.SerializeObject<CList<Generic<Event>>>(listenEvents, name: "listenEvents");
+			listenEvents = s.SerializeObject<CListO<Generic<Event>>>(listenEvents, name: "listenEvents");
 			idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 			eventAnim = s.SerializeObject<StringID>(eventAnim, name: "eventAnim");
 			eventIdleAnim = s.SerializeObject<StringID>(eventIdleAnim, name: "eventIdleAnim");

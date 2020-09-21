@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public uint sampleCount;
 		public float widthForAABB;
 		public RO2_BezierTree_Template.LinkMode linkMainBranch;
-		public CArray<Generic<RO2_BezierBranchComponent_Template>> branchComponents;
+		public CArrayO<Generic<RO2_BezierBranchComponent_Template>> branchComponents;
 		public TweenInterpreter_Template tweenInterpreter;
 		public StringID lengthCursorInput;
 		// ^ From RO2_BezierTree_Template
@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 		public float sinYMax;
 		public StringID childBone;
 		public Vec2d childAttachOffset;
-		public CList<StringID> parentBones;
+		public CListO<StringID> parentBones;
 		public float handOffset;
 		public float collisionRadiusWhileMoving;
 		public float collisionRadiusMin;
@@ -57,7 +57,7 @@ namespace UbiArt.ITF {
 			sampleCount = s.Serialize<uint>(sampleCount, name: "sampleCount");
 			widthForAABB = s.Serialize<float>(widthForAABB, name: "widthForAABB");
 			linkMainBranch = s.Serialize<RO2_BezierTree_Template.LinkMode>(linkMainBranch, name: "linkMainBranch");
-			branchComponents = s.SerializeObject<CArray<Generic<RO2_BezierBranchComponent_Template>>>(branchComponents, name: "branchComponents");
+			branchComponents = s.SerializeObject<CArrayO<Generic<RO2_BezierBranchComponent_Template>>>(branchComponents, name: "branchComponents");
 			tweenInterpreter = s.SerializeObject<TweenInterpreter_Template>(tweenInterpreter, name: "tweenInterpreter");
 			lengthCursorInput = s.SerializeObject<StringID>(lengthCursorInput, name: "lengthCursorInput");
 			attackRadius = s.Serialize<float>(attackRadius, name: "attackRadius");
@@ -84,7 +84,7 @@ namespace UbiArt.ITF {
 			sinYMax = s.Serialize<float>(sinYMax, name: "sinYMax");
 			childBone = s.SerializeObject<StringID>(childBone, name: "childBone");
 			childAttachOffset = s.SerializeObject<Vec2d>(childAttachOffset, name: "childAttachOffset");
-			parentBones = s.SerializeObject<CList<StringID>>(parentBones, name: "parentBones");
+			parentBones = s.SerializeObject<CListO<StringID>>(parentBones, name: "parentBones");
 			handOffset = s.Serialize<float>(handOffset, name: "handOffset");
 			collisionRadiusWhileMoving = s.Serialize<float>(collisionRadiusWhileMoving, name: "collisionRadiusWhileMoving");
 			collisionRadiusMin = s.Serialize<float>(collisionRadiusMin, name: "collisionRadiusMin");

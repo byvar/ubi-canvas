@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 		public Angle patchAngleMin;
 		public Vec2d ExtremityScale;
 		public ColorInteger selfIllumColor;
-		public CList<FriseTextureConfig> textureConfigs;
+		public CListO<FriseTextureConfig> textureConfigs;
 		public CMap<StringID, Path> gameMaterials;
 		public VertexAnim VertexAnim;
 		public FluidConfig Fluid;
@@ -68,8 +68,8 @@ namespace UbiArt.ITF {
 		public StringID slope_157;
 		public int idTexSwitch;
 		public bool cooked;
-		public CList<int> textureConfigIndexBySlope;
-		public CList<int> textureConfigIndexByZone;
+		public CListP<int> textureConfigIndexBySlope;
+		public CListP<int> textureConfigIndexByZone;
 		public bool smoothVisual;
 		public GFXPrimitiveParam PrimitiveParameters;
 		public Frieze3DConfig frieze3D;
@@ -113,7 +113,7 @@ namespace UbiArt.ITF {
 				patchAngleMin = s.SerializeObject<Angle>(patchAngleMin, name: "patchAngleMin");
 				ExtremityScale = s.SerializeObject<Vec2d>(ExtremityScale, name: "ExtremityScale");
 				selfIllumColor = s.SerializeObject<ColorInteger>(selfIllumColor, name: "selfIllumColor");
-				textureConfigs = s.SerializeObject<CList<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
+				textureConfigs = s.SerializeObject<CListO<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
 				VertexAnim = s.SerializeObject<VertexAnim>(VertexAnim, name: "VertexAnim");
 				Fluid = s.SerializeObject<FluidConfig>(Fluid, name: "Fluid");
 				skewAngle = s.Serialize<float>(skewAngle, name: "skewAngle");
@@ -142,8 +142,8 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					idTexSwitch = s.Serialize<int>(idTexSwitch, name: "idTexSwitch");
 					cooked = s.Serialize<bool>(cooked, name: "cooked");
-					textureConfigIndexBySlope = s.SerializeObject<CList<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
-					textureConfigIndexByZone = s.SerializeObject<CList<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
+					textureConfigIndexBySlope = s.SerializeObject<CListP<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
+					textureConfigIndexByZone = s.SerializeObject<CListP<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
 					smoothVisual = s.Serialize<bool>(smoothVisual, name: "smoothVisual");
 				}
 				PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
@@ -183,7 +183,7 @@ namespace UbiArt.ITF {
 				patchAngleMin = s.SerializeObject<Angle>(patchAngleMin, name: "patchAngleMin");
 				ExtremityScale = s.SerializeObject<Vec2d>(ExtremityScale, name: "ExtremityScale");
 				selfIllumColor = s.SerializeObject<ColorInteger>(selfIllumColor, name: "selfIllumColor");
-				textureConfigs = s.SerializeObject<CList<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
+				textureConfigs = s.SerializeObject<CListO<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
 				VertexAnim = s.SerializeObject<VertexAnim>(VertexAnim, name: "VertexAnim");
 				Fluid = s.SerializeObject<FluidConfig>(Fluid, name: "Fluid");
 				skewAngle = s.Serialize<float>(skewAngle, name: "skewAngle");
@@ -212,8 +212,8 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					idTexSwitch = s.Serialize<int>(idTexSwitch, name: "idTexSwitch");
 					cooked = s.Serialize<bool>(cooked, name: "cooked", options: CSerializerObject.Options.BoolAsByte);
-					textureConfigIndexBySlope = s.SerializeObject<CList<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
-					textureConfigIndexByZone = s.SerializeObject<CList<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
+					textureConfigIndexBySlope = s.SerializeObject<CListP<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
+					textureConfigIndexByZone = s.SerializeObject<CListP<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
 					smoothVisual = s.Serialize<bool>(smoothVisual, name: "smoothVisual", options: CSerializerObject.Options.BoolAsByte);
 				}
 				PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
@@ -253,7 +253,7 @@ namespace UbiArt.ITF {
 				patchAngleMin = s.SerializeObject<Angle>(patchAngleMin, name: "patchAngleMin");
 				ExtremityScale = s.SerializeObject<Vec2d>(ExtremityScale, name: "ExtremityScale");
 				selfIllumColor = s.SerializeObject<ColorInteger>(selfIllumColor, name: "selfIllumColor");
-				textureConfigs = s.SerializeObject<CList<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
+				textureConfigs = s.SerializeObject<CListO<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
 				VertexAnim = s.SerializeObject<VertexAnim>(VertexAnim, name: "VertexAnim");
 				Fluid = s.SerializeObject<FluidConfig>(Fluid, name: "Fluid");
 				mesh3D = s.SerializeObject<Mesh3dConfig>(mesh3D, name: "mesh3D");
@@ -284,8 +284,8 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					idTexSwitch = s.Serialize<int>(idTexSwitch, name: "idTexSwitch");
 					cooked = s.Serialize<bool>(cooked, name: "cooked");
-					textureConfigIndexBySlope = s.SerializeObject<CList<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
-					textureConfigIndexByZone = s.SerializeObject<CList<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
+					textureConfigIndexBySlope = s.SerializeObject<CListP<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
+					textureConfigIndexByZone = s.SerializeObject<CListP<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
 					smoothVisual = s.Serialize<bool>(smoothVisual, name: "smoothVisual");
 				}
 				PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
@@ -326,7 +326,7 @@ namespace UbiArt.ITF {
 				patchAngleMin = s.SerializeObject<Angle>(patchAngleMin, name: "patchAngleMin");
 				ExtremityScale = s.SerializeObject<Vec2d>(ExtremityScale, name: "ExtremityScale");
 				selfIllumColor = s.SerializeObject<ColorInteger>(selfIllumColor, name: "selfIllumColor");
-				textureConfigs = s.SerializeObject<CList<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
+				textureConfigs = s.SerializeObject<CListO<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
 				gameMaterials = s.SerializeObject<CMap<StringID, Path>>(gameMaterials, name: "gameMaterials");
 				VertexAnim = s.SerializeObject<VertexAnim>(VertexAnim, name: "VertexAnim");
 				Fluid = s.SerializeObject<FluidConfig>(Fluid, name: "Fluid");
@@ -358,8 +358,8 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					idTexSwitch = s.Serialize<int>(idTexSwitch, name: "idTexSwitch");
 					cooked = s.Serialize<bool>(cooked, name: "cooked");
-					textureConfigIndexBySlope = s.SerializeObject<CList<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
-					textureConfigIndexByZone = s.SerializeObject<CList<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
+					textureConfigIndexBySlope = s.SerializeObject<CListP<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
+					textureConfigIndexByZone = s.SerializeObject<CListP<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
 					smoothVisual = s.Serialize<bool>(smoothVisual, name: "smoothVisual");
 				}
 				PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");

@@ -13,7 +13,7 @@ namespace UbiArt.online {
 		public CMap<StringID, StringID> populations;
 		public bool iap;
 		public float iapPrediction;
-		public CArray<string> reco;
+		public CArrayP<string> reco;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			pid = s.Serialize<string>(pid, name: "pid");
@@ -26,8 +26,8 @@ namespace UbiArt.online {
 			populations = s.SerializeObject<CMap<StringID, StringID>>(populations, name: "populations");
 			iap = s.Serialize<bool>(iap, name: "iap");
 			iapPrediction = s.Serialize<float>(iapPrediction, name: "iapPrediction");
-			reco = s.SerializeObject<CArray<string>>(reco, name: "reco");
-			reco = s.SerializeObject<CArray<string>>(reco, name: "reco");
+			reco = s.SerializeObject<CArrayP<string>>(reco, name: "reco");
+			reco = s.SerializeObject<CArrayP<string>>(reco, name: "reco");
 		}
 	}
 }

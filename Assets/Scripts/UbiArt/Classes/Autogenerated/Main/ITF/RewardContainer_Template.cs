@@ -3,18 +3,18 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class RewardContainer_Template : TemplateObj {
-		public CList<RewardDetail> rewards;
+		public CListO<RewardDetail> rewards;
 		public RewardStatHandler statsHandler;
 		public bool isSilent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
-				rewards = s.SerializeObject<CList<RewardDetail>>(rewards, name: "rewards");
+				rewards = s.SerializeObject<CListO<RewardDetail>>(rewards, name: "rewards");
 				isSilent = s.Serialize<bool>(isSilent, name: "isSilent");
 			} else if (Settings.s.game == Settings.Game.COL) {
 				isSilent = s.Serialize<bool>(isSilent, name: "isSilent");
 			} else {
-				rewards = s.SerializeObject<CList<RewardDetail>>(rewards, name: "rewards");
+				rewards = s.SerializeObject<CListO<RewardDetail>>(rewards, name: "rewards");
 				statsHandler = s.SerializeObject<RewardStatHandler>(statsHandler, name: "statsHandler");
 				isSilent = s.Serialize<bool>(isSilent, name: "isSilent");
 			}

@@ -3,15 +3,15 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_RelayEventComponent : ActorComponent {
-		public CArray<W1W_RelayEventComponent.RelayData> CArray_W1W_RelayEventComponent_RelayData__0;
+		public CArrayO<W1W_RelayEventComponent.RelayData> CArray_W1W_RelayEventComponent_RelayData__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			CArray_W1W_RelayEventComponent_RelayData__0 = s.SerializeObject<CArray<W1W_RelayEventComponent.RelayData>>(CArray_W1W_RelayEventComponent_RelayData__0, name: "CArray_W1W_RelayEventComponent_RelayData__0");
+			CArray_W1W_RelayEventComponent_RelayData__0 = s.SerializeObject<CArrayO<W1W_RelayEventComponent.RelayData>>(CArray_W1W_RelayEventComponent_RelayData__0, name: "CArray_W1W_RelayEventComponent_RelayData__0");
 		}
 		[Games(GameFlags.VH)]
 		public partial class RelayData : CSerializable {
 			public Generic<Event> Generic_Event__0;
-			public CArray<Generic<Event>> CArray_Generic_Event__1;
+			public CArrayO<Generic<Event>> CArray_Generic_Event__1;
 			public float float__2;
 			public uint uint__3;
 			public bool bool__4;
@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				Generic_Event__0 = s.SerializeObject<Generic<Event>>(Generic_Event__0, name: "Generic_Event__0");
-				CArray_Generic_Event__1 = s.SerializeObject<CArray<Generic<Event>>>(CArray_Generic_Event__1, name: "CArray_Generic_Event__1");
+				CArray_Generic_Event__1 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__1, name: "CArray_Generic_Event__1");
 				float__2 = s.Serialize<float>(float__2, name: "float__2");
 				uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
 				bool__4 = s.Serialize<bool>(bool__4, name: "bool__4");

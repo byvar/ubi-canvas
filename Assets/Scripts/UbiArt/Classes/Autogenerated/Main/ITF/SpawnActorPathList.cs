@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class SpawnActorPathList : CSerializable {
-		public CList<SpawnActorPathTuto> tutoList;
+		public CListO<SpawnActorPathTuto> tutoList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			tutoList = s.SerializeObject<CList<SpawnActorPathTuto>>(tutoList, name: "tutoList");
+			tutoList = s.SerializeObject<CListO<SpawnActorPathTuto>>(tutoList, name: "tutoList");
 		}
 	}
 }

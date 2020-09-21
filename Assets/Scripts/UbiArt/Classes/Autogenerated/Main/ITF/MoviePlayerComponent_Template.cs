@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public bool loop;
 		public bool sound;
 		public bool mainthread;
-		public CList<uint> audioTracks;
+		public CListP<uint> audioTracks;
 		public bool playFade;
 		public bool whiteFade;
 		public bool pauseGameSounds;
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 				playFromMemory = s.Serialize<bool>(playFromMemory, name: "playFromMemory");
 			} else if (Settings.s.game == Settings.Game.COL) {
 				video = s.SerializeObject<Path>(video, name: "video");
-				audioTracks = s.SerializeObject<CList<uint>>(audioTracks, name: "audioTracks");
+				audioTracks = s.SerializeObject<CListP<uint>>(audioTracks, name: "audioTracks");
 				videoTrack = s.Serialize<bool>(videoTrack, name: "videoTrack", options: CSerializerObject.Options.BoolAsByte);
 				autoPlay = s.Serialize<bool>(autoPlay, name: "autoPlay", options: CSerializerObject.Options.BoolAsByte);
 				fadeInTime = s.Serialize<float>(fadeInTime, name: "fadeInTime");

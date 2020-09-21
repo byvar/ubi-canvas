@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public Generic<Event> onSpawnEvent;
 		public uint nbSpawns;
 		public Vec2d spawnPosOffset;
-		public CArray<Angle> clampAnglesList;
+		public CArrayO<Angle> clampAnglesList;
 		public Angle spawnAngleOffset;
 		public bool transmitAlwaysActive;
 		public uint spawnMinPreAllocModifier;
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 				onSpawnEvent = s.SerializeObject<Generic<Event>>(onSpawnEvent, name: "onSpawnEvent");
 				nbSpawns = s.Serialize<uint>(nbSpawns, name: "nbSpawns");
 				spawnPosOffset = s.SerializeObject<Vec2d>(spawnPosOffset, name: "spawnPosOffset");
-				clampAnglesList = s.SerializeObject<CArray<Angle>>(clampAnglesList, name: "clampAnglesList");
+				clampAnglesList = s.SerializeObject<CArrayO<Angle>>(clampAnglesList, name: "clampAnglesList");
 				spawnAngleOffset = s.SerializeObject<Angle>(spawnAngleOffset, name: "spawnAngleOffset");
 				transmitAlwaysActive = s.Serialize<bool>(transmitAlwaysActive, name: "transmitAlwaysActive");
 				spawnMinPreAllocModifier = s.Serialize<uint>(spawnMinPreAllocModifier, name: "spawnMinPreAllocModifier");
@@ -54,8 +54,8 @@ namespace UbiArt.ITF {
 				onSpawnEvent = s.SerializeObject<Generic<Event>>(onSpawnEvent, name: "onSpawnEvent");
 				nbSpawns = s.Serialize<uint>(nbSpawns, name: "nbSpawns");
 				spawnPosOffset = s.SerializeObject<Vec2d>(spawnPosOffset, name: "spawnPosOffset");
-				clampAnglesList = s.SerializeObject<CArray<Angle>>(clampAnglesList, name: "clampAnglesList");
-				clampAnglesList = s.SerializeObject<CArray<Angle>>(clampAnglesList, name: "clampAnglesList");
+				clampAnglesList = s.SerializeObject<CArrayO<Angle>>(clampAnglesList, name: "clampAnglesList");
+				clampAnglesList = s.SerializeObject<CArrayO<Angle>>(clampAnglesList, name: "clampAnglesList");
 				spawnAngleOffset = s.SerializeObject<Angle>(spawnAngleOffset, name: "spawnAngleOffset");
 				transmitAlwaysActive = s.Serialize<bool>(transmitAlwaysActive, name: "transmitAlwaysActive");
 				spawnMinPreAllocModifier = s.Serialize<uint>(spawnMinPreAllocModifier, name: "spawnMinPreAllocModifier");

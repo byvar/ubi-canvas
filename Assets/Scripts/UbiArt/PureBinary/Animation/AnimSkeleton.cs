@@ -11,18 +11,18 @@ namespace UbiArt.Animation {
 	// skl.ckd file
 	public class AnimSkeleton : CSerializable {
 		public uint version;
-		public CList<StringID> boneTags;
-		public CList<StringID> boneIndices;
-		public CList<StringID> boneTags2;
-		public CList<StringID> boneIndices2;
-		public CList<StringID> boneTags3;
-		public CList<ulong> boneTagsAdv;
-		public CList<ulong> boneTags2Adv;
-		public CList<ulong> boneTags3Adv;
-		public CList<StringID> boneIndices3;
-		public CList<AnimBone> bones;
-		public CList<AnimBoneDyn> bonesDyn;
-		public CArray<CArray<byte>> byteArray;
+		public CListO<StringID> boneTags;
+		public CListO<StringID> boneIndices;
+		public CListO<StringID> boneTags2;
+		public CListO<StringID> boneIndices2;
+		public CListO<StringID> boneTags3;
+		public CListP<ulong> boneTagsAdv;
+		public CListP<ulong> boneTags2Adv;
+		public CListP<ulong> boneTags3Adv;
+		public CListO<StringID> boneIndices3;
+		public CListO<AnimBone> bones;
+		public CListO<AnimBoneDyn> bonesDyn;
+		public CArrayO<CArrayP<byte>> byteArray;
 		public byte[] byteArrayOrigins;
 		public uint bankId0;
 		public uint bankId;
@@ -33,26 +33,26 @@ namespace UbiArt.Animation {
 			base.SerializeImpl(s);
 			version = s.Serialize<uint>(version, name: "version");
 			if (Settings.s.game == Settings.Game.RA) {
-				boneTagsAdv = s.SerializeObject<CList<ulong>>(boneTagsAdv, name: "boneTagsAdv");
-				boneIndices = s.SerializeObject<CList<StringID>>(boneIndices, name: "boneIndices");
-				boneTags2Adv = s.SerializeObject<CList<ulong>>(boneTags2Adv, name: "boneTags2Adv");
-				boneIndices2 = s.SerializeObject<CList<StringID>>(boneIndices2, name: "boneIndices2");
-				boneTags3Adv = s.SerializeObject<CList<ulong>>(boneTags3Adv, name: "boneTags3Adv");
-				boneIndices3 = s.SerializeObject<CList<StringID>>(boneIndices3, name: "boneIndices3");
+				boneTagsAdv = s.SerializeObject<CListP<ulong>>(boneTagsAdv, name: "boneTagsAdv");
+				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
+				boneTags2Adv = s.SerializeObject<CListP<ulong >> (boneTags2Adv, name: "boneTags2Adv");
+				boneIndices2 = s.SerializeObject<CListO<StringID>>(boneIndices2, name: "boneIndices2");
+				boneTags3Adv = s.SerializeObject<CListP<ulong>>(boneTags3Adv, name: "boneTags3Adv");
+				boneIndices3 = s.SerializeObject<CListO<StringID>>(boneIndices3, name: "boneIndices3");
 			} else {
-				boneTags = s.SerializeObject<CList<StringID>>(boneTags, name: "boneTags");
-				boneIndices = s.SerializeObject<CList<StringID>>(boneIndices, name: "boneIndices");
-				boneTags2 = s.SerializeObject<CList<StringID>>(boneTags2, name: "boneTags2");
-				boneIndices2 = s.SerializeObject<CList<StringID>>(boneIndices2, name: "boneIndices2");
+				boneTags = s.SerializeObject<CListO<StringID>>(boneTags, name: "boneTags");
+				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
+				boneTags2 = s.SerializeObject<CListO<StringID>>(boneTags2, name: "boneTags2");
+				boneIndices2 = s.SerializeObject<CListO<StringID>>(boneIndices2, name: "boneIndices2");
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-					boneTags3 = s.SerializeObject<CList<StringID>>(boneTags3, name: "boneTags3");
-					boneIndices3 = s.SerializeObject<CList<StringID>>(boneIndices3, name: "boneIndices3");
+					boneTags3 = s.SerializeObject<CListO<StringID>>(boneTags3, name: "boneTags3");
+					boneIndices3 = s.SerializeObject<CListO<StringID>>(boneIndices3, name: "boneIndices3");
 				}
 			}
-			bones = s.SerializeObject<CList<AnimBone>>(bones, name: "bones");
-			bonesDyn = s.SerializeObject<CList<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
+			bones = s.SerializeObject<CListO<AnimBone>>(bones, name: "bones");
+			bonesDyn = s.SerializeObject<CListO<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				byteArray = s.SerializeObject<CArray<CArray<byte>>>(byteArray, name: "byteArray");
+				byteArray = s.SerializeObject<CArrayO<CArrayP<byte>>>(byteArray, name: "byteArray");
 			} else {
 				byteArrayOrigins = s.SerializeBytes(byteArrayOrigins, 8);
 			}

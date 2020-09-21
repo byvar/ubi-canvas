@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public StringID creatureId;
 		public bool powerupSelectionActive;
 		public bool forceFirstMission;
-		public CList<StringID> missionsId;
+		public CListO<StringID> missionsId;
 		public bool bOverrideCharPrimitive;
 		public GFXPrimitiveParam overrideCharPrimitiveParams;
 		public float refractionDepthOffset;
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 				creatureId = s.SerializeObject<StringID>(creatureId, name: "creatureId");
 				powerupSelectionActive = s.Serialize<bool>(powerupSelectionActive, name: "powerupSelectionActive");
 				forceFirstMission = s.Serialize<bool>(forceFirstMission, name: "forceFirstMission");
-				missionsId = s.SerializeObject<CList<StringID>>(missionsId, name: "missionsId");
+				missionsId = s.SerializeObject<CListO<StringID>>(missionsId, name: "missionsId");
 				bOverrideCharPrimitive = s.Serialize<bool>(bOverrideCharPrimitive, name: "bOverrideCharPrimitive");
 				overrideCharPrimitiveParams = s.SerializeObject<GFXPrimitiveParam>(overrideCharPrimitiveParams, name: "overrideCharPrimitiveParams");
 				refractionDepthOffset = s.Serialize<float>(refractionDepthOffset, name: "refractionDepthOffset");

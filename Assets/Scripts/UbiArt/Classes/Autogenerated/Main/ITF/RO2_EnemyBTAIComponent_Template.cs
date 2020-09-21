@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 		public bool canChangeColor;
 		public bool allowOwnProjectileHit;
 		public bool useBumperPolyline;
-		public CList<RO2_HeartShield_Template> heartShieldData;
+		public CListO<RO2_HeartShield_Template> heartShieldData;
 		public bool AMCheckTouch;
 		public EnemyType enemyType;
 		public bool isSeasonalEnemy;
@@ -94,7 +94,7 @@ namespace UbiArt.ITF {
 				canChangeColor = s.Serialize<bool>(canChangeColor, name: "canChangeColor");
 				allowOwnProjectileHit = s.Serialize<bool>(allowOwnProjectileHit, name: "allowOwnProjectileHit");
 				useBumperPolyline = s.Serialize<bool>(useBumperPolyline, name: "useBumperPolyline");
-				heartShieldData = s.SerializeObject<CList<RO2_HeartShield_Template>>(heartShieldData, name: "heartShieldData");
+				heartShieldData = s.SerializeObject<CListO<RO2_HeartShield_Template>>(heartShieldData, name: "heartShieldData");
 				AMCheckTouch = s.Serialize<bool>(AMCheckTouch, name: "AMCheckTouch");
 				hideTextureDuration = s.Serialize<float>(hideTextureDuration, name: "hideTextureDuration");
 				enemyType = s.Serialize<EnemyType>(enemyType, name: "enemyType");
@@ -139,7 +139,7 @@ namespace UbiArt.ITF {
 				canChangeColor = s.Serialize<bool>(canChangeColor, name: "canChangeColor");
 				allowOwnProjectileHit = s.Serialize<bool>(allowOwnProjectileHit, name: "allowOwnProjectileHit");
 				useBumperPolyline = s.Serialize<bool>(useBumperPolyline, name: "useBumperPolyline");
-				heartShieldData = s.SerializeObject<CList<RO2_HeartShield_Template>>(heartShieldData, name: "heartShieldData");
+				heartShieldData = s.SerializeObject<CListO<RO2_HeartShield_Template>>(heartShieldData, name: "heartShieldData");
 				AMCheckTouch = s.Serialize<bool>(AMCheckTouch, name: "AMCheckTouch");
 				enemyType = s.Serialize<EnemyType>(enemyType, name: "enemyType");
 				isSeasonalEnemy = s.Serialize<bool>(isSeasonalEnemy, name: "isSeasonalEnemy");

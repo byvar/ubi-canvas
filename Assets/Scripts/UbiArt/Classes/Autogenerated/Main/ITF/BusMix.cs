@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public float duration;
 		public float fadeIn;
 		public float fadeOut;
-		public CList<BusDef> busDefs;
+		public CListO<BusDef> busDefs;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
@@ -17,13 +17,13 @@ namespace UbiArt.ITF {
 				duration = s.Serialize<float>(duration, name: "duration");
 				fadeIn = s.Serialize<float>(fadeIn, name: "fadeIn");
 				fadeOut = s.Serialize<float>(fadeOut, name: "fadeOut");
-				busDefs = s.SerializeObject<CList<BusDef>>(busDefs, name: "busDefs");
+				busDefs = s.SerializeObject<CListO<BusDef>>(busDefs, name: "busDefs");
 			} else {
 				priority = s.Serialize<uint>(priority, name: "priority");
 				duration = s.Serialize<float>(duration, name: "duration");
 				fadeIn = s.Serialize<float>(fadeIn, name: "fadeIn");
 				fadeOut = s.Serialize<float>(fadeOut, name: "fadeOut");
-				busDefs = s.SerializeObject<CList<BusDef>>(busDefs, name: "busDefs");
+				busDefs = s.SerializeObject<CListO<BusDef>>(busDefs, name: "busDefs");
 			}
 		}
 	}

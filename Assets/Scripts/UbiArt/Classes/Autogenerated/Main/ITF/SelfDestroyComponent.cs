@@ -6,13 +6,13 @@ namespace UbiArt.ITF {
 		public float Delay;
 		public eWait waitAnim;
 		public StringID AnimName;
-		public CList<SelfDestroyComponent.EventData> eventData;
+		public CListO<SelfDestroyComponent.EventData> eventData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			Delay = s.Serialize<float>(Delay, name: "Delay");
 			waitAnim = s.Serialize<eWait>(waitAnim, name: "waitAnim");
 			AnimName = s.SerializeObject<StringID>(AnimName, name: "AnimName");
-			eventData = s.SerializeObject<CList<SelfDestroyComponent.EventData>>(eventData, name: "eventData");
+			eventData = s.SerializeObject<CListO<SelfDestroyComponent.EventData>>(eventData, name: "eventData");
 		}
 		[Games(GameFlags.RA)]
 		public partial class EventData : CSerializable {

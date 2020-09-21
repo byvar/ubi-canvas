@@ -3,12 +3,12 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.COL)]
 	public partial class FlexMeshBranchComponent : BezierBranchComponent {
-		public CList<FlexMeshBranchComponent.FlexMesh> meshes;
+		public CListO<FlexMeshBranchComponent.FlexMesh> meshes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 			} else {
-				meshes = s.SerializeObject<CList<FlexMeshBranchComponent.FlexMesh>>(meshes, name: "meshes");
+				meshes = s.SerializeObject<CListO<FlexMeshBranchComponent.FlexMesh>>(meshes, name: "meshes");
 			}
 		}
 		[Games(GameFlags.RA)]

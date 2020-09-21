@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public StringID attachPolyline;
 		public StringID attachBone;
 		public StringID proceduralBone;
-		public CList<ShapeDetectorComponent_Template.sAnimPoly> animPolylineIDList;
+		public CListO<ShapeDetectorComponent_Template.sAnimPoly> animPolylineIDList;
 		public StringID animPolylineID;
 		public StringID animRefPosPointID;
 		public StringID animShapePosPointID;
@@ -63,7 +63,7 @@ namespace UbiArt.ITF {
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
 				attachBone = s.SerializeObject<StringID>(attachBone, name: "attachBone");
 				proceduralBone = s.SerializeObject<StringID>(proceduralBone, name: "proceduralBone");
-				animPolylineIDList = s.SerializeObject<CList<ShapeDetectorComponent_Template.sAnimPoly>>(animPolylineIDList, name: "animPolylineIDList");
+				animPolylineIDList = s.SerializeObject<CListO<ShapeDetectorComponent_Template.sAnimPoly>>(animPolylineIDList, name: "animPolylineIDList");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					animPolylineID = s.SerializeObject<StringID>(animPolylineID, name: "animPolylineID");
 				}

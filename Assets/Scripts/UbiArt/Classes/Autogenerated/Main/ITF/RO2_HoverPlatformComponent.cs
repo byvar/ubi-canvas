@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_HoverPlatformComponent : ActorComponent {
 		public bool cycleEnabled;
 		public uint cycleStartIndex;
-		public CList<RO2_moveData> moveList;
+		public CListO<RO2_moveData> moveList;
 		public Vec2d wakeUpDir;
 		public float wakeUpPeriod;
 		public float wakeUpCycleCount;
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 			if (s.HasFlags(SerializeFlags.Default)) {
 				cycleEnabled = s.Serialize<bool>(cycleEnabled, name: "cycleEnabled");
 				cycleStartIndex = s.Serialize<uint>(cycleStartIndex, name: "cycleStartIndex");
-				moveList = s.SerializeObject<CList<RO2_moveData>>(moveList, name: "moveList");
+				moveList = s.SerializeObject<CListO<RO2_moveData>>(moveList, name: "moveList");
 				wakeUpDir = s.SerializeObject<Vec2d>(wakeUpDir, name: "wakeUpDir");
 				wakeUpPeriod = s.Serialize<float>(wakeUpPeriod, name: "wakeUpPeriod");
 				wakeUpCycleCount = s.Serialize<float>(wakeUpCycleCount, name: "wakeUpCycleCount");

@@ -22,11 +22,11 @@ namespace UbiArt.ITF {
 		public bool bool__16;
 		public bool bool__17;
 		public bool bool__18;
-		public CArray<W1W_Actor_Rea.AvoidHitType> CArray_W1W_Actor_Rea_AvoidHitType__19;
+		public CArrayO<W1W_Actor_Rea.AvoidHitType> CArray_W1W_Actor_Rea_AvoidHitType__19;
 		public EventSender EventSender__20;
 		public EventSender EventSender__21;
 		public Path Path__22;
-		public CArray<W1W_Actor_Rea.spawnStruct> CArray_W1W_Actor_Rea_spawnStruct__23;
+		public CArrayO<W1W_Actor_Rea.spawnStruct> CArray_W1W_Actor_Rea_spawnStruct__23;
 		public Vec3d Vector3__24;
 		public StringID StringID__25;
 		public bool bool__26;
@@ -61,11 +61,11 @@ namespace UbiArt.ITF {
 				bool__16 = s.Serialize<bool>(bool__16, name: "bool__16");
 				bool__17 = s.Serialize<bool>(bool__17, name: "bool__17");
 				bool__18 = s.Serialize<bool>(bool__18, name: "bool__18");
-				CArray_W1W_Actor_Rea_AvoidHitType__19 = s.SerializeObject<CArray<W1W_Actor_Rea.AvoidHitType>>(CArray_W1W_Actor_Rea_AvoidHitType__19, name: "CArray_W1W_Actor_Rea_AvoidHitType__19");
+				CArray_W1W_Actor_Rea_AvoidHitType__19 = s.SerializeObject<CArrayO<W1W_Actor_Rea.AvoidHitType>>(CArray_W1W_Actor_Rea_AvoidHitType__19, name: "CArray_W1W_Actor_Rea_AvoidHitType__19");
 				EventSender__20 = s.SerializeObject<EventSender>(EventSender__20, name: "EventSender__20");
 				EventSender__21 = s.SerializeObject<EventSender>(EventSender__21, name: "EventSender__21");
 				Path__22 = s.SerializeObject<Path>(Path__22, name: "Path__22");
-				CArray_W1W_Actor_Rea_spawnStruct__23 = s.SerializeObject<CArray<W1W_Actor_Rea.spawnStruct>>(CArray_W1W_Actor_Rea_spawnStruct__23, name: "CArray_W1W_Actor_Rea_spawnStruct__23");
+				CArray_W1W_Actor_Rea_spawnStruct__23 = s.SerializeObject<CArrayO<W1W_Actor_Rea.spawnStruct>>(CArray_W1W_Actor_Rea_spawnStruct__23, name: "CArray_W1W_Actor_Rea_spawnStruct__23");
 				Vector3__24 = s.SerializeObject<Vec3d>(Vector3__24, name: "Vector3__24");
 				StringID__25 = s.SerializeObject<StringID>(StringID__25, name: "StringID__25");
 				bool__26 = s.Serialize<bool>(bool__26, name: "bool__26");

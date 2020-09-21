@@ -7,14 +7,14 @@ namespace UbiArt.ITF {
 		public Enum_conditionType conditionType;
 		public float floatValue;
 		public StringID stringValue;
-		public CArray<StringID> stringArrayValue;
+		public CArrayO<StringID> stringArrayValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			eventID = s.SerializeObject<StringID>(eventID, name: "eventID");
 			conditionType = s.Serialize<Enum_conditionType>(conditionType, name: "conditionType");
 			floatValue = s.Serialize<float>(floatValue, name: "floatValue");
 			stringValue = s.SerializeObject<StringID>(stringValue, name: "stringValue");
-			stringArrayValue = s.SerializeObject<CArray<StringID>>(stringArrayValue, name: "stringArrayValue");
+			stringArrayValue = s.SerializeObject<CArrayO<StringID>>(stringArrayValue, name: "stringArrayValue");
 		}
 		public enum Enum_conditionType {
 			[Serialize("Triggered"       )] Triggered = 0,

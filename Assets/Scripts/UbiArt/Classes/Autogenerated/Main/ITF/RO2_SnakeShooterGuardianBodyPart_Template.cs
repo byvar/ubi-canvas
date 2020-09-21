@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RL)]
 	public partial class RO2_SnakeShooterGuardianBodyPart_Template : RO2_SnakeBodyPartActor_Template {
 		public int health;
-		public CList<uint> damageLevels;
+		public CListP<uint> damageLevels;
 		public float multiPlayerLifePointFactor;
 		public StringID deathAnim;
 		public Path tailPath;
@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				health = s.Serialize<int>(health, name: "health");
-				damageLevels = s.SerializeObject<CList<uint>>(damageLevels, name: "damageLevels");
+				damageLevels = s.SerializeObject<CListP<uint>>(damageLevels, name: "damageLevels");
 				multiPlayerLifePointFactor = s.Serialize<float>(multiPlayerLifePointFactor, name: "multiPlayerLifePointFactor");
 				deathAnim = s.SerializeObject<StringID>(deathAnim, name: "deathAnim");
 				tailPath = s.SerializeObject<Path>(tailPath, name: "tailPath");
@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 				attackAnimation = s.SerializeObject<StringID>(attackAnimation, name: "attackAnimation");
 			} else {
 				health = s.Serialize<int>(health, name: "health");
-				damageLevels = s.SerializeObject<CList<uint>>(damageLevels, name: "damageLevels");
+				damageLevels = s.SerializeObject<CListP<uint>>(damageLevels, name: "damageLevels");
 				multiPlayerLifePointFactor = s.Serialize<float>(multiPlayerLifePointFactor, name: "multiPlayerLifePointFactor");
 				deathAnim = s.SerializeObject<StringID>(deathAnim, name: "deathAnim");
 				tailPath = s.SerializeObject<Path>(tailPath, name: "tailPath");

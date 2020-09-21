@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 		public bool allowRenderInTexture;
 		public uint renderInTectureSizeX;
 		public uint renderInTectureSizeY;
-		public CList<BoneMapping> boneList;
+		public CListO<BoneMapping> boneList;
 		public Path animationPath;
 		public bool isSynchronous;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 				frontZOffset = s.Serialize<float>(frontZOffset, name: "frontZOffset");
 				isSynchronous = s.Serialize<bool>(isSynchronous, name: "isSynchronous");
 				restoreStateAtCheckpoint = s.Serialize<bool>(restoreStateAtCheckpoint, name: "restoreStateAtCheckpoint");
-				boneList = s.SerializeObject<CList<BoneMapping>>(boneList, name: "boneList");
+				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
 				disableVisiblePrediction = s.Serialize<bool>(disableVisiblePrediction, name: "disableVisiblePrediction");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				useBase = s.Serialize<bool>(useBase, name: "useBase");
@@ -76,7 +76,7 @@ namespace UbiArt.ITF {
 				notifyAnimUpdate = s.Serialize<bool>(notifyAnimUpdate, name: "notifyAnimUpdate");
 				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 				useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset");
-				boneList = s.SerializeObject<CList<BoneMapping>>(boneList, name: "boneList");
+				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
 			} else if (Settings.s.game == Settings.Game.COL) {
 				useBase = s.Serialize<bool>(useBase, name: "useBase", options: CSerializerObject.Options.BoolAsByte);
 				smoothAnim = s.Serialize<bool>(smoothAnim, name: "smoothAnim", options: CSerializerObject.Options.BoolAsByte);
@@ -124,7 +124,7 @@ namespace UbiArt.ITF {
 				allowRenderInTexture = s.Serialize<bool>(allowRenderInTexture, name: "allowRenderInTexture");
 				renderInTectureSizeX = s.Serialize<uint>(renderInTectureSizeX, name: "renderInTectureSizeX");
 				renderInTectureSizeY = s.Serialize<uint>(renderInTectureSizeY, name: "renderInTectureSizeY");
-				boneList = s.SerializeObject<CList<BoneMapping>>(boneList, name: "boneList");
+				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
 			} else {
 				useBase = s.Serialize<bool>(useBase, name: "useBase");
 				smoothAnim = s.Serialize<bool>(smoothAnim, name: "smoothAnim");
@@ -152,7 +152,7 @@ namespace UbiArt.ITF {
 				allowRenderInTexture = s.Serialize<bool>(allowRenderInTexture, name: "allowRenderInTexture");
 				renderInTectureSizeX = s.Serialize<uint>(renderInTectureSizeX, name: "renderInTectureSizeX");
 				renderInTectureSizeY = s.Serialize<uint>(renderInTectureSizeY, name: "renderInTectureSizeY");
-				boneList = s.SerializeObject<CList<BoneMapping>>(boneList, name: "boneList");
+				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
 			}
 		}
 		public override uint? ClassCRC => 0xA3557351;

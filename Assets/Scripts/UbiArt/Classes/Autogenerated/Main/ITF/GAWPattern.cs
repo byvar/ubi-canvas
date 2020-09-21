@@ -4,13 +4,13 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class GAWPattern : CSerializable {
 		public Enum_VH_0 Enum_VH_0__0;
-		public CArray<ushort> CArray_ushort__1;
+		public CArrayP<ushort> CArray_ushort__1;
 		public bool bool__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
 				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
-				CArray_ushort__1 = s.SerializeObject<CArray<ushort>>(CArray_ushort__1, name: "CArray_ushort__1");
+				CArray_ushort__1 = s.SerializeObject<CArrayP<ushort>>(CArray_ushort__1, name: "CArray_ushort__1");
 				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
 			}
 		}

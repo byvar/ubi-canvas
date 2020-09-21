@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
 	public partial class PlayAnimOnEventReceiveComponent_Template : ActorComponent_Template {
-		public CList<Generic<Event>> listenEvents;
+		public CListO<Generic<Event>> listenEvents;
 		public bool useForLoop;
 		public StringID idleAnim;
 		public StringID eventAnim;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				listenEvents = s.SerializeObject<CList<Generic<Event>>>(listenEvents, name: "listenEvents");
+				listenEvents = s.SerializeObject<CListO<Generic<Event>>>(listenEvents, name: "listenEvents");
 				idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 				eventAnim = s.SerializeObject<StringID>(eventAnim, name: "eventAnim");
 				eventIdleAnim = s.SerializeObject<StringID>(eventIdleAnim, name: "eventIdleAnim");
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 				disableAfterEvent = s.Serialize<bool>(disableAfterEvent, name: "disableAfterEvent");
 				useAnimatedComponentForAnimsFinish = s.Serialize<bool>(useAnimatedComponentForAnimsFinish, name: "useAnimatedComponentForAnimsFinish");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				listenEvents = s.SerializeObject<CList<Generic<Event>>>(listenEvents, name: "listenEvents");
+				listenEvents = s.SerializeObject<CListO<Generic<Event>>>(listenEvents, name: "listenEvents");
 				idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 				eventAnim = s.SerializeObject<StringID>(eventAnim, name: "eventAnim");
 				eventIdleAnim = s.SerializeObject<StringID>(eventIdleAnim, name: "eventIdleAnim");
@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 				acceptOnlyChargedPunch = s.Serialize<bool>(acceptOnlyChargedPunch, name: "acceptOnlyChargedPunch");
 				eventToSend = s.SerializeObject<Generic<Event>>(eventToSend, name: "eventToSend");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				listenEvents = s.SerializeObject<CList<Generic<Event>>>(listenEvents, name: "listenEvents");
+				listenEvents = s.SerializeObject<CListO<Generic<Event>>>(listenEvents, name: "listenEvents");
 				idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 				eventAnim = s.SerializeObject<StringID>(eventAnim, name: "eventAnim");
 				eventIdleAnim = s.SerializeObject<StringID>(eventIdleAnim, name: "eventIdleAnim");
@@ -57,7 +57,7 @@ namespace UbiArt.ITF {
 				restoreEventIdleOnCheckpoint = s.Serialize<bool>(restoreEventIdleOnCheckpoint, name: "restoreEventIdleOnCheckpoint");
 				eventToSend = s.SerializeObject<Generic<Event>>(eventToSend, name: "eventToSend");
 			} else {
-				listenEvents = s.SerializeObject<CList<Generic<Event>>>(listenEvents, name: "listenEvents");
+				listenEvents = s.SerializeObject<CListO<Generic<Event>>>(listenEvents, name: "listenEvents");
 				useForLoop = s.Serialize<bool>(useForLoop, name: "useForLoop");
 				idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 				eventAnim = s.SerializeObject<StringID>(eventAnim, name: "eventAnim");

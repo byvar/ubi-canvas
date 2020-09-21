@@ -4,19 +4,19 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class LanguageFilterComponent : ActorComponent {
 		public Enum_operator _operator;
-		public CArray<uint> languages;
+		public CArrayP<uint> languages;
 		public bool isDemo;
 		public Enum_VH_0 Enum_VH_0__0;
-		public CArray<uint> CArray_uint__1;
+		public CArrayP<uint> CArray_uint__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
 				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
-				CArray_uint__1 = s.SerializeObject<CArray<uint>>(CArray_uint__1, name: "CArray_uint__1");
+				CArray_uint__1 = s.SerializeObject<CArrayP<uint>>(CArray_uint__1, name: "CArray_uint__1");
 			} else {
 				_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
-				languages = s.SerializeObject<CArray<uint>>(languages, name: "languages");
-				languages = s.SerializeObject<CArray<uint>>(languages, name: "languages");
+				languages = s.SerializeObject<CArrayP<uint>>(languages, name: "languages");
+				languages = s.SerializeObject<CArrayP<uint>>(languages, name: "languages");
 				isDemo = s.Serialize<bool>(isDemo, name: "isDemo");
 			}
 		}

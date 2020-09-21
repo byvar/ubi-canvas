@@ -5,13 +5,13 @@ namespace UbiArt.online {
 	public partial class Population : CSerializable {
 		public StringID KEY;
 		public float VAL;
-		public CArray<float> probability;
+		public CArrayP<float> probability;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			KEY = s.SerializeObject<StringID>(KEY, name: "KEY");
 			VAL = s.Serialize<float>(VAL, name: "VAL");
 			KEY = s.SerializeObject<StringID>(KEY, name: "KEY");
-			probability = s.SerializeObject<CArray<float>>(probability, name: "probability");
+			probability = s.SerializeObject<CArrayP<float>>(probability, name: "probability");
 		}
 	}
 }

@@ -10,9 +10,9 @@ namespace UbiArt.FriseOrigins {
 	// fcg.ckd file
 	public class FriseConfigOrigins : CSerializable {
 		public uint version;
-		public CList<int> textureConfigIndexBySlope;
-		public CList<int> textureConfigIndexByZone;
-		public CList<FriseTextureConfig> textureConfigs;
+		public CListP<int> textureConfigIndexBySlope;
+		public CListP<int> textureConfigIndexByZone;
+		public CListO<FriseTextureConfig> textureConfigs;
 		public int unk0;
 		public Path gameMaterial;
 		public Path gameMaterialExtremityStart;
@@ -94,7 +94,7 @@ namespace UbiArt.FriseOrigins {
 		public float flt38;
 		public float flt39;
 		public uint uint6;
-		public CList<FluidFriseLayer> Layers;
+		public CListO<FluidFriseLayer> Layers;
 		public uint uint7;
 		public int int4;
 		public float flt40;
@@ -111,9 +111,9 @@ namespace UbiArt.FriseOrigins {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			version = s.Serialize<uint>(version, name: "version");
-			textureConfigIndexBySlope = s.SerializeObject<CList<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
-			textureConfigIndexByZone = s.SerializeObject<CList<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
-			textureConfigs = s.SerializeObject<CList<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
+			textureConfigIndexBySlope = s.SerializeObject<CListP<int>>(textureConfigIndexBySlope, name: "textureConfigIndexBySlope");
+			textureConfigIndexByZone = s.SerializeObject<CListP<int>>(textureConfigIndexByZone, name: "textureConfigIndexByZone");
+			textureConfigs = s.SerializeObject<CListO<FriseTextureConfig>>(textureConfigs, name: "textureConfigs");
 			unk0 = s.Serialize<int>(unk0, name: "unk0");
 			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 			gameMaterialExtremityStart = s.SerializeObject<Path>(gameMaterialExtremityStart, name: "gameMaterialExtremityStart");
@@ -194,7 +194,7 @@ namespace UbiArt.FriseOrigins {
 			flt38 = s.Serialize<float>(flt38, name: "flt38");
 			flt39 = s.Serialize<float>(flt39, name: "flt39");
 			uint6 = s.Serialize<uint>(uint6, name: "uint6");
-			Layers = s.SerializeObject<CList<FluidFriseLayer>>(Layers, name: "Layers");
+			Layers = s.SerializeObject<CListO<FluidFriseLayer>>(Layers, name: "Layers");
 			uint7 = s.Serialize<uint>(uint7, name: "uint7");
 			int4 = s.Serialize<int>(int4, name: "int4");
 			flt40 = s.Serialize<float>(flt40, name: "flt40");

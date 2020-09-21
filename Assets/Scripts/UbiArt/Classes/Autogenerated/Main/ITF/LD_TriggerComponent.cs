@@ -7,9 +7,9 @@ namespace UbiArt.ITF {
 		public ModeAfterCP modeAfterCP;
 		public bool triggerOnceDone;
 		public Generic<Event> onEnterEvent;
-		public CList<Generic<Event>> onEnterMoreEvent;
+		public CListO<Generic<Event>> onEnterMoreEvent;
 		public Generic<Event> onExitEvent;
-		public CList<Generic<Event>> onExitMoreEvent;
+		public CListO<Generic<Event>> onExitMoreEvent;
 		public bool sendEventEveryFrame;
 		public float sendEventEveryDelai;
 		public bool triggerOnDetector;
@@ -39,9 +39,9 @@ namespace UbiArt.ITF {
 					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
 				}
 				onEnterEvent = s.SerializeObject<Generic<Event>>(onEnterEvent, name: "onEnterEvent");
-				onEnterMoreEvent = s.SerializeObject<CList<Generic<Event>>>(onEnterMoreEvent, name: "onEnterMoreEvent");
+				onEnterMoreEvent = s.SerializeObject<CListO<Generic<Event>>>(onEnterMoreEvent, name: "onEnterMoreEvent");
 				onExitEvent = s.SerializeObject<Generic<Event>>(onExitEvent, name: "onExitEvent");
-				onExitMoreEvent = s.SerializeObject<CList<Generic<Event>>>(onExitMoreEvent, name: "onExitMoreEvent");
+				onExitMoreEvent = s.SerializeObject<CListO<Generic<Event>>>(onExitMoreEvent, name: "onExitMoreEvent");
 				bool__6 = s.Serialize<bool>(bool__6, name: "bool__6");
 				bool__7 = s.Serialize<bool>(bool__7, name: "bool__7");
 				sendEventEveryDelai = s.Serialize<float>(sendEventEveryDelai, name: "sendEventEveryDelai");
@@ -65,9 +65,9 @@ namespace UbiArt.ITF {
 					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
 				}
 				onEnterEvent = s.SerializeObject<Generic<Event>>(onEnterEvent, name: "onEnterEvent");
-				onEnterMoreEvent = s.SerializeObject<CList<Generic<Event>>>(onEnterMoreEvent, name: "onEnterMoreEvent");
+				onEnterMoreEvent = s.SerializeObject<CListO<Generic<Event>>>(onEnterMoreEvent, name: "onEnterMoreEvent");
 				onExitEvent = s.SerializeObject<Generic<Event>>(onExitEvent, name: "onExitEvent");
-				onExitMoreEvent = s.SerializeObject<CList<Generic<Event>>>(onExitMoreEvent, name: "onExitMoreEvent");
+				onExitMoreEvent = s.SerializeObject<CListO<Generic<Event>>>(onExitMoreEvent, name: "onExitMoreEvent");
 				sendEventEveryFrame = s.Serialize<bool>(sendEventEveryFrame, name: "sendEventEveryFrame");
 				sendEventEveryDelai = s.Serialize<float>(sendEventEveryDelai, name: "sendEventEveryDelai");
 				triggerOnDetector = s.Serialize<bool>(triggerOnDetector, name: "triggerOnDetector");

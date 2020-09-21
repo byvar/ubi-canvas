@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class MultipassStateTreeRendererComponent_Template : GraphicComponent_Template {
-		public CList<MultipassStateTreeRendererComponent_Template.PasseState> passes;
+		public CListO<MultipassStateTreeRendererComponent_Template.PasseState> passes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			passes = s.SerializeObject<CList<MultipassStateTreeRendererComponent_Template.PasseState>>(passes, name: "passes");
+			passes = s.SerializeObject<CListO<MultipassStateTreeRendererComponent_Template.PasseState>>(passes, name: "passes");
 		}
 		[Games(GameFlags.RA)]
 		public partial class PasseState : CSerializable {

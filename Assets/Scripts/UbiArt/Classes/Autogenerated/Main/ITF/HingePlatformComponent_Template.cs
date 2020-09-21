@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class HingePlatformComponent_Template : PolylineComponent_Template {
-		public CList<HingePlatformComponent_Template.HingeBoneData> hingeBones;
-		public CList<HingePlatformComponent_Template.PlatformData> platforms;
-		public CList<HingePlatformComponent_Template.MovingPolylineData> movingPolylines;
+		public CListO<HingePlatformComponent_Template.HingeBoneData> hingeBones;
+		public CListO<HingePlatformComponent_Template.PlatformData> platforms;
+		public CListO<HingePlatformComponent_Template.MovingPolylineData> movingPolylines;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			hingeBones = s.SerializeObject<CList<HingePlatformComponent_Template.HingeBoneData>>(hingeBones, name: "hingeBones");
-			platforms = s.SerializeObject<CList<HingePlatformComponent_Template.PlatformData>>(platforms, name: "platforms");
-			movingPolylines = s.SerializeObject<CList<HingePlatformComponent_Template.MovingPolylineData>>(movingPolylines, name: "movingPolylines");
+			hingeBones = s.SerializeObject<CListO<HingePlatformComponent_Template.HingeBoneData>>(hingeBones, name: "hingeBones");
+			platforms = s.SerializeObject<CListO<HingePlatformComponent_Template.PlatformData>>(platforms, name: "platforms");
+			movingPolylines = s.SerializeObject<CListO<HingePlatformComponent_Template.MovingPolylineData>>(movingPolylines, name: "movingPolylines");
 		}
 		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
 		public partial class MovingPolylineData : CSerializable {

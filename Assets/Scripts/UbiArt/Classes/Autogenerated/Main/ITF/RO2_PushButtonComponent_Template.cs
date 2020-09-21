@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool activateChildren;
 		public bool isProgressive;
 		public float progressiveSpeed;
-		public CArray<uint> progressiveHitLevels;
+		public CArrayP<uint> progressiveHitLevels;
 		public bool stayOn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 				activateChildren = s.Serialize<bool>(activateChildren, name: "activateChildren");
 				isProgressive = s.Serialize<bool>(isProgressive, name: "isProgressive");
 				progressiveSpeed = s.Serialize<float>(progressiveSpeed, name: "progressiveSpeed");
-				progressiveHitLevels = s.SerializeObject<CArray<uint>>(progressiveHitLevels, name: "progressiveHitLevels");
+				progressiveHitLevels = s.SerializeObject<CArrayP<uint>>(progressiveHitLevels, name: "progressiveHitLevels");
 				stayOn = s.Serialize<bool>(stayOn, name: "stayOn");
 			} else {
 				onOffDuration = s.Serialize<float>(onOffDuration, name: "onOffDuration");
@@ -26,8 +26,8 @@ namespace UbiArt.ITF {
 				activateChildren = s.Serialize<bool>(activateChildren, name: "activateChildren");
 				isProgressive = s.Serialize<bool>(isProgressive, name: "isProgressive");
 				progressiveSpeed = s.Serialize<float>(progressiveSpeed, name: "progressiveSpeed");
-				progressiveHitLevels = s.SerializeObject<CArray<uint>>(progressiveHitLevels, name: "progressiveHitLevels");
-				progressiveHitLevels = s.SerializeObject<CArray<uint>>(progressiveHitLevels, name: "progressiveHitLevels");
+				progressiveHitLevels = s.SerializeObject<CArrayP<uint>>(progressiveHitLevels, name: "progressiveHitLevels");
+				progressiveHitLevels = s.SerializeObject<CArrayP<uint>>(progressiveHitLevels, name: "progressiveHitLevels");
 				stayOn = s.Serialize<bool>(stayOn, name: "stayOn");
 			}
 		}

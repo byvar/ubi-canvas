@@ -3,10 +3,10 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class RandomAnimBankChangeComponent_Template : ActorComponent_Template {
-		public CList<RandomAnimBankChangeComponent_Template.tplRandomPatchNames> PatchNameCanBeRemoved;
+		public CListO<RandomAnimBankChangeComponent_Template.tplRandomPatchNames> PatchNameCanBeRemoved;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			PatchNameCanBeRemoved = s.SerializeObject<CList<RandomAnimBankChangeComponent_Template.tplRandomPatchNames>>(PatchNameCanBeRemoved, name: "PatchNameCanBeRemoved");
+			PatchNameCanBeRemoved = s.SerializeObject<CListO<RandomAnimBankChangeComponent_Template.tplRandomPatchNames>>(PatchNameCanBeRemoved, name: "PatchNameCanBeRemoved");
 		}
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class tplRandomPatchNames : CSerializable {

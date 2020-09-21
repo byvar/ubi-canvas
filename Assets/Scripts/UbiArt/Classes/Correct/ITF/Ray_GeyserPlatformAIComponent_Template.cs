@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 		public StringID fx;
 		public int fxUseTransform;
 		public GeneratorType fxGeneratorType;
-		public CArray<StringID> fxGenerators;
+		public CArrayO<StringID> fxGenerators;
 		public float fxLengthOffset;
 		public float fxLengthMultiplier;
 		public float fxWidth;
@@ -68,7 +68,7 @@ namespace UbiArt.ITF {
 		public int jumpToPlatform;
 		public uint faction;
 		public uint windTunnelLevel;
-		public CList<Ray_GeyserPlatformAIComponent_Template.RegionData> regions;
+		public CListO<Ray_GeyserPlatformAIComponent_Template.RegionData> regions;
 		public int isGeyserBehavior;
 		public int registerToAIManager;
 		public Angle minAngle;
@@ -129,7 +129,7 @@ namespace UbiArt.ITF {
 			fx = s.SerializeObject<StringID>(fx, name: "fx");
 			fxUseTransform = s.Serialize<int>(fxUseTransform, name: "fxUseTransform");
 			fxGeneratorType = s.Serialize<GeneratorType>(fxGeneratorType, name: "fxGeneratorType");
-			fxGenerators = s.SerializeObject<CArray<StringID>>(fxGenerators, name: "fxGenerators");
+			fxGenerators = s.SerializeObject<CArrayO<StringID>>(fxGenerators, name: "fxGenerators");
 			fxLengthOffset = s.Serialize<float>(fxLengthOffset, name: "fxLengthOffset");
 			fxLengthMultiplier = s.Serialize<float>(fxLengthMultiplier, name: "fxLengthMultiplier");
 			fxWidth = s.Serialize<float>(fxWidth, name: "fxWidth");
@@ -144,7 +144,7 @@ namespace UbiArt.ITF {
 			jumpToPlatform = s.Serialize<int>(jumpToPlatform, name: "jumpToPlatform");
 			faction = s.Serialize<uint>(faction, name: "faction");
 			windTunnelLevel = s.Serialize<uint>(windTunnelLevel, name: "windTunnelLevel");
-			regions = s.SerializeObject<CList<Ray_GeyserPlatformAIComponent_Template.RegionData>>(regions, name: "regions");
+			regions = s.SerializeObject<CListO<Ray_GeyserPlatformAIComponent_Template.RegionData>>(regions, name: "regions");
 			isGeyserBehavior = s.Serialize<int>(isGeyserBehavior, name: "isGeyserBehavior");
 			registerToAIManager = s.Serialize<int>(registerToAIManager, name: "registerToAIManager");
 			if (Settings.s.game == Settings.Game.RO && !s.HasSerializerFlags(CSerializerObject.Flags.Flags0) && s.HasFlags(SerializeFlags.Flags_xC0)) {

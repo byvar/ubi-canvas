@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 		public Color NeutralColor;
 		public GFX_GridFluidFlowTex FlowTexture;
 		public GFX_GridFluidDuDvTex DuDvTexture;
-		public CList<GFX_GridFluidAdditionnalRender> AdditionnalRender;
+		public CListO<GFX_GridFluidAdditionnalRender> AdditionnalRender;
 		public GFXPrimitiveParam PrimitiveParam;
 
 
@@ -86,7 +86,7 @@ namespace UbiArt.ITF {
 				NeutralColor = s.SerializeObject<Color>(NeutralColor, name: "NeutralColor");
 				FlowTexture = s.SerializeObject<GFX_GridFluidFlowTex>(FlowTexture, name: "FlowTexture");
 				DuDvTexture = s.SerializeObject<GFX_GridFluidDuDvTex>(DuDvTexture, name: "DuDvTexture");
-				AdditionnalRender = s.SerializeObject<CList<GFX_GridFluidAdditionnalRender>>(AdditionnalRender, name: "AdditionnalRender");
+				AdditionnalRender = s.SerializeObject<CListO<GFX_GridFluidAdditionnalRender>>(AdditionnalRender, name: "AdditionnalRender");
 				PrimitiveParam = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParam, name: "PrimitiveParam");
 			}
 		}

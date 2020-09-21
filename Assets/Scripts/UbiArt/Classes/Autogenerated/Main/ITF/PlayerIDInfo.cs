@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public uint lineIdName;
 		public uint lineIdDescription;
 		public uint costumeIconAnimationId;
-		public CList<PlayerIDInfo.GameScreenInfo> gameScreens;
+		public CListO<PlayerIDInfo.GameScreenInfo> gameScreens;
 		public PlayerIDInfo.GameScreenInfo defaultGameScreenInfo;
 		public PlayerIDInfo.ActorInfo actorInfo;
 		public Color deathBubbleColor;
@@ -19,18 +19,18 @@ namespace UbiArt.ITF {
 				id = s.Serialize<string>(id, name: "id");
 				family = s.Serialize<string>(family, name: "family");
 				deathBubbleColor = s.SerializeObject<Color>(deathBubbleColor, name: "deathBubbleColor");
-				gameScreens = s.SerializeObject<CList<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
+				gameScreens = s.SerializeObject<CListO<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				id = s.Serialize<string>(id, name: "id");
 				family = s.Serialize<string>(family, name: "family");
-				gameScreens = s.SerializeObject<CList<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
+				gameScreens = s.SerializeObject<CListO<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
 				defaultGameScreenInfo = s.SerializeObject<PlayerIDInfo.GameScreenInfo>(defaultGameScreenInfo, name: "defaultGameScreenInfo");
 			} else if (Settings.s.game == Settings.Game.COL) {
 			} else if (Settings.s.game == Settings.Game.VH) {
 				actorInfo = s.SerializeObject<PlayerIDInfo.ActorInfo>(actorInfo, name: "actorInfo");
 				id = s.Serialize<string>(id, name: "id");
 				family = s.Serialize<string>(family, name: "family");
-				gameScreens = s.SerializeObject<CList<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
+				gameScreens = s.SerializeObject<CListO<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
 				defaultGameScreenInfo = s.SerializeObject<PlayerIDInfo.GameScreenInfo>(defaultGameScreenInfo, name: "defaultGameScreenInfo");
 			} else {
 				actorInfo = s.SerializeObject<PlayerIDInfo.ActorInfo>(actorInfo, name: "actorInfo");
@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 				lineIdName = s.Serialize<uint>(lineIdName, name: "lineIdName");
 				lineIdDescription = s.Serialize<uint>(lineIdDescription, name: "lineIdDescription");
 				costumeIconAnimationId = s.Serialize<uint>(costumeIconAnimationId, name: "costumeIconAnimationId");
-				gameScreens = s.SerializeObject<CList<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
+				gameScreens = s.SerializeObject<CListO<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
 				defaultGameScreenInfo = s.SerializeObject<PlayerIDInfo.GameScreenInfo>(defaultGameScreenInfo, name: "defaultGameScreenInfo");
 			}
 		}
@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 			public Path file;
 			public bool isAlwaysActive;
 			public bool isPlayable;
-			public CList<uint> gameModes;
+			public CListP<uint> gameModes;
 			public bool isDynamicallyLoaded;
 			public uint mainGameMode;
 			protected override void SerializeImpl(CSerializerObject s) {
@@ -56,7 +56,7 @@ namespace UbiArt.ITF {
 				file = s.SerializeObject<Path>(file, name: "file");
 				isAlwaysActive = s.Serialize<bool>(isAlwaysActive, name: "isAlwaysActive");
 				isPlayable = s.Serialize<bool>(isPlayable, name: "isPlayable");
-				gameModes = s.SerializeObject<CList<uint>>(gameModes, name: "gameModes");
+				gameModes = s.SerializeObject<CListP<uint>>(gameModes, name: "gameModes");
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 					isDynamicallyLoaded = s.Serialize<bool>(isDynamicallyLoaded, name: "isDynamicallyLoaded");
 					mainGameMode = s.Serialize<uint>(mainGameMode, name: "mainGameMode");
@@ -66,11 +66,11 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class GameScreenInfo : CSerializable {
 			public StringID gameScreen;
-			public CList<PlayerIDInfo.ActorInfo> actors;
+			public CListO<PlayerIDInfo.ActorInfo> actors;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				gameScreen = s.SerializeObject<StringID>(gameScreen, name: "gameScreen");
-				actors = s.SerializeObject<CList<PlayerIDInfo.ActorInfo>>(actors, name: "actors");
+				actors = s.SerializeObject<CListO<PlayerIDInfo.ActorInfo>>(actors, name: "actors");
 			}
 		}
 		public override uint? ClassCRC => 0x1F8C15FF;

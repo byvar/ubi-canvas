@@ -4,12 +4,12 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_PuzzleBrick : ActorComponent {
 		public Enum_VH_0 Enum_VH_0__0;
-		public CArray<Generic<Event>> CArray_Generic_Event__1;
-		public CArray<Generic<Event>> CArray_Generic_Event__2;
-		public CArray<EventSender> CArray_EventSender__3;
-		public CArray<EventSender> CArray_EventSender__4;
-		public CArray<EventSender> CArray_EventSender__5;
-		public CArray<EventSender> CArray_EventSender__6;
+		public CArrayO<Generic<Event>> CArray_Generic_Event__1;
+		public CArrayO<Generic<Event>> CArray_Generic_Event__2;
+		public CArrayO<EventSender> CArray_EventSender__3;
+		public CArrayO<EventSender> CArray_EventSender__4;
+		public CArrayO<EventSender> CArray_EventSender__5;
+		public CArrayO<EventSender> CArray_EventSender__6;
 		public float float__7;
 		public bool bool__8;
 		public bool bool__9;
@@ -17,12 +17,12 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
-			CArray_Generic_Event__1 = s.SerializeObject<CArray<Generic<Event>>>(CArray_Generic_Event__1, name: "CArray_Generic_Event__1");
-			CArray_Generic_Event__2 = s.SerializeObject<CArray<Generic<Event>>>(CArray_Generic_Event__2, name: "CArray_Generic_Event__2");
-			CArray_EventSender__3 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__3, name: "CArray_EventSender__3");
-			CArray_EventSender__4 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__4, name: "CArray_EventSender__4");
-			CArray_EventSender__5 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__5, name: "CArray_EventSender__5");
-			CArray_EventSender__6 = s.SerializeObject<CArray<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
+			CArray_Generic_Event__1 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__1, name: "CArray_Generic_Event__1");
+			CArray_Generic_Event__2 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__2, name: "CArray_Generic_Event__2");
+			CArray_EventSender__3 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__3, name: "CArray_EventSender__3");
+			CArray_EventSender__4 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__4, name: "CArray_EventSender__4");
+			CArray_EventSender__5 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__5, name: "CArray_EventSender__5");
+			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
 			float__7 = s.Serialize<float>(float__7, name: "float__7");
 			bool__8 = s.Serialize<bool>(bool__8, name: "bool__8");
 			bool__9 = s.Serialize<bool>(bool__9, name: "bool__9");

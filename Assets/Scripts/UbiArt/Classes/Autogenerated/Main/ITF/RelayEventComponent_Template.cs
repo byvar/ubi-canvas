@@ -3,14 +3,14 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class RelayEventComponent_Template : ActorComponent_Template {
-		public CList<ITF.RelayData> relays;
-		public CList<ITF.RelayEventComponent_Template.RelayData> relays2;
+		public CListO<ITF.RelayData> relays;
+		public CListO<ITF.RelayEventComponent_Template.RelayData> relays2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
-				relays2 = s.SerializeObject<CList<ITF.RelayEventComponent_Template.RelayData>>(relays2, name: "relays2");
+				relays2 = s.SerializeObject<CListO<ITF.RelayEventComponent_Template.RelayData>>(relays2, name: "relays2");
 			} else {
-				relays = s.SerializeObject<CList<ITF.RelayData>>(relays, name: "relays");
+				relays = s.SerializeObject<CListO<ITF.RelayData>>(relays, name: "relays");
 			}
 		}
 		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]

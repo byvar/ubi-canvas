@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
 	public partial class AdditionalBehaviorsComponent_Template : ActorComponent_Template {
-		public CList<ExternBehaviorData_Template> externBehaviorDataList;
+		public CListO<ExternBehaviorData_Template> externBehaviorDataList;
 		public StringID startBhv;
 		public StringID onTriggerActiveBhv;
 		public StringID onTriggerDesactivateBhv;
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 				disablePhys = s.Serialize<bool>(disablePhys, name: "disablePhys");
 				onTriggerActiveCheckNextBhv = s.Serialize<bool>(onTriggerActiveCheckNextBhv, name: "onTriggerActiveCheckNextBhv");
 			} else {
-				externBehaviorDataList = s.SerializeObject<CList<ExternBehaviorData_Template>>(externBehaviorDataList, name: "externBehaviorDataList");
+				externBehaviorDataList = s.SerializeObject<CListO<ExternBehaviorData_Template>>(externBehaviorDataList, name: "externBehaviorDataList");
 				startBhv = s.SerializeObject<StringID>(startBhv, name: "startBhv");
 				onTriggerActiveBhv = s.SerializeObject<StringID>(onTriggerActiveBhv, name: "onTriggerActiveBhv");
 				onTriggerDesactivateBhv = s.SerializeObject<StringID>(onTriggerDesactivateBhv, name: "onTriggerDesactivateBhv");

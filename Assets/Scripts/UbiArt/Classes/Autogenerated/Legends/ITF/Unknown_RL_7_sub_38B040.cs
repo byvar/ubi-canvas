@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class Unknown_RL_7_sub_38B040 : SoundCommand {
 		public StringID name;
 		public int activate;
-		public CList<StringID> buslist;
+		public CListO<StringID> buslist;
 		public float factor;
 		public uint aux;
 		public Unknown_RL_1377_sub_388210 reverbParams;
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			name = s.SerializeObject<StringID>(name, name: "name");
 			activate = s.Serialize<int>(activate, name: "activate");
-			buslist = s.SerializeObject<CList<StringID>>(buslist, name: "buslist");
+			buslist = s.SerializeObject<CListO<StringID>>(buslist, name: "buslist");
 			factor = s.Serialize<float>(factor, name: "factor");
 			aux = s.Serialize<uint>(aux, name: "aux");
 			reverbParams = s.SerializeObject<Unknown_RL_1377_sub_388210>(reverbParams, name: "reverbParams");

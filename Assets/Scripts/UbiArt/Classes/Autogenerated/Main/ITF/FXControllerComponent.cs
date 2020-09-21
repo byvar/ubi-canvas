@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public int triggerFXisActive;
 		public StringID triggerFx;
 		public StringID defaultFx;
-		public CList<StringID> defaultFxList;
+		public CListO<StringID> defaultFxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
 					defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
-					defaultFxList = s.SerializeObject<CList<StringID>>(defaultFxList, name: "defaultFxList");
+					defaultFxList = s.SerializeObject<CListO<StringID>>(defaultFxList, name: "defaultFxList");
 					allowBusMixEvents = s.Serialize<bool>(allowBusMixEvents, name: "allowBusMixEvents", options: CSerializerObject.Options.BoolAsByte);
 					allowMusicEvents = s.Serialize<bool>(allowMusicEvents, name: "allowMusicEvents", options: CSerializerObject.Options.BoolAsByte);
 				}

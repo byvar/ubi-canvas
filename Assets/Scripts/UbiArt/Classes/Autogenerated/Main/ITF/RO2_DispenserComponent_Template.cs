@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		public bool allowNonPlayerHits;
 		public bool disableWhenDone;
 		public StringID fxStandPaint;
-		public CList<Angle> ejectionAngleList;
+		public CListO<Angle> ejectionAngleList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 				dispenseDelay = s.Serialize<float>(dispenseDelay, name: "dispenseDelay");
 				shakeDelay = s.Serialize<float>(shakeDelay, name: "shakeDelay");
 				spawnOffset = s.SerializeObject<Vec3d>(spawnOffset, name: "spawnOffset");
-				ejectionAngleList = s.SerializeObject<CList<Angle>>(ejectionAngleList, name: "ejectionAngleList");
+				ejectionAngleList = s.SerializeObject<CListO<Angle>>(ejectionAngleList, name: "ejectionAngleList");
 				isChildLauncher = s.Serialize<bool>(isChildLauncher, name: "isChildLauncher");
 				animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");
 				canWiggle = s.Serialize<bool>(canWiggle, name: "canWiggle");

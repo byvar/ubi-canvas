@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public FilterType2 filterType2;
 		public uint metronomeType;
 		public uint playOnNext;
-		public CArray<Generic<SoundModifier>> modifiers;
+		public CArrayO<Generic<SoundModifier>> modifiers;
 		
 		public StringID playModeInput;
 		public int isMusic;
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 				filterType2 = s.Serialize<FilterType2>(filterType2, name: "filterType2");
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				playOnNext = s.Serialize<uint>(playOnNext, name: "playOnNext");
-				modifiers = s.SerializeObject<CArray<Generic<SoundModifier>>>(modifiers, name: "modifiers");
+				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");
 				isMusic = s.Serialize<int>(isMusic, name: "isMusic");
 			} else {
 				numChannels = s.Serialize<uint>(numChannels, name: "numChannels");
@@ -64,7 +64,7 @@ namespace UbiArt.ITF {
 				filterType = s.Serialize<FilterType>(filterType, name: "filterType");
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				playOnNext = s.Serialize<uint>(playOnNext, name: "playOnNext");
-				modifiers = s.SerializeObject<CArray<Generic<SoundModifier>>>(modifiers, name: "modifiers");
+				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");
 			}
 		}
 		public enum PlayMode {

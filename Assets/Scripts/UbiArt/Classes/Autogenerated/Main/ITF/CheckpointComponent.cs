@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		public Path Path__14;
 		public bool bool__15;
 		public Path Path__16;
-		public CArray<CheckpointComponent.SerializableDisguiseElementType> CArray_CheckpointComponent_SerializableDisguiseElementType__17;
+		public CArrayO<CheckpointComponent.SerializableDisguiseElementType> CArray_CheckpointComponent_SerializableDisguiseElementType__17;
 		public Enum_VH_1 Enum_VH_1__18;
 		public Enum_VH_1 Enum_VH_1__19;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -83,7 +83,7 @@ namespace UbiArt.ITF {
 				Path__14 = s.SerializeObject<Path>(Path__14, name: "Path__14");
 				bool__15 = s.Serialize<bool>(bool__15, name: "bool__15");
 				Path__16 = s.SerializeObject<Path>(Path__16, name: "Path__16");
-				CArray_CheckpointComponent_SerializableDisguiseElementType__17 = s.SerializeObject<CArray<CheckpointComponent.SerializableDisguiseElementType>>(CArray_CheckpointComponent_SerializableDisguiseElementType__17, name: "CArray_CheckpointComponent_SerializableDisguiseElementType__17");
+				CArray_CheckpointComponent_SerializableDisguiseElementType__17 = s.SerializeObject<CArrayO<CheckpointComponent.SerializableDisguiseElementType>>(CArray_CheckpointComponent_SerializableDisguiseElementType__17, name: "CArray_CheckpointComponent_SerializableDisguiseElementType__17");
 				Enum_VH_1__18 = s.Serialize<Enum_VH_1>(Enum_VH_1__18, name: "Enum_VH_1__18");
 				Enum_VH_1__19 = s.Serialize<Enum_VH_1>(Enum_VH_1__19, name: "Enum_VH_1__19");
 			} else {

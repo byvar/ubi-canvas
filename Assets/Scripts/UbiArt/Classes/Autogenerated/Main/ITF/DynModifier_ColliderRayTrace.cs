@@ -6,13 +6,13 @@ namespace UbiArt.ITF {
 		public Vec2d OffSet;
 		public float Size;
 		public ECOLLISIONFILTER CollisionMask;
-		public CList<StringID> IgnoreGMat;
+		public CListO<StringID> IgnoreGMat;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			OffSet = s.SerializeObject<Vec2d>(OffSet, name: "OffSet");
 			Size = s.Serialize<float>(Size, name: "Size");
 			CollisionMask = s.Serialize<ECOLLISIONFILTER>(CollisionMask, name: "CollisionMask");
-			IgnoreGMat = s.SerializeObject<CList<StringID>>(IgnoreGMat, name: "IgnoreGMat");
+			IgnoreGMat = s.SerializeObject<CListO<StringID>>(IgnoreGMat, name: "IgnoreGMat");
 		}
 		public enum ECOLLISIONFILTER {
 			[Serialize("ECOLLISIONFILTER_NONE"       )] NONE = 0,

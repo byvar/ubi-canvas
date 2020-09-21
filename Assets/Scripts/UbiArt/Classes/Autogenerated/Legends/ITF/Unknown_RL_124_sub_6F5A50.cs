@@ -15,8 +15,8 @@ namespace UbiArt.ITF {
 		public float CreatureBaseRadius;
 		public float CreatureRadiusSeeder;
 		public float CreatureNbCoeff;
-		public CList<Unknown_RL_20717_sub_6E6EE0> OnBoneData;
-		public CList<StringID> EyeBoneList;
+		public CListO<Unknown_RL_20717_sub_6E6EE0> OnBoneData;
+		public CListO<StringID> EyeBoneList;
 		public int ApplyAnimMod;
 		public StringID TailBone;
 		public StringID HeadBone;
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 		public float Gravity;
 		public float ExplosionForceMultiplier;
 		public float ExplosionInitialSpeed;
-		public CList<float> PunchExplosionRadius;
+		public CListP<float> PunchExplosionRadius;
 		public float PunchPercentageValidation;
 		public float TimeToVanish;
 		public float RotationCoeff;
@@ -72,8 +72,8 @@ namespace UbiArt.ITF {
 			CreatureBaseRadius = s.Serialize<float>(CreatureBaseRadius, name: "CreatureBaseRadius");
 			CreatureRadiusSeeder = s.Serialize<float>(CreatureRadiusSeeder, name: "CreatureRadiusSeeder");
 			CreatureNbCoeff = s.Serialize<float>(CreatureNbCoeff, name: "CreatureNbCoeff");
-			OnBoneData = s.SerializeObject<CList<Unknown_RL_20717_sub_6E6EE0>>(OnBoneData, name: "OnBoneData");
-			EyeBoneList = s.SerializeObject<CList<StringID>>(EyeBoneList, name: "EyeBoneList");
+			OnBoneData = s.SerializeObject<CListO<Unknown_RL_20717_sub_6E6EE0>>(OnBoneData, name: "OnBoneData");
+			EyeBoneList = s.SerializeObject<CListO<StringID>>(EyeBoneList, name: "EyeBoneList");
 			ApplyAnimMod = s.Serialize<int>(ApplyAnimMod, name: "ApplyAnimMod");
 			TailBone = s.SerializeObject<StringID>(TailBone, name: "TailBone");
 			HeadBone = s.SerializeObject<StringID>(HeadBone, name: "HeadBone");
@@ -95,7 +95,7 @@ namespace UbiArt.ITF {
 			Gravity = s.Serialize<float>(Gravity, name: "Gravity");
 			ExplosionForceMultiplier = s.Serialize<float>(ExplosionForceMultiplier, name: "ExplosionForceMultiplier");
 			ExplosionInitialSpeed = s.Serialize<float>(ExplosionInitialSpeed, name: "ExplosionInitialSpeed");
-			PunchExplosionRadius = s.SerializeObject<CList<float>>(PunchExplosionRadius, name: "PunchExplosionRadius");
+			PunchExplosionRadius = s.SerializeObject<CListP<float>>(PunchExplosionRadius, name: "PunchExplosionRadius");
 			PunchPercentageValidation = s.Serialize<float>(PunchPercentageValidation, name: "PunchPercentageValidation");
 			TimeToVanish = s.Serialize<float>(TimeToVanish, name: "TimeToVanish");
 			RotationCoeff = s.Serialize<float>(RotationCoeff, name: "RotationCoeff");

@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool registerToAIManager;
 		public uint faction;
 		public int health;
-		public CArray<uint> damageLevels;
+		public CArrayP<uint> damageLevels;
 		public float scaleRandomFactor;
 		public int listenToActivateEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -15,14 +15,14 @@ namespace UbiArt.ITF {
 				registerToAIManager = s.Serialize<bool>(registerToAIManager, name: "registerToAIManager");
 				faction = s.Serialize<uint>(faction, name: "faction");
 				health = s.Serialize<int>(health, name: "health");
-				damageLevels = s.SerializeObject<CArray<uint>>(damageLevels, name: "damageLevels");
+				damageLevels = s.SerializeObject<CArrayP<uint>>(damageLevels, name: "damageLevels");
 				scaleRandomFactor = s.Serialize<float>(scaleRandomFactor, name: "scaleRandomFactor");
 				listenToActivateEvent = s.Serialize<int>(listenToActivateEvent, name: "listenToActivateEvent");
 			} else {
 				registerToAIManager = s.Serialize<bool>(registerToAIManager, name: "registerToAIManager");
 				faction = s.Serialize<uint>(faction, name: "faction");
 				health = s.Serialize<int>(health, name: "health");
-				damageLevels = s.SerializeObject<CArray<uint>>(damageLevels, name: "damageLevels");
+				damageLevels = s.SerializeObject<CArrayP<uint>>(damageLevels, name: "damageLevels");
 				scaleRandomFactor = s.Serialize<float>(scaleRandomFactor, name: "scaleRandomFactor");
 			}
 		}

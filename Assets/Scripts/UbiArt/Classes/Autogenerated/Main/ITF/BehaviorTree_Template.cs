@@ -4,11 +4,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class BehaviorTree_Template : CSerializable {
 		public BTNodeTemplate_Ref root;
-		public CArray<Generic<BTNode_Template>> nodes;
+		public CArrayO<Generic<BTNode_Template>> nodes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			root = s.SerializeObject<BTNodeTemplate_Ref>(root, name: "root");
-			nodes = s.SerializeObject<CArray<Generic<BTNode_Template>>>(nodes, name: "nodes");
+			nodes = s.SerializeObject<CArrayO<Generic<BTNode_Template>>>(nodes, name: "nodes");
 		}
 	}
 }

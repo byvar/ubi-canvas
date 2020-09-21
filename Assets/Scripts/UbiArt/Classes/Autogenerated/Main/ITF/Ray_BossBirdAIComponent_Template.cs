@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		public float birdXSpace;
 		public float birdYSpace;
 		public uint maxLums;
-		public CList<EventPlayMusic> musics;
+		public CListO<EventPlayMusic> musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			isMecha = s.Serialize<int>(isMecha, name: "isMecha");
@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 			birdXSpace = s.Serialize<float>(birdXSpace, name: "birdXSpace");
 			birdYSpace = s.Serialize<float>(birdYSpace, name: "birdYSpace");
 			maxLums = s.Serialize<uint>(maxLums, name: "maxLums");
-			musics = s.SerializeObject<CList<EventPlayMusic>>(musics, name: "musics");
+			musics = s.SerializeObject<CListO<EventPlayMusic>>(musics, name: "musics");
 		}
 		public override uint? ClassCRC => 0x804D1AAC;
 	}
