@@ -8,8 +8,5 @@ namespace UbiArt.ITF {
 			uac.actor = act;
 			uac.component = this;
 		}
-
-		public virtual void UpdateZSortValue(Dictionary<Material, float> zdict) {
-		}
 	}
 }

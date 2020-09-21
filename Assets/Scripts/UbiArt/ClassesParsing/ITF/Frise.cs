@@ -46,6 +46,15 @@ namespace UbiArt.ITF {
 					MeshFilter mf = mesh_static.AddComponent<MeshFilter>();
 					MeshRenderer mr = mesh_static.AddComponent<MeshRenderer>();
 					Material[] mats = new Material[meshBuildData.value.StaticIndexList.Count];
+					for (int m = 0; m < mats.Length; m++) {
+						int idTexConfig = meshBuildData.value.StaticIndexList[m].IdTexConfig == 0xFFFFFFFF ? 0 : (int)meshBuildData.value.StaticIndexList[m].IdTexConfig;
+						if (config != null && config.obj.textureConfigs.Count > idTexConfig) {
+							mats[m] = config.obj.textureConfigs[idTexConfig].material.GetShaderMaterial(shader: shader?.obj);
+						} else {
+							mats[m] = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
+						}
+					}
+					mr.sharedMaterials = mats;
 					for (int m = 0; m < meshBuildData.value.StaticIndexList.Count; m++) {
 						/*int[] tris = new int[meshBuildData.value.StaticIndexList[m].List.Count * 2];
 						for (int i = 0; i < meshBuildData.value.StaticIndexList[m].List.Count / 3; i++) {
@@ -66,7 +75,6 @@ namespace UbiArt.ITF {
 						}
 						mesh.SetTriangles(tris, m);
 
-						Material mat;
 						int idTexConfig = meshBuildData.value.StaticIndexList[m].IdTexConfig == 0xFFFFFFFF ? 0 : (int)meshBuildData.value.StaticIndexList[m].IdTexConfig;
 						if (config != null && config.obj.textureConfigs.Count > idTexConfig) {
 							/*if (config.obj.textureConfigs[idTexConfig].material.shader != null && config.obj.textureConfigs[idTexConfig].material.shader.obj != null) {
@@ -87,8 +95,8 @@ namespace UbiArt.ITF {
 								mat.SetTexture("_MainTex", Util.CreateDummyTexture());
 							}
 							mat.color = UseTemplatePrimitiveParams ? config.obj.PrimitiveParameters.colorFactor : PrimitiveParameters.colorFactor;*/
-							mat = config.obj.textureConfigs[idTexConfig].material.GetUnityMaterial(shader != null ? shader.obj : null);
-							FillMaterialParams(mat);
+							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(mr, index: m, shader: shader?.obj);
+							FillMaterialParams(mr, m);
 							GenericFile<GFXMaterialShader_Template> sh = config.obj.textureConfigs[idTexConfig].material.shader;
 							if (sh != null && sh.obj != null && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
 								mesh_static.layer = 0;
@@ -97,16 +105,13 @@ namespace UbiArt.ITF {
 							}
 							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.Zero) {
 								AnimatedTexture animTex = mesh_static.AddComponent<AnimatedTexture>();
-								animTex.ResetMaterial(config.obj.textureConfigs[idTexConfig], mat);
+								animTex.ResetMaterial(config.obj.textureConfigs[idTexConfig], mr);
 							}
 						} else {
-							mat = new Material(MapLoader.Loader.baseMaterial);
-							FillMaterialParams(mat);
+							FillMaterialParams(mr, m);
 						}
-						mats[m] = mat;
 					}
 					mf.sharedMesh = mesh;
-					mr.sharedMaterials = mats;
 					mr_static = mr;
 				}
 				await Controller.WaitIfNecessary();
@@ -129,6 +134,15 @@ namespace UbiArt.ITF {
 					MeshFilter mf = mesh_anim.AddComponent<MeshFilter>();
 					MeshRenderer mr = mesh_anim.AddComponent<MeshRenderer>();
 					Material[] mats = new Material[meshBuildData.value.AnimIndexList.Count];
+					for (int m = 0; m < mats.Length; m++) {
+						int idTexConfig = meshBuildData.value.AnimIndexList[m].IdTexConfig == 0xFFFFFFFF ? 0 : (int)meshBuildData.value.AnimIndexList[m].IdTexConfig;
+						if (config != null && config.obj.textureConfigs.Count > idTexConfig) {
+							mats[m] = config.obj.textureConfigs[idTexConfig].material.GetShaderMaterial(shader: shader?.obj);
+						} else {
+							mats[m] = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
+						}
+					}
+					mr.sharedMaterials = mats;
 					for (int m = 0; m < meshBuildData.value.AnimIndexList.Count; m++) {
 						/*int[] tris = new int[meshBuildData.value.AnimIndexList[m].List.Count * 2];
 						for (int i = 0; i < meshBuildData.value.AnimIndexList[m].List.Count / 3; i++) {
@@ -148,7 +162,6 @@ namespace UbiArt.ITF {
 						}
 						mesh.SetTriangles(tris, m);
 
-						Material mat;
 						int idTexConfig = meshBuildData.value.AnimIndexList[m].IdTexConfig == 0xFFFFFFFF ? 0 : (int)meshBuildData.value.AnimIndexList[m].IdTexConfig;
 						if (config != null && config.obj.textureConfigs.Count > idTexConfig) {
 							/*if (config.obj.textureConfigs[idTexConfig].material.shader != null && config.obj.textureConfigs[idTexConfig].material.shader.obj != null) {
@@ -169,8 +182,8 @@ namespace UbiArt.ITF {
 								mat.SetTexture("_MainTex", Util.CreateDummyTexture());
 							}
 							mat.color = UseTemplatePrimitiveParams ? config.obj.PrimitiveParameters.colorFactor : PrimitiveParameters.colorFactor;*/
-							mat = config.obj.textureConfigs[idTexConfig].material.GetUnityMaterial(shader != null ? shader.obj : null);
-							FillMaterialParams(mat);
+							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(mr, index: m, shader: shader?.obj);
+							FillMaterialParams(mr, m);
 							GenericFile<GFXMaterialShader_Template> sh = config.obj.textureConfigs[idTexConfig].material.shader;
 							if (sh != null && sh.obj != null && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
 								mesh_anim.layer = 0;
@@ -179,33 +192,33 @@ namespace UbiArt.ITF {
 							}
 							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.Zero) {
 								AnimatedTexture animTex = mesh_anim.AddComponent<AnimatedTexture>();
-								animTex.ResetMaterial(config.obj.textureConfigs[idTexConfig], mat);
+								animTex.ResetMaterial(config.obj.textureConfigs[idTexConfig], mr);
 							}
 						} else {
-							mat = new Material(MapLoader.Loader.baseMaterial);
-							FillMaterialParams(mat);
+							FillMaterialParams(mr, m);
 						}
-						mats[m] = mat;
 					}
 					mf.sharedMesh = mesh;
-					mr.sharedMaterials = mats;
 					mr_anim = mr;
 				}
 			}
 		}
-
-		private void FillMaterialParams(Material mat) {
+		private void FillMaterialParams(Renderer r, int index = 0) {
 			bool hasConfig = config != null && config.obj != null;
 			//if (!hasConfig) return;
 			//GFXPrimitiveParam param = (UseTemplatePrimitiveParams && hasConfig) ? config.obj.PrimitiveParameters : PrimitiveParameters;
+
+			MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+			r.GetPropertyBlock(mpb, index);
 			GFXPrimitiveParam param = PrimitiveParameters;
-			mat.SetColor("_ColorFactor", param.colorFactor);
-			mat.SetColor("_LightConfig", new Vector4(
+			mpb.SetColor("_ColorFactor", param.colorFactor);
+			mpb.SetColor("_LightConfig", new Vector4(
 				param.FrontLightBrightness,
 				param.FrontLightContrast,
 				param.BackLightBrightness,
 				param.BackLightContrast));
-			mat.SetColor("_ColorFog", param.colorFog);
+			mpb.SetColor("_ColorFog", param.colorFog);
+			r.SetPropertyBlock(mpb, index);
 		}
 
 		protected override void OnPostSerialize(CSerializerObject s) {

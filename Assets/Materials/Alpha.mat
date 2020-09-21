@@ -26,7 +26,7 @@ Material:
     - _BackLight:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: -0.6028281, y: 0}
     - _BackLight2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -50,7 +50,7 @@ Material:
     - _Diffuse:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: -0.6028281, y: 0}
     - _Diffuse2:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -101,14 +101,14 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorFactor: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorFog: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorFog: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightConfig: {r: 0, g: 1, b: 0, a: 1}
-    - _ShaderParams: {r: 1, g: 0, b: 0, a: 0}
-    - _ShaderParams2: {r: 0, g: 0, b: 0, a: 0}
-    - _UseTextures: {r: 0, g: 0, b: 0, a: 0}
+    - _ShaderParams: {r: 0, g: 0, b: 1, a: 0}
+    - _ShaderParams2: {r: 0, g: 2, b: 0, a: 0}
+    - _UseTextures: {r: 1, g: 0, b: 0, a: 0}
     - _UseTextures2: {r: 0, g: 0, b: 0, a: 0}

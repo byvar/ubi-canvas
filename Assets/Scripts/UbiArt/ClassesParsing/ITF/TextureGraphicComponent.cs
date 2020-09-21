@@ -33,9 +33,10 @@ namespace UbiArt.ITF {
 			MeshFilter mf = tex_gao.AddComponent<MeshFilter>();
 			MeshRenderer mr = tex_gao.AddComponent<MeshRenderer>();
 			mf.sharedMesh = CreateMesh(material.textureSet.tex_diffuse);
-			tex_mat = material.GetUnityMaterial();
+			tex_mat = material.GetShaderMaterial();
 			tex_renderer = mr;
-			FillMaterialParams(tex_mat);
+			material.FillUnityMaterialPropertyBlock(tex_renderer);
+			FillMaterialParams(tex_renderer);
 			mr.sharedMaterial = tex_mat;
 		}
 
@@ -85,15 +86,18 @@ namespace UbiArt.ITF {
 			//meshUnity.SetUVs(4, Enumerable.Repeat(Vector4.one, 4).ToList());
 			return meshUnity;
 		}
-		private void FillMaterialParams(Material mat) {
+		private void FillMaterialParams(Renderer r, int index = 0) {
+			MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+			r.GetPropertyBlock(mpb, index);
 			GFXPrimitiveParam param = PrimitiveParameters;
-			mat.SetColor("_ColorFactor", param.colorFactor);
-			mat.SetColor("_LightConfig", new Vector4(
+			mpb.SetColor("_ColorFactor", param.colorFactor);
+			mpb.SetColor("_LightConfig", new Vector4(
 				param.FrontLightBrightness,
 				param.FrontLightContrast,
 				param.BackLightBrightness,
 				param.BackLightContrast));
-			mat.SetColor("_ColorFog", param.colorFog);
+			mpb.SetColor("_ColorFog", param.colorFog);
+			r.SetPropertyBlock(mpb, index);
 		}
 	}
 }

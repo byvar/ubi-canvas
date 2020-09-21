@@ -1,24 +1,24 @@
 ﻿Shader "Custom/UbiArtAlpha" {
 	Properties{
-		_Diffuse("Diffuse"             , 2D) = "white" {}
-		_BackLight("Back Light"        , 2D) = "white" {}
-		_Normal("Normal"               , 2D) = "white" {}
-		_SeparateAlpha("Separate Alpha", 2D) = "white" {}
-		_Diffuse2("Diffuse 2"          , 2D) = "white" {}
-		_BackLight2("Back Light 2"     , 2D) = "white" {}
-		_AnimImpostor("Anim Impostor"  , 2D) = "white" {}
+		[PerRendererData] _Diffuse("Diffuse"             , 2D) = "white" {}
+		[PerRendererData] _BackLight("Back Light"        , 2D) = "white" {}
+		[PerRendererData] _Normal("Normal"               , 2D) = "white" {}
+		[PerRendererData] _SeparateAlpha("Separate Alpha", 2D) = "white" {}
+		[PerRendererData] _Diffuse2("Diffuse 2"          , 2D) = "white" {}
+		[PerRendererData] _BackLight2("Back Light 2"     , 2D) = "white" {}
+		[PerRendererData] _AnimImpostor("Anim Impostor"  , 2D) = "white" {}
 		
-		_ColorFactor("Color Factor",       Color) = (1,1,1,1)
-		_LightConfig("Light Config",      Vector) = (0,1,0,1)
-		_ColorFog("Color Fog",             Color) = (1,1,1,1)
-		_UseTextures("Use Textures",      Vector) = (0,0,0,0)
-		_UseTextures2("Use Textures 2",   Vector) = (0,0,0,0)
-		_ShaderParams("Shader params",    Vector) = (1,0,0,0)
-		_ShaderParams2("Shader params 2", Vector) = (0,0,0,0)
+		[PerRendererData] _ColorFactor("Color Factor",       Color) = (1,1,1,1)
+		[PerRendererData] _LightConfig("Light Config",      Vector) = (0,1,0,1)
+		[PerRendererData] _ColorFog("Color Fog",             Color) = (1,1,1,1)
+		[PerRendererData] _UseTextures("Use Textures",      Vector) = (0,0,0,0)
+		[PerRendererData] _UseTextures2("Use Textures 2",   Vector) = (0,0,0,0)
+		[PerRendererData] _ShaderParams("Shader params",    Vector) = (1,0,0,0)
+		[PerRendererData] _ShaderParams2("Shader params 2", Vector) = (0,0,0,0)
 
 		_BlendSrc("Blend mode Source",      Float) = 5
 		_BlendDst("Blend mode Destination", Float) = 10
-		[Enum(Off,0,On,1)] _ZWrite("ZWrite",  Int) = 0
+		[Enum(Off,0,On,1)] _ZWrite("ZWrite",  Int) = 1
 	}
 	SubShader{
 		//ZWrite [_ZWrite]

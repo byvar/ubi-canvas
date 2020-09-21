@@ -123,7 +123,7 @@ namespace UbiArt.FileFormat.Texture {
 		private Texture2D CreateBitmap(int width, int height, byte[] rawData) {
 			Texture2D bitmap = new Texture2D(width, height, TextureFormat.RGBA32, false);
 			bitmap.LoadRawTextureData(rawData);
-			bitmap.Apply(false, true);
+			bitmap.Apply(false, false);
 			return bitmap;
 		}
 

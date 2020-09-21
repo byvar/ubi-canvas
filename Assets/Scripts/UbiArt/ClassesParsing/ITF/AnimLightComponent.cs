@@ -9,12 +9,12 @@ namespace UbiArt.ITF {
 		public GenericFile<GFXMaterialShader_Template> shader;
 		private AnimLightComponent_Template tpl;
 		private GameObject[] patches = new GameObject[0];
-		private Material[] patchMaterials = new Material[0];
 		private SkinnedMeshRenderer[] patchRenderers = new SkinnedMeshRenderer[0];
 		private GameObject skeleton_gao;
 		private UnityBone[] bones;
 		//private int zValue = 0;
 		private UnityAnimation ua;
+		MaterialPropertyBlock mpb;
 
 		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
 			base.InitUnityComponent(act, gao, template, index);
@@ -45,8 +45,7 @@ namespace UbiArt.ITF {
 
 		private void CreateGameObjects(GameObject gao) {
 			if (!MapLoader.Loader.loadAnimations) return;
-			Material tex_mat = GetUnityMaterial();
-			FillMaterialParams(tex_mat);
+			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
 			bool createdOne = false;
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				foreach (TextureBankPath bp in subAnimInfo.animPackage.textureBank) {
@@ -73,7 +72,6 @@ namespace UbiArt.ITF {
 			AnimSkeleton skeleton = sklRes != null ? (AnimSkeleton)sklRes : null;
 			if (pbk == null || skeleton == null) return;
 			patches = new GameObject[pbk.templates.Count];
-			patchMaterials = new Material[patches.Length];
 			patchRenderers = new SkinnedMeshRenderer[patches.Length];
 			skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
 			skeleton_gao.transform.SetParent(gao.transform, false);
@@ -87,9 +85,6 @@ namespace UbiArt.ITF {
 				Mesh mesh = at.CreateMesh();
 				if (mesh == null) continue;
 
-				Material patch_mat = new Material(tex_mat);
-				//SetMaterialTextures(patch_mat, bp.textureSet);
-
 				GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
 				patch_gao.transform.SetParent(gao.transform, false);
 				patch_gao.transform.localPosition = Vector3.zero;
@@ -102,12 +97,12 @@ namespace UbiArt.ITF {
 				//mf.sharedMesh = mesh;
 				SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
 				mr.bones = mesh_bones.Select(b => b?.transform).ToArray();
-				mr.sharedMaterial = patch_mat;
+				mr.sharedMaterial = tex_mat;
 				mr.sharedMesh = mesh;
+				FillMaterialParams(mr);
 				List<int> roots = at.GetRootIndices();
 				if (roots.Count > 0) mr.rootBone = mr.bones[roots[0]];
 				patches[i] = patch_gao;
-				patchMaterials[i] = patch_mat;
 				patchRenderers[i] = mr;
 			}
 			skeleton.ResetBones(bones);
@@ -116,9 +111,9 @@ namespace UbiArt.ITF {
 			ua.skeleton = skeleton;
 			ua.anims = new List<System.Tuple<Path, AnimTrack>>();
 			ua.patches = patches;
-			ua.patchMaterials = patchMaterials;
 			ua.patchRenderers = patchRenderers;
 			ua.pbk = pbk;
+			ua.alc = this;
 			/*List<Path> animPaths = new List<Path>();
 			foreach (SubAnim_Template sat in tpl.animSet.animations) {
 				animPaths.Add(sat.name);
@@ -142,7 +137,6 @@ namespace UbiArt.ITF {
 			if (bp != null && bp.textureSet != null && skeleton != null) {
 				if (bp.pbk != null) {
 					patches = new GameObject[bp.pbk.templates.Count];
-					patchMaterials = new Material[patches.Length];
 					patchRenderers = new SkinnedMeshRenderer[patches.Length];
 					skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
 					skeleton_gao.transform.SetParent(gao.transform, false);
@@ -154,9 +148,6 @@ namespace UbiArt.ITF {
 						AnimTemplate at = bp.pbk.templates[i];
 						Mesh mesh = at.CreateMesh();
 						if (mesh == null) continue;
-
-						Material patch_mat = new Material(tex_mat);
-						SetMaterialTextures(patch_mat, bp.textureSet);
 
 						GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
 						patch_gao.transform.SetParent(gao.transform, false);
@@ -170,10 +161,11 @@ namespace UbiArt.ITF {
 						//mf.sharedMesh = mesh;
 						SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
 						mr.bones = mesh_bones.Select(b => b != null ? b.transform : null).ToArray();
-						mr.sharedMaterial = patch_mat;
+						mr.sharedMaterial = tex_mat;
 						mr.sharedMesh = mesh;
+						FillMaterialParams(mr);
+						SetMaterialTextures(bp.textureSet, mr);
 						patches[i] = patch_gao;
-						patchMaterials[i] = patch_mat;
 						patchRenderers[i] = mr;
 					}
 					skeleton.ResetBones(bones);
@@ -183,9 +175,9 @@ namespace UbiArt.ITF {
 					List<Path> animPaths = new List<Path>();
 					ua.anims = new List<System.Tuple<Path, AnimTrack>>();
 					ua.patches = patches;
-					ua.patchMaterials = patchMaterials;
 					ua.patchRenderers = patchRenderers;
 					ua.pbk = bp.pbk;
+					ua.alc = this;
 					foreach (SubAnim_Template sat in tpl.animSet.animations) {
 						animPaths.Add(sat.name);
 					}
@@ -238,86 +230,88 @@ namespace UbiArt.ITF {
 			//meshUnity.SetUVs(4, Enumerable.Repeat(Vector4.one, 4).ToList());
 			return meshUnity;
 		}
-		private void FillMaterialParams(Material mat) {
+		private void FillMaterialParams(Renderer r, int index = 0) {
+			if (mpb == null) mpb = new MaterialPropertyBlock();
+			r.GetPropertyBlock(mpb, index);
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				GFXPrimitiveParam param = PrimitiveParameters;
-				mat.SetColor("_ColorFactor", param.colorFactor);
-				mat.SetColor("_LightConfig", new Vector4(
+				mpb.SetColor("_ColorFactor", param.colorFactor);
+				mpb.SetColor("_LightConfig", new Vector4(
 					param.FrontLightBrightness,
 					param.FrontLightContrast,
 					param.BackLightBrightness,
 					param.BackLightContrast));
-				mat.SetColor("_ColorFog", param.colorFog);
+				mpb.SetColor("_ColorFog", param.colorFog);
 			} else {
-				mat.SetColor("_ColorFactor", UnityEngine.Color.white);
-				mat.SetColor("_Lightonfig", new Vector4(1, 0, 1, 0));
-				mat.SetColor("_ColorFog", Vector4.zero);
+				mpb.SetColor("_ColorFactor", UnityEngine.Color.white);
+				mpb.SetColor("_LightConfig", new Vector4(1, 0, 1, 0));
+				mpb.SetColor("_ColorFog", Vector4.zero);
 			}
+			r.SetPropertyBlock(mpb, index);
 		}
-		private Material GetUnityMaterial(GFXMaterialShader_Template shader = null) {
+
+
+
+		public void FillUnityMaterialPropertyBlock(Renderer r, int index = 0, GFXMaterialShader_Template shader = null) {
 			if (shader == null) shader = (this.shader != null ? this.shader.obj : null);
-			//Shader sh = Shader.Find("Custom/UbiArtAlpha");
-			Material mat = new Material(MapLoader.Loader.baseTransparentMaterial);
-			if (shader != null) {
-				mat.SetVector("_ShaderParams", new Vector4(
+			if (mpb == null) mpb = new MaterialPropertyBlock();
+			if (shader == null) {
+				r.GetPropertyBlock(mpb, index);
+			} else {
+				r.GetPropertyBlock(mpb, index);
+				mpb.SetVector("_ShaderParams", new Vector4(
 					shader.renderRegular ? 1f : 0f,
 					shader.renderFrontLight ? 1f : 0f,
 					shader.renderBackLight ? 1f : 0f,
 					0f));
-				mat.SetVector("_ShaderParams2", new Vector4(
+				mpb.SetVector("_ShaderParams2", new Vector4(
 					(int)shader.materialtype2,
 					(int)shader.blendmode,
 					0f,
 					0f));
-				BlendMode blendSrc = BlendMode.SrcAlpha;
-				BlendMode blendDst = BlendMode.OneMinusSrcAlpha;
-				switch (shader.blendmode) {
-					case GFXMaterialShader_Template.GFX_BLEND.ALPHA:
-						blendSrc = BlendMode.SrcAlpha;
-						blendDst = BlendMode.OneMinusSrcAlpha;
-						break;
-					case GFXMaterialShader_Template.GFX_BLEND.ALPHAPREMULT:
-						blendSrc = BlendMode.One;
-						blendDst = BlendMode.OneMinusSrcAlpha;
-						break;
-					case GFXMaterialShader_Template.GFX_BLEND.ADD:
-						blendSrc = BlendMode.One;
-						blendDst = BlendMode.One;
-						break;
-					case GFXMaterialShader_Template.GFX_BLEND.ADDALPHA:
-						blendSrc = BlendMode.SrcAlpha;
-						blendDst = BlendMode.One;
-						break;
-					case GFXMaterialShader_Template.GFX_BLEND.MUL:
-						blendSrc = BlendMode.DstColor;
-						blendDst = BlendMode.Zero;
-						break;
-					case GFXMaterialShader_Template.GFX_BLEND.MUL2X:
-						blendSrc = BlendMode.DstColor;
-						blendDst = BlendMode.SrcColor;
-						break;
-				}
-				mat.SetInt("_ZWrite", (int)ZWrite.On);
-				if (shader.renderFrontLight || shader.renderBackLight) {
-					blendSrc = BlendMode.SrcAlpha;
-					blendDst = BlendMode.One;
-					mat.SetInt("_ZWrite", (int)ZWrite.Off);
-				}
-				mat.SetFloat("_BlendSrc", (int)blendSrc);
-				mat.SetFloat("_BlendDst", (int)blendDst);
 			}
-			return mat;
+
+			// Set property block
+			r.SetPropertyBlock(mpb, index);
 		}
-		private void SetMaterialTextures(Material mat, GFXMaterialTexturePathSet textureSet) {
+
+
+		private void SetMaterialTextures(GFXMaterialTexturePathSet textureSet, Renderer r, int index = 0) {
+			if (mpb == null) mpb = new MaterialPropertyBlock();
+			r.GetPropertyBlock(mpb, index);
 			if (textureSet != null) {
-				mat.SetVector("_UseTextures", new Vector4(
+				mpb.SetVector("_UseTextures", new Vector4(
 					textureSet.tex_diffuse != null ? 1f : 0f,
 					textureSet.tex_back_light != null ? 1f : 0f,
 					0f, 0f));
-				if (textureSet.tex_diffuse != null) mat.SetTexture("_Diffuse", textureSet.tex_diffuse.SquareTexture);
-				if (textureSet.tex_back_light != null) mat.SetTexture("_BackLight", textureSet.tex_back_light.SquareTexture);
+
+				if (textureSet.tex_diffuse != null) {
+					mpb.SetTexture("_Diffuse", textureSet.tex_diffuse.SquareTexture);
+					mpb.SetVector("_Diffuse_ST", new Vector4(1, 1, 0, 0));
+				}
+				if (textureSet.tex_back_light != null) {
+					mpb.SetTexture("_BackLight", textureSet.tex_back_light.SquareTexture);
+					mpb.SetVector("_BackLight_ST", new Vector4(1, 1, 0, 0));
+				}
 			}
+			r.SetPropertyBlock(mpb, index);
 		}
+		public void SetMaterialTextureOrigins(TextureCooked tex, Renderer r, int index = 0) {
+			if (mpb == null) mpb = new MaterialPropertyBlock();
+			r.GetPropertyBlock(mpb, index);
+			if (r != null && tex != null) {
+				mpb.SetVector("_UseTextures", new Vector4(1, 0, 0, 0));
+				mpb.SetTexture("_Diffuse", tex.SquareTexture);
+			}
+			r.SetPropertyBlock(mpb, index);
+		}
+		public void SetColor(Color col, Renderer r, int index = 0) {
+			if (mpb == null) mpb = new MaterialPropertyBlock();
+			r.GetPropertyBlock(mpb, index);
+			mpb.SetColor("_ColorFactor", col);
+			r.SetPropertyBlock(mpb, index);
+		}
+
 		/*private void SetMaterialTextures(Material mat) {
 			if (textureSet != null) {
 				mat.SetVector("_UseTextures", new Vector4(
@@ -328,9 +322,5 @@ namespace UbiArt.ITF {
 				if (textureSet.tex_back_light != null) mat.SetTexture("_BackLight", textureSet.tex_back_light.SquareTexture);
 			}
 		}*/
-		private enum ZWrite {
-			Off = 0,
-			On = 1
-		}
 	}
 }

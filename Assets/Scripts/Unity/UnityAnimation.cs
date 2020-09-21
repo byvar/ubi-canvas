@@ -18,7 +18,7 @@ public class UnityAnimation : MonoBehaviour {
 	public UnityBone[] bones;
 	public AnimPatchBank pbk;
 	public GameObject[] patches;
-	public Material[] patchMaterials;
+	public AnimLightComponent alc;
 	public SkinnedMeshRenderer[] patchRenderers;
 	public bool playAnimation = true;
 	public float animationSpeed = 30f;
@@ -132,7 +132,7 @@ public class UnityAnimation : MonoBehaviour {
 							if (texInd != -1) {
 								Pair<StringID, CString> texPath = animTrack.texturePathsOrigins[texInd];
 								if (l.tex.ContainsKey(texPath.Item1)) {
-									SetMaterialTextureOrigins(patchMaterials[ind], l.tex[texPath.Item1]);
+									alc.SetMaterialTextureOrigins(l.tex[texPath.Item1], patchRenderers[ind]);
 								}
 							}
 						}
@@ -176,7 +176,7 @@ public class UnityAnimation : MonoBehaviour {
 							}
 						}
 						if (alphas.Count > 0) {
-							patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, alphas.Average()));
+							alc.SetColor(new UnityEngine.Color(1f, 1f, 1f, alphas.Average()), patchRenderers[i]);
 						}
 						if (zs.Count > 0) {
 							zman.zDict[patchRenderers[i]] = transform.position.z - zs.Average() / 10000f;
@@ -229,10 +229,4 @@ public class UnityAnimation : MonoBehaviour {
 		list.Sort((k1, k2) => k2.Value.CompareTo(k1.Value));
 	}*/
 
-	private void SetMaterialTextureOrigins(Material mat, TextureCooked tex) {
-		if (mat != null && tex != null) {
-			mat.SetVector("_UseTextures", new Vector4(1,0,0,0));
-			mat.SetTexture("_Diffuse", tex.SquareTexture);
-		}
-	}
 }
