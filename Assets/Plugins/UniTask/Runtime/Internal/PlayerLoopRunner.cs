@@ -48,14 +48,24 @@ namespace Cysharp.Threading.Tasks.Internal
             }
         }
 
-        public void Clear()
+        public int Clear()
         {
             lock (arrayLock)
             {
+                var rest = 0;
+
                 for (var index = 0; index < loopItems.Length; index++)
                 {
+                    if (loopItems[index] != null)
+                    {
+                        rest++;
+                    }
+
                     loopItems[index] = null;
                 }
+
+                tail = 0;
+                return rest;
             }
         }
 
@@ -143,8 +153,6 @@ namespace Cysharp.Threading.Tasks.Internal
             {
                 var j = tail - 1;
 
-                var loopItems = this.loopItems;
-                // eliminate array-bound check for i
                 for (int i = 0; i < loopItems.Length; i++)
                 {
                     var action = loopItems[i];
