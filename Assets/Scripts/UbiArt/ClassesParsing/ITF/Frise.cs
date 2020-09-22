@@ -17,13 +17,13 @@ namespace UbiArt.ITF {
 			UnityFrise uf = gao.AddComponent<UnityFrise>();
 			uf.frise = this;
 			if (config != null && config.obj != null) {
-				UnityFriseConfig ufcg = gao.AddComponent<UnityFriseConfig>();
-				ufcg.friseConfig = config.obj;
+				/*UnityFriseConfig ufcg = gao.AddComponent<UnityFriseConfig>();
+				ufcg.friseConfig = config.obj;*/
 				if (config.obj.textureConfigs != null) {
 					foreach (FriseTextureConfig ftc in config.obj.textureConfigs) {
 						if (ftc.material != null && ftc.material.shader != null && ftc.material.shader.obj != null) {
-							UnityGFXMaterialShader_Template sh = gao.AddComponent<UnityGFXMaterialShader_Template>();
-							sh.shader = ftc.material.shader.obj;
+							/*UnityGFXMaterialShader_Template sh = gao.AddComponent<UnityGFXMaterialShader_Template>();
+							sh.shader = ftc.material.shader.obj;*/
 						}
 					}
 				}

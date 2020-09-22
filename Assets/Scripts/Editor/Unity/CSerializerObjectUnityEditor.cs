@@ -177,12 +177,86 @@ namespace UbiArt {
 			return SerializeGeneric<T>(obj, type: type, name: name, index: index);
 		}
 
+		// Helper method which returns an object so we can cast it
+		protected object SerializePrimitiveAsObject<T>(object obj, string name = null, Options options = Options.None) {
+			// Get the type
+			var type = typeof(T);
+
+			TypeCode typeCode = Type.GetTypeCode(type);
+
+			if (type.IsEnum) {
+				if (type.GetCustomAttributes<FlagsAttribute>().Any()) {
+					obj = EditorGUILayout.EnumFlagsField(name, (Enum)obj);
+				} else {
+					obj = EditorGUILayout.EnumPopup(name, (Enum)obj);
+				}
+			} else if (typeCode == TypeCode.Object) {
+				if (type == typeof(CString)) {
+					obj = new CString(EditorGUILayout.TextField(name, ((CString)obj).str));
+				}
+			}
+			switch (Type.GetTypeCode(type)) {
+				case TypeCode.Boolean: obj = EditorGUILayout.Toggle(name, (bool)obj); break;
+				case TypeCode.Byte: obj = (byte)EditorGUILayout.IntField(name, (byte)obj); break;
+				case TypeCode.Char: obj = (char)EditorGUILayout.IntField(name, (char)obj); break;
+				case TypeCode.String: obj = EditorGUILayout.TextField(name, (string)obj); break;
+				case TypeCode.Single: obj = EditorGUILayout.FloatField(name, (float)obj); break;
+				case TypeCode.Double: obj = EditorGUILayout.DoubleField(name, (double)obj); break;
+				case TypeCode.UInt16: obj = (ushort)EditorGUILayout.IntField(name, (ushort)obj); break;
+				case TypeCode.UInt32: obj = (uint)EditorGUILayout.LongField(name, (uint)obj); break;
+				case TypeCode.UInt64: obj = (ulong)EditorGUILayout.LongField(name, (uint)obj); break;
+				case TypeCode.Int16: obj = (short)EditorGUILayout.IntField(name, (short)obj); break;
+				case TypeCode.Int32: obj = EditorGUILayout.IntField(name, (int)obj); break;
+				case TypeCode.Int64: obj = EditorGUILayout.LongField(name, (long)obj); break;
+				default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
+			}
+			return obj;
+		}
+
+
 		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {
-			throw new NotImplementedException();
+			T t = (T)SerializePrimitiveAsObject<T>(obj, name: name, options: options);
+			return t;
 		}
 
 		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
-			throw new NotImplementedException();
+			// Get the type
+			var type = typeof(T);
+			if (type == typeof(Path)) {
+				Path p = (Path)(object)obj;
+				DrawPath(name, ref p);
+				obj = (T)(object)p;
+			} else if (type == typeof(LocalisationId)) {
+				LocalisationId locId = (LocalisationId)(object)obj;
+				DrawLocId(name, ref locId);
+				obj = (T)(object)locId;
+			} else if (type == typeof(Vec2d)) {
+				obj = (T)(object)(Vec2d)EditorGUILayout.Vector2Field(name, (Vec2d)(object)obj);
+			} else if (type == typeof(Vec3d)) {
+				obj = (T)(object)(Vec3d)EditorGUILayout.Vector3Field(name, (Vec3d)(object)obj);
+			} else if (type == typeof(Vec4d)) {
+				obj = (T)(object)(Vec4d)EditorGUILayout.Vector4Field(name, (Vec4d)(object)obj);
+			} else if (type == typeof(Color)) {
+				obj = (T)(object)(Color)EditorGUILayout.ColorField(name, (UnityEngine.Color)(object)obj);
+			} else {
+				if (obj == null) {
+					obj = new T();
+				}
+				if (!foldouts.ContainsKey(obj)) {
+					foldouts[obj] = false;
+				}
+				foldouts[obj] = EditorGUILayout.Foldout(foldouts[obj], name, true);
+				if (foldouts[obj]) {
+					EditorGUI.indentLevel++;
+					IncreaseLevel();
+					obj.Serialize(this, name);
+					DecreaseLevel();
+					EditorGUI.indentLevel--;
+				}
+			}
+
+			return obj;
 		}
+
 	}
 }
