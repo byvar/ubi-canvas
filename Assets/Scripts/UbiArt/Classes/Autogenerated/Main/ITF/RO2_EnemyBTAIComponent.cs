@@ -19,6 +19,7 @@ namespace UbiArt.ITF {
 		public bool dashCheckHole;
 		public Enum_tortureTypeType tortureTypeType;
 		public bool useRangedAttack;
+		public int useRangedAttack_RL;
 		public uint RA_countBulletBySequence;
 		public float RA_timeBetweenBullet;
 		public float RA_timeBetweenSequence;
@@ -55,7 +56,7 @@ namespace UbiArt.ITF {
 					limitLeft = s.Serialize<float>(limitLeft, name: "limitLeft");
 					limitRight = s.Serialize<float>(limitRight, name: "limitRight");
 					tortureTypeType = s.Serialize<Enum_tortureTypeType>(tortureTypeType, name: "tortureTypeType");
-					useRangedAttack = s.Serialize<bool>(useRangedAttack, name: "useRangedAttack");
+					useRangedAttack_RL = s.Serialize<int>(useRangedAttack_RL, name: "useRangedAttack");
 					RA_countBulletBySequence = s.Serialize<uint>(RA_countBulletBySequence, name: "RA_countBulletBySequence");
 					RA_timeBetweenBullet = s.Serialize<float>(RA_timeBetweenBullet, name: "RA_timeBetweenBullet");
 					RA_timeBetweenSequence = s.Serialize<float>(RA_timeBetweenSequence, name: "RA_timeBetweenSequence");

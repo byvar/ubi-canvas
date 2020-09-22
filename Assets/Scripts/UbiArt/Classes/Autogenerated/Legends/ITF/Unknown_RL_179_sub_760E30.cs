@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_179_sub_760E30 : CSerializable {
+	public partial class Unknown_RL_179_sub_760E30 : ActorComponent {
 		public int initLeftDoorOpened;
 		public int initRightDoorOpened;
 		public DoorState doorStateCurrent0;

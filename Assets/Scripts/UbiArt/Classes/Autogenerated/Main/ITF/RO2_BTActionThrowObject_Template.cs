@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public StringID customPhantomShapeEventOff;
 		public Vec2d quickLaunchOffset;
 		public bool debug;
-		public Placeholder projectileData;
+		public CListO<RO2_BTActionThrowObject_Template.ProjectileData> projectileData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 				markerLaunch = s.SerializeObject<StringID>(markerLaunch, name: "markerLaunch");
 				markerStartSpawneeDig = s.SerializeObject<StringID>(markerStartSpawneeDig, name: "markerStartSpawneeDig");
 				boneSnap = s.SerializeObject<StringID>(boneSnap, name: "boneSnap");
-				projectileData = s.SerializeObject<Placeholder>(projectileData, name: "projectileData");
+				projectileData = s.SerializeObject<CListO<RO2_BTActionThrowObject_Template.ProjectileData>>(projectileData, name: "projectileData");
 				launchData = s.SerializeObject<CListO<RO2_BTActionThrowObject_Tools.LaunchData>>(launchData, name: "launchData");
 				customPhantomShape = s.SerializeObject<StringID>(customPhantomShape, name: "customPhantomShape");
 				customPhantomShapeEventOn = s.SerializeObject<StringID>(customPhantomShapeEventOn, name: "customPhantomShapeEventOn");

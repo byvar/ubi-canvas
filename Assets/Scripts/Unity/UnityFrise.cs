@@ -20,6 +20,13 @@ public class UnityFrise : MonoBehaviour {
 						z += 0.001f;
 					}*/
 				}
+				if (frise.mr_overlay != null) {
+					zman.zDict[frise.mr_overlay] = z;
+					/*foreach (Material m in frise.mr_static.sharedMaterials) {
+						zman.zDict[m] = z;
+						z += 0.001f;
+					}*/
+				}
 				if (frise.mr_anim != null) {
 					zman.zDict[frise.mr_anim] = z;
 					/*foreach (Material m in frise.mr_anim.sharedMaterials) {

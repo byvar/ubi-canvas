@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_180_sub_760CB0 : CSerializable {
+	public partial class Unknown_RL_180_sub_760CB0 : ActorComponent_Template {
 		public StringID inputAnimLeft;
 		public StringID inputAnimRight;
 		public StringID inputStateLeft;
