@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace UbiArt {
 	public class TextureCooked : ICSerializable {
@@ -73,6 +74,7 @@ namespace UbiArt {
 						texture.LoadImage(img.ToByteArray(MagickFormat.Png32));
 						texture.Apply();
 					}*/
+					//UnityEngine.Debug.Log($"Texture - {texData.Length} - {width} - {height}");
 					texture = LoadTextureDXT(texData);
 					if (texture == null) {
 						using (DDSImage dds = new DDSImage(texData)) {
@@ -118,7 +120,7 @@ namespace UbiArt {
 					int size = Math.Max(tex.width, tex.height);
 					squareTexture = new Texture2D(size, size);
 					squareTexture.SetPixels(0, 0, tex.width, tex.height, tex.GetPixels(0,0,tex.width, tex.height));
-					squareTexture.Apply();
+					squareTexture.Apply(true, true);
 				}
 				return squareTexture;
 			}
@@ -148,11 +150,15 @@ namespace UbiArt {
 
 			int DDS_HEADER_SIZE = 128;
 			byte[] dxtBytes = new byte[ddsBytes.Length - DDS_HEADER_SIZE];
-			Buffer.BlockCopy(ddsBytes, DDS_HEADER_SIZE, dxtBytes, 0, ddsBytes.Length - DDS_HEADER_SIZE);
+			Array.Copy(ddsBytes, DDS_HEADER_SIZE, dxtBytes, 0, ddsBytes.Length - DDS_HEADER_SIZE);
 
 			Texture2D texture = new Texture2D(width, height, format, false);
 			texture.LoadRawTextureData(dxtBytes);
-			texture.Apply();
+			if (width == height) {
+				texture.Apply(true, true);
+			} else {
+				texture.Apply(true, false);
+			}
 
 			return (texture);
 		}

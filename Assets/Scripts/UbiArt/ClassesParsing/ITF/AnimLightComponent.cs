@@ -302,6 +302,7 @@ namespace UbiArt.ITF {
 			if (r != null && tex != null) {
 				mpb.SetVector("_UseTextures", new Vector4(1, 0, 0, 0));
 				mpb.SetTexture("_Diffuse", tex.SquareTexture);
+				mpb.SetVector("_Diffuse_ST", new Vector4(1, 1, 0, 0));
 			}
 			r.SetPropertyBlock(mpb, index);
 		}

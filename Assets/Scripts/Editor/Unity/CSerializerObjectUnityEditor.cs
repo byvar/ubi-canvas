@@ -237,7 +237,7 @@ namespace UbiArt {
 			} else if (type == typeof(Vec4d)) {
 				obj = (T)(object)(Vec4d)EditorGUILayout.Vector4Field(name, (Vec4d)(object)obj);
 			} else if (type == typeof(Color)) {
-				obj = (T)(object)(Color)EditorGUILayout.ColorField(name, (UnityEngine.Color)(object)obj);
+				obj = (T)(object)(Color)EditorGUILayout.ColorField(name, (Color)(object)obj);
 			} else {
 				if (obj == null) {
 					obj = new T();

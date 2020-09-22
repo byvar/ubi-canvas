@@ -110,7 +110,7 @@ namespace UbiArt {
 				try {
 					await www.SendWebRequest();
 					while (!www.isDone) {
-						await UniTask.WaitForEndOfFrame();
+						await UniTask.Yield();
 					}
 				} catch (UnityWebRequestException) {
 				} finally {
@@ -135,7 +135,7 @@ namespace UbiArt {
 			try {
 				await www.SendWebRequest();
 				while (!www.isDone) {
-					await UniTask.WaitForEndOfFrame();
+					await UniTask.Yield();
 				}
 			} catch (UnityWebRequestException) {
 			} finally {

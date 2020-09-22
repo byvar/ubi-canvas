@@ -37,7 +37,7 @@ public class Controller : MonoBehaviour {
 	public static string DetailedState { get; set; } = "Starting";
 
 	public static async UniTask WaitFrame() {
-		await UniTask.WaitForEndOfFrame();
+		await UniTask.Yield();
 
 		if (stopwatch.IsRunning) stopwatch.Restart();
 	}

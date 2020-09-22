@@ -349,7 +349,9 @@ namespace UbiArt {
 					byte[] newData = new byte[newDataLength];
 					await HttpRead(newData, 0, (int)newDataLength, startPosition);
 					long dataRead = lastRequestRead;
-					Array.Resize(ref newData, (int)dataRead);
+					if (dataRead != newDataLength) {
+						Array.Resize(ref newData, (int)dataRead);
+					}
 					int numReadLocal = (int)Math.Min(range.Value, dataRead - addLengthBefore);
 					//Array.Copy(newData, addLengthBefore, buffer, offset + range.Key, numReadLocal);
 					AddCache(startPosition, newData);
@@ -376,7 +378,7 @@ namespace UbiArt {
 			try {
 				await www.SendWebRequest();
 				while (!www.isDone) {
-					await UniTask.WaitForEndOfFrame();
+					await UniTask.Yield();
 				}
 			} catch (UnityWebRequestException) {
 			} finally {
@@ -384,6 +386,7 @@ namespace UbiArt {
 					byte[] data = www.downloadHandler.data;
 					int nread = Math.Min(data.Length, count);
 					Array.Copy(data, 0, buffer, offset, nread);
+					//Array.Copy(data, 0, buffer, offset, nread);
 					lastRequestRead = nread;
 				} else {
 					lastRequestRead = 0;

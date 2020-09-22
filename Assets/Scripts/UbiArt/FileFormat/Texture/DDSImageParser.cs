@@ -123,7 +123,11 @@ namespace UbiArt.FileFormat.Texture {
 		private Texture2D CreateBitmap(int width, int height, byte[] rawData) {
 			Texture2D bitmap = new Texture2D(width, height, TextureFormat.RGBA32, false);
 			bitmap.LoadRawTextureData(rawData);
-			bitmap.Apply(false, false);
+			if (width == height) {
+				bitmap.Apply(true, true);
+			} else {
+				bitmap.Apply(true, false);
+			}
 			return bitmap;
 		}
 
@@ -726,10 +730,14 @@ namespace UbiArt.FileFormat.Texture {
 			Colour8888[] colours = new Colour8888[4];
 			
 			int temp = pos;
-			for (int z = 0; z < depth; z++) {
-				for (int y = 0; y < height; y += 4) {
-					for (int x = 0; x < width; x += 4) {
-						int alpha = temp;
+			int z, y, x, alpha, i, j, k, select;
+			uint offset;
+			ushort word;
+
+			for (z = 0; z < depth; z++) {
+				for (y = 0; y < height; y += 4) {
+					for (x = 0; x < width; x += 4) {
+						alpha = temp;
 						temp += 8;
 
 						DxtcReadColors(data, temp, ref colours);
@@ -758,12 +766,12 @@ namespace UbiArt.FileFormat.Texture {
 						colours[3].red = (byte)((colours[0].red + 2 * colours[1].red + 1) / 3);
 						//colours[3].alpha = 0xFF;
 
-						for (int j = 0, k = 0; j < 4; j++) {
-							for (int i = 0; i < 4; k++, i++) {
-								int select = (int)((bitmask & (0x03 << k * 2)) >> k * 2);
+						for (j = 0, k = 0; j < 4; j++) {
+							for (i = 0; i < 4; k++, i++) {
+								select = (int)((bitmask & (0x03 << k * 2)) >> k * 2);
 
 								if (((x + i) < width) && ((y + j) < height)) {
-									uint offset = (uint)(z * sizeofplane + (y + j) * bps + (x + i) * bpp);
+									offset = (uint)(z * sizeofplane + (y + j) * bps + (x + i) * bpp);
 									rawData[offset + 0] = (byte)colours[select].red;
 									rawData[offset + 1] = (byte)colours[select].green;
 									rawData[offset + 2] = (byte)colours[select].blue;
@@ -771,12 +779,12 @@ namespace UbiArt.FileFormat.Texture {
 							}
 						}
 
-						for (int j = 0; j < 4; j++) {
+						for (j = 0; j < 4; j++) {
 							//ushort word = (ushort)(alpha[2 * j] + 256 * alpha[2 * j + 1]);
-							ushort word = (ushort)(data[alpha + 2 * j] | (data[alpha + 2 * j + 1] << 8));
-							for (int i = 0; i < 4; i++) {
+							word = (ushort)(data[alpha + 2 * j] | (data[alpha + 2 * j + 1] << 8));
+							for (i = 0; i < 4; i++) {
 								if (((x + i) < width) && ((y + j) < height)) {
-									uint offset = (uint)(z * sizeofplane + (y + j) * bps + (x + i) * bpp + 3);
+									offset = (uint)(z * sizeofplane + (y + j) * bps + (x + i) * bpp + 3);
 									rawData[offset] = (byte)(word & 0x0F);
 									rawData[offset] = (byte)(rawData[offset] | (rawData[offset] << 4));
 								}

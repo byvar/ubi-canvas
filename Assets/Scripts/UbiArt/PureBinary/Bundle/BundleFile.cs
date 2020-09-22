@@ -52,11 +52,10 @@ namespace UbiArt.Bundle {
 					byte[] fileBytes = reader.ReadBytes((int)size);
 					if (fileBytes != null) {
 						if (h.zSize != 0) {
-							using (MemoryStream ms = new MemoryStream()) {
-								using (var zlibStream = new ZlibStream(new MemoryStream(fileBytes), CompressionMode.Decompress))
-									zlibStream.CopyTo(ms);
-								fileBytes = ms.ToArray();
-							}
+							byte[] decompressedData = new byte[(int)h.size];
+							using (var zlibStream = new ZlibStream(new MemoryStream(fileBytes), CompressionMode.Decompress))
+								zlibStream.Read(decompressedData, 0, decompressedData.Length);
+							fileBytes = decompressedData;
 						}
 						readFileData[path] = fileBytes;
 					}

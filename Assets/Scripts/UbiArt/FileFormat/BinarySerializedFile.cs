@@ -9,7 +9,7 @@ namespace UbiArt.FileFormat {
 		bool ckd;
 		Path path;
         long length;
-        byte[] data = null;
+        //byte[] data = null;
 
         public BinarySerializedFile(string name, Path path, bool ckd) : this(name, MapLoader.Loader.GetGameFileStream(path, ckd)) {
             this.path = path;
