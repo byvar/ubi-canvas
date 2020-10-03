@@ -42,7 +42,7 @@ namespace UbiArt {
 		public bool usesSerializeFlags = true;
 		public bool isCatchThemAll = false;
 		public bool cooked = true;
-		public bool loadFromIPK = true;
+		public bool loadFromIPK = false;
 		public static Encoding StringEncoding { get; set; } = Encoding.UTF8;
 		public string[] bundles;
 

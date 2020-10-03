@@ -10,7 +10,7 @@ namespace UbiArt.FileFormat {
         public Reader reader;
         public Writer writer;
 		public CSerializerObject serializer;
-        public Dictionary<uint, Pointer> pointers = new Dictionary<uint, Pointer>();
+        public Dictionary<long, Pointer> pointers = new Dictionary<long, Pointer>();
 		public Dictionary<string, object> extraData = new Dictionary<string, object>();
         public long baseOffset; // Base offset within file
         public long headerOffset = 0;
@@ -22,7 +22,7 @@ namespace UbiArt.FileFormat {
             if (serializer != null) serializer.Disposed = true;
         }
 
-        public void AddPointer(uint offset, Pointer pointer) {
+        public void AddPointer(long offset, Pointer pointer) {
             pointers[offset] = pointer;
         }
 
@@ -32,7 +32,7 @@ namespace UbiArt.FileFormat {
             }
         }
 
-        public virtual Pointer GetUnsafePointer(uint value) {
+        public virtual Pointer GetUnsafePointer(long value) {
             return new Pointer(value, this);
         }
 

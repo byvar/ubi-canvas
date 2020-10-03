@@ -12,6 +12,7 @@ namespace UbiArt {
 	public class CListO<T> : CList<T> where T : ICSerializable, new() {
 
 		public override void Serialize(CSerializerObject s, string name) {
+			//UnityEngine.Debug.Log("Serializing List: " + name);
 			uint count = (uint)container.Count;
 			count = s.Serialize<uint>(count, name: name);
 			if(count != container.Count) Resize((int)count);

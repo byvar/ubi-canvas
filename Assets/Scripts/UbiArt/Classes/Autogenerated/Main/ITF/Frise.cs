@@ -81,7 +81,7 @@ namespace UbiArt.ITF {
 					POINTS = s.SerializeObject<CListO<PolyLineEdge>>(POINTS, name: "POINTS");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					pivotMode = s.Serialize<PivotMode>(pivotMode, name: "pivotMode");
+					pivotMode = s.Serialize<PivotMode>(pivotMode, name: "PivotMode");
 					LOOP = s.Serialize<bool>(LOOP, name: "LOOP");
 					USERPIVOT = s.SerializeObject<Vec2d>(USERPIVOT, name: "USERPIVOT");
 					ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");
@@ -120,19 +120,19 @@ namespace UbiArt.ITF {
 					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "collisionData");
-					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "meshStaticData");
-					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "meshAnimData");
-					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "meshOverlayData");
+					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "CollisionData");
+					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "MeshStaticData");
+					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "MeshAnimData");
+					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "MeshOverlayData");
 					VisualPolyline = s.SerializeObject<PolyLine>(VisualPolyline, name: "VisualPolyline");
 					VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
 					if (Settings.s.isCatchThemAll) {
 						meshBuildData = new Nullable<MeshBuildData>();
 						meshBuildData.value = s.SerializeObject<MeshBuildData>(meshBuildData.value, name: "MeshBuildData");
 					} else {
-						meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "meshBuildData");
+						meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "MeshBuildData");
 					}
-					meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "meshFluidData");
+					meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "MeshFluidData");
 					AABB_MinZ = s.Serialize<float>(AABB_MinZ, name: "AABB_MinZ");
 					AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				}
@@ -240,14 +240,14 @@ namespace UbiArt.ITF {
 					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "collisionData");
-					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "meshStaticData");
-					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "meshAnimData");
-					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "meshOverlayData");
+					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "CollisionData");
+					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "MeshStaticData");
+					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "MeshAnimData");
+					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "MeshOverlayData");
 					VisualPolyline = s.SerializeObject<PolyLine>(VisualPolyline, name: "VisualPolyline");
 					VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
-					meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "meshBuildData");
-					meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "meshFluidData");
+					meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "MeshBuildData");
+					meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "MeshFluidData");
 					AABB_MinZ = s.Serialize<float>(AABB_MinZ, name: "AABB_MinZ");
 					AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				}
@@ -302,15 +302,15 @@ namespace UbiArt.ITF {
 					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
 				}
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "collisionData");
-					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "meshStaticData");
-					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "meshAnimData");
-					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "meshOverlayData");
+					collisionData = s.SerializeObject<Nullable<Frise.CollisionData>>(collisionData, name: "CollisionData");
+					meshStaticData = s.SerializeObject<Nullable<Frise.MeshStaticData>>(meshStaticData, name: "MeshStaticData");
+					meshAnimData = s.SerializeObject<Nullable<Frise.MeshAnimData>>(meshAnimData, name: "MeshAnimData");
+					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "MeshOverlayData");
 				}
 				VisualPolyline = s.SerializeObject<PolyLine>(VisualPolyline, name: "VisualPolyline");
 				VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
-				meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "meshBuildData");
-				meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "meshFluidData");
+				meshBuildData = s.SerializeObject<Nullable<Frise.MeshBuildData>>(meshBuildData, name: "MeshBuildData");
+				meshFluidData = s.SerializeObject<Nullable<Frise.MeshFluidData>>(meshFluidData, name: "MeshFluidData");
 				AABB_MinZ = s.Serialize<float>(AABB_MinZ, name: "AABB_MinZ");
 				AABB_MaxZ = s.Serialize<float>(AABB_MaxZ, name: "AABB_MaxZ");
 				if (s.HasFlags(SerializeFlags.Flags8)) {

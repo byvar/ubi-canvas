@@ -240,20 +240,15 @@ namespace UbiArt {
 			}
 
 			IncreaseLevel();
-			T newObj;
-			if (obj == null) {
-				newObj = new T();
-			} else {
-				newObj = obj;
-			}
-			newObj.Serialize(this, name);
+			if (obj == null) obj = new T();
+			obj.Serialize(this, name);
 			DecreaseLevel();
-			AddToStringCache(newObj);
+			AddToStringCache(obj);
 
 			if (log && !isBigObject && name != null) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + newObj);
+				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
 			}
-			return newObj;
+			return obj;
 		}
 
 		public override async UniTask FillCacheForRead(long byteCount) {

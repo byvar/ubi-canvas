@@ -29,6 +29,189 @@ namespace UbiArt {
 			}
 		}
 
+
+
+		protected object FakeSerializePrimitive<T>(T t, string name = null) {
+			if (t != null) return t;
+			// Get the type
+			var type = typeof(T);
+
+			TypeCode typeCode = Type.GetTypeCode(type);
+
+			if (typeCode == TypeCode.Object) {
+				if (type == typeof(CString)) {
+					return new CString();
+				} else if (type == typeof(byte[])) {
+					return new byte[0];
+				} else {
+					throw new Exception(Position + ": Field with name " + name + " is not a valid primitive type");
+				}
+			}
+
+			switch (typeCode) {
+				case TypeCode.Boolean: return default(bool);
+				case TypeCode.SByte: return default(sbyte);
+				case TypeCode.Byte: return default(byte);
+				case TypeCode.Int16: return default(short);
+				case TypeCode.UInt16: return default(ushort);
+				case TypeCode.Int32: return default(int);
+				case TypeCode.UInt32: return default(uint);
+				case TypeCode.Int64: return default(long);
+				case TypeCode.UInt64: return default(ulong);
+				case TypeCode.Single: return default(float);
+				case TypeCode.Double: return default(double);
+				case TypeCode.String: return "";
+				case TypeCode.Char: return default(char);
+				default: throw new NotSupportedException($"The specified generic type ('{name}') can not be read from the reader");
+			}
+		}
+		protected T FakeSerializeObject<T>(T t, string name, Type objType) where T : ICSerializable, new() {
+			if (t != null) return t;
+			if (objType == typeof(Vec2d)) {
+				t = (T)(object)Vec2d.Zero;
+			} else if (objType == typeof(Vec3d)) {
+				t = (T)(object)Vec3d.Zero;
+			} else if (objType == typeof(Vec4d)) {
+				t = (T)(object)Vec4d.Zero;
+			} else if (objType == typeof(Color)) {
+				t = (T)(object)Color.Black;
+			} else {
+				if (t == null) t = new T();
+				IncreaseLevel();
+				t.Serialize(this, name);
+				DecreaseLevel();
+			}
+			return t;
+		}
+		protected T SerializeObjectFull<T>(T obj, string name, Type objType) where T : ICSerializable, new() {
+			if (fakeSerializeMode) {
+				return FakeSerializeObject<T>(obj, name, objType);
+			}
+			if (objType == typeof(Vec2d)) {
+				obj = (T)(object)new Vec2d(reader.ReadSingle(), reader.ReadSingle());
+			} else if (objType == typeof(Vec3d)) {
+				obj = (T)(object)new Vec3d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+			} else if (objType == typeof(Vec4d)) {
+				obj = (T)(object)new Vec4d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+			} else if (objType == typeof(Color)) {
+				float b = reader.ReadSingle();
+				float g = reader.ReadSingle();
+				float r = reader.ReadSingle();
+				float a = reader.ReadSingle();
+				obj = (T)(object)new Color(r,g,b,a);
+			} else {
+				if (obj == null) obj = new T();
+				IncreaseLevel();
+				bool entered = false;
+				if (GetTagCode(objType) == 200 && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
+					string typename = objType.Name;
+					if (obj is CSerializable) typename = ((CSerializable)(ICSerializable)obj).ClassName;
+					entered = ReadTag(typename, 200);
+				}
+				obj.Serialize(this, name);
+				if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
+					MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+				}
+				if (entered) reader.BaseStream.Position = endPos.Pop();
+				DecreaseLevel();
+				AddToStringCache(obj);
+			}
+			return obj;
+		}
+		// Helper method which returns an object so we can cast it
+		protected object ReadPrimitiveAsObject<T>(T t, string name = null, Options options = Options.None) {
+			if (fakeSerializeMode) {
+				return FakeSerializePrimitive(t, name: name);
+			}
+			// Get the type
+			var type = typeof(T);
+
+			TypeCode typeCode = Type.GetTypeCode(type);
+
+			if (typeCode == TypeCode.Object) {
+				if (type == typeof(CString)) {
+					CString s = new CString(reader.ReadString16());
+					AddToStringCache(s);
+					return s;
+				} else if (type == typeof(byte[])) {
+					int numBytes = reader.ReadInt32();
+					return reader.ReadBytes(numBytes);
+				} else {
+					throw new Exception(Position + ": Field with name " + name + " is not a valid primitive type");
+				}
+			}
+
+			switch (typeCode) {
+
+				case TypeCode.Boolean:
+					bool asByte = false;
+					if (options.HasFlag(Options.ForceAsByte)) {
+						asByte = true;
+					} else if (options.HasFlag(Options.BoolAsByte)) {
+						asByte = HasFlags(SerializeFlags.Flags1);
+					}
+					if (asByte) {
+						uint tmp = reader.ReadByte();
+						if (tmp == 1) {
+							return true;
+						} else if (tmp != 0) {
+							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							//obj = false;
+						} else {
+							return false;
+						}
+					} else {
+						uint tmp = reader.ReadUInt32();
+						if (tmp == 1) {
+							return true;
+						} else if (tmp != 0) {
+							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							//obj = false;
+						} else {
+							return false;
+						}
+					}
+
+				case TypeCode.SByte:
+					return reader.ReadSByte();
+
+				case TypeCode.Byte:
+					return reader.ReadByte();
+
+				case TypeCode.Int16:
+					return reader.ReadInt16();
+
+				case TypeCode.UInt16:
+					return reader.ReadUInt16();
+
+				case TypeCode.Int32:
+					return reader.ReadInt32();
+
+				case TypeCode.UInt32:
+					return reader.ReadUInt32();
+
+				case TypeCode.Int64:
+					return reader.ReadInt64();
+
+				case TypeCode.UInt64:
+					return reader.ReadUInt64();
+
+				case TypeCode.Single:
+					return reader.ReadSingle();
+
+				case TypeCode.Double:
+					return reader.ReadDouble();
+				case TypeCode.String:
+					string s = reader.ReadString();
+					AddToStringCache(s);
+					return s;
+				case TypeCode.Char:
+					return reader.ReadChar();
+				default:
+					throw new NotSupportedException($"The specified generic type ('{name}') can not be read from the reader");
+			}
+		}
+
 		public override void Serialize(ref object obj, Type type, string name = null) {
 			if (fakeSerializeMode) {
 				FakeSerialize(ref obj, type, name: name);
@@ -86,7 +269,7 @@ namespace UbiArt {
 					}
 					((ICSerializable)obj).Serialize(this, name);
 					if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
-						Pointer pos = new Pointer((uint)reader.BaseStream.Position, MapLoader.Loader.GetFileByReader(reader));
+						Pointer pos = new Pointer(reader.BaseStream.Position, MapLoader.Loader.GetFileByReader(reader));
 						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
 					}
 					if (entered) reader.BaseStream.Position = endPos.Pop();
@@ -218,6 +401,7 @@ namespace UbiArt {
 					fakeSerializeMode = true;
 					object obj2 = null;
 					Serialize(ref obj2, type ?? typeof(T), name: name);
+					if(type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
 					obj = (T)obj2;
 					fakeSerializeMode = prevFakeSerializeMode;
 				}
@@ -226,16 +410,17 @@ namespace UbiArt {
 				if (ReadTag(name, uafType)) {
 					Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
 					bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-					if (log && name != null && isBigObject) {
+					if (!fakeSerializeMode && log && name != null && isBigObject) {
 						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
 					}
 
 					object obj2 = obj;
 					Serialize(ref obj2, type ?? typeof(T), name: name);
+					if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
 					obj = (T)obj2;
 
 					reader.BaseStream.Position = endPos.Pop();
-					if (log && name != null && !isBigObject) {
+					if (!fakeSerializeMode && log && name != null && !isBigObject) {
 						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 					}
 
@@ -245,6 +430,7 @@ namespace UbiArt {
 						fakeSerializeMode = true;
 						object obj2 = null;
 						Serialize(ref obj2, type ?? typeof(T), name: name);
+						if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
 						obj = (T)obj2;
 						fakeSerializeMode = prevFakeSerializeMode;
 					}
@@ -252,15 +438,16 @@ namespace UbiArt {
 			} else {
 				Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
 				bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-				if (log && index.HasValue && isBigObject) {
+				if (!fakeSerializeMode && log && index.HasValue && isBigObject) {
 					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
 				}
 
 				object obj2 = obj;
 				Serialize(ref obj2, type ?? typeof(T), name: name);
+				if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
 				obj = (T)obj2;
 
-				if (log && index.HasValue && !isBigObject) {
+				if (!fakeSerializeMode && log && index.HasValue && !isBigObject) {
 					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
 				}
 			}
@@ -279,7 +466,7 @@ namespace UbiArt {
 		public override bool ArrayEntryStart(string name, int index) {
 			long position = reader.BaseStream.Position;
 			if (ReadTag(name, (uint)(200 + index))) {
-				Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+				Pointer pos = log ? new Pointer(position, MapLoader.Loader.GetFileByReader(reader)) : null;
 				if (log) {
 					MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index + "]:");
 				}
@@ -351,11 +538,107 @@ namespace UbiArt {
 		}
 
 		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {
-			throw new NotImplementedException();
+			//return SerializeGeneric<T>(obj, name: name, index: index);
+
+			long position = reader.BaseStream.Position;
+			if (endPos.Count > 0 && position >= endPos.Peek()) {
+				if (obj == null) {
+					bool prevFakeSerializeMode = fakeSerializeMode;
+					fakeSerializeMode = true;
+					obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
+					fakeSerializeMode = prevFakeSerializeMode;
+				}
+			} else if (name != null) {
+				Type objType = typeof(T);
+				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
+				if (ReadTag(name, uafType)) {
+					Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+					obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
+
+					if (log && endPos.Peek() != reader.BaseStream.Position) {
+						MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					}
+					reader.BaseStream.Position = endPos.Pop();
+					if (!fakeSerializeMode && log && name != null) {
+						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+					}
+				} else {
+					if (obj == null) {
+						bool prevFakeSerializeMode = fakeSerializeMode;
+						fakeSerializeMode = true;
+						obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
+						fakeSerializeMode = prevFakeSerializeMode;
+					}
+				}
+			} else {
+				Pointer pos = log && name != null ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+				obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
+				if (!fakeSerializeMode && log && name != null) {
+					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+				}
+			}
+			return obj;
 		}
 
 		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
-			throw new NotImplementedException();
+			//return SerializeGeneric<T>(obj, name: name, index: index);
+			long position = reader.BaseStream.Position;
+			Type objType = typeof(T);
+			if (endPos.Count > 0 && position >= endPos.Peek()) {
+				if (obj == null) {
+					bool prevFakeSerializeMode = fakeSerializeMode;
+					fakeSerializeMode = true;
+					obj = SerializeObjectFull<T>(obj, name: name, objType);
+					fakeSerializeMode = prevFakeSerializeMode;
+				}
+			} else if (name != null && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
+				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
+				/*if (name == "collisionData" && log) {
+					Pointer pos = log ? new Pointer(position, MapLoader.Loader.GetFileByReader(reader)) : null;
+					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":" + " - " + index + " - " + objType + " - " + uafType);
+				}*/
+				if (ReadTag(name, uafType)) {
+					Pointer pos = log ? new Pointer(position, MapLoader.Loader.GetFileByReader(reader)) : null;
+					bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
+
+					if (!fakeSerializeMode && log && isBigObject && name != null) {
+						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
+					}
+
+					obj = SerializeObjectFull<T>(default, name, objType);
+
+					if (log && endPos.Peek() != reader.BaseStream.Position) {
+						Pointer posNew = new Pointer(reader.BaseStream.Position, MapLoader.Loader.GetFileByReader(reader));
+						MapLoader.Loader.Log(posNew + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					}
+					reader.BaseStream.Position = endPos.Pop();
+
+					if (!fakeSerializeMode && log && !isBigObject && name != null) {
+						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
+					}
+				} else {
+					if (obj == null) {
+						bool prevFakeSerializeMode = fakeSerializeMode;
+						fakeSerializeMode = true;
+						obj = SerializeObjectFull<T>(obj, name: name, objType);
+						fakeSerializeMode = prevFakeSerializeMode;
+					}
+				}
+			} else {
+				Pointer pos = log ? new Pointer(position, MapLoader.Loader.GetFileByReader(reader)) : null;
+				bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
+
+				if (!fakeSerializeMode && log && isBigObject && name != null) {
+					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
+				}
+
+				obj = SerializeObjectFull<T>(obj, name, objType);
+
+				if (!fakeSerializeMode && log && !isBigObject && name != null) {
+					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
+				}
+			}
+			return obj;
 		}
 	}
 }

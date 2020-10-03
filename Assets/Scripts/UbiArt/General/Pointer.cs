@@ -7,17 +7,17 @@ using System.Text;
 
 namespace UbiArt {
 	public class Pointer : IEquatable<Pointer> {
-		public uint offset;
+		public long offset;
 		public FileWithPointers file;
-		public Pointer(uint offset, FileWithPointers file) {
+		public Pointer(long offset, FileWithPointers file) {
 			this.offset = offset;
 			this.file = file;
 		}
 
-		public uint FileOffset {
+		public long FileOffset {
 			get {
 				if (file != null) {
-					return (uint)(offset + file.baseOffset);
+					return (offset + file.baseOffset);
 				} else return offset;
 			}
 		}
@@ -43,10 +43,10 @@ namespace UbiArt {
 			return !(x == y);
 		}
 		public static Pointer operator +(Pointer x, long y) {
-			return new Pointer((uint)((long)x.offset + y), x.file);
+			return new Pointer((x.offset + y), x.file);
 		}
 		public static Pointer operator -(Pointer x, long y) {
-			return new Pointer((uint)((long)x.offset - y), x.file);
+			return new Pointer((x.offset - y), x.file);
 		}
 		public override string ToString() {
 			if (file != null && file.baseOffset != 0) {
@@ -90,11 +90,11 @@ namespace UbiArt {
 
 		public static Pointer Read(Reader reader, bool allowMinusOne = false) {
 			MapLoader l = MapLoader.Loader;
-			uint current_off = (uint)(reader.BaseStream.Position);
+			long current_off = reader.BaseStream.Position;
 			uint value = reader.ReadUInt32();
 			FileWithPointers file = l.GetFileByReader(reader);
 			if (file == null) throw new PointerException("Reader wasn't recognized.", "Pointer.Read");
-			uint fileOff = (uint)(current_off - file.baseOffset);
+			long fileOff = (current_off - file.baseOffset);
 			if (!file.pointers.ContainsKey(fileOff)) {
 				if (value == 0 || (allowMinusOne && value == 0xFFFFFFFF)) return null;
 				if (!l.allowDeadPointers && !file.allowUnsafePointers) {
@@ -124,7 +124,7 @@ namespace UbiArt {
 
 		public static void Write(Writer writer, Pointer pointer) {
 			MapLoader l = MapLoader.Loader;
-			uint current_off = (uint)(writer.BaseStream.Position);
+			long current_off = writer.BaseStream.Position;
 			FileWithPointers file = l.GetFileByWriter(writer);
 			if (file == null) throw new FormatException("Writer wasn't recognized.");
 			file.WritePointer(pointer);
@@ -149,10 +149,10 @@ namespace UbiArt {
 
 		public static Pointer Current(Reader reader) {
 			MapLoader l = MapLoader.Loader;
-			uint curPos = (uint)reader.BaseStream.Position;
+			long curPos = reader.BaseStream.Position;
 			FileWithPointers curFile = l.GetFileByReader(reader);
 			if (curFile != null) {
-				return new Pointer((uint)(curPos - curFile.baseOffset), curFile);
+				return new Pointer(curPos - curFile.baseOffset, curFile);
 			} else {
 				return new Pointer(curPos, null);
 			}
@@ -183,10 +183,10 @@ namespace UbiArt {
 
 		public static Pointer Current(Writer writer) {
 			MapLoader l = MapLoader.Loader;
-			uint curPos = (uint)writer.BaseStream.Position;
+			long curPos = writer.BaseStream.Position;
 			FileWithPointers curFile = l.GetFileByWriter(writer);
 			if (curFile != null) {
-				return new Pointer((uint)(curPos - curFile.baseOffset), curFile);
+				return new Pointer(curPos - curFile.baseOffset, curFile);
 			} else {
 				return new Pointer(curPos, null);
 			}

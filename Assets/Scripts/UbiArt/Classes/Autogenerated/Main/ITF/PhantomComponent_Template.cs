@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RA) {
-				collisionGroup2 = s.Serialize<uint>(collisionGroup2, name: "collisionGroup2");
+				collisionGroup2 = s.Serialize<uint>(collisionGroup2, name: "collisionGroup");
 			} else {
 				collisionGroup = s.Serialize<Enum_collisionGroup>(collisionGroup, name: "collisionGroup");
 			}

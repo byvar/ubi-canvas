@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 				PolyPointList = s.SerializeObject<PolyPointList>(PolyPointList, name: "PolyPointList");
 				AABB = s.SerializeObject<AABB>(AABB, name: "AABB");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					connection = s.SerializeObject<PolyLine.Connection>(connection, name: "connection");
+					connection = s.SerializeObject<PolyLine.Connection>(connection, name: "Connection");
 				}
 			}
 		}

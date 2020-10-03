@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 				animstart = s.Serialize<int>(animstart, name: "animstart");
 				animend = s.Serialize<int>(animend, name: "animend");
 				AnimUVfreq = s.Serialize<float>(AnimUVfreq, name: "AnimUVfreq");
-				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "_params");
+				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "params");
 				is2D = s.Serialize<bool>(is2D, name: "is2D");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				computeAABB = s.Serialize<uint>(computeAABB, name: "computeAABB");
@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 				animend = s.Serialize<int>(animend, name: "animend");
 				animname = s.SerializeObject<StringID>(animname, name: "animname");
 				AnimUVfreq = s.Serialize<float>(AnimUVfreq, name: "AnimUVfreq");
-				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "_params");
+				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "params");
 			} else if (Settings.s.game == Settings.Game.COL) {
 				computeAABB = s.Serialize<uint>(computeAABB, name: "computeAABB");
 				useAnim = s.Serialize<uint>(useAnim, name: "useAnim");
@@ -54,11 +54,11 @@ namespace UbiArt.ITF {
 				animend = s.Serialize<int>(animend, name: "animend");
 				animname = s.SerializeObject<StringID>(animname, name: "animname");
 				AnimUVfreq = s.Serialize<float>(AnimUVfreq, name: "AnimUVfreq");
-				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "_params");
+				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "params");
 				zSortMode = s.Serialize<PARGEN_ZSORT>(zSortMode, name: "zSortMode");
 			} else if (Settings.s.game == Settings.Game.VH) {
 				computeAABB = s.Serialize<uint>(computeAABB, name: "computeAABB");
-				useAnim_ = s.Serialize<bool>(useAnim_, name: "useAnim_");
+				useAnim_ = s.Serialize<bool>(useAnim_, name: "useAnim");
 				loop = s.Serialize<uint>(loop, name: "loop");
 				amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");
 				useUVRandom = s.Serialize<uint>(useUVRandom, name: "useUVRandom");
@@ -66,11 +66,11 @@ namespace UbiArt.ITF {
 				animend = s.Serialize<int>(animend, name: "animend");
 				animname = s.SerializeObject<StringID>(animname, name: "animname");
 				AnimUVfreq = s.Serialize<float>(AnimUVfreq, name: "AnimUVfreq");
-				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "_params");
+				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "params");
 				zSortMode = s.Serialize<PARGEN_ZSORT>(zSortMode, name: "zSortMode");
 			} else {
 				computeAABB = s.Serialize<uint>(computeAABB, name: "computeAABB");
-				useAnim_ = s.Serialize<bool>(useAnim_, name: "useAnim_");
+				useAnim_ = s.Serialize<bool>(useAnim_, name: "useAnim");
 				loop = s.Serialize<uint>(loop, name: "loop");
 				amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");
 				useUVRandom = s.Serialize<uint>(useUVRandom, name: "useUVRandom");
@@ -78,7 +78,7 @@ namespace UbiArt.ITF {
 				animend = s.Serialize<int>(animend, name: "animend");
 				animname = s.SerializeObject<StringID>(animname, name: "animname");
 				AnimUVfreq = s.Serialize<float>(AnimUVfreq, name: "AnimUVfreq");
-				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "_params");
+				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "params");
 				ObjectDeviceSpeed = s.Serialize<DeviceInfo__Device_Speed>(ObjectDeviceSpeed, name: "ObjectDeviceSpeed");
 				zSortMode = s.Serialize<PARGEN_ZSORT>(zSortMode, name: "zSortMode");
 			}
