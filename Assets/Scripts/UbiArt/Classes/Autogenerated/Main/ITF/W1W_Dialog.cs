@@ -17,9 +17,9 @@ namespace UbiArt.ITF {
 			}
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 				StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
-				StringID__3_ = s.SerializeObject<StringID>(StringID__3_, name: "StringID__3_");
-				StringID__4_ = s.SerializeObject<StringID>(StringID__4_, name: "StringID__4_");
-				StringID__5_ = s.SerializeObject<StringID>(StringID__5_, name: "StringID__5_");
+				StringID__3_ = s.SerializeObject<StringID>(StringID__3_, name: "StringID__3");
+				StringID__4_ = s.SerializeObject<StringID>(StringID__4_, name: "StringID__4");
+				StringID__5_ = s.SerializeObject<StringID>(StringID__5_, name: "StringID__5");
 			}
 		}
 		public override uint? ClassCRC => 0x562EEC6F;

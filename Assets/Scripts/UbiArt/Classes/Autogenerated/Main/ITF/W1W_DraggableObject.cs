@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 			float__8 = s.Serialize<float>(float__8, name: "float__8");
 			StringID__9 = s.SerializeObject<StringID>(StringID__9, name: "StringID__9");
 			StringID__10 = s.SerializeObject<StringID>(StringID__10, name: "StringID__10");
-			float__11_ = s.Serialize<float>(float__11_, name: "float__11_");
+			float__11_ = s.Serialize<float>(float__11_, name: "float__11");
 			EventSender__12 = s.SerializeObject<EventSender>(EventSender__12, name: "EventSender__12");
 			EventSender__13 = s.SerializeObject<EventSender>(EventSender__13, name: "EventSender__13");
 			EventSender__14 = s.SerializeObject<EventSender>(EventSender__14, name: "EventSender__14");

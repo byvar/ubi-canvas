@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
+					_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 					triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce", options: CSerializerObject.Options.BoolAsByte);
 					triggerSelf = s.Serialize<bool>(triggerSelf, name: "triggerSelf", options: CSerializerObject.Options.BoolAsByte);
 					triggerChildren = s.Serialize<bool>(triggerChildren, name: "triggerChildren", options: CSerializerObject.Options.BoolAsByte);
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 				}
 			} else if(Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
+					_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 					triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce", options: CSerializerObject.Options.BoolAsByte);
 					triggerSelf = s.Serialize<bool>(triggerSelf, name: "triggerSelf", options: CSerializerObject.Options.BoolAsByte);
 					triggerChildren = s.Serialize<bool>(triggerChildren, name: "triggerChildren", options: CSerializerObject.Options.BoolAsByte);
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
+					_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 					triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce");
 					triggerSelf = s.Serialize<bool>(triggerSelf, name: "triggerSelf");
 					triggerChildren = s.Serialize<bool>(triggerChildren, name: "triggerChildren");

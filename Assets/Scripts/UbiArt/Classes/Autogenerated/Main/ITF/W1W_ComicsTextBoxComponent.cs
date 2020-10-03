@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 				string__5 = s.Serialize<string>(string__5, name: "string__5");
 				LocalisationId__6 = s.SerializeObject<LocalisationId>(LocalisationId__6, name: "LocalisationId__6");
 				Enum_VH_0__7 = s.Serialize<Enum_VH_0>(Enum_VH_0__7, name: "Enum_VH_0__7");
-				float__8_ = s.Serialize<float>(float__8_, name: "float__8_");
+				float__8_ = s.Serialize<float>(float__8_, name: "float__8");
 				float__9 = s.Serialize<float>(float__9, name: "float__9");
 				Color__10 = s.SerializeObject<Color>(Color__10, name: "Color__10");
 				Enum_VH_1__11 = s.Serialize<Enum_VH_1>(Enum_VH_1__11, name: "Enum_VH_1__11");

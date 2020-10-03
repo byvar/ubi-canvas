@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
 			StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
 			StringID__3 = s.SerializeObject<StringID>(StringID__3, name: "StringID__3");
-			float__4_ = s.Serialize<float>(float__4_, name: "float__4_");
+			float__4_ = s.Serialize<float>(float__4_, name: "float__4");
 		}
 		public override uint? ClassCRC => 0x0B0234EF;
 	}

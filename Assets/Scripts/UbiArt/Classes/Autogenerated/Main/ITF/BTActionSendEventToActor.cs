@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
 			} else {
-				_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
+				_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 			}
 		}
 		public override uint? ClassCRC => 0x7E0B8BDB;

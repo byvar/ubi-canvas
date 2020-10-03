@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				CArray_W1W_BreakableParams__2 = s.SerializeObject<CArrayO<W1W_BreakableParams>>(CArray_W1W_BreakableParams__2, name: "CArray_W1W_BreakableParams__2");
+				CArray_W1W_BreakableParams__2 = s.SerializeObject<CArrayO<W1W_BreakableParams>>(CArray_W1W_BreakableParams__2, name: "CArray<W1W_BreakableParams>__2");
 				bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {

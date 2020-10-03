@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 					IS_SINGLE_PIECE = s.Serialize<bool>(IS_SINGLE_PIECE, name: "IS_SINGLE_PIECE");
 					ZFORCED = s.Serialize<bool>(ZFORCED, name: "ZFORCED");
 					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED");
-					parentBindOrigins = s.SerializeObject<Nullable<ActorBind>>(parentBindOrigins, name: "parentBindOrigins"); // Serialized a second time
+					parentBindOrigins = s.SerializeObject<Nullable<ActorBind>>(parentBindOrigins, name: "parentBind"); // Serialized a second time
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					RELATIVEPATH = s.SerializeObject<Path>(RELATIVEPATH, name: "RELATIVEPATH");
@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 					IS_SINGLE_PIECE = s.Serialize<bool>(IS_SINGLE_PIECE, name: "IS_SINGLE_PIECE");
 					ZFORCED = s.Serialize<bool>(ZFORCED, name: "ZFORCED");
 					if (EMBED_SCENE) {
-						SCENE_ORIGINS = s.SerializeObject<Generic<Scene>>(SCENE_ORIGINS, name: "SCENE_ORIGINS");
+						SCENE_ORIGINS = s.SerializeObject<Generic<Scene>>(SCENE_ORIGINS, name: "SCENE");
 					}
 				}
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {

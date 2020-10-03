@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 			Enum_VH_0__1 = s.Serialize<Enum_VH_0_>(Enum_VH_0__1, name: "Enum_VH_0__1");
 			uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");
 			uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
-			Generic_Event__4 = s.SerializeObject<Generic<Event>>(Generic_Event__4, name: "Generic_Event__4");
+			Generic_Event__4 = s.SerializeObject<Generic<Event>>(Generic_Event__4, name: "Generic<Event>__4");
 			if (s.HasFlags(SerializeFlags.Persistent)) {
 				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 			}

@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			creatureID = s.SerializeObject<StringID>(creatureID, name: "creatureID");
 			powerup = s.SerializeObject<StringID>(powerup, name: "powerup");
-			_new = s.Serialize<bool>(_new, name: "_new");
+			_new = s.Serialize<bool>(_new, name: "new");
 			duplicate = s.Serialize<bool>(duplicate, name: "duplicate");
 			family = s.Serialize<Creature_Family>(family, name: "family");
 			rarity = s.Serialize<Creature_Rarity>(rarity, name: "rarity");

@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 			float__1 = s.Serialize<float>(float__1, name: "float__1");
 			float__2 = s.Serialize<float>(float__2, name: "float__2");
 			Enum_VH_0__3 = s.Serialize<Enum_VH_0>(Enum_VH_0__3, name: "Enum_VH_0__3");
-			Enum_VH_0__4 = s.Serialize<Enum_VH_0>(Enum_VH_0__4, name: "Enum_VH_0__4");
+			Enum_VH_0__4 = s.Serialize<Enum_VH_0>(Enum_VH_0__4, name: "Enum_VH_1__4");
 		}
 		[Flags]
 		public enum Enum_VH_0 {

@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool loop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			s.Serialize<bool>(loop, name: "loop");
+			loop = s.Serialize<bool>(loop, name: "loop");
 		}
 		public override uint? ClassCRC => 0x4F51D4BC;
 	}

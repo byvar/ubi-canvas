@@ -31,9 +31,9 @@ namespace UbiArt.ITF {
 				float__8 = s.Serialize<float>(float__8, name: "float__8");
 				float__9 = s.Serialize<float>(float__9, name: "float__9");
 				uint__10 = s.Serialize<uint>(uint__10, name: "uint__10");
-				float__11_ = s.Serialize<float>(float__11_, name: "float__11_");
+				float__11_ = s.Serialize<float>(float__11_, name: "float__11");
 				bool__12 = s.Serialize<bool>(bool__12, name: "bool__12");
-				float__13_ = s.Serialize<float>(float__13_, name: "float__13_");
+				float__13_ = s.Serialize<float>(float__13_, name: "float__13");
 			}
 		}
 		public override uint? ClassCRC => 0x9B0058FF;

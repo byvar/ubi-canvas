@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 				fxUseActorSpeed = s.Serialize<bool>(fxUseActorSpeed, name: "fxUseActorSpeed");
 				fxUseActorOrientation = s.Serialize<bool>(fxUseActorOrientation, name: "fxUseActorOrientation");
 				fxBoneName = s.SerializeObject<StringID>(fxBoneName, name: "fxBoneName");
-				fxUseBoneOrientationBool = s.Serialize<bool>(fxUseBoneOrientationBool, name: "fxUseBoneOrientationBool");
+				fxUseBoneOrientationBool = s.Serialize<bool>(fxUseBoneOrientationBool, name: "fxUseBoneOrientation");
 				sound = s.SerializeObject<StringID>(sound, name: "sound");
 				particle = s.SerializeObject<StringID>(particle, name: "particle");
 				playContact = s.Serialize<int>(playContact, name: "playContact");

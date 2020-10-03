@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 				NormalOut = s.SerializeObject<Vec3d>(NormalOut, name: "NormalOut");
 				NormalOutTime = s.SerializeObject<Vec3d>(NormalOutTime, name: "NormalOutTime");
 				if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-					Interpolation_RO = s.Serialize<interp_RO>(Interpolation_RO, name: "Interpolation_RO");
+					Interpolation_RO = s.Serialize<interp_RO>(Interpolation_RO, name: "Interpolation");
 				} else {
 					Interpolation = s.Serialize<interp>(Interpolation, name: "Interpolation");
 				}

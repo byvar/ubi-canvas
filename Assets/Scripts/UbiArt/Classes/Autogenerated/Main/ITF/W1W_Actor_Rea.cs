@@ -61,21 +61,21 @@ namespace UbiArt.ITF {
 				bool__16 = s.Serialize<bool>(bool__16, name: "bool__16");
 				bool__17 = s.Serialize<bool>(bool__17, name: "bool__17");
 				bool__18 = s.Serialize<bool>(bool__18, name: "bool__18");
-				CArray_W1W_Actor_Rea_AvoidHitType__19 = s.SerializeObject<CArrayO<W1W_Actor_Rea.AvoidHitType>>(CArray_W1W_Actor_Rea_AvoidHitType__19, name: "CArray_W1W_Actor_Rea_AvoidHitType__19");
+				CArray_W1W_Actor_Rea_AvoidHitType__19 = s.SerializeObject<CArrayO<W1W_Actor_Rea.AvoidHitType>>(CArray_W1W_Actor_Rea_AvoidHitType__19, name: "CArray<W1W_Actor_Rea.AvoidHitType>__19");
 				EventSender__20 = s.SerializeObject<EventSender>(EventSender__20, name: "EventSender__20");
 				EventSender__21 = s.SerializeObject<EventSender>(EventSender__21, name: "EventSender__21");
 				Path__22 = s.SerializeObject<Path>(Path__22, name: "Path__22");
-				CArray_W1W_Actor_Rea_spawnStruct__23 = s.SerializeObject<CArrayO<W1W_Actor_Rea.spawnStruct>>(CArray_W1W_Actor_Rea_spawnStruct__23, name: "CArray_W1W_Actor_Rea_spawnStruct__23");
+				CArray_W1W_Actor_Rea_spawnStruct__23 = s.SerializeObject<CArrayO<W1W_Actor_Rea.spawnStruct>>(CArray_W1W_Actor_Rea_spawnStruct__23, name: "CArray<W1W_Actor_Rea.spawnStruct>__23");
 				Vector3__24 = s.SerializeObject<Vec3d>(Vector3__24, name: "Vector3__24");
 				StringID__25 = s.SerializeObject<StringID>(StringID__25, name: "StringID__25");
 				bool__26 = s.Serialize<bool>(bool__26, name: "bool__26");
 				bool__27 = s.Serialize<bool>(bool__27, name: "bool__27");
 				bool__28 = s.Serialize<bool>(bool__28, name: "bool__28");
 				Enum_VH_0__29 = s.Serialize<Enum_VH_0>(Enum_VH_0__29, name: "Enum_VH_0__29");
-				W1W_Actor_Rea_Orientation_Link__30 = s.SerializeObject<W1W_Actor_Rea.Orientation_Link>(W1W_Actor_Rea_Orientation_Link__30, name: "W1W_Actor_Rea_Orientation_Link__30");
-				W1W_Actor_Rea_Orientation_MC__31 = s.SerializeObject<W1W_Actor_Rea.Orientation_MC>(W1W_Actor_Rea_Orientation_MC__31, name: "W1W_Actor_Rea_Orientation_MC__31");
+				W1W_Actor_Rea_Orientation_Link__30 = s.SerializeObject<W1W_Actor_Rea.Orientation_Link>(W1W_Actor_Rea_Orientation_Link__30, name: "W1W_Actor_Rea.Orientation_Link__30");
+				W1W_Actor_Rea_Orientation_MC__31 = s.SerializeObject<W1W_Actor_Rea.Orientation_MC>(W1W_Actor_Rea_Orientation_MC__31, name: "W1W_Actor_Rea.Orientation_MC__31");
 				Angle__32 = s.SerializeObject<Angle>(Angle__32, name: "Angle__32");
-				W1W_Actor_Rea_Orientation_Angle__33 = s.SerializeObject<W1W_Actor_Rea.Orientation_Angle>(W1W_Actor_Rea_Orientation_Angle__33, name: "W1W_Actor_Rea_Orientation_Angle__33");
+				W1W_Actor_Rea_Orientation_Angle__33 = s.SerializeObject<W1W_Actor_Rea.Orientation_Angle>(W1W_Actor_Rea_Orientation_Angle__33, name: "W1W_Actor_Rea.Orientation_Angle__33");
 				Path__34 = s.SerializeObject<Path>(Path__34, name: "Path__34");
 				bool__35 = s.Serialize<bool>(bool__35, name: "bool__35");
 			}

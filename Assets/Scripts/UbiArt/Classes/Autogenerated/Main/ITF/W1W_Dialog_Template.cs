@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
-				StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1_");
+				StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1");
 				StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
 				StringID__3 = s.SerializeObject<StringID>(StringID__3, name: "StringID__3");
 			}

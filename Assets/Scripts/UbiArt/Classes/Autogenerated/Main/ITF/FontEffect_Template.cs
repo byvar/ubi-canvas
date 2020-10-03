@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 			fadeoutEnd = s.Serialize<float>(fadeoutEnd, name: "fadeoutEnd");
 			speedMin = s.Serialize<float>(speedMin, name: "speedMin");
 			speedMax = s.Serialize<float>(speedMax, name: "speedMax");
-			_static = s.Serialize<bool>(_static, name: "_static");
+			_static = s.Serialize<bool>(_static, name: "static");
 			staticSeed = s.Serialize<float>(staticSeed, name: "staticSeed");
 			min = s.Serialize<float>(min, name: "min");
 			max = s.Serialize<float>(max, name: "max");

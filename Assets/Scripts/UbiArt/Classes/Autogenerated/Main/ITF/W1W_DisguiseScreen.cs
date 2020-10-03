@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 				Enum_VH_0__1 = s.Serialize<Enum_VH_0_2>(Enum_VH_0__1, name: "Enum_VH_0__1");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				Enum_VH_0__0_1 = s.Serialize<Enum_VH_0_1>(Enum_VH_0__0_1, name: "Enum_VH_0__0_1");
+				Enum_VH_0__0_1 = s.Serialize<Enum_VH_0_1>(Enum_VH_0__0_1, name: "Enum_VH_0__0");
 			}
 		}
 		public enum Enum_VH_0_1 {

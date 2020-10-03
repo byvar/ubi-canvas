@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			storyEvent = s.SerializeObject<StringID>(storyEvent, name: "storyEvent");
 			value = s.Serialize<int>(value, name: "value");
-			_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
+			_operator = s.Serialize<Enum_operator>(_operator, name: "operator");
 		}
 		public enum Enum_operator {
 			[Serialize("Value_0")] Value_0 = 0,

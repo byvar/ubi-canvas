@@ -9,8 +9,8 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			BasicString__0 = s.SerializeObject<BasicString>(BasicString__0, name: "BasicString__0");
-			CList_LevelInfo__1 = s.SerializeObject<CListO<LevelInfo>>(CList_LevelInfo__1, name: "CList_LevelInfo__1");
-			CList_BasicString__2 = s.SerializeObject<CListO<BasicString>>(CList_BasicString__2, name: "CList_BasicString__2");
+			CList_LevelInfo__1 = s.SerializeObject<CListO<LevelInfo>>(CList_LevelInfo__1, name: "CList<LevelInfo>__1");
+			CList_BasicString__2 = s.SerializeObject<CListO<BasicString>>(CList_BasicString__2, name: "CList<BasicString>__2");
 		}
 	}
 }

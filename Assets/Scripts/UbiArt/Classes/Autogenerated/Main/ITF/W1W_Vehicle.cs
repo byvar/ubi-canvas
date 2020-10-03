@@ -58,7 +58,7 @@ namespace UbiArt.ITF {
 				float__14 = s.Serialize<float>(float__14, name: "float__14");
 				float__15 = s.Serialize<float>(float__15, name: "float__15");
 				float__16 = s.Serialize<float>(float__16, name: "float__16");
-				float__17_2 = s.Serialize<float>(float__17_2, name: "float__17_2");
+				float__17_2 = s.Serialize<float>(float__17_2, name: "float__17");
 				float__18 = s.Serialize<float>(float__18, name: "float__18");
 				float__19 = s.Serialize<float>(float__19, name: "float__19");
 				float__20 = s.Serialize<float>(float__20, name: "float__20");
@@ -84,10 +84,10 @@ namespace UbiArt.ITF {
 				EventSender__40 = s.SerializeObject<EventSender>(EventSender__40, name: "EventSender__40");
 				EventSender__41 = s.SerializeObject<EventSender>(EventSender__41, name: "EventSender__41");
 				EventSender__42 = s.SerializeObject<EventSender>(EventSender__42, name: "EventSender__42");
-				float__43_2 = s.Serialize<float>(float__43_2, name: "float__43_2");
-				float__44_2 = s.Serialize<float>(float__44_2, name: "float__44_2");
-				float__45_2 = s.Serialize<float>(float__45_2, name: "float__45_2");
-				float__46_2 = s.Serialize<float>(float__46_2, name: "float__46_2");
+				float__43_2 = s.Serialize<float>(float__43_2, name: "float__43");
+				float__44_2 = s.Serialize<float>(float__44_2, name: "float__44");
+				float__45_2 = s.Serialize<float>(float__45_2, name: "float__45");
+				float__46_2 = s.Serialize<float>(float__46_2, name: "float__46");
 				float__47 = s.Serialize<float>(float__47, name: "float__47");
 				float__48 = s.Serialize<float>(float__48, name: "float__48");
 			}

@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				CArray_StringID__0 = s.SerializeObject<CArrayO<StringID>>(CArray_StringID__0, name: "CArray_StringID__0");
+				CArray_StringID__0 = s.SerializeObject<CArrayO<StringID>>(CArray_StringID__0, name: "CArray<StringID>__0");
 				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
 			} else {
 				defaultProcess = s.Serialize<bool>(defaultProcess, name: "defaultProcess");

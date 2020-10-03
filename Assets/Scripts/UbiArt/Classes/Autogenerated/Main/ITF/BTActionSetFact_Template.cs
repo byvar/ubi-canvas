@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");
-				type2 = s.Serialize<EValueType2>(type2, name: "type2");
+				type2 = s.Serialize<EValueType2>(type2, name: "type");
 			} else {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");

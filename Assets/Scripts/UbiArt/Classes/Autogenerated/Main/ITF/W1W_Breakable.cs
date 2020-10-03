@@ -16,16 +16,16 @@ namespace UbiArt.ITF {
 		public bool bool__10;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			CArray_W1W_BreakableSequence__1 = s.SerializeObject<CArrayO<W1W_BreakableSequence>>(CArray_W1W_BreakableSequence__1, name: "CArray_W1W_BreakableSequence__1");
+			CArray_W1W_BreakableSequence__1 = s.SerializeObject<CArrayO<W1W_BreakableSequence>>(CArray_W1W_BreakableSequence__1, name: "CArray<W1W_BreakableSequence>__1");
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 				Enum_VH_0__2 = s.Serialize<Enum_VH_0>(Enum_VH_0__2, name: "Enum_VH_0__2");
 				int__3 = s.Serialize<int>(int__3, name: "int__3");
-				Generic_Event__4 = s.SerializeObject<Generic<Event>>(Generic_Event__4, name: "Generic_Event__4");
-				Generic_Event__5 = s.SerializeObject<Generic<Event>>(Generic_Event__5, name: "Generic_Event__5");
-				Generic_Event__6 = s.SerializeObject<Generic<Event>>(Generic_Event__6, name: "Generic_Event__6");
-				Generic_Event__7 = s.SerializeObject<Generic<Event>>(Generic_Event__7, name: "Generic_Event__7");
-				Generic_Event__8 = s.SerializeObject<Generic<Event>>(Generic_Event__8, name: "Generic_Event__8");
-				CArray_Generic_Event__9 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__9, name: "CArray_Generic_Event__9");
+				Generic_Event__4 = s.SerializeObject<Generic<Event>>(Generic_Event__4, name: "Generic<Event>__4");
+				Generic_Event__5 = s.SerializeObject<Generic<Event>>(Generic_Event__5, name: "Generic<Event>__5");
+				Generic_Event__6 = s.SerializeObject<Generic<Event>>(Generic_Event__6, name: "Generic<Event>__6");
+				Generic_Event__7 = s.SerializeObject<Generic<Event>>(Generic_Event__7, name: "Generic<Event>__7");
+				Generic_Event__8 = s.SerializeObject<Generic<Event>>(Generic_Event__8, name: "Generic<Event>__8");
+				CArray_Generic_Event__9 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__9, name: "CArray<Generic<Event>>__9");
 			}
 			bool__10 = s.Serialize<bool>(bool__10, name: "bool__10");
 			if (s.HasFlags(SerializeFlags.Persistent)) {

@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 				outputs = s.SerializeObject<CListO<StringID>>(outputs, name: "outputs");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				filterFrequency = s.Serialize<float>(filterFrequency, name: "filterFrequency");
-				filterType2 = s.Serialize<FilterType2>(filterType2, name: "filterType2");
+				filterType2 = s.Serialize<FilterType2>(filterType2, name: "filterType");
 				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");
 				outDevices = s.Serialize<uint>(outDevices, name: "outDevices");
 			}

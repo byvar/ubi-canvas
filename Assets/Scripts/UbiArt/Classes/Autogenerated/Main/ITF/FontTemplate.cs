@@ -70,7 +70,7 @@ namespace UbiArt.ITF {
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				lineHeight = s.Serialize<int>(lineHeight, name: "lineHeight");
-				_base = s.Serialize<int>(_base, name: "_base");
+				_base = s.Serialize<int>(_base, name: "base");
 				scaleW = s.Serialize<int>(scaleW, name: "scaleW");
 				scaleH = s.Serialize<int>(scaleH, name: "scaleH");
 				pages = s.Serialize<int>(pages, name: "pages");

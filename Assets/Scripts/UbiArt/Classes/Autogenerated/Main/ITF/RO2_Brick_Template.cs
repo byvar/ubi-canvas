@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 				}
 			} else {
 				name = s.SerializeObject<StringID>(name, name: "name");
-				name2 = s.Serialize<string>(name2, name: "name2");
+				name2 = s.Serialize<string>(name2, name: "name");
 				path = s.SerializeObject<Path>(path, name: "path");
 				spawnCooldown = s.Serialize<uint>(spawnCooldown, name: "spawnCooldown");
 				difficulty = s.Serialize<uint>(difficulty, name: "difficulty");

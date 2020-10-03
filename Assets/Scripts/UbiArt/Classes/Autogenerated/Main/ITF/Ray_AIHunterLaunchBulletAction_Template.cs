@@ -14,14 +14,14 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				endMarker_ = s.SerializeObject<StringID>(endMarker_, name: "endMarker_");
+				endMarker_ = s.SerializeObject<StringID>(endMarker_, name: "endMarker");
 				bulletExitBone = s.SerializeObject<StringID>(bulletExitBone, name: "bulletExitBone");
 				bullet = s.SerializeObject<Path>(bullet, name: "bullet");
 				offset = s.Serialize<float>(offset, name: "offset");
 				useBoneOrientation = s.Serialize<int>(useBoneOrientation, name: "useBoneOrientation");
 				launchSpeed = s.Serialize<float>(launchSpeed, name: "launchSpeed");
 			} else {
-				endMarker_ = s.SerializeObject<StringID>(endMarker_, name: "endMarker_");
+				endMarker_ = s.SerializeObject<StringID>(endMarker_, name: "endMarker");
 				bulletExitBone = s.SerializeObject<StringID>(bulletExitBone, name: "bulletExitBone");
 				bullet = s.SerializeObject<Path>(bullet, name: "bullet");
 				Path__3 = s.SerializeObject<Path>(Path__3, name: "Path__3");

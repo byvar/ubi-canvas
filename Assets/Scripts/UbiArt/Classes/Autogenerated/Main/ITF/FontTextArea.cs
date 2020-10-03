@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				FontTextArea_FontSet__0 = s.SerializeObject<FontTextArea.FontSet>(FontTextArea_FontSet__0, name: "FontTextArea_FontSet__0");
-				FontTextArea_Style__1 = s.SerializeObject<FontTextArea.Style>(FontTextArea_Style__1, name: "FontTextArea_Style__1");
+				FontTextArea_FontSet__0 = s.SerializeObject<FontTextArea.FontSet>(FontTextArea_FontSet__0, name: "FontTextArea.FontSet__0");
+				FontTextArea_Style__1 = s.SerializeObject<FontTextArea.Style>(FontTextArea_Style__1, name: "FontTextArea.Style__1");
 			} else {
 			}
 		}
@@ -26,14 +26,14 @@ namespace UbiArt.ITF {
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-					_default = s.SerializeObject<Path>(_default, name: "_default");
+					_default = s.SerializeObject<Path>(_default, name: "default");
 					japanese = s.SerializeObject<Path>(japanese, name: "japanese");
 					korean = s.SerializeObject<Path>(korean, name: "korean");
 					tradChinese = s.SerializeObject<Path>(tradChinese, name: "tradChinese");
 					simpleChinese = s.SerializeObject<Path>(simpleChinese, name: "simpleChinese");
 					russian = s.SerializeObject<Path>(russian, name: "russian");
 				} else {
-					_default = s.SerializeObject<Path>(_default, name: "_default");
+					_default = s.SerializeObject<Path>(_default, name: "default");
 					japanese = s.SerializeObject<Path>(japanese, name: "japanese");
 					korean = s.SerializeObject<Path>(korean, name: "korean");
 					tradChinese = s.SerializeObject<Path>(tradChinese, name: "tradChinese");
@@ -77,7 +77,7 @@ namespace UbiArt.ITF {
 					lineSpacing = s.Serialize<float>(lineSpacing, name: "lineSpacing");
 					paragraphSpacing = s.Serialize<float>(paragraphSpacing, name: "paragraphSpacing");
 					anchor = s.Serialize<AREA_ANCHOR>(anchor, name: "anchor");
-					hAlignment2 = s.Serialize<FONT_ALIGN2>(hAlignment2, name: "hAlignment2");
+					hAlignment2 = s.Serialize<FONT_ALIGN2>(hAlignment2, name: "hAlignment");
 					vAlignment = s.Serialize<FONT>(vAlignment, name: "vAlignment");
 					useGradient = s.Serialize<bool>(useGradient, name: "useGradient", options: CSerializerObject.Options.BoolAsByte);
 					gradientSize = s.Serialize<float>(gradientSize, name: "gradientSize");
@@ -96,7 +96,7 @@ namespace UbiArt.ITF {
 					lineSpacing = s.Serialize<float>(lineSpacing, name: "lineSpacing");
 					paragraphSpacing = s.Serialize<float>(paragraphSpacing, name: "paragraphSpacing");
 					anchor = s.Serialize<AREA_ANCHOR>(anchor, name: "anchor");
-					hAlignment2 = s.Serialize<FONT_ALIGN2>(hAlignment2, name: "hAlignment2");
+					hAlignment2 = s.Serialize<FONT_ALIGN2>(hAlignment2, name: "hAlignment");
 					vAlignment = s.Serialize<FONT>(vAlignment, name: "vAlignment");
 					useGradient = s.Serialize<bool>(useGradient, name: "useGradient");
 					gradientSize = s.Serialize<float>(gradientSize, name: "gradientSize");

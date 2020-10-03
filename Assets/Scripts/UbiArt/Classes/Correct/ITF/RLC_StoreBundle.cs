@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			Price = s.Serialize<float>(Price, name: "Price");
 			formattedPrice = s.Serialize<string>(formattedPrice, name: "formattedPrice");
-			locId_ = s.Serialize<uint>(locId_, name: "locId_");
+			locId_ = s.Serialize<uint>(locId_, name: "locId");
 			infoLocId = s.Serialize<uint>(infoLocId, name: "infoLocId");
 			reduction = s.Serialize<float>(reduction, name: "reduction");
 			gemspacks = s.SerializeObject<CListO<RLC_GemsPack>>(gemspacks, name: "gemspacks");

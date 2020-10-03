@@ -65,8 +65,8 @@ namespace UbiArt.ITF {
 				shadowDist = s.Serialize<float>(shadowDist, name: "shadowDist");
 				shadowOffsetPos = s.SerializeObject<Vec3d>(shadowOffsetPos, name: "shadowOffsetPos");
 				angleLimit = s.Serialize<float>(angleLimit, name: "angleLimit");
-				blendmode2 = s.Serialize<GFX_BLEND2>(blendmode2, name: "blendmode2");
-				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype2");
+				blendmode2 = s.Serialize<GFX_BLEND2>(blendmode2, name: "blendmode");
+				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				patchLevel = s.Serialize<uint>(patchLevel, name: "patchLevel");
 				patchHLevel = s.Serialize<uint>(patchHLevel, name: "patchHLevel");
@@ -77,7 +77,7 @@ namespace UbiArt.ITF {
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
 				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
-				materialtype3 = s.Serialize<GFX_MAT3>(materialtype3, name: "materialtype3");
+				materialtype3 = s.Serialize<GFX_MAT3>(materialtype3, name: "materialtype");
 				selfIllumColor = s.SerializeObject<Color>(selfIllumColor, name: "selfIllumColor");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
 				forceDisableLight = s.Serialize<bool>(forceDisableLight, name: "forceDisableLight");
@@ -102,7 +102,7 @@ namespace UbiArt.ITF {
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
 				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
-				materialtype3 = s.Serialize<GFX_MAT3>(materialtype3, name: "materialtype3");
+				materialtype3 = s.Serialize<GFX_MAT3>(materialtype3, name: "materialtype");
 				selfIllumColor = s.SerializeObject<Color>(selfIllumColor, name: "selfIllumColor");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight", options: CSerializerObject.Options.BoolAsByte);
 				forceDisableLight = s.Serialize<bool>(forceDisableLight, name: "forceDisableLight", options: CSerializerObject.Options.BoolAsByte);
@@ -128,7 +128,7 @@ namespace UbiArt.ITF {
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");
 				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
-				materialtype4 = s.Serialize<GFX_MAT4>(materialtype4, name: "materialtype4");
+				materialtype4 = s.Serialize<GFX_MAT4>(materialtype4, name: "materialtype");
 				selfIllumColor = s.SerializeObject<Color>(selfIllumColor, name: "selfIllumColor");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
 				forceDisableLight = s.Serialize<bool>(forceDisableLight, name: "forceDisableLight");

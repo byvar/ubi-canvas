@@ -24,10 +24,10 @@ namespace UbiArt.ITF {
 			float__2 = s.Serialize<float>(float__2, name: "float__2");
 			float__3 = s.Serialize<float>(float__3, name: "float__3");
 			bool__4 = s.Serialize<bool>(bool__4, name: "bool__4");
-			Generic_Event__5 = s.SerializeObject<Generic<Event>>(Generic_Event__5, name: "Generic_Event__5");
-			Generic_Event__6 = s.SerializeObject<Generic<Event>>(Generic_Event__6, name: "Generic_Event__6");
-			Generic_Event__7 = s.SerializeObject<Generic<Event>>(Generic_Event__7, name: "Generic_Event__7");
-			Generic_Event__8 = s.SerializeObject<Generic<Event>>(Generic_Event__8, name: "Generic_Event__8");
+			Generic_Event__5 = s.SerializeObject<Generic<Event>>(Generic_Event__5, name: "Generic<Event>__5");
+			Generic_Event__6 = s.SerializeObject<Generic<Event>>(Generic_Event__6, name: "Generic<Event>__6");
+			Generic_Event__7 = s.SerializeObject<Generic<Event>>(Generic_Event__7, name: "Generic<Event>__7");
+			Generic_Event__8 = s.SerializeObject<Generic<Event>>(Generic_Event__8, name: "Generic<Event>__8");
 			EventSender__9 = s.SerializeObject<EventSender>(EventSender__9, name: "EventSender__9");
 			EventSender__10 = s.SerializeObject<EventSender>(EventSender__10, name: "EventSender__10");
 			EventSender__11 = s.SerializeObject<EventSender>(EventSender__11, name: "EventSender__11");

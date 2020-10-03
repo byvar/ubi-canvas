@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 			atlasMaterial = s.SerializeObject<GFXMaterialSerializable>(atlasMaterial, name: "atlasMaterial");
 			atlasParticlesMaterial = s.SerializeObject<GFXMaterialSerializable>(atlasParticlesMaterial, name: "atlasParticlesMaterial");
 			edgeSize = s.Serialize<float>(edgeSize, name: "edgeSize");
-			faction2 = s.Serialize<uint>(faction2, name: "faction2");
+			faction2 = s.Serialize<uint>(faction2, name: "faction");
 		}
 		public override uint? ClassCRC => 0x189DAE6B;
 	}

@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public bool isTouchTapSensitive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			reward2 = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward2, name: "reward2");
+			reward2 = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward2, name: "reward");
 			crushAttackDamage = s.Serialize<uint>(crushAttackDamage, name: "crushAttackDamage");
 			frontDamage = s.Serialize<uint>(frontDamage, name: "frontDamage");
 			backDamage = s.Serialize<uint>(backDamage, name: "backDamage");

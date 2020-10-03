@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 				WwiseEventGUID = s.SerializeObject<StringID>(WwiseEventGUID, name: "WwiseEventGUID");
-				WwiseMetronomeID2 = s.Serialize<Enum_WwiseMetronomeID>(WwiseMetronomeID2, name: "WwiseMetronomeID2");
+				WwiseMetronomeID2 = s.Serialize<Enum_WwiseMetronomeID>(WwiseMetronomeID2, name: "WwiseMetronomeID");
 				StopOnDestroy = s.Serialize<int>(StopOnDestroy, name: "StopOnDestroy");
 			} else if (Settings.s.game == Settings.Game.VH) {
 				WwiseEventGUID = s.SerializeObject<StringID>(WwiseEventGUID, name: "WwiseEventGUID");

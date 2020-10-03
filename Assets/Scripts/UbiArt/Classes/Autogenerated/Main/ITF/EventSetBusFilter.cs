@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				bus = s.SerializeObject<StringID>(bus, name: "bus");
 				frequency = s.Serialize<float>(frequency, name: "frequency");
-				type2 = s.Serialize<FilterType2>(type2, name: "type2");
+				type2 = s.Serialize<FilterType2>(type2, name: "type");
 			} else {
 			}
 		}

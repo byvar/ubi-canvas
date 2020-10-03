@@ -43,10 +43,10 @@ namespace UbiArt.ITF {
 				Vector3__9 = s.SerializeObject<Vec3d>(Vector3__9, name: "Vector3__9");
 				bool__10 = s.Serialize<bool>(bool__10, name: "bool__10");
 				Enum_VH_1__11 = s.Serialize<Enum_VH_1>(Enum_VH_1__11, name: "Enum_VH_1__11");
-				Generic_Event__12 = s.SerializeObject<Generic<Event>>(Generic_Event__12, name: "Generic_Event__12");
-				Generic_Event__13 = s.SerializeObject<Generic<Event>>(Generic_Event__13, name: "Generic_Event__13");
-				Generic_Event__14 = s.SerializeObject<Generic<Event>>(Generic_Event__14, name: "Generic_Event__14");
-				Generic_Event__15 = s.SerializeObject<Generic<Event>>(Generic_Event__15, name: "Generic_Event__15");
+				Generic_Event__12 = s.SerializeObject<Generic<Event>>(Generic_Event__12, name: "Generic<Event>__12");
+				Generic_Event__13 = s.SerializeObject<Generic<Event>>(Generic_Event__13, name: "Generic<Event>__13");
+				Generic_Event__14 = s.SerializeObject<Generic<Event>>(Generic_Event__14, name: "Generic<Event>__14");
+				Generic_Event__15 = s.SerializeObject<Generic<Event>>(Generic_Event__15, name: "Generic<Event>__15");
 				bool__16 = s.Serialize<bool>(bool__16, name: "bool__16");
 				StringID__17 = s.SerializeObject<StringID>(StringID__17, name: "StringID__17");
 				StringID__18 = s.SerializeObject<StringID>(StringID__18, name: "StringID__18");

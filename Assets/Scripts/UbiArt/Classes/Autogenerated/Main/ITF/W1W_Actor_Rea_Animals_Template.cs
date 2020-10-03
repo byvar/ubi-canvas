@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public StringID StringID__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			StringID__0_ = s.SerializeObject<StringID>(StringID__0_, name: "StringID__0_");
+			StringID__0_ = s.SerializeObject<StringID>(StringID__0_, name: "StringID__0");
 			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
 		}
 		public override uint? ClassCRC => 0x9C47DBFC;

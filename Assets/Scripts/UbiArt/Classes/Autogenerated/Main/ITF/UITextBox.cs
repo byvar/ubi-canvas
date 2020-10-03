@@ -49,7 +49,7 @@ namespace UbiArt.ITF {
 					scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
 					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
 					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
-					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment2");
+					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment");
 					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
 					overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
 				}
@@ -67,7 +67,7 @@ namespace UbiArt.ITF {
 					scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
 					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
 					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
-					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment2");
+					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment");
 					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
 					overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
 				}

@@ -21,12 +21,12 @@ namespace UbiArt.ITF {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");
 				type = s.Serialize<EValueType>(type, name: "type");
-				superiorEnum = s.Serialize<EValueType>(superiorEnum, name: "superiorEnum");
-				inferiorEnum = s.Serialize<EValueType>(inferiorEnum, name: "inferiorEnum");
+				superiorEnum = s.Serialize<EValueType>(superiorEnum, name: "superior");
+				inferiorEnum = s.Serialize<EValueType>(inferiorEnum, name: "inferior");
 			} else {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");
-				typeRA = s.Serialize<EValueTypeRA>(typeRA, name: "typeRA");
+				typeRA = s.Serialize<EValueTypeRA>(typeRA, name: "type");
 				superior = s.Serialize<bool>(superior, name: "superior");
 				inferior = s.Serialize<bool>(inferior, name: "inferior");
 			}

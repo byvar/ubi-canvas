@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					LUA = s.SerializeObject<Path>(LUA, name: "LUA");
 					xFLIPPED = s.Serialize<bool>(xFLIPPED, name: "xFLIPPED");
-					parentBindOrigins = s.SerializeObject<Nullable<ActorBind>>(parentBindOrigins, name: "parentBindOrigins");
+					parentBindOrigins = s.SerializeObject<Nullable<ActorBind>>(parentBindOrigins, name: "parentBind");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");

@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
 			StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
-			CArray_Generic_Event__2 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__2, name: "CArray_Generic_Event__2");
+			CArray_Generic_Event__2 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__2, name: "CArray<Generic<Event>>__2");
 			float__3 = s.Serialize<float>(float__3, name: "float__3");
 			Enum_VH_1__4 = s.Serialize<Enum_VH_1>(Enum_VH_1__4, name: "Enum_VH_1__4");
 			Enum_VH_2__5 = s.Serialize<Enum_VH_2>(Enum_VH_2__5, name: "Enum_VH_2__5");

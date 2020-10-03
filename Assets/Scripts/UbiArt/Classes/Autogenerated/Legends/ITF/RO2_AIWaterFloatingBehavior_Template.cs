@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 			speedScaleMax = s.Serialize<float>(speedScaleMax, name: "speedScaleMax");
 			landForceMultiplier = s.Serialize<float>(landForceMultiplier, name: "landForceMultiplier");
 			landXForceMultiplier = s.Serialize<float>(landXForceMultiplier, name: "landXForceMultiplier");
-			_float = s.SerializeObject<Generic<AIAction_Template>>(_float, name: "_float");
+			_float = s.SerializeObject<Generic<AIAction_Template>>(_float, name: "float");
 		}
 		public override uint? ClassCRC => 0xEA40458D;
 	}

@@ -31,7 +31,6 @@ namespace UbiArt.ITF {
 			triggersCompletion = s.Serialize<ulong>(triggersCompletion, name: "triggersCompletion");
 			triggersReset = s.Serialize<ulong>(triggersReset, name: "triggersReset");
 			requiredHitCount = s.SerializeObject<CArrayP<uint>>(requiredHitCount, name: "requiredHitCount");
-			requiredHitCount = s.SerializeObject<CArrayP<uint>>(requiredHitCount, name: "requiredHitCount");
 			difficulty = s.Serialize<Mission_Difficulty>(difficulty, name: "difficulty");
 			objectiveType = s.Serialize<Mission_Type>(objectiveType, name: "objectiveType");
 			successCondition = s.Serialize<Mission_SuccessCondition>(successCondition, name: "successCondition");

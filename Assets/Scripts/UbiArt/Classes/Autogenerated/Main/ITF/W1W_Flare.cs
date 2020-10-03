@@ -25,8 +25,8 @@ namespace UbiArt.ITF {
 			float__6 = s.Serialize<float>(float__6, name: "float__6");
 			float__7 = s.Serialize<float>(float__7, name: "float__7");
 			float__8 = s.Serialize<float>(float__8, name: "float__8");
-			Generic_Event__9 = s.SerializeObject<Generic<Event>>(Generic_Event__9, name: "Generic_Event__9");
-			Generic_Event__10 = s.SerializeObject<Generic<Event>>(Generic_Event__10, name: "Generic_Event__10");
+			Generic_Event__9 = s.SerializeObject<Generic<Event>>(Generic_Event__9, name: "Generic<Event>__9");
+			Generic_Event__10 = s.SerializeObject<Generic<Event>>(Generic_Event__10, name: "Generic<Event>__10");
 		}
 		public override uint? ClassCRC => 0x110A85EE;
 	}

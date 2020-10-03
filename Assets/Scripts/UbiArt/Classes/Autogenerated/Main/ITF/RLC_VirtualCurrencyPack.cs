@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 			Price = s.Serialize<float>(Price, name: "Price");
 			Amount = s.Serialize<uint>(Amount, name: "Amount");
 			formattedPrice = s.Serialize<string>(formattedPrice, name: "formattedPrice");
-			locId_ = s.Serialize<uint>(locId_, name: "locId_");
+			locId_ = s.Serialize<uint>(locId_, name: "locId");
 			icon = s.Serialize<uint>(icon, name: "icon");
 			stickerNew = s.Serialize<bool>(stickerNew, name: "stickerNew");
 			stickerPopular = s.Serialize<bool>(stickerPopular, name: "stickerPopular");

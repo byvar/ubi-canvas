@@ -20,8 +20,8 @@ namespace UbiArt.ITF {
 				phaseTag = s.SerializeObject<StringID>(phaseTag, name: "phaseTag");
 				instructionTag = s.SerializeObject<StringID>(instructionTag, name: "instructionTag");
 				neededFlags = s.Serialize<LF>(neededFlags, name: "neededFlags");
-				tweenSelection2 = s.Serialize<LTLegends>(tweenSelection2, name: "tweenSelection2");
-				secondaryTweenSelection2 = s.Serialize<LTLegends>(secondaryTweenSelection2, name: "secondaryTweenSelection2");
+				tweenSelection2 = s.Serialize<LTLegends>(tweenSelection2, name: "tweenSelection");
+				secondaryTweenSelection2 = s.Serialize<LTLegends>(secondaryTweenSelection2, name: "secondaryTweenSelection");
 				triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce", options: CSerializerObject.Options.BoolAsByte);
 				tweenOffset = s.SerializeObject<Vec2d>(tweenOffset, name: "tweenOffset");
 			} else {

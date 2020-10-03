@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 				} else {
 					use = s.Serialize<bool>(use, name: "use");
 				}
-				pixelSize2 = s.Serialize<uint>(pixelSize2, name: "pixelSize2");
+				pixelSize2 = s.Serialize<uint>(pixelSize2, name: "pixelSize");
 				quality = s.Serialize<uint>(quality, name: "quality");
 			} else {
 				use = s.Serialize<bool>(use, name: "use");

@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				state2 = s.Serialize<Enum_state>(state2, name: "state2");
+				state2 = s.Serialize<Enum_state>(state2, name: "state");
 				label = s.Serialize<string>(label, name: "label");
 				forceLabel = s.Serialize<bool>(forceLabel, name: "forceLabel");
 			} else {

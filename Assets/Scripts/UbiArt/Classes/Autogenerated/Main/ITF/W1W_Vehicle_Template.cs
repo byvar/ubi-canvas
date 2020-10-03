@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			Vector2__0 = s.SerializeObject<Vec2d>(Vector2__0, name: "Vector2__0");
-			StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1_");
+			StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1");
 			Path__2 = s.SerializeObject<Path>(Path__2, name: "Path__2");
 			float__3 = s.Serialize<float>(float__3, name: "float__3");
 			float__4 = s.Serialize<float>(float__4, name: "float__4");

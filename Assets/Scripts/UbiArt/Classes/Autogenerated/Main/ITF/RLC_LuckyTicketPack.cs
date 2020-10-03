@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			if (s.HasFlags(SerializeFlags.Flags8)) {
 				GoldenTicketPack = s.Serialize<bool>(GoldenTicketPack, name: "GoldenTicketPack");
 			}
-			msdkItemId_ = s.Serialize<uint>(msdkItemId_, name: "msdkItemId_");
+			msdkItemId_ = s.Serialize<uint>(msdkItemId_, name: "msdkItemId");
 		}
 		public override uint? ClassCRC => 0xACECEBCA;
 	}

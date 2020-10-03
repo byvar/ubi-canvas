@@ -59,7 +59,7 @@ namespace UbiArt.ITF {
 				base.SerializeImpl(s);
 				AABB__0 = s.SerializeObject<AABB>(AABB__0, name: "AABB__0");
 				float__1 = s.Serialize<float>(float__1, name: "float__1");
-				Generic_AIPerformHitAction_Template__2 = s.SerializeObject<Generic<AIPerformHitAction_Template>>(Generic_AIPerformHitAction_Template__2, name: "Generic_AIPerformHitAction_Template__2");
+				Generic_AIPerformHitAction_Template__2 = s.SerializeObject<Generic<AIPerformHitAction_Template>>(Generic_AIPerformHitAction_Template__2, name: "Generic<AIPerformHitAction_Template>__2");
 			}
 		}
 		public override uint? ClassCRC => 0x2451FFFE;

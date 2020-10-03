@@ -13,8 +13,8 @@ namespace UbiArt.ITF {
 			AnimationAtlas__0 = s.SerializeObject<AnimationAtlas>(AnimationAtlas__0, name: "AnimationAtlas__0");
 			AABB__1 = s.SerializeObject<AABB>(AABB__1, name: "AABB__1");
 			Color__2 = s.SerializeObject<Color>(Color__2, name: "Color__2");
-			CArray_Vector2__3 = s.SerializeObject<CArrayO<Vec2d>>(CArray_Vector2__3, name: "CArray_Vector2__3");
-			CArray_Vector2__4 = s.SerializeObject<CArrayO<Vec2d>>(CArray_Vector2__4, name: "CArray_Vector2__4");
+			CArray_Vector2__3 = s.SerializeObject<CArrayO<Vec2d>>(CArray_Vector2__3, name: "CArray<Vector2>__3");
+			CArray_Vector2__4 = s.SerializeObject<CArrayO<Vec2d>>(CArray_Vector2__4, name: "CArray<Vector2>__4");
 		}
 	}
 }

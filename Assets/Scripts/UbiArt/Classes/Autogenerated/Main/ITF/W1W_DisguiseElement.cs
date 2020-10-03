@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		public StringID StringID__1_;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			Enum_VH_0__0_ = s.Serialize<Enum_VH_0_1>(Enum_VH_0__0_, name: "Enum_VH_0__0_");
-			StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1_");
+			Enum_VH_0__0_ = s.Serialize<Enum_VH_0_1>(Enum_VH_0__0_, name: "Enum_VH_0__0");
+			StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1");
 		}
 		public enum Enum_VH_0_1 {
 			[Serialize("Value_1")] Value_1 = 1,

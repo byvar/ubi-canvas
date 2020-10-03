@@ -8,7 +8,7 @@ namespace UbiArt.SceneConfig {
 		protected override void SerializeImpl(CSerializerObject s) {
 			if(Settings.s.game == Settings.Game.RA) {
 				unk = s.SerializeGenericPureBinary<uint>(unk, name: "unk");
-				sgsMapAdv = s.SerializeObject<SgsKey>(sgsMapAdv, name: "sgsMapAdv");
+				sgsMapAdv = s.SerializeObject<SgsKey>(sgsMapAdv, name: "sgsMap");
 			} else {
 				unk = s.Serialize<uint>(unk, name: "unk");
 				dataversion = s.Serialize<uint>(dataversion, name: "dataversion");

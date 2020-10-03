@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 			ownerSnapBone = s.SerializeObject<StringID>(ownerSnapBone, name: "ownerSnapBone");
 			DRC_catchRadius = s.Serialize<float>(DRC_catchRadius, name: "DRC_catchRadius");
 			DRC_forceCoeff = s.Serialize<float>(DRC_forceCoeff, name: "DRC_forceCoeff");
-			faction2 = s.Serialize<uint>(faction2, name: "faction2");
+			faction2 = s.Serialize<uint>(faction2, name: "faction");
 			bubbleBehavior = s.SerializeObject<Generic<RO2_AIBubbleDeathBehavior_Template>>(bubbleBehavior, name: "bubbleBehavior");
 		}
 		public override uint? ClassCRC => 0x0F730A08;

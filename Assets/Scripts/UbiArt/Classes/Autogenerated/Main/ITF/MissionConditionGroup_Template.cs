@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool negated;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
+			_operator = s.Serialize<Enum_operator>(_operator, name: "operator");
 			count = s.Serialize<uint>(count, name: "count");
 			negated = s.Serialize<bool>(negated, name: "negated", options: CSerializerObject.Options.BoolAsByte);
 		}
