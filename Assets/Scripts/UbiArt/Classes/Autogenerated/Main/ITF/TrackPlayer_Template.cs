@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListP<string> CList_String__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			CList_String__0 = s.SerializeObject<CListP<string>>(CList_String__0, name: "CList_String__0");
+			CList_String__0 = s.SerializeObject<CListP<string>>(CList_String__0, name: "CList<String>__0");
 		}
 		public override uint? ClassCRC => 0xED859FD5;
 	}

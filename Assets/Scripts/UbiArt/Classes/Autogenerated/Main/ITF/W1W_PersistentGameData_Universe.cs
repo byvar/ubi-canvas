@@ -54,7 +54,7 @@ namespace UbiArt.ITF {
 			uint__17 = s.Serialize<uint>(uint__17, name: "uint__17");
 			uint__18 = s.Serialize<uint>(uint__18, name: "uint__18");
 			uint__19 = s.Serialize<uint>(uint__19, name: "uint__19");
-			W1W_PersistentGameData_Universe_NodeData__20 = s.SerializeObject<W1W_PersistentGameData_Universe.NodeData>(W1W_PersistentGameData_Universe_NodeData__20, name: "W1W_PersistentGameData_Universe_NodeData__20");
+			W1W_PersistentGameData_Universe_NodeData__20 = s.SerializeObject<W1W_PersistentGameData_Universe.NodeData>(W1W_PersistentGameData_Universe_NodeData__20, name: "W1W_PersistentGameData_Universe.NodeData__20");
 			MenuOptionSave__21 = s.SerializeObject<MenuOptionSave>(MenuOptionSave__21, name: "MenuOptionSave__21");
 			bool__22 = s.Serialize<bool>(bool__22, name: "bool__22");
 			uint__23 = s.Serialize<uint>(uint__23, name: "uint__23");

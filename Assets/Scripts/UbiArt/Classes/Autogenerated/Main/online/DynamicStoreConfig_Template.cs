@@ -17,8 +17,7 @@ namespace UbiArt.online {
 		public uint forcedIAPTier;
 		public uint forcedReductionActive;
 		public float forcedReductionRatio;
-		public uint KEY;
-		public CArrayP<uint> timeSavingPackTimes;
+		public CMap<uint, uint> timeSavingPackTimes;
 		public uint maxNewEggIAPPerSave;
 		public uint AdventureTimeRegion_Default;
 		public uint AdventureTimeRegion_Medieval;
@@ -49,10 +48,7 @@ namespace UbiArt.online {
 			forcedIAPTier = s.Serialize<uint>(forcedIAPTier, name: "forcedIAPTier");
 			forcedReductionActive = s.Serialize<uint>(forcedReductionActive, name: "forcedReductionActive");
 			forcedReductionRatio = s.Serialize<float>(forcedReductionRatio, name: "forcedReductionRatio");
-			KEY = s.Serialize<uint>(KEY, name: "KEY");
-			timeSavingPackTimes = s.SerializeObject<CArrayP<uint>>(timeSavingPackTimes, name: "timeSavingPackTimes");
-			KEY = s.Serialize<uint>(KEY, name: "KEY");
-			timeSavingPackTimes = s.SerializeObject<CArrayP<uint>>(timeSavingPackTimes, name: "timeSavingPackTimes");
+			timeSavingPackTimes = s.SerializeObject<CMap<uint, uint>>(timeSavingPackTimes, name: "timeSavingPackTimes");
 			maxNewEggIAPPerSave = s.Serialize<uint>(maxNewEggIAPPerSave, name: "maxNewEggIAPPerSave");
 			AdventureTimeRegion_Default = s.Serialize<uint>(AdventureTimeRegion_Default, name: "AdventureTimeRegion_Default");
 			AdventureTimeRegion_Medieval = s.Serialize<uint>(AdventureTimeRegion_Medieval, name: "AdventureTimeRegion_Medieval");

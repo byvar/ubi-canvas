@@ -45,9 +45,9 @@ namespace UbiArt.ITF {
 			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
 			StringID__4 = s.SerializeObject<StringID>(StringID__4, name: "StringID__4");
 			Enum_VH_0__5 = s.Serialize<Enum_VH_0>(Enum_VH_0__5, name: "Enum_VH_0__5");
-			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
-			CArray_EventSender__7 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__7, name: "CArray_EventSender__7");
-			Generic_Event__8 = s.SerializeObject<Generic<Event>>(Generic_Event__8, name: "Generic_Event__8");
+			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray<EventSender>__6");
+			CArray_EventSender__7 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__7, name: "CArray<EventSender>__7");
+			Generic_Event__8 = s.SerializeObject<Generic<Event>>(Generic_Event__8, name: "Generic<Event>__8");
 			StringID__9 = s.SerializeObject<StringID>(StringID__9, name: "StringID__9");
 			bool__10 = s.Serialize<bool>(bool__10, name: "bool__10");
 			Enum_VH_1__11 = s.Serialize<Enum_VH_1>(Enum_VH_1__11, name: "Enum_VH_1__11");
@@ -59,10 +59,10 @@ namespace UbiArt.ITF {
 			float__17 = s.Serialize<float>(float__17, name: "float__17");
 			float__18 = s.Serialize<float>(float__18, name: "float__18");
 			StringID__19 = s.SerializeObject<StringID>(StringID__19, name: "StringID__19");
-			Enum_VH_1__20 = s.Serialize<Enum_VH_1>(Enum_VH_1__20, name: "Enum_VH_1__20");
+			Enum_VH_1__20 = s.Serialize<Enum_VH_1>(Enum_VH_1__20, name: "Enum_VH_3__20");
 			float__21 = s.Serialize<float>(float__21, name: "float__21");
 			StringID__22 = s.SerializeObject<StringID>(StringID__22, name: "StringID__22");
-			Generic_Event__23 = s.SerializeObject<Generic<Event>>(Generic_Event__23, name: "Generic_Event__23");
+			Generic_Event__23 = s.SerializeObject<Generic<Event>>(Generic_Event__23, name: "Generic<Event>__23");
 			bool__24 = s.Serialize<bool>(bool__24, name: "bool__24");
 			bool__25 = s.Serialize<bool>(bool__25, name: "bool__25");
 			bool__26 = s.Serialize<bool>(bool__26, name: "bool__26");

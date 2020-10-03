@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 				TAGS = s.SerializeObject<CListP<string>>(TAGS, name: "TAGS");
 				WIP = s.Serialize<bool>(WIP, name: "WIP", options: CSerializerObject.Options.BoolAsByte);
 				LOWUPDATE = s.Serialize<bool>(LOWUPDATE, name: "LOWUPDATE", options: CSerializerObject.Options.BoolAsByte);
-				UPDATELAYER2 = s.Serialize<WorldUpdateLayer2>(UPDATELAYER2, name: "UPDATELAYER2");
+				UPDATELAYER2 = s.Serialize<WorldUpdateLayer2>(UPDATELAYER2, name: "UPDATELAYER");
 			}  else {
 				TAGS = s.SerializeObject<CListP<string>>(TAGS, name: "TAGS");
 				WIP = s.Serialize<bool>(WIP, name: "WIP");

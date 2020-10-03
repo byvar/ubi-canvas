@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
 					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
 					overridingColor = s.SerializeObject<Color>(overridingColor, name: "overridingColor");
-					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment2");
+					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment");
 					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
 					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}
@@ -55,7 +55,7 @@ namespace UbiArt.ITF {
 					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
 					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
 					overridingColor = s.SerializeObject<Color>(overridingColor, name: "overridingColor");
-					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment2");
+					overridingHAlignment2 = s.Serialize<FONT_ALIGN2>(overridingHAlignment2, name: "overridingHAlignment");
 					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
 					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}

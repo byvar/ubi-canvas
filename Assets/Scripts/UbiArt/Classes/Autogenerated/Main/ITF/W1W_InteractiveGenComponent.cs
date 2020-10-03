@@ -103,8 +103,8 @@ namespace UbiArt.ITF {
 			float__17 = s.Serialize<float>(float__17, name: "float__17");
 			bool__18 = s.Serialize<bool>(bool__18, name: "bool__18");
 			bool__19 = s.Serialize<bool>(bool__19, name: "bool__19");
-			Generic_Event__20 = s.SerializeObject<Generic<Event>>(Generic_Event__20, name: "Generic_Event__20");
-			Generic_Event__21 = s.SerializeObject<Generic<Event>>(Generic_Event__21, name: "Generic_Event__21");
+			Generic_Event__20 = s.SerializeObject<Generic<Event>>(Generic_Event__20, name: "Generic<Event>__20");
+			Generic_Event__21 = s.SerializeObject<Generic<Event>>(Generic_Event__21, name: "Generic<Event>__21");
 			EventSender__22 = s.SerializeObject<EventSender>(EventSender__22, name: "EventSender__22");
 			EventSender__23 = s.SerializeObject<EventSender>(EventSender__23, name: "EventSender__23");
 			EventSender__24 = s.SerializeObject<EventSender>(EventSender__24, name: "EventSender__24");

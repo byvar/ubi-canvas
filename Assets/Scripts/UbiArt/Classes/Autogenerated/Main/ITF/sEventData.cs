@@ -17,11 +17,11 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				Generic_Event__0 = s.SerializeObject<Generic<Event>>(Generic_Event__0, name: "Generic_Event__0");
+				Generic_Event__0 = s.SerializeObject<Generic<Event>>(Generic_Event__0, name: "Generic<Event>__0");
 				float__1 = s.Serialize<float>(float__1, name: "float__1");
 				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
 			} else {
-				_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
+				_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 				delay = s.Serialize<float>(delay, name: "delay");
 				selfListener = s.Serialize<bool>(selfListener, name: "selfListener");
 				sendToChildren = s.Serialize<bool>(sendToChildren, name: "sendToChildren");

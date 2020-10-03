@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public int triggerBroadcast;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
+			_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 			triggerSelf = s.Serialize<int>(triggerSelf, name: "triggerSelf");
 			triggerChildren = s.Serialize<int>(triggerChildren, name: "triggerChildren");
 			triggerBoundChildren = s.Serialize<int>(triggerBoundChildren, name: "triggerBoundChildren");

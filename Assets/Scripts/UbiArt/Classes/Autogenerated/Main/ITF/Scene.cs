@@ -35,8 +35,8 @@ namespace UbiArt.ITF {
 					MUSIC_THEME_PATH = s.SerializeObject<Path>(MUSIC_THEME_PATH, name: "MUSIC_THEME_PATH");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					FRISE_ORIGINS = s.SerializeObject<CArrayO<Generic<Pickable>>>(FRISE_ORIGINS, name: "FRISE_ORIGINS");
-					ACTORS_ORIGINS = s.SerializeObject<CArrayO<Generic<Pickable>>>(ACTORS_ORIGINS, name: "ACTORS_ORIGINS");
+					FRISE_ORIGINS = s.SerializeObject<CArrayO<Generic<Pickable>>>(FRISE_ORIGINS, name: "FRISE");
+					ACTORS_ORIGINS = s.SerializeObject<CArrayO<Generic<Pickable>>>(ACTORS_ORIGINS, name: "ACTORS");
 					friezeConnections = s.SerializeObject<CListO<FriezeConnectionResult>>(friezeConnections, name: "friezeConnections");
 					MUSIC_THEME = s.SerializeObject<StringID>(MUSIC_THEME, name: "MUSIC_THEME");
 				}
@@ -56,8 +56,8 @@ namespace UbiArt.ITF {
 					PLATFORM_FILTER = s.SerializeObject<TargetFilterList>(PLATFORM_FILTER, name: "PLATFORM_FILTER");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-					FRISE_ORIGINS = s.SerializeObject<CArrayO<Generic<Pickable>>>(FRISE_ORIGINS, name: "FRISE_ORIGINS");
-					ACTORS_ORIGINS = s.SerializeObject<CArrayO<Generic<Pickable>>>(ACTORS_ORIGINS, name: "ACTORS_ORIGINS");
+					FRISE_ORIGINS = s.SerializeObject<CArrayO<Generic<Pickable>>>(FRISE_ORIGINS, name: "FRISE");
+					ACTORS_ORIGINS = s.SerializeObject<CArrayO<Generic<Pickable>>>(ACTORS_ORIGINS, name: "ACTORS");
 					friezeConnections = s.SerializeObject<CListO<FriezeConnectionResult>>(friezeConnections, name: "friezeConnections");
 					MUSIC_THEME = s.SerializeObject<StringID>(MUSIC_THEME, name: "MUSIC_THEME");
 				}

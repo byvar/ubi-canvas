@@ -50,13 +50,13 @@ namespace UbiArt.ITF {
 				maxInstances = s.Serialize<uint>(maxInstances, name: "maxInstances");
 				isStream = s.Serialize<int>(isStream, name: "isStream");
 				files = s.SerializeObject<CListO<Path>>(files, name: "files");
-				_params = s.SerializeObject<SoundParams>(_params, name: "_params");
+				_params = s.SerializeObject<SoundParams>(_params, name: "params");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				category = s.SerializeObject<StringID>(category, name: "category");
 				limitCategory = s.SerializeObject<StringID>(limitCategory, name: "limitCategory");
-				limitModeEnum = s.Serialize<Enum_limitMode>(limitModeEnum, name: "limitModeEnum");
+				limitModeEnum = s.Serialize<Enum_limitMode>(limitModeEnum, name: "limitMode");
 				maxInstances = s.Serialize<uint>(maxInstances, name: "maxInstances");
 				isStream = s.Serialize<int>(isStream, name: "isStream");
 				isPrefetched = s.Serialize<int>(isPrefetched, name: "isPrefetched");
@@ -68,7 +68,7 @@ namespace UbiArt.ITF {
 				filesOutro = s.SerializeObject<CListO<Path>>(filesOutro, name: "filesOutro");
 				serialPlayingMode = s.Serialize<Enum_serialPlayingMode>(serialPlayingMode, name: "serialPlayingMode");
 				serialStoppingMode = s.Serialize<Enum_serialStoppingMode>(serialStoppingMode, name: "serialStoppingMode");
-				_params = s.SerializeObject<SoundParams>(_params, name: "_params");
+				_params = s.SerializeObject<SoundParams>(_params, name: "params");
 				pauseInsensitiveFlags = s.Serialize<uint>(pauseInsensitiveFlags, name: "pauseInsensitiveFlags");
 				outDevices = s.Serialize<uint>(outDevices, name: "outDevices");
 				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");

@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 				soundList = s.SerializeObject<CListO<SoundDescriptor_Template>>(soundList, name: "soundList");
 				defaultSound = s.SerializeObject<StringID>(defaultSound, name: "defaultSound");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
-				WwiseBankList2 = s.SerializeObject<CListO<Path>>(WwiseBankList2, name: "WwiseBankList2");
+				WwiseBankList2 = s.SerializeObject<CListO<Path>>(WwiseBankList2, name: "WwiseBankList");
 				WwiseInputList = s.SerializeObject<CListO<WwiseInputDesc>>(WwiseInputList, name: "WwiseInputList");
 				RegisterRtpcListener = s.Serialize<bool>(RegisterRtpcListener, name: "RegisterRtpcListener");
 				UseDefaultEmitter = s.Serialize<bool>(UseDefaultEmitter, name: "UseDefaultEmitter");

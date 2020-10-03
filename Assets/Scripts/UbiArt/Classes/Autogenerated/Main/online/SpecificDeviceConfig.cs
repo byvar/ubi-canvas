@@ -16,7 +16,6 @@ namespace UbiArt.online {
 			configName = s.Serialize<string>(configName, name: "configName");
 			ignoreMe = s.Serialize<bool>(ignoreMe, name: "ignoreMe");
 			models = s.SerializeObject<CArrayP<string>>(models, name: "models");
-			models = s.SerializeObject<CArrayP<string>>(models, name: "models");
 			scale = s.Serialize<float>(scale, name: "scale");
 			deviceSpeed = s.Serialize<uint>(deviceSpeed, name: "deviceSpeed");
 			enableTextureCompression = s.Serialize<bool>(enableTextureCompression, name: "enableTextureCompression");

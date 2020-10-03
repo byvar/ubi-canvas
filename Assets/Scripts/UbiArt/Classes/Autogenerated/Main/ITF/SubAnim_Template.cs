@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 				syncRatio = s.Serialize<float>(syncRatio, name: "syncRatio");
 				allowSyncOffset = s.Serialize<bool>(allowSyncOffset, name: "allowSyncOffset");
 				shadowMul = s.Serialize<float>(shadowMul, name: "shadowMul");
-				metronome2 = s.Serialize<METRONOME_TYPE2>(metronome2, name: "metronome2");
+				metronome2 = s.Serialize<METRONOME_TYPE2>(metronome2, name: "metronome");
 			} else if(Settings.s.game == Settings.Game.RL) {
 				friendlyName = s.SerializeObject<StringID>(friendlyName, name: "friendlyName");
 				name = s.SerializeObject<Path>(name, name: "name");
@@ -62,8 +62,8 @@ namespace UbiArt.ITF {
 				syncRatio = s.Serialize<float>(syncRatio, name: "syncRatio");
 				allowSyncOffset = s.Serialize<bool>(allowSyncOffset, name: "allowSyncOffset");
 				shadowMul = s.Serialize<float>(shadowMul, name: "shadowMul");
-				metronome3 = s.Serialize<METRONOME_TYPE3>(metronome3, name: "metronome3");
-				forceZOffset2 = s.Serialize<BOOL>(forceZOffset2, name: "forceZOffset2");
+				metronome3 = s.Serialize<METRONOME_TYPE3>(metronome3, name: "metronome");
+				forceZOffset2 = s.Serialize<BOOL>(forceZOffset2, name: "forceZOffset");
 			} else if(Settings.s.game == Settings.Game.COL) {
 				friendlyName = s.SerializeObject<StringID>(friendlyName, name: "friendlyName");
 				name = s.SerializeObject<Path>(name, name: "name");
@@ -80,8 +80,8 @@ namespace UbiArt.ITF {
 				syncRatio = s.Serialize<float>(syncRatio, name: "syncRatio");
 				allowSyncOffset = s.Serialize<bool>(allowSyncOffset, name: "allowSyncOffset");
 				shadowMul = s.Serialize<float>(shadowMul, name: "shadowMul");
-				metronome3 = s.Serialize<METRONOME_TYPE3>(metronome3, name: "metronome3");
-				forceZOffset2 = s.Serialize<BOOL>(forceZOffset2, name: "forceZOffset2");
+				metronome3 = s.Serialize<METRONOME_TYPE3>(metronome3, name: "metronome");
+				forceZOffset2 = s.Serialize<BOOL>(forceZOffset2, name: "forceZOffset");
 			} else {
 				friendlyName = s.SerializeObject<StringID>(friendlyName, name: "friendlyName");
 				name = s.SerializeObject<Path>(name, name: "name");

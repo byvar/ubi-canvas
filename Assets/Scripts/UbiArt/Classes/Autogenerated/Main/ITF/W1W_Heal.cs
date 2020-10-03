@@ -44,9 +44,9 @@ namespace UbiArt.ITF {
 			uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");
 			EventSender__3 = s.SerializeObject<EventSender>(EventSender__3, name: "EventSender__3");
 			EventSender__4 = s.SerializeObject<EventSender>(EventSender__4, name: "EventSender__4");
-			CArray_EventSender__5 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__5, name: "CArray_EventSender__5");
-			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
-			CArray_EventSender__7 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__7, name: "CArray_EventSender__7");
+			CArray_EventSender__5 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__5, name: "CArray<EventSender>__5");
+			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray<EventSender>__6");
+			CArray_EventSender__7 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__7, name: "CArray<EventSender>__7");
 			StringID__8 = s.SerializeObject<StringID>(StringID__8, name: "StringID__8");
 			StringID__9 = s.SerializeObject<StringID>(StringID__9, name: "StringID__9");
 			StringID__10 = s.SerializeObject<StringID>(StringID__10, name: "StringID__10");
@@ -56,7 +56,7 @@ namespace UbiArt.ITF {
 			Vector2__14 = s.SerializeObject<Vec2d>(Vector2__14, name: "Vector2__14");
 			Vector2__15 = s.SerializeObject<Vec2d>(Vector2__15, name: "Vector2__15");
 			float__16 = s.Serialize<float>(float__16, name: "float__16");
-			float__17_2 = s.Serialize<float>(float__17_2, name: "float__17_2");
+			float__17_2 = s.Serialize<float>(float__17_2, name: "float__17");
 			float__18 = s.Serialize<float>(float__18, name: "float__18");
 			float__19 = s.Serialize<float>(float__19, name: "float__19");
 			float__20 = s.Serialize<float>(float__20, name: "float__20");
@@ -66,11 +66,11 @@ namespace UbiArt.ITF {
 			Enum_VH_2__24 = s.Serialize<Enum_VH_2>(Enum_VH_2__24, name: "Enum_VH_2__24");
 			bool__25 = s.Serialize<bool>(bool__25, name: "bool__25");
 			bool__26 = s.Serialize<bool>(bool__26, name: "bool__26");
-			bool__27_2 = s.Serialize<bool>(bool__27_2, name: "bool__27_2");
-			float__28_2 = s.Serialize<float>(float__28_2, name: "float__28_2");
-			float__29_2 = s.Serialize<float>(float__29_2, name: "float__29_2");
-			float__30_2 = s.Serialize<float>(float__30_2, name: "float__30_2");
-			float__31_2 = s.Serialize<float>(float__31_2, name: "float__31_2");
+			bool__27_2 = s.Serialize<bool>(bool__27_2, name: "bool__27");
+			float__28_2 = s.Serialize<float>(float__28_2, name: "float__28");
+			float__29_2 = s.Serialize<float>(float__29_2, name: "float__29");
+			float__30_2 = s.Serialize<float>(float__30_2, name: "float__30");
+			float__31_2 = s.Serialize<float>(float__31_2, name: "float__31");
 			bool__32 = s.Serialize<bool>(bool__32, name: "bool__32");
 			uint__33 = s.Serialize<uint>(uint__33, name: "uint__33");
 		}

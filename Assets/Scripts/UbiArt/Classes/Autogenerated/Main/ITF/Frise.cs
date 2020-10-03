@@ -111,7 +111,7 @@ namespace UbiArt.ITF {
 						IsDynamicFrieze = s.Serialize<int>(IsDynamicFrieze, name: "IsDynamicFrieze");
 						AtlasIndex = s.Serialize<uint>(AtlasIndex, name: "AtlasIndex");
 						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
-						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "LockTexture");
 					}
 				}
 			} else if (Settings.s.game == Settings.Game.RL) {
@@ -179,7 +179,7 @@ namespace UbiArt.ITF {
 						if (Settings.s.isCatchThemAll) {
 							UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
 						}
-						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "LockTexture");
 						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
@@ -230,7 +230,7 @@ namespace UbiArt.ITF {
 						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
 						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision", options: CSerializerObject.Options.BoolAsByte);
 						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams", options: CSerializerObject.Options.BoolAsByte);
-						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "LockTexture");
 						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
@@ -288,7 +288,7 @@ namespace UbiArt.ITF {
 						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
 						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision");
 						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams");
-						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "LockTexture");
 						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
@@ -348,7 +348,7 @@ namespace UbiArt.ITF {
 						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
 						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision");
 						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams");
-						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "lockTexture");
+						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "LockTexture");
 						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}

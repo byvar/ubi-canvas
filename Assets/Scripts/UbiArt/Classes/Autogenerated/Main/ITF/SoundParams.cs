@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RL) {
 				numChannels = s.Serialize<uint>(numChannels, name: "numChannels");
 				loop = s.Serialize<int>(loop, name: "loop");
-				playMode2 = s.Serialize<PlayMode2>(playMode2, name: "playMode2");
+				playMode2 = s.Serialize<PlayMode2>(playMode2, name: "playMode");
 				playModeInput = s.SerializeObject<StringID>(playModeInput, name: "playModeInput");
 				randomVolMin = s.SerializeObject<Volume>(randomVolMin, name: "randomVolMin");
 				randomVolMax = s.SerializeObject<Volume>(randomVolMax, name: "randomVolMax");
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				fadeInTime = s.Serialize<float>(fadeInTime, name: "fadeInTime");
 				fadeOutTime = s.Serialize<float>(fadeOutTime, name: "fadeOutTime");
 				filterFrequency = s.Serialize<float>(filterFrequency, name: "filterFrequency");
-				filterType2 = s.Serialize<FilterType2>(filterType2, name: "filterType2");
+				filterType2 = s.Serialize<FilterType2>(filterType2, name: "filterType");
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				playOnNext = s.Serialize<uint>(playOnNext, name: "playOnNext");
 				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");

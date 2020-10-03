@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				instructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
 				sync = s.Serialize<bool>(sync, name: "sync");
-				metronome2 = s.Serialize<METRONOME_TYPE2>(metronome2, name: "metronome2");
+				metronome2 = s.Serialize<METRONOME_TYPE2>(metronome2, name: "metronome");
 				syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
 				startMode = s.Serialize<StartMode>(startMode, name: "startMode");
 				startSet = s.SerializeObject<StringID>(startSet, name: "startSet");

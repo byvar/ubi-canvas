@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			float__1 = s.Serialize<float>(float__1, name: "float__1");
 			float__2 = s.Serialize<float>(float__2, name: "float__2");
 			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
-			CArray_TestSpriteBone__4 = s.SerializeObject<CArrayO<TestSpriteBone>>(CArray_TestSpriteBone__4, name: "CArray_TestSpriteBone__4");
+			CArray_TestSpriteBone__4 = s.SerializeObject<CArrayO<TestSpriteBone>>(CArray_TestSpriteBone__4, name: "CArray<TestSpriteBone>__4");
 		}
 	}
 }

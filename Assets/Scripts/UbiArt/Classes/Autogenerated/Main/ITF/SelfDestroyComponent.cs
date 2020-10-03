@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			Delay = s.Serialize<float>(Delay, name: "Delay");
 			waitAnim = s.Serialize<eWait>(waitAnim, name: "waitAnim");
 			AnimName = s.SerializeObject<StringID>(AnimName, name: "AnimName");
-			eventData = s.SerializeObject<CListO<SelfDestroyComponent.EventData>>(eventData, name: "eventData");
+			eventData = s.SerializeObject<CListO<SelfDestroyComponent.EventData>>(eventData, name: "EventData");
 		}
 		[Games(GameFlags.RA)]
 		public partial class EventData : CSerializable {

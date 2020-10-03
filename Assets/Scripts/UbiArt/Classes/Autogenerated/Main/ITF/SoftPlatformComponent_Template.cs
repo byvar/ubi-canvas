@@ -49,7 +49,7 @@ namespace UbiArt.ITF {
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				bone = s.Serialize<string>(bone, name: "bone");
-				_static = s.Serialize<bool>(_static, name: "_static");
+				_static = s.Serialize<bool>(_static, name: "static");
 				gravityMultiplier = s.Serialize<float>(gravityMultiplier, name: "gravityMultiplier");
 				windMultiplier = s.Serialize<float>(windMultiplier, name: "windMultiplier");
 				useStaticAngle = s.Serialize<bool>(useStaticAngle, name: "useStaticAngle");

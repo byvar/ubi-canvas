@@ -27,7 +27,6 @@ namespace UbiArt.online {
 			iap = s.Serialize<bool>(iap, name: "iap");
 			iapPrediction = s.Serialize<float>(iapPrediction, name: "iapPrediction");
 			reco = s.SerializeObject<CArrayP<string>>(reco, name: "reco");
-			reco = s.SerializeObject<CArrayP<string>>(reco, name: "reco");
 		}
 	}
 }
