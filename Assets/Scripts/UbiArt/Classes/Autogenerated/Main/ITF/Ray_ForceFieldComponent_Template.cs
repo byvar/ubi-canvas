@@ -49,7 +49,7 @@ namespace UbiArt.ITF {
 			patchMidPointOffset = s.Serialize<float>(patchMidPointOffset, name: "patchMidPointOffset");
 			patchMidPointPercent = s.Serialize<float>(patchMidPointPercent, name: "patchMidPointPercent");
 			patchCenterOffset = s.Serialize<float>(patchCenterOffset, name: "patchCenterOffset");
-			blendmode2 = s.SerializeObject<GFX_BLEND2>(blendmode2, name: "blendmode");
+			blendmode2 = s.Serialize<GFX_BLEND2>(blendmode2, name: "blendmode");
 		}
 		public override uint? ClassCRC => 0x35A6B61A;
 

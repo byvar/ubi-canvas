@@ -18,7 +18,6 @@ namespace UbiArt.ITF {
 				id = s.Serialize<uint>(id, name: "id");
 				pos = s.SerializeObject<Vec3d>(pos, name: "pos");
 				childIds = s.SerializeObject<CArrayP<uint>>(childIds, name: "childIds");
-				childIds = s.SerializeObject<CArrayP<uint>>(childIds, name: "childIds");
 			}
 		}
 		public override uint? ClassCRC => 0x2A1BBAD4;

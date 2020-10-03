@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game != Settings.Game.RA) {
 				activated = s.Serialize<bool>(activated, name: "activated");
-				activator = (ObjectRef)s.Serialize<uint>((uint)activator, name: "activator");
+				activator = (ObjectRef)s.Serialize<uint>(activator, name: "activator");
 			} else {
 				activated = s.Serialize<bool>(activated, name: "activated");
 				activator = s.SerializeObject<ObjectRef>(activator, name: "activator");
