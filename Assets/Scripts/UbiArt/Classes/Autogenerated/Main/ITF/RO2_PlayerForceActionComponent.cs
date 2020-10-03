@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					Action2 = s.Serialize<PlayerForcedAction2>(Action2, name: "Action2");
+					Action2 = s.Serialize<PlayerForcedAction2>(Action2, name: "Action");
 					enabledOnInit = s.Serialize<bool>(enabledOnInit, name: "enabledOnInit", options: CSerializerObject.Options.BoolAsByte);
 					OverallPriority = s.Serialize<uint>(OverallPriority, name: "OverallPriority");
 					priority = s.Serialize<uint>(priority, name: "priority");

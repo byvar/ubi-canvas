@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
 				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
-				RandomAnimBankChangeComponent_strRandomAnimBankPart__3 = s.SerializeObject<RandomAnimBankChangeComponent.strRandomAnimBankPart>(RandomAnimBankChangeComponent_strRandomAnimBankPart__3, name: "RandomAnimBankChangeComponent_strRandomAnimBankPart__3");
+				RandomAnimBankChangeComponent_strRandomAnimBankPart__3 = s.SerializeObject<RandomAnimBankChangeComponent.strRandomAnimBankPart>(RandomAnimBankChangeComponent_strRandomAnimBankPart__3, name: "RandomAnimBankChangeComponent.strRandomAnimBankPart__3");
 				strRandomPatchName__4 = s.SerializeObject<strRandomPatchName>(strRandomPatchName__4, name: "strRandomPatchName__4");
 			} else {
 				isAlreadyCompute = s.Serialize<bool>(isAlreadyCompute, name: "isAlreadyCompute");

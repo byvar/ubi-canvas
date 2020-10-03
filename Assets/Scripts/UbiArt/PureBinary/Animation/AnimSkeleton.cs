@@ -33,11 +33,11 @@ namespace UbiArt.Animation {
 			base.SerializeImpl(s);
 			version = s.Serialize<uint>(version, name: "version");
 			if (Settings.s.game == Settings.Game.RA) {
-				boneTagsAdv = s.SerializeObject<CListP<ulong>>(boneTagsAdv, name: "boneTagsAdv");
+				boneTagsAdv = s.SerializeObject<CListP<ulong>>(boneTagsAdv, name: "boneTags");
 				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
-				boneTags2Adv = s.SerializeObject<CListP<ulong >> (boneTags2Adv, name: "boneTags2Adv");
+				boneTags2Adv = s.SerializeObject<CListP<ulong>>(boneTags2Adv, name: "boneTags2");
 				boneIndices2 = s.SerializeObject<CListO<StringID>>(boneIndices2, name: "boneIndices2");
-				boneTags3Adv = s.SerializeObject<CListP<ulong>>(boneTags3Adv, name: "boneTags3Adv");
+				boneTags3Adv = s.SerializeObject<CListP<ulong>>(boneTags3Adv, name: "boneTags3");
 				boneIndices3 = s.SerializeObject<CListO<StringID>>(boneIndices3, name: "boneIndices3");
 			} else {
 				boneTags = s.SerializeObject<CListO<StringID>>(boneTags, name: "boneTags");
@@ -64,7 +64,7 @@ namespace UbiArt.Animation {
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 					bank = s.SerializeObject<Nullable<AnimPolylineBank>>(bank, name: "bank");
 				} else {
-					bankOrigins = s.SerializeObject<AnimPolylineBank>(bankOrigins, name: "bankOrigins");
+					bankOrigins = s.SerializeObject<AnimPolylineBank>(bankOrigins, name: "bank");
 				}
 			}
 			/*

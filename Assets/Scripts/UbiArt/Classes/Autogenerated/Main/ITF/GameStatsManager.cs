@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
-				GameStatsManager_SaveSession__0 = s.SerializeObject<GameStatsManager.SaveSession>(GameStatsManager_SaveSession__0, name: "GameStatsManager_SaveSession__0");
+				GameStatsManager_SaveSession__0 = s.SerializeObject<GameStatsManager.SaveSession>(GameStatsManager_SaveSession__0, name: "GameStatsManager.SaveSession__0");
 			} else {
 			}
 		}

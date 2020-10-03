@@ -17,8 +17,8 @@ namespace UbiArt.ITF {
 			public float validityDuration;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
-				_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
+				_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
+				_operator = s.Serialize<Enum_operator>(_operator, name: "operator");
 				validityDuration = s.Serialize<float>(validityDuration, name: "validityDuration");
 			}
 			public enum Enum_operator {

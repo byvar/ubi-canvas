@@ -29,19 +29,19 @@ namespace UbiArt.ITF {
 				max = s.Serialize<float>(max, name: "max");
 				minValue = s.Serialize<float>(minValue, name: "minValue");
 				maxValue = s.Serialize<float>(maxValue, name: "maxValue");
-				modFlag = s.Serialize<int>(modFlag, name: "modFlag");
-				absFlag = s.Serialize<int>(absFlag, name: "absFlag");
-				addFlag = s.Serialize<int>(addFlag, name: "addFlag");
+				modFlag = s.Serialize<int>(modFlag, name: "mod");
+				absFlag = s.Serialize<int>(absFlag, name: "abs");
+				addFlag = s.Serialize<int>(addFlag, name: "add");
 			} else if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				input = s.SerializeObject<StringID>(input, name: "input");
 				min = s.Serialize<float>(min, name: "min");
 				max = s.Serialize<float>(max, name: "max");
 				minValue = s.Serialize<float>(minValue, name: "minValue");
 				maxValue = s.Serialize<float>(maxValue, name: "maxValue");
-				modFlag = s.Serialize<int>(modFlag, name: "modFlag");
-				absFlag = s.Serialize<int>(absFlag, name: "absFlag");
-				addFlag = s.Serialize<int>(addFlag, name: "addFlag");
-				sinFlag = s.Serialize<int>(sinFlag, name: "sinFlag");
+				modFlag = s.Serialize<int>(modFlag, name: "mod");
+				absFlag = s.Serialize<int>(absFlag, name: "abs");
+				addFlag = s.Serialize<int>(addFlag, name: "add");
+				sinFlag = s.Serialize<int>(sinFlag, name: "sin");
 				curve = s.SerializeObject<Spline>(curve, name: "curve");
 			} else {
 				input = s.SerializeObject<StringID>(input, name: "input");

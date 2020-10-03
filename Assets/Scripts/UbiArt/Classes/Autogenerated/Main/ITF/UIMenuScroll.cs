@@ -27,7 +27,6 @@ namespace UbiArt.ITF {
 				itemStartPos = s.SerializeObject<Vec3d>(itemStartPos, name: "itemStartPos");
 				separatorStartPos = s.SerializeObject<Vec3d>(separatorStartPos, name: "separatorStartPos");
 				spawnRequestIndex = s.SerializeObject<CArrayP<uint>>(spawnRequestIndex, name: "spawnRequestIndex");
-				spawnRequestIndex = s.SerializeObject<CArrayP<uint>>(spawnRequestIndex, name: "spawnRequestIndex");
 			}
 		}
 		public override uint? ClassCRC => 0x0B43C905;

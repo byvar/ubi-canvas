@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CArrayP<uint> CArray_uint__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			CArray_uint__0 = s.SerializeObject<CArrayP<uint>>(CArray_uint__0, name: "CArray_uint__0");
+			CArray_uint__0 = s.SerializeObject<CArrayP<uint>>(CArray_uint__0, name: "CArray<uint>__0");
 		}
 	}
 }

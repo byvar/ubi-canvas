@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			public int int__4;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				CArray_Vector2__0 = s.SerializeObject<CArrayO<Vec2d>>(CArray_Vector2__0, name: "CArray_Vector2__0");
+				CArray_Vector2__0 = s.SerializeObject<CArrayO<Vec2d>>(CArray_Vector2__0, name: "CArray<Vector2>__0");
 				Path__1 = s.SerializeObject<Path>(Path__1, name: "Path__1");
 				StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
 				int__3 = s.Serialize<int>(int__3, name: "int__3");

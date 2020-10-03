@@ -52,7 +52,7 @@ namespace UbiArt.ITF {
 				climbVertical = s.Serialize<bool>(climbVertical, name: "climbVertical");
 				climbSlide = s.Serialize<bool>(climbSlide, name: "climbSlide");
 				climbForceSideJump = s.Serialize<bool>(climbForceSideJump, name: "climbForceSideJump");
-				castShadow_2 = s.Serialize<bool>(castShadow_2, name: "castShadow_2");
+				castShadow_2 = s.Serialize<bool>(castShadow_2, name: "castShadow");
 				noSquashDamage = s.Serialize<bool>(noSquashDamage, name: "noSquashDamage");
 				bounceOnCrushAttack = s.Serialize<bool>(bounceOnCrushAttack, name: "bounceOnCrushAttack");
 				Dangerous = s.Serialize<uint>(Dangerous, name: "Dangerous");
@@ -80,7 +80,7 @@ namespace UbiArt.ITF {
 				climbVertical = s.Serialize<bool>(climbVertical, name: "climbVertical");
 				climbSlide = s.Serialize<bool>(climbSlide, name: "climbSlide");
 				climbForceSideJump = s.Serialize<bool>(climbForceSideJump, name: "climbForceSideJump");
-				castShadow_2 = s.Serialize<bool>(castShadow_2, name: "castShadow_2");
+				castShadow_2 = s.Serialize<bool>(castShadow_2, name: "castShadow");
 				noSquashDamage = s.Serialize<bool>(noSquashDamage, name: "noSquashDamage");
 				bounceOnCrushAttack = s.Serialize<bool>(bounceOnCrushAttack, name: "bounceOnCrushAttack");
 				Dangerous = s.Serialize<uint>(Dangerous, name: "Dangerous");
@@ -113,7 +113,7 @@ namespace UbiArt.ITF {
 				climbVertical = s.Serialize<bool>(climbVertical, name: "climbVertical");
 				climbSlide = s.Serialize<bool>(climbSlide, name: "climbSlide");
 				climbForceSideJump = s.Serialize<bool>(climbForceSideJump, name: "climbForceSideJump");
-				castShadow_2 = s.Serialize<bool>(castShadow_2, name: "castShadow_2");
+				castShadow_2 = s.Serialize<bool>(castShadow_2, name: "castShadow");
 				noSquashDamage = s.Serialize<bool>(noSquashDamage, name: "noSquashDamage");
 				bounceOnCrushAttack = s.Serialize<bool>(bounceOnCrushAttack, name: "bounceOnCrushAttack");
 				Dangerous = s.Serialize<uint>(Dangerous, name: "Dangerous");

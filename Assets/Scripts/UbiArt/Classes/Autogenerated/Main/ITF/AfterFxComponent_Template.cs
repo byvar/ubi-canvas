@@ -31,8 +31,8 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.VH) {
-				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype2");
-				finalblend2 = s.Serialize<GFX_BLEND2>(finalblend2, name: "finalblend2");
+				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype");
+				finalblend2 = s.Serialize<GFX_BLEND2>(finalblend2, name: "finalblend");
 				startRank = s.Serialize<float>(startRank, name: "startRank");
 				renderRank = s.Serialize<float>(renderRank, name: "renderRank");
 				renderintarget = s.Serialize<uint>(renderintarget, name: "renderintarget");
@@ -55,7 +55,7 @@ namespace UbiArt.ITF {
 				forcedAABB = s.SerializeObject<AABB>(forcedAABB, name: "forcedAABB");
 				deactivateAfterFade = s.Serialize<bool>(deactivateAfterFade, name: "deactivateAfterFade");
 			} else if (Settings.s.game == Settings.Game.RL) {
-				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype2");
+				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype");
 				finalblend = s.Serialize<GFX_BLEND>(finalblend, name: "finalblend");
 				startRank = s.Serialize<float>(startRank, name: "startRank");
 				renderRank = s.Serialize<float>(renderRank, name: "renderRank");
@@ -79,7 +79,7 @@ namespace UbiArt.ITF {
 				forcedAABB = s.SerializeObject<AABB>(forcedAABB, name: "forcedAABB");
 				deactivateAfterFade = s.Serialize<bool>(deactivateAfterFade, name: "deactivateAfterFade");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype2");
+				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype");
 				finalblend = s.Serialize<GFX_BLEND>(finalblend, name: "finalblend");
 				startRank = s.Serialize<float>(startRank, name: "startRank");
 				renderRank = s.Serialize<float>(renderRank, name: "renderRank");
@@ -107,11 +107,8 @@ namespace UbiArt.ITF {
 				renderintarget = s.Serialize<uint>(renderintarget, name: "renderintarget");
 				colorRTarget = s.SerializeObject<Color>(colorRTarget, name: "colorRTarget");
 				paramf = s.SerializeObject<CArrayP<float>>(paramf, name: "paramf");
-				paramf = s.SerializeObject<CArrayP<float>>(paramf, name: "paramf");
-				parami = s.SerializeObject<CArrayP<int>>(parami, name: "parami");
 				parami = s.SerializeObject<CArrayP<int>>(parami, name: "parami");
 				paramv = s.SerializeObject<CListO<Vec3d>>(paramv, name: "paramv");
-				paramc = s.SerializeObject<CArrayO<Color>>(paramc, name: "paramc");
 				paramc = s.SerializeObject<CArrayO<Color>>(paramc, name: "paramc");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				ParamfProceduralInput = s.SerializeObject<CListO<ProceduralInputData>>(ParamfProceduralInput, name: "ParamfProceduralInput");

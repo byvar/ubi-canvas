@@ -46,7 +46,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				debugMenuMapListRO = s.SerializeObject<CArrayO<CString>>(debugMenuMapListRO, name: "debugMenuMapListRO");
+				debugMenuMapListRO = s.SerializeObject<CArrayO<CString>>(debugMenuMapListRO, name: "debugMenuMapList");
 				mapListPressConf = s.SerializeObject<CArrayO<CString>>(mapListPressConf, name: "mapListPressConf");
 				menus = s.SerializeObject<CArrayO<CString>>(menus, name: "menus");
 				luaIncludes = s.SerializeObject<CArrayO<Path>>(luaIncludes, name: "luaIncludes");
@@ -54,7 +54,7 @@ namespace UbiArt.ITF {
 				musicThemes = s.SerializeObject<CArrayO<MusicTheme>>(musicThemes, name: "musicThemes");
 				baseMap = s.SerializeObject<Path>(baseMap, name: "baseMap");
 				game2dWorld = s.SerializeObject<Path>(game2dWorld, name: "game2dWorld");
-				gameTextFilePathOrigins = s.Serialize<CString>(gameTextFilePathOrigins, name: "gameTextFilePathOrigins");
+				gameTextFilePathOrigins = s.Serialize<CString>(gameTextFilePathOrigins, name: "gameTextFilePath");
 				mainMenuBackMap = s.SerializeObject<Path>(mainMenuBackMap, name: "mainMenuBackMap");
 				mainMenuBackMapForDebugSaves = s.SerializeObject<Path>(mainMenuBackMapForDebugSaves, name: "mainMenuBackMapForDebugSaves");
 				worldMap = s.SerializeObject<Path>(worldMap, name: "worldMap");
@@ -63,7 +63,7 @@ namespace UbiArt.ITF {
 				menuSoundMap = s.SerializeObject<Path>(menuSoundMap, name: "menuSoundMap");
 				loading = s.SerializeObject<Path>(loading, name: "loading");
 				usePressConfMenu = s.Serialize<int>(usePressConfMenu, name: "usePressConfMenu");
-				playerIDInfoRO = s.SerializeObject<CListO<PlayerIDInfo>>(playerIDInfoRO, name: "playerIDInfoRO");
+				playerIDInfoRO = s.SerializeObject<CListO<PlayerIDInfo>>(playerIDInfoRO, name: "playerIDInfo");
 				familyList = s.SerializeObject<CArrayP<string>>(familyList, name: "familyList");
 				cameraShakeConfig = s.SerializeObject<Path>(cameraShakeConfig, name: "cameraShakeConfig");
 				cutSceneDefaultUnskippableDurationFirstTime = s.Serialize<float>(cutSceneDefaultUnskippableDurationFirstTime, name: "cutSceneDefaultUnskippableDurationFirstTime");

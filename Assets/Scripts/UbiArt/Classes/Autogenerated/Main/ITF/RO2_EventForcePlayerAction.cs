@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
-				action2 = s.Serialize<PlayerForcedAction2>(action2, name: "action2");
+				action2 = s.Serialize<PlayerForcedAction2>(action2, name: "action");
 				enable = s.Serialize<bool>(enable, name: "enable");
 				direction = s.SerializeObject<Vec2d>(direction, name: "direction");
 				hold = s.Serialize<bool>(hold, name: "hold");

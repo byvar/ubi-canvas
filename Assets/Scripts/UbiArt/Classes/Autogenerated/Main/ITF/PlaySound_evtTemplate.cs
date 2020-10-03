@@ -23,12 +23,12 @@ namespace UbiArt.ITF {
 				Sound = s.SerializeObject<Path>(Sound, name: "Sound");
 				Params = s.SerializeObject<SoundParams>(Params, name: "Params");
 				Volume = s.Serialize<float>(Volume, name: "Volume");
-				Category2 = s.SerializeObject<StringID>(Category2, name: "Category2");
+				Category2 = s.SerializeObject<StringID>(Category2, name: "Category");
 				IsStream = s.Serialize<int>(IsStream, name: "IsStream");
 			} else if (Settings.s.game == Settings.Game.COL) {
-				Sound2 = s.Serialize<string>(Sound2, name: "Sound2");
+				Sound2 = s.Serialize<string>(Sound2, name: "Sound");
 				Volume = s.Serialize<float>(Volume, name: "Volume");
-				Category2 = s.SerializeObject<StringID>(Category2, name: "Category2");
+				Category2 = s.SerializeObject<StringID>(Category2, name: "Category");
 				IsStream = s.Serialize<int>(IsStream, name: "IsStream");
 			} else {
 				Sound = s.SerializeObject<Path>(Sound, name: "Sound");

@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			Enum_VH_1__1 = s.Serialize<Enum_VH_1>(Enum_VH_1__1, name: "Enum_VH_1__1");
 			Enum_VH_1__2 = s.Serialize<Enum_VH_1>(Enum_VH_1__2, name: "Enum_VH_1__2");
 			bool__3 = s.Serialize<bool>(bool__3, name: "bool__3");
-			CArray_Generic_GenericDetectorConditioner__4 = s.SerializeObject<CArrayO<Generic<GenericDetectorConditioner>>>(CArray_Generic_GenericDetectorConditioner__4, name: "CArray_Generic_GenericDetectorConditioner__4");
+			CArray_Generic_GenericDetectorConditioner__4 = s.SerializeObject<CArrayO<Generic<GenericDetectorConditioner>>>(CArray_Generic_GenericDetectorConditioner__4, name: "CArray<Generic<GenericDetectorConditioner>>__4");
 		}
 		public enum Enum_VH_0 {
 			[Serialize("Value_0" )] Value_0 = 0,

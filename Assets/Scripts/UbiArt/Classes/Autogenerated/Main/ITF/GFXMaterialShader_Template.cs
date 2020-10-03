@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				textureBlend = s.Serialize<bool>(textureBlend, name: "textureBlend");
 				renderToTexture = s.Serialize<int>(renderToTexture, name: "renderToTexture");
 				animInTex = s.SerializeObject<CListO<GFXMatAnimImpostor>>(animInTex, name: "animInTex");
-				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype2");
+				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype");
 				lightingType = s.Serialize<GFX_MAT_SHADER>(lightingType, name: "lightingType");
 				matParams = s.SerializeObject<GFX_MaterialParams>(matParams, name: "matParams");
 				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
@@ -56,7 +56,7 @@ namespace UbiArt.ITF {
 				alphaRef = s.Serialize<uint>(alphaRef, name: "alphaRef");
 				separateAlpha = s.Serialize<bool>(separateAlpha, name: "separateAlpha", options: CSerializerObject.Options.BoolAsByte);
 				textureBlend = s.Serialize<bool>(textureBlend, name: "textureBlend", options: CSerializerObject.Options.BoolAsByte);
-				materialtype3 = s.Serialize<GFX_MAT3>(materialtype3, name: "materialtype3");
+				materialtype3 = s.Serialize<GFX_MAT3>(materialtype3, name: "materialtype");
 				lightingType = s.Serialize<GFX_MAT_SHADER>(lightingType, name: "lightingType");
 				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
 				Layer1 = s.SerializeObject<COL_GFXMaterialShader_Layer_Template>(Layer1, name: "Layer1");

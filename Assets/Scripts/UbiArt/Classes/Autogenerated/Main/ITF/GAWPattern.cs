@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
 				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
-				CArray_ushort__1 = s.SerializeObject<CArrayP<ushort>>(CArray_ushort__1, name: "CArray_ushort__1");
+				CArray_ushort__1 = s.SerializeObject<CArrayP<ushort>>(CArray_ushort__1, name: "CArray<unsigned short>__1");
 				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
 			}
 		}

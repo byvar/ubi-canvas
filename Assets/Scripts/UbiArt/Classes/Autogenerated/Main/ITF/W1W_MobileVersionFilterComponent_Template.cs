@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			uint__0 = s.Serialize<uint>(uint__0, name: "uint__0");
-			CArray_uint__1 = s.SerializeObject<CArrayP<uint>>(CArray_uint__1, name: "CArray_uint__1");
+			CArray_uint__1 = s.SerializeObject<CArrayP<uint>>(CArray_uint__1, name: "CArray<uint>__1");
 		}
 		public override uint? ClassCRC => 0x7665E29A;
 	}

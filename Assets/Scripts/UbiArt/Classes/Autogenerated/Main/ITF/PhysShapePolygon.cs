@@ -9,23 +9,15 @@ namespace UbiArt.ITF {
 		public CArrayP<float> distances;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
 				if (this is PhysShapeBox) return;
 				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+			} else {
 				if (Settings.s.isCatchThemAll) return;
 				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					normals = s.SerializeObject<CListO<Vec2d>>(normals, name: "normals");
 					edge = s.SerializeObject<CListO<Vec2d>>(edge, name: "edge");
-					distances = s.SerializeObject<CArrayP<float>>(distances, name: "distances");
-				}
-			} else {
-				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
-				if (s.HasFlags(SerializeFlags.Flags10)) {
-					normals = s.SerializeObject<CListO<Vec2d>>(normals, name: "normals");
-					edge = s.SerializeObject<CListO<Vec2d>>(edge, name: "edge");
-					distances = s.SerializeObject<CArrayP<float>>(distances, name: "distances");
 					distances = s.SerializeObject<CArrayP<float>>(distances, name: "distances");
 				}
 			}

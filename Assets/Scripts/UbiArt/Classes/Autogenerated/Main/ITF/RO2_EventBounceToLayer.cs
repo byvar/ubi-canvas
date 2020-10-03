@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 				targetActor = (ObjectRef)s.Serialize<uint>((uint)targetActor, name: "targetActor");
 				targetPos = s.SerializeObject<Vec3d>(targetPos, name: "targetPos");
 				targetOffset = s.SerializeObject<Vec2d>(targetOffset, name: "targetOffset");
-				hurt2 = s.Serialize<uint>(hurt2, name: "hurt2");
+				hurt2 = s.Serialize<uint>(hurt2, name: "hurt");
 				skipped = s.Serialize<bool>(skipped, name: "skipped");
 				useTargetActorScenePosZ = s.Serialize<bool>(useTargetActorScenePosZ, name: "useTargetActorScenePosZ");
 				useBounceHeight = s.Serialize<bool>(useBounceHeight, name: "useBounceHeight");

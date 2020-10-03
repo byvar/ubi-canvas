@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				innerSize = s.SerializeObject<Vec2d>(innerSize, name: "innerSize");
 				outerSize = s.SerializeObject<Vec2d>(outerSize, name: "outerSize");
 			} else {
-				fluidType = s.Serialize<FluidType>(fluidType, name: "fluidType");
+				fluidType = s.Serialize<FluidType>(fluidType, name: "FluidType");
 				ParticlesMaxNb = s.Serialize<uint>(ParticlesMaxNb, name: "ParticlesMaxNb");
 				FluidSimulation = s.SerializeObject<RO2_FluidSimulation>(FluidSimulation, name: "FluidSimulation");
 				downColor = s.SerializeObject<Color>(downColor, name: "downColor");

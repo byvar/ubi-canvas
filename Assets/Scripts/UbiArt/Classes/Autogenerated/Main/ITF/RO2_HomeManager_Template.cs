@@ -146,12 +146,9 @@ namespace UbiArt.ITF {
 				statsInfos = s.SerializeObject<CListO<StatInfos>>(statsInfos, name: "statsInfos");
 				playerLevelInfos = s.SerializeObject<CListO<PlayerLevelInfos>>(playerLevelInfos, name: "playerLevelInfos");
 				cupInfos = s.SerializeObject<CListO<CupInfos>>(cupInfos, name: "cupInfos");
-				messagesAdventures = s.SerializeObject<CListO<online.Message>>(messagesAdventures, name: "messagesAdventures");
-				medalColors = s.SerializeObject<CArrayO<Color>>(medalColors, name: "medalColors");
+				messagesAdventures = s.SerializeObject<CListO<online.Message>>(messagesAdventures, name: "messages");
 				medalColors = s.SerializeObject<CArrayO<Color>>(medalColors, name: "medalColors");
 				miiverseMenuSequenceNames = s.SerializeObject<CArrayO<StringID>>(miiverseMenuSequenceNames, name: "miiverseMenuSequenceNames");
-				miiverseMenuSequenceNames = s.SerializeObject<CArrayO<StringID>>(miiverseMenuSequenceNames, name: "miiverseMenuSequenceNames");
-				countryId = s.SerializeObject<CArrayP<int>>(countryId, name: "countryId");
 				countryId = s.SerializeObject<CArrayP<int>>(countryId, name: "countryId");
 				emblemDev = s.SerializeObject<Path>(emblemDev, name: "emblemDev");
 				emblemVip = s.SerializeObject<Path>(emblemVip, name: "emblemVip");

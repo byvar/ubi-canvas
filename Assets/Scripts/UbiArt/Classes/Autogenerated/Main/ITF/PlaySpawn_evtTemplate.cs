@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				Visible = s.Serialize<bool>(Visible, name: "Visible");
 				Stay = s.Serialize<bool>(Stay, name: "Stay");
-				FileName2 = s.Serialize<string>(FileName2, name: "FileName2");
+				FileName2 = s.Serialize<string>(FileName2, name: "FileName");
 				SpawnOffset = s.SerializeObject<Vec2d>(SpawnOffset, name: "SpawnOffset");
 				Flipped = s.Serialize<bool>(Flipped, name: "Flipped");
 			} else {

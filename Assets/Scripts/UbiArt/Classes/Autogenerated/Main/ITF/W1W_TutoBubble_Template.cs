@@ -15,14 +15,14 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				CArray_float__0 = s.SerializeObject<CArrayP<float>>(CArray_float__0, name: "CArray_float__0");
-				CArray_float__1 = s.SerializeObject<CArrayP<float>>(CArray_float__1, name: "CArray_float__1");
-				CArray_float__2 = s.SerializeObject<CArrayP<float>>(CArray_float__2, name: "CArray_float__2");
-				CArray_float__3 = s.SerializeObject<CArrayP<float>>(CArray_float__3, name: "CArray_float__3");
-				CArray_float__4 = s.SerializeObject<CArrayP<float>>(CArray_float__4, name: "CArray_float__4");
-				CArray_float__5 = s.SerializeObject<CArrayP<float>>(CArray_float__5, name: "CArray_float__5");
-				CArray_float__6 = s.SerializeObject<CArrayP<float>>(CArray_float__6, name: "CArray_float__6");
-				CArray_float__7 = s.SerializeObject<CArrayP<float>>(CArray_float__7, name: "CArray_float__7");
+				CArray_float__0 = s.SerializeObject<CArrayP<float>>(CArray_float__0, name: "CArray<float>__0");
+				CArray_float__1 = s.SerializeObject<CArrayP<float>>(CArray_float__1, name: "CArray<float>__1");
+				CArray_float__2 = s.SerializeObject<CArrayP<float>>(CArray_float__2, name: "CArray<float>__2");
+				CArray_float__3 = s.SerializeObject<CArrayP<float>>(CArray_float__3, name: "CArray<float>__3");
+				CArray_float__4 = s.SerializeObject<CArrayP<float>>(CArray_float__4, name: "CArray<float>__4");
+				CArray_float__5 = s.SerializeObject<CArrayP<float>>(CArray_float__5, name: "CArray<float>__5");
+				CArray_float__6 = s.SerializeObject<CArrayP<float>>(CArray_float__6, name: "CArray<float>__6");
+				CArray_float__7 = s.SerializeObject<CArrayP<float>>(CArray_float__7, name: "CArray<float>__7");
 				float__8 = s.Serialize<float>(float__8, name: "float__8");
 			}
 		}

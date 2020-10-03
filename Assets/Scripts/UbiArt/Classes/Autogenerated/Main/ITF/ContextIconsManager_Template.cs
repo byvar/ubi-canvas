@@ -22,15 +22,9 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA | GameFlags.VH)]
 		public partial class ButtonName : CSerializable {
 			public CArrayP<string> names;
-			public CArrayP<string> CArray_string__0;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (Settings.s.game == Settings.Game.VH) {
-					CArray_string__0 = s.SerializeObject<CArrayP<string>>(CArray_string__0, name: "CArray_string__0");
-				} else {
-					names = s.SerializeObject<CArrayP<string>>(names, name: "names");
-					names = s.SerializeObject<CArrayP<string>>(names, name: "names");
-				}
+				names = s.SerializeObject<CArrayP<string>>(names, name: "names");
 			}
 		}
 		public override uint? ClassCRC => 0x206358DA;

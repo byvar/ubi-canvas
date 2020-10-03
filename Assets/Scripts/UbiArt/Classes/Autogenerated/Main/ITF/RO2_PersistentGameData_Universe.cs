@@ -501,7 +501,6 @@ namespace UbiArt.ITF {
 				score = s.SerializeObject<RO2_PersistentGameData_Score>(score, name: "score");
 				bubbleDreamer = s.SerializeObject<RO2_PersistentGameData_BubbleDreamerData>(bubbleDreamer, name: "bubbleDreamer");
 				unlockedPets = s.SerializeObject<CArrayP<int>>(unlockedPets, name: "unlockedPets");
-				unlockedPets = s.SerializeObject<CArrayP<int>>(unlockedPets, name: "unlockedPets");
 				petsDailyReward = s.SerializeObject<CListO<RO2_PersistentGameData_Universe.petRewardData>>(petsDailyReward, name: "petsDailyReward");
 				unlockedCupsForPets = s.SerializeObject<CListO<RO2_PersistentGameData_Universe.st_petCups>>(unlockedCupsForPets, name: "unlockedCupsForPets");
 				givenPetCount = s.Serialize<uint>(givenPetCount, name: "givenPetCount");

@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO) {
-				Text2 = s.SerializeObject<Path>(Text2, name: "Text2");
+				Text2 = s.SerializeObject<Path>(Text2, name: "Text");
 				Params = s.SerializeObject<SimpleTextComponent>(Params, name: "Params");
 			} else if (Settings.s.game == Settings.Game.COL) {
 				Text = s.Serialize<string>(Text, name: "Text");

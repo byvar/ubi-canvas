@@ -41,14 +41,14 @@ namespace UbiArt.Animation {
 			base.SerializeImpl(s);
 			version = s.Serialize<uint>(version, name: "version");
 			length = s.Serialize<float>(length, name: "length");
-			bml = s.SerializeObject<CListO<AnimTrackBML>>(bml, name: "bml");
-			bonePAS = s.SerializeObject<CListO<AnimTrackBonePAS>>(bonePAS, name: "bonePAS");
-			boneZAL = s.SerializeObject<CListO<AnimTrackBoneZAL>>(boneZAL, name: "boneZAL");
+			bml = s.SerializeObject<CListO<AnimTrackBML>>(bml, name: "BML");
+			bonePAS = s.SerializeObject<CListO<AnimTrackBonePAS>>(bonePAS, name: "PAS");
+			boneZAL = s.SerializeObject<CListO<AnimTrackBoneZAL>>(boneZAL, name: "ZAL");
 			multiplierA = s.Serialize<float>(multiplierA, name: "multiplierA");
 			multiplierP = s.Serialize<float>(multiplierP, name: "multiplierP");
 			multiplierS = s.Serialize<float>(multiplierS, name: "multiplierS");
 			polylines = s.SerializeObject<CListO<AnimTrackPolyline>>(polylines, name: "polylines");
-			bonesLists = s.SerializeObject<CListO<AnimTrackBonesList>>(bonesLists, name: "bonesLists");
+			bonesLists = s.SerializeObject<CListO<AnimTrackBonesList>>(bonesLists, name: "bones");
 			frameEvents = s.SerializeObject<CListO<AnimTrackFrameEvents>>(frameEvents, name: "frameEvents");
 			soundEvents = s.SerializeObject<CListO<AnimTrackFrameSoundEvents>>(soundEvents, name: "soundEvents");
 			vectors = s.SerializeObject<CListO<Vec2d>>(vectors, name: "vectors");
@@ -58,18 +58,18 @@ namespace UbiArt.Animation {
 			vec3 = s.SerializeObject<Vec2d>(vec3, name: "vec3");
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				skeleton = s.SerializeObject<Pair<StringID, Path>>(skeleton, name: "skeleton");
-				texturePaths = s.SerializeObject<CListO<Pair<StringID, Path>>>(texturePaths, name: "texturePaths");
+				texturePaths = s.SerializeObject<CListO<Pair<StringID, Path>>>(texturePaths, name: "textures");
 				unk0 = s.Serialize<uint>(unk0, name: "unk0");
 				if (Settings.s.game == Settings.Game.RL) {
 					unk1 = s.Serialize<uint>(unk1, name: "unk1");
 				}
 				unk2 = s.Serialize<uint>(unk2, name: "unk2");
 			} else {
-				skeletonOrigins = s.SerializeObject<Pair<StringID, CString>>(skeletonOrigins, name: "skeletonOrigins");
-				texturePathKeysOrigins = s.SerializeObject<KeyArray<int>>(texturePathKeysOrigins, name: "texturePathKeysOrigins");
-				texturePathsOrigins = s.SerializeObject<CListO<Pair<StringID, CString>>>(texturePathsOrigins, name: "texturePathsOrigins");
-				unk0Origins = s.Serialize<ulong>(unk0Origins, name: "unk0Origins");
-				unk1Origins = s.SerializeObject<CListP<ulong>>(unk1Origins, name: "unk1Origins");
+				skeletonOrigins = s.SerializeObject<Pair<StringID, CString>>(skeletonOrigins, name: "skeleton");
+				texturePathKeysOrigins = s.SerializeObject<KeyArray<int>>(texturePathKeysOrigins, name: "texturePathKeys");
+				texturePathsOrigins = s.SerializeObject<CListO<Pair<StringID, CString>>>(texturePathsOrigins, name: "textures");
+				unk0Origins = s.Serialize<ulong>(unk0Origins, name: "unk0");
+				unk1Origins = s.SerializeObject<CListP<ulong>>(unk1Origins, name: "unk1");
 				unk2 = s.Serialize<uint>(unk2, name: "unk2");
 			}
 		}
