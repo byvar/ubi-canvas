@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CArrayO<ListPageRead> CArray_ListPageRead__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			CArray_ListPageRead__0 = s.SerializeObject<CArrayO<ListPageRead>>(CArray_ListPageRead__0, name: "CArray_ListPageRead__0");
+			CArray_ListPageRead__0 = s.SerializeObject<CArrayO<ListPageRead>>(CArray_ListPageRead__0, name: "CArray<ListPageRead>__0");
 		}
 	}
 }

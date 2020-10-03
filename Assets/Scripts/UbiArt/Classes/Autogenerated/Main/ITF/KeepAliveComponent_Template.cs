@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
-				startDying2 = s.Serialize<int>(startDying2, name: "startDying2");
+				startDying2 = s.Serialize<int>(startDying2, name: "startDying");
 			} else {
 				startDying = s.Serialize<bool>(startDying, name: "startDying");
 				useFade = s.Serialize<bool>(useFade, name: "useFade");

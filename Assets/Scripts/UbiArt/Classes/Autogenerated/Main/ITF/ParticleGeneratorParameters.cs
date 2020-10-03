@@ -318,7 +318,7 @@ namespace UbiArt.ITF {
 				boundingBox = s.SerializeObject<AABB>(boundingBox, name: "boundingBox");
 				orientDir = s.Serialize<uint>(orientDir, name: "orientDir");
 				UVmode = s.Serialize<UV>(UVmode, name: "UVmode");
-				uniformscale2 = s.Serialize<int>(uniformscale2, name: "uniformscale2");
+				uniformscale2 = s.Serialize<int>(uniformscale2, name: "uniformscale");
 				cartoonrendering = s.Serialize<int>(cartoonrendering, name: "cartoonrendering");
 				impostorrendering = s.Serialize<bool>(impostorrendering, name: "impostorrendering");
 				showimpostorrender = s.Serialize<bool>(showimpostorrender, name: "showimpostorrender");
@@ -341,14 +341,14 @@ namespace UbiArt.ITF {
 				canFlipOrientDir = s.Serialize<bool>(canFlipOrientDir, name: "canFlipOrientDir");
 				numberSplit = s.Serialize<uint>(numberSplit, name: "numberSplit");
 				splitDelta = s.SerializeObject<Angle>(splitDelta, name: "splitDelta");
-				useMatrix2 = s.Serialize<int>(useMatrix2, name: "useMatrix2");
+				useMatrix2 = s.Serialize<int>(useMatrix2, name: "useMatrix");
 				usePhasesColorAndSize = s.Serialize<bool>(usePhasesColorAndSize, name: "usePhasesColorAndSize");
 				useActorTranslation = s.Serialize<bool>(useActorTranslation, name: "useActorTranslation");
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
 				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
 				blendMode = s.Serialize<GFX_BLEND>(blendMode, name: "blendMode");
-				genGenType2 = s.Serialize<PARGEN_GEN2>(genGenType2, name: "genGenType2");
+				genGenType2 = s.Serialize<PARGEN_GEN2>(genGenType2, name: "genGenType");
 				genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
 			} else if (Settings.s.game == Settings.Game.RL) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
@@ -371,7 +371,7 @@ namespace UbiArt.ITF {
 				friction = s.Serialize<float>(friction, name: "friction");
 				freq = s.Serialize<float>(freq, name: "freq");
 				freqDelta = s.Serialize<float>(freqDelta, name: "freqDelta");
-				forceEmitAtStart_int = s.Serialize<int>(forceEmitAtStart_int, name: "forceEmitAtStart_int");
+				forceEmitAtStart_int = s.Serialize<int>(forceEmitAtStart_int, name: "forceEmitAtStart");
 				emitBatchCount = s.Serialize<uint>(emitBatchCount, name: "emitBatchCount");
 				emitBatchCount_AAO = s.Serialize<uint>(emitBatchCount_AAO, name: "emitBatchCount_AAO");
 				initAngle = s.SerializeObject<Angle>(initAngle, name: "initAngle");
@@ -523,7 +523,7 @@ namespace UbiArt.ITF {
 				numberSplit = s.Serialize<uint>(numberSplit, name: "numberSplit");
 				splitDelta = s.SerializeObject<Angle>(splitDelta, name: "splitDelta");
 				useMatrix = s.Serialize<BOOL>(useMatrix, name: "useMatrix");
-				scaleGenBox2 = s.Serialize<BOOL2>(scaleGenBox2, name: "scaleGenBox2");
+				scaleGenBox2 = s.Serialize<BOOL2>(scaleGenBox2, name: "scaleGenBox");
 				usePhasesColorAndSize = s.Serialize<bool>(usePhasesColorAndSize, name: "usePhasesColorAndSize");
 				useActorTranslation = s.Serialize<bool>(useActorTranslation, name: "useActorTranslation");
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");

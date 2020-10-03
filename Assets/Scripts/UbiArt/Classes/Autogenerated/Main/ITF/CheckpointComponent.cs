@@ -83,9 +83,9 @@ namespace UbiArt.ITF {
 				Path__14 = s.SerializeObject<Path>(Path__14, name: "Path__14");
 				bool__15 = s.Serialize<bool>(bool__15, name: "bool__15");
 				Path__16 = s.SerializeObject<Path>(Path__16, name: "Path__16");
-				CArray_CheckpointComponent_SerializableDisguiseElementType__17 = s.SerializeObject<CArrayO<CheckpointComponent.SerializableDisguiseElementType>>(CArray_CheckpointComponent_SerializableDisguiseElementType__17, name: "CArray_CheckpointComponent_SerializableDisguiseElementType__17");
+				CArray_CheckpointComponent_SerializableDisguiseElementType__17 = s.SerializeObject<CArrayO<CheckpointComponent.SerializableDisguiseElementType>>(CArray_CheckpointComponent_SerializableDisguiseElementType__17, name: "CArray<CheckpointComponent.SerializableDisguiseElementType>__17");
 				Enum_VH_1__18 = s.Serialize<Enum_VH_1>(Enum_VH_1__18, name: "Enum_VH_1__18");
-				Enum_VH_1__19 = s.Serialize<Enum_VH_1>(Enum_VH_1__19, name: "Enum_VH_1__19");
+				Enum_VH_1__19 = s.Serialize<Enum_VH_1>(Enum_VH_1__19, name: "Enum_VH_2__19");
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					INDEX = s.Serialize<uint>(INDEX, name: "INDEX");

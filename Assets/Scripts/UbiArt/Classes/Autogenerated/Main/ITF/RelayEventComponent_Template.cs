@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
-				relays2 = s.SerializeObject<CListO<ITF.RelayEventComponent_Template.RelayData>>(relays2, name: "relays2");
+				relays2 = s.SerializeObject<CListO<ITF.RelayEventComponent_Template.RelayData>>(relays2, name: "relays");
 			} else {
 				relays = s.SerializeObject<CListO<ITF.RelayData>>(relays, name: "relays");
 			}

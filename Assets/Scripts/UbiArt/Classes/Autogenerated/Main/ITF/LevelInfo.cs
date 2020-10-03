@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 				RJR_PowerUp__7 = s.SerializeObject<RJR_PowerUp>(RJR_PowerUp__7, name: "RJR_PowerUp__7");
 				uint__8 = s.Serialize<uint>(uint__8, name: "uint__8");
 				Gadgets__9 = s.SerializeObject<Gadgets>(Gadgets__9, name: "Gadgets__9");
-				CList_UnlockedGadgets__10 = s.SerializeObject<CListO<UnlockedGadgets>>(CList_UnlockedGadgets__10, name: "CList_UnlockedGadgets__10");
+				CList_UnlockedGadgets__10 = s.SerializeObject<CListO<UnlockedGadgets>>(CList_UnlockedGadgets__10, name: "CList<UnlockedGadgets>__10");
 				Gadgets__11 = s.SerializeObject<Gadgets>(Gadgets__11, name: "Gadgets__11");
 			} else {
 				BasicString__0 = s.SerializeObject<BasicString>(BasicString__0, name: "BasicString__0");

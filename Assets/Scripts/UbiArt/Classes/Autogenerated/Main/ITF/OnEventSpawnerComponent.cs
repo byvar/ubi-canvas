@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.VH) {
 				Path__0 = s.SerializeObject<Path>(Path__0, name: "Path__0");
-				CArray_Generic_Event__1 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__1, name: "CArray_Generic_Event__1");
+				CArray_Generic_Event__1 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__1, name: "CArray<Generic<Event>>__1");
 				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
 				if (s.HasFlags(SerializeFlags.Default)) {
 					EventSpawn__3 = s.SerializeObject<EventSpawn>(EventSpawn__3, name: "EventSpawn__3");

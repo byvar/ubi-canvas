@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 				id = s.SerializeObject<StringID>(id, name: "id");
 				string__1 = s.Serialize<string>(string__1, name: "string__1");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
-					CArray_StringID__2 = s.SerializeObject<CArrayO<StringID>>(CArray_StringID__2, name: "CArray_StringID__2");
+					CArray_StringID__2 = s.SerializeObject<CArrayO<StringID>>(CArray_StringID__2, name: "CArray<StringID>__2");
 				}
 			} else {
 				id = s.SerializeObject<StringID>(id, name: "id");

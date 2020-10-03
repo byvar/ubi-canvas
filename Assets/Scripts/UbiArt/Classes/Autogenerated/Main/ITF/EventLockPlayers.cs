@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				_lock = s.Serialize<int>(_lock, name: "_lock");
+				_lock = s.Serialize<int>(_lock, name: "lock");
 				applyToPlayers = s.Serialize<int>(applyToPlayers, name: "applyToPlayers");
 				applyToInputs = s.Serialize<int>(applyToInputs, name: "applyToInputs");
 				forceRevive = s.Serialize<bool>(forceRevive, name: "forceRevive");

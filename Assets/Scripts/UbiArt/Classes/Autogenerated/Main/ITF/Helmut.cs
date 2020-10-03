@@ -43,19 +43,19 @@ namespace UbiArt.ITF {
 				bool__11 = s.Serialize<bool>(bool__11, name: "bool__11");
 				float__12 = s.Serialize<float>(float__12, name: "float__12");
 				StringID__13 = s.SerializeObject<StringID>(StringID__13, name: "StringID__13");
-				Generic_Event__14 = s.SerializeObject<Generic<Event>>(Generic_Event__14, name: "Generic_Event__14");
-				Generic_Event__15 = s.SerializeObject<Generic<Event>>(Generic_Event__15, name: "Generic_Event__15");
-				Generic_Event__16 = s.SerializeObject<Generic<Event>>(Generic_Event__16, name: "Generic_Event__16");
-				Generic_Event__17 = s.SerializeObject<Generic<Event>>(Generic_Event__17, name: "Generic_Event__17");
-				Generic_Event__18 = s.SerializeObject<Generic<Event>>(Generic_Event__18, name: "Generic_Event__18");
-				Generic_Event__19 = s.SerializeObject<Generic<Event>>(Generic_Event__19, name: "Generic_Event__19");
-				Generic_Event__20 = s.SerializeObject<Generic<Event>>(Generic_Event__20, name: "Generic_Event__20");
-				Generic_Event__21 = s.SerializeObject<Generic<Event>>(Generic_Event__21, name: "Generic_Event__21");
-				Generic_Event__22 = s.SerializeObject<Generic<Event>>(Generic_Event__22, name: "Generic_Event__22");
-				Generic_Event__23 = s.SerializeObject<Generic<Event>>(Generic_Event__23, name: "Generic_Event__23");
+				Generic_Event__14 = s.SerializeObject<Generic<Event>>(Generic_Event__14, name: "Generic<Event>__14");
+				Generic_Event__15 = s.SerializeObject<Generic<Event>>(Generic_Event__15, name: "Generic<Event>__15");
+				Generic_Event__16 = s.SerializeObject<Generic<Event>>(Generic_Event__16, name: "Generic<Event>__16");
+				Generic_Event__17 = s.SerializeObject<Generic<Event>>(Generic_Event__17, name: "Generic<Event>__17");
+				Generic_Event__18 = s.SerializeObject<Generic<Event>>(Generic_Event__18, name: "Generic<Event>__18");
+				Generic_Event__19 = s.SerializeObject<Generic<Event>>(Generic_Event__19, name: "Generic<Event>__19");
+				Generic_Event__20 = s.SerializeObject<Generic<Event>>(Generic_Event__20, name: "Generic<Event>__20");
+				Generic_Event__21 = s.SerializeObject<Generic<Event>>(Generic_Event__21, name: "Generic<Event>__21");
+				Generic_Event__22 = s.SerializeObject<Generic<Event>>(Generic_Event__22, name: "Generic<Event>__22");
+				Generic_Event__23 = s.SerializeObject<Generic<Event>>(Generic_Event__23, name: "Generic<Event>__23");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
-				bool__0_ = s.Serialize<bool>(bool__0_, name: "bool__0_");
+				bool__0_ = s.Serialize<bool>(bool__0_, name: "bool__0");
 			}
 		}
 		public enum Enum_VH_0_ {

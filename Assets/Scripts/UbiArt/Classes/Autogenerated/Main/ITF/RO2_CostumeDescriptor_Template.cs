@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 				decorationBrickPath = s.SerializeObject<Path>(decorationBrickPath, name: "decorationBrickPath");
 				priority = s.Serialize<int>(priority, name: "priority");
 				costumeTag = s.SerializeObject<StringID>(costumeTag, name: "costumeTag");
-				costumetype2 = s.Serialize<CostumeType2>(costumetype2, name: "costumetype2");
+				costumetype2 = s.Serialize<CostumeType2>(costumetype2, name: "costumetype");
 				unlockable = s.Serialize<bool>(unlockable, name: "unlockable");
 			} else {
 				decorationBrickPath = s.SerializeObject<Path>(decorationBrickPath, name: "decorationBrickPath");

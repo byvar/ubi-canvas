@@ -50,7 +50,7 @@ namespace UbiArt.online {
 			public CMap<Error.GameServerError, RequestOptions.PopupOptions> specific;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				_default = s.SerializeObject<RequestOptions.PopupOptions>(_default, name: "_default");
+				_default = s.SerializeObject<RequestOptions.PopupOptions>(_default, name: "default");
 				specific = s.SerializeObject<CMap<Error.GameServerError, RequestOptions.PopupOptions>>(specific, name: "specific");
 			}
 		}

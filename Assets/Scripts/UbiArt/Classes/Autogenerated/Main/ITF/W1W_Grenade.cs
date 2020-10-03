@@ -37,14 +37,14 @@ namespace UbiArt.ITF {
 			float__7 = s.Serialize<float>(float__7, name: "float__7");
 			float__8 = s.Serialize<float>(float__8, name: "float__8");
 			float__9 = s.Serialize<float>(float__9, name: "float__9");
-			float__10_ = s.Serialize<float>(float__10_, name: "float__10_");
-			float__11_ = s.Serialize<float>(float__11_, name: "float__11_");
+			float__10_ = s.Serialize<float>(float__10_, name: "float__10");
+			float__11_ = s.Serialize<float>(float__11_, name: "float__11");
 			Angle__12 = s.SerializeObject<Angle>(Angle__12, name: "Angle__12");
 			Angle__13 = s.SerializeObject<Angle>(Angle__13, name: "Angle__13");
 			float__14 = s.Serialize<float>(float__14, name: "float__14");
 			float__15 = s.Serialize<float>(float__15, name: "float__15");
 			float__16 = s.Serialize<float>(float__16, name: "float__16");
-			float__17_ = s.Serialize<float>(float__17_, name: "float__17_");
+			float__17_ = s.Serialize<float>(float__17_, name: "float__17");
 			StringID__18 = s.SerializeObject<StringID>(StringID__18, name: "StringID__18");
 			float__19 = s.Serialize<float>(float__19, name: "float__19");
 			Vector2__20 = s.SerializeObject<Vec2d>(Vector2__20, name: "Vector2__20");

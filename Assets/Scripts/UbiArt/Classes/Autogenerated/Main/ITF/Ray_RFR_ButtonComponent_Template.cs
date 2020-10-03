@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public Generic<PhysShape> Generic_PhysShape__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			Generic_PhysShape__0 = s.SerializeObject<Generic<PhysShape>>(Generic_PhysShape__0, name: "Generic_PhysShape__0");
+			Generic_PhysShape__0 = s.SerializeObject<Generic<PhysShape>>(Generic_PhysShape__0, name: "Generic<PhysShape>__0");
 		}
 		public override uint? ClassCRC => 0xAE32DDF6;
 	}

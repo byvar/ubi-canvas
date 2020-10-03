@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Enum_VH_0 Enum_VH_0__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			float__0_ = s.Serialize<float>(float__0_, name: "float__0_");
+			float__0_ = s.Serialize<float>(float__0_, name: "float__0");
 			Enum_VH_0__1 = s.Serialize<Enum_VH_0>(Enum_VH_0__1, name: "Enum_VH_0__1");
 		}
 		public enum Enum_VH_0 {

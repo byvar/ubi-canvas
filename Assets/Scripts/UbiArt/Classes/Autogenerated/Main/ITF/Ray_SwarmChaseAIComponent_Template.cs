@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			pathAtlas = s.SerializeObject<Path>(pathAtlas, name: "pathAtlas");
 			hitLevel = s.Serialize<uint>(hitLevel, name: "hitLevel");
 			hitType = s.Serialize<RECEIVEDHITTYPE>(hitType, name: "hitType");
-			faction_ = s.Serialize<Enum_RFR_1>(faction_, name: "faction_");
+			faction_ = s.Serialize<Enum_RFR_1>(faction_, name: "faction");
 			smoothFactor = s.Serialize<float>(smoothFactor, name: "smoothFactor");
 			leaderSpeedMin = s.Serialize<float>(leaderSpeedMin, name: "leaderSpeedMin");
 			leaderSpeedMax = s.Serialize<float>(leaderSpeedMax, name: "leaderSpeedMax");

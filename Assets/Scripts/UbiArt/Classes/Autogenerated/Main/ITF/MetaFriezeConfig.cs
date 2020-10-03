@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 			} else {
-				_params = s.SerializeObject<CListO<MetaFriezeParams>>(_params, name: "_params");
+				_params = s.SerializeObject<CListO<MetaFriezeParams>>(_params, name: "params");
 			}
 		}
 		public override uint? ClassCRC => 0x11626154;

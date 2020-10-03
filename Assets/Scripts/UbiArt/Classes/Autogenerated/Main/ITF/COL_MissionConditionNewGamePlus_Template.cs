@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			numPlaythroughs = s.Serialize<uint>(numPlaythroughs, name: "numPlaythroughs");
-			_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
+			_operator = s.Serialize<Enum_operator>(_operator, name: "operator");
 		}
 		public enum Enum_operator {
 			[Serialize("Value_0")] Value_0 = 0,

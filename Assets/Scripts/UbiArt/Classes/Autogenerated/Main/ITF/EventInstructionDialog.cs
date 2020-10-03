@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
-				textStr = s.Serialize<string>(textStr, name: "textStr");
+				textStr = s.Serialize<string>(textStr, name: "text");
 				mood = s.Serialize<uint>(mood, name: "mood");
 				sizeText = s.Serialize<float>(sizeText, name: "sizeText");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");

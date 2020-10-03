@@ -86,7 +86,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					RenderToTexture = s.Serialize<bool>(RenderToTexture, name: "RenderToTexture");
 				}
-				gfxOccludeInfo2 = s.Serialize<GFX_OCCLUDE_INFO2>(gfxOccludeInfo2, name: "gfxOccludeInfo2");
+				gfxOccludeInfo2 = s.Serialize<GFX_OCCLUDE_INFO2>(gfxOccludeInfo2, name: "gfxOccludeInfo");
 			} else if (Settings.s.game == Settings.Game.VH) {
 				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");
@@ -99,7 +99,7 @@ namespace UbiArt.ITF {
 				bool__8 = s.Serialize<bool>(bool__8, name: "bool__8");
 				bool__9 = s.Serialize<bool>(bool__9, name: "bool__9");
 				bool__10 = s.Serialize<bool>(bool__10, name: "bool__10");
-				Nullable_NormalLightingParam__11 = s.SerializeObject<Nullable<NormalLightingParam>>(Nullable_NormalLightingParam__11, name: "Nullable_NormalLightingParam__11");
+				Nullable_NormalLightingParam__11 = s.SerializeObject<Nullable<NormalLightingParam>>(Nullable_NormalLightingParam__11, name: "Nullable<NormalLightingParam>__11");
 				OutlineColor = s.SerializeObject<Color>(OutlineColor, name: "OutlineColor");
 				OutlineWidth = s.Serialize<float>(OutlineWidth, name: "OutlineWidth");
 				OutlineGlow = s.Serialize<float>(OutlineGlow, name: "OutlineGlow");

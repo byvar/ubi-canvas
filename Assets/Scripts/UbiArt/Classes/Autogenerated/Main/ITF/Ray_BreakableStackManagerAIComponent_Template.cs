@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			atlasPath = s.SerializeObject<Path>(atlasPath, name: "atlasPath");
 			atlasParticlesPath = s.SerializeObject<Path>(atlasParticlesPath, name: "atlasParticlesPath");
 			edgeSize = s.Serialize<float>(edgeSize, name: "edgeSize");
-			faction2 = s.Serialize<uint>(faction2, name: "faction2");
+			faction2 = s.Serialize<uint>(faction2, name: "faction");
 		}
 		public override uint? ClassCRC => 0x964A0D32;
 	}

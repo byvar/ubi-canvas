@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public float landXForceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			faction2 = s.Serialize<uint>(faction2, name: "faction2");
+			faction2 = s.Serialize<uint>(faction2, name: "faction");
 			forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
 			maxSpeed = s.Serialize<float>(maxSpeed, name: "maxSpeed");
 			bounceMultiplier = s.Serialize<float>(bounceMultiplier, name: "bounceMultiplier");

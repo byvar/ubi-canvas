@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 				trajectory = s.Serialize<Trajectory>(trajectory, name: "trajectory");
 				chainOrder = s.Serialize<ChainOrder>(chainOrder, name: "chainOrder");
 				spawnMode = s.Serialize<SpawnMode>(spawnMode, name: "spawnMode");
-				drcMode = s.Serialize<DRCMode>(drcMode, name: "drcMode");
+				drcMode = s.Serialize<DRCMode>(drcMode, name: "DRCMode");
 				spawningFrameInterval = s.Serialize<uint>(spawningFrameInterval, name: "spawningFrameInterval");
 				patternSpawningInterval = s.Serialize<uint>(patternSpawningInterval, name: "patternSpawningInterval");
 				startBlend = s.Serialize<float>(startBlend, name: "startBlend");

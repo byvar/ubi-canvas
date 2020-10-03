@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			sender = s.Serialize<uint>(sender, name: "sender");
-			_lock = s.Serialize<bool>(_lock, name: "_lock", options: CSerializerObject.Options.BoolAsByte);
+			_lock = s.Serialize<bool>(_lock, name: "lock", options: CSerializerObject.Options.BoolAsByte);
 			characterID = s.SerializeObject<StringID>(characterID, name: "characterID");
 		}
 		public override uint? ClassCRC => 0x9043302F;

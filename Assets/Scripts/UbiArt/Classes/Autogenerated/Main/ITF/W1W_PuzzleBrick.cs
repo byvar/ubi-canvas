@@ -17,12 +17,12 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
-			CArray_Generic_Event__1 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__1, name: "CArray_Generic_Event__1");
-			CArray_Generic_Event__2 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__2, name: "CArray_Generic_Event__2");
-			CArray_EventSender__3 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__3, name: "CArray_EventSender__3");
-			CArray_EventSender__4 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__4, name: "CArray_EventSender__4");
-			CArray_EventSender__5 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__5, name: "CArray_EventSender__5");
-			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray_EventSender__6");
+			CArray_Generic_Event__1 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__1, name: "CArray<Generic<Event>>__1");
+			CArray_Generic_Event__2 = s.SerializeObject<CArrayO<Generic<Event>>>(CArray_Generic_Event__2, name: "CArray<Generic<Event>>__2");
+			CArray_EventSender__3 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__3, name: "CArray<EventSender>__3");
+			CArray_EventSender__4 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__4, name: "CArray<EventSender>__4");
+			CArray_EventSender__5 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__5, name: "CArray<EventSender>__5");
+			CArray_EventSender__6 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__6, name: "CArray<EventSender>__6");
 			float__7 = s.Serialize<float>(float__7, name: "float__7");
 			bool__8 = s.Serialize<bool>(bool__8, name: "bool__8");
 			bool__9 = s.Serialize<bool>(bool__9, name: "bool__9");

@@ -14,11 +14,11 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
 				loadResource = s.Serialize<bool>(loadResource, name: "loadResource");
-				menuType2 = s.Serialize<MenuType2>(menuType2, name: "menuType2");
+				menuType2 = s.Serialize<MenuType2>(menuType2, name: "menuType");
 			} else if (Settings.s.game == Settings.Game.VH) {
 				loadResource = s.Serialize<bool>(loadResource, name: "loadResource");
 				afxDuration = s.Serialize<float>(afxDuration, name: "afxDuration");
-				menuType3 = s.Serialize<MenuType3>(menuType3, name: "menuType3");
+				menuType3 = s.Serialize<MenuType3>(menuType3, name: "menuType");
 			} else {
 				loadResource = s.Serialize<bool>(loadResource, name: "loadResource");
 				afxDuration = s.Serialize<float>(afxDuration, name: "afxDuration");

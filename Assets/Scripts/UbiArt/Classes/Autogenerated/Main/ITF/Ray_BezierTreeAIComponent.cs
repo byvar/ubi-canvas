@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 					float__1 = s.Serialize<float>(float__1, name: "float__1");
 					Enum_RFR_0__2 = s.Serialize<Enum_RFR_0>(Enum_RFR_0__2, name: "Enum_RFR_0__2");
 					int__3 = s.Serialize<int>(int__3, name: "int__3");
-					CList_Ray_BezierTreeAIComponent_Branch__4 = s.SerializeObject<CListO<Ray_BezierTreeAIComponent.Branch>>(CList_Ray_BezierTreeAIComponent_Branch__4, name: "CList_Ray_BezierTreeAIComponent_Branch__4");
+					CList_Ray_BezierTreeAIComponent_Branch__4 = s.SerializeObject<CListO<Ray_BezierTreeAIComponent.Branch>>(CList_Ray_BezierTreeAIComponent_Branch__4, name: "CList<Ray_BezierTreeAIComponent.Branch>__4");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -58,7 +58,7 @@ namespace UbiArt.ITF {
 			public CArrayO<Ray_BezierTreeAIComponent.Node> CArray_Ray_BezierTreeAIComponent_Node__0;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				CArray_Ray_BezierTreeAIComponent_Node__0 = s.SerializeObject<CArrayO<Ray_BezierTreeAIComponent.Node>>(CArray_Ray_BezierTreeAIComponent_Node__0, name: "CArray_Ray_BezierTreeAIComponent_Node__0");
+				CArray_Ray_BezierTreeAIComponent_Node__0 = s.SerializeObject<CArrayO<Ray_BezierTreeAIComponent.Node>>(CArray_Ray_BezierTreeAIComponent_Node__0, name: "CArray<Ray_BezierTreeAIComponent.Node>__0");
 			}
 		}
 		public enum Enum_RJR_0 {

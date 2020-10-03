@@ -49,9 +49,9 @@ namespace UbiArt.ITF {
 			Path__6 = s.SerializeObject<Path>(Path__6, name: "Path__6");
 			Path__7 = s.SerializeObject<Path>(Path__7, name: "Path__7");
 			Path__8 = s.SerializeObject<Path>(Path__8, name: "Path__8");
-			CArray_Path__9 = s.SerializeObject<CArrayO<Path>>(CArray_Path__9, name: "CArray_Path__9");
+			CArray_Path__9 = s.SerializeObject<CArrayO<Path>>(CArray_Path__9, name: "CArray<Path>__9");
 			Path__10 = s.SerializeObject<Path>(Path__10, name: "Path__10");
-			CArray_W1W_Heal_Template_InputDisplay__11 = s.SerializeObject<CArrayO<W1W_Heal_Template.InputDisplay>>(CArray_W1W_Heal_Template_InputDisplay__11, name: "CArray_W1W_Heal_Template_InputDisplay__11");
+			CArray_W1W_Heal_Template_InputDisplay__11 = s.SerializeObject<CArrayO<W1W_Heal_Template.InputDisplay>>(CArray_W1W_Heal_Template_InputDisplay__11, name: "CArray<W1W_Heal_Template.InputDisplay>__11");
 			float__12 = s.Serialize<float>(float__12, name: "float__12");
 			float__13 = s.Serialize<float>(float__13, name: "float__13");
 			Color__14 = s.SerializeObject<Color>(Color__14, name: "Color__14");

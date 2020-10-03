@@ -29,25 +29,25 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
 				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
-				StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1_");
+				StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1");
 				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");
 				Vector2__3 = s.SerializeObject<Vec2d>(Vector2__3, name: "Vector2__3");
 				float__4 = s.Serialize<float>(float__4, name: "float__4");
 				bool__5 = s.Serialize<bool>(bool__5, name: "bool__5");
 				bool__6 = s.Serialize<bool>(bool__6, name: "bool__6");
 				bool__7 = s.Serialize<bool>(bool__7, name: "bool__7");
-				bool__8_ = s.Serialize<bool>(bool__8_, name: "bool__8_");
-				CArray_W1W_ItemType__9 = s.SerializeObject<CArrayO<W1W_ItemType>>(CArray_W1W_ItemType__9, name: "CArray_W1W_ItemType__9");
-				CArray_W1W_ItemType__10 = s.SerializeObject<CArrayO<W1W_ItemType>>(CArray_W1W_ItemType__10, name: "CArray_W1W_ItemType__10");
-				CArray_EventSender__11 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__11, name: "CArray_EventSender__11");
-				CArray_EventSender__12 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__12, name: "CArray_EventSender__12");
-				CArray_EventSender__13 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__13, name: "CArray_EventSender__13");
-				CArray_EventSender__14 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__14, name: "CArray_EventSender__14");
-				CArray_EventSender__15 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__15, name: "CArray_EventSender__15");
-				bool__16_ = s.Serialize<bool>(bool__16_, name: "bool__16_");
+				bool__8_ = s.Serialize<bool>(bool__8_, name: "bool__8");
+				CArray_W1W_ItemType__9 = s.SerializeObject<CArrayO<W1W_ItemType>>(CArray_W1W_ItemType__9, name: "CArray<W1W_ItemType>__9");
+				CArray_W1W_ItemType__10 = s.SerializeObject<CArrayO<W1W_ItemType>>(CArray_W1W_ItemType__10, name: "CArray<W1W_ItemType>__10");
+				CArray_EventSender__11 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__11, name: "CArray<EventSender>__11");
+				CArray_EventSender__12 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__12, name: "CArray<EventSender>__12");
+				CArray_EventSender__13 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__13, name: "CArray<EventSender>__13");
+				CArray_EventSender__14 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__14, name: "CArray<EventSender>__14");
+				CArray_EventSender__15 = s.SerializeObject<CArrayO<EventSender>>(CArray_EventSender__15, name: "CArray<EventSender>__15");
+				bool__16_ = s.Serialize<bool>(bool__16_, name: "bool__16");
 				EventSender__17 = s.SerializeObject<EventSender>(EventSender__17, name: "EventSender__17");
-				bool__18_ = s.Serialize<bool>(bool__18_, name: "bool__18_");
-				bool__19_ = s.Serialize<bool>(bool__19_, name: "bool__19_");
+				bool__18_ = s.Serialize<bool>(bool__18_, name: "bool__18");
+				bool__19_ = s.Serialize<bool>(bool__19_, name: "bool__19");
 			}
 			if (s.HasFlags(SerializeFlags.Persistent)) {
 			}

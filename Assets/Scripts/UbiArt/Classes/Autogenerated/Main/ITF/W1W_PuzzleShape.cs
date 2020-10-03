@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public float float__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			CArray_Path__0 = s.SerializeObject<CArrayO<Path>>(CArray_Path__0, name: "CArray_Path__0");
+			CArray_Path__0 = s.SerializeObject<CArrayO<Path>>(CArray_Path__0, name: "CArray<Path>__0");
 			Enum_VH_0__1 = s.Serialize<Enum_VH_0>(Enum_VH_0__1, name: "Enum_VH_0__1");
 			StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");
 			uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");

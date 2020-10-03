@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 					dialogAcceptSpace = s.Serialize<bool>(dialogAcceptSpace, name: "dialogAcceptSpace");
 					dialogNameRaw = s.Serialize<string>(dialogNameRaw, name: "dialogNameRaw");
 					dialogNameLoc = s.SerializeObject<LocalisationId>(dialogNameLoc, name: "dialogNameLoc");
-					style2 = s.Serialize<InputAdapter__VK_style2>(style2, name: "style2");
+					style2 = s.Serialize<InputAdapter__VK_style2>(style2, name: "style");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {

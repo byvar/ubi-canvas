@@ -24,12 +24,12 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
 				TypeAnim = s.Serialize<type>(TypeAnim, name: "TypeAnim");
-				AnimRO = s.Serialize<string>(AnimRO, name: "AnimRO");
+				AnimRO = s.Serialize<string>(AnimRO, name: "Anim");
 				Loop = s.Serialize<bool>(Loop, name: "Loop");
 				Cycle = s.Serialize<bool>(Cycle, name: "Cycle");
 				PlayRate = s.Serialize<float>(PlayRate, name: "PlayRate");
-				BeginMarkerRO = s.Serialize<int>(BeginMarkerRO, name: "BeginMarkerRO");
-				EndMarkerRO = s.Serialize<int>(EndMarkerRO, name: "EndMarkerRO");
+				BeginMarkerRO = s.Serialize<int>(BeginMarkerRO, name: "BeginMarker");
+				EndMarkerRO = s.Serialize<int>(EndMarkerRO, name: "EndMarker");
 				Flip = s.SerializeObject<BoolEventList>(Flip, name: "Flip");
 				Weight = s.SerializeObject<Spline>(Weight, name: "Weight");
 				usePatches = s.SerializeObject<BoolEventList>(usePatches, name: "usePatches");

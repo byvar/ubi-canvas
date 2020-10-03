@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 				StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
 				ObjectPath__2 = s.SerializeObject<ObjectPath>(ObjectPath__2, name: "ObjectPath__2");
 				ObjectPath__3 = s.SerializeObject<ObjectPath>(ObjectPath__3, name: "ObjectPath__3");
-				CList_ObjectPath__4 = s.SerializeObject<CListO<ObjectPath>>(CList_ObjectPath__4, name: "CList_ObjectPath__4");
+				CList_ObjectPath__4 = s.SerializeObject<CListO<ObjectPath>>(CList_ObjectPath__4, name: "CList<ObjectPath>__4");
 			}
 		}
 		public override uint? ClassCRC => 0x79F06CB0;

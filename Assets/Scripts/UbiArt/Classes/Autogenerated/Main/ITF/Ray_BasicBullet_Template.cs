@@ -58,7 +58,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RFR) {
-				Generic_PhysShape__26 = s.SerializeObject<Generic<PhysShape>>(Generic_PhysShape__26, name: "Generic_PhysShape__26");
+				Generic_PhysShape__26 = s.SerializeObject<Generic<PhysShape>>(Generic_PhysShape__26, name: "Generic<PhysShape>__26");
 				Enum_RFR_0__27 = s.Serialize<Enum_RFR_0>(Enum_RFR_0__27, name: "Enum_RFR_0__27");
 				float__28 = s.Serialize<float>(float__28, name: "float__28");
 				uint__29 = s.Serialize<uint>(uint__29, name: "uint__29");
@@ -85,7 +85,7 @@ namespace UbiArt.ITF {
 				StringID__50 = s.SerializeObject<StringID>(StringID__50, name: "StringID__50");
 				int__51 = s.Serialize<int>(int__51, name: "int__51");
 			} else {
-				Generic_PhysShape__0 = s.SerializeObject<Generic<PhysShape>>(Generic_PhysShape__0, name: "Generic_PhysShape__0");
+				Generic_PhysShape__0 = s.SerializeObject<Generic<PhysShape>>(Generic_PhysShape__0, name: "Generic<PhysShape>__0");
 				Enum_RJR_0__1 = s.Serialize<Enum_RJR_0>(Enum_RJR_0__1, name: "Enum_RJR_0__1");
 				float__2 = s.Serialize<float>(float__2, name: "float__2");
 				uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
-				action = s.Serialize<Action>(action, name: "action");
+				action = s.Serialize<Action>(action, name: "Action");
 				Radius = s.Serialize<float>(Radius, name: "Radius");
 			}
 		}

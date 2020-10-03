@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
-				clearColor2 = s.SerializeObject<Color>(clearColor2, name: "clearColor2");
+				clearColor2 = s.SerializeObject<Color>(clearColor2, name: "clearColor");
 				clearFrontLightColor = s.SerializeObject<Color>(clearFrontLightColor, name: "clearFrontLightColor");
 				clearBackLightColor = s.SerializeObject<Color>(clearBackLightColor, name: "clearBackLightColor");
 			} else {

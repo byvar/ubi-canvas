@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 				blurFrontLightBuffer = s.Serialize<int>(blurFrontLightBuffer, name: "blurFrontLightBuffer");
 				blurBackLightBuffer = s.Serialize<int>(blurBackLightBuffer, name: "blurBackLightBuffer");
 				blurQuality = s.Serialize<uint>(blurQuality, name: "blurQuality");
-				blurSize2 = s.Serialize<uint>(blurSize2, name: "blurSize2");
+				blurSize2 = s.Serialize<uint>(blurSize2, name: "blurSize");
 			} else {
 				clearFrontLightBuffer = s.Serialize<bool>(clearFrontLightBuffer, name: "clearFrontLightBuffer");
 				clearFrontLightColor = s.SerializeObject<Color>(clearFrontLightColor, name: "clearFrontLightColor");

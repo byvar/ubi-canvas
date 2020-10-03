@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
-			StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1_");
+			StringID__1_ = s.SerializeObject<StringID>(StringID__1_, name: "StringID__1");
 			uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");
 			uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
 			uint__4 = s.Serialize<uint>(uint__4, name: "uint__4");

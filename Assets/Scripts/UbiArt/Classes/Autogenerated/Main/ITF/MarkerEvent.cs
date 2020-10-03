@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			marker = s.SerializeObject<StringID>(marker, name: "marker");
-			_event = s.SerializeObject<Generic<Event>>(_event, name: "_event");
+			_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 		}
 	}
 }

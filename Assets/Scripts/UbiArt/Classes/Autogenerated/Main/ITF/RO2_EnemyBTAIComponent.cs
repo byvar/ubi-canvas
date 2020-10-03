@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
-					appearType2 = s.Serialize<Enum_appearType2>(appearType2, name: "appearType2");
+					appearType2 = s.Serialize<Enum_appearType2>(appearType2, name: "appearType");
 					useChargeDirect = s.Serialize<bool>(useChargeDirect, name: "useChargeDirect");
 					useChargeSpot = s.Serialize<bool>(useChargeSpot, name: "useChargeSpot");
 					chargeOnce = s.Serialize<bool>(chargeOnce, name: "chargeOnce");

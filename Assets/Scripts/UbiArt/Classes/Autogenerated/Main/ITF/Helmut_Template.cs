@@ -20,12 +20,12 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			WithAnimStateMachine_Template__0 = s.SerializeObject<WithAnimStateMachine_Template>(WithAnimStateMachine_Template__0, name: "WithAnimStateMachine_Template__0");
-			float__1_ = s.Serialize<float>(float__1_, name: "float__1_");
-			float__2_ = s.Serialize<float>(float__2_, name: "float__2_");
-			float__3_ = s.Serialize<float>(float__3_, name: "float__3_");
-			float__4_ = s.Serialize<float>(float__4_, name: "float__4_");
-			float__5_ = s.Serialize<float>(float__5_, name: "float__5_");
-			float__6_ = s.Serialize<float>(float__6_, name: "float__6_");
+			float__1_ = s.Serialize<float>(float__1_, name: "float__1");
+			float__2_ = s.Serialize<float>(float__2_, name: "float__2");
+			float__3_ = s.Serialize<float>(float__3_, name: "float__3");
+			float__4_ = s.Serialize<float>(float__4_, name: "float__4");
+			float__5_ = s.Serialize<float>(float__5_, name: "float__5");
+			float__6_ = s.Serialize<float>(float__6_, name: "float__6");
 			float__7 = s.Serialize<float>(float__7, name: "float__7");
 			float__8 = s.Serialize<float>(float__8, name: "float__8");
 			float__9 = s.Serialize<float>(float__9, name: "float__9");

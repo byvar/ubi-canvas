@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			concurrent = s.Serialize<bool>(concurrent, name: "concurrent", options: CSerializerObject.Options.BoolAsByte);
-			_operator = s.Serialize<Enum_operator>(_operator, name: "_operator");
+			_operator = s.Serialize<Enum_operator>(_operator, name: "operator");
 			count = s.Serialize<uint>(count, name: "count");
 		}
 		public enum Enum_operator {

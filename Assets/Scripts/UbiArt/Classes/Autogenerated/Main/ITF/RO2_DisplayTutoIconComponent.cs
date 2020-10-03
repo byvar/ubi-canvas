@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					tutoType2 = s.Serialize<TutoType2>(tutoType2, name: "tutoType2");
+					tutoType2 = s.Serialize<TutoType2>(tutoType2, name: "tutoType");
 					scale = s.Serialize<float>(scale, name: "scale");
 					offset = s.SerializeObject<Vec3d>(offset, name: "offset");
 					offsetUseActorFlip = s.Serialize<bool>(offsetUseActorFlip, name: "offsetUseActorFlip");

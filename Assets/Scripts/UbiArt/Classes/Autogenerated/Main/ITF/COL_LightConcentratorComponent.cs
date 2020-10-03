@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 			lightUnits = s.Serialize<float>(lightUnits, name: "lightUnits");
 			accumulationRate = s.Serialize<float>(accumulationRate, name: "accumulationRate");
 			lossRate = s.Serialize<float>(lossRate, name: "lossRate");
-			_event = s.SerializeObject<Placeholder>(_event, name: "_event");
+			_event = s.SerializeObject<Placeholder>(_event, name: "event");
 			fxPath = s.SerializeObject<Path>(fxPath, name: "fxPath");
 			fxFull = s.SerializeObject<StringID>(fxFull, name: "fxFull");
 			fxReset = s.SerializeObject<StringID>(fxReset, name: "fxReset");

@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 			if (Settings.s.game == Settings.Game.VH) {
 				flags = s.Serialize<uint>(flags, name: "flags");
 			} else if (Settings.s.game == Settings.Game.RA) {
-				flagsEnum = s.Serialize<TransitionFlag>(flagsEnum, name: "flagsEnum");
+				flagsEnum = s.Serialize<TransitionFlag>(flagsEnum, name: "flags");
 			}
 			blendFromTransition = s.Serialize<uint>(blendFromTransition, name: "blendFromTransition");
 			from = s.SerializeObject<CArrayO<StringID>>(from, name: "from");
