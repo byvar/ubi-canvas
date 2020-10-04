@@ -16,7 +16,12 @@ namespace UbiArt {
             Write(Convert.ToByte(value));
         }
 
-        public override void Write(Int32 value) {
+		public override void Write(bool value) {
+            if (value) Write((int)1);
+            else Write((int)0);
+        }
+
+		public override void Write(Int32 value) {
             var data = BitConverter.GetBytes(value);
             if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
             Write(data);

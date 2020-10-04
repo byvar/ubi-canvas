@@ -78,43 +78,22 @@ namespace UbiArt {
 						}
 					}
 
-				case TypeCode.SByte:
-					return reader.ReadSByte();
-
-				case TypeCode.Byte:
-					return reader.ReadByte();
-
-				case TypeCode.Int16:
-					return reader.ReadInt16();
-
-				case TypeCode.UInt16:
-					return reader.ReadUInt16();
-
-				case TypeCode.Int32:
-					return reader.ReadInt32();
-
-				case TypeCode.UInt32:
-					return reader.ReadUInt32();
-
-				case TypeCode.Int64:
-					return reader.ReadInt64();
-
-				case TypeCode.UInt64:
-					return reader.ReadUInt64();
-
-				case TypeCode.Single:
-					return reader.ReadSingle();
-
-				case TypeCode.Double:
-					return reader.ReadDouble();
+				case TypeCode.SByte: return reader.ReadSByte();
+				case TypeCode.Byte: return reader.ReadByte();
+				case TypeCode.Int16: return reader.ReadInt16();
+				case TypeCode.UInt16: return reader.ReadUInt16();
+				case TypeCode.Int32: return reader.ReadInt32();
+				case TypeCode.UInt32: return reader.ReadUInt32();
+				case TypeCode.Int64: return reader.ReadInt64();
+				case TypeCode.UInt64: return reader.ReadUInt64();
+				case TypeCode.Single: return reader.ReadSingle();
+				case TypeCode.Double: return reader.ReadDouble();
 				case TypeCode.String:
 					string s = reader.ReadString();
 					AddToStringCache(s);
 					return s;
-				case TypeCode.Char:
-					return reader.ReadChar();
-				default:
-					throw new NotSupportedException($"The specified generic type ('{name}') can not be read from the reader");
+				case TypeCode.Char: return reader.ReadChar();
+				default: throw new NotSupportedException($"The specified generic type ('{name}') can not be read from the reader");
 			}
 		}
 
