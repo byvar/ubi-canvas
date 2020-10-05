@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			enable = s.Serialize<bool>(enable, name: "enable", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0x8B3590C5;
+		public override uint? ClassCRC => 0x7499D2C0;
 	}
 }
 

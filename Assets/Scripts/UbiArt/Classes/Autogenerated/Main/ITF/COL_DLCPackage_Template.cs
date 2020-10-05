@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 			steamID = s.Serialize<uint>(steamID, name: "steamID");
 			uplayID = s.Serialize<uint>(uplayID, name: "uplayID");
 		}
-		public override uint? ClassCRC => 0x75BC560D;
+		public override uint? ClassCRC => 0xADFA05EF;
 	}
 }
 

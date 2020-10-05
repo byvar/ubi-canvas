@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			levelIncreasedFX = s.SerializeObject<StringID>(levelIncreasedFX, name: "levelIncreasedFX");
 			skillPointsEarnedFX = s.SerializeObject<StringID>(skillPointsEarnedFX, name: "skillPointsEarnedFX");
 		}
-		public override uint? ClassCRC => 0xAD262E0C;
+		public override uint? ClassCRC => 0xEA8E9D22;
 	}
 }
 

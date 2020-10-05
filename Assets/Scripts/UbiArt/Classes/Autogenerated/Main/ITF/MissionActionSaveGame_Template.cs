@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			Id = s.SerializeObject<Placeholder>(Id, name: "Id");
 			MapLocation = s.SerializeObject<StringID>(MapLocation, name: "MapLocation");
 		}
-		public override uint? ClassCRC => 0x548F1F5E;
+		public override uint? ClassCRC => 0x8A5CABF3;
 	}
 }
 

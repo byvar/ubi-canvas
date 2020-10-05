@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 				refillMPOnLevelUp = s.Serialize<bool>(refillMPOnLevelUp, name: "refillMPOnLevelUp", options: CSerializerObject.Options.BoolAsByte);
 			}
 		}
-		public override uint? ClassCRC => 0x0E325A03;
+		public override uint? ClassCRC => 0xBDFF97ED;
 	}
 }
 

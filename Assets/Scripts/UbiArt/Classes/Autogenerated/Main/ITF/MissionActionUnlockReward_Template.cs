@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			rewardID = s.SerializeObject<StringID>(rewardID, name: "rewardID");
 		}
-		public override uint? ClassCRC => 0x46A4C1B5;
+		public override uint? ClassCRC => 0xC98C99AD;
 	}
 }
 

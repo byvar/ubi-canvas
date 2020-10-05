@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			skillPtsCountOffsetX = s.Serialize<float>(skillPtsCountOffsetX, name: "skillPtsCountOffsetX");
 		}
-		public override uint? ClassCRC => 0x4D11593D;
+		public override uint? ClassCRC => 0x0A7A2507;
 	}
 }
 

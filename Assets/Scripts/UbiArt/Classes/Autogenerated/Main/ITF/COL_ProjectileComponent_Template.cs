@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			speed = s.Serialize<float>(speed, name: "speed");
 			delay = s.Serialize<float>(delay, name: "delay");
 		}
-		public override uint? ClassCRC => 0x2E8A2705;
+		public override uint? ClassCRC => 0xF31C4044;
 	}
 }
 

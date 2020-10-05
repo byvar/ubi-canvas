@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 			onStopRotatingFX = s.SerializeObject<StringID>(onStopRotatingFX, name: "onStopRotatingFX");
 			playStopFXDeltaAngle = s.SerializeObject<Angle>(playStopFXDeltaAngle, name: "playStopFXDeltaAngle");
 		}
-		public override uint? ClassCRC => 0xB16627BB;
+		public override uint? ClassCRC => 0x41AB9924;
 	}
 }
 

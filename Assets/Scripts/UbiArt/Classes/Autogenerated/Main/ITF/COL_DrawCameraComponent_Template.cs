@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			depth = s.Serialize<float>(depth, name: "depth");
 			offset = s.SerializeObject<Vec3d>(offset, name: "offset");
 		}
-		public override uint? ClassCRC => 0x7E65B07D;
+		public override uint? ClassCRC => 0x03F4BE39;
 	}
 }
 

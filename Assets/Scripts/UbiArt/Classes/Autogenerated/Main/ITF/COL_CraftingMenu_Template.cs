@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			craftingAvailableFX = s.SerializeObject<StringID>(craftingAvailableFX, name: "craftingAvailableFX");
 			craftSuccessFX = s.SerializeObject<StringID>(craftSuccessFX, name: "craftSuccessFX");
 		}
-		public override uint? ClassCRC => 0xCCF3ADC5;
+		public override uint? ClassCRC => 0x6AC2A5BB;
 	}
 }
 

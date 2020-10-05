@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			projectileActorPath = s.SerializeObject<Path>(projectileActorPath, name: "projectileActorPath");
 			detectionShape = s.SerializeObject<Placeholder>(detectionShape, name: "detectionShape");
 		}
-		public override uint? ClassCRC => 0x25554ED4;
+		public override uint? ClassCRC => 0x7C29B7AC;
 	}
 }
 

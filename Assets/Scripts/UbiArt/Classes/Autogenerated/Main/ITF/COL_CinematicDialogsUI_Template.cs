@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			dialogBackgroundTexture = s.SerializeObject<Placeholder>(dialogBackgroundTexture, name: "dialogBackgroundTexture");
 			nameBackgroundTexture = s.SerializeObject<Placeholder>(nameBackgroundTexture, name: "nameBackgroundTexture");
 		}
-		public override uint? ClassCRC => 0x29C67378;
+		public override uint? ClassCRC => 0xF0DDE2DB;
 	}
 }
 

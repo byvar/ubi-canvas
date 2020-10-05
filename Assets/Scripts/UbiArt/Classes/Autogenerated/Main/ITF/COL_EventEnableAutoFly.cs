@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			skipDelay = s.Serialize<bool>(skipDelay, name: "skipDelay", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0x12BE68F5;
+		public override uint? ClassCRC => 0x1AB2ECAF;
 	}
 }
 

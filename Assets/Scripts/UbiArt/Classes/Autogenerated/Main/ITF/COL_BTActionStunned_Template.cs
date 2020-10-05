@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			minTimeBetween2Stuns = s.Serialize<float>(minTimeBetween2Stuns, name: "minTimeBetween2Stuns");
 			secondStunThreshold = s.Serialize<float>(secondStunThreshold, name: "secondStunThreshold");
 		}
-		public override uint? ClassCRC => 0xC367087F;
+		public override uint? ClassCRC => 0x568F2BFF;
 	}
 }
 

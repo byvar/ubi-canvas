@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			soundDescriptorTemplate = s.SerializeObject<SoundDescriptor_Template>(soundDescriptorTemplate, name: "soundDescriptorTemplate");
 		}
-		public override uint? ClassCRC => 0xC1B94CB3;
+		public override uint? ClassCRC => 0x72C1B820;
 	}
 }
 

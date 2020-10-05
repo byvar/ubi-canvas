@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 				detectionShape = s.SerializeObject<Placeholder>(detectionShape, name: "detectionShape");
 			}
 		}
-		public override uint? ClassCRC => 0x5373166E;
+		public override uint? ClassCRC => 0x1323BFB6;
 	}
 }
 

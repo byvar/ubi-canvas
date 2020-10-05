@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			soundGUID = s.SerializeObject<StringID>(soundGUID, name: "soundGUID");
 		}
-		public override uint? ClassCRC => 0x1337518F;
+		public override uint? ClassCRC => 0x5E8E32C6;
 	}
 }
 

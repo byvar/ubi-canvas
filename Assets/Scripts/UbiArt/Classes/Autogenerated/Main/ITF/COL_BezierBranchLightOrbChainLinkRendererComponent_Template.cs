@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			branchSpeed = s.Serialize<float>(branchSpeed, name: "branchSpeed");
 			boundsOffset = s.Serialize<float>(boundsOffset, name: "boundsOffset");
 		}
-		public override uint? ClassCRC => 0xE17E5B9C;
+		public override uint? ClassCRC => 0x44596E84;
 	}
 }
 

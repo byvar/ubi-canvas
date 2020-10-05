@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 			maxLightOrbCount = s.Serialize<uint>(maxLightOrbCount, name: "maxLightOrbCount");
 			potionIDs = s.SerializeObject<Placeholder>(potionIDs, name: "potionIDs");
 		}
-		public override uint? ClassCRC => 0x4314140A;
+		public override uint? ClassCRC => 0x6CF7300D;
 	}
 }
 

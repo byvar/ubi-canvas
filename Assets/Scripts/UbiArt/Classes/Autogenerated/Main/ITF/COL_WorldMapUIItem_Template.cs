@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			locationUnlockFX = s.SerializeObject<StringID>(locationUnlockFX, name: "locationUnlockFX");
 		}
-		public override uint? ClassCRC => 0x82555443;
+		public override uint? ClassCRC => 0x2D01A2DC;
 	}
 }
 

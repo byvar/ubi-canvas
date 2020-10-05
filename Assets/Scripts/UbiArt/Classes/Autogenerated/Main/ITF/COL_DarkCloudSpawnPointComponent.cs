@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			spawnRadius = s.Serialize<float>(spawnRadius, name: "spawnRadius");
 		}
-		public override uint? ClassCRC => 0x4B5D3BDB;
+		public override uint? ClassCRC => 0x88C84913;
 	}
 }
 

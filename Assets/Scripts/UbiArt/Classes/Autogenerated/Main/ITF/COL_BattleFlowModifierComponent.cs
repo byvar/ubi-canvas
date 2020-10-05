@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			OutroLossCinematicID = s.SerializeObject<StringID>(OutroLossCinematicID, name: "OutroLossCinematicID");
 			SynchronousIntro = s.Serialize<int>(SynchronousIntro, name: "SynchronousIntro");
 		}
-		public override uint? ClassCRC => 0x22DEFD90;
+		public override uint? ClassCRC => 0xF4D8C124;
 	}
 }
 

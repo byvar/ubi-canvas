@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			moods = s.SerializeObject<Placeholder>(moods, name: "moods");
 			actors = s.SerializeObject<Placeholder>(actors, name: "actors");
 		}
-		public override uint? ClassCRC => 0xDF7C3ACF;
+		public override uint? ClassCRC => 0x4DBF16AB;
 	}
 }
 

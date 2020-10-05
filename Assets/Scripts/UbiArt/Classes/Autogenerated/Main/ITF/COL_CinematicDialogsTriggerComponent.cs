@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			dialogData = s.SerializeObject<Placeholder>(dialogData, name: "dialogData");
 		}
-		public override uint? ClassCRC => 0x8D9A36A7;
+		public override uint? ClassCRC => 0x475B791D;
 	}
 }
 

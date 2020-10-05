@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			focusDuration = s.Serialize<float>(focusDuration, name: "focusDuration");
 		}
-		public override uint? ClassCRC => 0xF9ED2023;
+		public override uint? ClassCRC => 0x0951C513;
 	}
 }
 

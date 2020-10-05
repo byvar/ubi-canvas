@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			COL_GameScreen_Exploration = s.SerializeObject<Placeholder>(COL_GameScreen_Exploration, name: "COL_GameScreen_Exploration");
 		}
-		public override uint? ClassCRC => 0x1E7456E4;
+		public override uint? ClassCRC => 0x4FB70F75;
 	}
 }
 

@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 			actionToIdleDuration = s.Serialize<float>(actionToIdleDuration, name: "actionToIdleDuration");
 			transitionCurve = s.SerializeObject<Placeholder>(transitionCurve, name: "transitionCurve");
 		}
-		public override uint? ClassCRC => 0x2C3BBFD4;
+		public override uint? ClassCRC => 0x327E716F;
 	}
 }
 

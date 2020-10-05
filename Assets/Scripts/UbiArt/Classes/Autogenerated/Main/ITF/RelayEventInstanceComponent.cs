@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			resetEvent = s.SerializeObject<Placeholder>(resetEvent, name: "resetEvent");
 		}
-		public override uint? ClassCRC => 0xE44E2592;
+		public override uint? ClassCRC => 0x02D88068;
 	}
 }
 

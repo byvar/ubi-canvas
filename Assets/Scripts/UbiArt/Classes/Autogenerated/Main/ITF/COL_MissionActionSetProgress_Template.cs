@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			progress = s.Serialize<float>(progress, name: "progress");
 		}
-		public override uint? ClassCRC => 0x0962D937;
+		public override uint? ClassCRC => 0x463F3ADB;
 	}
 }
 

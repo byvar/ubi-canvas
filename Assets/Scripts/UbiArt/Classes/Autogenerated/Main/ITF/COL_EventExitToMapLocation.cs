@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			checkpointIndex = s.Serialize<uint>(checkpointIndex, name: "checkpointIndex");
 			checkpointObjectId = s.SerializeObject<Placeholder>(checkpointObjectId, name: "checkpointObjectId");
 		}
-		public override uint? ClassCRC => 0xEDFEA31B;
+		public override uint? ClassCRC => 0x8FEDB2CD;
 	}
 }
 

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			activationDistance = s.Serialize<float>(activationDistance, name: "activationDistance");
 		}
-		public override uint? ClassCRC => 0x546651E5;
+		public override uint? ClassCRC => 0xA5AD645E;
 	}
 }
 

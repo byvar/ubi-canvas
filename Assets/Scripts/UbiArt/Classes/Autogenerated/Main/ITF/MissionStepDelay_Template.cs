@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			time = s.Serialize<float>(time, name: "time");
 		}
-		public override uint? ClassCRC => 0x3A059B95;
+		public override uint? ClassCRC => 0xE006F18E;
 	}
 }
 

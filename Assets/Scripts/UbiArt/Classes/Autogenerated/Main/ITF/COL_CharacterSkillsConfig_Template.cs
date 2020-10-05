@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			slowBuffId = s.SerializeObject<StringID>(slowBuffId, name: "slowBuffId");
 			paralyzeBuffId = s.SerializeObject<StringID>(paralyzeBuffId, name: "paralyzeBuffId");
 		}
-		public override uint? ClassCRC => 0x1A94CD46;
+		public override uint? ClassCRC => 0x678C0EE0;
 	}
 }
 

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			physShape = s.SerializeObject<Placeholder>(physShape, name: "physShape");
 		}
-		public override uint? ClassCRC => 0xFF59805E;
+		public override uint? ClassCRC => 0xB29157FA;
 	}
 }
 

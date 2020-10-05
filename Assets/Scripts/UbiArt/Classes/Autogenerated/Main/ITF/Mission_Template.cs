@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			sendTracking = s.Serialize<bool>(sendTracking, name: "sendTracking", options: CSerializerObject.Options.BoolAsByte);
 			dlcPackage = s.Serialize<string>(dlcPackage, name: "dlcPackage");
 		}
-		public override uint? ClassCRC => 0x8F80C479;
+		public override uint? ClassCRC => 0x69129214;
 	}
 }
 

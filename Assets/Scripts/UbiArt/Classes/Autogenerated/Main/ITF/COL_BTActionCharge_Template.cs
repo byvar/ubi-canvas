@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			detectionShape = s.SerializeObject<Placeholder>(detectionShape, name: "detectionShape");
 			targetDistThreshold = s.Serialize<float>(targetDistThreshold, name: "targetDistThreshold");
 		}
-		public override uint? ClassCRC => 0x105C82C9;
+		public override uint? ClassCRC => 0xE5816A26;
 	}
 }
 

@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			characterID = s.SerializeObject<StringID>(characterID, name: "characterID");
 			unlock = s.Serialize<bool>(unlock, name: "unlock", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0x37A0F730;
+		public override uint? ClassCRC => 0x14696743;
 	}
 }
 

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			autoIncrement = s.Serialize<bool>(autoIncrement, name: "autoIncrement", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0xBCBF0922;
+		public override uint? ClassCRC => 0x6DD3D7EC;
 	}
 }
 

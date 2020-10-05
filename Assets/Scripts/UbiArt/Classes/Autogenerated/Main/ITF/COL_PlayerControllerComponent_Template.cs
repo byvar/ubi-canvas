@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 			blockingMovablesCheckExtraRadius = s.Serialize<float>(blockingMovablesCheckExtraRadius, name: "blockingMovablesCheckExtraRadius");
 			flyingClampMargin = s.SerializeObject<Vec2d>(flyingClampMargin, name: "flyingClampMargin");
 		}
-		public override uint? ClassCRC => 0x4FD21A5D;
+		public override uint? ClassCRC => 0xDB87F624;
 	}
 }
 

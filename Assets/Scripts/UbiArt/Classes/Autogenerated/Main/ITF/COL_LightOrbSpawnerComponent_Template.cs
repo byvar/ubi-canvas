@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 				timeBeforeRefill = s.Serialize<float>(timeBeforeRefill, name: "timeBeforeRefill");
 			}
 		}
-		public override uint? ClassCRC => 0x4FB77A07;
+		public override uint? ClassCRC => 0x62185118;
 	}
 }
 

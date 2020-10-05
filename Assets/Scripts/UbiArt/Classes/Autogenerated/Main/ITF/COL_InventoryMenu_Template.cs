@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			openLetterFX = s.SerializeObject<StringID>(openLetterFX, name: "openLetterFX");
 		}
-		public override uint? ClassCRC => 0xBAFFC83F;
+		public override uint? ClassCRC => 0x0E6D7F2A;
 	}
 }
 

@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			uplay = s.SerializeObject<Placeholder>(uplay, name: "uplay");
 			trc = s.SerializeObject<Placeholder>(trc, name: "trc");
 		}
-		public override uint? ClassCRC => 0xF6DD4359;
+		public override uint? ClassCRC => 0x5E7FF18D;
 	}
 }
 

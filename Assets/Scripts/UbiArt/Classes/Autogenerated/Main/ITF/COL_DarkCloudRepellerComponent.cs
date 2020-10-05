@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			radiusMin = s.Serialize<float>(radiusMin, name: "radiusMin");
 			cycleDuration = s.Serialize<float>(cycleDuration, name: "cycleDuration");
 		}
-		public override uint? ClassCRC => 0x2651A3EF;
+		public override uint? ClassCRC => 0x706A533D;
 	}
 }
 

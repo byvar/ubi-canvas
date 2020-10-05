@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 				manaOrbsMax = s.Serialize<float>(manaOrbsMax, name: "manaOrbsMax");
 			}
 		}
-		public override uint? ClassCRC => 0x5D240124;
+		public override uint? ClassCRC => 0x7159601A;
 	}
 }
 

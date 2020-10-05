@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			fullBarFX = s.SerializeObject<StringID>(fullBarFX, name: "fullBarFX");
 			fxOffset = s.SerializeObject<Vec2d>(fxOffset, name: "fxOffset");
 		}
-		public override uint? ClassCRC => 0x5354E297;
+		public override uint? ClassCRC => 0x946886AB;
 	}
 }
 

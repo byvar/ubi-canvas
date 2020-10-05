@@ -60,7 +60,7 @@ namespace UbiArt.ITF {
 			usePlayersAsTargets = s.Serialize<int>(usePlayersAsTargets, name: "usePlayersAsTargets");
 			useGridSpawningStrategy = s.Serialize<int>(useGridSpawningStrategy, name: "useGridSpawningStrategy");
 		}
-		public override uint? ClassCRC => 0x3CE977D9;
+		public override uint? ClassCRC => 0x34AE8C59;
 	}
 }
 

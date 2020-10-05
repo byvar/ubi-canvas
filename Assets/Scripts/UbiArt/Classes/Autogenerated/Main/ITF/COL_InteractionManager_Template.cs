@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			defaultCameraDistanceToInteractiveButton = s.Serialize<float>(defaultCameraDistanceToInteractiveButton, name: "defaultCameraDistanceToInteractiveButton");
 		}
-		public override uint? ClassCRC => 0xA742BC85;
+		public override uint? ClassCRC => 0x421CCDF3;
 	}
 }
 

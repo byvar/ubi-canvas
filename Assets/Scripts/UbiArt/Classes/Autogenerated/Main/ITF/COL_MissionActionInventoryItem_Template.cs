@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			showpopup = s.Serialize<bool>(showpopup, name: "showpopup", options: CSerializerObject.Options.BoolAsByte);
 			quantity = s.Serialize<uint>(quantity, name: "quantity");
 		}
-		public override uint? ClassCRC => 0x392801DF;
+		public override uint? ClassCRC => 0xF9DAFB46;
 	}
 }
 

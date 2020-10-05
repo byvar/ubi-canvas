@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 			musicStateBattleMiniBoss = s.SerializeObject<StringID>(musicStateBattleMiniBoss, name: "musicStateBattleMiniBoss");
 			musicStateBattleWinBoss = s.SerializeObject<StringID>(musicStateBattleWinBoss, name: "musicStateBattleWinBoss");
 		}
-		public override uint? ClassCRC => 0xC62F093D;
+		public override uint? ClassCRC => 0xF1EBE701;
 	}
 }
 

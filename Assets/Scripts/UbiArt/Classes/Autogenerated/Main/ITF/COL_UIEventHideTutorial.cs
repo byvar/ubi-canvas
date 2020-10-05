@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			sender = s.Serialize<uint>(sender, name: "sender");
 			tutorialID = s.SerializeObject<StringID>(tutorialID, name: "tutorialID");
 		}
-		public override uint? ClassCRC => 0x0CDA2316;
+		public override uint? ClassCRC => 0x068A690D;
 	}
 }
 

@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 				savedObjectState = s.SerializeObject<StringID>(savedObjectState, name: "savedObjectState");
 			}
 		}
-		public override uint? ClassCRC => 0x550E7A52;
+		public override uint? ClassCRC => 0x1EA037A7;
 	}
 }
 

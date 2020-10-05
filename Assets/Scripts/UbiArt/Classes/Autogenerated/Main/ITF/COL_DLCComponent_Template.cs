@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			supportSkin = s.Serialize<int>(supportSkin, name: "supportSkin");
 			skinFamily = s.SerializeObject<StringID>(skinFamily, name: "skinFamily");
 		}
-		public override uint? ClassCRC => 0x601770B5;
+		public override uint? ClassCRC => 0x1C6C1B31;
 	}
 }
 

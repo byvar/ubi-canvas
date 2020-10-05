@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			storyEvent = s.SerializeObject<StringID>(storyEvent, name: "storyEvent");
 			storyEventValue = s.Serialize<int>(storyEventValue, name: "storyEventValue");
 		}
-		public override uint? ClassCRC => 0xD600F1EE;
+		public override uint? ClassCRC => 0x3CCA850F;
 	}
 }
 

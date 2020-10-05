@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 			activeInUIEnvironment = s.Serialize<int>(activeInUIEnvironment, name: "activeInUIEnvironment");
 			activeInGameplayEnvironment = s.Serialize<int>(activeInGameplayEnvironment, name: "activeInGameplayEnvironment");
 		}
-		public override uint? ClassCRC => 0xDCC69EFD;
+		public override uint? ClassCRC => 0xDCF707CF;
 	}
 }
 

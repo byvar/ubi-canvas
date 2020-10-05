@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			animDuration = s.Serialize<float>(animDuration, name: "animDuration");
 		}
-		public override uint? ClassCRC => 0x804284F3;
+		public override uint? ClassCRC => 0x14564FFC;
 	}
 }
 

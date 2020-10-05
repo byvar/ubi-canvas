@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			[Serialize("Value_0")] Value_0 = 0,
 			[Serialize("Value_1")] Value_1 = 1,
 		}
-		public override uint? ClassCRC => 0x9DC40808;
+		public override uint? ClassCRC => 0xBCCC85E8;
 	}
 }
 

@@ -71,7 +71,7 @@ namespace UbiArt.ITF {
 				actionEndDuration = s.Serialize<float>(actionEndDuration, name: "actionEndDuration");
 			}
 		}
-		public override uint? ClassCRC => 0x6CEE05D6;
+		public override uint? ClassCRC => 0x8405D2AC;
 	}
 }
 

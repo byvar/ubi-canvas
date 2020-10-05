@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			brushNibMaterial = s.SerializeObject<Placeholder>(brushNibMaterial, name: "brushNibMaterial");
 			interactionIconActorPath = s.SerializeObject<Path>(interactionIconActorPath, name: "interactionIconActorPath");
 		}
-		public override uint? ClassCRC => 0x0D66D118;
+		public override uint? ClassCRC => 0xE46D871B;
 	}
 }
 

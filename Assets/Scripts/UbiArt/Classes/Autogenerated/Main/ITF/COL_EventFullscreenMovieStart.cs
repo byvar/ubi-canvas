@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			videoIndex = s.Serialize<uint>(videoIndex, name: "videoIndex");
 		}
-		public override uint? ClassCRC => 0x3E478ACC;
+		public override uint? ClassCRC => 0xF1EEC07C;
 	}
 }
 

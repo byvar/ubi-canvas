@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 			storyEventValidateValue = s.Serialize<int>(storyEventValidateValue, name: "storyEventValidateValue");
 			storyEventDeclineValue = s.Serialize<int>(storyEventDeclineValue, name: "storyEventDeclineValue");
 		}
-		public override uint? ClassCRC => 0xEFAC690A;
+		public override uint? ClassCRC => 0xBA0BE8A2;
 	}
 }
 

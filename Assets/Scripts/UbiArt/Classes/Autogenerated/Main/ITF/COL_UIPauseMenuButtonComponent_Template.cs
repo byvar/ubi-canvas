@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}
-		public override uint? ClassCRC => 0xBFC5EFC0;
+		public override uint? ClassCRC => 0xAE0C5EE8;
 	}
 }
 

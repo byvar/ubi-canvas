@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			travelDistance = s.Serialize<float>(travelDistance, name: "travelDistance");
 			scaleMultiplier = s.Serialize<float>(scaleMultiplier, name: "scaleMultiplier");
 		}
-		public override uint? ClassCRC => 0x3E7D5E55;
+		public override uint? ClassCRC => 0xACD14A7A;
 	}
 }
 

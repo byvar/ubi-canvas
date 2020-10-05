@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			bankGuid = s.SerializeObject<StringID>(bankGuid, name: "bankGuid");
 			musicStateBattle = s.SerializeObject<StringID>(musicStateBattle, name: "musicStateBattle");
 		}
-		public override uint? ClassCRC => 0x0172D3E3;
+		public override uint? ClassCRC => 0x574EA746;
 	}
 }
 

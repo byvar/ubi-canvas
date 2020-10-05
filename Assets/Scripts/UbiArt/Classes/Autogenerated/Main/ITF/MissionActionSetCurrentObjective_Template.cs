@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			primary = s.Serialize<bool>(primary, name: "primary", options: CSerializerObject.Options.BoolAsByte);
 			reset = s.Serialize<bool>(reset, name: "reset", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0xE356C1F4;
+		public override uint? ClassCRC => 0x9840154A;
 	}
 }
 

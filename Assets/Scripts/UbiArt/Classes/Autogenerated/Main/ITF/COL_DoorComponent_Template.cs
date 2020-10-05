@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			startOpen = s.Serialize<int>(startOpen, name: "startOpen");
 			openSpeed = s.Serialize<float>(openSpeed, name: "openSpeed");
 		}
-		public override uint? ClassCRC => 0x27B03C33;
+		public override uint? ClassCRC => 0xF0D69CEC;
 	}
 }
 

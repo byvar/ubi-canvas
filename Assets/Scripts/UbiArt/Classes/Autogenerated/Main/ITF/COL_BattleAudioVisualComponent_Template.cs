@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			spawnOffset = s.SerializeObject<Vec2d>(spawnOffset, name: "spawnOffset");
 		}
-		public override uint? ClassCRC => 0xB65F2B53;
+		public override uint? ClassCRC => 0x9E1A196D;
 	}
 }
 

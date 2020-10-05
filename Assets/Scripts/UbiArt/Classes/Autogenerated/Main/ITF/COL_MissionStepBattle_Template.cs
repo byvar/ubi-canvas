@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			id = s.SerializeObject<Placeholder>(id, name: "id");
 			battleWon = s.Serialize<bool>(battleWon, name: "battleWon", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0xADB8FD39;
+		public override uint? ClassCRC => 0x2FF9CA00;
 	}
 }
 

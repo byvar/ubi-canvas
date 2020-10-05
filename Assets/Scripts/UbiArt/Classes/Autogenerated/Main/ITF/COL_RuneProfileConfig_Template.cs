@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			runeBagSize = s.Serialize<uint>(runeBagSize, name: "runeBagSize");
 		}
-		public override uint? ClassCRC => 0x5CA69E72;
+		public override uint? ClassCRC => 0x2492BB40;
 	}
 }
 

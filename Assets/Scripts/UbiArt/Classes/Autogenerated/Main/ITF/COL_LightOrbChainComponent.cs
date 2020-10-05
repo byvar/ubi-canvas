@@ -89,7 +89,7 @@ namespace UbiArt.ITF {
 			[Serialize("InteractiveOffset_BreakableDown"       )] BreakableDown = 3,
 			[Serialize("InteractiveOffset_BreakableMiddle_Down")] BreakableMiddle_Down = 4,
 		}
-		public override uint? ClassCRC => 0x5D2E5715;
+		public override uint? ClassCRC => 0xD14D16D5;
 	}
 }
 

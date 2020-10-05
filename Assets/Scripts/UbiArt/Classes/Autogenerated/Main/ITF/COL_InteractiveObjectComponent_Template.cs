@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			interactButtonYOffset = s.Serialize<float>(interactButtonYOffset, name: "interactButtonYOffset");
 			interactButtonZOffsetFromAurora = s.Serialize<float>(interactButtonZOffsetFromAurora, name: "interactButtonZOffsetFromAurora");
 		}
-		public override uint? ClassCRC => 0x854530D6;
+		public override uint? ClassCRC => 0x442EC083;
 	}
 }
 

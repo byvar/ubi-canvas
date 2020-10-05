@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			baseLevel = s.Serialize<string>(baseLevel, name: "baseLevel");
 		}
-		public override uint? ClassCRC => 0x72B55C7B;
+		public override uint? ClassCRC => 0xEEAE6E5C;
 	}
 }
 

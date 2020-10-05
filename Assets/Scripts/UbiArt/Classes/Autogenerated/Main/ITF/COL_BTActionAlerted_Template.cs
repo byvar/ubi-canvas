@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 			animAlertedToCharge = s.SerializeObject<StringID>(animAlertedToCharge, name: "animAlertedToCharge");
 			detectionShape = s.SerializeObject<Placeholder>(detectionShape, name: "detectionShape");
 		}
-		public override uint? ClassCRC => 0x081FB5C8;
+		public override uint? ClassCRC => 0x02999C6C;
 	}
 }
 

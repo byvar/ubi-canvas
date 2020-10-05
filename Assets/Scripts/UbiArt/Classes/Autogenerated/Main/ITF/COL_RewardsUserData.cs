@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			bigSpiderName = s.SerializeObject<StringID>(bigSpiderName, name: "bigSpiderName");
 			partnersLevelToReach = s.Serialize<uint>(partnersLevelToReach, name: "partnersLevelToReach");
 		}
-		public override uint? ClassCRC => 0x76AE36B2;
+		public override uint? ClassCRC => 0xAED7767F;
 	}
 }
 

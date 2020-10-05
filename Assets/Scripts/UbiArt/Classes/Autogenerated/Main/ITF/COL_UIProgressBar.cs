@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 				barWidth = s.Serialize<float>(barWidth, name: "barWidth");
 			}
 		}
-		public override uint? ClassCRC => 0x6FE31CAF;
+		public override uint? ClassCRC => 0x11D4CEB0;
 	}
 }
 

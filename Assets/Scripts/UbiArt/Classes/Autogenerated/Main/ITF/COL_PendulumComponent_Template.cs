@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			fxOnHit = s.SerializeObject<StringID>(fxOnHit, name: "fxOnHit");
 			fxOnStartMove = s.SerializeObject<StringID>(fxOnStartMove, name: "fxOnStartMove");
 		}
-		public override uint? ClassCRC => 0x98B83CF2;
+		public override uint? ClassCRC => 0x7EB31AD5;
 	}
 }
 

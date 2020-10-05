@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 			igniculusInfoScaleDownMultiplier = s.Serialize<float>(igniculusInfoScaleDownMultiplier, name: "igniculusInfoScaleDownMultiplier");
 			characterInfoBackgroundFade = s.Serialize<float>(characterInfoBackgroundFade, name: "characterInfoBackgroundFade");
 		}
-		public override uint? ClassCRC => 0x4824B4BF;
+		public override uint? ClassCRC => 0x2EAF268E;
 	}
 }
 

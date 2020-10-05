@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 			idleDuration = s.Serialize<float>(idleDuration, name: "idleDuration");
 			followCurveAngle = s.Serialize<bool>(followCurveAngle, name: "followCurveAngle", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0x71C7E752;
+		public override uint? ClassCRC => 0x5F5BD095;
 	}
 }
 

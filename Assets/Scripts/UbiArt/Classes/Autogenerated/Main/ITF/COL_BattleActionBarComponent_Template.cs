@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			zPriorityWhenSelectingAction = s.Serialize<int>(zPriorityWhenSelectingAction, name: "zPriorityWhenSelectingAction");
 			zPriorityWithIgniculus = s.Serialize<int>(zPriorityWithIgniculus, name: "zPriorityWithIgniculus");
 		}
-		public override uint? ClassCRC => 0x67126EAE;
+		public override uint? ClassCRC => 0x53133777;
 	}
 }
 

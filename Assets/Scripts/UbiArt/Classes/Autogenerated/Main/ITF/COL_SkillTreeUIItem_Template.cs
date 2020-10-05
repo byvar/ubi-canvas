@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			skillUnlockFX = s.SerializeObject<StringID>(skillUnlockFX, name: "skillUnlockFX");
 		}
-		public override uint? ClassCRC => 0x84BA89E6;
+		public override uint? ClassCRC => 0xB0B6BFD2;
 	}
 }
 

@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			authorizedPCStates = s.SerializeObject<Placeholder>(authorizedPCStates, name: "authorizedPCStates");
 			onInteractFeedbackID = s.SerializeObject<StringID>(onInteractFeedbackID, name: "onInteractFeedbackID");
 		}
-		public override uint? ClassCRC => 0xB8752E22;
+		public override uint? ClassCRC => 0x97819D56;
 	}
 }
 

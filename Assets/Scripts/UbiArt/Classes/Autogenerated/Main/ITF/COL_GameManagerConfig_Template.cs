@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 			loadingScenePath = s.SerializeObject<Path>(loadingScenePath, name: "loadingScenePath");
 			endCreditDialogData = s.SerializeObject<Placeholder>(endCreditDialogData, name: "endCreditDialogData");
 		}
-		public override uint? ClassCRC => 0x8D6F0830;
+		public override uint? ClassCRC => 0x29AEA8EE;
 	}
 }
 

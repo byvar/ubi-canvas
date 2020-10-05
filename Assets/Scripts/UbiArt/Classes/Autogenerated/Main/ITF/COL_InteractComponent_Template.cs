@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			triggerSelf = s.Serialize<int>(triggerSelf, name: "triggerSelf");
 			triggerChildren = s.Serialize<int>(triggerChildren, name: "triggerChildren");
 		}
-		public override uint? ClassCRC => 0xACBABA5C;
+		public override uint? ClassCRC => 0x9A0DE502;
 	}
 }
 

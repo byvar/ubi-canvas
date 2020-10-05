@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			defaultMaxAttributes = s.SerializeObject<Placeholder>(defaultMaxAttributes, name: "defaultMaxAttributes");
 		}
-		public override uint? ClassCRC => 0xBC58D901;
+		public override uint? ClassCRC => 0x342E9374;
 	}
 }
 

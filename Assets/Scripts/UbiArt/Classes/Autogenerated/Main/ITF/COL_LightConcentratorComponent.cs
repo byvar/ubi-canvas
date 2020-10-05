@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 			fxOffset = s.SerializeObject<Vec2d>(fxOffset, name: "fxOffset");
 			fxBoneName = s.SerializeObject<StringID>(fxBoneName, name: "fxBoneName");
 		}
-		public override uint? ClassCRC => 0x8A4975A0;
+		public override uint? ClassCRC => 0x65933D3A;
 	}
 }
 

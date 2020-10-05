@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			climbable = s.Serialize<bool>(climbable, name: "climbable", options: CSerializerObject.Options.BoolAsByte);
 			dangerous = s.Serialize<bool>(dangerous, name: "dangerous", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0xEA2A372A;
+		public override uint? ClassCRC => 0x490AB036;
 	}
 }
 

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			npcPath = s.SerializeObject<Path>(npcPath, name: "npcPath");
 		}
-		public override uint? ClassCRC => 0xDD9F5C37;
+		public override uint? ClassCRC => 0xCA888358;
 	}
 }
 

@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			waterTime = s.Serialize<float>(waterTime, name: "waterTime");
 			ploufAlteration = s.Serialize<float>(ploufAlteration, name: "ploufAlteration");
 		}
-		public override uint? ClassCRC => 0x55DE8D99;
+		public override uint? ClassCRC => 0x46841093;
 	}
 }
 

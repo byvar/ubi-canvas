@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 			Id = s.SerializeObject<Placeholder>(Id, name: "Id");
 			PlayerID = s.SerializeObject<StringID>(PlayerID, name: "PlayerID");
 		}
-		public override uint? ClassCRC => 0xE4163580;
+		public override uint? ClassCRC => 0xC6B3DFC5;
 	}
 }
 

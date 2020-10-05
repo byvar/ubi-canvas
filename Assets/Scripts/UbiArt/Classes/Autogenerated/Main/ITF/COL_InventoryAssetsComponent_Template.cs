@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			wingsMeshName = s.Serialize<string>(wingsMeshName, name: "wingsMeshName");
 			defaultItems = s.SerializeObject<Placeholder>(defaultItems, name: "defaultItems");
 		}
-		public override uint? ClassCRC => 0x01CA259F;
+		public override uint? ClassCRC => 0x193E8B71;
 	}
 }
 

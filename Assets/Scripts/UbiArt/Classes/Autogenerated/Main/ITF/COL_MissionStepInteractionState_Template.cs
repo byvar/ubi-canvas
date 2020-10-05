@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			id = s.SerializeObject<Placeholder>(id, name: "id");
 			state = s.SerializeObject<StringID>(state, name: "state");
 		}
-		public override uint? ClassCRC => 0xFFE2E7F5;
+		public override uint? ClassCRC => 0x043E6AC0;
 	}
 }
 

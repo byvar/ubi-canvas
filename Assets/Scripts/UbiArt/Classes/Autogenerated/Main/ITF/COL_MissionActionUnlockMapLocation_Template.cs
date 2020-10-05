@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			mapLocationId = s.SerializeObject<StringID>(mapLocationId, name: "mapLocationId");
 			unlock = s.Serialize<bool>(unlock, name: "unlock", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0xB944FD6D;
+		public override uint? ClassCRC => 0x2148609F;
 	}
 }
 

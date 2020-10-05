@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 			characteridmap = s.SerializeObject<Placeholder>(characteridmap, name: "characteridmap");
 			characternames = s.SerializeObject<Placeholder>(characternames, name: "characternames");
 		}
-		public override uint? ClassCRC => 0x1ADB9275;
+		public override uint? ClassCRC => 0x593E789E;
 	}
 }
 

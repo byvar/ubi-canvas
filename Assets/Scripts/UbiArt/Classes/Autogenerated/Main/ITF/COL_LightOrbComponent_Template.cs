@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 			magnetDistanceWithLightSphere = s.Serialize<float>(magnetDistanceWithLightSphere, name: "magnetDistanceWithLightSphere");
 			magnetDuration = s.Serialize<float>(magnetDuration, name: "magnetDuration");
 		}
-		public override uint? ClassCRC => 0xD8E5EC9D;
+		public override uint? ClassCRC => 0x666A1334;
 	}
 }
 

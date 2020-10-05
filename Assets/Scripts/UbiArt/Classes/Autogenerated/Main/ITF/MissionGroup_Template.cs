@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			concurrent = s.Serialize<bool>(concurrent, name: "concurrent", options: CSerializerObject.Options.BoolAsByte);
 			pickOneAfterBattle = s.Serialize<bool>(pickOneAfterBattle, name: "pickOneAfterBattle", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0xC024AC8B;
+		public override uint? ClassCRC => 0x2DB01F12;
 	}
 }
 

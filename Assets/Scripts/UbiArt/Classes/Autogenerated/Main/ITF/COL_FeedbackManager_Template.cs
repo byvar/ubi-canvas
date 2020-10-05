@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 			alwaysLoadedBattle_ContextTag = s.SerializeObject<StringID>(alwaysLoadedBattle_ContextTag, name: "alwaysLoadedBattle_ContextTag");
 			isPreloadAllFeedbacksEnabled = s.Serialize<bool>(isPreloadAllFeedbacksEnabled, name: "isPreloadAllFeedbacksEnabled", options: CSerializerObject.Options.BoolAsByte);
 		}
-		public override uint? ClassCRC => 0x4A67ED13;
+		public override uint? ClassCRC => 0x2D111952;
 	}
 }
 

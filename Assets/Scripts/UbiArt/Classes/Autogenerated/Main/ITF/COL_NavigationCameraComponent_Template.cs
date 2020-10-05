@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			flyingLookAtOffset = s.SerializeObject<Vec2d>(flyingLookAtOffset, name: "flyingLookAtOffset");
 		}
-		public override uint? ClassCRC => 0x8CEFB6B9;
+		public override uint? ClassCRC => 0xAE25E90A;
 	}
 }
 

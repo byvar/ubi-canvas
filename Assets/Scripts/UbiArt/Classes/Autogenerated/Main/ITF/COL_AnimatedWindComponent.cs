@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			curveMaxValue = s.Serialize<float>(curveMaxValue, name: "curveMaxValue");
 			curveDuration = s.Serialize<float>(curveDuration, name: "curveDuration");
 		}
-		public override uint? ClassCRC => 0x230B936F;
+		public override uint? ClassCRC => 0xB5EB6A88;
 	}
 }
 

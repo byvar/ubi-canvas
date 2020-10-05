@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			animDown = s.SerializeObject<StringID>(animDown, name: "animDown");
 			animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");
 		}
-		public override uint? ClassCRC => 0x549518B2;
+		public override uint? ClassCRC => 0x8AF360A0;
 	}
 }
 

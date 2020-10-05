@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			baseActionsTexture = s.SerializeObject<Placeholder>(baseActionsTexture, name: "baseActionsTexture");
 			buttonBackgroundTexture = s.SerializeObject<Placeholder>(buttonBackgroundTexture, name: "buttonBackgroundTexture");
 		}
-		public override uint? ClassCRC => 0x96C4970A;
+		public override uint? ClassCRC => 0x793D8966;
 	}
 }
 

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			mapLocationId = s.SerializeObject<StringID>(mapLocationId, name: "mapLocationId");
 		}
-		public override uint? ClassCRC => 0xA859529E;
+		public override uint? ClassCRC => 0xB676855D;
 	}
 }
 

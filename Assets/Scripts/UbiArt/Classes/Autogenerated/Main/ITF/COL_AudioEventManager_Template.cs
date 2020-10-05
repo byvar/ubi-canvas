@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 			pauseAllSoundDescriptor = s.SerializeObject<Placeholder>(pauseAllSoundDescriptor, name: "pauseAllSoundDescriptor");
 			resumeAllSoundDescriptor = s.SerializeObject<Placeholder>(resumeAllSoundDescriptor, name: "resumeAllSoundDescriptor");
 		}
-		public override uint? ClassCRC => 0x2E949D2F;
+		public override uint? ClassCRC => 0x16C91A6A;
 	}
 }
 

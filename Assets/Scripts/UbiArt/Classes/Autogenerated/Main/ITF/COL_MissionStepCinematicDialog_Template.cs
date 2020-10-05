@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			data = s.SerializeObject<Placeholder>(data, name: "data");
 		}
-		public override uint? ClassCRC => 0x8F77242E;
+		public override uint? ClassCRC => 0x345EBE1E;
 	}
 }
 

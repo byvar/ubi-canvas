@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 			avoidanceCheckRadius = s.Serialize<float>(avoidanceCheckRadius, name: "avoidanceCheckRadius");
 			avoidanceSpeed = s.Serialize<float>(avoidanceSpeed, name: "avoidanceSpeed");
 		}
-		public override uint? ClassCRC => 0x8F18F05D;
+		public override uint? ClassCRC => 0xC9791002;
 	}
 }
 
