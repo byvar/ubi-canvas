@@ -15,9 +15,10 @@ namespace UbiArt {
 		COL = 1 << 4,
 		VH = 1 << 5,
 		RA = 1 << 6,
+		RM = 1 << 7,
 		ROVersion = RO | RJR | RFR,
 		RLVersion = RL | COL,
-		RAVersion = RA | VH,
-		All = RO | RJR | RFR | RL | COL | VH | RA
+		RAVersion = RA | VH | RM,
+		All = RO | RJR | RFR | RL | COL | VH | RA | RM
 	}
 }

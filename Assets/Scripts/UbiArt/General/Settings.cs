@@ -28,7 +28,7 @@ namespace UbiArt {
 			RO = 0,
 			RL = 1
 		};
-		public enum Game { None, RO, RL, RA, RJR, RFR, COL, VH };
+		public enum Game { None, RO, RL, RA, RJR, RFR, COL, VH, RM };
 		public enum Platform { None, PC, iOS, Android, WiiU, Vita, MacOS };
 		public enum Endian { Little, Big };
 		public enum SerializerType { Binary, TagBinary };
