@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_GeyserComponent_Template : RO2_ChildLaunchComponent_Template {
 		public float warnDuration;
 		public float launchDuration;

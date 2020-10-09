@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class EventEnableShadow : Event {
 		public bool Enable;
 		protected override void SerializeImpl(CSerializerObject s) {

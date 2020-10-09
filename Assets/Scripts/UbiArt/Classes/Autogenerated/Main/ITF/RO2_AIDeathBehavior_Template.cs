@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AIDeathBehavior_Template : AIDeathBehavior_Template {
 		public Generic<RO2_EventSpawnReward> reward;
 		public Path soul;

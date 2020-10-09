@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_AmbianceManager_Template : TemplateObj {
 		public CArrayO<Generic<RLC_AmbianceDetails>> ambianceDetails;
 		public CArrayO<Generic<RLC_AmbianceConfigAdventure>> ambianceConfigs_Adventure;

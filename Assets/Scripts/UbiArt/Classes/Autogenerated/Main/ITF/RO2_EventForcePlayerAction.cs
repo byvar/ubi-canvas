@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_EventForcePlayerAction : Event {
 		public PlayerForcedAction action;
 		public PlayerForcedAction2 action2;

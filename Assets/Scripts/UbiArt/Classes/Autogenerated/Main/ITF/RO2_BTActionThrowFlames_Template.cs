@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_BTActionThrowFlames_Template : BTAction_Template {
 		public StringID animation;
 		public StringID endAnimation;

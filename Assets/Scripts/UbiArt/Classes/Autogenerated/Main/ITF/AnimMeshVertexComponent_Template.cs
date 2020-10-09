@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.COL | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class AnimMeshVertexComponent_Template : GraphicComponent_Template {
 		public bool defaultUpdate;
 		public bool draw2D;

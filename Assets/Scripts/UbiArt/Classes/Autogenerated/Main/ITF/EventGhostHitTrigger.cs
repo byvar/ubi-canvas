@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.COL | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class EventGhostHitTrigger : EventTrigger {
 		public bool triggeredByCollision;
 		public bool triggeredByHitStim;

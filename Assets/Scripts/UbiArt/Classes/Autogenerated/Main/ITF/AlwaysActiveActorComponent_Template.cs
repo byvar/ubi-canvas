@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.All)]
 	public partial class AlwaysActiveActorComponent_Template : ActorComponent_Template {
 		public float safeTimeOutDuration;
 		public bool stopOnScreenLeaving;

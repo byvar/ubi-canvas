@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.RO | GameFlags.VH)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class UIComponent_Template : ActorComponent_Template {
 		public bool is2D;
 		public float showingFadeDuration;

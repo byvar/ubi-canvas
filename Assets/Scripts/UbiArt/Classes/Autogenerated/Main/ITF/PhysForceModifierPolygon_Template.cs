@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class PhysForceModifierPolygon_Template : PhysForceModifier_Template {
 		public PhysShapePolygon polygon;
 		public Vec2d direction;

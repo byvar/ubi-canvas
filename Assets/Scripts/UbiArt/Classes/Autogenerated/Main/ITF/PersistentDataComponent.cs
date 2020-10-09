@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class PersistentDataComponent : ActorComponent {
 		public CMap<StringID, int> i32Map;
 		public CMap<StringID, float> f32Map;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.RO | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class PersistentGameData_Universe : CSerializable {
 		public CMapGeneric<StringID, PersistentGameData_Level> Levels;
 		public GameStatsManager.SaveSession Rewards;

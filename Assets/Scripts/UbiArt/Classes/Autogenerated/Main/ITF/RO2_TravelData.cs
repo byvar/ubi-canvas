@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_TravelData : CSerializable {
 		public float duration;
 		public AccelType accelType;

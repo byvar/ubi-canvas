@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_GameManagerConfig_Template : GameManagerConfig_Template {
 		public RO2_PlayerConfig_Template playerConfig;
 		public Path gameplayCameraPath;
@@ -376,7 +376,7 @@ namespace UbiArt.ITF {
 				newsButton_android = s.Serialize<bool>(newsButton_android, name: "newsButton_android");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.RA)]
 		public partial class LockDataClass : CSerializable {
 			public StringID tag;
 			public MapLockType lockType;

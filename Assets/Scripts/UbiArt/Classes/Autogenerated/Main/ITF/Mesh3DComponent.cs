@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class Mesh3DComponent : GraphicComponent {
 		public float ScaleZ;
 		public CListO<GFXMaterialSerializable> materialList;

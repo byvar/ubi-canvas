@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class FontTextArea : CSerializable {
 		public FontTextArea.FontSet FontTextArea_FontSet__0;
 		public FontTextArea.Style FontTextArea_Style__1;
@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 			} else {
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+		[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 		public partial class FontSet : CSerializable {
 			public Path _default;
 			public Path japanese;
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
+		[Games(GameFlags.COL | GameFlags.VH | GameFlags.RA)]
 		public partial class Style : CSerializable {
 			public Path fontPath;
 			public FontTextArea.FontSet fontSet;

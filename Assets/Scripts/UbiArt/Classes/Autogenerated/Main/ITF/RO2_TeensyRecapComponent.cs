@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_TeensyRecapComponent : ActorComponent {
 		public CListO<RO2_TeensyRecapComponent.Teensy> teensies;
 		public StringID level;

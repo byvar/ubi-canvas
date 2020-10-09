@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BlackSwarmComponent_Template : SwarmComponent_Template {
 		public float detectionRadius;
 		public float particleMaxSpeed;

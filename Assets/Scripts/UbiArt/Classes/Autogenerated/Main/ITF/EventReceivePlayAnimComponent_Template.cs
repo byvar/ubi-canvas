@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class EventReceivePlayAnimComponent_Template : ActorComponent_Template {
 		public Generic<PhysShape> phantomShape;
 		public Generic<Event> watchEvent;

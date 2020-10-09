@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class SequencePlayerComponent_Template : ActorComponent_Template {
 		public CArrayO<Generic<SequenceEvent_Template>> events;
 		public float unskippableDurationFirstTime;

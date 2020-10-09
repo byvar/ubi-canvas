@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionAppearBackgroundNinja_Template : RO2_BTActionAppearBackground_Template {
 		public StringID animNinjaBack;
 		public StringID animFallBack;

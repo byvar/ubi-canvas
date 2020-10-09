@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class ZAction : CSerializable {
 		public StringID name;
 		public bool inverted;

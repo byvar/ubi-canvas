@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RO | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.RLVersion)]
 	public partial class MusicTreeNodePlayMusic_Template : MusicTreeNode_Template {
 		public StringID musicName;
 		protected override void SerializeImpl(CSerializerObject s) {

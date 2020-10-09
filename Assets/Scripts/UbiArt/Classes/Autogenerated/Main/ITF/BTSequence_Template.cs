@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class BTSequence_Template : BTNode_Template {
 		public CListO<BTNodeTemplate_Ref> nodes;
 		protected override void SerializeImpl(CSerializerObject s) {

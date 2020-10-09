@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_BossLuchadoreComponent_Template : ActorComponent_Template {
 		public CListO<RO2_BossLuchadoreComponent_Template.SequencePhase> phases;
 		public float opportunityInputLockedDuration;
@@ -163,7 +163,7 @@ namespace UbiArt.ITF {
 				[Serialize("LF_Aiming"                   )] Aiming = 2,
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.RA)]
 		public partial class SequencePhase : CSerializable {
 			public StringID tag;
 			public StringID animStand;

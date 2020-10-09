@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class UIScrollbar_Template : UIComponent_Template {
 		public CListO<UIScrollbar_Template.Style> styles;
 		protected override void SerializeImpl(CSerializerObject s) {

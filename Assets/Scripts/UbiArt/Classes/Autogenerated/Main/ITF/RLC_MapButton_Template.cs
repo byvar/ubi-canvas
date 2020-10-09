@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_MapButton_Template : RLC_BasicAdventureButton_Template {
 		public StringID WwiseGUID_SpawnLums;
 		public StringID WwiseGUID_SpawnEnemy;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.RO | GameFlags.COL | GameFlags.VH | GameFlags.RA)]
 	public partial class BTDeciderHasPlayerNear_Template : BTDecider_Template {
 		public StringID fact;
 		public float radius;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class BTActionStayIdle_Template : BTAction_Template {
 		public StringID groundAnim;
 		public StringID swimAnim;

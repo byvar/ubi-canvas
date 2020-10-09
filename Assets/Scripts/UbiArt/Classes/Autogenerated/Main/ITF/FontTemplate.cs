@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class FontTemplate : TemplateObj {
 		public FontTemplate.Info info;
 		public FontTemplate.Common common;
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 				chars = s.SerializeObject<CListO<FontTemplate.Char>>(chars, name: "chars");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class Info : CSerializable {
 			public string face;
 			public int size;
@@ -55,7 +55,7 @@ namespace UbiArt.ITF {
 				outline = s.Serialize<uint>(outline, name: "outline");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class Common : CSerializable {
 			public int lineHeight;
 			public int _base;
@@ -81,7 +81,7 @@ namespace UbiArt.ITF {
 				blueChnl = s.Serialize<int>(blueChnl, name: "blueChnl");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class Char : CSerializable {
 			public int id;
 			public int x;
@@ -107,7 +107,7 @@ namespace UbiArt.ITF {
 				chnl = s.Serialize<int>(chnl, name: "chnl");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class Page : CSerializable {
 			public int id;
 			public Path file;

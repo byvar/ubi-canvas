@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class InterpolatorComponent_Template : ActorComponent_Template {
 		public StringID input;
 		public bool useMainCharacter;

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RO | GameFlags.VH | GameFlags.RFR | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class PhantomComponent_Template : ShapeComponent_Template {
 		public Enum_collisionGroup collisionGroup;
 		public uint collisionGroup2;

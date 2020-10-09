@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SnakeRendererComponent_Template : GraphicComponent_Template {
 		public CArrayO<Generic<RO2_SnakeBodyPart_Template>> bodyParts;
 		public float bodyPartsZSpacing;

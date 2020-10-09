@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_BreakableAIComponent_Template : Ray_AIComponent_Template {
 		public Generic<Ray_EventSpawnReward> reward2;
 		public uint crushAttackDamage;

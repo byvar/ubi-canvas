@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_SceneConfig_PromoScreen : RO2_SceneConfig_Platform {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

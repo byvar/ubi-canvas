@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class EventSequenceSetPlayerPos : Event {
 		public string actor;
 		public uint playerId;

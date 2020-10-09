@@ -1,14 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class RandomAnimBankChangeComponent_Template : ActorComponent_Template {
 		public CListO<RandomAnimBankChangeComponent_Template.tplRandomPatchNames> PatchNameCanBeRemoved;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			PatchNameCanBeRemoved = s.SerializeObject<CListO<RandomAnimBankChangeComponent_Template.tplRandomPatchNames>>(PatchNameCanBeRemoved, name: "PatchNameCanBeRemoved");
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class tplRandomPatchNames : CSerializable {
 			public StringID Name;
 			public float Percent;

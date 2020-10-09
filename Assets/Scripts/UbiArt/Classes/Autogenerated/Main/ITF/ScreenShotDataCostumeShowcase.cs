@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class ScreenShotDataCostumeShowcase : online.OpenGraphObject {
 		public string costumeName;
 		protected override void SerializeImpl(CSerializerObject s) {

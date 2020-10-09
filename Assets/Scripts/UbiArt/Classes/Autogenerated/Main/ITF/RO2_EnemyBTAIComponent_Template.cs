@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_EnemyBTAIComponent_Template : RO2_BTAIComponent_Template {
 		public float squashDeathPenetration;
 		public float timeFight;

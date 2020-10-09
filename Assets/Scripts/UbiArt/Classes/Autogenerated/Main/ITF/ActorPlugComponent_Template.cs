@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class ActorPlugComponent_Template : ActorComponent_Template {
 		public CArrayO<Generic<ActorPlugBaseController_Template>> controllers;
 		public StringID unpluggedControllerID;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class CircleInterpolatorComponent_Template : InterpolatorComponent_Template {
 		public float innerRadius;
 		public float outerRadius;

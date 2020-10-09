@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class TweenRenderComponent_Template : GraphicComponent_Template {
 		public Trail_Template trail;
 		protected override void SerializeImpl(CSerializerObject s) {

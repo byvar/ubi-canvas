@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GameGlobalsDayOfWeekCondition : GameGlobalsCondition {
 		public bool utc;
 		public uint week;

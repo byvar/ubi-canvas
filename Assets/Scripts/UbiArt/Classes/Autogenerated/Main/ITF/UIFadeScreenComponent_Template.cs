@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class UIFadeScreenComponent_Template : UIComponent_Template {
 		public CListO<UIFadeEntry> types;
 		protected override void SerializeImpl(CSerializerObject s) {

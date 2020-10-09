@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AIBlowFishBehavior_Template : RO2_AIGroundBaseBehavior_Template {
 		public Generic<AIAction_Template> idle;
 		public Generic<AIAction_Template> detect;

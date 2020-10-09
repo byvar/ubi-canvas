@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class ExternBehaviorData_Template : CSerializable {
 		public Generic<TemplateAIBehavior> behaviorTemplate;
 		public StringID behaviorName;
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 			nextBehaviors = s.SerializeObject<CListO<ExternBehaviorData_Template.NextBhvData>>(nextBehaviors, name: "nextBehaviors");
 			defaultNextBehavior = s.SerializeObject<StringID>(defaultNextBehavior, name: "defaultNextBehavior");
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class NextBhvData : CSerializable {
 			public StringID previousBvh;
 			public StringID nextBvh;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIBubblePrizeFixedBehavior_Template : TemplateAIBehavior {
 		public Ray_BubblePrize_Template bubblePrize;
 		public float playerDetectorMultiplierInWater;

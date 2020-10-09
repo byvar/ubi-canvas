@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_LivingstoneHatAIComponent_Template : Ray_AIComponent_Template {
 		public Generic<TemplateAIBehavior> roamBehavior;
 		public Generic<Ray_AIWaterBaseBehavior_Template> floatingBehavior;

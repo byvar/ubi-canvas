@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_SnakeAIComponent_Template : ActorComponent_Template {
 		public StringID headPolyline;
 		public CListO<Generic<BodyPartBase_Template>> bodyParts;

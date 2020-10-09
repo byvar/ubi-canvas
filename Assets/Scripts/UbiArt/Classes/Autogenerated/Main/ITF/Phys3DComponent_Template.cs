@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class Phys3DComponent_Template : ActorComponent_Template {
 		public float gravity;
 		public float friction;

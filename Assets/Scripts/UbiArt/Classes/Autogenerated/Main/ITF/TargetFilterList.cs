@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RO | GameFlags.RFR | GameFlags.VH)]
+	[Games(GameFlags.ROVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class TargetFilterList : CSerializable {
 		public Platform platform;
 		public CArrayP<string> objects;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class SubAnchorComponent : ActorComponent {
 		public CListO<SubAnchor> subAnchors;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class EventStopPlayer : Event {
 		public int stop;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.ROVersion | GameFlags.RLVersion)]
 	public partial class Doppler : SoundModifier {
 		public float factor;
 		protected override void SerializeImpl(CSerializerObject s) {

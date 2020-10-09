@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RL)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class CamModifier_Template : CSerializable {
 		public float cameraLookAtOffsetYUp;
 		public float cameraLookAtOffsetYDown;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class WwiseSoundBoxInterpolatorComponent : BoxInterpolatorComponent {
 		public StringID WwiseGUID_sound;
 		public bool stopOnInactive;

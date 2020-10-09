@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PrisonerCageLightComponent_Template : RO2_AIComponent_Template {
 		public CListO<StringID> snapBones;
 		protected override void SerializeImpl(CSerializerObject s) {

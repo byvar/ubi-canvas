@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class EventPlayFX : Event {
 		public StringID FXName;
 		public FX_St Action;

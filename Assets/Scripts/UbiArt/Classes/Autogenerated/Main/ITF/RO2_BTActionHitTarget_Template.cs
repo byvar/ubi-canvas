@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionHitTarget_Template : BTAction_Template {
 		public CListO<RO2_BTActionHitTarget_Template.AttackData> attacks;
 		public StringID fxBoneName;

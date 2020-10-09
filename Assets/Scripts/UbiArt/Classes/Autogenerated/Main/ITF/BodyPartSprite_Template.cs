@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class BodyPartSprite_Template : BodyPartBase_Template {
 		public BodyPartSpriteRenderer_Template spriteRenderer;
 		protected override void SerializeImpl(CSerializerObject s) {

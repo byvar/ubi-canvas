@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class DynModifier_ColliderRayTrace : AbstractDynModifier {
 		public Vec2d OffSet;
 		public float Size;

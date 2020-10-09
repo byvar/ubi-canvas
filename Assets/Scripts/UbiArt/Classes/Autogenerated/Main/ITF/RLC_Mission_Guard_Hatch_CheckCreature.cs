@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_Mission_Guard_Hatch_CheckCreature : RLC_Mission_Guard {
 		public StringID creatureID;
 		public StringID powerup;

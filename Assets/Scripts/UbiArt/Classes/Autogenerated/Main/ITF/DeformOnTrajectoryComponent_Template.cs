@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class DeformOnTrajectoryComponent_Template : ActorComponent_Template {
 		public CListO<StringID> bones;
 		public float sampleLength;

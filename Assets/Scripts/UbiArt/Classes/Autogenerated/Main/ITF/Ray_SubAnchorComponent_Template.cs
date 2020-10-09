@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_SubAnchorComponent_Template : ActorComponent_Template {
 		public CListO<Ray_SubAnchor_Template> subAnchors;
 		protected override void SerializeImpl(CSerializerObject s) {

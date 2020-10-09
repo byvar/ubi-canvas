@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class EventSpawnCommand : Event {
 		public EventSpawnCommand_Enum Command;
 		public float duration;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class SequenceLauncherComponent_Template : ActorComponent_Template {
 		public EventSequenceControl eventPlaySequence;
 		protected override void SerializeImpl(CSerializerObject s) {

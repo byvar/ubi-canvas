@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class BounceOnPolylinePhysComponent_Template : PhysComponent_Template {
 		public float bouncingFactor;
 		public float bouncingMinYSpeed;

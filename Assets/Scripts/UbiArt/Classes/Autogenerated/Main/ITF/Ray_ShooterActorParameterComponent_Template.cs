@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_ShooterActorParameterComponent_Template : ActorComponent_Template {
 		public Ray_VacuumData_Template vacuumData;
 		public Generic<TemplateAIBehavior> playerEjectBehavior;
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 			onVacuumedStim = s.SerializeObject<Generic<PunchStim>>(onVacuumedStim, name: "onVacuumedStim");
 			onEnemyReVacuumedStim = s.SerializeObject<Generic<PunchStim>>(onEnemyReVacuumedStim, name: "onEnemyReVacuumedStim");
 		}
-		[Games(GameFlags.RFR | GameFlags.RO | GameFlags.RL)]
+		[Games(GameFlags.RO | GameFlags.RFR | GameFlags.RL)]
 		public partial class VacuumFxNames : CSerializable {
 			public StringID fxNameVacuuming;
 			public StringID fxNameVacuumingStop;

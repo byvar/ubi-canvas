@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class AttractorComponent : ActorComponent {
 		public Spline valueOverDistance;
 		public Spline valueOverSpeed;

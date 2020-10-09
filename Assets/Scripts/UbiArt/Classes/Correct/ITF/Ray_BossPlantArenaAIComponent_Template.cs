@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BossPlantArenaAIComponent_Template : AIComponent_Template {
 		public int isMecha;
 		public CListO<Ray_BossPlantArenaAIComponent_Template.BuboBone> buboBones;
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			buboBones = s.SerializeObject<CListO<Ray_BossPlantArenaAIComponent_Template.BuboBone>>(buboBones, name: "buboBones");
 			musics = s.SerializeObject<CListO<EventPlayMusic>>(musics, name: "musics");
 		}
-		[Games(GameFlags.RFR | GameFlags.RO)]
+		[Games(GameFlags.RO | GameFlags.RFR)]
 		public partial class BuboBone : CSerializable {
 			public StringID bone;
 			protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class EventTimeFactor : Event {
 		public EventFlip__eFlip ActorFactorValue;
 		public EventFlip__eFlip WorldFactorValue;

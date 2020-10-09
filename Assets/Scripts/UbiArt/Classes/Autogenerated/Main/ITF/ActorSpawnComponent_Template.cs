@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class ActorSpawnComponent_Template : ActorComponent_Template {
 		public bool spawnDelayed;
 		public CListO<ActorSpawnComponent_Template.SpawnData> spawnActors;
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 				transmitAlwaysActive = s.Serialize<bool>(transmitAlwaysActive, name: "transmitAlwaysActive");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+		[Games(GameFlags.ROVersion | GameFlags.VH | GameFlags.RA)]
 		public partial class SpawnData : CSerializable {
 			public Path actorLua;
 			public string spawnActorBoneName;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class CameraModifierComponent_Template : ActorComponent_Template {
 		public CamModifier_Template CM;
 		public Vec2d SCALE;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class TweenFX_Template : TweenInstruction_Template {
 		public StringID fx;
 		public bool stop;

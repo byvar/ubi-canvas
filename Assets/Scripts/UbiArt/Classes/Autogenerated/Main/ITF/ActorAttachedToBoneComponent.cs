@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class ActorAttachedToBoneComponent : ActorComponent {
 		public StringID boneName;
 		public Vec2d posOffset;

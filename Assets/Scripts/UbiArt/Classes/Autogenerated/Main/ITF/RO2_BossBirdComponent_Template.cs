@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_BossBirdComponent_Template : ActorComponent_Template {
 		public StringID buboBone;
 		public bool isMecha;

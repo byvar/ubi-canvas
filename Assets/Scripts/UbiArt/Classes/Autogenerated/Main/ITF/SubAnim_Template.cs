@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class SubAnim_Template : CSerializable {
 		public StringID friendlyName;
 		public Path name;

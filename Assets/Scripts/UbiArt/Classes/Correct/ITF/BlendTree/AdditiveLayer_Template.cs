@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(~GameFlags.ROVersion)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class AdditiveLayer_Template<T> : CSerializable {
 		public CListO<Generic<BlendTreeNodeTemplate<T>>> nodes;
 		public CListO<BlendTreeTransition_Template<T>> nodeTransitions;

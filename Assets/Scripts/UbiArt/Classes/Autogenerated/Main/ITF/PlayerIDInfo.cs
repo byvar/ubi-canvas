@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class PlayerIDInfo : CSerializable {
 		public string id;
 		public string family;
@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 				defaultGameScreenInfo = s.SerializeObject<PlayerIDInfo.GameScreenInfo>(defaultGameScreenInfo, name: "defaultGameScreenInfo");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 		public partial class ActorInfo : CSerializable {
 			public Path file;
 			public bool isAlwaysActive;
@@ -63,7 +63,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class GameScreenInfo : CSerializable {
 			public StringID gameScreen;
 			public CListO<PlayerIDInfo.ActorInfo> actors;

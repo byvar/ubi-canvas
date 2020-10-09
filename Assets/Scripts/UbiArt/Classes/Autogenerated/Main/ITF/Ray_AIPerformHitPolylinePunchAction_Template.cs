@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIPerformHitPolylinePunchAction_Template : Ray_AIPerformHitAction_Template {
 		public Angle dirOffset;
 		public int hitEnvironment;

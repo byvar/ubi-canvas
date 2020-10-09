@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GameGlobalsAlwaysCondition : GameGlobalsCondition {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

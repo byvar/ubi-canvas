@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_DigShapeComponent : ActorComponent {
 		public Enum_Action Action;
 		public float Radius;

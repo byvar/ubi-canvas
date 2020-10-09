@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_ScoreLumAIComponent_Template : Ray_FixedAIComponent_Template {
 		public Path lumAtlasPath;
 		public float framePerSecond;

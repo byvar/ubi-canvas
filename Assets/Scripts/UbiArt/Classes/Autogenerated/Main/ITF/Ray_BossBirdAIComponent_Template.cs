@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BossBirdAIComponent_Template : Ray_AIComponent_Template {
 		public int isMecha;
 		public int playIntroMusic;

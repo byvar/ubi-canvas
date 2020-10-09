@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class StaticMeshVertexComponent : GraphicComponent {
 		public CListO<StaticMeshElement> staticMeshElements;
 		public CArrayP<uint> sortedMeshElements;

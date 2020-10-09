@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_SpikyPlatformAIComponent_Template : ActorComponent_Template {
 		public StringID setDown;
 		public StringID setUp;

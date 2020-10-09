@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_OnlineEventDirectionChange : Event {
 		public Vec2d speed;
 		public Vec2d position;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class TriggerTestComponent_Template : ActorComponent_Template {
 		public CArrayO<sEventData> CArray_sEventData__0;
 		public CArrayO<sEventData> CArray_sEventData__1;

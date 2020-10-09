@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AnimMeshVertexPetComponent_Template : ActorComponent_Template {
 		public bool allowUpdate;
 		public CListO<AnimMeshVertexPetData> pets;

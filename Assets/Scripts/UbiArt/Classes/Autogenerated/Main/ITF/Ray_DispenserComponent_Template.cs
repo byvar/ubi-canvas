@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_DispenserComponent_Template : ActorComponent_Template {
 		public uint goodsCount;
 		public uint lowLifeGoodsMax;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIJanodRoamingBehavior_Template : Ray_AIJanodRoamingBaseBehavior_Template {
 		public float apexTypicalHeight;
 		public float detectionDistance;

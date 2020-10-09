@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_HeartShield_Template : Ray_PowerUpDisplay_Template {
 		public Path heartActor;
 		public StringID heartDeathBhvName;

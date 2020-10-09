@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.COL | GameFlags.RL)]
+	[Games(GameFlags.ROVersion | GameFlags.RLVersion)]
 	public partial class ControlPitch : SoundModifier {
 		public ProceduralInputData input;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class GameStatsManager : CSerializable {
 		public GameStatsManager.SaveSession GameStatsManager_SaveSession__0;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			} else {
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 		public partial class SaveSession : CSerializable {
 			public CListP<float> tags;
 			public CListP<float> timers;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.COL | GameFlags.VH | GameFlags.RA)]
 	public partial class EventBindRope : Event {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

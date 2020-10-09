@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_BossCameraComponent_Template : BaseCameraComponent_Template {
 		public StringID attachBone;
 		protected override void SerializeImpl(CSerializerObject s) {

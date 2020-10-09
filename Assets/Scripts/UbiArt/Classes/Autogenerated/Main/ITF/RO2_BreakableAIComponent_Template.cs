@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BreakableAIComponent_Template : RO2_AIComponent_Template {
 		public Generic<RO2_EventSpawnReward> reward2;
 		public uint crushAttackDamage;
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 			resetOnCheckpoint = s.Serialize<bool>(resetOnCheckpoint, name: "resetOnCheckpoint");
 			isTouchTapSensitive = s.Serialize<bool>(isTouchTapSensitive, name: "isTouchTapSensitive");
 		}
-		[Games(GameFlags.RA | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.RA)]
 		public partial class DestructionStage : CSerializable {
 			public StringID rumble;
 			public StringID destroy;

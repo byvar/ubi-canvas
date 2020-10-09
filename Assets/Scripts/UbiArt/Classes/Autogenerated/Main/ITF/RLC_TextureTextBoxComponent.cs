@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_TextureTextBoxComponent : TextureGraphicComponent {
 		public bool is2D;
 		public string Text;

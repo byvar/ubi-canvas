@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.COL)]
+	[Games(GameFlags.COL | GameFlags.RA)]
 	public partial class BezierBranchAmvComponent_Template : BezierBranchComponent_Template {
 		public Path amvPath;
 		public GFXMaterialSerializable amvMaterial;

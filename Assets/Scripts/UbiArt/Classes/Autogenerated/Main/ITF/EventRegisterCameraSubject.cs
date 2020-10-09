@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class EventRegisterCameraSubject : Event {
 		public ACTION actionActivator;
 		public ACTION actionChildren;

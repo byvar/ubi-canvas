@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_EyeAnimationComponent_Template : ActorComponent_Template {
 		public float eyeCursorSmoothFactor;
 		public StringID eyeInputX;

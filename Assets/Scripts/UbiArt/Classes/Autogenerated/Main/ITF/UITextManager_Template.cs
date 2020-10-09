@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RO | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class UITextManager_Template : TemplateObj {
 		public CListO<UITextManager_Template.ActorIcon> actorIcons;
 		public float iconSize;
@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 				actorIcons = s.SerializeObject<CListO<UITextManager_Template.ActorIcon>>(actorIcons, name: "actorIcons");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class ActorIcon : CSerializable {
 			public StringID iconName;
 			public Path iconPath;

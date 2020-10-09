@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BlackSwarmRepellerAIComponent_Template : CSerializable {
 		public int interactive;
 		public float safeZoneToleranceDistance;

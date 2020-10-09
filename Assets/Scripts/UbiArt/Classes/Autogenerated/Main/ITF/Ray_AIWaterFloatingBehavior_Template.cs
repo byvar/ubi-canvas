@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIWaterFloatingBehavior_Template : Ray_AIWaterBaseBehavior_Template {
 		public float minSpeed;
 		public float maxSpeed;

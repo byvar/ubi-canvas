@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class TriggerTest_Count : TriggerTestAbstract {
 		public uint ValueRef;
 		public ECompareType Operator;

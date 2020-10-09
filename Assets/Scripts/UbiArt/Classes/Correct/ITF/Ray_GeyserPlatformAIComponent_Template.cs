@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_GeyserPlatformAIComponent_Template : GraphicComponent_Template {
 		public StringID attachBone;
 		public int ignoreActorScale;
@@ -155,7 +155,7 @@ namespace UbiArt.ITF {
 				debugFx = s.Serialize<int>(debugFx, name: "debugFx");
 			}
 		}
-		[Games(GameFlags.RO | GameFlags.RJR | GameFlags.RFR)]
+		[Games(GameFlags.ROVersion)]
 		public partial class RegionData : CSerializable {
 			public float widthOffset;
 			public float heightOffset;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_AIShooterAttackBehavior_Template : TemplateAIBehavior {
 		public Generic<AIIdleAction_Template> idle;
 		public Generic<Ray_AIShooterLaunchBulletAction_Template> hit;

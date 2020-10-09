@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class BezierCurveRendererComponent_Template : ActorComponent_Template {
 		public BezierCurveRenderer_Template renderer;
 		protected override void SerializeImpl(CSerializerObject s) {

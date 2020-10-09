@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RO | GameFlags.RFR)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_GameMaterial_Template : GameMaterial_Template {
 		public int Bounce;
 		public Enum_RJR_0 BounceType;

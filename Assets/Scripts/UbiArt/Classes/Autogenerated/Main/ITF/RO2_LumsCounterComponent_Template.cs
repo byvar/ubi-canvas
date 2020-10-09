@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_LumsCounterComponent_Template : ActorComponent_Template {
 		public SmartLocId smartLocID;
 		public float displayDuration;

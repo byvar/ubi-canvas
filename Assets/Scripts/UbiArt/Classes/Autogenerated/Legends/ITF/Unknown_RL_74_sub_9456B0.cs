@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RLVersion)]
 	public partial class Unknown_RL_74_sub_9456B0 : MusicTreeNode_Template {
 		public int playBlockOnce;
 		public uint nbPartPlayed;

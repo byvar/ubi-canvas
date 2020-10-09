@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class AnimMeshVertexPetData : CSerializable {
 		public CListO<AnimMeshVertexPetPart> parts;
 		public Vec3d position;

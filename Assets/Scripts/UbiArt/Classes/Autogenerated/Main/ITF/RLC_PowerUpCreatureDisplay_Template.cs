@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_PowerUpCreatureDisplay_Template : RLC_BasicCreatureDisplay_Template {
 		public float powerActiveDuration;
 		protected override void SerializeImpl(CSerializerObject s) {

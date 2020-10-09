@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.All)]
 	public partial class PhysShapePolygon : PhysShape {
 		public CListO<Vec2d> Points;
 		public CListO<Vec2d> normals;

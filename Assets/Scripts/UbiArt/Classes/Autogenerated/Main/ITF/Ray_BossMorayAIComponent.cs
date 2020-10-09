@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BossMorayAIComponent : Ray_SnakeAIComponent {
 		public CListO<Ray_BossMorayAIComponent.Sequence> sequences;
 		public ObjectPath finalCinematic;

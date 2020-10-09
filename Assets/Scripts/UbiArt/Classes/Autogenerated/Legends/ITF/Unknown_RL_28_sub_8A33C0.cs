@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RLVersion)]
 	public partial class Unknown_RL_28_sub_8A33C0 : CSerializable {
 		public uint sender;
 		protected override void SerializeImpl(CSerializerObject s) {

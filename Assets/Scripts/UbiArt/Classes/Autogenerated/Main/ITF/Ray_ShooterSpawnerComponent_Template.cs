@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_ShooterSpawnerComponent_Template : TimedSpawnerComponent_Template {
 		public ActorSpawnBank_Template bank;
 		public CListO<StringID> tweenInstructionSetList;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AIReceiveHitAction_Template : AIReceiveHitAction_Template {
 		public Generic<RO2_EventSpawnReward> reward;
 		public float playRateVariation;

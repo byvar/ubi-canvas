@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AIReceiveHitBehavior_Template : AIReceiveHitBehavior_Template {
 		public CListO<RO2_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
 		public bool canReceiveRehits;

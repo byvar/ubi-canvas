@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class ParticlePhysComponent_Template : PhysComponent_Template {
 		public float physFriction;
 		public float physAngularSpeedMinLinear;

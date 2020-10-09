@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class RandomAnimBankChangeComponent : ActorComponent {
 		public bool isAlreadyCompute;
 		public uint NbItem;
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 				PatchNamesToRemove = s.SerializeObject<CListO<strRandomPatchName>>(PatchNamesToRemove, name: "PatchNamesToRemove");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class strRandomAnimBankPart : CSerializable {
 			public StringID SRC;
 			public StringID BankChange;

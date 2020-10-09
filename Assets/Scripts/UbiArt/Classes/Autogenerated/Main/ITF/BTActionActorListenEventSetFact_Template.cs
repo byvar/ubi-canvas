@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class BTActionActorListenEventSetFact_Template : BTAction_Template {
 		public StringID factOnOff;
 		public Generic<Event> ListenEvent;

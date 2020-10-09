@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIAlInfernoStaticBehavior_Template : TemplateAIBehavior {
 		public Generic<AIAction_Template> idle;
 		public Generic<AIAction_Template> uturn;

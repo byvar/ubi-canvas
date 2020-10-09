@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class DialogComponent_Template : DialogBaseComponent_Template {
 		public CArrayO<Generic<InstructionDialog>> instructionList;
 		protected override void SerializeImpl(CSerializerObject s) {

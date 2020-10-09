@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIReceiveHitBehavior_Template : AIReceiveHitBehavior_Template {
 		public CListO<Ray_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
 		public int canReceiveRehits;

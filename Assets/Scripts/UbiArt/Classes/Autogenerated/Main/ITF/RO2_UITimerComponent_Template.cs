@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_UITimerComponent_Template : UIComponent_Template {
 		public bool time_hasMillisecond;
 		public float time_countdownPulseThreshold;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class SceneConfig : CSerializable {
 		public CArrayO<Generic<GameModeParameters>> gameModeParametersList;
 		public StringID OnEnterFade;

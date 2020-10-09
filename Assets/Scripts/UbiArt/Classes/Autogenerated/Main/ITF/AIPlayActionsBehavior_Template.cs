@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class AIPlayActionsBehavior_Template : TemplateAIBehavior {
 		public CArrayO<Generic<AIAction_Template>> actions;
 		public bool resetAnimTime;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class AISpawnAction_Template : AIAction_Template {
 		public Path path;
 		public StringID bonePosName;

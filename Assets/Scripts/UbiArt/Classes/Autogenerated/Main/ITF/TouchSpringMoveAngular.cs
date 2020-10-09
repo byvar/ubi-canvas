@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class TouchSpringMoveAngular : TouchSpringMoveBase {
 		public Angle totalAngle;
 		public Angle minAngleLimit;

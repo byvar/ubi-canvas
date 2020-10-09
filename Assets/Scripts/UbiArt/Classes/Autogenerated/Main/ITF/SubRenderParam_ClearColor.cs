@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class SubRenderParam_ClearColor : SubRenderParam {
 		public Color ClearColor = Color.Black;
 		public Color ClearFrontLightColor = Color.Black;

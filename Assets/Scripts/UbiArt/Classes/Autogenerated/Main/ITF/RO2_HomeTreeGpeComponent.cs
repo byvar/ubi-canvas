@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_HomeTreeGpeComponent : ActorComponent {
 		public bool isDebugActor;
 		public float appearCursor;

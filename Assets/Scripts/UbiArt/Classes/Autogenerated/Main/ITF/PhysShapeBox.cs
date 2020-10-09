@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.All)]
 	public partial class PhysShapeBox : PhysShapePolygon {
 		public Vec2d Extent;
 		protected override void SerializeImpl(CSerializerObject s) {

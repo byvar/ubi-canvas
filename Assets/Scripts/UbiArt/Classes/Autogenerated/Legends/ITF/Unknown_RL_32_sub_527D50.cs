@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RLVersion)]
 	public partial class Unknown_RL_32_sub_527D50 : CSerializable {
 		public Placeholder input;
 		public float frequency;

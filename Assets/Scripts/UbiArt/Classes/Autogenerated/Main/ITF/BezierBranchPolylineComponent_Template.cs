@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.COL)]
+	[Games(GameFlags.COL | GameFlags.RA)]
 	public partial class BezierBranchPolylineComponent_Template : BezierBranchComponent_Template {
 		public Path gameMaterial;
 		public float beginLength;

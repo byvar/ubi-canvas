@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class MusicComponent_Template : ActorComponent_Template {
 		public MusicPartSet_Template musicPartSet;
 		public MusicTree_Template musicTree;

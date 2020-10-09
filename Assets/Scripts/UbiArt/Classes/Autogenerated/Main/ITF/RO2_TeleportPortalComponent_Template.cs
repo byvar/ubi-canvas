@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_TeleportPortalComponent_Template : ActorComponent_Template {
 		public Angle directionAngleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {

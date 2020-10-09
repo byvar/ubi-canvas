@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class DialogSoundDescriptorComponent_Template : ActorComponent_Template {
 		public CListO<DialogSoundDescriptorElement> DescriptorList;
 		protected override void SerializeImpl(CSerializerObject s) {

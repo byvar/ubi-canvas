@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_TouchSpringPlatformComponent : RO2_TouchSpringPlatformBaseComponent {
 		public RO2_TouchSpringPlatformComponent.AnchorDataStruct anchorData;
 		public RO2_TouchSpringPlatformComponent.CalibrationParamsStruct calibrationParams;
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 				calibrationParams = s.SerializeObject<RO2_TouchSpringPlatformComponent.CalibrationParamsStruct>(calibrationParams, name: "calibrationParams");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.RA)]
 		public partial class CalibrationParamsStruct : CSerializable {
 			public bool start;
 			public bool invertPivot;
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.RA)]
 		public partial class AnchorDataStruct : CSerializable {
 			public StringID anchorRefBoneName;
 			public StringID pivotRefBoneName;

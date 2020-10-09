@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RO | GameFlags.RFR)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_FluidFallAIComponent : GraphicComponent {
 		public Enum_RJR_0 uvMode;
 		public int startOpen;

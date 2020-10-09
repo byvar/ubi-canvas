@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.COL | GameFlags.RAVersion)]
 	public partial class EventResetWwiseAuxBusEffect : Event {
 		public StringID WwiseBusGUID;
 		public AUDIO_BUS_SLOT WwiseBusSlotID;

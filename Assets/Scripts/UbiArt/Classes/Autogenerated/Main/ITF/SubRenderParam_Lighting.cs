@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class SubRenderParam_Lighting : SubRenderParam {
 		public Color GlobalColor;
 		public Color GlobalStaticFog;

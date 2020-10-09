@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.ROVersion | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class TweenComponent : ActorComponent {
 		public bool trigOnCheckPoint;
 		public Nullable<TweenComponent_Template> instanceTemplate;
@@ -75,7 +75,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class InstructionSet : CSerializable {
 			public StringID name;
 			public CArrayO<Generic<TweenInstruction>> instructions;

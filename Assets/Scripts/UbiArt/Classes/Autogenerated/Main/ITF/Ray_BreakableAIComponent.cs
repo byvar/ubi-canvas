@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_BreakableAIComponent : Ray_AIComponent {
 		public uint currentDestructionStage;
 		public uint targetDestructionStage;

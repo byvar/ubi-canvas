@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_DigRegionComponent : ActorComponent {
 		public Action Brush_State;
 		public Action Brush_Action;
@@ -109,7 +109,7 @@ namespace UbiArt.ITF {
 				IsDiggable = s.Serialize<bool>(IsDiggable, name: "IsDiggable");
 			}
 		}
-		[Games(GameFlags.VH | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.VH)]
 		public partial class ParamUV : CSerializable {
 			public bool UseWorldCoord;
 			public Vec2d Offset;

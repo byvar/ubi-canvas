@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_BezierBranchAmvComponent : RO2_BezierBranchComponent {
 		public bool flipTexture;
 		public CListO<RO2_BezierBranchAmvComponent.Zone> zones;
@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			flipTexture = s.Serialize<bool>(flipTexture, name: "flipTexture");
 			zones = s.SerializeObject<CListO<RO2_BezierBranchAmvComponent.Zone>>(zones, name: "zones");
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class Zone : CSerializable {
 			public float startDist;
 			public float endDist;

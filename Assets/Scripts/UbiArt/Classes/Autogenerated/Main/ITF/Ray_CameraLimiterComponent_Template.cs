@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_CameraLimiterComponent_Template : CSerializable {
 		public int useEjectMargin;
 		public Margin ejectMargin;

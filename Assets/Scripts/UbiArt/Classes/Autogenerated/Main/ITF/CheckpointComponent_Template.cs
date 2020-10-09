@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RFR)]
+	[Games(GameFlags.All)]
 	public partial class CheckpointComponent_Template : ActorComponent_Template {
 		public bool spawnPlayer;
 		public int int__0;

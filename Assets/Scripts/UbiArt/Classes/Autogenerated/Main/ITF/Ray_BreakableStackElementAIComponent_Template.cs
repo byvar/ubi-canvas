@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BreakableStackElementAIComponent_Template : Ray_AIComponent_Template {
 		public CListO<InfoElementList> grid;
 		public uint width;

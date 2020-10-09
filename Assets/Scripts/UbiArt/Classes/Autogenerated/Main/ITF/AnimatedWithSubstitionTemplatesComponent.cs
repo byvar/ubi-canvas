@@ -1,14 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class AnimatedWithSubstitionTemplatesComponent : AnimatedComponent {
 		public CListO<AnimatedWithSubstitionTemplatesComponent.AnimSubstsTemplate> AnimSbustitionTemplates;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			AnimSbustitionTemplates = s.SerializeObject<CListO<AnimatedWithSubstitionTemplatesComponent.AnimSubstsTemplate>>(AnimSbustitionTemplates, name: "AnimSbustitionTemplates");
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class AnimSubst : CSerializable {
 			public StringID original;
 			public StringID final;
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 				final = s.SerializeObject<StringID>(final, name: "final");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class AnimSubstsTemplate : CSerializable {
 			public CListO<AnimatedWithSubstitionTemplatesComponent.AnimSubst> substitutedAnimsList;
 			protected override void SerializeImpl(CSerializerObject s) {

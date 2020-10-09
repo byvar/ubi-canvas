@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.RAVersion)]
 	public partial class BaseCameraComponent_Template : ActorComponent_Template {
 		public bool startAsMainCam;
 		public float rampUpDestinationCoeff;

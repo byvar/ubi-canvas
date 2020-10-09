@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_AIBasicBulletAction_Template : AIAction_Template {
 		public Ray_BasicBullet_Template basicBullet;
 		public int hasOwner;

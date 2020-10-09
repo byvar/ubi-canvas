@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class TODOComponent_Template : ActorComponent_Template {
 		public Path textPath;
 		protected override void SerializeImpl(CSerializerObject s) {

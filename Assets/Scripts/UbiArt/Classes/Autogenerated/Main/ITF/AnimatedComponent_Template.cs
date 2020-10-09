@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class AnimatedComponent_Template : AnimLightComponent_Template {
 		public CListO<InputDesc> inputs;
 		public AnimTree_Template tree;

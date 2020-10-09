@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_PlayerCostumeManagerComponent_Template : ActorComponent_Template {
 		public CArrayO<CostumeInfo> costumes;
 		protected override void SerializeImpl(CSerializerObject s) {

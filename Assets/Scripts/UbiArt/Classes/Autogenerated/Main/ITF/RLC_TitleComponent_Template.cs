@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_TitleComponent_Template : ActorComponent_Template {
 		public Path titleEFIGTextureBank;
 		public Path titleArabicTextureBank;

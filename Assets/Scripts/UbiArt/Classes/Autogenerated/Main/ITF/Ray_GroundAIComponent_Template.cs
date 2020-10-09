@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_GroundAIComponent_Template : Ray_AIComponent_Template {
 		public Generic<TemplateAIBehavior> roamBehavior;
 		public Generic<Ray_AIGroundRunAwayBehavior_Template> runAwayBehavior;

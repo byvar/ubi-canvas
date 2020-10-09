@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class PolyPointList : CSerializable {
 		public CListO<PolyLineEdge> LocalPoints;
 		public bool Loop;

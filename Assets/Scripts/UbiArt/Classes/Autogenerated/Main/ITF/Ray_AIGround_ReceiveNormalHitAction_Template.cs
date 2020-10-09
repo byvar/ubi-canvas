@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIGround_ReceiveNormalHitAction_Template : Ray_AIGroundReceiveHitAction_Template {
 		public float frictionMultiplier;
 		public float gravityMultiplier;

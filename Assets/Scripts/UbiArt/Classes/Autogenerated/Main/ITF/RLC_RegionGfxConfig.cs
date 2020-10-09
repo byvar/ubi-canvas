@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_RegionGfxConfig : CSerializable {
 		public Enum_Family Family;
 		public GFXPrimitiveParam LineRootPrimitiveParam;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RA)]
 	public partial class BubblePrizeContent_Template : CSerializable {
 		public Generic<Event> popEvent;
 		public Generic<Event> popEventPainted;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.COL | GameFlags.RAVersion)]
 	public partial class RopeComponent_Template : GraphicComponent_Template {
 		public Path beginTexture;
 		public Path endTexture;

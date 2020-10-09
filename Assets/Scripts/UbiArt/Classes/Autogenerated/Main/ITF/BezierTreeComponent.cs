@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.COL)]
+	[Games(GameFlags.COL | GameFlags.RA)]
 	public partial class BezierTreeComponent : ActorComponent {
 		public BezierBranch branch;
 		protected override void SerializeImpl(CSerializerObject s) {

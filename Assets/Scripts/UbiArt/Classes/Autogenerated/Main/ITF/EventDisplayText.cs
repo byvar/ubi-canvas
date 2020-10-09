@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class EventDisplayText : Event {
 		public uint lineId;
 		protected override void SerializeImpl(CSerializerObject s) {

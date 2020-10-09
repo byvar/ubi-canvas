@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class MultiTextBoxComponent : ActorComponent {
 		public CListO<MultiTextBoxComponent.TextBox> textBoxList;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class TextBox : CSerializable {
 			public SmartLocId text;
 			public Vec2d area;

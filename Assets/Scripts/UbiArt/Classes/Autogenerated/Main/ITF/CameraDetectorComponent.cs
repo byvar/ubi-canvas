@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RFR)]
+	[Games(GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class CameraDetectorComponent : ShapeDetectorComponent {
 		public bool remote;
 		protected override void SerializeImpl(CSerializerObject s) {

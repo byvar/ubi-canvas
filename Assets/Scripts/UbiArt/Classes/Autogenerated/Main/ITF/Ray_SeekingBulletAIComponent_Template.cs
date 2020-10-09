@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_SeekingBulletAIComponent_Template : Ray_BulletAIComponent_Template {
 		public Angle maxTurnAngle;
 		public float phaseChangeRadius;

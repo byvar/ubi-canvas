@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_GeyserPlatformAIComponent_Template : GraphicComponent_Template {
 		public StringID attachBone;
 		public bool ignoreActorScale;
@@ -237,7 +237,7 @@ namespace UbiArt.ITF {
 				widthReductionSpeed = s.Serialize<float>(widthReductionSpeed, name: "widthReductionSpeed");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class RegionData : CSerializable {
 			public float widthOffset;
 			public float heightOffset;

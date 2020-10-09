@@ -1,14 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class AxisPolylineComponent_Template : PolylineComponent_Template {
 		public CListO<AxisPolylineComponent_Template.AxisPoly> axisPolylines;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			axisPolylines = s.SerializeObject<CListO<AxisPolylineComponent_Template.AxisPoly>>(axisPolylines, name: "axisPolylines");
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class AxisPoly : CSerializable {
 			public float stiff;
 			public float damp;

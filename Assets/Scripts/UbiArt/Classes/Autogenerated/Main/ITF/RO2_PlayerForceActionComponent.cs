@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PlayerForceActionComponent : ActorComponent {
 		public PlayerForcedAction Action;
 		public bool enabledOnInit;
@@ -75,7 +75,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.RA)]
 		public partial class ActorUpdateInfoStruct : CSerializable {
 			public Enum_orientationUpdateType orientationUpdateType;
 			public Angle specificOrientation;

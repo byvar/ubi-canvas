@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class ActorAttachedToBoneComponent_Template : ActorComponent_Template {
 		public StringID boneName;
 		public bool useBoneScale;

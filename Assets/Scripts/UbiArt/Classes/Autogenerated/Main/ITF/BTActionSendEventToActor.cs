@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class BTActionSendEventToActor : BTAction {
 		public Generic<Event> _event;
 		protected override void SerializeImpl(CSerializerObject s) {

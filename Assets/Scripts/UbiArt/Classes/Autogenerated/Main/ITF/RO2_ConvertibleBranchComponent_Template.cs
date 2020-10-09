@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_ConvertibleBranchComponent_Template : RO2_BezierBranchComponent_Template {
 		public float width;
 		public bool attachToEnd;

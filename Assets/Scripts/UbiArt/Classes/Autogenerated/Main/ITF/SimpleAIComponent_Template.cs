@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class SimpleAIComponent_Template : GenericAIComponent_Template {
 		public Generic<AIReceiveHitBehavior_Template> receiveHitBehavior;
 		public Generic<TemplateAIBehavior> deathBehavior;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AspiNetworkComponent_Template : ActorComponent_Template {
 		public float enterDuration;
 		public float enterBezierMultiplier;

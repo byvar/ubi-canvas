@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_DarkCreatureComponent_Template : ActorComponent_Template {
 		public float CellSpace;
 		public float Gravity;

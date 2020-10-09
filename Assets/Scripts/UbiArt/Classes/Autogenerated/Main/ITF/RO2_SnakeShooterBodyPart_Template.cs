@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_SnakeShooterBodyPart_Template : RO2_SnakeBodyPartSimple_Template {
 		public int health;
 		public CListP<uint> damageLevels;

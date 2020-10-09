@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_TutoBallComponent_Template : ActorComponent_Template {
 		public Path tutoTapPath;
 		public Path tutoSwipePath;

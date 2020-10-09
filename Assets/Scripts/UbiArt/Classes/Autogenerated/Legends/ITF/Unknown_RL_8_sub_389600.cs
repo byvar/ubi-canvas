@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RLVersion)]
 	public partial class Unknown_RL_8_sub_389600 : SoundCommand {
 		public StringID name;
 		public int activate;

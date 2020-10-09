@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_CarnivorousPlatformComponent_Template : RO2_PlatformAIComponent_Template {
 		public float closedDuration;
 		public uint hitLevel;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_PlugState_Jump_Template : ActorPlugStateImplement_Template {
 		public float wallImpulseForce;
 		public Vec2d wallBounceMinSpeed;

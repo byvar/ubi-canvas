@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class UIMenuManager_Template : TemplateObj {
 		public CListO<UIMenuManager_Template.MenuInfo> menuInfos;
 		public bool useRemoteUI;
@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 				defaultBackInput = s.SerializeObject<StringID>(defaultBackInput, name: "defaultBackInput");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class MenuInfo : CSerializable {
 			public Path path;
 			public PathRef optionalPath;

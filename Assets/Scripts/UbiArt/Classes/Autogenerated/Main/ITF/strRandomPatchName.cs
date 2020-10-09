@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class strRandomPatchName : CSerializable {
 		public StringID PatchName;
 		protected override void SerializeImpl(CSerializerObject s) {

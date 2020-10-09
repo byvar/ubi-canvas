@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class PlayInput_evtTemplate : SequenceEventWithActor_Template {
 		public string InputName;
 		public Spline InputSpline;

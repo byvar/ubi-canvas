@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class TweenTranslationLine_Template : TweenTranslation_Template {
 		public Vec3d movement;
 		protected override void SerializeImpl(CSerializerObject s) {

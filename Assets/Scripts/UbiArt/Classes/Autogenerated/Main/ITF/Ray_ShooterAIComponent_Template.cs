@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_ShooterAIComponent_Template : Ray_AIComponent_Template {
 		public Generic<TemplateAIBehavior> idleBehavior;
 		public Generic<Ray_AIReceiveHitBehavior_Template> receiveHitBehavior;

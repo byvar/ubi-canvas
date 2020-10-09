@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_FruitAIComponent_Template : Ray_AIComponent_Template {
 		public Generic<Ray_AIFruitRoamingBehavior_Template> roamBehavior;
 		public Generic<TemplateAIBehavior> deathBehavior;

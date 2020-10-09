@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.COL)]
+	[Games(GameFlags.COL | GameFlags.RM)]
 	public partial class EventChangeClimbingPolyine : Event {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

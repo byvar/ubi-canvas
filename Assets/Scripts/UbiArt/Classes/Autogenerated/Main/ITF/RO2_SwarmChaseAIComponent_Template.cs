@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_SwarmChaseAIComponent_Template : RO2_AIComponent_Template {
 		public GFXMaterialSerializable atlasMaterial;
 		public uint hitLevel;

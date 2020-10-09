@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RAVersion | GameFlags.RLVersion)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class SubAnimSet : CSerializable {
 		public AnimResourcePackage animPackage;
 		public CListO<SubAnim_Template> animations;

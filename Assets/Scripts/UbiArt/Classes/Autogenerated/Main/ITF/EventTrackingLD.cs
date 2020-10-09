@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class EventTrackingLD : Event {
 		public string description;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.All)]
 	public partial class AISendEventAction_Template : AIAction_Template {
 		public Generic<Event> eventToSend;
 		public bool triggerSelf;

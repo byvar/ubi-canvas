@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GameConfigExtended_Template : TemplateObj {
 		public uint doSomething;
 		public CListO<PlayerIDInfo> playerIDInfo;

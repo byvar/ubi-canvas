@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_AIShooterVacuumBehavior_Template : TemplateAIBehavior {
 		public VacuumSkill_Template vacuumSkill;
 		public Generic<AIAction_Template> waitAction;

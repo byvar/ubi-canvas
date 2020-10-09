@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_EventTickleRewarded : Event {
 		public uint rewardValue;
 		protected override void SerializeImpl(CSerializerObject s) {

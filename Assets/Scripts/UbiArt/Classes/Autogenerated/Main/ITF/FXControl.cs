@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.VH)]
+	[Games(GameFlags.ROVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class FXControl : CSerializable {
 		public StringID name;
 		public bool fxStopOnEndAnim;

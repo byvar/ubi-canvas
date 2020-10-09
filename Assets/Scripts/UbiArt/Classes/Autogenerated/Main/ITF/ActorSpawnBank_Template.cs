@@ -1,14 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class ActorSpawnBank_Template : CSerializable {
 		public CListO<ActorSpawnBank_Template.ActorSpawnData> list;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			list = s.SerializeObject<CListO<ActorSpawnBank_Template.ActorSpawnData>>(list, name: "list");
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RL)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 		public partial class ActorSpawnData : CSerializable {
 			public StringID id;
 			public Path path;

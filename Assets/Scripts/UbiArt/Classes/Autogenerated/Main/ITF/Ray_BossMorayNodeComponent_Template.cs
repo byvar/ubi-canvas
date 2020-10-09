@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BossMorayNodeComponent_Template : ActorComponent_Template {
 		public Ray_EventBossMorayNodeReached triggerEvent;
 		public float debugCorridorWidth;

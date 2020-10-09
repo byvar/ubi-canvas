@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class BTDeciderDistance_Template : BTDecider_Template {
 		public float distance;
 		public ECompareType type;

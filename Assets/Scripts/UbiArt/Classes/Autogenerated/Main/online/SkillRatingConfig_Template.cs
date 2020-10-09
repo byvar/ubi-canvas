@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class SkillRatingConfig_Template : ITF.TemplateObj {
 		public uint DefaultSkillboard;
 		public bool AutoFetch;

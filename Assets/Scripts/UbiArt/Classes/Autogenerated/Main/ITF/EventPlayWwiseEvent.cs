@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.COL | GameFlags.VH | GameFlags.RA)]
 	public partial class EventPlayWwiseEvent : SendMetronomedEvent {
 		public StringID WwiseEventGUID;
 		public StringID EventGUIDBackupSerialization;

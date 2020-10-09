@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class MessageBoxConfig_Template : ITF.TemplateObj {
 		public bool autoFetch;
 		public float refreshDelay;

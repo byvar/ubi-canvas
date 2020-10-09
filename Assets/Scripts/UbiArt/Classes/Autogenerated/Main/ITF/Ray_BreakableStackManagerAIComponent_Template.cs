@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BreakableStackManagerAIComponent_Template : Ray_AIComponent_Template {
 		public float timeShakeBeforeFall;
 		public float countDownHit;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class BTNodeTemplate_Ref : CSerializable {
 		public StringID nameId;
 		public Generic<BTNode_Template> node;

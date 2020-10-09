@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class TriggerMultiTargetComponent : ActorComponent {
 		public CListO<MultiTargetEvent> onEnterEvents;
 		public CListO<MultiTargetUpdateEvent> onStayEvents;

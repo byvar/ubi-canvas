@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class DynModifier_GravityController : AbstractDynModifier {
 		public Curve2D curvMultiplier;
 		public float timeTotal;

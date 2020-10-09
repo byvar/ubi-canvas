@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.RFR | GameFlags.RL | GameFlags.RAVersion)]
 	public partial class AIBallisticsAction_Template : AIAction_Template {
 		public float duration;
 		public float speed;

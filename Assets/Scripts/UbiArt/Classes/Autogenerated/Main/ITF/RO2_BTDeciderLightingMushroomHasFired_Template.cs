@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_BTDeciderLightingMushroomHasFired_Template : BTDecider_Template {
 		public bool invert;
 		public StringID factActor;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_TouchControllerComponent_Template : ActorComponent_Template {
 		public Generic<PhysShape> shape;
 		public StringID fxControlStart;

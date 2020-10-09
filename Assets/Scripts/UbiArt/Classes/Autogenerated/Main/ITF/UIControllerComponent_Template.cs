@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class UIControllerComponent_Template : UIComponent_Template {
 		public CListO<UIControllerComponent_Template.ControllerTextObject> buttonActions;
 		public Path textboxPath;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class ControllerTextObject : CSerializable {
 			public StringID boneName;
 			public LocalisationId locId;

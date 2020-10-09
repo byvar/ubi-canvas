@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class EventActivateComponent : Event {
 		public bool active;
 		public CListO<EventActivateComponent.sComponentName> SpecificComponents;

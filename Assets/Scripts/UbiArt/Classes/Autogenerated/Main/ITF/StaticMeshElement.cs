@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RAVersion | GameFlags.RLVersion)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class StaticMeshElement : CSerializable {
 		public Vec3d pos;
 		public Color color;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RFR)]
+	[Games(GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class Spline : CSerializable {
 		public CListO<Spline.SplinePoint> Points;
 		public uint TimeLoopMode;
@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 				TimeLoop = s.Serialize<float>(TimeLoop, name: "TimeLoop");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class SplinePoint : CSerializable {
 			public Vec3d Point;
 			public float Time;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class SubRenderParam_Mask : SubRenderParam {
 		public Color SilhouetteColor;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class ShadowZonePlayerDetectorComponent_Template : DetectorComponent_Template {
 		public int playerId;
 		public bool allowDeadActors;

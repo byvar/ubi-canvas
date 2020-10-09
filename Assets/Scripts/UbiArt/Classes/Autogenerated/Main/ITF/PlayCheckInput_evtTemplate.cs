@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class PlayCheckInput_evtTemplate : SequenceEvent_Template {
 		public string GotoLabel;
 		public StringID ActionToCheck;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class MonologComponent_Template : DialogBaseComponent_Template {
 		public CListO<MonologComponent_Template.TextData> textDataList;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 				textDataList = s.SerializeObject<CListO<MonologComponent_Template.TextData>>(textDataList, name: "textDataList");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class TextData : CSerializable {
 			public StringID textName;
 			public LocalisationId locId;

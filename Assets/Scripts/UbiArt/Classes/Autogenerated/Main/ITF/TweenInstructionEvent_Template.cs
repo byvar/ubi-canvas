@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class TweenInstructionEvent_Template : TweenInstruction_Template {
 		public Generic<Event> _event;
 		public int triggerSelf;

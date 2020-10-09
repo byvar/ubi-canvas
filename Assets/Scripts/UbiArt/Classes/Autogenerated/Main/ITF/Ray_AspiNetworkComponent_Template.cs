@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_AspiNetworkComponent_Template : CSerializable {
 		public float enterDuration;
 		public float enterBezierMultiplier;

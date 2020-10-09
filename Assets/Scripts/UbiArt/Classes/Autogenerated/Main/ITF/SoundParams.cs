@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL)]
+	[Games(GameFlags.ROVersion | GameFlags.RL)]
 	public partial class SoundParams : CSerializable {
 		public uint numChannels;
 		public int loop;

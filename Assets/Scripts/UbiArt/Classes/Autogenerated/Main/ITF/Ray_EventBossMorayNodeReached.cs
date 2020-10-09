@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RO | GameFlags.RFR)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_EventBossMorayNodeReached : EventTrigger {
 		public float speed;
 		public float acceleration;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class ScreenShotDataAdventureComplete : online.OpenGraphObject {
 		public uint cur_adv_seq;
 		protected override void SerializeImpl(CSerializerObject s) {

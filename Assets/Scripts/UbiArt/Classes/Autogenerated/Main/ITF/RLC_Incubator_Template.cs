@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_Incubator_Template : TemplateObj {
 		public Path IncubatorScenePath;
 		public float PopupCooldown;

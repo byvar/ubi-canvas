@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO | GameFlags.RL)]
+	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.RL)]
 	public partial class Ray_ShooterActorParameter_StackData : CSerializable {
 		public Path projectilePath;
 		public uint numProjectiles;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_CheckpointComponent : CheckpointComponent {
 		public StringID PrimaryPowerUp;
 		public StringID SecondaryPowerUp;

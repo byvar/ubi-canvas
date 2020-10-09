@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class UIItemCheck_Template : UIItemBasic_Template {
 		public float iconScalefactor;
 		public SmartLocId tagUnchecked;

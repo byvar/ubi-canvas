@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIShooterFlyingBombBehavior_Template : TemplateAIBehavior {
 		public Generic<AIBezierAction_Template> moveAction;
 		public Generic<AIAction_Template> openingAction;

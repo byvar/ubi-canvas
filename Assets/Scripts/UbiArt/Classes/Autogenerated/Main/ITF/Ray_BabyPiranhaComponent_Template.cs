@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BabyPiranhaComponent_Template : CSerializable {
 		public ITF_ParticleGenerator_Template particleGeneratorStand;
 		public ITF_ParticleGenerator_Template particleGeneratorAttack;

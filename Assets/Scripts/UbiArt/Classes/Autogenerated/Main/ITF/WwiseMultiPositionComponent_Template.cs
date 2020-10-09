@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class WwiseMultiPositionComponent_Template : ActorComponent_Template {
 		public StringID SoundName;
 		public AUDIO_MULTIPOSITION_MODE MultiPositionMode;

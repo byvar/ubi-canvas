@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class PlayAnimOnWeightChangeComponent : ActorComponent {
 		public int isActive;
 		protected override void SerializeImpl(CSerializerObject s) {

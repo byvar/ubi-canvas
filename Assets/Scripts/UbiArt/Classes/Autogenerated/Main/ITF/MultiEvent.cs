@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class MultiEvent : Event {
 		public CArrayO<Generic<Event>> eventList;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class FlexMeshComponent_Template : GraphicComponent_Template {
 		public CListO<FlexMeshData> flexList;
 		public bool useActorFlip;

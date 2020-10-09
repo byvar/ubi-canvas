@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_LightningPatchAIComponent_Template : ActorComponent_Template {
 		public float maxLength;
 		public StringID boneName;

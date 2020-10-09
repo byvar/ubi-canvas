@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_MultiPiecesActorAIComponent_Template : Ray_AIComponent_Template {
 		public CListO<PieceData> piecesDataList;
 		protected override void SerializeImpl(CSerializerObject s) {

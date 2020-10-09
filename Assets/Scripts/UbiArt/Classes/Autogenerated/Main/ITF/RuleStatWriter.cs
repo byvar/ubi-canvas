@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RuleStatWriter : StatWriter {
 		public CMultiMap<StringID, RuleStat> Rules;
 		public Generic<StatWriter> Writer;

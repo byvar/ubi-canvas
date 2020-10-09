@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class WithAnimStateImplement_Tempate : WithAnimState_Template {
 		public StateImplement_Template implementTempate;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_GyroSpikyComponent : RO2_RailComponent {
 		public Angle tiltAngleLeft;
 		public Angle tiltAngleRight;

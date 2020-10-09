@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class TriggerTest_Speed : TriggerTestAbstract {
 		public float SpeedValue;
 		public bool HorizontalTest;

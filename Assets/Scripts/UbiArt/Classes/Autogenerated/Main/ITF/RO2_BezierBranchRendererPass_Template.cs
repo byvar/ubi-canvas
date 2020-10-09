@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_BezierBranchRendererPass_Template : CSerializable {
 		public StringID name;
 		public BezierCurveRenderer_Template renderer;

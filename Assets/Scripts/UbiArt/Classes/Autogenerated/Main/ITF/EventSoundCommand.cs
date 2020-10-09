@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RLVersion | GameFlags.RA | GameFlags.RM)]
 	public partial class EventSoundCommand : Event {
 		public CListO<Generic<SoundCommand>> commands; // CList<Generic<???>>
 		protected override void SerializeImpl(CSerializerObject s) {

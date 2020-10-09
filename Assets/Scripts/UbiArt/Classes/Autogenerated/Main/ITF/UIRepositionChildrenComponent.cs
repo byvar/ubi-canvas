@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class UIRepositionChildrenComponent : UIItem {
 		public int spaceBetweenChildren;
 		public int verticalOffset;

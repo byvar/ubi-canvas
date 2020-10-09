@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class Animation3DSet_Template : CSerializable {
 		public CListO<Animation3DInfo_Template> animations;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RO | GameFlags.RFR)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_StimComponent_Template : ShapeComponent_Template {
 		public Enum_faction faction;
 		public bool useFixedAngle;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_HeadBranchComponent_Template : RO2_BezierBranchComponent_Template {
 		public Path headActor;
 		public float headAttachOffset;

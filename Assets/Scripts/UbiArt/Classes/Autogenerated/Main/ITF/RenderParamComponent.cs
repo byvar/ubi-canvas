@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class RenderParamComponent : ActorComponent {
 		public SubRenderParam_ClearColor ClearColor;
 		public SubRenderParam_Lighting Lighting;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_BallComponent_Template : ActorComponent_Template {
 		public float impulseForce_Ground;
 		public float impulseForce_Wall;

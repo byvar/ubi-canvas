@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_Mission_Guard_CheckHitCount : RLC_Mission_Guard {
 		public uint hitCount;
 		public uint successCondition;

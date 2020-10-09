@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RL)]
 	public partial class PlayerSpawnPos : CSerializable {
 		public StringID playerID;
 		public Vec2d offset;

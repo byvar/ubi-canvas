@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
+	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class GFXMaterialSerializableParam : CSerializable {
 		public float Reflector_factor;
 		public float HiddenMask_Z_Extrude;

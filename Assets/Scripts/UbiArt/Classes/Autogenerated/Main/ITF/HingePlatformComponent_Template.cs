@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class HingePlatformComponent_Template : PolylineComponent_Template {
 		public CListO<HingePlatformComponent_Template.HingeBoneData> hingeBones;
 		public CListO<HingePlatformComponent_Template.PlatformData> platforms;
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			platforms = s.SerializeObject<CListO<HingePlatformComponent_Template.PlatformData>>(platforms, name: "platforms");
 			movingPolylines = s.SerializeObject<CListO<HingePlatformComponent_Template.MovingPolylineData>>(movingPolylines, name: "movingPolylines");
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class MovingPolylineData : CSerializable {
 			public StringID polyline;
 			public float resistance;
@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 				forceMultiplier = s.Serialize<float>(forceMultiplier, name: "forceMultiplier");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class HingeBoneData : CSerializable {
 			public StringID name;
 			public StringID polyline;
@@ -70,7 +70,7 @@ namespace UbiArt.ITF {
 				alwaysApplyAngleLimitation = s.Serialize<bool>(alwaysApplyAngleLimitation, name: "alwaysApplyAngleLimitation");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class PlatformData : CSerializable {
 			public StringID poly;
 			public StringID scale;

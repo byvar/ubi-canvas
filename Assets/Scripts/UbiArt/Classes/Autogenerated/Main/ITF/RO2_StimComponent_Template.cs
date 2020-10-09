@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_StimComponent_Template : ShapeComponent_Template {
 		public RO2_FACTION faction;
 		public bool useFixedAngle;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class EventChangeSubstitutionTemplateAnim : Event {
 		public bool set;
 		public uint templateIdToSet;

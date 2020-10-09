@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_LightingMushroomComponent : ActorComponent {
 		public bool IsMoving;
 		public float ScaleMin;
@@ -49,7 +49,7 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.RA)]
 		public partial class MushroomTarget : CSerializable {
 			public Vec3d Position;
 			public float ExplosionTimer;

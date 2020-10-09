@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_BezierBranch : CSerializable {
 		public CListO<RO2_BezierNode> nodes;
 		public CListO<RO2_BezierSubBranch> subBranches;

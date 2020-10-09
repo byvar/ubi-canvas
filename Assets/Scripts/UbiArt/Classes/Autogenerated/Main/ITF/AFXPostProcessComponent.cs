@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.COL | GameFlags.RL)]
+	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFXPostProcessComponent : ActorComponent {
 		public AFX_BlurParam blur;
 		public AFX_GlowParam glow;

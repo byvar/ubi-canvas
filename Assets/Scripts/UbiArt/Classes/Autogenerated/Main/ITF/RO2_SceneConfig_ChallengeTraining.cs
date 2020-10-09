@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SceneConfig_ChallengeTraining : RO2_SceneConfig_Base {
 		public Path modePath;
 		public uint debugForcedSeed;

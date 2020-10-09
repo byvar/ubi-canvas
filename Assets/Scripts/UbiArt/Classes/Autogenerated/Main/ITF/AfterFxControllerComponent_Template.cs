@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.RL | GameFlags.RAVersion)]
 	public partial class AfterFxControllerComponent_Template : ActorComponent_Template {
 		public bool useCircle;
 		public bool useBox;

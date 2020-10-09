@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class EventNoHit : Event {
 		public bool activateNoHit;
 		protected override void SerializeImpl(CSerializerObject s) {

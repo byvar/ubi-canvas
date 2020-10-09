@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AICornBehavior_Template : TemplateAIBehavior {
 		public Angle randomAngle;
 		public Generic<AIAction_Template> jumpAction;

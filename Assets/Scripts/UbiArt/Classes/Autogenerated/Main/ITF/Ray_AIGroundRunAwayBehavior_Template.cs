@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIGroundRunAwayBehavior_Template : Ray_AIGroundBaseMovementBehavior_Template {
 		public Generic<AIJumpAction_Template> jumpOverObstacle;
 		public Generic<AIJumpAction_Template> jumpOverVoid;

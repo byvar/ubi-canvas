@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_PowerUpManager : CSerializable {
 		public CMap<StringID, Ray_GlobalPowerUpData> globalData;
 		public CMap<StringID, CArrayO<Ray_PerPlayerPowerUpData>> perPlayerData;

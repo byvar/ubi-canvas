@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class MultiTextBoxComponent_Template : ActorComponent_Template {
 		public CListO<FontTextArea.Style> styles;
 		protected override void SerializeImpl(CSerializerObject s) {

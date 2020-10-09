@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH)]
+	[Games(GameFlags.ROVersion | GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class AnimTreeNodePlayOnOff_Template : BlendTreeNodeTemplate<AnimTreeResult> {
 		public Generic<BlendTreeNodeTemplate<AnimTreeResult>> nodeOn;
 		public Generic<BlendTreeNodeTemplate<AnimTreeResult>> nodeOff;

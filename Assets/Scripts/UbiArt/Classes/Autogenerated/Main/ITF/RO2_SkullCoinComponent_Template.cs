@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_SkullCoinComponent_Template : GraphicComponent_Template {
 		public uint lumCount;
 		public float challengeDuration;

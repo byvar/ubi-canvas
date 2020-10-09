@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class AnimFXEvent : AnimMarkerEvent {
 		public FX Action;
 		protected override void SerializeImpl(CSerializerObject s) {

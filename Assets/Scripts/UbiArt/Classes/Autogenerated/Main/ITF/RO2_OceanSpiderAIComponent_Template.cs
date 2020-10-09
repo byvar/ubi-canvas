@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_OceanSpiderAIComponent_Template : RO2_SimpleAIComponent_Template {
 		public StringID addHitInputName;
 		public Path buboPath;

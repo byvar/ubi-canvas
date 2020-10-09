@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_Pad2Touch_Template : ActorComponent_Template {
 		public CMap<StringID, RLC_Pad2TouchInput> InputMapping;
 		public bool SelectInactive;

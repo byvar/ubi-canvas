@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class BoxInterpolatorComponent_Template : InterpolatorComponent_Template {
 		public Placeholder innerAABB;
 		public Placeholder outerAABB;

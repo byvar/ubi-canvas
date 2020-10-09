@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_OceanSpiderAIComponent : RO2_SimpleAIComponent {
 		public bool waitForTrigger;
 		public uint bubblePrize;

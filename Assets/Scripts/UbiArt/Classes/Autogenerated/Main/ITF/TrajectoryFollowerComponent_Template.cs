@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.All)]
 	public partial class TrajectoryFollowerComponent_Template : ActorComponent_Template {
 		public float speed;
 		public float speedSmoothFactor;

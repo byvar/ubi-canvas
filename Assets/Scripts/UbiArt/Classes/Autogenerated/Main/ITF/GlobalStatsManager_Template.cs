@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GlobalStatsManager_Template : TemplateObj {
 		public CArrayO<Generic<StatHandler>> Handlers;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class DestructibleBodyPart_Template : BodyPart_Template {
 		public int ejectOnDeath;
 		public Vec3d ejectMinStartSpeed;

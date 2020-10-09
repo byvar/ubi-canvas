@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_CreatureWH_BulbComponent_Template : RO2_AIComponent_Template {
 		// v From RO2_BezierTree_Template
 		public uint sampleCount;

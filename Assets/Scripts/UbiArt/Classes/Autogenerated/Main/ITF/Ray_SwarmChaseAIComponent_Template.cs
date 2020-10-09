@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_SwarmChaseAIComponent_Template : Ray_AIComponent_Template {
 		public Path pathAtlas;
 		public uint hitLevel;

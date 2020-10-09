@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class LD_TriggerComponent : ActorComponent {
 		public Mode mode;
 		public ModeAfterCP modeAfterCP;

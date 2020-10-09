@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_AIShooterLaunchBulletAction_Template : Ray_AIPerformHitAction_Template {
 		public StringID bulletExitBone;
 		public int useBonesEnd;

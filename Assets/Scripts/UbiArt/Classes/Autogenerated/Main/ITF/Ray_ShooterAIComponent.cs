@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_ShooterAIComponent : Ray_AIComponent {
 		public Vec3d beforeCamRelativeInitialPos;
 		protected override void SerializeImpl(CSerializerObject s) {

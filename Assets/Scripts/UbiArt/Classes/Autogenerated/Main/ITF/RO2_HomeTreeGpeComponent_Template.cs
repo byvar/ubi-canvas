@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_HomeTreeGpeComponent_Template : ActorComponent_Template {
 		public AppearMode appearMode;
 		public float fadeDuration;

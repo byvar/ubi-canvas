@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_AnglerFishBTAIComponent : RO2_EnemyBTAIComponent {
 		public float LightRadiusCoeff;
 		protected override void SerializeImpl(CSerializerObject s) {

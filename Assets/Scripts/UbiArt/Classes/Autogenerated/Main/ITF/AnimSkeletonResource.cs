@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RO | GameFlags.RL)]
+	[Games(GameFlags.RO | GameFlags.RL | GameFlags.RM)]
 	public partial class AnimSkeletonResource : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

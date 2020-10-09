@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class UIPadManager_Template : TemplateObj {
 		public float snapDistanceWeight;
 		public float snapDeadAngle;

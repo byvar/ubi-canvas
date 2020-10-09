@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_TargetingCreatureDisplay_Template : RLC_PowerUpCreatureDisplay_Template {
 		public float targetRange;
 		protected override void SerializeImpl(CSerializerObject s) {

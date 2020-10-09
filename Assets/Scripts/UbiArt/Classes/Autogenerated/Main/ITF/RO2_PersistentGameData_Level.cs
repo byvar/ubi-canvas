@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_PersistentGameData_Level : PersistentGameData_Level {
 		public uint bestLumsTaken;
 		public float bestDistance;

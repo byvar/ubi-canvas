@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class Animation3DTreeNodePlayAnim_Template : BlendTreeNodeTemplate<Animation3DTreeResult> {
 		public StringID animationName;
 		public ProceduralInputData proceduralInput;

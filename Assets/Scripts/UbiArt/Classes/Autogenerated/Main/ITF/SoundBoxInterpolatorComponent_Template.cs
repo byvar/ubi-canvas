@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class SoundBoxInterpolatorComponent_Template : BoxInterpolatorComponent_Template {
 		public StringID sound;
 		public bool stopOnInactive;

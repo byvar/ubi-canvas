@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_SeasonalEventSpawnerComponent_Template : ActorComponent_Template {
 		public CListO<Path> actorPaths;
 		public bool disabled;

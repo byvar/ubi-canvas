@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class AtlasGraphicComponent_Template : GraphicComponent_Template {
 		public Path texture;
 		public GFXMaterialSerializable material;

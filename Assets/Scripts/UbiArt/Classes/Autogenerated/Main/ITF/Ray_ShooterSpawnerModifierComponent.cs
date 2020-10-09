@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_ShooterSpawnerModifierComponent : TimedSpawnerModifierComponent {
 		public Enum_RFR_0 tweenId;
 		protected override void SerializeImpl(CSerializerObject s) {

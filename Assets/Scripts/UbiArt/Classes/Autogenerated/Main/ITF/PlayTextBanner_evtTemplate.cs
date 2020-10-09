@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class PlayTextBanner_evtTemplate : SequenceEvent_Template {
 		public uint LineId;
 		public uint LineId2;

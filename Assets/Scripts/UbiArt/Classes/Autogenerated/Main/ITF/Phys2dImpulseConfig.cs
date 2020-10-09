@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class Phys2dImpulseConfig : CSerializable {
 		public float impulseVal;
 		public float impulseAngle;

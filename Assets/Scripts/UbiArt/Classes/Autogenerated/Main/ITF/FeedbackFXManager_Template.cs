@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class FeedbackFXManager_Template : TemplateObj {
 		public CListO<SoundDescriptor_Template> soundDescriptors;
 		public CListO<FxDescriptor_Template> FxDescriptors;
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 				busList = s.SerializeObject<CListO<FeedbackFXManager_Template.buses>>(busList, name: "busList");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class buses : CSerializable {
 			public StringID actorType;
 			public StringID bus;

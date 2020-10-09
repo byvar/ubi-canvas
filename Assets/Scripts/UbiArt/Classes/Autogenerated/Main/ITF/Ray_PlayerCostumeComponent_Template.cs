@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_PlayerCostumeComponent_Template : ActorComponent_Template {
 		public Path newIconPath;
 		public Vec3d newIconOffset;

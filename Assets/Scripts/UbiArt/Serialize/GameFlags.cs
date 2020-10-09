@@ -19,6 +19,7 @@ namespace UbiArt {
 		ROVersion = RO | RJR | RFR,
 		RLVersion = RL | COL,
 		RAVersion = RA | VH | RM,
+		LegendsAndUp = RLVersion | RAVersion,
 		All = RO | RJR | RFR | RL | COL | VH | RA | RM
 	}
 }

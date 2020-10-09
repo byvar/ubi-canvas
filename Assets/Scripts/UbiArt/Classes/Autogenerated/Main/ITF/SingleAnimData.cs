@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class SingleAnimData : CSerializable {
 		public bool flip;
 		public Angle angle;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
+	[Games(GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class FxData : CSerializable {
 		public StringID fxFall;
 		public StringID fxHit;

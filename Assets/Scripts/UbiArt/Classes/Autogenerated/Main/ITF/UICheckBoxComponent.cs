@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class UICheckBoxComponent : UIItem {
 		public StringID checkBoxCheckedID;
 		public StringID checkBoxUncheckedID;

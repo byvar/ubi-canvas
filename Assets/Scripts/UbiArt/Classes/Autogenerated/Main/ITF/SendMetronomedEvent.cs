@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class SendMetronomedEvent : Event {
 		public METRONOME_TYPE WwiseMetronomeID;
 		public AUDIO_SYNC_PLAY WwisePlayAt;

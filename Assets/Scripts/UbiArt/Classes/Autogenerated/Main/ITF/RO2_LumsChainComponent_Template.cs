@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_LumsChainComponent_Template : ActorComponent_Template {
 		public uint chainCompletedNumRewardLum;
 		public float detectionRadius;

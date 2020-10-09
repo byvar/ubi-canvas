@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class UIMenuBasic_Template : UIItem_Template {
 		public CListO<ValidateItemSound> validateItemSounds;
 		public float nextItemMinAngle;
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 			} else {
 			}
 		}
-		[Games(GameFlags.VH | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.VH)]
 		public partial class ValidateItemSound : CSerializable {
 			public StringID itemId;
 			public StringID mainSoundId;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RO | GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.COL)]
+	[Games(GameFlags.ROVersion | GameFlags.COL | GameFlags.VH | GameFlags.RA)]
 	public partial class SoundDescriptor_Template : CSerializable {
 		public StringID name;
 		public bool soundPlayAfterdestroy;

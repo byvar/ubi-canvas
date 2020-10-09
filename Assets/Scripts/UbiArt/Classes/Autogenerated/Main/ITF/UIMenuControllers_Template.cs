@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class UIMenuControllers_Template : UIMenuBasic_Template {
 		public CListO<UIMenuControllers_Template.ControllerLayout> controllerLayout;
 		public CListO<StringID> controllerActorNames;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 				controllerActorNames = s.SerializeObject<CListO<StringID>>(controllerActorNames, name: "controllerActorNames");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class ControllerLayout : CSerializable {
 			public uint numControllers;
 			public CListO<Vec2d> positions;

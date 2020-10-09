@@ -1,14 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class ImpParamHandler_Template : CSerializable {
 		public CListO<ImpParamHandler_Template.ImpParamData> list;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			list = s.SerializeObject<CListO<ImpParamHandler_Template.ImpParamData>>(list, name: "list");
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class ImpParamData : CSerializable {
 			public StringID name;
 			public string value;

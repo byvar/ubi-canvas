@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_BezierTree_Template : CSerializable {
 		public uint sampleCount;
 		public float widthForAABB;

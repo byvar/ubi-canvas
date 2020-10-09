@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class DataFluid : CSerializable {
 		public CListO<EdgeFluid> EdgeFluidList;
 		public CListO<EdgeFluidLevel> EdgeFluidListLevels;

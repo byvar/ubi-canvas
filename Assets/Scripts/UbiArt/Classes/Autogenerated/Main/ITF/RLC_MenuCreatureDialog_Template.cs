@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_MenuCreatureDialog_Template : UIMenuBasic_Template {
 		public Spline SlowDTCurve;
 		public Path Gem3DPath;

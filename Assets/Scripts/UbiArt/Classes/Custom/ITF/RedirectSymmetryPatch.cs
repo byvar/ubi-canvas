@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.COL | GameFlags.RL)]
+	[Games(GameFlags.RLVersion)]
 	public partial class RedirectSymmetryPatch : CSerializable {
 		public StringID mainPatch;
 		public StringID boneName;

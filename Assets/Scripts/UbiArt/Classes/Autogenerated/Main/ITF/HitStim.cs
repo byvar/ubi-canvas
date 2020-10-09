@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.All)]
 	public partial class HitStim : EventStim {
 		public uint level;
 		public Vec2d direction;

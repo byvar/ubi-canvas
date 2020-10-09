@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_RopeHookComponent : ActorComponent {
 		public RO2_TouchHandler touchHandler;
 		public float torqueFriction;

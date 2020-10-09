@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_AIShooterReceiveHitAction_Template : Ray_AIReceiveHitAction_Template {
 		public float minStunTime;
 		public float maxStunTime;

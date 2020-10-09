@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class TRCLocalisation_Template : TemplateObj {
 		public CMap<GameplayErrorContext, TRCLocalisation_Detail> TRCLocalisationList;
 		public CArrayO<Path> TRCActorsList;

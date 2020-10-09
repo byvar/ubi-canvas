@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_Mission_Guard_CheckActiveTime : RLC_Mission_Guard {
 		public float activeTime;
 		public uint successCondition;

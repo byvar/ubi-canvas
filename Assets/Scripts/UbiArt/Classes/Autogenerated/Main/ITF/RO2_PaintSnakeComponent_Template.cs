@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_PaintSnakeComponent_Template : ActorComponent_Template {
 		public StringID BubonBoneL;
 		public StringID BubonBoneR;

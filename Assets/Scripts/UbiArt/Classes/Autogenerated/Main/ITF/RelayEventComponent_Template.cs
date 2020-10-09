@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.VH | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class RelayEventComponent_Template : ActorComponent_Template {
 		public CListO<ITF.RelayData> relays;
 		public CListO<ITF.RelayEventComponent_Template.RelayData> relays2;
@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 				relays = s.SerializeObject<CListO<ITF.RelayData>>(relays, name: "relays");
 			}
 		}
-		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+		[Games(GameFlags.ROVersion)]
 		public partial class RelayData : CSerializable {
 			public Generic<Event> eventToListen;
 			public Generic<Event> eventToRelay;

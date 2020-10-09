@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RO | GameFlags.RFR | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.ROVersion | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class Frise : Actor {
 		public Color EventShowColorDst;
 		public bool disablePhysic;
@@ -363,7 +363,7 @@ namespace UbiArt.ITF {
 				highlightAmplitude = s.Serialize<float>(highlightAmplitude, name: "highlightAmplitude");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class MeshStaticData : CSerializable {
 			public AABB LocalAABB;
 			public AABB WorldAABB;
@@ -373,7 +373,7 @@ namespace UbiArt.ITF {
 				WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class MeshAnimData : CSerializable {
 			public AABB LocalAABB;
 			public AABB WorldAABB;
@@ -383,7 +383,7 @@ namespace UbiArt.ITF {
 				WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class MeshOverlayData : CSerializable {
 			public AABB LocalAABB;
 			public AABB WorldAABB;
@@ -397,7 +397,7 @@ namespace UbiArt.ITF {
 				SinAngle = s.Serialize<float>(SinAngle, name: "SinAngle");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL)]
+		[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 		public partial class IndexList : CSerializable {
 			public CListP<ushort> List;
 			public uint IdTexConfig;
@@ -407,7 +407,7 @@ namespace UbiArt.ITF {
 				IdTexConfig = s.Serialize<uint>(IdTexConfig, name: "IdTexConfig");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class MeshBuildData : CSerializable {
 			public CListO<Frise.IndexList> AnimIndexList;
 			public CListO<VertexPNC3T> AnimVertexList;
@@ -425,7 +425,7 @@ namespace UbiArt.ITF {
 				OverlayVertexList = s.SerializeObject<CListO<VertexPCBT>>(OverlayVertexList, name: "OverlayVertexList");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class MeshFluidData : CSerializable {
 			public DataFluid Data;
 			public AABB LocalAABB;
@@ -437,7 +437,7 @@ namespace UbiArt.ITF {
 				WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class CollisionData : CSerializable {
 			public CListO<PolyPointList> LocalCollisionList;
 			public CListO<PolyLine> WorldCollisionList;

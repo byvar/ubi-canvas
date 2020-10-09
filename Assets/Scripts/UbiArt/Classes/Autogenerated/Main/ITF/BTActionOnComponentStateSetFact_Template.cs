@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class BTActionOnComponentStateSetFact_Template : BTAction_Template {
 		public StringID fact;
 		public uint ComponentList;

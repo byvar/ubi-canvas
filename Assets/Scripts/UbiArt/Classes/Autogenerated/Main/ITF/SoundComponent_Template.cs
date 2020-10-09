@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RO | GameFlags.RFR | GameFlags.COL | GameFlags.RL)]
+	[Games(GameFlags.All)]
 	public partial class SoundComponent_Template : ActorComponent_Template {
 		public CListO<SoundDescriptor_Template> soundList;
 		public StringID defaultSound;

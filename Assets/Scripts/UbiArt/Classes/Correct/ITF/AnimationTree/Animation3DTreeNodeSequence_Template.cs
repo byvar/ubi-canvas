@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class Animation3DTreeNodeSequence_Template : BlendTreeNodeBlend_Template<Animation3DTreeResult> {
 		public int loopCount;
 		public bool randomizeLoopCount;

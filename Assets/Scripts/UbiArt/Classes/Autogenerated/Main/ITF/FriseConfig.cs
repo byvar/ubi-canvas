@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class FriseConfig : Actor_Template {
 		public Path gameMaterial;
 		public Path gameMaterialExtremityStart;

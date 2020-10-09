@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.COL)]
+	[Games(GameFlags.COL | GameFlags.RA)]
 	public partial class BezierBranchFluidRendererComponent : BezierBranchBaseRendererComponent {
 		public bool startActivated;
 		public float branchSpeed;

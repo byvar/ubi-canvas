@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class ScreenShotDataWinLevelTimeAttack : online.OpenGraphObject {
 		public uint minutes;
 		public uint seconds;

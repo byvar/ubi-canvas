@@ -1,14 +1,14 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RFR | GameFlags.VH)]
+	[Games(GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class AnimationAtlas : CSerializable {
 		public CListO<AnimationAtlas.Key> sequence;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			sequence = s.SerializeObject<CListO<AnimationAtlas.Key>>(sequence, name: "sequence");
 		}
-		[Games(GameFlags.RA | GameFlags.RL | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RFR | GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 		public partial class Key : CSerializable {
 			public uint atlas;
 			public uint count;

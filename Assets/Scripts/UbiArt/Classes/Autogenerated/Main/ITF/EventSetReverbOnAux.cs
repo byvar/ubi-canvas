@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RLVersion | GameFlags.RA | GameFlags.RM)]
 	public partial class EventSetReverbOnAux : Event {
 		public uint XAudio2ReflectionsDelay;
 		public char XAudio2ReverbDelay;

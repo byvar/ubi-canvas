@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_BossPlantAIComponent_Template : AIComponent_Template {
 		public Vec2d targetEvaluationOffset;
 		public float playRateMultiplierMinDistance;

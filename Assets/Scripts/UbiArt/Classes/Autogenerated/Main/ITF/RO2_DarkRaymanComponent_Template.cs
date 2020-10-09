@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_DarkRaymanComponent_Template : ActorComponent_Template {
 		public uint frameToWaitBeforeRehit;
 		public float waitDurationWhenDead;

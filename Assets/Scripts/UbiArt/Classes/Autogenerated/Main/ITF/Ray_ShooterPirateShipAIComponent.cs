@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_ShooterPirateShipAIComponent : Ray_MultiPiecesActorAIComponent {
 		public int useTempateFogParams;
 		public Color dynamicFogColor;

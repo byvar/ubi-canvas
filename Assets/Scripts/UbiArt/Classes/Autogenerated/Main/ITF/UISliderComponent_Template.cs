@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RO | GameFlags.RL)]
+	[Games(GameFlags.RO | GameFlags.RL | GameFlags.RAVersion)]
 	public partial class UISliderComponent_Template : UIItemBasic_Template {
 		public float scaleOnSelected;
 		public int isCursor;

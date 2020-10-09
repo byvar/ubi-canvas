@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class AliasManager_Template : CSerializable {
 		public CMap<StringID, Path> Alias;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_TutoTriggerComponent_Template : ActorComponent_Template {
 		public Spline SlowDTCurve;
 		public StringID WwiseGUID_onEnter;

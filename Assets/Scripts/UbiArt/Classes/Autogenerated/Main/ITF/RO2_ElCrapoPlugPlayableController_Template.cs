@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_ElCrapoPlugPlayableController_Template : ActorPlugPlayableController_Template {
 		public float ejectSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {

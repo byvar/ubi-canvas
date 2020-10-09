@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class SoftPlatformComponent_Template : ActorComponent_Template {
 		public CListO<SoftPlatformComponent_Template.BodyData> softPlatformParticles;
 		public CListO<SoftPlatformComponent_Template.ConstraintData> softPlatformConstraints;
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 				precision = s.Serialize<ConstraintSolverIterationPrecision>(precision, name: "precision");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class BodyData : CSerializable {
 			public string bone;
 			public bool _static;
@@ -56,7 +56,7 @@ namespace UbiArt.ITF {
 				setAngle = s.SerializeObject<Angle>(setAngle, name: "setAngle");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.VH)]
+		[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 		public partial class ConstraintData : CSerializable {
 			public string bodyA;
 			public string bodyB;

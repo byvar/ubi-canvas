@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class TweenInstructionAnim_Template : TweenInstruction_Template {
 		public StringID anim;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class MaskResolverComponent_Template : ActorComponent_Template {
 		public bool resolveFrontLightBuffer;
 		public bool resolveFrontLightBufferInverted;

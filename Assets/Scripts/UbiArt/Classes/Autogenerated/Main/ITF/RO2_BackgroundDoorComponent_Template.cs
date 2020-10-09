@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_BackgroundDoorComponent_Template : RO2_DoorComponent_Template {
 		public Vec3d walkThroughDoorTarget;
 		public Color enterColor;

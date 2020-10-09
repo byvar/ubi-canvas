@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class UPlayConfig_Template : ITF.TemplateObj {
 		public bool AutoHandleActions;
 		public bool AutoShowActionsUI;

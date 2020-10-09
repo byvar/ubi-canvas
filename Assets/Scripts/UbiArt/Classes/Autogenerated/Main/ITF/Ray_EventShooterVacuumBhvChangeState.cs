@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RO | GameFlags.RFR)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_EventShooterVacuumBhvChangeState : Event {
 		public uint state;
 		public Vec2d spitForce;

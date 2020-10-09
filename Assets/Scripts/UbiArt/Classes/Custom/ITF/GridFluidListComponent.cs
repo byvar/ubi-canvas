@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GridFluidListComponent : ActorComponent {
 		public CListO<GFX_GridFluid> GridList;
 		protected override void SerializeImpl(CSerializerObject s) {

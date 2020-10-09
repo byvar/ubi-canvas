@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class ActorPlugPlayableController_Template : ActorPlugBaseController_Template {
 		public StringID unplugInputAction;
 		protected override void SerializeImpl(CSerializerObject s) {

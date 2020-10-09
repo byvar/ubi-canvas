@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class RenderParamComponent_Template : ActorComponent_Template {
 		public InputDesc input;
 		public InputDesc inputFactor;

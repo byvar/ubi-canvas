@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionAppearBasket_Template : BTAction_Template {
 		public StringID animStand;
 		public StringID animAppear;

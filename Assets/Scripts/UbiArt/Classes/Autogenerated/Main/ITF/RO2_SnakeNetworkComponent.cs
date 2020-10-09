@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SnakeNetworkComponent : ActorComponent {
 		public CListO<RO2_SnakeNetworkComponent.Node> nodes;
 		protected override void SerializeImpl(CSerializerObject s) {

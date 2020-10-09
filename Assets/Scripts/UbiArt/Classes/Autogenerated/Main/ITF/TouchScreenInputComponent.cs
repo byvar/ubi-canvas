@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class TouchScreenInputComponent : ShapeComponent {
 		public string viewName;
 		protected override void SerializeImpl(CSerializerObject s) {

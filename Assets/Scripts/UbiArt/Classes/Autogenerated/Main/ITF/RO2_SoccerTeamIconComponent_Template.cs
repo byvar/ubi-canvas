@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SoccerTeamIconComponent_Template : GraphicComponent_Template {
 		public float transitionTime;
 		public GFXMaterialSerializable frameMaterial;

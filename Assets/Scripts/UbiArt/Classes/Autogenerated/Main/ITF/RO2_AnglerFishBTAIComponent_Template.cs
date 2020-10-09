@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_AnglerFishBTAIComponent_Template : RO2_EnemyBTAIComponent_Template {
 		public StringID spawnBone;
 		public Path lightSpawnPath;

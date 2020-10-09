@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GridFluidModifierComponent : ActorComponent {
 		public bool Reinit;
 		public GFX_GridFluidModifierList FluidModifier;

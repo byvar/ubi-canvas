@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_PlatformEnemyAIComponent_Template : RO2_GroundEnemyAIComponent_Template {
 		public bool restartTweeningAfterHit;
 		protected override void SerializeImpl(CSerializerObject s) {

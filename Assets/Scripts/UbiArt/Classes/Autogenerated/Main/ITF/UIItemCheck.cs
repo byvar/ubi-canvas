@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class UIItemCheck : UIItemBasic {
 		public uint isChecked;
 		protected override void SerializeImpl(CSerializerObject s) {

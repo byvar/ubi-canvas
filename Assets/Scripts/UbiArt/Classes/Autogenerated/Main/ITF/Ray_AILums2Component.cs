@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AILums2Component : Ray_FixedAIComponent {
 		public int IsTaken;
 		protected override void SerializeImpl(CSerializerObject s) {

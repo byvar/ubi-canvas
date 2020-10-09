@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.COL)]
+	[Games(GameFlags.All)]
 	public partial class LinkComponent : ActorComponent {
 		public CListO<ChildEntry> Children;
 		public CListO<ObjectId> ChildrenObjId;

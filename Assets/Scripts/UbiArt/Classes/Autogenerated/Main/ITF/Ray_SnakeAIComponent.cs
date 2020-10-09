@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_SnakeAIComponent : ActorComponent {
 		public Enum_RFR_0 activeMode;
 		protected override void SerializeImpl(CSerializerObject s) {

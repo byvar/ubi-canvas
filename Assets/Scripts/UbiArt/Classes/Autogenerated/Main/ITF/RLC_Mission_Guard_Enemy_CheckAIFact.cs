@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_Mission_Guard_Enemy_CheckAIFact : RLC_Mission_Guard {
 		public StringID AIFact;
 		protected override void SerializeImpl(CSerializerObject s) {

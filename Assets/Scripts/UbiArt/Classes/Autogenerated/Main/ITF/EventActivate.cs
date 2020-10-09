@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH | GameFlags.RJR | GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.ROVersion | GameFlags.RAVersion)]
 	public partial class EventActivate : Event {
 		public int activated;
 		protected override void SerializeImpl(CSerializerObject s) {

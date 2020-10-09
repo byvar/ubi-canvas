@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_BossMorayBodyPart_Template : BodyPart_Template {
 		public Path buboPath;
 		public CArrayO<StringID> buboAttachBones;

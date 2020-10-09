@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class PerformanceTestComponent_Template : ActorComponent_Template {
 		public CArrayO<Path> spawns;
 		public Vec3d offset;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RFR | GameFlags.RO)]
+	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_AIAlInfernoWaiterBehavior_Template : Ray_AIGroundBaseMovementBehavior_Template {
 		public Generic<AIAction_Template> fall;
 		public Generic<AIAction_Template> patrol;

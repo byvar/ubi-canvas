@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_BasicCreatureDisplay_Template : RO2_PowerUpDisplay_Template {
 		public PathRef creatureActor;
 		public Creature_Family creatureFamily;

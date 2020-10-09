@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class TextBoxAttachedToBoneComponent_Template : ActorComponent_Template {
 		public StringID boneName;
 		public bool useBoneScale;

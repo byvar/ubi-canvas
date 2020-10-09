@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.VH | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.VH)]
 	public partial class RO2_DigRegionComponent_Template : ActorComponent_Template {
 		public GFXMaterialSerializable MaterialDig;
 		public GFXMaterialSerializable MaterialPlump;

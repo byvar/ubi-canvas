@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class HttpConfig_Template : ITF.TemplateObj {
 		public uint MaxRetryCount;
 		public float MaxRetryDuration;

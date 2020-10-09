@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 				id = s.Serialize<string>(id, name: "id");
 			}
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class Level : CSerializable {
 			public string name;
 			public bool parent;

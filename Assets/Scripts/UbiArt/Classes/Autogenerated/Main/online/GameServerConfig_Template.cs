@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GameServerConfig_Template : ITF.TemplateObj {
 		public string NodeJsUrl;
 		public RequestOptions DefaultRequestOptions;

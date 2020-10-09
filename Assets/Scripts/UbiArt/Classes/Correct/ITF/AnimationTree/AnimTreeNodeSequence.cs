@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RO | GameFlags.VH | GameFlags.RL | GameFlags.COL)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class AnimTreeNodeSequence : BlendTreeNodeBlend<AnimTreeResult> {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

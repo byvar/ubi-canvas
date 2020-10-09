@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.online {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class Gifts_Template : ITF.TemplateObj {
 		public CMap<StringID, GiftPoolConfig> pools;
 		public StringID currentPoolKeyStringID;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.ROVersion | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
+	[Games(GameFlags.All)]
 	public partial class AnimatedComponent : AnimLightComponent {
 		public bool DebugAnimTransition;
 		public CArrayO<Generic<Event>> EventPostComponents;

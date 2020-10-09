@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.VH)]
+	[Games(GameFlags.RAVersion)]
 	public partial class PlayAnimComponent : ActorComponent {
 		public CListO<PlayAnimComponent.strPlayAnimParams> SequenceList;
 		public bool isLooping;
@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			isLooping = s.Serialize<bool>(isLooping, name: "isLooping");
 			startActive = s.Serialize<bool>(startActive, name: "startActive");
 		}
-		[Games(GameFlags.RA | GameFlags.VH)]
+		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class strPlayAnimParams : CSerializable {
 			public StringID AnimToPlay;
 			public bool WaitAnimEnd;

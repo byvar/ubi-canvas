@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA | GameFlags.RL)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AIReceiveCameraEjectHitAction_Template : RO2_AIReceiveHitAction_Template {
 		public Vec3d minStartSpeed;
 		public Vec3d maxStartSpeed;
