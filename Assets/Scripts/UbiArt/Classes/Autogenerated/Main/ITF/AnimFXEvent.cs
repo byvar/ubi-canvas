@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public FX Action;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RA) {
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 				Action = s.Serialize<FX>(Action, name: "Action");
 			}
 		}

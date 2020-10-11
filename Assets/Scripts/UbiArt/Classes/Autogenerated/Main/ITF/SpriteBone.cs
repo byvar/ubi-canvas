@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			p1 = s.SerializeObject<Vec2d>(p1, name: "p1");
 			uv0 = s.SerializeObject<Vec2d>(uv0, name: "uv0");
 			uv1 = s.SerializeObject<Vec2d>(uv1, name: "uv1");
-			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM || Settings.s.game == Settings.Game.VH) {
 				z = s.Serialize<float>(z, name: "z");
 			}
 		}

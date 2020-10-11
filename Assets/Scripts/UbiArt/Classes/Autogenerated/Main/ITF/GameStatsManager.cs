@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 				timers = s.SerializeObject<CListP<float>>(timers, name: "timers");
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 					rewardsState = s.SerializeObject<CMap<StringID, bool>>(rewardsState, name: "rewardsState");
-					if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.VH) {
+					if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM || Settings.s.game == Settings.Game.VH) {
 						uplayRewardsState = s.SerializeObject<CMap<StringID, bool>>(uplayRewardsState, name: "uplayRewardsState");
 						uplayActionsState = s.SerializeObject<CMap<StringID, uint>>(uplayActionsState, name: "uplayActionsState");
 					}

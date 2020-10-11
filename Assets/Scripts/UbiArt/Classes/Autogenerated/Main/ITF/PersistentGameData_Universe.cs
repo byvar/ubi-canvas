@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (Settings.s.game == Settings.Game.COL) {
 				Levels = s.SerializeObject<CMapGeneric<StringID, PersistentGameData_Level>>(Levels, name: "Levels");
-			} else if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RA) {
+			} else if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 				Levels = s.SerializeObject<CMapGeneric<StringID, PersistentGameData_Level>>(Levels, name: "Levels");
 				Rewards = s.SerializeObject<GameStatsManager.SaveSession>(Rewards, name: "Rewards");
 				sequenceAlreadySeen = s.SerializeObject<CArrayO<ObjectPath>>(sequenceAlreadySeen, name: "sequenceAlreadySeen");

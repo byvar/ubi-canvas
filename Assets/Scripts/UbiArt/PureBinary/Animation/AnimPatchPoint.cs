@@ -21,7 +21,7 @@ namespace UbiArt.Animation {
 			index = s.Serialize<uint>(index, name: "index");
 			uv = s.SerializeObject<Vec2d>(uv, name: "uv");
 			normal = s.SerializeObject<Vec2d>(normal, name: "normal");
-			if (Settings.s.game == Settings.Game.RA) {
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 				sid = s.SerializeObject<StringID>(sid, name: "sid");
 			}
 			local = s.SerializeObject<AnimPatchPointLocal>(local, name: "local");

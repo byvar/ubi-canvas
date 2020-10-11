@@ -41,7 +41,7 @@ namespace UbiArt {
 				height = s.Serialize<ushort>(height);
 				unk_x = s.Serialize<ushort>(unk_x);
 				unk_y = s.Serialize<ushort>(unk_y);
-				if (Settings.s.game == Settings.Game.RA) {
+				if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 					unkAdventures = s.Serialize<uint>(unkAdventures);
 				}
 				texSize2 = s.Serialize<uint>(texSize2);

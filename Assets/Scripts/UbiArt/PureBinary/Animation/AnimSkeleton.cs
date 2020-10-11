@@ -32,7 +32,7 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			version = s.Serialize<uint>(version, name: "version");
-			if (Settings.s.game == Settings.Game.RA) {
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 				boneTagsAdv = s.SerializeObject<CListP<ulong>>(boneTagsAdv, name: "boneTags");
 				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
 				boneTags2Adv = s.SerializeObject<CListP<ulong>>(boneTags2Adv, name: "boneTags2");
@@ -85,7 +85,7 @@ namespace UbiArt.Animation {
 			return bones.FirstOrDefault(b => b.key == link);
 		}
 		public int GetBoneIndexFromTag(StringID tag) {
-			if (Settings.s.game == Settings.Game.RA) {
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 				if (boneTagsAdv.Any(b => tag.stringID == b)) {
 					return boneTagsAdv.IndexOf(boneTagsAdv.First(b => tag.stringID == b));
 				} else {

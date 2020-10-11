@@ -11,10 +11,10 @@ namespace UbiArt.online {
 		public uint second;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.HasFlags(SerializeFlags.Flags8) || Settings.s.game != Settings.Game.RA) {
+			if (s.HasFlags(SerializeFlags.Flags8) || (Settings.s.game != Settings.Game.RA && Settings.s.game != Settings.Game.RM)) {
 				value = s.Serialize<ulong>(value, name: "value");
 			}
-			if (Settings.s.game == Settings.Game.RA) {
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 				year = s.Serialize<uint>(year, name: "year");
 				month = s.Serialize<uint>(month, name: "month");
 				day = s.Serialize<uint>(day, name: "day");

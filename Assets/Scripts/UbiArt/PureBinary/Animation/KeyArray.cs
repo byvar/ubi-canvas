@@ -13,7 +13,7 @@ namespace UbiArt.Animation {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RA) {
+			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 				keys = s.SerializeObject<CArrayP<ulong>>(keys, name: "keys");
 			} else {
 				keysLegends = s.SerializeObject<CArrayO<StringID>>(keysLegends, name: "keysLegends");

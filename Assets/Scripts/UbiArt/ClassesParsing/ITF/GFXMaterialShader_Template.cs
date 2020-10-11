@@ -41,11 +41,11 @@ namespace UbiArt.ITF {
 						blendDst = BlendMode.SrcColor;
 						break;
 				}
-				if (shader.renderFrontLight || shader.renderBackLight) {
+				/*if (shader.renderFrontLight || shader.renderBackLight) {
 					blendSrc = BlendMode.SrcAlpha;
 					blendDst = BlendMode.One;
 					zwrite = ZWrite.Off;
-				}
+				}*/
 				if (!(blendSrc == BlendMode.SrcAlpha && blendDst == BlendMode.OneMinusSrcAlpha && zwrite == ZWrite.On)) {
 					string key = $"{blendSrc}-{blendDst}-{zwrite}";
 					if (mats == null) {

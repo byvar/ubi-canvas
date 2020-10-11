@@ -100,10 +100,11 @@ namespace UbiArt.ITF {
 							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(mr, index: m, shader: shader?.obj);
 							FillMaterialParams(mr, m);
 							GenericFile<GFXMaterialShader_Template> sh = config.obj.textureConfigs[idTexConfig].material.shader;
-							if (sh != null && sh.obj != null && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
+							if (sh != null && sh.obj != null && !sh.obj.renderRegular && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
 								mesh_static.layer = 0;
 								if (sh.obj.renderFrontLight) mesh_static.layer |= LayerMask.NameToLayer("FrontLight");
 								if (sh.obj.renderBackLight) mesh_static.layer |= LayerMask.NameToLayer("BackLight");
+								if (sh.obj.renderRegular) mesh_static.layer |= LayerMask.NameToLayer("Default");
 							}
 							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.Zero) {
 								AnimatedTexture animTex = mesh_static.AddComponent<AnimatedTexture>();
@@ -187,10 +188,11 @@ namespace UbiArt.ITF {
 							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(mr, index: m, shader: shader?.obj);
 							FillMaterialParams(mr, m);
 							GenericFile<GFXMaterialShader_Template> sh = config.obj.textureConfigs[idTexConfig].material.shader;
-							if (sh != null && sh.obj != null && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
+							if (sh != null && sh.obj != null && !sh.obj.renderRegular && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
 								mesh_anim.layer = 0;
 								if (sh.obj.renderFrontLight) mesh_anim.layer |= LayerMask.NameToLayer("FrontLight");
 								if (sh.obj.renderBackLight) mesh_anim.layer |= LayerMask.NameToLayer("BackLight");
+								if (sh.obj.renderRegular) mesh_anim.layer |= LayerMask.NameToLayer("Default");
 							}
 							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.Zero) {
 								AnimatedTexture animTex = mesh_anim.AddComponent<AnimatedTexture>();
@@ -244,10 +246,11 @@ namespace UbiArt.ITF {
 							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(mr, index: m, shader: shader?.obj);
 							FillMaterialParams(mr, m);
 							GenericFile<GFXMaterialShader_Template> sh = config.obj.textureConfigs[idTexConfig].material.shader;
-							if (sh != null && sh.obj != null && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
+							if (sh != null && sh.obj != null && !sh.obj.renderRegular && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
 								mesh_overlay.layer = 0;
 								if (sh.obj.renderFrontLight) mesh_overlay.layer |= LayerMask.NameToLayer("FrontLight");
 								if (sh.obj.renderBackLight) mesh_overlay.layer |= LayerMask.NameToLayer("BackLight");
+								if (sh.obj.renderRegular) mesh_overlay.layer |= LayerMask.NameToLayer("Default");
 							}
 							if (config.obj.textureConfigs[idTexConfig].scrollUV != Vec2d.Zero) {
 								AnimatedTexture animTex = mesh_overlay.AddComponent<AnimatedTexture>();

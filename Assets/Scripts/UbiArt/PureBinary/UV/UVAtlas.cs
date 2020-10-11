@@ -16,7 +16,7 @@ namespace UbiArt.UV {
 			uvData = s.SerializeObject<CMap<int, UVdata>>(uvData, name: "uvData");
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
 				uvParams = s.SerializeObject<CMap<int, UVparameters>>(uvParams, name: "uvParams");
-				if (Settings.s.game == Settings.Game.RA) {
+				if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
 					uv3D = s.SerializeObject<CMap<int, Vec3d>>(uv3D, name: "uv3D");
 					float0 = s.Serialize<float>(float0, name: "float0");
 					float1 = s.Serialize<float>(float1, name: "float1");

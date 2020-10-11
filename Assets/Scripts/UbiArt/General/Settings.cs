@@ -148,7 +148,7 @@ namespace UbiArt {
 		};
 		public static Settings RMMac = new Settings() {
 			engineVersion = EngineVersion.RL,
-			game = Game.RA,
+			game = Game.RM,
 			platform = Platform.MacOS,
 			endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures,

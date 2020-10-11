@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class GFXMaterialShader_Template : TemplateObj {
 		public uint flags;
-		public bool renderRegular;
+		public bool renderRegular = true;
 		public bool renderFrontLight;
 		public bool renderBackLight;
 		public int renderInReflection;
