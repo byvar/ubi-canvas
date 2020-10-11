@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GFX_GridFluidFlowTex : CSerializable {
 		public Path Texture;
 		public float Deformation;
@@ -47,6 +47,7 @@ namespace UbiArt.ITF {
 				VelocityPower = s.Serialize<float>(VelocityPower, name: "VelocityPower");
 			}
 		}
+		public override uint? ClassCRC => 0x6CD16CAE;
 	}
 }
 

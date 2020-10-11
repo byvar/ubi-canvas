@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GFX_GridFluidModifierList : CSerializable {
 		public StringID Name;
 		public bool Active;
@@ -16,6 +16,7 @@ namespace UbiArt.ITF {
 				ModifierList = s.SerializeObject<CListO<GFX_GridFluidModifier>>(ModifierList, name: "ModifierList");
 			}
 		}
+		public override uint? ClassCRC => 0xF10E0A6A;
 	}
 }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GFX_GridFluidLightingParam : CSerializable {
 		public bool UseLighting;
 		public float FrontLightIntensity;
@@ -15,6 +15,7 @@ namespace UbiArt.ITF {
 				BackLightIntensity = s.Serialize<float>(BackLightIntensity, name: "BackLightIntensity");
 			}
 		}
+		public override uint? ClassCRC => 0xEC756912;
 	}
 }
 

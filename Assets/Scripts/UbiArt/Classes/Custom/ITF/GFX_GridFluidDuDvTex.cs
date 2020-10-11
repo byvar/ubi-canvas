@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GFX_GridFluidDuDvTex : CSerializable {
 		public Path Texture;
 		public float Intensity;
@@ -21,6 +21,7 @@ namespace UbiArt.ITF {
 				ScaleY1 = s.Serialize<float>(ScaleY1, name: "ScaleY1");
 			}
 		}
+		public override uint? ClassCRC => 0x3E03E120;
 	}
 }
 

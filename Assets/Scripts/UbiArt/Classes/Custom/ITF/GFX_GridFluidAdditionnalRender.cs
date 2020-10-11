@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GFX_GridFluidAdditionnalRender : CSerializable {
 		public Vec3d RenderOffset;
 		public Color FluidCol;
@@ -32,6 +32,7 @@ namespace UbiArt.ITF {
 			[Serialize("GFX_BLEND_ADDSMOOTH"   )] ADDSMOOTH    = 22,
 			[Serialize("GFX_BLEND_ALPHAPREMULT")] ALPHAPREMULT = 3,
 		}
+		public override uint? ClassCRC => 0xD0ECFF81;
 	}
 }
 

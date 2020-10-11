@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GFX_GridFluidModifier : CSerializable {
 		public Vec3d BoxOffset;
 		public Vec2d BoxSize;
@@ -76,6 +76,7 @@ namespace UbiArt.ITF {
 			[Serialize("GFX_GRID_MOD_PULSE_PALIER2"  )] PALIER2 = 6,
 			[Serialize("GFX_GRID_MOD_PULSE_PALIER3"  )] PALIER3 = 7
 		}
+		public override uint? ClassCRC => 0xCD8B54CE;
 	}
 }
 

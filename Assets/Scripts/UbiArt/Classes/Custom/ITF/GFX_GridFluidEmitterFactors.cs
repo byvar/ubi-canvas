@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GFX_GridFluidEmitterFactors : CSerializable {
 		public float ExternalForce;
 		public float ExternalFluid;
@@ -15,6 +15,7 @@ namespace UbiArt.ITF {
 				ExternalPrimitive = s.Serialize<float>(ExternalPrimitive, name: "ExternalPrimitive");
 			}
 		}
+		public override uint? ClassCRC => 0xC921B588;
 	}
 }
 

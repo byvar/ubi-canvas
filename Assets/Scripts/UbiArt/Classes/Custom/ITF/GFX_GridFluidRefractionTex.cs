@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RA)]
+	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class GFX_GridFluidRefractionTex : CSerializable {
 		public Path Texture;
 		public float NoiseIntensity;
@@ -27,6 +27,7 @@ namespace UbiArt.ITF {
 				FlatenSpeed = s.Serialize<float>(FlatenSpeed, name: "FlatenSpeed");
 			}
 		}
+		public override uint? ClassCRC => 0x3B08DB7A;
 	}
 }
 
