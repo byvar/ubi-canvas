@@ -23,6 +23,7 @@ namespace UbiArt.ITF {
 		public Color colorForMask3;
 		public float saturation;
 		public float GridFluidEmitterIntensity;
+		public uint GridFluidEmitterFilter;
 		public float FrontLightFactor;
 		public float BackLightFactor;
 		public float FrontLightBlurFactor;
@@ -53,7 +54,8 @@ namespace UbiArt.ITF {
 		public bool bool__8;
 		public bool bool__9;
 		public bool bool__10;
-		public Nullable<NormalLightingParam> Nullable_NormalLightingParam__11;
+		public Nullable<NormalLightingParam> NormalLightParam;
+		public NormalLightingParam NormalLightParam2;
 		public Color Color__12;
 		public float float__13;
 		public float float__14;
@@ -99,7 +101,7 @@ namespace UbiArt.ITF {
 				bool__8 = s.Serialize<bool>(bool__8, name: "bool__8");
 				bool__9 = s.Serialize<bool>(bool__9, name: "bool__9");
 				bool__10 = s.Serialize<bool>(bool__10, name: "bool__10");
-				Nullable_NormalLightingParam__11 = s.SerializeObject<Nullable<NormalLightingParam>>(Nullable_NormalLightingParam__11, name: "Nullable<NormalLightingParam>__11");
+				NormalLightParam = s.SerializeObject<Nullable<NormalLightingParam>>(NormalLightParam, name: "NormalLightParam");
 				OutlineColor = s.SerializeObject<Color>(OutlineColor, name: "OutlineColor");
 				OutlineWidth = s.Serialize<float>(OutlineWidth, name: "OutlineWidth");
 				OutlineGlow = s.Serialize<float>(OutlineGlow, name: "OutlineGlow");
@@ -138,6 +140,11 @@ namespace UbiArt.ITF {
 				BackLightContrast = s.Serialize<float>(BackLightContrast, name: "BackLightContrast");
 				colorFog = s.SerializeObject<Color>(colorFog, name: "colorFog");
 				DynamicFogFactor = s.Serialize<float>(DynamicFogFactor, name: "DynamicFogFactor");
+
+				if (Settings.s.game == Settings.Game.RM) {
+					NormalLightParam2 = s.SerializeObject<NormalLightingParam>(NormalLightParam2, name: "NormalLightParam");
+				}
+
 				OutlineColor = s.SerializeObject<Color>(OutlineColor, name: "OutlineColor");
 				OutlineWidth = s.Serialize<float>(OutlineWidth, name: "OutlineWidth");
 				OutlineGlow = s.Serialize<float>(OutlineGlow, name: "OutlineGlow");
@@ -148,6 +155,9 @@ namespace UbiArt.ITF {
 				colorForMask3 = s.SerializeObject<Color>(colorForMask3, name: "colorForMask3");
 				saturation = s.Serialize<float>(saturation, name: "saturation");
 				GridFluidEmitterIntensity = s.Serialize<float>(GridFluidEmitterIntensity, name: "GridFluidEmitterIntensity");
+				if (Settings.s.game == Settings.Game.RM) {
+					GridFluidEmitterFilter = s.Serialize<uint>(GridFluidEmitterFilter, name: "GridFluidEmitterFilter");
+				}
 				FrontLightFactor = s.Serialize<float>(FrontLightFactor, name: "FrontLightFactor");
 				BackLightFactor = s.Serialize<float>(BackLightFactor, name: "BackLightFactor");
 				FrontLightBlurFactor = s.Serialize<float>(FrontLightBlurFactor, name: "FrontLightBlurFactor");
