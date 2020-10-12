@@ -104,9 +104,14 @@ namespace UbiArt {
 				IncreaseLevel();
 				bool entered = false;
 				if (GetTagCode(objType) == 200 && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
-					string typename = objType.Name;
-					if (obj is CSerializable) typename = ((CSerializable)(ICSerializable)obj).ClassName;
-					entered = ReadTag(typename, 200);
+					string typeName;
+					if (obj is CSerializable) {
+						typeName = ((CSerializable)(ICSerializable)obj).ClassName;
+					} else {
+						typeName = objType.Name;
+						if (typeName.Contains('`')) typeName = typeName.Substring(0, typeName.IndexOf("`"));
+					}
+					entered = ReadTag(typeName, 200);
 				}
 				obj.Serialize(this, name);
 				if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
@@ -263,9 +268,14 @@ namespace UbiArt {
 					bool entered = false;
 					if (GetTagCode(type) == 200
 						&& !type.IsDefined(typeof(SerializeEmbedAttribute), false)) {
-						string typename = type.Name;
-						if (obj is CSerializable) typename = ((CSerializable)obj).ClassName;
-						entered = ReadTag(typename, 200);
+						string typeName;
+						if (obj is CSerializable) {
+							typeName = ((CSerializable)obj).ClassName;
+						} else {
+							typeName = type.Name;
+							if (typeName.Contains('`')) typeName = typeName.Substring(0, typeName.IndexOf("`"));
+						}
+						entered = ReadTag(typeName, 200);
 					}
 					((ICSerializable)obj).Serialize(this, name);
 					if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
@@ -419,6 +429,10 @@ namespace UbiArt {
 					if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
 					obj = (T)obj2;
 
+
+					if (log && endPos.Peek() != reader.BaseStream.Position) {
+						MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					}
 					reader.BaseStream.Position = endPos.Pop();
 					if (!fakeSerializeMode && log && name != null && !isBigObject) {
 						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
@@ -476,6 +490,10 @@ namespace UbiArt {
 
 		public override void ArrayEntryStop() {
 			base.ArrayEntryStop();
+
+			if (log && endPos.Peek() != reader.BaseStream.Position) {
+				MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+			}
 			reader.BaseStream.Position = endPos.Pop();
 		}
 
@@ -495,9 +513,11 @@ namespace UbiArt {
 				fieldCRC[info] = requiredCRC;
 			}
 			if (crc == requiredCRC) {
+				//MapLoader.Loader.Log((Position-8) + ":" + new string(' ', (Indent + 1) * 2) + "TAG: " + name + " (" + type + ")");
 				endPos.Push(reader.BaseStream.Position + size);
 				return true;
 			} else {
+				//MapLoader.Loader.Log((Position - 8) + ":" + new string(' ', (Indent + 1) * 2) + "Read tag failed: " + name + " (" + type + ")");
 				reader.BaseStream.Seek(-8, System.IO.SeekOrigin.Current);
 				return false;
 			}

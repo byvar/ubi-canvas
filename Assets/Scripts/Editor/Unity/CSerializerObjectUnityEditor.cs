@@ -61,6 +61,10 @@ namespace UbiArt {
 				Path p = (Path)obj;
 				DrawPath(name, ref p);
 				obj = p;
+			} else if (type == typeof(StringID)) {
+				StringID sid = (StringID)obj;
+				DrawStringID(name, ref sid);
+				obj = sid;
 			} else if(type == typeof(LocalisationId)) {
 				LocalisationId locId = (LocalisationId)obj;
 				DrawLocId(name, ref locId);
@@ -136,6 +140,20 @@ namespace UbiArt {
 			if (newPath != fullPath) {
 				p = new Path(newPath);
 			}
+		}
+		public void DrawStringID(string name, ref StringID sid) {
+			if (sid == null) sid = new StringID();
+			//EditorGUILayout.PrefixLabel(name);
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			//texPreviewRect = EditorGUI.PrefixLabel(texPreviewRect, new GUIContent(name));
+			/*string str = null;
+			if (MapLoader.Loader.stringCache.ContainsKey(sid)) {
+				str = MapLoader.Loader.stringCache[sid];
+			}*/
+			string stringIdToString = sid.ToString();
+			//EditorGUI.BeginDisabledGroup(true);
+			string newStringID = EditorGUI.TextField(rect, new GUIContent(name), stringIdToString);
+			//EditorGUI.EndDisabledGroup();
 		}
 		public void DrawLocId(string name, ref LocalisationId locId) {
 			if (locId == null) locId = new LocalisationId();
@@ -226,6 +244,10 @@ namespace UbiArt {
 				Path p = (Path)(object)obj;
 				DrawPath(name, ref p);
 				obj = (T)(object)p;
+			} else if (type == typeof(StringID)) {
+				StringID sid = (StringID)(object)obj;
+				DrawStringID(name, ref sid);
+				obj = (T)(object)sid;
 			} else if (type == typeof(LocalisationId)) {
 				LocalisationId locId = (LocalisationId)(object)obj;
 				DrawLocId(name, ref locId);

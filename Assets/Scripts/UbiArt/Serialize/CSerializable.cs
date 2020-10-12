@@ -54,7 +54,18 @@ namespace UbiArt {
 			return result;
 		}
 
-		public virtual string ClassName => GetType().Name;
+		public virtual string ClassName {
+			get {
+				Type t = GetType();
+				if (t.IsGenericType) {
+					string typeName = t.Name;
+					if (typeName.Contains('`')) typeName = typeName.Substring(0, typeName.IndexOf("`"));
+					return typeName;
+				} else {
+					return t.Name;
+				}
+			}
+		}
 
 		public virtual uint? ClassCRC => null;
 	}

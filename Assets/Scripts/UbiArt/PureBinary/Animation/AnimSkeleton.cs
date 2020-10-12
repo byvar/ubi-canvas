@@ -37,7 +37,7 @@ namespace UbiArt.Animation {
 				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
 				boneTags2Adv = s.SerializeObject<CListP<ulong>>(boneTags2Adv, name: "boneTags2");
 				boneIndices2 = s.SerializeObject<CListO<StringID>>(boneIndices2, name: "boneIndices2");
-				boneTags3Adv = s.SerializeObject<CListP<ulong>>(boneTags3Adv, name: "boneTags3");
+				boneTags3Adv = s.SerializeObject<CListP<ulong>>(boneTags3Adv, name: "boneTags3"); // matches subSkeleton
 				boneIndices3 = s.SerializeObject<CListO<StringID>>(boneIndices3, name: "boneIndices3");
 			} else {
 				boneTags = s.SerializeObject<CListO<StringID>>(boneTags, name: "boneTags");
@@ -45,7 +45,7 @@ namespace UbiArt.Animation {
 				boneTags2 = s.SerializeObject<CListO<StringID>>(boneTags2, name: "boneTags2");
 				boneIndices2 = s.SerializeObject<CListO<StringID>>(boneIndices2, name: "boneIndices2");
 				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-					boneTags3 = s.SerializeObject<CListO<StringID>>(boneTags3, name: "boneTags3");
+					boneTags3 = s.SerializeObject<CListO<StringID>>(boneTags3, name: "boneTags3"); // matches subSkeleton
 					boneIndices3 = s.SerializeObject<CListO<StringID>>(boneIndices3, name: "boneIndices3");
 				}
 			}
