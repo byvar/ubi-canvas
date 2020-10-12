@@ -16,8 +16,8 @@ namespace UbiArt.ITF {
 			if (isFirstLoad) {
 				LoadTexture(nameof(tex_diffuse), diffuse);
 				LoadTexture(nameof(tex_back_light), back_light);
-				/*LoadTexture(nameof(tex_normal), normal);
 				LoadTexture(nameof(tex_separateAlpha), separateAlpha);
+				/*LoadTexture(nameof(tex_normal), normal);
 				LoadTexture(nameof(tex_diffuse_2), diffuse_2);
 				LoadTexture(nameof(tex_back_light_2), back_light_2);
 				LoadTexture(nameof(tex_anim_impostor), anim_impostor);*/

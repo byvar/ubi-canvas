@@ -212,21 +212,22 @@ namespace UbiArt {
 				if (type == typeof(CString)) {
 					obj = new CString(EditorGUILayout.TextField(name, ((CString)obj).str));
 				}
-			}
-			switch (Type.GetTypeCode(type)) {
-				case TypeCode.Boolean: obj = EditorGUILayout.Toggle(name, (bool)obj); break;
-				case TypeCode.Byte: obj = (byte)EditorGUILayout.IntField(name, (byte)obj); break;
-				case TypeCode.Char: obj = (char)EditorGUILayout.IntField(name, (char)obj); break;
-				case TypeCode.String: obj = EditorGUILayout.TextField(name, (string)obj); break;
-				case TypeCode.Single: obj = EditorGUILayout.FloatField(name, (float)obj); break;
-				case TypeCode.Double: obj = EditorGUILayout.DoubleField(name, (double)obj); break;
-				case TypeCode.UInt16: obj = (ushort)EditorGUILayout.IntField(name, (ushort)obj); break;
-				case TypeCode.UInt32: obj = (uint)EditorGUILayout.LongField(name, (uint)obj); break;
-				case TypeCode.UInt64: obj = (ulong)EditorGUILayout.LongField(name, (uint)obj); break;
-				case TypeCode.Int16: obj = (short)EditorGUILayout.IntField(name, (short)obj); break;
-				case TypeCode.Int32: obj = EditorGUILayout.IntField(name, (int)obj); break;
-				case TypeCode.Int64: obj = EditorGUILayout.LongField(name, (long)obj); break;
-				default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
+			} else {
+				switch (Type.GetTypeCode(type)) {
+					case TypeCode.Boolean: obj = EditorGUILayout.Toggle(name, (bool)obj); break;
+					case TypeCode.Byte: obj = (byte)EditorGUILayout.IntField(name, (byte)obj); break;
+					case TypeCode.Char: obj = (char)EditorGUILayout.IntField(name, (char)obj); break;
+					case TypeCode.String: obj = EditorGUILayout.TextField(name, (string)obj); break;
+					case TypeCode.Single: obj = EditorGUILayout.FloatField(name, (float)obj); break;
+					case TypeCode.Double: obj = EditorGUILayout.DoubleField(name, (double)obj); break;
+					case TypeCode.UInt16: obj = (ushort)EditorGUILayout.IntField(name, (ushort)obj); break;
+					case TypeCode.UInt32: obj = (uint)EditorGUILayout.LongField(name, (uint)obj); break;
+					case TypeCode.UInt64: obj = (ulong)EditorGUILayout.LongField(name, (uint)obj); break;
+					case TypeCode.Int16: obj = (short)EditorGUILayout.IntField(name, (short)obj); break;
+					case TypeCode.Int32: obj = EditorGUILayout.IntField(name, (int)obj); break;
+					case TypeCode.Int64: obj = EditorGUILayout.LongField(name, (long)obj); break;
+					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
+				}
 			}
 			return obj;
 		}

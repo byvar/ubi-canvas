@@ -52,7 +52,8 @@ namespace UbiArt.ITF {
 				mpb.SetVector("_UseTextures", new Vector4(
 					textureSet.tex_diffuse != null ? 1f : 0f,
 					textureSet.tex_back_light != null ? 1f : 0f,
-					0f, 0f));
+					0f,
+					textureSet.tex_separateAlpha != null ? 1f : 0f));
 				if (textureSet.tex_diffuse != null) {
 					mpb.SetTexture("_Diffuse", textureSet.tex_diffuse.Texture);
 					mpb.SetVector("_Diffuse_ST", new Vector4(1,1,0,0));
@@ -60,6 +61,10 @@ namespace UbiArt.ITF {
 				if (textureSet.tex_back_light != null) {
 					mpb.SetTexture("_BackLight", textureSet.tex_back_light.Texture);
 					mpb.SetVector("_BackLight_ST", new Vector4(1,1,0,0));
+				}
+				if (textureSet.tex_separateAlpha != null) {
+					mpb.SetTexture("_SeparateAlpha", textureSet.tex_separateAlpha.Texture);
+					mpb.SetVector("_SeparateAlpha_ST", new Vector4(1, 1, 0, 0));
 				}
 			}
 

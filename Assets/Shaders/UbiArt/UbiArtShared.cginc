@@ -65,6 +65,7 @@ struct v2f {
 	float2 uv4 : TEXCOORD3;
 	float4 color : COLOR;
 	float4 screenPos : TEXCOORD4;
+	float2 uv1_untransformed : TEXCOORD5;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 	//UNITY_FOG_COORDS(3)
 };
@@ -73,6 +74,7 @@ v2f process_vert(appdata v) {
 	v2f o;
 	UNITY_SETUP_INSTANCE_ID(v);
 	UNITY_TRANSFER_INSTANCE_ID(v, o);
+	o.uv1_untransformed = v.texcoord.xy;
 	o.uv1 = TRANSFORM_TEX(v.texcoord.xy, _Diffuse);
 	o.uv2 = v.texcoord1;
 	o.uv3 = v.texcoord2;
@@ -90,6 +92,7 @@ v2f process_vert(appdata v) {
 float4 process_frag(v2f i) : SV_TARGET{
 	UNITY_SETUP_INSTANCE_ID(i);
 	float4 UseTextures = UNITY_ACCESS_INSTANCED_PROP(Props, _UseTextures);
+	float4 UseTextures2 = UNITY_ACCESS_INSTANCED_PROP(Props, _UseTextures2);
 
 	float4 c = float4(0.0, 0.0, 0.0, 0.0);
 	if (UseTextures.x == 1) {
@@ -110,6 +113,9 @@ float4 process_frag(v2f i) : SV_TARGET{
 				float4 backLightColor = clamp(float4(LightConfig.z, LightConfig.z, LightConfig.z, 0) + tex2D(_LightsBackLight, screenPos) * LightConfig.w, 0, 1) * tex2D(_BackLight, i.uv1);
 				c = c + float4(backLightColor.xyz, 0);
 			}
+		}
+		if (UseTextures.w == 1) {
+			c = float4(c.xyz, c.a * tex2D(_SeparateAlpha, i.uv1_untransformed).a);
 		}
 	}
 	return c;

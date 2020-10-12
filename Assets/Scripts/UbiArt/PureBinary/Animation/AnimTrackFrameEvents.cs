@@ -8,18 +8,18 @@ using UnityEngine;
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrackFrameEvents::serialize
 	public class AnimTrackFrameEvents : CSerializable {
-		public float unk;
+		public float frame;
 		public CListO<AnimMarkerEvent> events;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			unk = s.Serialize<float>(unk, name: "unk");
+			frame = s.Serialize<float>(frame, name: "frame");
 			events = s.SerializeObject<CListO<AnimMarkerEvent>>(events, name: "events");
 		}
 
 		public class AnimMarkerEvent : CSerializable {
 			public int type;
-			public StringID unk0;
+			public StringID marker;
 			public Vec2d posLocal;
 			public StringID name;
 			public uint eventData0;
@@ -28,7 +28,7 @@ namespace UbiArt.Animation {
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				type = s.Serialize<int>(type, name: "type");
-				unk0 = s.SerializeObject<StringID>(unk0, name: "unk0");
+				marker = s.SerializeObject<StringID>(marker, name: "marker"); // matches markerStart, markerStop
 				posLocal = s.SerializeObject<Vec2d>(posLocal, name: "posLocal");
 				name = s.SerializeObject<StringID>(name, name: "name");
 				switch (type) {
