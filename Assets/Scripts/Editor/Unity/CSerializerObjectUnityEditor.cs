@@ -77,6 +77,8 @@ namespace UbiArt {
 				obj = (Vector4)EditorGUILayout.Vector4Field(name, (Vector4)obj);
 			} else if (type == typeof(Color)) {
 				obj = (Color)EditorGUILayout.ColorField(name, (Color)obj);
+			} else if (type == typeof(ColorInteger)) {
+				obj = (ColorInteger)EditorGUILayout.ColorField(name, (ColorInteger)obj);
 			} else if (type == typeof(CString)) {
 				obj = new CString(EditorGUILayout.TextField(name, ((CString)obj).str));
 			} else {
@@ -261,6 +263,8 @@ namespace UbiArt {
 				obj = (T)(object)(Vec4d)EditorGUILayout.Vector4Field(name, (Vec4d)(object)obj);
 			} else if (type == typeof(Color)) {
 				obj = (T)(object)(Color)EditorGUILayout.ColorField(name, (Color)(object)obj);
+			} else if (type == typeof(ColorInteger)) {
+				obj = (T)(object)(ColorInteger)EditorGUILayout.ColorField(name, (ColorInteger)(object)obj);
 			} else {
 				if (obj == null) {
 					obj = new T();
