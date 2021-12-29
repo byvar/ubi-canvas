@@ -43,7 +43,7 @@ namespace UbiArt {
 					int numBytes = reader.ReadInt32();
 					return reader.ReadBytes(numBytes);
 				} else {
-					throw new Exception(Position + ": Field with name " + name + " is not a valid primitive type");
+					throw new Exception($"{Position}: Field with name {name} is not a valid primitive type");
 				}
 			}
 
@@ -61,7 +61,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
-							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							throw new Exception($"{Position}: Bool with name {name} was {tmp}!");
 							//obj = false;
 						} else {
 							return false;
@@ -71,7 +71,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
-							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							throw new Exception($"{Position}: Bool with name {name} was {tmp}!");
 							//obj = false;
 						} else {
 							return false;
@@ -106,7 +106,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							obj = true;
 						} else if (tmp != 0) {
-							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							throw new Exception($"{Position}: Bool with name {name} was {tmp}!");
 							//obj = false;
 						} else {
 							obj = false;
@@ -153,14 +153,14 @@ namespace UbiArt {
 			Pointer pos = log ? Position : null;
 			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
 			if (log && isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
+				MapLoader.Loader.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({f.DeclaringType}) {f.Name}:");
 			}
 			object obj = null;
 			Serialize(ref obj, type ?? f.FieldType, name: name);
 			if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 			f.SetValue(containerObj, obj);
 			if (log && !isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
+				MapLoader.Loader.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({f.DeclaringType}) {f.Name} - {obj}");
 			}
 		}
 
@@ -168,7 +168,7 @@ namespace UbiArt {
 			Pointer pos = log && name != null ? Position : null;
 			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && name != null && isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
+				MapLoader.Loader.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({name}:");
 			}
 
 			object obj2 = obj;
@@ -176,7 +176,7 @@ namespace UbiArt {
 			obj = (T)obj2;
 
 			if (log && name != null && !isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+				MapLoader.Loader.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({name} - {obj}");
 			}
 			return obj;
 		}
@@ -187,7 +187,7 @@ namespace UbiArt {
 
 		public override bool ArrayEntryStart(string name, int index) {
 			if (log) {
-				MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index + "]:");
+				MapLoader.Loader.Log($"{Position}:{new string(' ', (Indent + 1) * 2)}({name}[{index}]:");
 			}
 			return base.ArrayEntryStart(name, index);
 		}
@@ -206,7 +206,7 @@ namespace UbiArt {
 			T t = (T)ReadPrimitiveAsObject<T>(name: name, options: options);
 
 			if (log && name != null) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + t);
+				MapLoader.Loader.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({name} - {t}");
 			}
 			return t;
 		}
@@ -215,7 +215,7 @@ namespace UbiArt {
 			Pointer pos = log ? Position : null;
 			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && isBigObject && name != null) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
+				MapLoader.Loader.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({typeof(T)}) {name}:");
 			}
 
 			IncreaseLevel();
@@ -225,7 +225,7 @@ namespace UbiArt {
 			AddToStringCache(obj);
 
 			if (log && !isBigObject && name != null) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
+				MapLoader.Loader.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({typeof(T)}) {name} - {obj}");
 			}
 			return obj;
 		}

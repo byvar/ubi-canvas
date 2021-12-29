@@ -59,7 +59,7 @@ namespace UbiArt.ITF {
 					a.USERFRIENDLY = name;
 					int i = 0;
 					while(ACTORS.Any(ac => !ac.IsNull && ac.obj.USERFRIENDLY == a.USERFRIENDLY)) {
-						a.USERFRIENDLY = name + "@" + i;
+						a.USERFRIENDLY = $"{name}@{i}";
 						i++;
 					}
 				}

@@ -92,7 +92,7 @@ namespace UbiArt {
 				await www.SendWebRequest();
 			} catch (UnityWebRequestException) {
 			} finally {
-				if (www.isNetworkError || www.isHttpError) {
+				if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) {
 					Debug.Log(www.error);
 					virtualFiles[path] = null;
 				} else {
@@ -114,10 +114,10 @@ namespace UbiArt {
 					}
 				} catch (UnityWebRequestException) {
 				} finally {
-					if (!www.isHttpError && !www.isNetworkError) {
-						existingDirectories.Add(path, true);
-					} else {
+					if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) {
 						existingDirectories.Add(path, false);
+					} else {
+						existingDirectories.Add(path, true);
 					}
 				}
 			} else {
@@ -139,7 +139,7 @@ namespace UbiArt {
 				}
 			} catch (UnityWebRequestException) {
 			} finally {
-				if (!www.isHttpError && !www.isNetworkError) {
+				if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)) {
 					long contentLength;
 					if (long.TryParse(www.GetResponseHeader("Content-Length"), out contentLength)) {
 						AddVirtualBigFile(path, contentLength, cacheLength);

@@ -27,7 +27,7 @@ namespace UbiArt {
 
 		public bool IsNull {
 			get {
-				return className != null ? className.IsNull : true;
+				return className == null || className.IsNull;
 			}
 		}
 
