@@ -113,11 +113,11 @@ namespace UbiArt.ITF {
 						} else {
 							FillMaterialParams(mr, m);
 						}
+						await Controller.WaitIfNecessary();
 					}
 					mf.sharedMesh = mesh;
 					mr_static = mr;
 				}
-				await Controller.WaitIfNecessary();
 				if (meshBuildData.value.AnimIndexList?.Count > 0) {
 					mesh_anim = new GameObject("Anim");
 					mesh_anim.transform.SetParent(gao.transform, false);
@@ -201,11 +201,11 @@ namespace UbiArt.ITF {
 						} else {
 							FillMaterialParams(mr, m);
 						}
+						await Controller.WaitIfNecessary();
 					}
 					mf.sharedMesh = mesh;
 					mr_anim = mr;
 				}
-				await Controller.WaitIfNecessary();
 				if (meshBuildData.value.OverlayIndexList?.List.Count > 0) {
 					mesh_overlay = new GameObject("Overlay");
 					mesh_overlay.transform.SetParent(gao.transform, false);
@@ -259,6 +259,7 @@ namespace UbiArt.ITF {
 						} else {
 							FillMaterialParams(mr, m);
 						}
+						await Controller.WaitIfNecessary();
 					}
 					mf.sharedMesh = mesh;
 					mr_overlay = mr;

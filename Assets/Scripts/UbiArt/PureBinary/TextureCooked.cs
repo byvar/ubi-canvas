@@ -82,6 +82,7 @@ namespace UbiArt {
 						}
 					}
 					//texture = LoadDDS(texData);
+					if (FileSystem.mode == FileSystem.Mode.Web) texData = null;
 				}
 				return texture;
 			}
