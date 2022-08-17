@@ -30,7 +30,7 @@ public class CameraComponent : MonoBehaviour {
         targetDirection = transform.localRotation.eulerAngles;
     }
 
-    public void JumpTo(GameObject gao) {
+    public void JumpTo(GameObject gao, bool frontView = false) {
         Vector3? center = null, size = null;
         center = (gao.transform.position);
 		size = gao.transform.lossyScale;
@@ -40,13 +40,18 @@ public class CameraComponent : MonoBehaviour {
             float cameraView = 2.0f * Mathf.Tan(0.5f * Mathf.Deg2Rad * cam.fieldOfView); // Visible height 1 meter in front
             float distance = cameraDistance * objectSize / cameraView; // Combined wanted distance from the object
             distance += objectSize; // Estimated offset from the center to the outside of the object * 2
-            /*transform.position = center.Value + -transform.right * distance;
+			/*transform.position = center.Value + -transform.right * distance;
             transform.LookAt(center.Value, Vector3.up);*/
-            //transform.LookAt(center.Value, Vector3.up);
-            //transform.position = center.Value + Vector3.Normalize(transform.position - center.Value) * distance;
-			targetPos = center.Value + Vector3.Normalize(transform.position - center.Value) * distance;
-			if (center.Value - transform.position != Vector3.zero) {
-				targetRot = Quaternion.LookRotation(center.Value - transform.position, Vector3.up);
+			//transform.LookAt(center.Value, Vector3.up);
+			//transform.position = center.Value + Vector3.Normalize(transform.position - center.Value) * distance;
+			if (frontView) {
+				targetPos = center.Value + Vector3.back * distance;
+				targetRot = Quaternion.identity;
+			} else {
+				targetPos = center.Value + Vector3.Normalize(transform.position - center.Value) * distance;
+				if (center.Value - transform.position != Vector3.zero) {
+					targetRot = Quaternion.LookRotation(center.Value - transform.position, Vector3.up);
+				}
 			}
 		}
     }

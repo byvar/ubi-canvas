@@ -22,6 +22,7 @@ public class Controller : MonoBehaviour {
 	private Sprite[] icons;
 	bool displayGizmos_ = false; public bool displayGizmos = false;
 	MapLoader loader = null;
+	public UnityPickable SelectedObject { get; set; }
 
 	private static readonly Stopwatch stopwatch = new Stopwatch();
 

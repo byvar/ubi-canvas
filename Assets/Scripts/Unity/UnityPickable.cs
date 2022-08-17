@@ -6,6 +6,7 @@ using System.Linq;
 public class UnityPickable : MonoBehaviour {
 	public Pickable pickable;
 	private SpriteRenderer sr;
+	private SphereCollider sc;
 	private bool inited = false;
 
 	private void Init() {
@@ -19,6 +20,7 @@ public class UnityPickable : MonoBehaviour {
 		if (!inited) Init();
 		if (sr != null) {
 			sr.enabled = MapLoader.Loader.controller.displayGizmos;
+			sc.enabled = sr.enabled;
 			if (sr.enabled) {
 				sr.size = new Vector2(
 					transform.lossyScale.x != 0 ? (1f / transform.lossyScale.x) : 1f,
@@ -117,6 +119,8 @@ public class UnityPickable : MonoBehaviour {
 		sr = gameObject.AddComponent<SpriteRenderer>();
 		sr.sortingLayerName = "Gizmo";
 		sr.drawMode = SpriteDrawMode.Sliced;
+		sc = gameObject.AddComponent<SphereCollider>();
+		sc.radius = 0.2f;
 		//sr.sharedMaterial = new Material(Shader.Find("Custom/Gizmo"));
 		/*mr.sharedMaterial = unityMat;
 		Mesh meshUnity = new Mesh();
@@ -144,5 +148,17 @@ public class UnityPickable : MonoBehaviour {
 
 
 		mf.mesh = meshUnity;*/
+	}
+	private void OnMouseDown() {
+		if (Controller.LoadState != Controller.State.Finished) return;
+		if (!inited) return;
+		var cam = FindObjectOfType<CameraComponent>();
+		if(cam == null) return;
+
+		MapLoader.Loader.controller.SelectedObject = this;
+#if UNITY_EDITOR
+		UnityEditor.Selection.activeGameObject = gameObject;
+#endif
+		cam.JumpTo(gameObject, frontView: true);
 	}
 }
