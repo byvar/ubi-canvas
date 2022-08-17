@@ -2690,7 +2690,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_99
+      name: frieze_point_small
       rect:
         serializedVersion: 2
         x: 130
@@ -2711,7 +2711,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_100
+      name: frieze_point_small_s
       rect:
         serializedVersion: 2
         x: 162
@@ -3803,7 +3803,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_152
+      name: frieze_point
       rect:
         serializedVersion: 2
         x: 322
@@ -3824,7 +3824,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_153
+      name: frieze_point_s
       rect:
         serializedVersion: 2
         x: 386
@@ -4002,13 +4002,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      tagicons_99: 21300198
       trigger: 21300122
       tagicons_96: 21300192
       tagicons_138: 21300276
       tagicons_141: 21300282
       ld_frieze_s: 21300144
-      tagicons_153: 21300306
       tagicons_112: 21300224
       tagicons_109: 21300218
       tagicons_58: 21300116
@@ -4046,7 +4044,6 @@ TextureImporter:
       tsc: 21300234
       mus_s: 21300050
       trajectory_s: 21300286
-      tagicons_152: 21300304
       tagicons_34: 21300068
       afx_s: 21300010
       tagicons_113: 21300226
@@ -4069,6 +4066,7 @@ TextureImporter:
       trigger_automurphy_s: 21300080
       dig: 21300070
       trigger_automurphy: 21300078
+      frieze_point_s: 21300306
       tagicons_131: 21300262
       isc_ld_2_s: 21300104
       logic_s: 21300148
@@ -4078,15 +4076,15 @@ TextureImporter:
       back_lgt_frieze_s: 21300034
       particle: 21300004
       tween_editor_s: 21300176
+      tagicons_147: 21300294
       trigger_autorayman: 21300074
       isc_cine_s: 21300160
+      tagicons_137: 21300274
+      tagicons_125: 21300250
       isc_sound: 21300178
       tagicons_120: 21300240
-      tagicons_125: 21300250
-      light: 21300258
-      tagicons_147: 21300294
       tagicons_97: 21300194
-      tagicons_137: 21300274
+      light: 21300258
       tagicons_156: 21300312
       tagicons_115: 21300230
       front_lgt_frieze: 21300316
@@ -4122,11 +4120,11 @@ TextureImporter:
       amb_s: 21300018
       tagicons_30: 21300060
       tagicons_84: 21300168
+      frieze_point_small: 21300198
       tagicons_132: 21300264
       light_normal_s: 21300046
       isc_sound_2_s: 21300128
       3d_s: 21300058
-      tagicons_100: 21300200
       tagicons_12: 21300024
       light_back_s: 21300038
       tagicons_149: 21300298
@@ -4137,7 +4135,9 @@ TextureImporter:
       tagicons_134: 21300268
       enemy: 21300090
       tagicons_107: 21300214
+      frieze_point_small_s: 21300200
       isc_graph: 21300150
+      frieze_point: 21300304
       isc_fx_s: 21300184
       tagicons_57: 21300114
       tagicons_127: 21300254
