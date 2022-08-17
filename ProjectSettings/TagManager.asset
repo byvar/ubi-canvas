@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Gizmo-Line
+    uniqueID: 186207139
+    locked: 0
   - name: Gizmo
     uniqueID: 1639705613
     locked: 0

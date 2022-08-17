@@ -25,6 +25,7 @@ public class UnityPickable : MonoBehaviour {
 				sr.size = new Vector2(
 					transform.lossyScale.x != 0 ? (1f / transform.lossyScale.x) : 1f,
 					transform.lossyScale.y != 0 ? (1f / transform.lossyScale.y) : 1f);
+				sc.radius = sr.size.magnitude * 0.2f;
 			}
 		}
 		if (pickable != null) {
@@ -48,7 +49,8 @@ public class UnityPickable : MonoBehaviour {
 			}
 		}
 	}
-	void UpdateGizmo() {
+
+	void UpdateGizmo(bool selected = false) {
 		Sprite spr = null;
 		if (pickable != null) {
 			Controller c = MapLoader.Loader.controller;
@@ -77,24 +79,24 @@ public class UnityPickable : MonoBehaviour {
 					}
 					if (spr == null && ssa.RELATIVEPATH != null && !ssa.RELATIVEPATH.IsNull) {
 						if (ssa.RELATIVEPATH.filename.EndsWith("_graph.isc")) {
-							spr = MapLoader.Loader.controller.GetIcon("isc_graph");
+							spr = c.GetIcon("isc_graph", selected);
 						} else if (ssa.RELATIVEPATH.filename.EndsWith("_fx.isc")) {
-							spr = MapLoader.Loader.controller.GetIcon("isc_fx");
+							spr = c.GetIcon("isc_fx", selected);
 						} else if (ssa.RELATIVEPATH.filename.EndsWith("_ld.isc")) {
-							spr = MapLoader.Loader.controller.GetIcon("isc_ld");
+							spr = c.GetIcon("isc_ld", selected);
 						} else if (ssa.RELATIVEPATH.filename.EndsWith("_cine.isc")) {
-							spr = MapLoader.Loader.controller.GetIcon("isc_cine");
+							spr = c.GetIcon("isc_cine", selected);
 						} else if (ssa.RELATIVEPATH.filename.EndsWith("_sound.isc")) {
-							spr = MapLoader.Loader.controller.GetIcon("isc_sound");
+							spr = c.GetIcon("isc_sound", selected);
 						}
 					}
 					if (spr == null) {
-						spr = MapLoader.Loader.controller.GetIcon("isc");
+						spr = c.GetIcon("isc", selected);
 					}
 				} else {
 					if (t != null && t.TAGS != null && t.TAGS.Count > 0) {
 						foreach (string tag in t.TAGS) {
-							Sprite sprLoc = c.GetIcon(tag);
+							Sprite sprLoc = c.GetIcon(tag, selected);
 							if (sprLoc == null) {
 								print("Actor: Untreated tag " + tag);
 							}
@@ -102,7 +104,7 @@ public class UnityPickable : MonoBehaviour {
 						}
 					}
 					if (spr == null) {
-						spr = MapLoader.Loader.controller.GetIcon("actor");
+						spr = c.GetIcon("actor", selected);
 					}
 				}
 			}
@@ -113,6 +115,13 @@ public class UnityPickable : MonoBehaviour {
 	}
 
 	void CreateTexture() {
+	}
+
+	public void Deselect() {
+		UpdateGizmo(false);
+	}
+	public void Select() {
+		UpdateGizmo(true);
 	}
 
 	void CreateMesh() {
@@ -148,17 +157,5 @@ public class UnityPickable : MonoBehaviour {
 
 
 		mf.mesh = meshUnity;*/
-	}
-	private void OnMouseDown() {
-		if (Controller.LoadState != Controller.State.Finished) return;
-		if (!inited) return;
-		var cam = FindObjectOfType<CameraComponent>();
-		if(cam == null) return;
-
-		MapLoader.Loader.controller.SelectedObject = this;
-#if UNITY_EDITOR
-		UnityEditor.Selection.activeGameObject = gameObject;
-#endif
-		cam.JumpTo(gameObject, frontView: true);
 	}
 }

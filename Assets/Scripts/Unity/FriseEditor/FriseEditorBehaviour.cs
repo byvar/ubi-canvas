@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class FriseEditorBehaviour : MonoBehaviour {
 	public Controller controller;
+	public Material lineMaterial;
 	private UnityPickable currentSelectedObject;
 	private FriseEditorPointBehaviour[] Points { get; set; }
 
@@ -18,6 +19,7 @@ public class FriseEditorBehaviour : MonoBehaviour {
 		set {
 			if(_selectedPoint != null) _selectedPoint.Deselect();
 			_selectedPoint = value;
+			if(_selectedPoint != null) _selectedPoint.Select();
 		}
 	}
 
@@ -38,28 +40,40 @@ public class FriseEditorBehaviour : MonoBehaviour {
 
 	public void DestroyPoints() {
 		if (Points != null) {
-			foreach (var pt in Points)
-				Destroy(pt.gameObject);
+			foreach (var pt in Points) if(pt != null) Destroy(pt.gameObject);
 			Points = null;
 		}
 	}
 	public void CreatePoints() {
 		var fr = currentSelectedObject.GetComponent<UnityFrise>();
 		if (fr != null) {
-			var points = fr.frise.PointsList?.LocalPoints;
+			var pointsList = fr.frise.PointsList?.LocalPoints;
+			var loop = fr.frise.PointsList?.Loop ?? true;
 			var frTransform = fr.gameObject.transform;
-			Points = points.Select((p,i) => {
+			Points = new FriseEditorPointBehaviour[pointsList.Count];
+
+			for (int i = 0; i < Points.Length; i++) {
+				var edge = pointsList[i];
 				var gao = new GameObject($"Point {i}");
 				gao.transform.SetParent(transform, false);
-				gao.transform.localPosition = frTransform.TransformPoint(new Vector3(p.POS.x, p.POS.y, 0));
-				gao.transform.localScale = Vector3.one * p.Scale;
+				gao.transform.localPosition = frTransform.TransformPoint(new Vector3(edge.POS.x, edge.POS.y, 0));
+				gao.transform.localScale = Vector3.one * edge.Scale;
 				gao.transform.localRotation = Quaternion.identity;
 
 				var frp = gao.AddComponent<FriseEditorPointBehaviour>();
 				frp.controller = controller;
 				frp.editor = this;
-				return frp;
-			}).ToArray();
+				frp.Data = edge;
+				Points[i] = frp;
+			}
+			for (int i = 0; i < Points.Length; i++) {
+				if (i + 1 < Points.Length) {
+					Points[i].target = Points[i + 1];
+				} else if (loop) {
+					Points[i].target = Points[0];
+				}
+				Points[i].Init();
+			}
 		}
 	}
 }

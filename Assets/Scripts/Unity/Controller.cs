@@ -22,7 +22,8 @@ public class Controller : MonoBehaviour {
 	private Sprite[] icons;
 	bool displayGizmos_ = false; public bool displayGizmos = false;
 	MapLoader loader = null;
-	public UnityPickable SelectedObject { get; set; }
+	public PickableSelector selector;
+	public UnityPickable SelectedObject => selector.selected;
 
 	private static readonly Stopwatch stopwatch = new Stopwatch();
 
@@ -195,7 +196,11 @@ public class Controller : MonoBehaviour {
 		}
 	}
 
-	public Sprite GetIcon(string name) {
-		return icons.FirstOrDefault(s => s.name == name);
+	public Sprite GetIcon(string name, bool selected = false) {
+		if (selected) {
+			return icons.FirstOrDefault(s => s.name == $"{name}_s") ?? icons.FirstOrDefault(s => s.name == name);
+		} else {
+			return icons.FirstOrDefault(s => s.name == name);
+		}
 	}
 }
