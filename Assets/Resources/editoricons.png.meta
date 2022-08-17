@@ -195,7 +195,7 @@ TextureImporter:
       213: 21300126
     second: editoricons_63
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -215,6 +215,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -223,12 +225,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 1
     aniso: 1
-    mipBias: -100
+    mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -246,9 +248,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1667,6 +1673,71 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      editoricons_12: 21300024
+      editoricons_40: 21300080
+      editoricons_3: 21300006
+      editoricons_9: 21300018
+      editoricons_47: 21300094
+      editoricons_46: 21300092
+      editoricons_2: 21300004
+      editoricons_29: 21300058
+      editoricons_30: 21300060
+      editoricons_34: 21300068
+      editoricons_0: 21300000
+      editoricons_53: 21300106
+      editoricons_16: 21300032
+      editoricons_19: 21300038
+      editoricons_58: 21300116
+      editoricons_4: 21300008
+      editoricons_38: 21300076
+      editoricons_26: 21300052
+      editoricons_5: 21300010
+      editoricons_10: 21300020
+      editoricons_28: 21300056
+      editoricons_13: 21300026
+      editoricons_27: 21300054
+      editoricons_42: 21300084
+      editoricons_57: 21300114
+      editoricons_21: 21300042
+      editoricons_35: 21300070
+      editoricons_18: 21300036
+      editoricons_60: 21300120
+      editoricons_8: 21300016
+      editoricons_33: 21300066
+      editoricons_41: 21300082
+      editoricons_20: 21300040
+      editoricons_59: 21300118
+      editoricons_25: 21300050
+      editoricons_49: 21300098
+      editoricons_62: 21300124
+      editoricons_14: 21300028
+      editoricons_43: 21300086
+      editoricons_52: 21300104
+      editoricons_51: 21300102
+      editoricons_56: 21300112
+      editoricons_1: 21300002
+      editoricons_6: 21300012
+      editoricons_55: 21300110
+      editoricons_17: 21300034
+      editoricons_45: 21300090
+      editoricons_22: 21300044
+      editoricons_23: 21300046
+      editoricons_54: 21300108
+      editoricons_61: 21300122
+      editoricons_24: 21300048
+      editoricons_37: 21300074
+      editoricons_15: 21300030
+      editoricons_7: 21300014
+      editoricons_39: 21300078
+      editoricons_50: 21300100
+      editoricons_36: 21300072
+      editoricons_11: 21300022
+      editoricons_31: 21300062
+      editoricons_32: 21300064
+      editoricons_63: 21300126
+      editoricons_48: 21300096
+      editoricons_44: 21300088
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

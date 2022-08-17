@@ -4,74 +4,127 @@ using System.Text;
 
 namespace UbiArt {
     public class Writer : BinaryWriter {
-        bool isLittleEndian = true;
-        byte? xorKey;
-        uint bytesSinceAlignStart;
-        bool autoAlignOn = false;
+        #region Constructors
 
-        public Writer(Stream stream) : base(stream) { isLittleEndian = true; }
-        public Writer(Stream stream, bool isLittleEndian) : base(stream) { this.isLittleEndian = isLittleEndian; }
+        public Writer(Stream stream, bool isLittleEndian = true, bool leaveOpen = false) : base(stream, new UTF8Encoding(), leaveOpen) {
+            IsLittleEndian = isLittleEndian;
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public bool IsLittleEndian { get; set; }
+
+        #endregion
+
+        #region Protected Properties
+
+        protected uint BytesSinceAlignStart { get; set; }
+        protected bool AutoAlignOn { get; set; }
+
+        #endregion
+
+        #region Write Methods
+
+        public override void Write(int value) {
+            var data = BitConverter.GetBytes(value);
+            if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+            Write(data);
+        }
+
+        public override void Write(short value) {
+            var data = BitConverter.GetBytes(value);
+            if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+            Write(data);
+        }
+
+        public override void Write(uint value) {
+            var data = BitConverter.GetBytes(value);
+            if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+            Write(data);
+        }
+
+        public override void Write(ushort value) {
+            var data = BitConverter.GetBytes(value);
+            if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+            Write(data);
+        }
+
+        public override void Write(long value) {
+            var data = BitConverter.GetBytes(value);
+            if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+            Write(data);
+        }
+
+        public override void Write(ulong value) {
+            var data = BitConverter.GetBytes(value);
+            if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+            Write(data);
+        }
+
+        public override void Write(float value) {
+            var data = BitConverter.GetBytes(value);
+            if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+            Write(data);
+        }
+
+        public override void Write(double value) {
+            var data = BitConverter.GetBytes(value);
+            if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
+            Write(data);
+        }
+
+        public void WriteNullDelimitedString(string value, Encoding encoding) {
+            if (encoding == null)
+                throw new ArgumentNullException(nameof(encoding));
+
+            if (value == null) value = "";
+            byte[] data = encoding.GetBytes(value + '\0');
+            Write(data);
+        }
+
+        public void WriteString(string value, long size, Encoding encoding) {
+            if (encoding == null)
+                throw new ArgumentNullException(nameof(encoding));
+
+            value ??= "";
+            byte[] data = encoding.GetBytes(value + '\0');
+            if (data.Length != size)
+                Array.Resize(ref data, (int)size);
+            Write(data);
+        }
+
+        public override void Write(byte[] buffer) {
+            if (buffer == null)
+                return;
+
+            base.Write(buffer);
+
+            if (AutoAlignOn)
+                BytesSinceAlignStart += (uint)buffer.Length;
+        }
+
+        public override void Write(byte value) {
+            base.Write(value);
+
+            if (AutoAlignOn)
+                BytesSinceAlignStart++;
+        }
+
+        public override void Write(sbyte value) => Write((byte)value);
 
         public override void Write(Char value) {
             Write(Convert.ToByte(value));
         }
 
-		public override void Write(bool value) {
+        public override void Write(bool value) {
             if (value) Write((int)1);
             else Write((int)0);
         }
-
-		public override void Write(Int32 value) {
-            var data = BitConverter.GetBytes(value);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            Write(data);
-        }
-
-        public override void Write(Int16 value) {
-            var data = BitConverter.GetBytes(value);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            Write(data);
-        }
-
-        public override void Write(UInt32 value) {
-            var data = BitConverter.GetBytes(value);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            Write(data);
-        }
-
-        public override void Write(UInt16 value) {
-            var data = BitConverter.GetBytes(value);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            Write(data);
-        }
-
-        public override void Write(Int64 value) {
-            var data = BitConverter.GetBytes(value);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            Write(data);
-        }
-
-        public override void Write(UInt64 value) {
-            var data = BitConverter.GetBytes(value);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            Write(data);
-        }
-
-        public override void Write(Single value) {
-            var data = BitConverter.GetBytes(value);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            Write(data);
-        }
-
-        public override void Write(Double value) {
-            var data = BitConverter.GetBytes(value);
-            if (isLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
-            Write(data);
-        }
-
         public override void Write(String value) {
             if (value == null) value = "";
-            var data = Encoding.ASCII.GetBytes(value);
+            var data = Encoding.UTF8.GetBytes(value);
             Write(data.Length);
             Write(data);
         }
@@ -81,61 +134,10 @@ namespace UbiArt {
             Write(data.Length / 2);
             Write(data);
         }
-
-        public void WriteNullDelimitedString(string value, Encoding encoding = null) {
-            if (encoding == null)
-                encoding = Settings.StringEncoding;
-            byte[] data = encoding.GetBytes(value + '\0');
-            Write(data);
-        }
-
-        public void WriteString(string value, long? size = null, Encoding encoding = null) {
-            if (value == null) return;
-            if (encoding == null)
-                encoding = Settings.StringEncoding;
-            byte[] data = encoding.GetBytes(value + '\0');
-            if (size.HasValue) {
-                if (data.Length != size) {
-                    Array.Resize(ref data, (int)size);
-                }
-            }
-            Write(data);
-        }
-
-        public override void Write(byte[] buffer) {
-            if (buffer == null) 
-                return;
-            
-            var data = buffer;
-
-            if (xorKey.HasValue) {
-                // Avoid changing data in array, so create a copy
-                data = new byte[buffer.Length];
-                Array.Copy(buffer, 0, data, 0, buffer.Length);
-                for (int i = 0; i < data.Length; i++) {
-                    data[i] = (byte)(data[i] ^ xorKey.Value);
-                }
-            }
-
-            base.Write(data);
-            
-            if (autoAlignOn) 
-                bytesSinceAlignStart += (uint)data.Length;
-        }
-
-        public override void Write(byte value) {
-            if (xorKey.HasValue)
-                value = (byte)(value ^ xorKey.Value);
-
-            base.Write(value);
-            
-            if (autoAlignOn) 
-                bytesSinceAlignStart++;
-        }
-
-        public override void Write(sbyte value) => Write((byte)value);
+        #endregion
 
         #region Alignment
+
         // To make sure position is a multiple of alignBytes
         public void Align(int alignBytes) {
             if (BaseStream.Position % alignBytes != 0) {
@@ -163,22 +165,15 @@ namespace UbiArt {
         }
 
         public void AutoAlign(int alignBytes) {
-            if (bytesSinceAlignStart % alignBytes != 0) {
-                int length = alignBytes - (int)(bytesSinceAlignStart % alignBytes);
+            if (BytesSinceAlignStart % alignBytes != 0) {
+                int length = alignBytes - (int)(BytesSinceAlignStart % alignBytes);
                 byte[] data = new byte[length];
                 Write(data);
             }
-            bytesSinceAlignStart = 0;
+            BytesSinceAlignStart = 0;
         }
+
         #endregion
-        
-        #region XOR & Checksum
-        public void BeginXOR(byte xorKey) {
-            this.xorKey = xorKey;
-        }
-        public void EndXOR() {
-            xorKey = null;
-        }
-        #endregion
+
     }
 }
