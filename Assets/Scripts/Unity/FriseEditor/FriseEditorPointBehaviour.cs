@@ -33,11 +33,13 @@ public class FriseEditorPointBehaviour : MonoBehaviour {
 		}
 	}
 	void CreateMesh() {
+		var scale = 0.3f + Data.Scale;
 		sr = gameObject.AddComponent<SpriteRenderer>();
 		sr.sortingLayerName = "Gizmo";
+		sr.size = Vector2.one * scale;
 		sr.drawMode = SpriteDrawMode.Sliced;
 		sc = gameObject.AddComponent<SphereCollider>();
-		sc.radius = 0.2f;
+		sc.radius = 0.2f * scale;
 		if (target != null) {
 			lr = gameObject.AddComponent<LineRenderer>();
 			lr.material = new Material(editor.lineMaterial);

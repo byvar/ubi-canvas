@@ -57,7 +57,7 @@ public class FriseEditorBehaviour : MonoBehaviour {
 				var gao = new GameObject($"Point {i}");
 				gao.transform.SetParent(transform, false);
 				gao.transform.localPosition = frTransform.TransformPoint(new Vector3(edge.POS.x, edge.POS.y, 0));
-				gao.transform.localScale = Vector3.one * edge.Scale;
+				gao.transform.localScale = Vector3.one;
 				gao.transform.localRotation = Quaternion.identity;
 
 				var frp = gao.AddComponent<FriseEditorPointBehaviour>();

@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class PolyLineEdge : CSerializable {
 		public Vec2d POS;
-		public float Scale;
+		public float Scale = 1f;
 		public bool SwitchTexture;
 		public StringID GMatOverride;
 		public Hole HoleMode;
