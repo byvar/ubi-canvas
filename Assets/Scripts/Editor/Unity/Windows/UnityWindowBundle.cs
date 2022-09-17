@@ -14,7 +14,7 @@ public class UnityWindowBundle : UnityWindow {
 		titleContent = EditorGUIUtility.IconContent("SaveActive");
 		titleContent.text = "Bundle Export";
 	}
-	async UniTaskVoid OnGUI() {
+	async void OnGUI() {
 		float yPos = 0f;
 		if (EditorApplication.isPlaying) {
 			if (Controller.LoadState == Controller.State.Finished) {
