@@ -6,12 +6,12 @@ namespace UbiArt.ITF {
 		public Vec2d POS;
 		public float Scale = 1f;
 		public bool SwitchTexture;
-		public StringID GMatOverride;
+		public StringID GMatOverride = new StringID();
 		public Hole HoleMode;
-		public Vec2d Vector;
-		public Vec2d NormalizedVector;
+		public Vec2d Vector = Vec2d.Zero;
+		public Vec2d NormalizedVector = Vec2d.Zero;
 		public float Length;
-		public StringID GameMaterial;
+		public StringID GameMaterial = new StringID();
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
