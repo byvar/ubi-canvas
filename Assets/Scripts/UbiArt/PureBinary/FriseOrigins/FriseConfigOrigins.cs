@@ -202,7 +202,7 @@ namespace UbiArt.FriseOrigins {
 			int5 = s.Serialize<int>(int5, name: "int5");
 			int6 = s.Serialize<int>(int6, name: "int6");
 			int7 = s.Serialize<int>(int7, name: "int7");
-			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
+			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
 				int8 = s.Serialize<int>(int8, name: "int8");
 			}
 			sid1 = s.SerializeObject<StringID>(sid1, name: "sid1");

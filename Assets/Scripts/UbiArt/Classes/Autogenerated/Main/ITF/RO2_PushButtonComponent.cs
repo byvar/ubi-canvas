@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public uint activator;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					triggerOnStick = s.Serialize<bool>(triggerOnStick, name: "triggerOnStick");
 					triggerOnHit = s.Serialize<bool>(triggerOnHit, name: "triggerOnHit");

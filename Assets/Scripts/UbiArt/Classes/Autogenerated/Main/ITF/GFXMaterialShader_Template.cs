@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 		public COL_GFXMaterialShader_Layer_Template Layer4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				flags = s.Serialize<uint>(flags, name: "flags");
 				renderRegular = s.Serialize<bool>(renderRegular, name: "renderRegular");
 				renderFrontLight = s.Serialize<bool>(renderFrontLight, name: "renderFrontLight");
@@ -46,7 +46,7 @@ namespace UbiArt.ITF {
 				lightingType = s.Serialize<GFX_MAT_SHADER>(lightingType, name: "lightingType");
 				matParams = s.SerializeObject<GFX_MaterialParams>(matParams, name: "matParams");
 				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				flags = s.Serialize<uint>(flags, name: "flags");
 				renderRegular = s.Serialize<bool>(renderRegular, name: "renderRegular", options: CSerializerObject.Options.BoolAsByte);
 				renderGenerateBack = s.Serialize<bool>(renderGenerateBack, name: "renderGenerateBack", options: CSerializerObject.Options.BoolAsByte);

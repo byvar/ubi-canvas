@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public bool reverse;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				elastic = s.Serialize<bool>(elastic, name: "elastic", options: CSerializerObject.Options.BoolAsByte);
 				reverse = s.Serialize<bool>(reverse, name: "reverse", options: CSerializerObject.Options.BoolAsByte);
 			} else {

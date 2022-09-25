@@ -18,11 +18,11 @@ namespace UbiArt.ITF {
 		public Vec2d size;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						texture = s.SerializeObject<Path>(texture, name: "texture");
@@ -30,12 +30,12 @@ namespace UbiArt.ITF {
 					anchor = s.Serialize<TEXTURE_ANCHOR>(anchor, name: "anchor");
 					material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
 					spriteIndex = s.Serialize<uint>(spriteIndex, name: "spriteIndex");
-					if (!Settings.s.isCatchThemAll) {
+					if (!s.Settings.isCatchThemAll) {
 						uvRatio = s.SerializeObject<Vec2d>(uvRatio, name: "uvRatio");
 						uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 					}
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						texture = s.SerializeObject<Path>(texture, name: "texture");
@@ -47,7 +47,7 @@ namespace UbiArt.ITF {
 					uvRatio = s.SerializeObject<Vec2d>(uvRatio, name: "uvRatio");
 					uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						texture = s.SerializeObject<Path>(texture, name: "texture");

@@ -26,7 +26,7 @@ namespace UbiArt {
 		protected virtual void SerializeImpl(CSerializerObject s) {
 			if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)
 				&& !s.Embedded
-				&& Settings.s.engineVersion > Settings.EngineVersion.RO
+				&& s.Settings.engineVersion > Settings.EngineVersion.RO
 				&& !(s is CSerializerObjectTagBinary)) {
 				sizeOf = s.Serialize<uint>(sizeOf, name: "sizeof");
 			}
@@ -36,7 +36,7 @@ namespace UbiArt {
 			byte[] serializedData = null;
 			CSerializable result = null;
 			using (MemoryStream stream = new MemoryStream()) {
-				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
+				using (Writer writer = new Writer(stream, UbiArtContext.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(UbiArtContext, writer);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, extension);
 					object toWrite = this;
@@ -45,7 +45,7 @@ namespace UbiArt {
 				}
 			}
 			using (MemoryStream stream = new MemoryStream(serializedData)) {
-				using (Reader reader = new Reader(stream, Settings.s.IsLittleEndian)) {
+				using (Reader reader = new Reader(stream, UbiArtContext.Settings.IsLittleEndian)) {
 					CSerializerObject r = new CSerializerObjectBinary(UbiArtContext, reader);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.flagsOwn, extension);
 					object toRead = null;

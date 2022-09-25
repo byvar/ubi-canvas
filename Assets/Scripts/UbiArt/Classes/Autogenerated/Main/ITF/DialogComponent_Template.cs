@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CArrayO<Generic<InstructionDialog>> instructionList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				instructionList = s.SerializeObject<CArrayO<Generic<InstructionDialog>>>(instructionList, name: "instructionList");
 			}

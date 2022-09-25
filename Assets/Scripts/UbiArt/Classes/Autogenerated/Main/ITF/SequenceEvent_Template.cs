@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public event_mode EventMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				StartFrame = s.Serialize<int>(StartFrame, name: "StartFrame");
 				Offset = s.Serialize<int>(Offset, name: "Offset");
 				Duration = s.Serialize<int>(Duration, name: "Duration");

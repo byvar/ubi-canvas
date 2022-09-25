@@ -82,8 +82,6 @@ namespace UbiArt {
 			return s;
 		}
 
-
-		public static Settings s = null;
 		public static Settings ROPC = new Settings() {
 			engineVersion = EngineVersion.RO,
 			game = Game.RO,

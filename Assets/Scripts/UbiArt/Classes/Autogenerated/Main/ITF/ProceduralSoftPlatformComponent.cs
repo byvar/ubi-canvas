@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public bool flipTexture;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					endPos = s.SerializeObject<Vec3d>(endPos, name: "endPos");
 					useBeginTexture = s.Serialize<bool>(useBeginTexture, name: "useBeginTexture");

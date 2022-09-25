@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		public bool bool__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				SubRenderParam_ClearColor__0 = s.SerializeObject<SubRenderParam_ClearColor>(SubRenderParam_ClearColor__0, name: "SubRenderParam_ClearColor__0");
 				SubRenderParam_Lighting__1 = s.SerializeObject<SubRenderParam_Lighting>(SubRenderParam_Lighting__1, name: "SubRenderParam_Lighting__1");
 				SubRenderParam_Misc__2 = s.SerializeObject<SubRenderParam_Misc>(SubRenderParam_Misc__2, name: "SubRenderParam_Misc__2");

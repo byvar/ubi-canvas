@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public Enum_powerUpId powerUpId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					detectRadius = s.Serialize<float>(detectRadius, name: "detectRadius");
 				}

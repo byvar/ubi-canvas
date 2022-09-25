@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 		public float minDelayBeforeAppearing;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				animVictoryPlayer = s.SerializeObject<StringID>(animVictoryPlayer, name: "animVictoryPlayer");
 				animFlying = s.SerializeObject<StringID>(animFlying, name: "animFlying");
 				animAfterJumpAnim = s.SerializeObject<StringID>(animAfterJumpAnim, name: "animAfterJumpAnim");

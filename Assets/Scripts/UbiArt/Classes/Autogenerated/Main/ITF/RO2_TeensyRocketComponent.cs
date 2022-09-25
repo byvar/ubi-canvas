@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public bool displayRope;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				time = s.Serialize<float>(time, name: "time");
 			} else {
 				time = s.Serialize<float>(time, name: "time");

@@ -17,14 +17,14 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
 				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
-			} else if (Settings.s.game == Settings.Game.RO) {
+			} else if (s.Settings.game == Settings.Game.RO) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 				}
 				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 				bone = s.SerializeObject<StringID>(bone, name: "bone");
 				bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");

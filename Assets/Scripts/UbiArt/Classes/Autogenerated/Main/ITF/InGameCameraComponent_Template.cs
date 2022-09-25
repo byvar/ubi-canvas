@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CamModifier_Template CM;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				CM = s.SerializeObject<CamModifier_Template>(CM, name: "CM");
 			}

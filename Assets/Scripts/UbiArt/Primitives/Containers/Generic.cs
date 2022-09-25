@@ -32,7 +32,7 @@ namespace UbiArt {
 		}
 
 		public void SerializeClassName(CSerializerObject s) {
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 				className = s.SerializeObject<StringID>(className, name: "NAME");
 			} else {
 				className = s.SerializeObject<StringID>(className, name: "$ClassName$");

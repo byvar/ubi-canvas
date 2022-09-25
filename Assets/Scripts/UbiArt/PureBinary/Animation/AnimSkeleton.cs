@@ -32,7 +32,7 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			version = s.Serialize<uint>(version, name: "version");
-			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
+			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
 				boneTagsAdv = s.SerializeObject<CListP<ulong>>(boneTagsAdv, name: "boneTags");
 				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
 				boneTags2Adv = s.SerializeObject<CListP<ulong>>(boneTags2Adv, name: "boneTags2");
@@ -44,24 +44,24 @@ namespace UbiArt.Animation {
 				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
 				boneTags2 = s.SerializeObject<CListO<StringID>>(boneTags2, name: "boneTags2");
 				boneIndices2 = s.SerializeObject<CListO<StringID>>(boneIndices2, name: "boneIndices2");
-				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 					boneTags3 = s.SerializeObject<CListO<StringID>>(boneTags3, name: "boneTags3"); // matches subSkeleton
 					boneIndices3 = s.SerializeObject<CListO<StringID>>(boneIndices3, name: "boneIndices3");
 				}
 			}
 			bones = s.SerializeObject<CListO<AnimBone>>(bones, name: "bones");
 			bonesDyn = s.SerializeObject<CListO<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				byteArray = s.SerializeObject<CArrayO<CArrayP<byte>>>(byteArray, name: "byteArray");
 			} else {
 				byteArrayOrigins = s.SerializeBytes(byteArrayOrigins, 8);
 			}
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 			}
 			bankId = s.Serialize<uint>(bankId, name: "bankId");
 			if (bankId != 0) {
-				if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+				if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 					bank = s.SerializeObject<Nullable<AnimPolylineBank>>(bank, name: "bank");
 				} else {
 					bankOrigins = s.SerializeObject<AnimPolylineBank>(bankOrigins, name: "bank");
@@ -85,7 +85,7 @@ namespace UbiArt.Animation {
 			return bones.FirstOrDefault(b => b.key == link);
 		}
 		public int GetBoneIndexFromTag(StringID tag) {
-			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
+			if (UbiArtContext.Settings.game == Settings.Game.RA || UbiArtContext.Settings.game == Settings.Game.RM) {
 				if (boneTagsAdv.Any(b => tag.stringID == b)) {
 					return boneTagsAdv.IndexOf(boneTagsAdv.First(b => tag.stringID == b));
 				} else {
@@ -133,7 +133,7 @@ namespace UbiArt.Animation {
 				unityBones[i].localRotation = 0;
 				unityBones[i].bindZ = bonesDyn[i].z;
 				unityBones[i].localZ = 0;
-				if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+				if (UbiArtContext.Settings.engineVersion <= Settings.EngineVersion.RO) {
 					unityBones[i].xOffset = bonesDyn[i].xOffset;
 					unityBones[i].xScaleMultiplier = bonesDyn[i].xOffset;
 				}

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool activated;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.isCatchThemAll) return;
+			if (s.Settings.isCatchThemAll) return;
 			if (s.HasFlags(SerializeFlags.Default)) {
 				AMDisplayTuto = s.Serialize<bool>(AMDisplayTuto, name: "AMDisplayTuto", options: CSerializerObject.Options.BoolAsByte);
 				if (s.HasFlags(SerializeFlags.Editor)) {

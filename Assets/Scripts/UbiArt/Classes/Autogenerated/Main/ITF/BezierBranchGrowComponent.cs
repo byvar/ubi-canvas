@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public EaseMode easeMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				startCursor = s.Serialize<float>(startCursor, name: "startCursor");
 				growSpeed = s.Serialize<float>(growSpeed, name: "growSpeed");
 				easeMode = s.Serialize<EaseMode>(easeMode, name: "easeMode");

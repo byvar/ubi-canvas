@@ -14,10 +14,10 @@ namespace UbiArt.ITF {
 		public int textSnapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				Text2 = s.SerializeObject<Path>(Text2, name: "Text");
 				Params = s.SerializeObject<SimpleTextComponent>(Params, name: "Params");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				Text = s.Serialize<string>(Text, name: "Text");
 				wordTime = s.Serialize<float>(wordTime, name: "wordTime");
 				mood = s.Serialize<uint>(mood, name: "mood");

@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public uint GoldRequirement;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RM) {
+			if (s.Settings.game == Settings.Game.RM) {
 				LineIdName = s.Serialize<uint>(LineIdName, name: "LineIdName");
 				Path = s.SerializeObject<PathRef>(Path, name: "Path");
 				ScoreRecapPath = s.SerializeObject<PathRef>(ScoreRecapPath, name: "ScoreRecapPath");

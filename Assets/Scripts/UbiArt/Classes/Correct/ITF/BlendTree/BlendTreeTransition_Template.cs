@@ -14,9 +14,9 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			blend = s.Serialize<uint>(blend, name: "blend");
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				flags = s.Serialize<uint>(flags, name: "flags");
-			} else if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
+			} else if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
 				flagsEnum = s.Serialize<TransitionFlag>(flagsEnum, name: "flags");
 			}
 			blendFromTransition = s.Serialize<uint>(blendFromTransition, name: "blendFromTransition");

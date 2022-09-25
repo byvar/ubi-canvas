@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					modifierPriority = s.Serialize<int>(modifierPriority, name: "modifierPriority");
 					constraintLeftIsActive = s.Serialize<bool>(constraintLeftIsActive, name: "constraintLeftIsActive");
@@ -57,7 +57,7 @@ namespace UbiArt.ITF {
 					zoneNeutral = s.SerializeObject<Vec2d>(zoneNeutral, name: "zoneNeutral");
 					useDecentering = s.Serialize<bool>(useDecentering, name: "useDecentering");
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					modifierPriority = s.Serialize<int>(modifierPriority, name: "modifierPriority");
 					lookAtOffset = s.SerializeObject<Vec3d>(lookAtOffset, name: "lookAtOffset");
@@ -79,7 +79,7 @@ namespace UbiArt.ITF {
 					constraintExtendedTop = s.SerializeObject<ConstraintExtended>(constraintExtendedTop, name: "constraintExtendedTop");
 					constraintExtendedBottom = s.SerializeObject<ConstraintExtended>(constraintExtendedBottom, name: "constraintExtendedBottom");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					modifierPriority = s.Serialize<int>(modifierPriority, name: "modifierPriority");
 					lookAtOffset = s.SerializeObject<Vec3d>(lookAtOffset, name: "lookAtOffset");
@@ -101,7 +101,7 @@ namespace UbiArt.ITF {
 					constraintExtendedTop = s.SerializeObject<ConstraintExtended>(constraintExtendedTop, name: "constraintExtendedTop");
 					constraintExtendedBottom = s.SerializeObject<ConstraintExtended>(constraintExtendedBottom, name: "constraintExtendedBottom");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					modifierPriority = s.Serialize<int>(modifierPriority, name: "modifierPriority");
 					lookAtOffset = s.SerializeObject<Vec3d>(lookAtOffset, name: "lookAtOffset");

@@ -17,12 +17,12 @@ namespace UbiArt.FileFormat {
         public BinaryBigFile(MapLoader context, string name, Stream stream) {
             this.name = name;
             length = stream.Length;
-            reader = new Reader(stream, Settings.s.IsLittleEndian);
+            reader = new Reader(stream, context.Settings.IsLittleEndian);
 			string extension = null;
 			if (name.Contains(".")) {
 				extension = name.Substring(name.LastIndexOf(".") + 1);
 			}
-			if (Settings.s.serializerType == Settings.SerializerType.TagBinary && !context.IsPureBinary(name, extension)) {
+			if (context.Settings.serializerType == Settings.SerializerType.TagBinary && !context.IsPureBinary(name, extension)) {
 				serializer = new CSerializerObjectTagBinary(context, reader);
 			} else {
 				serializer = new CSerializerObjectBinary(context, reader);

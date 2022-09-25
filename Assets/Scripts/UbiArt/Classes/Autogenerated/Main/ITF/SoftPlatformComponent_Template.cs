@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public ConstraintSolverIterationPrecision precision;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				softPlatformParticles = s.SerializeObject<CListO<SoftPlatformComponent_Template.BodyData>>(softPlatformParticles, name: "softPlatformParticles");
 				softPlatformConstraints = s.SerializeObject<CListO<SoftPlatformComponent_Template.ConstraintData>>(softPlatformConstraints, name: "softPlatformConstraints");
 				weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");

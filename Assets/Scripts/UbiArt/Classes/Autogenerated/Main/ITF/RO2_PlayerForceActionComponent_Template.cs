@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public int inShadowTest;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				stackAction = s.Serialize<bool>(stackAction, name: "stackAction");
 				inShadowTest = s.Serialize<int>(inShadowTest, name: "inShadowTest");
 				DRCInteractActorInZoneTest = s.Serialize<bool>(DRCInteractActorInZoneTest, name: "DRCInteractActorInZoneTest");

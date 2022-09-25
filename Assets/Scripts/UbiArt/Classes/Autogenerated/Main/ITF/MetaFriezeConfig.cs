@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<MetaFriezeParams> _params;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				_params = s.SerializeObject<CListO<MetaFriezeParams>>(_params, name: "params");
 			}

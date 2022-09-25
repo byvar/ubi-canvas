@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public float polylineTessellation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					polylineMode2 = s.Serialize<RO2_PolylineMode2>(polylineMode2, name: "polylineMode");
 				}

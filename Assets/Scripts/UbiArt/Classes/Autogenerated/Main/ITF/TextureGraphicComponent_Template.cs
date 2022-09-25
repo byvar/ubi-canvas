@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public bool draw2DNoScreenRatio;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				texture = s.SerializeObject<Path>(texture, name: "texture");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				angleX = s.SerializeObject<Angle>(angleX, name: "angleX");
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 				speedRotX = s.Serialize<float>(speedRotX, name: "speedRotX");
 				speedRotY = s.Serialize<float>(speedRotY, name: "speedRotY");
 				speedRotZ = s.Serialize<float>(speedRotZ, name: "speedRotZ");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}

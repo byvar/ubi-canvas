@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Placeholder childData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				leafs = s.SerializeObject<Placeholder>(leafs, name: "leafs");
 				childData = s.SerializeObject<Placeholder>(childData, name: "childData");
 			} else {

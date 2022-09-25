@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public uint seed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
 				spawns = s.SerializeObject<CArrayO<Path>>(spawns, name: "spawns");
 				offset = s.SerializeObject<Vec3d>(offset, name: "offset");
 				limits = s.SerializeObject<Vec3d>(limits, name: "limits");

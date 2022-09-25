@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public Generic<Event> onUnhangEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				radius = s.Serialize<float>(radius, name: "radius");
 				phantomOffset = s.SerializeObject<Vec2d>(phantomOffset, name: "phantomOffset");
 				phantomRadius = s.Serialize<float>(phantomRadius, name: "phantomRadius");

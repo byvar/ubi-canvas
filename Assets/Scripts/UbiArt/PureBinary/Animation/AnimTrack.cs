@@ -56,11 +56,11 @@ namespace UbiArt.Animation {
 			vec1 = s.SerializeObject<Vec2d>(vec1, name: "vec1");
 			vec2 = s.SerializeObject<Vec2d>(vec2, name: "vec2");
 			vec3 = s.SerializeObject<Vec2d>(vec3, name: "vec3");
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				skeleton = s.SerializeObject<Pair<StringID, Path>>(skeleton, name: "skeleton");
 				texturePaths = s.SerializeObject<CListO<Pair<StringID, Path>>>(texturePaths, name: "textures");
 				unk0 = s.Serialize<uint>(unk0, name: "unk0");
-				if (Settings.s.game == Settings.Game.RL) {
+				if (s.Settings.game == Settings.Game.RL) {
 					unk1 = s.Serialize<uint>(unk1, name: "unk1");
 				}
 				unk2 = s.Serialize<uint>(unk2, name: "unk2");
@@ -78,7 +78,7 @@ namespace UbiArt.Animation {
 		public TextureCooked[] texs;
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				if (skeleton != null && skeleton.Item2 != null && IsFirstLoad) {
 					MapLoader l = MapLoader.Loader;
 					l.Load(skeleton.Item2, (extS) => {

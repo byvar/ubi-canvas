@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 
 		protected override async UniTask InitGameObject() {
 			await base.InitGameObject();
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (UbiArtContext.Settings.engineVersion > Settings.EngineVersion.RO) {
 				if (SCENE != null && SCENE.read) {
 					await SCENE.value.SetGameObjectParent(gao, this);
 				}
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 						l.isc[RELATIVEPATH.stringID] = sceneFile;
 					}
 					if (sceneFile != null) {
-						if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+						if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 							SCENE_ORIGINS = new Generic<Scene>(sceneFile.obj);
 						} else {
 							SCENE = new Nullable<Scene>() {

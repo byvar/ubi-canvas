@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public int pendouilleAnim;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				ringSide = s.Serialize<SwampRingSide>(ringSide, name: "ringSide");
 				lianaSide = s.Serialize<SwampRingSide>(lianaSide, name: "lianaSide");
 				isActive = s.Serialize<bool>(isActive, name: "isActive");

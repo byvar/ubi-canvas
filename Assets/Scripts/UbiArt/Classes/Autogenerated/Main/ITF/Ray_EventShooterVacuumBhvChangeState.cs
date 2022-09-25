@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Vec2d spitForce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RFR) {
 				state = s.Serialize<uint>(state, name: "state");
 				spitForce = s.SerializeObject<Vec2d>(spitForce, name: "spitForce");
 			} else {

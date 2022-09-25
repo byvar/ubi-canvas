@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 		public float float__19;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RFR) {
 				int__0 = s.Serialize<int>(int__0, name: "int__0");
 				Enum_RFR_0__1 = s.Serialize<Enum_RFR_0>(Enum_RFR_0__1, name: "Enum_RFR_0__1");
 				int__2 = s.Serialize<int>(int__2, name: "int__2");

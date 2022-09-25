@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public bool ownerIsDead;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				investigator = (ObjectRef)s.Serialize<uint>((uint)investigator, name: "investigator");
 				ownerIsDead = s.Serialize<bool>(ownerIsDead, name: "ownerIsDead");
 			} else {

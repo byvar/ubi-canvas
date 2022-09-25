@@ -8,11 +8,11 @@ namespace UbiArt.ITF {
 		public CArrayO<Path> controllerActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				controllerLayout = s.SerializeObject<CListO<UIMenuControllers_Template.ControllerLayout>>(controllerLayout, name: "controllerLayout");
 				controllerActorPaths = s.SerializeObject<CArrayO<Path>>(controllerActorPaths, name: "controllerActorPaths");
 				controllerActorNames = s.SerializeObject<CListO<StringID>>(controllerActorNames, name: "controllerActorNames");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				controllerActorPaths = s.SerializeObject<CArrayO<Path>>(controllerActorPaths, name: "controllerActorPaths");
 				controllerActorNames = s.SerializeObject<CListO<StringID>>(controllerActorNames, name: "controllerActorNames");
 			} else {

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public CArrayO<TexLanguageOverride> texOverrides;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				texture = s.SerializeObject<Path>(texture, name: "texture");
 				rank = s.Serialize<uint>(rank, name: "rank");
 				texOverrides = s.SerializeObject<CArrayO<TexLanguageOverride>>(texOverrides, name: "texOverrides");

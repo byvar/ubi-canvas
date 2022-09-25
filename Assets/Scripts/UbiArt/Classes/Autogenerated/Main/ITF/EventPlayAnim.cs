@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public uint AnimPriority;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				AnimToPlay = s.SerializeObject<StringID>(AnimToPlay, name: "AnimToPlay");
 				NbBlendFrame = s.Serialize<uint>(NbBlendFrame, name: "NbBlendFrame");
 				ResetAnim = s.Serialize<bool>(ResetAnim, name: "ResetAnim");

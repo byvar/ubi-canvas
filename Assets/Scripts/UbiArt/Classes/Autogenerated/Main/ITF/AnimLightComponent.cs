@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		public bool bool__7;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
 					animInstance = s.SerializeObject<Path>(animInstance, name: "animInstance");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
 					currentFrameSubAnims = s.SerializeObject<CListO<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
 					startOffset = s.Serialize<float>(startOffset, name: "startOffset");
@@ -47,7 +47,7 @@ namespace UbiArt.ITF {
 					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
 					currentFrameSubAnims = s.SerializeObject<CListO<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
 					startOffset = s.Serialize<float>(startOffset, name: "startOffset");
@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 					playAnimFrames = s.Serialize<uint>(playAnimFrames, name: "playAnimFrames");
 					currentFrameSubAnims = s.SerializeObject<CListO<AnimLightFrameInfo>>(currentFrameSubAnims, name: "currentFrameSubAnims");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
 					startOffset = s.Serialize<float>(startOffset, name: "startOffset");

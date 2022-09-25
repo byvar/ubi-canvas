@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		public StringID hitFxPhase03Name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				camShakeType = s.SerializeObject<StringID>(camShakeType, name: "camShakeType");
 				offsetZSwitch = s.Serialize<float>(offsetZSwitch, name: "offsetZSwitch");
 				zSwitchDuration = s.Serialize<float>(zSwitchDuration, name: "zSwitchDuration");

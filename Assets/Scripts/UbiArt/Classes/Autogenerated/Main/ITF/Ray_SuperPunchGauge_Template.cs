@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 		public float float__22;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RFR) {
 				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
 				StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
 				Path__2 = s.SerializeObject<Path>(Path__2, name: "Path__2");

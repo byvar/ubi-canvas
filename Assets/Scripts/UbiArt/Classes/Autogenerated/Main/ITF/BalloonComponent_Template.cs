@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public SoundGUID appearSoundGuid;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				aabbMin = s.SerializeObject<Vec2d>(aabbMin, name: "aabbMin");
 				is3D = s.Serialize<bool>(is3D, name: "is3D");
 				appearSoundGuid = s.SerializeObject<SoundGUID>(appearSoundGuid, name: "appearSoundGuid");

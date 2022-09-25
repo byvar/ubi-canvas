@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<DialogSoundDescriptorElement> DescriptorList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				DescriptorList = s.SerializeObject<CListO<DialogSoundDescriptorElement>>(DescriptorList, name: "DescriptorList");
 			}

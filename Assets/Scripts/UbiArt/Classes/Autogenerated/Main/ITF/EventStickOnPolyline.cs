@@ -8,9 +8,9 @@ namespace UbiArt.ITF {
 		public uint polylineRef;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				sticked = s.Serialize<bool>(sticked, name: "sticked");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				sticked = s.Serialize<bool>(sticked, name: "sticked");
 				speed = s.SerializeObject<Vec2d>(speed, name: "speed");
 				polylineRef = s.Serialize<uint>(polylineRef, name: "polylineRef");

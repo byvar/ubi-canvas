@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
 					POS = s.SerializeObject<Vec2d>(POS, name: "POS");
 				}
@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 					Scale = s.Serialize<float>(Scale, name: "Scale");
 					SwitchTexture = s.Serialize<bool>(SwitchTexture, name: "SwitchTexture");
 				}
-			} else if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL) {
 				POS = s.SerializeObject<Vec2d>(POS, name: "POS");
 				Scale = s.Serialize<float>(Scale, name: "Scale");
 				SwitchTexture = s.Serialize<bool>(SwitchTexture, name: "SwitchTexture");

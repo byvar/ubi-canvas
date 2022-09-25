@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				fxStopOnEndAnim = s.Serialize<bool>(fxStopOnEndAnim, name: "fxStopOnEndAnim");
 				fxPlayOnce = s.Serialize<bool>(fxPlayOnce, name: "fxPlayOnce");
@@ -52,7 +52,7 @@ namespace UbiArt.ITF {
 				sounds = s.SerializeObject<CListO<StringID>>(sounds, name: "sounds");
 				particles = s.SerializeObject<CListO<StringID>>(particles, name: "particles");
 				owner = s.SerializeObject<StringID>(owner, name: "owner");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				fxStopOnEndAnim = s.Serialize<bool>(fxStopOnEndAnim, name: "fxStopOnEndAnim");
 				fxPlayOnce = s.Serialize<bool>(fxPlayOnce, name: "fxPlayOnce");
@@ -70,7 +70,7 @@ namespace UbiArt.ITF {
 				owner = s.SerializeObject<StringID>(owner, name: "owner");
 				busMixActivate = s.Serialize<bool>(busMixActivate, name: "busMixActivate", options: CSerializerObject.Options.BoolAsByte);
 				fxDontStopSound = s.Serialize<bool>(fxDontStopSound, name: "fxDontStopSound", options: CSerializerObject.Options.BoolAsByte);
-			} else if(Settings.s.game == Settings.Game.COL) {
+			} else if(s.Settings.game == Settings.Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				fxStopOnEndAnim = s.Serialize<bool>(fxStopOnEndAnim, name: "fxStopOnEndAnim", options: CSerializerObject.Options.BoolAsByte);
 				fxPlayOnce = s.Serialize<bool>(fxPlayOnce, name: "fxPlayOnce", options: CSerializerObject.Options.BoolAsByte);
@@ -88,7 +88,7 @@ namespace UbiArt.ITF {
 				owner = s.SerializeObject<StringID>(owner, name: "owner");
 				busMixActivate = s.Serialize<bool>(busMixActivate, name: "busMixActivate", options: CSerializerObject.Options.BoolAsByte);
 				fxDontStopSound = s.Serialize<bool>(fxDontStopSound, name: "fxDontStopSound", options: CSerializerObject.Options.BoolAsByte);
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				fxStopOnEndAnim = s.Serialize<bool>(fxStopOnEndAnim, name: "fxStopOnEndAnim");
 				bool__16 = s.Serialize<bool>(bool__16, name: "bool__16");

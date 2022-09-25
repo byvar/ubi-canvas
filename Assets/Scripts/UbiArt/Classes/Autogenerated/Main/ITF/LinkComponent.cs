@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public CListO<ObjectPath> LinkedChildren;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					Children = s.SerializeObject<CListO<ChildEntry>>(Children, name: "Children");
 				}
@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 					ChildrenObjId = s.SerializeObject<CListO<ObjectId>>(ChildrenObjId, name: "ChildrenObjId");
 					LinkedChildren = s.SerializeObject<CListO<ObjectPath>>(LinkedChildren, name: "LinkedChildren");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					Children = s.SerializeObject<CListO<ChildEntry>>(Children, name: "Children");

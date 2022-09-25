@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 		public Path gpeIconsPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				debugMenuMapListRO = s.SerializeObject<CArrayO<CString>>(debugMenuMapListRO, name: "debugMenuMapList");
 				mapListPressConf = s.SerializeObject<CArrayO<CString>>(mapListPressConf, name: "mapListPressConf");
 				menus = s.SerializeObject<CArrayO<CString>>(menus, name: "menus");
@@ -77,7 +77,7 @@ namespace UbiArt.ITF {
 				TEMP_runTimerStop = s.Serialize<float>(TEMP_runTimerStop, name: "TEMP_runTimerStop");
 				iconsButtonPath = s.SerializeObject<Path>(iconsButtonPath, name: "iconsButtonPath");
 				gpeIconsPath = s.SerializeObject<Path>(gpeIconsPath, name: "gpeIconsPath");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.COL) {
 				debugMenuMapList = s.SerializeObject<CArrayO<Path>>(debugMenuMapList, name: "debugMenuMapList");
 				gameTextFilePath = s.SerializeObject<Path>(gameTextFilePath, name: "gameTextFilePath");
 				loading = s.SerializeObject<Path>(loading, name: "loading");

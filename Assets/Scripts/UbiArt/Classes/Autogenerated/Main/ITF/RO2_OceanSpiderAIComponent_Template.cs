@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public Placeholder bubblePrizePaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				addHitInputName = s.SerializeObject<StringID>(addHitInputName, name: "addHitInputName");
 				buboPath = s.SerializeObject<Path>(buboPath, name: "buboPath");
 				buboBoneName = s.SerializeObject<StringID>(buboBoneName, name: "buboBoneName");

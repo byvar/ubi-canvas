@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public float zOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.RL) {
 				bezierRenderer = s.SerializeObject<BezierCurveRenderer_Template>(bezierRenderer, name: "bezierRenderer");
 				tileSpriteIndex = s.Serialize<uint>(tileSpriteIndex, name: "tileSpriteIndex");
 				tileSpriteSubDiv = s.Serialize<float>(tileSpriteSubDiv, name: "tileSpriteSubDiv");

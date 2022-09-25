@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public BezierCurve bezier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					bezier = s.SerializeObject<BezierCurve>(bezier, name: "bezier");

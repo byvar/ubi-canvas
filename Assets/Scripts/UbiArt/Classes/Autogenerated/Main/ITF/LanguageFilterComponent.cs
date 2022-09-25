@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool isDemo;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				_operator = s.Serialize<Enum_operator>(_operator, name: "operator");
 				languages = s.SerializeObject<CArrayP<uint>>(languages, name: "languages");
 			} else {

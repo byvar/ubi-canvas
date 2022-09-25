@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public float height;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				texture = s.SerializeObject<Path>(texture, name: "texture");
 				playRate = s.Serialize<float>(playRate, name: "playRate");
 				width = s.Serialize<float>(width, name: "width");

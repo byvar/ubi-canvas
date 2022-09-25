@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<PadRumble> rumbles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				rumbles = s.SerializeObject<CListO<PadRumble>>(rumbles, name: "rumbles");
 			}

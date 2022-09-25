@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.VH) {
 				Type_2 = s.Serialize<AFX_2>(Type_2, name: "Type");
 			} else {
 				Type = s.Serialize<AFX>(Type, name: "Type");

@@ -18,14 +18,14 @@ namespace UbiArt.ITF {
 		public Angle angleStep;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				path = s.SerializeObject<Path>(path, name: "path");
 				bonePosName = s.SerializeObject<StringID>(bonePosName, name: "bonePosName");
 				onSpawnEvent = s.SerializeObject<Generic<Event>>(onSpawnEvent, name: "onSpawnEvent");
 				nbSpawns = s.Serialize<uint>(nbSpawns, name: "nbSpawns");
 				angleStart = s.SerializeObject<Angle>(angleStart, name: "angleStart");
 				angleStep = s.SerializeObject<Angle>(angleStep, name: "angleStep");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				path = s.SerializeObject<Path>(path, name: "path");
 				bonePosName = s.SerializeObject<StringID>(bonePosName, name: "bonePosName");
 				onSpawnEvent = s.SerializeObject<Generic<Event>>(onSpawnEvent, name: "onSpawnEvent");
@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 				spawnMinPreAllocModifier = s.Serialize<uint>(spawnMinPreAllocModifier, name: "spawnMinPreAllocModifier");
 				spawnMaxPreAllocModifier = s.Serialize<uint>(spawnMaxPreAllocModifier, name: "spawnMaxPreAllocModifier");
 				requestSpawnOnLoad = s.Serialize<bool>(requestSpawnOnLoad, name: "requestSpawnOnLoad");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				path = s.SerializeObject<Path>(path, name: "path");
 				bonePosName = s.SerializeObject<StringID>(bonePosName, name: "bonePosName");
 				onSpawnEvent = s.SerializeObject<Generic<Event>>(onSpawnEvent, name: "onSpawnEvent");

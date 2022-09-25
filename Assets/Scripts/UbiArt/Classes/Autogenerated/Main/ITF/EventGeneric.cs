@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		public bool On_Off;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR
-				|| Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR
+				|| s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL) {
 				id = s.SerializeObject<StringID>(id, name: "id");
 			} else {
 				id = s.SerializeObject<StringID>(id, name: "id");

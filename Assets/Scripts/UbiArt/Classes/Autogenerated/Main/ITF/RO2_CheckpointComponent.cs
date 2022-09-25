@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public float refractionDepthOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Editor)) {
 					PrimaryPowerUp = s.SerializeChoiceListObject<StringID>(PrimaryPowerUp, name: "PrimaryPowerUp", choices: PowerUpList);

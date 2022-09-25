@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public bool bool__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
 				Enum_VH_0__1 = s.Serialize<Enum_VH_0>(Enum_VH_0__1, name: "Enum_VH_0__1");
 				uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");

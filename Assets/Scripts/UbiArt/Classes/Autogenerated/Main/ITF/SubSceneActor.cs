@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public Generic<Scene> SCENE_ORIGINS;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30)) {
 					RELATIVEPATH = s.SerializeObject<Path>(RELATIVEPATH, name: "RELATIVEPATH");
 					EMBED_SCENE = s.Serialize<bool>(EMBED_SCENE, name: "EMBED_SCENE");
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 						SCENE_ORIGINS = s.SerializeObject<Generic<Scene>>(SCENE_ORIGINS, name: "SCENE");
 					}
 				}
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.COL) {
 				RELATIVEPATH = s.SerializeObject<Path>(RELATIVEPATH, name: "RELATIVEPATH");
 				EMBED_SCENE = s.Serialize<bool>(EMBED_SCENE, name: "EMBED_SCENE");
 				IS_SINGLE_PIECE = s.Serialize<bool>(IS_SINGLE_PIECE, name: "IS_SINGLE_PIECE");

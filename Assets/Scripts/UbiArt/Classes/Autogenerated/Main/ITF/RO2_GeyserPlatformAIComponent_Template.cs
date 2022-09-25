@@ -82,7 +82,7 @@ namespace UbiArt.ITF {
 		public int debugFx;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				attachBone = s.SerializeObject<StringID>(attachBone, name: "attachBone");
 				ignoreActorScale = s.Serialize<bool>(ignoreActorScale, name: "ignoreActorScale");
 				length = s.Serialize<float>(length, name: "length");

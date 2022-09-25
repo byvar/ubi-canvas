@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public CListO<FeedbackFXManager_Template.buses> busList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				soundDescriptors = s.SerializeObject<CListO<SoundDescriptor_Template>>(soundDescriptors, name: "soundDescriptors");
 				FxDescriptors = s.SerializeObject<CListO<FxDescriptor_Template>>(FxDescriptors, name: "FxDescriptors");
 			} else {

@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			animPackage = s.SerializeObject<AnimResourcePackage>(animPackage, name: "animPackage");
 			animations = s.SerializeObject<CListO<SubAnim_Template>>(animations, name: "animations");
-			if ((Settings.s.game == Settings.Game.RL && !Settings.s.isCatchThemAll) || Settings.s.game == Settings.Game.COL) {
+			if ((s.Settings.game == Settings.Game.RL && !s.Settings.isCatchThemAll) || s.Settings.game == Settings.Game.COL) {
 				redirectSymmetryPatches = s.SerializeObject<CListO<RedirectSymmetryPatch>>(redirectSymmetryPatches, name: "redirectSymmetryPatches");
 			}
 		}

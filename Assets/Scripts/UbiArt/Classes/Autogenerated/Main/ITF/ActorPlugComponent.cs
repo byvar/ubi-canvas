@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CArrayO<Generic<ActorPlugBaseController>> controllers;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					controllers = s.SerializeObject<CArrayO<Generic<ActorPlugBaseController>>>(controllers, name: "controllers");

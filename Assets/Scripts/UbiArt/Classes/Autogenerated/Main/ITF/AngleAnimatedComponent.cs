@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Angle angleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 			} else {
 				Addanim = s.Serialize<bool>(Addanim, name: "Addanim");
 				angleOffset = s.SerializeObject<Angle>(angleOffset, name: "angleOffset");

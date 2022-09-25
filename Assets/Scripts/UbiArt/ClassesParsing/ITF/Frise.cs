@@ -298,7 +298,7 @@ namespace UbiArt.ITF {
 					}
 				});
 				l.Load(ConfigName, (extS) => {
-					if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+					if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 						if (l.fcg.ContainsKey(ConfigName.stringID)) {
 							config = l.fcg[ConfigName.stringID];
 						} else {

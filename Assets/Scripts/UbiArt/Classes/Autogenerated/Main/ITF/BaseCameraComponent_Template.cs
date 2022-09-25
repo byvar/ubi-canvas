@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public float rampUpCoeff;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				startAsMainCam = s.Serialize<bool>(startAsMainCam, name: "startAsMainCam");
 				rampUpDestinationCoeff = s.Serialize<float>(rampUpDestinationCoeff, name: "rampUpDestinationCoeff");
 				rampUpCoeff = s.Serialize<float>(rampUpCoeff, name: "rampUpCoeff");

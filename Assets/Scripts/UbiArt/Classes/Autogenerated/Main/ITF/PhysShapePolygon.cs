@@ -9,11 +9,11 @@ namespace UbiArt.ITF {
 		public CArrayP<float> distances;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 				if (this is PhysShapeBox) return;
 				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
 			} else {
-				if (Settings.s.isCatchThemAll) return;
+				if (s.Settings.isCatchThemAll) return;
 				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					normals = s.SerializeObject<CListO<Vec2d>>(normals, name: "normals");

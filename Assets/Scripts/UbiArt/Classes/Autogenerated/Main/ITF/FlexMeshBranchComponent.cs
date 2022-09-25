@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<FlexMeshBranchComponent.FlexMesh> meshes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				meshes = s.SerializeObject<CListO<FlexMeshBranchComponent.FlexMesh>>(meshes, name: "meshes");
 			}

@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				Bounce = s.Serialize<bool>(Bounce, name: "Bounce");
 				BounceType = s.Serialize<BOUNCETYPE>(BounceType, name: "BounceType");
 				Wave = s.Serialize<bool>(Wave, name: "Wave");
@@ -67,7 +67,7 @@ namespace UbiArt.ITF {
 				destroyBoulders = s.Serialize<bool>(destroyBoulders, name: "destroyBoulders");
 				crossableByBullet = s.Serialize<bool>(crossableByBullet, name: "crossableByBullet");
 				crossableByLaser = s.Serialize<bool>(crossableByLaser, name: "crossableByLaser");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				Bounce = s.Serialize<bool>(Bounce, name: "Bounce");
 				BounceType = s.Serialize<BOUNCETYPE>(BounceType, name: "BounceType");
 				Wave = s.Serialize<bool>(Wave, name: "Wave");

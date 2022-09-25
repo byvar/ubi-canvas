@@ -286,7 +286,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");
@@ -350,7 +350,7 @@ namespace UbiArt.ITF {
 				blendMode = s.Serialize<GFX_BLEND>(blendMode, name: "blendMode");
 				genGenType2 = s.Serialize<PARGEN_GEN2>(genGenType2, name: "genGenType");
 				genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");
@@ -445,7 +445,7 @@ namespace UbiArt.ITF {
 				genGenType = s.Serialize<PARGEN_GEN>(genGenType, name: "genGenType");
 				genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
 				genEmitMode = s.Serialize<PARGEN_EMITMODE>(genEmitMode, name: "genEmitMode");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");
@@ -562,7 +562,7 @@ namespace UbiArt.ITF {
 				genGenType = s.Serialize<PARGEN_GEN>(genGenType, name: "genGenType");
 				genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
 				genEmitMode = s.Serialize<PARGEN_EMITMODE>(genEmitMode, name: "genEmitMode");
-			} else if(Settings.s.game == Settings.Game.COL) {
+			} else if(s.Settings.game == Settings.Game.COL) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");

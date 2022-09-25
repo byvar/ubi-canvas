@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public bool ForceSnappingExternalActor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
 			} else {
 				boneName = s.SerializeObject<StringID>(boneName, name: "boneName");
 				useBoneScale = s.Serialize<bool>(useBoneScale, name: "useBoneScale");

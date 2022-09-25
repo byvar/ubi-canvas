@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public GFXPrimitiveParam atlasPrimitiveParam;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					managerPath = s.SerializeObject<ObjectPath>(managerPath, name: "managerPath");
 				}

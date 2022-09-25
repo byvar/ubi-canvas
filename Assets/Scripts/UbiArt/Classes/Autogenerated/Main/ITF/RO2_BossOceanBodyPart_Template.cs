@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public Placeholder buboAttachBones;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				buboPath = s.SerializeObject<Path>(buboPath, name: "buboPath");
 				buboAttachBones = s.SerializeObject<Placeholder>(buboAttachBones, name: "buboAttachBones");
 				missilePath = s.SerializeObject<Path>(missilePath, name: "missilePath");

@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 		public float float__12;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RFR) {
 				Path__0 = s.SerializeObject<Path>(Path__0, name: "Path__0");
 				uint__1 = s.Serialize<uint>(uint__1, name: "uint__1");
 				float__2 = s.Serialize<float>(float__2, name: "float__2");
@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 				float__10 = s.Serialize<float>(float__10, name: "float__10");
 				float__11 = s.Serialize<float>(float__11, name: "float__11");
 				float__12 = s.Serialize<float>(float__12, name: "float__12");
-			} else if (Settings.s.game == Settings.Game.RO) {
+			} else if (s.Settings.game == Settings.Game.RO) {
 				swarmTexture = s.SerializeObject<Path>(swarmTexture, name: "swarmTexture");
 				numParticles = s.Serialize<uint>(numParticles, name: "numParticles");
 				startRadius = s.Serialize<float>(startRadius, name: "startRadius");

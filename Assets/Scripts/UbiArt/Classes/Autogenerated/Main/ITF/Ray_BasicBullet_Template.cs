@@ -57,7 +57,7 @@ namespace UbiArt.ITF {
 		public int int__51;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RFR) {
 				Generic_PhysShape__26 = s.SerializeObject<Generic<PhysShape>>(Generic_PhysShape__26, name: "Generic<PhysShape>__26");
 				Enum_RFR_0__27 = s.Serialize<Enum_RFR_0>(Enum_RFR_0__27, name: "Enum_RFR_0__27");
 				float__28 = s.Serialize<float>(float__28, name: "float__28");

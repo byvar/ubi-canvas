@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			animSpikyToFriendly = s.SerializeObject<StringID>(animSpikyToFriendly, name: "animSpikyToFriendly");
 			animFriendly = s.SerializeObject<StringID>(animFriendly, name: "animFriendly");
 			flip = s.Serialize<bool>(flip, name: "flip");
-			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM || s.Settings.game == Settings.Game.VH) {
 				grow = s.Serialize<bool>(grow, name: "grow");
 				delayMin = s.Serialize<float>(delayMin, name: "delayMin");
 				delayMax = s.Serialize<float>(delayMax, name: "delayMax");

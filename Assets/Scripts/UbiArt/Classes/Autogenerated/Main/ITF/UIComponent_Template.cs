@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 		public bool bool__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				if (!(this is UITextBox_Template)) {
 					fontName = s.SerializeObject<Path>(fontName, name: "fontName");
 					fontHeight = s.Serialize<float>(fontHeight, name: "fontHeight");
@@ -57,12 +57,12 @@ namespace UbiArt.ITF {
 					lineSpacingFactor = s.Serialize<float>(lineSpacingFactor, name: "lineSpacingFactor");
 					forceUseAnimSize = s.Serialize<int>(forceUseAnimSize, name: "forceUseAnimSize");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
 				showingFadeDuration = s.Serialize<float>(showingFadeDuration, name: "showingFadeDuration");
 				hidingFadeDuration = s.Serialize<float>(hidingFadeDuration, name: "hidingFadeDuration");
-			} else if (Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.RL) {
 				is2D = s.Serialize<bool>(is2D, name: "is2D", options: CSerializerObject.Options.BoolAsByte);
 				showingFadeDuration = s.Serialize<float>(showingFadeDuration, name: "showingFadeDuration");
 				hidingFadeDuration = s.Serialize<float>(hidingFadeDuration, name: "hidingFadeDuration");

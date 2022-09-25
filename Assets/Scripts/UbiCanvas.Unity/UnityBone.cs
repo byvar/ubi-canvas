@@ -76,6 +76,7 @@ public class UnityBone : MonoBehaviour {
 	}
 
 	public void UpdateBone() {
+		var c = MapLoader.Loader;
 		if (bind) {
 			if (parent != null) {
 				globalAngle = parent.globalAngle + bindRotation + localRotation;
@@ -96,7 +97,7 @@ public class UnityBone : MonoBehaviour {
 				globalAngle = bindRotation + localRotation;
 			}
 			computedScale = Vector3.Scale(localScale, bindScale);
-			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+			if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
 				transform.localScale = new Vector3(computedScale.x * xScaleMultiplier, computedScale.y, 1f);
 			} else {
 				transform.localScale = computedScale;

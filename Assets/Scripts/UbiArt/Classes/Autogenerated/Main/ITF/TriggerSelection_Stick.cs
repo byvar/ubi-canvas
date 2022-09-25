@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public bool bool__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 			} else {
 				Self = s.Serialize<bool>(Self, name: "Self");

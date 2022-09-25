@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public bool onTriggerActiveCheckNextBhv;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				startBhv = s.SerializeObject<StringID>(startBhv, name: "startBhv");
 				onTriggerActiveBhv = s.SerializeObject<StringID>(onTriggerActiveBhv, name: "onTriggerActiveBhv");
 				onTriggerDesactivateBhv = s.SerializeObject<StringID>(onTriggerDesactivateBhv, name: "onTriggerDesactivateBhv");

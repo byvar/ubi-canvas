@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public bool loop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 			} else {
 				xofs = s.Serialize<float>(xofs, name: "xofs");
 				yofs = s.Serialize<float>(yofs, name: "yofs");

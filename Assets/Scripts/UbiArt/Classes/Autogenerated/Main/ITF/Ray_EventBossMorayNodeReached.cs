@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public int LeadCam;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RFR) {
 				speed = s.Serialize<float>(speed, name: "speed");
 				acceleration = s.Serialize<float>(acceleration, name: "acceleration");
 				disableSpeedMultiplier = s.Serialize<int>(disableSpeedMultiplier, name: "disableSpeedMultiplier");

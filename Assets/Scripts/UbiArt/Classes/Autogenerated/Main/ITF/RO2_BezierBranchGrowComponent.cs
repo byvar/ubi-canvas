@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public float retractSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				startCursor = s.Serialize<float>(startCursor, name: "startCursor");
 				useSameSpeed = s.Serialize<bool>(useSameSpeed, name: "useSameSpeed", options: CSerializerObject.Options.BoolAsByte);
 				growSpeed = s.Serialize<float>(growSpeed, name: "growSpeed");

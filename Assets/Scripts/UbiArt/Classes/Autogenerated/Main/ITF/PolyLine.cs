@@ -9,11 +9,11 @@ namespace UbiArt.ITF {
 		public CListO<PolyLineEdge> POINTS;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
 					POINTS = s.SerializeObject<CListO<PolyLineEdge>>(POINTS, name: "POINTS");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				PolyPointList = s.SerializeObject<PolyPointList>(PolyPointList, name: "PolyPointList");
 				AABB = s.SerializeObject<AABB>(AABB, name: "AABB");
 				if (s.HasFlags(SerializeFlags.Flags10)) {

@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public bool bool__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				Vector2__0 = s.SerializeObject<Vec2d>(Vector2__0, name: "Vector2__0");
 				Path__1 = s.SerializeObject<Path>(Path__1, name: "Path__1");
 				StringID__2 = s.SerializeObject<StringID>(StringID__2, name: "StringID__2");

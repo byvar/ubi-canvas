@@ -24,11 +24,11 @@ namespace UbiArt.ITF {
 		public EventSender EventSender__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
-			} else if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				selectTextStyle = s.Serialize<uint>(selectTextStyle, name: "selectTextStyle");
 				selectAnimMeshVertex = s.SerializeObject<CListO<StringID>>(selectAnimMeshVertex, name: "selectAnimMeshVertex");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				selectTextStyle = s.Serialize<uint>(selectTextStyle, name: "selectTextStyle");
 				selectAnimMeshVertex = s.SerializeObject<CListO<StringID>>(selectAnimMeshVertex, name: "selectAnimMeshVertex");
 				PathForMap = s.SerializeObject<PathRef>(PathForMap, name: "PathForMap");

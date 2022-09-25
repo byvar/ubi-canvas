@@ -20,6 +20,7 @@ namespace UbiArt {
 		public bool Disposed { get; set; }
 
 		public MapLoader Context { get; set; }
+		public Settings Settings => Context?.Settings;
 
 		public CSerializerObject(MapLoader context) {
 			Context = context;

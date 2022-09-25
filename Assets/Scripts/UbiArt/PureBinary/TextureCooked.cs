@@ -33,7 +33,7 @@ namespace UbiArt {
 		public UV.UVAtlas atlas = null;
 
 		public void Serialize(CSerializerObject s, string name) {
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				version = s.Serialize<uint>(version);
 				signature = s.Serialize<uint>(signature);
 				hdrSize = s.Serialize<uint>(hdrSize);
@@ -42,7 +42,7 @@ namespace UbiArt {
 				height = s.Serialize<ushort>(height);
 				unk_x = s.Serialize<ushort>(unk_x);
 				unk_y = s.Serialize<ushort>(unk_y);
-				if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
+				if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
 					unkAdventures = s.Serialize<uint>(unkAdventures);
 				}
 				texSize2 = s.Serialize<uint>(texSize2);

@@ -363,7 +363,7 @@ namespace UbiArt {
 		public async UniTask WriteBundle(string path, List<Pair<Path, ICSerializable>> files) {
 			Bundle.BundleFile b = new Bundle.BundleFile();
 			foreach (Pair<Path, ICSerializable> f in files) {
-				b.AddFile(f.Item1.CookedPath, f.Item2);
+				b.AddFile(f.Item1.CookedPath(this), f.Item2);
 			}
 			TimeController.StartStopwatch();
 			await b.WriteBundle(this, path);

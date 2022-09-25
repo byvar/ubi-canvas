@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public bool disablePhys;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				anim = s.SerializeObject<StringID>(anim, name: "anim");
 				restartOnFact = s.SerializeObject<StringID>(restartOnFact, name: "restartOnFact");
 				retOnFinish = s.Serialize<bool>(retOnFinish, name: "retOnFinish");

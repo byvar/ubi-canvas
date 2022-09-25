@@ -7,9 +7,9 @@ namespace UbiArt.ITF {
 		public CArrayO<Path> TRCActorsList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || 
-				Settings.s.game == Settings.Game.VH ||
-				Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || 
+				s.Settings.game == Settings.Game.VH ||
+				s.Settings.game == Settings.Game.COL) {
 				TRCLocalisationList = s.SerializeObject<CMap<GameplayErrorContext, TRCLocalisation_Detail>>(TRCLocalisationList, name: "TRCLocalisationList");
 				TRCActorsList = s.SerializeObject<CArrayO<Path>>(TRCActorsList, name: "TRCActorsList");
 			} else {

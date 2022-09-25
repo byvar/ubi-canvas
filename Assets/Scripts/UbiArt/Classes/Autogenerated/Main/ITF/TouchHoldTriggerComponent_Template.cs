@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public float tapGaugeHoldAsTapDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				ListenToSwipe = s.Serialize<bool>(ListenToSwipe, name: "ListenToSwipe");
 				input = s.SerializeObject<StringID>(input, name: "input");
 				catchFrontEnabled = s.Serialize<bool>(catchFrontEnabled, name: "catchFrontEnabled");

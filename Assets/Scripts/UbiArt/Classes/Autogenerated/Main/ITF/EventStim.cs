@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public float z;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 			} else {
 				pos = s.SerializeObject<Vec2d>(pos, name: "pos");
 				prevPos = s.SerializeObject<Vec2d>(prevPos, name: "prevPos");

@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<FontEffect_Template> effects;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				effects = s.SerializeObject<CListO<FontEffect_Template>>(effects, name: "effects");
 			}

@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public StringID animOnFlip;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				torchPath = s.SerializeObject<Path>(torchPath, name: "torchPath");
 				snapBones = s.SerializeObject<CArrayO<StringID>>(snapBones, name: "snapBones");
 				ZOffset = s.Serialize<float>(ZOffset, name: "ZOffset");

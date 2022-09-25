@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public CListO<BusDef> busDefs;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				priority = s.Serialize<uint>(priority, name: "priority");
 				duration = s.Serialize<float>(duration, name: "duration");

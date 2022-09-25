@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public uint bounceReactType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				bounceType = s.Serialize<BOUNCETYPE>(bounceType, name: "bounceType");
 				bounceReactType = s.Serialize<uint>(bounceReactType, name: "bounceReactType");
 				direction = s.SerializeObject<Vec2d>(direction, name: "direction");

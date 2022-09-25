@@ -71,7 +71,7 @@ namespace UbiArt.ITF {
 		public float syncMessageRestartDelay;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				tombPath = s.SerializeObject<Path>(tombPath, name: "tombPath");
 				tombIconPath = s.SerializeObject<Path>(tombIconPath, name: "tombIconPath");
 				challengeEndDelay = s.Serialize<float>(challengeEndDelay, name: "challengeEndDelay");

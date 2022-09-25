@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		public StringID animUturnUpEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				factTarget = s.SerializeObject<StringID>(factTarget, name: "factTarget");
 				thresholdY = s.Serialize<float>(thresholdY, name: "thresholdY");
 				thresholdYDown = s.Serialize<float>(thresholdYDown, name: "thresholdYDown");

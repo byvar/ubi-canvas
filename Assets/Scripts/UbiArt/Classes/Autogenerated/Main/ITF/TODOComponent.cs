@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public int centerText;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					TextLabel = s.Serialize<CString>(TextLabel, name: "TextLabel");
 					drawUsingEngine = s.Serialize<int>(drawUsingEngine, name: "drawUsingEngine");

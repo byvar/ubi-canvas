@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public bool ignoreCamZ;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					offsetFromCam = s.SerializeObject<Vec3d>(offsetFromCam, name: "offsetFromCam");
 				}

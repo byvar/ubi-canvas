@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 		public CListO<FluidFriseLayer> Layers;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				Elasticity = s.Serialize<float>(Elasticity, name: "Elasticity");
 				Velocity = s.Serialize<float>(Velocity, name: "Velocity");
 				Viscosity = s.Serialize<float>(Viscosity, name: "Viscosity");

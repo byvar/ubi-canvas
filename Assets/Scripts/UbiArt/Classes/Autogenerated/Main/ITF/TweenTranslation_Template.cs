@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public float speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
 				startDuration = s.Serialize<float>(startDuration, name: "startDuration");
 				endDuration = s.Serialize<float>(endDuration, name: "endDuration");
 				startSpeed = s.Serialize<float>(startSpeed, name: "startSpeed");
@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 				angle = s.SerializeObject<AngleAmount>(angle, name: "angle");
 				angleOffset = s.SerializeObject<AngleAmount>(angleOffset, name: "angleOffset");
 				scaleMultiplier = s.SerializeObject<Vec2d>(scaleMultiplier, name: "scaleMultiplier");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				startDuration = s.Serialize<float>(startDuration, name: "startDuration");
 				endDuration = s.Serialize<float>(endDuration, name: "endDuration");
 				startSpeed = s.Serialize<float>(startSpeed, name: "startSpeed");

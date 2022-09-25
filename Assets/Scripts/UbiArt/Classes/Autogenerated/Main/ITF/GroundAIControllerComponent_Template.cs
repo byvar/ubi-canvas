@@ -46,7 +46,7 @@ namespace UbiArt.ITF {
 		public float dashSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				walkForce = s.Serialize<float>(walkForce, name: "walkForce");
 				walkEfficiencyMaxSpeed = s.Serialize<float>(walkEfficiencyMaxSpeed, name: "walkEfficiencyMaxSpeed");
 				walkEfficiencyMinGroundAngle = s.SerializeObject<Angle>(walkEfficiencyMinGroundAngle, name: "walkEfficiencyMinGroundAngle");
@@ -84,7 +84,7 @@ namespace UbiArt.ITF {
 				sprintWalkForceMultiplier = s.Serialize<float>(sprintWalkForceMultiplier, name: "sprintWalkForceMultiplier");
 				sprintEfficiencyMaxSpeedMultiplier = s.Serialize<float>(sprintEfficiencyMaxSpeedMultiplier, name: "sprintEfficiencyMaxSpeedMultiplier");
 				sprintAccelerationDuration = s.Serialize<float>(sprintAccelerationDuration, name: "sprintAccelerationDuration");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
 				walkForce = s.Serialize<float>(walkForce, name: "walkForce");
 				walkEfficiencyMaxSpeed = s.Serialize<float>(walkEfficiencyMaxSpeed, name: "walkEfficiencyMaxSpeed");
 				walkEfficiencyMinGroundAngle = s.SerializeObject<Angle>(walkEfficiencyMinGroundAngle, name: "walkEfficiencyMinGroundAngle");

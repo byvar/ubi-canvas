@@ -73,7 +73,7 @@ namespace UbiArt.ITF {
 		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
 					LOCAL_POINTS = s.SerializeObject<CListO<PolyLineEdge>>(LOCAL_POINTS, name: "LOCAL_POINTS");
 				}
@@ -114,7 +114,7 @@ namespace UbiArt.ITF {
 						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "LockTexture");
 					}
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					EventShowColorDst = s.SerializeObject<Color>(EventShowColorDst, name: "EventShowColorDst");
 					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
@@ -126,7 +126,7 @@ namespace UbiArt.ITF {
 					meshOverlayData = s.SerializeObject<Nullable<Frise.MeshOverlayData>>(meshOverlayData, name: "MeshOverlayData");
 					VisualPolyline = s.SerializeObject<PolyLine>(VisualPolyline, name: "VisualPolyline");
 					VisualPolyPointLocal = s.SerializeObject<PolyPointList>(VisualPolyPointLocal, name: "VisualPolyPointLocal");
-					if (Settings.s.isCatchThemAll) {
+					if (s.Settings.isCatchThemAll) {
 						meshBuildData = new Nullable<MeshBuildData>();
 						meshBuildData.value = s.SerializeObject<MeshBuildData>(meshBuildData.value, name: "MeshBuildData");
 					} else {
@@ -165,7 +165,7 @@ namespace UbiArt.ITF {
 						UvY_Offset = s.Serialize<float>(UvY_Offset, name: "UvY_Offset");
 						UvX_Flip = s.Serialize<bool>(UvX_Flip, name: "UvX_Flip", options: CSerializerObject.Options.ForceAsByte);
 						UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
-						if (Settings.s.isCatchThemAll) {
+						if (s.Settings.isCatchThemAll) {
 							UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
 						}
 						uvY_Tile = s.Serialize<float>(uvY_Tile, name: "uvY_Tile");
@@ -176,14 +176,14 @@ namespace UbiArt.ITF {
 						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
 						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision");
 						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams");
-						if (Settings.s.isCatchThemAll) {
+						if (s.Settings.isCatchThemAll) {
 							UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
 						}
 						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "LockTexture");
 						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					EventShowColorDst = s.SerializeObject<Color>(EventShowColorDst, name: "EventShowColorDst");
 					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");
@@ -234,7 +234,7 @@ namespace UbiArt.ITF {
 						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					}
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					EventShowColorDst = s.SerializeObject<Color>(EventShowColorDst, name: "EventShowColorDst");
 					disablePhysic = s.Serialize<bool>(disablePhysic, name: "disablePhysic");

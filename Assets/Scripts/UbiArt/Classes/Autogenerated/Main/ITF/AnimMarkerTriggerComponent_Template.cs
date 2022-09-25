@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<MarkerEvent> markerEvents;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				markerEvents = s.SerializeObject<CListO<MarkerEvent>>(markerEvents, name: "markerEvents");
 			}

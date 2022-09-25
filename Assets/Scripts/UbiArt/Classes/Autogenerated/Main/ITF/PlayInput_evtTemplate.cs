@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public ColorEventList Colors;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
 				InputName = s.Serialize<string>(InputName, name: "InputName");
 				InputSpline = s.SerializeObject<Spline>(InputSpline, name: "InputSpline");
 			} else {

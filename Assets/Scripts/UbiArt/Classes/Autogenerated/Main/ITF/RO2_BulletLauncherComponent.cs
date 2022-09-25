@@ -12,14 +12,14 @@ namespace UbiArt.ITF {
 		public bool spawnAlwaysActive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					timedSpawnerData = s.SerializeObject<TimedSpawnerData>(timedSpawnerData, name: "timedSpawnerData");
 					startActive = s.Serialize<bool>(startActive, name: "startActive");
 					applyColorsToBullet = s.Serialize<bool>(applyColorsToBullet, name: "applyColorsToBullet");
 					useTutoOnBullet = s.Serialize<bool>(useTutoOnBullet, name: "useTutoOnBullet", options: CSerializerObject.Options.BoolAsByte);
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					timedSpawnerData = s.SerializeObject<TimedSpawnerData>(timedSpawnerData, name: "timedSpawnerData");
 					startActive = s.Serialize<bool>(startActive, name: "startActive");

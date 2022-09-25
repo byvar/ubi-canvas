@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public StateImplement_Template implementTempate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				implementTempate = s.SerializeObject<StateImplement_Template>(implementTempate, name: "implementTempate");
 			}

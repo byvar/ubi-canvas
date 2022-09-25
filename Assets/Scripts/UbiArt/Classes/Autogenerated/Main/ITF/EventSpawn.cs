@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public bool bool__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				Enum_VH_0__0 = s.Serialize<Enum_VH_0>(Enum_VH_0__0, name: "Enum_VH_0__0");
 				int__1 = s.Serialize<int>(int__1, name: "int__1");
 				float__2 = s.Serialize<float>(float__2, name: "float__2");

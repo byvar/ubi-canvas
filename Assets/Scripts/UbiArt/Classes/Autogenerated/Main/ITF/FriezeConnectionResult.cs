@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public uint uint__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					Vector2__0 = s.SerializeObject<Vec2d>(Vector2__0, name: "Vector2__0");
 					ObjectPath__1 = s.SerializeObject<ObjectPath>(ObjectPath__1, name: "ObjectPath__1");

@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public Placeholder FriezePath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
 					PointsList = s.SerializeObject<PolyPointList>(PointsList, name: "PointsList");
 				}
@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 				SwitchExtremityStop = s.Serialize<bool>(SwitchExtremityStop, name: "SwitchExtremityStop");
 				SwitchTexturePipeExtremity = s.Serialize<uint>(SwitchTexturePipeExtremity, name: "SwitchTexturePipeExtremity");
 				IsFriendlyNameValid = s.Serialize<bool>(IsFriendlyNameValid, name: "IsFriendlyNameValid");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
 					PointsList = s.SerializeObject<PolyPointList>(PointsList, name: "PointsList");
 				}

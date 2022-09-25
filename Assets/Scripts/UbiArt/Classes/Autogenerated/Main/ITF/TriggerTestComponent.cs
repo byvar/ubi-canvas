@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				AutoStart = s.Serialize<bool>(AutoStart, name: "AutoStart");
 				if (!s.HasFlags(SerializeFlags.Editor)) {
 					Detection = s.SerializeObject<CListO<Generic<TriggerSelectionAbstract>>>(Detection, name: "Detection");

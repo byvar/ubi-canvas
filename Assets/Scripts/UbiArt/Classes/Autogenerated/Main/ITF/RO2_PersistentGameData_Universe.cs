@@ -420,7 +420,7 @@ namespace UbiArt.ITF {
 		public Message messageDummy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				score = s.SerializeObject<RO2_PersistentGameData_Score>(score, name: "score");
 				profile = s.SerializeObject<Unknown_RL_31371_sub_894F80>(profile, name: "profile");
 				bubbleDreamer = s.SerializeObject<RO2_PersistentGameData_BubbleDreamerData>(bubbleDreamer, name: "bubbleDreamer");

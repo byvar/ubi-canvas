@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 		public Enum_VH_1 Enum_VH_1__19;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					INDEX = s.Serialize<uint>(INDEX, name: "INDEX");
 					joinAlive = s.Serialize<bool>(joinAlive, name: "joinAlive");
@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					active = s.Serialize<bool>(active, name: "active");
 				}
-				if (Settings.s.isCatchThemAll) {
+				if (s.Settings.isCatchThemAll) {
 					uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
 					uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
 					uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
@@ -52,7 +52,7 @@ namespace UbiArt.ITF {
 					uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
 					uint__3 = s.Serialize<uint>(uint__3, name: "uint__3");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					INDEX = s.Serialize<uint>(INDEX, name: "INDEX");
 					joinAlive = s.Serialize<bool>(joinAlive, name: "joinAlive");
@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					active = s.Serialize<bool>(active, name: "active");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					INDEX = s.Serialize<uint>(INDEX, name: "INDEX");
 					Enum_VH_0__1 = s.Serialize<Enum_VH_0>(Enum_VH_0__1, name: "Enum_VH_0__1");

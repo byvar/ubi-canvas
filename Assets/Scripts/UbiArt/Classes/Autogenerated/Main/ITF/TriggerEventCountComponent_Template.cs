@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool useGenerics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				eventToCount = s.SerializeObject<Generic<Event>>(eventToCount, name: "eventToCount");
 				eventToSend = s.SerializeObject<Generic<Event>>(eventToSend, name: "eventToSend");
 				useGenerics = s.Serialize<bool>(useGenerics, name: "useGenerics", options: CSerializerObject.Options.BoolAsByte);

@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public ActorPlugInterface_Parameters plugInterfaceParameters;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				unpluggedControllerID = s.SerializeObject<StringID>(unpluggedControllerID, name: "unpluggedControllerID");
 			} else {
 				controllers = s.SerializeObject<CArrayO<Generic<ActorPlugBaseController_Template>>>(controllers, name: "controllers");

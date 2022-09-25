@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public Vec2d UV3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 				use = s.Serialize<bool>(use, name: "use");

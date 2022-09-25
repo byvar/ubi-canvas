@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				numChannels = s.Serialize<uint>(numChannels, name: "numChannels");
 				loop = s.Serialize<int>(loop, name: "loop");
 				playMode2 = s.Serialize<PlayMode2>(playMode2, name: "playMode");

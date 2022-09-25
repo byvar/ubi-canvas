@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public strRandomPatchName strRandomPatchName__4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
 				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");

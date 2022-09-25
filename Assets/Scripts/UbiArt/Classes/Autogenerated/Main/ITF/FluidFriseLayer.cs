@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public bool hasForcedHeightWhenNotColored;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
 				threshold = s.Serialize<float>(threshold, name: "threshold");
 				color = s.SerializeObject<Color>(color, name: "color");
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");

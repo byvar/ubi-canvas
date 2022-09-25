@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public AABB aabb;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					isActive = s.Serialize<bool>(isActive, name: "isActive");
 					margingTop = s.Serialize<float>(margingTop, name: "margingTop");
@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 					minimumSize = s.SerializeObject<Vec2d>(minimumSize, name: "minimumSize");
 					aabb = s.SerializeObject<AABB>(aabb, name: "aabb");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					isActive = s.Serialize<bool>(isActive, name: "isActive");
 					margingTop = s.Serialize<float>(margingTop, name: "margingTop");

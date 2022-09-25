@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		public Placeholder musicEventHighEnd;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				timeBetweenLums = s.Serialize<float>(timeBetweenLums, name: "timeBetweenLums");
 				timeAppearNewPet = s.Serialize<float>(timeAppearNewPet, name: "timeAppearNewPet");
 				animPlayerDance = s.SerializeObject<StringID>(animPlayerDance, name: "animPlayerDance");

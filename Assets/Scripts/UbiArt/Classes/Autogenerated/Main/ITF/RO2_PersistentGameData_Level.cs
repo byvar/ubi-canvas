@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public int onlineSynced;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				bestLumsTaken = s.Serialize<uint>(bestLumsTaken, name: "bestLumsTaken");
 				bestDistance = s.Serialize<float>(bestDistance, name: "bestDistance");
 				bestTime = s.Serialize<float>(bestTime, name: "bestTime");

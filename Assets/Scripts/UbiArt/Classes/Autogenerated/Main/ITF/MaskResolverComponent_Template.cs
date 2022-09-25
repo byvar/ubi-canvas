@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool resolveBackLightBuffer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				resolveFrontLightBuffer = s.Serialize<bool>(resolveFrontLightBuffer, name: "resolveFrontLightBuffer");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					resolveFrontLightBufferInverted = s.Serialize<bool>(resolveFrontLightBufferInverted, name: "resolveFrontLightBufferInverted");

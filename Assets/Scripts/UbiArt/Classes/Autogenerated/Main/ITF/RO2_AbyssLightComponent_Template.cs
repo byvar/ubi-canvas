@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public GFXMaterialSerializable mat;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				radius = s.Serialize<float>(radius, name: "radius");
 				textureRenderPrio = s.Serialize<float>(textureRenderPrio, name: "textureRenderPrio");
 				textureRadiusRatio = s.Serialize<float>(textureRadiusRatio, name: "textureRadiusRatio");

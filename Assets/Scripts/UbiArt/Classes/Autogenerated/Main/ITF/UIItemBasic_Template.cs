@@ -67,8 +67,8 @@ namespace UbiArt.ITF {
 		public StringID StringID__31;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
-			} else if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				blinkScaleMin = s.Serialize<float>(blinkScaleMin, name: "blinkScaleMin");
 				blinkScale = s.Serialize<float>(blinkScale, name: "blinkScale");
 				blinkPeriod = s.Serialize<float>(blinkPeriod, name: "blinkPeriod");
@@ -93,7 +93,7 @@ namespace UbiArt.ITF {
 				actorIconUnselected = s.SerializeObject<StringID>(actorIconUnselected, name: "actorIconUnselected");
 				actorIconOffset = s.SerializeObject<Vec2d>(actorIconOffset, name: "actorIconOffset");
 				inverseShadowState = s.Serialize<bool>(inverseShadowState, name: "inverseShadowState");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				float__0 = s.Serialize<float>(float__0, name: "float__0");
 				float__1 = s.Serialize<float>(float__1, name: "float__1");
 				float__2 = s.Serialize<float>(float__2, name: "float__2");

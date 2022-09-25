@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 		public GFXMaterialSerializable GFXMaterialSerializable__9;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				size = s.SerializeObject<Vec2d>(size, name: "size");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				uvPreTranslation = s.SerializeObject<Vec2d>(uvPreTranslation, name: "uvPreTranslation");
@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 				uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 				uvRotationSpeed = s.SerializeObject<Angle>(uvRotationSpeed, name: "uvRotationSpeed");
 				uvPivot = s.SerializeObject<Vec2d>(uvPivot, name: "uvPivot");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				Vector2__0 = s.SerializeObject<Vec2d>(Vector2__0, name: "Vector2__0");
 				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
 				Vector2__2 = s.SerializeObject<Vec2d>(Vector2__2, name: "Vector2__2");

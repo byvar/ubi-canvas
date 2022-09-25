@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public Placeholder triggerEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				anim = s.SerializeObject<StringID>(anim, name: "anim");
 				animPlayRate = s.Serialize<float>(animPlayRate, name: "animPlayRate");
 				cycleVector = s.SerializeObject<Vec2d>(cycleVector, name: "cycleVector");

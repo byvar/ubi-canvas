@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public AnimResourcePackage animPackage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				defaultUpdate = s.Serialize<bool>(defaultUpdate, name: "defaultUpdate");
 				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
 				amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");

@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
-				if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+				if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 					bindedBoneName = s.SerializeObject<StringID>(bindedBoneName, name: "bindedBoneName");
 					localOffset = s.SerializeObject<Vec2d>(localOffset, name: "localOffset");
 					applyRotation = s.Serialize<bool>(applyRotation, name: "applyRotation");

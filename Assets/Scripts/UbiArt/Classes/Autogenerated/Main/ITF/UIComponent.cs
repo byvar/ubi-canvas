@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 		public float float__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
 				if (this is UITextBox) return;
 				if (s.HasFlags(SerializeFlags.Default)) {
 					RELATIVEPOSX = s.Serialize<float>(RELATIVEPOSX, name: "RELATIVEPOSX");
@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 					defaultSelectedByInstance = s.Serialize<int>(defaultSelectedByInstance, name: "defaultSelectedByInstance");
 					align = s.Serialize<Align>(align, name: "align");
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					transition = s.Serialize<bool>(transition, name: "transition");
 					display = s.Serialize<bool>(display, name: "display");
@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					screenSpace = s.SerializeObject<Vec2d>(screenSpace, name: "screenSpace");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					transition = s.Serialize<bool>(transition, name: "transition");
 					display = s.Serialize<bool>(display, name: "display");
@@ -70,7 +70,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					screenSpace = s.SerializeObject<Vec2d>(screenSpace, name: "screenSpace");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					transition = s.Serialize<bool>(transition, name: "transition");
 					display = s.Serialize<bool>(display, name: "display");

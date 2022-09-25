@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public int snapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				enableDialog = s.Serialize<bool>(enableDialog, name: "enableDialog");
 				textOffset = s.SerializeObject<Vec2d>(textOffset, name: "textOffset");
 				snapToScreen = s.Serialize<int>(snapToScreen, name: "snapToScreen");

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public CArrayO<sEventData> CArray_sEventData__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				CArray_sEventData__0 = s.SerializeObject<CArrayO<sEventData>>(CArray_sEventData__0, name: "CArray<sEventData>__0");
 				CArray_sEventData__1 = s.SerializeObject<CArrayO<sEventData>>(CArray_sEventData__1, name: "CArray<sEventData>__1");
 				CArray_sEventData__2 = s.SerializeObject<CArrayO<sEventData>>(CArray_sEventData__2, name: "CArray<sEventData>__2");

@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 			public bool bool__1;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (Settings.s.game == Settings.Game.VH) {
+				if (s.Settings.game == Settings.Game.VH) {
 					StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
 					bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
 				} else {

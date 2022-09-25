@@ -21,7 +21,7 @@ namespace UbiArt.Localisation {
 			audio = s.SerializeObject<CMap<LocalisationId, LocAudio>>(audio, name: "audio");
 			paths = s.SerializeObject<CListO<Path>>(paths, name: "paths");
 			// Special array with sometimes predefined size
-			if (Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
+			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
 				// Adventures: length specified in file, but when writing, the script always writes 25.
 				count = s.Serialize<uint>(count, name: "count");
 			} else {

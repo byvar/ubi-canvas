@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public bool disableColorRamp;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					trailPath = s.SerializeObject<Path>(trailPath, name: "trailPath");
 				}

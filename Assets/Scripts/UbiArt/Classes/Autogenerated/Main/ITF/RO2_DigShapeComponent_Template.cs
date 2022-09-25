@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public Generic<PhysShape> digShape;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				digByDefault = s.Serialize<bool>(digByDefault, name: "digByDefault", options: CSerializerObject.Options.BoolAsByte);
 				digOffset = s.SerializeObject<Vec2d>(digOffset, name: "digOffset");
 				digScale = s.SerializeObject<Vec2d>(digScale, name: "digScale");

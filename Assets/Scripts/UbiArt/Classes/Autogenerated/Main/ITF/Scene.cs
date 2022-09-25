@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
 					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 					friezeConnections = s.SerializeObject<CListO<FriezeConnectionResult>>(friezeConnections, name: "friezeConnections");
 					MUSIC_THEME = s.SerializeObject<StringID>(MUSIC_THEME, name: "MUSIC_THEME");
 				}
-			} else if (Settings.s.game == Settings.Game.RO) {
+			} else if (s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
 					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 					friezeConnections = s.SerializeObject<CListO<FriezeConnectionResult>>(friezeConnections, name: "friezeConnections");
 					MUSIC_THEME = s.SerializeObject<StringID>(MUSIC_THEME, name: "MUSIC_THEME");
 				}
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags7)) {
 					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}

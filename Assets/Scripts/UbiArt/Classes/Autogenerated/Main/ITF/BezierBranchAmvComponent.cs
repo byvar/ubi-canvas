@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public CListO<BezierBranchAmvComponent.Zone> zones;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				flipTexture = s.Serialize<bool>(flipTexture, name: "flipTexture", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 				flipTexture = s.Serialize<bool>(flipTexture, name: "flipTexture");

@@ -8,11 +8,11 @@ namespace UbiArt.ITF {
 		public float inputActorScaleFactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				buttonActions = s.SerializeObject<CListO<UIControllerComponent_Template.ControllerTextObject>>(buttonActions, name: "buttonActions");
 				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
 				inputActorScaleFactor = s.Serialize<float>(inputActorScaleFactor, name: "inputActorScaleFactor");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				textboxPath = s.SerializeObject<Path>(textboxPath, name: "textboxPath");
 				inputActorScaleFactor = s.Serialize<float>(inputActorScaleFactor, name: "inputActorScaleFactor");
 			} else {

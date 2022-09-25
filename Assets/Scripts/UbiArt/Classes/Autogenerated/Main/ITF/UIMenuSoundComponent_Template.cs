@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<UIMenuPageSoundConfig> pageConfigList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				pageConfigList = s.SerializeObject<CListO<UIMenuPageSoundConfig>>(pageConfigList, name: "pageConfigList");
 			}

@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public CListO<Vec2d> otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				anim = s.SerializeObject<StringID>(anim, name: "anim");
 				startFrame = s.Serialize<uint>(startFrame, name: "startFrame");
 				scale = s.SerializeObject<Vec2d>(scale, name: "scale");

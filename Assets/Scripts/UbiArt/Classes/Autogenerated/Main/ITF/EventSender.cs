@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 					triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce", options: CSerializerObject.Options.BoolAsByte);
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 					discardChildrenWithTags = s.Serialize<bool>(discardChildrenWithTags, name: "discardChildrenWithTags", options: CSerializerObject.Options.BoolAsByte);
 					sendOnlyToChildrenWithThisTag = s.SerializeObject<StringID>(sendOnlyToChildrenWithThisTag, name: "sendOnlyToChildrenWithThisTag");
 				}
-			} else if(Settings.s.game == Settings.Game.RL) {
+			} else if(s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 					triggerOnce = s.Serialize<bool>(triggerOnce, name: "triggerOnce", options: CSerializerObject.Options.BoolAsByte);

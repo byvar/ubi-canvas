@@ -8,10 +8,10 @@ namespace UbiArt.ITF {
 		public bool isSilent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				rewards = s.SerializeObject<CListO<RewardDetail>>(rewards, name: "rewards");
 				isSilent = s.Serialize<bool>(isSilent, name: "isSilent");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				isSilent = s.Serialize<bool>(isSilent, name: "isSilent");
 			} else {
 				rewards = s.SerializeObject<CListO<RewardDetail>>(rewards, name: "rewards");

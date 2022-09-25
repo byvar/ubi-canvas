@@ -18,7 +18,7 @@ namespace UbiArt.Animation {
 			frame = s.Serialize<ushort>(frame, name: "frame");
 			z = s.Serialize<float>(z, name: "z");
 			alpha = s.Serialize<short>(alpha, name: "alpha");
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 				originsInt = s.Serialize<int>(originsInt, name: "originsInt");
 			}
 		}

@@ -10,8 +10,8 @@ namespace UbiArt.ITF {
 		public bool isOR;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR
-				|| Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR
+				|| s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				eval = s.SerializeObject<StringID>(eval, name: "eval");
 				value = s.Serialize<float>(value, name: "value");

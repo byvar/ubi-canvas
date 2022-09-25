@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 		public Vec2d offsetLangage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					style = s.Serialize<uint>(style, name: "style");
 					offset = s.SerializeObject<Vec2d>(offset, name: "offset");
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
 					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					style = s.Serialize<uint>(style, name: "style");
 					offset = s.SerializeObject<Vec2d>(offset, name: "offset");

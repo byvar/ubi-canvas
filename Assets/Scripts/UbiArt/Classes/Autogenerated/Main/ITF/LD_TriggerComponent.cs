@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				mode = s.Serialize<Mode>(mode, name: "mode");
 				modeAfterCP = s.Serialize<ModeAfterCP>(modeAfterCP, name: "modeAfterCP");
 				if (s.HasFlags(SerializeFlags.Persistent)) {

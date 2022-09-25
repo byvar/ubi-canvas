@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public float Q;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				bus = s.SerializeObject<StringID>(bus, name: "bus");
 				changeFrequency = s.Serialize<int>(changeFrequency, name: "changeFrequency");
 				frequency = s.Serialize<float>(frequency, name: "frequency");
@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 				type = s.Serialize<FilterType>(type, name: "type");
 				changeQ = s.Serialize<int>(changeQ, name: "changeQ");
 				Q = s.Serialize<float>(Q, name: "Q");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				bus = s.SerializeObject<StringID>(bus, name: "bus");
 				frequency = s.Serialize<float>(frequency, name: "frequency");
 				type2 = s.Serialize<FilterType2>(type2, name: "type");

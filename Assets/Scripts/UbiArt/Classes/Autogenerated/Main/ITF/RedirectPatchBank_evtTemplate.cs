@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public BankChange_TemplateList banks;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				banks = s.SerializeObject<BankChange_TemplateList>(banks, name: "banks");
 			}

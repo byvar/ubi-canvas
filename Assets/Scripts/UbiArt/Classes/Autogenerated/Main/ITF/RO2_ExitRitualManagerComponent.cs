@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool canDisplayTuto;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					ritualType = s.Serialize<RitualType>(ritualType, name: "ritualType");
 					canBeClosed = s.Serialize<bool>(canBeClosed, name: "canBeClosed", options: CSerializerObject.Options.BoolAsByte);

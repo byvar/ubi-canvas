@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 		public GFXMaterialSerializable highlightMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				is2D = s.Serialize<bool>(is2D, name: "is2D");
 				addBorders = s.Serialize<bool>(addBorders, name: "addBorders");
 				useAnimMeshVertex = s.Serialize<bool>(useAnimMeshVertex, name: "useAnimMeshVertex");
@@ -107,7 +107,7 @@ namespace UbiArt.ITF {
 					highlightTexture = s.SerializeObject<Path>(highlightTexture, name: "highlightTexture");
 				}
 				highlightMaterial = s.SerializeObject<GFXMaterialSerializable>(highlightMaterial, name: "highlightMaterial");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				is2D = s.Serialize<bool>(is2D, name: "is2D");
 				addBorders = s.Serialize<bool>(addBorders, name: "addBorders");
 				useAnimMeshVertex = s.Serialize<bool>(useAnimMeshVertex, name: "useAnimMeshVertex");

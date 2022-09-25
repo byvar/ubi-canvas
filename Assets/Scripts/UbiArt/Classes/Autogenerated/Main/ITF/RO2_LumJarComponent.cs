@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool hookDn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
 				}

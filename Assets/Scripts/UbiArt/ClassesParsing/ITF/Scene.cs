@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			gao.transform.localRotation = Quaternion.identity;
 			UnityScene us = gao.AddComponent<UnityScene>();
 			us.scene = this;
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (UbiArtContext.Settings.engineVersion > Settings.EngineVersion.RO) {
 				foreach (Frise f in FRISE) {
 					await f.SetGameObjectParent(gao);
 				}

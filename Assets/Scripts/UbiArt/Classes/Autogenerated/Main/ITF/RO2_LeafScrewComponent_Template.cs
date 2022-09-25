@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		public float bounceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");
 				animImpact = s.SerializeObject<StringID>(animImpact, name: "animImpact");
 				animResist = s.SerializeObject<StringID>(animResist, name: "animResist");

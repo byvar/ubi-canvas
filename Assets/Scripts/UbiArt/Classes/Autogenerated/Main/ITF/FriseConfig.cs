@@ -75,9 +75,9 @@ namespace UbiArt.ITF {
 		public Frieze3DConfig frieze3D;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
+			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
 				throw new Exception(s.Position + " - FriseConfig is internal/purebinary in RO version, but you can figure it out with RFR. TODO!");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				gameMaterialExtremityStart = s.SerializeObject<Path>(gameMaterialExtremityStart, name: "gameMaterialExtremityStart");
 				gameMaterialExtremityStop = s.SerializeObject<Path>(gameMaterialExtremityStop, name: "gameMaterialExtremityStop");
@@ -147,7 +147,7 @@ namespace UbiArt.ITF {
 					smoothVisual = s.Serialize<bool>(smoothVisual, name: "smoothVisual");
 				}
 				PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				gameMaterialExtremityStart = s.SerializeObject<Path>(gameMaterialExtremityStart, name: "gameMaterialExtremityStart");
 				gameMaterialExtremityStop = s.SerializeObject<Path>(gameMaterialExtremityStop, name: "gameMaterialExtremityStop");
@@ -217,7 +217,7 @@ namespace UbiArt.ITF {
 					smoothVisual = s.Serialize<bool>(smoothVisual, name: "smoothVisual", options: CSerializerObject.Options.BoolAsByte);
 				}
 				PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				gameMaterialExtremityStart = s.SerializeObject<Path>(gameMaterialExtremityStart, name: "gameMaterialExtremityStart");
 				gameMaterialExtremityStop = s.SerializeObject<Path>(gameMaterialExtremityStop, name: "gameMaterialExtremityStop");

@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 		public Placeholder musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				countDownAttack = s.Serialize<float>(countDownAttack, name: "countDownAttack");
 				timeAnticipation = s.Serialize<float>(timeAnticipation, name: "timeAnticipation");
 				gravityBallistics = s.Serialize<float>(gravityBallistics, name: "gravityBallistics");

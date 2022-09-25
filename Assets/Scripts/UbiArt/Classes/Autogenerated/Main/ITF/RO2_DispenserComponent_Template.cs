@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 		public CListO<Angle> ejectionAngleList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				goodsCount = s.Serialize<uint>(goodsCount, name: "goodsCount");
 				lowLifeGoodsMax = s.Serialize<uint>(lowLifeGoodsMax, name: "lowLifeGoodsMax");
 				lowLifeThreshold = s.Serialize<float>(lowLifeThreshold, name: "lowLifeThreshold");

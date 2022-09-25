@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public bool hitEnemiesOnce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				hitType = s.Serialize<RECEIVEDHITTYPE>(hitType, name: "hitType");
 				pushBackDistance = s.Serialize<float>(pushBackDistance, name: "pushBackDistance");
 				radial = s.Serialize<bool>(radial, name: "radial");

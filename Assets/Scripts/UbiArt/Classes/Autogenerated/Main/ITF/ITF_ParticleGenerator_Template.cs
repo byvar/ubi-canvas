@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public uint phaseLoopStopIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				computeAABB = s.Serialize<uint>(computeAABB, name: "computeAABB");
 				useAnim = s.Serialize<uint>(useAnim, name: "useAnim");
 				loop = s.Serialize<uint>(loop, name: "loop");
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 				AnimUVfreq = s.Serialize<float>(AnimUVfreq, name: "AnimUVfreq");
 				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "params");
 				is2D = s.Serialize<bool>(is2D, name: "is2D");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				computeAABB = s.Serialize<uint>(computeAABB, name: "computeAABB");
 				useAnim = s.Serialize<uint>(useAnim, name: "useAnim");
 				loop = s.Serialize<uint>(loop, name: "loop");
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				animname = s.SerializeObject<StringID>(animname, name: "animname");
 				AnimUVfreq = s.Serialize<float>(AnimUVfreq, name: "AnimUVfreq");
 				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "params");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				computeAABB = s.Serialize<uint>(computeAABB, name: "computeAABB");
 				useAnim = s.Serialize<uint>(useAnim, name: "useAnim");
 				loop = s.Serialize<uint>(loop, name: "loop");
@@ -56,7 +56,7 @@ namespace UbiArt.ITF {
 				AnimUVfreq = s.Serialize<float>(AnimUVfreq, name: "AnimUVfreq");
 				_params = s.SerializeObject<ParticleGeneratorParameters>(_params, name: "params");
 				zSortMode = s.Serialize<PARGEN_ZSORT>(zSortMode, name: "zSortMode");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				computeAABB = s.Serialize<uint>(computeAABB, name: "computeAABB");
 				useAnim_ = s.Serialize<bool>(useAnim_, name: "useAnim");
 				loop = s.Serialize<uint>(loop, name: "loop");

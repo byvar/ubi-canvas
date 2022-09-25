@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public bool usePhysicJump;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				anim = s.SerializeObject<StringID>(anim, name: "anim");
 				factTargetActor = s.SerializeObject<StringID>(factTargetActor, name: "factTargetActor");
 				factTargetPos = s.SerializeObject<StringID>(factTargetPos, name: "factTargetPos");

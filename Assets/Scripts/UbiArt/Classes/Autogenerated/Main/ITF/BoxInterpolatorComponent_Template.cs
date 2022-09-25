@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public Angle AABBRotation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				innerAABB = s.SerializeObject<Placeholder>(innerAABB, name: "innerAABB");
 				outerAABB = s.SerializeObject<Placeholder>(outerAABB, name: "outerAABB");
 				AABBRotation = s.SerializeObject<Angle>(AABBRotation, name: "AABBRotation");

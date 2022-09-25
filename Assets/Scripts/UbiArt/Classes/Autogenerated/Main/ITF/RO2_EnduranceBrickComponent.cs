@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public BrickSide outSide;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					canFlip = s.Serialize<bool>(canFlip, name: "canFlip", options: CSerializerObject.Options.BoolAsByte);
 					size = s.SerializeObject<Vec2d>(size, name: "size");

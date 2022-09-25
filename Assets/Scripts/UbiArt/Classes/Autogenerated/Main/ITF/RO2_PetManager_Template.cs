@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public Placeholder familyTags;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				RewardFullUnlock = s.Serialize<uint>(RewardFullUnlock, name: "RewardFullUnlock");
 				petPath = s.SerializeObject<Path>(petPath, name: "petPath");
 				petModels = s.SerializeObject<CListO<RO2_PetModel>>(petModels, name: "petModels");

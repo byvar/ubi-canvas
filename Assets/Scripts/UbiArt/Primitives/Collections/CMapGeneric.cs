@@ -26,7 +26,7 @@ namespace UbiArt {
 					val = copy[i].Value;
 				}
 				if (s.ArrayEntryStart(name: name, index: i)) {
-					if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+					if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 						val.SerializeClassName(s);
 						key = s.SerializeGeneric(key, name: "KEY");
 						val.serializeClassName = false;

@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				category = s.SerializeObject<StringID>(category, name: "category");
@@ -51,7 +51,7 @@ namespace UbiArt.ITF {
 				isStream = s.Serialize<int>(isStream, name: "isStream");
 				files = s.SerializeObject<CListO<Path>>(files, name: "files");
 				_params = s.SerializeObject<SoundParams>(_params, name: "params");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				category = s.SerializeObject<StringID>(category, name: "category");
@@ -75,7 +75,7 @@ namespace UbiArt.ITF {
 				soundPlayFadeAfterdestroy = s.Serialize<int>(soundPlayFadeAfterdestroy, name: "soundPlayFadeAfterdestroy");
 				noDrop = s.Serialize<int>(noDrop, name: "noDrop");
 				Priority = s.Serialize<uint>(Priority, name: "Priority");
-			} else if(Settings.s.game == Settings.Game.COL) {
+			} else if(s.Settings.game == Settings.Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				spawnEvent = s.SerializeObject<SoundGUID>(spawnEvent, name: "spawnEvent");
 				livingEvent = s.SerializeObject<SoundGUID>(livingEvent, name: "livingEvent");

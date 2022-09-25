@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public Path gameMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				attackDetectionShape = s.SerializeObject<Generic<PhysShape>>(attackDetectionShape, name: "attackDetectionShape");
 				detectionRadius = s.Serialize<float>(detectionRadius, name: "detectionRadius");
 				minDetectTime = s.Serialize<float>(minDetectTime, name: "minDetectTime");

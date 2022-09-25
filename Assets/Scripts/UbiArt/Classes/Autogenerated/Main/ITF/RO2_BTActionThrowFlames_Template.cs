@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public Placeholder fxMarkerStop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				animation = s.SerializeObject<StringID>(animation, name: "animation");
 				endAnimation = s.SerializeObject<StringID>(endAnimation, name: "endAnimation");
 				fxNames = s.SerializeObject<Placeholder>(fxNames, name: "fxNames");

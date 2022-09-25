@@ -18,7 +18,7 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			boneKeys = s.SerializeObject<KeyArray<int>>(boneKeys, name: "boneKeys");
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 				unkfloat = s.Serialize<float>(unkfloat, name: "unkfloat");
 			}
 			bones = s.SerializeObject<CListO<AnimBone>>(bones, name: "bones");
@@ -44,7 +44,7 @@ namespace UbiArt.Animation {
 				//unityBones[i].localScale = new Vector3(Mathf.Abs(scale.y), Mathf.Abs(scale.x), scale.z);
 				unityBones[i].bindPosition = Vector3.zero;
 				unityBones[i].bindRotation = 0;
-				if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+				if (UbiArtContext.Settings.engineVersion <= Settings.EngineVersion.RO) {
 					unityBones[i].xOffset = bonesDyn[i].xOffset;
 					unityBones[i].xScaleMultiplier = skeleton.bonesDyn[boneIndex].xOffset / bonesDyn[i].xOffset;
 				}

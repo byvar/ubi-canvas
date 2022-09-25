@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public EditableShape ZONE;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				ZONE = s.SerializeObject<EditableShape>(ZONE, name: "ZONE");
 			}

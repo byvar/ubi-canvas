@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool isAlwaysActive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				isAlwaysActive = s.Serialize<bool>(isAlwaysActive, name: "isAlwaysActive");
 			}
 		}

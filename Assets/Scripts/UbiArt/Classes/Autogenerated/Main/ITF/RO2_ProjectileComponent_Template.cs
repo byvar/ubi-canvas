@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public bool CanExplode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				animAppear = s.SerializeObject<StringID>(animAppear, name: "animAppear");
 				animHold = s.SerializeObject<StringID>(animHold, name: "animHold");
 				animEjected = s.SerializeObject<StringID>(animEjected, name: "animEjected");

@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public string FileName2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				Visible = s.Serialize<bool>(Visible, name: "Visible");
 				Stay = s.Serialize<bool>(Stay, name: "Stay");
 				FileName2 = s.Serialize<string>(FileName2, name: "FileName");

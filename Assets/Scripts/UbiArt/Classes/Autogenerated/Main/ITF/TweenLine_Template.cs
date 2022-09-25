@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public bool CosinusOnX;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				movement = s.SerializeObject<Vec3d>(movement, name: "movement");
 			} else {
 				movement = s.SerializeObject<Vec3d>(movement, name: "movement");

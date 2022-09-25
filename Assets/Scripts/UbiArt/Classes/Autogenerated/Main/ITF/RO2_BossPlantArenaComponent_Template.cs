@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public Placeholder musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				isMecha = s.Serialize<bool>(isMecha, name: "isMecha");
 				buboBones = s.SerializeObject<CListO<RO2_BossPlantArenaComponent_Template.BuboBone>>(buboBones, name: "buboBones");
 				musics = s.SerializeObject<Placeholder>(musics, name: "musics");

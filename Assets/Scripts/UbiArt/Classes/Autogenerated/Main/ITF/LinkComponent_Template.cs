@@ -9,8 +9,8 @@ namespace UbiArt.ITF {
 		public int debugChildIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
-			} else if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
+			} else if (s.Settings.game == Settings.Game.RO) {
 				if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0) && s.HasFlags(SerializeFlags.Flags_xC0)) {
 					debugColor = s.SerializeObject<Color>(debugColor, name: "debugColor");
 					debugColorSelected = s.SerializeObject<Color>(debugColorSelected, name: "debugColorSelected");

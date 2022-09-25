@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public uint blurSize2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
 				clearFrontLightBuffer = s.Serialize<bool>(clearFrontLightBuffer, name: "clearFrontLightBuffer");
 				clearFrontLightColor = s.SerializeObject<Color>(clearFrontLightColor, name: "clearFrontLightColor");
 				clearBackLightBuffer = s.Serialize<bool>(clearBackLightBuffer, name: "clearBackLightBuffer");

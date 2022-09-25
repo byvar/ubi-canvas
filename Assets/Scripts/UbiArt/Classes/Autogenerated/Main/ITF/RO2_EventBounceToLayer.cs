@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public uint hurt2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				bounceHeight = s.Serialize<float>(bounceHeight, name: "bounceHeight");
 				bounceHeight2 = s.Serialize<float>(bounceHeight2, name: "bounceHeight2");
 				bounceSpeed = s.Serialize<float>(bounceSpeed, name: "bounceSpeed");

@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<MultiTextBoxComponent.TextBox> textBoxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					textBoxList = s.SerializeObject<CListO<MultiTextBoxComponent.TextBox>>(textBoxList, name: "textBoxList");
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 			public Enum_VH_2 Enum_VH_2__12;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (Settings.s.game == Settings.Game.VH) {
+				if (s.Settings.game == Settings.Game.VH) {
 					if (s.HasFlags(SerializeFlags.Default)) {
 						SmartLocId__0 = s.SerializeObject<SmartLocId>(SmartLocId__0, name: "SmartLocId__0");
 						Vector2__1 = s.SerializeObject<Vec2d>(Vector2__1, name: "Vector2__1");

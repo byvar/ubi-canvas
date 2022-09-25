@@ -44,7 +44,7 @@ namespace UbiArt {
 			folder = s.Serialize<string>(folder);
 			filename = s.Serialize<string>(filename);
 			stringID = s.SerializeObject<StringID>(stringID);
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				flags = s.Serialize<uint>(flags);
 				if (flags != 0) MapLoader.Loader.print("PathRef with nonzero flags: " + this + " - " + flags);
 			}

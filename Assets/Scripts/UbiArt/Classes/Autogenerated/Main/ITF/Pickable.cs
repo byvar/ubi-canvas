@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					POS2D = s.SerializeObject<Vec2d>(POS2D, name: "POS2D");
 					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
@@ -52,7 +52,7 @@ namespace UbiArt.ITF {
 					ISALLOWEDFORCELL = s.Serialize<int>(ISALLOWEDFORCELL, name: "ISALLOWEDFORCELL");
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled");
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
 					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
@@ -60,7 +60,7 @@ namespace UbiArt.ITF {
 					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
 					UPDATEDEPENDENCYLIST = s.SerializeObject<CArrayO<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 				}
-				if (Settings.s.isCatchThemAll) {
+				if (s.Settings.isCatchThemAll) {
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
@@ -74,7 +74,7 @@ namespace UbiArt.ITF {
 					ANGLE = s.SerializeObject<Angle>(ANGLE, name: "ANGLE");
 					INSTANCEDATAFILE = s.SerializeObject<Path>(INSTANCEDATAFILE, name: "INSTANCEDATAFILE");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
 					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
@@ -91,7 +91,7 @@ namespace UbiArt.ITF {
 					INSTANCEDATAFILE = s.SerializeObject<Path>(INSTANCEDATAFILE, name: "INSTANCEDATAFILE");
 					OBJECTID = s.SerializeObject<ObjectId>(OBJECTID, name: "OBJECTID");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Flags16)) {
 					globalPos = s.SerializeObject<Vec3d>(globalPos, name: "globalPos");
 				}

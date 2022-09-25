@@ -26,12 +26,12 @@ namespace UbiArt.ITF {
 		public bool bool__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
-			} else if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				slideBarWidth = s.Serialize<float>(slideBarWidth, name: "slideBarWidth");
 				fixPosX = s.Serialize<float>(fixPosX, name: "fixPosX");
 				fixPosY = s.Serialize<float>(fixPosY, name: "fixPosY");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
 				StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
 				float__2 = s.Serialize<float>(float__2, name: "float__2");

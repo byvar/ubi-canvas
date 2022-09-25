@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 		public Vec2d secondaryCollisionCheckPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RO) {
 				physFriction = s.Serialize<float>(physFriction, name: "physFriction");
 				physAirFriction = s.Serialize<float>(physAirFriction, name: "physAirFriction");
 				physUnstickMinAngle = s.SerializeObject<Angle>(physUnstickMinAngle, name: "physUnstickMinAngle");
@@ -73,7 +73,7 @@ namespace UbiArt.ITF {
 				physTreatCornerCase = s.Serialize<bool>(physTreatCornerCase, name: "physTreatCornerCase");
 				physCornerCaseDisableDelay = s.Serialize<float>(physCornerCaseDisableDelay, name: "physCornerCaseDisableDelay");
 				physTreatMovingPolylines = s.Serialize<bool>(physTreatMovingPolylines, name: "physTreatMovingPolylines");
-			} else if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RL) {
 				physFriction = s.Serialize<float>(physFriction, name: "physFriction");
 				physAirFriction = s.Serialize<float>(physAirFriction, name: "physAirFriction");
 				physUnstickMinAngle = s.SerializeObject<Angle>(physUnstickMinAngle, name: "physUnstickMinAngle");
@@ -105,7 +105,7 @@ namespace UbiArt.ITF {
 				physCornerCaseDisableDelay = s.Serialize<float>(physCornerCaseDisableDelay, name: "physCornerCaseDisableDelay");
 				physTreatMovingPolylines = s.Serialize<bool>(physTreatMovingPolylines, name: "physTreatMovingPolylines");
 				physTreatSelfCollision = s.Serialize<bool>(physTreatSelfCollision, name: "physTreatSelfCollision");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				physFriction = s.Serialize<float>(physFriction, name: "physFriction");
 				physAirFriction = s.Serialize<float>(physAirFriction, name: "physAirFriction");
 				physUnstickMinAngle = s.SerializeObject<Angle>(physUnstickMinAngle, name: "physUnstickMinAngle");

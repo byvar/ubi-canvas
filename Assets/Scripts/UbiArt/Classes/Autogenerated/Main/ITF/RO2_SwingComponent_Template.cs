@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public CArrayO<Angle> restAngles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				length = s.Serialize<float>(length, name: "length");
 				angle = s.SerializeObject<Angle>(angle, name: "angle");
 				gravityMultiplier = s.Serialize<float>(gravityMultiplier, name: "gravityMultiplier");

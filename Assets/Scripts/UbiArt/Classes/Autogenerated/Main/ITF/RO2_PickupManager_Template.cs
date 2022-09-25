@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public Path prisonerCounterPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				prisonerCounterPath = s.SerializeObject<Path>(prisonerCounterPath, name: "prisonerCounterPath");
 				scoreLumPath = s.SerializeObject<Path>(scoreLumPath, name: "scoreLumPath");
 				heartRainPath = s.SerializeObject<Path>(heartRainPath, name: "heartRainPath");

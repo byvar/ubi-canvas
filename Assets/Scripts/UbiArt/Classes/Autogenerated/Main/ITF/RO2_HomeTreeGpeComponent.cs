@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool useComponent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					isDebugActor = s.Serialize<bool>(isDebugActor, name: "isDebugActor", options: CSerializerObject.Options.BoolAsByte);
 					appearCursor = s.Serialize<float>(appearCursor, name: "appearCursor");

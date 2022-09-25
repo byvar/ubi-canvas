@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CArrayP<float> depthOffsets;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RA || Settings.s.game == Settings.Game.RM) {
+			if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
 				depthOffsets = s.SerializeObject<CArrayP<float>>(depthOffsets, name: "depthOffsets");
 			}
 		}

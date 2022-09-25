@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public Path DRCScreenPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				loopfx = s.SerializeObject<StringID>(loopfx, name: "loopfx");
 				localLoopFx = s.SerializeObject<StringID>(localLoopFx, name: "localLoopFx");
 				localLoopForceFx = s.SerializeObject<StringID>(localLoopForceFx, name: "localLoopForceFx");

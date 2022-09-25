@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public bool removeWithParent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Flags_xC0)) {
 					parentPath = s.SerializeObject<ObjectPath>(parentPath, name: "parentPath");
 					offsetPos = s.SerializeObject<Vec3d>(offsetPos, name: "offsetPos");

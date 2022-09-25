@@ -94,7 +94,7 @@ namespace UbiArt.ITF {
 		public float float__59;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RFR) {
 				int__28 = s.Serialize<int>(int__28, name: "int__28");
 				int__29 = s.Serialize<int>(int__29, name: "int__29");
 				StringID__30 = s.SerializeObject<StringID>(StringID__30, name: "StringID__30");
@@ -127,7 +127,7 @@ namespace UbiArt.ITF {
 				int__57 = s.Serialize<int>(int__57, name: "int__57");
 				float__58 = s.Serialize<float>(float__58, name: "float__58");
 				float__59 = s.Serialize<float>(float__59, name: "float__59");
-			} else if (Settings.s.game == Settings.Game.RO) {
+			} else if (s.Settings.game == Settings.Game.RO) {
 				lockFirstNode = s.Serialize<int>(lockFirstNode, name: "lockFirstNode");
 				lockLastNodeScale = s.Serialize<int>(lockLastNodeScale, name: "lockLastNodeScale");
 				attachBone = s.SerializeObject<StringID>(attachBone, name: "attachBone");

@@ -20,7 +20,7 @@ namespace UbiArt.Animation {
 			base.SerializeImpl(s);
 			vec0 = s.SerializeObject<Vec2d>(vec0, name: "vec0");
 			float1 = s.Serialize<float>(float1, name: "float1");
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 				xOffset = s.Serialize<float>(xOffset, name: "xOffset");
 			}
 			position = s.SerializeObject<Vec2d>(position, name: "position");

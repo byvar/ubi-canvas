@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				instructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
 				sync = s.Serialize<bool>(sync, name: "sync");
 				metronome2 = s.Serialize<METRONOME_TYPE2>(metronome2, name: "metronome");
@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 				applyRotation = s.Serialize<bool>(applyRotation, name: "applyRotation");
 				applyScale = s.Serialize<bool>(applyScale, name: "applyScale");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				instructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
 				playFirstSetIfNoStartSet = s.Serialize<bool>(playFirstSetIfNoStartSet, name: "playFirstSetIfNoStartSet", options: CSerializerObject.Options.BoolAsByte);
 				sync = s.Serialize<bool>(sync, name: "sync", options: CSerializerObject.Options.BoolAsByte);
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 				applyFeedback = s.Serialize<bool>(applyFeedback, name: "applyFeedback", options: CSerializerObject.Options.BoolAsByte);
 				trigOnCheckPointEnabled = s.Serialize<bool>(trigOnCheckPointEnabled, name: "trigOnCheckPointEnabled", options: CSerializerObject.Options.BoolAsByte);
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				preInstructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(preInstructionSets, name: "preInstructionSets");
 				instructionSets = s.SerializeObject<CListO<TweenComponent_Template.InstructionSet>>(instructionSets, name: "instructionSets");
 				playFirstSetIfNoStartSet = s.Serialize<bool>(playFirstSetIfNoStartSet, name: "playFirstSetIfNoStartSet");
@@ -86,7 +86,7 @@ namespace UbiArt.ITF {
 			public ProceduralInputData proceduralInput;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
+				if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
 					name = s.SerializeObject<StringID>(name, name: "name");
 					instructions = s.SerializeObject<CListO<Generic<TweenInstruction_Template>>>(instructions, name: "instructions");
 					iterationCount = s.Serialize<uint>(iterationCount, name: "iterationCount");
@@ -97,7 +97,7 @@ namespace UbiArt.ITF {
 					nextSet = s.SerializeObject<StringID>(nextSet, name: "nextSet");
 					triggable = s.Serialize<bool>(triggable, name: "triggable");
 					proceduralInput = s.SerializeObject<ProceduralInputData>(proceduralInput, name: "proceduralInput");
-				} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+				} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 					name = s.SerializeObject<StringID>(name, name: "name");
 					instructions = s.SerializeObject<CListO<Generic<TweenInstruction_Template>>>(instructions, name: "instructions");
 					iterationCount = s.Serialize<uint>(iterationCount, name: "iterationCount");

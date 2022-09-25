@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 			duration = s.Serialize<float>(duration, name: "duration");
 			color = s.SerializeObject<Color>(color, name: "color");
 			anim = s.SerializeObject<StringID>(anim, name: "anim");
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				fadeInSound = s.SerializeObject<StringID>(fadeInSound, name: "fadeInSound");
 				fadeOutSound = s.SerializeObject<StringID>(fadeOutSound, name: "fadeOutSound");
 			}

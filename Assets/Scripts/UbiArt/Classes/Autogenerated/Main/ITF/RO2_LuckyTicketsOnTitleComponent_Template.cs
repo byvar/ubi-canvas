@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public float japaneseVerticalOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				luckyTicketActorPath = s.SerializeObject<Path>(luckyTicketActorPath, name: "luckyTicketActorPath");
 				luckyTicketGreyActorPath = s.SerializeObject<Path>(luckyTicketGreyActorPath, name: "luckyTicketGreyActorPath");
 				verticalOffset = s.Serialize<float>(verticalOffset, name: "verticalOffset");

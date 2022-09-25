@@ -20,12 +20,12 @@ namespace UbiArt.ITF {
 		public int minimumDepthToHideDialogBalloons;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				menuInfos = s.SerializeObject<CListO<UIMenuManager_Template.MenuInfo>>(menuInfos, name: "menuInfos");
 				useRemoteUI = s.Serialize<bool>(useRemoteUI, name: "useRemoteUI");
 				defaultValidInput = s.SerializeObject<StringID>(defaultValidInput, name: "defaultValidInput");
 				defaultBackInput = s.SerializeObject<StringID>(defaultBackInput, name: "defaultBackInput");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				menuSounds = s.SerializeObject<Placeholder>(menuSounds, name: "menuSounds");
 				showESRBMenu = s.Serialize<int>(showESRBMenu, name: "showESRBMenu");
 				useRemoteUI = s.Serialize<bool>(useRemoteUI, name: "useRemoteUI");
@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 			public Path Path__4;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (Settings.s.game == Settings.Game.VH) {
+				if (s.Settings.game == Settings.Game.VH) {
 					Path__0 = s.SerializeObject<Path>(Path__0, name: "Path__0");
 					int__1 = s.Serialize<int>(int__1, name: "int__1");
 					uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");

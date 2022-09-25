@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public int int__7;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				endMarker_ = s.SerializeObject<StringID>(endMarker_, name: "endMarker");
 				bulletExitBone = s.SerializeObject<StringID>(bulletExitBone, name: "bulletExitBone");
 				bullet = s.SerializeObject<Path>(bullet, name: "bullet");

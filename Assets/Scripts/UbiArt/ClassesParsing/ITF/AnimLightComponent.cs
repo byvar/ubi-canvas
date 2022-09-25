@@ -44,10 +44,11 @@ namespace UbiArt.ITF {
 		// v GameObject
 
 		private void CreateGameObjects(GameObject gao) {
-			if (!MapLoader.Loader.loadAnimations) return;
+			var context = MapLoader.Loader;
+			if (!context.loadAnimations) return;
 			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
 			bool createdOne = false;
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (context.Settings.engineVersion > Settings.EngineVersion.RO) {
 				foreach (TextureBankPath bp in subAnimInfo.animPackage.textureBank) {
 					createdOne = ProcessTextureBank(bp, gao, tex_mat, subAnimInfo.animPackage.skel);
 					if (createdOne) break;
@@ -233,7 +234,7 @@ namespace UbiArt.ITF {
 		private void FillMaterialParams(Renderer r, int index = 0) {
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (MapLoader.Loader.Settings.engineVersion > Settings.EngineVersion.RO) {
 				GFXPrimitiveParam param = PrimitiveParameters;
 				mpb.SetColor("_ColorFactor", param.colorFactor);
 				mpb.SetColor("_LightConfig", new Vector4(

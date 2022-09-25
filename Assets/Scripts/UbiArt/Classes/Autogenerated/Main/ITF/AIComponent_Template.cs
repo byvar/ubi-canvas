@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public int listenToActivateEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RJR) {
+			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
 				registerToAIManager = s.Serialize<bool>(registerToAIManager, name: "registerToAIManager");
 				faction = s.Serialize<uint>(faction, name: "faction");
 				health = s.Serialize<int>(health, name: "health");

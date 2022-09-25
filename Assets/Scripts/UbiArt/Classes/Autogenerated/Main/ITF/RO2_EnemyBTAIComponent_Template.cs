@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 		public float hideTextureDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				squashDeathPenetration = s.Serialize<float>(squashDeathPenetration, name: "squashDeathPenetration");
 				timeFight = s.Serialize<float>(timeFight, name: "timeFight");
 				disabledPhys = s.Serialize<bool>(disabledPhys, name: "disabledPhys");
@@ -177,7 +177,7 @@ namespace UbiArt.ITF {
 				softColForce = s.Serialize<float>(softColForce, name: "softColForce");
 				startLevel = s.Serialize<uint>(startLevel, name: "startLevel");
 				stiltsOriginCenter = s.SerializeObject<Vec2d>(stiltsOriginCenter, name: "stiltsOriginCenter");
-				if (Settings.s.game == Settings.Game.RL) {
+				if (s.Settings.game == Settings.Game.RL) {
 					phantomShape = s.SerializeObject<StringID>(phantomShape, name: "phantomShape");
 				}
 			}

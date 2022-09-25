@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			blendParams = s.SerializeObject<CListO<BlendLeaf>>(blendParams, name: "blendParams");
 			blendInput = s.SerializeObject<StringID>(blendInput, name: "blendInput");
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				blendInputInterpolation = s.Serialize<float>(blendInputInterpolation, name: "blendInputInterpolation");
 				blendInputInterpoStartValue = s.Serialize<float>(blendInputInterpoStartValue, name: "blendInputInterpoStartValue");
 			}

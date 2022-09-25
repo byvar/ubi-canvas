@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
 						ColorFog_Red = s.Serialize<float>(ColorFog_Red, name: "ColorFog_Red");
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 					renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
 					disableLight = s.Serialize<int>(disableLight, name: "disableLight");
 				}
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 					}
 					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
 					colorComputerTagId = s.Serialize<uint>(colorComputerTagId, name: "colorComputerTagId");
-					if (Settings.s.isCatchThemAll) {
+					if (s.Settings.isCatchThemAll) {
 						renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
 						renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget", options: CSerializerObject.Options.ForceAsByte);
 					}
@@ -57,7 +57,7 @@ namespace UbiArt.ITF {
 					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");
 					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");

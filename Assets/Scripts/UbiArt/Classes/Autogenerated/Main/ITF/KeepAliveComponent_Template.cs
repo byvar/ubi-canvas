@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public int startDying2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				startDying2 = s.Serialize<int>(startDying2, name: "startDying");
 			} else {
 				startDying = s.Serialize<bool>(startDying, name: "startDying");

@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public uint BlendFrames;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				Anim = s.SerializeObject<Path>(Anim, name: "Anim");
 				BlendFrames = s.Serialize<uint>(BlendFrames, name: "BlendFrames");
 			} else {

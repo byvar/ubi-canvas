@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public Placeholder musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				speedOnBuboHit = s.Serialize<float>(speedOnBuboHit, name: "speedOnBuboHit");
 				accelerationOnBuboHit = s.Serialize<float>(accelerationOnBuboHit, name: "accelerationOnBuboHit");
 				shrinkDuration = s.Serialize<float>(shrinkDuration, name: "shrinkDuration");

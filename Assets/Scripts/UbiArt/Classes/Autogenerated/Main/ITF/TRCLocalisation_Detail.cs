@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 		public Enum_VH_0 Enum_VH_0__11;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				uint__0 = s.Serialize<uint>(uint__0, name: "uint__0");
 				string__1 = s.Serialize<string>(string__1, name: "string__1");
 				LocalisationId__2 = s.SerializeObject<LocalisationId>(LocalisationId__2, name: "LocalisationId__2");

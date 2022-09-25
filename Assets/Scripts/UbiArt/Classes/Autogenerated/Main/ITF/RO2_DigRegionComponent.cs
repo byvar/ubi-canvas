@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 		public bool IsDiggable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					Brush_State = s.Serialize<Action>(Brush_State, name: "Brush_State");
 					Brush_Action = s.Serialize<Action>(Brush_Action, name: "Brush_Action");

@@ -13,11 +13,11 @@ namespace UbiArt.ITF {
 		public EValueType inferiorEnum;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");
 				type = s.Serialize<EValueType>(type, name: "type");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");
 				type = s.Serialize<EValueType>(type, name: "type");

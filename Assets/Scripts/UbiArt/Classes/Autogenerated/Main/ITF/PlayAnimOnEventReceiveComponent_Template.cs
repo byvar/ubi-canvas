@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public bool restoreEventIdleOnCheckpoint;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				listenEvents = s.SerializeObject<CListO<Generic<Event>>>(listenEvents, name: "listenEvents");
 				idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 				eventAnim = s.SerializeObject<StringID>(eventAnim, name: "eventAnim");
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 				stayOnEventCheckpointSave = s.Serialize<bool>(stayOnEventCheckpointSave, name: "stayOnEventCheckpointSave");
 				disableAfterEvent = s.Serialize<bool>(disableAfterEvent, name: "disableAfterEvent");
 				useAnimatedComponentForAnimsFinish = s.Serialize<bool>(useAnimatedComponentForAnimsFinish, name: "useAnimatedComponentForAnimsFinish");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				listenEvents = s.SerializeObject<CListO<Generic<Event>>>(listenEvents, name: "listenEvents");
 				idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 				eventAnim = s.SerializeObject<StringID>(eventAnim, name: "eventAnim");
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				useMRKtoAllowRestart = s.Serialize<bool>(useMRKtoAllowRestart, name: "useMRKtoAllowRestart");
 				acceptOnlyChargedPunch = s.Serialize<bool>(acceptOnlyChargedPunch, name: "acceptOnlyChargedPunch");
 				eventToSend = s.SerializeObject<Generic<Event>>(eventToSend, name: "eventToSend");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				listenEvents = s.SerializeObject<CListO<Generic<Event>>>(listenEvents, name: "listenEvents");
 				idleAnim = s.SerializeObject<StringID>(idleAnim, name: "idleAnim");
 				eventAnim = s.SerializeObject<StringID>(eventAnim, name: "eventAnim");

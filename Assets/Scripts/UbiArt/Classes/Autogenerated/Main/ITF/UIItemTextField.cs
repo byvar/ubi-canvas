@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public InputAdapter__VK_style2 style2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					isPassword = s.Serialize<bool>(isPassword, name: "isPassword", options: CSerializerObject.Options.BoolAsByte);
 					dialogMaxChar = s.Serialize<uint>(dialogMaxChar, name: "dialogMaxChar");

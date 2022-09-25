@@ -92,7 +92,7 @@ namespace UbiArt.ITF {
 		public float iconFadeInDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				regionPath = s.SerializeObject<Path>(regionPath, name: "regionPath");
 				startPos = s.SerializeObject<Vec2d>(startPos, name: "startPos");
 				lineHeight = s.Serialize<float>(lineHeight, name: "lineHeight");

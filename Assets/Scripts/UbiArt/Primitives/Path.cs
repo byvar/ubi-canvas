@@ -60,21 +60,17 @@ namespace UbiArt {
 			}
 		}
 
-		public bool IsCooked {
-			get {
-				return (folder != null && folder.StartsWith(Settings.s.ITFDirectory)) 
-					|| (filename != null && filename.EndsWith(".ckd"));
-			}
+		public bool IsCooked(MapLoader context) {
+			return (folder != null && folder.StartsWith(context.Settings.ITFDirectory)) 
+				|| (filename != null && filename.EndsWith(".ckd"));
 		}
 
-		public Path CookedPath {
-			get {
-				if (!IsNull && !IsCooked) {
-					return new Path(folder != null ? Settings.s.ITFDirectory + folder : null,
-						filename != null ? filename + ".ckd" : null, cooked: true);
-				}
-				return this;
+		public Path CookedPath(MapLoader context) {
+			if (!IsNull && !IsCooked(context)) {
+				return new Path(folder != null ? context.Settings.ITFDirectory + folder : null,
+					filename != null ? filename + ".ckd" : null, cooked: true);
 			}
+			return this;
 		}
 
 		public string GetExtension(bool removeCooked = false) {
@@ -91,7 +87,7 @@ namespace UbiArt {
 			folder = s.Serialize<string>(folder);
 			filename = s.Serialize<string>(filename);
 			stringID = s.SerializeObject<StringID>(stringID);
-			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				flags = s.Serialize<uint>(flags);
 				//if (flags != 0) MapLoader.Loader.print("Path with nonzero flags: " + this + " - " + flags);
 			}

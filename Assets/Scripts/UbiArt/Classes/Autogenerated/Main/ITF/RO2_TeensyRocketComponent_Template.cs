@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public StringID FXPutOutWick;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				snapBone = s.SerializeObject<StringID>(snapBone, name: "snapBone");
 				FXBurningWick = s.SerializeObject<StringID>(FXBurningWick, name: "FXBurningWick");
 				FXPutOutWick = s.SerializeObject<StringID>(FXPutOutWick, name: "FXPutOutWick");

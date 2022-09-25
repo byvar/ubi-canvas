@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public Nullable<ActorBind> parentBindOrigins;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (this is Frise) return;
 				if (s.HasFlags(SerializeFlags.Default)) {
 					LUA = s.SerializeObject<Path>(LUA, name: "LUA");
@@ -19,9 +19,9 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
 				}
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				if (this is Frise) return;
-				if (Settings.s.isCatchThemAll) {
+				if (s.Settings.isCatchThemAll) {
 					uint lol = 0;
 					lol = s.Serialize<uint>(lol, name: "placeholder");
 					lol = s.Serialize<uint>(lol, name: "placeholder");
@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Persistent | SerializeFlags.Default | SerializeFlags.Flags13 | SerializeFlags.Flags14)) {
 					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent>>>(COMPONENTS, name: "COMPONENTS");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (this is Frise) return;
 				if (s.HasFlags(SerializeFlags.Default)) {
 					LUA = s.SerializeObject<Path>(LUA, name: "LUA");

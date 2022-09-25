@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public bool draw2D;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				gen = s.SerializeObject<ITF_ParticleGenerator_Template>(gen, name: "gen");
 				texture = s.SerializeObject<Path>(texture, name: "texture");

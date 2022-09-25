@@ -128,7 +128,7 @@ public class UnityAnimation : MonoBehaviour {
 					int ind = pbk.templateKeys.GetKeyIndex(templateId);
 					if (ind != -1) {
 						indexes.Add(ind);
-						if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+						if (l.Settings.engineVersion == Settings.EngineVersion.RO) {
 							int texInd = animTrack.texturePathKeysOrigins.GetKeyIndex(entry.textureBankId);
 							if (texInd != -1) {
 								Pair<StringID, CString> texPath = animTrack.texturePathsOrigins[texInd];

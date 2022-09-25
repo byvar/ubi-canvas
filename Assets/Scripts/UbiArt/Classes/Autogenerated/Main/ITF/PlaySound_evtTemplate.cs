@@ -13,19 +13,19 @@ namespace UbiArt.ITF {
 		public string Sound2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				Sound = s.SerializeObject<Path>(Sound, name: "Sound");
 				Params = s.SerializeObject<SoundParams>(Params, name: "Params");
 				Volume = s.Serialize<float>(Volume, name: "Volume");
 				Category = s.Serialize<string>(Category, name: "Category");
 				IsStrem = s.Serialize<int>(IsStrem, name: "IsStrem");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				Sound = s.SerializeObject<Path>(Sound, name: "Sound");
 				Params = s.SerializeObject<SoundParams>(Params, name: "Params");
 				Volume = s.Serialize<float>(Volume, name: "Volume");
 				Category2 = s.SerializeObject<StringID>(Category2, name: "Category");
 				IsStream = s.Serialize<int>(IsStream, name: "IsStream");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				Sound2 = s.Serialize<string>(Sound2, name: "Sound");
 				Volume = s.Serialize<float>(Volume, name: "Volume");
 				Category2 = s.SerializeObject<StringID>(Category2, name: "Category");

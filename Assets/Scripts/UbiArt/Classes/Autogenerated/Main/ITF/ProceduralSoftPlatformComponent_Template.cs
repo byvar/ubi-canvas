@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 		public StringID startingBone;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				isSwing = s.Serialize<bool>(isSwing, name: "isSwing");
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				isLiana = s.Serialize<bool>(isLiana, name: "isLiana");
@@ -69,7 +69,7 @@ namespace UbiArt.ITF {
 				beginTexture = s.SerializeObject<Path>(beginTexture, name: "beginTexture");
 				endTexture = s.SerializeObject<Path>(endTexture, name: "endTexture");
 				bezierSampling = s.Serialize<uint>(bezierSampling, name: "bezierSampling");
-			} else if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				isSwing = s.Serialize<bool>(isSwing, name: "isSwing");
 				isLiana = s.Serialize<bool>(isLiana, name: "isLiana");
 				defaultEndPos = s.SerializeObject<Vec3d>(defaultEndPos, name: "defaultEndPos");

@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		public Gadgets Gadgets__11;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR) {
+			if (s.Settings.game == Settings.Game.RFR) {
 				BasicString__4 = s.SerializeObject<BasicString>(BasicString__4, name: "BasicString__4");
 				BasicString__5 = s.SerializeObject<BasicString>(BasicString__5, name: "BasicString__5");
 				uint__6 = s.Serialize<uint>(uint__6, name: "uint__6");

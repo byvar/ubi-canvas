@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public float float__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				area = s.SerializeObject<Placeholder>(area, name: "area");
 				scale = s.Serialize<float>(scale, name: "scale");
 			} else {

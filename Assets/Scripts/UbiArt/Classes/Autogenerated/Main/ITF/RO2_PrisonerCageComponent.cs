@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public Vec2d checkpointPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
 					savePosOnCheckpoint = s.Serialize<bool>(savePosOnCheckpoint, name: "savePosOnCheckpoint");

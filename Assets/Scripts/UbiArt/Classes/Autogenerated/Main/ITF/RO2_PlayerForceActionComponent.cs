@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		public bool shadowActorGroupTest;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					Action2 = s.Serialize<PlayerForcedAction2>(Action2, name: "Action");
 					enabledOnInit = s.Serialize<bool>(enabledOnInit, name: "enabledOnInit", options: CSerializerObject.Options.BoolAsByte);
@@ -89,7 +89,7 @@ namespace UbiArt.ITF {
 					specificOrientation = s.SerializeObject<Angle>(specificOrientation, name: "specificOrientation");
 				}
 				if (orientationUpdateType == Enum_orientationUpdateType.dynamicAxisRecenter) {
-					if (Settings.s.game == Settings.Game.RL) {
+					if (s.Settings.game == Settings.Game.RL) {
 						axisRecenter_StopActionInCorridor = s.Serialize<bool>(axisRecenter_StopActionInCorridor, name: "axisRecenter_StopActionInCorridor", options: CSerializerObject.Options.BoolAsByte);
 					} else {
 						axisRecenter_StopActionInCorridor = s.Serialize<bool>(axisRecenter_StopActionInCorridor, name: "axisRecenter_StopActionInCorridor");
@@ -97,7 +97,7 @@ namespace UbiArt.ITF {
 				}
 				if (orientationUpdateType == Enum_orientationUpdateType.dynamicAxisRecenter ||
 					orientationUpdateType == Enum_orientationUpdateType.dynamicHelicoCorridorRecenter) {
-					if (Settings.s.game == Settings.Game.RL) {
+					if (s.Settings.game == Settings.Game.RL) {
 						axisRecenter_FollowDRCInteractActor = s.Serialize<bool>(axisRecenter_FollowDRCInteractActor, name: "axisRecenter_FollowDRCInteractActor", options: CSerializerObject.Options.BoolAsByte);
 					} else {
 						axisRecenter_FollowDRCInteractActor = s.Serialize<bool>(axisRecenter_FollowDRCInteractActor, name: "axisRecenter_FollowDRCInteractActor");

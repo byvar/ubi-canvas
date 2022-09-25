@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public CMap<StringID, uint> friendlyToInstanceActor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				events = s.SerializeObject<CArrayO<Generic<SequenceEvent_Template>>>(events, name: "events");
 				unskippableDurationFirstTime = s.Serialize<float>(unskippableDurationFirstTime, name: "unskippableDurationFirstTime");
 				deactivatedPlayers = s.Serialize<bool>(deactivatedPlayers, name: "deactivatedPlayers");
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 				reactivatePlayers = s.Serialize<bool>(reactivatePlayers, name: "reactivatePlayers");
 				saveInitialView = s.Serialize<bool>(saveInitialView, name: "saveInitialView");
 				trackList = s.SerializeObject<CListO<SequenceTrackInfo_Template>>(trackList, name: "trackList");
-			} else if (Settings.s.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				events = s.SerializeObject<CArrayO<Generic<SequenceEvent_Template>>>(events, name: "events");
 				unskippableDurationFirstTime = s.Serialize<float>(unskippableDurationFirstTime, name: "unskippableDurationFirstTime");
 				deactivatedPlayers = s.Serialize<bool>(deactivatedPlayers, name: "deactivatedPlayers");
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 				instanceActors = s.SerializeObject<CListO<Actor>>(instanceActors, name: "instanceActors");
 				instanceActorsCRC = s.SerializeObject<CArrayP<uint>>(instanceActorsCRC, name: "instanceActorsCRC");
 				friendlyToInstanceActor = s.SerializeObject<CMap<StringID, uint>>(friendlyToInstanceActor, name: "friendlyToInstanceActor");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				events = s.SerializeObject<CArrayO<Generic<SequenceEvent_Template>>>(events, name: "events");
 				unskippableDurationFirstTime = s.Serialize<float>(unskippableDurationFirstTime, name: "unskippableDurationFirstTime");
 				deactivatedPlayers = s.Serialize<bool>(deactivatedPlayers, name: "deactivatedPlayers", options: CSerializerObject.Options.BoolAsByte);

@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public CListO<FontTemplate.Char> chars;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				info = s.SerializeObject<FontTemplate.Info>(info, name: "info");
 				common = s.SerializeObject<FontTemplate.Common>(common, name: "common");

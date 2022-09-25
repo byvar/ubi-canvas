@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 			animAmplitudeX = s.Serialize<float>(animAmplitudeX, name: "animAmplitudeX");
 			animAmplitudeY = s.Serialize<float>(animAmplitudeY, name: "animAmplitudeY");
 			animSync = s.Serialize<float>(animSync, name: "animSync");
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 				animAngleUsed = s.Serialize<bool>(animAngleUsed, name: "animAngleUsed", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 				animAngleUsed = s.Serialize<bool>(animAngleUsed, name: "animAngleUsed");

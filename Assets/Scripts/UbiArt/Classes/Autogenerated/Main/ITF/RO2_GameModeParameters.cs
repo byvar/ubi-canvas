@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public GameMode2 gameMode2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				gameMode2 = s.Serialize<GameMode2>(gameMode2, name: "gameMode");
 			} else {
 				gameMode = s.Serialize<GameMode>(gameMode, name: "gameMode");

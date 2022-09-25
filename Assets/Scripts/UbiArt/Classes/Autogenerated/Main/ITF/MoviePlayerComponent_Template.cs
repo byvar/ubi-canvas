@@ -21,13 +21,13 @@ namespace UbiArt.ITF {
 		public FontTextArea.Style subsFontTextStyle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 				video = s.SerializeObject<Path>(video, name: "video");
 				autoPlay = s.Serialize<bool>(autoPlay, name: "autoPlay");
 				fadeInTime = s.Serialize<float>(fadeInTime, name: "fadeInTime");
 				fadeOutTime = s.Serialize<float>(fadeOutTime, name: "fadeOutTime");
 				playFromMemory = s.Serialize<bool>(playFromMemory, name: "playFromMemory");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				video = s.SerializeObject<Path>(video, name: "video");
 				audioTracks = s.SerializeObject<CListP<uint>>(audioTracks, name: "audioTracks");
 				videoTrack = s.Serialize<bool>(videoTrack, name: "videoTrack", options: CSerializerObject.Options.BoolAsByte);

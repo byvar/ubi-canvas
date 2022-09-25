@@ -68,8 +68,8 @@ namespace UbiArt.ITF {
 		public float float__21;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
-				if (Settings.s.isCatchThemAll) {
+			if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.isCatchThemAll) {
 					colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 					uint__15 = (uint)s.Serialize<byte>((byte)uint__15, name: "uint__15");
 					uint__15 = (uint)s.Serialize<byte>((byte)uint__15, name: "uint__15");
@@ -89,7 +89,7 @@ namespace UbiArt.ITF {
 					RenderToTexture = s.Serialize<bool>(RenderToTexture, name: "RenderToTexture");
 				}
 				gfxOccludeInfo2 = s.Serialize<GFX_OCCLUDE_INFO2>(gfxOccludeInfo2, name: "gfxOccludeInfo");
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");
 				FrontLightContrast = s.Serialize<float>(FrontLightContrast, name: "FrontLightContrast");
@@ -141,7 +141,7 @@ namespace UbiArt.ITF {
 				colorFog = s.SerializeObject<Color>(colorFog, name: "colorFog");
 				DynamicFogFactor = s.Serialize<float>(DynamicFogFactor, name: "DynamicFogFactor");
 
-				if (Settings.s.game == Settings.Game.RM) {
+				if (s.Settings.game == Settings.Game.RM) {
 					NormalLightParam2 = s.SerializeObject<NormalLightingParam>(NormalLightParam2, name: "NormalLightParam");
 				}
 
@@ -155,7 +155,7 @@ namespace UbiArt.ITF {
 				colorForMask3 = s.SerializeObject<Color>(colorForMask3, name: "colorForMask3");
 				saturation = s.Serialize<float>(saturation, name: "saturation");
 				GridFluidEmitterIntensity = s.Serialize<float>(GridFluidEmitterIntensity, name: "GridFluidEmitterIntensity");
-				if (Settings.s.game == Settings.Game.RM) {
+				if (s.Settings.game == Settings.Game.RM) {
 					GridFluidEmitterFilter = s.Serialize<uint>(GridFluidEmitterFilter, name: "GridFluidEmitterFilter");
 				}
 				FrontLightFactor = s.Serialize<float>(FrontLightFactor, name: "FrontLightFactor");

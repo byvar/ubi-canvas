@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public CListO<Criteria> criterias;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RO) {
 			} else {
 				animOn = s.SerializeObject<Generic<BlendTreeNode<AnimTreeResult>>>(animOn, name: "animOn");
 				animOff = s.SerializeObject<Generic<BlendTreeNode<AnimTreeResult>>>(animOff, name: "animOff");

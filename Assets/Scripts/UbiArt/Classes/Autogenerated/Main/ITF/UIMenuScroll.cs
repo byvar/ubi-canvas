@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public CArrayP<uint> spawnRequestIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
 				itemOffset = s.SerializeObject<Vec2d>(itemOffset, name: "itemOffset");
 				itemVisiblesCount = s.Serialize<int>(itemVisiblesCount, name: "itemVisiblesCount");
 				displayOutItems = s.Serialize<bool>(displayOutItems, name: "displayOutItems");

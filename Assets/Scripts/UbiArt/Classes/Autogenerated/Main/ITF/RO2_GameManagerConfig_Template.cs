@@ -155,7 +155,7 @@ namespace UbiArt.ITF {
 		public CListO<Path> packages;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				playerConfig = s.SerializeObject<RO2_PlayerConfig_Template>(playerConfig, name: "playerConfig");
 				gameplayCameraPath = s.SerializeObject<Path>(gameplayCameraPath, name: "gameplayCameraPath");
 				remoteCameraPath = s.SerializeObject<Path>(remoteCameraPath, name: "remoteCameraPath");

@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 		public float moveOnTopSpeedMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				angularSpeedMultiplier = s.Serialize<float>(angularSpeedMultiplier, name: "angularSpeedMultiplier");
 				angularAcceleration = s.SerializeObject<Angle>(angularAcceleration, name: "angularAcceleration");
 				angularDeceleration = s.SerializeObject<Angle>(angularDeceleration, name: "angularDeceleration");

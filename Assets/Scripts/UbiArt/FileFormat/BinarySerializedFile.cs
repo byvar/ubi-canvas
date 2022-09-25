@@ -22,12 +22,12 @@ namespace UbiArt.FileFormat {
             /*using (Reader fileReader = new Reader(stream, Settings.s.IsLittleEndian)) {
                 data = fileReader.ReadBytes((int)stream.Length);
             }*/
-            reader = new Reader(stream/*new MemoryStream(data)*/, Settings.s.IsLittleEndian);
+            reader = new Reader(stream/*new MemoryStream(data)*/, context.Settings.IsLittleEndian);
 			string extension = null;
 			if (name.Contains(".")) {
 				extension = name.Substring(name.LastIndexOf(".") + 1);
 			}
-			if (Settings.s.serializerType == Settings.SerializerType.TagBinary && !context.IsPureBinary(name, extension)) {
+			if (context.Settings.serializerType == Settings.SerializerType.TagBinary && !context.IsPureBinary(name, extension)) {
 				serializer = new CSerializerObjectTagBinary(context, reader);
 			} else {
 				serializer = new CSerializerObjectBinary(context, reader);

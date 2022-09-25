@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public bool rescued;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					path = s.SerializeObject<Path>(path, name: "path");
 					prisonerVisualType = s.Serialize<Prisoner>(prisonerVisualType, name: "prisonerVisualType");

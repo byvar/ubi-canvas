@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<FontTextArea.Style> styles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				styles = s.SerializeObject<CListO<FontTextArea.Style>>(styles, name: "styles");
 			}

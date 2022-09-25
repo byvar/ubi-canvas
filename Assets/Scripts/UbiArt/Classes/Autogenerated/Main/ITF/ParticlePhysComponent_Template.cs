@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public Angle physAngularSpeedMaxAngular;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				physFriction = s.Serialize<float>(physFriction, name: "physFriction");
 				physAngularSpeedMinLinear = s.Serialize<float>(physAngularSpeedMinLinear, name: "physAngularSpeedMinLinear");
 				physAngularSpeedMaxLinear = s.Serialize<float>(physAngularSpeedMaxLinear, name: "physAngularSpeedMaxLinear");

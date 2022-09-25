@@ -69,7 +69,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				modifierBlend = s.Serialize<float>(modifierBlend, name: "modifierBlend");
 				modifierInertie = s.Serialize<float>(modifierInertie, name: "modifierInertie");
 				constraintDelayToActivate = s.SerializeObject<Vec3d>(constraintDelayToActivate, name: "constraintDelayToActivate");
@@ -123,7 +123,7 @@ namespace UbiArt.ITF {
 				cameraDriftDelay = s.Serialize<float>(cameraDriftDelay, name: "cameraDriftDelay");
 				controllerDriftDelay = s.Serialize<float>(controllerDriftDelay, name: "controllerDriftDelay");
 				isMainSubject = s.Serialize<bool>(isMainSubject, name: "isMainSubject");
-			} else if(Settings.s.game == Settings.Game.RL) {
+			} else if(s.Settings.game == Settings.Game.RL) {
 				modifierBlend = s.Serialize<float>(modifierBlend, name: "modifierBlend");
 				modifierInertie = s.Serialize<float>(modifierInertie, name: "modifierInertie");
 				constraintDelayToActivate = s.SerializeObject<Vec3d>(constraintDelayToActivate, name: "constraintDelayToActivate");

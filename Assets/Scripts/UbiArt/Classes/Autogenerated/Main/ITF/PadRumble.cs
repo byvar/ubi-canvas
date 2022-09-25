@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public float float__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.VH) {
 				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
 				float__1 = s.Serialize<float>(float__1, name: "float__1");
 				float__2 = s.Serialize<float>(float__2, name: "float__2");

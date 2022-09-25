@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			tex = s.SerializeObject<StringID>(tex, name: "tex");
 			zExtrude = s.Serialize<float>(zExtrude, name: "zExtrude");
 			if (s.HasFlags(SerializeFlags.Flags10)) {
-				if (Settings.s.game == Settings.Game.COL) {
+				if (s.Settings.game == Settings.Game.COL) {
 					isSmooth = s.Serialize<bool>(isSmooth, name: "isSmooth", options: CSerializerObject.Options.BoolAsByte);
 				} else {
 					isSmooth = s.Serialize<bool>(isSmooth, name: "isSmooth");

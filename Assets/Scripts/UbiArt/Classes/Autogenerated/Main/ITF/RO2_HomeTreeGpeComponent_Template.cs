@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public float trunkAttachCurveWidth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				appearMode = s.Serialize<AppearMode>(appearMode, name: "appearMode");
 				fadeDuration = s.Serialize<float>(fadeDuration, name: "fadeDuration");
 				appearAnim = s.SerializeObject<StringID>(appearAnim, name: "appearAnim");

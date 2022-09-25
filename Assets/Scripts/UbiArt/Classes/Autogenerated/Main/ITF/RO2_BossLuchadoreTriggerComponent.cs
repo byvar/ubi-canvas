@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public LTLegends secondaryTweenSelection2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL) {
 				luchadoreEvent = s.Serialize<LE>(luchadoreEvent, name: "luchadoreEvent");
 				phaseTag = s.SerializeObject<StringID>(phaseTag, name: "phaseTag");
 				instructionTag = s.SerializeObject<StringID>(instructionTag, name: "instructionTag");

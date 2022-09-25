@@ -34,8 +34,8 @@ namespace UbiArt.ITF {
 		public bool bool__12;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
-			} else if (Settings.s.game == Settings.Game.RL) {
+			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
+			} else if (s.Settings.game == Settings.Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					style = s.Serialize<uint>(style, name: "style");
 					offset = s.SerializeObject<Vec2d>(offset, name: "offset");
@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
 					overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
 				}
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					style = s.Serialize<uint>(style, name: "style");
 					offset = s.SerializeObject<Vec2d>(offset, name: "offset");
@@ -71,7 +71,7 @@ namespace UbiArt.ITF {
 					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
 					overridingAnchor = s.Serialize<AREA_ANCHOR>(overridingAnchor, name: "overridingAnchor");
 				}
-			} else if (Settings.s.game == Settings.Game.VH) {
+			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					style = s.Serialize<uint>(style, name: "style");
 					offset = s.SerializeObject<Vec2d>(offset, name: "offset");

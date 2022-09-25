@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		public Spline curve;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				input = s.SerializeObject<StringID>(input, name: "input");
 				min = s.Serialize<float>(min, name: "min");
 				max = s.Serialize<float>(max, name: "max");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 				modFlag = s.Serialize<int>(modFlag, name: "mod");
 				absFlag = s.Serialize<int>(absFlag, name: "abs");
 				addFlag = s.Serialize<int>(addFlag, name: "add");
-			} else if (Settings.s.game == Settings.Game.VH || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				input = s.SerializeObject<StringID>(input, name: "input");
 				min = s.Serialize<float>(min, name: "min");
 				max = s.Serialize<float>(max, name: "max");

@@ -17,8 +17,9 @@ public class UnityWindowActor : UnityWindow {
 		if (EditorApplication.isPlaying) {
 			if (controller == null) controller = FindObjectOfType<Controller>();
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
-				string extension = "act" + (Settings.s.cooked ? ".ckd" : "");
-				if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
+				var c = MapLoader.Loader;
+				string extension = "act" + (c.Settings.cooked ? ".ckd" : "");
+				if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
 					extension = "act_fake";
 				}
 				#region Add Actor
@@ -30,14 +31,14 @@ public class UnityWindowActor : UnityWindow {
 				}
 				rect = EditorGUI.PrefixLabel(rect, new GUIContent("Actor file"));
 				if (EditorGUI.DropdownButton(rect, new GUIContent(buttonString), FocusType.Passive)) {
-					string directory = (MapLoader.Loader.gameDataBinFolder + Settings.s.ITFDirectory).Replace(System.IO.Path.DirectorySeparatorChar, '/');
+					string directory = (MapLoader.Loader.gameDataBinFolder + c.Settings.ITFDirectory).Replace(System.IO.Path.DirectorySeparatorChar, '/');
 					if (!directory.EndsWith("/")) directory += "/";
 					while (directory.Contains("//")) directory = directory.Replace("//", "/");
 
-					if (recheckFiles || Dropdown == null || Dropdown.directory != directory || Dropdown.extension != "*." + extension || Dropdown.mode != Settings.s.mode) {
+					if (recheckFiles || Dropdown == null || Dropdown.directory != directory || Dropdown.extension != "*." + extension || Dropdown.mode != c.Settings.mode) {
 						Dropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, "*." + extension) {
 							name = "Actor files",
-							mode = Settings.s.mode
+							mode = c.Settings.mode
 						};
 						recheckFiles = false;
 					}

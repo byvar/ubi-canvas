@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public float offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RO || Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 			} else {
 				frequency = s.Serialize<float>(frequency, name: "frequency");
 				amplitude = s.Serialize<float>(amplitude, name: "amplitude");

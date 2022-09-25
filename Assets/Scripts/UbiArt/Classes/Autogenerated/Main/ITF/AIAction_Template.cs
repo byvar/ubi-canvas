@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public float ignoreContactDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 				if (this is AIDestroyAction_Template) return;
 			}
 			action = s.SerializeObject<StringID>(action, name: "action");

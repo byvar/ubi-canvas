@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RJR || Settings.s.game == Settings.Game.RFR || Settings.s.game == Settings.Game.RO) {
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				ParticleGeneratorParams = s.SerializeObject<ITF_ParticleGenerator_Template>(ParticleGeneratorParams, name: "ParticleGeneratorParams");
 				startTime = s.Serialize<float>(startTime, name: "startTime");
 				stopTime = s.Serialize<float>(stopTime, name: "stopTime");
@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				frequencyInput = s.SerializeObject<ProceduralInputData>(frequencyInput, name: "frequencyInput");
 				emitCountInput = s.SerializeObject<ProceduralInputData>(emitCountInput, name: "emitCountInput");
-			} else if (Settings.s.game == Settings.Game.COL) {
+			} else if (s.Settings.game == Settings.Game.COL) {
 				ParticleGeneratorParams = s.SerializeObject<ITF_ParticleGenerator_Template>(ParticleGeneratorParams, name: "ParticleGeneratorParams");
 				startTime = s.Serialize<float>(startTime, name: "startTime");
 				stopTime = s.Serialize<float>(stopTime, name: "stopTime");

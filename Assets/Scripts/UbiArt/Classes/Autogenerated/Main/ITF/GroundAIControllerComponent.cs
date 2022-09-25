@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool AppearDisablePhysic;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.RL || Settings.s.game == Settings.Game.COL || Settings.s.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
 			} else {
 				AppearDisablePhysic = s.Serialize<bool>(AppearDisablePhysic, name: "AppearDisablePhysic");
 			}

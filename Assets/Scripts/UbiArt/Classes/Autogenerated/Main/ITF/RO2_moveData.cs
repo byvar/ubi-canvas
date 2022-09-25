@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 				playFxAttach = s.Serialize<bool>(playFxAttach, name: "playFxAttach");
 				playFxMove = s.Serialize<bool>(playFxMove, name: "playFxMove");
 				playFxDetach = s.Serialize<bool>(playFxDetach, name: "playFxDetach");
-				if (Settings.s.game == Settings.Game.RL) {
+				if (s.Settings.game == Settings.Game.RL) {
 					pauseFxInWait = s.Serialize<bool>(pauseFxInWait, name: "pauseFxInWait");
 				}
 			}

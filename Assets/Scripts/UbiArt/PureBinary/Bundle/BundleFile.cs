@@ -34,6 +34,10 @@ namespace UbiArt.Bundle {
 			bootHeader = new BundleBootHeader();
 			packMaster = new FilePackMaster();
 		}
+		public BundleFile(MapLoader context) {
+			bootHeader = new BundleBootHeader(context);
+			packMaster = new FilePackMaster();
+		}
 		public Stream GetFileStream(Path path) {
 			if (readFileData.ContainsKey(path)) return new MemoryStream(readFileData[path]);
 			return null;
@@ -80,7 +84,7 @@ namespace UbiArt.Bundle {
 			byte[] serializedData = null;
 			foreach (KeyValuePair<Path, ICSerializable> kv in files) {
 				using (MemoryStream stream = new MemoryStream()) {
-					using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
+					using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
 						MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
 						object toWrite = kv.Value;
@@ -101,7 +105,7 @@ namespace UbiArt.Bundle {
 				await TimeController.WaitIfNecessary();
 			}
 			using (MemoryStream stream = new MemoryStream()) {
-				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
+				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
@@ -112,7 +116,7 @@ namespace UbiArt.Bundle {
 			await TimeController.WaitIfNecessary();
 			bootHeader.baseOffset = (uint)serializedData.Length;
 			using (MemoryStream stream = new MemoryStream()) {
-				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
+				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;

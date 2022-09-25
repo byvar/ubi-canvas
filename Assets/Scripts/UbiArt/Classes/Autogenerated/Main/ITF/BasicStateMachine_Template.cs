@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<BasicState_Template> stateList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (Settings.s.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				stateList = s.SerializeObject<CListO<BasicState_Template>>(stateList, name: "stateList");
 			}
