@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
-				MapLoader l = s.Context;
+				Context l = s.Context;
 				l.Load(materialShader, (extS) => {
 					if (l.msh.ContainsKey(materialShader.stringID)) {
 						shader = l.msh[materialShader.stringID];

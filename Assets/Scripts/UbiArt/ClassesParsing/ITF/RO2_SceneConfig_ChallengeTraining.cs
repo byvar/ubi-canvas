@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
-				MapLoader l = s.Context;
+				Context l = s.Context;
 				l.Load(modePath, (extS) => {
 					if (l.isg.ContainsKey(modePath.stringID)) {
 						mode = l.isg[modePath.stringID];

@@ -14,7 +14,7 @@ namespace UbiArt {
 		private LocalisationIdDropdown localisationDropdown = null;
 
 		private static CSerializerObjectUnityEditor serializer;
-		public static CSerializerObjectUnityEditor Serializer(MapLoader context) {
+		public static CSerializerObjectUnityEditor Serializer(Context context) {
 			if(serializer != null && serializer.Context != context)
 				serializer = null;
 
@@ -27,7 +27,7 @@ namespace UbiArt {
 		}
 
 
-		public CSerializerObjectUnityEditor(MapLoader context) : base(context) {
+		public CSerializerObjectUnityEditor(Context context) : base(context) {
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
 
@@ -171,8 +171,8 @@ namespace UbiArt {
 				locIdPreview += "None";
 			} else if (locId.id == 0) {
 				locIdPreview += "Empty";
-			} else if (MapLoader.Loader.localisation != null && MapLoader.Loader.localisation.strings.Count > 0 && MapLoader.Loader.localisation.strings[0].ContainsKey(locId)) {
-				locIdPreview += MapLoader.Loader.localisation.strings[0][locId].text.Replace("\n","\\n");
+			} else if (Controller.MainContext.localisation != null && Controller.MainContext.localisation.strings.Count > 0 && Controller.MainContext.localisation.strings[0].ContainsKey(locId)) {
+				locIdPreview += Controller.MainContext.localisation.strings[0][locId].text.Replace("\n","\\n");
 			} else {
 				locIdPreview += "Error";
 			}

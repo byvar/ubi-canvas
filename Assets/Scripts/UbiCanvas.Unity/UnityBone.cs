@@ -76,7 +76,7 @@ public class UnityBone : MonoBehaviour {
 	}
 
 	public void UpdateBone() {
-		var c = MapLoader.Loader;
+		var c = Controller.MainContext;
 		if (bind) {
 			if (parent != null) {
 				globalAngle = parent.globalAngle + bindRotation + localRotation;

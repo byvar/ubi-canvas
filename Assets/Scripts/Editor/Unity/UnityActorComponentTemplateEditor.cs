@@ -31,7 +31,7 @@ public class UnityActorComponentTemplateEditor : Editor {
 
 		UnityActorComponentTemplate uac = target as UnityActorComponentTemplate;
 		if (uac != null && uac.component != null) {
-			uac.component.Serialize(CSerializerObjectUnityEditor.Serializer(MapLoader.Loader), "ActorComponent_Template");
+			uac.component.Serialize(CSerializerObjectUnityEditor.Serializer(Controller.MainContext), "ActorComponent_Template");
 		}
 
 	}

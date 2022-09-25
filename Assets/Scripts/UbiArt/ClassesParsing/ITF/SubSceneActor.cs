@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad && !EMBED_SCENE) {
-				MapLoader l = s.Context;
+				Context l = s.Context;
 				l.Load(RELATIVEPATH, (extS) => {
 					if (l.isc.ContainsKey(RELATIVEPATH.stringID)) {
 						sceneFile = l.isc[RELATIVEPATH.stringID];

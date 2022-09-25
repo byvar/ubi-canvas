@@ -174,7 +174,7 @@ namespace UbiArt.Animation {
 					}
 				}
 			}
-			if (currentIndex != bones.Count) MapLoader.Loader.print(currentIndex + " - " + bones.Count);
+			if (currentIndex != bones.Count) UbiArtContext.print(currentIndex + " - " + bones.Count);
 			return order;
 		}
 

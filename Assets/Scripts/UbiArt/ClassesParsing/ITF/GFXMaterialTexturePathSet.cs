@@ -24,8 +24,8 @@ namespace UbiArt.ITF {
 			}
 		}
 
-		protected void LoadTexture(MapLoader context, string fieldName, Path path) {
-			MapLoader l = context;
+		protected void LoadTexture(Context context, string fieldName, Path path) {
+			Context l = context;
 			l.Load(path, (extS) => {
 				FieldInfo f = GetType().GetField(fieldName);
 				if (l.tex.ContainsKey(path.stringID)) {

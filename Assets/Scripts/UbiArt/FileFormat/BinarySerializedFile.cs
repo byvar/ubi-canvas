@@ -11,12 +11,12 @@ namespace UbiArt.FileFormat {
         long length;
         //byte[] data = null;
 
-        public BinarySerializedFile(MapLoader context, string name, Path path, bool ckd) : this(context, name, context.GetGameFileStream(path, ckd)) {
+        public BinarySerializedFile(Context context, string name, Path path, bool ckd) : this(context, name, context.GetGameFileStream(path, ckd)) {
             this.path = path;
 			this.ckd = ckd;
         }
 
-        public BinarySerializedFile(MapLoader context, string name, Stream stream) {
+        public BinarySerializedFile(Context context, string name, Stream stream) {
             this.name = name;
             length = stream.Length;
             /*using (Reader fileReader = new Reader(stream, Settings.s.IsLittleEndian)) {
@@ -32,7 +32,7 @@ namespace UbiArt.FileFormat {
 			} else {
 				serializer = new CSerializerObjectBinary(context, reader);
 			}
-			MapLoader.ConfigureSerializeFlagsForExtension(ref serializer.flags, ref serializer.flagsOwn, extension);
+			Context.ConfigureSerializeFlagsForExtension(ref serializer.flags, ref serializer.flagsOwn, extension);
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
         }
 

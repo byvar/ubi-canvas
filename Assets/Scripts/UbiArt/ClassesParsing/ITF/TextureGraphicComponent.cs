@@ -46,7 +46,7 @@ namespace UbiArt.ITF {
 			if (spriteIndex != 0xFFFFFFFF && tex.atlas != null) {
 				if (tex.atlas.uvData.ContainsKey((int)spriteIndex)) {
 					uvsArr = tex.atlas.uvData[(int)spriteIndex].uvs;
-					MapLoader.Loader.print("Texture path with UV count:" + material.textureSet.diffuse + " - " + uvsArr.Count);
+					UbiArtContext.print("Texture path with UV count:" + material.textureSet.diffuse + " - " + uvsArr.Count);
 				}
 			}
 			Vector3[] vertices = new Vector3[4];

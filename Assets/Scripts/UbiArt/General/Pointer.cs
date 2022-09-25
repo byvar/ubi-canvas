@@ -51,7 +51,7 @@ namespace UbiArt {
 		}
 
 		public static Pointer Current(Reader reader) {
-			MapLoader l = MapLoader.Loader;
+			Context l = Controller.MainContext;
 			long curPos = reader.BaseStream.Position;
 			FileWithPointers curFile = l.GetFileByReader(reader);
 			return new Pointer(curPos, curFile);
@@ -59,7 +59,7 @@ namespace UbiArt {
 
 
 		public static Pointer Current(Writer writer) {
-			MapLoader l = MapLoader.Loader;
+			Context l = Controller.MainContext;
 			long curPos = writer.BaseStream.Position;
 			FileWithPointers curFile = l.GetFileByWriter(writer);
 			return new Pointer(curPos, curFile);

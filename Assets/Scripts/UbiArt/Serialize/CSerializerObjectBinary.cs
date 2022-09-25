@@ -12,7 +12,7 @@ namespace UbiArt {
 		public Reader reader;
 
 
-		public CSerializerObjectBinary(MapLoader context, Reader reader) : base(context) {
+		public CSerializerObjectBinary(Context context, Reader reader) : base(context) {
 			this.reader = reader;
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}

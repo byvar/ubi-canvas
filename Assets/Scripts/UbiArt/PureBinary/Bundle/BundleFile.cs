@@ -34,7 +34,7 @@ namespace UbiArt.Bundle {
 			bootHeader = new BundleBootHeader();
 			packMaster = new FilePackMaster();
 		}
-		public BundleFile(MapLoader context) {
+		public BundleFile(Context context) {
 			bootHeader = new BundleBootHeader(context);
 			packMaster = new FilePackMaster();
 		}
@@ -77,7 +77,7 @@ namespace UbiArt.Bundle {
 		public void AddFile(Path path, ICSerializable data) {
 			files[path] = data;
 		}
-		public async UniTask WriteBundle(MapLoader context, string path) {
+		public async UniTask WriteBundle(Context context, string path) {
 			bootHeader.numFiles = (uint)files.Keys.Count;
 			List<byte[]> data = new List<byte[]>();
 			uint curOffset = 0;
@@ -86,7 +86,7 @@ namespace UbiArt.Bundle {
 				using (MemoryStream stream = new MemoryStream()) {
 					using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
-						MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
+						Context.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
 						object toWrite = kv.Value;
 						w.Serialize(ref toWrite, kv.Value.GetType(), name: kv.Key.filename);
 						serializedData = stream.ToArray();
@@ -107,7 +107,7 @@ namespace UbiArt.Bundle {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
-					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
+					Context.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "Bundle");
 					serializedData = stream.ToArray();
@@ -118,7 +118,7 @@ namespace UbiArt.Bundle {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
-					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
+					Context.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "Bundle");
 					serializedData = stream.ToArray();

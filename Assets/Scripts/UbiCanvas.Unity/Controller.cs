@@ -21,11 +21,11 @@ public class Controller : MonoBehaviour {
 	public ZListManager zListManager;
 	private Sprite[] icons;
 	bool displayGizmos_ = false; public bool displayGizmos = false;
-	MapLoader loader = null;
 	public PickableSelector selector;
 	public UnityPickable SelectedObject => selector.selected;
 
 	public static Controller Obj { get; protected set; }
+	public static Context MainContext { get; protected set; }
 
 	void Awake() {
 		Application.logMessageReceived += Log;
@@ -56,16 +56,14 @@ public class Controller : MonoBehaviour {
 
 		loadingScreen.Active = true;
 		var settings = Settings.Init(mode);
-		MapLoader.Loader = new MapLoader(settings);
-		loader = MapLoader.Loader;
-		loader.Settings = settings;
-		loader.gameDataBinFolder = gameDataBinFolder;
-		loader.pathFolder = System.IO.Path.GetDirectoryName(lvlPath);
-		loader.pathFile = System.IO.Path.GetFileName(lvlPath);
-		//loader.lvlName = lvlName;
-		loader.logFile = logFile;
-		loader.logEnabled = log;
-		loader.loadAnimations = loadAnimations;
+		MainContext = new Context(settings);
+		MainContext.gameDataBinFolder = gameDataBinFolder;
+		MainContext.pathFolder = System.IO.Path.GetDirectoryName(lvlPath);
+		MainContext.pathFile = System.IO.Path.GetFileName(lvlPath);
+		//MainContext.lvlName = lvlName;
+		MainContext.logFile = logFile;
+		MainContext.logEnabled = log;
+		MainContext.loadAnimations = loadAnimations;
 
 		await Init();
 	}
@@ -75,7 +73,7 @@ public class Controller : MonoBehaviour {
 		w.Start();
 		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
 		await TimeController.WaitFrame();
-		await loader.LoadInit();
+		await MainContext.LoadInit();
 		await TimeController.WaitFrame();
 		if (GlobalLoadState.LoadState == GlobalLoadState.State.Error) return;
 		GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
@@ -91,10 +89,10 @@ public class Controller : MonoBehaviour {
 	public async UniTask LoadActor(Scene scene, string pathFile, string pathFolder) {
 		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
 		loadingScreen.Active = true;
-		ContainerFile<Actor> act = await MapLoader.Loader.LoadExtraActor(pathFile, pathFolder);
+		ContainerFile<Actor> act = await MainContext.LoadExtraActor(pathFile, pathFolder);
 		if (act != null && act.obj != null) {
 			await TimeController.WaitFrame();
-			CSerializable c = await MapLoader.Loader.Clone(act.obj, "act");
+			CSerializable c = await MainContext.Clone(act.obj, "act");
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
 			await scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
 			Controller.Obj.zListManager.Sort();
@@ -108,7 +106,7 @@ public class Controller : MonoBehaviour {
 	public async UniTask ExportActor(Actor actor, string path) {
 		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
 		loadingScreen.Active = true;
-		await MapLoader.Loader.WriteActor(path, actor);
+		await MainContext.WriteActor(path, actor);
 		GlobalLoadState.DetailedState = "Finished";
 		GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
 		loadingScreen.Active = false;
@@ -122,7 +120,7 @@ public class Controller : MonoBehaviour {
 				loadingScreen.LoadingtextColor = UnityEngine.Color.red;
 			} else {
 				if (GlobalLoadState.LoadState == GlobalLoadState.State.Loading) {
-					loadingScreen.LoadingText = loader.loadingState;
+					loadingScreen.LoadingText = MainContext.loadingState;
 				} else {
 					loadingScreen.LoadingText = GlobalLoadState.DetailedState;
 				}
@@ -133,7 +131,7 @@ public class Controller : MonoBehaviour {
 			displayGizmos = !displayGizmos;
 		}
 		bool updatedSettings = false;
-		if (loader != null) {
+		if (MainContext != null) {
 			if (displayGizmos != displayGizmos_) {
 				updatedSettings = true;
 			}

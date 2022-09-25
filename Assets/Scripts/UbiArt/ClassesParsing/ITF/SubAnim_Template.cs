@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (name != null && IsFirstLoad) {
-				MapLoader l = s.Context;
+				Context l = s.Context;
 				if (l.loadAnimations) {
 					l.Load(name, (extS) => {
 						if (l.anm.ContainsKey(name.stringID)) {

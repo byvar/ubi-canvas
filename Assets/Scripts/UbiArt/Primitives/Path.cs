@@ -60,12 +60,12 @@ namespace UbiArt {
 			}
 		}
 
-		public bool IsCooked(MapLoader context) {
+		public bool IsCooked(Context context) {
 			return (folder != null && folder.StartsWith(context.Settings.ITFDirectory)) 
 				|| (filename != null && filename.EndsWith(".ckd"));
 		}
 
-		public Path CookedPath(MapLoader context) {
+		public Path CookedPath(Context context) {
 			if (!IsNull && !IsCooked(context)) {
 				return new Path(folder != null ? context.Settings.ITFDirectory + folder : null,
 					filename != null ? filename + ".ckd" : null, cooked: true);

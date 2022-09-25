@@ -31,7 +31,7 @@ public class UnitySceneConfigEditor : Editor {
 
 		UnitySceneConfig sc = target as UnitySceneConfig;
 		if (sc != null && sc.config != null) {
-			sc.config.Serialize(CSerializerObjectUnityEditor.Serializer(MapLoader.Loader), "SceneConfig");
+			sc.config.Serialize(CSerializerObjectUnityEditor.Serializer(Controller.MainContext), "SceneConfig");
 		}
 
 	}

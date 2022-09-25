@@ -31,7 +31,7 @@ public class UnityFriseEditor : Editor {
 
 		UnityFrise frise = target as UnityFrise;
 		if (frise != null && frise.frise != null) {
-			frise.frise.Serialize(CSerializerObjectUnityEditor.Serializer(MapLoader.Loader), "Frise");
+			frise.frise.Serialize(CSerializerObjectUnityEditor.Serializer(Controller.MainContext), "Frise");
 		}
 
 	}

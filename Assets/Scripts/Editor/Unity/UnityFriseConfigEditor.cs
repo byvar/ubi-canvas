@@ -25,7 +25,7 @@ public class UnityFriseConfigEditor : Editor {
 
 		UnityFriseConfig fcg = target as UnityFriseConfig;
 		if (fcg != null && fcg.friseConfig != null) {
-			fcg.friseConfig.Serialize(CSerializerObjectUnityEditor.Serializer(MapLoader.Loader), "FriseConfig");
+			fcg.friseConfig.Serialize(CSerializerObjectUnityEditor.Serializer(Controller.MainContext), "FriseConfig");
 		}
 
 	}

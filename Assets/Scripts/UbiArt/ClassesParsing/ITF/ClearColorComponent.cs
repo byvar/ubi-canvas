@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 	public partial class ClearColorComponent {
 		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
 			base.InitUnityComponent(act, gao, template, index);
-			var context = MapLoader.Loader;
+			var context = UbiArtContext;
 			ShaderManager shaderManager = GameObject.FindObjectOfType<ShaderManager>();
 			if (shaderManager != null) {
 				if (clearColor != null && clearColor.Enable) {

@@ -17,7 +17,7 @@ public class UnityWindowActor : UnityWindow {
 		if (EditorApplication.isPlaying) {
 			if (controller == null) controller = FindObjectOfType<Controller>();
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
-				var c = MapLoader.Loader;
+				var c = Controller.MainContext;
 				string extension = "act" + (c.Settings.cooked ? ".ckd" : "");
 				if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
 					extension = "act_fake";
@@ -31,7 +31,7 @@ public class UnityWindowActor : UnityWindow {
 				}
 				rect = EditorGUI.PrefixLabel(rect, new GUIContent("Actor file"));
 				if (EditorGUI.DropdownButton(rect, new GUIContent(buttonString), FocusType.Passive)) {
-					string directory = (MapLoader.Loader.gameDataBinFolder + c.Settings.ITFDirectory).Replace(System.IO.Path.DirectorySeparatorChar, '/');
+					string directory = (Controller.MainContext.gameDataBinFolder + c.Settings.ITFDirectory).Replace(System.IO.Path.DirectorySeparatorChar, '/');
 					if (!directory.EndsWith("/")) directory += "/";
 					while (directory.Contains("//")) directory = directory.Replace("//", "/");
 
@@ -53,7 +53,7 @@ public class UnityWindowActor : UnityWindow {
 					EditorGUI.TextArea(GetNextRect(ref yPos), SelectedActorFile);
 				}
 				EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(SelectedActorFile));
-				UbiArt.ITF.Scene sc = MapLoader.Loader.mainScene.obj;
+				UbiArt.ITF.Scene sc = Controller.MainContext.mainScene.obj;
 				UbiArt.ITF.SubSceneActor ssa = null;
 				if (Selection.activeGameObject != null) {
 					UnityScene us = Selection.activeGameObject.GetComponent<UnityScene>();

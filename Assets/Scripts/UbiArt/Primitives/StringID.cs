@@ -113,9 +113,10 @@ namespace UbiArt {
 
 		public override string ToString() {
 			string str = "StringID(0x" + stringID.ToString("X8") + ")";
-			if (!IsNull && MapLoader.Loader.stringCache.ContainsKey(this)) {
-				str += " - " + MapLoader.Loader.stringCache[this].Replace("\n", "\\n");
-			}
+			// TODO: Re-enable
+			/*if (!IsNull && Context.Loader.stringCache.ContainsKey(this)) {
+				str += " - " + Context.Loader.stringCache[this].Replace("\n", "\\n");
+			}*/
 			return str;
 		}
 

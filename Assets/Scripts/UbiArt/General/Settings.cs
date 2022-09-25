@@ -14,7 +14,7 @@ namespace UbiArt {
 		public Mode mode = Mode.RaymanLegendsPC;
 
 
-		public static Dictionary<string, Mode> cmdModeNameDict = new Dictionary<string, Mode>() {
+		public static readonly Dictionary<string, Mode> cmdModeNameDict = new Dictionary<string, Mode>() {
 			{ "ro_pc", Mode.RaymanOriginsPC },
 			{ "rl_pc", Mode.RaymanLegendsPC },
 			{ "rl_vita", Mode.RaymanLegendsVitaCatchThemAll },
@@ -165,7 +165,7 @@ namespace UbiArt {
 		};
 
 
-		public static Dictionary<Mode, Settings> settingsDict = new Dictionary<Mode, Settings>() {
+		public static readonly Dictionary<Mode, Settings> settingsDict = new Dictionary<Mode, Settings>() {
 			{ Mode.RaymanOriginsPC, ROPC },
 			{ Mode.RaymanLegendsPC, RLPC },
 			{ Mode.RaymanLegendsVitaCatchThemAll, RLVita },

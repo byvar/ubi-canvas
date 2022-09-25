@@ -19,7 +19,7 @@ namespace UbiArt.FileFormat.Texture {
 			this.Parse(ddsImage);
 		}
 
-		public DDSImage(Stream ddsImage) {
+		public DDSImage(Context context, Stream ddsImage) {
 			if (ddsImage == null) return;
 			if (!ddsImage.CanRead) return;
 
@@ -748,7 +748,7 @@ namespace UbiArt.FileFormat.Texture {
 							bitmask = ToUInt32(data, temp);
 							temp += 4;
 						} catch (Exception ex) {
-							MapLoader.Loader.print("StartIndex: " + (temp + 4) + " - Size: " + data.Length);
+							MonoBehaviour.print("StartIndex: " + (temp + 4) + " - Size: " + data.Length);
 							throw ex;
 						}
 

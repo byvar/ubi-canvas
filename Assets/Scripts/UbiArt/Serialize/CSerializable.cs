@@ -10,7 +10,7 @@ using UnityEngine;
 namespace UbiArt {
 	public class CSerializable : ICSerializable {
 		protected bool IsFirstLoad { get; set; } = true;
-		public MapLoader UbiArtContext { get; protected set; }
+		public Context UbiArtContext { get; protected set; }
 		public uint sizeOf;
 
 		public void Serialize(CSerializerObject s, string name) {
@@ -38,7 +38,7 @@ namespace UbiArt {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, UbiArtContext.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(UbiArtContext, writer);
-					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, extension);
+					Context.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, extension);
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "clone");
 					serializedData = stream.ToArray();
@@ -47,7 +47,7 @@ namespace UbiArt {
 			using (MemoryStream stream = new MemoryStream(serializedData)) {
 				using (Reader reader = new Reader(stream, UbiArtContext.Settings.IsLittleEndian)) {
 					CSerializerObject r = new CSerializerObjectBinary(UbiArtContext, reader);
-					MapLoader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.flagsOwn, extension);
+					Context.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.flagsOwn, extension);
 					object toRead = null;
 					r.Serialize(ref toRead, GetType(), name: "clone");
 					result = toRead as CSerializable;

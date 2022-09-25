@@ -15,7 +15,7 @@ using UbiArt.UV;
 using UbiCanvas.Helpers;
 
 namespace UbiArt {
-	public class MapLoader {
+	public class Context {
 		public string loadingState = "Loading";
 		public string gameDataBinFolder;
 		public string pathFolder;
@@ -81,9 +81,7 @@ namespace UbiArt {
 
 		public ContainerFile<ITF.Scene> mainScene;
 
-		public static MapLoader Loader { get; set; }
-
-		public MapLoader(Settings settings) {
+		public Context(Settings settings) {
 			Settings = settings;
 
 			// Init String Cache
@@ -337,7 +335,7 @@ namespace UbiArt {
 		public async UniTask<ContainerFile<ITF.Actor>> LoadExtraActor(string pathFile, string pathFolder) {
 			if (pathFile.EndsWith(".act") || pathFile.EndsWith(".act.ckd")) {
 				Path p = new Path(pathFolder, pathFile);
-				MapLoader l = MapLoader.Loader;
+				Context l = this;
 				ContainerFile<ITF.Actor> a = null;
 				l.Load(p, (extS) => {
 					if (l.act.ContainsKey(p.stringID)) {
@@ -427,7 +425,7 @@ namespace UbiArt {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(this, writer);
-					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "act");
+					Context.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "act");
 					object toWrite = container;
 					w.Serialize(ref toWrite, container.GetType(), name: act.USERFRIENDLY);
 					serializedData = stream.ToArray();

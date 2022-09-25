@@ -15,7 +15,7 @@ namespace UbiArt {
 		protected bool fakeSerializeMode = false;
 
 
-		public CSerializerObjectTagBinary(MapLoader context, Reader reader) : base(context) {
+		public CSerializerObjectTagBinary(Context context, Reader reader) : base(context) {
 			this.reader = reader;
 			flagsOwn = Flags.Flags0 | Flags.Flags7; // 0x81
 		}

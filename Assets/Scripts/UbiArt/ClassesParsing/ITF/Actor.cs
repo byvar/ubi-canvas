@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (this is Frise) return;
 			if (IsFirstLoad) {
-				MapLoader l = s.Context;
+				Context l = s.Context;
 				l.Load(LUA, (extS) => {
 					if (l.tpl.ContainsKey(LUA.stringID)) {
 						template = l.tpl[LUA.stringID];

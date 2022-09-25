@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
-				MapLoader l = s.Context;
+				Context l = s.Context;
 				l.Load(MatShader, (extS) => {
 					if (l.msh.ContainsKey(MatShader.stringID)) {
 						shader = l.msh[MatShader.stringID];
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 		// v GameObject
 
 		private void CreateGameObjects(GameObject gao) {
-			var context = MapLoader.Loader;
+			var context = UbiArtContext;
 			if (!context.loadAnimations) return;
 			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
 			bool createdOne = false;
@@ -66,7 +66,7 @@ namespace UbiArt.ITF {
 
 		private void ProcessOrigins(GameObject gao, Material tex_mat) {
 			ICSerializable[] resources = tpl.animSet.resources;
-			if (!MapLoader.Loader.loadAnimations) return;
+			if (!UbiArtContext.loadAnimations) return;
 			ICSerializable pbkRes = resources.Where(res => res is AnimPatchBank).FirstOrDefault();
 			AnimPatchBank pbk = pbkRes != null ? (AnimPatchBank)pbkRes : null;
 			ICSerializable sklRes = resources.Where(res => res is AnimSkeleton).FirstOrDefault();
@@ -119,7 +119,7 @@ namespace UbiArt.ITF {
 			foreach (SubAnim_Template sat in tpl.animSet.animations) {
 				animPaths.Add(sat.name);
 			}*/
-			MapLoader l = MapLoader.Loader;
+			Context l = UbiArtContext;
 
 			ua.anims = new List<System.Tuple<Path, AnimTrack>>();
 			for (int i = 0; i < resources.Length; i++) {
@@ -182,7 +182,7 @@ namespace UbiArt.ITF {
 					foreach (SubAnim_Template sat in tpl.animSet.animations) {
 						animPaths.Add(sat.name);
 					}
-					MapLoader l = MapLoader.Loader;
+					Context l = UbiArtContext;
 					ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, l.anm[p.stringID]) : null).Where(t => t != null).ToList();
 					if (ua.anims.Count > 0) {
 						ua.animIndex = 0;
@@ -234,7 +234,7 @@ namespace UbiArt.ITF {
 		private void FillMaterialParams(Renderer r, int index = 0) {
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
-			if (MapLoader.Loader.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (UbiArtContext.Settings.engineVersion > Settings.EngineVersion.RO) {
 				GFXPrimitiveParam param = PrimitiveParameters;
 				mpb.SetColor("_ColorFactor", param.colorFactor);
 				mpb.SetColor("_LightConfig", new Vector4(

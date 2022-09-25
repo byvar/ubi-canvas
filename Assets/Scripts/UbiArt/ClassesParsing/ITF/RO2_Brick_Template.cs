@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
-				MapLoader l = s.Context;
+				Context l = s.Context;
 				l.Load(archive, path.filename, (extS) => {
 					extS.log = l.logEnabled;
 					sceneFile = extS.SerializeObject<ContainerFile<Scene>>(sceneFile);

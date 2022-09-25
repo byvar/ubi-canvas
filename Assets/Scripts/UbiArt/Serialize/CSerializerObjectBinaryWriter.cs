@@ -10,7 +10,7 @@ namespace UbiArt {
 	public class CSerializerObjectBinaryWriter : CSerializerObject {
 		public Writer writer;
 		
-		public CSerializerObjectBinaryWriter(MapLoader context, Writer writer) : base(context) {
+		public CSerializerObjectBinaryWriter(Context context, Writer writer) : base(context) {
 			this.writer = writer;
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}

@@ -78,61 +78,59 @@ namespace UbiArt.Animation {
 		public TextureCooked[] texs;
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
+			Context c = s.Context;
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				if (skeleton != null && skeleton.Item2 != null && IsFirstLoad) {
-					MapLoader l = MapLoader.Loader;
-					l.Load(skeleton.Item2, (extS) => {
-						if (l.skl.ContainsKey(skeleton.Item2.stringID)) {
-							skel = l.skl[skeleton.Item2.stringID];
+					c.Load(skeleton.Item2, (extS) => {
+						if (c.skl.ContainsKey(skeleton.Item2.stringID)) {
+							skel = c.skl[skeleton.Item2.stringID];
 						} else {
-							extS.log = l.logEnabled;
+							extS.log = c.logEnabled;
 							skel = extS.SerializeObject<AnimSkeleton>(skel);
-							l.skl[skeleton.Item2.stringID] = skel;
-							l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+							c.skl[skeleton.Item2.stringID] = skel;
+							c.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 						}
 					});
 				}
 				if (texturePaths != null) {
 					texs = new TextureCooked[texturePaths.Count];
 					for (int i = 0; i < texturePaths.Count; i++) {
-						LoadTexture(i, texturePaths[i].Item2);
+						LoadTexture(c, i, texturePaths[i].Item2);
 					}
 				}
 			} else {
 				if (skeletonOrigins != null && skeletonOrigins.Item2 != null && IsFirstLoad) {
-					MapLoader l = MapLoader.Loader;
-					l.Load(skeletonOrigins.Item2, (extS) => {
+					c.Load(skeletonOrigins.Item2, (extS) => {
 						Path p = new Path(skeletonOrigins.Item2.str);
-						if (l.skl.ContainsKey(p.stringID)) {
-							skel = l.skl[p.stringID];
+						if (c.skl.ContainsKey(p.stringID)) {
+							skel = c.skl[p.stringID];
 						} else {
-							extS.log = l.logEnabled;
+							extS.log = c.logEnabled;
 							skel = extS.SerializeObject<AnimSkeleton>(skel);
-							l.skl[p.stringID] = skel;
-							l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+							c.skl[p.stringID] = skel;
+							c.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 						}
 					});
 				}
 				if (texturePathsOrigins != null) {
 					texs = new TextureCooked[texturePathsOrigins.Count];
 					for (int i = 0; i < texturePathsOrigins.Count; i++) {
-						LoadTexture(i, new Path(texturePathsOrigins[i].Item2.str));
+						LoadTexture(c, i, new Path(texturePathsOrigins[i].Item2.str));
 					}
 				}
 			}
 		}
 
-		protected void LoadTexture(int index, Path path) {
-			MapLoader l = MapLoader.Loader;
-			l.Load(path, (extS) => {
-				if (l.tex.ContainsKey(path.stringID)) {
-					texs[index] = l.tex[path.stringID];
+		protected void LoadTexture(Context c, int index, Path path) {
+			c.Load(path, (extS) => {
+				if (c.tex.ContainsKey(path.stringID)) {
+					texs[index] = c.tex[path.stringID];
 				} else {
 					texs[index] = extS.SerializeObject<TextureCooked>(texs[index]);
 					TextureCooked tex = texs[index];
-					tex.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
-					l.tex[path.stringID] = tex;
-					l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+					tex.atlas = c.uvAtlasManager.GetAtlasIfExists(path);
+					c.tex[path.stringID] = tex;
+					c.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
 				}
 			});
 		}

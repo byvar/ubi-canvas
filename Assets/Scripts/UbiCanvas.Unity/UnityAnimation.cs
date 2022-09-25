@@ -32,7 +32,7 @@ public class UnityAnimation : MonoBehaviour {
 	public void Start() {
 	}
 	public void Init() {
-		MapLoader l = MapLoader.Loader;
+		Context l = Controller.MainContext;
 		if (animIndex > 0 && skeleton != null) {
 			currentFrame = 0;
 			lastBmlFrame = -1;
@@ -122,7 +122,7 @@ public class UnityAnimation : MonoBehaviour {
 			if(bml != null && bml.frame != lastBmlFrame) {
 				lastBmlFrame = bml.frame;
 				List<int> indexes = new List<int>();
-				MapLoader l = MapLoader.Loader;
+				Context l = Controller.MainContext;
 				foreach (AnimTrackBML.Entry entry in bml.entries) {
 					StringID templateId = entry.templateId;
 					int ind = pbk.templateKeys.GetKeyIndex(templateId);

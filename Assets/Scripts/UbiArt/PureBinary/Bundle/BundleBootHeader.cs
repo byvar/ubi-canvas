@@ -40,7 +40,7 @@ namespace UbiArt.Bundle {
 		public BundleBootHeader() {
 		}
 
-		public BundleBootHeader(MapLoader context) {
+		public BundleBootHeader(Context context) {
 			if (context.Settings.game == Settings.Game.RL) {
 				signature = staticSignature;
 				version = 5;

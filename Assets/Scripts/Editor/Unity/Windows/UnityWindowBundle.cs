@@ -25,7 +25,7 @@ public class UnityWindowBundle : UnityWindow {
 				DrawHeader(ref yPos, "Export Patch Bundle");
 				path = FileField(GetNextRect(ref yPos), "Bundle file", path, true, "ipk");
 
-				MapLoader l = MapLoader.Loader;
+				Context l = Controller.MainContext;
 				DrawFoldout(ref yPos, "Scenes", l.isc);
 				DrawFoldout(ref yPos, "Generic", l.isg);
 				//DrawFoldout("Actors", l.act);
@@ -39,7 +39,7 @@ public class UnityWindowBundle : UnityWindow {
 					//GetSelectedPaths(selection, l.act);
 					GetSelectedPaths(selection, l.fcg);
 					GetSelectedPaths(selection, l.tpl);
-					await MapLoader.Loader.WriteBundle(path, selection);
+					await Controller.MainContext.WriteBundle(path, selection);
 				}
 				EditorGUI.EndDisabledGroup();
 				totalyPos = yPos;
@@ -59,7 +59,7 @@ public class UnityWindowBundle : UnityWindow {
 		foldouts[title] = EditorGUI.Foldout(GetNextRect(ref yPos), foldouts[title], title, true);
 		//foldouts[title] = EditorGUILayout.Foldout(foldouts[title], title, true);
 		if (foldouts[title]) {
-			MapLoader l = MapLoader.Loader;
+			Context l = Controller.MainContext;
 			foreach (StringID sid in dict.Keys) {
 				if (!selectedPaths.ContainsKey(sid)) {
 					selectedPaths[sid] = false;
@@ -69,7 +69,7 @@ public class UnityWindowBundle : UnityWindow {
 		}
 	}
 	void GetSelectedPaths<T>(List<Pair<Path, ICSerializable>> selection, Dictionary<StringID, T> dict) where T : ICSerializable {
-		MapLoader l = MapLoader.Loader;
+		Context l = Controller.MainContext;
 		foreach (StringID sid in dict.Keys) {
 			if (!selectedPaths.ContainsKey(sid)) continue;
 			if (selectedPaths[sid]) {

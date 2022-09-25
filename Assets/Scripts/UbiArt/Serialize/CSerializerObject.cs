@@ -19,10 +19,10 @@ namespace UbiArt {
 		public bool Embedded => embeddedLevels.Count > 0 && embeddedLevels.Peek() == indent;
 		public bool Disposed { get; set; }
 
-		public MapLoader Context { get; set; }
+		public Context Context { get; set; }
 		public Settings Settings => Context?.Settings;
 
-		public CSerializerObject(MapLoader context) {
+		public CSerializerObject(Context context) {
 			Context = context;
 		}
 

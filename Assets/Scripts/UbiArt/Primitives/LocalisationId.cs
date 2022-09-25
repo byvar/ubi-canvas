@@ -29,9 +29,10 @@ namespace UbiArt {
 
 		public override string ToString() {
 			string mainStr = "LocId(" + id + ")";
-			if (MapLoader.Loader.localisation != null && MapLoader.Loader.localisation.strings[0].ContainsKey(id)) {
-				mainStr += " - " + MapLoader.Loader.localisation.strings[0][id].text.Replace("\n", "\\n");
-			}
+			// TODO: Re-enable
+			/*if (Context.Loader.localisation != null && Context.Loader.localisation.strings[0].ContainsKey(id)) {
+				mainStr += " - " + Context.Loader.localisation.strings[0][id].text.Replace("\n", "\\n");
+			}*/
 			return mainStr;
 		}
 
