@@ -15,7 +15,7 @@ namespace UbiArt {
 		protected bool fakeSerializeMode = false;
 
 
-		public CSerializerObjectTagBinary(Reader reader) {
+		public CSerializerObjectTagBinary(MapLoader context, Reader reader) : base(context) {
 			this.reader = reader;
 			flagsOwn = Flags.Flags0 | Flags.Flags7; // 0x81
 		}
@@ -115,7 +115,7 @@ namespace UbiArt {
 				}
 				obj.Serialize(this, name);
 				if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
-					MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
 				}
 				if (entered) reader.BaseStream.Position = endPos.Pop();
 				DecreaseLevel();
@@ -279,8 +279,8 @@ namespace UbiArt {
 					}
 					((ICSerializable)obj).Serialize(this, name);
 					if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
-						Pointer pos = new Pointer(reader.BaseStream.Position, MapLoader.Loader.GetFileByReader(reader));
-						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+						Pointer pos = new Pointer(reader.BaseStream.Position, Context.GetFileByReader(reader));
+						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
 					}
 					if (entered) reader.BaseStream.Position = endPos.Pop();
 					DecreaseLevel();
@@ -351,10 +351,10 @@ namespace UbiArt {
 			} else if (name != null && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
-					Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+					Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
 					bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
 					if (log && isBigObject) {
-						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
+						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
 					}
 					object obj = null;
 					Serialize(ref obj, objType, name: name);
@@ -362,12 +362,12 @@ namespace UbiArt {
 					f.SetValue(containerObj, obj);
 
 					if (log && endPos.Peek() != reader.BaseStream.Position) {
-						Pointer posNew = new Pointer((uint)reader.BaseStream.Position, MapLoader.Loader.GetFileByReader(reader));
-						MapLoader.Loader.Log(posNew + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+						Pointer posNew = new Pointer((uint)reader.BaseStream.Position, Context.GetFileByReader(reader));
+						Context.Log(posNew + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
 					}
 					reader.BaseStream.Position = endPos.Pop();
 					if (log && !isBigObject) {
-						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
+						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
 					}
 				} else {
 					if (f.GetValue(containerObj) == null) {
@@ -381,10 +381,10 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+				Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
 				bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
 				if (log && isBigObject) {
-					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
+					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
 				}
 				object obj = null;
 
@@ -392,7 +392,7 @@ namespace UbiArt {
 				if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 				f.SetValue(containerObj, obj);
 				if (log && !isBigObject) {
-					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
+					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
 				}
 			}
 		}
@@ -401,7 +401,7 @@ namespace UbiArt {
 			/*Pointer pos = log && index.HasValue ? Position : null;
 			bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && index.HasValue && isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
 			}*/
 			long position = reader.BaseStream.Position;
 			Type objType = type ?? typeof(T);
@@ -418,10 +418,10 @@ namespace UbiArt {
 			} else if (name != null && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
-					Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+					Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
 					bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 					if (!fakeSerializeMode && log && name != null && isBigObject) {
-						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
+						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
 					}
 
 					object obj2 = obj;
@@ -431,11 +431,11 @@ namespace UbiArt {
 
 
 					if (log && endPos.Peek() != reader.BaseStream.Position) {
-						MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+						Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
 					}
 					reader.BaseStream.Position = endPos.Pop();
 					if (!fakeSerializeMode && log && name != null && !isBigObject) {
-						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 					}
 
 				} else {
@@ -450,10 +450,10 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+				Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
 				bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 				if (!fakeSerializeMode && log && index.HasValue && isBigObject) {
-					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
+					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
 				}
 
 				object obj2 = obj;
@@ -462,13 +462,13 @@ namespace UbiArt {
 				obj = (T)obj2;
 
 				if (!fakeSerializeMode && log && index.HasValue && !isBigObject) {
-					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
+					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
 				}
 			}
 			return obj;
 
 			/*if (log && index.HasValue && !isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
 			}*/
 		}
 
@@ -480,9 +480,9 @@ namespace UbiArt {
 		public override bool ArrayEntryStart(string name, int index) {
 			long position = reader.BaseStream.Position;
 			if (ReadTag(name, (uint)(200 + index))) {
-				Pointer pos = log ? new Pointer(position, MapLoader.Loader.GetFileByReader(reader)) : null;
+				Pointer pos = log ? new Pointer(position, Context.GetFileByReader(reader)) : null;
 				if (log) {
-					MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index + "]:");
+					Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index + "]:");
 				}
 				return base.ArrayEntryStart(name, index);
 			} else return false;
@@ -492,7 +492,7 @@ namespace UbiArt {
 			base.ArrayEntryStop();
 
 			if (log && endPos.Peek() != reader.BaseStream.Position) {
-				MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+				Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
 			}
 			reader.BaseStream.Position = endPos.Pop();
 		}
@@ -513,11 +513,11 @@ namespace UbiArt {
 				fieldCRC[info] = requiredCRC;
 			}
 			if (crc == requiredCRC) {
-				//MapLoader.Loader.Log((Position-8) + ":" + new string(' ', (Indent + 1) * 2) + "TAG: " + name + " (" + type + ")");
+				//Context.Log((Position-8) + ":" + new string(' ', (Indent + 1) * 2) + "TAG: " + name + " (" + type + ")");
 				endPos.Push(reader.BaseStream.Position + size);
 				return true;
 			} else {
-				//MapLoader.Loader.Log((Position - 8) + ":" + new string(' ', (Indent + 1) * 2) + "Read tag failed: " + name + " (" + type + ")");
+				//Context.Log((Position - 8) + ":" + new string(' ', (Indent + 1) * 2) + "Read tag failed: " + name + " (" + type + ")");
 				reader.BaseStream.Seek(-8, System.IO.SeekOrigin.Current);
 				return false;
 			}
@@ -544,7 +544,7 @@ namespace UbiArt {
 			Pointer pos = log && name != null ? Position : null;
 			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && name != null && isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
 			}
 
 			object obj2 = obj;
@@ -552,7 +552,7 @@ namespace UbiArt {
 			obj = (T)obj2;
 
 			if (log && name != null && !isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 			}
 			return obj;
 		}
@@ -572,15 +572,15 @@ namespace UbiArt {
 				Type objType = typeof(T);
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
-					Pointer pos = log ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+					Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
 					obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
 
 					if (log && endPos.Peek() != reader.BaseStream.Position) {
-						MapLoader.Loader.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+						Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
 					}
 					reader.BaseStream.Position = endPos.Pop();
 					if (!fakeSerializeMode && log && name != null) {
-						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 					}
 				} else {
 					if (obj == null) {
@@ -591,10 +591,10 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				Pointer pos = log && name != null ? new Pointer((uint)position, MapLoader.Loader.GetFileByReader(reader)) : null;
+				Pointer pos = log && name != null ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
 				obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
 				if (!fakeSerializeMode && log && name != null) {
-					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
 				}
 			}
 			return obj;
@@ -614,27 +614,27 @@ namespace UbiArt {
 			} else if (name != null && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				/*if (name == "collisionData" && log) {
-					Pointer pos = log ? new Pointer(position, MapLoader.Loader.GetFileByReader(reader)) : null;
-					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":" + " - " + index + " - " + objType + " - " + uafType);
+					Pointer pos = log ? new Pointer(position, Context.GetFileByReader(reader)) : null;
+					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":" + " - " + index + " - " + objType + " - " + uafType);
 				}*/
 				if (ReadTag(name, uafType)) {
-					Pointer pos = log ? new Pointer(position, MapLoader.Loader.GetFileByReader(reader)) : null;
+					Pointer pos = log ? new Pointer(position, Context.GetFileByReader(reader)) : null;
 					bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
 
 					if (!fakeSerializeMode && log && isBigObject && name != null) {
-						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
+						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
 					}
 
 					obj = SerializeObjectFull<T>(default, name, objType);
 
 					if (log && endPos.Peek() != reader.BaseStream.Position) {
-						Pointer posNew = new Pointer(reader.BaseStream.Position, MapLoader.Loader.GetFileByReader(reader));
-						MapLoader.Loader.Log(posNew + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+						Pointer posNew = new Pointer(reader.BaseStream.Position, Context.GetFileByReader(reader));
+						Context.Log(posNew + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
 					}
 					reader.BaseStream.Position = endPos.Pop();
 
 					if (!fakeSerializeMode && log && !isBigObject && name != null) {
-						MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
+						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
 					}
 				} else {
 					if (obj == null) {
@@ -645,17 +645,17 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				Pointer pos = log ? new Pointer(position, MapLoader.Loader.GetFileByReader(reader)) : null;
+				Pointer pos = log ? new Pointer(position, Context.GetFileByReader(reader)) : null;
 				bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
 
 				if (!fakeSerializeMode && log && isBigObject && name != null) {
-					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
+					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
 				}
 
 				obj = SerializeObjectFull<T>(obj, name, objType);
 
 				if (!fakeSerializeMode && log && !isBigObject && name != null) {
-					MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
+					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
 				}
 			}
 			return obj;

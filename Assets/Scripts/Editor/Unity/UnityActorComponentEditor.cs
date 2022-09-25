@@ -31,7 +31,7 @@ public class UnityActorComponentEditor : Editor {
 
 		UnityActorComponent uac = target as UnityActorComponent;
 		if (uac != null && uac.component != null) {
-			uac.component.Serialize(CSerializerObjectUnityEditor.Serializer, "Component");
+			uac.component.Serialize(CSerializerObjectUnityEditor.Serializer(MapLoader.Loader), "Component");
 		}
 
 	}

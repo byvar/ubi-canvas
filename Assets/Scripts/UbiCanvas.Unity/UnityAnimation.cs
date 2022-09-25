@@ -148,7 +148,7 @@ public class UnityAnimation : MonoBehaviour {
 
 
 			// Configure Z for all patches
-			ZListManager zman = MapLoader.Loader.controller.zListManager;
+			ZListManager zman = Controller.Obj.zListManager;
 			if (bml == null) {
 				bml = animTrack.bml.ToList().FindLast(b => b.frame == lastBmlFrame);
 			}

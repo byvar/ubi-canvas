@@ -30,7 +30,7 @@ public class UnityGenericObjectEditor : Editor {
 
 		UnityGenericObject ugo = target as UnityGenericObject;
 		if (ugo != null && ugo.obj != null) {
-			ugo.obj.Serialize(CSerializerObjectUnityEditor.Serializer, "UnityGenericObject");
+			ugo.obj.Serialize(CSerializerObjectUnityEditor.Serializer(MapLoader.Loader), "UnityGenericObject");
 		}
 
 	}

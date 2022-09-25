@@ -9,14 +9,16 @@ using UnityEngine;
 
 namespace UbiArt {
 	public class CSerializable : ICSerializable {
-		protected bool isFirstLoad = true;
+		protected bool IsFirstLoad { get; set; } = true;
+		public MapLoader UbiArtContext { get; protected set; }
 		public uint sizeOf;
 
 		public void Serialize(CSerializerObject s, string name) {
+			UbiArtContext = s.Context;
 			OnPreSerialize(s);
 			SerializeImpl(s);
 			OnPostSerialize(s);
-			isFirstLoad = false;
+			IsFirstLoad = false;
 		}
 
 		protected virtual void OnPreSerialize(CSerializerObject s) {}
@@ -35,7 +37,7 @@ namespace UbiArt {
 			CSerializable result = null;
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
-					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
+					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(UbiArtContext, writer);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, extension);
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "clone");
@@ -44,7 +46,7 @@ namespace UbiArt {
 			}
 			using (MemoryStream stream = new MemoryStream(serializedData)) {
 				using (Reader reader = new Reader(stream, Settings.s.IsLittleEndian)) {
-					CSerializerObject r = new CSerializerObjectBinary(reader);
+					CSerializerObject r = new CSerializerObjectBinary(UbiArtContext, reader);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.flagsOwn, extension);
 					object toRead = null;
 					r.Serialize(ref toRead, GetType(), name: "clone");

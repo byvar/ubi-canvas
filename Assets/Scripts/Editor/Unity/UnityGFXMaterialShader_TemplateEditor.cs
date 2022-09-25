@@ -25,7 +25,7 @@ public class UnityGFXMaterialShader_TemplateEditor : Editor {
 
 		UnityGFXMaterialShader_Template sh = target as UnityGFXMaterialShader_Template;
 		if (sh != null && sh.shader != null) {
-			sh.shader.Serialize(CSerializerObjectUnityEditor.Serializer, "Shader");
+			sh.shader.Serialize(CSerializerObjectUnityEditor.Serializer(MapLoader.Loader), "Shader");
 		}
 
 	}

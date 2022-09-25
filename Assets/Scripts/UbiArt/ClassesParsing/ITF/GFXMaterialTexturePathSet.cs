@@ -13,10 +13,10 @@ namespace UbiArt.ITF {
 
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (isFirstLoad) {
-				LoadTexture(nameof(tex_diffuse), diffuse);
-				LoadTexture(nameof(tex_back_light), back_light);
-				LoadTexture(nameof(tex_separateAlpha), separateAlpha);
+			if (IsFirstLoad) {
+				LoadTexture(s.Context, nameof(tex_diffuse), diffuse);
+				LoadTexture(s.Context, nameof(tex_back_light), back_light);
+				LoadTexture(s.Context, nameof(tex_separateAlpha), separateAlpha);
 				/*LoadTexture(nameof(tex_normal), normal);
 				LoadTexture(nameof(tex_diffuse_2), diffuse_2);
 				LoadTexture(nameof(tex_back_light_2), back_light_2);
@@ -24,8 +24,8 @@ namespace UbiArt.ITF {
 			}
 		}
 
-		protected void LoadTexture(string fieldName, Path path) {
-			MapLoader l = MapLoader.Loader;
+		protected void LoadTexture(MapLoader context, string fieldName, Path path) {
+			MapLoader l = context;
 			l.Load(path, (extS) => {
 				FieldInfo f = GetType().GetField(fieldName);
 				if (l.tex.ContainsKey(path.stringID)) {

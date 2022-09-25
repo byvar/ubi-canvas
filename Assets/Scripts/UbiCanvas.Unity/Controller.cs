@@ -25,6 +25,8 @@ public class Controller : MonoBehaviour {
 	public PickableSelector selector;
 	public UnityPickable SelectedObject => selector.selected;
 
+	public static Controller Obj { get; protected set; }
+
 	void Awake() {
 		Application.logMessageReceived += Log;
 		if (Application.platform == RuntimePlatform.WebGLPlayer) {
@@ -37,6 +39,8 @@ public class Controller : MonoBehaviour {
 
 	// Use this for initialization
 	async UniTaskVoid Start() {
+		Obj = this;
+
 		Settings.Mode mode = UnitySettings.GameMode;
 		string gameDataBinFolder = UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "";
 		string lvlPath = UnitySettings.SelectedLevelFile;
@@ -51,8 +55,10 @@ public class Controller : MonoBehaviour {
 		icons = Resources.LoadAll<Sprite>("tagicons");
 
 		loadingScreen.Active = true;
-		Settings.Init(mode);
+		var settings = Settings.Init(mode);
+		MapLoader.Loader = new MapLoader(settings);
 		loader = MapLoader.Loader;
+		loader.Settings = settings;
 		loader.gameDataBinFolder = gameDataBinFolder;
 		loader.pathFolder = System.IO.Path.GetDirectoryName(lvlPath);
 		loader.pathFile = System.IO.Path.GetFileName(lvlPath);
@@ -60,7 +66,6 @@ public class Controller : MonoBehaviour {
 		loader.logFile = logFile;
 		loader.logEnabled = log;
 		loader.loadAnimations = loadAnimations;
-		loader.controller = this;
 
 		await Init();
 	}
@@ -92,7 +97,7 @@ public class Controller : MonoBehaviour {
 			CSerializable c = await MapLoader.Loader.Clone(act.obj, "act");
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
 			await scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
-			MapLoader.Loader.controller.zListManager.Sort();
+			Controller.Obj.zListManager.Sort();
 			await TimeController.WaitFrame();
 		}
 		GlobalLoadState.DetailedState = "Finished";

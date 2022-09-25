@@ -10,7 +10,7 @@ namespace UbiArt {
 	public class CSerializerObjectBinaryWriter : CSerializerObject {
 		public Writer writer;
 		
-		public CSerializerObjectBinaryWriter(Writer writer) {
+		public CSerializerObjectBinaryWriter(MapLoader context, Writer writer) : base(context) {
 			this.writer = writer;
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
@@ -126,11 +126,11 @@ namespace UbiArt {
 			object obj = f.GetValue(containerObj);
 			if (type != null) ConvertTypeBefore(ref obj, name, type, f.FieldType);
 			if (log && isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
 			} else if (log && !isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
 			}
-			//MapLoader.Loader.print(name);
+			//Context.print(name);
 			Serialize(ref obj, type ?? f.FieldType, name: name);
 		}
 
@@ -138,9 +138,9 @@ namespace UbiArt {
 			Pointer pos = log && index.HasValue ? Position : null;
 			bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && index.HasValue && isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
 			} else if (log && index.HasValue && !isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
 			}
 			object obj2 = obj;
 			Serialize(ref obj2, type ?? typeof(T), name: name);
@@ -151,7 +151,7 @@ namespace UbiArt {
 			Pointer pos = log && name != null ? Position : null;
 			obj = (T)WritePrimitive<T>(obj, name: name, options: options);
 			if (log && name != null) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
 			}
 			return obj;
 		}
@@ -170,9 +170,9 @@ namespace UbiArt {
 			Pointer pos = log ? Position : null;
 			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
 			if (log && index.HasValue && isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
 			} else if (log && index.HasValue && !isBigObject) {
-				MapLoader.Loader.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
+				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
 			}
 
 			IncreaseLevel();

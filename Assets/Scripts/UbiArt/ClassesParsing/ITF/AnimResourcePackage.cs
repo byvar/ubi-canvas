@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (skeleton != null && isFirstLoad) {
+			if (skeleton != null && IsFirstLoad) {
 				MapLoader l = MapLoader.Loader;
 				if (l.loadAnimations) {
 					l.Load(skeleton, (extS) => {

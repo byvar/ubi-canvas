@@ -19,7 +19,10 @@ namespace UbiArt {
 		public bool Embedded => embeddedLevels.Count > 0 && embeddedLevels.Peek() == indent;
 		public bool Disposed { get; set; }
 
-		public CSerializerObject() {
+		public MapLoader Context { get; set; }
+
+		public CSerializerObject(MapLoader context) {
+			Context = context;
 		}
 
 		public abstract void Serialize(ref object obj, Type type, string name = null);
@@ -170,27 +173,27 @@ namespace UbiArt {
 				if (type == typeof(string)) {
 					string str = ((string)obj);
 					if (!string.IsNullOrEmpty(str)) {
-						MapLoader.Loader.stringCache[new StringID(str)] = str;
+						Context.stringCache[new StringID(str)] = str;
 					}
 				} else if (type == typeof(CString)) {
 					string str = ((CString)obj).str;
 					if (!string.IsNullOrEmpty(str)) {
-						MapLoader.Loader.stringCache[new StringID(str)] = str;
+						Context.stringCache[new StringID(str)] = str;
 					}
 				} else if (type == typeof(BasicString)) {
 					string str = ((BasicString)obj).str;
 					if (!string.IsNullOrEmpty(str)) {
-						MapLoader.Loader.stringCache[new StringID(str)] = str;
+						Context.stringCache[new StringID(str)] = str;
 					}
 				} else if (type == typeof(Path)) {
 					Path p = ((Path)obj);
 					if (!p.IsNull) {
-						MapLoader.Loader.stringCache[p.stringID] = p.FullPath;
+						Context.stringCache[p.stringID] = p.FullPath;
 					}
 				} else if (type == typeof(PathRef)) {
 					PathRef p = ((PathRef)obj);
 					if (!p.IsNull) {
-						MapLoader.Loader.stringCache[p.stringID] = p.FullPath;
+						Context.stringCache[p.stringID] = p.FullPath;
 					}
 				}
 			}

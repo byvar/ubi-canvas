@@ -73,7 +73,7 @@ namespace UbiArt.Bundle {
 		public void AddFile(Path path, ICSerializable data) {
 			files[path] = data;
 		}
-		public async UniTask WriteBundle(string path) {
+		public async UniTask WriteBundle(MapLoader context, string path) {
 			bootHeader.numFiles = (uint)files.Keys.Count;
 			List<byte[]> data = new List<byte[]>();
 			uint curOffset = 0;
@@ -81,7 +81,7 @@ namespace UbiArt.Bundle {
 			foreach (KeyValuePair<Path, ICSerializable> kv in files) {
 				using (MemoryStream stream = new MemoryStream()) {
 					using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
-						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
+						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
 						MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
 						object toWrite = kv.Value;
 						w.Serialize(ref toWrite, kv.Value.GetType(), name: kv.Key.filename);
@@ -102,7 +102,7 @@ namespace UbiArt.Bundle {
 			}
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
-					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
+					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "Bundle");
@@ -113,7 +113,7 @@ namespace UbiArt.Bundle {
 			bootHeader.baseOffset = (uint)serializedData.Length;
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
-					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
+					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "Bundle");

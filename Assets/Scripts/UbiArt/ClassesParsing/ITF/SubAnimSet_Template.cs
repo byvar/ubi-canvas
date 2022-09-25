@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (Settings.s.engineVersion <= Settings.EngineVersion.RO && isFirstLoad) {
-				MapLoader l = MapLoader.Loader;
+			if (Settings.s.engineVersion <= Settings.EngineVersion.RO && IsFirstLoad) {
+				MapLoader l = s.Context;
 				if (l.loadAnimations) {
 					resources = new ICSerializable[resourceTypeList.Count];
 					for (int i = 0; i < resourceTypeList.Count; i++) {

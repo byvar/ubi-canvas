@@ -28,6 +28,8 @@ namespace UbiArt {
 
 		public StringBuilder log = new StringBuilder();
 
+		public Settings Settings { get; set; }
+
 
 		public ITF.RO2_GameManagerConfig_Template gameConfig;
 		public ITF.Ray_GameManagerConfig_Template gameConfigRO;
@@ -79,18 +81,11 @@ namespace UbiArt {
 
 		public ContainerFile<ITF.Scene> mainScene;
 
-		public Controller controller = null;
-		private static MapLoader loader = null;
-		public static MapLoader Loader {
-			get {
-				if (loader == null) {
-					loader = new MapLoader();
-				}
-				return loader;
-			}
-		}
+		public static MapLoader Loader { get; set; }
 
-		public MapLoader() {
+		public MapLoader(Settings settings) {
+			Settings = settings;
+
 			// Init String Cache
 			foreach (uint sid in ObjectFactory.classes.Keys) {
 				stringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
@@ -98,10 +93,10 @@ namespace UbiArt {
 		}
 
 		protected bool GameFileExists(Path p, bool ckd) {
-			string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
-			if (Settings.s.loadFromIPK && Settings.s.bundles != null) {
+			string cookedFolder = ckd ? Settings.ITFDirectory : "";
+			if (Settings.loadFromIPK && Settings.bundles != null) {
 				Path path = ckd ? new Path(cookedFolder + p.folder, p.filename + (ckd ? ".ckd" : ""), cooked: true) : p;
-				string[] bnames = Settings.s.bundles;
+				string[] bnames = Settings.bundles;
 				foreach (var bname in bnames) {
 					if (bundles.ContainsKey(bname) && bundles[bname].HasReadFile(path)) return true;
 				}
@@ -111,10 +106,10 @@ namespace UbiArt {
 			}
 		}
 		public Stream GetGameFileStream(Path p, bool ckd) {
-			string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
-			if (Settings.s.loadFromIPK && Settings.s.bundles != null) {
+			string cookedFolder = ckd ? Settings.ITFDirectory : "";
+			if (Settings.loadFromIPK && Settings.bundles != null) {
 				Path path = ckd ? new Path(cookedFolder + p.folder, p.filename + (ckd ? ".ckd" : ""), cooked: true) : p;
-				string[] bnames = Settings.s.bundles;
+				string[] bnames = Settings.bundles;
 				foreach (var bname in bnames) {
 					if (bundles.ContainsKey(bname) && bundles[bname].HasReadFile(path)) return bundles[bname].GetFileStream(path);
 				}
@@ -124,8 +119,8 @@ namespace UbiArt {
 			}
 		}
 		protected async UniTask PrepareGameFile(Path p, bool ckd) {
-			string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
-			if (Settings.s.loadFromIPK && Settings.s.bundles != null) {
+			string cookedFolder = ckd ? Settings.ITFDirectory : "";
+			if (Settings.loadFromIPK && Settings.bundles != null) {
 				string s = loadingState;
 				loadingState = "Downloading\n" + p.FullPath;
 				await PrepareGameFile_Internal();
@@ -133,7 +128,7 @@ namespace UbiArt {
 
 				async UniTask PrepareGameFile_Internal() {
 					Path path = ckd ? new Path(cookedFolder + p.folder, p.filename + (ckd ? ".ckd" : ""), cooked: true) : p;
-					string[] bnames = Settings.s.bundles;
+					string[] bnames = Settings.bundles;
 					// Loop 1: try to find an already loaded bundle and an already loaded file
 					foreach (var bname in bnames) {
 						if (bundles.ContainsKey(bname) && bundles[bname].HasReadFile(path)) return;
@@ -148,10 +143,10 @@ namespace UbiArt {
 					// Loop 3: load new bundles until you find the file
 					foreach (var bname in bnames) {
 						if (!bundles.ContainsKey(bname)) {
-							string fullbname = gameDataBinFolder + bname + "_" + Settings.s.PlatformString + ".ipk";
+							string fullbname = gameDataBinFolder + bname + "_" + Settings.PlatformString + ".ipk";
 							await FileSystem.PrepareBigFile(fullbname, 0);
 							if (!FileSystem.FileExists(fullbname)) continue;
-							bigFiles[bname] = new BinaryBigFile(bname, FileSystem.GetFileReadStream(fullbname));
+							bigFiles[bname] = new BinaryBigFile(this, bname, FileSystem.GetFileReadStream(fullbname));
 							bundles[bname] = new BundleFile();
 							await bundles[bname].SerializeAsync(bigFiles[bname].serializer, bname);
 						}
@@ -209,7 +204,7 @@ namespace UbiArt {
 						s.log = logEnabled;
 						mainScene = s.SerializeObject<ContainerFile<ITF.Scene>>(mainScene);
 						isc[p.stringID] = mainScene;
-						Settings.s.isCatchThemAll = false;
+						Settings.isCatchThemAll = false;
 					});
 				}
 				await LoadLoop();
@@ -229,11 +224,11 @@ namespace UbiArt {
 						StringID id = o.path.stringID;
 						paths[id] = o.path;
 						if (!files.ContainsKey(id)) {
-							bool ckd = Settings.s.cooked && !o.path.specialUncooked;
-							string cookedFolder = ckd ? Settings.s.ITFDirectory : "";
+							bool ckd = Settings.cooked && !o.path.specialUncooked;
+							string cookedFolder = ckd ? Settings.ITFDirectory : "";
 							await PrepareGameFile(o.path, ckd);
 							if (GameFileExists(o.path, ckd)) {
-								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
+								files.Add(id, new BinarySerializedFile(this, o.path.filename, o.path, ckd));
 								loadingState = state + "\n" + o.path.FullPath;
 								await TimeController.WaitIfNecessary();
 							}
@@ -247,7 +242,7 @@ namespace UbiArt {
 						}
 					} else if (o.virtualFile != null) {
 						using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
-							FileWithPointers f = new BinarySerializedFile(o.virtualFile.Item1, str);
+							FileWithPointers f = new BinarySerializedFile(this, o.virtualFile.Item1, str);
 							Tuple<string, FileWithPointers> t = new Tuple<string, FileWithPointers>(o.virtualFile.Item1, f);
 							virtualFiles.Add(t);
 							CSerializerObject s = f.serializer;
@@ -371,7 +366,7 @@ namespace UbiArt {
 				b.AddFile(f.Item1.CookedPath, f.Item2);
 			}
 			TimeController.StartStopwatch();
-			await b.WriteBundle(path);
+			await b.WriteBundle(this, path);
 			TimeController.StopStopwatch();
 		}
 
@@ -430,8 +425,8 @@ namespace UbiArt {
 			// Serialize container file
 			byte[] serializedData = null;
 			using (MemoryStream stream = new MemoryStream()) {
-				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
-					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(writer);
+				using (Writer writer = new Writer(stream, Settings.IsLittleEndian)) {
+					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(this, writer);
 					MapLoader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "act");
 					object toWrite = container;
 					w.Serialize(ref toWrite, container.GetType(), name: act.USERFRIENDLY);

@@ -31,8 +31,8 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (this is Frise) return;
-			if (isFirstLoad) {
-				MapLoader l = MapLoader.Loader;
+			if (IsFirstLoad) {
+				MapLoader l = s.Context;
 				l.Load(LUA, (extS) => {
 					if (l.tpl.ContainsKey(LUA.stringID)) {
 						template = l.tpl[LUA.stringID];

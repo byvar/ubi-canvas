@@ -11,7 +11,7 @@ public class UnityTextureGraphicComponent : MonoBehaviour {
 			float z = transform.position.z;
 			if (z != prevZ) {
 				prevZ = z;
-				ZListManager zman = MapLoader.Loader.controller.zListManager;
+				ZListManager zman = Controller.Obj.zListManager;
 				zman.zDict[tgc.tex_renderer] = z;
 				//zman.zDict[tgc.tex_mat] = z;
 			}

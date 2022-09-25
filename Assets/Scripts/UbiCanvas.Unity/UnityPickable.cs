@@ -20,7 +20,7 @@ public class UnityPickable : MonoBehaviour {
 		if (GlobalLoadState.LoadState != GlobalLoadState.State.Finished) return;
 		if (!inited) Init();
 		if (sr != null) {
-			sr.enabled = MapLoader.Loader.controller.displayGizmos;
+			sr.enabled = Controller.Obj.displayGizmos;
 			sc.enabled = sr.enabled;
 			if (sr.enabled) {
 				sr.size = new Vector2(
@@ -35,7 +35,7 @@ public class UnityPickable : MonoBehaviour {
 
 				if (pickable.RELATIVEZ != -transform.localPosition.z) {
 					pickable.RELATIVEZ = -transform.localPosition.z;
-					MapLoader.Loader.controller.zListManager.Sort(printMessages: false);
+					Controller.Obj.zListManager.Sort(printMessages: false);
 				}
 			}
 			if (transform.localEulerAngles.z != pickable.ANGLE.EulerAngle) {
@@ -54,7 +54,7 @@ public class UnityPickable : MonoBehaviour {
 	void UpdateGizmo(bool selected = false) {
 		Sprite spr = null;
 		if (pickable != null) {
-			Controller c = MapLoader.Loader.controller;
+			Controller c = Controller.Obj;
 			TemplatePickable t = pickable.templatePickable;
 			if (pickable is Frise) {
 				if (t != null && t.TAGS != null) {

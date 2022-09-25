@@ -25,7 +25,7 @@ public class UnityActorTemplateEditor : Editor {
 
 		UnityActorTemplate tpl = target as UnityActorTemplate;
 		if (tpl != null && tpl.template != null) {
-			tpl.template.Serialize(CSerializerObjectUnityEditor.Serializer, "Template");
+			tpl.template.Serialize(CSerializerObjectUnityEditor.Serializer(MapLoader.Loader), "Template");
 		}
 
 	}

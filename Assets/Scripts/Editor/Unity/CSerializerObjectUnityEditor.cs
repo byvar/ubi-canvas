@@ -14,18 +14,20 @@ namespace UbiArt {
 		private LocalisationIdDropdown localisationDropdown = null;
 
 		private static CSerializerObjectUnityEditor serializer;
-		public static CSerializerObjectUnityEditor Serializer {
-			get {
-				if (serializer == null) {
-					serializer = new CSerializerObjectUnityEditor();
-					serializer.flags |= SerializeFlags.Flags7;
-				}
-				return serializer;
+		public static CSerializerObjectUnityEditor Serializer(MapLoader context) {
+			if(serializer != null && serializer.Context != context)
+				serializer = null;
+
+			if (serializer == null) {
+				serializer = new CSerializerObjectUnityEditor(context);
+				serializer.flags |= SerializeFlags.Flags7;
 			}
+
+			return serializer;
 		}
 
 
-		public CSerializerObjectUnityEditor() {
+		public CSerializerObjectUnityEditor(MapLoader context) : base(context) {
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
 

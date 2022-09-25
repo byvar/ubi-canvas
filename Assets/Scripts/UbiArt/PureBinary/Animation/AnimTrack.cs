@@ -79,7 +79,7 @@ namespace UbiArt.Animation {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (Settings.s.engineVersion > Settings.EngineVersion.RO) {
-				if (skeleton != null && skeleton.Item2 != null && isFirstLoad) {
+				if (skeleton != null && skeleton.Item2 != null && IsFirstLoad) {
 					MapLoader l = MapLoader.Loader;
 					l.Load(skeleton.Item2, (extS) => {
 						if (l.skl.ContainsKey(skeleton.Item2.stringID)) {
@@ -99,7 +99,7 @@ namespace UbiArt.Animation {
 					}
 				}
 			} else {
-				if (skeletonOrigins != null && skeletonOrigins.Item2 != null && isFirstLoad) {
+				if (skeletonOrigins != null && skeletonOrigins.Item2 != null && IsFirstLoad) {
 					MapLoader l = MapLoader.Loader;
 					l.Load(skeletonOrigins.Item2, (extS) => {
 						Path p = new Path(skeletonOrigins.Item2.str);

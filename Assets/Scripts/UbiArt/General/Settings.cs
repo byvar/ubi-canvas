@@ -73,11 +73,13 @@ namespace UbiArt {
 			}
 		}
 
-		public static void Init(Mode mode) {
+		public static Settings Init(Mode mode) {
+			Settings s = null;
 			if (settingsDict.ContainsKey(mode)) {
 				s = settingsDict[mode];
 			}
 			if (s != null) s.mode = mode;
+			return s;
 		}
 
 

@@ -12,8 +12,8 @@ namespace UbiArt.ITF {
 
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (isFirstLoad) {
-				MapLoader l = MapLoader.Loader;
+			if (IsFirstLoad) {
+				MapLoader l = s.Context;
 				l.Load(shaderPath, (extS) => {
 					if (l.msh.ContainsKey(shaderPath.stringID)) {
 						shader = l.msh[shaderPath.stringID];

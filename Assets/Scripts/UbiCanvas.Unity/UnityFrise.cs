@@ -13,7 +13,7 @@ public class UnityFrise : MonoBehaviour {
 			float z = transform.position.z;
 			if (z != prevZ) {
 				prevZ = z;
-				ZListManager zman = MapLoader.Loader.controller.zListManager;
+				ZListManager zman = Controller.Obj.zListManager;
 				if (frise.mr_static != null) {
 					zman.zDict[frise.mr_static] = z;
 					/*foreach (Material m in frise.mr_static.sharedMaterials) {

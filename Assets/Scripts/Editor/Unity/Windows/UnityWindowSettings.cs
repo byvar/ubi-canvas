@@ -53,12 +53,12 @@ public class UnityWindowSettings : UnityWindow {
 		} else {
 			if (EditorGUI.DropdownButton(rect, new GUIContent(buttonString), FocusType.Passive)) {
 				// Initialize settings
-				Settings.Init(UnitySettings.GameMode);
-				string directory = (CurrentGameDataDir + "/" + Settings.s.ITFDirectory).Replace(Path.DirectorySeparatorChar, '/');
+				var s = Settings.Init(UnitySettings.GameMode);
+				string directory = (CurrentGameDataDir + "/" + s.ITFDirectory).Replace(Path.DirectorySeparatorChar, '/');
 				if (!directory.EndsWith("/")) directory += "/";
 				while (directory.Contains("//")) directory = directory.Replace("//", "/");
 				string extension = "*.isc";
-				if (Settings.s.cooked) {
+				if (s.cooked) {
 					extension += ".ckd";
 				}
 
