@@ -1,0 +1,137 @@
+﻿using UnityEngine;
+
+namespace UbiCanvas.Helpers 
+{
+	public static class TextureHelpers 
+	{
+		/// <summary>
+		/// Creates a new <see cref="Texture2D"/>
+		/// </summary>
+		/// <param name="width">The texture width</param>
+		/// <param name="height">The texture height</param>
+		/// <param name="clear">Indicates if the image should start as fully transparent</param>
+		/// <param name="applyClear">Indicates if the clear transparent pixels should be applied</param>
+		/// <returns>The texture</returns>
+		public static Texture2D CreateTexture2D(int width, int height, bool clear = false, bool applyClear = false) {
+			var tex = new Texture2D(width, height, TextureFormat.RGBA32, false) {
+				filterMode = FilterMode.Point,
+				wrapMode = TextureWrapMode.Clamp
+			};
+
+			if (clear) {
+				tex.SetPixels(new Color[width * height]);
+
+				if (applyClear)
+					tex.Apply();
+			}
+
+			return tex;
+		}
+
+		public static Texture2D Crop(this Texture2D tex, RectInt rect, bool destroyTex, bool flipY = true) {
+			var newTex = CreateTexture2D(rect.width, rect.height);
+
+			if (flipY)
+				rect.y = tex.height - rect.height - rect.y;
+
+			newTex.SetPixels(tex.GetPixels(rect.x, rect.y, rect.width, rect.height));
+
+			newTex.Apply();
+
+			if (destroyTex)
+				Object.DestroyImmediate(tex);
+
+			return newTex;
+		}
+
+		public static void ResizeImageData(this Texture2D texture2D, int targetX, int targetY, bool mipmap = true, FilterMode filter = FilterMode.Bilinear) {
+			//create a temporary RenderTexture with the target size
+			RenderTexture rt = RenderTexture.GetTemporary(targetX, targetY, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
+
+			//set the active RenderTexture to the temporary texture so we can read from it
+			RenderTexture.active = rt;
+
+			//Copy the texture data on the GPU - this is where the magic happens [(;]
+			Graphics.Blit(texture2D, rt);
+			//resize the texture to the target values (this sets the pixel data as undefined)
+			texture2D.Reinitialize(targetX, targetY, texture2D.format, mipmap);
+			texture2D.filterMode = filter;
+
+			try {
+				//reads the pixel values from the temporary RenderTexture onto the resized texture
+				texture2D.ReadPixels(new Rect(0.0f, 0.0f, targetX, targetY), 0, 0);
+				//actually upload the changed pixels to the graphics card
+				texture2D.Apply();
+			} catch {
+				Debug.LogError("Read/Write is not enabled on texture " + texture2D.name);
+			}
+
+
+			RenderTexture.ReleaseTemporary(rt);
+		}
+
+		public static void Export(this Texture2D texture2D, string filePath, bool includesExt = false)
+		{
+			if (!includesExt)
+				filePath = $"{filePath}.png";
+
+			Util.ByteArrayToFile(filePath, texture2D.EncodeToPNG());
+		}
+
+		public static bool IsTransparent(this Texture2D texture2D) {
+			Color[] cols = texture2D.GetPixels();
+			foreach (Color col in cols) {
+				if (col.a != 1f) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static Texture2D CreateDummyTexture() {
+			Texture2D texture = new Texture2D(1, 1);
+			texture.SetPixel(0, 0, UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f, 1f, 1f));
+			texture.Apply();
+			return texture;
+		}
+
+		public static Texture2D WhiteTexture() {
+			Texture2D tex = new Texture2D(1, 1);
+			tex.SetPixel(0, 0, Color.white);
+			tex.Apply();
+			return tex;
+		}
+		public static Texture2D GrayTexture() {
+			Texture2D tex = new Texture2D(1, 1);
+			tex.SetPixel(0, 0, Color.gray);
+			tex.Apply();
+			return tex;
+		}
+
+		public static Texture2D CreateDummyCheckerTexture() {
+			Texture2D texture = new Texture2D(2, 2);
+			Color col1 = Color.white;
+			Color col2 = new Color(0.9f, 0.9f, 0.9f, 1f); // very light grey
+			texture.SetPixel(0, 0, col1);
+			texture.SetPixel(1, 1, col1);
+			texture.SetPixel(0, 1, col2);
+			texture.SetPixel(1, 0, col2);
+			texture.filterMode = FilterMode.Point;
+			texture.Apply();
+			return texture;
+		}
+
+		public static Texture2D CreateDummyLineTexture() {
+			Texture2D texture = new Texture2D(2, 2);
+			Color col1 = Color.white;
+			Color col2 = new Color(0.9f, 0.9f, 0.9f, 1f); // very light grey
+			texture.SetPixel(0, 0, col1);
+			texture.SetPixel(1, 1, col2);
+			texture.SetPixel(0, 1, col1);
+			texture.SetPixel(1, 0, col2);
+			texture.filterMode = FilterMode.Point;
+			texture.Apply();
+			return texture;
+		}
+	}
+}

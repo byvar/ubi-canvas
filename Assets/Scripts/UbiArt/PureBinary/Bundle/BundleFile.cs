@@ -8,6 +8,7 @@ using UnityEngine;
 using System.IO;
 using Cysharp.Threading.Tasks;
 using Ionic.Zlib;
+using UbiCanvas.Helpers;
 
 namespace UbiArt.Bundle {
 	public class BundleFile : ICSerializable {
@@ -46,7 +47,7 @@ namespace UbiArt.Bundle {
 					ulong off = h.offsets[0];
 					uint size = h.zSize != 0 ? h.zSize : h.size;
 					reader.BaseStream.Position = (long)off + bootHeader.baseOffset;
-					if (reader.BaseStream is PartialHttpStream p) {
+					if (reader.BaseStream is UbiCanvas.Helpers.PartialHttpStream p) {
 						await p.FillCacheForRead((int)size);
 					}
 					byte[] fileBytes = reader.ReadBytes((int)size);
@@ -97,7 +98,7 @@ namespace UbiArt.Bundle {
 				packMaster.files.Add(new Pair<FileHeaderRuntime, Path>(fhr, kv.Key));
 				data.Add(serializedData);
 				curOffset += (uint)serializedData.Length;
-				await Controller.WaitIfNecessary();
+				await TimeController.WaitIfNecessary();
 			}
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
@@ -108,7 +109,7 @@ namespace UbiArt.Bundle {
 					serializedData = stream.ToArray();
 				}
 			}
-			await Controller.WaitIfNecessary();
+			await TimeController.WaitIfNecessary();
 			bootHeader.baseOffset = (uint)serializedData.Length;
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.s.IsLittleEndian)) {
@@ -119,7 +120,7 @@ namespace UbiArt.Bundle {
 					serializedData = stream.ToArray();
 				}
 			}
-			await Controller.WaitIfNecessary();
+			await TimeController.WaitIfNecessary();
 			using (BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create))) {
 				bw.Write(serializedData);
 				for (int i = 0; i < data.Count; i++) {

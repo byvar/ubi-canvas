@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UbiArt;
 using UnityEngine;
+using UbiCanvas.Helpers;
 
 public class UnityWindowActor : UnityWindow {
 	[MenuItem("Ubi-Canvas/Actor Tools")]
@@ -15,7 +16,7 @@ public class UnityWindowActor : UnityWindow {
 		float yPos = 0f;
 		if (EditorApplication.isPlaying) {
 			if (controller == null) controller = FindObjectOfType<Controller>();
-			if (Controller.LoadState == Controller.State.Finished) {
+			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
 				string extension = "act" + (Settings.s.cooked ? ".ckd" : "");
 				if (Settings.s.engineVersion == Settings.EngineVersion.RO) {
 					extension = "act_fake";

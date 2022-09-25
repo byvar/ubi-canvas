@@ -4,6 +4,7 @@ using UnityEngine;
 using UbiArt.ITF;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using UbiCanvas.Helpers;
 
 public class UnityWindowBundle : UnityWindow {
 	[MenuItem("Ubi-Canvas/Bundle Export")]
@@ -17,7 +18,7 @@ public class UnityWindowBundle : UnityWindow {
 	async void OnGUI() {
 		float yPos = 0f;
 		if (EditorApplication.isPlaying) {
-			if (Controller.LoadState == Controller.State.Finished) {
+			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
 				if (totalyPos == 0f) totalyPos = position.height;
 				scrollbarShown = totalyPos > position.height;
 				scrollPosition = GUI.BeginScrollView(new Rect(0,0, EditorGUIUtility.currentViewWidth, position.height), scrollPosition, new Rect(0, 0, EditorGUIUtility.currentViewWidth - (scrollbarShown ? scrollbarWidth : 0f), totalyPos));

@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 
 		public static Material GetShaderMaterial(GFXMaterialShader_Template shader = null) {
 			if (shader == null) {
-				return MapLoader.Loader.baseTransparentMaterial;
+				return MapLoader.Loader.controller.baseTransparentMaterial;
 			} else {
 				BlendMode blendSrc = BlendMode.SrcAlpha;
 				BlendMode blendDst = BlendMode.OneMinusSrcAlpha;
@@ -52,14 +52,14 @@ namespace UbiArt.ITF {
 						mats = new Dictionary<string, Material>();
 					}
 					if (!mats.ContainsKey(key)) {
-						mats[key] = new Material(MapLoader.Loader.baseTransparentMaterial);
+						mats[key] = new Material(MapLoader.Loader.controller.baseTransparentMaterial);
 						mats[key].SetInt("_ZWrite", (int)zwrite);
 						mats[key].SetFloat("_BlendSrc", (int)blendSrc);
 						mats[key].SetFloat("_BlendDst", (int)blendDst);
 					}
 					return mats[key];
 				}
-				return MapLoader.Loader.baseTransparentMaterial;
+				return MapLoader.Loader.controller.baseTransparentMaterial;
 			}
 		}
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using UbiCanvas.Helpers;
 
 namespace UbiArt {
 	public class TextureCooked : ICSerializable {

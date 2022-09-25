@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
+using UbiCanvas.Helpers;
 
 namespace UbiArt.ITF {
 	public partial class Frise {
@@ -31,7 +32,7 @@ namespace UbiArt.ITF {
 				}
 			}
 			if (meshBuildData != null && meshBuildData.value != null) {
-				await Controller.WaitIfNecessary();
+				await TimeController.WaitIfNecessary();
 				if (meshBuildData.value.StaticIndexList.Count > 0) {
 					mesh_static = new GameObject("Static");
 					mesh_static.transform.SetParent(gao.transform, false);
@@ -113,7 +114,7 @@ namespace UbiArt.ITF {
 						} else {
 							FillMaterialParams(mr, m);
 						}
-						await Controller.WaitIfNecessary();
+						await TimeController.WaitIfNecessary();
 					}
 					mf.sharedMesh = mesh;
 					mr_static = mr;
@@ -201,7 +202,7 @@ namespace UbiArt.ITF {
 						} else {
 							FillMaterialParams(mr, m);
 						}
-						await Controller.WaitIfNecessary();
+						await TimeController.WaitIfNecessary();
 					}
 					mf.sharedMesh = mesh;
 					mr_anim = mr;
@@ -259,7 +260,7 @@ namespace UbiArt.ITF {
 						} else {
 							FillMaterialParams(mr, m);
 						}
-						await Controller.WaitIfNecessary();
+						await TimeController.WaitIfNecessary();
 					}
 					mf.sharedMesh = mesh;
 					mr_overlay = mr;

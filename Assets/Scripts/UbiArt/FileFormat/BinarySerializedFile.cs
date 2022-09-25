@@ -34,7 +34,6 @@ namespace UbiArt.FileFormat {
 				serializer = new CSerializerObjectBinary(reader);
 			}
 			MapLoader.ConfigureSerializeFlagsForExtension(ref serializer.flags, ref serializer.flagsOwn, extension);
-			baseOffset = -headerOffset;
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
         }
 

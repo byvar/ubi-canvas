@@ -232,7 +232,7 @@ namespace UbiArt {
 
 		public override async UniTask FillCacheForRead(long byteCount) {
 			await base.FillCacheForRead(byteCount);
-			if (reader.BaseStream is PartialHttpStream p) {
+			if (reader.BaseStream is UbiCanvas.Helpers.PartialHttpStream p) {
 				await p.FillCacheForRead(byteCount);
 			}
 		}

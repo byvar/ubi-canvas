@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UbiArt {
 	public class ObjectFactory {
-		public static Dictionary<uint, Type> classes = new Dictionary<uint, Type> {
+		public static readonly Dictionary<uint, Type> classes = new Dictionary<uint, Type> {
 			{ 0x16429EB7, typeof(ITF.ViewportUIComponent_Template) },
 			{ 0xFCDDDCBC, typeof(ITF.GridFluidListComponent) },
 			{ 0x5BE9B3A1, typeof(ITF.GridFluidListComponent_Template) },

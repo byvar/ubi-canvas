@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UbiArt;
+using UbiCanvas.Helpers;
 using UnityEditor;
 using UnityEngine;
 using Path = System.IO.Path;

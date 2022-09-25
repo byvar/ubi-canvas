@@ -12,6 +12,7 @@ using Cysharp.Threading.Tasks;
 using UbiArt.Bundle;
 using JetBrains.Annotations;
 using UbiArt.UV;
+using UbiCanvas.Helpers;
 
 namespace UbiArt {
 	public class MapLoader {
@@ -22,15 +23,6 @@ namespace UbiArt {
 		//public string lvlName;
 		public string logFile;
 
-		public Material baseMaterial;
-		public Material baseTransparentMaterial;
-		public Material baseLightMaterial;
-		public Material collideMaterial;
-		public Material collideTransparentMaterial;
-
-		public bool allowDeadPointers = false;
-		public bool forceDisplayBackfaces = false;
-		public bool blockyMode = false;
 		public bool logEnabled = false;
 		public bool loadAnimations = false;
 
@@ -157,7 +149,7 @@ namespace UbiArt {
 					foreach (var bname in bnames) {
 						if (!bundles.ContainsKey(bname)) {
 							string fullbname = gameDataBinFolder + bname + "_" + Settings.s.PlatformString + ".ipk";
-							await PrepareBigFile(fullbname, 0);
+							await FileSystem.PrepareBigFile(fullbname, 0);
 							if (!FileSystem.FileExists(fullbname)) continue;
 							bigFiles[bname] = new BinaryBigFile(bname, FileSystem.GetFileReadStream(fullbname));
 							bundles[bname] = new BundleFile();
@@ -170,7 +162,7 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				await PrepareFile(gameDataBinFolder + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+				await FileSystem.PrepareFile(gameDataBinFolder + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
 			}
 		}
 
@@ -230,7 +222,7 @@ namespace UbiArt {
 		protected async UniTask LoadLoop() {
 			try {
 				string state = loadingState;
-				Controller.StartStopwatch();
+				TimeController.StartStopwatch();
 				while (pathsToLoad.Count > 0) {
 					ObjectPlaceHolder o = pathsToLoad.Dequeue();
 					if (o.path != null) {
@@ -243,7 +235,7 @@ namespace UbiArt {
 							if (GameFileExists(o.path, ckd)) {
 								files.Add(id, new BinarySerializedFile(o.path.filename, o.path, ckd));
 								loadingState = state + "\n" + o.path.FullPath;
-								await Controller.WaitIfNecessary();
+								await TimeController.WaitIfNecessary();
 							}
 						}
 						if (files.ContainsKey(id)) {
@@ -265,11 +257,11 @@ namespace UbiArt {
 							virtualFiles.Remove(t);
 						}
 					}
-					await Controller.WaitIfNecessary();
+					await TimeController.WaitIfNecessary();
 					loadingState = state;
 				}
 			} finally {
-				Controller.StopStopwatch();
+				TimeController.StopStopwatch();
 				foreach (KeyValuePair<StringID, FileWithPointers> kv in files) {
 					kv.Value.Dispose();
 				}
@@ -378,9 +370,9 @@ namespace UbiArt {
 			foreach (Pair<Path, ICSerializable> f in files) {
 				b.AddFile(f.Item1.CookedPath, f.Item2);
 			}
-			Controller.StartStopwatch();
+			TimeController.StartStopwatch();
 			await b.WriteBundle(path);
-			Controller.StopStopwatch();
+			TimeController.StopStopwatch();
 		}
 
 		public void LoadGenericFile(string path, Action<GenericFile<CSerializable>> onResult) {
@@ -420,7 +412,7 @@ namespace UbiArt {
 		}
 
 		public async UniTask WriteActor(string path, ITF.Actor act) {
-			Controller.StartStopwatch();
+			TimeController.StartStopwatch();
 			// Clone actor
 			CSerializable c = await Clone(act, "act");
 			ITF.Actor actClone = c as ITF.Actor;
@@ -446,10 +438,10 @@ namespace UbiArt {
 					serializedData = stream.ToArray();
 				}
 			}
-			await Controller.WaitIfNecessary();
+			await TimeController.WaitIfNecessary();
 			// Write serialized data to file
 			Util.ByteArrayToFile(path, serializedData);
-			Controller.StopStopwatch();
+			TimeController.StopStopwatch();
 		}
 
 		// Defining it this way, clicking the print will go straight to the code you want
@@ -487,24 +479,6 @@ namespace UbiArt {
 				}
 			}
 			return null;
-		}
-
-		protected async UniTask PrepareFile(string path) {
-			if (FileSystem.mode == FileSystem.Mode.Web) {
-				string state = loadingState;
-				loadingState = state + "\nDownloading file: " + path;
-				await FileSystem.DownloadFile(path);
-				loadingState = state;
-			}
-		}
-
-		protected async UniTask PrepareBigFile(string path, int cacheLength) {
-			if (FileSystem.mode == FileSystem.Mode.Web) {
-				string state = loadingState;
-				loadingState = state + "\nInitializing bigfile: " + path + " (Cache size: " + Util.SizeSuffix(cacheLength, 0) + ")";
-				await FileSystem.InitBigFile(path, cacheLength);
-				loadingState = state;
-			}
 		}
 	}
 }
