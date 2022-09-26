@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,7 @@ namespace UbiArt {
 		public SerializeFlags flags;
 		public Flags flagsOwn;
 		protected int indent;
-		public int Indent => indent;
-		public bool log = false;
+		public int Depth => indent;
 		protected Stack<int> embeddedLevels = new Stack<int>();
 		protected bool embedded = false;
 		public bool Embedded => embeddedLevels.Count > 0 && embeddedLevels.Peek() == indent;
@@ -25,6 +25,24 @@ namespace UbiArt {
 		public CSerializerObject(Context context) {
 			Context = context;
 		}
+
+
+		#region Serializer Logging
+
+		/// <summary>
+		/// Indicates if logging is enabled for the serialization
+		/// </summary>
+		public bool IsSerializerLogEnabled => Context.SerializerLog.IsEnabled;// && !DisableSerializerLogForObject;
+
+		/// <summary>
+		/// Writes a line to the serializer log, if enabled
+		/// </summary>
+		/// <param name="logString">The string to log</param>
+		/// <param name="args">The log string arguments</param>
+		[StringFormatMethod("logString")]
+		public abstract void Log(string logString, params object[] args);
+
+		#endregion
 
 		public abstract void Serialize(ref object obj, Type type, string name = null);
 		public abstract void Serialize(object o, FieldInfo f, Type type = null, string name = null, int? index = null);
@@ -45,7 +63,7 @@ namespace UbiArt {
 		public abstract T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null);
 		public abstract byte[] SerializeBytes(byte[] obj, int numBytes);
 		public abstract uint SerializeFileSize(uint obj);
-		public abstract Pointer Position {
+		public abstract Pointer CurrentPointer {
 			get;
 		}
 		public abstract Pointer Length {
@@ -154,7 +172,7 @@ namespace UbiArt {
 				if (((byte)obj) == 1) {
 					obj = true;
 				} else if (((byte)obj) != 0) {
-					throw new Exception(Position + ": BoolAsByte with name " + name + " was " + ((byte)obj) + "!");
+					throw new Exception(CurrentPointer + ": BoolAsByte with name " + name + " was " + ((byte)obj) + "!");
 					//obj = false;
 				} else {
 					obj = false;

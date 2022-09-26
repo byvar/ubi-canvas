@@ -76,7 +76,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
-				throw new Exception(s.Position + " - FriseConfig is internal/purebinary in RO version, but you can figure it out with RFR. TODO!");
+				throw new Exception(s.CurrentPointer + " - FriseConfig is internal/purebinary in RO version, but you can figure it out with RFR. TODO!");
 			} else if (s.Settings.game == Settings.Game.RL) {
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				gameMaterialExtremityStart = s.SerializeObject<Path>(gameMaterialExtremityStart, name: "gameMaterialExtremityStart");

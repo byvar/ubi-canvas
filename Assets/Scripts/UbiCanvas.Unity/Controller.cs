@@ -10,6 +10,7 @@ using UbiArt.ITF;
 using System.Diagnostics;
 using Cysharp.Threading.Tasks;
 using UbiCanvas.Helpers;
+using UbiCanvas;
 
 public class Controller : MonoBehaviour {
 	public Material baseMaterial;
@@ -44,8 +45,6 @@ public class Controller : MonoBehaviour {
 		Settings.Mode mode = UnitySettings.GameMode;
 		string gameDataBinFolder = UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "";
 		string lvlPath = UnitySettings.SelectedLevelFile;
-		string logFile = UnitySettings.LogFile;
-		bool log = UnitySettings.Log;
 		bool loadAnimations = UnitySettings.LoadAnimations;
 
 		if (FileSystem.mode == FileSystem.Mode.Web) {
@@ -56,13 +55,13 @@ public class Controller : MonoBehaviour {
 
 		loadingScreen.Active = true;
 		var settings = Settings.Init(mode);
-		MainContext = new Context(settings);
-		MainContext.gameDataBinFolder = gameDataBinFolder;
+		MainContext = new Context(gameDataBinFolder, settings,
+			serializerLog: new MapViewerSerializerLog(),
+			fileManager: new MapViewerFileManager(),
+			systemLog: new UnitySystemLog());
 		MainContext.pathFolder = System.IO.Path.GetDirectoryName(lvlPath);
 		MainContext.pathFile = System.IO.Path.GetFileName(lvlPath);
 		//MainContext.lvlName = lvlName;
-		MainContext.logFile = logFile;
-		MainContext.logEnabled = log;
 		MainContext.loadAnimations = loadAnimations;
 
 		await Init();

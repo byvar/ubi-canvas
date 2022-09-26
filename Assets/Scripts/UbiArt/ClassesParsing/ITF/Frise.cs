@@ -309,7 +309,6 @@ namespace UbiArt.ITF {
 							templatePickable = config.obj;
 						}
 					} else {
-						extS.log = l.logEnabled;
 						if (l.fcgOrigins.ContainsKey(ConfigName.stringID)) {
 							configOrigins = l.fcgOrigins[ConfigName.stringID];
 						} else {

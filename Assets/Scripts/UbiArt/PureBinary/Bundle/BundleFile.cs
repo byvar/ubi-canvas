@@ -43,7 +43,7 @@ namespace UbiArt.Bundle {
 			return null;
 		}
 
-		public async UniTask<byte[]> GetFile(Reader reader, Path path) {
+		public async UniTask<byte[]> GetFile(Context context, Reader reader, Path path) {
 			if (readFileData.ContainsKey(path)) return readFileData[path];
 			if (packMaster != null) {
 				FileHeaderRuntime h = packMaster.files.FirstOrDefault(f => f.Item2 == path)?.Item1;
@@ -51,9 +51,7 @@ namespace UbiArt.Bundle {
 					ulong off = h.offsets[0];
 					uint size = h.zSize != 0 ? h.zSize : h.size;
 					reader.BaseStream.Position = (long)off + bootHeader.baseOffset;
-					if (reader.BaseStream is UbiCanvas.Helpers.PartialHttpStream p) {
-						await p.FillCacheForRead((int)size);
-					}
+					await context.FileManager?.FillCacheForReadAsync(size, reader);
 					byte[] fileBytes = reader.ReadBytes((int)size);
 					if (fileBytes != null) {
 						if (h.zSize != 0) {

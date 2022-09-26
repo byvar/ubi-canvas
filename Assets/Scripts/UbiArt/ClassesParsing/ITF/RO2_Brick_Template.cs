@@ -9,7 +9,6 @@ namespace UbiArt.ITF {
 			if (IsFirstLoad) {
 				Context l = s.Context;
 				l.Load(archive, path.filename, (extS) => {
-					extS.log = l.logEnabled;
 					sceneFile = extS.SerializeObject<ContainerFile<Scene>>(sceneFile);
 				});
 			}

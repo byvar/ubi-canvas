@@ -10,8 +10,8 @@ namespace UbiArt {
 		public uint platform;
 
 		public void Serialize(CSerializerObject s, string name) {
-			Debug.LogError(s.Position + ": Encountered Platform with name " + name);
-			throw new Exception(s.Position + ": Encountered Platform with name " + name);
+			Debug.LogError(s.CurrentPointer + ": Encountered Platform with name " + name);
+			throw new Exception(s.CurrentPointer + ": Encountered Platform with name " + name);
 			//s.Serialize<uint>(ref platform);
 		}
 	}

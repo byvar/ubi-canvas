@@ -15,8 +15,8 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			Debug.LogError(s.Position + ": BasicString here");
-			throw new Exception(s.Position + ": BasicString here");
+			Debug.LogError(s.CurrentPointer + ": BasicString here");
+			throw new Exception(s.CurrentPointer + ": BasicString here");
 			//s.Serialize<string>(ref str);
 		}
 	}

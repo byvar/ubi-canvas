@@ -20,7 +20,7 @@ namespace UbiArt {
 			flagsOwn = Flags.Flags0 | Flags.Flags7; // 0x81
 		}
 
-		public override Pointer Position => Pointer.Current(reader);
+		public override Pointer CurrentPointer => Pointer.Current(reader);
 		public override Pointer Length => new Pointer((uint)reader.BaseStream.Length, Pointer.Current(reader).file);
 
 		public override void ResetPosition() {
@@ -44,7 +44,7 @@ namespace UbiArt {
 				} else if (type == typeof(byte[])) {
 					return new byte[0];
 				} else {
-					throw new Exception(Position + ": Field with name " + name + " is not a valid primitive type");
+					throw new Exception(CurrentPointer + ": Field with name " + name + " is not a valid primitive type");
 				}
 			}
 
@@ -114,8 +114,8 @@ namespace UbiArt {
 					entered = ReadTag(typeName, 200);
 				}
 				obj.Serialize(this, name);
-				if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
-					Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+				if (IsSerializerLogEnabled && entered && endPos.Peek() != reader.BaseStream.Position) {
+					Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 				}
 				if (entered) reader.BaseStream.Position = endPos.Pop();
 				DecreaseLevel();
@@ -142,7 +142,7 @@ namespace UbiArt {
 					int numBytes = reader.ReadInt32();
 					return reader.ReadBytes(numBytes);
 				} else {
-					throw new Exception(Position + ": Field with name " + name + " is not a valid primitive type");
+					throw new Exception(CurrentPointer + ": Field with name " + name + " is not a valid primitive type");
 				}
 			}
 
@@ -160,7 +160,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
-							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							throw new Exception(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
 							//obj = false;
 						} else {
 							return false;
@@ -170,7 +170,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
-							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							throw new Exception(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
 							//obj = false;
 						} else {
 							return false;
@@ -229,7 +229,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							obj = true;
 						} else if (tmp != 0) {
-							throw new Exception(Position + ": Bool with name " + name + " was " + tmp + "!");
+							throw new Exception(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
 							//obj = false;
 						} else {
 							obj = false;
@@ -278,9 +278,8 @@ namespace UbiArt {
 						entered = ReadTag(typeName, 200);
 					}
 					((ICSerializable)obj).Serialize(this, name);
-					if (log && entered && endPos.Peek() != reader.BaseStream.Position) {
-						Pointer pos = new Pointer(reader.BaseStream.Position, Context.GetFileByReader(reader));
-						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					if (IsSerializerLogEnabled && entered && endPos.Peek() != reader.BaseStream.Position) {
+						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
 					if (entered) reader.BaseStream.Position = endPos.Pop();
 					DecreaseLevel();
@@ -351,23 +350,22 @@ namespace UbiArt {
 			} else if (name != null && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
-					Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
-					bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
-					if (log && isBigObject) {
-						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
+					var logPrefix = LogPrefix;
+					bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
+					if (IsSerializerLogEnabled && isBigObject) {
+						Context.SerializerLog.Log($"{logPrefix}({f.DeclaringType}) {f.Name}:");
 					}
 					object obj = null;
 					Serialize(ref obj, objType, name: name);
 					if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 					f.SetValue(containerObj, obj);
 
-					if (log && endPos.Peek() != reader.BaseStream.Position) {
-						Pointer posNew = new Pointer((uint)reader.BaseStream.Position, Context.GetFileByReader(reader));
-						Context.Log(posNew + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
 					reader.BaseStream.Position = endPos.Pop();
-					if (log && !isBigObject) {
-						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
+					if (IsSerializerLogEnabled && !isBigObject) {
+						Context.SerializerLog.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {obj}");
 					}
 				} else {
 					if (f.GetValue(containerObj) == null) {
@@ -381,18 +379,18 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
-				bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
-				if (log && isBigObject) {
-					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + ":");
+				var logPrefix = LogPrefix;
+				bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
+				if (IsSerializerLogEnabled && isBigObject) {
+					Context.SerializerLog.Log($"{logPrefix}({f.DeclaringType}) {f.Name}:");
 				}
 				object obj = null;
 
 				Serialize(ref obj, objType, name: name);
 				if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 				f.SetValue(containerObj, obj);
-				if (log && !isBigObject) {
-					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + f.DeclaringType + ") " + f.Name + " - " + obj);
+				if (IsSerializerLogEnabled && !isBigObject) {
+					Context.SerializerLog.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {obj}");
 				}
 			}
 		}
@@ -418,10 +416,10 @@ namespace UbiArt {
 			} else if (name != null && !objType.IsDefined(typeof(SerializeEmbedAttribute), false)) {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
-					Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
-					bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-					if (!fakeSerializeMode && log && name != null && isBigObject) {
-						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
+					var logPrefix = LogPrefix;
+					bool isBigObject = IsSerializerLogEnabled && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+					if (!fakeSerializeMode && IsSerializerLogEnabled && name != null && isBigObject) {
+						Context.SerializerLog.Log($"{logPrefix}{name}:");
 					}
 
 					object obj2 = obj;
@@ -430,12 +428,12 @@ namespace UbiArt {
 					obj = (T)obj2;
 
 
-					if (log && endPos.Peek() != reader.BaseStream.Position) {
-						Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
 					reader.BaseStream.Position = endPos.Pop();
-					if (!fakeSerializeMode && log && name != null && !isBigObject) {
-						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+					if (!fakeSerializeMode && IsSerializerLogEnabled && name != null && !isBigObject) {
+						Context.SerializerLog.Log($"{logPrefix}{name} - {obj}");
 					}
 
 				} else {
@@ -450,10 +448,10 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
-				bool isBigObject = log && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-				if (!fakeSerializeMode && log && index.HasValue && isBigObject) {
-					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
+				var logPrefix = LogPrefix;
+				bool isBigObject = IsSerializerLogEnabled && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+				if (!fakeSerializeMode && IsSerializerLogEnabled && index.HasValue && isBigObject) {
+					Context.SerializerLog.Log($"{logPrefix}{name}[{index.Value}]:");
 				}
 
 				object obj2 = obj;
@@ -461,8 +459,8 @@ namespace UbiArt {
 				if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
 				obj = (T)obj2;
 
-				if (!fakeSerializeMode && log && index.HasValue && !isBigObject) {
-					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "] - " + obj);
+				if (!fakeSerializeMode && IsSerializerLogEnabled && index.HasValue && !isBigObject) {
+					Context.SerializerLog.Log($"{logPrefix}{name}[{index.Value}] - {obj}");
 				}
 			}
 			return obj;
@@ -478,11 +476,9 @@ namespace UbiArt {
 		}
 
 		public override bool ArrayEntryStart(string name, int index) {
-			long position = reader.BaseStream.Position;
 			if (ReadTag(name, (uint)(200 + index))) {
-				Pointer pos = log ? new Pointer(position, Context.GetFileByReader(reader)) : null;
-				if (log) {
-					Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index + "]:");
+				if (IsSerializerLogEnabled) {
+					Context.SerializerLog.Log($"{LogPrefix}{name}[{index}]:");
 				}
 				return base.ArrayEntryStart(name, index);
 			} else return false;
@@ -491,8 +487,8 @@ namespace UbiArt {
 		public override void ArrayEntryStop() {
 			base.ArrayEntryStop();
 
-			if (log && endPos.Peek() != reader.BaseStream.Position) {
-				Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+			if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+				Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 			}
 			reader.BaseStream.Position = endPos.Pop();
 		}
@@ -541,18 +537,18 @@ namespace UbiArt {
 		}
 
 		public override T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null) {
-			Pointer pos = log && name != null ? Position : null;
-			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-			if (log && name != null && isBigObject) {
-				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + ":");
+			var logPrefix = LogPrefix;
+			bool isBigObject = IsSerializerLogEnabled && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+			if (IsSerializerLogEnabled && name != null && isBigObject) {
+				Context.SerializerLog.Log($"{logPrefix}{name}:");
 			}
 
 			object obj2 = obj;
 			Serialize(ref obj2, type ?? typeof(T), name: name);
 			obj = (T)obj2;
 
-			if (log && name != null && !isBigObject) {
-				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+			if (IsSerializerLogEnabled && name != null && !isBigObject) {
+				Context.SerializerLog.Log($"{logPrefix}{name} - {obj}");
 			}
 			return obj;
 		}
@@ -572,15 +568,15 @@ namespace UbiArt {
 				Type objType = typeof(T);
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
-					Pointer pos = log ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
+					var logPrefix = LogPrefix;
 					obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
 
-					if (log && endPos.Peek() != reader.BaseStream.Position) {
-						Context.Log(Position + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
 					reader.BaseStream.Position = endPos.Pop();
-					if (!fakeSerializeMode && log && name != null) {
-						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+					if (!fakeSerializeMode && IsSerializerLogEnabled && name != null) {
+						Context.SerializerLog.Log($"{logPrefix}{name} - {obj}");
 					}
 				} else {
 					if (obj == null) {
@@ -591,10 +587,10 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				Pointer pos = log && name != null ? new Pointer((uint)position, Context.GetFileByReader(reader)) : null;
+				var logPrefix = LogPrefix;
 				obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
-				if (!fakeSerializeMode && log && name != null) {
-					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + " - " + obj);
+				if (!fakeSerializeMode && IsSerializerLogEnabled && name != null) {
+					Context.SerializerLog.Log($"{logPrefix}{name} - {obj}");
 				}
 			}
 			return obj;
@@ -618,23 +614,22 @@ namespace UbiArt {
 					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":" + " - " + index + " - " + objType + " - " + uafType);
 				}*/
 				if (ReadTag(name, uafType)) {
-					Pointer pos = log ? new Pointer(position, Context.GetFileByReader(reader)) : null;
-					bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
+					var logPrefix = LogPrefix;
+					bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
 
-					if (!fakeSerializeMode && log && isBigObject && name != null) {
-						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
+					if (!fakeSerializeMode && IsSerializerLogEnabled && isBigObject && name != null) {
+						Context.SerializerLog.Log($"{logPrefix}({typeof(T)}) {name}:");
 					}
 
 					obj = SerializeObjectFull<T>(default, name, objType);
 
-					if (log && endPos.Peek() != reader.BaseStream.Position) {
-						Pointer posNew = new Pointer(reader.BaseStream.Position, Context.GetFileByReader(reader));
-						Context.Log(posNew + ":" + new string(' ', (Indent + 1) * 2) + "ERROR: NOT FULLY READ");
+					if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
 					reader.BaseStream.Position = endPos.Pop();
 
-					if (!fakeSerializeMode && log && !isBigObject && name != null) {
-						Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
+					if (!fakeSerializeMode && IsSerializerLogEnabled && !isBigObject && name != null) {
+						Context.SerializerLog.Log($"{logPrefix}({typeof(T)}) {name} - {obj}");
 					}
 				} else {
 					if (obj == null) {
@@ -645,20 +640,30 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				Pointer pos = log ? new Pointer(position, Context.GetFileByReader(reader)) : null;
-				bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
+				var logPrefix = LogPrefix;
+				bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
 
-				if (!fakeSerializeMode && log && isBigObject && name != null) {
-					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + ":");
+				if (!fakeSerializeMode && IsSerializerLogEnabled && isBigObject && name != null) {
+					Context.SerializerLog.Log($"{logPrefix}({typeof(T)}) {name}:");
 				}
 
 				obj = SerializeObjectFull<T>(obj, name, objType);
 
-				if (!fakeSerializeMode && log && !isBigObject && name != null) {
-					Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + "(" + typeof(T) + ") " + name + " - " + obj);
+				if (!fakeSerializeMode && IsSerializerLogEnabled && !isBigObject && name != null) {
+					Context.SerializerLog.Log($"{logPrefix}({typeof(T)}) {name} - {obj}");
 				}
 			}
 			return obj;
 		}
+
+		#region Logging
+
+		protected string LogPrefix => IsSerializerLogEnabled ? $"(R) {CurrentPointer}:{new string(' ', (Depth + 1) * 2)}" : null;
+		public override void Log(string logString, params object[] args) {
+			if (IsSerializerLogEnabled)
+				Context.SerializerLog.Log(LogPrefix + String.Format(logString, args));
+		}
+
+		#endregion
 	}
 }

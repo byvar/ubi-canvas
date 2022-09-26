@@ -28,10 +28,10 @@ namespace UbiArt {
 			}
 			footer = s.SerializeBytes(footer, 0x190);
 			if (s.Length != null) {
-				if (s.Position != s.Length) {
-					throw new Exception("File reading check failed. Position:" + s.Position + " - Length:" + s.Length);
-				} else if (s.Position.file != null) {
-					s.Context.print("Finished reading file: " + s.Position.file.name);
+				if (s.CurrentPointer != s.Length) {
+					throw new Exception("File reading check failed. Position:" + s.CurrentPointer + " - Length:" + s.Length);
+				} else if (s.CurrentPointer.file != null) {
+					s.Context.SystemLog?.LogInfo("Finished reading file: " + s.CurrentPointer.file.name);
 				}
 			}
 		}

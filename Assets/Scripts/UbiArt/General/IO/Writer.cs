@@ -4,30 +4,40 @@ using System.Text;
 
 namespace UbiArt {
     public class Writer : BinaryWriter {
-        #region Constructors
+		#region Constructors
 
-        public Writer(Stream stream, bool isLittleEndian = true, bool leaveOpen = false) : base(stream, new UTF8Encoding(), leaveOpen) {
-            IsLittleEndian = isLittleEndian;
-        }
+		public Writer(Stream stream, bool isLittleEndian = true, bool leaveOpen = false) : base(new StreamWrapper(stream), new UTF8Encoding(), leaveOpen) {
+			IsLittleEndian = isLittleEndian;
+		}
 
-        #endregion
+		#endregion
 
-        #region Public Properties
+		#region Public Properties
 
-        public bool IsLittleEndian { get; set; }
+		public bool IsLittleEndian { get; set; }
+		public new StreamWrapper BaseStream => (StreamWrapper)base.BaseStream;
 
-        #endregion
+		#endregion
 
-        #region Protected Properties
+		#region Protected Properties
 
-        protected uint BytesSinceAlignStart { get; set; }
+		protected uint BytesSinceAlignStart { get; set; }
         protected bool AutoAlignOn { get; set; }
 
-        #endregion
+		protected IXORCalculator XORCalculator {
+			get => BaseStream.XORCalculator;
+			set => BaseStream.XORCalculator = value;
+		}
+		protected IChecksumCalculator ChecksumCalculator {
+			get => BaseStream.ChecksumCalculator;
+			set => BaseStream.ChecksumCalculator = value;
+		}
 
-        #region Write Methods
+		#endregion
 
-        public override void Write(int value) {
+		#region Write Methods
+
+		public override void Write(int value) {
             var data = BitConverter.GetBytes(value);
             if (IsLittleEndian != BitConverter.IsLittleEndian) Array.Reverse(data);
             Write(data);
@@ -173,7 +183,27 @@ namespace UbiArt {
             BytesSinceAlignStart = 0;
         }
 
-        #endregion
+		#endregion
 
-    }
+		#region XOR & Checksum
+
+		public void BeginXOR(IXORCalculator xorCalculator) => XORCalculator = xorCalculator;
+		public void EndXOR() => XORCalculator = null;
+		public IXORCalculator GetXORCalculator() => XORCalculator;
+
+		public void BeginCalculateChecksum(IChecksumCalculator checksumCalculator) => ChecksumCalculator = checksumCalculator;
+		public IChecksumCalculator PauseCalculateChecksum() {
+			IChecksumCalculator c = ChecksumCalculator;
+			ChecksumCalculator = null;
+			return c;
+
+		}
+		public T EndCalculateChecksum<T>() {
+			IChecksumCalculator c = ChecksumCalculator;
+			ChecksumCalculator = null;
+			return ((IChecksumCalculator<T>)c).ChecksumValue;
+		}
+
+		#endregion
+	}
 }

@@ -40,7 +40,7 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			Pointer pos = s.Position;
+			Pointer pos = s.CurrentPointer;
 			if (serializeClassName) {
 				SerializeClassName(s);
 			}
@@ -56,8 +56,8 @@ namespace UbiArt {
 					Type type = ObjectFactory.classes[className.stringID];
 					if (type.ContainsGenericParameters) {
 						if (!typeof(T).IsGenericType) {
-							Debug.LogError(s.Position + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
-							throw new Exception(s.Position + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
+							Debug.LogError(s.CurrentPointer + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
+							throw new Exception(s.CurrentPointer + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
 						}
 						type = type.MakeGenericType(typeof(T).GetGenericArguments());
 					}
@@ -65,15 +65,15 @@ namespace UbiArt {
 				} else {
 					if (s is CSerializerObjectTagBinary) {
 						Debug.LogWarning("CRC " + className.stringID.ToString("X8")
-							+ " found at " + s.Position
+							+ " found at " + s.CurrentPointer
 							+ " while reading container of type " + typeof(T) + " is not yet supported!");
 						className.stringID = 0xFFFFFFFF;
 					} else {
 						Debug.LogError("CRC " + className.stringID.ToString("X8")
-							+ " found at " + s.Position
+							+ " found at " + s.CurrentPointer
 							+ " while reading container of type " + typeof(T) + " is not yet supported!");
 						throw new NotImplementedException("CRC " + className.stringID.ToString("X8")
-							+ " found at position " + s.Position
+							+ " found at position " + s.CurrentPointer
 							+ " while reading container of type " + typeof(T) + " is not yet supported!");
 					}
 				}

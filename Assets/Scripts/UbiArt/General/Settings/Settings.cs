@@ -23,6 +23,7 @@ namespace UbiArt {
 		};
 
 
+		// TODO: Move these enums out of Settings folder into Enums
 		public enum EngineVersion {
 			None = -1,
 			RO = 0,
@@ -30,13 +31,12 @@ namespace UbiArt {
 		};
 		public enum Game { None, RO, RL, RA, RJR, RFR, COL, VH, RM };
 		public enum Platform { None, PC, iOS, Android, WiiU, Vita, MacOS };
-		public enum Endian { Little, Big };
 		public enum SerializerType { Binary, TagBinary };
 
 		public EngineVersion engineVersion;
 		public Game game;
 		public Platform platform;
-		public Endian endian;
+		public Endian Endian { get; set; }
 		public VersionFlags versionFlags;
 		public SerializerType serializerType = SerializerType.Binary;
 		public bool usesSerializeFlags = true;
@@ -47,7 +47,7 @@ namespace UbiArt {
 		public string[] bundles;
 
 		public bool IsLittleEndian {
-			get { return endian == Endian.Little; }
+			get { return Endian == Endian.Little; }
 		}
 		public string PlatformString {
 			get {
@@ -86,7 +86,7 @@ namespace UbiArt {
 			engineVersion = EngineVersion.RO,
 			game = Game.RO,
 			platform = Platform.PC,
-			endian = Endian.Big,
+			Endian = Endian.Big,
 			versionFlags = VersionFlags.Origins,
 			usesSerializeFlags = false,
 			bundles = new string[] { "bundle" }
@@ -95,7 +95,7 @@ namespace UbiArt {
 			engineVersion = EngineVersion.RL,
 			game = Game.RL,
 			platform = Platform.PC,
-			endian = Endian.Big,
+			Endian = Endian.Big,
 			versionFlags = VersionFlags.Legends,
 			bundles = new string[] {
 				"persistentLoading", "Bundle"
@@ -105,7 +105,7 @@ namespace UbiArt {
 			engineVersion = EngineVersion.RL,
 			game = Game.RA,
 			platform = Platform.iOS,
-			endian = Endian.Big,
+			Endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures,
 			serializerType = SerializerType.TagBinary
 		};
@@ -113,7 +113,7 @@ namespace UbiArt {
 			engineVersion = EngineVersion.RL,
 			game = Game.RA,
 			platform = Platform.Android,
-			endian = Endian.Big,
+			Endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures,
 			serializerType = SerializerType.TagBinary,
 			bundles = new string[] {
@@ -150,7 +150,7 @@ namespace UbiArt {
 			engineVersion = EngineVersion.RL,
 			game = Game.RM,
 			platform = Platform.MacOS,
-			endian = Endian.Big,
+			Endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures,
 			serializerType = SerializerType.TagBinary,
 			bundles = new string[] { "bundle" }
@@ -159,7 +159,7 @@ namespace UbiArt {
 			engineVersion = EngineVersion.RL,
 			game = Game.RL,
 			platform = Platform.Vita,
-			endian = Endian.Big,
+			Endian = Endian.Big,
 			versionFlags = VersionFlags.Legends,
 			isCatchThemAll = true
 		};

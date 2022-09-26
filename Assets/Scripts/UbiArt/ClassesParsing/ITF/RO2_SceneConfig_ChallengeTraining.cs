@@ -21,7 +21,6 @@ namespace UbiArt.ITF {
 					if (l.isg.ContainsKey(modePath.stringID)) {
 						mode = l.isg[modePath.stringID];
 					} else {
-						extS.log = l.logEnabled;
 						mode = extS.SerializeObject<GenericFile<CSerializable>>(mode);
 						l.isg[modePath.stringID] = mode;
 					}

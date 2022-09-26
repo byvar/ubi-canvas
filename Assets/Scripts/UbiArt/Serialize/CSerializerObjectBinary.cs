@@ -17,7 +17,7 @@ namespace UbiArt {
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
 
-		public override Pointer Position => Pointer.Current(reader);
+		public override Pointer CurrentPointer => Pointer.Current(reader);
 		public override Pointer Length => new Pointer((uint)reader.BaseStream.Length, Pointer.Current(reader).file);
 
 		public override void ResetPosition() {
@@ -43,7 +43,7 @@ namespace UbiArt {
 					int numBytes = reader.ReadInt32();
 					return reader.ReadBytes(numBytes);
 				} else {
-					throw new Exception($"{Position}: Field with name {name} is not a valid primitive type");
+					throw new Exception($"{CurrentPointer}: Field with name {name} is not a valid primitive type");
 				}
 			}
 
@@ -61,7 +61,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
-							throw new Exception($"{Position}: Bool with name {name} was {tmp}!");
+							throw new Exception($"{CurrentPointer}: Bool with name {name} was {tmp}!");
 							//obj = false;
 						} else {
 							return false;
@@ -71,7 +71,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
-							throw new Exception($"{Position}: Bool with name {name} was {tmp}!");
+							throw new Exception($"{CurrentPointer}: Bool with name {name} was {tmp}!");
 							//obj = false;
 						} else {
 							return false;
@@ -106,7 +106,7 @@ namespace UbiArt {
 						if (tmp == 1) {
 							obj = true;
 						} else if (tmp != 0) {
-							throw new Exception($"{Position}: Bool with name {name} was {tmp}!");
+							throw new Exception($"{CurrentPointer}: Bool with name {name} was {tmp}!");
 							//obj = false;
 						} else {
 							obj = false;
@@ -150,33 +150,33 @@ namespace UbiArt {
 		}
 
 		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
-			Pointer pos = log ? Position : null;
-			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
-			if (log && isBigObject) {
-				Context.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({f.DeclaringType}) {f.Name}:");
+			var logPrefix = LogPrefix;
+			bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
+			if (IsSerializerLogEnabled && isBigObject) {
+				Context.SerializerLog.Log($"{logPrefix}({f.DeclaringType}) {f.Name}:");
 			}
 			object obj = null;
 			Serialize(ref obj, type ?? f.FieldType, name: name);
 			if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 			f.SetValue(containerObj, obj);
-			if (log && !isBigObject) {
-				Context.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({f.DeclaringType}) {f.Name} - {obj}");
+			if (IsSerializerLogEnabled && !isBigObject) {
+				Context.SerializerLog.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {obj}");
 			}
 		}
 
 		public override T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null) {
-			Pointer pos = log && name != null ? Position : null;
-			bool isBigObject = log && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-			if (log && name != null && isBigObject) {
-				Context.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({name}:");
+			var logPrefix = LogPrefix;
+			bool isBigObject = IsSerializerLogEnabled && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+			if (IsSerializerLogEnabled && name != null && isBigObject) {
+				Context.SerializerLog.Log($"{logPrefix}({name}:");
 			}
 
 			object obj2 = obj;
 			Serialize(ref obj2, type ?? typeof(T), name: name);
 			obj = (T)obj2;
 
-			if (log && name != null && !isBigObject) {
-				Context.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({name} - {obj}");
+			if (IsSerializerLogEnabled && name != null && !isBigObject) {
+				Context.SerializerLog.Log($"{logPrefix}({name} - {obj}");
 			}
 			return obj;
 		}
@@ -186,8 +186,8 @@ namespace UbiArt {
 		}
 
 		public override bool ArrayEntryStart(string name, int index) {
-			if (log) {
-				Context.Log($"{Position}:{new string(' ', (Indent + 1) * 2)}({name}[{index}]:");
+			if (IsSerializerLogEnabled) {
+				Context.SerializerLog.Log($"{LogPrefix}({name}[{index}]:");
 			}
 			return base.ArrayEntryStart(name, index);
 		}
@@ -201,21 +201,21 @@ namespace UbiArt {
 		}
 
 		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {
-			Pointer pos = log && name != null ? Position : null;
+			var logPrefix = LogPrefix;
 
 			T t = (T)ReadPrimitiveAsObject<T>(name: name, options: options);
 
-			if (log && name != null) {
-				Context.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({name} - {t}");
+			if (IsSerializerLogEnabled && name != null) {
+				Context.SerializerLog.Log($"{logPrefix}({name} - {t}");
 			}
 			return t;
 		}
 
 		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
-			Pointer pos = log ? Position : null;
-			bool isBigObject = log && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-			if (log && isBigObject && name != null) {
-				Context.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({typeof(T)}) {name}:");
+			var logPrefix = LogPrefix;
+			bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
+			if (IsSerializerLogEnabled && isBigObject && name != null) {
+				Context.SerializerLog.Log($"{logPrefix}({typeof(T)}) {name}:");
 			}
 
 			IncreaseLevel();
@@ -224,17 +224,23 @@ namespace UbiArt {
 			DecreaseLevel();
 			AddToStringCache(obj);
 
-			if (log && !isBigObject && name != null) {
-				Context.Log($"{pos}:{new string(' ', (Indent + 1) * 2)}({typeof(T)}) {name} - {obj}");
+			if (IsSerializerLogEnabled && !isBigObject && name != null) {
+				Context.SerializerLog.Log($"{logPrefix}({typeof(T)}) {name} - {obj}");
 			}
 			return obj;
 		}
 
-		public override async UniTask FillCacheForRead(long byteCount) {
-			await base.FillCacheForRead(byteCount);
-			if (reader.BaseStream is UbiCanvas.Helpers.PartialHttpStream p) {
-				await p.FillCacheForRead(byteCount);
-			}
+		public override async UniTask FillCacheForRead(long byteCount) => await Context.FileManager.FillCacheForReadAsync(byteCount, reader);
+
+
+		#region Logging
+
+		protected string LogPrefix => IsSerializerLogEnabled ? $"(R) {CurrentPointer}:{new string(' ', (Depth + 1) * 2)}" : null;
+		public override void Log(string logString, params object[] args) {
+			if (IsSerializerLogEnabled)
+				Context.SerializerLog.Log(LogPrefix + String.Format(logString, args));
 		}
+
+		#endregion
 	}
 }

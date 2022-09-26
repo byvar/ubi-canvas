@@ -14,11 +14,10 @@ namespace UbiArt.ITF {
 						if (l.skl.ContainsKey(skeleton.stringID)) {
 							skel = l.skl[skeleton.stringID];
 						} else {
-							extS.log = l.logEnabled;
 							skel = extS.SerializeObject<AnimSkeleton>(skel);
 							l.skl[skeleton.stringID] = skel;
-							if (extS.Position != extS.Length) {
-								l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+							if (extS.CurrentPointer != extS.Length) {
+								l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 							}
 						}
 					});

@@ -3,33 +3,187 @@ using UbiArt.FileFormat;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
-using System.Collections;
 using System.Text;
-using System.Diagnostics;
 using Cysharp.Threading.Tasks;
 using UbiArt.Bundle;
-using JetBrains.Annotations;
 using UbiArt.UV;
 using UbiCanvas.Helpers;
 
 namespace UbiArt {
 	public class Context {
+
+		#region Constructors
+		public Context(string basePath, Settings settings, ISerializerLog serializerLog = null, IFileManager fileManager = null, ISystemLog systemLog = null) {
+			// Set properties from parameters
+			FileManager = fileManager ?? new DefaultFileManager();
+			SystemLog = systemLog;
+			SerializerLog = serializerLog ?? new EmptySerializerLog();
+			BasePath = NormalizePath(basePath, true);
+			Settings = settings;
+
+			// Initialize properties
+			ObjectStorage = new Dictionary<string, object>();
+			AdditionalSettings = new Dictionary<Type, object>();
+
+			InitStringCache();
+		}
+
+		#endregion
+
+		#region Abstraction
+
+#nullable enable
+		public IFileManager FileManager { get; }
+		public ISystemLog? SystemLog { get; }
+#nullable restore
+
+		#endregion
+
+		#region Internal Fields
+
+		internal object _threadLock = new object();
+
+		#endregion
+
+		#region Public Properties
+
+		public string BasePath { get; }
+		public ISerializerLog SerializerLog { get; }
+
+		#endregion
+
+		#region Settings
+
+		public Settings Settings { get; }
+
+		protected Dictionary<Type, object> AdditionalSettings { get; }
+		public T GetSettings<T>(bool throwIfNotFound = true) {
+			var s = AdditionalSettings.TryGetValue(typeof(T), out object settings) ? settings : null;
+
+			if (s != null)
+				return (T)s;
+
+			if (throwIfNotFound)
+				throw new ContextException($"The requested serializer settings of type {typeof(T)} could not be found");
+
+			return default;
+		}
+		public T AddSettings<T>(T settings) {
+			AdditionalSettings[typeof(T)] = settings;
+			return settings;
+		}
+		public void AddSettings(object settings, Type settingsType) {
+			AdditionalSettings[settingsType] = settings;
+		}
+		public void RemoveSettings<T>() {
+			AdditionalSettings.Remove(typeof(T));
+		}
+		public bool HasSettings<T>() {
+			return AdditionalSettings.ContainsKey(typeof(T));
+		}
+
+		#endregion
+		
+		#region Storage
+
+		protected Dictionary<string, object> ObjectStorage { get; }
+
+		public T GetStoredObject<T>(string id, bool throwIfNotFound = false) {
+			if (ObjectStorage.ContainsKey(id))
+				return (T)ObjectStorage[id];
+
+			if (throwIfNotFound)
+				throw new ContextException($"The requested object with ID {id} could not be found");
+
+			return default;
+		}
+
+		public void RemoveStoredObject(string id) {
+			ObjectStorage.Remove(id);
+		}
+
+		public T StoreObject<T>(string id, T obj) {
+			ObjectStorage[id] = obj;
+			return obj;
+		}
+
+		#endregion
+
+		#region Files
+
+
+		private char SeparatorChar => FileManager.SeparatorCharacter switch
+        {
+            PathSeparatorChar.ForwardSlash => '/',
+            PathSeparatorChar.BackSlash => '\\',
+            _ => '/',
+        };
+
+        public virtual string GetAbsoluteFilePath(string relativePath) => BasePath + relativePath;
+        public virtual string NormalizePath(string path, bool isDirectory)
+        {
+            // Get the path separator character
+            string separatorChar = SeparatorChar.ToString();
+
+            // Normalize the path
+            string newPath = FileManager.SeparatorCharacter switch
+            {
+                PathSeparatorChar.ForwardSlash => path.Replace('\\', '/'),
+                PathSeparatorChar.BackSlash => path.Replace('/', '\\'),
+                _ => throw new ArgumentOutOfRangeException(nameof(FileManager.SeparatorCharacter), FileManager.SeparatorCharacter, null)
+            };
+
+            // Make sure a directory path ends with the separator
+            if (isDirectory && !newPath.EndsWith(separatorChar) && !String.IsNullOrWhiteSpace(path)) 
+                newPath += separatorChar;
+            
+            return newPath;
+        }
+		#endregion
+
+		#region String Cache
+		protected void InitStringCache() {
+			// Init String Cache
+			foreach (uint sid in ObjectFactory.classes.Keys) {
+				stringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
+			}
+		}
+		#endregion
+
+
+		#region Events
+
+		public event EventHandler Disposed;
+
+		#endregion
+
+		#region Dispose
+
+		public void Close() {
+			/*deserializer?.Dispose();
+			deserializer = null;
+			serializer?.Dispose();
+			serializer = null;
+
+			foreach (var file in MemoryMap.Files)
+				file?.Dispose();*/
+
+			SerializerLog.Dispose();
+		}
+		public void Dispose() {
+			Close();
+			Disposed?.Invoke(this, EventArgs.Empty);
+		}
+
+		#endregion
+
+
 		public string loadingState = "Loading";
-		public string gameDataBinFolder;
 		public string pathFolder;
 		public string pathFile;
-		//public string lvlName;
-		public string logFile;
 
-		public bool logEnabled = false;
 		public bool loadAnimations = false;
-
-		public StringBuilder log = new StringBuilder();
-
-		public Settings Settings { get; set; }
-
 
 		public ITF.RO2_GameManagerConfig_Template gameConfig;
 		public ITF.Ray_GameManagerConfig_Template gameConfigRO;
@@ -81,15 +235,6 @@ namespace UbiArt {
 
 		public ContainerFile<ITF.Scene> mainScene;
 
-		public Context(Settings settings) {
-			Settings = settings;
-
-			// Init String Cache
-			foreach (uint sid in ObjectFactory.classes.Keys) {
-				stringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
-			}
-		}
-
 		protected bool GameFileExists(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
 			if (Settings.loadFromIPK && Settings.bundles != null) {
@@ -100,7 +245,7 @@ namespace UbiArt {
 				}
 				return false;
 			} else {
-				return FileSystem.FileExists(gameDataBinFolder + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+				return FileSystem.FileExists(BasePath + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
 			}
 		}
 		public Stream GetGameFileStream(Path p, bool ckd) {
@@ -113,7 +258,7 @@ namespace UbiArt {
 				}
 				return null;
 			} else {
-				return FileSystem.GetFileReadStream(gameDataBinFolder + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+				return FileSystem.GetFileReadStream(BasePath + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
 			}
 		}
 		protected async UniTask PrepareGameFile(Path p, bool ckd) {
@@ -134,14 +279,14 @@ namespace UbiArt {
 					// Loop 2: try to find an already loaded bundle and an already loaded file
 					foreach (var bname in bnames) {
 						if (bundles.ContainsKey(bname)) {
-							byte[] data = await bundles[bname].GetFile(bigFiles[bname].reader, path);
+							byte[] data = await bundles[bname].GetFile(this, bigFiles[bname].reader, path);
 							if (data != null) return;
 						}
 					}
 					// Loop 3: load new bundles until you find the file
 					foreach (var bname in bnames) {
 						if (!bundles.ContainsKey(bname)) {
-							string fullbname = gameDataBinFolder + bname + "_" + Settings.PlatformString + ".ipk";
+							string fullbname = BasePath + bname + "_" + Settings.PlatformString + ".ipk";
 							await FileSystem.PrepareBigFile(fullbname, 0);
 							if (!FileSystem.FileExists(fullbname)) continue;
 							bigFiles[bname] = new BinaryBigFile(this, bname, FileSystem.GetFileReadStream(fullbname));
@@ -149,29 +294,28 @@ namespace UbiArt {
 							await bundles[bname].SerializeAsync(bigFiles[bname].serializer, bname);
 						}
 						if (bundles.ContainsKey(bname)) {
-							byte[] data = await bundles[bname].GetFile(bigFiles[bname].reader, path);
+							byte[] data = await bundles[bname].GetFile(this, bigFiles[bname].reader, path);
 							if (data != null) return;
 						}
 					}
 				}
 			} else {
-				await FileSystem.PrepareFile(gameDataBinFolder + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+				await FileSystem.PrepareFile(BasePath + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
 			}
 		}
 
 		public async UniTask LoadInit() {
-			if (!gameDataBinFolder.EndsWith("/")) gameDataBinFolder += "/";
 			try {
 
 				Path pAtlas = new Path("", "atlascontainer.ckd");
 				Load(pAtlas, (CSerializerObject s) => {
 					uvAtlasManager = s.SerializeObject<UVAtlasManager>(uvAtlasManager);
-					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+					SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 				});
 				Path pLoc = new Path("enginedata/localisation/", "localisation.loc8") { specialUncooked = true };
 				Load(pLoc, (CSerializerObject s) => {
 					localisation = s.SerializeObject<Localisation.Localisation_Template>(localisation);
-					print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+					SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 
 				});
 
@@ -199,7 +343,6 @@ namespace UbiArt {
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
 					Path p = new Path(pathFolder, pathFile);
 					Load(p, (CSerializerObject s) => {
-						s.log = logEnabled;
 						mainScene = s.SerializeObject<ContainerFile<ITF.Scene>>(mainScene);
 						isc[p.stringID] = mainScene;
 						Settings.isCatchThemAll = false;
@@ -259,7 +402,7 @@ namespace UbiArt {
 					kv.Value.Dispose();
 				}
 				files.Clear();
-				WriteLog();
+				Dispose();
 			}
 		}
 
@@ -303,14 +446,6 @@ namespace UbiArt {
 			}
 		}
 
-		private void WriteLog() {
-			if (logEnabled && logFile != null && logFile.Trim() != "") {
-				using (StreamWriter writer = new StreamWriter(logFile)) {
-					writer.WriteLine(log.ToString());
-				}
-			}
-		}
-
 		public void Load(Path path, SerializeAction action) {
 			if (path == null || path.IsNull) return;
 			if (files.ContainsKey(path.stringID)) {
@@ -341,7 +476,6 @@ namespace UbiArt {
 					if (l.act.ContainsKey(p.stringID)) {
 						a = l.act[p.stringID];
 					} else {
-						extS.log = l.logEnabled;
 						a = extS.SerializeObject<ContainerFile<ITF.Actor>>(a);
 						l.act[p.stringID] = a;
 					}
@@ -375,32 +509,29 @@ namespace UbiArt {
 				if (isg.ContainsKey(pGeneric.stringID)) {
 					curIsg = isg[pGeneric.stringID];
 				} else {
-					s.log = logEnabled;
 					curIsg = s.SerializeObject<GenericFile<CSerializable>>(curIsg);
 					isg[pGeneric.stringID] = curIsg;
 				}
 				onResult(curIsg);
-				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 			});
 		}
 		public void LoadSaveFile(string path, Action<RO2_SaveData> onResult) {
 			Path pGeneric = new Path(path) { specialUncooked = true };
 			Load(pGeneric, (CSerializerObject s) => {
 				RO2_SaveData saveData = null;
-				s.log = logEnabled;
 				saveData = s.SerializeObject<RO2_SaveData>(saveData);
 				onResult?.Invoke(saveData);
-				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 			});
 		}
 		public void LoadSaveFileOrigins(string path, Action<Ray_SaveData> onResult) {
 			Path pGeneric = new Path(path) { specialUncooked = true };
 			Load(pGeneric, (CSerializerObject s) => {
 				Ray_SaveData saveData = null;
-				s.log = logEnabled;
 				saveData = s.SerializeObject<Ray_SaveData>(saveData);
 				onResult?.Invoke(saveData);
-				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
+				SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 			});
 		}
 
@@ -435,13 +566,6 @@ namespace UbiArt {
 			// Write serialized data to file
 			Util.ByteArrayToFile(path, serializedData);
 			TimeController.StopStopwatch();
-		}
-
-		// Defining it this way, clicking the print will go straight to the code you want
-		public Action<object> print = MonoBehaviour.print;
-		public void Log(object obj) {
-			if(logEnabled)
-				log.AppendLine(obj != null ? obj.ToString() : "");
 		}
 
 		public FileWithPointers GetFileByReader(Reader reader) {

@@ -36,8 +36,8 @@ namespace UbiArt.ITF {
 					f.SetValue(this, tex);
 					tex.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
 					l.tex[path.stringID] = tex;
-					if (extS.Position != extS.Length) {
-						l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+					if (extS.CurrentPointer != extS.Length) {
+						l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 					}
 				}
 			});

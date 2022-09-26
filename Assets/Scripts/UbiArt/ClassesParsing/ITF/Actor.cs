@@ -37,7 +37,6 @@ namespace UbiArt.ITF {
 					if (l.tpl.ContainsKey(LUA.stringID)) {
 						template = l.tpl[LUA.stringID];
 					} else {
-						extS.log = l.logEnabled;
 						template = extS.SerializeObject<GenericFile<Actor_Template>>(template);
 						l.tpl[LUA.stringID] = template;
 					}

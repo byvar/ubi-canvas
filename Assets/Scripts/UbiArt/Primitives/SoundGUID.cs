@@ -10,7 +10,7 @@ namespace UbiArt {
 		public uint id;
 
 		public void Serialize(CSerializerObject s, string name) {
-			Debug.LogError(s.Position + ": Figure out SoundGUID format");
+			Debug.LogError(s.CurrentPointer + ": Figure out SoundGUID format");
 			id = s.Serialize<uint>(id);
 		}
 

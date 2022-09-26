@@ -31,7 +31,7 @@ public class UnityWindowActor : UnityWindow {
 				}
 				rect = EditorGUI.PrefixLabel(rect, new GUIContent("Actor file"));
 				if (EditorGUI.DropdownButton(rect, new GUIContent(buttonString), FocusType.Passive)) {
-					string directory = (Controller.MainContext.gameDataBinFolder + c.Settings.ITFDirectory).Replace(System.IO.Path.DirectorySeparatorChar, '/');
+					string directory = (Controller.MainContext.BasePath + c.Settings.ITFDirectory).Replace(System.IO.Path.DirectorySeparatorChar, '/');
 					if (!directory.EndsWith("/")) directory += "/";
 					while (directory.Contains("//")) directory = directory.Replace("//", "/");
 

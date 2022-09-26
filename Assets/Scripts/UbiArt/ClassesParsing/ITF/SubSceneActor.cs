@@ -26,7 +26,6 @@ namespace UbiArt.ITF {
 					if (l.isc.ContainsKey(RELATIVEPATH.stringID)) {
 						sceneFile = l.isc[RELATIVEPATH.stringID];
 					} else {
-						extS.log = l.logEnabled;
 						sceneFile = extS.SerializeObject<ContainerFile<Scene>>(sceneFile);
 						l.isc[RELATIVEPATH.stringID] = sceneFile;
 					}

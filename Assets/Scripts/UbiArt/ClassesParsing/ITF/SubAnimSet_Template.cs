@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 										l.tex[path.stringID] = temp;
 										temp.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
 										resources[j] = temp;
-										l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+										l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 									}
 								});
 								break;
@@ -35,12 +35,11 @@ namespace UbiArt.ITF {
 									if (l.anm.ContainsKey(path.stringID)) {
 										resources[j] = l.anm[path.stringID];
 									} else {
-										extS.log = l.logEnabled;
 										AnimTrack temp = null;
 										temp = extS.SerializeObject<AnimTrack>(temp);
 										l.anm[path.stringID] = temp;
 										resources[j] = temp;
-										l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+										l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 									}
 								});
 								break;
@@ -49,12 +48,11 @@ namespace UbiArt.ITF {
 									if (l.skl.ContainsKey(path.stringID)) {
 										resources[j] = l.skl[path.stringID];
 									} else {
-										extS.log = l.logEnabled;
 										AnimSkeleton temp = null;
 										temp = extS.SerializeObject<AnimSkeleton>(temp);
 										l.skl[path.stringID] = temp;
 										resources[j] = temp;
-										l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+										l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 									}
 								});
 								break;
@@ -63,12 +61,11 @@ namespace UbiArt.ITF {
 									if (l.pbk.ContainsKey(path.stringID)) {
 										resources[j] = l.pbk[path.stringID];
 									} else {
-										extS.log = l.logEnabled;
 										AnimPatchBank temp = null;
 										temp = extS.SerializeObject<AnimPatchBank>(temp);
 										l.pbk[path.stringID] = temp;
 										resources[j] = temp;
-										l.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+										l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 									}
 								});
 								break;

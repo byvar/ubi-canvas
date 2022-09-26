@@ -85,10 +85,9 @@ namespace UbiArt.Animation {
 						if (c.skl.ContainsKey(skeleton.Item2.stringID)) {
 							skel = c.skl[skeleton.Item2.stringID];
 						} else {
-							extS.log = c.logEnabled;
 							skel = extS.SerializeObject<AnimSkeleton>(skel);
 							c.skl[skeleton.Item2.stringID] = skel;
-							c.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+							c.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 						}
 					});
 				}
@@ -105,10 +104,9 @@ namespace UbiArt.Animation {
 						if (c.skl.ContainsKey(p.stringID)) {
 							skel = c.skl[p.stringID];
 						} else {
-							extS.log = c.logEnabled;
 							skel = extS.SerializeObject<AnimSkeleton>(skel);
 							c.skl[p.stringID] = skel;
-							c.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+							c.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 						}
 					});
 				}
@@ -130,7 +128,7 @@ namespace UbiArt.Animation {
 					TextureCooked tex = texs[index];
 					tex.atlas = c.uvAtlasManager.GetAtlasIfExists(path);
 					c.tex[path.stringID] = tex;
-					c.print("Read:" + extS.Position + " - Length:" + extS.Length + " - " + (extS.Position == extS.Length ? "good!" : "bad!"));
+					c.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 				}
 			});
 		}

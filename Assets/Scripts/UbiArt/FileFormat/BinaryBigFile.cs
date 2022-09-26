@@ -10,7 +10,7 @@ namespace UbiArt.FileFormat {
 		Path path;
         long length;
 
-        public BinaryBigFile(Context context, string name, Path path) : this(context, name, FileSystem.GetFileReadStream((context.gameDataBinFolder + "/" + path.folder + path.filename))) {
+        public BinaryBigFile(Context context, string name, Path path) : this(context, name, FileSystem.GetFileReadStream((context.BasePath + "/" + path.folder + path.filename))) {
             this.path = path;
         }
 

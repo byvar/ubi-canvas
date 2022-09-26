@@ -10,41 +10,53 @@ namespace UbiArt {
     /// An extended version of the <see cref="BinaryReader"/> for reading binary data
     /// </summary>
     public class Reader : BinaryReader {
-        #region Constructors
-        public Reader(Stream stream, bool isLittleEndian = true, bool leaveOpen = false)
-            : base(stream, new UTF8Encoding(), leaveOpen) {
-            IsLittleEndian = isLittleEndian;
-        }
-        #endregion
+		#region Constructors
+		public Reader(Stream stream, bool isLittleEndian = true, bool leaveOpen = false)
+			// Wrap the stream to be read in a StreamWrapper so that we can easily process the bytes which get read
+			// The encoding passed in to the base ctor is irrelevant since we have re-implemented the string reading
+			: base(new StreamWrapper(stream), new UTF8Encoding(), leaveOpen) {
+			IsLittleEndian = isLittleEndian;
+		}
+		#endregion
 
-        #region Protected Properties
+		#region Protected Properties
 
-        /// <summary>
-        /// A common buffer to use for reading value types. This is created once to avoid allocating a new
-        /// byte array on each read call. The length is set to 8 due to 64-bit values currently being the largest supported.
-        /// </summary>
-        protected byte[] ValueBuffer { get; } = new byte[8];
+		/// <summary>
+		/// A common buffer to use for reading value types. This is created once to avoid allocating a new
+		/// byte array on each read call. The length is set to 8 due to 64-bit values currently being the largest supported.
+		/// </summary>
+		protected byte[] ValueBuffer { get; } = new byte[8];
 
         protected bool RequiresByteReversing => IsLittleEndian != BitConverter.IsLittleEndian;
 
         protected uint BytesSinceAlignStart { get; set; }
         protected bool AutoAlignOn { get; set; }
 
-        #endregion
+		protected IXORCalculator XORCalculator {
+			get => BaseStream.XORCalculator;
+			set => BaseStream.XORCalculator = value;
+		}
+		protected IChecksumCalculator ChecksumCalculator {
+			get => BaseStream.ChecksumCalculator;
+			set => BaseStream.ChecksumCalculator = value;
+		}
 
-        #region Public Properties
+		#endregion
 
-        public bool IsLittleEndian { get; set; }
+		#region Public Properties
 
-        #endregion
+		public bool IsLittleEndian { get; set; }
+		public new StreamWrapper BaseStream => (StreamWrapper)base.BaseStream;
 
-        #region Protected Methods
+		#endregion
 
-        /// <summary>
-        /// Reads the specified number of bytes to <see cref="ValueBuffer"/> and reverses them if needed.
-        /// </summary>
-        /// <param name="count">The number of bytes to read</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+		#region Protected Methods
+
+		/// <summary>
+		/// Reads the specified number of bytes to <see cref="ValueBuffer"/> and reverses them if needed.
+		/// </summary>
+		/// <param name="count">The number of bytes to read</param>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void ReadToValueBuffer(int count) {
             ReadBytes(ValueBuffer, 0, count);
 
@@ -222,5 +234,24 @@ namespace UbiArt {
             }
         }
 		#endregion
-    }
+
+		#region XOR & Checksum
+
+		public void BeginXOR(IXORCalculator xorCalculator) => XORCalculator = xorCalculator;
+		public void EndXOR() => XORCalculator = null;
+		public IXORCalculator GetXORCalculator() => XORCalculator;
+		public void BeginCalculateChecksum(IChecksumCalculator checksumCalculator) => ChecksumCalculator = checksumCalculator;
+		public IChecksumCalculator PauseCalculateChecksum() {
+			IChecksumCalculator c = ChecksumCalculator;
+			ChecksumCalculator = null;
+			return c;
+		}
+		public T EndCalculateChecksum<T>() {
+			IChecksumCalculator c = ChecksumCalculator;
+			ChecksumCalculator = null;
+			return ((IChecksumCalculator<T>)c).ChecksumValue;
+		}
+
+		#endregion
+	}
 }

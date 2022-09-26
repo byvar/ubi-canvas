@@ -28,7 +28,7 @@ namespace UbiArt {
 					&& !(s is CSerializerObjectTagBinary)) {
 					sizeOf = s.Serialize<uint>(sizeOf, name: "sizeof");
 				}
-				Pointer pos = s.Position;
+				Pointer pos = s.CurrentPointer;
 				if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
 					className = s.SerializeObject<StringID>(className, name: "NAME");
 				} else {
@@ -46,18 +46,18 @@ namespace UbiArt {
 						Type type = ObjectFactory.classes[className.stringID];
 						if (type.ContainsGenericParameters) {
 							if (!typeof(T).IsGenericType) {
-								Debug.LogError(s.Position + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
-								throw new Exception(s.Position + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
+								Debug.LogError(s.CurrentPointer + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
+								throw new Exception(s.CurrentPointer + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
 							}
 							type = type.MakeGenericType(typeof(T).GetGenericArguments());
 						}
 						obj = s.SerializeGeneric<T>(obj, type);
 					} else {
 						Debug.LogError("CRC " + className.stringID.ToString("X8")
-							+ " found at " + s.Position
+							+ " found at " + s.CurrentPointer
 							+ " while reading container of type " + typeof(T) + " is not yet supported!");
 						throw new NotImplementedException("CRC " + className.stringID.ToString("X8")
-							+ " found at position " + s.Position
+							+ " found at position " + s.CurrentPointer
 							+ " while reading container of type " + typeof(T) + " is not yet supported!");
 					}
 				}
@@ -66,9 +66,9 @@ namespace UbiArt {
 				obj = s.SerializeGeneric<T>(obj, type);
 			}
 			if (s.Length != null) {
-				if (s.Position != s.Length) {
-					throw new Exception("File reading check failed. Position:" + s.Position + " - Length:" + s.Length);
-				} else if (s.Position.file != null) {
+				if (s.CurrentPointer != s.Length) {
+					throw new Exception("File reading check failed. Position:" + s.CurrentPointer + " - Length:" + s.Length);
+				} else if (s.CurrentPointer.file != null) {
 					//MapLoader.Loader.print("Finished reading file: " + s.Position.file.name);
 				}
 			}

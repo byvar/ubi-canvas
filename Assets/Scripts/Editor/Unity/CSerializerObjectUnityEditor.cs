@@ -31,7 +31,7 @@ namespace UbiArt {
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
 
-		public override Pointer Position => new Pointer(0, null);
+		public override Pointer CurrentPointer => new Pointer(0, null);
 		public override Pointer Length => new Pointer(0, null);
 		public override void ResetPosition() {
 		}
@@ -287,5 +287,6 @@ namespace UbiArt {
 			return obj;
 		}
 
+		public override void Log(string logString, params object[] args) { }
 	}
 }
