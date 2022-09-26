@@ -119,7 +119,7 @@ namespace UbiArt {
 				}
 				if (entered) reader.BaseStream.Position = endPos.Pop();
 				DecreaseLevel();
-				AddToStringCache(obj);
+				Context.AddToStringCache(obj);
 			}
 			return obj;
 		}
@@ -136,7 +136,7 @@ namespace UbiArt {
 			if (typeCode == TypeCode.Object) {
 				if (type == typeof(CString)) {
 					CString s = new CString(reader.ReadString16());
-					AddToStringCache(s);
+					Context.AddToStringCache(s);
 					return s;
 				} else if (type == typeof(byte[])) {
 					int numBytes = reader.ReadInt32();
@@ -208,7 +208,7 @@ namespace UbiArt {
 					return reader.ReadDouble();
 				case TypeCode.String:
 					string s = reader.ReadString();
-					AddToStringCache(s);
+					Context.AddToStringCache(s);
 					return s;
 				case TypeCode.Char:
 					return reader.ReadChar();
@@ -238,7 +238,7 @@ namespace UbiArt {
 						break;
 					case TypeCode.Byte: obj = (object)reader.ReadByte(); break;
 					case TypeCode.Char: obj = (object)reader.ReadChar(); break;
-					case TypeCode.String: obj = (object)reader.ReadString(); AddToStringCache(obj); break;
+					case TypeCode.String: obj = (object)reader.ReadString(); Context.AddToStringCache(obj); break;
 					case TypeCode.Single: obj = (object)reader.ReadSingle(); break;
 					case TypeCode.Double: obj = (object)reader.ReadDouble(); break;
 					case TypeCode.UInt16: obj = (object)reader.ReadUInt16(); break;
@@ -251,7 +251,7 @@ namespace UbiArt {
 				}
 			} else if (type == typeof(CString)) {
 				obj = new CString(reader.ReadString16());
-				AddToStringCache(obj);
+				Context.AddToStringCache(obj);
 			} else if (type == typeof(byte[])) {
 				int numBytes = reader.ReadInt32();
 				obj = reader.ReadBytes(numBytes);
@@ -283,7 +283,7 @@ namespace UbiArt {
 					}
 					if (entered) reader.BaseStream.Position = endPos.Pop();
 					DecreaseLevel();
-					AddToStringCache(obj);
+					Context.AddToStringCache(obj);
 				}
 			}
 		}

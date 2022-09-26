@@ -186,38 +186,6 @@ namespace UbiArt {
 			}
 		}
 
-		protected void AddToStringCache(object obj) {
-			if (obj != null) {
-				Type type = obj.GetType();
-				if (type == typeof(string)) {
-					string str = ((string)obj);
-					if (!string.IsNullOrEmpty(str)) {
-						Context.stringCache[new StringID(str)] = str;
-					}
-				} else if (type == typeof(CString)) {
-					string str = ((CString)obj).str;
-					if (!string.IsNullOrEmpty(str)) {
-						Context.stringCache[new StringID(str)] = str;
-					}
-				} else if (type == typeof(BasicString)) {
-					string str = ((BasicString)obj).str;
-					if (!string.IsNullOrEmpty(str)) {
-						Context.stringCache[new StringID(str)] = str;
-					}
-				} else if (type == typeof(Path)) {
-					Path p = ((Path)obj);
-					if (!p.IsNull) {
-						Context.stringCache[p.stringID] = p.FullPath;
-					}
-				} else if (type == typeof(PathRef)) {
-					PathRef p = ((PathRef)obj);
-					if (!p.IsNull) {
-						Context.stringCache[p.stringID] = p.FullPath;
-					}
-				}
-			}
-		}
-
 		[Flags]
 		public enum Flags {
 			None = 0,

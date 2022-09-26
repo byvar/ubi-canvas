@@ -143,10 +143,44 @@ namespace UbiArt {
 		#endregion
 
 		#region String Cache
+		public Dictionary<StringID, string> StringCache = new Dictionary<StringID, string>();
+
 		protected void InitStringCache() {
 			// Init String Cache
 			foreach (uint sid in ObjectFactory.classes.Keys) {
-				stringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
+				StringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
+			}
+		}
+
+		public void AddToStringCache(object obj) {
+			if (obj != null) {
+				Type type = obj.GetType();
+				if (type == typeof(string)) {
+					string str = ((string)obj);
+					if (!string.IsNullOrEmpty(str)) {
+						StringCache[new StringID(str)] = str;
+					}
+				} else if (type == typeof(CString)) {
+					string str = ((CString)obj).str;
+					if (!string.IsNullOrEmpty(str)) {
+						StringCache[new StringID(str)] = str;
+					}
+				} else if (type == typeof(BasicString)) {
+					string str = ((BasicString)obj).str;
+					if (!string.IsNullOrEmpty(str)) {
+						StringCache[new StringID(str)] = str;
+					}
+				} else if (type == typeof(Path)) {
+					Path p = ((Path)obj);
+					if (!p.IsNull) {
+						StringCache[p.stringID] = p.FullPath;
+					}
+				} else if (type == typeof(PathRef)) {
+					PathRef p = ((PathRef)obj);
+					if (!p.IsNull) {
+						StringCache[p.stringID] = p.FullPath;
+					}
+				}
 			}
 		}
 		#endregion
@@ -231,7 +265,6 @@ namespace UbiArt {
 		public Dictionary<StringID, Animation.AnimPatchBank> pbk = new Dictionary<StringID, Animation.AnimPatchBank>();
 		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
 		public Dictionary<StringID, Path> paths = new Dictionary<StringID, Path>();
-		public Dictionary<StringID, string> stringCache = new Dictionary<StringID, string>();
 
 		public ContainerFile<ITF.Scene> mainScene;
 
