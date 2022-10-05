@@ -4,48 +4,53 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using UbiArt.FileFormat;
 using UnityEngine;
 
 namespace UbiArt {
 	public class CSerializerObjectBinaryWriter : CSerializerObject {
-		public Writer writer;
 		
 		public CSerializerObjectBinaryWriter(Context context, Writer writer) : base(context) {
-			this.writer = writer;
+			this.Writer = writer;
+			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
+		}
+		public CSerializerObjectBinaryWriter(Context context, BinaryFile file) : base(context) {
+			File = file;
+			Writer = File.CreateWriter();
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
 
-		public override Pointer CurrentPointer => Pointer.Current(writer);
-		public override Pointer Length => new Pointer((uint)writer.BaseStream.Length, Pointer.Current(writer).file);
+		public BinaryFile File { get; protected set; }
+		public Writer Writer { get; protected set; }
+		public override Pointer CurrentPointer => new Pointer(Writer.BaseStream.Position, File);
+		public override Pointer Length => new Pointer(Writer.BaseStream.Length, File);
 
-		public override void ResetPosition() {
-			if (!Disposed) {
-				writer.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
-			}
+		public override void Goto(long position) {
+			if (!Disposed) Writer.BaseStream.Position = position;
 		}
 
 		public override void Serialize(ref object obj, Type type, string name = null) {
 			if (Type.GetTypeCode(type) != TypeCode.Object) {
 				switch (Type.GetTypeCode(type)) {
-					case TypeCode.Boolean: writer.Write((bool)obj); break;
-					case TypeCode.Byte: writer.Write((byte)obj); break;
-					case TypeCode.Char: writer.Write((char)obj); break;
-					case TypeCode.String: writer.Write((string)obj); break;
-					case TypeCode.Single: writer.Write((float)obj); break;
-					case TypeCode.Double: writer.Write((double)obj); break;
-					case TypeCode.UInt16: writer.Write((ushort)obj); break;
-					case TypeCode.UInt32: writer.Write((uint)obj); break;
-					case TypeCode.UInt64: writer.Write((ulong)obj); break;
-					case TypeCode.Int16: writer.Write((short)obj); break;
-					case TypeCode.Int32: writer.Write((int)obj); break;
-					case TypeCode.Int64: writer.Write((long)obj); break;
+					case TypeCode.Boolean: Writer.Write((bool)obj); break;
+					case TypeCode.Byte: Writer.Write((byte)obj); break;
+					case TypeCode.Char: Writer.Write((char)obj); break;
+					case TypeCode.String: Writer.Write((string)obj); break;
+					case TypeCode.Single: Writer.Write((float)obj); break;
+					case TypeCode.Double: Writer.Write((double)obj); break;
+					case TypeCode.UInt16: Writer.Write((ushort)obj); break;
+					case TypeCode.UInt32: Writer.Write((uint)obj); break;
+					case TypeCode.UInt64: Writer.Write((ulong)obj); break;
+					case TypeCode.Int16: Writer.Write((short)obj); break;
+					case TypeCode.Int32: Writer.Write((int)obj); break;
+					case TypeCode.Int64: Writer.Write((long)obj); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
 			} else if (type == typeof(CString)) {
-				writer.Write16(obj != null ? ((CString)obj).str : null);
+				Writer.Write16(obj != null ? ((CString)obj).str : null);
 			} else if (type == typeof(byte[])) {
-				writer.Write(((byte[])obj).Length);
-				writer.Write((byte[])obj);
+				Writer.Write(((byte[])obj).Length);
+				Writer.Write((byte[])obj);
 			} else {
 				if (obj == null) {
 					var ctor = type.GetConstructor(Type.EmptyTypes);
@@ -72,10 +77,10 @@ namespace UbiArt {
 
 			if (typeCode == TypeCode.Object) {
 				if (type == typeof(CString)) {
-					writer.Write16(obj != null ? ((CString)obj).str : null);
+					Writer.Write16(obj != null ? ((CString)obj).str : null);
 				} else if (type == typeof(byte[])) {
-					writer.Write(((byte[])obj).Length);
-					writer.Write((byte[])obj);
+					Writer.Write(((byte[])obj).Length);
+					Writer.Write((byte[])obj);
 				} else {
 					throw new Exception(CurrentPointer + ": Field with name " + name + " is not a valid primitive type");
 				}
@@ -92,27 +97,27 @@ namespace UbiArt {
 					}
 					if (asByte) {
 						if ((bool)obj) {
-							writer.Write((byte)1);
+							Writer.Write((byte)1);
 						} else {
-							writer.Write((byte)0);
+							Writer.Write((byte)0);
 						}
 					} else {
-						writer.Write((bool)obj);
+						Writer.Write((bool)obj);
 					}
 					break;
 
-				case TypeCode.SByte: writer.Write((sbyte)obj); break;
-				case TypeCode.Byte: writer.Write((byte)obj); break;
-				case TypeCode.Char: writer.Write((char)obj); break;
-				case TypeCode.String: writer.Write((string)obj); break;
-				case TypeCode.Single: writer.Write((float)obj); break;
-				case TypeCode.Double: writer.Write((double)obj); break;
-				case TypeCode.UInt16: writer.Write((ushort)obj); break;
-				case TypeCode.UInt32: writer.Write((uint)obj); break;
-				case TypeCode.UInt64: writer.Write((ulong)obj); break;
-				case TypeCode.Int16: writer.Write((short)obj); break;
-				case TypeCode.Int32: writer.Write((int)obj); break;
-				case TypeCode.Int64: writer.Write((long)obj); break;
+				case TypeCode.SByte: Writer.Write((sbyte)obj); break;
+				case TypeCode.Byte: Writer.Write((byte)obj); break;
+				case TypeCode.Char: Writer.Write((char)obj); break;
+				case TypeCode.String: Writer.Write((string)obj); break;
+				case TypeCode.Single: Writer.Write((float)obj); break;
+				case TypeCode.Double: Writer.Write((double)obj); break;
+				case TypeCode.UInt16: Writer.Write((ushort)obj); break;
+				case TypeCode.UInt32: Writer.Write((uint)obj); break;
+				case TypeCode.UInt64: Writer.Write((ulong)obj); break;
+				case TypeCode.Int16: Writer.Write((short)obj); break;
+				case TypeCode.Int32: Writer.Write((int)obj); break;
+				case TypeCode.Int64: Writer.Write((long)obj); break;
 				default: throw new NotSupportedException($"The specified generic type ('{name}') can not be written from the writer");
 			}
 			return obj;
@@ -154,8 +159,8 @@ namespace UbiArt {
 			return obj;
 		}
 
-		public override byte[] SerializeBytes(byte[] obj, int numBytes) {
-			writer.Write(obj);
+		public override byte[] SerializeBytes(byte[] obj, long count) {
+			Writer.Write(obj);
 			return obj;
 		}
 

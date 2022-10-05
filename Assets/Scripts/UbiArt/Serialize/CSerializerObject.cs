@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UbiArt {
-	public abstract class CSerializerObject {
+	public abstract class CSerializerObject : IDisposable {
 		public SerializeFlags flags;
 		public Flags flagsOwn;
 		protected int indent;
@@ -57,11 +57,12 @@ namespace UbiArt {
 			return SerializeObject<T>(obj, onPreSerialize: onPreSerialize, name: name, options: options);
 		}
 
+		public virtual void Goto(long position) { }
 		public virtual async UniTask FillCacheForRead(long byteCount) { await UniTask.CompletedTask; }
 
 		public abstract T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null);
 		public abstract T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null);
-		public abstract byte[] SerializeBytes(byte[] obj, int numBytes);
+		public abstract byte[] SerializeBytes(byte[] obj, long count);
 		public abstract uint SerializeFileSize(uint obj);
 		public abstract Pointer CurrentPointer {
 			get;
@@ -69,7 +70,7 @@ namespace UbiArt {
 		public abstract Pointer Length {
 			get;
 		}
-		public abstract void ResetPosition();
+		public virtual void ResetPosition() => Goto(0);
 		public void EnterEmbed() {
 			embedded = true;
 		}
@@ -184,6 +185,10 @@ namespace UbiArt {
 			} else if (type == typeof(PathRef) && fieldType == typeof(Path)) {
 				obj = (Path)(PathRef)obj;
 			}
+		}
+
+		public virtual void Dispose() {
+			Disposed = true;
 		}
 
 		[Flags]

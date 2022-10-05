@@ -27,8 +27,8 @@ namespace UbiArt {
 				if (s.Length != null) {
 					if (s.CurrentPointer != s.Length) {
 						throw new Exception("File reading check failed. Position:" + s.CurrentPointer + " - Length:" + s.Length);
-					} else if (s.CurrentPointer.file != null) {
-						s.Context.SystemLog?.LogInfo($"Finished reading file: {s.CurrentPointer.file.name}");
+					} else if (s.CurrentPointer.File != null) {
+						s.Context.SystemLog?.LogInfo($"Finished reading file: {s.CurrentPointer.File.DisplayName}");
 					}
 				}
 			}

@@ -43,16 +43,16 @@ namespace UbiArt.Bundle {
 			return null;
 		}
 
-		public async UniTask<byte[]> GetFile(Context context, Reader reader, Path path) {
+		public async UniTask<byte[]> GetFile(Context context, CSerializerObject s, Path path) {
 			if (readFileData.ContainsKey(path)) return readFileData[path];
 			if (packMaster != null) {
 				FileHeaderRuntime h = packMaster.files.FirstOrDefault(f => f.Item2 == path)?.Item1;
 				if (h != null) {
 					ulong off = h.offsets[0];
 					uint size = h.zSize != 0 ? h.zSize : h.size;
-					reader.BaseStream.Position = (long)off + bootHeader.baseOffset;
-					await context.FileManager?.FillCacheForReadAsync(size, reader);
-					byte[] fileBytes = reader.ReadBytes((int)size);
+					s.Goto((long)off + bootHeader.baseOffset);
+					await s.FillCacheForRead(size);
+					byte[] fileBytes = s.SerializeBytes(default, size);
 					if (fileBytes != null) {
 						if (h.zSize != 0) {
 							byte[] decompressedData = new byte[(int)h.size];

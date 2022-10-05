@@ -33,8 +33,6 @@ namespace UbiArt {
 
 		public override Pointer CurrentPointer => new Pointer(0, null);
 		public override Pointer Length => new Pointer(0, null);
-		public override void ResetPosition() {
-		}
 
 		public override void Serialize(ref object obj, Type type, string name = null) {
 			if (type.IsEnum) {
@@ -121,7 +119,7 @@ namespace UbiArt {
 			return (T)obj2;
 		}
 
-		public override byte[] SerializeBytes(byte[] obj, int numBytes) {
+		public override byte[] SerializeBytes(byte[] obj, long count) {
 			//obj = reader.ReadBytes(numBytes);
 			return obj;
 		}

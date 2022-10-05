@@ -5,28 +5,31 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UbiArt.CRC;
+using UbiArt.FileFormat;
 using UnityEngine;
 
 namespace UbiArt {
 	public class CSerializerObjectTagBinary : CSerializerObject {
-		public Reader reader;
 		public static Dictionary<UAFInfo, uint> fieldCRC = new Dictionary<UAFInfo, uint>();
 		protected Stack<long> endPos = new Stack<long>();
 		protected bool fakeSerializeMode = false;
 
-
 		public CSerializerObjectTagBinary(Context context, Reader reader) : base(context) {
-			this.reader = reader;
+			Reader = reader;
+			flagsOwn = Flags.Flags0 | Flags.Flags7; // 0x81
+		}
+		public CSerializerObjectTagBinary(Context context, BinaryFile file) : base(context) {
+			Reader = file.CreateReader();
 			flagsOwn = Flags.Flags0 | Flags.Flags7; // 0x81
 		}
 
-		public override Pointer CurrentPointer => Pointer.Current(reader);
-		public override Pointer Length => new Pointer((uint)reader.BaseStream.Length, Pointer.Current(reader).file);
+		public BinaryFile File { get; protected set; }
+		public Reader Reader { get; protected set; }
+		public override Pointer CurrentPointer => new Pointer(Reader.BaseStream.Position, File);
+		public override Pointer Length => new Pointer(Reader.BaseStream.Length, File);
 
-		public override void ResetPosition() {
-			if (!Disposed) {
-				reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
-			}
+		public override void Goto(long position) {
+			if (!Disposed) Reader.BaseStream.Position = position;
 		}
 
 
@@ -88,16 +91,16 @@ namespace UbiArt {
 				return FakeSerializeObject<T>(obj, name, objType);
 			}
 			if (objType == typeof(Vec2d)) {
-				obj = (T)(object)new Vec2d(reader.ReadSingle(), reader.ReadSingle());
+				obj = (T)(object)new Vec2d(Reader.ReadSingle(), Reader.ReadSingle());
 			} else if (objType == typeof(Vec3d)) {
-				obj = (T)(object)new Vec3d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+				obj = (T)(object)new Vec3d(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
 			} else if (objType == typeof(Vec4d)) {
-				obj = (T)(object)new Vec4d(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+				obj = (T)(object)new Vec4d(Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle(), Reader.ReadSingle());
 			} else if (objType == typeof(Color)) {
-				float b = reader.ReadSingle();
-				float g = reader.ReadSingle();
-				float r = reader.ReadSingle();
-				float a = reader.ReadSingle();
+				float b = Reader.ReadSingle();
+				float g = Reader.ReadSingle();
+				float r = Reader.ReadSingle();
+				float a = Reader.ReadSingle();
 				obj = (T)(object)new Color(r,g,b,a);
 			} else {
 				if (obj == null) obj = new T();
@@ -114,10 +117,10 @@ namespace UbiArt {
 					entered = ReadTag(typeName, 200);
 				}
 				obj.Serialize(this, name);
-				if (IsSerializerLogEnabled && entered && endPos.Peek() != reader.BaseStream.Position) {
+				if (IsSerializerLogEnabled && entered && endPos.Peek() != Reader.BaseStream.Position) {
 					Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 				}
-				if (entered) reader.BaseStream.Position = endPos.Pop();
+				if (entered) Reader.BaseStream.Position = endPos.Pop();
 				DecreaseLevel();
 				Context.AddToStringCache(obj);
 			}
@@ -135,12 +138,12 @@ namespace UbiArt {
 
 			if (typeCode == TypeCode.Object) {
 				if (type == typeof(CString)) {
-					CString s = new CString(reader.ReadString16());
+					CString s = new CString(Reader.ReadString16());
 					Context.AddToStringCache(s);
 					return s;
 				} else if (type == typeof(byte[])) {
-					int numBytes = reader.ReadInt32();
-					return reader.ReadBytes(numBytes);
+					int numBytes = Reader.ReadInt32();
+					return Reader.ReadBytes(numBytes);
 				} else {
 					throw new Exception(CurrentPointer + ": Field with name " + name + " is not a valid primitive type");
 				}
@@ -156,7 +159,7 @@ namespace UbiArt {
 						asByte = HasFlags(SerializeFlags.Flags1);
 					}
 					if (asByte) {
-						uint tmp = reader.ReadByte();
+						uint tmp = Reader.ReadByte();
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
@@ -166,7 +169,7 @@ namespace UbiArt {
 							return false;
 						}
 					} else {
-						uint tmp = reader.ReadUInt32();
+						uint tmp = Reader.ReadUInt32();
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
@@ -178,40 +181,40 @@ namespace UbiArt {
 					}
 
 				case TypeCode.SByte:
-					return reader.ReadSByte();
+					return Reader.ReadSByte();
 
 				case TypeCode.Byte:
-					return reader.ReadByte();
+					return Reader.ReadByte();
 
 				case TypeCode.Int16:
-					return reader.ReadInt16();
+					return Reader.ReadInt16();
 
 				case TypeCode.UInt16:
-					return reader.ReadUInt16();
+					return Reader.ReadUInt16();
 
 				case TypeCode.Int32:
-					return reader.ReadInt32();
+					return Reader.ReadInt32();
 
 				case TypeCode.UInt32:
-					return reader.ReadUInt32();
+					return Reader.ReadUInt32();
 
 				case TypeCode.Int64:
-					return reader.ReadInt64();
+					return Reader.ReadInt64();
 
 				case TypeCode.UInt64:
-					return reader.ReadUInt64();
+					return Reader.ReadUInt64();
 
 				case TypeCode.Single:
-					return reader.ReadSingle();
+					return Reader.ReadSingle();
 
 				case TypeCode.Double:
-					return reader.ReadDouble();
+					return Reader.ReadDouble();
 				case TypeCode.String:
-					string s = reader.ReadString();
+					string s = Reader.ReadString();
 					Context.AddToStringCache(s);
 					return s;
 				case TypeCode.Char:
-					return reader.ReadChar();
+					return Reader.ReadChar();
 				default:
 					throw new NotSupportedException($"The specified generic type ('{name}') can not be read from the reader");
 			}
@@ -225,7 +228,7 @@ namespace UbiArt {
 			if (Type.GetTypeCode(type) != TypeCode.Object) {
 				switch (Type.GetTypeCode(type)) {
 					case TypeCode.Boolean:
-						uint tmp = reader.ReadUInt32();
+						uint tmp = Reader.ReadUInt32();
 						if (tmp == 1) {
 							obj = true;
 						} else if (tmp != 0) {
@@ -236,25 +239,25 @@ namespace UbiArt {
 						}
 						//obj = (object)reader.ReadBoolean();
 						break;
-					case TypeCode.Byte: obj = (object)reader.ReadByte(); break;
-					case TypeCode.Char: obj = (object)reader.ReadChar(); break;
-					case TypeCode.String: obj = (object)reader.ReadString(); Context.AddToStringCache(obj); break;
-					case TypeCode.Single: obj = (object)reader.ReadSingle(); break;
-					case TypeCode.Double: obj = (object)reader.ReadDouble(); break;
-					case TypeCode.UInt16: obj = (object)reader.ReadUInt16(); break;
-					case TypeCode.UInt32: obj = (object)reader.ReadUInt32(); break;
-					case TypeCode.UInt64: obj = (object)reader.ReadUInt64(); break;
-					case TypeCode.Int16: obj = (object)reader.ReadInt16(); break;
-					case TypeCode.Int32: obj = (object)reader.ReadInt32(); break;
-					case TypeCode.Int64: obj = (object)reader.ReadInt64(); break;
+					case TypeCode.Byte: obj = (object)Reader.ReadByte(); break;
+					case TypeCode.Char: obj = (object)Reader.ReadChar(); break;
+					case TypeCode.String: obj = (object)Reader.ReadString(); Context.AddToStringCache(obj); break;
+					case TypeCode.Single: obj = (object)Reader.ReadSingle(); break;
+					case TypeCode.Double: obj = (object)Reader.ReadDouble(); break;
+					case TypeCode.UInt16: obj = (object)Reader.ReadUInt16(); break;
+					case TypeCode.UInt32: obj = (object)Reader.ReadUInt32(); break;
+					case TypeCode.UInt64: obj = (object)Reader.ReadUInt64(); break;
+					case TypeCode.Int16: obj = (object)Reader.ReadInt16(); break;
+					case TypeCode.Int32: obj = (object)Reader.ReadInt32(); break;
+					case TypeCode.Int64: obj = (object)Reader.ReadInt64(); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
 			} else if (type == typeof(CString)) {
-				obj = new CString(reader.ReadString16());
+				obj = new CString(Reader.ReadString16());
 				Context.AddToStringCache(obj);
 			} else if (type == typeof(byte[])) {
-				int numBytes = reader.ReadInt32();
-				obj = reader.ReadBytes(numBytes);
+				int numBytes = Reader.ReadInt32();
+				obj = Reader.ReadBytes(numBytes);
 			} else {
 				if (obj == null) {
 					var ctor = type.GetConstructor(Type.EmptyTypes);
@@ -278,10 +281,10 @@ namespace UbiArt {
 						entered = ReadTag(typeName, 200);
 					}
 					((ICSerializable)obj).Serialize(this, name);
-					if (IsSerializerLogEnabled && entered && endPos.Peek() != reader.BaseStream.Position) {
+					if (IsSerializerLogEnabled && entered && endPos.Peek() != Reader.BaseStream.Position) {
 						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
-					if (entered) reader.BaseStream.Position = endPos.Pop();
+					if (entered) Reader.BaseStream.Position = endPos.Pop();
 					DecreaseLevel();
 					Context.AddToStringCache(obj);
 				}
@@ -335,7 +338,7 @@ namespace UbiArt {
 		}
 
 		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
-			long position = reader.BaseStream.Position;
+			long position = Reader.BaseStream.Position;
 			Type objType = type ?? f.FieldType;
 			if (endPos.Count > 0 && position >= endPos.Peek()) {
 				if (f.GetValue(containerObj) == null) {
@@ -360,10 +363,10 @@ namespace UbiArt {
 					if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
 					f.SetValue(containerObj, obj);
 
-					if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+					if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
 						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
-					reader.BaseStream.Position = endPos.Pop();
+					Reader.BaseStream.Position = endPos.Pop();
 					if (IsSerializerLogEnabled && !isBigObject) {
 						Context.SerializerLog.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {obj}");
 					}
@@ -401,7 +404,7 @@ namespace UbiArt {
 			if (log && index.HasValue && isBigObject) {
 				Context.Log(pos + ":" + new string(' ', (Indent + 1) * 2) + name + "[" + index.Value + "]:");
 			}*/
-			long position = reader.BaseStream.Position;
+			long position = Reader.BaseStream.Position;
 			Type objType = type ?? typeof(T);
 			if (endPos.Count > 0 && position >= endPos.Peek()) {
 				if (obj == null) {
@@ -428,10 +431,10 @@ namespace UbiArt {
 					obj = (T)obj2;
 
 
-					if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+					if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
 						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
-					reader.BaseStream.Position = endPos.Pop();
+					Reader.BaseStream.Position = endPos.Pop();
 					if (!fakeSerializeMode && IsSerializerLogEnabled && name != null && !isBigObject) {
 						Context.SerializerLog.Log($"{logPrefix}{name} - {obj}");
 					}
@@ -470,9 +473,9 @@ namespace UbiArt {
 			}*/
 		}
 
-		public override byte[] SerializeBytes(byte[] obj, int numBytes) {
+		public override byte[] SerializeBytes(byte[] obj, long count) {
 			if (fakeSerializeMode) return obj;
-			return reader.ReadBytes(numBytes);
+			return Reader.ReadBytes((int)count);
 		}
 
 		public override bool ArrayEntryStart(string name, int index) {
@@ -487,10 +490,10 @@ namespace UbiArt {
 		public override void ArrayEntryStop() {
 			base.ArrayEntryStop();
 
-			if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+			if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
 				Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 			}
-			reader.BaseStream.Position = endPos.Pop();
+			Reader.BaseStream.Position = endPos.Pop();
 		}
 
 		protected bool ReadTag(string name, uint type) {
@@ -499,8 +502,8 @@ namespace UbiArt {
 				name = name,
 				type = type
 			};
-			uint crc = reader.ReadUInt32();
-			uint size = reader.ReadUInt32();
+			uint crc = Reader.ReadUInt32();
+			uint size = Reader.ReadUInt32();
 			uint requiredCRC = 0;
 			if (fieldCRC.ContainsKey(info)) {
 				requiredCRC = fieldCRC[info];
@@ -510,11 +513,11 @@ namespace UbiArt {
 			}
 			if (crc == requiredCRC) {
 				//Context.Log((Position-8) + ":" + new string(' ', (Indent + 1) * 2) + "TAG: " + name + " (" + type + ")");
-				endPos.Push(reader.BaseStream.Position + size);
+				endPos.Push(Reader.BaseStream.Position + size);
 				return true;
 			} else {
 				//Context.Log((Position - 8) + ":" + new string(' ', (Indent + 1) * 2) + "Read tag failed: " + name + " (" + type + ")");
-				reader.BaseStream.Seek(-8, System.IO.SeekOrigin.Current);
+				Reader.BaseStream.Seek(-8, System.IO.SeekOrigin.Current);
 				return false;
 			}
 		}
@@ -533,7 +536,7 @@ namespace UbiArt {
 		}
 
 		public override uint SerializeFileSize(uint obj) {
-			return (uint)reader.BaseStream.Length;
+			return (uint)Reader.BaseStream.Length;
 		}
 
 		public override T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null) {
@@ -556,7 +559,7 @@ namespace UbiArt {
 		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {
 			//return SerializeGeneric<T>(obj, name: name, index: index);
 
-			long position = reader.BaseStream.Position;
+			long position = Reader.BaseStream.Position;
 			if (endPos.Count > 0 && position >= endPos.Peek()) {
 				if (obj == null) {
 					bool prevFakeSerializeMode = fakeSerializeMode;
@@ -571,10 +574,10 @@ namespace UbiArt {
 					var logPrefix = LogPrefix;
 					obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
 
-					if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+					if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
 						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
-					reader.BaseStream.Position = endPos.Pop();
+					Reader.BaseStream.Position = endPos.Pop();
 					if (!fakeSerializeMode && IsSerializerLogEnabled && name != null) {
 						Context.SerializerLog.Log($"{logPrefix}{name} - {obj}");
 					}
@@ -598,7 +601,7 @@ namespace UbiArt {
 
 		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
 			//return SerializeGeneric<T>(obj, name: name, index: index);
-			long position = reader.BaseStream.Position;
+			long position = Reader.BaseStream.Position;
 			Type objType = typeof(T);
 			if (endPos.Count > 0 && position >= endPos.Peek()) {
 				if (obj == null) {
@@ -623,10 +626,10 @@ namespace UbiArt {
 
 					obj = SerializeObjectFull<T>(default, name, objType);
 
-					if (IsSerializerLogEnabled && endPos.Peek() != reader.BaseStream.Position) {
+					if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
 						Context.SerializerLog.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
-					reader.BaseStream.Position = endPos.Pop();
+					Reader.BaseStream.Position = endPos.Pop();
 
 					if (!fakeSerializeMode && IsSerializerLogEnabled && !isBigObject && name != null) {
 						Context.SerializerLog.Log($"{logPrefix}({typeof(T)}) {name} - {obj}");

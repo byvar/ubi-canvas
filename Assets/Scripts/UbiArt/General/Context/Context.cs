@@ -9,6 +9,7 @@ using Cysharp.Threading.Tasks;
 using UbiArt.Bundle;
 using UbiArt.UV;
 using UbiCanvas.Helpers;
+using System.Linq;
 
 namespace UbiArt {
 	public class Context {
@@ -50,6 +51,7 @@ namespace UbiArt {
 
 		public string BasePath { get; }
 		public ISerializerLog SerializerLog { get; }
+		public List<UbiArtFile> Files { get; }
 
 		#endregion
 
@@ -120,7 +122,15 @@ namespace UbiArt {
             _ => '/',
         };
 
-        public virtual string GetAbsoluteFilePath(string relativePath) => BasePath + relativePath;
+		public Stream GetFileStream(string relativePath) {
+			Stream str = FileManager.GetFileReadStream(GetAbsoluteFilePath(NormalizePath(relativePath, false)));
+			return str;
+		}
+		public UbiArtFile GetFile(string relativePath) {
+			string path = NormalizePath(relativePath, false);
+			return Files.FirstOrDefault<UbiArtFile>(f => f.FilePath?.ToLower() == path?.ToLower() || f.Alias?.ToLower() == relativePath?.ToLower());
+		}
+		public virtual string GetAbsoluteFilePath(string relativePath) => BasePath + relativePath;
         public virtual string NormalizePath(string path, bool isDirectory)
         {
             // Get the path separator character
@@ -139,7 +149,34 @@ namespace UbiArt {
                 newPath += separatorChar;
             
             return newPath;
-        }
+		}
+		public T AddFile<T>(T file) where T : UbiArtFile {
+			if (Files.Any(x => x.FilePath == file.FilePath))
+				throw new ContextException($"A file with the path '{file.FilePath}' has already been added to the context");
+
+			Files.Add(file);
+
+			SystemLog?.LogTrace("Added file {0}", file.FilePath);
+
+			return file;
+		}
+		public void RemoveFile(string filePath) => RemoveFile(GetFile(filePath));
+		public void RemoveFile(UbiArtFile file) {
+			if (file is null)
+				return;
+
+			Files.Remove(file);
+			file.Dispose();
+
+			SystemLog?.LogTrace("Removed file {0}", file.FilePath);
+		}
+		public bool FileExists(UbiArtFile file) {
+			return Files.Contains(file);
+		}
+		public bool FileExists(string relativePath) {
+			UbiArtFile f = GetFile(relativePath);
+			return f != null;
+		}
 		#endregion
 
 		#region String Cache
@@ -226,8 +263,8 @@ namespace UbiArt {
 		public UV.UVAtlasManager uvAtlasManager;
 		public SceneConfig.SceneConfigManager sceneConfigManager;
 		public Localisation.Localisation_Template localisation;
-		public Dictionary<StringID, FileWithPointers> files = new Dictionary<StringID, FileWithPointers>();
-		public List<Tuple<string, FileWithPointers>> virtualFiles = new List<Tuple<string, FileWithPointers>>();
+		public Dictionary<StringID, UbiArtFile> files = new Dictionary<StringID, UbiArtFile>();
+		public List<Tuple<string, UbiArtFile>> virtualFiles = new List<Tuple<string, UbiArtFile>>();
 
 		public delegate void SerializeAction(CSerializerObject s);
 		public struct ObjectPlaceHolder {
@@ -278,7 +315,7 @@ namespace UbiArt {
 				}
 				return false;
 			} else {
-				return FileSystem.FileExists(BasePath + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+				return FileManager.FileExists(BasePath + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
 			}
 		}
 		public Stream GetGameFileStream(Path p, bool ckd) {
@@ -291,7 +328,7 @@ namespace UbiArt {
 				}
 				return null;
 			} else {
-				return FileSystem.GetFileReadStream(BasePath + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
+				return FileManager.GetFileReadStream(BasePath + cookedFolder + p.folder + p.filename + (ckd ? ".ckd" : ""));
 			}
 		}
 		protected async UniTask PrepareGameFile(Path p, bool ckd) {
@@ -312,22 +349,25 @@ namespace UbiArt {
 					// Loop 2: try to find an already loaded bundle and an already loaded file
 					foreach (var bname in bnames) {
 						if (bundles.ContainsKey(bname)) {
-							byte[] data = await bundles[bname].GetFile(this, bigFiles[bname].reader, path);
+							byte[] data = await bundles[bname].GetFile(this, bigFiles[bname].Deserializer, path);
 							if (data != null) return;
 						}
 					}
 					// Loop 3: load new bundles until you find the file
 					foreach (var bname in bnames) {
 						if (!bundles.ContainsKey(bname)) {
-							string fullbname = BasePath + bname + "_" + Settings.PlatformString + ".ipk";
-							await FileSystem.PrepareBigFile(fullbname, 0);
-							if (!FileSystem.FileExists(fullbname)) continue;
-							bigFiles[bname] = new BinaryBigFile(this, bname, FileSystem.GetFileReadStream(fullbname));
+							string fileName = $"{bname}_{Settings.PlatformString}.ipk";
+							string fullPath = $"{BasePath}{fileName}";
+							await FileSystem.PrepareBigFile(fullPath, 0);
+							if (!FileManager.FileExists(fullPath)) continue;
+							bigFiles[bname] = new BinaryBigFile(this, fileName) {
+								Alias = bname
+							};
 							bundles[bname] = new BundleFile();
-							await bundles[bname].SerializeAsync(bigFiles[bname].serializer, bname);
+							await bundles[bname].SerializeAsync(bigFiles[bname].Deserializer, bname);
 						}
 						if (bundles.ContainsKey(bname)) {
-							byte[] data = await bundles[bname].GetFile(this, bigFiles[bname].reader, path);
+							byte[] data = await bundles[bname].GetFile(this, bigFiles[bname].Deserializer, path);
 							if (data != null) return;
 						}
 					}
@@ -402,24 +442,24 @@ namespace UbiArt {
 							string cookedFolder = ckd ? Settings.ITFDirectory : "";
 							await PrepareGameFile(o.path, ckd);
 							if (GameFileExists(o.path, ckd)) {
-								files.Add(id, new BinarySerializedFile(this, o.path.filename, o.path, ckd));
+								files.Add(id, new BinaryGameFile(this, o.path.filename, o.path, ckd));
 								loadingState = state + "\n" + o.path.FullPath;
 								await TimeController.WaitIfNecessary();
 							}
 						}
 						if (files.ContainsKey(id)) {
-							FileWithPointers f = files[id];
-							CSerializerObject s = f.serializer;
+							UbiArtFile f = files[id];
+							CSerializerObject s = f.Deserializer;
 							s.ResetPosition();
 							o.action(s);
 							f.Dispose();
 						}
 					} else if (o.virtualFile != null) {
 						using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
-							FileWithPointers f = new BinarySerializedFile(this, o.virtualFile.Item1, str);
-							Tuple<string, FileWithPointers> t = new Tuple<string, FileWithPointers>(o.virtualFile.Item1, f);
+							UbiArtFile f = new BinaryStreamFile(this, o.virtualFile.Item1, str);
+							Tuple<string, UbiArtFile> t = new Tuple<string, UbiArtFile>(o.virtualFile.Item1, f);
 							virtualFiles.Add(t);
-							CSerializerObject s = f.serializer;
+							CSerializerObject s = f.Deserializer;
 							s.ResetPosition();
 							o.action(s);
 							f.Dispose();
@@ -431,7 +471,7 @@ namespace UbiArt {
 				}
 			} finally {
 				TimeController.StopStopwatch();
-				foreach (KeyValuePair<StringID, FileWithPointers> kv in files) {
+				foreach (KeyValuePair<StringID, UbiArtFile> kv in files) {
 					kv.Value.Dispose();
 				}
 				files.Clear();
@@ -482,8 +522,8 @@ namespace UbiArt {
 		public void Load(Path path, SerializeAction action) {
 			if (path == null || path.IsNull) return;
 			if (files.ContainsKey(path.stringID)) {
-				FileWithPointers f = files[path.stringID];
-				CSerializerObject s = f.serializer;
+				UbiArtFile f = files[path.stringID];
+				CSerializerObject s = f.Deserializer;
 				s.ResetPosition();
 				action(s);
 			} else {
@@ -599,36 +639,6 @@ namespace UbiArt {
 			// Write serialized data to file
 			Util.ByteArrayToFile(path, serializedData);
 			TimeController.StopStopwatch();
-		}
-
-		public FileWithPointers GetFileByReader(Reader reader) {
-			foreach (KeyValuePair<StringID, FileWithPointers> kv in files) {
-				FileWithPointers file = kv.Value;
-				if (file != null && reader.Equals(file.reader)) {
-					return file;
-				}
-			}
-			foreach (Tuple<string, FileWithPointers> t in virtualFiles) {
-				if (t.Item2 != null && reader.Equals(t.Item2.reader)) {
-					return t.Item2;
-				}
-			}
-			return null;
-		}
-
-		public FileWithPointers GetFileByWriter(Writer writer) {
-			foreach (KeyValuePair<StringID, FileWithPointers> kv in files) {
-				FileWithPointers file = kv.Value;
-				if (file != null && writer.Equals(file.writer)) {
-					return file;
-				}
-			}
-			foreach (Tuple<string, FileWithPointers> t in virtualFiles) {
-				if (t.Item2 != null && writer.Equals(t.Item2.writer)) {
-					return t.Item2;
-				}
-			}
-			return null;
 		}
 	}
 }
