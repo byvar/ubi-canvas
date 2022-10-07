@@ -26,6 +26,7 @@ namespace UbiArt {
 			// Initialize properties
 			ObjectStorage = new Dictionary<string, object>();
 			AdditionalSettings = new Dictionary<Type, object>();
+			Files = new List<UbiArtFile>();
 
 			InitStringCache();
 		}
@@ -232,13 +233,8 @@ namespace UbiArt {
 		#region Dispose
 
 		public void Close() {
-			/*deserializer?.Dispose();
-			deserializer = null;
-			serializer?.Dispose();
-			serializer = null;
-
-			foreach (var file in MemoryMap.Files)
-				file?.Dispose();*/
+			foreach (var file in Files)
+				file?.Dispose();
 
 			SerializerLog.Dispose();
 		}

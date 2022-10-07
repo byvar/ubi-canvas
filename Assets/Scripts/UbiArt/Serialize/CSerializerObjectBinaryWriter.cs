@@ -14,10 +14,8 @@ namespace UbiArt {
 			this.Writer = writer;
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
-		public CSerializerObjectBinaryWriter(Context context, BinaryFile file) : base(context) {
+		public CSerializerObjectBinaryWriter(Context context, BinaryFile file) : this(context, file.CreateWriter()) {
 			File = file;
-			Writer = File.CreateWriter();
-			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
 
 		public BinaryFile File { get; protected set; }

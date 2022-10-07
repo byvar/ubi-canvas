@@ -23,16 +23,16 @@ namespace UbiArt.FileFormat {
 						default:
 							CurrentSerializer?.Dispose();
 							CurrentSerializer = null;
-
-							if (Context.Settings.serializerType == Settings.SerializerType.TagBinary && !Context.IsPureBinary(FilePath, Extension)) {
-								CurrentSerializer = new CSerializerObjectTagBinary(Context, CreateReader());
-							} else {
-								CurrentSerializer = new CSerializerObjectBinary(Context, CreateReader());
-							}
-							Context.ConfigureSerializeFlagsForExtension(ref CurrentSerializer.flags, ref CurrentSerializer.flagsOwn, Extension);
-
 							break;
 					}
+				}
+				if (CurrentSerializer == null) {
+					if (Context.Settings.serializerType == Settings.SerializerType.TagBinary && !Context.IsPureBinary(FilePath, Extension)) {
+						CurrentSerializer = new CSerializerObjectTagBinary(Context, this);
+					} else {
+						CurrentSerializer = new CSerializerObjectBinary(Context, this);
+					}
+					Context.ConfigureSerializeFlagsForExtension(ref CurrentSerializer.flags, ref CurrentSerializer.flagsOwn, Extension);
 				}
 				return CurrentSerializer;
 			}

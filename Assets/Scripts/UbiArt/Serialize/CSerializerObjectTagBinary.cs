@@ -18,9 +18,8 @@ namespace UbiArt {
 			Reader = reader;
 			flagsOwn = Flags.Flags0 | Flags.Flags7; // 0x81
 		}
-		public CSerializerObjectTagBinary(Context context, BinaryFile file) : base(context) {
-			Reader = file.CreateReader();
-			flagsOwn = Flags.Flags0 | Flags.Flags7; // 0x81
+		public CSerializerObjectTagBinary(Context context, BinaryFile file) : this(context, file.CreateReader()) {
+			File = file;
 		}
 
 		public BinaryFile File { get; protected set; }
