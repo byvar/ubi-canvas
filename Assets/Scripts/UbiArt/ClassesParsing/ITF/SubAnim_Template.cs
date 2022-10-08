@@ -16,9 +16,6 @@ namespace UbiArt.ITF {
 						} else {
 							anim = extS.SerializeObject<AnimTrack>(anim);
 							l.anm[name.stringID] = anim;
-							if (extS.CurrentPointer != extS.Length) {
-								l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
-							}
 						}
 					});
 				}

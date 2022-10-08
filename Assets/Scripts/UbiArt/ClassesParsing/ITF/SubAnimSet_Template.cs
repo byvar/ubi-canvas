@@ -26,7 +26,6 @@ namespace UbiArt.ITF {
 										l.tex[path.stringID] = temp;
 										temp.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
 										resources[j] = temp;
-										l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 									}
 								});
 								break;
@@ -39,7 +38,6 @@ namespace UbiArt.ITF {
 										temp = extS.SerializeObject<AnimTrack>(temp);
 										l.anm[path.stringID] = temp;
 										resources[j] = temp;
-										l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 									}
 								});
 								break;
@@ -52,7 +50,6 @@ namespace UbiArt.ITF {
 										temp = extS.SerializeObject<AnimSkeleton>(temp);
 										l.skl[path.stringID] = temp;
 										resources[j] = temp;
-										l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 									}
 								});
 								break;
@@ -65,7 +62,6 @@ namespace UbiArt.ITF {
 										temp = extS.SerializeObject<AnimPatchBank>(temp);
 										l.pbk[path.stringID] = temp;
 										resources[j] = temp;
-										l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
 									}
 								});
 								break;

@@ -24,13 +24,6 @@ namespace UbiArt {
 			}
 			if (read) { // Read scene
 				obj = s.SerializeObject<T>(obj);
-				if (s.Length != null) {
-					if (s.CurrentPointer != s.Length) {
-						throw new Exception("File reading check failed. Position:" + s.CurrentPointer + " - Length:" + s.Length);
-					} else if (s.CurrentPointer.File != null) {
-						s.Context.SystemLog?.LogInfo($"Finished reading file: {s.CurrentPointer.File.DisplayName}");
-					}
-				}
 			}
 		}
 	}

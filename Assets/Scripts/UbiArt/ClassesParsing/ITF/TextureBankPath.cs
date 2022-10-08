@@ -25,9 +25,6 @@ namespace UbiArt.ITF {
 						} else {
 							pbk = extS.SerializeObject<AnimPatchBank>(pbk);
 							l.pbk[patchBank.stringID] = pbk;
-							if (extS.CurrentPointer != extS.Length) {
-								l.SystemLog?.LogInfo("Read:" + extS.CurrentPointer + " - Length:" + extS.Length + " - " + (extS.CurrentPointer == extS.Length ? "good!" : "bad!"));
-							}
 						}
 					});
 				}

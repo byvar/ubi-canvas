@@ -27,13 +27,6 @@ namespace UbiArt {
 				CONTENT = s.SerializeObject<RO2_PersistentGameData_Universe>(CONTENT);
 			}
 			footer = s.SerializeBytes(footer, 0x190);
-			if (s.Length != null) {
-				if (s.CurrentPointer != s.Length) {
-					throw new Exception("File reading check failed. Position:" + s.CurrentPointer + " - Length:" + s.Length);
-				} else if (s.CurrentPointer.File != null) {
-					s.Context.SystemLog?.LogInfo("Finished reading file: " + s.CurrentPointer.File.DisplayName);
-				}
-			}
 		}
 	}
 }

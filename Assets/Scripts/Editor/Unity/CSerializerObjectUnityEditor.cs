@@ -31,8 +31,9 @@ namespace UbiArt {
 			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
 		}
 
-		public override Pointer CurrentPointer => new Pointer(0, null);
-		public override Pointer Length => new Pointer(0, null);
+		public override Pointer CurrentPointer => new Pointer(CurrentPosition, null);
+		public override long CurrentPosition => 0;
+		public override long Length => 0;
 
 		public override void Serialize(ref object obj, Type type, string name = null) {
 			if (type.IsEnum) {

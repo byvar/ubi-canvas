@@ -20,8 +20,9 @@ namespace UbiArt {
 
 		public BinaryFile File { get; protected set; }
 		public Writer Writer { get; protected set; }
-		public override Pointer CurrentPointer => new Pointer(Writer.BaseStream.Position, File);
-		public override Pointer Length => new Pointer(Writer.BaseStream.Length, File);
+		public override Pointer CurrentPointer => new Pointer(CurrentPosition, File);
+		public override long CurrentPosition => Writer.BaseStream.Position;
+		public override long Length => Writer.BaseStream.Length;
 
 		public override void Goto(long position) {
 			if (!Disposed) Writer.BaseStream.Position = position;

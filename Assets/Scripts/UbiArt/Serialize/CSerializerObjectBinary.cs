@@ -20,8 +20,9 @@ namespace UbiArt {
 
 		public BinaryFile File { get; protected set; }
 		public Reader Reader { get; protected set; }
-		public override Pointer CurrentPointer => new Pointer(Reader.BaseStream.Position, File);
-		public override Pointer Length => new Pointer(Reader.BaseStream.Length, File);
+		public override Pointer CurrentPointer => new Pointer(CurrentPosition, File);
+		public override long CurrentPosition => Reader.BaseStream.Position;
+		public override long Length => Reader.BaseStream.Length;
 
 		public override void Goto(long position) {
 			if (!Disposed) Reader.BaseStream.Position = position;

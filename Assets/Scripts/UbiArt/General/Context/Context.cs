@@ -379,13 +379,10 @@ namespace UbiArt {
 				Path pAtlas = new Path("", "atlascontainer.ckd");
 				Load(pAtlas, (CSerializerObject s) => {
 					uvAtlasManager = s.SerializeObject<UVAtlasManager>(uvAtlasManager);
-					SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 				});
 				Path pLoc = new Path("enginedata/localisation/", "localisation.loc8") { specialUncooked = true };
 				Load(pLoc, (CSerializerObject s) => {
 					localisation = s.SerializeObject<Localisation.Localisation_Template>(localisation);
-					SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
-
 				});
 
 				/*Path pGameConfigRO = new Path("gameconfig/", "gameconfig.isg.ckd");
@@ -448,6 +445,11 @@ namespace UbiArt {
 							CSerializerObject s = f.Deserializer;
 							s.ResetPosition();
 							o.action(s);
+							if (s.CurrentPosition == s.Length) {
+								//SystemLog?.LogInfo($"{s.CurrentPointer}: OK");
+							} else if (s.CurrentPosition != 0) {
+								SystemLog?.LogInfo($"{s.CurrentPointer}: Did not fully serialize file! Length: {s.Length:X8}");
+							}
 							f.Dispose();
 						}
 					} else if (o.virtualFile != null) {
@@ -522,6 +524,11 @@ namespace UbiArt {
 				CSerializerObject s = f.Deserializer;
 				s.ResetPosition();
 				action(s);
+				if (s.CurrentPosition == s.Length) {
+					//SystemLog?.LogInfo($"{s.CurrentPointer}: OK");
+				} else if(s.CurrentPosition != 0) {
+					SystemLog?.LogInfo($"{s.CurrentPointer}: Did not fully serialize file! Length: {s.Length:X8}");
+				}
 			} else {
 				pathsToLoad.Enqueue(new ObjectPlaceHolder(path, action));
 			}
@@ -582,7 +589,6 @@ namespace UbiArt {
 					isg[pGeneric.stringID] = curIsg;
 				}
 				onResult(curIsg);
-				SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 			});
 		}
 		public void LoadSaveFile(string path, Action<RO2_SaveData> onResult) {
@@ -591,7 +597,6 @@ namespace UbiArt {
 				RO2_SaveData saveData = null;
 				saveData = s.SerializeObject<RO2_SaveData>(saveData);
 				onResult?.Invoke(saveData);
-				SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 			});
 		}
 		public void LoadSaveFileOrigins(string path, Action<Ray_SaveData> onResult) {
@@ -600,7 +605,6 @@ namespace UbiArt {
 				Ray_SaveData saveData = null;
 				saveData = s.SerializeObject<Ray_SaveData>(saveData);
 				onResult?.Invoke(saveData);
-				SystemLog?.LogInfo("Read:" + s.CurrentPointer + " - Length:" + s.Length + " - " + (s.CurrentPointer == s.Length ? "good!" : "bad!"));
 			});
 		}
 

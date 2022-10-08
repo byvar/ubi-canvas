@@ -64,12 +64,11 @@ namespace UbiArt {
 		public abstract T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null);
 		public abstract byte[] SerializeBytes(byte[] obj, long count);
 		public abstract uint SerializeFileSize(uint obj);
-		public abstract Pointer CurrentPointer {
-			get;
-		}
-		public abstract Pointer Length {
-			get;
-		}
+		public abstract Pointer CurrentPointer { get; }
+		public abstract long CurrentPosition { get; }
+		public abstract long Length { get; }
+
+
 		public virtual void ResetPosition() => Goto(0);
 		public void EnterEmbed() {
 			embedded = true;
