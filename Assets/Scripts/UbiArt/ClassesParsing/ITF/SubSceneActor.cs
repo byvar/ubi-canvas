@@ -22,15 +22,11 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad && !EMBED_SCENE) {
 				Context l = s.Context;
-				l.Load(RELATIVEPATH, (extS) => {
-					if (l.isc.ContainsKey(RELATIVEPATH.stringID)) {
-						sceneFile = l.isc[RELATIVEPATH.stringID];
-					} else {
-						sceneFile = extS.SerializeObject<ContainerFile<Scene>>(sceneFile);
-						l.isc[RELATIVEPATH.stringID] = sceneFile;
-					}
+				l.LoadFile<ContainerFile<Scene>>(RELATIVEPATH, result => {
+					sceneFile = result;
+
 					if (sceneFile != null) {
-						if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+						if (l.Settings.engineVersion <= Settings.EngineVersion.RO) {
 							SCENE_ORIGINS = new Generic<Scene>(sceneFile.obj);
 						} else {
 							SCENE = new Nullable<Scene>() {

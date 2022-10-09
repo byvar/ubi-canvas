@@ -10,6 +10,7 @@ using UbiArt.Bundle;
 using UbiArt.UV;
 using UbiCanvas.Helpers;
 using System.Linq;
+using Codice.CM.Common;
 
 namespace UbiArt {
 	public class Context {
@@ -25,6 +26,7 @@ namespace UbiArt {
 
 			// Initialize properties
 			ObjectStorage = new Dictionary<string, object>();
+			Cache = new SerializableCache(SystemLog);
 			AdditionalSettings = new Dictionary<Type, object>();
 			Files = new List<UbiArtFile>();
 
@@ -51,6 +53,7 @@ namespace UbiArt {
 		#region Public Properties
 
 		public string BasePath { get; }
+		public SerializableCache Cache { get; }
 		public ISerializerLog SerializerLog { get; }
 		public List<UbiArtFile> Files { get; }
 
@@ -285,18 +288,12 @@ namespace UbiArt {
 		public Dictionary<string, BundleFile> bundles = new Dictionary<string, BundleFile>();
 
 		// Types
-
-		public Dictionary<StringID, GenericFile<ITF.Actor_Template>> tpl = new Dictionary<StringID, GenericFile<ITF.Actor_Template>>();
-		public Dictionary<StringID, GenericFile<ITF.FriseConfig>> fcg = new Dictionary<StringID, GenericFile<ITF.FriseConfig>>();
-		public Dictionary<StringID, FriseOrigins.FriseConfigOrigins> fcgOrigins = new Dictionary<StringID, FriseOrigins.FriseConfigOrigins>();
-		public Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>> msh = new Dictionary<StringID, GenericFile<ITF.GFXMaterialShader_Template>>();
-		public Dictionary<StringID, GenericFile<CSerializable>> isg = new Dictionary<StringID, GenericFile<CSerializable>>();
-		public Dictionary<StringID, ContainerFile<ITF.Scene>> isc = new Dictionary<StringID, ContainerFile<ITF.Scene>>();
-		public Dictionary<StringID, ContainerFile<ITF.Actor>> act = new Dictionary<StringID, ContainerFile<ITF.Actor>>();
-		public Dictionary<StringID, Animation.AnimTrack> anm = new Dictionary<StringID, Animation.AnimTrack>();
-		public Dictionary<StringID, Animation.AnimSkeleton> skl = new Dictionary<StringID, Animation.AnimSkeleton>();
-		public Dictionary<StringID, Animation.AnimPatchBank> pbk = new Dictionary<StringID, Animation.AnimPatchBank>();
-		public Dictionary<StringID, TextureCooked> tex = new Dictionary<StringID, TextureCooked>();
+		public Dictionary<StringID, ICSerializable> tpl => Cache.Structs[typeof(GenericFile<ITF.Actor_Template>)];
+		public Dictionary<StringID, ICSerializable> fcg => Cache.Structs[typeof(GenericFile<ITF.FriseConfig>)];
+		public Dictionary<StringID, ICSerializable> isg => Cache.Structs[typeof(GenericFile<CSerializable>)];
+		public Dictionary<StringID, ICSerializable> isc => Cache.Structs[typeof(ContainerFile<ITF.Scene>)];
+		public Dictionary<StringID, ICSerializable> anm => Cache.Structs[typeof(Animation.AnimTrack)];
+		public Dictionary<StringID, ICSerializable> tex => Cache.Structs[typeof(TextureCooked)];
 		public Dictionary<StringID, Path> paths = new Dictionary<StringID, Path>();
 
 		public ContainerFile<ITF.Scene> mainScene;
@@ -377,13 +374,9 @@ namespace UbiArt {
 			try {
 
 				Path pAtlas = new Path("", "atlascontainer.ckd");
-				Load(pAtlas, (CSerializerObject s) => {
-					uvAtlasManager = s.SerializeObject<UVAtlasManager>(uvAtlasManager);
-				});
+				LoadFile<UVAtlasManager>(pAtlas, result => uvAtlasManager = result);
 				Path pLoc = new Path("enginedata/localisation/", "localisation.loc8") { specialUncooked = true };
-				Load(pLoc, (CSerializerObject s) => {
-					localisation = s.SerializeObject<Localisation.Localisation_Template>(localisation);
-				});
+				LoadFile<Localisation.Localisation_Template>(pLoc, result => localisation = result);
 
 				/*Path pGameConfigRO = new Path("gameconfig/", "gameconfig.isg.ckd");
 				Load(pGameConfigRO, (CSerializerObject s) => {
@@ -408,9 +401,8 @@ namespace UbiArt {
 				mainScene = null;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
 					Path p = new Path(pathFolder, pathFile);
-					Load(p, (CSerializerObject s) => {
-						mainScene = s.SerializeObject<ContainerFile<ITF.Scene>>(mainScene);
-						isc[p.stringID] = mainScene;
+					LoadFile<ContainerFile<ITF.Scene>>(p, result => {
+						mainScene = result;
 						Settings.isCatchThemAll = false;
 					});
 				}
@@ -517,7 +509,7 @@ namespace UbiArt {
 			}
 		}
 
-		public void Load(Path path, SerializeAction action) {
+		protected void Load(Path path, SerializeAction action) {
 			if (path == null || path.IsNull) return;
 			if (files.ContainsKey(path.stringID)) {
 				UbiArtFile f = files[path.stringID];
@@ -533,11 +525,6 @@ namespace UbiArt {
 				pathsToLoad.Enqueue(new ObjectPlaceHolder(path, action));
 			}
 		}
-		public void Load(CString path, SerializeAction action) {
-			if (path == null || path.str == null || path.str == "") return;
-			Path p = new Path(path.str);
-			Load(p, action);
-		}
 
 		public void Load(ArchiveMemory mem, string name, SerializeAction action) {
 			pathsToLoad.Enqueue(new ObjectPlaceHolder(name, mem, action));
@@ -548,14 +535,7 @@ namespace UbiArt {
 				Path p = new Path(pathFolder, pathFile);
 				Context l = this;
 				ContainerFile<ITF.Actor> a = null;
-				l.Load(p, (extS) => {
-					if (l.act.ContainsKey(p.stringID)) {
-						a = l.act[p.stringID];
-					} else {
-						a = extS.SerializeObject<ContainerFile<ITF.Actor>>(a);
-						l.act[p.stringID] = a;
-					}
-				});
+				l.LoadFile<ContainerFile<ITF.Actor>>(p, result => a = result);
 				await LoadLoop();
 				return a;
 			}
@@ -578,35 +558,39 @@ namespace UbiArt {
 			TimeController.StopStopwatch();
 		}
 
-		public void LoadGenericFile(string path, Action<GenericFile<CSerializable>> onResult) {
-			Path pGeneric = new Path(path);
-			Load(pGeneric, (CSerializerObject s) => {
-				GenericFile<CSerializable> curIsg = null;
-				if (isg.ContainsKey(pGeneric.stringID)) {
-					curIsg = isg[pGeneric.stringID];
-				} else {
-					curIsg = s.SerializeObject<GenericFile<CSerializable>>(curIsg);
-					isg[pGeneric.stringID] = curIsg;
-				}
-				onResult(curIsg);
+		public void LoadFile<T>(Path path, Action<T> onResult) where T : class, ICSerializable, new() {
+			var t = Cache.Get<T>(path.stringID);
+			if (t != null) {
+				onResult(t);
+			} else {
+				Load(path, (CSerializerObject s) => {
+					var cachedObject = Cache.Get<T>(path.stringID);
+					if (cachedObject == null) {
+						cachedObject = s.SerializeObject<T>(cachedObject);
+						Cache.Add<T>(path.stringID, cachedObject);
+					}
+					onResult(cachedObject);
+				});
+			}
+		}
+
+		public void LoadTexture(Path path, Action<TextureCooked> onResult) {
+			LoadFile<TextureCooked>(path, (result) => {
+				if (result != null && result.atlas == null)
+					result.atlas = uvAtlasManager.GetAtlasIfExists(path);
+				onResult(result);
 			});
 		}
-		public void LoadSaveFile(string path, Action<RO2_SaveData> onResult) {
+
+		public void LoadGenericFile(Path path, Action<GenericFile<CSerializable>> onResult) => LoadFile<GenericFile<CSerializable>>(path, onResult);
+
+		public void LoadUncooked<T>(string path, Action<T> onResult) where T : class, ICSerializable, new() {
 			Path pGeneric = new Path(path) { specialUncooked = true };
-			Load(pGeneric, (CSerializerObject s) => {
-				RO2_SaveData saveData = null;
-				saveData = s.SerializeObject<RO2_SaveData>(saveData);
-				onResult?.Invoke(saveData);
-			});
+			LoadFile<T>(pGeneric, onResult);
 		}
-		public void LoadSaveFileOrigins(string path, Action<Ray_SaveData> onResult) {
-			Path pGeneric = new Path(path) { specialUncooked = true };
-			Load(pGeneric, (CSerializerObject s) => {
-				Ray_SaveData saveData = null;
-				saveData = s.SerializeObject<Ray_SaveData>(saveData);
-				onResult?.Invoke(saveData);
-			});
-		}
+
+		public void LoadSaveFile(string path, Action<RO2_SaveData> onResult) => LoadUncooked<RO2_SaveData>(path, onResult);
+		public void LoadSaveFileOrigins(string path, Action<Ray_SaveData> onResult) => LoadUncooked<Ray_SaveData>(path, onResult);
 
 		public async UniTask WriteActor(string path, ITF.Actor act) {
 			TimeController.StartStopwatch();

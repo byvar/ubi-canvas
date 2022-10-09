@@ -10,23 +10,10 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
 				Context l = s.Context;
-				l.Load(materialShader, (extS) => {
-					if (l.msh.ContainsKey(materialShader.stringID)) {
-						shader = l.msh[materialShader.stringID];
-					} else {
-						shader = extS.SerializeObject<GenericFile<GFXMaterialShader_Template>>(shader);
-						l.msh[materialShader.stringID] = shader;
-					}
-				});
+				l.LoadFile<GenericFile<GFXMaterialShader_Template>>(materialShader, result => shader = result);
+
 				if (l.loadAnimations) {
-					l.Load(patchBank, (extS) => {
-						if (l.pbk.ContainsKey(patchBank.stringID)) {
-							pbk = l.pbk[patchBank.stringID];
-						} else {
-							pbk = extS.SerializeObject<AnimPatchBank>(pbk);
-							l.pbk[patchBank.stringID] = pbk;
-						}
-					});
+					l.LoadFile<AnimPatchBank>(patchBank, result => pbk = result);
 				}
 			}
 		}

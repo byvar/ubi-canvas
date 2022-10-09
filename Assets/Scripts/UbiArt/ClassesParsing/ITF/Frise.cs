@@ -289,34 +289,20 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
 				Context l = s.Context;
-				l.Load(MatShader, (extS) => {
-					if (l.msh.ContainsKey(MatShader.stringID)) {
-						shader = l.msh[MatShader.stringID];
-					} else {
-						shader = extS.SerializeObject<GenericFile<GFXMaterialShader_Template>>(shader);
-						l.msh[MatShader.stringID] = shader;
-					}
-				});
-				l.Load(ConfigName, (extS) => {
-					if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
-						if (l.fcg.ContainsKey(ConfigName.stringID)) {
-							config = l.fcg[ConfigName.stringID];
-						} else {
-							config = extS.SerializeObject<GenericFile<FriseConfig>>(config);
-							l.fcg[ConfigName.stringID] = config;
-						}
-						if (config != null) {
+
+				l.LoadFile<GenericFile<GFXMaterialShader_Template>>(MatShader, result => shader = result);
+
+				if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+					l.LoadFile<GenericFile<FriseConfig>>(ConfigName, result => {
+						config = result;
+						if (config != null)
 							templatePickable = config.obj;
-						}
-					} else {
-						if (l.fcgOrigins.ContainsKey(ConfigName.stringID)) {
-							configOrigins = l.fcgOrigins[ConfigName.stringID];
-						} else {
-							configOrigins = extS.SerializeObject<FriseOrigins.FriseConfigOrigins>(configOrigins);
-							l.fcgOrigins[ConfigName.stringID] = configOrigins;
-						}
-					}
-				});
+					});
+				} else {
+					l.LoadFile<FriseOrigins.FriseConfigOrigins>(ConfigName, result => {
+						configOrigins = result;
+					});
+				}
 			}
 		}
 	}

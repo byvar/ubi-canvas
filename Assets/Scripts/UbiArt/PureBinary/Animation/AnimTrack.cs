@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UbiArt.ITF;
 using UnityEngine;
 
 namespace UbiArt.Animation {
@@ -81,14 +82,7 @@ namespace UbiArt.Animation {
 			Context c = s.Context;
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				if (skeleton != null && skeleton.Item2 != null && IsFirstLoad) {
-					c.Load(skeleton.Item2, (extS) => {
-						if (c.skl.ContainsKey(skeleton.Item2.stringID)) {
-							skel = c.skl[skeleton.Item2.stringID];
-						} else {
-							skel = extS.SerializeObject<AnimSkeleton>(skel);
-							c.skl[skeleton.Item2.stringID] = skel;
-						}
-					});
+					c.LoadFile<AnimSkeleton>(skeleton.Item2, result => skel = result);
 				}
 				if (texturePaths != null) {
 					texs = new TextureCooked[texturePaths.Count];
@@ -98,15 +92,7 @@ namespace UbiArt.Animation {
 				}
 			} else {
 				if (skeletonOrigins != null && skeletonOrigins.Item2 != null && IsFirstLoad) {
-					c.Load(skeletonOrigins.Item2, (extS) => {
-						Path p = new Path(skeletonOrigins.Item2.str);
-						if (c.skl.ContainsKey(p.stringID)) {
-							skel = c.skl[p.stringID];
-						} else {
-							skel = extS.SerializeObject<AnimSkeleton>(skel);
-							c.skl[p.stringID] = skel;
-						}
-					});
+					c.LoadFile<AnimSkeleton>(new Path(skeletonOrigins.Item2.str), result => skel = result);
 				}
 				if (texturePathsOrigins != null) {
 					texs = new TextureCooked[texturePathsOrigins.Count];
@@ -118,15 +104,8 @@ namespace UbiArt.Animation {
 		}
 
 		protected void LoadTexture(Context c, int index, Path path) {
-			c.Load(path, (extS) => {
-				if (c.tex.ContainsKey(path.stringID)) {
-					texs[index] = c.tex[path.stringID];
-				} else {
-					texs[index] = extS.SerializeObject<TextureCooked>(texs[index]);
-					TextureCooked tex = texs[index];
-					tex.atlas = c.uvAtlasManager.GetAtlasIfExists(path);
-					c.tex[path.stringID] = tex;
-				}
+			c.LoadTexture(path, tex => {
+				texs[index] = tex;
 			});
 		}
 

@@ -10,14 +10,7 @@ namespace UbiArt.ITF {
 			if (name != null && IsFirstLoad) {
 				Context l = s.Context;
 				if (l.loadAnimations) {
-					l.Load(name, (extS) => {
-						if (l.anm.ContainsKey(name.stringID)) {
-							anim = l.anm[name.stringID];
-						} else {
-							anim = extS.SerializeObject<AnimTrack>(anim);
-							l.anm[name.stringID] = anim;
-						}
-					});
+					l.LoadFile<AnimTrack>(name, result => anim = result);
 				}
 			}
 		}

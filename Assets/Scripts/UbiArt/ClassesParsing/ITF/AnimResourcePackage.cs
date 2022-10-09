@@ -10,14 +10,7 @@ namespace UbiArt.ITF {
 			if (skeleton != null && IsFirstLoad) {
 				Context l = UbiArtContext;
 				if (l.loadAnimations) {
-					l.Load(skeleton, (extS) => {
-						if (l.skl.ContainsKey(skeleton.stringID)) {
-							skel = l.skl[skeleton.stringID];
-						} else {
-							skel = extS.SerializeObject<AnimSkeleton>(skel);
-							l.skl[skeleton.stringID] = skel;
-						}
-					});
+					l.LoadFile<AnimSkeleton>(skeleton, result => skel = result);
 				}
 			}
 		}

@@ -33,16 +33,10 @@ namespace UbiArt.ITF {
 			if (this is Frise) return;
 			if (IsFirstLoad) {
 				Context l = s.Context;
-				l.Load(LUA, (extS) => {
-					if (l.tpl.ContainsKey(LUA.stringID)) {
-						template = l.tpl[LUA.stringID];
-					} else {
-						template = extS.SerializeObject<GenericFile<Actor_Template>>(template);
-						l.tpl[LUA.stringID] = template;
-					}
-					if (template != null) {
+				l.LoadFile<GenericFile<Actor_Template>>(LUA, result => {
+					template = result;
+					if (template != null)
 						templatePickable = template.obj;
-					}
 				});
 			}
 		}

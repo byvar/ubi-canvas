@@ -17,14 +17,7 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
 				Context l = s.Context;
-				l.Load(modePath, (extS) => {
-					if (l.isg.ContainsKey(modePath.stringID)) {
-						mode = l.isg[modePath.stringID];
-					} else {
-						mode = extS.SerializeObject<GenericFile<CSerializable>>(mode);
-						l.isg[modePath.stringID] = mode;
-					}
-				});
+				l.LoadGenericFile(modePath, result => mode = result);
 			}
 		}
 	}

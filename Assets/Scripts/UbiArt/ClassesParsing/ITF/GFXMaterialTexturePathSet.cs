@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Codice.Utils;
+using System.Reflection;
 using UnityEngine;
 
 namespace UbiArt.ITF {
@@ -26,17 +27,10 @@ namespace UbiArt.ITF {
 
 		protected void LoadTexture(Context context, string fieldName, Path path) {
 			Context l = context;
-			l.Load(path, (extS) => {
+
+			l.LoadTexture(path, tex => {
 				FieldInfo f = GetType().GetField(fieldName);
-				if (l.tex.ContainsKey(path.stringID)) {
-					f.SetValue(this, l.tex[path.stringID]);
-				} else {
-					TextureCooked tex = (TextureCooked)f.GetValue(this);
-					tex = extS.SerializeObject<TextureCooked>(tex);
-					f.SetValue(this, tex);
-					tex.atlas = l.uvAtlasManager.GetAtlasIfExists(path);
-					l.tex[path.stringID] = tex;
-				}
+				f.SetValue(this, tex);
 			});
 		}
 	}

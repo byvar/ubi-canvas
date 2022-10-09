@@ -29,14 +29,7 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
 				Context l = s.Context;
-				l.Load(MatShader, (extS) => {
-					if (l.msh.ContainsKey(MatShader.stringID)) {
-						shader = l.msh[MatShader.stringID];
-					} else {
-						shader = extS.SerializeObject<GenericFile<GFXMaterialShader_Template>>(shader);
-						l.msh[MatShader.stringID] = shader;
-					}
-				});
+				l.LoadFile<GenericFile<GFXMaterialShader_Template>>(MatShader, result => shader = result);
 			}
 		}
 		// ^ Serialize
@@ -183,7 +176,7 @@ namespace UbiArt.ITF {
 						animPaths.Add(sat.name);
 					}
 					Context l = UbiArtContext;
-					ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, l.anm[p.stringID]) : null).Where(t => t != null).ToList();
+					ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, (AnimTrack)l.anm[p.stringID]) : null).Where(t => t != null).ToList();
 					if (ua.anims.Count > 0) {
 						ua.animIndex = 0;
 						ua.animTrack = ua.anims[0].Item2;

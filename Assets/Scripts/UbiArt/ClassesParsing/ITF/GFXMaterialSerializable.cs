@@ -14,14 +14,7 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
 				Context l = s.Context;
-				l.Load(shaderPath, (extS) => {
-					if (l.msh.ContainsKey(shaderPath.stringID)) {
-						shader = l.msh[shaderPath.stringID];
-					} else {
-						shader = extS.SerializeObject<GenericFile<GFXMaterialShader_Template>>(shader);
-						l.msh[shaderPath.stringID] = shader;
-					}
-				});
+				l.LoadFile<GenericFile<GFXMaterialShader_Template>>(shaderPath, result => shader = result);
 			}
 		}
 
