@@ -69,12 +69,12 @@ namespace UbiArt {
 		public Dictionary<string, BundleFile> Bundles { get; private set; } = new Dictionary<string, BundleFile>();
 
 		// Types
-		public Dictionary<StringID, ICSerializable> tpl => Context.Cache.Structs[typeof(GenericFile<ITF.Actor_Template>)];
-		public Dictionary<StringID, ICSerializable> fcg => Context.Cache.Structs[typeof(GenericFile<ITF.FriseConfig>)];
-		public Dictionary<StringID, ICSerializable> isg => Context.Cache.Structs[typeof(GenericFile<CSerializable>)];
-		public Dictionary<StringID, ICSerializable> isc => Context.Cache.Structs[typeof(ContainerFile<ITF.Scene>)];
-		public Dictionary<StringID, ICSerializable> anm => Context.Cache.Structs[typeof(Animation.AnimTrack)];
-		public Dictionary<StringID, ICSerializable> tex => Context.Cache.Structs[typeof(TextureCooked)];
+		public Dictionary<StringID, ICSerializable> tpl => Context.Cache.Structs.GetValueOrDefault(typeof(GenericFile<ITF.Actor_Template>));
+		public Dictionary<StringID, ICSerializable> fcg => Context.Cache.Structs.GetValueOrDefault(typeof(GenericFile<ITF.FriseConfig>));
+		public Dictionary<StringID, ICSerializable> isg => Context.Cache.Structs.GetValueOrDefault(typeof(GenericFile<CSerializable>));
+		public Dictionary<StringID, ICSerializable> isc => Context.Cache.Structs.GetValueOrDefault(typeof(ContainerFile<ITF.Scene>));
+		public Dictionary<StringID, ICSerializable> anm => Context.Cache.Structs.GetValueOrDefault(typeof(Animation.AnimTrack));
+		public Dictionary<StringID, ICSerializable> tex => Context.Cache.Structs.GetValueOrDefault(typeof(TextureCooked));
 		public Dictionary<StringID, Path> Paths { get; private set; } = new Dictionary<StringID, Path>();
 
 		protected bool GameFileExists(Path p, bool ckd) {

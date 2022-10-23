@@ -54,6 +54,8 @@ public class UnityWindowBundle : UnityWindow {
 	}
 
 	void DrawFoldout<T>(ref float yPos, string title, Dictionary<StringID, T> dict) where T : ICSerializable {
+		if(dict == null)
+			return;
 		if (!foldouts.ContainsKey(title)) {
 			foldouts[title] = false;
 		}
@@ -71,6 +73,7 @@ public class UnityWindowBundle : UnityWindow {
 	}
 	void GetSelectedPaths<T>(List<Pair<Path, ICSerializable>> selection, Dictionary<StringID, T> dict) where T : ICSerializable {
 		Loader l = Controller.MainContext.Loader;
+		if(dict == null) return;
 		foreach (StringID sid in dict.Keys) {
 			if (!selectedPaths.ContainsKey(sid)) continue;
 			if (selectedPaths[sid]) {
