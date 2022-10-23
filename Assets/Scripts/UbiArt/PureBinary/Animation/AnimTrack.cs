@@ -79,32 +79,32 @@ namespace UbiArt.Animation {
 		public TextureCooked[] texs;
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			Context c = s.Context;
+			Loader l = s.Context.Loader;
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				if (skeleton != null && skeleton.Item2 != null && IsFirstLoad) {
-					c.LoadFile<AnimSkeleton>(skeleton.Item2, result => skel = result);
+					l.LoadFile<AnimSkeleton>(skeleton.Item2, result => skel = result);
 				}
 				if (texturePaths != null) {
 					texs = new TextureCooked[texturePaths.Count];
 					for (int i = 0; i < texturePaths.Count; i++) {
-						LoadTexture(c, i, texturePaths[i].Item2);
+						LoadTexture(l, i, texturePaths[i].Item2);
 					}
 				}
 			} else {
 				if (skeletonOrigins != null && skeletonOrigins.Item2 != null && IsFirstLoad) {
-					c.LoadFile<AnimSkeleton>(new Path(skeletonOrigins.Item2.str), result => skel = result);
+					l.LoadFile<AnimSkeleton>(new Path(skeletonOrigins.Item2.str), result => skel = result);
 				}
 				if (texturePathsOrigins != null) {
 					texs = new TextureCooked[texturePathsOrigins.Count];
 					for (int i = 0; i < texturePathsOrigins.Count; i++) {
-						LoadTexture(c, i, new Path(texturePathsOrigins[i].Item2.str));
+						LoadTexture(l, i, new Path(texturePathsOrigins[i].Item2.str));
 					}
 				}
 			}
 		}
 
-		protected void LoadTexture(Context c, int index, Path path) {
-			c.LoadTexture(path, tex => {
+		protected void LoadTexture(Loader l, int index, Path path) {
+			l.LoadTexture(path, tex => {
 				texs[index] = tex;
 			});
 		}

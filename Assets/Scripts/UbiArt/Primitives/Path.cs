@@ -48,11 +48,7 @@ namespace UbiArt {
 			}
 		}
 
-		public string FullPath {
-			get {
-				return (folder ?? "") + (filename ?? "");
-			}
-		}
+		public string FullPath => $"{(folder ?? "")}{(filename ?? "")}";
 
 		public bool IsNull {
 			get {
@@ -95,7 +91,7 @@ namespace UbiArt {
 
 		public override string ToString() {
 			if (stringID.IsNull) return "Path(null)";
-			return "Path(\"" + folder + "\", \"" + filename + "\")";
+			return $"Path(\"{folder}\", \"{filename}\")";
 		}
 
 		/* Flags:

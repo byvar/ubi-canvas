@@ -27,6 +27,7 @@ public class Controller : MonoBehaviour {
 
 	public static Controller Obj { get; protected set; }
 	public static Context MainContext { get; protected set; }
+	public ContainerFile<UbiArt.ITF.Scene> MainScene { get; protected set; }
 
 	void Awake() {
 		Application.logMessageReceived += Log;
@@ -59,10 +60,8 @@ public class Controller : MonoBehaviour {
 			serializerLog: new MapViewerSerializerLog(),
 			fileManager: new MapViewerFileManager(),
 			systemLog: new UnitySystemLog());
-		MainContext.pathFolder = System.IO.Path.GetDirectoryName(lvlPath);
-		MainContext.pathFile = System.IO.Path.GetFileName(lvlPath);
-		//MainContext.lvlName = lvlName;
-		MainContext.loadAnimations = loadAnimations;
+
+		MainContext.Loader.loadAnimations = loadAnimations;
 
 		await Init();
 	}
@@ -72,7 +71,22 @@ public class Controller : MonoBehaviour {
 		w.Start();
 		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
 		await TimeController.WaitFrame();
-		await MainContext.LoadInit();
+
+		using (MainContext) {
+			MainContext.Loader.LoadingState = "Loading initial files";
+			await MainContext.Loader.LoadInitial();
+
+			// Load main scene
+			string lvlPath = UnitySettings.SelectedLevelFile;
+			string pathFolder = System.IO.Path.GetDirectoryName(lvlPath);
+			string pathFile = System.IO.Path.GetFileName(lvlPath);
+			MainContext.Loader.LoadingState = $"Loading scene: {pathFile}";
+			MainScene = await MainContext.Loader.LoadScene(new UbiArt.Path(pathFolder, pathFile));
+		}
+		if (MainScene != null && MainScene.obj != null) {
+			GameObject sceneGao = await MainScene.obj.GetGameObject();
+		}
+
 		await TimeController.WaitFrame();
 		if (GlobalLoadState.LoadState == GlobalLoadState.State.Error) return;
 		GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
@@ -88,10 +102,10 @@ public class Controller : MonoBehaviour {
 	public async UniTask LoadActor(Scene scene, string pathFile, string pathFolder) {
 		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
 		loadingScreen.Active = true;
-		ContainerFile<Actor> act = await MainContext.LoadExtraActor(pathFile, pathFolder);
+		ContainerFile<Actor> act = await MainContext.Loader.LoadExtraActor(pathFile, pathFolder);
 		if (act != null && act.obj != null) {
 			await TimeController.WaitFrame();
-			CSerializable c = await MainContext.Clone(act.obj, "act");
+			CSerializable c = await MainContext.Loader.Clone(act.obj, "act");
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
 			await scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
 			Controller.Obj.zListManager.Sort();
@@ -105,7 +119,7 @@ public class Controller : MonoBehaviour {
 	public async UniTask ExportActor(Actor actor, string path) {
 		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
 		loadingScreen.Active = true;
-		await MainContext.WriteActor(path, actor);
+		await MainContext.Loader.WriteActor(path, actor);
 		GlobalLoadState.DetailedState = "Finished";
 		GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
 		loadingScreen.Active = false;
@@ -119,7 +133,7 @@ public class Controller : MonoBehaviour {
 				loadingScreen.LoadingtextColor = UnityEngine.Color.red;
 			} else {
 				if (GlobalLoadState.LoadState == GlobalLoadState.State.Loading) {
-					loadingScreen.LoadingText = MainContext.loadingState;
+					loadingScreen.LoadingText = MainContext.Loader.LoadingState;
 				} else {
 					loadingScreen.LoadingText = GlobalLoadState.DetailedState;
 				}

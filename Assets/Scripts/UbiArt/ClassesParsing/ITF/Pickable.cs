@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 
 		protected virtual async UniTask InitGameObject() {
 			gao = new GameObject(USERFRIENDLY);
-			UbiArtContext.loadingState = $"Creating objects\n{USERFRIENDLY}";
+			UbiArtContext.Loader.LoadingState = $"Creating objects\n{USERFRIENDLY}";
 			await TimeController.WaitIfNecessary();
 			gao.transform.localPosition = new Vec3d(POS2D.x, POS2D.y, -RELATIVEZ);
 			gao.transform.localScale = new Vec3d((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);

@@ -165,13 +165,14 @@ namespace UbiArt {
 
 			
 			int indent = EditorGUI.indentLevel;
+			var localisation = Controller.MainContext.Loader.localisation;
 			string locIdPreview = locId.IsNull ? "-1 - " : locId.id + " - ";
 			if (locId.IsNull) {
 				locIdPreview += "None";
 			} else if (locId.id == 0) {
 				locIdPreview += "Empty";
-			} else if (Controller.MainContext.localisation != null && Controller.MainContext.localisation.strings.Count > 0 && Controller.MainContext.localisation.strings[0].ContainsKey(locId)) {
-				locIdPreview += Controller.MainContext.localisation.strings[0][locId].text.Replace("\n","\\n");
+			} else if (localisation != null && localisation.strings.Count > 0 && localisation.strings[0].ContainsKey(locId)) {
+				locIdPreview += localisation.strings[0][locId].text.Replace("\n","\\n");
 			} else {
 				locIdPreview += "Error";
 			}

@@ -27,12 +27,12 @@ namespace UbiArt.FileFormat {
 					}
 				}
 				if (CurrentSerializer == null) {
-					if (Context.Settings.serializerType == Settings.SerializerType.TagBinary && !Context.IsPureBinary(FilePath, Extension)) {
+					if (Context.Settings.serializerType == Settings.SerializerType.TagBinary && !Context.Loader.IsPureBinary(FilePath, Extension)) {
 						CurrentSerializer = new CSerializerObjectTagBinary(Context, this);
 					} else {
 						CurrentSerializer = new CSerializerObjectBinary(Context, this);
 					}
-					Context.ConfigureSerializeFlagsForExtension(ref CurrentSerializer.flags, ref CurrentSerializer.flagsOwn, Extension);
+					Loader.ConfigureSerializeFlagsForExtension(ref CurrentSerializer.flags, ref CurrentSerializer.flagsOwn, Extension);
 				}
 				return CurrentSerializer;
 			}

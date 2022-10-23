@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (skeleton != null && IsFirstLoad) {
-				Context l = UbiArtContext;
+				Loader l = s.Context.Loader;
 				if (l.loadAnimations) {
 					l.LoadFile<AnimSkeleton>(skeleton, result => skel = result);
 				}

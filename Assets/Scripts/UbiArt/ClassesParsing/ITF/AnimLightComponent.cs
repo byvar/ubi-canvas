@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
-				Context l = s.Context;
+				Loader l = s.Context.Loader;
 				l.LoadFile<GenericFile<GFXMaterialShader_Template>>(MatShader, result => shader = result);
 			}
 		}
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 
 		private void CreateGameObjects(GameObject gao) {
 			var context = UbiArtContext;
-			if (!context.loadAnimations) return;
+			if (!context.Loader.loadAnimations) return;
 			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
 			bool createdOne = false;
 			if (context.Settings.engineVersion > Settings.EngineVersion.RO) {
@@ -59,7 +59,7 @@ namespace UbiArt.ITF {
 
 		private void ProcessOrigins(GameObject gao, Material tex_mat) {
 			ICSerializable[] resources = tpl.animSet.resources;
-			if (!UbiArtContext.loadAnimations) return;
+			if (!UbiArtContext.Loader.loadAnimations) return;
 			ICSerializable pbkRes = resources.Where(res => res is AnimPatchBank).FirstOrDefault();
 			AnimPatchBank pbk = pbkRes != null ? (AnimPatchBank)pbkRes : null;
 			ICSerializable sklRes = resources.Where(res => res is AnimSkeleton).FirstOrDefault();
@@ -175,7 +175,7 @@ namespace UbiArt.ITF {
 					foreach (SubAnim_Template sat in tpl.animSet.animations) {
 						animPaths.Add(sat.name);
 					}
-					Context l = UbiArtContext;
+					Loader l = UbiArtContext.Loader;
 					ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, (AnimTrack)l.anm[p.stringID]) : null).Where(t => t != null).ToList();
 					if (ua.anims.Count > 0) {
 						ua.animIndex = 0;

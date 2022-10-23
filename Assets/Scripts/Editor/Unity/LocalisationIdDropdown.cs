@@ -17,7 +17,7 @@ class LocalisationIdDropdown : AdvancedDropdown {
 
 	protected override AdvancedDropdownItem BuildRoot() {
 		var root = new AdvancedDropdownItem(name);
-		Localisation_Template lt = Controller.MainContext.localisation;
+		Localisation_Template lt = Controller.MainContext.Loader.localisation;
 		root.AddChild(new AdvancedDropdownItem("-1 - None"));
 		root.AddChild(new AdvancedDropdownItem("0 - None"));
 		if (lt != null && lt.strings != null && lt.strings.Count > 0) {
@@ -34,7 +34,7 @@ class LocalisationIdDropdown : AdvancedDropdown {
 
 	protected override void ItemSelected(AdvancedDropdownItem item) {
 		base.ItemSelected(item);
-		Localisation_Template lt = Controller.MainContext.localisation;
+		Localisation_Template lt = Controller.MainContext.Loader.localisation;
 		if (item.children.Count() == 0) {
 			if (lt != null && lt.strings != null && lt.strings.Count > 0) {
 				CMap<LocalisationId, LocText> textMap = lt.strings[0];

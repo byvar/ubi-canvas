@@ -53,7 +53,7 @@ public class UnityWindowActor : UnityWindow {
 					EditorGUI.TextArea(GetNextRect(ref yPos), SelectedActorFile);
 				}
 				EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(SelectedActorFile));
-				UbiArt.ITF.Scene sc = Controller.MainContext.mainScene.obj;
+				UbiArt.ITF.Scene sc = Controller.Obj.MainScene.obj;
 				UbiArt.ITF.SubSceneActor ssa = null;
 				if (Selection.activeGameObject != null) {
 					UnityScene us = Selection.activeGameObject.GetComponent<UnityScene>();

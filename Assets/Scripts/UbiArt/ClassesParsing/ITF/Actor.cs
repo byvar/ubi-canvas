@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (this is Frise) return;
 			if (IsFirstLoad) {
-				Context l = s.Context;
+				Loader l = s.Context.Loader;
 				l.LoadFile<GenericFile<Actor_Template>>(LUA, result => {
 					template = result;
 					if (template != null)

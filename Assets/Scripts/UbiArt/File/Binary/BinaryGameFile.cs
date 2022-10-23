@@ -15,7 +15,7 @@ namespace UbiArt.FileFormat {
 			Cooked = cooked;
 		}
 
-		protected override Stream ReadStream => Context.GetGameFileStream(Path, Cooked);
+		protected override Stream ReadStream => Context.Loader.GetGameFileStream(Path, Cooked);
 		protected override Stream WriteStream => throw new NotImplementedException();
 
 		public override string DisplayName => Alias ?? Path?.filename ?? FilePath;

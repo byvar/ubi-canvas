@@ -112,7 +112,7 @@ namespace UbiArt {
 		}
 
 		public override string ToString() {
-			string str = "StringID(0x" + stringID.ToString("X8") + ")";
+			string str = $"StringID(0x{stringID.ToString("X8")})";
 			// TODO: Re-enable
 			/*if (!IsNull && Context.Loader.stringCache.ContainsKey(this)) {
 				str += " - " + Context.Loader.stringCache[this].Replace("\n", "\\n");
