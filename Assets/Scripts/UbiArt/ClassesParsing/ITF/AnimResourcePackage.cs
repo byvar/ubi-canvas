@@ -1,5 +1,4 @@
 ﻿using UbiArt.Animation;
-using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class AnimResourcePackage {

@@ -108,7 +108,12 @@ public class Controller : MonoBehaviour {
 			await TimeController.WaitFrame();
 			CSerializable c = await MainContext.Loader.Clone(act.obj, "act");
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
-			await scene.AddActor(c as Actor, pathFile.Substring(0, pathFile.IndexOf('.')));
+			Actor a = c as Actor;
+			bool isAdded = scene.AddActor(a, pathFile.Substring(0, pathFile.IndexOf('.')));
+			if (isAdded) {
+				var sceneGao = await scene.GetGameObject();
+				await a.SetGameObjectParent(sceneGao);
+			}
 			Controller.Obj.zListManager.Sort();
 			await TimeController.WaitFrame();
 		}
