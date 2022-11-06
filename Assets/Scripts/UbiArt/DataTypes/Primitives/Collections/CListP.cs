@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-
-namespace UbiArt {
+﻿namespace UbiArt {
 	// For serializing primitives
 	[SerializeEmbed]
 	public class CListP<T> : CList<T> {

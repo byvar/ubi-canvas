@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace UbiArt {
 	[SerializeEmbed]
-	public class CList<T> : IList<T>, ICSerializable, IObjectContainer {
-		protected List<T> container = new List<T>();
+	public class CArray<T> : IList<T>, ICSerializable, IObjectContainer {
+		protected T[] container = new T[0];
 
 		public virtual void Serialize(CSerializerObject s, string name) {
-			uint count = (uint)container.Count;
+			uint count = (uint)Count;
 			count = s.Serialize<uint>(count, name: name);
-			if(count != container.Count) Resize((int)count);
+			if (count != (uint)Count) {
+				Array.Resize(ref container, (int)count);
+			}
 			string typeName = "VAL";
 			if (count > 0 && s.GetTagCode(typeof(T)) == 200) {
 				typeName = null;
 			}
+			//s.EnterEmbed();
 			for (int i = 0; i < count; i++) {
 				T obj = container[i];
 				if (s.ArrayEntryStart(name: name, index: i)) {
@@ -27,32 +26,27 @@ namespace UbiArt {
 				}
 				container[i] = obj;
 			}
+			//s.ExitEmbed();
 		}
 
-		#region List Interface
-		public T this[int index] {
-			get {
-				return container[index];
-			}
-			set {
-				container[index] = value;
-			}
-		}
+		#region List interface
+		public T this[int index] { get => ((IList<T>)container)[index]; set => ((IList<T>)container)[index] = value; }
 
-		public int Count => container.Count;
+		public int Count => ((IList<T>)container).Count;
 
 		public bool IsReadOnly => ((IList<T>)container).IsReadOnly;
 
 		public void Add(T item) {
-			container.Add(item);
+			Array.Resize(ref container, Count+1);
+			container[Count - 1] = item;
 		}
 
 		public void Clear() {
-			container.Clear();
+			Array.Resize(ref container, 0);
 		}
 
 		public bool Contains(T item) {
-			return container.Contains(item);
+			return ((IList<T>)container).Contains(item);
 		}
 
 		public void CopyTo(T[] array, int arrayIndex) {
@@ -79,18 +73,8 @@ namespace UbiArt {
 			((IList<T>)container).RemoveAt(index);
 		}
 
-		public void Resize(int sz) {
-			int cur = container.Count;
-			if (sz < cur)
-				container.RemoveRange(sz, cur - sz);
-			else if (sz > cur) {
-				if (sz > container.Capacity) container.Capacity = sz;
-				container.AddRange(Enumerable.Repeat(default(T), sz - cur));
-			}
-		}
-
 		IEnumerator IEnumerable.GetEnumerator() {
-			return container.GetEnumerator();
+			return ((IList<T>)container).GetEnumerator();
 		}
 		#endregion
 	}

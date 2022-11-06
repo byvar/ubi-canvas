@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace UbiArt {
 	public class Generic<T> : ICSerializable, IObjectContainer where T : CSerializable {
@@ -56,7 +50,7 @@ namespace UbiArt {
 					Type type = ObjectFactory.classes[className.stringID];
 					if (type.ContainsGenericParameters) {
 						if (!typeof(T).IsGenericType) {
-							Debug.LogError(s.CurrentPointer + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
+							s.Context.SystemLogger?.LogError(s.CurrentPointer + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
 							throw new Exception(s.CurrentPointer + " - Generic parameters error with type " + type + ". Expecting type " + typeof(T) + ".");
 						}
 						type = type.MakeGenericType(typeof(T).GetGenericArguments());
@@ -64,12 +58,12 @@ namespace UbiArt {
 					obj = s.SerializeGeneric<T>(obj, type);
 				} else {
 					if (s is CSerializerObjectTagBinary) {
-						Debug.LogWarning("CRC " + className.stringID.ToString("X8")
+						s.Context.SystemLogger?.LogWarning("CRC " + className.stringID.ToString("X8")
 							+ " found at " + s.CurrentPointer
 							+ " while reading container of type " + typeof(T) + " is not yet supported!");
 						className.stringID = 0xFFFFFFFF;
 					} else {
-						Debug.LogError("CRC " + className.stringID.ToString("X8")
+						s.Context.SystemLogger?.LogError("CRC " + className.stringID.ToString("X8")
 							+ " found at " + s.CurrentPointer
 							+ " while reading container of type " + typeof(T) + " is not yet supported!");
 						throw new NotImplementedException("CRC " + className.stringID.ToString("X8")

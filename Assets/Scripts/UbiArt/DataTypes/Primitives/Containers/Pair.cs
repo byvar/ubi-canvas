@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-
-namespace UbiArt {
+﻿namespace UbiArt {
 	[SerializeEmbed]
 	public class Pair<T1, T2> : ICSerializable, IObjectContainer {
 		public T1 Item1;
