@@ -2,7 +2,7 @@
 
 namespace UbiArt
 {
-    public interface ISerializerLog : IDisposable
+    public interface ISerializerLogger : IDisposable
     {
         bool IsEnabled { get; }
         void Log(object obj);

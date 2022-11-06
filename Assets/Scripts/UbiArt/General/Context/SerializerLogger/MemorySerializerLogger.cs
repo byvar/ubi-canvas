@@ -4,10 +4,10 @@ using System.Text;
 namespace UbiArt
 {
     /// <summary>
-    /// A serializer log which logs to memory, allowing the entire log to be retrieved as a string. This is not recommended
+    /// A serializer logger which logs to memory, allowing the entire log to be retrieved as a string. This is not recommended
     /// for larger serializations as it can use a lot of memory.
     /// </summary>
-    public class MemorySerializerLog : ISerializerLog
+    public class MemorySerializerLogger : ISerializerLogger
     {
         public bool IsEnabled { get; set; } = true;
 

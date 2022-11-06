@@ -1,14 +1,10 @@
-﻿
-using UbiArt.FileFormat;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Cysharp.Threading.Tasks;
 using UbiArt.Bundle;
 using UbiArt.UV;
-using UbiCanvas.Helpers;
-using System.Linq;
+using UbiArt.FileFormat;
+using System.Threading.Tasks;
 
 namespace UbiArt {
 	public class Loader {
@@ -103,7 +99,7 @@ namespace UbiArt {
 				return FileManager.GetFileReadStream($"{Context.BasePath}{cookedFolder}{p.folder}{p.filename}{(ckd ? ".ckd" : "")}");
 			}
 		}
-		protected async UniTask PrepareGameFile(Path p, bool ckd) {
+		protected async Task PrepareGameFile(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
 			if (Settings.loadFromIPK && Settings.bundles != null) {
 				string s = LoadingState;
@@ -111,7 +107,7 @@ namespace UbiArt {
 				await PrepareGameFile_Internal();
 				LoadingState = s;
 
-				async UniTask PrepareGameFile_Internal() {
+				async Task PrepareGameFile_Internal() {
 					Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
 					string[] bnames = Settings.bundles;
 					// Loop 1: try to find an already loaded bundle and an already loaded file
@@ -130,7 +126,7 @@ namespace UbiArt {
 						if (!Bundles.ContainsKey(bname)) {
 							string fileName = $"{bname}_{Settings.PlatformString}.ipk";
 							string fullPath = $"{Context.BasePath}{fileName}";
-							await FileSystem.PrepareBigFile(fullPath, 0);
+							await FileManager.PrepareBigFile(fullPath, 0);
 							if (!FileManager.FileExists(fullPath)) continue;
 							BigFiles[bname] = new BinaryBigFile(Context, fileName) {
 								Alias = bname
@@ -145,11 +141,11 @@ namespace UbiArt {
 					}
 				}
 			} else {
-				await FileSystem.PrepareFile($"{Context.BasePath}{cookedFolder}{p.folder}{p.filename}{(ckd ? ".ckd" : "")}");
+				await FileManager.PrepareFile($"{Context.BasePath}{cookedFolder}{p.folder}{p.filename}{(ckd ? ".ckd" : "")}");
 			}
 		}
 
-		public async UniTask LoadInitial() {
+		public async Task LoadInitial() {
 			// Load UV Atlas manager for textures
 			Path pAtlas = new Path("", "atlascontainer.ckd");
 			LoadFile<UVAtlasManager>(pAtlas, result => uvAtlasManager = result);
@@ -182,7 +178,7 @@ namespace UbiArt {
 			await LoadLoop();
 		}
 
-		public async UniTask<ContainerFile<ITF.Scene>> LoadScene(Path path) {
+		public async Task<ContainerFile<ITF.Scene>> LoadScene(Path path) {
 			try {
 				ContainerFile<ITF.Scene> scene = null;
 				var pathFile = path.filename;
@@ -199,10 +195,10 @@ namespace UbiArt {
 			} finally {
 			}
 		}
-		protected async UniTask LoadLoop() {
+		protected async Task LoadLoop() {
 			try {
 				string state = LoadingState;
-				TimeController.StartStopwatch();
+				Context.AsyncController.StartAsync();
 				while (pathsToLoad.Count > 0) {
 					ObjectPlaceHolder o = pathsToLoad.Dequeue();
 					if (o.path != null) {
@@ -215,7 +211,7 @@ namespace UbiArt {
 							if (GameFileExists(o.path, ckd)) {
 								files.Add(id, new BinaryGameFile(Context, o.path.filename, o.path, ckd));
 								LoadingState = $"{state}\n{o.path.FullPath}";
-								await TimeController.WaitIfNecessary();
+								await Context.AsyncController.WaitIfNecessary();
 							}
 						}
 						if (files.ContainsKey(id)) {
@@ -226,7 +222,7 @@ namespace UbiArt {
 							if (s.CurrentPosition == s.Length) {
 								//SystemLog?.LogInfo($"{s.CurrentPointer}: OK");
 							} else if (s.CurrentPosition != 0) {
-								Context.SystemLog?.LogInfo($"{s.CurrentPointer}: Did not fully serialize file! Length: {s.Length:X8}");
+								Context.SystemLogger?.LogInfo($"{s.CurrentPointer}: Did not fully serialize file! Length: {s.Length:X8}");
 							}
 							f.Dispose();
 						}
@@ -242,11 +238,11 @@ namespace UbiArt {
 							virtualFiles.Remove(t);
 						}
 					}
-					await TimeController.WaitIfNecessary();
+					await Context.AsyncController.WaitIfNecessary();
 					LoadingState = state;
 				}
 			} finally {
-				TimeController.StopStopwatch();
+				Context.AsyncController.StopAsync();
 				foreach (KeyValuePair<StringID, UbiArtFile> kv in files) {
 					kv.Value.Dispose();
 				}
@@ -304,7 +300,7 @@ namespace UbiArt {
 				if (s.CurrentPosition == s.Length) {
 					//SystemLog?.LogInfo($"{s.CurrentPointer}: OK");
 				} else if(s.CurrentPosition != 0) {
-					Context.SystemLog?.LogInfo($"{s.CurrentPointer}: Did not fully serialize file! Length: {s.Length:X8}");
+					Context.SystemLogger?.LogInfo($"{s.CurrentPointer}: Did not fully serialize file! Length: {s.Length:X8}");
 				}
 			} else {
 				pathsToLoad.Enqueue(new ObjectPlaceHolder(path, action));
@@ -315,7 +311,7 @@ namespace UbiArt {
 			pathsToLoad.Enqueue(new ObjectPlaceHolder(name, mem, action));
 		}
 
-		public async UniTask<ContainerFile<ITF.Actor>> LoadExtraActor(string pathFile, string pathFolder) {
+		public async Task<ContainerFile<ITF.Actor>> LoadExtraActor(string pathFile, string pathFolder) {
 			if (pathFile.EndsWith(".act") || pathFile.EndsWith(".act.ckd")) {
 				Path p = new Path(pathFolder, pathFile);
 				Loader l = this;
@@ -327,20 +323,20 @@ namespace UbiArt {
 			return null;
 		}
 
-		public async UniTask<CSerializable> Clone(CSerializable cs, string extension) {
+		public async Task<CSerializable> Clone(CSerializable cs, string extension) {
 			CSerializable c = cs.Clone(extension);
 			await LoadLoop();
 			return c;
 		}
 
-		public async UniTask WriteBundle(string path, List<Pair<Path, ICSerializable>> files) {
+		public async Task WriteBundle(string path, List<Pair<Path, ICSerializable>> files) {
 			Bundle.BundleFile b = new Bundle.BundleFile();
 			foreach (Pair<Path, ICSerializable> f in files) {
 				b.AddFile(f.Item1.CookedPath(Context), f.Item2);
 			}
-			TimeController.StartStopwatch();
+			Context.AsyncController.StartAsync();
 			await b.WriteBundle(Context, path);
-			TimeController.StopStopwatch();
+			Context.AsyncController.StopAsync();
 		}
 
 		public void LoadFile<T>(Path path, Action<T> onResult) where T : class, ICSerializable, new() {
@@ -377,8 +373,9 @@ namespace UbiArt {
 		public void LoadSaveFile(string path, Action<RO2_SaveData> onResult) => LoadUncooked<RO2_SaveData>(path, onResult);
 		public void LoadSaveFileOrigins(string path, Action<Ray_SaveData> onResult) => LoadUncooked<Ray_SaveData>(path, onResult);
 
-		public async UniTask WriteActor(string path, ITF.Actor act) {
-			TimeController.StartStopwatch();
+		public async Task<byte[]> WriteActorFile(ITF.Actor act) {
+			Context.AsyncController.StartAsync();
+
 			// Clone actor
 			CSerializable c = await Clone(act, "act");
 			ITF.Actor actClone = c as ITF.Actor;
@@ -388,11 +385,13 @@ namespace UbiArt {
 			actClone.RELATIVEZ = 0;
 			actClone.xFLIPPED = false;
 			actClone.USERFRIENDLY = "";
+
 			// Add it to a container file
 			ContainerFile<ITF.Actor> container = new ContainerFile<ITF.Actor>() {
 				read = true,
 				obj = actClone
 			};
+
 			// Serialize container file
 			byte[] serializedData = null;
 			using (MemoryStream stream = new MemoryStream()) {
@@ -404,10 +403,10 @@ namespace UbiArt {
 					serializedData = stream.ToArray();
 				}
 			}
-			await TimeController.WaitIfNecessary();
-			// Write serialized data to file
-			Util.ByteArrayToFile(path, serializedData);
-			TimeController.StopStopwatch();
+			await Context.AsyncController.WaitIfNecessary();
+			Context.AsyncController.StopAsync();
+
+			return serializedData;
 		}
 	}
 }

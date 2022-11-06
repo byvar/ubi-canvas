@@ -370,8 +370,8 @@ namespace UbiCanvas.Helpers {
 			UnityWebRequest www = UnityWebRequest.Get(Url);
 			string state = GlobalLoadState.DetailedState;
 			int totalSize = caches.Sum(c => c.Value.Length);
-			GlobalLoadState.DetailedState = state + "\nDownloading part of bigfile: " + Url.Replace(FileSystem.serverAddress, "") + " (New size: " + Util.SizeSuffix(totalSize + count, 0) + "/" + Util.SizeSuffix(Length, 0) + ")";
-			UnityEngine.Debug.Log("Requesting range: " + string.Format("bytes={0}-{1}", startPosition, startPosition + count - 1) + " - " + Url);
+			GlobalLoadState.DetailedState = $"{state}\nDownloading part of bigfile: {Url.Replace(FileSystem.serverAddress, "")} (New size: {Util.SizeSuffix(totalSize + count, 0)}/{Util.SizeSuffix(Length, 0)})";
+			UnityEngine.Debug.Log($"Requesting range: {string.Format("bytes={0}-{1}", startPosition, startPosition + count - 1)} - {Url}");
 			www.SetRequestHeader("Range", string.Format("bytes={0}-{1}", startPosition, startPosition + count - 1));
 			try {
 				await www.SendWebRequest();

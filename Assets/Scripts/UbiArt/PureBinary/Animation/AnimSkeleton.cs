@@ -174,7 +174,7 @@ namespace UbiArt.Animation {
 					}
 				}
 			}
-			if (currentIndex != bones.Count) UbiArtContext.SystemLog?.LogInfo(currentIndex + " - " + bones.Count);
+			if (currentIndex != bones.Count) UbiArtContext.SystemLogger?.LogInfo(currentIndex + " - " + bones.Count);
 			return order;
 		}
 

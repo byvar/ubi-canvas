@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using ISystemLog = UbiArt.ISystemLog;
+using ISystemLogger = UbiArt.ISystemLogger;
 
 namespace UbiCanvas {
-	public class UnitySystemLog : ISystemLog
+	public class UnitySystemLogger : ISystemLogger
 	{
 		public void Log(UbiArt.LogLevel logLevel, object log, params object[] args) {
 			switch (logLevel) {

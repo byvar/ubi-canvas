@@ -22,5 +22,9 @@ namespace UbiCanvas {
 			if (reader.BaseStream.InnerStream is PartialHttpStream httpStream)
 				await httpStream.FillCacheForRead(length);
 		}
+
+		public async Task PrepareFile(string path) => await FileSystem.PrepareFile(path);
+
+		public async Task PrepareBigFile(string path, int cacheLength) => await FileSystem.PrepareBigFile(path, cacheLength);
 	}
 }

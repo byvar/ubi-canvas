@@ -8,17 +8,22 @@ namespace UbiArt {
 	public class Context : IDisposable {
 
 		#region Constructors
-		public Context(string basePath, Settings settings, ISerializerLog serializerLog = null, IFileManager fileManager = null, ISystemLog systemLog = null) {
+		public Context(string basePath, Settings settings,
+			ISerializerLogger serializerLogger = null,
+			IFileManager fileManager = null,
+			ISystemLogger systemLogger = null,
+			IAsyncController asyncController = null) {
 			// Set properties from parameters
 			FileManager = fileManager ?? new DefaultFileManager();
-			SystemLog = systemLog;
-			SerializerLog = serializerLog ?? new EmptySerializerLog();
+			SystemLogger = systemLogger;
+			SerializerLogger = serializerLogger ?? new EmptySerializerLogger();
+			AsyncController = asyncController ?? new EmptyAsyncController();
 			BasePath = NormalizePath(basePath, true);
 			Settings = settings;
 
 			// Initialize properties
 			ObjectStorage = new Dictionary<string, object>();
-			Cache = new SerializableCache(SystemLog);
+			Cache = new SerializableCache(SystemLogger);
 			AdditionalSettings = new Dictionary<Type, object>();
 			Files = new List<UbiArtFile>();
 
@@ -33,7 +38,9 @@ namespace UbiArt {
 
 #nullable enable
 		public IFileManager FileManager { get; }
-		public ISystemLog? SystemLog { get; }
+		public ISystemLogger? SystemLogger { get; }
+		public ISerializerLogger SerializerLogger { get; }
+		public IAsyncController AsyncController { get; }
 #nullable restore
 
 		#endregion
@@ -48,7 +55,6 @@ namespace UbiArt {
 
 		public string BasePath { get; }
 		public SerializableCache Cache { get; }
-		public ISerializerLog SerializerLog { get; }
 		public List<UbiArtFile> Files { get; }
 		public Loader Loader { get; }
 
@@ -155,7 +161,7 @@ namespace UbiArt {
 
 			Files.Add(file);
 
-			SystemLog?.LogTrace("Added file {0}", file.FilePath);
+			SystemLogger?.LogTrace("Added file {0}", file.FilePath);
 
 			return file;
 		}
@@ -167,7 +173,7 @@ namespace UbiArt {
 			Files.Remove(file);
 			file.Dispose();
 
-			SystemLog?.LogTrace("Removed file {0}", file.FilePath);
+			SystemLogger?.LogTrace("Removed file {0}", file.FilePath);
 		}
 		public bool FileExists(UbiArtFile file) {
 			return Files.Contains(file);
@@ -234,7 +240,7 @@ namespace UbiArt {
 			foreach (var file in Files)
 				file?.Dispose();
 
-			SerializerLog.Dispose();
+			SerializerLogger.Dispose();
 		}
 		public void Dispose() {
 			Close();

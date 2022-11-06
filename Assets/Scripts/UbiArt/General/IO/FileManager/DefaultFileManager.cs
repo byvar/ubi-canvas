@@ -14,5 +14,8 @@ namespace UbiArt
         public virtual PathSeparatorChar SeparatorCharacter => PathSeparatorChar.ForwardSlash;
 
         public virtual Task FillCacheForReadAsync(long length, Reader reader) => Task.CompletedTask;
+
+        public Task PrepareFile(string path) => Task.CompletedTask;
+        public Task PrepareBigFile(string path, int cacheLength) => Task.CompletedTask;
     }
 }

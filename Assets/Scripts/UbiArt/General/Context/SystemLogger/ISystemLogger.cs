@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace UbiArt
 {
-    public interface ISystemLog
+    public interface ISystemLogger
     {
         [StringFormatMethod("log")]
         void Log(LogLevel logLevel, object? log, params object[] args);

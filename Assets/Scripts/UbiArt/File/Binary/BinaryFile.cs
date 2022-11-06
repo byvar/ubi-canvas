@@ -41,14 +41,14 @@ namespace UbiArt.FileFormat {
 		public virtual Reader CreateReader() {
 			Stream s = ReadStream;
 			Reader reader = new Reader(s, isLittleEndian: Endianness == Endian.Little);
-			Context.SystemLog?.LogTrace("Created reader for file {0}", FilePath);
+			Context.SystemLogger?.LogTrace("Created reader for file {0}", FilePath);
 			return reader;
 		}
 
 		public virtual Writer CreateWriter() {
 			Stream s = WriteStream;
 			Writer writer = new Writer(s, isLittleEndian: Endianness == Endian.Little);
-			Context.SystemLog?.LogTrace("Created writer for file {0}", FilePath);
+			Context.SystemLogger?.LogTrace("Created writer for file {0}", FilePath);
 			return writer;
 		}
 

@@ -171,7 +171,7 @@ namespace UbiCanvas.Helpers {
 		public static async UniTask PrepareFile(string path) {
 			if (FileSystem.mode == FileSystem.Mode.Web && !string.IsNullOrEmpty(path)) {
 				string state = GlobalLoadState.DetailedState;
-				GlobalLoadState.DetailedState = state + "\nDownloading file: " + path;
+				GlobalLoadState.DetailedState = $"{state}\nDownloading file: {path}";
 				await FileSystem.DownloadFile(path);
 				GlobalLoadState.DetailedState = state;
 				await TimeController.WaitIfNecessary();
@@ -181,7 +181,7 @@ namespace UbiCanvas.Helpers {
 		public static async UniTask PrepareBigFile(string path, int cacheLength) {
 			if (FileSystem.mode == FileSystem.Mode.Web) {
 				string state = GlobalLoadState.DetailedState;
-				GlobalLoadState.DetailedState = state + "\nInitializing bigfile: " + path + " (Cache size: " + Util.SizeSuffix(cacheLength, 0) + ")";
+				GlobalLoadState.DetailedState = $"{state}\nInitializing bigfile: {path} (Cache size: {Util.SizeSuffix(cacheLength, 0)})";
 				await FileSystem.InitBigFile(path, cacheLength);
 				GlobalLoadState.DetailedState = state;
 				await TimeController.WaitIfNecessary();

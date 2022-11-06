@@ -103,7 +103,7 @@ namespace UbiArt.Animation {
 					}
 				}
 			}
-			if (currentIndex != bones.Count) UbiArtContext.SystemLog?.LogInfo(currentIndex + " - " + bones.Count);
+			if (currentIndex != bones.Count) UbiArtContext.SystemLogger?.LogInfo(currentIndex + " - " + bones.Count);
 			if (skeleton != null) {
 				for (int i = 0; i < bones.Count; i++) {
 					order[i] = skeleton.GetBoneIndexFromTag(bones[order[i]].tag);

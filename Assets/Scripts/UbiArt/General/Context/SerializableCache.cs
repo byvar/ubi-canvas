@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace UbiArt {
 	public class SerializableCache {
-		public SerializableCache(ISystemLog systemLog) {
+		public SerializableCache(ISystemLogger systemLog) {
 			SystemLog = systemLog;
 			Structs = new Dictionary<Type, Dictionary<StringID, ICSerializable>>();
 		}
 
-		protected ISystemLog SystemLog { get; }
+		protected ISystemLogger SystemLog { get; }
 
 		public Dictionary<Type, Dictionary<StringID, ICSerializable>> Structs { get; }
 

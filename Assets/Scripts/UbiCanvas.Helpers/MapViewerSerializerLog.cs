@@ -3,7 +3,7 @@ using System.Text;
 using UbiArt;
 
 namespace UbiCanvas {
-	public class MapViewerSerializerLog : ISerializerLog
+	public class MapViewerSerializerLogger : ISerializerLogger
 	{
 		public bool IsEnabled => UnitySettings.Log;
 

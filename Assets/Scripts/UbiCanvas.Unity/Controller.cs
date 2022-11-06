@@ -57,9 +57,10 @@ public class Controller : MonoBehaviour {
 		loadingScreen.Active = true;
 		var settings = Settings.Init(mode);
 		MainContext = new Context(gameDataBinFolder, settings,
-			serializerLog: new MapViewerSerializerLog(),
+			serializerLogger: new MapViewerSerializerLogger(),
 			fileManager: new MapViewerFileManager(),
-			systemLog: new UnitySystemLog());
+			systemLogger: new UnitySystemLogger(),
+			asyncController: new UniTaskAsyncController());
 
 		MainContext.Loader.loadAnimations = loadAnimations;
 
@@ -119,7 +120,10 @@ public class Controller : MonoBehaviour {
 	public async UniTask ExportActor(Actor actor, string path) {
 		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
 		loadingScreen.Active = true;
-		await MainContext.Loader.WriteActor(path, actor);
+		byte[] actorBytes = await MainContext.Loader.WriteActorFile(actor);
+		if (actorBytes != null)
+			Util.ByteArrayToFile(path, actorBytes);
+
 		GlobalLoadState.DetailedState = "Finished";
 		GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
 		loadingScreen.Active = false;

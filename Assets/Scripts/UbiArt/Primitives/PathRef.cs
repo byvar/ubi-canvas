@@ -46,7 +46,7 @@ namespace UbiArt {
 			stringID = s.SerializeObject<StringID>(stringID);
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				flags = s.Serialize<uint>(flags);
-				if (flags != 0) s.Context.SystemLog?.LogInfo("PathRef with nonzero flags: " + this + " - " + flags);
+				if (flags != 0) s.Context.SystemLogger?.LogInfo("PathRef with nonzero flags: " + this + " - " + flags);
 			}
 		}
 		public override string ToString() {

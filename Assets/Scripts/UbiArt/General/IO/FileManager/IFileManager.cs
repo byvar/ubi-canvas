@@ -14,5 +14,8 @@ namespace UbiArt
         PathSeparatorChar SeparatorCharacter { get; }
 
         Task FillCacheForReadAsync(long length, Reader reader);
-    }
+
+        Task PrepareFile(string path);
+        Task PrepareBigFile(string path, int cacheLength);
+	}
 }
