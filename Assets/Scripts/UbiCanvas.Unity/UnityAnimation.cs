@@ -36,7 +36,7 @@ public class UnityAnimation : MonoBehaviour {
 		if (animIndex > 0 && skeleton != null) {
 			currentFrame = 0;
 			lastBmlFrame = -1;
-			skeleton.ResetBones(bones);
+			skeleton.ResetBones(l, bones);
 			UpdateAnimation();
 		}
 		loaded = true;
@@ -64,15 +64,15 @@ public class UnityAnimation : MonoBehaviour {
 						AnimTrackBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
 						AnimTrackBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
 						if (p == bl.amountPAS - 1 || (currentFrame >= pas.frame && currentFrame < next.frame)) {
-							Vector2 pos = pas.Position;
+							Vector2 pos = pas.Position.GetUnityVector();
 							Angle rot = pas.Rotation;
-							Vector2 scl = pas.Scale;
+							Vector2 scl = pas.Scale.GetUnityVector();
 							if (next != pas) {
 								float nextFrame = next.frame < pas.frame ? next.frame + animTrack.length : next.frame;
 								float lerp = (currentFrame - pas.frame) / (nextFrame - pas.frame);
-								pos = Vector2.Lerp(pos, next.Position, lerp);
+								pos = Vector2.Lerp(pos, next.Position.GetUnityVector(), lerp);
 								rot = Mathf.Lerp(rot, next.Rotation, lerp);
-								scl = Vector2.Lerp(scl, next.Scale, lerp);
+								scl = Vector2.Lerp(scl, next.Scale.GetUnityVector(), lerp);
 							}
 							pos *= animTrack.multiplierP;
 							rot *= animTrack.multiplierA;

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.UV {
 	public class UVAtlas : CSerializable {
 		public static uint versionLegends = 0xC;

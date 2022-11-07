@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class SubSceneActor {

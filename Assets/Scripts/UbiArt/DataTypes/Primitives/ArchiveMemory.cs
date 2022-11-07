@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt {
 	[Games(GameFlags.All)]
 	public partial class ArchiveMemory : ICSerializable {

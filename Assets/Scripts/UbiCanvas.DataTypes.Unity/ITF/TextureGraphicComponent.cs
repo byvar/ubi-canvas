@@ -90,13 +90,13 @@ namespace UbiArt.ITF {
 			MaterialPropertyBlock mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
 			GFXPrimitiveParam param = PrimitiveParameters;
-			mpb.SetColor("_ColorFactor", param.colorFactor);
+			mpb.SetColor("_ColorFactor", param.colorFactor.GetUnityColor());
 			mpb.SetColor("_LightConfig", new Vector4(
 				param.FrontLightBrightness,
 				param.FrontLightContrast,
 				param.BackLightBrightness,
 				param.BackLightContrast));
-			mpb.SetColor("_ColorFog", param.colorFog);
+			mpb.SetColor("_ColorFog", param.colorFog.GetUnityColor());
 			r.SetPropertyBlock(mpb, index);
 		}
 	}

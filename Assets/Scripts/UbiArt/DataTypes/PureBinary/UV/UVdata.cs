@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.UV {
 	public class UVdata : CSerializable {
 		public CArrayO<Vec2d> uvs;

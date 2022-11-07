@@ -108,12 +108,13 @@ namespace UbiArt {
 			return new StringID(s);
 		}
 
-		public override string ToString() {
-			string str = $"StringID(0x{stringID.ToString("X8")})";
-			// TODO: Re-enable
-			/*if (!IsNull && Context.Loader.stringCache.ContainsKey(this)) {
-				str += " - " + Context.Loader.stringCache[this].Replace("\n", "\\n");
-			}*/
+		public override string ToString() => $"StringID(0x{stringID.ToString("X8")})";
+
+		public string ToString(Context c) {
+			string str = ToString();
+			if (!IsNull && c.StringCache.ContainsKey(this)) {
+				str += " - " + c.StringCache[this].Replace("\n", "\\n");
+			}
 			return str;
 		}
 

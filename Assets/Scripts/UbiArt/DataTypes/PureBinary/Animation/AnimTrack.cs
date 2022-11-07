@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UbiArt.ITF;
-using UnityEngine;
-
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrack::serialize
 	// anm.ckd file

@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 namespace UbiArt.ITF {
 	public partial class RO2_SceneConfig_ChallengeTraining {
 		public GenericFile<CSerializable> mode;

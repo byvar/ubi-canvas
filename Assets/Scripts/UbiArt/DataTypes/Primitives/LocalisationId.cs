@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using I18N.Common;
+using System;
 
 namespace UbiArt {
 	public class LocalisationId : ICSerializable, IEquatable<LocalisationId> {
@@ -27,13 +24,14 @@ namespace UbiArt {
 			return new LocalisationId(i);
 		}
 
-		public override string ToString() {
-			string mainStr = "LocId(" + id + ")";
-			// TODO: Re-enable
-			/*if (Context.Loader.localisation != null && Context.Loader.localisation.strings[0].ContainsKey(id)) {
-				mainStr += " - " + Context.Loader.localisation.strings[0][id].text.Replace("\n", "\\n");
-			}*/
-			return mainStr;
+		public override string ToString() => $"LocId({id})";
+
+		public string ToString(Context c) {
+			string str = ToString();
+			if (c.Loader?.localisation != null && c.Loader.localisation.strings[0].ContainsKey(id)) {
+				str += $" - {c.Loader.localisation.strings[0][id].text.Replace("\n", "\\n")}";
+			}
+			return str;
 		}
 
 		public override bool Equals(object obj) {

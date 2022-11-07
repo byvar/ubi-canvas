@@ -39,8 +39,8 @@ namespace UbiArt.ITF {
 					Mesh mesh = new Mesh();
 					mesh.subMeshCount = meshBuildData.value.StaticIndexList.Count;
 					mesh.vertices = meshBuildData.value.StaticVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
-					mesh.uv = meshBuildData.value.StaticVertexList.Select(v => (Vector2)v.uv).ToArray();
-					mesh.colors = meshBuildData.value.StaticVertexList.Select(v => (UnityEngine.Color)v.color.Color).ToArray();
+					mesh.uv = meshBuildData.value.StaticVertexList.Select(v => v.uv.GetUnityVector()).ToArray();
+					mesh.colors = meshBuildData.value.StaticVertexList.Select(v => v.color.GetUnityColor()).ToArray();
 					//mesh.SetUVs(4, meshBuildData.value.StaticVertexList.Select(v => v.color.Vector).ToList());
 					//MapLoader.Loader.print(meshBuildData.value.StaticVertexList[0].color.Vector);
 					MeshFilter mf = mesh_static.AddComponent<MeshFilter>();
@@ -125,11 +125,11 @@ namespace UbiArt.ITF {
 					Mesh mesh = new Mesh();
 					mesh.subMeshCount = meshBuildData.value.AnimIndexList.Count;
 					mesh.vertices = meshBuildData.value.AnimVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
-					mesh.uv = meshBuildData.value.AnimVertexList.Select(v => (Vector2)v.uv1).ToArray();
+					mesh.uv = meshBuildData.value.AnimVertexList.Select(v => v.uv1.GetUnityVector()).ToArray();
 					mesh.SetUVs(1, meshBuildData.value.AnimVertexList.Select(v => v.uv2.UnityVector).ToList());
 					mesh.SetUVs(2, meshBuildData.value.AnimVertexList.Select(v => v.uv3.UnityVector).ToList());
-					mesh.SetUVs(3, meshBuildData.value.AnimVertexList.Select(v => (Vector2)v.uv4).ToList());
-					mesh.colors = meshBuildData.value.AnimVertexList.Select(v => v.color.Color).ToArray();
+					mesh.SetUVs(3, meshBuildData.value.AnimVertexList.Select(v => v.uv4.GetUnityVector()).ToList());
+					mesh.colors = meshBuildData.value.AnimVertexList.Select(v => v.color.GetUnityColor()).ToArray();
 					//mesh.SetUVs(4, meshBuildData.value.AnimVertexList.Select(v => v.color.Vector).ToList());
 					//MapLoader.Loader.print(meshBuildData.value.StaticVertexList[0].color.Vector);
 					MeshFilter mf = mesh_anim.AddComponent<MeshFilter>();
@@ -213,8 +213,8 @@ namespace UbiArt.ITF {
 					Mesh mesh = new Mesh();
 					mesh.subMeshCount = 1;
 					mesh.vertices = meshBuildData.value.OverlayVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
-					mesh.uv = meshBuildData.value.OverlayVertexList.Select(v => (Vector2)v.uv).ToArray();
-					mesh.colors = meshBuildData.value.OverlayVertexList.Select(v => (UnityEngine.Color)v.color.Color).ToArray();
+					mesh.uv = meshBuildData.value.OverlayVertexList.Select(v => v.uv.GetUnityVector()).ToArray();
+					mesh.colors = meshBuildData.value.OverlayVertexList.Select(v => (UnityEngine.Color)v.color.GetUnityColor()).ToArray();
 					//mesh.SetUVs(4, meshBuildData.value.StaticVertexList.Select(v => v.color.Vector).ToList());
 					//MapLoader.Loader.print(meshBuildData.value.StaticVertexList[0].color.Vector);
 					MeshFilter mf = mesh_overlay.AddComponent<MeshFilter>();
@@ -272,13 +272,13 @@ namespace UbiArt.ITF {
 			MaterialPropertyBlock mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
 			GFXPrimitiveParam param = PrimitiveParameters;
-			mpb.SetColor("_ColorFactor", param.colorFactor);
+			mpb.SetColor("_ColorFactor", param.colorFactor.GetUnityColor());
 			mpb.SetColor("_LightConfig", new Vector4(
 				param.FrontLightBrightness,
 				param.FrontLightContrast,
 				param.BackLightBrightness,
 				param.BackLightContrast));
-			mpb.SetColor("_ColorFog", param.colorFog);
+			mpb.SetColor("_ColorFog", param.colorFog.GetUnityColor());
 			r.SetPropertyBlock(mpb, index);
 		}
 	}

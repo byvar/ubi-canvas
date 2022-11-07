@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace UbiArt {
 	public class Angle : ICSerializable {
@@ -32,30 +27,15 @@ namespace UbiArt {
 
 		public float EulerAngle {
 			get {
-				return angle * Mathf.Rad2Deg;
+				return angle * Rad2Deg;
 			}
 			set {
-				angle = value * Mathf.Deg2Rad;
+				angle = value * Deg2Rad;
 			}
 		}
-		public Vector3 VectorAngle {
-			get {
-				return new Vector3(0, 0, EulerAngle);
-			}
-			set {
-				EulerAngle = value.z;
-			}
-		}
-		public Quaternion QuaternionAngle {
-			get {
-				return Quaternion.Euler(0, 0, EulerAngle);
-			}
-			set {
-				EulerAngle = value.eulerAngles.z;
-			}
-		}
-		public override string ToString() {
-			return "Angle(" + angle + "rad|" + EulerAngle + "°" +")";
-		}
+		public override string ToString() => $"Angle({angle}rad|{EulerAngle}°)";
+
+		private readonly float Deg2Rad = (MathF.PI * 2) / 360f;
+		private readonly float Rad2Deg = 360f / (MathF.PI * 2);
 	}
 }

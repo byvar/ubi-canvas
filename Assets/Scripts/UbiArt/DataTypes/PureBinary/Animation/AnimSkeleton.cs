@@ -1,10 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Animations;
 
 namespace UbiArt.Animation {
 	// See: ITF::AnimSkeleton::serialize
@@ -96,57 +91,6 @@ namespace UbiArt.Animation {
 			}
 		}
 
-		public UnityBone[] CreateBones(GameObject gao) {
-			UnityBone[] unityBones = new UnityBone[bones.Count];
-			for (int i = 0; i < bones.Count; i++) {
-				GameObject boneGao = new GameObject("Bone " + i);
-				unityBones[i] = boneGao.AddComponent<UnityBone>();
-				unityBones[i].bind = true;
-				unityBones[i].transform.parent = gao.transform;
-			}
-			ResetBones(unityBones);
-			return unityBones;
-		}
-
-		public void ResetBones(UnityBone[] unityBones) {
-			for (int i = 0; i < bones.Count; i++) {
-				/*if (bones[i].parentKey.stringID != 0) {
-					AnimBone parent = GetBoneFromLink(bones[i].parentKey);
-					int parentIndex = bones.IndexOf(parent);
-					unityBones[i].parent = unityBones[parentIndex];
-				} else {
-					unityBones[i].parent = gao.transform;
-				}*/
-				if (bones[i].parentKey.stringID != 0) {
-					AnimBone parent = GetBoneFromLink(bones[i].parentKey);
-					int parentIndex = bones.IndexOf(parent);
-					unityBones[i].parent = unityBones[parentIndex];
-				} else {
-					unityBones[i].parent = null;
-				}
-				unityBones[i].bindPosition = (Vector2)bonesDyn[i].position;
-				unityBones[i].bindScale = (Vector2)bonesDyn[i].scale;
-				unityBones[i].bindRotation = bonesDyn[i].angle;
-				//unityBones[i].xOffset = bonesDyn[i].float1;
-				unityBones[i].localPosition = Vector3.zero;
-				unityBones[i].localScale = Vector3.one;
-				unityBones[i].localRotation = 0;
-				unityBones[i].bindZ = bonesDyn[i].z;
-				unityBones[i].localZ = 0;
-				if (UbiArtContext.Settings.engineVersion <= Settings.EngineVersion.RO) {
-					unityBones[i].xOffset = bonesDyn[i].xOffset;
-					unityBones[i].xScaleMultiplier = bonesDyn[i].xOffset;
-				}
-				//unityBones[i].UpdateBone();
-			}
-
-			// Calculate T Pose
-			int[] updateOrder = GetBonesUpdateOrder();
-			for (int i = 0; i < updateOrder.Length; i++) {
-				unityBones[updateOrder[i]].UpdateBone();
-			}
-		}
-
 		public List<int> GetRootIndices() {
 			List<int> rootIndices = new List<int>();
 			for (int i = 0; i < bones.Count; i++) {
@@ -176,22 +120,6 @@ namespace UbiArt.Animation {
 			}
 			if (currentIndex != bones.Count) UbiArtContext.SystemLogger?.LogInfo(currentIndex + " - " + bones.Count);
 			return order;
-		}
-
-		public void ResetBonesZero(Transform[] unityBones) {
-			for (int i = 0; i < bones.Count; i++) {
-				UnityBone b = unityBones[i].GetComponent<UnityBone>();
-				b.parent = null;
-				b.localPosition = Vector3.zero;
-				b.localScale = Vector3.one;
-				b.localRotation = 0f;
-				b.UpdateBone();
-				/*b.bindPosition = bonesDyn[i].position;
-				unityBones[i].localScale = bonesDyn[i].scale;
-				b.bindRotation = Quaternion.Euler(new Vector3(0, 0, bonesDyn[i].angle.EulerAngle));
-				b.localPosition = Vector3.zero;
-				b.localRotation = Quaternion.identity;*/
-			}
 		}
 	}
 }

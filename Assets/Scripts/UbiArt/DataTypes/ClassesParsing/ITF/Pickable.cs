@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using UbiCanvas.Helpers;
-using UnityEngine;
 
 namespace UbiArt.ITF {
 	public partial class Pickable {

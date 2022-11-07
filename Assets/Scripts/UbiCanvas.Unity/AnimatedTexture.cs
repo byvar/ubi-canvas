@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UbiArt;
 using UbiArt.ITF;
 using UbiCanvas.Helpers;
 using UnityEngine;
@@ -67,7 +68,7 @@ public class AnimatedTexture : MonoBehaviour {
 	public void Update() {
 		if (GlobalLoadState.LoadState != GlobalLoadState.State.Finished) return;
 		if (config != null && ren != null && mpb != null) {
-			if (config.scrollUV != Vector2.zero) {
+			if (config.scrollUV.GetUnityVector() != Vector2.zero) {
 				time += Time.deltaTime * animationSpeed;
 				if (time > animationResetTime) {
 					time = time % animationResetTime;

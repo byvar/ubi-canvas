@@ -26,16 +26,5 @@ namespace UbiArt {
 		public double Magnitude => Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
 		public static Vec2d operator +(Vec2d a, Vec2d b) => new Vec2d(a.x + b.x, a.y + b.y);
 		public static Vec2d operator -(Vec2d a, Vec2d b) => new Vec2d(a.x - b.x, a.y - b.y);
-
-
-		public static implicit operator Vec2d(UnityEngine.Vector2 v) {
-			return new Vec2d() {
-				x = v.x,
-				y = v.y
-			};
-		}
-		public static implicit operator UnityEngine.Vector2(Vec2d v) {
-			return new UnityEngine.Vector2(v.x, v.y);
-		}
 	}
 }

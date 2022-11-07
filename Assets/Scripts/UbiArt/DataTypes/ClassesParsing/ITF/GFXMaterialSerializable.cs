@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace UbiArt.ITF {
 	public partial class GFXMaterialSerializable {

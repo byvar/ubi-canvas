@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UbiArt {
+﻿namespace UbiArt {
 	public class LocalizedPath : CSerializable {
 		public LocalisationId locId;
 		public Path defaultPath;

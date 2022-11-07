@@ -102,7 +102,7 @@ public class UnityBone : MonoBehaviour {
 			} else {
 				transform.localScale = computedScale;
 			}
-			transform.localRotation = new Angle(globalAngle).QuaternionAngle;
+			transform.localRotation = new Angle(globalAngle).GetUnityQuaternion();
 			transform.localPosition = globalPosition;
 			cos = Mathf.Cos(globalAngle);
 			sin = Mathf.Sin(globalAngle);
@@ -115,11 +115,11 @@ public class UnityBone : MonoBehaviour {
 		} else {
 			if (parent != null) {
 				transform.localPosition = parent.transform.localPosition + parent.transform.localRotation * localPosition;
-				transform.localRotation = parent.transform.localRotation * new Angle(localRotation).QuaternionAngle;
+				transform.localRotation = parent.transform.localRotation * new Angle(localRotation).GetUnityQuaternion();
 				transform.localScale = localScale;
 			} else {
 				transform.localPosition = localPosition;
-				transform.localRotation = new Angle(localRotation).QuaternionAngle;
+				transform.localRotation = new Angle(localRotation).GetUnityQuaternion();
 				transform.localScale = localScale;
 			}
 		}

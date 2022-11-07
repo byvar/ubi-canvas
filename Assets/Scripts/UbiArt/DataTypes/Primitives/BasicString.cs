@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace UbiArt {
 	public class BasicString : ICSerializable {
@@ -15,7 +10,7 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			Debug.LogError(s.CurrentPointer + ": BasicString here");
+			s.Context.SystemLogger?.LogError(s.CurrentPointer + ": BasicString here");
 			throw new Exception(s.CurrentPointer + ": BasicString here");
 			//s.Serialize<string>(ref str);
 		}

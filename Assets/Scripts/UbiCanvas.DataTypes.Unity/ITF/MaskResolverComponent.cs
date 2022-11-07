@@ -12,11 +12,11 @@ namespace UbiArt.ITF {
 				if (shaderManager != null) {
 					if (tpl.resolveFrontLightBuffer) {
 						//shaderManager.frontLightCamera.clearFlags = clearFrontLightBuffer ? CameraClearFlags.SolidColor : CameraClearFlags.Nothing;
-						if(clearFrontLightBuffer) shaderManager.frontLightCamera.backgroundColor = clearFrontLightColor;
+						if(clearFrontLightBuffer) shaderManager.frontLightCamera.backgroundColor = clearFrontLightColor.GetUnityColor();
 					}
 					if (tpl.resolveBackLightBuffer) {
 						//shaderManager.backLightCamera.clearFlags = clearBackLightBuffer ? CameraClearFlags.SolidColor : CameraClearFlags.Nothing;
-						if(clearBackLightBuffer) shaderManager.backLightCamera.backgroundColor = clearBackLightColor;
+						if(clearBackLightBuffer) shaderManager.backLightCamera.backgroundColor = clearBackLightColor.GetUnityColor();
 					}
 				}
 			}

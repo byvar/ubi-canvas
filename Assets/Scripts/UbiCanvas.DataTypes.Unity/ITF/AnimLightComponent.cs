@@ -61,7 +61,9 @@ namespace UbiArt.ITF {
 			skeleton_gao.transform.localRotation = Quaternion.identity;
 			skeleton_gao.transform.localScale = Vector3.one;
 
-			bones = skeleton.CreateBones(skeleton_gao);
+			var c = UbiArtContext;
+
+			bones = skeleton.CreateBones(c, skeleton_gao);
 			for (int i = 0; i < pbk.templates.Count; i++) {
 				AnimTemplate at = pbk.templates[i];
 				Mesh mesh = at.CreateMesh();
@@ -73,7 +75,7 @@ namespace UbiArt.ITF {
 				patch_gao.transform.localRotation = Quaternion.identity;
 				patch_gao.transform.localScale = Vector3.one;
 
-				UnityBone[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
+				UnityBone[] mesh_bones = at.GetBones(c, mesh, skeleton_gao, skeleton, bones);
 				//Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
 				//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
 				//mf.sharedMesh = mesh;
@@ -87,7 +89,7 @@ namespace UbiArt.ITF {
 				patches[i] = patch_gao;
 				patchRenderers[i] = mr;
 			}
-			skeleton.ResetBones(bones);
+			skeleton.ResetBones(c, bones);
 			ua = skeleton_gao.AddComponent<UnityAnimation>();
 			ua.bones = bones;
 			ua.skeleton = skeleton;
@@ -115,6 +117,7 @@ namespace UbiArt.ITF {
 		}
 
 		private bool ProcessTextureBank(TextureBankPath bp, GameObject gao, Material tex_mat, AnimSkeleton skeleton) {
+			var c = UbiArtContext;
 			if (bp != null && bp.textureSet != null && skeleton != null) {
 				if (bp.pbk != null) {
 					patches = new GameObject[bp.pbk.templates.Count];
@@ -124,7 +127,7 @@ namespace UbiArt.ITF {
 					skeleton_gao.transform.localPosition = Vector3.zero;
 					skeleton_gao.transform.localRotation = Quaternion.identity;
 					skeleton_gao.transform.localScale = Vector3.one;
-					bones = skeleton.CreateBones(skeleton_gao);
+					bones = skeleton.CreateBones(c, skeleton_gao);
 					for (int i = 0; i < bp.pbk.templates.Count; i++) {
 						AnimTemplate at = bp.pbk.templates[i];
 						Mesh mesh = at.CreateMesh();
@@ -136,7 +139,7 @@ namespace UbiArt.ITF {
 						patch_gao.transform.localRotation = Quaternion.identity;
 						patch_gao.transform.localScale = Vector3.one;
 
-						UnityBone[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
+						UnityBone[] mesh_bones = at.GetBones(c, mesh, skeleton_gao, skeleton, bones);
 						//Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
 						//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
 						//mf.sharedMesh = mesh;
@@ -149,7 +152,7 @@ namespace UbiArt.ITF {
 						patches[i] = patch_gao;
 						patchRenderers[i] = mr;
 					}
-					skeleton.ResetBones(bones);
+					skeleton.ResetBones(c, bones);
 					ua = skeleton_gao.AddComponent<UnityAnimation>();
 					ua.bones = bones;
 					ua.skeleton = skeleton;
@@ -216,13 +219,13 @@ namespace UbiArt.ITF {
 			r.GetPropertyBlock(mpb, index);
 			if (UbiArtContext.Settings.engineVersion > Settings.EngineVersion.RO) {
 				GFXPrimitiveParam param = PrimitiveParameters;
-				mpb.SetColor("_ColorFactor", param.colorFactor);
+				mpb.SetColor("_ColorFactor", param.colorFactor.GetUnityColor());
 				mpb.SetColor("_LightConfig", new Vector4(
 					param.FrontLightBrightness,
 					param.FrontLightContrast,
 					param.BackLightBrightness,
 					param.BackLightContrast));
-				mpb.SetColor("_ColorFog", param.colorFog);
+				mpb.SetColor("_ColorFog", param.colorFog.GetUnityColor());
 			} else {
 				mpb.SetColor("_ColorFactor", UnityEngine.Color.white);
 				mpb.SetColor("_LightConfig", new Vector4(1, 0, 1, 0));
@@ -292,7 +295,7 @@ namespace UbiArt.ITF {
 			}
 			r.SetPropertyBlock(mpb, index);
 		}
-		public void SetColor(Color col, Renderer r, int index = 0) {
+		public void SetColor(UnityEngine.Color col, Renderer r, int index = 0) {
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
 			mpb.SetColor("_ColorFactor", col);

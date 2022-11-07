@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UbiArt {
+﻿namespace UbiArt {
 	public class ObjectId : ICSerializable {
 		public long id;
 
@@ -14,10 +8,6 @@ namespace UbiArt {
 
 		public const int Invalid = -1;
 
-		public bool IsNull {
-			get {
-				return id == -1;
-			}
-		}
+		public bool IsNull => id == Invalid;
 	}
 }

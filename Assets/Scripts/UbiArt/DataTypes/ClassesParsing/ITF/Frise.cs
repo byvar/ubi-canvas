@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Linq;
-using UnityEngine;
 using UbiCanvas.Helpers;
 
 namespace UbiArt.ITF {

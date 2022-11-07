@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.UV {
 	public class UVparameters : CSerializable {
 		public float unkFloat;

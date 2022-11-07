@@ -15,8 +15,8 @@ namespace UbiArt.ITF {
 
 		protected virtual async UniTask InitGameObject() {
 			gao = new GameObject("Scene");
-			gao.transform.localPosition = Vec3d.Zero;
-			gao.transform.localScale = Vec3d.One;
+			gao.transform.localPosition = Vector3.zero;
+			gao.transform.localScale = Vector3.one;
 			gao.transform.localRotation = Quaternion.identity;
 			UnityScene us = gao.AddComponent<UnityScene>();
 			us.scene = this;
@@ -47,8 +47,8 @@ namespace UbiArt.ITF {
 				await GetGameObject();
 			}
 			gao.transform.SetParent(gp.transform, false);
-			gao.transform.localPosition = Vec3d.Zero;
-			gao.transform.localScale = Vec3d.One;
+			gao.transform.localPosition = Vector3.zero;
+			gao.transform.localScale = Vector3.one;
 			gao.transform.localRotation = Quaternion.identity;
 			gao.GetComponent<UnityScene>().subSceneActor = actor;
 		}

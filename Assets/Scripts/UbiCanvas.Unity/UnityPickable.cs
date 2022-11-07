@@ -31,7 +31,7 @@ public class UnityPickable : MonoBehaviour {
 		}
 		if (pickable != null) {
 			if (transform.localPosition != new Vector3(pickable.POS2D.x, pickable.POS2D.y, -pickable.RELATIVEZ)) {
-				pickable.POS2D = new Vector2(transform.localPosition.x, transform.localPosition.y);
+				pickable.POS2D = new Vec2d(transform.localPosition.x, transform.localPosition.y);
 
 				if (pickable.RELATIVEZ != -transform.localPosition.z) {
 					pickable.RELATIVEZ = -transform.localPosition.z;
@@ -45,7 +45,7 @@ public class UnityPickable : MonoBehaviour {
 				pickable.SCALE.x = Mathf.Abs(transform.localScale.x);
 			}
 			if (new Vector2(transform.localScale.x, transform.localScale.y) != new Vector2((pickable.xFLIPPED ? -1f : 1f) * pickable.SCALE.x, pickable.SCALE.y)) {
-				pickable.SCALE = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
+				pickable.SCALE = new Vec2d(Mathf.Abs(transform.localScale.x), transform.localScale.y);
 				pickable.xFLIPPED = transform.localScale.x < 0;
 			}
 		}
