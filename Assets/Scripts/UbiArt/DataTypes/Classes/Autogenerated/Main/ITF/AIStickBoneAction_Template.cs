@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class AIStickBoneAction_Template : AIAction_Template {

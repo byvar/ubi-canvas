@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_Mission_Guard_SNS_CheckConnected : RLC_Mission_Guard {

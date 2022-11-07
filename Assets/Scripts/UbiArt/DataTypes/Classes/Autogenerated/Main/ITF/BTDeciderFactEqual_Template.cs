@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class BTDeciderFactEqual_Template : BTDecider_Template {

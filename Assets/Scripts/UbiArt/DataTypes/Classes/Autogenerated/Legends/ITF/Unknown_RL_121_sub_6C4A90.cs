@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_121_sub_6C4A90 : ActorComponent {

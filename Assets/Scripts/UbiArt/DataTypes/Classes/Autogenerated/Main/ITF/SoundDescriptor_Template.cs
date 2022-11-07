@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.COL | GameFlags.VH | GameFlags.RA)]
 	public partial class SoundDescriptor_Template : CSerializable {

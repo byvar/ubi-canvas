@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RM)]
 	public partial class Unknown_RM_32_sub_1003534C6 : CSerializable {

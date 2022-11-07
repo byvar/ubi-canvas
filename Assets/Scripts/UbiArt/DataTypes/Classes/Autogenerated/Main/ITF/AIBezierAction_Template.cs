@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AIBezierAction_Template : AIAction_Template {

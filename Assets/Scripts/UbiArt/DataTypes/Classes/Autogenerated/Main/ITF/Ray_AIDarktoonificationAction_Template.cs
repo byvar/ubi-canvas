@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIDarktoonificationAction_Template : Ray_AIPerformHitPunchAction_Template {

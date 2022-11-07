@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class RO2_ShooterSpawnerComponent_Template : TimedSpawnerComponent_Template {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class SubAnchor_Template : CSerializable {

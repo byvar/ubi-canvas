@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class Unknown_RL_305_sub_A05040 : BaseCameraComponent {

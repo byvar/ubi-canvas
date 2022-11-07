@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class DJ_ReticleComponent_Template : ActorComponent_Template {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class BlendTreeNodeChooseBranch_Template<T> : BlendTreeNodeBlend_Template<T> {

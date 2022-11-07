@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_BreakableAIComponent : Ray_AIComponent {

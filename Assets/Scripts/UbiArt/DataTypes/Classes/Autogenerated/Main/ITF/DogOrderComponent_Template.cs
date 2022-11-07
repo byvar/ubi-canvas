@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class DogOrderComponent_Template : ActorComponent_Template {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class ContextIconsManager_Template : TemplateObj {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class Helmut_Template : Npc_Template {

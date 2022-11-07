@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class LightComponent_Template : ActorComponent_Template {

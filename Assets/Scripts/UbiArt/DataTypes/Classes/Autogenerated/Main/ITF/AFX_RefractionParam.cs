@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH)]
 	public partial class AFX_RefractionParam : CSerializable {

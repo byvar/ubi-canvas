@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_Freddie : W1W_Emile {

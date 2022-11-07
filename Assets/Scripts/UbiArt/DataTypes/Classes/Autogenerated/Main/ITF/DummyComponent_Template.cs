@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class DummyComponent_Template : ActorComponent_Template {

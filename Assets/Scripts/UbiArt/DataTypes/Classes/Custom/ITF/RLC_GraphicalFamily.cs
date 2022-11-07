@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public enum RLC_GraphicalFamily {
 		[Serialize("RLC_GraphicalFamily_Unknown"      )] Unknown = 0,

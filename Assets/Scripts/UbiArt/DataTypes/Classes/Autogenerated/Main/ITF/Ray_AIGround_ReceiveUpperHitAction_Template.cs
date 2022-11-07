@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIGround_ReceiveUpperHitAction_Template : Ray_AIGroundReceiveHitAction_Template {

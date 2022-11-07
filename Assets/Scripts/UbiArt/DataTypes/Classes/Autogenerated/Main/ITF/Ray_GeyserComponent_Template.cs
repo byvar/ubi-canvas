@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_GeyserComponent_Template : Ray_ChildLaunchComponent_Template {

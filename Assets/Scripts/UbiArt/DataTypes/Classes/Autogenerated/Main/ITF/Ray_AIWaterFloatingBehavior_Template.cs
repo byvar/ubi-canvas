@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIWaterFloatingBehavior_Template : Ray_AIWaterBaseBehavior_Template {

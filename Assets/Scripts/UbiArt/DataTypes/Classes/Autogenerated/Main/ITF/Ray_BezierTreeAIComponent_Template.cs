@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_BezierTreeAIComponent_Template : GraphicComponent_Template {

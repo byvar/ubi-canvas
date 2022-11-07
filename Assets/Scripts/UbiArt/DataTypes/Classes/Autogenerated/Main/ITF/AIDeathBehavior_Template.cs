@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AIDeathBehavior_Template : AIPlayActionsBehavior_Template {

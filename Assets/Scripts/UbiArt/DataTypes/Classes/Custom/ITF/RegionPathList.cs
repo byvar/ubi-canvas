@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public partial class RegionPathList : CSerializable {
 		public CListO<Path> RegionBackgroundPath;

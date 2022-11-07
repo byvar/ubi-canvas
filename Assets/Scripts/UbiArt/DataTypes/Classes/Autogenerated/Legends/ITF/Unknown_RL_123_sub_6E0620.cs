@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)] // Definitely for a dragon
 	public partial class Unknown_RL_123_sub_6E0620 : ActorComponent {

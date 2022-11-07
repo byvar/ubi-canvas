@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion)]
 	public partial class RedirectSymmetryPatch : CSerializable {

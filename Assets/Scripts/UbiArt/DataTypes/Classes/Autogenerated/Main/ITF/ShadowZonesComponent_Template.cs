@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class ShadowZonesComponent_Template : ActorComponent_Template {

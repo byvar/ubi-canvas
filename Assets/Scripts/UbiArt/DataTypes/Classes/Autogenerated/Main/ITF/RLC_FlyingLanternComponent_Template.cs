@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_FlyingLanternComponent_Template : RO2_HangSpotComponent_Template {

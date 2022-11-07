@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_ConnexionSocialMenu_Template : UIMenuBasic_Template {

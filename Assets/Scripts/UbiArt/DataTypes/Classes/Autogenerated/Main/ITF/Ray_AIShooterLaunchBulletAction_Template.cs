@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_AIShooterLaunchBulletAction_Template : Ray_AIPerformHitAction_Template {

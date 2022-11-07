@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RJR | GameFlags.RFR | GameFlags.RO | GameFlags.RL | GameFlags.COL | GameFlags.VH)]
 	public partial class AnimTreeNodeRandomBranch_Template<T> : BlendTreeNodeChooseBranch_Template<T> where T : AnimTreeResult {

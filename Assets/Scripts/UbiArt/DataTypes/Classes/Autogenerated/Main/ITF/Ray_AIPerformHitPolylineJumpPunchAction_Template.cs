@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIPerformHitPolylineJumpPunchAction_Template : Ray_AIPerformHitPolylinePunchAction_Template {

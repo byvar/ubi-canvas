@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion)]
 	public partial class Unknown_RL_5_sub_38AF40 : SoundCommand {

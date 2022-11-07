@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RAVersion)]
 	public partial class ApplyScreenRatioComponent_Template : ActorComponent_Template {

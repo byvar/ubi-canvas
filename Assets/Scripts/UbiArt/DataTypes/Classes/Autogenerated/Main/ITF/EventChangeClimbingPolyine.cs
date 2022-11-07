@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL | GameFlags.RM)]
 	public partial class EventChangeClimbingPolyine : Event {

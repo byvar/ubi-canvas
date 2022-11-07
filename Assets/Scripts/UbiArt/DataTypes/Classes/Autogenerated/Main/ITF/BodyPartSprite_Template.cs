@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class BodyPartSprite_Template : BodyPartBase_Template {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_Mission_Guard_EnemyHit_CheckType : RLC_Mission_Guard {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class MissionActionStoryEvent_Template : CSerializable {

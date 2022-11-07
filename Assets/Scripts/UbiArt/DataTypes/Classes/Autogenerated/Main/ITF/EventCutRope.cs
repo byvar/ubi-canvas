@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL | GameFlags.RAVersion)]
 	public partial class EventCutRope : Event {

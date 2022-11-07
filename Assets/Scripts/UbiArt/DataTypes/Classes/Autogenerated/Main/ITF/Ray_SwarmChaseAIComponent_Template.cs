@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
 	public partial class Ray_SwarmChaseAIComponent_Template : Ray_AIComponent_Template {

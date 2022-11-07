@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RLVersion)]
 	public partial class MusicTreeNodeRandom_Template : MusicTreeNode_Template {

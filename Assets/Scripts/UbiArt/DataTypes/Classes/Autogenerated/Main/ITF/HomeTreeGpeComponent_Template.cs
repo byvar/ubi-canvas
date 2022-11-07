@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class HomeTreeGpeComponent_Template : ActorComponent_Template {

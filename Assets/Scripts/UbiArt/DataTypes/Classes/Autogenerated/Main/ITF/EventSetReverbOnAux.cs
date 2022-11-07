@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.RA | GameFlags.RM)]
 	public partial class EventSetReverbOnAux : Event {

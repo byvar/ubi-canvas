@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_StoreDiscountPopUp_ServerSide_Template : UIMenuBasic_Template {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_LivingStoneAIComponent2_Template : Ray_GroundEnemyAIComponent_Template {

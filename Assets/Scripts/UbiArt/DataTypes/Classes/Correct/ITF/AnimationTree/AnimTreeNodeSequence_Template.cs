@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AnimTreeNodeSequence_Template : BlendTreeNodeBlend_Template<AnimTreeResult> {

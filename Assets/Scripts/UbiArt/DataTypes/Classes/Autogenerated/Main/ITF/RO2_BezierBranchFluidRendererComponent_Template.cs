@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_BezierBranchFluidRendererComponent_Template : RO2_BezierBranchBaseRendererComponent_Template {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class RLC_ShopScrollingMenu_Template : RLC_UIMenuScroll_Template {

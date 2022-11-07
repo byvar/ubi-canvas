@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class RO2_ShooterTurretAIComponent : Unknown_RL_466_sub_B92120 {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public enum RLC_ElixirType {
 		[Serialize("RLC_ElixirType_UNKNOWN"          )] UNKNOWN = 0,

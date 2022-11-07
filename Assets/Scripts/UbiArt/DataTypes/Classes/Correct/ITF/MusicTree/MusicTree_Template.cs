@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RL)]
 	public partial class MusicTree_Template : BlendTreeTemplate<MusicTreeResult> {

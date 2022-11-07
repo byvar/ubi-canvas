@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class CharacterDebuggerComponent : ActorComponent {

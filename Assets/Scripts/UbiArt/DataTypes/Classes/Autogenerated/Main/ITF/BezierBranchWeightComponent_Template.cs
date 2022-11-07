@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL | GameFlags.RA)]
 	public partial class BezierBranchWeightComponent_Template : BezierBranchComponent_Template {

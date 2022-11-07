@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class ActorSpawnComponent : ActorComponent {

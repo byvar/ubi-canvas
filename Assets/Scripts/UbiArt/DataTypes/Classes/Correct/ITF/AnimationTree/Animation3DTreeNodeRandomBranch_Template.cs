@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.VH)]
 	public partial class Animation3DTreeNodeRandomBranch_Template<T> : BlendTreeNodeChooseBranch_Template<T> where T : Animation3DTreeResult {

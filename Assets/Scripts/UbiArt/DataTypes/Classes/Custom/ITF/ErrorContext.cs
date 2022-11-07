@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public enum ErrorContext {
 		[Serialize("RangeContexte")] RangeContexte = 100,

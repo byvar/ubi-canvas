@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH)]
 	public partial class W1W_FirePatchAIComponent : GraphicComponent {

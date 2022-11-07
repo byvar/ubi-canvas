@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RAVersion)]
 	public partial class BTActionOnInputSetFact_Template : BTAction_Template {

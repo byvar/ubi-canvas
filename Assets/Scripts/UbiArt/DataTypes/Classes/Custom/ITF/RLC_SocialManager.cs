@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public partial class RLC_SocialManager : CSerializable {
 		public enum eScreenShotType {

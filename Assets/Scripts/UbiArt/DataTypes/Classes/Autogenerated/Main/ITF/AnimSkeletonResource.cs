@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RL | GameFlags.RM)]
 	public partial class AnimSkeletonResource : CSerializable {

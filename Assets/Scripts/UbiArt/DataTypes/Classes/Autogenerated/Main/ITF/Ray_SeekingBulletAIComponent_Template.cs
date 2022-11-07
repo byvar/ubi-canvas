@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_SeekingBulletAIComponent_Template : Ray_BulletAIComponent_Template {

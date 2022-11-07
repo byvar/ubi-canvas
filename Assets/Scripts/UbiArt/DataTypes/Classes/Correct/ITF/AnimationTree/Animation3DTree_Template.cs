@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class Animation3DTree_Template : BlendTreeTemplate<Animation3DTreeResult> {

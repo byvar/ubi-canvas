@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.online {
 	public partial class incubationStatusResult : CSerializable {
 		public DateTime hatchingEnd;

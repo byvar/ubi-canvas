@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public enum RLC_TutorialCommandType {
 		[Serialize("RLC_TutorialCommandType_None"       )] None = 0,

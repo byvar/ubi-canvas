@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_ShooterCheckPointComponent_Template : CheckpointComponent_Template {

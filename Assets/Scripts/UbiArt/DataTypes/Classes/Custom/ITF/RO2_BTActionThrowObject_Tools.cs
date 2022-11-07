@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public partial class RO2_BTActionThrowObject_Tools : CSerializable {
 		[Games(GameFlags.RL | GameFlags.RA)]

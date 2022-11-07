@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class RO2_ShadowZonesComponent : ActorComponent { // Equal to ShadowZonesComponent. Maybe RO2_ShadowZonesComponent.

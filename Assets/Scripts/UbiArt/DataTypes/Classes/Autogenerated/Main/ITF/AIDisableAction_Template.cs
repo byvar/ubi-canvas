@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class AIDisableAction_Template : AIAction_Template {

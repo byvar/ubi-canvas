@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_BubblePrizePlatformComponent_Template : Ray_ChildLaunchComponent_Template {

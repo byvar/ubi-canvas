@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIGround_ReceiveHitLaunchBulletAction_Template : Ray_AIGround_ReceiveNormalHitAction_Template {

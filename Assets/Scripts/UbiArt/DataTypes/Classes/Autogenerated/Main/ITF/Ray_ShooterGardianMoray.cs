@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR)]
 	public partial class Ray_ShooterGardianMoray : Ray_SnakeAIComponent {

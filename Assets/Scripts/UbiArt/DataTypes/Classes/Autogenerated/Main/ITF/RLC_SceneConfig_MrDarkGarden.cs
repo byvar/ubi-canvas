@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RM)]
 	public partial class RLC_SceneConfig_MrDarkGarden : RO2_SceneConfig_Base {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public enum RLC_MapType {
 		[Serialize("RLC_MapType_Unknown"          )] Unknown = 0,

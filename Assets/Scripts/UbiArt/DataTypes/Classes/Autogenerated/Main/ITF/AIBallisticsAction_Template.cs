@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.RL | GameFlags.RAVersion)]
 	public partial class AIBallisticsAction_Template : AIAction_Template {

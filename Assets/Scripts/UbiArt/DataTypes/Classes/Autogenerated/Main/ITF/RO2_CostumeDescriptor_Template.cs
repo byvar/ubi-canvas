@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_CostumeDescriptor_Template : TemplateObj {

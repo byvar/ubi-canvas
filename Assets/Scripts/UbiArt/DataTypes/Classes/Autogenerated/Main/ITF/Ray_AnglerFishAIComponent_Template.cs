@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AnglerFishAIComponent_Template : Ray_SimpleAIComponent_Template {

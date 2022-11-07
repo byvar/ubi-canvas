@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class FxData : CSerializable {

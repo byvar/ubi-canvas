@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class FriseConfig : Actor_Template {

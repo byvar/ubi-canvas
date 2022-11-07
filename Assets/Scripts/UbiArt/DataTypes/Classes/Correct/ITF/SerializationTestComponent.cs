@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class SerializationTestComponent : ActorComponent {

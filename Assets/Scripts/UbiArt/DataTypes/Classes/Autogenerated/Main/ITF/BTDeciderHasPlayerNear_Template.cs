@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.COL | GameFlags.VH | GameFlags.RA)]
 	public partial class BTDeciderHasPlayerNear_Template : BTDecider_Template {

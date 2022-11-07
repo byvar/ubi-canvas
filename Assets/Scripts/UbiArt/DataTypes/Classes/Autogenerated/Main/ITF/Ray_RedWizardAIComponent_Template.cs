@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_RedWizardAIComponent_Template : Ray_GroundAIComponent_Template {

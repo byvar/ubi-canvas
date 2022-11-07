@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.RA)]
 	public partial class BezierTreeRendererComponent_Template : GraphicComponent_Template {

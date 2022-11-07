@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
 	public partial class Ray_AIGroundRoamBehavior_Template : Ray_AIGroundBaseMovementBehavior_Template {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.online {
 	[Games(GameFlags.RA)]
 	public partial class userProfileShortData : CSerializable {

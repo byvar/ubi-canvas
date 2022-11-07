@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL | GameFlags.RA)]
 	public partial class ConvertibleBranchComponent_Template : BezierBranchComponent_Template {

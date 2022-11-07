@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	public enum RLC_GraphicalKit {
 		[Serialize("RLC_GraphicalKit_Dojo")] RLC_GraphicalKit_Dojo = 1,

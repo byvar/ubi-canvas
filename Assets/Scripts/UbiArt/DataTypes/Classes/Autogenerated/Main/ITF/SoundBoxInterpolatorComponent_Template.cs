@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class SoundBoxInterpolatorComponent_Template : BoxInterpolatorComponent_Template {

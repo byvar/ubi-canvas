@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL | GameFlags.RA)]
 	public partial class MultipassTreeRendererComponent_Template : GraphicComponent_Template {
