@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using UnityEngine;
 
-namespace UbiArt.FileFormat.Texture {
+namespace UbiCanvas.Helpers {
 	#region DDSImage Class
 	public class DDSImage : IDisposable {
 		#region Variables
@@ -19,7 +19,7 @@ namespace UbiArt.FileFormat.Texture {
 			this.Parse(ddsImage);
 		}
 
-		public DDSImage(Context context, Stream ddsImage) {
+		public DDSImage(Stream ddsImage) {
 			if (ddsImage == null) return;
 			if (!ddsImage.CanRead) return;
 

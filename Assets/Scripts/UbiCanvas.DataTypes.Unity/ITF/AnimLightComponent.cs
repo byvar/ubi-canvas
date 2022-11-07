@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UbiArt.Animation;
+using UbiCanvas;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -271,15 +272,15 @@ namespace UbiArt.ITF {
 					textureSet.tex_separateAlpha != null ? 1f : 0f));
 
 				if (textureSet.tex_diffuse != null) {
-					mpb.SetTexture("_Diffuse", textureSet.tex_diffuse.SquareTexture);
+					mpb.SetTexture("_Diffuse", textureSet.tex_diffuse.GetUnityTexture(UbiArtContext).SquareTexture);
 					mpb.SetVector("_Diffuse_ST", new Vector4(1, 1, 0, 0));
 				}
 				if (textureSet.tex_back_light != null) {
-					mpb.SetTexture("_BackLight", textureSet.tex_back_light.SquareTexture);
+					mpb.SetTexture("_BackLight", textureSet.tex_back_light.GetUnityTexture(UbiArtContext).SquareTexture);
 					mpb.SetVector("_BackLight_ST", new Vector4(1, 1, 0, 0));
 				}
 				if (textureSet.tex_separateAlpha != null) {
-					mpb.SetTexture("_SeparateAlpha", textureSet.tex_separateAlpha.Texture);
+					mpb.SetTexture("_SeparateAlpha", textureSet.tex_separateAlpha.GetUnityTexture(UbiArtContext).Texture);
 					mpb.SetVector("_SeparateAlpha_ST", new Vector4(1, 1, 0, 0));
 				}
 			}
@@ -290,7 +291,7 @@ namespace UbiArt.ITF {
 			r.GetPropertyBlock(mpb, index);
 			if (r != null && tex != null) {
 				mpb.SetVector("_UseTextures", new Vector4(1, 0, 0, 0));
-				mpb.SetTexture("_Diffuse", tex.SquareTexture);
+				mpb.SetTexture("_Diffuse", tex.GetUnityTexture(UbiArtContext).SquareTexture);
 				mpb.SetVector("_Diffuse_ST", new Vector4(1, 1, 0, 0));
 			}
 			r.SetPropertyBlock(mpb, index);
