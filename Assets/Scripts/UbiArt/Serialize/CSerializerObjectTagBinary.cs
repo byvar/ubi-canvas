@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using UbiArt.CRC;
 using UbiArt.FileFormat;
-using UnityEngine;
 
 namespace UbiArt {
 	public class CSerializerObjectTagBinary : CSerializerObject {
@@ -315,8 +312,8 @@ namespace UbiArt {
 				obj = default(Vec2d);
 			} else if (type == typeof(Vec3d)) {
 				obj = default(Vec3d);
-			} else if (type == typeof(Vector4)) {
-				obj = default(Vector4);
+			} else if (type == typeof(Vec4d)) {
+				obj = default(Vec4d);
 			} else if (type == typeof(Color)) {
 				obj = default(Color);
 			} else if (type == typeof(CString)) {
