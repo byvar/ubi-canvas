@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 			mf.sharedMesh = CreateMesh(material.textureSet.tex_diffuse);
 			tex_mat = material.GetShaderMaterial();
 			tex_renderer = mr;
-			material.FillUnityMaterialPropertyBlock(tex_renderer);
+			material.FillUnityMaterialPropertyBlock(UbiArtContext, tex_renderer);
 			FillMaterialParams(tex_renderer);
 			mr.sharedMaterial = tex_mat;
 		}

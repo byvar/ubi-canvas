@@ -2,21 +2,21 @@
 using UbiArt;
 
 namespace UbiCanvas {
-	public class Unity_DataStorage {
+	public class UnityDataStorage {
 		public Context Context { get; protected set; }
 
 		private void Register(Context context) {
 			Context = context;
-			Context.StoreObject<Unity_DataStorage>(ContextKey, this);
+			Context.StoreObject<UnityDataStorage>(ContextKey, this);
 		}
-		public Unity_DataStorage(Context context) {
+		public UnityDataStorage(Context context) {
 			Register(context);
 		}
 
-		public static string ContextKey => nameof(Unity_DataStorage);
+		public static string ContextKey => nameof(UnityDataStorage);
 
-		protected Dictionary<object, Unity_Data> UnityDataDictionary { get; set; } = new Dictionary<object, Unity_Data>();
-		public T GetUnityData<T, U>(U obj) where T : Unity_Data<U>, new() {
+		protected Dictionary<object, UnityData> UnityDataDictionary { get; set; } = new Dictionary<object, UnityData>();
+		public T GetUnityData<T, U>(U obj) where T : UnityData<U>, new() {
 			if (!UnityDataDictionary.ContainsKey(obj)) {
 				var data = new T();
 				data.Init(this, obj);

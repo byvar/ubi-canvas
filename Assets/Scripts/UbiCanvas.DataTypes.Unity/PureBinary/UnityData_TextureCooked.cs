@@ -4,7 +4,7 @@ using UbiCanvas.Helpers;
 using UnityEngine;
 
 namespace UbiCanvas {
-	public class Unity_TextureCooked : Unity_Data<TextureCooked> {
+	public class UnityData_TextureCooked : UnityData<TextureCooked> {
 		private Texture2D texture;
 		private Texture2D squareTexture;
 		private Texture2D[] subtextures;

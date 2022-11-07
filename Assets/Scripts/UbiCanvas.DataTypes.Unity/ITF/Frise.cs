@@ -95,7 +95,7 @@ namespace UbiArt.ITF {
 								mat.SetTexture("_MainTex", Util.CreateDummyTexture());
 							}
 							mat.color = UseTemplatePrimitiveParams ? config.obj.PrimitiveParameters.colorFactor : PrimitiveParameters.colorFactor;*/
-							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(mr, index: m, shader: shader?.obj);
+							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(UbiArtContext, mr, index: m, shader: shader?.obj);
 							FillMaterialParams(mr, m);
 							GenericFile<GFXMaterialShader_Template> sh = config.obj.textureConfigs[idTexConfig].material.shader;
 							if (sh != null && sh.obj != null && !sh.obj.renderRegular && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
@@ -126,8 +126,8 @@ namespace UbiArt.ITF {
 					mesh.subMeshCount = meshBuildData.value.AnimIndexList.Count;
 					mesh.vertices = meshBuildData.value.AnimVertexList.Select(v => new Vector3(v.pos.x, v.pos.y, -v.pos.z)).ToArray();
 					mesh.uv = meshBuildData.value.AnimVertexList.Select(v => v.uv1.GetUnityVector()).ToArray();
-					mesh.SetUVs(1, meshBuildData.value.AnimVertexList.Select(v => v.uv2.UnityVector).ToList());
-					mesh.SetUVs(2, meshBuildData.value.AnimVertexList.Select(v => v.uv3.UnityVector).ToList());
+					mesh.SetUVs(1, meshBuildData.value.AnimVertexList.Select(v => v.uv2.GetUnityVector()).ToList());
+					mesh.SetUVs(2, meshBuildData.value.AnimVertexList.Select(v => v.uv3.GetUnityVector()).ToList());
 					mesh.SetUVs(3, meshBuildData.value.AnimVertexList.Select(v => v.uv4.GetUnityVector()).ToList());
 					mesh.colors = meshBuildData.value.AnimVertexList.Select(v => v.color.GetUnityColor()).ToArray();
 					//mesh.SetUVs(4, meshBuildData.value.AnimVertexList.Select(v => v.color.Vector).ToList());
@@ -183,7 +183,7 @@ namespace UbiArt.ITF {
 								mat.SetTexture("_MainTex", Util.CreateDummyTexture());
 							}
 							mat.color = UseTemplatePrimitiveParams ? config.obj.PrimitiveParameters.colorFactor : PrimitiveParameters.colorFactor;*/
-							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(mr, index: m, shader: shader?.obj);
+							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(UbiArtContext, mr, index: m, shader: shader?.obj);
 							FillMaterialParams(mr, m);
 							GenericFile<GFXMaterialShader_Template> sh = config.obj.textureConfigs[idTexConfig].material.shader;
 							if (sh != null && sh.obj != null && !sh.obj.renderRegular && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {
@@ -241,7 +241,7 @@ namespace UbiArt.ITF {
 
 						int idTexConfig = meshBuildData.value.OverlayIndexList.IdTexConfig == 0xFFFFFFFF ? 0 : (int)meshBuildData.value.OverlayIndexList.IdTexConfig;
 						if (config != null && config.obj.textureConfigs.Count > idTexConfig) {
-							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(mr, index: m, shader: shader?.obj);
+							config.obj.textureConfigs[idTexConfig].material.FillUnityMaterialPropertyBlock(UbiArtContext, mr, index: m, shader: shader?.obj);
 							FillMaterialParams(mr, m);
 							GenericFile<GFXMaterialShader_Template> sh = config.obj.textureConfigs[idTexConfig].material.shader;
 							if (sh != null && sh.obj != null && !sh.obj.renderRegular && (sh.obj.renderBackLight || sh.obj.renderFrontLight)) {

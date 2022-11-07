@@ -3,6 +3,6 @@ using UnityEngine;
 
 namespace UbiArt {
 	public static class TextureCookedExtensions {
-		public static Unity_TextureCooked GetUnityTexture(this TextureCooked tex, Context c) => c.GetUnityDataStorage().GetUnityData<Unity_TextureCooked, TextureCooked>(tex);
+		public static UnityData_TextureCooked GetUnityTexture(this TextureCooked tex, Context c) => c.GetUnityDataStorage().GetUnityData<UnityData_TextureCooked, TextureCooked>(tex);
 	}
 }
