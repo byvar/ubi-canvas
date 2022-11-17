@@ -21,5 +21,11 @@ namespace UbiArt.UV {
 				}
 			}
 		}
+
+		public void Reinit(Settings settings) {
+			if (settings.engineVersion == Settings.EngineVersion.RL && version >= versionLegends) {
+				version = versionLegends;
+			}
+		}
 	}
 }

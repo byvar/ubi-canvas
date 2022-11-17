@@ -166,11 +166,7 @@ namespace UbiArt {
 			//LoadGenericFile("enginedata/gameconfig/adventuresconfig.isg", (isg) => { });
 
 			/*Path pSgsContainer = new Path("", "sgscontainer.ckd");
-			Load(pSgsContainer, (CSerializerObject s) => {
-				s.log = logEnabled;
-				s.Serialize(ref sceneConfigManager);
-				print("Read:" + s.Position + " - Length:" + s.Length + " - " + (s.Position == s.Length ? "good!" : "bad!"));
-			});*/
+			LoadFile<SceneConfig.SceneConfigManager>(pSgsContainer, result => sceneConfigManager = result);*/
 			//LoadGenericFile("enginedata/gameconfig/ghostconfig.isg", (isg) => { });
 			//LoadSaveFile("RaymanSave_0", (save) => { });
 			//LoadSaveFileOrigins("Savegame_0", null);
@@ -356,6 +352,8 @@ namespace UbiArt {
 		}
 
 		public void LoadTexture(Path path, Action<TextureCooked> onResult) {
+			if (path == null) return;
+
 			LoadFile<TextureCooked>(path, (result) => {
 				if (result != null && result.atlas == null)
 					result.atlas = uvAtlasManager.GetAtlasIfExists(path);

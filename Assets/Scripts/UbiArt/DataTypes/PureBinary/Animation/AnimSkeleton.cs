@@ -5,6 +5,8 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimSkeleton::serialize
 	// skl.ckd file
 	public class AnimSkeleton : CSerializable {
+		public const uint VersionLegends = 0xF;
+
 		public uint version;
 		public CListO<StringID> boneTags;
 		public CListO<StringID> boneIndices;
@@ -120,6 +122,23 @@ namespace UbiArt.Animation {
 			}
 			if (currentIndex != bones.Count) UbiArtContext.SystemLogger?.LogInfo(currentIndex + " - " + bones.Count);
 			return order;
+		}
+		public void Reinit(Settings settings) {
+			if (settings.engineVersion == Settings.EngineVersion.RL && version >= VersionLegends) {
+				version = VersionLegends;
+				if (boneTags == null) {
+					boneTags = new CListO<StringID>();
+					foreach (var bta in boneTagsAdv) boneTags.Add(new StringID((uint)bta));
+				}
+				if (boneTags2 == null) {
+					boneTags2 = new CListO<StringID>();
+					foreach(var bta in boneTags2Adv) boneTags2.Add(new StringID((uint)bta));
+				}
+				if (boneTags3 == null) {
+					boneTags3 = new CListO<StringID>();
+					foreach(var bta in boneTags3Adv) boneTags3.Add(new StringID((uint)bta));
+				}
+			}
 		}
 	}
 }

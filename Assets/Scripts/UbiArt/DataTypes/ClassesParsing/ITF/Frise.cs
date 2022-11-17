@@ -1,6 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using System.Linq;
-using UbiCanvas.Helpers;
+﻿using System.Collections.Generic;
 
 namespace UbiArt.ITF {
 	public partial class Frise {
@@ -27,6 +25,50 @@ namespace UbiArt.ITF {
 					});
 				}
 			}
+		}
+
+		protected void RecomputeLineData() {
+			PointsList?.CheckLoop();
+			PointsList?.RecomputeData();
+		}
+
+		public void Recompute() {
+			RecomputeLineData();
+			if(config?.obj == null) return;
+			var friseConfig = config?.obj;
+
+			// Init datas
+			RecomputeData recomputeData = new RecomputeData(this);
+
+			var method = (FriseMethode)friseConfig.methode;
+			// TODO
+			switch (method) {
+				case FriseMethode.Generic:
+					break;
+			}
+		}
+
+		private void BuildFrieze_InGeneric(RecomputeData recomputeData) {
+			recomputeData.CopyEdgesFromPolyline();
+			// TODO:
+		}
+
+		public enum FriseMethode : uint {
+			 Roundness = 0,
+			 Generic,
+			 Extremity,
+			 Archi,
+			 Fluid,
+			 Pipe,
+			 ExtremitySimple,
+			 String,
+			 Atlas,
+			 Overlay,
+			 Frame,
+			 ArchiSimple,
+			 PipePatchSimple,
+			 Extremity13,
+			 Bezier3D,
 		}
 	}
 }
