@@ -2,7 +2,7 @@
 using System;
 
 namespace UbiArt {
-	public class LocalisationId : ICSerializable, IEquatable<LocalisationId> {
+	public class LocalisationId : ICSerializable, IEquatable<LocalisationId>, ICSerializableShortLog {
 		public uint id = 0xFFFFFFFF;
 
 		public LocalisationId() { }
@@ -44,6 +44,8 @@ namespace UbiArt {
 		public bool Equals(LocalisationId other) {
 			return this == (LocalisationId)other;
 		}
+
+		public string SerializeLog(CSerializerObject s) => ToString(s?.Context);
 
 		public static bool operator ==(LocalisationId x, LocalisationId y) {
 			if (ReferenceEquals(x, y)) return true;

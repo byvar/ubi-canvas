@@ -28,7 +28,7 @@ namespace UbiArt {
 		/// <summary>
 		/// Indicates if logging is enabled for the serialization
 		/// </summary>
-		public bool IsSerializerLogEnabled => Context.SerializerLogger.IsEnabled;// && !DisableSerializerLogForObject;
+		public bool IsSerializerLoggerEnabled => Context.SerializerLogger.IsEnabled && !DisableSerializerLoggerForObject;
 
 		/// <summary>
 		/// Writes a line to the serializer log, if enabled
@@ -37,6 +37,20 @@ namespace UbiArt {
 		/// <param name="args">The log string arguments</param>
 		[StringFormatMethod("logString")]
 		public abstract void Log(string logString, params object[] args);
+
+		protected bool DisableSerializerLoggerForObject { get; set; }
+
+		protected bool IsShortLog(Type type) {
+			if (IsSerializerLoggerEnabled && (typeof(ICSerializableShortLog).IsAssignableFrom(type))) {
+				DisableSerializerLoggerForObject = true;
+				return true;
+			}
+			return false;
+		}
+		protected string ShortLog<T>(T t) => (t as ICSerializableShortLog)?.SerializeLog(this) ?? t?.ToString() ?? "null";
+		protected bool IsBigObject(Type type) => IsSerializerLoggerEnabled
+				&& (typeof(CSerializable).IsAssignableFrom(type) || typeof(IObjectContainer).IsAssignableFrom(type))
+				&& !typeof(ICSerializableShortLog).IsAssignableFrom(type);
 
 		#endregion
 

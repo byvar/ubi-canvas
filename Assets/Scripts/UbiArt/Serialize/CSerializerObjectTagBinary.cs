@@ -114,7 +114,7 @@ namespace UbiArt {
 					entered = ReadTag(typeName, 200);
 				}
 				obj.Serialize(this, name);
-				if (IsSerializerLogEnabled && entered && endPos.Peek() != Reader.BaseStream.Position) {
+				if (IsSerializerLoggerEnabled && entered && endPos.Peek() != Reader.BaseStream.Position) {
 					Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 				}
 				if (entered) Reader.BaseStream.Position = endPos.Pop();
@@ -278,7 +278,7 @@ namespace UbiArt {
 						entered = ReadTag(typeName, 200);
 					}
 					((ICSerializable)obj).Serialize(this, name);
-					if (IsSerializerLogEnabled && entered && endPos.Peek() != Reader.BaseStream.Position) {
+					if (IsSerializerLoggerEnabled && entered && endPos.Peek() != Reader.BaseStream.Position) {
 						Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
 					if (entered) Reader.BaseStream.Position = endPos.Pop();
@@ -351,21 +351,27 @@ namespace UbiArt {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
 					var logPrefix = LogPrefix;
-					bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
-					if (IsSerializerLogEnabled && isBigObject) {
+
+					bool isBigObject = IsBigObject(type ?? f.FieldType);
+					bool isLogTemporarilyDisabled = IsShortLog(type ?? f.FieldType);
+
+					if (IsSerializerLoggerEnabled && isBigObject) {
 						Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name}:");
 					}
 					object obj = null;
-					Serialize(ref obj, objType, name: name);
-					if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
-					f.SetValue(containerObj, obj);
-
-					if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
-						Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
-					}
-					Reader.BaseStream.Position = endPos.Pop();
-					if (IsSerializerLogEnabled && !isBigObject) {
-						Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {obj}");
+					try {
+						Serialize(ref obj, objType, name: name);
+						if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
+						f.SetValue(containerObj, obj);
+					} finally {
+						if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+						if (IsSerializerLoggerEnabled && endPos.Peek() != Reader.BaseStream.Position) {
+							Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
+						}
+						Reader.BaseStream.Position = endPos.Pop();
+						if (IsSerializerLoggerEnabled && !isBigObject) {
+							Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {ShortLog(obj)}");
+						}
 					}
 				} else {
 					if (f.GetValue(containerObj) == null) {
@@ -380,17 +386,23 @@ namespace UbiArt {
 				}
 			} else {
 				var logPrefix = LogPrefix;
-				bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
-				if (IsSerializerLogEnabled && isBigObject) {
+
+				bool isBigObject = IsBigObject(type ?? f.FieldType);
+				bool isLogTemporarilyDisabled = IsShortLog(type ?? f.FieldType); 
+				
+				if (IsSerializerLoggerEnabled && isBigObject) {
 					Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name}:");
 				}
 				object obj = null;
-
-				Serialize(ref obj, objType, name: name);
-				if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
-				f.SetValue(containerObj, obj);
-				if (IsSerializerLogEnabled && !isBigObject) {
-					Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {obj}");
+				try {
+					Serialize(ref obj, objType, name: name);
+					if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
+					f.SetValue(containerObj, obj);
+				} finally {
+					if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+					if (IsSerializerLoggerEnabled && !isBigObject) {
+						Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {ShortLog(obj)}");
+					}
 				}
 			}
 		}
@@ -417,23 +429,28 @@ namespace UbiArt {
 				uint uafType = index.HasValue ? 200 + (uint)index.Value : GetTagCode(objType);
 				if (ReadTag(name, uafType)) {
 					var logPrefix = LogPrefix;
-					bool isBigObject = IsSerializerLogEnabled && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-					if (!fakeSerializeMode && IsSerializerLogEnabled && name != null && isBigObject) {
+
+					bool isBigObject = IsBigObject(type ?? typeof(T)) && name != null;
+					bool isLogTemporarilyDisabled = IsShortLog(type ?? typeof(T));
+
+					if (!fakeSerializeMode && IsSerializerLoggerEnabled && name != null && isBigObject) {
 						Context.SerializerLogger.Log($"{logPrefix}{name}:");
 					}
 
-					object obj2 = obj;
-					Serialize(ref obj2, type ?? typeof(T), name: name);
-					if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
-					obj = (T)obj2;
-
-
-					if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
-						Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
-					}
-					Reader.BaseStream.Position = endPos.Pop();
-					if (!fakeSerializeMode && IsSerializerLogEnabled && name != null && !isBigObject) {
-						Context.SerializerLogger.Log($"{logPrefix}{name} - {obj}");
+					try {
+						object obj2 = obj;
+						Serialize(ref obj2, type ?? typeof(T), name: name);
+						if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
+						obj = (T)obj2;
+					} finally {
+						if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+						if (IsSerializerLoggerEnabled && endPos.Peek() != Reader.BaseStream.Position) {
+							Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
+						}
+						Reader.BaseStream.Position = endPos.Pop();
+						if (!fakeSerializeMode && IsSerializerLoggerEnabled && name != null && !isBigObject) {
+							Context.SerializerLogger.Log($"{logPrefix}{name} - {ShortLog(obj)}");
+						}
 					}
 
 				} else {
@@ -449,18 +466,22 @@ namespace UbiArt {
 				}
 			} else {
 				var logPrefix = LogPrefix;
-				bool isBigObject = IsSerializerLogEnabled && index.HasValue && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-				if (!fakeSerializeMode && IsSerializerLogEnabled && index.HasValue && isBigObject) {
+				bool isBigObject = IsBigObject(type ?? typeof(T));
+				bool isLogTemporarilyDisabled = IsShortLog(type ?? typeof(T));
+				if (!fakeSerializeMode && IsSerializerLoggerEnabled && index.HasValue && isBigObject) {
 					Context.SerializerLogger.Log($"{logPrefix}{name}[{index.Value}]:");
 				}
 
-				object obj2 = obj;
-				Serialize(ref obj2, type ?? typeof(T), name: name);
-				if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
-				obj = (T)obj2;
-
-				if (!fakeSerializeMode && IsSerializerLogEnabled && index.HasValue && !isBigObject) {
-					Context.SerializerLogger.Log($"{logPrefix}{name}[{index.Value}] - {obj}");
+				try {
+					object obj2 = obj;
+					Serialize(ref obj2, type ?? typeof(T), name: name);
+					if (type != null) ConvertTypeAfter(ref obj2, name, type, typeof(T));
+					obj = (T)obj2;
+				} finally {
+					if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+					if (!fakeSerializeMode && IsSerializerLoggerEnabled && index.HasValue && !isBigObject) {
+						Context.SerializerLogger.Log($"{logPrefix}{name}[{index.Value}] - {obj}");
+					}
 				}
 			}
 			return obj;
@@ -477,7 +498,7 @@ namespace UbiArt {
 
 		public override bool ArrayEntryStart(string name, int index) {
 			if (ReadTag(name, (uint)(200 + index))) {
-				if (IsSerializerLogEnabled) {
+				if (IsSerializerLoggerEnabled) {
 					Context.SerializerLogger.Log($"{LogPrefix}{name}[{index}]:");
 				}
 				return base.ArrayEntryStart(name, index);
@@ -487,7 +508,7 @@ namespace UbiArt {
 		public override void ArrayEntryStop() {
 			base.ArrayEntryStop();
 
-			if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
+			if (IsSerializerLoggerEnabled && endPos.Peek() != Reader.BaseStream.Position) {
 				Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 			}
 			Reader.BaseStream.Position = endPos.Pop();
@@ -538,17 +559,23 @@ namespace UbiArt {
 
 		public override T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null) {
 			var logPrefix = LogPrefix;
-			bool isBigObject = IsSerializerLogEnabled && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-			if (IsSerializerLogEnabled && name != null && isBigObject) {
+
+			bool isBigObject = IsBigObject(type ?? typeof(T));
+			bool isLogTemporarilyDisabled = IsShortLog(type ?? typeof(T));
+
+			if (IsSerializerLoggerEnabled && name != null && isBigObject) {
 				Context.SerializerLogger.Log($"{logPrefix}{name}:");
 			}
 
-			object obj2 = obj;
-			Serialize(ref obj2, type ?? typeof(T), name: name);
-			obj = (T)obj2;
-
-			if (IsSerializerLogEnabled && name != null && !isBigObject) {
-				Context.SerializerLogger.Log($"{logPrefix}{name} - {obj}");
+			try {
+				object obj2 = obj;
+				Serialize(ref obj2, type ?? typeof(T), name: name);
+				obj = (T)obj2;
+			} finally {
+				if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+				if (IsSerializerLoggerEnabled && name != null && !isBigObject) {
+					Context.SerializerLogger.Log($"{logPrefix}{name} - {ShortLog(obj)}");
+				}
 			}
 			return obj;
 		}
@@ -571,12 +598,12 @@ namespace UbiArt {
 					var logPrefix = LogPrefix;
 					obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
 
-					if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
+					if (IsSerializerLoggerEnabled && endPos.Peek() != Reader.BaseStream.Position) {
 						Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
 					}
 					Reader.BaseStream.Position = endPos.Pop();
-					if (!fakeSerializeMode && IsSerializerLogEnabled && name != null) {
-						Context.SerializerLogger.Log($"{logPrefix}{name} - {obj}");
+					if (!fakeSerializeMode && IsSerializerLoggerEnabled && name != null) {
+						Context.SerializerLogger.Log($"{logPrefix}{name} - {ShortLog(obj)}");
 					}
 				} else {
 					if (obj == null) {
@@ -589,8 +616,8 @@ namespace UbiArt {
 			} else {
 				var logPrefix = LogPrefix;
 				obj = (T)ReadPrimitiveAsObject<T>(obj, name: name, options: options);
-				if (!fakeSerializeMode && IsSerializerLogEnabled && name != null) {
-					Context.SerializerLogger.Log($"{logPrefix}{name} - {obj}");
+				if (!fakeSerializeMode && IsSerializerLoggerEnabled && name != null) {
+					Context.SerializerLogger.Log($"{logPrefix}{name} - {ShortLog(obj)}");
 				}
 			}
 			return obj;
@@ -615,21 +642,25 @@ namespace UbiArt {
 				}*/
 				if (ReadTag(name, uafType)) {
 					var logPrefix = LogPrefix;
-					bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
+					bool isBigObject = IsBigObject(objType);
+					bool isLogTemporarilyDisabled = IsShortLog(objType);
 
-					if (!fakeSerializeMode && IsSerializerLogEnabled && isBigObject && name != null) {
+					if (!fakeSerializeMode && IsSerializerLoggerEnabled && isBigObject && name != null) {
 						Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name}:");
 					}
 
-					obj = SerializeObjectFull<T>(default, name, objType);
+					try {
+						obj = SerializeObjectFull<T>(default, name, objType);
+					} finally {
+						if (IsSerializerLoggerEnabled && endPos.Peek() != Reader.BaseStream.Position) {
+							Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
+						}
+						Reader.BaseStream.Position = endPos.Pop();
 
-					if (IsSerializerLogEnabled && endPos.Peek() != Reader.BaseStream.Position) {
-						Context.SerializerLogger.Log($"{LogPrefix}ERROR: NOT FULLY READ");
-					}
-					Reader.BaseStream.Position = endPos.Pop();
-
-					if (!fakeSerializeMode && IsSerializerLogEnabled && !isBigObject && name != null) {
-						Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name} - {obj}");
+						if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+						if (!fakeSerializeMode && IsSerializerLoggerEnabled && !isBigObject && name != null) {
+							Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name} - {ShortLog(obj)}");
+						}
 					}
 				} else {
 					if (obj == null) {
@@ -641,16 +672,20 @@ namespace UbiArt {
 				}
 			} else {
 				var logPrefix = LogPrefix;
-				bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(objType) || typeof(IObjectContainer).IsAssignableFrom(objType));
+				bool isBigObject = IsBigObject(objType);
+				bool isLogTemporarilyDisabled = IsShortLog(objType);
 
-				if (!fakeSerializeMode && IsSerializerLogEnabled && isBigObject && name != null) {
+				if (!fakeSerializeMode && IsSerializerLoggerEnabled && isBigObject && name != null) {
 					Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name}:");
 				}
 
-				obj = SerializeObjectFull<T>(obj, name, objType);
-
-				if (!fakeSerializeMode && IsSerializerLogEnabled && !isBigObject && name != null) {
-					Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name} - {obj}");
+				try {
+					obj = SerializeObjectFull<T>(obj, name, objType);
+				} finally {
+					if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+					if (!fakeSerializeMode && IsSerializerLoggerEnabled && !isBigObject && name != null) {
+						Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name} - {ShortLog(obj)}");
+					}
 				}
 			}
 			return obj;
@@ -658,9 +693,9 @@ namespace UbiArt {
 
 		#region Logging
 
-		protected string LogPrefix => IsSerializerLogEnabled ? $"(R) {CurrentPointer}:{new string(' ', (Depth + 1) * 2)}" : null;
+		protected string LogPrefix => IsSerializerLoggerEnabled ? $"(R) {CurrentPointer}:{new string(' ', (Depth + 1) * 2)}" : null;
 		public override void Log(string logString, params object[] args) {
-			if (IsSerializerLogEnabled)
+			if (IsSerializerLoggerEnabled)
 				Context.SerializerLogger.Log(LogPrefix + String.Format(logString, args));
 		}
 

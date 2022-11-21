@@ -45,7 +45,6 @@ public class Controller : MonoBehaviour {
 
 		Settings.Mode mode = UnitySettings.GameMode;
 		string gameDataBinFolder = UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "";
-		string lvlPath = UnitySettings.SelectedLevelFile;
 		bool loadAnimations = UnitySettings.LoadAnimations;
 
 		if (FileSystem.mode == FileSystem.Mode.Web) {

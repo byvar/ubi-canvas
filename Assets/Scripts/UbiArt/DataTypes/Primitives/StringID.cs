@@ -2,7 +2,7 @@
 using System.Text;
 
 namespace UbiArt {
-	public class StringID : ICSerializable, IEquatable<StringID> {
+	public class StringID : ICSerializable, IEquatable<StringID>, ICSerializableShortLog {
 		public uint stringID;
 
 		public void Serialize(CSerializerObject s, string name) {
@@ -128,6 +128,8 @@ namespace UbiArt {
 		public bool Equals(StringID other) {
 			return this == (StringID)other;
 		}
+
+		public string SerializeLog(CSerializerObject s) => ToString(s?.Context);
 
 		public static bool operator ==(StringID x, StringID y) {
 			if (ReferenceEquals(x, y)) return true;

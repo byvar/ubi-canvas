@@ -147,32 +147,45 @@ namespace UbiArt {
 
 		public override void Serialize(object containerObj, FieldInfo f, Type type = null, string name = null, int? index = null) {
 			var logPrefix = LogPrefix;
-			bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(f.FieldType) || typeof(IObjectContainer).IsAssignableFrom(f.FieldType));
-			if (IsSerializerLogEnabled && isBigObject) {
+			bool isBigObject = IsBigObject(type ?? f.FieldType);
+			bool isLogTemporarilyDisabled = IsShortLog(type ?? f.FieldType);
+
+			if (IsSerializerLoggerEnabled && isBigObject) {
 				Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name}:");
 			}
 			object obj = null;
-			Serialize(ref obj, type ?? f.FieldType, name: name);
-			if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
-			f.SetValue(containerObj, obj);
-			if (IsSerializerLogEnabled && !isBigObject) {
-				Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {obj}");
+
+			try {
+				Serialize(ref obj, type ?? f.FieldType, name: name);
+				if (type != null) ConvertTypeAfter(ref obj, name, type, f.FieldType);
+				f.SetValue(containerObj, obj);
+			} finally {
+				if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+				if (IsSerializerLoggerEnabled && !isBigObject) {
+					Context.SerializerLogger.Log($"{logPrefix}({f.DeclaringType}) {f.Name} - {ShortLog(obj)}");
+				}
 			}
 		}
 
 		public override T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null) {
 			var logPrefix = LogPrefix;
-			bool isBigObject = IsSerializerLogEnabled && name != null && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-			if (IsSerializerLogEnabled && name != null && isBigObject) {
+
+			bool isBigObject = IsBigObject(type ?? typeof(T)) && name != null;
+			bool isLogTemporarilyDisabled = IsShortLog(type ?? typeof(T)); 
+			
+			if (IsSerializerLoggerEnabled && name != null && isBigObject) {
 				Context.SerializerLogger.Log($"{logPrefix}({name}:");
 			}
 
-			object obj2 = obj;
-			Serialize(ref obj2, type ?? typeof(T), name: name);
-			obj = (T)obj2;
-
-			if (IsSerializerLogEnabled && name != null && !isBigObject) {
-				Context.SerializerLogger.Log($"{logPrefix}({name} - {obj}");
+			try {
+				object obj2 = obj;
+				Serialize(ref obj2, type ?? typeof(T), name: name);
+				obj = (T)obj2;
+			} finally {
+				if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+				if (IsSerializerLoggerEnabled && name != null && !isBigObject) {
+					Context.SerializerLogger.Log($"{logPrefix}({name} - {ShortLog(obj)}");
+				}
 			}
 			return obj;
 		}
@@ -182,7 +195,7 @@ namespace UbiArt {
 		}
 
 		public override bool ArrayEntryStart(string name, int index) {
-			if (IsSerializerLogEnabled) {
+			if (IsSerializerLoggerEnabled) {
 				Context.SerializerLogger.Log($"{LogPrefix}({name}[{index}]:");
 			}
 			return base.ArrayEntryStart(name, index);
@@ -201,27 +214,34 @@ namespace UbiArt {
 
 			T t = (T)ReadPrimitiveAsObject<T>(name: name, options: options);
 
-			if (IsSerializerLogEnabled && name != null) {
-				Context.SerializerLogger.Log($"{logPrefix}({name} - {t}");
+			if (IsSerializerLoggerEnabled && name != null) {
+				Context.SerializerLogger.Log($"{logPrefix}({name} - {ShortLog(t)}");
 			}
 			return t;
 		}
 
 		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
 			var logPrefix = LogPrefix;
-			bool isBigObject = IsSerializerLogEnabled && (typeof(CSerializable).IsAssignableFrom(typeof(T)) || typeof(IObjectContainer).IsAssignableFrom(typeof(T)));
-			if (IsSerializerLogEnabled && isBigObject && name != null) {
+
+			bool isBigObject = IsBigObject(typeof(T));
+			bool isLogTemporarilyDisabled = IsShortLog(typeof(T));
+
+			if (IsSerializerLoggerEnabled && isBigObject && name != null) {
 				Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name}:");
 			}
 
 			IncreaseLevel();
-			if (obj == null) obj = new T();
-			obj.Serialize(this, name);
-			DecreaseLevel();
-			Context.AddToStringCache(obj);
+			try {
+				if (obj == null) obj = new T();
+				obj.Serialize(this, name);
+			} finally {
+				DecreaseLevel();
+				Context.AddToStringCache(obj);
 
-			if (IsSerializerLogEnabled && !isBigObject && name != null) {
-				Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name} - {obj}");
+				if (isLogTemporarilyDisabled) DisableSerializerLoggerForObject = false;
+				if (IsSerializerLoggerEnabled && !isBigObject && name != null) {
+					Context.SerializerLogger.Log($"{logPrefix}({typeof(T)}) {name} - {ShortLog(obj)}");
+				}
 			}
 			return obj;
 		}
@@ -231,9 +251,9 @@ namespace UbiArt {
 
 		#region Logging
 
-		protected string LogPrefix => IsSerializerLogEnabled ? $"(R) {CurrentPointer}:{new string(' ', (Depth + 1) * 2)}" : null;
+		protected string LogPrefix => IsSerializerLoggerEnabled ? $"(R) {CurrentPointer}:{new string(' ', (Depth + 1) * 2)}" : null;
 		public override void Log(string logString, params object[] args) {
-			if (IsSerializerLogEnabled)
+			if (IsSerializerLoggerEnabled)
 				Context.SerializerLogger.Log(LogPrefix + String.Format(logString, args));
 		}
 
