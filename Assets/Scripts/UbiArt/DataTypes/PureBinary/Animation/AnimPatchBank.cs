@@ -24,6 +24,9 @@ namespace UbiArt.Animation {
 				version = VersionLegends;
 			}
 		}
-
+		protected override void OnPreSerialize(CSerializerObject s) {
+			base.OnPreSerialize(s);
+			Reinit(s.Settings);
+		}
 	}
 }

@@ -19,6 +19,11 @@ namespace UbiArt {
 		public override long CurrentPosition => Reader.BaseStream.Position;
 		public override long Length => Reader.BaseStream.Length;
 
+		public override void Dispose() {
+			base.Dispose();
+			Reader?.Dispose();
+		}
+
 		public override void Goto(long position) {
 			if (!Disposed) Reader.BaseStream.Position = position;
 		}

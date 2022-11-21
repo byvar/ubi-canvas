@@ -19,6 +19,11 @@ namespace UbiArt {
 		public override long CurrentPosition => Writer.BaseStream.Position;
 		public override long Length => Writer.BaseStream.Length;
 
+		public override void Dispose() {
+			base.Dispose();
+			Writer?.Dispose();
+		}
+
 		public override void Goto(long position) {
 			if (!Disposed) Writer.BaseStream.Position = position;
 		}

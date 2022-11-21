@@ -66,7 +66,15 @@ namespace UbiArt {
 		}
 
 		public bool Remove(T item) {
-			return ((IList<T>)container).Remove(item);
+			int removeIndex = IndexOf(item);
+			if (removeIndex != -1) {
+				for (int i = removeIndex + 1; i < container.Length; i++) {
+					container[i-1] = container[i];
+				}
+				Array.Resize(ref container, container.Length-1);
+				return true;
+			}
+			return false;
 		}
 
 		public void RemoveAt(int index) {

@@ -16,8 +16,10 @@ namespace UbiArt.UV {
 		}
 
 		public void Reinit(Settings settings) {
-			foreach(var at in atlas)
-				at.Value?.Reinit(settings);
+			if (atlas != null) {
+				foreach (var at in atlas)
+					at.Value?.Reinit(settings);
+			}
 		}
 	}
 }

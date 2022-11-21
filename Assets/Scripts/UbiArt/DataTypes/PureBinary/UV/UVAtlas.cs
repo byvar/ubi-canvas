@@ -27,5 +27,10 @@ namespace UbiArt.UV {
 				version = versionLegends;
 			}
 		}
+		protected override void OnPreSerialize(CSerializerObject s) {
+			base.OnPreSerialize(s);
+			Reinit(s.Settings);
+		}
+
 	}
 }

@@ -78,6 +78,12 @@ namespace UbiArt.Animation {
 			0713E113
 			*/
 		}
+
+		protected override void OnPreSerialize(CSerializerObject s) {
+			base.OnPreSerialize(s);
+			Reinit(s.Settings);
+		}
+
 		public AnimBone GetBoneFromLink(Link link) {
 			return bones.FirstOrDefault(b => b.key == link);
 		}
