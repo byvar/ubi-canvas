@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using Cysharp.Threading.Tasks;
 using Ionic.Zlib;
+using System.Threading.Tasks;
 using UbiCanvas.Helpers;
 
 namespace UbiArt.Bundle {
@@ -10,6 +10,7 @@ namespace UbiArt.Bundle {
 		public BundleBootHeader bootHeader;
 		public FilePackMaster packMaster;
 		private Dictionary<Path, ICSerializable> files = new Dictionary<Path, ICSerializable>();
+		private Dictionary<Path, byte[]> preProcessedFiles = new Dictionary<Path, byte[]>();
 
 		private Dictionary<Path, byte[]> readFileData = new Dictionary<Path, byte[]>();
 
@@ -18,7 +19,7 @@ namespace UbiArt.Bundle {
 			packMaster = s.SerializeObject<FilePackMaster>(packMaster, name: nameof(packMaster));
 		}
 
-		public async UniTask SerializeAsync(CSerializerObject s, string name) {
+		public async Task SerializeAsync(CSerializerObject s, string name) {
 			await s.FillCacheForRead(11 * 4);
 			bootHeader = s.SerializeObject<BundleBootHeader>(bootHeader, name: nameof(bootHeader));
 			await s.FillCacheForRead(bootHeader.baseOffset);
@@ -38,7 +39,7 @@ namespace UbiArt.Bundle {
 			return null;
 		}
 
-		public async UniTask<byte[]> GetFile(Context context, CSerializerObject s, Path path) {
+		public async Task<byte[]> GetFile(Context context, CSerializerObject s, Path path) {
 			if (readFileData.ContainsKey(path)) return readFileData[path];
 			if (packMaster != null) {
 				FileHeaderRuntime h = packMaster.files.FirstOrDefault(f => f.Item2 == path)?.Item1;
@@ -66,12 +67,18 @@ namespace UbiArt.Bundle {
 		public bool HasReadFile(Path path) {
 			return readFileData.ContainsKey(path);
 		}
+		public bool HasPreprocessedFile(Path path) => preProcessedFiles.ContainsKey(path);
+		public bool ContainsFile(Path path) => packMaster.files.Any(f => f.Item2 == path);
 
 		public void AddFile(Path path, ICSerializable data) {
 			files[path] = data;
 		}
-		public async UniTask WriteBundle(Context context, string path) {
-			bootHeader.numFiles = (uint)files.Keys.Count;
+		public void AddFile(Path path, byte[] data) {
+			preProcessedFiles[path] = data;
+		}
+
+		public async Task WriteBundle(Context context, string path) {
+			bootHeader.numFiles = (uint)files.Keys.Count + (uint)preProcessedFiles.Count;
 			List<byte[]> data = new List<byte[]>();
 			uint curOffset = 0;
 			byte[] serializedData = null;
@@ -85,6 +92,20 @@ namespace UbiArt.Bundle {
 						serializedData = stream.ToArray();
 					}
 				}
+				FileHeaderRuntime fhr = new FileHeaderRuntime {
+					numOffsets = 1,
+					offsets = new ulong[1] { curOffset },
+					size = (uint)serializedData.Length,
+					zSize = 0,
+					timeStamp = 0
+				};
+				packMaster.files.Add(new Pair<FileHeaderRuntime, Path>(fhr, kv.Key));
+				data.Add(serializedData);
+				curOffset += (uint)serializedData.Length;
+				await TimeController.WaitIfNecessary();
+			}
+			foreach (var kv in preProcessedFiles) {
+				serializedData = kv.Value;
 				FileHeaderRuntime fhr = new FileHeaderRuntime {
 					numOffsets = 1,
 					offsets = new ulong[1] { curOffset },

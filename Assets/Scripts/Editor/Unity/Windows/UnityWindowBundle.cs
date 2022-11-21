@@ -5,6 +5,7 @@ using UbiArt.ITF;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UbiCanvas.Helpers;
+using UbiCanvas;
 
 public class UnityWindowBundle : UnityWindow {
 	[MenuItem("Ubi-Canvas/Bundle Export")]
@@ -41,6 +42,57 @@ public class UnityWindowBundle : UnityWindow {
 					GetSelectedPaths(selection, l.tpl);
 					using (Controller.MainContext) 
 						await l.WriteBundle(path, selection);
+				}
+				DrawHeader(ref yPos, "Rayman Legends Export");
+				rlPath = FileField(GetNextRect(ref yPos), "Original bundle file", rlPath, false, "ipk");
+				if (GUI.Button(GetNextRect(ref yPos), new GUIContent("Write all for RL"))) {
+					var basePath = System.IO.Path.GetDirectoryName(rlPath);
+					var settings = Settings.Init(Settings.Mode.RaymanLegendsPC);
+					var mainContext = Controller.MainContext;
+
+					// Step 1: create new paths dictionary
+					var ogDir = l.Settings.ITFDirectory;
+					var newDir = settings.ITFDirectory;
+					var structs = l.Context.Cache.Structs;
+					var pathMapping = new Dictionary<StringID, Path>();
+					foreach (var structType in structs) {
+						foreach (var structMap in structType.Value) {
+							var ogPath = l.CookedPaths[structMap.Key];
+							if (ogPath.folder != null && ogPath.folder.Contains(ogDir)) {
+								pathMapping[structMap.Key] = new Path(ogPath.FullPath.Replace(ogDir, newDir), true);
+							} else {
+								pathMapping[structMap.Key] = ogPath;
+							}
+						}
+					}
+					// Step 2, load bundles, for each struct check if it's already present in the bundle, otherwise add it
+					using (var rlContext = new Context(basePath, settings,
+						fileManager: new MapViewerFileManager(),
+						systemLogger: new UnitySystemLogger(),
+						asyncController: new UniTaskAsyncController())) {
+						await rlContext.Loader.LoadBundles();
+						var bun = new UbiArt.Bundle.BundleFile();
+						var ogBun = rlContext.Loader.Bundles["Bundle"];
+
+						// Add all original files to new bundle
+						/*foreach (var f in ogBun.packMaster.files) {
+							var fData = await ogBun.GetFile(rlContext, rlContext.Loader.BigFiles["Bundle"].Deserializer, f.Item2);
+							bun.AddFile(f.Item2, fData);
+						}*/
+						// Add new data
+						foreach (var structType in structs) {
+							foreach (var structMap in structType.Value) {
+								var curPath = pathMapping[structMap.Key];
+								if(curPath.filename == "localisation.loc8") continue;
+								//if (!bun.HasPreprocessedFile(curPath)) {
+								if (!ogBun.ContainsFile(curPath)) {
+									bun.AddFile(curPath, structMap.Value);
+								}
+							}
+						}
+						// Write bundle
+						await rlContext.Loader.WriteBundle(path, bun);
+					}
 				}
 				EditorGUI.EndDisabledGroup();
 				totalyPos = yPos;
@@ -85,6 +137,7 @@ public class UnityWindowBundle : UnityWindow {
 	private float totalyPos = 0f;
 	private Vector2 scrollPosition = Vector2.zero;
 	private string path;
+	private string rlPath;
 	private Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
 	private Dictionary<StringID, bool> selectedPaths = new Dictionary<StringID, bool>();
 }

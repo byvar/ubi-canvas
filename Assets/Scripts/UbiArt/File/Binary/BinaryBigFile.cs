@@ -14,7 +14,7 @@ namespace UbiArt.FileFormat {
 		}
 
 		public string DestinationPath { get; set; }
-		protected override Stream ReadStream => FileManager.GetFileReadStream(FilePath);
+		protected override Stream ReadStream => FileManager.GetFileReadStream(Context.GetAbsoluteFilePath(Context.NormalizePath(FilePath, false)));
 		protected override Stream WriteStream => FileManager.GetFileWriteStream(DestinationPath, true);
 	}
 }

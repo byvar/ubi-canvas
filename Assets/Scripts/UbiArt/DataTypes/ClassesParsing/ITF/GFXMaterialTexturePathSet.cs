@@ -17,10 +17,10 @@ namespace UbiArt.ITF {
 				LoadTexture(s.Context, nameof(tex_diffuse), diffuse);
 				LoadTexture(s.Context, nameof(tex_back_light), back_light);
 				LoadTexture(s.Context, nameof(tex_separateAlpha), separateAlpha);
-				/*LoadTexture(nameof(tex_normal), normal);
-				LoadTexture(nameof(tex_diffuse_2), diffuse_2);
-				LoadTexture(nameof(tex_back_light_2), back_light_2);
-				LoadTexture(nameof(tex_anim_impostor), anim_impostor);*/
+				LoadTexture(s.Context, nameof(tex_normal), normal);
+				LoadTexture(s.Context, nameof(tex_diffuse_2), diffuse_2);
+				LoadTexture(s.Context, nameof(tex_back_light_2), back_light_2);
+				LoadTexture(s.Context, nameof(tex_anim_impostor), anim_impostor);
 			}
 		}
 

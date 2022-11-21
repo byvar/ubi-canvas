@@ -72,6 +72,7 @@ namespace UbiArt {
 		public Dictionary<StringID, ICSerializable> anm => Context.Cache.Structs.GetValueOrDefault(typeof(Animation.AnimTrack));
 		public Dictionary<StringID, ICSerializable> tex => Context.Cache.Structs.GetValueOrDefault(typeof(TextureCooked));
 		public Dictionary<StringID, Path> Paths { get; private set; } = new Dictionary<StringID, Path>();
+		public Dictionary<StringID, Path> CookedPaths { get; private set; } = new Dictionary<StringID, Path>();
 
 		protected bool GameFileExists(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
@@ -98,6 +99,60 @@ namespace UbiArt {
 			} else {
 				return FileManager.GetFileReadStream($"{Context.BasePath}{cookedFolder}{p.folder}{p.filename}{(ckd ? ".ckd" : "")}");
 			}
+		}
+		public async Task LoadBundles() {
+			string[] bnames = Settings.bundles;
+			foreach (var bname in bnames) {
+				if (!Bundles.ContainsKey(bname)) {
+					string fileName = $"{bname}_{Settings.PlatformString}.ipk";
+					string fullPath = $"{Context.BasePath}{fileName}";
+					await FileManager.PrepareBigFile(fullPath, 0);
+					if (!FileManager.FileExists(fullPath)) continue;
+					BigFiles[bname] = new BinaryBigFile(Context, fileName) {
+						Alias = bname
+					};
+					Bundles[bname] = new BundleFile();
+					await Bundles[bname].SerializeAsync(BigFiles[bname].Deserializer, bname);
+				}
+			}
+		}
+		public async Task<byte[]> GetFileFromBundles(Path p, bool ckd) {
+			string cookedFolder = ckd ? Settings.ITFDirectory : "";
+			Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
+			string[] bnames = Settings.bundles;
+			// Loop 1: try to find an already loaded bundle and an already loaded file
+			foreach (var bname in bnames) {
+				if (Bundles.ContainsKey(bname) && Bundles[bname].HasReadFile(path)) {
+					byte[] data = await Bundles[bname].GetFile(Context, BigFiles[bname].Deserializer, path);
+					if (data != null) return data;
+				}
+			}
+			// Loop 2: try to find an already loaded bundle and an already loaded file
+			foreach (var bname in bnames) {
+				if (Bundles.ContainsKey(bname)) {
+					byte[] data = await Bundles[bname].GetFile(Context, BigFiles[bname].Deserializer, path);
+					if (data != null) return data;
+				}
+			}
+			// Loop 3: load new bundles until you find the file
+			foreach (var bname in bnames) {
+				if (!Bundles.ContainsKey(bname)) {
+					string fileName = $"{bname}_{Settings.PlatformString}.ipk";
+					string fullPath = $"{Context.BasePath}{fileName}";
+					await FileManager.PrepareBigFile(fullPath, 0);
+					if (!FileManager.FileExists(fullPath)) continue;
+					BigFiles[bname] = new BinaryBigFile(Context, fileName) {
+						Alias = bname
+					};
+					Bundles[bname] = new BundleFile();
+					await Bundles[bname].SerializeAsync(BigFiles[bname].Deserializer, bname);
+				}
+				if (Bundles.ContainsKey(bname)) {
+					byte[] data = await Bundles[bname].GetFile(Context, BigFiles[bname].Deserializer, path);
+					if (data != null) return data;
+				}
+			}
+			return null;
 		}
 		protected async Task PrepareGameFile(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
@@ -205,6 +260,8 @@ namespace UbiArt {
 							string cookedFolder = ckd ? Settings.ITFDirectory : "";
 							await PrepareGameFile(o.path, ckd);
 							if (GameFileExists(o.path, ckd)) {
+								Path ckdPath = ckd ? new Path($"{cookedFolder}{o.path.folder}", $"{o.path.filename}{(ckd ? ".ckd" : "")}", cooked: true) : o.path;
+								CookedPaths[id] = ckdPath;
 								files.Add(id, new BinaryGameFile(Context, o.path.filename, o.path, ckd));
 								LoadingState = $"{state}\n{o.path.FullPath}";
 								await Context.AsyncController.WaitIfNecessary();
@@ -330,6 +387,9 @@ namespace UbiArt {
 			foreach (Pair<Path, ICSerializable> f in files) {
 				b.AddFile(f.Item1.CookedPath(Context), f.Item2);
 			}
+			await WriteBundle(path, b);
+		}
+		public async Task WriteBundle(string path, Bundle.BundleFile b) {
 			Context.AsyncController.StartAsync();
 			await b.WriteBundle(Context, path);
 			Context.AsyncController.StopAsync();
