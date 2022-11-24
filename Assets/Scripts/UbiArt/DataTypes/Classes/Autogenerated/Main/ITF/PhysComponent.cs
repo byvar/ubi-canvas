@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class PhysComponent : ActorComponent {
-		public float Mass;
-		public float Friction;
-		public float FrictionMultiplier;
+		public float Mass = 1f;
+		public float Friction = 0.5f;
+		public float FrictionMultiplier = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {

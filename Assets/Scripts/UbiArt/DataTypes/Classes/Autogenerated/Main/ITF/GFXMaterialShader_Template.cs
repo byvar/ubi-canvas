@@ -5,9 +5,9 @@ namespace UbiArt.ITF {
 		public bool renderRegular = true;
 		public bool renderFrontLight;
 		public bool renderBackLight;
-		public int renderInReflection;
+		public int renderInReflection = -1;
 		public bool useAlphaTest;
-		public uint alphaRef;
+		public uint alphaRef = 0x80;
 		public bool separateAlpha;
 		public bool normalMapLighting;
 		public bool textureBlend;
@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		public GFX_MAT3 materialtype3;
 		public GFX_MAT_SHADER lightingType;
 		public GFX_MaterialParams matParams;
-		public GFX_BLEND blendmode;
+		public GFX_BLEND blendmode = GFX_BLEND.ALPHA;
 		public int renderToTexture;
 		public bool renderGenerateBack;
 		public COL_GFXMaterialShader_Layer_Template Layer1;

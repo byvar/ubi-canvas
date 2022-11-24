@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class CameraModifierComponent : ActorComponent {
-		public uint cameraView;
+		public uint cameraView = 3;
 		public bool ignoreAABB;
 		public bool ignoreSceneActiveState;
 		public CamModifier CM;

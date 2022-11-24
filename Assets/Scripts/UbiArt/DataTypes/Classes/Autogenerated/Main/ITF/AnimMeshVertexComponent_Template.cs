@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		public Path amvPath;
 		public Path texture;
 		public GFXMaterialSerializable material;
-		public bool useEditor;
-		public bool useDataAnims;
-		public bool useActorScale;
+		public bool useEditor = true;
+		public bool useDataAnims = true;
+		public bool useActorScale = true;
 		public float stopDuration;
 		public AnimResourcePackage animPackage;
 		protected override void SerializeImpl(CSerializerObject s) {

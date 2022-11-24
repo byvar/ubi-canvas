@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class CameraModifierComponent_Template : ActorComponent_Template {
 		public CamModifier_Template CM;
-		public Vec2d SCALE;
+		public Vec2d SCALE = new Vec2d(32.4f, 18.225f);
 		public CamModifierOverride_Template CM_override;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

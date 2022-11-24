@@ -2,13 +2,13 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class PolylineParameters : CSerializable {
 		public float speedLoss;
-		public float weightMultiplier;
-		public float landSpeedMultiplier;
-		public float hitForceMultiplier;
-		public float impulseMultiplier;
-		public float windMultiplier;
+		public float weightMultiplier = 1f;
+		public float landSpeedMultiplier = 1f;
+		public float hitForceMultiplier = 5f;
+		public float impulseMultiplier = 1f;
+		public float windMultiplier = 1f;
 		public Path gameMaterial;
-		public bool environment;
+		public bool environment = true;
 		public bool usePhantom;
 		public bool useMovingPolyline;
 		public StringID regionType;

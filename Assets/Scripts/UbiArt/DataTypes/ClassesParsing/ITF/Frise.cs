@@ -6,6 +6,27 @@ namespace UbiArt.ITF {
 		public FriseOrigins.FriseConfigOrigins configOrigins;
 		public GenericFile<GFXMaterialShader_Template> shader;
 
+		public Frise() {
+			Thickness = 1f;
+			lockTexture = LockTexture.None;
+			animSpeedFactor = 1f;
+			animAmplitudeFactor = 1f;
+			highlightFrontLightBrightness = 1.5f;
+			highlightOutlineWidth = 4f;
+			highlightPeriod = 1f;
+			highlightAmplitude = 0.21f;
+			highlightOutlineColor = Color.White;
+			XfForCook = new Transform2d() {
+				Rot = new matrix2d() {
+					Col1 = new Vec2d(1f, 0f),
+					Col2 = new Vec2d(0f, 1f)
+				}
+			};
+			UseTemplatePrimitiveParams = true;
+			uvY_Tile = 1f;
+
+		}
+
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {

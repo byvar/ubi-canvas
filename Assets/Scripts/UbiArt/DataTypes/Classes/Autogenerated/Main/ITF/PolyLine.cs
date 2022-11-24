@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.VH | GameFlags.RA)]
 		public partial class Connection : CSerializable {
-			public uint PreviousId;
+			public uint PreviousId = 0xFFFFFFFF;
 			public Vec2d PosInit;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

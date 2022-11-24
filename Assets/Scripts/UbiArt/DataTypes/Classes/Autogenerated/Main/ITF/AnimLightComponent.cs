@@ -7,9 +7,9 @@ namespace UbiArt.ITF {
 		public Path MatShader;
 		public StringID subSkeleton;
 		public StringID defaultAnim;
-		public bool useZOffset;
+		public bool useZOffset = true;
 		public bool EmitFluid;
-		public bool BasicRender;
+		public bool BasicRender = true;
 		public StringID lastAnim;
 		public StringID playAnim;
 		public uint playAnimFrames;

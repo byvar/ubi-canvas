@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		public StringID animName;
 		public uint offset;
 		public Vec3d pos;
-		public Vec2d scale;
-		public Color color;
-		public uint anim;
+		public Vec2d scale = Vec2d.One;
+		public Color color = Color.White;
+		public uint anim = 0xFFFFFFFF;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			flip = s.Serialize<bool>(flip, name: "flip");

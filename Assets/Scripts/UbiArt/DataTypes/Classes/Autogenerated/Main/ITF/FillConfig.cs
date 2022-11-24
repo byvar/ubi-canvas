@@ -1,14 +1,14 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class FillConfig : CSerializable {
-		public float smoothFactor;
-		public float offset;
+		public float smoothFactor = 3.402823e+38F;
+		public float offset = 0.5f;
 		public Angle angle;
-		public Vec2d scale;
+		public Vec2d scale = new Vec2d(2, 2);
 		public StringID tex;
 		public float zExtrude;
 		public bool isSmooth;
-		public int texIndex;
+		public int texIndex = -1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			smoothFactor = s.Serialize<float>(smoothFactor, name: "smoothFactor");

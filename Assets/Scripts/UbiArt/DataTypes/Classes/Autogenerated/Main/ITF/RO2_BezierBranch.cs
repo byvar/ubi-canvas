@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public CListO<RO2_BezierNode> nodes;
 		public CListO<RO2_BezierSubBranch> subBranches;
 		public CArrayO<Generic<RO2_BezierBranchComponent>> components;
-		public bool autoStartTweening;
+		public bool autoStartTweening = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			nodes = s.SerializeObject<CListO<RO2_BezierNode>>(nodes, name: "nodes");

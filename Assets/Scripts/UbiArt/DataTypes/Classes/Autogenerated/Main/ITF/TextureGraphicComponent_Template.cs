@@ -3,14 +3,14 @@ namespace UbiArt.ITF {
 	public partial class TextureGraphicComponent_Template : GraphicComponent_Template {
 		public Path texture;
 		public GFXMaterialSerializable material;
-		public Color defaultColor;
+		public Color defaultColor = Color.White;
 		public Angle angleX;
 		public Angle angleY;
 		public Angle angleZ;
 		public float speedRotX;
 		public float speedRotY;
 		public float speedRotZ;
-		public Vec2d size;
+		public Vec2d size = Vec2d.One;
 		public float zOffset;
 		public bool draw2D;
 		public bool draw2DNoScreenRatio;

@@ -1,26 +1,26 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class BezierCurveRenderer_Template : CSerializable {
-		public float beginLength;
-		public float endLength;
-		public float beginWidth;
-		public float midWidth;
-		public float endWidth;
-		public float beginAlpha;
-		public float midAlpha;
-		public float endAlpha;
-		public Color beginColor;
-		public Color midColor;
-		public Color endColor;
-		public float tileLength;
+		public float beginLength = 2;
+		public float endLength = 2;
+		public float beginWidth = 1;
+		public float midWidth = 1;
+		public float endWidth = 1;
+		public float beginAlpha = 0;
+		public float midAlpha = 1;
+		public float endAlpha = 0;
+		public Color beginColor = new Color(1, 1, 1, 0);
+		public Color midColor = Color.White;
+		public Color endColor = new Color(1, 1, 1, 0);
+		public float tileLength = 1f;
 		public bool stretchTexture;
-		public float tessellationLength;
+		public float tessellationLength = 0.1f;
 		public GFXPrimitiveParam primitiveParameters;
 		public Path texture;
 		public GFXMaterialSerializable material;
 		public BezierDivMode divMode;
 		public float startUV;
-		public Color color;
+		public Color color = Color.White;
 		public Color fogColor;
 		public UV_MODE uvMode;
 

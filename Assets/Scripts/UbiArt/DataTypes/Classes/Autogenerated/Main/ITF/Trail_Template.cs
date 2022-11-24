@@ -3,18 +3,18 @@ namespace UbiArt.ITF {
 	public partial class Trail_Template : CSerializable {
 		public Path texture;
 		public GFXMaterialSerializable material;
-		public uint nbFrames;
+		public uint nbFrames = 1;
 		public uint fixTrailLenght;
-		public float trailFaidingTime;
-		public float thicknessBegin;
+		public float trailFaidingTime = 1f;
+		public float thicknessBegin = 1f;
 		public float thicknessEnd;
-		public float alphaBegin;
-		public float alphaEnd;
+		public float alphaBegin = 1f;
+		public float alphaEnd = 1f;
 		public float trailBlending;
 		public float fadeLength;
-		public float tesselateMaxLength;
+		public float tesselateMaxLength = 1e+30f;
 		public float tesselateMinLength;
-		public Color color;
+		public Color color = Color.White;
 		public StringID attachBone;
 		public GFX_BLEND blendmode;
 		protected override void SerializeImpl(CSerializerObject s) {

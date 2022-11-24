@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public Prisoner prisonerVisualType;
 		public Enum_prisonerType prisonerType;
 		public Index prisonerIndexType;
-		public bool canReceiveHits;
+		public bool canReceiveHits = true;
 		public ObjectPath targetWaypoint;
 		public ObjectPath respawnPoint;
 		public bool rescued;

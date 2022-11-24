@@ -2,8 +2,8 @@ using System;
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class PhantomComponent_Template : ShapeComponent_Template {
-		public Enum_collisionGroup collisionGroup;
-		public uint collisionGroup2;
+		public Enum_collisionGroup collisionGroup = Enum_collisionGroup.Value_1;
+		public uint collisionGroup2 = 1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {

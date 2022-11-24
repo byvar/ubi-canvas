@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AnimMeshVertexComponent : GraphicComponent {
-		public float mergeRange;
+		public float mergeRange = 10f;
 		public AABB aabb;
 		public CListO<SingleAnimData> anims;
 		protected override void SerializeImpl(CSerializerObject s) {

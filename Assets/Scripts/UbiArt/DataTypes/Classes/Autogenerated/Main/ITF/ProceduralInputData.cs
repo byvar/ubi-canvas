@@ -3,10 +3,10 @@ namespace UbiArt.ITF {
 	public partial class ProceduralInputData : CSerializable {
 		public StringID input;
 		public float min;
-		public float max;
+		public float max = 1f;
 		public float initialValue;
 		public float minValue;
-		public float maxValue;
+		public float maxValue = 1f;
 		public bool mod;
 		public bool abs;
 		public bool add;

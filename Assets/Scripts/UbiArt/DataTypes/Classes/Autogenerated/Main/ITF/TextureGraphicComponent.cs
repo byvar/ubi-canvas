@@ -2,16 +2,16 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class TextureGraphicComponent : GraphicComponent {
 		public Path texture;
-		public TEXTURE_ANCHOR anchor;
+		public TEXTURE_ANCHOR anchor = TEXTURE_ANCHOR.MIDDLE_CENTER;
 		public GFXMaterialSerializable material;
-		public Vec2d Scale;
+		public Vec2d Scale = Vec2d.One;
 		public float Width;
 		public Angle Angle;
 		public Vec3d Offset;
-		public Vec2d UVScale;
+		public Vec2d UVScale = Vec2d.One;
 		public Vec2d UVOffset;
-		public uint spriteIndex;
-		public Vec2d uvRatio;
+		public uint spriteIndex = 0xFFFFFFFF;
+		public Vec2d uvRatio = Vec2d.One;
 		public Vec2d uvTranslationSpeed;
 		public Vec2d size;
 		protected override void SerializeImpl(CSerializerObject s) {

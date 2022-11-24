@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		public bool stencilTest;
 		public bool skipDepthTest;
 		public bool isTwoSided;
-		public uint alphaTest;
-		public uint alphaRef;
+		public uint alphaTest = 0xFFFFFFFF;
+		public uint alphaRef = 0xFFFFFFFF;
 
 		// Child of Light is vastly different
 		public uint ATL_Channel;

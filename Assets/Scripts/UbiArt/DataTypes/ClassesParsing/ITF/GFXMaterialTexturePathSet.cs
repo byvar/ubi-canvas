@@ -1,5 +1,4 @@
-﻿using Codice.Utils;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace UbiArt.ITF {
 	public partial class GFXMaterialTexturePathSet {

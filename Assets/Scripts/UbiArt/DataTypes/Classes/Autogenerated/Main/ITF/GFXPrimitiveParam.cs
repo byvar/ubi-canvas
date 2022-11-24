@@ -2,39 +2,39 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class GFXPrimitiveParam : CSerializable {
 		public GFX_GridFluidObjParam GridFluidParam;
-		public Enum_GlobalScissor GlobalScissor;
+		public Enum_GlobalScissor GlobalScissor = 0;
 		public Color colorFactor = Color.White;
 		public float FrontLightBrightness;
 		public float FrontLightContrast = 1f;
 		public float BackLightBrightness;
 		public float BackLightContrast = 1f;
 		public Color colorFog;
-		public float DynamicFogFactor;
-		public Color OutlineColor;
+		public float DynamicFogFactor = 1f;
+		public Color OutlineColor = new Color(1,1,1,0);
 		public float OutlineWidth;
 		public float OutlineGlow;
-		public uint ViewportVisibility;
+		public uint ViewportVisibility = 0xffff;
 		public GFX_OCCLUDE_INFO gfxOccludeInfo;
 		public GFX_OCCLUDE_INFO2 gfxOccludeInfo2;
-		public Color colorForMask1;
-		public Color colorForMask2;
-		public Color colorForMask3;
+		public Color colorForMask1 = Color.White;
+		public Color colorForMask2 = Color.White;
+		public Color colorForMask3 = Color.White;
 		public float saturation;
-		public float GridFluidEmitterIntensity;
+		public float GridFluidEmitterIntensity = 1f;
 		public uint GridFluidEmitterFilter;
-		public float FrontLightFactor;
-		public float BackLightFactor;
-		public float FrontLightBlurFactor;
-		public float BackLightBlurFactor;
+		public float FrontLightFactor = 1f;
+		public float BackLightFactor = 1f;
+		public float FrontLightBlurFactor = 1f;
+		public float BackLightBlurFactor = 1f;
 
-		
+
 		public bool useStaticFog;
-		public bool RenderInReflections;
+		public bool RenderInReflections = true;
 		public bool RenderToTexture;
 		
-		public bool UseGlobalLighting;
+		public bool UseGlobalLighting = true;
 		public bool UseZInject;
-		public bool RenderRegular;
+		public bool RenderRegular = true;
 		public bool RenderFrontLight;
 		public bool RenderBackLight;
 		public bool RenderFrontLightBlur;

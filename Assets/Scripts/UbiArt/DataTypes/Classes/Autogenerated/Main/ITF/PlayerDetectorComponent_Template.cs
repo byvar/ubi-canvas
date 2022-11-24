@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class PlayerDetectorComponent_Template : ShapeDetectorComponent_Template {
 		public bool allowDeadActors;
 		public bool firstPlayerOnly;
-		public uint allPlayerInMode;
-		public float maxDetectionRadius;
+		public uint allPlayerInMode = 0xffffffff;
+		public float maxDetectionRadius = 5f;
 		public bool allowTouchScreenPlayer;
 		public bool ignoreZ;
 		public bool drcPlayerOnly;

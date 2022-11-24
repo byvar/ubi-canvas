@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class TweenCircle_Template : TweenTranslation_Template {
 		public Vec3d pivot;
-		public float cycleCount;
+		public float cycleCount = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			pivot = s.SerializeObject<Vec3d>(pivot, name: "pivot");

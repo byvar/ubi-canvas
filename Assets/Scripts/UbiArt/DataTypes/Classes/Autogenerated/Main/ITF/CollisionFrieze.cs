@@ -2,13 +2,13 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class CollisionFrieze : CSerializable {
 		public bool build;
-		public float offset;
+		public float offset = 0.5f;
 		public Vec2d extremity;
 		public Vec2d extremity2;
 		public bool flip;
 		public uint methode;
-		public float distMaxToSkipParallelEdge;
-		public float smoothFactor;
+		public float distMaxToSkipParallelEdge = 0.075f;
+		public float smoothFactor = 3.402823e+38F;
 		public bool isSmooth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -6,13 +6,13 @@ namespace UbiArt.ITF {
 		public GFXPrimitiveParam PrimitiveParameters;
 		public uint colorComputerTagId;
 		public bool renderInTarget;
-		public int disableLight;
-		public int disableShadow;
+		public int disableLight = -1;
+		public int disableShadow = -1;
 		public float depthOffset;
-		public float AlphaInit;
-		public float highlightFrontLightBrightness;
+		public float AlphaInit = 1f;
+		public float highlightFrontLightBrightness = -1;
 		public Color highlightOutlineColor;
-		public float highlightOutlineWidth;
+		public float highlightOutlineWidth = -1;
 		public float ColorFog_Red;
 		public float ColorFog_Green;
 		public float ColorFog_Blu;

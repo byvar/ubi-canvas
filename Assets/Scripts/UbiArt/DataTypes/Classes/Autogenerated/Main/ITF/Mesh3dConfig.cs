@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class Mesh3dConfig : CSerializable {
-		public float texureTileSize;
-		public bool random;
+		public float texureTileSize = 1f;
+		public bool random = true;
 		public CListO<Mesh3dData> mesh3dList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

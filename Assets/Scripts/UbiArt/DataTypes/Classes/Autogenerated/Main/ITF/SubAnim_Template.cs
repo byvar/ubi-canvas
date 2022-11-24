@@ -3,10 +3,10 @@ namespace UbiArt.ITF {
 	public partial class SubAnim_Template : CSerializable {
 		public StringID friendlyName;
 		public Path name;
-		public float playRate;
+		public float playRate = 1f;
 		public bool loop;
 		public uint flags;
-		public bool useRootRotation;
+		public bool useRootRotation = true;
 		public bool reverse;
 		public bool defaultFlip;
 		public StringID markerStart;
@@ -14,9 +14,9 @@ namespace UbiArt.ITF {
 		public bool procedural;
 		public bool sync;
 		public uint syncEighthNote;
-		public float syncRatio;
-		public bool allowSyncOffset;
-		public float shadowMul;
+		public float syncRatio = 1f;
+		public bool allowSyncOffset = true;
+		public float shadowMul = 1f;
 		public METRONOME_TYPE metronome;
 		public METRONOME_TYPE2 metronome2;
 		public METRONOME_TYPE3 metronome3;

@@ -4,14 +4,14 @@ namespace UbiArt.ITF {
 		public Generic<Event> onEnterEvent;
 		public Generic<Event> onExitEvent;
 		public bool resetOnExit;
-		public bool triggerEachActor;
+		public bool triggerEachActor = true;
 		public bool triggerAllActors;
 		public bool sendEventEveryFrame;
-		public bool triggerOnDetector;
+		public bool triggerOnDetector = true;
 		public bool triggerOnHit;
 		public bool triggerOnCrush;
 		public bool triggerable;
-		public bool triggerSelf;
+		public bool triggerSelf = true;
 		public bool triggerChildren;
 		public bool triggerBoundChildren;
 		public bool triggerParent;

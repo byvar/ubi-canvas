@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class TweenEvent_Template : TweenInstruction_Template {
 		public Generic<Event> _event;
-		public bool triggerSelf;
+		public bool triggerSelf = true;
 		public bool triggerChildren;
 		public bool triggerBoundChildren;
 		public bool triggerGameManager;

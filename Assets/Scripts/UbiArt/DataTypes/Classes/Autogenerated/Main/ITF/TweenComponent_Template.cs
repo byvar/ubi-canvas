@@ -3,17 +3,17 @@ namespace UbiArt.ITF {
 	public partial class TweenComponent_Template : ActorComponent_Template {
 		public CListO<TweenComponent_Template.InstructionSet> preInstructionSets;
 		public CListO<TweenComponent_Template.InstructionSet> instructionSets;
-		public bool playFirstSetIfNoStartSet;
+		public bool playFirstSetIfNoStartSet = true;
 		public bool sync;
-		public METRONOME_TYPE metronome;
-		public METRONOME_TYPE2 metronome2;
-		public bool applyPosition;
-		public bool applyRotation;
-		public bool applyScale;
-		public bool applyFeedback;
+		public METRONOME_TYPE metronome = METRONOME_TYPE.DEFAULT;
+		public METRONOME_TYPE2 metronome2 = METRONOME_TYPE2.DEFAULT;
+		public bool applyPosition = true;
+		public bool applyRotation = true;
+		public bool applyScale = true;
+		public bool applyFeedback = true;
 		public bool trigOnCheckPointEnabled;
 		public CListO<InputDesc> inputs;
-		public bool autoStart;
+		public bool autoStart = true;
 		
 		public StartMode startMode;
 		public float syncOffset;

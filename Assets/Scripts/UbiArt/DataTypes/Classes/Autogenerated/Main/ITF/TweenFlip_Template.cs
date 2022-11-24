@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class TweenFlip_Template : TweenInstruction_Template {
-		public TweenFlipMode mode;
+		public TweenFlipMode mode = TweenFlipMode.Toggle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			mode = s.Serialize<TweenFlipMode>(mode, name: "mode");

@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_HangSpotComponent_Template : ActorComponent_Template {
-		public float radius;
+		public float radius = 0.2f;
 		public Vec2d phantomOffset;
-		public float phantomRadius;
-		public bool notifyToParentBind;
+		public float phantomRadius = 0.25f;
+		public bool notifyToParentBind = true;
 		public bool allowOneHangOnly;
 		public bool hangEventTriggerOnce;
 		public bool unHangEventTriggerOnce;

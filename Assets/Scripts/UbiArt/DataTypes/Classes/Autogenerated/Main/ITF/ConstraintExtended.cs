@@ -2,9 +2,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class ConstraintExtended : CSerializable {
 		public float offset;
-		public float timeToIncrease;
-		public float timeToWaitBeforeDecrease;
-		public float timeToDecrease;
+		public float timeToIncrease = 1f;
+		public float timeToWaitBeforeDecrease = 5f;
+		public float timeToDecrease = 2f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

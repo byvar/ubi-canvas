@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class TweenSine_Template : TweenTranslation_Template {
 		public Vec3d movement;
-		public float amplitude;
-		public float cycleCount;
+		public float amplitude = 1f;
+		public float cycleCount = 1f;
 		public float cycleOffset;
 		public bool CosinusOnX;
 		protected override void SerializeImpl(CSerializerObject s) {

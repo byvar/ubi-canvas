@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class ShapeComponent : ActorComponent {
 		public Vec2d localOffset;
-		public Vec2d localScale;
-		public bool useShapeTransform;
+		public Vec2d localScale = Vec2d.One;
+		public bool useShapeTransform = true;
 		public CListO<StringID> AnimPolylineList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

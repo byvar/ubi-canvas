@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 		public bool EMBED_SCENE;
 		public bool IS_SINGLE_PIECE;
 		public bool ZFORCED;
-		public bool DIRECT_PICKING;
-		public VIEWTYPE viewType;
+		public bool DIRECT_PICKING = true;
+		public VIEWTYPE viewType = VIEWTYPE.ALL;
 		public Nullable<Scene> SCENE;
 		public Generic<Scene> SCENE_ORIGINS;
 		protected override void SerializeImpl(CSerializerObject s) {

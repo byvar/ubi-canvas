@@ -5,17 +5,17 @@ namespace UbiArt.ITF {
 		public GFXMaterialSerializable material;
 		public StringID friendly;
 		public Path gameMaterial;
-		public ColorInteger color;
-		public float fillingOffset;
+		public ColorInteger color = new ColorInteger(1, 1, 1, 1);
+		public float fillingOffset = 3.402823e+38F;
 		public CollisionTexture collision;
 		public Vec2d scrollUV;
 		public float scrollAngle;
 		public bool useUV2;
-		public Vec2d scaleUV2;
+		public Vec2d scaleUV2 = Vec2d.One;
 		public Vec2d scrollUV2;
 		public float scrollAngle2;
-		public byte alphaBorder;
-		public byte alphaUp;
+		public byte alphaBorder = 0xff;
+		public byte alphaUp = 0xff;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {

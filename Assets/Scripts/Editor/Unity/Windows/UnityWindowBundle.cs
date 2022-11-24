@@ -65,7 +65,38 @@ public class UnityWindowBundle : UnityWindow {
 							}
 						}
 					}
-					// Step 2, load bundles, for each struct check if it's already present in the bundle, otherwise add it
+					// Step 2, load uv atlas manager, and combine with adventures. Write patch_PC
+					/*UbiArt.UV.UVAtlasManager uvManager = null;
+					using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
+						Settings.Init(Settings.Mode.RaymanLegendsPC),
+						fileManager: new MapViewerFileManager(),
+						systemLogger: new UnitySystemLogger(),
+						asyncController: new UniTaskAsyncController())) {
+						await rlContextExt.Loader.LoadInitial();
+						uvManager = rlContextExt.Loader.uvAtlasManager;
+						foreach (var uv in l.uvAtlasManager.atlas) {
+							if(!uvManager.atlas.ContainsKey(uv.Key)) uvManager.atlas.Add(uv);
+						}
+						await rlContextExt.Loader.WriteBundle(System.IO.Path.Combine(basePath, "patch_PC.ipk"), new List<Pair<Path, ICSerializable>>() {
+							new Pair<Path, ICSerializable>(
+								rlContextExt.Loader.CookedPaths[new Path("", "atlascontainer.ckd").stringID],
+								uvManager)
+						});
+					}*/
+					// Step 2, load replacement texture
+					/*TextureCooked tempTexture = null;
+					using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
+						Settings.Init(Settings.Mode.RaymanLegendsPC),
+						fileManager: new MapViewerFileManager(),
+						systemLogger: new UnitySystemLogger(),
+						asyncController: new UniTaskAsyncController())) {
+						await rlContextExt.Loader.LoadInitial();
+						rlContextExt.Loader.LoadTexture(new Path("world/common/playablecharacter/teensy/animation/teensy_a1.tga"), tex => {
+							tempTexture = tex;
+						});
+						await rlContextExt.Loader.LoadLoop();
+					}*/
+					// Step 3, load bundles, for each struct check if it's already present in the bundle, otherwise add it
 					using (var rlContext = new Context(basePath, settings,
 						fileManager: new MapViewerFileManager(),
 						systemLogger: new UnitySystemLogger(),
@@ -86,7 +117,11 @@ public class UnityWindowBundle : UnityWindow {
 								if(curPath.filename == "localisation.loc8") continue;
 								//if (!bun.HasPreprocessedFile(curPath)) {
 								if (!ogBun.ContainsFile(curPath)) {
-									bun.AddFile(curPath, structMap.Value);
+									/*if (structMap.Value is TextureCooked) {
+										bun.AddFile(curPath, tempTexture);
+									} else {*/
+										bun.AddFile(curPath, structMap.Value);
+									//}
 								}
 							}
 						}

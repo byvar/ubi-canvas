@@ -3,12 +3,12 @@ namespace UbiArt.ITF {
 	public partial class VertexAnim : CSerializable {
 		public float animGlobalSpeed;
 		public Angle animGlobalRotSpeed;
-		public float animSpeedX;
-		public float animSpeedY;
+		public float animSpeedX = 1f;
+		public float animSpeedY = 1f;
 		public float animSyncX;
 		public float animSyncY;
-		public float animAmplitudeX;
-		public float animAmplitudeY;
+		public float animAmplitudeX = 1f;
+		public float animAmplitudeY = 1f;
 		public float animSync;
 		public bool animAngleUsed;
 		public Angle animAngle;

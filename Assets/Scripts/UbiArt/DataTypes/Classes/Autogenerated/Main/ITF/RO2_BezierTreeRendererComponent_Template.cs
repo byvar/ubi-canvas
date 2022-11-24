@@ -2,15 +2,15 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_BezierTreeRendererComponent_Template : GraphicComponent_Template {
 		public BezierCurveRenderer_Template bezierRenderer;
-		public uint tileSpriteIndex;
-		public float tileSpriteSubDiv;
-		public uint startSpriteIndex;
-		public float startSpriteLength;
-		public uint endSpriteIndex;
-		public float endSpriteLength;
-		public float spriteCyclePlayRate;
-		public bool uvStretch;
-		public bool uvAttachToHead;
+		public uint tileSpriteIndex = 0;
+		public float tileSpriteSubDiv = 1f;
+		public uint startSpriteIndex = 1;
+		public float startSpriteLength = 1f;
+		public uint endSpriteIndex = 2;
+		public float endSpriteLength = 1f;
+		public float spriteCyclePlayRate = 1f;
+		public bool uvStretch = true;
+		public bool uvAttachToHead = true;
 		public bool uvScaleAdaptive;
 		public float uvScrollSpeed;
 		public float zOffset;

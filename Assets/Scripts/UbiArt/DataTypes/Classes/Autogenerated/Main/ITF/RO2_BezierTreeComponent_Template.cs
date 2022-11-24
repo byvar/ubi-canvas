@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_BezierTreeComponent_Template : ActorComponent_Template {
-		public uint sampleCount;
-		public float widthForAABB;
-		public RO2_BezierTree_Template.LinkMode linkMainBranch;
+		public uint sampleCount = 10;
+		public float widthForAABB = 1f;
+		public RO2_BezierTree_Template.LinkMode linkMainBranch = RO2_BezierTree_Template.LinkMode.FirstLinkOrTag;
 		public CArrayO<Generic<RO2_BezierBranchComponent_Template>> branchComponents;
 		public TweenInterpreter_Template tweenInterpreter;
 		public StringID lengthCursorInput;

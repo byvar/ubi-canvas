@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 		public Nullable<TweenComponent_Template> instanceTemplate;
 		public float syncOffset;
 		public bool skipInstructionSetSyncOffset;
-		public bool autoStart;
-		public uint groupIndex;
+		public bool autoStart = true;
+		public uint groupIndex = 0xFFFFFFFF;
 		public StringID startSet;
 		public CListO<TweenComponent.InstructionSet> instructionSets;
 		protected override void SerializeImpl(CSerializerObject s) {

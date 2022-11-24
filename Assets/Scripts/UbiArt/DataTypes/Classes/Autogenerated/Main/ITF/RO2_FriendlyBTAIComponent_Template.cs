@@ -1,13 +1,13 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_FriendlyBTAIComponent_Template : BTAIComponent_Template {
-		public float retaliationDuration;
-		public float squashDeathPenetration;
+		public float retaliationDuration = 3f;
+		public float squashDeathPenetration = 0.6f;
 		public Path darktoonSpawn;
 		public bool disappearOnRescue;
 		public RO2_HeartShield_Template heartShieldTemplate;
 		public AnimResourcePackage alreadySavedAnimPackage;
-		public bool canReceiveCrush;
+		public bool canReceiveCrush = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {

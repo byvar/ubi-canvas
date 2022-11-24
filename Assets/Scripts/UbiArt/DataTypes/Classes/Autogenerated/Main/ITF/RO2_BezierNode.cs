@@ -2,10 +2,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_BezierNode : CSerializable {
 		public Vec3d pos;
-		public Vec2d tangent;
-		public float scale;
+		public Vec2d tangent = Vec2d.Right;
+		public float scale = 1f;
 		public Nullable<RO2_BezierTween> tween;
-		public float lumChainSpeedMultiplier;
+		public float lumChainSpeedMultiplier = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			pos = s.SerializeObject<Vec3d>(pos, name: "pos");

@@ -2,9 +2,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class TweenBallistic_Template : TweenTranslation_Template {
 		public Vec3d movement;
-		public TangentMode tangentMode;
-		public Vec3d startTangent;
-		public bool disableCollisions;
+		public TangentMode tangentMode = TangentMode.Auto;
+		public Vec3d startTangent = new Vec3d(1,0,0);
+		public bool disableCollisions = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {

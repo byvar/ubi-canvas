@@ -1,34 +1,34 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class CamModifier : CSerializable {
-		public Vec3d lookAtOffset;
-		public Vec3d lookAtOffsetMax;
+		public Vec3d lookAtOffset = new Vec3d(0,0,13);
+		public Vec3d lookAtOffsetMax = new Vec3d(0,0,22);
 		public int modifierPriority;
 		public float lookAtOffsetX;
 		public float lookAtOffsetY;
-		public float lookAtOffsetZ;
+		public float lookAtOffsetZ = 13f;
 		public float lookAtOffsetMaxX;
 		public float lookAtOffsetMaxY;
-		public float lookAtOffsetMaxZ;
+		public float lookAtOffsetMaxZ = 22f;
 		public float blendingZoneStart;
 		public float blendingZoneStop;
 		public Vec2d zoneNeutral;
 		public bool useRotationCurve;
 		public Angle rotationAngle;
 		public bool UseDynamicRotation;
-		public float rotationSpeed;
+		public float rotationSpeed = 0.1f;
 		public Angle rotationUpDownAngle;
-		public float transitionTime;
+		public float transitionTime = 2f;
 		public float moveInertia;
-		public float moveInertiaForZoomIn;
-		public float moveInertiaForZoomOut;
+		public float moveInertiaForZoomIn = -1;
+		public float moveInertiaForZoomOut = -1;
 		public float horizontalVersusVertical;
 		public Vec2d offsetHVS;
 		public CameraFlip flipView;
-		public bool constraintLeftIsActive;
-		public bool constraintRightIsActive;
-		public bool constraintTopIsActive;
-		public bool constraintBottomIsActive;
+		public bool constraintLeftIsActive = true;
+		public bool constraintRightIsActive = true;
+		public bool constraintTopIsActive = true;
+		public bool constraintBottomIsActive = true;
 		public bool constraintMatchView;
 		public ConstraintExtended constraintExtendedLeft;
 		public ConstraintExtended constraintExtendedRight;

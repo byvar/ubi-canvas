@@ -1,15 +1,15 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class PhysComponent_Template : ActorComponent_Template {
-		public float physGravityMultiplier;
-		public float physRadius;
-		public float physWeight;
-		public float physWindMultiplier;
-		public float physWaterMultiplier;
-		public float physForce2Speed;
-		public float physWindSpeedLimit;
-		public float physWindScaleFactorWhenSpeedIsOpposite;
-		public float physFanForceMultiplier;
+		public float physGravityMultiplier = 1f;
+		public float physRadius = 1f;
+		public float physWeight = 1f;
+		public float physWindMultiplier = 1f;
+		public float physWaterMultiplier = 1f;
+		public float physForce2Speed = 1 / 60f;
+		public float physWindSpeedLimit = 20f;
+		public float physWindScaleFactorWhenSpeedIsOpposite = 1.5f;
+		public float physFanForceMultiplier = 1f;
 		public float physWaterMinPerturbation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

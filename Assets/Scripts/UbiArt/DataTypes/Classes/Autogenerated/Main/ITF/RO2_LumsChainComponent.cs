@@ -1,33 +1,33 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_LumsChainComponent : ActorComponent {
-		public float moveSpeed;
+		public float moveSpeed = 8f;
 		public bool useGlobalSpeedFactor;
 		public Trajectory trajectory;
-		public ChainOrder chainOrder;
-		public SpawnMode spawnMode;
-		public DRCMode drcMode;
-		public uint spawningFrameInterval;
-		public uint patternSpawningInterval;
-		public float startBlend;
-		public uint animFrameOffset;
-		public float slowDownDistance;
-		public float distanceBetweenFinalPositions;
-		public float distanceBetweenPatterns;
-		public uint nbPatterns;
-		public uint nbLumsInPattern;
+		public ChainOrder chainOrder = ChainOrder.EndToBegin;
+		public SpawnMode spawnMode = SpawnMode.StartSpawned_Begin;
+		public DRCMode drcMode = (DRCMode)1;
+		public uint spawningFrameInterval = 5;
+		public uint patternSpawningInterval = 10;
+		public float startBlend = 0.1f;
+		public uint animFrameOffset = 5;
+		public float slowDownDistance = 2f;
+		public float distanceBetweenFinalPositions = 1f;
+		public float distanceBetweenPatterns = 2f;
+		public uint nbPatterns = 1;
+		public uint nbLumsInPattern = 5;
 		public uint startNode;
-		public float spawningEffectMoveSpeed;
-		public float disappearTimeInterval;
+		public float spawningEffectMoveSpeed = 20f;
+		public float disappearTimeInterval = 0.15f;
 		public bool isHidden;
 		public bool alwaysRed;
 		public float disappearingTime;
-		public float particleDisappearingInterval;
-		public bool particleDisappearForward;
+		public float particleDisappearingInterval = 0.15f;
+		public bool particleDisappearForward = true;
 		public InteractiveOffset interactiveActorOffsets;
 		public bool flipInteractiveActor;
 		public bool useFireflyCloud;
-		public bool displayLinks;
+		public bool displayLinks = true;
 		public bool tutoSucceeded;
 		public CListO<RO2_LumsChainComponent.st_Particle> particles;
 		public CListO<RO2_LumsChainComponent.st_cursors> links;
@@ -143,7 +143,7 @@ namespace UbiArt.ITF {
 			public float currentTarget;
 			public float timeToWait;
 			public float currentSpeed;
-			public float currentSpeedFactor;
+			public float currentSpeedFactor = 1f;
 			public float maxSpeedReached;
 			public float initialCurveRatio;
 			public float attractiveForce;
@@ -156,9 +156,9 @@ namespace UbiArt.ITF {
 			public Vec2d speed;
 			public uint frameCount;
 			public uint frameOffset;
-			public ANIM animState;
+			public ANIM animState = ANIM.YELLOW_STAND;
 			public float alpha;
-			public uint animIndex;
+			public uint animIndex = 0xFFFFFFFF;
 			public uint frame;
 			public float timeInState;
 			protected override void SerializeImpl(CSerializerObject s) {

@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public AngleAmount angle;
 		public AngleAmount angleOffset;
 		public Vec2d scaleMultiplier;
-		public float speed;
+		public float speed = -1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {

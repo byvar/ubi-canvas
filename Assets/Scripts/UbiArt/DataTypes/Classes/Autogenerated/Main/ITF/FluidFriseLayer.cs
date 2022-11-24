@@ -2,13 +2,13 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class FluidFriseLayer : CSerializable {
 		public uint erosion;
-		public Color color;
-		public float threshold;
+		public Color color = Color.White;
+		public float threshold = 3.402823e+38F;
 		public Path gameMaterial;
 		public Path backsideGameMaterial;
-		public float collisionHeight;
+		public float collisionHeight = -1000f;
 		public bool hasBacksideInversion;
-		public float forcedHeightWhenNotColored;
+		public float forcedHeightWhenNotColored = -3.402823e+38F;
 		public bool hasForcedHeightWhenNotColored;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

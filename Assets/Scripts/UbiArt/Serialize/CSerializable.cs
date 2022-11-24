@@ -5,7 +5,7 @@ namespace UbiArt {
 	public class CSerializable : ICSerializable {
 		protected bool IsFirstLoad { get; set; } = true;
 		public Context UbiArtContext { get; protected set; }
-		public uint sizeOf;
+		public uint sizeOf = 0x100000;
 
 		public void Serialize(CSerializerObject s, string name) {
 			UbiArtContext = s.Context;

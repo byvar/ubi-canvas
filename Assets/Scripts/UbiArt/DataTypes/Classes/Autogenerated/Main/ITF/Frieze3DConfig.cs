@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class Frieze3DConfig : CSerializable {
-		public bool orient;
+		public bool orient = true;
 		public Path mesh3DFile;
 		public Path mesh3DFile_Left;
 		public Path mesh3DFile_Right;

@@ -5,17 +5,17 @@ namespace UbiArt.ITF {
 		public StringID heartDeathBhvName;
 		public StringID heartAppearBhvName;
 		public Vec2d playerFollowOffset;
-		public float speedBlend;
+		public float speedBlend = 1f;
 		public float speedMin;
-		public float speedMax;
+		public float speedMax = 1f;
 		public float blendAtSpeedMin;
-		public float blendAtSpeedMax;
-		public float depthOffset;
-		public float approachDistance;
-		public float approachStartBlend;
-		public float approachEndBlend;
-		public float approachBlendTime;
-		public float m_approachEndDistance;
+		public float blendAtSpeedMax = 1f;
+		public float depthOffset = 0.0001f;
+		public float approachDistance = 1f;
+		public float approachStartBlend = 0.05f;
+		public float approachEndBlend = 0.1f;
+		public float approachBlendTime = 2f;
+		public float m_approachEndDistance = 0.1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			heartActor = s.SerializeObject<Path>(heartActor, name: "heartActor");

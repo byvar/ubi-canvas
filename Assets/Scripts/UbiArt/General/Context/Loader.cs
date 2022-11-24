@@ -246,7 +246,7 @@ namespace UbiArt {
 			} finally {
 			}
 		}
-		protected async Task LoadLoop() {
+		public async Task LoadLoop() {
 			try {
 				string state = LoadingState;
 				Context.AsyncController.StartAsync();

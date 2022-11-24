@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ShapeDetectorComponent : DetectorComponent {
 		public Vec2d localOffset;
-		public Vec2d localScale;
-		public bool useShapeTransform;
+		public Vec2d localScale = Vec2d.One;
+		public bool useShapeTransform = true;
 		public bool useEditableShape;
 		public EditableShape editableShape;
 		protected override void SerializeImpl(CSerializerObject s) {

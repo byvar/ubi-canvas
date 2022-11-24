@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public CListO<FxDescriptor_Template> Fx;
 		public CListO<InputDesc> inputs;
 		public bool visibilityTest;
-		public uint MaxActiveInstance;
+		public uint MaxActiveInstance = 20;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {

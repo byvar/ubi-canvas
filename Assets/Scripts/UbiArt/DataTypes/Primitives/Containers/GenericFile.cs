@@ -3,7 +3,7 @@
 namespace UbiArt {
 	public class GenericFile<T> : ICSerializable, IObjectContainer {
 		[Serialize("read"       )] public bool read = true;
-		[Serialize("sizeof"     )] public uint sizeOf;
+		[Serialize("sizeof"     )] public uint sizeOf = 0x100000;
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;
 

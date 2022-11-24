@@ -19,9 +19,9 @@ namespace UbiArt.ITF {
 			public Vec3d Point;
 			public float Time;
 			public Vec3d NormalIn;
-			public Vec3d NormalInTime;
+			public Vec3d NormalInTime = Vec3d.One;
 			public Vec3d NormalOut;
-			public Vec3d NormalOutTime;
+			public Vec3d NormalOutTime = Vec3d.One;
 			public interp Interpolation;
 			public interp_RO Interpolation_RO;
 			protected override void SerializeImpl(CSerializerObject s) {
