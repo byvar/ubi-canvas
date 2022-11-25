@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_EventSpawnReward : Event {
-		public uint numRewards;
-		public bool autoPickup;
-		public float ejectionRandomForce;
-		public Angle ejectionRandomAngle;
+		public uint numRewards = 1;
+		public bool autoPickup = true;
+		public float ejectionRandomForce = 100f;
+		public Angle ejectionRandomAngle = 0.5235988f;
 		public float ejectionDuration;
-		public float ejectionForce;
+		public float ejectionForce = 200f;
 		public Angle ejectionGravityAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

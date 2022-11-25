@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AnimTreeNodePlayAnimProceduralSmooth_Template : AnimTreeNodePlayAnim_Template {
-		public float startCursor;
-		public float stiffConstant;
-		public float dampConstant;
+		public float startCursor = -1f;
+		public float stiffConstant = 120f;
+		public float dampConstant = 10f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			startCursor = s.Serialize<float>(startCursor, name: "startCursor");

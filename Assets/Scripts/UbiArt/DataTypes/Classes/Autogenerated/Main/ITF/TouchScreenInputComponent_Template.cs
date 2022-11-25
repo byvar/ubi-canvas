@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class TouchScreenInputComponent_Template : ShapeComponent_Template {
-		public uint priority;
+		public uint priority = 10;
 		public bool ignoreZ;
 		public StringID interactionBoneID;
 		protected override void SerializeImpl(CSerializerObject s) {

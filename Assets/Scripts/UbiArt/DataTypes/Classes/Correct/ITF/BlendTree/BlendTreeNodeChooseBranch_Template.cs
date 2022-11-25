@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class BlendTreeNodeChooseBranch_Template<T> : BlendTreeNodeBlend_Template<T> {
 		public float blendTime;
-		public uint startingLeaf;
+		public uint startingLeaf = 0xFFFFFFFF;
 		public CListO<BlendLeaf> leafsCriterias;
 		public bool noUpdateInactive;
 		protected override void SerializeImpl(CSerializerObject s) {

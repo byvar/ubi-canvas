@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		public StringID tapSoundFXName;
 		public StringID grabSoundFXName;
 		public StringID landFX;
-		public float speedMultiplier;
+		public float speedMultiplier = 1f;
 		public Vec2d forceSinus;
-		public float freqSinus;
+		public float freqSinus = 1f;
 		public bool isSpiky;
 		public bool isGrabable;
 		public CListO<StringID> snapBones;

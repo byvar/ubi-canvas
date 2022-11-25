@@ -23,6 +23,7 @@ namespace UbiArt {
 
 		public static Vec2d Zero => new Vec2d();
 		public static Vec2d One => new Vec2d(1f, 1f);
+		public static Vec2d Infinity => new Vec2d(float.MaxValue, float.MaxValue);
 		public double Magnitude => Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
 		public static Vec2d operator +(Vec2d a, Vec2d b) => new Vec2d(a.x + b.x, a.y + b.y);
 		public static Vec2d operator -(Vec2d a, Vec2d b) => new Vec2d(a.x - b.x, a.y - b.y);

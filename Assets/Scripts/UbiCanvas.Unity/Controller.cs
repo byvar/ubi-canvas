@@ -55,6 +55,7 @@ public class Controller : MonoBehaviour {
 
 		loadingScreen.Active = true;
 		var settings = Settings.Init(mode);
+		settings.LoadAll = true;
 		MainContext = new Context(gameDataBinFolder, settings,
 			serializerLogger: new MapViewerSerializerLogger(),
 			fileManager: new MapViewerFileManager(),

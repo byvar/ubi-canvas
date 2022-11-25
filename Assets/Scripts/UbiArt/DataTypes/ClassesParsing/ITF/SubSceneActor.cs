@@ -23,6 +23,12 @@ namespace UbiArt.ITF {
 					}
 				});
 			}
+			if (EMBED_SCENE && (SCENE == null || SCENE.IsNull)) {
+				SCENE = new Nullable<Scene>() {
+					read = true,
+					value = new Scene(s.Context)
+				};
+			}
 		}
 	}
 }

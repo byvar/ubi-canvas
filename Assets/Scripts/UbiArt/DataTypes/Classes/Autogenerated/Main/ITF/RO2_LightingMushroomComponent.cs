@@ -2,16 +2,16 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_LightingMushroomComponent : ActorComponent {
 		public bool IsMoving;
-		public float ScaleMin;
-		public float ScaleMax;
+		public float ScaleMin = 0.8f;
+		public float ScaleMax = 1.1f;
 		public bool StayLightingAfterHit;
 		public bool AlwaysLighting;
-		public Size ExplosionRadius;
-		public uint RocketNb;
+		public Size ExplosionRadius = Size.Medium;
+		public uint RocketNb = 1;
 		public bool SteadyExplosion;
 		public float TimeToStartFalling;
 		public CListO<RO2_LightingMushroomComponent.MushroomTarget> MushroomTargets;
-		public uint GPEColor;
+		public uint GPEColor = 0xFFFFFFFF;
 		public bool fireOnce;
 		public bool triggerSpawn;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public bool isUvFlipX;
 		public bool isUvFlipY;
 		public bool isRatioFixed = true;
-		public float smoothFactorVisual = 3.402823e+38f;
+		public float smoothFactorVisual = float.MaxValue;
 		public float scale = 1f;
 		public float density = 1f;
 		public CollisionFrieze collision;
@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 		public FluidConfig Fluid;
 		public Mesh3dConfig mesh3D;
 		public bool invertMeshOrder;
-		public float skewAngle = 3.402823e+38f;
+		public float skewAngle = float.MaxValue;
 		public bool isDigShape;
 		public bool isLockedDigShape;
 		public bool switchExtremityAuto;

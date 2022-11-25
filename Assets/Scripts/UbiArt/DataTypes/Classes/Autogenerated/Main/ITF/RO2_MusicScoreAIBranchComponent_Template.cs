@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_MusicScoreAIBranchComponent_Template : RO2_BezierBranchComponent_Template {
-		public float openingSpeed;
-		public float noteIntervalHeight;
+		public float openingSpeed = 5f;
+		public float noteIntervalHeight = 0.2f;
 		public StringID openSound;
 		public StringID closeSound;
 		protected override void SerializeImpl(CSerializerObject s) {

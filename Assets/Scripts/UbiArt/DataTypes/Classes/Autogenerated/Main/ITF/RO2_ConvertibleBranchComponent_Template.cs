@@ -1,24 +1,24 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_ConvertibleBranchComponent_Template : RO2_BezierBranchComponent_Template {
-		public float width;
-		public bool attachToEnd;
-		public float tileLength;
+		public float width = 1f;
+		public bool attachToEnd = true;
+		public float tileLength = 1f;
 		public CListO<SpriteBone> tileBones;
-		public float endLength;
+		public float endLength = 1f;
 		public CListO<SpriteBone> endBones;
 		public Path amvPath;
 		public GFXMaterialSerializable amvMaterial;
 		public float zOffset;
-		public float scaleFactor;
-		public bool convertFromEnd;
-		public float conversionSpeed;
+		public float scaleFactor = 1f;
+		public bool convertFromEnd = true;
+		public float conversionSpeed = 1f;
 		public Path convertedGameMaterial;
 		public float conversionOffset;
 		public float conversionOverlap;
 		public CListO<ConvertibleElement_Template> elementTypes;
-		public float triggerDelay;
-		public float zSegmentation;
+		public float triggerDelay = -1f;
+		public float zSegmentation = 0.25f;
 		public bool drawDebug;
 		public bool drawDebugAnims;
 		protected override void SerializeImpl(CSerializerObject s) {

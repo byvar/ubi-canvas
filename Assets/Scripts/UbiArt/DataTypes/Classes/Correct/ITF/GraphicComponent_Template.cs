@@ -2,15 +2,15 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class GraphicComponent_Template : ActorComponent_Template {
 		public uint patchLevel;
-		public uint patchHLevel;
-		public uint patchVLevel;
+		public uint patchHLevel = 2;
+		public uint patchVLevel = 2;
 		public AABB visualAABB;
 		public bool renderintarget;
 		public Vec2d posOffset;
 		public float depthOffset;
 		public Angle angleOffset;
 		public GFX_BLEND blendmode = GFX_BLEND.ALPHA;
-		public GFX_BLEND2 blendmode2;
+		public GFX_BLEND2 blendmode2 = GFX_BLEND2.ALPHA;
 		public GFX_MAT materialtype;
 		public GFX_MAT2 materialtype2;
 		public GFX_MAT3 materialtype3;
@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 		public Path shadowTextureFile;
 		public GFXMaterialSerializable shadowMaterial;
 		public float shadowAttenuation = 1f;
-		public float shadowDist;
+		public float shadowDist = 4f;
 		public Vec3d shadowOffsetPos;
 		public float angleLimit;
 		public float curveSize0;
@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 		public float highlightAmplitude = 0.21f;
 		public Color highlightOutlineColor = Color.White;
 		public float highlightFrontLightBrightness = 0.25f;
-		public float highlightOutlineWidth;
+		public float highlightOutlineWidth = 4f;
 		public StringID shadowUnderBone;
 		public float float__64;
 		public float float__65;

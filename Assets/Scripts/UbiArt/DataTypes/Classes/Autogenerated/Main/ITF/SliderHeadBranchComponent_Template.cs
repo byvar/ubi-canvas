@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class SliderHeadBranchComponent_Template : BezierBranchComponent_Template {
-		public float slideForceFactor;
-		public float slideSpeedSmoothA;
-		public float slideSpeedSmoothB;
-		public float growSpeedSmoothA;
-		public float growSpeedSmoothB;
-		public float waitDuration;
+		public float slideForceFactor = 0.1f;
+		public float slideSpeedSmoothA = 0.1f;
+		public float slideSpeedSmoothB = 0.1f;
+		public float growSpeedSmoothA = 0.01f;
+		public float growSpeedSmoothB = 0.01f;
+		public float waitDuration = 2f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			slideForceFactor = s.Serialize<float>(slideForceFactor, name: "slideForceFactor");

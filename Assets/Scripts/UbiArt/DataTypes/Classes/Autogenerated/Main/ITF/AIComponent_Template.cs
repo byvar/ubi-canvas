@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AIComponent_Template : ActorComponent_Template {
-		public bool registerToAIManager;
+		public bool registerToAIManager = true;
 		public uint faction;
-		public int health;
+		public int health = 100;
 		public CArrayP<uint> damageLevels;
 		public float scaleRandomFactor;
 		public int listenToActivateEvent;

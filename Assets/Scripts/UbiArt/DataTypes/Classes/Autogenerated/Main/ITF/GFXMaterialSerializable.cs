@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public GFXMaterialSerializableParam materialParams;
 		public bool stencilTest;
 		public bool skipDepthTest;
-		public bool isTwoSided;
+		public bool isTwoSided = true;
 		public uint alphaTest = 0xFFFFFFFF;
 		public uint alphaRef = 0xFFFFFFFF;
 

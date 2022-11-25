@@ -21,18 +21,26 @@ namespace UbiArt.ITF {
 			UnityScene us = gao.AddComponent<UnityScene>();
 			us.scene = this;
 			if (UbiArtContext.Settings.engineVersion > Settings.EngineVersion.RO) {
-				foreach (Frise f in FRISE) {
-					await f.SetGameObjectParent(gao);
+				if (FRISE != null) {
+					foreach (Frise f in FRISE) {
+						await f.SetGameObjectParent(gao);
+					}
 				}
-				foreach (Generic<Actor> a in ACTORS) {
-					await a.obj.SetGameObjectParent(gao);
+				if (ACTORS != null) {
+					foreach (Generic<Actor> a in ACTORS) {
+						await a.obj.SetGameObjectParent(gao);
+					}
 				}
 			} else {
-				foreach (Generic<Pickable> f in FRISE_ORIGINS) {
-					await f.obj.SetGameObjectParent(gao);
+				if (FRISE_ORIGINS != null) {
+					foreach (Generic<Pickable> f in FRISE_ORIGINS) {
+						await f.obj.SetGameObjectParent(gao);
+					}
 				}
-				foreach (Generic<Pickable> a in ACTORS_ORIGINS) {
-					await a.obj.SetGameObjectParent(gao);
+				if (ACTORS_ORIGINS != null) {
+					foreach (Generic<Pickable> a in ACTORS_ORIGINS) {
+						await a.obj.SetGameObjectParent(gao);
+					}
 				}
 			}
 			if (sceneConfigs != null && sceneConfigs.sceneConfigs != null) {

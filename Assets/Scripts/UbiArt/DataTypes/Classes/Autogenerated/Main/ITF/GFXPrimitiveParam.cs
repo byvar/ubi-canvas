@@ -14,8 +14,8 @@ namespace UbiArt.ITF {
 		public float OutlineWidth;
 		public float OutlineGlow;
 		public uint ViewportVisibility = 0xffff;
-		public GFX_OCCLUDE_INFO gfxOccludeInfo;
-		public GFX_OCCLUDE_INFO2 gfxOccludeInfo2;
+		public GFX_OCCLUDE_INFO gfxOccludeInfo = GFX_OCCLUDE_INFO.DEFAULT;
+		public GFX_OCCLUDE_INFO2 gfxOccludeInfo2 = GFX_OCCLUDE_INFO2.DEFAULT;
 		public Color colorForMask1 = Color.White;
 		public Color colorForMask2 = Color.White;
 		public Color colorForMask3 = Color.White;

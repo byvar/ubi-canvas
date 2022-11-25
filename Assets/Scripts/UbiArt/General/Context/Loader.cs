@@ -5,6 +5,7 @@ using UbiArt.Bundle;
 using UbiArt.UV;
 using UbiArt.FileFormat;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace UbiArt {
 	public class Loader {
@@ -116,6 +117,7 @@ namespace UbiArt {
 				}
 			}
 		}
+		public bool AnyBundleContainsFile(Path path) => Bundles.Any(b => b.Value.ContainsFile(path));
 		public async Task<byte[]> GetFileFromBundles(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
 			Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
@@ -315,6 +317,7 @@ namespace UbiArt {
 				case "msh":
 				case "tpl":
 				case "isg":
+				case "gmt":
 					flags |= SerializeFlags.Flags7;
 					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
 					break;
@@ -398,7 +401,7 @@ namespace UbiArt {
 		public void LoadFile<T>(Path path, Action<T> onResult) where T : class, ICSerializable, new() {
 			var t = Cache.Get<T>(path.stringID);
 			if (t != null) {
-				onResult(t);
+				onResult?.Invoke(t);
 			} else {
 				Load(path, (CSerializerObject s) => {
 					var cachedObject = Cache.Get<T>(path.stringID);
@@ -406,7 +409,7 @@ namespace UbiArt {
 						cachedObject = s.SerializeObject<T>(cachedObject);
 						Cache.Add<T>(path.stringID, cachedObject);
 					}
-					onResult(cachedObject);
+					onResult?.Invoke(cachedObject);
 				});
 			}
 		}
@@ -417,7 +420,7 @@ namespace UbiArt {
 			LoadFile<TextureCooked>(path, (result) => {
 				if (result != null && result.atlas == null)
 					result.atlas = uvAtlasManager.GetAtlasIfExists(path);
-				onResult(result);
+				onResult?.Invoke(result);
 			});
 		}
 

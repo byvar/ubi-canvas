@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_AIComponent_Template : AIComponent_Template {
-		public bool reactivateOnCheckpoint;
+		public bool reactivateOnCheckpoint = true;
 		public bool customCheckpointHandling;
 		public float softCollisionRadius;
 		public Generic<RO2_EventSpawnReward> reward;

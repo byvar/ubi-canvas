@@ -29,6 +29,10 @@ namespace UbiArt {
 			//s.ExitEmbed();
 		}
 
+		public void SetContainer(T[] container) {
+			this.container = container;
+		}
+
 		#region List interface
 		public T this[int index] { get => ((IList<T>)container)[index]; set => ((IList<T>)container)[index] = value; }
 

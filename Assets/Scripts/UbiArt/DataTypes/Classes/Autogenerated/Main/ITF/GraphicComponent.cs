@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RL | GameFlags.RAVersion)]
 	public partial class GraphicComponent : ActorComponent {
-		public Color ColorFactor;
+		public Color ColorFactor = Color.White;
 		public Color ColorFog;
 		public GFXPrimitiveParam PrimitiveParameters;
 		public uint colorComputerTagId;

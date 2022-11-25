@@ -1,4 +1,6 @@
 ﻿using System;
+using UbiArt.Animation;
+using UbiArt.ITF;
 
 namespace UbiArt {
 	public class Path : ICSerializable, IEquatable<Path> {
@@ -82,6 +84,55 @@ namespace UbiArt {
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				flags = s.Serialize<uint>(flags);
 				//if (flags != 0) MapLoader.Loader.print("Path with nonzero flags: " + this + " - " + flags);
+			}
+			if (s.Settings.LoadAll) LoadObject(s.Context);
+		}
+
+		public void LoadObject(Context c) {
+			if (!IsNull) {
+				switch (GetExtension()) {
+					case "anm":
+						c.Loader.LoadFile<AnimTrack>(this, null);
+						break;
+					case "skl":
+						c.Loader.LoadFile<AnimSkeleton>(this, null);
+						break;
+					case "pbk":
+						c.Loader.LoadFile<AnimPatchBank>(this, null);
+						break;
+					case "fcg":
+						c.Loader.LoadFile<GenericFile<FriseConfig>>(this, null);
+						break;
+					case "isc":
+						c.Loader.LoadFile<ContainerFile<ITF.Scene>>(this, null);
+						break;
+					case "act":
+						c.Loader.LoadFile<ContainerFile<ITF.Actor>>(this, null);
+						break;
+					case "tga":
+					case "dds":
+					case "png":
+						c.Loader.LoadTexture(this, null);
+						break;
+					case "gmt":
+						c.Loader.LoadFile<GenericFile<GameMaterial_Template>>(this, null);
+						break;
+					case "msh":
+						c.Loader.LoadFile<GenericFile<GFXMaterialShader_Template>>(this, null);
+						break;
+					case "tpl":
+						c.Loader.LoadFile<GenericFile<Actor_Template>>(this, null);
+						break;
+					case "tsc":
+					case "asc":
+						c.Loader.LoadGenericFile(this, null);
+						break;
+					case "":
+						break;
+					default:
+						c.SystemLogger?.LogInfo($"Encountered path with extension {GetExtension()}");
+						break;
+				}
 			}
 		}
 

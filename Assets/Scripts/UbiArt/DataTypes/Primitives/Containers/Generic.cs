@@ -1,4 +1,5 @@
 ﻿using System;
+using UbiArt.ITF;
 
 namespace UbiArt {
 	public class Generic<T> : ICSerializable, IObjectContainer where T : CSerializable {
@@ -34,6 +35,7 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
+			Reinit(s.Context, s.Settings);
 			Pointer pos = s.CurrentPointer;
 			if (serializeClassName) {
 				SerializeClassName(s);
@@ -72,6 +74,26 @@ namespace UbiArt {
 					}
 				}
 			}
+		}
+
+
+		Settings previousSettings = null;
+		protected virtual void Reinit(Context c, Settings settings) {
+			if (previousSettings != null) {
+				if (previousSettings.game != settings.game) {
+					if (obj != null) {
+						if (obj is ITF.Event e) {
+							if (e.IsAdventuresExclusive()) MakeNull();
+						}
+					}
+				}
+			}
+			previousSettings = settings;
+		}
+
+		public void MakeNull() {
+			className = null;
+			obj = null;
 		}
 	}
 }

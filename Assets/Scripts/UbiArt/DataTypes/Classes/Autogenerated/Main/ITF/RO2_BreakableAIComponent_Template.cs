@@ -2,13 +2,13 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BreakableAIComponent_Template : RO2_AIComponent_Template {
 		public Generic<RO2_EventSpawnReward> reward2;
-		public uint crushAttackDamage;
-		public uint frontDamage;
-		public uint backDamage;
+		public uint crushAttackDamage = 100;
+		public uint frontDamage = 0xFFFFFFFF;
+		public uint backDamage = 0xFFFFFFFF;
 		public Angle hitAngleOffset;
 		public Angle hitAngleMinIncidence;
 		public StringID restoreAnim;
-		public bool checkHitSenderDirection;
+		public bool checkHitSenderDirection = true;
 		public CListO<RO2_BreakableAIComponent_Template.DestructionStage> destructionStages;
 		public StringID openAnim;
 		public StringID openAnimReverse;

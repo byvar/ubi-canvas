@@ -2,11 +2,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AnimTreeNodePlayAnim_Template : BlendTreeNodeTemplate<AnimTreeResult> {
 		public StringID animationName;
-		public bool usePatches;
-		public bool useEvents;
+		public bool usePatches = true;
+		public bool useEvents = true;
 		public ProceduralInputData proceduralInput;
 		public ProceduralInputData proceduralPlayRate;
-		public float weight;
+		public float weight = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {

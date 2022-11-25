@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class CollisionFrieze : CSerializable {
 		public bool build;
 		public float offset = 0.5f;
-		public Vec2d extremity;
-		public Vec2d extremity2;
+		public Vec2d extremity = Vec2d.Infinity;
+		public Vec2d extremity2 = Vec2d.Infinity;
 		public bool flip;
 		public uint methode;
 		public float distMaxToSkipParallelEdge = 0.075f;

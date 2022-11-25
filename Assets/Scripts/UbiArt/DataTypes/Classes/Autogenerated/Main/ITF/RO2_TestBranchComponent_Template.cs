@@ -1,13 +1,13 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_TestBranchComponent_Template : RO2_BezierBranchComponent_Template {
-		public float width;
+		public float width = 1f;
 		public bool attachToEnd;
-		public float tileLength;
+		public float tileLength = 1f;
 		public CListO<TestSpriteBone> tileBones;
 		public float endLength;
 		public CListO<TestSpriteBone> endBones;
-		public bool drawDebug;
+		public bool drawDebug = true;
 		public uint debugMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

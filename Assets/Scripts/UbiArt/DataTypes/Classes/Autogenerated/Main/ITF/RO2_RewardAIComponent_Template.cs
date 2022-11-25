@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		public Generic<RO2_EventSpawnReward> fallbackReward;
 		public uint addHp;
 		public uint addMaxHp;
-		public float snapFactor;
-		public float snapMinDistance;
+		public float snapFactor = 1f;
+		public float snapMinDistance = 3f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			idleBehavior = s.SerializeObject<Generic<TemplateAIBehavior>>(idleBehavior, name: "idleBehavior");

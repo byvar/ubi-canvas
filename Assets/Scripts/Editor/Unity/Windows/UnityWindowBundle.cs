@@ -116,7 +116,7 @@ public class UnityWindowBundle : UnityWindow {
 								var curPath = pathMapping[structMap.Key];
 								if(curPath.filename == "localisation.loc8") continue;
 								//if (!bun.HasPreprocessedFile(curPath)) {
-								if (!ogBun.ContainsFile(curPath)) {
+								if (!rlContext.Loader.AnyBundleContainsFile(curPath)) {
 									/*if (structMap.Value is TextureCooked) {
 										bun.AddFile(curPath, tempTexture);
 									} else {*/

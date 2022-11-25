@@ -43,6 +43,7 @@ namespace UbiArt {
 		public bool isCatchThemAll = false;
 		public bool cooked = true;
 		public bool loadFromIPK = false;
+		public bool LoadAll = false;
 		public static Encoding StringEncoding { get; set; } = Encoding.UTF8;
 		public string[] bundles;
 

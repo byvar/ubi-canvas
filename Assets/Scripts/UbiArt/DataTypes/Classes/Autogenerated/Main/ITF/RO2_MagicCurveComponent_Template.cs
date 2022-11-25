@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 		public BezierCurveRenderer_Template bezierRenderer;
 		public bool debug;
 		public bool useOrientation;
-		public float distMin;
-		public float uvScrollFactor;
+		public float distMin = 1f;
+		public float uvScrollFactor = 1f;
 		public float extraLength;
 		public Vec2d offset;
 		protected override void SerializeImpl(CSerializerObject s) {

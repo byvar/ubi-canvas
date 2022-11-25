@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class FillConfig : CSerializable {
-		public float smoothFactor = 3.402823e+38F;
+		public float smoothFactor = float.MaxValue;
 		public float offset = 0.5f;
 		public Angle angle;
 		public Vec2d scale = new Vec2d(2, 2);

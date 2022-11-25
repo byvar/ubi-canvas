@@ -24,6 +24,9 @@ namespace UbiArt {
 				container[i] = obj;
 			}
 		}
+		public void SetContainer(List<T> container) {
+			this.container = container;
+		}
 
 		#region List Interface
 		public T this[int index] {

@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTAIComponent_Template : BTAIComponent_Template {
-		public int health;
+		public int health = 100;
 		public CArrayP<uint> damageLevels;
 		public bool useHealth;
 		protected override void SerializeImpl(CSerializerObject s) {

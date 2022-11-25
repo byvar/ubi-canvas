@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public StringID friendly;
 		public Path gameMaterial;
 		public ColorInteger color = new ColorInteger(1, 1, 1, 1);
-		public float fillingOffset = 3.402823e+38F;
+		public float fillingOffset = float.MaxValue;
 		public CollisionTexture collision;
 		public Vec2d scrollUV;
 		public float scrollAngle;
