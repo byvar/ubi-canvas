@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 
 		private void CreateGameObjects(GameObject gao) {
 			var context = UbiArtContext;
-			if (!context.Loader.loadAnimations) return;
+			if (!context.Loader.LoadAnimations) return;
 			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
 			bool createdOne = false;
 			if (context.Settings.engineVersion > Settings.EngineVersion.RO) {
@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 
 		private void ProcessOrigins(GameObject gao, Material tex_mat) {
 			ICSerializable[] resources = tpl.animSet.resources;
-			if (!UbiArtContext.Loader.loadAnimations) return;
+			if (!UbiArtContext.Loader.LoadAnimations) return;
 			ICSerializable pbkRes = resources.Where(res => res is AnimPatchBank).FirstOrDefault();
 			AnimPatchBank pbk = pbkRes != null ? (AnimPatchBank)pbkRes : null;
 			ICSerializable sklRes = resources.Where(res => res is AnimSkeleton).FirstOrDefault();

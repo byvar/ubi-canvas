@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (s.Settings.engineVersion <= Settings.EngineVersion.RO && IsFirstLoad) {
 				Loader l = s.Context.Loader;
-				if (l.loadAnimations) {
+				if (l.LoadAnimations) {
 					resources = new ICSerializable[resourceTypeList.Count];
 					for (int i = 0; i < resourceTypeList.Count; i++) {
 						uint type = resourceTypeList[i];

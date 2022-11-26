@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 				Loader l = s.Context.Loader;
 				l.LoadFile<GenericFile<GFXMaterialShader_Template>>(materialShader, result => shader = result);
 
-				if (l.loadAnimations) {
+				if (l.LoadAnimations) {
 					l.LoadFile<AnimPatchBank>(patchBank, result => pbk = result);
 				}
 			}

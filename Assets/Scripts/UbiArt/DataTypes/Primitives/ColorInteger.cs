@@ -7,10 +7,10 @@ namespace UbiArt {
 		public ColorInteger() {
 		}
 		public ColorInteger(float r, float g, float b, float a) {
-			uint rc = (uint)MathF.Max(0, MathF.Min(255, r * 255f));
-			uint gc = (uint)MathF.Max(0, MathF.Min(255, g * 255f));
-			uint bc = (uint)MathF.Max(0, MathF.Min(255, b * 255f));
-			uint ac = (uint)MathF.Max(0, MathF.Min(255, a * 255f));
+			uint rc = Math.Max(0, Math.Min(255, (uint)(r * 255f))) & 0xFF;
+			uint gc = Math.Max(0, Math.Min(255, (uint)(g * 255f))) & 0xFF;
+			uint bc = Math.Max(0, Math.Min(255, (uint)(b * 255f))) & 0xFF;
+			uint ac = Math.Max(0, Math.Min(255, (uint)(a * 255f))) & 0xFF;
 			colorBytes = (rc | (gc << 8) | (bc << 16) | (ac << 24));
 		}
 
@@ -21,6 +21,10 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			colorBytes = s.Serialize<uint>(colorBytes);
+		}
+
+		public override string ToString() {
+			return $"ColorInteger({R}, {G}, {B}, {A})";
 		}
 	}
 }

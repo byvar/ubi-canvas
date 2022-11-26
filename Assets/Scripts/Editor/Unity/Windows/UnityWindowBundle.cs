@@ -66,7 +66,8 @@ public class UnityWindowBundle : UnityWindow {
 						}
 					}
 					// Step 2, load uv atlas manager, and combine with adventures. Write patch_PC
-					/*UbiArt.UV.UVAtlasManager uvManager = null;
+					UbiArt.UV.UVAtlasManager uvManager = null;
+					Path uvManagerPath = null;
 					using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
 						Settings.Init(Settings.Mode.RaymanLegendsPC),
 						fileManager: new MapViewerFileManager(),
@@ -77,25 +78,9 @@ public class UnityWindowBundle : UnityWindow {
 						foreach (var uv in l.uvAtlasManager.atlas) {
 							if(!uvManager.atlas.ContainsKey(uv.Key)) uvManager.atlas.Add(uv);
 						}
-						await rlContextExt.Loader.WriteBundle(System.IO.Path.Combine(basePath, "patch_PC.ipk"), new List<Pair<Path, ICSerializable>>() {
-							new Pair<Path, ICSerializable>(
-								rlContextExt.Loader.CookedPaths[new Path("", "atlascontainer.ckd").stringID],
-								uvManager)
-						});
-					}*/
-					// Step 2, load replacement texture
-					/*TextureCooked tempTexture = null;
-					using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
-						Settings.Init(Settings.Mode.RaymanLegendsPC),
-						fileManager: new MapViewerFileManager(),
-						systemLogger: new UnitySystemLogger(),
-						asyncController: new UniTaskAsyncController())) {
-						await rlContextExt.Loader.LoadInitial();
-						rlContextExt.Loader.LoadTexture(new Path("world/common/playablecharacter/teensy/animation/teensy_a1.tga"), tex => {
-							tempTexture = tex;
-						});
-						await rlContextExt.Loader.LoadLoop();
-					}*/
+						uvManagerPath = rlContextExt.Loader.CookedPaths[new Path("", "atlascontainer.ckd").stringID];
+					}
+
 					// Step 3, load bundles, for each struct check if it's already present in the bundle, otherwise add it
 					using (var rlContext = new Context(basePath, settings,
 						fileManager: new MapViewerFileManager(),
@@ -103,6 +88,7 @@ public class UnityWindowBundle : UnityWindow {
 						asyncController: new UniTaskAsyncController())) {
 						await rlContext.Loader.LoadBundles();
 						var bun = new UbiArt.Bundle.BundleFile();
+						var patch = new UbiArt.Bundle.BundleFile();
 						var ogBun = rlContext.Loader.Bundles["Bundle"];
 
 						// Add all original files to new bundle
@@ -117,16 +103,19 @@ public class UnityWindowBundle : UnityWindow {
 								if(curPath.filename == "localisation.loc8") continue;
 								//if (!bun.HasPreprocessedFile(curPath)) {
 								if (!rlContext.Loader.AnyBundleContainsFile(curPath)) {
-									/*if (structMap.Value is TextureCooked) {
-										bun.AddFile(curPath, tempTexture);
-									} else {*/
-										bun.AddFile(curPath, structMap.Value);
-									//}
+									bun.AddFile(curPath, structMap.Value);
+								} else if(curPath.filename.Contains("rotation_biggear.tpl")) {
+									patch.AddFile(curPath, structMap.Value);
 								}
 							}
 						}
 						// Write bundle
 						await rlContext.Loader.WriteBundle(path, bun);
+
+						//Write patch
+						patch.AddFile(uvManagerPath, uvManager);
+						await rlContext.Loader.WriteBundle(System.IO.Path.Combine(basePath, "patch_PC.ipk"), patch);
+
 					}
 				}
 				EditorGUI.EndDisabledGroup();

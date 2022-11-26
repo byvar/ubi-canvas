@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public bool BasicRender = true;
 		public StringID lastAnim;
 		public StringID playAnim;
-		public uint playAnimFrames;
+		public uint playAnimFrames = 0xFFFFFFFF;
 		public CListO<AnimLightFrameInfo> currentFrameSubAnims;
 		public Path animInstance;
 		public bool bool__5;

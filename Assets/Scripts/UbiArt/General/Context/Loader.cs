@@ -31,7 +31,8 @@ namespace UbiArt {
 
 		public string LoadingState = "Loading";
 
-		public bool loadAnimations = false;
+		public bool LoadAnimations { get; set; } = false;
+		public bool LoadAllPaths { get; set; } = false;
 
 		public ITF.RO2_GameManagerConfig_Template gameConfig;
 		public ITF.Ray_GameManagerConfig_Template gameConfigRO;
@@ -339,6 +340,7 @@ namespace UbiArt {
 				case "png":
 				case "loc8":
 				case "ipk":
+				case "asc":
 				case null:
 					return true;
 				default:

@@ -4,12 +4,12 @@ namespace UbiArt.ITF {
 		public Vec3d lookAtOffset = new Vec3d(0,0,13);
 		public Vec3d lookAtOffsetMax = new Vec3d(0,0,22);
 		public int modifierPriority;
-		public float lookAtOffsetX;
-		public float lookAtOffsetY;
-		public float lookAtOffsetZ = 13f;
-		public float lookAtOffsetMaxX;
-		public float lookAtOffsetMaxY;
-		public float lookAtOffsetMaxZ = 22f;
+		public float lookAtOffsetX { get => lookAtOffset.x; set => lookAtOffset = new Vec3d(value, lookAtOffset.y, lookAtOffset.z); }
+		public float lookAtOffsetY { get => lookAtOffset.y; set => lookAtOffset = new Vec3d(lookAtOffset.x, value, lookAtOffset.z); }
+		public float lookAtOffsetZ { get => lookAtOffset.z; set => lookAtOffset = new Vec3d(lookAtOffset.x, lookAtOffset.y, value); }
+		public float lookAtOffsetMaxX { get => lookAtOffsetMax.x; set => lookAtOffsetMax = new Vec3d(value, lookAtOffsetMax.y, lookAtOffsetMax.z); }
+		public float lookAtOffsetMaxY { get => lookAtOffsetMax.y; set => lookAtOffsetMax = new Vec3d(lookAtOffsetMax.x, value, lookAtOffsetMax.z); }
+		public float lookAtOffsetMaxZ { get => lookAtOffsetMax.z; set => lookAtOffsetMax = new Vec3d(lookAtOffsetMax.x, lookAtOffsetMax.y, value); }
 		public float blendingZoneStart;
 		public float blendingZoneStop;
 		public Vec2d zoneNeutral;

@@ -21,5 +21,20 @@ namespace UbiArt.Animation {
 				return keys.IndexOf(key.stringID);
 			}
 		}
+
+		protected override void OnPostSerialize(CSerializerObject s) {
+			base.OnPostSerialize(s);
+			if (keys == null && keysLegends != null) {
+				keys = new CArrayP<ulong>();
+				foreach (var k in keysLegends) {
+					keys.Add(k?.stringID ?? 0xFFFFFFFF);
+				}
+			} else if (keysLegends == null && keys != null) {
+				keysLegends = new CArrayO<StringID>();
+				foreach (var k in keys) {
+					keysLegends.Add(new StringID((uint)k));
+				}
+			}
+		}
 	}
 }

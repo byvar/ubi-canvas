@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace UbiArt.ITF {
-	public partial class FXControl {
+	public partial class FXControllerComponent_Template {
 		protected override void OnPreSerialize(CSerializerObject s) {
 			base.OnPreSerialize(s);
 			Reinit(s.Context, s.Settings);
@@ -12,8 +12,11 @@ namespace UbiArt.ITF {
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
 				if (previousSettings.game != settings.game) {
-					//sounds = null;
-					//music = null;
+					/*feedbackTags = null;
+					fxControlList = null;
+					triggerFx = null;
+					defaultFx = null;
+					FXSwitch = null;*/
 				}
 			}
 			previousSettings = settings;

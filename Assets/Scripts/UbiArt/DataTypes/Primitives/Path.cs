@@ -85,7 +85,7 @@ namespace UbiArt {
 				flags = s.Serialize<uint>(flags);
 				//if (flags != 0) MapLoader.Loader.print("Path with nonzero flags: " + this + " - " + flags);
 			}
-			if (s.Settings.LoadAll) LoadObject(s.Context);
+			if (s.Context.Loader.LoadAllPaths) LoadObject(s.Context);
 		}
 
 		public void LoadObject(Context c) {
@@ -104,6 +104,7 @@ namespace UbiArt {
 						c.Loader.LoadFile<GenericFile<FriseConfig>>(this, null);
 						break;
 					case "isc":
+					case "tsc":
 						c.Loader.LoadFile<ContainerFile<ITF.Scene>>(this, null);
 						break;
 					case "act":
@@ -123,9 +124,16 @@ namespace UbiArt {
 					case "tpl":
 						c.Loader.LoadFile<GenericFile<Actor_Template>>(this, null);
 						break;
-					case "tsc":
 					case "asc":
-						c.Loader.LoadGenericFile(this, null);
+						c.Loader.LoadFile<AnimMeshVertex>(this, null);
+						// TODO: AnimMeshVertex::serialize purebinary
+						break;
+					case "wav":
+					case "tfn":
+						// TODO
+						break;
+					case "ilu":
+						// Doesn't seem to be included
 						break;
 					case "":
 						break;

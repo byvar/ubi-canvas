@@ -111,6 +111,7 @@ public class UnityWindowSettings : UnityWindow {
 		}
 
 		UnitySettings.LoadAnimations = EditorGUI.Toggle(GetNextRect(ref yPos), new GUIContent("Load Animations"), UnitySettings.LoadAnimations);
+		UnitySettings.LoadAllPaths = EditorGUI.Toggle(GetNextRect(ref yPos), new GUIContent("Load all paths"), UnitySettings.LoadAllPaths);
 
 
 		totalyPos = yPos;

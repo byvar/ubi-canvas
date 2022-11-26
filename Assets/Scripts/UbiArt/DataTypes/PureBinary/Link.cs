@@ -6,7 +6,7 @@ namespace UbiArt {
 		}
 
 		public override string ToString() {
-			return "Link(" + stringID + ")";
+			return $"Link({stringID})";
 		}
 		
 		public override int GetHashCode() {

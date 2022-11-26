@@ -86,6 +86,15 @@ namespace UbiArt {
 							if (e.IsAdventuresExclusive()) MakeNull();
 						}
 					}
+					if (obj != null) {
+						var attr = (GamesAttribute)Attribute.GetCustomAttribute(obj.GetType(), typeof(GamesAttribute));
+						if (attr != null) {
+							if (!attr.HasGame(settings.game)) {
+								c.SystemLogger?.LogInfo("Removing Generic component: {0}", obj.GetType());
+								MakeNull();
+							}
+						}
+					}
 				}
 			}
 			previousSettings = settings;

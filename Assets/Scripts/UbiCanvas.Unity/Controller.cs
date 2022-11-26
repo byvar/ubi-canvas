@@ -45,7 +45,6 @@ public class Controller : MonoBehaviour {
 
 		Settings.Mode mode = UnitySettings.GameMode;
 		string gameDataBinFolder = UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "";
-		bool loadAnimations = UnitySettings.LoadAnimations;
 
 		if (FileSystem.mode == FileSystem.Mode.Web) {
 			gameDataBinFolder = UnitySettings.GameDirsWeb.ContainsKey(mode) ? UnitySettings.GameDirsWeb[mode] : "";
@@ -55,14 +54,14 @@ public class Controller : MonoBehaviour {
 
 		loadingScreen.Active = true;
 		var settings = Settings.Init(mode);
-		settings.LoadAll = true;
 		MainContext = new Context(gameDataBinFolder, settings,
 			serializerLogger: new MapViewerSerializerLogger(),
 			fileManager: new MapViewerFileManager(),
 			systemLogger: new UnitySystemLogger(),
 			asyncController: new UniTaskAsyncController());
 
-		MainContext.Loader.loadAnimations = loadAnimations;
+		MainContext.Loader.LoadAnimations = UnitySettings.LoadAnimations;
+		MainContext.Loader.LoadAllPaths = UnitySettings.LoadAllPaths;
 
 		await Init();
 	}

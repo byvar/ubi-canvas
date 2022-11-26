@@ -31,6 +31,8 @@ public class UnitySettings {
 
 	public static bool LoadAnimations { get; set; } = true;
 
+    public static bool LoadAllPaths { get; set; }
+
 	/// <summary>
 	/// Static constructor loads in editor data at editor startup.
 	/// This way, the data loads even if the editor window isn't active.
@@ -73,6 +75,7 @@ public class UnitySettings {
 
         SelectedLevelFile = s.SerializeString(nameof(SelectedLevelFile), SelectedLevelFile, "level", "lvl", "map");
         LoadAnimations = s.SerializeBool(nameof(LoadAnimations), LoadAnimations);
+        LoadAllPaths = s.SerializeBool(nameof(LoadAllPaths), LoadAllPaths);
         
         BackupFiles = s.SerializeBool(nameof(BackupFiles), BackupFiles);
         Log = s.SerializeBool(nameof(Log), Log);

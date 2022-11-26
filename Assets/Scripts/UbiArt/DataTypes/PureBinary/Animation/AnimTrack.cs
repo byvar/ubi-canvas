@@ -2,6 +2,8 @@ namespace UbiArt.Animation {
 	// See: ITF::AnimTrack::serialize
 	// anm.ckd file
 	public class AnimTrack : CSerializable {
+		public const uint VersionLegends = 34;
+
 		public uint version;
 		public float length;
 		public CListO<AnimTrackBML> bml;
@@ -24,8 +26,8 @@ namespace UbiArt.Animation {
 		public KeyArray<int> texturePathKeysOrigins;
 		public CListO<Pair<StringID, Path>> texturePaths;
 		public CListO<Pair<StringID, CString>> texturePathsOrigins;
-		public uint unk0;
-		public uint unk1;
+		public uint bankId0;
+		public uint bankId;
 		public uint unk2;
 		public ulong unk0Origins;
 		public CListP<ulong> unk1Origins;
@@ -52,10 +54,10 @@ namespace UbiArt.Animation {
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				skeleton = s.SerializeObject<Pair<StringID, Path>>(skeleton, name: "skeleton");
 				texturePaths = s.SerializeObject<CListO<Pair<StringID, Path>>>(texturePaths, name: "textures");
-				unk0 = s.Serialize<uint>(unk0, name: "unk0");
 				if (s.Settings.game == Settings.Game.RL) {
-					unk1 = s.Serialize<uint>(unk1, name: "unk1");
+					bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 				}
+				bankId = s.Serialize<uint>(bankId, name: "bankId");
 				unk2 = s.Serialize<uint>(unk2, name: "unk2");
 			} else {
 				skeletonOrigins = s.SerializeObject<Pair<StringID, CString>>(skeletonOrigins, name: "skeleton");
@@ -99,6 +101,15 @@ namespace UbiArt.Animation {
 			l.LoadTexture(path, tex => {
 				texs[index] = tex;
 			});
+		}
+		protected override void OnPreSerialize(CSerializerObject s) {
+			base.OnPreSerialize(s);
+			Reinit(s.Settings);
+		}
+		public void Reinit(Settings settings) {
+			if (settings.engineVersion == Settings.EngineVersion.RL && version >= VersionLegends) {
+				version = VersionLegends;
+			}
 		}
 
 	}

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.OnPostSerialize(s);
 			if (name != null && IsFirstLoad) {
 				Loader l = s.Context.Loader;
-				if (l.loadAnimations) {
+				if (l.LoadAnimations) {
 					l.LoadFile<AnimTrack>(name, result => anim = result);
 				}
 			}
