@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class BTActionPlayAnim_Template : BTAction_Template {
 		public StringID anim;
 		public StringID restartOnFact;
-		public bool retOnFinish;
-		public float playTime;
+		public bool retOnFinish = true;
+		public float playTime = -1f;
 		public bool useAnimationRootDelta;
 		public bool disablePhys;
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -2,11 +2,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ParticleGeneratorComponent_Template : GraphicComponent_Template {
 		public ITF_ParticleGenerator_Template ParticleGeneratorParams;
-		public float startTime;
-		public float stopTime;
+		public float startTime = 1f;
+		public float stopTime = 1f;
 		public Path texture;
 		public GFXMaterialSerializable material;
-		public bool beginStart;
+		public bool beginStart = true;
 		public CListO<InputDesc> inputs;
 		public ProceduralInputData frequencyInput;
 		public ProceduralInputData emitCountInput;

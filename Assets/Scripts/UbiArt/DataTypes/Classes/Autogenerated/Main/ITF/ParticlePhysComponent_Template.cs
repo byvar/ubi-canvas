@@ -2,10 +2,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ParticlePhysComponent_Template : PhysComponent_Template {
 		public float physFriction;
-		public float physAngularSpeedMinLinear;
-		public float physAngularSpeedMaxLinear;
-		public Angle physAngularSpeedMinAngular;
-		public Angle physAngularSpeedMaxAngular;
+		public float physAngularSpeedMinLinear = 1f;
+		public float physAngularSpeedMaxLinear = 10f;
+		public Angle physAngularSpeedMinAngular = 150f;
+		public Angle physAngularSpeedMaxAngular = 250f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {

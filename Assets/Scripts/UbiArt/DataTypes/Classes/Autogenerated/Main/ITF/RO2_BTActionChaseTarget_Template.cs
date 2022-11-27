@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public Generic<PhysShape> enemyDetectionRange;
 		public StringID animWalk;
 		public StringID animUTurn;
-		public float timeChaseWithoutTarget;
+		public float timeChaseWithoutTarget = 2f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			enemyDetectionRange = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRange, name: "enemyDetectionRange");

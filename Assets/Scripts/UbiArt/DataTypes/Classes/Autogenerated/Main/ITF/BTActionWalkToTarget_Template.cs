@@ -7,10 +7,10 @@ namespace UbiArt.ITF {
 		public StringID jumpAnim;
 		public StringID factTargetActor;
 		public StringID factTargetPos;
-		public bool canPerformTurn;
+		public bool canPerformTurn = true;
 		public bool wallRun;
 		public bool forceSprint;
-		public bool autoJump;
+		public bool autoJump = true;
 		public float maxJumpHeight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

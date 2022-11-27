@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public int animstart;
 		public int animend;
 		public StringID animname;
-		public float AnimUVfreq;
+		public float AnimUVfreq = 1f;
 		public ParticleGeneratorParameters _params;
 		public DeviceInfo__Device_Speed ObjectDeviceSpeed;
 		public PARGEN_ZSORT zSortMode;

@@ -3,10 +3,10 @@ namespace UbiArt.ITF {
 	public partial class RO2_ParticlesFluxComponent_Template : ActorComponent_Template {
 		public StringID standAnim;
 		public float offsetRange;
-		public float scale;
+		public float scale = 1f;
 		public float startAlpha;
-		public float endAlpha;
-		public float m_alphaTransitionTime;
+		public float endAlpha = 1f;
+		public float m_alphaTransitionTime = 0.2f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			standAnim = s.SerializeObject<StringID>(standAnim, name: "standAnim");

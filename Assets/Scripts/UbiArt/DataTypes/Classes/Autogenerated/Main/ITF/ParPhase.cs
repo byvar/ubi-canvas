@@ -1,17 +1,17 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class ParPhase : CSerializable {
-		public float phaseTime;
-		public Color colorMin;
-		public Color colorMax;
-		public Vec2d sizeMin;
-		public Vec2d sizeMax;
-		public int animstart;
-		public int animend;
+		public float phaseTime = 1f;
+		public Color colorMin = Color.White;
+		public Color colorMax = Color.White;
+		public Vec2d sizeMin = Vec2d.One;
+		public Vec2d sizeMax = Vec2d.One;
+		public int animstart = -1;
+		public int animend = -1;
 		public StringID animname;
 		public float deltaphasetime;
 		public bool animstretchtime;
-		public bool blendtonextphase;
+		public bool blendtonextphase = true;
 
 		public float float__0;
 		public Color Color__1;

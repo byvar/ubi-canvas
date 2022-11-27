@@ -2,9 +2,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class BTActionJumpToBack_Template : BTAction_Template {
 		public StringID anim;
-		public float time;
-		public float zOffset;
-		public float height;
+		public float time = 1f;
+		public float zOffset = 0.1f;
+		public float height = 2f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			anim = s.SerializeObject<StringID>(anim, name: "anim");

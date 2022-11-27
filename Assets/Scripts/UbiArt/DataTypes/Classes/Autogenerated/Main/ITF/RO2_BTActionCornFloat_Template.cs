@@ -2,15 +2,15 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionCornFloat_Template : BTAction_Template {
 		public StringID anim;
-		public float floatIntervalMin;
-		public float floatIntervalMax;
-		public float floatHeightMin;
-		public float floatHeightMax;
-		public float springConstant;
-		public float frictionConstant;
-		public float weightThreshold;
-		public float lowerSpringConstant;
-		public float lowerFrictionConstant;
+		public float floatIntervalMin = 1f;
+		public float floatIntervalMax = 2f;
+		public float floatHeightMin = 1f;
+		public float floatHeightMax = 2f;
+		public float springConstant = 1f;
+		public float frictionConstant = 1f;
+		public float weightThreshold = 1f;
+		public float lowerSpringConstant = 1f;
+		public float lowerFrictionConstant = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			anim = s.SerializeObject<StringID>(anim, name: "anim");

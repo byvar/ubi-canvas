@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionAppearSplinterCell_Template : BTAction_Template {
 		public StringID animSwimUp;
-		public float speedLimitToStop;
-		public float antiBounceFactor;
+		public float speedLimitToStop = 0.1f;
+		public float antiBounceFactor = 30f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animSwimUp = s.SerializeObject<StringID>(animSwimUp, name: "animSwimUp");

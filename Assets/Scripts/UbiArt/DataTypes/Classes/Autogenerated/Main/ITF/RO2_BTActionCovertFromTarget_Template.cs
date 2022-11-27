@@ -2,11 +2,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionCovertFromTarget_Template : BTAction_Template {
 		public StringID factTarget;
-		public float thresholdY;
-		public float thresholdYDown;
-		public float timeCarryingAllowed;
-		public float radiusMaxTempo;
-		public float timeMaxTempo;
+		public float thresholdY = 1f;
+		public float thresholdYDown = 0.6f;
+		public float timeCarryingAllowed = 3f;
+		public float radiusMaxTempo = 10f;
+		public float timeMaxTempo = 1f;
 		public Enum_forcedDirection forcedDirection;
 		public StringID animIdle;
 		public StringID animStandUp;

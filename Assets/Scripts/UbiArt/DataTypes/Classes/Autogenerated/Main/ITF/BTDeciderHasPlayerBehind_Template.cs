@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class BTDeciderHasPlayerBehind_Template : BTDecider_Template {
-		public float radius;
+		public float radius = 1f;
 		public float margin;
 		public bool invert;
 		public bool checkAll;

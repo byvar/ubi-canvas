@@ -5,13 +5,13 @@ namespace UbiArt.ITF {
 		public StringID animFallBack;
 		public StringID animNinjaFore;
 		public StringID animFallFore;
-		public float heightNinja;
-		public float fallTime;
-		public float jumpToActorMinTime;
+		public float heightNinja = 3f;
+		public float fallTime = 1f;
+		public float jumpToActorMinTime = 1f;
 		public float jumpToActorYFuncPoint0Dist;
-		public float jumpToActorYFuncPoint1Dist;
+		public float jumpToActorYFuncPoint1Dist = 1f;
 		public float jumpToActorXZFuncPoint0T;
-		public float jumpToActorXZFuncPoint1T;
+		public float jumpToActorXZFuncPoint1T = 0.5f;
 		public bool jumpUseEasing;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

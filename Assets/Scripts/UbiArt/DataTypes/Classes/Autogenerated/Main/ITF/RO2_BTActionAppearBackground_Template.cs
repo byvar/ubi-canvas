@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public StringID animAnticipFore;
 		public StringID animJumpFore;
 		public StringID animLandingFore;
-		public bool waitForTrigger;
+		public bool waitForTrigger = true;
 		public bool disablePhys;
 		public bool resetAngle;
 		protected override void SerializeImpl(CSerializerObject s) {

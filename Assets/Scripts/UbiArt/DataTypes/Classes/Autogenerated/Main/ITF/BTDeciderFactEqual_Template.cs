@@ -42,6 +42,7 @@ namespace UbiArt.ITF {
 			[Serialize("EValueType_Event"     )] Event = 9,
 		}
 		public enum EValueType {
+			[Serialize("EValueType_Unknown"   )] Unknown = 0,
 			[Serialize("EValueType_Boolean"   )] Boolean = 1,
 			[Serialize("EValueType_Integer32" )] Integer32 = 2,
 			[Serialize("EValueType_UInteger32")] UInteger32 = 3,

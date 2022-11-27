@@ -5,12 +5,12 @@ namespace UbiArt.ITF {
 		public StringID animFall;
 		public StringID animGround;
 		public float groundDistance;
-		public float fallDist;
-		public float transitionDuration;
-		public float transitionGravityFactorMin;
-		public float transitionGravityFactorMax;
-		public float fallGravityFactor;
-		public float floatSpeedMax;
+		public float fallDist = 5f;
+		public float transitionDuration = 1f;
+		public float transitionGravityFactorMin = 1f;
+		public float transitionGravityFactorMax = 1f;
+		public float fallGravityFactor = 1f;
+		public float floatSpeedMax = 5f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animFloat = s.SerializeObject<StringID>(animFloat, name: "animFloat");

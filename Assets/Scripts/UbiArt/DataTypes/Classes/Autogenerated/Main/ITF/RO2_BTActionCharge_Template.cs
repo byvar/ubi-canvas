@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public StringID animEndRun;
 		public StringID animHitWall;
 		public StringID animHoleStop;
-		public float distMaxCharge;
+		public float distMaxCharge = 10f;
 		public float timePatinage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

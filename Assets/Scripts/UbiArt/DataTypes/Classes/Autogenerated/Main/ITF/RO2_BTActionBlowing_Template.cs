@@ -2,10 +2,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionBlowing_Template : BTAction_Template {
 		public Generic<PhysShape> enemyDetectionRange;
-		public bool blowingUp;
+		public bool blowingUp = true;
 		public bool modeAuto;
-		public float blowingTime;
-		public float coolDown;
+		public float blowingTime = 2f;
+		public float coolDown = 2f;
 		public StringID animStand;
 		public StringID animAnticip;
 		public StringID animLoop;

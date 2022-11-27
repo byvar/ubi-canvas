@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class GFX_GridFluidObjParam : CSerializable {
-		public bool BasicRender;
-		public float EmitterIntensity;
+		public bool BasicRender = true;
+		public float EmitterIntensity = 1f;
 		public GFX_GRID_MOD_MODE Mode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

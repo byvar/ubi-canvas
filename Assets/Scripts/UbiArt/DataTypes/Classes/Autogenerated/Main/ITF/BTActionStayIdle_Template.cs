@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 		public StringID groundAnim;
 		public StringID swimAnim;
 		public StringID fallAnim;
-		public float avoidanceRadius;
-		public float maxTime;
+		public float avoidanceRadius = 0.4f;
+		public float maxTime = -1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RO) {

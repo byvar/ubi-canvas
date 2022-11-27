@@ -6,16 +6,16 @@ namespace UbiArt.ITF {
 		public StringID animFreeFall;
 		public StringID animImpact;
 		public StringID animReceiveHitDrag;
-		public float bulletTouchDirNormThreshold;
-		public float DRCSpeedSmoothFactor;
+		public float bulletTouchDirNormThreshold = 500f;
+		public float DRCSpeedSmoothFactor = 5f;
 		public Vec2d offsetDrag;
-		public float speedBulletMultiplier;
-		public float smoothFactor;
-		public float smoothFactorOnPoly;
-		public float smoothFactorOnDoublePoly;
-		public bool useRehitStim;
-		public float speedMaxBullet;
-		public bool acceptRoofCrash;
+		public float speedBulletMultiplier = 1f;
+		public float smoothFactor = 0.1f;
+		public float smoothFactorOnPoly = 0.4f;
+		public float smoothFactorOnDoublePoly = 0.4f;
+		public bool useRehitStim = true;
+		public float speedMaxBullet = 30f;
+		public bool acceptRoofCrash = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			anim = s.SerializeObject<StringID>(anim, name: "anim");

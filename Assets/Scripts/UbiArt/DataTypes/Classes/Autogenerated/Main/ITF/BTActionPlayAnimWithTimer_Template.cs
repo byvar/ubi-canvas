@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class BTActionPlayAnimWithTimer_Template : BTActionPlayAnim_Template {
-		public float minTime;
-		public float maxTime;
+		public float minTime = 1f;
+		public float maxTime = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			minTime = s.Serialize<float>(minTime, name: "minTime");
