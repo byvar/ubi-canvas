@@ -9,9 +9,9 @@ namespace UbiArt.ITF {
 		public float endWidth;
 		public float startOffset;
 		public float endOffset;
-		public float tessellationLength;
+		public float tessellationLength = 1f;
 		public bool usePolylinePhantom;
-		public bool isJobable;
+		public bool isJobable = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");

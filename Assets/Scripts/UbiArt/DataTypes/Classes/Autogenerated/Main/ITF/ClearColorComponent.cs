@@ -2,11 +2,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class ClearColorComponent : ActorComponent {
 		public SubRenderParam_ClearColor clearColor;
-		public float Weight;
+		public float Weight = 1f;
 		public uint Priority;
 		public Color clearColor2;
-		public Color clearFrontLightColor;
-		public Color clearBackLightColor;
+		public Color clearFrontLightColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+		public Color clearBackLightColor = Color.Black;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {

@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class EdgeProcessData : CSerializable {
-		public int Id;
+		public int Id = -1;
 		public int IndexStart;
 		public int IndexEnd;
 		public Vec2d PosStart;

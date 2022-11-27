@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_BezierBranchFluidRendererComponent : RO2_BezierBranchBaseRendererComponent {
-		public bool startActivated;
-		public float branchSpeed;
+		public bool startActivated = true;
+		public float branchSpeed = 10f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			startActivated = s.Serialize<bool>(startActivated, name: "startActivated");

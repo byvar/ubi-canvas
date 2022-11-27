@@ -2,15 +2,15 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_BezierBranchWeightComponent_Template : RO2_BezierBranchComponent_Template {
 		public Angle minAngle;
-		public Angle maxAngle;
-		public float bendingSpeed;
-		public float weightInfluence;
+		public Angle maxAngle = 0.1745329f;
+		public float bendingSpeed = 5f;
+		public float weightInfluence = 1f;
 		public float weightMinValue;
-		public float weightMaxValue;
-		public float forceInfluence;
-		public float forceDuration;
+		public float weightMaxValue = 0.5f;
+		public float forceInfluence = 1f;
+		public float forceDuration = 0.25f;
 		public float forceMinSpeed;
-		public float forceMaxSpeed;
+		public float forceMaxSpeed = 5f;
 		public bool exclusiveForce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

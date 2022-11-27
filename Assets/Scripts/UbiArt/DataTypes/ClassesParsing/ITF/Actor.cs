@@ -34,11 +34,23 @@ namespace UbiArt.ITF {
 						// Check components, remove all that don't have the right gameflags
 						for (int i = 0; i < COMPONENTS.Count; i++) {
 							var compobj = COMPONENTS[i].obj;
-							var attr = (GamesAttribute)Attribute.GetCustomAttribute(compobj.GetType(), typeof(GamesAttribute));
-							if (attr != null) {
-								if (!attr.HasGame(settings.game)) {
-									c.SystemLogger?.LogInfo("Removing actor component: {0}",compobj.GetType());
+							var newobj = compobj?.Convert(previousSettings, settings);
+							if (newobj != compobj) {
+								if (newobj == null) {
 									RemovedComponents.Add(COMPONENTS[i]);
+								} else {
+									COMPONENTS[i].obj = newobj;
+									COMPONENTS[i].className = new StringID(newobj.ClassCRC.Value);
+								}
+								compobj = newobj;
+							}
+							if (compobj != null) {
+								var attr = (GamesAttribute)Attribute.GetCustomAttribute(compobj.GetType(), typeof(GamesAttribute));
+								if (attr != null) {
+									if (!attr.HasGame(settings.game)) {
+										c.SystemLogger?.LogInfo("Removing actor component: {0}", compobj.GetType());
+										RemovedComponents.Add(COMPONENTS[i]);
+									}
 								}
 							}
 						}

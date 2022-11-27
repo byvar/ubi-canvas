@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public uint IdEdgeFluid;
 		public EdgeData Data;
 		public Transform2d Xf;
-		public float Scale;
+		public float Scale = 1f;
 		public CListO<FluidFriseLayer> LayerInfos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

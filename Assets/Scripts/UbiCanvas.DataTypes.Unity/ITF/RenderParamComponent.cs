@@ -9,13 +9,13 @@ namespace UbiArt.ITF {
 			ShaderManager shaderManager = GameObject.FindObjectOfType<ShaderManager>();
 			if (shaderManager != null) {
 				if (ClearColor != null && ClearColor.Enable) {
-					Camera.main.backgroundColor = ClearColor.ClearColor.GetUnityColor();
-					shaderManager.frontLightCamera.backgroundColor = ClearColor.ClearFrontLightColor.GetUnityColor();
-					shaderManager.backLightCamera.backgroundColor = ClearColor.ClearBackLightColor.GetUnityColor();
+					Camera.main.backgroundColor = (ClearColor.ClearColor ?? Color.Black).GetUnityColor();
+					shaderManager.frontLightCamera.backgroundColor = (ClearColor.ClearFrontLightColor ?? Color.Black).GetUnityColor();
+					shaderManager.backLightCamera.backgroundColor = (ClearColor.ClearBackLightColor ?? Color.Black).GetUnityColor();
 				}
 				if (Lighting != null && Lighting.Enable) {
-					shaderManager.frontLightCamera.backgroundColor = Lighting.GlobalColor.GetUnityColor();
-					shaderManager.backLightCamera.backgroundColor = Lighting.GlobalColor.GetUnityColor();
+					shaderManager.frontLightCamera.backgroundColor = (Lighting.GlobalColor ?? Color.Black).GetUnityColor();
+					shaderManager.backLightCamera.backgroundColor = (Lighting.GlobalColor ?? Color.Black).GetUnityColor();
 				}
 			}
 		}

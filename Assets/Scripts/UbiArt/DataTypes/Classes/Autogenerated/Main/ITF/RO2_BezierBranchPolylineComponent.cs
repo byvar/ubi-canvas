@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_BezierBranchPolylineComponent : RO2_BezierBranchComponent {
-		public RO2_PolylineMode polylineMode;
-		public RO2_PolylineMode2 polylineMode2;
+		public RO2_PolylineMode polylineMode = RO2_PolylineMode.DoubleSided;
+		public RO2_PolylineMode2 polylineMode2 = RO2_PolylineMode2.DoubleSided;
 		public float polylineTessellation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

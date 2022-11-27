@@ -4,12 +4,12 @@ namespace UbiArt.ITF {
 		public Generic<Event> eventToListen;
 		public Generic<Event> eventToRelay;
 		public float delay;
-		public bool triggerSelf;
-		public bool triggerChildren;
+		public bool triggerSelf = true;
+		public bool triggerChildren = true;
 		public bool triggerBroadcast;
 		public bool replaceSender;
 		public bool replaceSenderByActivator;
-		public bool resetTimerOnRetrigger;
+		public bool resetTimerOnRetrigger = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			eventToListen = s.SerializeObject<Generic<Event>>(eventToListen, name: "eventToListen");

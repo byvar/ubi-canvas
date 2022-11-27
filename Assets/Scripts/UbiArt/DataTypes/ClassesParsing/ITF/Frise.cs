@@ -6,16 +6,6 @@ namespace UbiArt.ITF {
 		public FriseOrigins.FriseConfigOrigins configOrigins;
 		public GenericFile<GFXMaterialShader_Template> shader;
 
-		public Frise() {
-			XfForCook = new Transform2d() {
-				Rot = new matrix2d() {
-					Col1 = new Vec2d(1f, 0f),
-					Col2 = new Vec2d(0f, 1f)
-				}
-			};
-
-		}
-
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {

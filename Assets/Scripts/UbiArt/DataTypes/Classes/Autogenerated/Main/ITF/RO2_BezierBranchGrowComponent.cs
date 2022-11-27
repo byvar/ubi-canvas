@@ -1,15 +1,15 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_BezierBranchGrowComponent : RO2_BezierBranchComponent {
-		public float startCursor;
-		public float minCursor;
-		public float maxCursor;
-		public float reinitTime;
-		public float autoStartTime;
-		public float growSpeed;
+		public float startCursor = 1f;
+		public float minCursor = -1f;
+		public float maxCursor = -1f;
+		public float reinitTime = -1f;
+		public float autoStartTime = -1f;
+		public float growSpeed = 10f;
 		public EaseMode easeMode;
-		public bool useSameSpeed;
-		public float retractSpeed;
+		public bool useSameSpeed = true;
+		public float retractSpeed = 10f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {

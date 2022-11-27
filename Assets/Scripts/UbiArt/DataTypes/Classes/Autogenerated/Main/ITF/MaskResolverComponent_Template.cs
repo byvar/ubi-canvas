@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class MaskResolverComponent_Template : ActorComponent_Template {
-		public bool resolveFrontLightBuffer;
+		public bool resolveFrontLightBuffer = true;
 		public bool resolveFrontLightBufferInverted;
-		public bool resolveBackLightBuffer;
+		public bool resolveBackLightBuffer = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {

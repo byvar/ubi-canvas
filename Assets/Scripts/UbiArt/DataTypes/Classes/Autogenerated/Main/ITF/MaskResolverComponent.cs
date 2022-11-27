@@ -1,15 +1,15 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class MaskResolverComponent : ActorComponent {
-		public bool clearFrontLightBuffer;
-		public Color clearFrontLightColor;
-		public bool clearBackLightBuffer;
-		public Color clearBackLightColor;
-		public float blurSize;
+		public bool clearFrontLightBuffer = true;
+		public Color clearFrontLightColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+		public bool clearBackLightBuffer = true;
+		public Color clearBackLightColor = Color.Black;
+		public float blurSize = 6f;
 		public int blurFrontLightBuffer;
 		public int blurBackLightBuffer;
-		public uint blurQuality;
-		public uint blurSize2;
+		public uint blurQuality = 1;
+		public uint blurSize2 = 8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {

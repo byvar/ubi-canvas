@@ -5,9 +5,9 @@ namespace UbiArt.ITF {
 		public CArrayO<Vec2d> UVList;
 		public CArrayO<ColorInteger> Colors;
 		public Vec2d UvAnimTrans;
-		public uint MeshLevel;
+		public uint MeshLevel = 8;
 		public float Depth;
-		public uint LastIndex;
+		public uint LastIndex = 0x80;
 		public float LocalNorm;
 		public float WorldNorm;
 		public float WorldHeight;

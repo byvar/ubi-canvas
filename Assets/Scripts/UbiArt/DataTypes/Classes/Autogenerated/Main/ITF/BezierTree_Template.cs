@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class BezierTree_Template : CSerializable {
-		public uint sampleCount;
-		public float widthForAABB;
+		public uint sampleCount = 10;
+		public float widthForAABB = 1f;
 		public LinkMode linkMainBranch;
 		public CArrayO<Generic<BezierBranchComponent_Template>> branchComponents;
 		public TweenInterpreter_Template tweenInterpreter;

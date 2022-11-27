@@ -1,30 +1,30 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_RopeComponent : GraphicComponent {
-		public bool useBeginTexture;
-		public bool useEndTexture;
-		public float rendererScaleMultiplier;
+		public bool useBeginTexture = true;
+		public bool useEndTexture = true;
+		public float rendererScaleMultiplier = 1f;
 		public bool flipTexture;
 		public bool initIteration;
 		public bool ignoreStims;
-		public float initLenth;
-		public float force;
-		public float rigidConstraintFactor;
-		public float lengthFactor;
-		public float edgeLength;
-		public uint bezierSampling;
+		public float initLenth = 10f;
+		public float force = 300f;
+		public float rigidConstraintFactor = 0.8f;
+		public float lengthFactor = 1f;
+		public float edgeLength = 1f;
+		public uint bezierSampling = 1;
 		public bool inverseCurveRenderer;
-		public float fadeTime;
+		public float fadeTime = 1.3f;
 		public Generic<Event> onCutEvent;
 		public bool sendEventOnce;
 		public RopeBind beginBindType;
 		public StringID beginBindName;
-		public bool snapEnd;
+		public bool snapEnd = true;
 		public float safeMargin;
 		public bool resetOnCheckpoint;
 		public bool disableAfterFadeOnRelease;
 		public bool wasCut;
-		public float cutLength;
+		public float cutLength = 1f;
 		public uint cutSender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,13 +1,13 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class EdgeData : CSerializable {
-		public float Level;
+		public float Level = 1f;
 		public float Pos;
 		public int Way;
 		public bool CutUV;
-		public float HeightScale;
-		public float HeightScaleTotal;
-		public float HeightPos;
+		public float HeightScale = 1f;
+		public float HeightScaleTotal = 1f;
+		public float HeightPos = 1f;
 		public float PosZ;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
