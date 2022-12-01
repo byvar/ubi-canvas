@@ -71,17 +71,17 @@ namespace UbiArt {
 				DrawLocId(name, ref locId);
 				obj = locId;
 			} else if (type == typeof(Vec2d)) {
-				obj = (Vec2d)(EditorGUILayout.Vector2Field(name, ((Vec2d)obj).GetUnityVector()).GetUbiArtVector());
+				obj = (Vec2d)(EditorGUILayout.Vector2Field(name, ((Vec2d)obj ?? new Vec2d()).GetUnityVector()).GetUbiArtVector());
 			} else if (type == typeof(Vec3d)) {
-				obj = (Vec3d)(EditorGUILayout.Vector3Field(name, ((Vec3d)obj).GetUnityVector()).GetUbiArtVector());
+				obj = (Vec3d)(EditorGUILayout.Vector3Field(name, ((Vec3d)obj ?? new Vec3d()).GetUnityVector()).GetUbiArtVector());
 			} else if (type == typeof(Vec4d)) {
-				obj = (Vec4d)(EditorGUILayout.Vector4Field(name, ((Vec4d)obj).GetUnityVector()).GetUbiArtVector());
+				obj = (Vec4d)(EditorGUILayout.Vector4Field(name, ((Vec4d)obj ?? new Vec4d()).GetUnityVector()).GetUbiArtVector());
 			} else if (type == typeof(Color)) {
-				obj = (Color)(EditorGUILayout.ColorField(name, ((Color)obj).GetUnityColor()).GetUbiArtColor());
+				obj = (Color)(EditorGUILayout.ColorField(name, ((Color)obj ?? new Color()).GetUnityColor()).GetUbiArtColor());
 			} else if (type == typeof(ColorInteger)) {
-				obj = (ColorInteger)(EditorGUILayout.ColorField(name, ((ColorInteger)obj).GetUnityColor()).GetUbiArtColorInteger());
+				obj = (ColorInteger)(EditorGUILayout.ColorField(name, ((ColorInteger)obj ?? new ColorInteger()).GetUnityColor()).GetUbiArtColorInteger());
 			} else if (type == typeof(CString)) {
-				obj = new CString(EditorGUILayout.TextField(name, ((CString)obj).str));
+				obj = new CString(EditorGUILayout.TextField(name, ((CString)obj ?? new CString()).str));
 			} else {
 				if (obj == null) {
 					var ctor = type.GetConstructor(Type.EmptyTypes);
@@ -254,15 +254,15 @@ namespace UbiArt {
 				DrawLocId(name, ref locId);
 				obj = (T)(object)locId;
 			} else if (type == typeof(Vec2d)) {
-				obj = (T)(object)(Vec2d)(EditorGUILayout.Vector2Field(name, ((Vec2d)(object)obj).GetUnityVector()).GetUbiArtVector());
+				obj = (T)(object)(Vec2d)(EditorGUILayout.Vector2Field(name, ((Vec2d)(object)obj ?? new Vec2d()).GetUnityVector()).GetUbiArtVector());
 			} else if (type == typeof(Vec3d)) {
-				obj = (T)(object)(Vec3d)(EditorGUILayout.Vector3Field(name, ((Vec3d)(object)obj).GetUnityVector()).GetUbiArtVector());
+				obj = (T)(object)(Vec3d)(EditorGUILayout.Vector3Field(name, ((Vec3d)(object)obj ?? new Vec3d()).GetUnityVector()).GetUbiArtVector());
 			} else if (type == typeof(Vec4d)) {
-				obj = (T)(object)(Vec4d)(EditorGUILayout.Vector4Field(name, ((Vec4d)(object)obj).GetUnityVector()).GetUbiArtVector());
+				obj = (T)(object)(Vec4d)(EditorGUILayout.Vector4Field(name, ((Vec4d)(object)obj ?? new Vec4d()).GetUnityVector()).GetUbiArtVector());
 			} else if (type == typeof(Color)) {
-				obj = (T)(object)(Color)(EditorGUILayout.ColorField(name, ((Color)(object)obj).GetUnityColor()).GetUbiArtColor());
+				obj = (T)(object)(Color)(EditorGUILayout.ColorField(name, ((Color)(object)obj ?? new Color()).GetUnityColor()).GetUbiArtColor());
 			} else if (type == typeof(ColorInteger)) {
-				obj = (T)(object)(ColorInteger)(EditorGUILayout.ColorField(name, ((ColorInteger)(object)obj).GetUnityColor()).GetUbiArtColorInteger());
+				obj = (T)(object)(ColorInteger)(EditorGUILayout.ColorField(name, ((ColorInteger)(object)obj ?? new ColorInteger()).GetUnityColor()).GetUbiArtColorInteger());
 			} else {
 				if (obj == null) {
 					obj = new T();

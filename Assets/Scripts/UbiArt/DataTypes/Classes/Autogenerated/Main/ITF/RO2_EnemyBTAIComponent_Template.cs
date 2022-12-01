@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_EnemyBTAIComponent_Template : RO2_BTAIComponent_Template {
-		public float squashDeathPenetration;
-		public float timeFight;
+		public float squashDeathPenetration = 0.6f;
+		public float timeFight = 2f;
 		public bool disabledPhys;
 		public bool canSwim;
 		public bool stickOnWall;
@@ -12,19 +12,19 @@ namespace UbiArt.ITF {
 		public bool withShield;
 		public StringID colShield;
 		public StringID colShield2;
-		public float timeBlockingContact;
+		public float timeBlockingContact = 0.3f;
 		public bool shieldIsJustAToy;
 		public RO2_EnemyBTAIComponent_Template.StiltsDataStruct StiltsData;
-		public uint lifePoints;
-		public uint hitReward;
-		public uint rehitReward;
+		public uint lifePoints = 1;
+		public uint hitReward = 10;
+		public uint rehitReward = 10;
 		public uint deathReward;
 		public Path specialRewardActorPath;
 		public bool heartReward;
 		public bool getHeartRewardIsForAll;
 		public bool forwardHitToLinkedActors;
-		public float timeBeforeForwardHit;
-		public float distMinforSwipe;
+		public float timeBeforeForwardHit = 0.1f;
+		public float distMinforSwipe = 0.1f;
 		public bool triggerLinkedActorsOnTrigger;
 		public float timeBeforeTriggerLinkedActorOnTrigger;
 		public bool immuneCrush;
@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 		public float slingShotDetectionRadius;
 		public bool immuneToPlayerHits;
 		public bool alwaysCheckDangerousPol;
-		public float suspendedFreqSinus;
+		public float suspendedFreqSinus = 1f;
 		public Vec2d suspendedForceSinus;
 		public bool disabledTweenOnHit;
 		public uint nbFreeRehit;
@@ -47,7 +47,7 @@ namespace UbiArt.ITF {
 		public bool isSeasonalEnemy;
 		public bool withHat;
 		public StringID colHat;
-		public float hatBounceMultiplier;
+		public float hatBounceMultiplier = 1f;
 		public float hideTextureDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -151,15 +151,15 @@ namespace UbiArt.ITF {
 			public bool used;
 			public StringID firstPolyline;
 			public StringID secondPolyline;
-			public uint polylineTopEdgeIndex;
-			public uint polylineTopEdgeIndexFlipped;
-			public float polylineTopEdgeDirection;
-			public float polylineTopEdgeDirectionFlipped;
-			public float totalHeight;
-			public float softColCheckDistance;
-			public float softColForce;
-			public uint startLevel;
-			public Vec2d stiltsOriginCenter;
+			public uint polylineTopEdgeIndex = 1;
+			public uint polylineTopEdgeIndexFlipped = 1;
+			public float polylineTopEdgeDirection = 1f;
+			public float polylineTopEdgeDirectionFlipped = -1f;
+			public float totalHeight = 6f;
+			public float softColCheckDistance = 0.6f;
+			public float softColForce = 100f;
+			public uint startLevel = 3;
+			public Vec2d stiltsOriginCenter = new Vec2d(0,-0.5f);
 			public StringID phantomShape;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

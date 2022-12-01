@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class PlaySkip_evtTemplate : SequenceEvent_Template {
-		public ContextIcon skipContextIcon;
+		public ContextIcon skipContextIcon = ContextIcon.Skip;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			skipContextIcon = s.Serialize<ContextIcon>(skipContextIcon, name: "skipContextIcon");

@@ -1,14 +1,14 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class PlayAnim_evtTemplate : SequenceEventWithActor_Template {
-		public type TypeAnim;
+		public type TypeAnim = type.anim;
 		public Path Anim;
 		public bool Loop;
-		public bool Cycle;
-		public float PlayRate;
+		public bool Cycle = true;
+		public float PlayRate = 1f;
 		public StringID BeginMarker;
 		public StringID EndMarker;
-		public bool processEvents;
+		public bool processEvents = true;
 		public int BlendFrames;
 		public Spline Weight;
 		public BoolEventList usePatches;

@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 		[Games(GameFlags.RA)]
 		public partial class ProjectileData : CSerializable {
 			public Path path;
-			public uint spawnMaxPeriod;
+			public uint spawnMaxPeriod = uint.MaxValue;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				path = s.SerializeObject<Path>(path, name: "path");

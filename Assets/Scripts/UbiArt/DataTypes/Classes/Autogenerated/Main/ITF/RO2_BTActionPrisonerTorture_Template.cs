@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public StringID animFreeHitHeadOnGround;
 		public StringID animThank;
 		public StringID animFreeFall;
-		public uint countLumsReward;
+		public uint countLumsReward = 5;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animPrisonerJumpOnVictim = s.SerializeObject<StringID>(animPrisonerJumpOnVictim, name: "animPrisonerJumpOnVictim");

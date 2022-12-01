@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class SequenceEventWithActor_Template : SequenceEvent_Template {
 		public ObjectPath TargetFriendlyName;
-		public bool DisableComponentsActor;
+		public bool DisableComponentsActor = true;
 		public StringID TargetID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

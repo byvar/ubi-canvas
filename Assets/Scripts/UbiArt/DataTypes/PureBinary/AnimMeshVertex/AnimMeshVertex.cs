@@ -44,6 +44,12 @@ namespace UbiArt.Animation {
 		public void Reinit(Settings settings) {
 			if (settings.engineVersion == Settings.EngineVersion.RL && version >= VersionLegends) {
 				version = VersionLegends;
+				if (unk1 == null && unk1Adv != null) {
+					unk1 = new CListO<StringID>();
+					foreach (var u in unk1Adv) {
+						unk1.Add(new StringID((uint)u));
+					}
+				}
 			}
 		}
 		protected override void OnPreSerialize(CSerializerObject s) {

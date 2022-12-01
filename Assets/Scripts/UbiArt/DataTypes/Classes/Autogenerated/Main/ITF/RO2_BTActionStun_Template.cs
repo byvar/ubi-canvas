@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionStun_Template : BTAction_Template {
-		public float timeBeforeDeath;
-		public bool useDeathTimer;
+		public float timeBeforeDeath = 1f;
+		public bool useDeathTimer = true;
 		public StringID animStun;
 		public StringID animStunLoop;
 		public StringID animRestor;

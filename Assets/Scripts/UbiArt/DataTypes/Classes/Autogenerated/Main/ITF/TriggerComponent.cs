@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		public bool DBG_DrawCountdown;
 		public bool AutoActivation;
 		public Generic<Event> NoConditionEvent;
-		public CListO<Event> onEnterMoreEvent;
-		public CListO<Event> onExitMoreEvent;
+		public CListO<Generic<Event>> onEnterMoreEvent;
+		public CListO<Generic<Event>> onExitMoreEvent;
 		public bool moreEventSendBroadcast;
 		public bool moreEventSendGameManager;
 		public bool activatedOnGo;
@@ -111,8 +111,8 @@ namespace UbiArt.ITF {
 				DBG_DrawCountdown = s.Serialize<bool>(DBG_DrawCountdown, name: "DBG_DrawCountdown");
 				AutoActivation = s.Serialize<bool>(AutoActivation, name: "AutoActivation");
 				NoConditionEvent = s.SerializeObject<Generic<Event>>(NoConditionEvent, name: "NoConditionEvent");
-				onEnterMoreEvent = s.SerializeObject<CListO<Event>>(onEnterMoreEvent, name: "onEnterMoreEvent");
-				onExitMoreEvent = s.SerializeObject<CListO<Event>>(onExitMoreEvent, name: "onExitMoreEvent");
+				onEnterMoreEvent = s.SerializeObject<CListO<Generic<Event>>>(onEnterMoreEvent, name: "onEnterMoreEvent");
+				onExitMoreEvent = s.SerializeObject<CListO<Generic<Event>>>(onExitMoreEvent, name: "onExitMoreEvent");
 				moreEventSendBroadcast = s.Serialize<bool>(moreEventSendBroadcast, name: "moreEventSendBroadcast");
 				moreEventSendGameManager = s.Serialize<bool>(moreEventSendGameManager, name: "moreEventSendGameManager");
 				activatedOnGo = s.Serialize<bool>(activatedOnGo, name: "activatedOnGo");

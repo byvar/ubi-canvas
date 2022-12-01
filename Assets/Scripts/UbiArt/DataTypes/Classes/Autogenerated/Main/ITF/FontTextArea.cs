@@ -47,9 +47,9 @@ namespace UbiArt.ITF {
 			public Path fontPath;
 			public FontTextArea.FontSet fontSet;
 			public float fontSize;
-			public Color color;
-			public Vec2d shadowOffset;
-			public Color shadowColor;
+			public Color color = Color.White;
+			public Vec2d shadowOffset = new Vec2d(3.4f, 3.4f);
+			public Color shadowColor = Color.Black;
 			public float lineSpacing;
 			public float paragraphSpacing;
 			public AREA_ANCHOR anchor;
@@ -57,9 +57,9 @@ namespace UbiArt.ITF {
 			public FONT_ALIGN2 hAlignment2;
 			public FONT vAlignment;
 			public bool useGradient;
-			public float gradientSize;
-			public float gradientOffset;
-			public Color gradientColor;
+			public float gradientSize = 1f;
+			public float gradientOffset = 0.5f;
+			public Color gradientColor = Color.Black;
 			public float charSpacing;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

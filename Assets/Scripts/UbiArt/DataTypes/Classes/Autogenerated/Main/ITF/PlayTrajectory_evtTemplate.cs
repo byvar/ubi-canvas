@@ -6,12 +6,12 @@ namespace UbiArt.ITF {
 		public ObjectPath ParentFriendlyName;
 		public StringID ParentID;
 		public string ParentBone;
-		public bool RestoreInitialPos;
+		public bool RestoreInitialPos = true;
 		public Trajectory_Template Keyframes;
 		public int startFrameCameraBlend;
-		public float coeffCameraIn;
+		public float coeffCameraIn = 1f;
 		public float coeffCameraOut;
-		public uint cameraMask;
+		public uint cameraMask = 0xFFFFFFFF;
 		public BoolEventList Flip;
 		public Spline Color;
 		public Spline Alpha;

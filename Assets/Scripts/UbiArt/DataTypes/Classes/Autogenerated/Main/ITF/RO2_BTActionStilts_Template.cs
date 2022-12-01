@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionStilts_Template : BTAction_Template {
 		public bool useArmor;
-		public float speedFall;
+		public float speedFall = 1f;
 		public StringID animBreak_To_0;
 		public StringID animBreak_To_1;
 		public StringID animBreak_To_2;

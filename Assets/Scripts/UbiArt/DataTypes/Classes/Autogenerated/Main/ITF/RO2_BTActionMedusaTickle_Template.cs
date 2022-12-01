@@ -3,15 +3,15 @@ namespace UbiArt.ITF {
 	public partial class RO2_BTActionMedusaTickle_Template : BTAction_Template {
 		public StringID animLaugh;
 		public StringID animLaugh_ToStand;
-		public float laughingTime;
-		public float distMinForSwipe;
+		public float laughingTime = 0.1f;
+		public float distMinForSwipe = 0.5f;
 		public bool disabledTweenOnTickle;
 		public bool returnToRootPosition;
-		public float returnToRootPositionDuration;
-		public uint lumsByReward;
-		public uint countMaxReward;
-		public float timeBetweenRewardInSwipe;
-		public float holdTimeToDoTickle;
+		public float returnToRootPositionDuration = 1f;
+		public uint lumsByReward = 1;
+		public uint countMaxReward = 3;
+		public float timeBetweenRewardInSwipe = 0.8f;
+		public float holdTimeToDoTickle = 0.25f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animLaugh = s.SerializeObject<StringID>(animLaugh, name: "animLaugh");

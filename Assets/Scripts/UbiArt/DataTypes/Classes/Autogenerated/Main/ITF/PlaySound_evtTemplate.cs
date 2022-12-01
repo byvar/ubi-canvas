@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public float Volume;
 		public string Category;
 		public int IsStrem;
-		public StringID Category2;
+		public StringID Category2 = new StringID("SFX");
 		public int IsStream;
 		public string Sound2;
 		protected override void SerializeImpl(CSerializerObject s) {

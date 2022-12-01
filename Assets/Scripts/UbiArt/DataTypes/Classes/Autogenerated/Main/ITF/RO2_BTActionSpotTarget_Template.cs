@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public StringID animSpot;
 		public StringID animFight;
 		public StringID animUTurn;
-		public float timingStaySpotting;
+		public float timingStaySpotting = 2f;
 		public bool disableUTurn;
 		public bool debug;
 		protected override void SerializeImpl(CSerializerObject s) {

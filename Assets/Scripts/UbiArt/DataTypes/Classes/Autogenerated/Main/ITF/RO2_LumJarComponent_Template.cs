@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_LumJarComponent_Template : ActorComponent_Template {
-		public uint LumNumberReward;
-		public uint FrameNbTransition;
+		public uint LumNumberReward = 5;
+		public uint FrameNbTransition = 5;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			LumNumberReward = s.Serialize<uint>(LumNumberReward, name: "LumNumberReward");

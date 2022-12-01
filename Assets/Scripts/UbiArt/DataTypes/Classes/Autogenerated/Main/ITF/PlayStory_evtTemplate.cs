@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class PlayStory_evtTemplate : SequenceEvent_Template {
 		public Path baseFilePath;
 		public bool isVideo;
-		public float alpha;
-		public float percent;
+		public float alpha = 0.5f;
+		public float percent = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			baseFilePath = s.SerializeObject<Path>(baseFilePath, name: "baseFilePath");

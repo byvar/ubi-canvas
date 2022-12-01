@@ -2,30 +2,30 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class AfterFxComponent_Template : ActorComponent_Template {
 		public AFX afxtype;
-		public GFX_BLEND finalblend;
-		public float startRank;
-		public float renderRank;
+		public GFX_BLEND finalblend = GFX_BLEND.ALPHA;
+		public float startRank = -1000f;
+		public float renderRank = 1000f;
 		public uint renderintarget;
-		public Color colorRTarget;
+		public Color colorRTarget = Color.Black;
 		public CArrayP<float> paramf;
 		public CArrayP<int> parami;
 		public CListO<Vec3d> paramv;
 		public CArrayO<Color> paramc;
 		public CListO<InputDesc> inputs;
 		public CListO<ProceduralInputData> ParamfProceduralInput;
-		public Color colorRTargetMin;
-		public Color colorRTargetMax;
+		public Color colorRTargetMin = Color.Black;
+		public Color colorRTargetMax = Color.Black;
 		public ProceduralInputData colorRTargetInputData;
 		public Path customTex0;
 		public Enum_alphaMode alphaMode;
-		public float alphaRadialProgressionSpeed;
-		public float alphaFadeTime;
+		public float alphaRadialProgressionSpeed = 1f;
+		public float alphaFadeTime = 1f;
 		public bool alphaFadeIn;
-		public float alphaFadeTotalDuration;
+		public float alphaFadeTotalDuration = 5f;
 		public AABB forcedAABB;
 		public bool deactivateAfterFade;
 		public AFX2 afxtype2;
-		public GFX_BLEND2 finalblend2;
+		public GFX_BLEND2 finalblend2 = GFX_BLEND2.ALPHA;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.VH) {

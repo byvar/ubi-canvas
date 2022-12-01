@@ -2,9 +2,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class Trail3DComponent_Template : GraphicComponent_Template {
 		public CListO<Trail_Template> trailList;
-		public bool startActive;
+		public bool startActive = true;
 		public bool draw2D;
-		public bool fixDepth;
+		public bool fixDepth = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RO) {

@@ -26,7 +26,7 @@ namespace UbiArt {
 				angle = value * Deg2Rad;
 			}
 		}
-		public override string ToString() => $"Angle({angle}rad|{EulerAngle}°)";
+		public override string ToString() => $"AngleAmount({angle}rad|{EulerAngle}°)";
 
 		private readonly float Deg2Rad = (MathF.PI * 2) / 360f;
 		private readonly float Rad2Deg = 360f / (MathF.PI * 2);

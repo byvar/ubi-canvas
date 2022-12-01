@@ -2,17 +2,17 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PlatformTreeComponent_Template : ActorComponent_Template {
 		public bool ignoreEventTrigger;
-		public float maxStartDelay;
-		public float childMoveSpeed;
+		public float maxStartDelay = 1f;
+		public float childMoveSpeed = 3f;
 		public float childMoveSpeedRandom;
 		public bool fastMode;
-		public bool useTouch;
-		public float childAngleCorrectionDist;
-		public float childLinkFadeDist;
-		public float childAppearDist;
-		public float childDisappearDist;
-		public float childOpenDist;
-		public float childCloseDist;
+		public bool useTouch = true;
+		public float childAngleCorrectionDist = 0.8f;
+		public float childLinkFadeDist = 0.5f;
+		public float childAppearDist = 0.1f;
+		public float childDisappearDist = 0.1f;
+		public float childOpenDist = 0.7f;
+		public float childCloseDist = 0.7f;
 		public StringID animOpened;
 		public StringID animClosed;
 		public StringID animAppear;
@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 		public StringID padRumbleWiggle;
 		public StringID animWiggleOpened;
 		public StringID animWiggleClosed;
-		public bool disableCollisionDuringTransition;
+		public bool disableCollisionDuringTransition = true;
 		public bool disableActorOnOpen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -3,8 +3,8 @@ using System.Reflection;
 
 namespace UbiArt.ITF {
 	public partial class RopeComponent_Template {
-		public override ActorComponent_Template Convert(Settings oldSettings, Settings newSettings) {
-			base.Convert(oldSettings, newSettings);
+		public override ActorComponent_Template Convert(Actor_Template actor, Settings oldSettings, Settings newSettings) {
+			base.Convert(actor, oldSettings, newSettings);
 			if (oldSettings.game != newSettings.game) {
 				if (newSettings.game == Settings.Game.RL) {
 					return Merge<RO2_RopeComponent_Template>();

@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_SoftCollision_Template : CSerializable {
-		public float radius;
-		public float exitSpeed;
-		public float exitForce;
+		public float radius = 1f;
+		public float exitSpeed = 5f;
+		public float exitForce = 100f;
 		public Vec2d offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

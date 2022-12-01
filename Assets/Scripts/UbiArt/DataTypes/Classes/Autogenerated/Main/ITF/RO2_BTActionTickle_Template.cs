@@ -3,19 +3,19 @@ namespace UbiArt.ITF {
 	public partial class RO2_BTActionTickle_Template : BTAction_Template {
 		public StringID animLaugh_level1;
 		public StringID animLaugh_level1ToStand;
-		public float level1_RemainingTime;
+		public float level1_RemainingTime = 2f;
 		public StringID animLaugh_level2;
 		public StringID animLaugh_level2ToStand;
-		public float level2_RemainingTime;
+		public float level2_RemainingTime = 2f;
 		public StringID animLaugh_level3;
 		public StringID animLaugh_level3ToStand;
-		public float level3_RemainingTime;
-		public float timeBetweenTickle;
-		public float distMinForSwipe;
+		public float level3_RemainingTime = 2f;
+		public float timeBetweenTickle = 0.1f;
+		public float distMinForSwipe = 0.5f;
 		public StringID phantomShapeID;
-		public uint lumsByReward;
-		public uint countMaxReward;
-		public float timeBetweenRewardInSwipe;
+		public uint lumsByReward = 1;
+		public uint countMaxReward = 3;
+		public float timeBetweenRewardInSwipe = 0.8f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animLaugh_level1 = s.SerializeObject<StringID>(animLaugh_level1, name: "animLaugh_level1");

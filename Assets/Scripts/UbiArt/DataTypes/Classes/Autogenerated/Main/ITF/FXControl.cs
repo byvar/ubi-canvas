@@ -7,10 +7,10 @@ namespace UbiArt.ITF {
 		public bool fxPlayOnce;
 		public bool pickColorFromFreeze;
 		public bool fxInstanceOnce;
-		public bool fxEmitFromBase;
-		public bool fxUseActorSpeed;
+		public bool fxEmitFromBase = true;
+		public bool fxUseActorSpeed = true;
 		public bool fxUseActorOrientation;
-		public bool fxUseActorAlpha;
+		public bool fxUseActorAlpha = true;
 		public StringID fxBoneName;
 		public BOOL fxUseBoneOrientation;
 		public CListO<StringID> sounds;
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public StringID music;
 		public StringID busMix;
 		public StringID owner;
-		public bool busMixActivate;
+		public bool busMixActivate = true;
 		public bool fxDontStopSound;
 		public bool fxAttach;
 		public ObjectPath attractor;

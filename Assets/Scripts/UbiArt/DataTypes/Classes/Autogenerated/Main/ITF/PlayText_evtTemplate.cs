@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class PlayText_evtTemplate : SequenceEventWithActor_Template {
 		public string Text;
-		public float wordTime;
+		public float wordTime = -1f;
 		public uint mood;
 		public Vec2d textOffset;
 		public LocalisationId localisationId;

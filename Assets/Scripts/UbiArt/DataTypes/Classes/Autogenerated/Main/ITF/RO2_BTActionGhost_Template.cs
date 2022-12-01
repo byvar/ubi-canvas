@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 		public StringID animFlyOpen;
 		public StringID animFlyClosed;
 		public StringID sparklesFxName;
-		public float speed;
-		public float distMax;
+		public float speed = 1f;
+		public float distMax = 10f;
 		public bool isOnFire;
 		public bool isStatic;
 		protected override void SerializeImpl(CSerializerObject s) {

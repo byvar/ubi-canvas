@@ -104,8 +104,15 @@ public class UnityWindowBundle : UnityWindow {
 								//if (!bun.HasPreprocessedFile(curPath)) {
 								if (!rlContext.Loader.AnyBundleContainsFile(curPath)) {
 									bun.AddFile(curPath, structMap.Value);
-								} else if(curPath.filename.Contains("rotation_biggear.tpl") /*|| curPath.filename.Contains("lightingmushroom.tpl")*/) {
+									if (curPath.filename.Contains(".tpl")) {
+										Debug.Log($"Added template: {curPath.FullPath}");
+									}
+								} else if (curPath.filename.Contains("rotation_biggear.tpl") /*|| curPath.filename.Contains("ball.tpl") || curPath.filename.Contains("lightingmushroom.tpl")*/) {
 									patch.AddFile(curPath, structMap.Value);
+								} else {
+									if (curPath.filename.Contains(".tpl")) {
+										Debug.Log($"Skipped adding template: {curPath.FullPath}");
+									}
 								}
 							}
 						}

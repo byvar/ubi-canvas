@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionFindAttackTarget_Template : BTAction_Template {
-		public float radius;
+		public float radius = 10f;
 		public StringID fact;
-		public bool filterByHeight;
+		public bool filterByHeight = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			radius = s.Serialize<float>(radius, name: "radius");

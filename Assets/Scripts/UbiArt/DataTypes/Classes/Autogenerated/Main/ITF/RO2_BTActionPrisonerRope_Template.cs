@@ -5,10 +5,10 @@ namespace UbiArt.ITF {
 		public StringID animFree;
 		public StringID animThank;
 		public StringID animFreeFall;
-		public float speedMultiplier;
+		public float speedMultiplier = 1f;
 		public Vec2d forceSinus;
-		public float freqSinus;
-		public uint countLumsReward;
+		public float freqSinus = 1f;
+		public uint countLumsReward = 5;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animPrisoner = s.SerializeObject<StringID>(animPrisoner, name: "animPrisoner");

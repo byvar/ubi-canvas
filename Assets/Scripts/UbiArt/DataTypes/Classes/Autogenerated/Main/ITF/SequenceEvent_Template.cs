@@ -3,12 +3,12 @@ namespace UbiArt.ITF {
 	public partial class SequenceEvent_Template : CSerializable {
 		public int StartFrame;
 		public int Offset;
-		public int Duration;
-		public uint TrackLine;
-		public string Channel;
-		public int Selected;
+		public int Duration = 1;
+		public uint TrackLine = 1;
+		public string Channel = "";
+		public int Selected = -1;
 		public bool DisabledForTesting;
-		public uint uid;
+		public uint uid = 0xFFFFFFFF;
 		public event_mode EventMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

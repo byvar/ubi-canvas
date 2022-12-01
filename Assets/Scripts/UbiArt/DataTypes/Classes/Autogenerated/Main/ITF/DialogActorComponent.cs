@@ -2,9 +2,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class DialogActorComponent : ActorComponent {
 		public bool enableDialog;
-		public Vec2d offset;
+		public Vec2d offset = new Vec2d(0, 1.4f);
 		public bool is3D;
-		public float widthTextAreaMax;
+		public float widthTextAreaMax = 5f;
 		public Vec2d offSetCorrectionPx;
 		public Vec2d managerOffsetDelta;
 		public Vec2d textOffset;

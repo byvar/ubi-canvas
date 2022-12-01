@@ -6,15 +6,15 @@ namespace UbiArt.ITF {
 		public StringID animWallStand;
 		public StringID animWallJump;
 		public StringID animReception;
-		public float jumpImpulse;
-		public Vec2d jumpDir;
-		public float wallJumpImpulse;
-		public Vec2d wallJumpDir;
-		public float jumpGravityMult;
-		public float holeDetectionDist;
-		public float wallDetectionDist;
-		public float timeAnticip;
-		public float timeWallAnticip;
+		public float jumpImpulse = 10f;
+		public Vec2d jumpDir = Vec2d.One;
+		public float wallJumpImpulse = 10f;
+		public Vec2d wallJumpDir = Vec2d.One;
+		public float jumpGravityMult = 1f;
+		public float holeDetectionDist = 2f;
+		public float wallDetectionDist = 1f;
+		public float timeAnticip = 1f;
+		public float timeWallAnticip = 0.5f;
 		public bool avoidHoles;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -3,14 +3,14 @@ namespace UbiArt.ITF {
 	public partial class RO2_BTActionTickleGeneric_Template : BTAction_Template {
 		public StringID animLaugh;
 		public StringID animLaugh_ToStand;
-		public float distMinForSwipe;
+		public float distMinForSwipe = 0.5f;
 		public bool disabledTweenOnTickle;
 		public bool returnToRootPosition;
-		public float returnToRootPositionDuration;
-		public uint lumsByReward;
-		public uint countMaxReward;
-		public float timeBetweenRewardInSwipe;
-		public float laughingTime;
+		public float returnToRootPositionDuration = 1f;
+		public uint lumsByReward = 1;
+		public uint countMaxReward = 3;
+		public float timeBetweenRewardInSwipe = 0.8f;
+		public float laughingTime = 0.1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {

@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public float margingLeft;
 		public float margingRight;
 		public float margingBottom;
-		public ScaleType scaleType;
+		public ScaleType scaleType = ScaleType.All;
 		public bool autoFillContained;
 		public CListO<ObjectPath> ContainedChildren;
 		public bool autoFillReposition;
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public CListO<ObjectPath> relRepositionObjects;
 		public CListO<AnimScaleRepositionedObject> borderRepositionedObjects;
 		public Vec2d minimumSize;
-		public AABB aabb;
+		public AABB aabb = new AABB() { MIN = Vec2d.Infinity, MAX = new Vec2d(float.MinValue, float.MinValue) };
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {

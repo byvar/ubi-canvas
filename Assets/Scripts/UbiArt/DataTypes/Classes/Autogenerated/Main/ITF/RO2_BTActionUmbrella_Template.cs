@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		public StringID animationOpening;
 		public StringID animationClosing;
 		public StringID animationWarning;
-		public bool closeWithWeight;
-		public float weightThreshold;
-		public float closedStateTime;
-		public float warningStateTime;
+		public bool closeWithWeight = true;
+		public float weightThreshold = 0.6f;
+		public float closedStateTime = 0.5f;
+		public float warningStateTime = 0.3f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animationOpen = s.SerializeObject<StringID>(animationOpen, name: "animationOpen");

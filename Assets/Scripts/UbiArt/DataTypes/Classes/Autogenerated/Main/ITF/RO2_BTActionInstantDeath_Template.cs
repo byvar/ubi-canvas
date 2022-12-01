@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_BTActionInstantDeath_Template : BTAction_Template {
 		public StringID anim;
 		public Path fx;
-		public bool spawnOnMarker;
+		public bool spawnOnMarker = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			anim = s.SerializeObject<StringID>(anim, name: "anim");

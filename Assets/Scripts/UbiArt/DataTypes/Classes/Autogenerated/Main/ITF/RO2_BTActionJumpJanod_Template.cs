@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionJumpJanod_Template : BTAction_Template {
-		public float speedJump;
-		public float timeOnGround;
+		public float speedJump = 1f;
+		public float timeOnGround = 1f;
 		public StringID animAnticip;
 		public StringID animJump;
 		public StringID animFall;

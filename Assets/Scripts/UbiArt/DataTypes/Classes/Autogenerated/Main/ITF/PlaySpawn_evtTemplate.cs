@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR | GameFlags.LegendsAndUp)]
 	public partial class PlaySpawn_evtTemplate : SequenceEventWithActor_Template {
-		public bool Visible;
+		public bool Visible = true;
 		public bool Stay;
 		public Path FileName;
-		public Vec2d SpawnOffset;
+		public Vec2d SpawnOffset = Vec2d.One;
 		public bool Flipped;
 		public Path IluFile;
 		public string FileName2;

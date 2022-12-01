@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public Generic<PhysShape> enemyAttackRange;
 		public StringID detectAnim;
 		public StringID attackAnim;
-		public float lookAtBlend;
+		public float lookAtBlend = 5f;
 		public bool debug;
 		public CListO<StringID> fxNames;
 		public CListO<StringID> fxMarkerStart;

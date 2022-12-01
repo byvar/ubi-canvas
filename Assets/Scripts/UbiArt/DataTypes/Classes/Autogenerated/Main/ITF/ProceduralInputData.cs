@@ -14,10 +14,10 @@ namespace UbiArt.ITF {
 		// The mod, abs, add and sin values are based on one flag. Before serializing, the game code splits them
 		// In Adventures, the values are bitshifted so they are always 0 or 1
 		// In Legends, the values are not bitshifted, so they are 0 or 1, 2, 4, or 8.
-		public int modFlag; // 0 or 1
-		public int absFlag; // 0 or 2
-		public int addFlag; // 0 or 4
-		public int sinFlag; // 0 or 8
+		public int modFlag { get => mod ? 1 : 0; set => mod = value == 1; } // 0 or 1
+		public int absFlag { get => abs ? 2 : 0; set => abs = value == 2; } // 0 or 2
+		public int addFlag { get => add ? 4 : 0; set => add = value == 4; } // 0 or 4
+		public int sinFlag { get => sin ? 8 : 0; set => sin = value == 8; } // 0 or 8
 		public Spline curve;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

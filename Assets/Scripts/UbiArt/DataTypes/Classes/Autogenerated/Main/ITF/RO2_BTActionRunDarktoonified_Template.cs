@@ -6,11 +6,11 @@ namespace UbiArt.ITF {
 		public StringID fallAnim;
 		public StringID flyFallAnim;
 		public StringID crashWallAnim;
-		public float launchIdleMinTime;
-		public float launchIdleMaxTime;
-		public float stayIdleMinTime;
-		public float stayIdleMaxTime;
-		public float flyFallSpeedMultiplier;
+		public float launchIdleMinTime = 1f;
+		public float launchIdleMaxTime = 2f;
+		public float stayIdleMinTime = 2f;
+		public float stayIdleMaxTime = 3f;
+		public float flyFallSpeedMultiplier = 0.9f;
 		public bool canRunInTheAir;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

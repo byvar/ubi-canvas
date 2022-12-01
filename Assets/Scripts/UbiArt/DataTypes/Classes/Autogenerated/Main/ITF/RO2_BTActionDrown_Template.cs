@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionDrown_Template : BTAction_Template {
-		public float timeDrown;
-		public float waterPerturbationForce;
-		public float waterPerturbationRadius;
+		public float timeDrown = 2f;
+		public float waterPerturbationForce = 20f;
+		public float waterPerturbationRadius = 1f;
 		public StringID animFallInWater;
 		public StringID animDrown;
 		protected override void SerializeImpl(CSerializerObject s) {

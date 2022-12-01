@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionFollowTarget_Template : BTActionWalkToTarget_Template {
-		public float range;
+		public float range = 0.5f;
 		public StringID followTarget;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

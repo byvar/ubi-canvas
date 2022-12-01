@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class TweenInput_Template : TweenInstruction_Template {
 		public StringID inputName;
-		public float floatValue = 3.40282e+38f;
-		public uint uintValue = 0xFFFFFFFF;
+		public float floatValue = float.MaxValue;
+		public uint uintValue = uint.MaxValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			inputName = s.SerializeObject<StringID>(inputName, name: "inputName");

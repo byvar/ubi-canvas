@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public Generic<Event> onEnterEvent;
 		public string onExitEventName;
 		public Generic<Event> onExitEvent;
-		public bool executeOnce;
+		public bool executeOnce = true;
 		public bool broadcast;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class BoxInterpolatorComponent : InterpolatorComponent {
-		public AABB innerBox;
-		public AABB outerBox;
+		public AABB innerBox = new AABB() { MIN = new Vec2d(-1, -1), MAX = Vec2d.One };
+		public AABB outerBox = new AABB() { MIN = new Vec2d(-1, -1), MAX = Vec2d.One };
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

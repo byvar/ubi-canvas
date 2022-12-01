@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_BTActionTorture_Template : BTAction_Template {
 		public StringID animTortureHitHeadOnGround;
 		public StringID animTortureJumpOnVictim;
-		public float forceSoftCol;
+		public float forceSoftCol = 1f;
 		public float speedMinSoftCol;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

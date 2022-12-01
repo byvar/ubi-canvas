@@ -9,11 +9,11 @@ namespace UbiArt.ITF {
 		public StringID boneNameSnap;
 		public bool useBoneOrientation;
 		public uint typeAttack;
-		public Vec2d defaultDir;
+		public Vec2d defaultDir = Vec2d.Right;
 		public Path projectilesPath;
-		public uint countProjectilesPrealloc;
-		public uint countProjectilesMax;
-		public float projectileSpeed;
+		public uint countProjectilesPrealloc = 1;
+		public uint countProjectilesMax = 1;
+		public float projectileSpeed = 7f;
 		public bool debug;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

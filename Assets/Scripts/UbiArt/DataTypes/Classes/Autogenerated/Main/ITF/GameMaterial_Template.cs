@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class GameMaterial_Template : TemplateObj {
 		public CListO<StringID> feedbackTags;
-		public bool solid;
+		public bool solid = true;
 		public uint filter;
 		public bool nostim;
 		public bool noStick;
@@ -11,8 +11,8 @@ namespace UbiArt.ITF {
 		public bool castShadow;
 		public float moveSpeed;
 		public float moveForce;
-		public float friction;
-		public float speedMultiplier;
+		public float friction = 1f;
+		public float speedMultiplier = 1f;
 		public float regionFriction;
 		public float regionFrictionAir;
 		public float WaterResistance;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		public uint collisionGroup;
 		public StringID soundMatGUID;
 		public StringID type;
-		public uint phys2dFilter;
+		public uint phys2dFilter = 1;
 		public StringID archetype;
 		public Nullable<FxKit> fxkit;
 		public StringID StringID__16;

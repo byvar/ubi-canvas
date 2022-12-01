@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		public StringID supportBone;
 		public StringID walkTargetFactActor;
 		public StringID walkTargetFactPos;
-		public float areaRadius;
-		public float distanceCheck;
-		public float feetDistanceCheck;
+		public float areaRadius = 0.5f;
+		public float distanceCheck = 0.5f;
+		public float feetDistanceCheck = 0.5f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animPedestal = s.SerializeObject<StringID>(animPedestal, name: "animPedestal");

@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BTActionMusicalBounce_Template : BTActionPlayAnim_Template {
-		public float amplitude;
-		public float syncRatio;
+		public float amplitude = 1f;
+		public float syncRatio = 4f;
 		public float syncOffset;
 		public bool updateMovement;
 		public StringID musicalAnimation;
