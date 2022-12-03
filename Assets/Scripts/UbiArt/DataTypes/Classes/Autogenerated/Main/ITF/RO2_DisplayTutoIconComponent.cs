@@ -3,11 +3,11 @@ namespace UbiArt.ITF {
 	public partial class RO2_DisplayTutoIconComponent : ActorComponent {
 		public TutoType tutoType;
 		public TutoType2 tutoType2;
-		public float scale;
+		public float scale = 3f;
 		public Vec3d offset;
-		public bool offsetUseActorFlip;
+		public bool offsetUseActorFlip = true;
 		public Angle angleOffset;
-		public float holdMinTime;
+		public float holdMinTime = 0.2f;
 		public Vec3d pos;
 		public bool displayTuto;
 		public bool flip;
@@ -15,9 +15,9 @@ namespace UbiArt.ITF {
 		public bool activateByTrigger;
 		public int activateByTriggerInt;
 		public float cyclePauseDuration;
-		public float cycleDisplayDuration;
-		public bool testSceneDepthRef;
-		public int AMActionCountMax;
+		public float cycleDisplayDuration = 99999f;
+		public bool testSceneDepthRef = true;
+		public int AMActionCountMax = -1;
 		public bool tutoSucceeded;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

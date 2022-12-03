@@ -9,15 +9,15 @@ namespace UbiArt.ITF {
 		public StringID animClimbFore;
 		public StringID animJumpFore;
 		public StringID animLandFore;
-		public bool waitForTrigger;
+		public bool waitForTrigger = true;
 		public bool disablePhys;
 		public bool resetAngle;
-		public float speedClimb;
-		public float jumpToActorMinTime;
+		public float speedClimb = 2f;
+		public float jumpToActorMinTime = 1f;
 		public float jumpToActorYFuncPoint0Dist;
-		public float jumpToActorYFuncPoint1Dist;
+		public float jumpToActorYFuncPoint1Dist = 1f;
 		public float jumpToActorXZFuncPoint0T;
-		public float jumpToActorXZFuncPoint1T;
+		public float jumpToActorXZFuncPoint1T = 0.5f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animStandBack = s.SerializeObject<StringID>(animStandBack, name: "animStandBack");

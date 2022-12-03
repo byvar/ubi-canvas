@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RL)]
 	public partial class SoundParams : CSerializable {
-		public uint numChannels;
+		public uint numChannels = 1;
 		public int loop;
 		public PlayMode playMode;
 		public PlayMode2 playMode2;
@@ -9,16 +9,16 @@ namespace UbiArt.ITF {
 		public Volume randomVolMax;
 		public float delay;
 		public float randomDelay;
-		public float randomPitchMin;
-		public float randomPitchMax;
+		public float randomPitchMin = 1f;
+		public float randomPitchMax = 1f;
 		public float fadeInTime;
 		public float fadeOutTime;
 		public float filterFrequency;
 		public float filterQ;
-		public FilterType filterType;
-		public FilterType2 filterType2;
-		public uint metronomeType;
-		public uint playOnNext;
+		public FilterType filterType = FilterType.HighPass;
+		public FilterType2 filterType2 = FilterType2.HighPass;
+		public uint metronomeType = uint.MaxValue;
+		public uint playOnNext = uint.MaxValue;
 		public CArrayO<Generic<SoundModifier>> modifiers;
 		
 		public StringID playModeInput;

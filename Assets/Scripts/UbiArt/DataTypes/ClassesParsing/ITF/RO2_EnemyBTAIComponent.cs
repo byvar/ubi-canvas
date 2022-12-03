@@ -7,6 +7,7 @@
 					if (appearType != Enum_appearType.Basket && appearType != Enum_appearType.Rope) {
 						appearType2 = (Enum_appearType2)(int)appearType;
 					}
+					useRangedAttack_RL = useRangedAttack ? 1 : 0;
 				}
 			}
 			return this;

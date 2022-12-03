@@ -4,6 +4,8 @@ namespace UbiArt.ITF {
 	public partial class SubSceneActor {
 		ContainerFile<Scene> sceneFile;
 
+		public static string DefaultPath => "enginedata/actortemplates/subscene.tpl";
+
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			if (IsFirstLoad && !EMBED_SCENE) {

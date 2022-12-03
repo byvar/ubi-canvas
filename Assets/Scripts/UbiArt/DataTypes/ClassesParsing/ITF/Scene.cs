@@ -37,6 +37,26 @@ namespace UbiArt.ITF {
 			if (previousSettings != null) {
 				if (previousSettings.game != settings.game) {
 					ENGINE_VERSION = 0;
+					if (FRISE != null) {
+						List<Frise> friseToRemove = new List<Frise>();
+						List<Actor> actorsToAdd = new List<Actor>();
+						foreach (var fr in FRISE) {
+							if (fr.ShouldCreateParentActor(settings)) {
+								actorsToAdd.Add(fr.CreateParentActor());
+								friseToRemove.Add(fr);
+							}
+						}
+						foreach (var fr in friseToRemove) {
+							FRISE.Remove(fr);
+						}
+						foreach (var act in actorsToAdd) {
+							if(ACTORS == null) ACTORS = new CArrayO<Generic<Actor>>();
+							ACTORS.Add(new Generic<Actor>() {
+								className = new StringID(act.ClassCRC ?? uint.MaxValue),
+								obj = act
+							});
+						}
+					}
 					/*if (FRISE != null) {
 						foreach (var fr in FRISE) {
 							if (fr.ConfigName?.filename == "greecemap_clouds.fcg"

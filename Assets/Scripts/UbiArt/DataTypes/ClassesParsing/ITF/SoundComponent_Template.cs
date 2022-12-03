@@ -7,6 +7,13 @@
 				inputs = null;
 				defaultSound = null;*/
 			}
+			if (newSettings.game == Settings.Game.RL) {
+				foreach (var comp in actor.COMPONENTS) {
+					if (comp?.obj is SoundComponent_Template c) {
+						return (this == c) ? this : null;
+					}
+				}
+			}
 			return this;
 		}
 	}

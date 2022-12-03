@@ -18,6 +18,7 @@
 		}
 		public static Vec3d Zero => new Vec3d();
 		public static Vec3d One => new Vec3d() { x = 1f, y = 1f, z = 1f };
+		public static Vec3d Invalid => new Vec3d() { x = float.MaxValue, y = float.MaxValue, z = float.MaxValue };
 
 		public override string ToString() => $"Vec3d({x}, {y}, {z})";
 	}

@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public CArrayP<uint> sortedMeshElements;
 		public GFXMaterialSerializable material;
 		public AABB localAABB;
-		public float mergeRange;
+		public float mergeRange = 0.1f;
 		public ObjectPath friseGroupPath;
 		public int forceMatrixUpdate;
 		protected override void SerializeImpl(CSerializerObject s) {

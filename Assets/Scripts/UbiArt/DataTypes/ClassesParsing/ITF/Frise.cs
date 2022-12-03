@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace UbiArt.ITF {
 	public partial class Frise {
@@ -25,6 +27,60 @@ namespace UbiArt.ITF {
 					});
 				}
 			}
+		}
+
+		protected override void Reinit(Context c, Settings settings) {
+			if (previousSettings != null) {
+				if (previousSettings.game != settings.game) {
+					if ((previousSettings.game == Settings.Game.RA || previousSettings.game == Settings.Game.RM) &&
+						!(settings.game == Settings.Game.RA || settings.game == Settings.Game.RM)) {
+						// Check components
+						if (COMPONENTS != null && COMPONENTS.Count > 0) {
+							c.SystemLogger?.LogWarning($"Frise with components: {USERFRIENDLY}");
+						}
+						// Check parentBind
+						if (parentBind != null && !parentBind.IsNull) {
+							c.SystemLogger?.LogWarning($"Frise with parentBind: {USERFRIENDLY}");
+						}
+					}
+				}
+			}
+			base.Reinit(c, settings);
+		}
+
+		public SubSceneActor CreateParentActor() {
+			var parent = Merger.Merge<SubSceneActor>(this);
+			parent.LUA = new Path(SubSceneActor.DefaultPath);
+			parent.EMBED_SCENE = true;
+			parent.SCENE = new Nullable<Scene>() {
+				read = true,
+				value = new Scene() {
+					FRISE = new CListO<Frise>()
+				}
+			};
+			parent.SCENE.value.FRISE.Add(this);
+			//parent.USERFRIENDLY = $"{USERFRIENDLY}__friseparent";
+			//parent.ZFORCED = true;
+			//parent.IS_SINGLE_PIECE = true;
+			//parent.DIRECT_PICKING = false;
+
+			// Reset transform as it has been assigned to the subsceneactor
+			parentBind = null;
+			isEnabled = true;
+			xFLIPPED = false;
+			POS2D = null;
+			SCALE = Vec2d.One;
+			RELATIVEZ = 0;
+			ANGLE = null;
+
+			return parent;
+		}
+		public bool ShouldCreateParentActor(Settings settings) {
+			if (!(settings.game == Settings.Game.RA || settings.game == Settings.Game.RM)) {
+				if(parentBind != null && parentBind.read == true)
+					return true;
+			}
+			return false;
 		}
 
 		protected void RecomputeLineData() {

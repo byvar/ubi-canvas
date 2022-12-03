@@ -47,7 +47,7 @@ namespace UbiArt.Animation {
 				if (unk1 == null && unk1Adv != null) {
 					unk1 = new CListO<StringID>();
 					foreach (var u in unk1Adv) {
-						unk1.Add(new StringID((uint)u));
+						unk1.Add(new StringID((uint)(u & 0xFFFFFFFF)));
 					}
 				}
 			}

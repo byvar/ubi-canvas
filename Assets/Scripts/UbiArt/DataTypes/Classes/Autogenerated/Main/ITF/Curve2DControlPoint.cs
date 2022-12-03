@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public float x;
 		public float y;
 		public float leftTan;
-		public float rightTan;
+		public float rightTan = float.MaxValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			x = s.Serialize<float>(x, name: "x");

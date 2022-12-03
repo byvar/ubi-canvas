@@ -4,15 +4,15 @@ namespace UbiArt.ITF {
 		public StringID name;
 		public bool soundPlayAfterdestroy;
 		public StringID WwiseEventGUID;
-		public METRONOME_TYPE WwiseMetronomeID;
+		public METRONOME_TYPE WwiseMetronomeID = METRONOME_TYPE.INVALID;
 		public AUDIO_SYNC_PLAY WwisePlayAt;
 		public StringID WwisePlayAtCue;
 		public StringID StringID__0;
 		public Volume volume;
 		public StringID category;
 		public StringID limitCategory;
-		public uint limitMode;
-		public uint maxInstances;
+		public uint limitMode = 1;
+		public uint maxInstances = uint.MaxValue;
 		public int isStream;
 		public CListO<Path> files;
 		public SoundParams _params;
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		public SoundGUID onEnterZone;
 		public SoundGUID onExitZone;
 		public bool soundPlayAfterDestroy;
-		public Enum_limitMode limitModeEnum;
+		public Enum_limitMode limitModeEnum = Enum_limitMode.Value_1;
 		public int isPrefetched;
 		public CListO<LocalizedPath> localizedFiles;
 		public CListO<Path> filesIntro;
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 		public Enum_serialPlayingMode serialPlayingMode;
 		public Enum_serialStoppingMode serialStoppingMode;
 		public uint pauseInsensitiveFlags;
-		public uint outDevices;
+		public uint outDevices = uint.MaxValue;
 		public int soundPlayFadeAfterdestroy;
 		public int noDrop;
 		public uint Priority;

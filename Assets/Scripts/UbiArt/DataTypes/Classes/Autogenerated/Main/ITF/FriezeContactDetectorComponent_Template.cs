@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class FriezeContactDetectorComponent_Template : DetectorComponent_Template {
-		public uint factionToDetect;
+		public uint factionToDetect = uint.MaxValue;
 		public bool allowDeadActors;
-		public bool detectHang;
+		public bool detectHang = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			factionToDetect = s.Serialize<uint>(factionToDetect, name: "factionToDetect");

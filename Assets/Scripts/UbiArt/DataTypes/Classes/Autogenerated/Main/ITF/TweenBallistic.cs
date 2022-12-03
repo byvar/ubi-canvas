@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class TweenBallistic : TweenTranslation {
-		public Vec3d movement = new Vec3d(float.MaxValue, float.MaxValue, float.MaxValue);
-		public Vec3d startTangent = new Vec3d(float.MaxValue, float.MaxValue, float.MaxValue);
+		public Vec3d movement = Vec3d.Invalid;
+		public Vec3d startTangent = Vec3d.Invalid;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			movement = s.SerializeObject<Vec3d>(movement, name: "movement");

@@ -23,13 +23,13 @@ namespace UbiArt.ITF {
 			Reinit(s.Context, s.Settings);
 		}
 
-		Settings previousSettings = null;
+		protected Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
 				if (previousSettings.game != settings.game) {
 					//COMPONENTS = null;
 					//LUA = new Path("enginedata/actortemplates/subscene.tpl");
-					if (COMPONENTS != null) {
+					if (COMPONENTS != null && COMPONENTS.Count > 0) {
 						List<Generic<ActorComponent>> RemovedComponents = new List<Generic<ActorComponent>>();
 						// Check components, remove all that don't have the right gameflags
 						for (int i = 0; i < COMPONENTS.Count; i++) {

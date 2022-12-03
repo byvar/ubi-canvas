@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class CamModifier_Template : CSerializable {
 		public float cameraLookAtOffsetYUp;
 		public float cameraLookAtOffsetYDown;
-		public Vec3d cameraLookAtOffset;
-		public Vec3d cameraLookAtOffsetMaxInMulti;
+		public Vec3d cameraLookAtOffset = Vec3d.Invalid;
+		public Vec3d cameraLookAtOffsetMaxInMulti = Vec3d.Invalid;
 		public Angle focale;
 		public bool ignoreZ;
 		public float zoneScaleDepthMin = 8;
@@ -39,28 +39,28 @@ namespace UbiArt.ITF {
 		public float subjectWeightRegisterDelay;
 		public Vec2d subjectMainVisibilityHorizontal = Vec2d.One;
 		public Vec2d subjectMainVisibilityVertical = Vec2d.One;
-		public float cameraMovingSmoothCoeffForLeader = 1f;
+		public float cameraMovingSmoothCoeffForLeader = 0.5f;
 		public float subjectMainVisibilitySwitchAxeSpeed;
-		public float zoomBlendInMultiplayer = 3.40282e+38f;
+		public float zoomBlendInMultiplayer = float.MaxValue;
 		public bool isMainSubject = true;
 		public bool isMainDRCPlayer;
 		public bool isLockedAxe;
 		public bool isFixed;
 
 
-		public float modifierBlend;
-		public float modifierInertie;
-		public Vec3d constraintDelayToActivate;
-		public Vec3d constraintDelayToDisable;
-		public Vec3d constraintOverrideActivationDelay;
+		public float modifierBlend = float.MaxValue;
+		public float modifierInertie = float.MaxValue;
+		public Vec3d constraintDelayToActivate = Vec3d.Invalid;
+		public Vec3d constraintDelayToDisable = Vec3d.Invalid;
+		public Vec3d constraintOverrideActivationDelay = Vec3d.Invalid;
 
 		public Vec2d cameraDecenteringDelay;
 		
-		public float zoomInertieInMultiplayer;
-		public float zoomDelayInMultiplayer;
+		public float zoomInertieInMultiplayer = float.MaxValue;
+		public float zoomDelayInMultiplayer = float.MaxValue;
 		public float dezoomBlendInMultiplayer;
 		public float dezoomInertieInMultiplayer;
-		public float cameraDriftDelay;
+		public float cameraDriftDelay = float.MaxValue;
 		public float controllerDriftDelay;
 
 		

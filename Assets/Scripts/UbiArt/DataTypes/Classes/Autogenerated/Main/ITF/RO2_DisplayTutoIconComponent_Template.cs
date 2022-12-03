@@ -3,14 +3,14 @@ namespace UbiArt.ITF {
 	public partial class RO2_DisplayTutoIconComponent_Template : ActorComponent_Template {
 		public SpawnActorPathList tutos3d;
 		public SpawnActorPathList tutos2d;
-		public uint autoHideCount;
+		public uint autoHideCount = 99999;
 		public StringID animIdle;
 		public StringID animIdleWithInfo;
-		public float idleTime;
-		public uint idleWithInfoNbTimes;
+		public float idleTime = 4f;
+		public uint idleWithInfoNbTimes = 2;
 		public Generic<Event> successfulEvent;
 		public float fadeTotalTime;
-		public Vec2d tutoScale;
+		public Vec2d tutoScale = Vec2d.One;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			tutos3d = s.SerializeObject<SpawnActorPathList>(tutos3d, name: "tutos3d");

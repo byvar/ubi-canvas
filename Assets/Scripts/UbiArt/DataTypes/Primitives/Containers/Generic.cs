@@ -90,8 +90,53 @@ namespace UbiArt {
 						var attr = (GamesAttribute)Attribute.GetCustomAttribute(obj.GetType(), typeof(GamesAttribute));
 						if (attr != null) {
 							if (!attr.HasGame(settings.game)) {
-								c.SystemLogger?.LogInfo("Removing Generic component: {0}", obj.GetType());
-								MakeNull();
+								if (obj is RO2_BTActionCovertWithHat_Template btHat) {
+									var newBT = Merger.Merge<RO2_BTActionCovertFromTarget_Template>(btHat);
+									newBT.animStandUp = btHat.animIdle;
+									newBT.animUTurnDn = btHat.animIdle;
+									newBT.animUTurnUp = btHat.animIdle;
+									newBT.animMoveShieldDn = btHat.animIdle;
+									newBT.animMoveShieldUp = btHat.animIdle;
+									newBT.animUturnUpEvent = btHat.animIdle;
+									newBT.factTarget = btHat.factTarget;
+									obj = (T)(object)newBT;
+									className = new StringID(obj.ClassCRC.Value);
+								} else if (obj is RO2_BTActionDash_Template btDash) {
+									var newBT = Merger.Merge<RO2_BTActionCharge_Template>(btDash);
+									newBT.animRun = btDash.animDash;
+									newBT.animEndRun = btDash.animEndDash;
+									newBT.animAnticip = btDash.animAnticip;
+									newBT.animHitWall = btDash.animHitWall;
+									newBT.animHoleStop = btDash.animHoleStop;
+									newBT.distMaxCharge = btDash.distMaxCharge;
+									newBT.name = btDash.name;
+									obj = (T)(object)newBT;
+									className = new StringID(obj.ClassCRC.Value);
+								} else if (obj is RO2_BTActionJumpAttack_Template btJump) {
+									var newBT = Merger.Merge<RO2_BTActionCharge_Template>(btJump);
+									newBT.animRun = btJump.animJump;
+									newBT.animEndRun = btJump.animReception;
+									newBT.animAnticip = btJump.animAnticip;
+									newBT.animHitWall = btJump.animWallJump;
+									newBT.animHoleStop = btJump.animWallStand;
+									newBT.name = btJump.name;
+									obj = (T)(object)newBT;
+									className = new StringID(obj.ClassCRC.Value);
+								} else if(obj is RO2_BTActionAppearBackground_Rope_Template btRope) {
+									var newBT = Merger.Merge<RO2_BTActionAppearBackgroundLadders_Template>(btRope);
+									newBT.name = btRope.name;
+									obj = (T)(object)newBT;
+									className = new StringID(obj.ClassCRC.Value);
+								} else if (obj is RO2_BTActionAppearBasket_Template btBasket) {
+									var newBT = Merger.Merge<RO2_BTActionAppearFromGround_Template>(btBasket);
+									newBT.anim = btBasket.animAppear;
+									newBT.name = btBasket.name;
+									obj = (T)(object)newBT;
+									className = new StringID(obj.ClassCRC.Value);
+								} else {
+									c.SystemLogger?.LogInfo("Removing Generic component: {0}", obj.GetType());
+									MakeNull();
+								}
 							}
 						}
 					}

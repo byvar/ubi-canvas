@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class StaticMeshElement : CSerializable {
 		public Vec3d pos;
-		public Color color;
+		public Color color = Color.White;
 		public bool animated;
 		public ObjectPath frisePath;
 		public CArrayP<ushort> staticIndexList;

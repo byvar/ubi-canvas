@@ -8,6 +8,13 @@ namespace UbiArt.ITF {
 			if (oldSettings.game != newSettings.game) {
 				soundList = null;
 			}
+			if (newSettings.game == Settings.Game.RL) {
+				foreach (var comp in actor.COMPONENTS) {
+					if (comp?.obj is SoundComponent c) {
+						return (this == c) ? this : null;
+					}
+				}
+			}
 			return this;
 		}
 	}
