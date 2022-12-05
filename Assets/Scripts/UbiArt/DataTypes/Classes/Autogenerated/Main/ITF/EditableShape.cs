@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public Generic<PhysShape> shape;
 		public StringID bindedBoneName;
 		public Vec2d localOffset;
-		public bool applyRotation;
+		public bool applyRotation = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

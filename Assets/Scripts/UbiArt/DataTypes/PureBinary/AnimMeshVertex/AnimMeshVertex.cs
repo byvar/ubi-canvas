@@ -42,7 +42,7 @@ namespace UbiArt.Animation {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.engineVersion == Settings.EngineVersion.RL && version >= VersionLegends) {
+			if (settings.game == Settings.Game.RL && version >= VersionLegends) {
 				version = VersionLegends;
 				if (unk1 == null && unk1Adv != null) {
 					unk1 = new CListO<StringID>();

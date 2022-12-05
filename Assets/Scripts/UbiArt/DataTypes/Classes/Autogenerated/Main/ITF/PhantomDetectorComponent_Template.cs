@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class PhantomDetectorComponent_Template : ShapeDetectorComponent_Template {
 		public bool allowDeadActors;
-		public uint factionToDetect;
+		public uint factionToDetect = uint.MaxValue;
 		public Enum_VH_0 Enum_VH_0__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

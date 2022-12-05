@@ -107,7 +107,7 @@ namespace UbiArt.Animation {
 			Reinit(s.Settings);
 		}
 		public void Reinit(Settings settings) {
-			if (settings.engineVersion == Settings.EngineVersion.RL && version >= VersionLegends) {
+			if (settings.game == Settings.Game.RL && version >= VersionLegends) {
 				version = VersionLegends;
 			}
 		}

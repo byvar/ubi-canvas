@@ -23,7 +23,7 @@ namespace UbiArt.UV {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.engineVersion == Settings.EngineVersion.RL && version >= versionLegends) {
+			if (settings.game == Settings.Game.RL && version >= versionLegends) {
 				version = versionLegends;
 			}
 		}

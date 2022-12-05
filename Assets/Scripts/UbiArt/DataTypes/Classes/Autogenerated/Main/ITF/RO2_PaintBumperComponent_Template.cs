@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PaintBumperComponent_Template : ActorComponent_Template {
-		public uint LumRewardNb;
+		public uint LumRewardNb = 5;
 		public StringID AnimPaint;
 		public StringID AnimStand;
 		public bool useAdditive;

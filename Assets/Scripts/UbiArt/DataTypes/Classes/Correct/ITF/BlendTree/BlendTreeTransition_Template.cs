@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public uint blend;
 		public TransitionFlag flagsEnum;
 		public uint flags;
-		public uint blendFromTransition;
+		public uint blendFromTransition = 4;
 		public CArrayO<StringID> from;
 		public CArrayO<StringID> to;
 		public Generic<BlendTreeNodeTemplate<T>> node;

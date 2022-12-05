@@ -46,7 +46,29 @@ namespace UbiArt {
 			}
 		}
 
-		public string FullPath => $"{(folder ?? "")}{(filename ?? "")}";
+		public string FullPath {
+			get {
+				return $"{(folder ?? "")}{(filename ?? "")}";
+			}
+			set {
+				string fullPath = value.Replace('\\', '/');
+				if (fullPath.Contains('/')) {
+					folder = fullPath.Substring(0, fullPath.LastIndexOf('/') + 1);
+					filename = fullPath.Substring(fullPath.LastIndexOf('/') + 1);
+				} else {
+					folder = "";
+					filename = fullPath;
+				}
+				if (folder != null && folder != "" && !folder.EndsWith("/")) folder += "/";
+				if (folder != null && folder.StartsWith("/")) folder = folder.Substring(1);
+
+				if((folder != null && folder != "") || (filename != null && filename != "")) {
+					stringID = new StringID(FullPath);
+				} else {
+					stringID = new StringID();
+				}
+			}
+		}
 
 		public bool IsNull {
 			get {
@@ -77,6 +99,9 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
+			if (s.Context.HasSettings<ConversionSettings>()) {
+				ConvertPath(s.Context.GetSettings<ConversionSettings>());
+			}
 			// null path: 0, 0, -1, 0
 			folder = s.Serialize<string>(folder);
 			filename = s.Serialize<string>(filename);
@@ -141,6 +166,13 @@ namespace UbiArt {
 						c.SystemLogger?.LogInfo($"Encountered path with extension {GetExtension()}");
 						break;
 				}
+			}
+		}
+
+		public void ConvertPath(ConversionSettings conversion) {
+			if (conversion?.PathConversionRules == null) return;
+			foreach (var rule in conversion.PathConversionRules) {
+				rule.Apply(this);
 			}
 		}
 

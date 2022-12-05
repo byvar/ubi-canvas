@@ -49,7 +49,7 @@ namespace UbiArt {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.engineVersion == Settings.EngineVersion.RL && version >= 16) {
+			if (settings.game == Settings.Game.RL && version >= 16) {
 				version = 13;
 				hdrSize = 0x34;
 			}

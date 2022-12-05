@@ -49,6 +49,16 @@ public class UnityWindowBundle : UnityWindow {
 					var basePath = System.IO.Path.GetDirectoryName(rlPath);
 					var settings = Settings.Init(Settings.Mode.RaymanLegendsPC);
 					var mainContext = Controller.MainContext;
+					var oldSettings = l.Settings;
+
+					// Create conversion settings
+					var conversionSettings = new ConversionSettings() {
+						OldSettings = oldSettings,
+					};
+					if (oldSettings.game == Settings.Game.RM) {
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
+					}
 
 					// Step 1: create new paths dictionary
 					var ogDir = l.Settings.ITFDirectory;
@@ -63,6 +73,7 @@ public class UnityWindowBundle : UnityWindow {
 							} else {
 								pathMapping[structMap.Key] = ogPath;
 							}
+							pathMapping[structMap.Key].ConvertPath(conversionSettings);
 						}
 					}
 					// Step 2, load uv atlas manager, and combine with adventures. Write patch_PC
@@ -116,7 +127,9 @@ public class UnityWindowBundle : UnityWindow {
 								}
 							}
 						}
+
 						// Write bundle
+						rlContext.AddSettings<ConversionSettings>(conversionSettings);
 						await rlContext.Loader.WriteBundle(path, bun);
 
 						//Write patch
