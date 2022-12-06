@@ -10,6 +10,7 @@ namespace UbiArt.ITF {
 			if (this is Frise) return;
 			if (IsFirstLoad) {
 				Loader l = s.Context.Loader;
+				l.LoadedActors.Add(this);
 				l.LoadFile<GenericFile<Actor_Template>>(LUA, result => {
 					template = result;
 					if (template != null)

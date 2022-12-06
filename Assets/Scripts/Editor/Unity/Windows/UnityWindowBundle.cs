@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UbiCanvas.Helpers;
 using UbiCanvas;
+using System.Linq;
 
 public class UnityWindowBundle : UnityWindow {
 	[MenuItem("Ubi-Canvas/Bundle Export")]
@@ -58,6 +59,35 @@ public class UnityWindowBundle : UnityWindow {
 					if (oldSettings.game == Settings.Game.RM) {
 						conversionSettings.PathConversionRules.Add(
 							new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
+					}
+
+					// Duplicate actor templates for actors with StartPaused
+					Dictionary<Path, GenericFile<Actor_Template>> templatesToDuplicate = new Dictionary<Path, GenericFile<Actor_Template>>();
+					foreach (var act in l.LoadedActors) {
+						if (act.STARTPAUSE && !(act.template?.obj?.STARTPAUSED ?? false)) {
+							templatesToDuplicate[act.LUA] = act.template;
+							act.LUA = new Path(act.LUA.FullPath.Replace(".tpl","__startpaused.tpl"));
+						}
+					}
+					if (templatesToDuplicate.Any()) {
+						foreach (var tpl in templatesToDuplicate) {
+							var ogPath = tpl.Key;
+							var ogTpl = tpl.Value;
+
+							l.Context.SystemLogger?.LogInfo($"Duplicating template (STARTPAUSE): {ogPath.FullPath}");
+
+							var newPath = new Path(ogPath.FullPath.Replace(".tpl", "__startpaused.tpl"));
+							var newTpl = new GenericFile<Actor_Template>() {
+								obj = Merger.Merge<Actor_Template>(ogTpl.obj),
+								className = new StringID(ogTpl.obj.ClassCRC ?? uint.MaxValue)
+							};
+							newTpl.obj.STARTPAUSED = true;
+							var newCookedPath = new Path(l.CookedPaths[ogPath.stringID].FullPath.Replace(".tpl", "__startpaused.tpl"), true);
+							l.CookedPaths[newPath.stringID] = newCookedPath;
+							l.Paths[newPath.stringID] = newPath;
+							l.Context.Cache.Structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
+							//l.Context.Cache.Structs
+						}
 					}
 
 					// Step 1: create new paths dictionary

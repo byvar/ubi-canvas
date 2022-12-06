@@ -6,6 +6,7 @@ using UbiArt.UV;
 using UbiArt.FileFormat;
 using System.Threading.Tasks;
 using System.Linq;
+using UbiArt.ITF;
 
 namespace UbiArt {
 	public class Loader {
@@ -75,6 +76,8 @@ namespace UbiArt {
 		public Dictionary<StringID, ICSerializable> tex => Context.Cache.Structs.GetValueOrDefault(typeof(TextureCooked));
 		public Dictionary<StringID, Path> Paths { get; private set; } = new Dictionary<StringID, Path>();
 		public Dictionary<StringID, Path> CookedPaths { get; private set; } = new Dictionary<StringID, Path>();
+
+		public List<Actor> LoadedActors = new List<Actor>();
 
 		protected bool GameFileExists(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
