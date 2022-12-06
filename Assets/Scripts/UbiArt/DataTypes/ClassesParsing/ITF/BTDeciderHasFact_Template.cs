@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game) {
+				/*if (previousSettings.game != settings.game) {
 					if ((previousSettings.game == Settings.Game.RA || previousSettings.game == Settings.Game.RM) 
 						&& settings.game == Settings.Game.RL) {
 						if (factsHave != null) {
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 							factsNotHave.Remove(new StringID(0x84E2B5AB));
 						}
 					}
-				}
+				}*/
 			}
 			previousSettings = settings;
 		}

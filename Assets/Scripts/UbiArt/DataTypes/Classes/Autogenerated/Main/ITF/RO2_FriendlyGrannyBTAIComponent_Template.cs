@@ -1,13 +1,13 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_FriendlyGrannyBTAIComponent_Template : RO2_FriendlyBTAIComponent_Template {
-		public int health;
-		public int hitHealthMalus;
-		public bool ignoreRehit;
-		public float earthquakeBounceMultiplier;
-		public float crushBounceMultiplier;
+		public int health = 100;
+		public int hitHealthMalus = 100;
+		public bool ignoreRehit = true;
+		public float earthquakeBounceMultiplier = 1f;
+		public float crushBounceMultiplier = 1f;
 		public RO2_SoftCollision_Template softCollision;
-		public bool enableAutoSpawnOnCheckpoint;
+		public bool enableAutoSpawnOnCheckpoint = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			health = s.Serialize<int>(health, name: "health");
