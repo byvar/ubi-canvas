@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class RO2_SnakeBodyPartAmvRenderer_Template : RO2_SnakeBodyPartRenderer_Template {
 		public StringID anim;
 		public uint startFrame;
-		public Vec2d scale;
-		public Color color;
+		public Vec2d scale = Vec2d.One;
+		public Color color = Color.White;
 		public CListO<Vec2d> polyline;
 		public CListO<Vec2d> otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {

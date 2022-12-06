@@ -2,12 +2,12 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_SnakeNetworkFollowerComponent_Template : ActorComponent_Template {
 		public uint prevNodeCount;
-		public float speedMultiplierMinValue;
-		public float speedMultiplierMaxValue;
-		public float speedMultiplierMinDistance;
-		public float speedMultiplierMaxDistance;
+		public float speedMultiplierMinValue = 1f;
+		public float speedMultiplierMaxValue = 1f;
+		public float speedMultiplierMinDistance = 5f;
+		public float speedMultiplierMaxDistance = 10f;
 		public Vec2d targetEvaluationOffset;
-		public float brakeValue;
+		public float brakeValue = 3f;
 		public bool DBG_speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -2,19 +2,19 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SnakeRendererComponent_Template : GraphicComponent_Template {
 		public CArrayO<Generic<RO2_SnakeBodyPart_Template>> bodyParts;
-		public float bodyPartsZSpacing;
+		public float bodyPartsZSpacing = 0.002f;
 		public bool drawHeadBelow;
-		public bool broadcastEventToPart;
+		public bool broadcastEventToPart = true;
 		public float trajectoryOffset;
-		public float sampleLength;
+		public float sampleLength = 0.1f;
 		public Path gameMaterial;
 		public bool usePolylinePhantom;
 		public GFXMaterialSerializable gfxMaterial;
 		public Path amvPath;
-		public StringID fxStart;
-		public StringID fxLoop;
-		public StringID fxStop;
-		public StringID inputSpeed;
+		public StringID fxStart = new StringID(0x873ef53c);
+		public StringID fxLoop = new StringID(0x71c6b3da);
+		public StringID fxStop = new StringID(0x43ffe1ae);
+		public StringID inputSpeed = new StringID(0xfb6e8b46);
 		public RO2_SnakeRendererComponent_Template.Perturbator tapPerturbator;
 		public CListO<RO2_SnakeRendererComponent_Template.Perturbator> hitPerturbators;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -38,10 +38,10 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class Perturbator : CSerializable {
-			public uint range;
-			public float duration;
-			public float amplitude;
-			public float frequency;
+			public uint range = 1;
+			public float duration = 1f;
+			public float amplitude = 1f;
+			public float frequency = 1f;
 			public StringID fx;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

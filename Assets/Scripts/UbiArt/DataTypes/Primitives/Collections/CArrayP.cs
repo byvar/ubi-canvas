@@ -25,5 +25,7 @@ namespace UbiArt {
 			}
 			//s.ExitEmbed();
 		}
+		public CArrayP() { }
+		public CArrayP(T[] array) : base(array) { }
 	}
 }

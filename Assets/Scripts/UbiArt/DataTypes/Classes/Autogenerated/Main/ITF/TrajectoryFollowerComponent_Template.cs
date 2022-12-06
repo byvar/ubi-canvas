@@ -1,22 +1,22 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class TrajectoryFollowerComponent_Template : ActorComponent_Template {
-		public float speed;
-		public float speedSmoothFactor;
+		public float speed = 1f;
+		public float speedSmoothFactor = 1f;
 		public bool cameraRelative;
 		public bool skipRetrigger;
 		public bool destroyAtEnd;
-		public bool updatesAnimInput;
+		public bool updatesAnimInput = true;
 		public bool startsActivated;
-		public bool updatesAngle;
-		public bool updatesZ;
-		public bool triggerChildren;
+		public bool updatesAngle = true;
+		public bool updatesZ = true;
+		public bool triggerChildren = true;
 		public float safeDistance;
 		public bool iAmThePursueur;
 		public float minSpeed;
-		public float maxSpeed;
+		public float maxSpeed = 1f;
 		public bool inputOrientEnabled;
-		public float inputOrientBlendFactor;
+		public float inputOrientBlendFactor = 1f;
 		public bool useCheckpointLoaded;
 		public bool inputAddVerticalEnabled;
 		public float inputAddVerticalMinSpeed;
@@ -28,8 +28,8 @@ namespace UbiArt.ITF {
 		public float inputSpeedMaxMinTime;
 		public float inputSpeedMaxThreshold;
 		public bool playRateEnabled;
-		public float playRateMin;
-		public float playRateMax;
+		public float playRateMin = 1f;
+		public float playRateMax = 1f;
 		public bool uTurnEnabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

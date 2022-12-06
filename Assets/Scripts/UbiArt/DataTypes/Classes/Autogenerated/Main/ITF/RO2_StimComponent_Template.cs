@@ -9,8 +9,8 @@ namespace UbiArt.ITF {
 		public uint hitLevel;
 		public bool hitRadial;
 		public bool useNormal;
-		public bool registerToAIManager;
-		public bool useOutOfScreenOptim;
+		public bool registerToAIManager = true;
+		public bool useOutOfScreenOptim = true;
 		public bool hitEnemiesOnce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

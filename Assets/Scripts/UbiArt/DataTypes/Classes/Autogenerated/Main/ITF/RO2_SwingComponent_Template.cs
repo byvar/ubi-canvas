@@ -1,19 +1,19 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SwingComponent_Template : ActorComponent_Template {
-		public float length;
-		public Angle angle;
-		public float gravityMultiplier;
+		public float length = 1f;
+		public Angle angle = 1.570796f;
+		public float gravityMultiplier = 1f;
 		public float memoryTimer;
-		public float playerDetectRange;
-		public float armsDistance;
-		public float armsLengthStiff;
-		public float armsLengthDamp;
-		public float armsAngleStiff;
-		public float armsAngleDamp;
-		public float armsGraspInterpolateTime;
-		public uint numArms;
-		public CArrayO<Angle> restAngles;
+		public float playerDetectRange = 5f;
+		public float armsDistance = 3f;
+		public float armsLengthStiff = 10f;
+		public float armsLengthDamp = 1f;
+		public float armsAngleStiff = 5f;
+		public float armsAngleDamp = 1f;
+		public float armsGraspInterpolateTime = 0.1f;
+		public uint numArms = 1;
+		public CArrayO<Angle> restAngles = new CArrayO<Angle>(new Angle[] { 0.7853982f, 2.356194f, 3.926991f, 5.497787f });
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {

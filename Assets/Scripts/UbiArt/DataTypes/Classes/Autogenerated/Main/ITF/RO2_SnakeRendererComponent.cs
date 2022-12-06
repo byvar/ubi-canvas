@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SnakeRendererComponent : GraphicComponent {
-		public bool alignOnTrajectoryOnStart;
+		public bool alignOnTrajectoryOnStart = true;
 		public bool flipWithDirection;
 		public bool disablePolyline;
 		public bool disableTopPolyline;

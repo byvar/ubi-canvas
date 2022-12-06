@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_LaserDetectorComponent : ActorComponent {
-		public float Length;
-		public float DetectedSizeEffect;
+		public float Length = 1f;
+		public float DetectedSizeEffect = 0.6f;
 		public float DelaiInactive;
 		public bool LaserSendPafAlone;
 		protected override void SerializeImpl(CSerializerObject s) {

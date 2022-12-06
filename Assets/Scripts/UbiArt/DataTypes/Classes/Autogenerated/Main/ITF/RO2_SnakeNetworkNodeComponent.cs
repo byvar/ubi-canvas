@@ -8,13 +8,13 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class NodeData : CSerializable {
-			public float speedMultiplier;
+			public float speedMultiplier = 1f;
 			public bool forceApplySpeed;
 			public float acceleration;
 			public float accelerationMultiplier;
 			public bool disableSpeedMultiplier;
 			public bool stopOnNode;
-			public float detectionDistMultiplier;
+			public float detectionDistMultiplier = 1f;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				speedMultiplier = s.Serialize<float>(speedMultiplier, name: "speedMultiplier");

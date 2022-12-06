@@ -3,21 +3,21 @@ namespace UbiArt.ITF {
 	public partial class RO2_LaserGraphicComponent : GraphicComponent {
 		public Path characterTexture;
 		public GFXMaterialSerializable characterMaterial;
-		public Color ColorNormal;
-		public Color ColorDetected;
+		public Color ColorNormal = Color.White;
+		public Color ColorDetected = Color.Red;
 		public float AlfaOnExtremities;
-		public float AlfaStart;
-		public float SpeedLaser;
-		public uint GraphicLayerNb;
-		public int GraphicLayerForced;
-		public float GraphicalLayerDelaiChange;
-		public float GraphicalLayerDelaiRandom;
-		public uint GraphicUVTarget;
-		public float SacleY;
-		public float laserBoxLeftPointCoefOffset;
-		public float laserBoxRightPointCoefOffset;
-		public float laserLength;
-		public float textureRatio;
+		public float AlfaStart = 0.2f;
+		public float SpeedLaser = 0.25f;
+		public uint GraphicLayerNb = 1;
+		public int GraphicLayerForced = -1;
+		public float GraphicalLayerDelaiChange = 1f;
+		public float GraphicalLayerDelaiRandom = 0.4f;
+		public uint GraphicUVTarget = 1;
+		public float SacleY = 1f;
+		public float laserBoxLeftPointCoefOffset = -1f;
+		public float laserBoxRightPointCoefOffset = 1f;
+		public float laserLength = 1f;
+		public float textureRatio = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {

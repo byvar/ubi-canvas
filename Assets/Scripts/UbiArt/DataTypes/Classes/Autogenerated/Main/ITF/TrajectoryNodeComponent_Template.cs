@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class TrajectoryNodeComponent_Template : ActorComponent_Template {
-		public bool useCurvedEnd;
-		public bool useDrawDebug;
+		public bool useCurvedEnd = true;
+		public bool useDrawDebug = true;
 		public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

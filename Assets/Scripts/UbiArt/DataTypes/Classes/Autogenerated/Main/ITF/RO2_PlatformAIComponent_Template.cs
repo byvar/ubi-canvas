@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public float closeTimeHysteresis;
 		public bool closeOnHit;
 		public StringID closeOnHitTransition;
-		public float closeOnHitDuration;
+		public float closeOnHitDuration = 5f;
 		public Generic<Event> openFullEvent;
 		public StringID openFullTransition;
 		public StringID openFullIdle;

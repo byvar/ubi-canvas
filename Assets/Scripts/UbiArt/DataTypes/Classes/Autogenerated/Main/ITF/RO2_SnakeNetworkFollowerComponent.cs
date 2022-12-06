@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SnakeNetworkFollowerComponent : ActorComponent {
-		public float baseSpeed;
-		public float baseAcceleration;
+		public float baseSpeed = 5f;
+		public float baseAcceleration = 1f;
 		public ActiveMode activeMode;
 		public bool disableOnCheckpointIfActive;
 		public bool everStarted;
