@@ -7,6 +7,9 @@ namespace UbiArt {
 	public class CList<T> : IList<T>, ICSerializable, IObjectContainer {
 		protected List<T> container = new List<T>();
 
+		public CList() { }
+		public CList(List<T> list) { container = list; }
+
 		public virtual void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)container.Count;
 			count = s.Serialize<uint>(count, name: name);

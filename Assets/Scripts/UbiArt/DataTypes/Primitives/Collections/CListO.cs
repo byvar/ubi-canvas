@@ -1,7 +1,11 @@
-﻿namespace UbiArt {
+﻿using System.Collections.Generic;
+
+namespace UbiArt {
 	// For serializing ICSerializable objects
 	[SerializeEmbed]
 	public class CListO<T> : CList<T> where T : ICSerializable, new() {
+		public CListO() { }
+		public CListO(List<T> list) : base(list) { }
 
 		public override void Serialize(CSerializerObject s, string name) {
 			//s.Context.SystemLogger?.Log("Serializing List: " + name);

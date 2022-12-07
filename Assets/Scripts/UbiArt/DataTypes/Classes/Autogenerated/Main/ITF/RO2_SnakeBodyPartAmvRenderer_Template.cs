@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_SnakeBodyPartAmvRenderer_Template : RO2_SnakeBodyPartRenderer_Template {
@@ -5,8 +7,8 @@ namespace UbiArt.ITF {
 		public uint startFrame;
 		public Vec2d scale = Vec2d.One;
 		public Color color = Color.White;
-		public CListO<Vec2d> polyline;
-		public CListO<Vec2d> otherPolyline;
+		public CListO<Vec2d> polyline = new CListO<Vec2d>(new List<Vec2d>() { new Vec2d(0,-0.1f) });
+		public CListO<Vec2d> otherPolyline = new CListO<Vec2d>(new List<Vec2d>() { new Vec2d(0, 0.1f) });
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {

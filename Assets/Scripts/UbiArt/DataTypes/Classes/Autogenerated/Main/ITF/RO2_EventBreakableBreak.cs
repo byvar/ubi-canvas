@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_EventBreakableBreak : Event {
-		public bool Break;
+		public bool Break = true;
 		public bool immediate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

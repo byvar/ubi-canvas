@@ -1,7 +1,12 @@
-﻿namespace UbiArt {
+﻿using System.Collections.Generic;
+
+namespace UbiArt {
 	// For serializing primitives
 	[SerializeEmbed]
 	public class CListP<T> : CList<T> {
+		public CListP() { }
+		public CListP(List<T> list) : base(list) { }
+
 		public override void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)container.Count;
 			count = s.Serialize<uint>(count, name: name);

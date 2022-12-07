@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_SnakeBodyPartSpriteRenderer_Template : RO2_SnakeBodyPartRenderer_Template {
 		public AnimationAtlas anim;
-		public AABB drawAABB;
-		public Color color;
+		public AABB drawAABB = new AABB() { MIN = new Vec2d(-1, -1), MAX = new Vec2d(0.5f, 0) };
+		public Color color = Color.White;
 		public Placeholder polyline;
 		public Placeholder otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {

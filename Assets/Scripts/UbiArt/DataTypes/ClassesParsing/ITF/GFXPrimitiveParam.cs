@@ -16,7 +16,12 @@ namespace UbiArt.ITF {
 						if (gfxOccludeInfo != GFX_OCCLUDE_INFO.ZPASS_ONLY) {
 							gfxOccludeInfo2 = (GFX_OCCLUDE_INFO2)(int)gfxOccludeInfo;
 						}
-
+						//FrontLightBrightness = 5f;
+						/*colorFactor = new Color(
+							colorFactor.r * FrontLightBrightness,
+							colorFactor.g * FrontLightBrightness,
+							colorFactor.b * FrontLightBrightness,
+							colorFactor.a);*/
 						/*if (colorFog != null) {
 							BackLightBrightness = 1;
 							//colorFog = new Color(colorFog.r, colorFog.g, colorFog.b, System.MathF.Min(colorFog.a * 2f, 1f));

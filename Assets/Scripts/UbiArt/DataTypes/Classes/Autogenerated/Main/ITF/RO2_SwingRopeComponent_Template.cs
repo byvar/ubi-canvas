@@ -1,16 +1,16 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SwingRopeComponent_Template : SoftPlatformComponent_Template {
-		public Angle maxSwingAngle;
-		public float stiffGravityMultiplier;
-		public float stiffImpulseMultiplier;
-		public float stiffSwingSpeedFriction;
-		public float nonStiffSwingSpeedFriction;
-		public float landDragMultiplier;
-		public float landDragDuration;
-		public bool canUseSmall;
-		public bool canUseNormal;
-		public bool repositionWithBones;
+		public Angle maxSwingAngle = 1.570796f;
+		public float stiffGravityMultiplier = 5f;
+		public float stiffImpulseMultiplier = 2.5f;
+		public float stiffSwingSpeedFriction = 0.95f;
+		public float nonStiffSwingSpeedFriction = 0.95f;
+		public float landDragMultiplier = 10f;
+		public float landDragDuration = 0.5f;
+		public bool canUseSmall = true;
+		public bool canUseNormal = true;
+		public bool repositionWithBones = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			maxSwingAngle = s.SerializeObject<Angle>(maxSwingAngle, name: "maxSwingAngle");

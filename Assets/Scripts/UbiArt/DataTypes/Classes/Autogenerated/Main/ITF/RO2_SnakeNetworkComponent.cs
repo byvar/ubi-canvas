@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class Node : CSerializable {
-			public uint id;
+			public uint id = uint.MaxValue;
 			public Vec3d pos;
 			public CArrayP<uint> childIds;
 			protected override void SerializeImpl(CSerializerObject s) {

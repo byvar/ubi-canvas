@@ -3,9 +3,9 @@ namespace UbiArt.ITF {
 	public partial class TimedSpawnerComponent_Template : ActorComponent_Template {
 		public Path actorToSpawn;
 		public float spawnDelay;
-		public float spawnRate;
-		public int burstElementsCount;
-		public int burstCount;
+		public float spawnRate = 1f;
+		public int burstElementsCount = -1;
+		public int burstCount = -1;
 		public float burstDelay;
 		public bool useInstanceValues;
 		public bool recycling;

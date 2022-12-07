@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class TimedSpawnerModifierComponent_Template : ActorComponent_Template {
 		public TimedSpawnerData timedSpawnerData;
-		public bool useInstanceValues;
+		public bool useInstanceValues = true;
 		public bool isTriggered;
 		public Placeholder TimedSpawnerData;
 		protected override void SerializeImpl(CSerializerObject s) {

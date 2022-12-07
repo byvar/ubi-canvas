@@ -2,9 +2,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class EventTimedSpawnerDataSet : Event {
 		public float spawnDelay;
-		public float spawnRate;
-		public int burstElementsCount;
-		public int burstCount;
+		public float spawnRate = 1f;
+		public int burstElementsCount = -1;
+		public int burstCount = -1;
 		public float burstDelay;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

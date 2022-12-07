@@ -3,10 +3,10 @@ namespace UbiArt.ITF {
 	public partial class SoftPlatformComponent_Template : ActorComponent_Template {
 		public CListO<SoftPlatformComponent_Template.BodyData> softPlatformParticles;
 		public CListO<SoftPlatformComponent_Template.ConstraintData> softPlatformConstraints;
-		public float weightMultiplier;
-		public float landSpeedMultiplier;
-		public float hitForceMultiplier;
-		public float impulseMultiplier;
+		public float weightMultiplier = 1f;
+		public float landSpeedMultiplier = 1f;
+		public float hitForceMultiplier = 1f;
+		public float impulseMultiplier = 1f;
 		public float movingPolylineForce;
 		public Path gameMaterial;
 		public bool usePhantom;
@@ -40,8 +40,8 @@ namespace UbiArt.ITF {
 		public partial class BodyData : CSerializable {
 			public string bone;
 			public bool _static;
-			public float gravityMultiplier;
-			public float windMultiplier;
+			public float gravityMultiplier = 1f;
+			public float windMultiplier = 1f;
 			public bool useStaticAngle;
 			public Angle setAngle;
 			protected override void SerializeImpl(CSerializerObject s) {
@@ -62,7 +62,7 @@ namespace UbiArt.ITF {
 			public Angle maxAngle;
 			public float minLength;
 			public float maxLength;
-			public float stiff;
+			public float stiff = 1f;
 			public float damp;
 			public bool limitAngle;
 			public bool relaxLength;

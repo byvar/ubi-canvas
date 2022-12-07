@@ -15,13 +15,5 @@
 
 			}
 		}
-
-		public FriseConfig() {
-			textureConfigIndexBySlope = new CListP<int>();
-			for (int i = 0; i < 17; i++) textureConfigIndexBySlope.Add(-1);
-			textureConfigIndexByZone = new CListP<int>();
-			for (int i = 0; i < 4; i++) textureConfigIndexByZone.Add(-1);
-
-		}
 	}
 }

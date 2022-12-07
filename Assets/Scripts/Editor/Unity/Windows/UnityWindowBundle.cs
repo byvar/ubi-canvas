@@ -60,6 +60,10 @@ public class UnityWindowBundle : UnityWindow {
 						conversionSettings.PathConversionRules.Add(
 							new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 					}
+					if (oldSettings.game == Settings.Game.RA) {
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("common/matshader/", "common/matshader_adventures/"));
+					}
 
 					// Duplicate actor templates for actors with StartPaused
 					Dictionary<Path, GenericFile<Actor_Template>> templatesToDuplicate = new Dictionary<Path, GenericFile<Actor_Template>>();

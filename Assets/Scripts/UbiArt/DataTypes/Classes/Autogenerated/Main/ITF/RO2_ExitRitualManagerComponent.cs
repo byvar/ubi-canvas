@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_ExitRitualManagerComponent : ActorComponent {
 		public RitualType ritualType;
-		public bool canBeClosed;
-		public bool canDisplayTuto;
+		public bool canBeClosed = true;
+		public bool canDisplayTuto = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {

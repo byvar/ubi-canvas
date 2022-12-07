@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class FriseConfig : Actor_Template {
@@ -66,8 +68,8 @@ namespace UbiArt.ITF {
 		public StringID slope_157;
 		public int idTexSwitch = -1;
 		public bool cooked;
-		public CListP<int> textureConfigIndexBySlope;
-		public CListP<int> textureConfigIndexByZone;
+		public CListP<int> textureConfigIndexBySlope = new CListP<int>(Enumerable.Repeat(-1, 17).ToList());
+		public CListP<int> textureConfigIndexByZone = new CListP<int>(Enumerable.Repeat(-1, 4).ToList());
 		public bool smoothVisual;
 		public GFXPrimitiveParam PrimitiveParameters;
 		public Frieze3DConfig frieze3D;

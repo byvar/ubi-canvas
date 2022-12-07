@@ -121,7 +121,7 @@ namespace UbiArt {
 									newBT.name = btJump.name;
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);
-								} else if(obj is RO2_BTActionAppearBackground_Rope_Template btRope) {
+								} else if (obj is RO2_BTActionAppearBackground_Rope_Template btRope) {
 									var newBT = Merger.Merge<RO2_BTActionAppearBackgroundLadders_Template>(btRope);
 									newBT.name = btRope.name;
 									obj = (T)(object)newBT;
@@ -131,6 +131,14 @@ namespace UbiArt {
 									newBT.anim = btBasket.animAppear;
 									newBT.name = btBasket.name;
 									obj = (T)(object)newBT;
+									className = new StringID(obj.ClassCRC.Value);
+								} else if (obj is EventBreakableBreak evbreak) {
+									var newEv = Merger.Merge<RO2_EventBreakableBreak>(evbreak);
+									obj = (T)(object)newEv;
+									className = new StringID(obj.ClassCRC.Value);
+								} else if (obj is EventBreakableQuery evquery) {
+									var newEv = Merger.Merge<RO2_EventBreakableQuery>(evquery);
+									obj = (T)(object)newEv;
 									className = new StringID(obj.ClassCRC.Value);
 								} else {
 									c.SystemLogger?.LogInfo("Removing Generic component: {0}", obj.GetType());

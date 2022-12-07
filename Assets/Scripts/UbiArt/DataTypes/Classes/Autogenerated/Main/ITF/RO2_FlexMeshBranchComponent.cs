@@ -11,8 +11,8 @@ namespace UbiArt.ITF {
 			public StringID flexId;
 			public float distance;
 			public float offset;
-			public float length;
-			public float width;
+			public float length = 1f;
+			public float width = 1f;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				flexId = s.SerializeObject<StringID>(flexId, name: "flexId");

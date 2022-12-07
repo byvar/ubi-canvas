@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool registerToAIManager = true;
 		public uint faction;
 		public int health = 100;
-		public CArrayP<uint> damageLevels;
+		public CArrayP<uint> damageLevels = new CArrayP<uint>(new uint[] { 5, 25, 50, 100 });
 		public float scaleRandomFactor;
 		public int listenToActivateEvent;
 		protected override void SerializeImpl(CSerializerObject s) {

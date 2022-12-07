@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public GFXPrimitiveParam primitiveParameters;
 		public Path texture;
 		public GFXMaterialSerializable material;
-		public BezierDivMode divMode;
+		public BezierDivMode divMode = BezierDivMode.Adaptive4;
 		public float startUV;
 		public Color color = Color.White;
 		public Color fogColor;
