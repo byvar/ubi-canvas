@@ -113,12 +113,11 @@ namespace UbiArt {
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);
 								} else if (obj is RO2_BTActionJumpAttack_Template btJump) {
-									var newBT = Merger.Merge<RO2_BTActionCharge_Template>(btJump);
-									newBT.animRun = btJump.animJump;
-									newBT.animEndRun = btJump.animReception;
+									var newBT = Merger.Merge<RO2_BTActionJumpJanod_Template>(btJump);
+									newBT.animJump = btJump.animJump;
+									newBT.animLanding = btJump.animReception;
 									newBT.animAnticip = btJump.animAnticip;
-									newBT.animHitWall = btJump.animWallJump;
-									newBT.animHoleStop = btJump.animWallStand;
+									newBT.animIdle = btJump.animWallStand;
 									newBT.name = btJump.name;
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);

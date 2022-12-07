@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public StringID animPullSword;
 		public StringID animPullSwordToStand;
 		public StringID animHoleStop;
-		public float distMaxCharge;
+		public float distMaxCharge = 10f;
 		public float timeTired;
 		public float timeAnticip;
 		public float timePullSword;

@@ -26,6 +26,7 @@
 		public static Color Red   => new Color(1, 0, 0, 1f);
 		public static Color Green => new Color(0, 1, 0, 1f);
 		public static Color Blue  => new Color(0, 0, 1, 1f);
+		public static Color Zero => new Color(0,0,0,0);
 
 		public override string ToString() {
 			return $"Color({r}, {g}, {b}, {a})";

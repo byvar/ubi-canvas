@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public SubRenderParam_ClearColor clearColor;
 		public float Weight = 1f;
 		public uint Priority;
-		public Color clearColor2;
+		public Color clearColor2 = Color.Black; // = new Color(0.1f, 0.2f, 0.4f, 1f);
 		public Color clearFrontLightColor = new Color(0.5f, 0.5f, 0.5f, 1f);
 		public Color clearBackLightColor = Color.Black;
 		protected override void SerializeImpl(CSerializerObject s) {

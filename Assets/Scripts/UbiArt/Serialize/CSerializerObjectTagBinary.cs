@@ -79,7 +79,7 @@ namespace UbiArt {
 			} else if (objType == typeof(Vec4d)) {
 				t = (T)(object)Vec4d.Zero;
 			} else if (objType == typeof(Color)) {
-				t = (T)(object)Color.Black;
+				t = (T)(object)Color.Zero;
 			} else {
 				if (t == null) t = new T();
 				IncreaseLevel();

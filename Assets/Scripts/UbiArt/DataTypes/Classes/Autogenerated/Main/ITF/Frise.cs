@@ -24,9 +24,9 @@ namespace UbiArt.ITF {
 		public bool PreComputedForCook;
 		public Transform2d XfForCook;
 		public float DepthForCook;
-		public Color ColorFactor;
-		public Color ColorFog;
-		public GFXPrimitiveParam PrimitiveParameters;
+		public Color ColorFactor { get => PrimitiveParameters.colorFactor; set { PrimitiveParameters.colorFactor = value; } }
+		public Color ColorFog { get => PrimitiveParameters.colorFog; set { PrimitiveParameters.colorFog = value; } }
+		public GFXPrimitiveParam PrimitiveParameters = new GFXPrimitiveParam();
 		public float DepthOffset;
 		public float UvX_Offset;
 		public float UvY_Offset;
@@ -65,10 +65,10 @@ namespace UbiArt.ITF {
 		public uint ColorComputerTagId;
 		public int renderInTarget;
 		public int IsDynamicFrieze;
-		public bool useStaticFog;
-		public bool renderInRelection;
-		
-		
+		public bool useStaticFog { get => PrimitiveParameters.useStaticFog; set { PrimitiveParameters.useStaticFog = value; } }
+		public bool renderInRelection { get => PrimitiveParameters.RenderInReflections; set { PrimitiveParameters.RenderInReflections = value; } }
+
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
