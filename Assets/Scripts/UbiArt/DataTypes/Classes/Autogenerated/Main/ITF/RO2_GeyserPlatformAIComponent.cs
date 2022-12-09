@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_GeyserPlatformAIComponent : GraphicComponent {
-		public int startOpen;
-		public float platformHeight;
-		public float angle;
-		public float width;
+		public int startOpen = -1;
+		public float platformHeight = float.MaxValue;
+		public float angle = float.MaxValue;
+		public float width = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

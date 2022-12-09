@@ -1,28 +1,28 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class RenderBoxComponent_Template : GraphicComponent_Template {
-		public bool is2D;
-		public bool addBorders;
-		public bool useAnimMeshVertex;
+		public bool is2D = true;
+		public bool addBorders = true;
+		public bool useAnimMeshVertex = true;
 		public CListO<RenderSingleAnimData> anims;
 		public Path texture;
 		public GFXMaterialSerializable material;
 		public CListO<GFXMaterialSerializable> AdditionalMaterials;
 		public Path frontTexture;
 		public GFXMaterialSerializable frontMaterial;
-		public float leftWidth;
-		public float rightWidth;
-		public float topHeight;
-		public float bottomHeight;
-		public uint backTopLeftCornerAtlasIndex;
-		public uint backTopMiddleCornerAtlasIndex;
-		public uint backTopRightCornerAtlasIndex;
-		public uint backMiddleLeftCornerAtlasIndex;
-		public uint backMiddleMiddleCornerAtlasIndex;
-		public uint backMiddleRightCornerAtlasIndex;
-		public uint backBottomLeftCornerAtlasIndex;
-		public uint backBottomMiddleCornerAtlasIndex;
-		public uint backBottomRightCornerAtlasIndex;
+		public float leftWidth = 0.25f;
+		public float rightWidth = 0.25f;
+		public float topHeight = 0.25f;
+		public float bottomHeight = 0.25f;
+		public uint backTopLeftCornerAtlasIndex = uint.MaxValue;
+		public uint backTopMiddleCornerAtlasIndex = uint.MaxValue;
+		public uint backTopRightCornerAtlasIndex = uint.MaxValue;
+		public uint backMiddleLeftCornerAtlasIndex = uint.MaxValue;
+		public uint backMiddleMiddleCornerAtlasIndex = uint.MaxValue;
+		public uint backMiddleRightCornerAtlasIndex = uint.MaxValue;
+		public uint backBottomLeftCornerAtlasIndex = uint.MaxValue;
+		public uint backBottomMiddleCornerAtlasIndex = uint.MaxValue;
+		public uint backBottomRightCornerAtlasIndex = uint.MaxValue;
 		public int backTopLeftCornerAtlasRotate;
 		public int backTopMiddleCornerAtlasRotate;
 		public int backTopRightCornerAtlasRotate;
@@ -36,17 +36,17 @@ namespace UbiArt.ITF {
 		public bool backMiddleLeftCornerAtlasTile;
 		public bool backMiddleRightCornerAtlasTile;
 		public bool backBottomMiddleCornerAtlasTile;
-		public float xUVToDistance;
-		public float yUVToDistance;
+		public float xUVToDistance = 1f;
+		public float yUVToDistance = 1f;
 		public float zOffset;
 		public float dynamicAMVMinimunBorderSize;
 		public Vec3d shadowOffset;
 		public float shadowAlpha;
-		public bool shadowUseFrontTexture;
+		public bool shadowUseFrontTexture = true;
 		public bool posShadowRelative;
 		public Vec3d highlightOffset;
 		public float highlightAlpha;
-		public Vec2d highlightScale;
+		public Vec2d highlightScale = Vec2d.One;
 		public Path highlightTexture;
 		public GFXMaterialSerializable highlightMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {

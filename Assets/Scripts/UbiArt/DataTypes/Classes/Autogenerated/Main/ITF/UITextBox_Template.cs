@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class UITextBox_Template : UIComponent_Template {
-		public CListO<FontTextArea.Style> styles;
+		public CListO<FontTextArea.Style> styles = new CListO<FontTextArea.Style>(new System.Collections.Generic.List<FontTextArea.Style>() { new FontTextArea.Style() });
 		public float depthOffset;
 		public bool is2DNoScreenRatio;
 		public float textHeight;

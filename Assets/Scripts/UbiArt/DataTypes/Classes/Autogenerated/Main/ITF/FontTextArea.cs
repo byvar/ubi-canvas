@@ -1,15 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class FontTextArea : CSerializable {
-		public FontTextArea.FontSet FontTextArea_FontSet__0;
-		public FontTextArea.Style FontTextArea_Style__1;
+		public FontTextArea.FontSet _FontSet;
+		public FontTextArea.Style _Style;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.VH) {
-				FontTextArea_FontSet__0 = s.SerializeObject<FontTextArea.FontSet>(FontTextArea_FontSet__0, name: "FontTextArea.FontSet__0");
-				FontTextArea_Style__1 = s.SerializeObject<FontTextArea.Style>(FontTextArea_Style__1, name: "FontTextArea.Style__1");
-			} else {
-			}
+			_FontSet = s.SerializeObject<FontTextArea.FontSet>(_FontSet, name: "FontSet");
+			_Style = s.SerializeObject<FontTextArea.Style>(_Style, name: "Style");
 		}
 		[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 		public partial class FontSet : CSerializable {
@@ -163,11 +160,17 @@ namespace UbiArt.ITF {
 				[Serialize("FONT_VALIGN_BOTTOM")] VALIGN_BOTTOM = 2,
 			}
 			public enum FONT_ALIGN2 {
-				[Serialize("FONT_ALIGN_NONE")] NONE = -1,
-				[Serialize("FONT_ALIGN_LEFT")] LEFT = 0,
+				[Serialize("FONT_ALIGN_NONE"  )] NONE = -1,
+				[Serialize("FONT_ALIGN_LEFT"  )] LEFT = 0,
 				[Serialize("FONT_ALIGN_CENTER")] CENTER = 1,
-				[Serialize("FONT_ALIGN_RIGHT")] RIGHT = 2,
+				[Serialize("FONT_ALIGN_RIGHT" )] RIGHT = 2,
 			}
+		}
+
+		public enum ScaleMatchType {
+			[Serialize("NoScaleMatch"       )] NoScaleMatch = 0,
+			[Serialize("ScaleMatchOneLine"  )] ScaleMatchOneLine = 1,
+			[Serialize("ScaleMatchMultiLine")] ScaleMatchMultiLine = 2,
 		}
 	}
 }

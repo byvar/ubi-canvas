@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
 				if (previousSettings.game != settings.game) {
-					if ((previousSettings.game == Settings.Game.RA /*|| previousSettings.game == Settings.Game.RM*/) && settings.game == Settings.Game.RL) {
+					if ((previousSettings.game == Settings.Game.RA || previousSettings.game == Settings.Game.RM) && settings.game == Settings.Game.RL) {
 						materialtype2 = (GFX_MAT2)(int)materialtype;
 
 						// Some lighting parameters otherwise don't work in Legends

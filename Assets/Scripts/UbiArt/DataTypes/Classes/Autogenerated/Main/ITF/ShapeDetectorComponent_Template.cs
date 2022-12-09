@@ -13,9 +13,7 @@ namespace UbiArt.ITF {
 		public bool shapeIsConcave;
 		public bool computeAnimShapeOnce;
 		public bool useFriezeShape;
-		public StringID StringID__3;
-		public StringID StringID__4;
-		public StringID StringID__5;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {

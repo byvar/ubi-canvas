@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AspiNetworkComponent_Template : ActorComponent_Template {
-		public float enterDuration;
-		public float enterBezierMultiplier;
-		public float speed;
-		public float exitSpeed;
-		public float exitDist;
-		public float exitRestoreZDist;
+		public float enterDuration = 1f;
+		public float enterBezierMultiplier = 1f;
+		public float speed = 1f;
+		public float exitSpeed = 1f;
+		public float exitDist = 3f;
+		public float exitRestoreZDist = 1f;
 		public CListO<RO2_AspiNetworkComponent_Template.FxDataNet> fxData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -2,17 +2,17 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class UIComponent : ActorComponent {
 		public bool transition;
-		public bool display;
+		public bool display = true;
 		public StringID leftComponentID;
 		public StringID rightComponentID;
 		public StringID upComponentID;
 		public StringID downComponentID;
-		public bool buggyLine;
+		public bool buggyLine = true;
 		public float showingFadeDuration;
 		public float hidingFadeDuration;
-		public View displayMask;
+		public View displayMask = View.MainAndRemote;
 		public Vec2d screenSpace;
-		public int UIState;
+		public int UIState = 1;
 		public bool needsAspectRatioFix;
 		public bool needsAspectRatioFixLocal;
 		public float RELATIVEPOSX;

@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class PhysForceModifierPolygon_Template : PhysForceModifier_Template {
 		public PhysShapePolygon polygon;
-		public Vec2d direction;
+		public Vec2d direction = Vec2d.Right;
 		public Vec2d centre;
 		public float fallOffStart;
 		public float fallOffEnd;

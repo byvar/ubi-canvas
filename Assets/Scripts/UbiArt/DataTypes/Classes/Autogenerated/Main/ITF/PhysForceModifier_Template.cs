@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		public bool isInverted;
 		public float centerForce;
 		public float centerForceMaxSpeed;
-		public float speedMultiplierX;
-		public float speedMultiplierY;
+		public float speedMultiplierX = 1f;
+		public float speedMultiplierY = 1f;
 		public Vec2d posOffset;
 		public Angle angleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {

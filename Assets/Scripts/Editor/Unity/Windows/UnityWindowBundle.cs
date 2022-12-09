@@ -56,13 +56,19 @@ public class UnityWindowBundle : UnityWindow {
 					var conversionSettings = new ConversionSettings() {
 						OldSettings = oldSettings,
 					};
+					if (oldSettings.game == Settings.Game.RA || oldSettings.game == Settings.Game.RM) {
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("common/matshader/", "common/matshader_adv/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("common/fx/lifeelements/water/", "common/fx/lifeelements/water_adv/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("common/platform/aspinetwork/", "common/platform/aspinetwork_adv/"));
+						//conversionSettings.PathConversionRules.Add(
+						//	new PathConversionRule("world/common/ldfrieze/polystyrene/frieze/", "world/common/ldfrieze/polystyrene/frieze_adv/"));
+					}
 					if (oldSettings.game == Settings.Game.RM) {
 						conversionSettings.PathConversionRules.Add(
 							new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
-					}
-					if (oldSettings.game == Settings.Game.RA) {
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("common/matshader/", "common/matshader_adventures/"));
 					}
 
 					// Duplicate actor templates for actors with StartPaused
@@ -122,6 +128,21 @@ public class UnityWindowBundle : UnityWindow {
 						uvManager = rlContextExt.Loader.uvAtlasManager;
 						foreach (var uv in l.uvAtlasManager.atlas) {
 							if(!uvManager.atlas.ContainsKey(uv.Key)) uvManager.atlas.Add(uv);
+						}
+						// Add renamed UV atlas
+						foreach (var tex in structs[typeof(TextureCooked)]) {
+							var curPath = pathMapping[tex.Key];
+							if (l.uvAtlasManager.atlas.ContainsKey(curPath.stringID)) {
+								var convertedPath = new Path(curPath.FullPath);
+								convertedPath.ConvertPath(conversionSettings);
+								if (convertedPath != curPath) {
+									if (uvManager.atlas.ContainsKey(convertedPath.stringID)) {
+										rlContextExt.SystemLogger?.LogWarning($"Cannot merge UV manager, already contains {convertedPath.stringID}");
+									} else {
+										uvManager.atlas[convertedPath.stringID] = l.uvAtlasManager.atlas[curPath.stringID];
+									}
+								}
+							}
 						}
 						uvManagerPath = rlContextExt.Loader.CookedPaths[new Path("", "atlascontainer.ckd").stringID];
 					}

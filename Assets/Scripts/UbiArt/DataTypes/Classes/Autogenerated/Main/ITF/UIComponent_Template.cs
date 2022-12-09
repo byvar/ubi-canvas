@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class UIComponent_Template : ActorComponent_Template {
-		public bool is2D;
+		public bool is2D = true;
 		public float showingFadeDuration;
 		public float hidingFadeDuration;
 		public Path fontName;

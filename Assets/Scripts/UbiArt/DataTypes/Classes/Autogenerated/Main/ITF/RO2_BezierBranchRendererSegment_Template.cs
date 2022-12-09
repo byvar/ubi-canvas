@@ -4,28 +4,28 @@ namespace UbiArt.ITF {
 		public StringID name;
 		public float startRatio;
 		public float startOffset;
-		public float endRatio;
+		public float endRatio = 1f;
 		public float endOffset;
 		public uint spriteMinIndex;
 		public uint spriteMaxIndex;
 		public float spritePlayRate;
 		public float spritePlayRateSpeedMultiplier;
-		public float tileLength;
-		public bool uvAttachToEnd;
+		public float tileLength = 1f;
+		public bool uvAttachToEnd = true;
 		public float uvScrollSpeed;
-		public float beginLength;
-		public float endLength;
-		public float beginWidth;
-		public float beginAlpha;
+		public float beginLength { get => startLengthOffset; set => startLengthOffset = value; }
+		public float endLength { get => endLengthOffset; set => endLengthOffset = value; }
+		public float beginWidth { get => startWidth; set => startWidth = value; }
+		public float beginAlpha { get => startAlpha; set => startAlpha = value; }
 		public float startLengthRatio;
 		public float startLengthOffset;
 		public float endLengthRatio;
 		public float endLengthOffset;
-		public float startWidth;
-		public float midWidth;
-		public float endWidth;
+		public float startWidth = 1f;
+		public float midWidth = 1f;
+		public float endWidth = 1f;
 		public float startAlpha;
-		public float midAlpha;
+		public float midAlpha = 1f;
 		public float endAlpha;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

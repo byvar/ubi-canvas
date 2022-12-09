@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 		public bool disableAfterLaunch;
 		public StringID launchPolyline;
 		public Path hintFxPath;
-		public bool hintFxInstantDestroy;
-		public bool triggerChildsOnTouch;
+		public bool hintFxInstantDestroy = true;
+		public bool triggerChildsOnTouch = true;
 		public bool isPaintable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

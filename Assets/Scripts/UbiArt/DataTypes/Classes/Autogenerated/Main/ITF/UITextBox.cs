@@ -4,31 +4,31 @@ namespace UbiArt.ITF {
 		public uint style;
 		public Vec2d offset;
 		public float depth;
-		public Vec2d scale;
-		public Vec2d area;
-		public float maxWidth;
+		public Vec2d scale = Vec2d.One;
+		public Vec2d area = new Vec2d(-1,-1);
+		public float maxWidth = -1f;
 		public string rawText;
 		public LocalisationId locId;
 		public bool unsecureSource;
 		public Color overridingColor;
 		public Enum_GlobalScissor GlobalScissor;
-		public bool scaleToMatchWithArea;
+		public bool scaleToMatchWithArea { get => scaleToMatchWithAreaType != FontTextArea.ScaleMatchType.NoScaleMatch; set => scaleToMatchWithAreaType = value ? FontTextArea.ScaleMatchType.ScaleMatchOneLine : FontTextArea.ScaleMatchType.NoScaleMatch; }
 		public float autoScrollSpeed;
 		public float autoScrollWaitTime;
 		public float autoScrollFirstWaitTime;
 		public bool autoScrollLoop;
 		public AutoScroll autoScrollMode;
 		public AutoScrollUpdate autoScrollUpdate;
-		public uint autoScrollLoopGap;
-		public FONT_ALIGN overridingHAlignment;
-		public FONT_ALIGN2 overridingHAlignment2;
-		public FONT overridingVAlignment;
-		public AREA_ANCHOR overridingAnchor;
-		public uint ViewportVisibility;
+		public uint autoScrollLoopGap = 1;
+		public FONT_ALIGN overridingHAlignment = FONT_ALIGN.NONE;
+		public FONT_ALIGN2 overridingHAlignment2 = FONT_ALIGN2.NONE;
+		public FONT overridingVAlignment = FONT.ALIGN_NONE;
+		public AREA_ANCHOR overridingAnchor = AREA_ANCHOR.NONE;
+		public uint ViewportVisibility = 0xFFFF;
 		public bool AdaptToLangage;
 		public bool DontResizeForChinese;
+		public FontTextArea.ScaleMatchType scaleToMatchWithAreaType;
 
-		public Enum_VH_0 Enum_VH_0__9;
 		public bool bool__12;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -83,7 +83,7 @@ namespace UbiArt.ITF {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
 					}
-					Enum_VH_0__9 = s.Serialize<Enum_VH_0>(Enum_VH_0__9, name: "Enum_VH_0__9");
+					scaleToMatchWithAreaType = s.Serialize<FontTextArea.ScaleMatchType>(scaleToMatchWithAreaType, name: "scaleToMatchWithArea");
 					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
 					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
 					bool__12 = s.Serialize<bool>(bool__12, name: "bool__12");
@@ -107,6 +107,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
 				}
+				scaleToMatchWithAreaType = s.Serialize<FontTextArea.ScaleMatchType>(scaleToMatchWithAreaType, name: "scaleToMatchWithArea");
 				autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
 				autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
 				autoScrollFirstWaitTime = s.Serialize<float>(autoScrollFirstWaitTime, name: "autoScrollFirstWaitTime");
@@ -171,11 +172,6 @@ namespace UbiArt.ITF {
 			[Serialize("FONT_ALIGN_LEFT"   )] LEFT = 0,
 			[Serialize("FONT_ALIGN_CENTER" )] CENTER = 1,
 			[Serialize("FONT_ALIGN_RIGHT"  )] RIGHT = 2,
-		}
-		public enum Enum_VH_0 {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
 		}
 		public override uint? ClassCRC => 0xD10CBEED;
 	}

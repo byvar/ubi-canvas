@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class RenderSingleAnimData : SingleAnimData {
 		public float xMin;
 		public float yMin;
-		public uint state;
+		public uint state = uint.MaxValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			xMin = s.Serialize<float>(xMin, name: "xMin");
