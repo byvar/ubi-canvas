@@ -69,6 +69,7 @@ namespace UbiArt.Bundle {
 		}
 		public bool HasPreprocessedFile(Path path) => preProcessedFiles.ContainsKey(path);
 		public bool ContainsFile(Path path) => packMaster.files.Any(f => f.Item2 == path);
+		public Path GetPathByStringID(StringID id) => packMaster.files.FirstOrDefault(f => f.Item2.stringID == id)?.Item2 ?? null;
 
 		public void AddFile(Path path, ICSerializable data) {
 			files[path] = data;

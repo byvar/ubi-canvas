@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public bool SteadyExplosion;
 		public float TimeToStartFalling;
 		public CListO<RO2_LightingMushroomComponent.MushroomTarget> MushroomTargets;
-		public uint GPEColor = 0xFFFFFFFF;
+		public uint GPEColor = uint.MaxValue;
 		public bool fireOnce;
 		public bool triggerSpawn;
 		protected override void SerializeImpl(CSerializerObject s) {

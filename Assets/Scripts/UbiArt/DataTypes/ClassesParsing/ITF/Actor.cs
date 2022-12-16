@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UbiArt.ITF {
 	public partial class Actor {
@@ -62,6 +63,16 @@ namespace UbiArt.ITF {
 				}
 			}
 			previousSettings = settings;
+		}
+
+		/// <summary>
+		/// Gets first component of type T
+		/// </summary>
+		/// <typeparam name="T">Component type</typeparam>
+		/// <returns>Component of the requested type</returns>
+		public T GetComponent<T>() where T : ActorComponent {
+			if(COMPONENTS == null) return null;
+			return COMPONENTS.FirstOrDefault(c => (c?.obj as T) != null)?.obj as T;
 		}
 	}
 }

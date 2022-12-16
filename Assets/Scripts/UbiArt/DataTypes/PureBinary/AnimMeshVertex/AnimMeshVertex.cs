@@ -1,3 +1,4 @@
+using System.Linq;
 using UbiArt.ITF;
 
 namespace UbiArt.Animation {
@@ -8,15 +9,15 @@ namespace UbiArt.Animation {
 
 		public uint version;
 
-		public CListO<StringID> unk1;
-		public CListP<ulong> unk1Adv;
+		public CListO<StringID> animFriendly;
+		public CListP<ulong> animFriendly_adv;
 
-		public CListP<uint> unk2;
+		public CListP<uint> animIndex; // Index of an animation is found using animIndex[IndexOf(stringID, animFriendly)]
 
 		public CListO<CListO<FrameMeshInfo>> frameMeshInfo;
-		public CListP<uint> unk3;
+		public CListP<uint> unk3; // Vec2ds indices?
 		public uint unk4;
-		public CListO<AABB> aabb;
+		public CListO<AABB> animAABB;
 		public CListO<Vec2d> vec2ds;
 		public CListO<PatchData> patches;
 		public CListP<string> animNames;
@@ -27,15 +28,15 @@ namespace UbiArt.Animation {
 			version = s.Serialize<uint>(version, name: "version");
 
 			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
-				unk1Adv = s.SerializeObject<CListP<ulong>>(unk1Adv, name: "unk1");
+				animFriendly_adv = s.SerializeObject<CListP<ulong>>(animFriendly_adv, name: "animFriendly");
 			} else {
-				unk1 = s.SerializeObject<CListO<StringID>>(unk1, name: "unk1");
+				animFriendly = s.SerializeObject<CListO<StringID>>(animFriendly, name: "animFriendly");
 			}
-			unk2 = s.SerializeObject<CListP<uint>>(unk2, name: "unk2");
+			animIndex = s.SerializeObject<CListP<uint>>(animIndex, name: "animIndex");
 			frameMeshInfo = s.SerializeObject<CListO<CListO<FrameMeshInfo>>>(frameMeshInfo, name: "frameMeshInfo");
 			unk3 = s.SerializeObject<CListP<uint>>(unk3, name: "unk3");
 			unk4 = s.Serialize<uint>(unk4, name: "unk4");
-			aabb = s.SerializeObject<CListO<AABB>>(aabb, name: "aabb");
+			animAABB = s.SerializeObject<CListO<AABB>>(animAABB, name: "aabb");
 			vec2ds = s.SerializeObject<CListO<Vec2d>>(vec2ds, name: "vec2ds");
 			patches = s.SerializeObject<CListO<PatchData>>(patches, name: "patches");
 			animNames = s.SerializeObject<CListP<string>>(animNames, name: "animNames");
@@ -44,11 +45,14 @@ namespace UbiArt.Animation {
 		public void Reinit(Settings settings) {
 			if (settings.game == Settings.Game.RL && version >= VersionLegends) {
 				version = VersionLegends;
-				if (unk1 == null && unk1Adv != null) {
-					unk1 = new CListO<StringID>();
-					foreach (var u in unk1Adv) {
-						unk1.Add(new StringID((uint)(u & 0xFFFFFFFF)));
+				if (animFriendly == null && animFriendly_adv != null) {
+					animFriendly = new CListO<StringID>();
+					foreach (var u in animFriendly_adv) {
+						animFriendly.Add(new StringID((uint)(u & 0xFFFFFFFF)));
 					}
+				}
+				if (animNames == null || animNames.Count == 0) {
+					animNames = new CListP<string>(Enumerable.Repeat("",animFriendly.Count).ToList());
 				}
 			}
 		}

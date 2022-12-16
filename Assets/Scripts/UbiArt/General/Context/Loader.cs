@@ -122,6 +122,8 @@ namespace UbiArt {
 			}
 		}
 		public bool AnyBundleContainsFile(Path path) => Bundles.Any(b => b.Value.ContainsFile(path));
+		public Path GetPathFromBundleByStringID(StringID id) => Bundles.Values.FirstOrDefault(b => b.GetPathByStringID(id) != null)?.GetPathByStringID(id);
+
 		public async Task<byte[]> GetFileFromBundles(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
 			Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;

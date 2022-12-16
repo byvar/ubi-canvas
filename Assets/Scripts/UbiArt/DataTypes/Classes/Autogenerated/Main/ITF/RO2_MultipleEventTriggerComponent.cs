@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public partial class EventCondition : CSerializable {
 			public Generic<Event> _event;
 			public Enum_operator _operator;
-			public float validityDuration;
+			public float validityDuration = -1f;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
