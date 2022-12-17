@@ -58,12 +58,12 @@ namespace UbiArt.ITF {
 		public RECEIVEDHITTYPE receivedHitType_ShotCharge;
 		public RECEIVEDHITTYPE receivedHitType_EjectY;
 		public RECEIVEDHITTYPE receivedHitType_Pass;
-		public uint hitLevel_ShotBasic;
-		public uint hitLevel_ShotCrush;
-		public uint hitLevel_ShotUp;
-		public uint hitLevel_ShotCharge;
-		public uint hitLevel_EjectY;
-		public uint hitLevel_Pass;
+		public uint hitLevel_ShotBasic = uint.MaxValue;
+		public uint hitLevel_ShotCrush = uint.MaxValue;
+		public uint hitLevel_ShotUp = uint.MaxValue;
+		public uint hitLevel_ShotCharge = uint.MaxValue;
+		public uint hitLevel_EjectY = uint.MaxValue;
+		public uint hitLevel_Pass = uint.MaxValue;
 		public float hitDelay;
 		public float blockingEdgeTimer;
 		public float minTime_Pass;
@@ -73,7 +73,7 @@ namespace UbiArt.ITF {
 		public Angle angleAltChoice_ShotCharge;
 		public Angle angleAltChoice_EjectY;
 		public Angle angleAltChoice_Pass;
-		public uint joyTrameMax;
+		public uint joyTrameMax = uint.MaxValue;
 		public float impulseForceMegaHit_ShotBasic;
 		public float impulseForceMegaHit_ShotCrush;
 		public float impulseForceMegaHit_ShotUp;
@@ -88,12 +88,12 @@ namespace UbiArt.ITF {
 		public bool buildMegaHitEnabled_ShotCharge;
 		public bool buildMegaHitEnabled_EjectY;
 		public bool buildMegaHitEnabled_Pass;
-		public uint hitCountForMegaHit;
+		public uint hitCountForMegaHit = uint.MaxValue;
 		public float stretchAnimSpeedMin;
 		public float animHaloTimer;
 		public float crushGroundImmuneDuration;
 		public float megaHitForce;
-		public float drcTapForce;
+		public float drcTapForce = 500f;
 		public uint faction;
 		public float playerHitLifeTime;
 		protected override void SerializeImpl(CSerializerObject s) {

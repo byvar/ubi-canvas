@@ -178,7 +178,7 @@ namespace UbiArt {
 
 		public override string ToString() {
 			if (stringID.IsNull) return "Path(null)";
-			return $"Path(\"{folder}\", \"{filename}\")";
+			return $"Path(\"{folder}\", \"{filename}\", {stringID.stringID:X8})";
 		}
 
 		/* Flags:

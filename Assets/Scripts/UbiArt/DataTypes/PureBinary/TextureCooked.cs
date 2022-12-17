@@ -7,8 +7,8 @@ namespace UbiArt {
 		public uint texSize;
 		public ushort width;
 		public ushort height;
-		public ushort unk_x; // tiling flags?
-		public ushort unk_y;
+		public ushort unk_factor; // unk1 & unk2 are both divided by (width * height * unk_factor) to determine something
+		public ushort unk_y; // ???
 		public uint unkAdventures;
 		public uint texSize2;
 		public uint unk0;
@@ -30,7 +30,7 @@ namespace UbiArt {
 				texSize = s.Serialize<uint>(texSize);
 				width = s.Serialize<ushort>(width);
 				height = s.Serialize<ushort>(height);
-				unk_x = s.Serialize<ushort>(unk_x);
+				unk_factor = s.Serialize<ushort>(unk_factor);
 				unk_y = s.Serialize<ushort>(unk_y);
 				if (version >= 16) {
 					unkAdventures = s.Serialize<uint>(unkAdventures);

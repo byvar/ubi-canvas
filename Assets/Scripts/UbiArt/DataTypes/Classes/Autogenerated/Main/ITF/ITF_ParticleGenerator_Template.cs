@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class ITF_ParticleGenerator_Template : CSerializable {
 		public uint computeAABB;
 		public uint useAnim;
-		public bool useAnim_;
+		public bool useAnim_ { get => useAnim != 0; set => useAnim = value ? (uint)1 : 0; }
 		public uint loop;
 		public Path amvPath;
 		public uint useUVRandom;

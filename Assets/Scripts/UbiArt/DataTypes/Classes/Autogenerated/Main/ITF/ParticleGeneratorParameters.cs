@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		public float friction = 1f;
 		public float freq = 0.05f;
 		public float freqDelta;
-		public bool forceEmitAtStart;
+		public bool forceEmitAtStart { get => forceEmitAtStart_int != 0; set => forceEmitAtStart_int = value ? 1 : 0; }
 		public int forceEmitAtStart_int;
 		public uint emitBatchCount = 1;
 		public uint emitBatchCount_AAO = 1;
@@ -259,8 +259,8 @@ namespace UbiArt.ITF {
 		public int cartoonrendering;
 		public bool impostorrendering;
 		public bool showimpostorrender;
-		public uint impostorTextureSizeX;
-		public uint impostorTextureSizeY;
+		public uint impostorTextureSizeX = 128;
+		public uint impostorTextureSizeY = 128;
 		public float outlinesize;
 		public uint randomoutline;
 		public int texturemirroru;

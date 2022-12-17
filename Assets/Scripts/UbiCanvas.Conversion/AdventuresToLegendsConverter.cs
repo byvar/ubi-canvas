@@ -34,6 +34,28 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("rotation_biggear.tpl", "rotation_biggear_adv.tpl"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("lightingmushroom.tpl", "lightingmushroom_adv.tpl"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/"));
+
+				// FX - Sadly, can't just replace the whole textures folder (it breaks maps like spikyspinners), so... case by case
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures/fireworks/", "world/common/fx/textures/fireworks_adv/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures/star/", "world/common/fx/textures/star_adv/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures/light/", "world/common/fx/textures/light_adv/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures/smoke/", "world/common/fx/textures/smoke_adv/")); // TODO: fix smoke textures coming from egghunt
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures/smoke_adv/fx_steam_anim_01.tga", "world/common/fx/textures/smoke/fx_steam_anim_01.tga"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures/smoke_adv/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures/pollen/", "world/common/fx/textures/pollen_adv/"));
+				/*conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/", "world/common/fx_/"));*/
+				/*conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/lifeelements2/dust/", "world/common/fx/lifeelements2/dust_adv/"));*/
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/common/ldfrieze/polystyrene/frieze/", "world/common/ldfrieze/polystyrene/frieze_adv/"));
 			}
@@ -42,9 +64,9 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
 
-			// Duplicate actor templates for actors with StartPaused
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
+			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
 
 
 			// Step 1: create new paths dictionary
@@ -195,6 +217,7 @@ namespace UbiCanvas.Conversion {
 						tmpl.onEnterEvent.className = new StringID(tmpl.onEnterEvent.obj.ClassCRC ?? uint.MaxValue);
 						tmpl.onExitEvent = null;
 					}
+					// TODO: Change restartTimer in template as well if fireOnce is set
 
 					var gpeColor = lightingMushroom.GPEColor;
 					if (gpeColor != uint.MaxValue) {
@@ -334,6 +357,40 @@ namespace UbiCanvas.Conversion {
 			);
 
 			return newAMV;
+		}
+		public void AddStickToPolylinePhysComponentForSoccerBall(Context oldContext, Settings newSettings) {
+			Loader l = oldContext.Loader;
+
+			foreach (var act in l.LoadedActors) {
+				var ball = act.GetComponent<RO2_BallComponent>();
+				if (ball != null) {
+					var stickToPolyline = act.GetComponent<StickToPolylinePhysComponent>();
+					if (stickToPolyline == null) {
+						stickToPolyline = new StickToPolylinePhysComponent();
+						act.COMPONENTS.Add(new Generic<ActorComponent>() {
+							obj = stickToPolyline,
+							className = new StringID(stickToPolyline.ClassCRC ?? uint.MaxValue)
+						});
+
+						var tplStickToPolyline = act.template?.obj?.GetComponent<StickToPolylinePhysComponent_Template>();
+						if (tplStickToPolyline == null) {
+							tplStickToPolyline = new StickToPolylinePhysComponent_Template() {
+								physRadius = 0.58f,
+								physWeight = 0.3f,
+								physGravityMultiplier = 0.5f,
+								physAirFriction = 4f,
+							};
+							act.template?.obj?.COMPONENTS.Add(new Generic<ActorComponent_Template>() {
+								obj = tplStickToPolyline,
+								className = new StringID(tplStickToPolyline.ClassCRC ?? uint.MaxValue)
+							});
+						}
+						// Hack: Also set cameraRegisterDelay to float.maxvalue to prevent the camera from moving towards it all the time
+						var tplBall = act.template?.obj?.GetComponent<RO2_BallComponent_Template>();
+						tplBall.cameraRegisterDelay = float.MaxValue;
+					}
+				}
+			}
 		}
 		#endregion
 	}

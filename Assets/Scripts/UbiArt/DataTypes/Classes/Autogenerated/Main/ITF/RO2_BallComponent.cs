@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BallComponent : ActorComponent {
-		public bool disableWindForce;
+		public bool disableWindForce = true;
 		public bool startWithHalo;
-		public float bounceMultiplier;
+		public float bounceMultiplier = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
