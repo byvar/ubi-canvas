@@ -371,22 +371,23 @@ namespace UbiCanvas.Conversion {
 							obj = stickToPolyline,
 							className = new StringID(stickToPolyline.ClassCRC ?? uint.MaxValue)
 						});
-
+						var tplBall = act.template?.obj?.GetComponent<RO2_BallComponent_Template>();
 						var tplStickToPolyline = act.template?.obj?.GetComponent<StickToPolylinePhysComponent_Template>();
 						if (tplStickToPolyline == null) {
 							tplStickToPolyline = new StickToPolylinePhysComponent_Template() {
 								physRadius = 0.58f,
 								physWeight = 0.3f,
 								physGravityMultiplier = 0.5f,
-								physAirFriction = 4f,
+								physAirFriction = 4f,// / ball.bounceMultiplier,
 							};
 							act.template?.obj?.COMPONENTS.Add(new Generic<ActorComponent_Template>() {
 								obj = tplStickToPolyline,
 								className = new StringID(tplStickToPolyline.ClassCRC ?? uint.MaxValue)
 							});
+							tplBall.bounceCoefFactor_x *= ball.bounceMultiplier;
+							tplBall.bounceCoefFactor_y *= ball.bounceMultiplier;
 						}
 						// Hack: Also set cameraRegisterDelay to float.maxvalue to prevent the camera from moving towards it all the time
-						var tplBall = act.template?.obj?.GetComponent<RO2_BallComponent_Template>();
 						tplBall.cameraRegisterDelay = float.MaxValue;
 					}
 				}
