@@ -74,5 +74,15 @@ namespace UbiArt.ITF {
 			if(COMPONENTS == null) return null;
 			return COMPONENTS.FirstOrDefault(c => (c?.obj as T) != null)?.obj as T;
 		}
+
+		public T AddComponent<T>() where T : ActorComponent, new() {
+			if(COMPONENTS == null) COMPONENTS = new CArrayO<Generic<ActorComponent>>();
+			var t = new T();
+			COMPONENTS.Add(new Generic<ActorComponent>() {
+				obj = t,
+				className = new StringID(t?.ClassCRC ?? uint.MaxValue)
+			});
+			return t;
+		}
 	}
 }

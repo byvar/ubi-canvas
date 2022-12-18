@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_23_sub_726B40 : CSerializable {
+	public partial class RO2_OnlineBallComponent_Template : ActorComponent_Template {
 		public float impulseForce_Ground;
 		public float impulseForce_Wall;
 		public float impulseForce_Hit;

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_276_sub_902FB0 : ActorComponent_Template {
+	public partial class RO2_DRCForceActionComponent_Template : ActorComponent_Template {
 		public GFXMaterialSerializable dbgSplineMaterial;
 		public float shieldDragDistance;
 		public int allowMultiPlayerMode;

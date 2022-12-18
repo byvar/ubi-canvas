@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_194_sub_781AC0 : CSerializable {
+	public partial class RO2_DRCTrappedComponent_Template : ActorComponent_Template {
 		public Placeholder trappedShape;
 		public StringID animOff;
 		public StringID animTrapped;

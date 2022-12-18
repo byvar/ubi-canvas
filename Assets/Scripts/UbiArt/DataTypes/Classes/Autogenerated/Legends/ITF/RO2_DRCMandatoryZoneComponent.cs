@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_435_sub_B679C0 : ActorComponent {
+	public partial class RO2_DRCMandatoryZoneComponent : ActorComponent {
 		public bool AMDisplayTuto;
 		public StringID AM_MapId;
 		public bool activated;

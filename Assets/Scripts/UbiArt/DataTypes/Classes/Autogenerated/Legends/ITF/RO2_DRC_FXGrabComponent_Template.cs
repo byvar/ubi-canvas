@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_215_sub_7E8750 : ActorComponent_Template {
+	public partial class RO2_DRC_FXGrabComponent_Template : ActorComponent_Template {
 		public StringID fxName;
 		public int autoUpdatePos;
 		public Vec2d scaleFXGrab;

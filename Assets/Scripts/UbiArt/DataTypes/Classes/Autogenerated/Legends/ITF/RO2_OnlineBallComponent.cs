@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_134_sub_726470 : CSerializable {
+	public partial class RO2_OnlineBallComponent : ActorComponent {
 		public bool disableWindForce;
 		public bool startWithHalo;
 		protected override void SerializeImpl(CSerializerObject s) {

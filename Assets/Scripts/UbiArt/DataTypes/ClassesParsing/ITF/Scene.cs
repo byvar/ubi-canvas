@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Search;
 
 namespace UbiArt.ITF {
 	public partial class Scene {
 		// Returns whether actor was added to scene successfully
 		public bool AddActor(Actor a, string name) {
-			if (ACTORS != null && a != null && !ACTORS.Any(ac => ac.obj != null && ac.obj == a)) {
-				if (a.USERFRIENDLY == null || a.USERFRIENDLY.Length == 0) {
+			if (ACTORS == null) ACTORS = new CArrayO<Generic<Actor>>();
+			if (a != null && !ACTORS.Any(ac => ac?.obj == a)) {
+				if (string.IsNullOrEmpty(a.USERFRIENDLY)) {
 					a.USERFRIENDLY = name;
+				}
+				if(name != null) {
 					int i = 0;
 					while(ACTORS.Any(ac => !ac.IsNull && ac.obj.USERFRIENDLY == a.USERFRIENDLY)) {
 						a.USERFRIENDLY = $"{name}@{i}";
@@ -97,6 +102,97 @@ namespace UbiArt.ITF {
 				}
 			}
 			previousSettings = settings;
+		}
+
+		public SearchResult<Pickable> FindPickable(Predicate<Pickable> p, SearchFlags flags = SearchFlags.AllRecursive) {
+			if (flags.HasFlag(SearchFlags.Frise)) {
+				if (FRISE != null) {
+					foreach (var fr in FRISE) {
+						if(fr == null) continue;
+						if (p(fr)) {
+							return new SearchResult<Pickable>() {
+								Path = new ObjectPath() { id = fr.USERFRIENDLY },
+								Result = fr,
+								ContainingScene = this,
+								RootScene = this,
+							};
+						}
+					}
+				}
+			}
+			if (flags.HasFlag(SearchFlags.Actors)) {
+				if (ACTORS != null) {
+					foreach (var act in ACTORS) {
+						if(act?.obj == null) continue;
+						if (p(act.obj)) {
+							return new SearchResult<Pickable>() {
+								Path = new ObjectPath() { id = act.obj.USERFRIENDLY },
+								Result = act.obj,
+								ContainingScene = this,
+								RootScene = this,
+							};
+						}
+						if (flags.HasFlag(SearchFlags.Recursive) && act.obj is SubSceneActor ssa && ssa?.SCENE?.value != null) {
+							var ss = ssa.SCENE.value;
+							var ssResult = ss.FindPickable(p, flags);
+							if (ssResult != null) {
+								List<ObjectPath.Level> levels = new List<ObjectPath.Level>();
+								levels.Add(new ObjectPath.Level() {
+									name = ssa.USERFRIENDLY
+								});
+								if (ssResult.Path.levels != null) {
+									foreach (var lev in ssResult.Path.levels) {
+										levels.Add(lev);
+									}
+								}
+								var newResult = new SearchResult<Pickable>() {
+									RootScene = this,
+									ContainingScene = ssResult.ContainingScene,
+									Path = new ObjectPath() {
+										levels = new CListO<ObjectPath.Level>(levels),
+										id = ssResult.Path.id
+									},
+									Result = ssResult.Result
+								};
+
+								return newResult;
+							}
+						}
+					}
+				}
+			}
+			return null;
+		}
+		public SearchResult<Actor> FindActor(Predicate<Actor> a, SearchFlags flags = SearchFlags.Actors | SearchFlags.Recursive) {
+			var pickable = FindPickable(p => a(p as Actor), flags & ~SearchFlags.Frise);
+			if (pickable != null) {
+				return new SearchResult<Actor>() {
+					ContainingScene = pickable.ContainingScene,
+					RootScene = pickable.RootScene,
+					Path = pickable.Path,
+					Result = pickable.Result as Actor
+				};
+			}
+			return null;
+		}
+
+		[Flags]
+		public enum SearchFlags {
+			None = 0,
+			Actors = 1 << 0,
+			Frise = 1 << 1,
+			All = Actors | Frise,
+
+			Recursive = 1 << 2,
+
+			AllRecursive = All | Recursive,
+		}
+
+		public class SearchResult<T> where T : Pickable {
+			public T Result { get; set; }
+			public ObjectPath Path { get; set; }
+			public Scene RootScene { get; set; }
+			public Scene ContainingScene { get; set; }
 		}
 	}
 }

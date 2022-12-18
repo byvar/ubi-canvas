@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_436_sub_B68190 : ActorComponent_Template {
+	public partial class RO2_DRCMandatoryZoneComponent_Template : ActorComponent_Template {
 		public int enter;
 		public Generic<Event> hi5Event;
 		public int autoMurphy;

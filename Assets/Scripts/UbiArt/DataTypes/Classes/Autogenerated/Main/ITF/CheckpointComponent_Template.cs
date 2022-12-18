@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public int int__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (this is Ray_ShooterCheckPointComponent_Template) return;
+			if (this is Ray_ShooterCheckPointComponent_Template || this is RO2_CheckpointComponent_Template) return;
 			if (s.Settings.game == Settings.Game.RFR) {
 				int__0 = s.Serialize<int>(int__0, name: "int__0");
 				int__1 = s.Serialize<int>(int__1, name: "int__1");

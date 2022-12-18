@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_277_sub_9033E0 : ActorComponent {
+	public partial class RO2_DRCForceActionComponent : ActorComponent {
 		public Enum_forcedAction forcedAction;
 		public bool followPlayer;
 		public bool followPlayerUseCamDir;
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
 				forcedAction = s.Serialize<Enum_forcedAction>(forcedAction, name: "forcedAction");
-				if (forcedAction == Enum_forcedAction.Value_1) {
+				if (forcedAction == Enum_forcedAction.NoTouch) {
 					followPlayer = s.Serialize<bool>(followPlayer, name: "followPlayer", options: CSerializerObject.Options.BoolAsByte);
 					if (followPlayer) {
 						followPlayerUseCamDir = s.Serialize<bool>(followPlayerUseCamDir, name: "followPlayerUseCamDir", options: CSerializerObject.Options.BoolAsByte);
@@ -31,16 +31,16 @@ namespace UbiArt.ITF {
 					if (useToTargetTravel) {
 						toTargetTravel = s.SerializeObject<RO2_TravelData>(toTargetTravel, name: "toTargetTravel");
 					}
-					if (forcedAction == Enum_forcedAction.Value_4) {
+					if (forcedAction == Enum_forcedAction.Gyro) {
 						gyroData = s.SerializeObject<GyroData>(gyroData, name: "gyroData");
-					} else if (forcedAction == Enum_forcedAction.Value_3) {
+					} else if (forcedAction == Enum_forcedAction.TouchHold) {
 						holdToggleMode = s.Serialize<bool>(holdToggleMode, name: "holdToggleMode", options: CSerializerObject.Options.BoolAsByte);
 						if (useToTargetTravel) {
 							holdDuringToTargetTravel = s.Serialize<bool>(holdDuringToTargetTravel, name: "holdDuringToTargetTravel", options: CSerializerObject.Options.BoolAsByte);
 						}
 					}
 				}
-				if (forcedAction != Enum_forcedAction.Value_4) {
+				if (forcedAction != Enum_forcedAction.Gyro) {
 					canBackward = s.Serialize<bool>(canBackward, name: "canBackward", options: CSerializerObject.Options.BoolAsByte);
 					if (canBackward) {
 						canBackwardAnytime = s.Serialize<bool>(canBackwardAnytime, name: "canBackwardAnytime", options: CSerializerObject.Options.BoolAsByte);
@@ -55,12 +55,12 @@ namespace UbiArt.ITF {
 			}
 		}
 		public enum Enum_forcedAction {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-			[Serialize("Value_5")] Value_5 = 5,
+			[Serialize("GenericTouch")] GenericTouch = 0,
+			[Serialize("NoTouch"     )] NoTouch = 1,
+			[Serialize("ZoneInteract")] ZoneInteract = 2,
+			[Serialize("TouchHold"   )] TouchHold = 3,
+			[Serialize("Gyro"        )] Gyro = 4,
+			[Serialize("TouchOnInput")] TouchOnInput = 5,
 		}
 		public override uint? ClassCRC => 0xA38389F8;
 
@@ -103,11 +103,11 @@ namespace UbiArt.ITF {
 				}
 			}
 			public enum Enum_activationMode {
-				[Serialize("Value_0")] Value_0 = 0,
-				[Serialize("Value_1")] Value_1 = 1,
-				[Serialize("Value_2")] Value_2 = 2,
-				[Serialize("Value_3")] Value_3 = 3,
-				[Serialize("Value_4")] Value_4 = 4,
+				[Serialize("Once_CheckpointReset"             )] Once_CheckpointReset = 0,
+				[Serialize("Once"                             )] Once = 1,
+				[Serialize("Multiple"                         )] Multiple = 2,
+				[Serialize("Once_CheckpointReset_IfActionDone")] Once_CheckpointReset_IfActionDone = 3,
+				[Serialize("Once_IfActionDone"                )] Once_IfActionDone = 4,
 			}
 		}
 	}

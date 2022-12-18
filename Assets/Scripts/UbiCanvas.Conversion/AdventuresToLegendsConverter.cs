@@ -67,6 +67,7 @@ namespace UbiCanvas.Conversion {
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
+			AddSceneConfigForRotatingPlatform(mainContext, settings, Controller.Obj.MainScene.obj);
 
 
 			// Step 1: create new paths dictionary
@@ -366,24 +367,17 @@ namespace UbiCanvas.Conversion {
 				if (ball != null) {
 					var stickToPolyline = act.GetComponent<StickToPolylinePhysComponent>();
 					if (stickToPolyline == null) {
-						stickToPolyline = new StickToPolylinePhysComponent();
-						act.COMPONENTS.Add(new Generic<ActorComponent>() {
-							obj = stickToPolyline,
-							className = new StringID(stickToPolyline.ClassCRC ?? uint.MaxValue)
-						});
+						stickToPolyline = act.AddComponent<StickToPolylinePhysComponent>();
 						var tplBall = act.template?.obj?.GetComponent<RO2_BallComponent_Template>();
 						var tplStickToPolyline = act.template?.obj?.GetComponent<StickToPolylinePhysComponent_Template>();
 						if (tplStickToPolyline == null) {
-							tplStickToPolyline = new StickToPolylinePhysComponent_Template() {
-								physRadius = 0.58f,
-								physWeight = 0.3f,
-								physGravityMultiplier = 0.5f,
-								physAirFriction = 4f,// / ball.bounceMultiplier,
-							};
-							act.template?.obj?.COMPONENTS.Add(new Generic<ActorComponent_Template>() {
-								obj = tplStickToPolyline,
-								className = new StringID(tplStickToPolyline.ClassCRC ?? uint.MaxValue)
-							});
+							tplStickToPolyline = act.template?.obj?.AddComponent<StickToPolylinePhysComponent_Template>();
+							tplStickToPolyline.physRadius = 0.58f;
+							tplStickToPolyline.physWeight = 0.3f;
+							tplStickToPolyline.physGravityMultiplier = 0.5f;
+							tplStickToPolyline.physAirFriction = 4f; // / ball.bounceMultiplier,
+
+							// Hack: Apply bounceMultiplier to bounceCoefFactor in template
 							tplBall.bounceCoefFactor_x *= ball.bounceMultiplier;
 							tplBall.bounceCoefFactor_y *= ball.bounceMultiplier;
 						}
@@ -391,6 +385,89 @@ namespace UbiCanvas.Conversion {
 						tplBall.cameraRegisterDelay = float.MaxValue;
 					}
 				}
+			}
+		}
+		public void AddSceneConfigForRotatingPlatform(Context oldContext, Settings newSettings, Scene scene) {
+
+			// TODO: Browse scene instead
+			Loader l = oldContext.Loader;
+
+			// Find any rotating platforms
+			bool foundRotatingPlatform = false;
+			foreach (var act in l.LoadedActors) {
+				if (act.GetComponent<RLC_RotatingPlatformComponent>() != null) {
+					foundRotatingPlatform = true;
+					break;
+				}
+			}
+			if (foundRotatingPlatform) {
+				// Find start point
+				var checkpointSearch = scene.FindActor(act => act.GetComponent<CheckpointComponent>()?.INDEX == 0);
+				Actor checkpointActor = checkpointSearch?.Result;
+				if (checkpointSearch != null) {
+					var sc = checkpointSearch.ContainingScene;
+
+					// Create murfy activation action
+					var murfyTrigger = new Actor() {
+						LUA = new Path("world/common/logicactor/automurphy/component/trigger_box_automurphyactivation.tpl"),
+						USERFRIENDLY = "trigger_box_automurphyactivation",
+						POS2D = checkpointActor.POS2D,
+					};
+					murfyTrigger.AddComponent<LinkComponent>();
+
+					var playerDetector = murfyTrigger.AddComponent<PlayerDetectorComponent>();
+					playerDetector.localOffset = new Vec2d(1.597768f, 1.616089f);
+					playerDetector.localScale = new Vec2d(2.387086f, 5.156033f);
+					playerDetector.useShapeTransform = true;
+
+					murfyTrigger.AddComponent<RO2_DRCMandatoryZoneComponent>();
+
+					if (sc.AddActor(murfyTrigger, "trigger_box_automurphyactivation")) {
+						oldContext?.SystemLogger?.LogInfo($"Added Murfy activation actor");
+					}
+
+					// Create murfy forced action (follow player)
+					var murfyAction = new Actor() {
+						LUA = new Path("world/common/logicactor/automurphy/component/trigger_box_murphyforcedaction.tpl"),
+						USERFRIENDLY = "trigger_box_murphyforcedaction_start",
+						POS2D = checkpointActor.POS2D,
+					};
+					murfyAction.AddComponent<LinkComponent>();
+					murfyAction.AddComponent<ShapeComponent>().useShapeTransform = false;
+					var forcedAction = murfyAction.AddComponent<RO2_DRCForceActionComponent>();
+					forcedAction.forcedAction = RO2_DRCForceActionComponent.Enum_forcedAction.NoTouch;
+					forcedAction.followPlayer = true;
+					forcedAction.followPlayerUseCamDir = true;
+					forcedAction.canBackward = true;
+					forcedAction.canBackwardAnytime = true;
+					forcedAction.actionTravel = new RO2_TravelData() {
+						duration = 5,
+						accelType = RO2_TravelData.AccelType.Linear,
+						speedType = RO2_TravelData.SpeedType.Uniform
+					};
+					forcedAction.activationData = new RO2_DRCForceActionComponent.ActivationData() {
+						activationMode = RO2_DRCForceActionComponent.ActivationData.Enum_activationMode.Multiple,
+						saveBackward = true,
+						saveBackwardOnActionExit = true
+					};
+					if (sc.AddActor(murfyAction, "trigger_box_murphyforcedaction_start")) {
+						oldContext?.SystemLogger?.LogInfo($"Added Murfy forced action actor");
+					}
+
+				}
+
+				// Add sceneConfig to scene
+				if (scene.sceneConfigs == null) scene.sceneConfigs = new SceneConfigs();
+				var scfg = scene.sceneConfigs;
+				if (scfg.sceneConfigs == null) scfg.sceneConfigs = new CArrayO<Generic<SceneConfig>>();
+				var obj = new RO2_SceneConfig_Platform() {
+					DRCGameplayMode = RO2_SceneConfig_Base.Enum_DRCGameplayMode.Coop,
+				};
+				scfg.sceneConfigs.Add(new Generic<SceneConfig>() {
+					obj = obj,
+					className = new StringID(obj.ClassCRC ?? uint.MaxValue)
+				});
+
 			}
 		}
 		#endregion

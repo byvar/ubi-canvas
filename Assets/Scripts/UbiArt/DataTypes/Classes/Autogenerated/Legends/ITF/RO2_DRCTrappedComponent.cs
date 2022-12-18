@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_195_sub_781120 : CSerializable {
+	public partial class RO2_DRCTrappedComponent : ActorComponent {
 		public int isTrapped;
 		public Path DRCTriggerPath;
 		protected override void SerializeImpl(CSerializerObject s) {

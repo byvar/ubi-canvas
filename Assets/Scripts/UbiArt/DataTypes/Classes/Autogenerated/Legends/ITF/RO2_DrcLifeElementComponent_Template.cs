@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_128_sub_7149F0 : ActorComponent_Template {
+	public partial class RO2_DrcLifeElementComponent_Template : ActorComponent_Template {
 		public int requireActivationTrigger;
 		public int oneShotAnimation;
 		public uint lumsToGive;

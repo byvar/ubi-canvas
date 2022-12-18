@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_378_sub_AE5920 : CSerializable {
+	public partial class RO2_PinkMonkeyComponent_Template : ActorComponent_Template {
 		public StringID launchBone;
 		public float launchZOffset;
 		public int launchInRootScene;

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_430_sub_B590D0 : ActorComponent_Template {
+	public partial class RO2_DRCPlayerComponent_Template : ActorComponent_Template {
 		public float maxSpeed_level0;
 		public float maxSpeed_level1;
 		public Generic<PhysShape> phantomShape;

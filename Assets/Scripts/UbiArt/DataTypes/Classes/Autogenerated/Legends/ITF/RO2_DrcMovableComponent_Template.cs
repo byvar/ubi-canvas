@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_394_sub_B010E0 : CSerializable {
+	public partial class RO2_DrcMovableComponent_Template : ActorComponent_Template {
 		public int drcTapEnabled;
 		public int drcSwipeEnabled;
 		public int drcHoldEnabled;
