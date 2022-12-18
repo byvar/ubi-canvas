@@ -1,0 +1,10 @@
+namespace UbiArt.ITF {
+	[Games(GameFlags.RL)]
+	public partial class UplayActionComplete_Component_Template : ActorComponent_Template {
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+		}
+		public override uint? ClassCRC => 0xC582C27F;
+	}
+}
+

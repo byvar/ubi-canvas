@@ -1,0 +1,10 @@
+namespace UbiArt.ITF {
+	[Games(GameFlags.RLVersion)]
+	public partial class MusicTreeBlockSequence_Template : MusicTreeBlock_Template {
+		protected override void SerializeImpl(CSerializerObject s) {
+			base.SerializeImpl(s);
+		}
+		public override uint? ClassCRC => 0x27DFBD99;
+	}
+}
+
