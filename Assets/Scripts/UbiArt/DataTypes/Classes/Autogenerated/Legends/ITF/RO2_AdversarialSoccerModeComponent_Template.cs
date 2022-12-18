@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_22_sub_71F740 : CSerializable {
+	public partial class RO2_AdversarialSoccerModeComponent_Template : CSerializable {
 		public Path ballPath;
 		public uint goalLumCount;
 		public uint goalOnFireLumCount;

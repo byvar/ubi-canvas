@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_210_sub_7B31F0 : CSerializable {
+	public partial class RO2_SceneConfig_AdversarialGoldenPotato : RO2_SceneConfig_Adversarial {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}
-		public override uint? ClassCRC => 0x26547F85;
+		public override uint? ClassCRC => 0xE5B76026;
 	}
 }
 
