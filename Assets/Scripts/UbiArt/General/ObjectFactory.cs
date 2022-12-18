@@ -5105,6 +5105,8 @@ namespace UbiArt {
 			{ 0x81BBDFEF, typeof(ITF.Unknown_RM_169_sub_1002F944E) },
 			{ 0xD5FEDFA0, typeof(ITF.Unknown_RM_170_sub_1002F944E) },
 			{ 0xC4B94B1F, typeof(ITF.OpenGraphObject) },
+			{ 0xBBD78B77, typeof(ITF.RO2_AdversarialSkullCoinModeComponent) },
+			{ 0x97223F2C, typeof(ITF.RO2_AdversarialSkullCoinModeComponent_Template) },
 		};
 	}
 }
