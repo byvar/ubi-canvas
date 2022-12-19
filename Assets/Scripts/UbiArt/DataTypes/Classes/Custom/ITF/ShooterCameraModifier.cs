@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_38748_sub_A04420 : CSerializable {
+	public partial class ShooterCameraModifier : CSerializable {
 		public Vec2d moveSpeed;
 		public float zOffset;
 		public bool changeEjectMargins;

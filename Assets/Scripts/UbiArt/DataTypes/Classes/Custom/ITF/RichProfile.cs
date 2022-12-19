@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_31371_sub_894F80 : CSerializable {
+	public partial class RichProfile : CSerializable {
 		public int pid;
 		public string name;
 		public uint statusIcon;
@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public uint goldMedals;
 		public uint silverMedals;
 		public uint bronzeMedals;
-		public Unknown_RL_31339_sub_893AE0 playerStats;
+		public PlayerStats playerStats;
 		public uint costume;
 		public uint totalChallengePlayed;
 
@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 				goldMedals = s.Serialize<uint>(goldMedals, name: "goldMedals");
 				silverMedals = s.Serialize<uint>(silverMedals, name: "silverMedals");
 				bronzeMedals = s.Serialize<uint>(bronzeMedals, name: "bronzeMedals");
-				playerStats = s.SerializeObject<Unknown_RL_31339_sub_893AE0>(playerStats, name: "playerStats");
+				playerStats = s.SerializeObject<PlayerStats>(playerStats, name: "playerStats");
 				costume = s.Serialize<uint>(costume, name: "costume");
 				totalChallengePlayed = s.Serialize<uint>(totalChallengePlayed, name: "totalChallengePlayed");
 			}

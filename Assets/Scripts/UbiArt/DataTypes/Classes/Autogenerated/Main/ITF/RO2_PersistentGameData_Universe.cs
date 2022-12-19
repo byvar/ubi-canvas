@@ -401,7 +401,7 @@ namespace UbiArt.ITF {
 		public uint CurrentPerkPackActive;
 		public online.DateTime TimeLastShownMiniEventExclamation;
 		public uint MiniEventsSessionsSinceLastShown;
-		public Unknown_RL_31371_sub_894F80 profile;
+		public RichProfile profile;
 		public CListO<Message> messages;
 		public CArrayO<StringID> mrDarkUnlockCount;
 		public CArrayO<StringID> newCostumes;
@@ -420,7 +420,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
 				score = s.SerializeObject<RO2_PersistentGameData_Score>(score, name: "score");
-				profile = s.SerializeObject<Unknown_RL_31371_sub_894F80>(profile, name: "profile");
+				profile = s.SerializeObject<RichProfile>(profile, name: "profile");
 				bubbleDreamer = s.SerializeObject<RO2_PersistentGameData_BubbleDreamerData>(bubbleDreamer, name: "bubbleDreamer");
 				unlockedPets = s.SerializeObject<CArrayP<int>>(unlockedPets, name: "unlockedPets");
 				petsDailyReward = s.SerializeObject<CListO<RO2_PersistentGameData_Universe.petRewardData>>(petsDailyReward, name: "petsDailyReward");

@@ -7,10 +7,10 @@ namespace UbiArt.ITF {
 			UplayAction = s.Serialize<Enum_UplayAction>(UplayAction, name: "UplayAction");
 		}
 		public enum Enum_UplayAction {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
+			[Serialize("online::uplayAction1")] uplayAction1 = 0,
+			[Serialize("online::uplayAction2")] uplayAction2 = 1,
+			[Serialize("online::uplayAction3")] uplayAction3 = 2,
+			[Serialize("online::uplayAction4")] uplayAction4 = 3,
 		}
 		public override uint? ClassCRC => 0x9546A69F;
 	}
