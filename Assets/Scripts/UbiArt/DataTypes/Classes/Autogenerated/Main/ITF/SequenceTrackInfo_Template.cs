@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR | GameFlags.VH | GameFlags.RA)]
 	public partial class SequenceTrackInfo_Template : CSerializable {
-		public bool isEnable;
+		public bool isEnable = true;
 		public bool selected;
 		public bool isGroup;
 		public uint parentGroup;
 		public string name;
-		public bool fold;
+		public bool fold = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			isEnable = s.Serialize<bool>(isEnable, name: "isEnable");

@@ -170,7 +170,8 @@ namespace UbiCanvas.Conversion {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
 
-			foreach (var act in l.LoadedActors) {
+			for(int i = 0; i < l.LoadedActors.Count; i++) { // Not foreach, as actors can be added during the loop
+				var act = l.LoadedActors[i];
 				if (act.STARTPAUSE && !(act.template?.obj?.STARTPAUSED ?? false)) {
 
 					var ogPath = act.LUA;
@@ -193,6 +194,7 @@ namespace UbiCanvas.Conversion {
 						structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
 					}
 					act.template = (GenericFile<Actor_Template>)structs[typeof(GenericFile<Actor_Template>)][newPath.stringID];
+					act.STARTPAUSE = false;
 				}
 			}
 		}
@@ -200,7 +202,8 @@ namespace UbiCanvas.Conversion {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
 
-			foreach (var act in l.LoadedActors) {
+			for (int i = 0; i < l.LoadedActors.Count; i++) { // Not foreach, as actors can be added during the loop
+				var act = l.LoadedActors[i];
 				var lightingMushroom = act.GetComponent<RO2_LightingMushroomComponent>();
 				if (lightingMushroom != null) {
 
@@ -355,7 +358,8 @@ namespace UbiCanvas.Conversion {
 		public void AddStickToPolylinePhysComponentForSoccerBall(Context oldContext, Settings newSettings) {
 			Loader l = oldContext.Loader;
 
-			foreach (var act in l.LoadedActors) {
+			for (int i = 0; i < l.LoadedActors.Count; i++) { // Not foreach, as actors can be added during the loop
+				var act = l.LoadedActors[i];
 				var ball = act.GetComponent<RO2_BallComponent>();
 				if (ball != null) {
 					var stickToPolyline = act.GetComponent<StickToPolylinePhysComponent>();
@@ -454,7 +458,7 @@ namespace UbiCanvas.Conversion {
 				USERFRIENDLY = "trigger_box_murphyforcedaction_rotatingplatform",
 				POS2D = act.POS2D,
 				RELATIVEZ = 0.17f,
-				SCALE = new Vec2d(8, 8)
+				SCALE = new Vec2d(7.5f, 7.5f)
 			};
 			var murfyActionLink = murfyAction.AddComponent<LinkComponent>(); // Link to gyrocontroller later
 			var murfyActionShape = murfyAction.AddComponent<ShapeComponent>();
@@ -465,7 +469,7 @@ namespace UbiCanvas.Conversion {
 			forcedAction.autoAction = false;
 			forcedAction.useToTargetTravel = true;
 			forcedAction.toTargetTravel = new RO2_TravelData() {
-				duration = 1,
+				duration = 0.3f,
 				accelType = RO2_TravelData.AccelType.InvX2,
 				speedType = RO2_TravelData.SpeedType.Uniform
 			};

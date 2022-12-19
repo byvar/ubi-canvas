@@ -140,6 +140,10 @@ namespace UbiArt {
 									var newEv = Merger.Merge<RO2_EventBreakableQuery>(evquery);
 									obj = (T)(object)newEv;
 									className = new StringID(obj.ClassCRC.Value);
+								} else if (obj is PlayWwise_evtTemplate wwiseEvtTpl) {
+									var newEv = Merger.Merge<PlaySound_evtTemplate>(wwiseEvtTpl);
+									obj = (T)(object)newEv;
+									className = new StringID(obj.ClassCRC.Value);
 								} else {
 									c.SystemLogger?.LogInfo("Removing Generic component: {0}", obj.GetType());
 									MakeNull();
