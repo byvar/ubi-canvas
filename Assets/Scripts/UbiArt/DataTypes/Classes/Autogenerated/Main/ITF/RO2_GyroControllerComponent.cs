@@ -1,20 +1,20 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_GyroControllerComponent : ActorComponent {
-		public float cursorSmooth;
-		public float rollBackCursorSmooth;
-		public float rollBackCursorSmoothMidTarget;
-		public float angleMultiplier;
-		public float forcedAngleMultiplier;
+		public float cursorSmooth = 0.9f;
+		public float rollBackCursorSmooth = 0.01f;
+		public float rollBackCursorSmoothMidTarget = 0.1f;
+		public float angleMultiplier = 1f;
+		public float forcedAngleMultiplier = 0.5f;
 		public bool activateOnTrigger;
-		public float angleMin;
-		public float angleMax;
-		public float cameraRampUpCoeff;
-		public float cameraRampDownCoeff;
-		public float cameraZOffset;
-		public float TVOffcameraZOffset;
+		public float angleMin = -180f;
+		public float angleMax = 180f;
+		public float cameraRampUpCoeff = 0.05f;
+		public float cameraRampDownCoeff = 0.05f;
+		public float cameraZOffset = 5f;
+		public float TVOffcameraZOffset = 20f;
 		public Vec2d TVOffcameraPosOffset;
-		public bool TVOffcameraResetMultiplier;
+		public bool TVOffcameraResetMultiplier = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {

@@ -60,10 +60,7 @@ namespace UbiArt.ITF {
 		public T AddComponent<T>() where T : ActorComponent_Template, new() {
 			if (COMPONENTS == null) COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>();
 			var t = new T();
-			COMPONENTS.Add(new Generic<ActorComponent_Template>() {
-				obj = t,
-				className = new StringID(t?.ClassCRC ?? uint.MaxValue)
-			});
+			COMPONENTS.Add(new Generic<ActorComponent_Template>(t));
 			return t;
 		}
 	}

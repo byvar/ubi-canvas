@@ -1,17 +1,17 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class TouchDetectorComponent : ShapeDetectorComponent {
-		public bool checkTaps;
-		public float tapTime;
-		public uint tapSampleTolerance;
-		public uint numTaps;
+		public bool checkTaps = true;
+		public float tapTime = 0.5f;
+		public uint tapSampleTolerance = 5;
+		public uint numTaps = 1;
 		public bool tapHold;
-		public float swipeMinLength;
+		public float swipeMinLength = 20f;
 		public Angle swipeAngleTolerance;
-		public bool swipeThrough;
-		public bool blockOnSwipe;
+		public bool swipeThrough = true;
+		public bool blockOnSwipe = true;
 		public bool bidirectional;
-		public uint priority;
+		public uint priority = 10;
 		public Angle angleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public bool displayTuto;
 		public bool flip;
 		public bool isPos2D;
-		public bool activateByTrigger;
+		public bool activateByTrigger { get => activateByTriggerInt != 0; set => activateByTriggerInt = value ? 1 : 0; }
 		public int activateByTriggerInt;
 		public float cyclePauseDuration;
 		public float cycleDisplayDuration = 99999f;
@@ -152,7 +152,7 @@ namespace UbiArt.ITF {
 			[Serialize("TutoType_MAIN_PaintingAndDifficulty")] MAIN_PaintingAndDifficulty = 31,
 			[Serialize("TutoType_MAIN_ChargedPunch"         )] MAIN_ChargedPunch = 37,
 			[Serialize("TutoType_MAIN_ROShrink"             )] MAIN_ROShrink = 38,
-			[Serialize("Value_73")] Value_73 = 73,
+			[Serialize("TutoType_MAIN_ROGrow"               )] MAIN_ROGrow = 73,
 			[Serialize("TutoType_MAIN_Dive"                 )] MAIN_Dive = 39,
 			[Serialize("TutoType_MAIN_Sprint"               )] MAIN_Sprint = 40,
 			[Serialize("TutoType_MAIN_Shoot"                )] MAIN_Shoot = 41,
@@ -191,8 +191,8 @@ namespace UbiArt.ITF {
 			[Serialize("TutoType_AM_PressButton"            )] AM_PressButton = 67,
 			[Serialize("TutoType_AM_MoveObject"             )] AM_MoveObject = 68,
 			[Serialize("TutoType_AM_MoveTheObstacle"        )] AM_MoveTheObstacle = 69,
-			[Serialize("Value_72")] Value_72 = 72,
-			[Serialize("Value_74")] Value_74 = 74,
+			[Serialize("TutoType_MAIN_Course_Swim"          )] MAIN_Course_Swim = 72,
+			[Serialize("TutoType_MAIN_ReachGoal"            )] MAIN_ReachGoal = 74,
 		}
 		public override uint? ClassCRC => 0xCCD6E553;
 	}
