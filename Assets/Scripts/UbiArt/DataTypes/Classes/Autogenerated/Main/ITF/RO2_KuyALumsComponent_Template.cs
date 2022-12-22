@@ -8,8 +8,8 @@ namespace UbiArt.ITF {
 		public StringID animResist;
 		public StringID animExplode;
 		public StringID fxStandPaint;
-		public uint countLumsReward;
-		public uint countLumsPaintReward;
+		public uint countLumsReward = 5;
+		public uint countLumsPaintReward = 5;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");

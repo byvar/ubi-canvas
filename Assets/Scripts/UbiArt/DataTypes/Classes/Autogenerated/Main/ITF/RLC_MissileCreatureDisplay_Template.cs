@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public float launchYOffset;
 		public float reducedLaunchDistance;
 		public float reducedLaunchYOffset;
-		public float depthOffset;
+		public float depthOffset = 0.0002f;
 		public Path punchActor;
 		public Path megaFireballActor;
 		protected override void SerializeImpl(CSerializerObject s) {

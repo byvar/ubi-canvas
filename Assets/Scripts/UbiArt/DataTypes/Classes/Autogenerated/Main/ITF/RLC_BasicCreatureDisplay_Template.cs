@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public Creature_Family creatureFamily;
 		public Creature_Rarity creatureRarity;
 		public bool isForbidden;
-		public uint locId;
+		public uint locId = uint.MaxValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			creatureActor = s.SerializeObject<PathRef>(creatureActor, name: "creatureActor");

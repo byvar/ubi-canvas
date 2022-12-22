@@ -1,11 +1,11 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class EventShow : Event {
-		public float alpha;
+		public float alpha = 1f;
 		public float transitionTime;
 		public bool overrideColor;
-		public bool alpharatio;
-		public Color color;
+		public bool alpharatio = true;
+		public Color color = Color.White;
 		public bool pauseOnEnd;
 		public bool destroyOnEnd;
 		protected override void SerializeImpl(CSerializerObject s) {

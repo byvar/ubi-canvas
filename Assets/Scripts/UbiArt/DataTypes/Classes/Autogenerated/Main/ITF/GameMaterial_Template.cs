@@ -23,7 +23,6 @@ namespace UbiArt.ITF {
 		public uint phys2dFilter = 1;
 		public StringID archetype;
 		public Nullable<FxKit> fxkit;
-		public StringID StringID__16;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
@@ -76,7 +75,7 @@ namespace UbiArt.ITF {
 				WaterResistance = s.Serialize<float>(WaterResistance, name: "WaterResistance");
 				amount = s.Serialize<uint>(amount, name: "amount");
 				collisionGroup = s.Serialize<uint>(collisionGroup, name: "collisionGroup");
-				StringID__16 = s.SerializeObject<StringID>(StringID__16, name: "StringID__16");
+				soundMatGUID = s.SerializeObject<StringID>(soundMatGUID, name: "soundMatGUID");
 			} else {
 				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				solid = s.Serialize<bool>(solid, name: "solid");

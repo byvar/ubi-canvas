@@ -3,9 +3,9 @@ namespace UbiArt.ITF {
 	public partial class WindComponent_Template : PhysForceModifierComponent_Template {
 		public CListO<PhysForceModifier> windAreasOrigins;
 		public CListO<Generic<PhysForceModifier_Template>> windAreas;
-		public bool canInverse;
-		public bool canStop;
-		public bool enableAtStart;
+		public bool canInverse = true;
+		public bool canStop = true;
+		public bool enableAtStart = true;
 		public Enum_flags flags;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

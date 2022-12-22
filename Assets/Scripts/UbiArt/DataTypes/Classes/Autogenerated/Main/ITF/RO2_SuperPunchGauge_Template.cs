@@ -9,14 +9,14 @@ namespace UbiArt.ITF {
 		public float launchYOffset;
 		public float reducedLaunchDistance;
 		public float reducedLaunchYOffset;
-		public uint visibleAmmo;
-		public float speedBlend;
+		public uint visibleAmmo = 3;
+		public float speedBlend = 1f;
 		public float speedMin;
-		public float speedMax;
-		public float depthOffset;
+		public float speedMax = 1f;
+		public float depthOffset = 0.0002f;
 		public float blendAtSpeedMin;
-		public float blendAtSpeedMax;
-		public float ritualOffset;
+		public float blendAtSpeedMax = 1f;
+		public float ritualOffset = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			fxControl = s.SerializeObject<StringID>(fxControl, name: "fxControl");

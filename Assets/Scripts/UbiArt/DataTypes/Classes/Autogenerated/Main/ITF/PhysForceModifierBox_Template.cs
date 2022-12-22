@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class PhysForceModifierBox_Template : PhysForceModifier_Template {
-		public float width;
-		public float height;
+		public float width = 1f;
+		public float height = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			width = s.Serialize<float>(width, name: "width");

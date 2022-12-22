@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class PhysForceModifierCircle_Template : PhysForceModifier_Template {
-		public float radius;
+		public float radius = 1f;
 		public Angle angleStart;
 		public Angle angleEnd;
 		public Angle gradientAngleOffset;

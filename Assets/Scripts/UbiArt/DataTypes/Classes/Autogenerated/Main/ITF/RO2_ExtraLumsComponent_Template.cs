@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_ExtraLumsComponent_Template : ActorComponent_Template {
-		public uint lumsCount;
-		public float disappearStartTime;
-		public float disappearIntervalTime;
-		public float lumsDistance;
-		public float lumsScale;
-		public Angle lumsRotationSpeed;
+		public uint lumsCount = 5;
+		public float disappearStartTime = 3f;
+		public float disappearIntervalTime = 1f;
+		public float lumsDistance = 1f;
+		public float lumsScale = 1f;
+		public Angle lumsRotationSpeed = 0.7853982f;
 		public StringID attachedBone;
 		public StringID lumsAnimAppear;
 		public StringID lumsAnimStand;
