@@ -170,6 +170,7 @@ namespace UbiCanvas.Conversion {
 		public void CreateFriseParents(Context oldContext, Settings newSettings, Scene scene) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
+			List<SubSceneActor> parentActors = new List<SubSceneActor>();
 
 			bool ShouldCreateParentActorForFrise(Frise f) {
 				if (!(newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM)) {
@@ -236,14 +237,46 @@ namespace UbiCanvas.Conversion {
 				return parent;
 			}
 
+			// First, search for frises pointed to in LinkComponents
+			{
+				HashSet<Frise> processedFrises = new HashSet<Frise>();
+				var sceneTree = new PickableTree(scene);
+				var linkComponentSearch = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children?.Count > 0);
+
+				foreach (var linkResult in linkComponentSearch) {
+					var linkPath = linkResult.Path;
+
+					var linkComponent = linkResult.Result.GetComponent<LinkComponent>();
+					foreach (var linkChild in linkComponent.Children) {
+						try {
+							PickableTree.Node result = sceneTree.FollowObjectPath(linkPath, linkChild.Path);
+							if (result.Pickable is Frise frise && !processedFrises.Contains(frise)) {
+								processedFrises.Add(frise);
+								var containingScene = result.Parent.Scene;
+
+								var parentActor = CreateParentActor(frise);
+
+								// Remove frise from scene and add parent actor
+								if (containingScene.ACTORS == null) containingScene.ACTORS = new CArrayO<Generic<Actor>>();
+								containingScene.ACTORS.Add(new Generic<Actor>(parentActor));
+								containingScene.FRISE.Remove(frise);
+
+								parentActors.Add(parentActor);
+							}
+						} catch (Exception ex) {
+							oldContext?.SystemLogger?.LogWarning(ex);
+						}
+					}
+				}
+			}
+
+			// Then, search for remaining frises that have a parentBind or components
 			var friseSearch = scene.FindPickables(p => (p is Frise f) && ShouldCreateParentActorForFrise(f));
 			if (friseSearch?.Any() == true) {
-				List<SubSceneActor> parentActors = new List<SubSceneActor>();
 				// Create parent actors
 				foreach (var friseResult in friseSearch) {
 					var containingScene = friseResult.ContainingScene;
 					var frise = (Frise)(friseResult.Result);
-					var frisePath = friseResult.Path;
 
 					var parentActor = CreateParentActor(frise);
 
@@ -255,7 +288,8 @@ namespace UbiCanvas.Conversion {
 					parentActors.Add(parentActor);
 
 				}
-
+			}
+			if(parentActors.Any()) {
 				var sceneTree = new PickableTree(scene);
 				var linkComponentSearch = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children?.Count > 0);
 

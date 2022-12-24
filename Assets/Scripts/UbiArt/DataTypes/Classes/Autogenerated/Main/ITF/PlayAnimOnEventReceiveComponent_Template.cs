@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public StringID idleAnim;
 		public StringID eventAnim;
 		public StringID eventIdleAnim;
-		public bool resetOnRetrigger;
+		public bool resetOnRetrigger = true;
 		public bool stayOnEvent;
 		public bool stayOnEventCheckpointSave;
 		public bool disableAfterEvent;
