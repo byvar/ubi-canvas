@@ -42,60 +42,6 @@ namespace UbiArt.ITF {
 			if (previousSettings != null) {
 				if (previousSettings.game != settings.game) {
 					ENGINE_VERSION = 0;
-					if (FRISE != null) {
-						List<Frise> friseToRemove = new List<Frise>();
-						List<Actor> actorsToAdd = new List<Actor>();
-						foreach (var fr in FRISE) {
-							if (fr.ShouldCreateParentActor(settings)) {
-								actorsToAdd.Add(fr.CreateParentActor());
-								friseToRemove.Add(fr);
-							}
-						}
-						foreach (var fr in friseToRemove) {
-							FRISE.Remove(fr);
-						}
-						foreach (var act in actorsToAdd) {
-							if(ACTORS == null) ACTORS = new CArrayO<Generic<Actor>>();
-							ACTORS.Add(new Generic<Actor>(act));
-						}
-					}
-					/*if (FRISE != null) {
-						foreach (var fr in FRISE) {
-							if (fr.ConfigName?.filename == "greecemap_clouds.fcg"
-								|| fr.ConfigName?.filename == "greecemap_clouds_atlas.fcg"){
-								//|| fr.ConfigName?.filename == "toadstorymap_background01.fcg") {
-								fr.ConfigName = new Path("world/landofthedead/deadjail/playground/decostructure/wallsquare.fcg");
-							}
-						}
-					}*/
-					//ACTORS = null;
-
-					/*if (ACTORS != null) {
-						List<Generic<Actor>> RemovedComponents = new List<Generic<Actor>>();
-						// Check components, remove all that don't have the right gameflags
-						for (int i = 0; i < ACTORS.Count; i++) {
-							var compobj = ACTORS[i].obj;
-							compobj.parentBind = null;
-							if (compobj is SubSceneActor ssa) {
-								if((ssa.SCENE?.read ?? false) == false)
-									RemovedComponents.Add(ACTORS[i]);
-							} else {
-								RemovedComponents.Add(ACTORS[i]);
-							}
-						}
-						foreach (var comp in RemovedComponents) {
-							ACTORS.Remove(comp);
-						}
-					}*/
-					/*f (FRISE?.Count == 5) {
-						var newFrise = new CListO<Frise>();
-						for (int i = 0; i < 5; i++) {
-							if (i == 0 || i == 2) {
-								newFrise.Add(FRISE[i]);
-							}
-						}
-						FRISE = newFrise;
-					}*/
 				}
 			}
 			previousSettings = settings;

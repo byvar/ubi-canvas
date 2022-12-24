@@ -48,41 +48,6 @@ namespace UbiArt.ITF {
 			base.Reinit(c, settings);
 		}
 
-		public SubSceneActor CreateParentActor() {
-			var parent = Merger.Merge<SubSceneActor>(this);
-			parent.LUA = new Path(SubSceneActor.DefaultPath);
-			parent.EMBED_SCENE = true;
-			parent.SCENE = new Nullable<Scene>() {
-				read = true,
-				value = new Scene() {
-					FRISE = new CListO<Frise>()
-				}
-			};
-			parent.SCENE.value.FRISE.Add(this);
-			//parent.USERFRIENDLY = $"{USERFRIENDLY}__friseparent";
-			//parent.ZFORCED = true;
-			//parent.IS_SINGLE_PIECE = true;
-			//parent.DIRECT_PICKING = false;
-
-			// Reset transform as it has been assigned to the subsceneactor
-			parentBind = null;
-			isEnabled = true;
-			xFLIPPED = false;
-			POS2D = null;
-			SCALE = Vec2d.One;
-			RELATIVEZ = 0;
-			ANGLE = null;
-
-			return parent;
-		}
-		public bool ShouldCreateParentActor(Settings settings) {
-			if (!(settings.game == Settings.Game.RA || settings.game == Settings.Game.RM)) {
-				if(parentBind != null && parentBind.read == true)
-					return true;
-			}
-			return false;
-		}
-
 		protected void RecomputeLineData() {
 			PointsList?.CheckLoop();
 			PointsList?.RecomputeData();

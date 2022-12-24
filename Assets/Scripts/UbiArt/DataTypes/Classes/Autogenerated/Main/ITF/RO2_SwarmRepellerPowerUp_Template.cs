@@ -3,11 +3,11 @@ namespace UbiArt.ITF {
 	public partial class RO2_SwarmRepellerPowerUp_Template : RO2_PowerUpDisplay_Template {
 		public Path repellerActor;
 		public Vec2d playerFollowOffset;
-		public float speedBlend;
+		public float speedBlend = 1f;
 		public float speedMin;
-		public float speedMax;
+		public float speedMax = 1f;
 		public float blendAtSpeedMin;
-		public float blendAtSpeedMax;
+		public float blendAtSpeedMax = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			repellerActor = s.SerializeObject<Path>(repellerActor, name: "repellerActor");

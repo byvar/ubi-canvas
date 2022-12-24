@@ -64,6 +64,7 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
 
+			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
@@ -166,6 +167,136 @@ namespace UbiCanvas.Conversion {
 
 
 		#region Specific adjustments
+		public void CreateFriseParents(Context oldContext, Settings newSettings, Scene scene) {
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			bool ShouldCreateParentActorForFrise(Frise f) {
+				if (!(newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM)) {
+					if (f.parentBind != null && f.parentBind.read == true)
+						return true;
+					if (f.COMPONENTS != null && f.COMPONENTS.Any(c => c?.obj != null))
+						return true;
+				}
+				return false;
+			}
+			SubSceneActor CreateParentActor(Frise f) {
+				var newFrise = f.Clone("isc") as Frise;
+				var parent = Merger.Merge<SubSceneActor>(f);
+				parent.EMBED_SCENE = true;
+				parent.SCENE = new UbiArt.Nullable<Scene>() {
+					read = true,
+					value = new Scene() {
+						FRISE = new CListO<Frise>() { newFrise }
+					}
+				};
+
+				var config = f.config?.obj;
+				if (config?.COMPONENTS != null && config.COMPONENTS.Any(c => c?.obj != null)) {
+					// Create new actor template too
+					// But first, check if it should be created
+					var ogPath = f.ConfigName;
+					var newPath = new Path(ogPath.FullPath.Replace(".fcg", "__friseparent.tpl"));
+					if (newPath.stringID == ogPath.stringID) {
+						l.Context.SystemLogger?.LogInfo($"Could not rename path: {ogPath.FullPath}");
+					}
+					parent.LUA = new Path(newPath.FullPath);
+
+
+					if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
+						l.Context.SystemLogger?.LogInfo($"Duplicating template (Frise with Components): {ogPath.FullPath}");
+						var newTpl = new GenericFile<Actor_Template>(Merger.Merge<Actor_Template>(config));
+						var oldCookedPath = l.CookedPaths[ogPath.stringID];
+						var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".fcg", "__friseparent.tpl"), true);
+						l.CookedPaths[newPath.stringID] = newCookedPath;
+						l.Paths[newPath.stringID] = newPath;
+						structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
+					}
+					parent.template = (GenericFile<Actor_Template>)structs[typeof(GenericFile<Actor_Template>)][newPath.stringID];
+				} else {
+					parent.LUA = new Path(SubSceneActor.DefaultPath);
+					parent.template = (GenericFile<Actor_Template>)structs[typeof(GenericFile<Actor_Template>)][parent.LUA.stringID];
+					parent.COMPONENTS = null;
+				}
+				//parent.USERFRIENDLY = $"{USERFRIENDLY}__friseparent";
+				//parent.ZFORCED = true;
+				//parent.IS_SINGLE_PIECE = true;
+				//parent.DIRECT_PICKING = false;
+
+				// Reset transform as it has been assigned to the subsceneactor
+				newFrise.parentBind = null;
+				newFrise.isEnabled = true;
+				newFrise.xFLIPPED = false;
+				newFrise.POS2D = Vec2d.Zero;
+				newFrise.SCALE = Vec2d.One;
+				newFrise.RELATIVEZ = 0;
+				newFrise.ANGLE = 0;
+				newFrise.COMPONENTS = null;
+
+				return parent;
+			}
+
+			var friseSearch = scene.FindPickables(p => (p is Frise f) && ShouldCreateParentActorForFrise(f));
+			if (friseSearch?.Any() == true) {
+				List<SubSceneActor> parentActors = new List<SubSceneActor>();
+				// Create parent actors
+				foreach (var friseResult in friseSearch) {
+					var containingScene = friseResult.ContainingScene;
+					var frise = (Frise)(friseResult.Result);
+					var frisePath = friseResult.Path;
+
+					var parentActor = CreateParentActor(frise);
+
+					// Remove frise from scene and add parent actor
+					if (containingScene.ACTORS == null) containingScene.ACTORS = new CArrayO<Generic<Actor>>();
+					containingScene.ACTORS.Add(new Generic<Actor>(parentActor));
+					containingScene.FRISE.Remove(frise);
+
+					parentActors.Add(parentActor);
+
+				}
+
+				var sceneTree = new PickableTree(scene);
+				var linkComponentSearch = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children?.Count > 0);
+
+				// Update link components
+				foreach (var linkResult in linkComponentSearch) {
+					var linkPath = linkResult.Path;
+
+					var linkComponent = linkResult.Result.GetComponent<LinkComponent>();
+					List<Pair<Pickable, ChildEntry>> childrenToDuplicate = new List<Pair<Pickable, ChildEntry>>();
+					foreach (var linkChild in linkComponent.Children) {
+						try {
+							PickableTree.Node result = sceneTree.FollowObjectPath(linkPath, linkChild.Path);
+							if (result.Pickable != null && parentActors.Contains(result.Pickable)) {
+								childrenToDuplicate.Add(new Pair<Pickable, ChildEntry>(result.Pickable, linkChild));
+							}
+						} catch (Exception ex) {
+							oldContext?.SystemLogger?.LogWarning(ex);
+						}
+					}
+					foreach (var dupChild in childrenToDuplicate) {
+						var newChild = new ChildEntry() {
+							Path = new ObjectPath() {
+								id = dupChild.Item2.Path.id,
+								absolute = dupChild.Item2.Path.absolute
+							},
+							TagValues = dupChild.Item2.TagValues
+						};
+						newChild.Path.levels = new CListO<ObjectPath.Level>();
+						if (dupChild.Item2.Path.levels != null) {
+							foreach(var lev in dupChild.Item2.Path.levels)
+								newChild.Path.levels.Add(lev);
+						}
+						newChild.Path.levels.Add(new ObjectPath.Level() {
+							name = dupChild.Item1.USERFRIENDLY
+						});
+						linkComponent.Children.Add(newChild);
+						l.Context.SystemLogger?.LogInfo($"Duplicating LinkComponent for duplicated Frise: {newChild.Path.id}");
+					}
+				}
+			}
+		}
 		public void DuplicateActorTemplatesForStartPaused(Context oldContext) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -182,10 +313,7 @@ namespace UbiCanvas.Conversion {
 
 					if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
 						l.Context.SystemLogger?.LogInfo($"Duplicating template (STARTPAUSE): {ogPath.FullPath}");
-						var newTpl = new GenericFile<Actor_Template>() {
-							obj = ogTpl.obj?.Clone("tpl") as Actor_Template,
-							className = new StringID(ogTpl.obj.ClassCRC ?? uint.MaxValue)
-						};
+						var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl") as Actor_Template);
 						newTpl.obj.STARTPAUSED = true;
 						var oldCookedPath = l.CookedPaths[ogPath.stringID];
 						var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", "__startpaused.tpl"), true);
@@ -231,10 +359,7 @@ namespace UbiCanvas.Conversion {
 							if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
 								l.Context.SystemLogger?.LogInfo($"Duplicating template (LightingMushroom.GPEColor): {ogPath.FullPath}");
 
-								var newTpl = new GenericFile<Actor_Template>() {
-									obj = ogTpl.obj?.Clone("tpl") as Actor_Template,
-									className = new StringID(ogTpl.obj.ClassCRC ?? uint.MaxValue)
-								};
+								var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl") as Actor_Template);
 
 								newTpl.obj.COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>();
 								foreach (var c in ogTpl.obj.COMPONENTS) {

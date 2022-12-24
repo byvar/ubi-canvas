@@ -1,11 +1,11 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_DiggingRegenerationComponent_Template : ActorComponent_Template {
-		public float RadiusAdditive;
-		public float RadiusRegenerationSafe;
-		public float TruncateRadiusRegenerationSafe;
+		public float RadiusAdditive = 1f;
+		public float RadiusRegenerationSafe = 1f;
+		public float TruncateRadiusRegenerationSafe = float.MaxValue;
 		public Vec2d OffsetRegenerationSafe;
-		public float RadiusFillingSafe;
+		public float RadiusFillingSafe = 1f;
 		public Vec2d OffsetFillingSafe;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

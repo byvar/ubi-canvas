@@ -13,6 +13,19 @@ namespace UbiArt {
 			}
 		}
 
+		public GenericFile() {
+			className = new StringID();
+		}
+
+		public GenericFile(T obj) {
+			if (obj != null && obj is CSerializable ct && ct.ClassCRC.HasValue) {
+				className = new StringID(ct.ClassCRC.Value);
+				this.obj = obj;
+			} else {
+				className = new StringID();
+			}
+		}
+
 		public void Serialize(CSerializerObject s, string name) {
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				read = s.Serialize<bool>(read, name: "read");
