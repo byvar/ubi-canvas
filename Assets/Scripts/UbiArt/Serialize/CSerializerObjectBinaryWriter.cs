@@ -139,16 +139,17 @@ namespace UbiArt {
 		}
 
 		public override T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null) {
-			bool isBigObject = IsBigObject(type ?? typeof(T));
+			var usedType = type ?? typeof(T);
+			bool isBigObject = IsBigObject(usedType);
 			if (IsSerializerLoggerEnabled && index.HasValue) {
 				if (isBigObject) {
-					Context.SerializerLogger.Log($"{LogPrefix}{name}[{index.Value}]:");
+					Context.SerializerLogger.Log($"{LogPrefix}({usedType}) {name}[{index.Value}]:");
 				} else {
-					Context.SerializerLogger.Log($"{LogPrefix}{name}[{index.Value}] - {ShortLog(obj)}");
+					Context.SerializerLogger.Log($"{LogPrefix}({usedType}) {name}[{index.Value}] - {ShortLog(obj)}");
 				}
 			}
 			object obj2 = obj;
-			Serialize(ref obj2, type ?? typeof(T), name: name);
+			Serialize(ref obj2, usedType, name: name);
 			return (T)obj2;
 		}
 
@@ -177,9 +178,9 @@ namespace UbiArt {
 
 			if (IsSerializerLoggerEnabled) {
 				if (index.HasValue && isBigObject) {
-					Context.SerializerLogger.Log($"{LogPrefix}{name}[{index.Value}]:");
+					Context.SerializerLogger.Log($"{LogPrefix}{typeof(T)} {name}[{index.Value}]:");
 				} else if (index.HasValue && !isBigObject) {
-					Context.SerializerLogger.Log($"{LogPrefix}{name}[{index.Value}] - {ShortLog(obj)}");
+					Context.SerializerLogger.Log($"{LogPrefix}{typeof(T)} {name}[{index.Value}] - {ShortLog(obj)}");
 				}
 			}
 
