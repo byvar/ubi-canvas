@@ -521,6 +521,7 @@ namespace UbiArt {
 
 		protected bool ReadTag(string name, uint type) {
 			if (fakeSerializeMode) return false;
+			if(CurrentPosition >= Length) return false;
 			UAFInfo info = new UAFInfo {
 				name = name,
 				type = type
@@ -536,7 +537,7 @@ namespace UbiArt {
 			}
 			if (crc == requiredCRC) {
 				//Context.Log((Position-8) + ":" + new string(' ', (Indent + 1) * 2) + "TAG: " + name + " (" + type + ")");
-				endPos.Push(Reader.BaseStream.Position + size);
+				endPos.Push(CurrentPosition + size);
 				return true;
 			} else {
 				//Context.Log((Position - 8) + ":" + new string(' ', (Indent + 1) * 2) + "Read tag failed: " + name + " (" + type + ")");
