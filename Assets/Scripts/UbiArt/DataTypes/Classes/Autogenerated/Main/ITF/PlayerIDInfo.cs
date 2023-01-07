@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 			public bool isPlayable;
 			public CListP<uint> gameModes;
 			public bool isDynamicallyLoaded;
-			public uint mainGameMode;
+			public uint mainGameMode = uint.MaxValue;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				file = s.SerializeObject<Path>(file, name: "file");
