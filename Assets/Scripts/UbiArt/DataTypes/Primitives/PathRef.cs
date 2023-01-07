@@ -69,7 +69,11 @@ namespace UbiArt {
 		public static bool operator !=(PathRef x, PathRef y) {
 			return !(x == y);
 		}
-		public static implicit operator PathRef(Path p) {
+		public static implicit operator PathRef(Path p)
+		{
+			if (p == null)
+				return null;
+
 			return new PathRef {
 				filename = p.filename,
 				folder = p.folder,
