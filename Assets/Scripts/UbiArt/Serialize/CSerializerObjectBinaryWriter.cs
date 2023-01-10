@@ -141,11 +141,19 @@ namespace UbiArt {
 		public override T SerializeGeneric<T>(T obj, Type type = null, string name = null, int? index = null) {
 			var usedType = type ?? typeof(T);
 			bool isBigObject = IsBigObject(usedType);
-			if (IsSerializerLoggerEnabled && index.HasValue) {
-				if (isBigObject) {
-					Context.SerializerLogger.Log($"{LogPrefix}({usedType}) {name}[{index.Value}]:");
+			if (IsSerializerLoggerEnabled) {
+				if (index.HasValue) {
+					if (isBigObject) {
+						Context.SerializerLogger.Log($"{LogPrefix}({usedType}) {name}[{index.Value}]:");
+					} else {
+						Context.SerializerLogger.Log($"{LogPrefix}({usedType}) {name}[{index.Value}] - {ShortLog(obj)}");
+					}
 				} else {
-					Context.SerializerLogger.Log($"{LogPrefix}({usedType}) {name}[{index.Value}] - {ShortLog(obj)}");
+					if (isBigObject) {
+						Context.SerializerLogger.Log($"{LogPrefix}({usedType}) {name}:");
+					} else {
+						Context.SerializerLogger.Log($"{LogPrefix}({usedType}) {name} - {ShortLog(obj)}");
+					}
 				}
 			}
 			object obj2 = obj;
@@ -176,11 +184,22 @@ namespace UbiArt {
 
 			bool isBigObject = IsBigObject(typeof(T));
 
+			if (IsSerializerLoggerEnabled && isBigObject && name != null) {
+				Context.SerializerLogger.Log($"{LogPrefix}({typeof(T)}) {name}:");
+			}
 			if (IsSerializerLoggerEnabled) {
-				if (index.HasValue && isBigObject) {
-					Context.SerializerLogger.Log($"{LogPrefix}{typeof(T)} {name}[{index.Value}]:");
-				} else if (index.HasValue && !isBigObject) {
-					Context.SerializerLogger.Log($"{LogPrefix}{typeof(T)} {name}[{index.Value}] - {ShortLog(obj)}");
+				if (index.HasValue) {
+					if (isBigObject) {
+						Context.SerializerLogger.Log($"{LogPrefix}{typeof(T)} {name}[{index.Value}]:");
+					} else {
+						Context.SerializerLogger.Log($"{LogPrefix}{typeof(T)} {name}[{index.Value}] - {ShortLog(obj)}");
+					}
+				} else {
+					if (isBigObject) {
+						Context.SerializerLogger.Log($"{LogPrefix}{typeof(T)} {name}:");
+					} else {
+						Context.SerializerLogger.Log($"{LogPrefix}{typeof(T)} {name} - {ShortLog(obj)}");
+					}
 				}
 			}
 
