@@ -1,10 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace UbiArt {
 	public class CSerializable : ICSerializable {
+		[IgnoreDataMember]
 		protected bool IsFirstLoad { get; set; } = true;
+		[IgnoreDataMember]
 		public Context UbiArtContext { get; protected set; }
+		[IgnoreDataMember]
 		public uint sizeOf = 0;
 
 		public void Serialize(CSerializerObject s, string name) {
@@ -63,6 +67,7 @@ namespace UbiArt {
 			}
 		}
 
+		[IgnoreDataMember]
 		public virtual uint? ClassCRC => null;
 	}
 }
