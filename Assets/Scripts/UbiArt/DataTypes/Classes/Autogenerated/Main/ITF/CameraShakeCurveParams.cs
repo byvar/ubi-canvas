@@ -6,12 +6,9 @@ namespace UbiArt.ITF {
 		public float offset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
-			} else {
-				frequency = s.Serialize<float>(frequency, name: "frequency");
-				amplitude = s.Serialize<float>(amplitude, name: "amplitude");
-				offset = s.Serialize<float>(offset, name: "offset");
-			}
+			frequency = s.Serialize<float>(frequency, name: "frequency");
+			amplitude = s.Serialize<float>(amplitude, name: "amplitude");
+			offset = s.Serialize<float>(offset, name: "offset");
 		}
 		public override uint? ClassCRC => 0xC2243BF4;
 	}

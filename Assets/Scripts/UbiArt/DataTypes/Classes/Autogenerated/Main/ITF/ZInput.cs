@@ -15,8 +15,10 @@ namespace UbiArt.ITF {
 			axis_range = s.SerializeObject<Vec2d>(axis_range, name: "axis_range");
 			threshold = s.Serialize<float>(threshold, name: "threshold");
 			delay = s.Serialize<float>(delay, name: "delay");
-			decreaseSpeed = s.Serialize<float>(decreaseSpeed, name: "decreaseSpeed");
-			increaseValue = s.Serialize<float>(increaseValue, name: "increaseValue");
+			if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RA) {
+				decreaseSpeed = s.Serialize<float>(decreaseSpeed, name: "decreaseSpeed");
+				increaseValue = s.Serialize<float>(increaseValue, name: "increaseValue");
+			}
 		}
 	}
 }

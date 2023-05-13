@@ -12,18 +12,15 @@ namespace UbiArt.ITF {
 		public bool loop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
-			} else {
-				xofs = s.Serialize<float>(xofs, name: "xofs");
-				yofs = s.Serialize<float>(yofs, name: "yofs");
-				xScale = s.Serialize<float>(xScale, name: "xScale");
-				yScale = s.Serialize<float>(yScale, name: "yScale");
-				xMin = s.Serialize<float>(xMin, name: "xMin");
-				xMax = s.Serialize<float>(xMax, name: "xMax");
-				yMin = s.Serialize<float>(yMin, name: "yMin");
-				yMax = s.Serialize<float>(yMax, name: "yMax");
-				loop = s.Serialize<bool>(loop, name: "loop");
-			}
+			xofs = s.Serialize<float>(xofs, name: "xofs");
+			yofs = s.Serialize<float>(yofs, name: "yofs");
+			xScale = s.Serialize<float>(xScale, name: "xScale");
+			yScale = s.Serialize<float>(yScale, name: "yScale");
+			xMin = s.Serialize<float>(xMin, name: "xMin");
+			xMax = s.Serialize<float>(xMax, name: "xMax");
+			yMin = s.Serialize<float>(yMin, name: "yMin");
+			yMax = s.Serialize<float>(yMax, name: "yMax");
+			loop = s.Serialize<bool>(loop, name: "loop");
 		}
 		public override uint? ClassCRC => 0x9E41C323;
 	}

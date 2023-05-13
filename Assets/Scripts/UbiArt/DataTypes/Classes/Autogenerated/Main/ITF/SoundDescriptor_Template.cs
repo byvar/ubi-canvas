@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 		public SoundGUID onEnterZone;
 		public SoundGUID onExitZone;
 		public bool soundPlayAfterDestroy;
-		public Enum_limitMode limitModeEnum = Enum_limitMode.Value_1;
+		public LimiterDef.LimiterMode limitModeEnum = LimiterDef.LimiterMode.StopOldest;
 		public int isPrefetched;
 		public CListO<LocalizedPath> localizedFiles;
 		public CListO<Path> filesIntro;
@@ -54,7 +54,7 @@ namespace UbiArt.ITF {
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				category = s.SerializeObject<StringID>(category, name: "category");
 				limitCategory = s.SerializeObject<StringID>(limitCategory, name: "limitCategory");
-				limitModeEnum = s.Serialize<Enum_limitMode>(limitModeEnum, name: "limitMode");
+				limitModeEnum = s.Serialize<LimiterDef.LimiterMode>(limitModeEnum, name: "limitMode");
 				maxInstances = s.Serialize<uint>(maxInstances, name: "maxInstances");
 				isStream = s.Serialize<int>(isStream, name: "isStream");
 				isPrefetched = s.Serialize<int>(isPrefetched, name: "isPrefetched");
@@ -106,21 +106,14 @@ namespace UbiArt.ITF {
 			[Serialize("AUDIO_SYNC_PLAY_AT_ENTRY_CUE"      )] AT_ENTRY_CUE = 6,
 			[Serialize("AUDIO_SYNC_PLAY_AT_EXIT_CUE"       )] AT_EXIT_CUE = 7,
 		}
-		public enum Enum_limitMode {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-		}
 		public enum Enum_serialPlayingMode {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
+			[Serialize("PlayOrdered")] PlayOrdered = 0,
+			[Serialize("PlayRandom")] PlayRandom = 1,
+			[Serialize("PlayOrdered_RandomStart")] PlayOrdered_RandomStart = 2,
 		}
 		public enum Enum_serialStoppingMode {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
+			[Serialize("FinishCurrentSound")] FinishCurrentSound = 0,
+			[Serialize("StopImmediate")] StopImmediate = 1,
 		}
 	}
 }

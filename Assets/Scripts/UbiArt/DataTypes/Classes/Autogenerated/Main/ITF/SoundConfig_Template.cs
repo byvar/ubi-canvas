@@ -7,35 +7,35 @@ namespace UbiArt.ITF {
 		public CListO<EventSetWwiseAuxBusEffect> WwiseDefaultAuxEffectList;
 		public float microZoffset;
 		public CListO<StringID> WwiseStateToRestoreAfterHotReload;
-		public Placeholder busses;
-		public Placeholder limiters;
+		public CListO<BusDef> busses;
+		public CListO<LimiterDef> limiters;
 		public Placeholder busMixBank;
 		public float pauseFadeIn;
 		public float pauseFadeOut;
-		public Placeholder headphoneBusMix;
-		public Placeholder playerNumberBusMix;
+		public BusMix headphoneBusMix;
+		public CListO<PlayerNumberBusMix> playerNumberBusMix;
 		public float limiterStopFade;
 		public float engineStopFade;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RO) {
-				busses = s.SerializeObject<Placeholder>(busses, name: "busses");
-				limiters = s.SerializeObject<Placeholder>(limiters, name: "limiters");
+				busses = s.SerializeObject<CListO<BusDef>>(busses, name: "busses");
+				limiters = s.SerializeObject<CListO<LimiterDef>>(limiters, name: "limiters");
 				busMixBank = s.SerializeObject<Placeholder>(busMixBank, name: "busMixBank");
 			} else if (s.Settings.game == Settings.Game.RL) {
-				busses = s.SerializeObject<Placeholder>(busses, name: "busses");
-				limiters = s.SerializeObject<Placeholder>(limiters, name: "limiters");
+				busses = s.SerializeObject<CListO<BusDef>>(busses, name: "busses");
+				limiters = s.SerializeObject<CListO<LimiterDef>>(limiters, name: "limiters");
 				pauseFadeIn = s.Serialize<float>(pauseFadeIn, name: "pauseFadeIn");
 				pauseFadeOut = s.Serialize<float>(pauseFadeOut, name: "pauseFadeOut");
-				headphoneBusMix = s.SerializeObject<Placeholder>(headphoneBusMix, name: "headphoneBusMix");
-				playerNumberBusMix = s.SerializeObject<Placeholder>(playerNumberBusMix, name: "playerNumberBusMix");
+				headphoneBusMix = s.SerializeObject<BusMix>(headphoneBusMix, name: "headphoneBusMix");
+				playerNumberBusMix = s.SerializeObject<CListO<PlayerNumberBusMix>>(playerNumberBusMix, name: "playerNumberBusMix");
 				limiterStopFade = s.Serialize<float>(limiterStopFade, name: "limiterStopFade");
 				engineStopFade = s.Serialize<float>(engineStopFade, name: "engineStopFade");
 			} else if (s.Settings.game == Settings.Game.COL) {
-				busses = s.SerializeObject<Placeholder>(busses, name: "busses");
+				busses = s.SerializeObject<CListO<BusDef>>(busses, name: "busses");
 				pauseFadeIn = s.Serialize<float>(pauseFadeIn, name: "pauseFadeIn");
 				pauseFadeOut = s.Serialize<float>(pauseFadeOut, name: "pauseFadeOut");
-				headphoneBusMix = s.SerializeObject<Placeholder>(headphoneBusMix, name: "headphoneBusMix");
+				headphoneBusMix = s.SerializeObject<BusMix>(headphoneBusMix, name: "headphoneBusMix");
 				WwiseBankList = s.SerializeObject<CListO<PathRef>>(WwiseBankList, name: "WwiseBankList");
 				microZoffset = s.Serialize<float>(microZoffset, name: "microZoffset");
 			} else {

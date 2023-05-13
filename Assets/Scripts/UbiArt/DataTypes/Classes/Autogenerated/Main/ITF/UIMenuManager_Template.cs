@@ -59,7 +59,11 @@ namespace UbiArt.ITF {
 			public Path Path__4;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (s.Settings.game == Settings.Game.VH) {
+				if (s.Settings.game == Settings.Game.RL) {
+					path = s.SerializeObject<Path>(path, name: "path");
+					depth = s.Serialize<int>(depth, name: "depth");
+					flags = s.Serialize<uint>(flags, name: "flags");
+				} else if (s.Settings.game == Settings.Game.VH) {
 					Path__0 = s.SerializeObject<Path>(Path__0, name: "Path__0");
 					int__1 = s.Serialize<int>(int__1, name: "int__1");
 					uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");

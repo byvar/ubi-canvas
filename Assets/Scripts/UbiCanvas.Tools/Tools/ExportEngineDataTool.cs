@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UbiArt;
@@ -18,8 +19,8 @@ namespace UbiCanvas.Tools
 
 		public override async Task InvokeAsync(string outputDir)
 		{
-			Context context = CreateContext();
-			Loader loader = new(context);
+			using Context context = CreateContext();
+			await context.Loader.LoadInitial();
 
 			string itfDir = context.Settings.ITFDirectory;
 
@@ -28,7 +29,7 @@ namespace UbiCanvas.Tools
 				         "*.isg.ckd", SearchOption.AllDirectories))
 			{
 				string relativePath = configFile.Substring(configFile.IndexOf("enginedata"));
-				loader.LoadGenericFile(new Path(relativePath), x =>
+				context.Loader.LoadGenericFile(new Path(relativePath), x =>
 				{
 					string exportFile = System.IO.Path.Combine(outputDir, $"{relativePath}.json");
 					Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
@@ -36,7 +37,7 @@ namespace UbiCanvas.Tools
 				});
 			}
 
-			await loader.LoadLoop();
+			await context.Loader.LoadLoop();
 		}
 	}
 }

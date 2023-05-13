@@ -4,14 +4,14 @@ namespace UbiArt.ITF {
 		public uint RewardFullUnlock;
 		public Path petPath;
 		public CListO<RO2_PetModel> petModels;
-		public Placeholder familyTags;
+		public CListO<StringID> familyTags;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
 				RewardFullUnlock = s.Serialize<uint>(RewardFullUnlock, name: "RewardFullUnlock");
 				petPath = s.SerializeObject<Path>(petPath, name: "petPath");
 				petModels = s.SerializeObject<CListO<RO2_PetModel>>(petModels, name: "petModels");
-				familyTags = s.SerializeObject<Placeholder>(familyTags, name: "familyTags");
+				familyTags = s.SerializeObject<CListO<StringID>>(familyTags, name: "familyTags");
 			} else {
 				RewardFullUnlock = s.Serialize<uint>(RewardFullUnlock, name: "RewardFullUnlock");
 				petPath = s.SerializeObject<Path>(petPath, name: "petPath");
