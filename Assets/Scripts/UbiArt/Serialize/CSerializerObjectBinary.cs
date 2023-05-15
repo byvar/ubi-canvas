@@ -270,7 +270,7 @@ namespace UbiArt {
 
 		#region Encoding
 
-		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, bool allowLocalPointers = false, string filename = null) {
+		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, string filename = null) {
 			if (action == null)
 				throw new ArgumentNullException(nameof(action));
 
@@ -322,6 +322,10 @@ namespace UbiArt {
 				File = file;
 				Context.Loader.virtualFiles.Remove(tuple);
 			}
+		}
+
+		public override void DoEncrypted(uint[] encryptionKey, Action action, string name = null) {
+			throw new NotImplementedException();
 		}
 
 		#endregion

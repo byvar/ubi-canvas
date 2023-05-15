@@ -98,8 +98,6 @@ namespace UbiArt
 			void WriteChar(byte b) {
 				if(b != 0) output.WriteByte(b);
 			}
-
-            output.Write(buffer, 0, buffer.Length);
         }
 
 		public void EncodeStream(Stream input, Stream output) {
@@ -123,8 +121,6 @@ namespace UbiArt
 			void WriteChar(byte b) {
 				if (b != 0) output.WriteByte(b);
 			}
-
-			output.Write(buffer, 0, buffer.Length);
 		}
     }
 }

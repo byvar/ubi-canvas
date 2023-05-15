@@ -61,8 +61,12 @@ namespace UbiArt {
 			IStreamEncoder encoder,
 			Action action,
 			Endian? endianness = null,
-			bool allowLocalPointers = false,
 			string filename = null);
+
+		public abstract void DoEncrypted(
+			uint[] encryptionKey,
+			Action action,
+			string name = null);
 
 		#endregion
 

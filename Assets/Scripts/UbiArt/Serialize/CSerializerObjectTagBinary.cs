@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using UbiArt.CRC;
 using UbiArt.FileFormat;
+using UbiCanvas.Helpers;
 
 namespace UbiArt {
 	public class CSerializerObjectTagBinary : CSerializerObject {
@@ -713,7 +714,7 @@ namespace UbiArt {
 
 		#region Encoding
 
-		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, bool allowLocalPointers = false, string filename = null) {
+		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, string filename = null) {
 			if (action == null)
 				throw new ArgumentNullException(nameof(action));
 
@@ -752,6 +753,11 @@ namespace UbiArt {
 				long decodedLength = Reader.BaseStream.Length;
 				Context.Loader.virtualFiles.Add(tuple);
 
+				//byte[] bytes = this.Reader.ReadBytes((int)decodedLength);
+				//Util.ByteArrayToFile(test_export_path, bytes);
+				//this.Reader.BaseStream.Position = 0;
+
+
 				//DoAt(sf.StartPointer, () => {
 				Log("Decoded data using {0} at {1} with decoded length {2} and encoded length {3}",
 					encoder.Name, offset, decodedLength, encodedLength);
@@ -766,7 +772,31 @@ namespace UbiArt {
 				Context.Loader.virtualFiles.Remove(tuple);
 			}
 		}
+		public override void DoEncrypted(uint[] encryptionKey, Action action, string name = null) {
+			if (action == null)
+				throw new ArgumentNullException(nameof(action));
 
+			Crc crc = new Crc(new Parameters("CRC-32", 32, 0x04C11DB7, 0xFFFFFFFF, false, false, 0xFFFFFFFF, 0xCBF43926));
+			byte[] encryptionKeyBytes = new byte[encryptionKey.Length * 4];
+			for (int i = 0; i < encryptionKey.Length; i++) {
+				encryptionKeyBytes[(i * 4) + 0] = (byte)((encryptionKey[i] >>  0) & 0xFF);
+				encryptionKeyBytes[(i * 4) + 1] = (byte)((encryptionKey[i] >>  8) & 0xFF);
+				encryptionKeyBytes[(i * 4) + 2] = (byte)((encryptionKey[i] >> 16) & 0xFF);
+				encryptionKeyBytes[(i * 4) + 3] = (byte)((encryptionKey[i] >> 24) & 0xFF);
+			}
+			uint computedCRC = CrcHelper.ToUInt32(crc.ComputeHash(encryptionKeyBytes));
+			uint uafType = computedCRC;
+			if (ReadTag(name, uafType)) {
+				var end = endPos.Peek();
+				var len = end - CurrentPosition;
+				DoEncoded(new TeaEncoder(len, encryptionKey), () => {
+					// Stored as Base64.
+					DoEncoded(new Base64Encoder(Length), () => {
+						action();
+					});
+				});
+			}
+		}
 		#endregion
 	}
 }
