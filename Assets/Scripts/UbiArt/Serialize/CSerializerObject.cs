@@ -2,7 +2,9 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using UbiArt.FileFormat;
 
 namespace UbiArt {
 	public abstract class CSerializerObject : IDisposable {
@@ -51,6 +53,16 @@ namespace UbiArt {
 		protected bool IsBigObject(Type type) => IsSerializerLoggerEnabled
 				&& (typeof(CSerializable).IsAssignableFrom(type) || typeof(IObjectContainer).IsAssignableFrom(type))
 				&& !typeof(ICSerializableShortLog).IsAssignableFrom(type);
+
+		#endregion
+
+		#region Encoding
+		public abstract void DoEncoded(
+			IStreamEncoder encoder,
+			Action action,
+			Endian? endianness = null,
+			bool allowLocalPointers = false,
+			string filename = null);
 
 		#endregion
 

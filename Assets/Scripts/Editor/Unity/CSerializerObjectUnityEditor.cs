@@ -284,5 +284,11 @@ namespace UbiArt {
 		}
 
 		public override void Log(string logString, params object[] args) { }
+
+		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, bool allowLocalPointers = false, string filename = null) {
+			if (action == null)
+				throw new ArgumentNullException(nameof(action)); 
+			action();
+		}
 	}
 }

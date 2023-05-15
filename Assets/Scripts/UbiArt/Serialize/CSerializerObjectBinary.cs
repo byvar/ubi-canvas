@@ -1,5 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using UbiArt.FileFormat;
 
@@ -262,6 +264,64 @@ namespace UbiArt {
 		public override void Log(string logString, params object[] args) {
 			if (IsSerializerLoggerEnabled)
 				Context.SerializerLogger.Log(LogPrefix + String.Format(logString, args));
+		}
+
+		#endregion
+
+		#region Encoding
+
+		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, bool allowLocalPointers = false, string filename = null) {
+			if (action == null)
+				throw new ArgumentNullException(nameof(action));
+
+			if (encoder == null) {
+				action();
+				return;
+			}
+
+			// Stream key
+			Pointer offset = CurrentPointer;
+			string key = filename ?? $"{offset}_{encoder.Name}";
+
+			// Decode the data into a stream
+			long start = Reader.BaseStream.Position;
+			using MemoryStream memStream = new();
+			encoder.DecodeStream(Reader.BaseStream, memStream);
+			memStream.Position = 0;
+			long end = Reader.BaseStream.Position;
+			long encodedLength = end - start;
+
+			// Add the stream
+			BinaryStreamFile sf = new(
+				context: Context,
+				name: key,
+				stream: memStream,
+				endianness: endianness ?? File.Endianness);
+
+			var reader = Reader;
+			var file = File;
+
+			var tuple = new Tuple<string, UbiArtFile>(key, sf);
+			
+			try {
+				File = sf;
+				Reader = sf.CreateReader();
+				long decodedLength = Reader.BaseStream.Length;
+				Context.Loader.virtualFiles.Add(tuple);
+
+				//DoAt(sf.StartPointer, () => {
+				Log("Decoded data using {0} at {1} with decoded length {2} and encoded length {3}",
+					encoder.Name, offset, decodedLength, encodedLength);
+				action();
+				if (CurrentPosition != decodedLength)
+					Context?.SystemLogger?.LogWarning("Encoded block {0} was not fully deserialized: Serialized size: {1} != Total size: {2}",
+						key, CurrentPointer, decodedLength);
+				//});
+			} finally {
+				Reader = reader;
+				File = file;
+				Context.Loader.virtualFiles.Remove(tuple);
+			}
 		}
 
 		#endregion

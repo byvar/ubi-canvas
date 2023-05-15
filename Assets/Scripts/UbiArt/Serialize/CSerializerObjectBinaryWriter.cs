@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using UbiArt.FileFormat;
 
@@ -226,6 +227,58 @@ namespace UbiArt {
 				Context.SerializerLogger.Log(LogPrefix + String.Format(logString, args));
 		}
 
+		#endregion
+
+		#region Encoding
+
+
+		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, bool allowLocalPointers = false, string filename = null) {
+
+			if (action == null)
+				throw new ArgumentNullException(nameof(action));
+
+			if (encoder == null) {
+				action();
+				return;
+			}
+
+			using MemoryStream decodedStream = new();
+
+			// Stream key
+			string key = filename ?? $"{CurrentPointer}_{encoder.Name}";
+
+			// Create a temporary file for the stream to serialize to
+			BinaryStreamFile sf = new(
+				context: Context,
+				name: key,
+				stream: decodedStream,
+				endianness: endianness ?? File.Endianness);
+
+			var writer = Writer;
+			var file = File;
+
+			var tuple = new Tuple<string, UbiArtFile>(key, sf);
+
+			try {
+				// Add the temporary file
+				File = sf;
+				Writer = sf.CreateWriter();
+				Context.Loader.virtualFiles.Add(tuple);
+				Context.AddFile(sf);
+
+				// Serialize the data into the stream
+				action();
+
+				// Encode the stream to the current file
+				decodedStream.Position = 0;
+				encoder.EncodeStream(decodedStream, Writer.BaseStream);
+			} finally {
+				// Remove the temporary file
+				Writer = writer;
+				File = file;
+				Context.Loader.virtualFiles.Remove(tuple);
+			}
+		}
 		#endregion
 	}
 }
