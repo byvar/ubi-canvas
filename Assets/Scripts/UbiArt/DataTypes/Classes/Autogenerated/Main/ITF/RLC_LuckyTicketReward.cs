@@ -4,6 +4,10 @@ namespace UbiArt.ITF {
 		public Enum_type type;
 		public StringID creatureID;
 		public uint count;
+		public RLC_ElixirType elixirType0;
+		public RLC_ElixirType elixirType1;
+		public RLC_ElixirType elixirType2;
+		public RLC_RewardType ticketType;
 		public bool jackpot;
 		public bool seasonalFixedReward;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -11,6 +15,10 @@ namespace UbiArt.ITF {
 			type = s.Serialize<Enum_type>(type, name: "type");
 			creatureID = s.SerializeObject<StringID>(creatureID, name: "creatureID");
 			count = s.Serialize<uint>(count, name: "count");
+			elixirType0 = s.Serialize<RLC_ElixirType>(elixirType0, name: "elixirType0");
+			elixirType1 = s.Serialize<RLC_ElixirType>(elixirType1, name: "elixirType1");
+			elixirType2 = s.Serialize<RLC_ElixirType>(elixirType2, name: "elixirType2");
+			ticketType = s.Serialize<RLC_RewardType>(ticketType, name: "ticketType");
 			jackpot = s.Serialize<bool>(jackpot, name: "jackpot");
 			seasonalFixedReward = s.Serialize<bool>(seasonalFixedReward, name: "seasonalFixedReward");
 		}

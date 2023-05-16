@@ -21,11 +21,11 @@ namespace UbiArt.Animation {
 		public Vec2d vec1;
 		public Vec2d vec2;
 		public Vec2d vec3;
-		public Pair<StringID, Path> skeleton;
-		public Pair<StringID, CString> skeletonOrigins;
+		public pair<StringID, Path> skeleton;
+		public pair<StringID, CString> skeletonOrigins;
 		public KeyArray<int> texturePathKeysOrigins;
-		public CListO<Pair<StringID, Path>> texturePaths;
-		public CListO<Pair<StringID, CString>> texturePathsOrigins;
+		public CListO<pair<StringID, Path>> texturePaths;
+		public CListO<pair<StringID, CString>> texturePathsOrigins;
 		public uint bankId0;
 		public uint bankId;
 		public uint unk2;
@@ -52,17 +52,17 @@ namespace UbiArt.Animation {
 			vec2 = s.SerializeObject<Vec2d>(vec2, name: "vec2");
 			vec3 = s.SerializeObject<Vec2d>(vec3, name: "vec3");
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
-				skeleton = s.SerializeObject<Pair<StringID, Path>>(skeleton, name: "skeleton");
-				texturePaths = s.SerializeObject<CListO<Pair<StringID, Path>>>(texturePaths, name: "textures");
+				skeleton = s.SerializeObject<pair<StringID, Path>>(skeleton, name: "skeleton");
+				texturePaths = s.SerializeObject<CListO<pair<StringID, Path>>>(texturePaths, name: "textures");
 				if (s.Settings.game == Settings.Game.RL) {
 					bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 				}
 				bankId = s.Serialize<uint>(bankId, name: "bankId");
 				unk2 = s.Serialize<uint>(unk2, name: "unk2");
 			} else {
-				skeletonOrigins = s.SerializeObject<Pair<StringID, CString>>(skeletonOrigins, name: "skeleton");
+				skeletonOrigins = s.SerializeObject<pair<StringID, CString>>(skeletonOrigins, name: "skeleton");
 				texturePathKeysOrigins = s.SerializeObject<KeyArray<int>>(texturePathKeysOrigins, name: "texturePathKeys");
-				texturePathsOrigins = s.SerializeObject<CListO<Pair<StringID, CString>>>(texturePathsOrigins, name: "textures");
+				texturePathsOrigins = s.SerializeObject<CListO<pair<StringID, CString>>>(texturePathsOrigins, name: "textures");
 				unk0Origins = s.Serialize<ulong>(unk0Origins, name: "unk0");
 				unk1Origins = s.SerializeObject<CListP<ulong>>(unk1Origins, name: "unk1");
 				unk2 = s.Serialize<uint>(unk2, name: "unk2");

@@ -392,9 +392,9 @@ namespace UbiArt {
 			return c;
 		}
 
-		public async Task WriteBundle(string path, List<Pair<Path, ICSerializable>> files) {
+		public async Task WriteBundle(string path, List<pair<Path, ICSerializable>> files) {
 			Bundle.BundleFile b = new Bundle.BundleFile();
-			foreach (Pair<Path, ICSerializable> f in files) {
+			foreach (pair<Path, ICSerializable> f in files) {
 				b.AddFile(f.Item1.CookedPath(Context), f.Item2);
 			}
 			await WriteBundle(path, b);

@@ -273,7 +273,7 @@ namespace UbiArt {
 				if (obj is ICSerializable) {
 					IncreaseLevel();
 					bool entered = false;
-					if (GetTagCode(type) == 200
+					if (!IsValueType(type)
 						&& !type.IsDefined(typeof(SerializeEmbedAttribute), false)) {
 						string typeName;
 						if (obj is CSerializable) {
@@ -539,11 +539,11 @@ namespace UbiArt {
 				fieldCRC[info] = requiredCRC;
 			}
 			if (crc == requiredCRC) {
-				//Context.Log((Position-8) + ":" + new string(' ', (Indent + 1) * 2) + "TAG: " + name + " (" + type + ")");
+				//if (IsSerializerLoggerEnabled) Context.SerializerLogger.Log($"{logPrefix}TAG: {name} ({type})");
 				endPos.Push(CurrentPosition + size);
 				return true;
 			} else {
-				//Context.Log((Position - 8) + ":" + new string(' ', (Indent + 1) * 2) + "Read tag failed: " + name + " (" + type + ")");
+				//if (IsSerializerLoggerEnabled) Context.SerializerLogger.Log($"{logPrefix}Read tag failed: {name} ({type}) (Read:{crc:X8} != Tried:{requiredCRC:X8})");
 				Reader.BaseStream.Seek(-8, System.IO.SeekOrigin.Current);
 				return false;
 			}

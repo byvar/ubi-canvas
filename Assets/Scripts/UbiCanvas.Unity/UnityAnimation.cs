@@ -131,7 +131,7 @@ public class UnityAnimation : MonoBehaviour {
 						if (l.Settings.engineVersion == Settings.EngineVersion.RO) {
 							int texInd = animTrack.texturePathKeysOrigins.GetKeyIndex(entry.textureBankId);
 							if (texInd != -1) {
-								Pair<StringID, CString> texPath = animTrack.texturePathsOrigins[texInd];
+								pair<StringID, CString> texPath = animTrack.texturePathsOrigins[texInd];
 								if (l.Loader.tex.ContainsKey(texPath.Item1)) {
 									alc.SetMaterialTextureOrigins((TextureCooked)l.Loader.tex[texPath.Item1], patchRenderers[ind]);
 								}

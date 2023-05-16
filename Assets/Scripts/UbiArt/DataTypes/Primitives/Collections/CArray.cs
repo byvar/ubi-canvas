@@ -17,7 +17,7 @@ namespace UbiArt {
 				Array.Resize(ref container, (int)count);
 			}
 			string typeName = "VAL";
-			if (count > 0 && s.GetTagCode(typeof(T)) == 200) {
+			if (count > 0 && !s.IsValueType(typeof(T))) {
 				typeName = null;
 			}
 			//s.EnterEmbed();

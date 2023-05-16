@@ -100,7 +100,7 @@ namespace UbiArt.Bundle {
 					zSize = 0,
 					timeStamp = 0
 				};
-				packMaster.files.Add(new Pair<FileHeaderRuntime, Path>(fhr, kv.Key));
+				packMaster.files.Add(new pair<FileHeaderRuntime, Path>(fhr, kv.Key));
 				data.Add(serializedData);
 				curOffset += (uint)serializedData.Length;
 				await TimeController.WaitIfNecessary();
@@ -114,7 +114,7 @@ namespace UbiArt.Bundle {
 					zSize = 0,
 					timeStamp = 0
 				};
-				packMaster.files.Add(new Pair<FileHeaderRuntime, Path>(fhr, kv.Key));
+				packMaster.files.Add(new pair<FileHeaderRuntime, Path>(fhr, kv.Key));
 				data.Add(serializedData);
 				curOffset += (uint)serializedData.Length;
 				await TimeController.WaitIfNecessary();

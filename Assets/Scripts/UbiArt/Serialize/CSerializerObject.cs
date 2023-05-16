@@ -154,6 +154,17 @@ namespace UbiArt {
 				return 200;
 			}
 		}
+		public bool IsValueType(Type type) {
+			if(Type.GetTypeCode(type) != TypeCode.Object)
+				return true;
+			if (typeMapping.ContainsKey(type))
+				return true;
+			// Add specific checks here
+			if(type == typeof(ITF.ObjectPath))
+				return true;
+
+			return false;
+		}
 
 		public bool HasFlags(SerializeFlags flags) {
 			switch (flags) {

@@ -36,7 +36,7 @@ public class UnityWindowBundle : UnityWindow {
 				DrawFoldout(ref yPos, "Actor Templates", l.tpl);
 				EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(path));
 				if (GUI.Button(GetNextRect(ref yPos), new GUIContent("Write"))) {
-					List<Pair<Path, ICSerializable>> selection = new List<Pair<Path, ICSerializable>>();
+					List<pair<Path, ICSerializable>> selection = new List<pair<Path, ICSerializable>>();
 					GetSelectedPaths(selection, l.isc);
 					GetSelectedPaths(selection, l.isg);
 					//GetSelectedPaths(selection, l.act);
@@ -79,13 +79,13 @@ public class UnityWindowBundle : UnityWindow {
 			}
 		}
 	}
-	void GetSelectedPaths<T>(List<Pair<Path, ICSerializable>> selection, Dictionary<StringID, T> dict) where T : ICSerializable {
+	void GetSelectedPaths<T>(List<pair<Path, ICSerializable>> selection, Dictionary<StringID, T> dict) where T : ICSerializable {
 		Loader l = Controller.MainContext.Loader;
 		if(dict == null) return;
 		foreach (StringID sid in dict.Keys) {
 			if (!selectedPaths.ContainsKey(sid)) continue;
 			if (selectedPaths[sid]) {
-				selection.Add(new Pair<Path, ICSerializable>(l.Paths[sid], dict[sid]));
+				selection.Add(new pair<Path, ICSerializable>(l.Paths[sid], dict[sid]));
 			}
 		}
 	}

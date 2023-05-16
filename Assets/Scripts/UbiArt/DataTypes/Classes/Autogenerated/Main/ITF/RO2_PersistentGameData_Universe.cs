@@ -333,6 +333,7 @@ namespace UbiArt.ITF {
 		public uint maxContinueCost;
 		public uint maxContinueWatchAd;
 		public int SeasonalEventLastChanceId;
+		public CListO<RLC_BeatboxDataList> BeatboxCreatureList;
 		public string profileId;
 		public string PlayerNameNext;
 		public uint askedSlot;
@@ -346,7 +347,7 @@ namespace UbiArt.ITF {
 		public float Playtime_Leaderboard_VisitingTree;
 		public uint Leaderboard_VisitingTreeCount;
 		public uint Leaderboard_VisitingProfileCount;
-		public CMap<uint, Pair<uint, RLC_CreatureTreeTier>> TreeEventFamilyMap;
+		public CMap<uint, pair<uint, RLC_CreatureTreeTier>> TreeEventFamilyMap;
 		public uint seasonalEventCurrencyPoolAdventure;
 		public uint seasonalEventCurrencyPoolTree;
 		public uint seasonalEventCurrencyPoolLevel;
@@ -391,6 +392,7 @@ namespace UbiArt.ITF {
 		public bool neverShowRatingPopup;
 		public uint ratingPopupShownCptLtd;
 		public uint newRatingPopupRequestedCount;
+		public CListP<string> playedGameVersions;
 		public bool needToShowTimeSavingEndingPopup;
 		public bool ShopAgeGateCheckDone;
 		public bool ShopNonAgressiveMode;
@@ -851,6 +853,7 @@ namespace UbiArt.ITF {
 				maxContinueCost = s.Serialize<uint>(maxContinueCost, name: "maxContinueCost");
 				maxContinueWatchAd = s.Serialize<uint>(maxContinueWatchAd, name: "maxContinueWatchAd");
 				SeasonalEventLastChanceId = s.Serialize<int>(SeasonalEventLastChanceId, name: "SeasonalEventLastChanceId");
+				BeatboxCreatureList = s.SerializeObject<CListO<RLC_BeatboxDataList>>(BeatboxCreatureList, name: "BeatboxCreatureList");
 				profileId = s.Serialize<string>(profileId, name: "profileId");
 				PlayerNameNext = s.Serialize<string>(PlayerNameNext, name: "PlayerNameNext");
 				askedSlot = s.Serialize<uint>(askedSlot, name: "askedSlot");
@@ -864,7 +867,7 @@ namespace UbiArt.ITF {
 				Playtime_Leaderboard_VisitingTree = s.Serialize<float>(Playtime_Leaderboard_VisitingTree, name: "Playtime_Leaderboard_VisitingTree");
 				Leaderboard_VisitingTreeCount = s.Serialize<uint>(Leaderboard_VisitingTreeCount, name: "Leaderboard_VisitingTreeCount");
 				Leaderboard_VisitingProfileCount = s.Serialize<uint>(Leaderboard_VisitingProfileCount, name: "Leaderboard_VisitingProfileCount");
-				TreeEventFamilyMap = s.SerializeObject<CMap<uint, Pair<uint, RLC_CreatureTreeTier>>>(TreeEventFamilyMap, name: "TreeEventFamilyMap");
+				TreeEventFamilyMap = s.SerializeObject<CMap<uint, pair<uint, RLC_CreatureTreeTier>>>(TreeEventFamilyMap, name: "TreeEventFamilyMap");
 				seasonalEventCurrencyPoolAdventure = s.Serialize<uint>(seasonalEventCurrencyPoolAdventure, name: "seasonalEventCurrencyPoolAdventure");
 				seasonalEventCurrencyPoolTree = s.Serialize<uint>(seasonalEventCurrencyPoolTree, name: "seasonalEventCurrencyPoolTree");
 				seasonalEventCurrencyPoolLevel = s.Serialize<uint>(seasonalEventCurrencyPoolLevel, name: "seasonalEventCurrencyPoolLevel");
@@ -909,6 +912,7 @@ namespace UbiArt.ITF {
 				neverShowRatingPopup = s.Serialize<bool>(neverShowRatingPopup, name: "neverShowRatingPopup");
 				ratingPopupShownCptLtd = s.Serialize<uint>(ratingPopupShownCptLtd, name: "ratingPopupShownCptLtd");
 				newRatingPopupRequestedCount = s.Serialize<uint>(newRatingPopupRequestedCount, name: "newRatingPopupRequestedCount");
+				playedGameVersions = s.SerializeObject<CListP<string>>(playedGameVersions, name: "playedGameVersions");
 				needToShowTimeSavingEndingPopup = s.Serialize<bool>(needToShowTimeSavingEndingPopup, name: "needToShowTimeSavingEndingPopup");
 				ShopAgeGateCheckDone = s.Serialize<bool>(ShopAgeGateCheckDone, name: "ShopAgeGateCheckDone");
 				ShopNonAgressiveMode = s.Serialize<bool>(ShopNonAgressiveMode, name: "ShopNonAgressiveMode");
@@ -1198,6 +1202,7 @@ namespace UbiArt.ITF {
 			public RLC_LuckyTicketReward decoyReward;
 			public Enum_region region;
 			public Creature_Rarity rarity;
+			public RLC_CreatureAcquisition acquisition;
 			public bool spyGlass;
 			public uint version;
 			protected override void SerializeImpl(CSerializerObject s) {
@@ -1207,6 +1212,7 @@ namespace UbiArt.ITF {
 				decoyReward = s.SerializeObject<RLC_LuckyTicketReward>(decoyReward, name: "decoyReward");
 				region = s.Serialize<Enum_region>(region, name: "region");
 				rarity = s.Serialize<Creature_Rarity>(rarity, name: "rarity");
+				acquisition = s.Serialize<RLC_CreatureAcquisition>(acquisition, name: "acquisition");
 				spyGlass = s.Serialize<bool>(spyGlass, name: "spyGlass");
 				version = s.Serialize<uint>(version, name: "version");
 			}

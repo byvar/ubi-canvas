@@ -1,13 +1,13 @@
 namespace UbiArt.Bundle {
 	public class FilePackMaster : ICSerializable {
-		public CListO<Pair<FileHeaderRuntime, Path>> files;
+		public CListO<pair<FileHeaderRuntime, Path>> files;
 
 		public void Serialize(CSerializerObject s, string name) {
-			files = s.SerializeObject<CListO<Pair<FileHeaderRuntime, Path>>>(files);
+			files = s.SerializeObject<CListO<pair<FileHeaderRuntime, Path>>>(files);
 		}
 
 		public FilePackMaster() {
-			files = new CListO<Pair<FileHeaderRuntime, Path>>();
+			files = new CListO<pair<FileHeaderRuntime, Path>>();
 		}
 	}
 }

@@ -298,12 +298,12 @@ namespace UbiCanvas.Conversion {
 					var linkPath = linkResult.Path;
 
 					var linkComponent = linkResult.Result.GetComponent<LinkComponent>();
-					List<Pair<Pickable, ChildEntry>> childrenToDuplicate = new List<Pair<Pickable, ChildEntry>>();
+					List<pair<Pickable, ChildEntry>> childrenToDuplicate = new List<pair<Pickable, ChildEntry>>();
 					foreach (var linkChild in linkComponent.Children) {
 						try {
 							PickableTree.Node result = sceneTree.FollowObjectPath(linkPath, linkChild.Path);
 							if (result.Pickable != null && parentActors.Contains(result.Pickable)) {
-								childrenToDuplicate.Add(new Pair<Pickable, ChildEntry>(result.Pickable, linkChild));
+								childrenToDuplicate.Add(new pair<Pickable, ChildEntry>(result.Pickable, linkChild));
 							}
 						} catch (Exception ex) {
 							oldContext?.SystemLogger?.LogWarning(ex);
