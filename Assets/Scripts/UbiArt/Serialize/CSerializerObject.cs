@@ -57,7 +57,7 @@ namespace UbiArt {
 		#endregion
 
 		#region Encoding
-		public abstract void DoEncoded(
+		protected abstract void DoEncoded(
 			IStreamEncoder encoder,
 			Action action,
 			Endian? endianness = null,
@@ -65,6 +65,10 @@ namespace UbiArt {
 
 		public abstract void DoEncrypted(
 			uint[] encryptionKey,
+			Action action,
+			string name = null);
+
+		public abstract void DoCompressed(
 			Action action,
 			string name = null);
 

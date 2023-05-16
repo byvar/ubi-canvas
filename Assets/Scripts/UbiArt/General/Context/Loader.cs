@@ -440,6 +440,7 @@ namespace UbiArt {
 
 		public void LoadSaveFile(string path, Action<RO2_SaveData> onResult) => LoadUncooked<RO2_SaveData>(path, onResult);
 		public void LoadSaveFileOrigins(string path, Action<Ray_SaveData> onResult) => LoadUncooked<Ray_SaveData>(path, onResult);
+		public void LoadSaveFileAdventures(string path, Action<RLC_SaveData> onResult) => LoadUncooked<RLC_SaveData>(path, onResult);
 
 		public async Task<byte[]> WriteActorFile(ITF.Actor act) {
 			Context.AsyncController.StartAsync();

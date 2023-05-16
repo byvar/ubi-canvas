@@ -232,7 +232,7 @@ namespace UbiArt {
 		#region Encoding
 
 
-		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, string filename = null) {
+		protected override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, string filename = null) {
 
 			if (action == null)
 				throw new ArgumentNullException(nameof(action));
@@ -280,6 +280,9 @@ namespace UbiArt {
 			}
 		}
 		public override void DoEncrypted(uint[] encryptionKey, Action action, string name = null) {
+			throw new NotImplementedException();
+		}
+		public override void DoCompressed(Action action, string name = null) {
 			throw new NotImplementedException();
 		}
 		#endregion

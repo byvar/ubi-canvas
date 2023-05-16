@@ -22,7 +22,7 @@ namespace UbiArt {
 					val = copy[i].Value;
 				}
 				if (s.ArrayEntryStart(name: name, index: i)) {
-					if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+					if (s.Settings.game == Settings.Game.RL) {
 						val.SerializeClassName(s);
 						key = s.SerializeGeneric(key, name: "KEY");
 						val.serializeClassName = false;

@@ -215,6 +215,8 @@ namespace UbiArt.ITF {
 		public online.DateTime firstShopOpeningDate;
 		public CListP<uint> alreadyBoughtStarterPacks;
 		public CListP<uint> alreadyBoughStoreBundles;
+		public CListP<string> alreadyBoughtDynamicPacks;
+		public CListO<StringID> unlockedCostumesNotSeenYet;
 		public CListO<RLC_ShopCostumeVersion> alreadySeenCostumeTrades;
 		public uint gppSessionId;
 		public online.DateTime lastSessionStartTimestamp;
@@ -244,6 +246,13 @@ namespace UbiArt.ITF {
 		public bool luckyTicketShopAlreadyEntered;
 		public bool elixirShopAlreadyEntered;
 		public bool beatboxShopAlreadyEntered;
+		public RLC_GraphicalFamily lastAdventureRegion;
+		public RLC_GraphicalFamily nextRegion0;
+		public RLC_GraphicalFamily nextRegion1;
+		public RLC_GraphicalFamily nextRegion2;
+		public RLC_GraphicalFamily nextRegion3;
+		public RLC_GraphicalFamily nextRegion4;
+		public RLC_GraphicalFamily forcedNextRegion;
 		public uint nextRegionsChoiceNb;
 		public bool nextRegionRandomDone;
 		public CListP<RLC_GraphicalFamily> revealedRegions;
@@ -263,6 +272,7 @@ namespace UbiArt.ITF {
 		public bool adventureEggRarityRevealed;
 		public uint treeSeed;
 		public uint adventureSeed;
+		public CListO<StringID> treeRewardFamilyComplete;
 		public bool RewardDojoRegionUnlocked;
 		public uint saveBranchId;
 		public string fbToken;
@@ -277,6 +287,7 @@ namespace UbiArt.ITF {
 		public uint IncubatorElixirUtilisationsCountLtd4;
 		public uint IncubatorElixirUtilisationsCountLtd5;
 		public StringID hatchingRitualInProgressCreatureId;
+		public RLC_CreatureAcquisition hatchingRitualInProgressAcquisitionSource;
 		public RO2_PersistentGameData_Universe.RLC_EggData hatchingRitualInProgressEggData;
 		public CMap<StringID, string> optionalData;
 		public uint additionalDataBufferInt0;
@@ -522,7 +533,11 @@ namespace UbiArt.ITF {
 				luckyTicketsCounter = s.Serialize<uint>(luckyTicketsCounter, name: "luckyTicketsCounter");
 				luckyTicketLevelCount = s.Serialize<uint>(luckyTicketLevelCount, name: "luckyTicketLevelCount");
 				retroMapUnlockedCounter = s.Serialize<uint>(retroMapUnlockedCounter, name: "retroMapUnlockedCounter");
+				mrDarkUnlockCount = s.SerializeObject<CArrayO<StringID>>(mrDarkUnlockCount, name: "mrDarkUnlockCount");
 				catchEmAllIndex = s.Serialize<uint>(catchEmAllIndex, name: "catchEmAllIndex");
+				newCostumes = s.SerializeObject<CArrayO<StringID>>(newCostumes, name: "newCostumes");
+				costumeUnlockSeen = s.SerializeObject<CArrayO<StringID>>(costumeUnlockSeen, name: "costumeUnlockSeen");
+				retroUnlocks = s.SerializeObject<CArrayO<StringID>>(retroUnlocks, name: "retroUnlocks");
 				newUnlockedDoor = s.SerializeObject<CListO<RO2_PersistentGameData_Universe.UnlockedDoor>>(newUnlockedDoor, name: "newUnlockedDoor");
 				luckyTicketRewardList = s.SerializeObject<CListO<RO2_PersistentGameData_Universe.RO2_LuckyTicketReward>>(luckyTicketRewardList, name: "luckyTicketRewardList");
 				nodeData = s.SerializeObject<CListO<RO2_PersistentGameData_Universe.NodeDataStruct>>(nodeData, name: "nodeData");
@@ -540,10 +555,14 @@ namespace UbiArt.ITF {
 				uplayDoneReward2 = s.Serialize<bool>(uplayDoneReward2, name: "uplayDoneReward2");
 				uplayDoneReward3 = s.Serialize<bool>(uplayDoneReward3, name: "uplayDoneReward3");
 				uplayDoneReward3 = s.Serialize<bool>(uplayDoneReward3, name: "uplayDoneReward3");
+				playedDiamondCupSequence = s.SerializeObject<CArrayO<StringID>>(playedDiamondCupSequence, name: "playedDiamondCupSequence");
+				costumes = s.SerializeObject<CArrayO<StringID>>(costumes, name: "costumes");
 				playedChallenge = s.SerializeObject<CListP<uint>>(playedChallenge, name: "playedChallenge");
+				playedInvasion = s.SerializeObject<CArrayO<StringID>>(playedInvasion, name: "playedInvasion");
 				tvOffOptionEnabledNb = s.Serialize<uint>(tvOffOptionEnabledNb, name: "tvOffOptionEnabledNb");
 				tvOffOptionActivatedTime = s.Serialize<uint>(tvOffOptionActivatedTime, name: "tvOffOptionActivatedTime");
 				barbaraCostumeUnlockSeen = s.Serialize<bool>(barbaraCostumeUnlockSeen, name: "barbaraCostumeUnlockSeen");
+				worldUnlockMessagesSeen = s.SerializeObject<CArrayO<StringID>>(worldUnlockMessagesSeen, name: "worldUnlockMessagesSeen");
 				retroWorldUnlockMessageSeen = s.Serialize<bool>(retroWorldUnlockMessageSeen, name: "retroWorldUnlockMessageSeen");
 				freedAllTeensiesMessageSeen = s.Serialize<bool>(freedAllTeensiesMessageSeen, name: "freedAllTeensiesMessageSeen");
 				MisterDarkCompletionMessageSeen = s.Serialize<bool>(MisterDarkCompletionMessageSeen, name: "MisterDarkCompletionMessageSeen");
@@ -551,6 +570,8 @@ namespace UbiArt.ITF {
 				InvitationTutoSeen = s.Serialize<bool>(InvitationTutoSeen, name: "InvitationTutoSeen");
 				MessageSeen8Bit = s.Serialize<bool>(MessageSeen8Bit, name: "MessageSeen8Bit");
 				challengeWorldUnlockMessageSeen = s.Serialize<bool>(challengeWorldUnlockMessageSeen, name: "challengeWorldUnlockMessageSeen");
+				doorUnlockMessageSeen = s.SerializeObject<CArrayO<StringID>>(doorUnlockMessageSeen, name: "doorUnlockMessageSeen");
+				doorUnlockDRCMessageRequired = s.SerializeObject<CArrayO<StringID>>(doorUnlockDRCMessageRequired, name: "doorUnlockDRCMessageRequired");
 				luckyTicketRewardWorldName = s.SerializeObject<StringID>(luckyTicketRewardWorldName, name: "luckyTicketRewardWorldName");
 				isUGCMiiverseWarningSet = s.Serialize<bool>(isUGCMiiverseWarningSet, name: "isUGCMiiverseWarningSet");
 				unlockPrivilegesData = s.Serialize<string>(unlockPrivilegesData, name: "unlockPrivilegesData");
@@ -712,6 +733,8 @@ namespace UbiArt.ITF {
 				firstShopOpeningDate = s.SerializeObject<online.DateTime>(firstShopOpeningDate, name: "firstShopOpeningDate");
 				alreadyBoughtStarterPacks = s.SerializeObject<CListP<uint>>(alreadyBoughtStarterPacks, name: "alreadyBoughtStarterPacks");
 				alreadyBoughStoreBundles = s.SerializeObject<CListP<uint>>(alreadyBoughStoreBundles, name: "alreadyBoughStoreBundles");
+				alreadyBoughtDynamicPacks = s.SerializeObject<CListP<string>>(alreadyBoughtDynamicPacks, name: "alreadyBoughtDynamicPacks");
+				unlockedCostumesNotSeenYet = s.SerializeObject<CListO<StringID>>(unlockedCostumesNotSeenYet, name: "unlockedCostumesNotSeenYet");
 				alreadySeenCostumeTrades = s.SerializeObject<CListO<RLC_ShopCostumeVersion>>(alreadySeenCostumeTrades, name: "alreadySeenCostumeTrades");
 				gppSessionId = s.Serialize<uint>(gppSessionId, name: "gppSessionId");
 				lastSessionStartTimestamp = s.SerializeObject<online.DateTime>(lastSessionStartTimestamp, name: "lastSessionStartTimestamp");
@@ -741,6 +764,13 @@ namespace UbiArt.ITF {
 				luckyTicketShopAlreadyEntered = s.Serialize<bool>(luckyTicketShopAlreadyEntered, name: "luckyTicketShopAlreadyEntered");
 				elixirShopAlreadyEntered = s.Serialize<bool>(elixirShopAlreadyEntered, name: "elixirShopAlreadyEntered");
 				beatboxShopAlreadyEntered = s.Serialize<bool>(beatboxShopAlreadyEntered, name: "beatboxShopAlreadyEntered");
+				lastAdventureRegion = s.Serialize<RLC_GraphicalFamily>(lastAdventureRegion, name: "lastAdventureRegion");
+				nextRegion0 = s.Serialize<RLC_GraphicalFamily>(nextRegion0, name: "nextRegion0");
+				nextRegion1 = s.Serialize<RLC_GraphicalFamily>(nextRegion1, name: "nextRegion1");
+				nextRegion2 = s.Serialize<RLC_GraphicalFamily>(nextRegion2, name: "nextRegion2");
+				nextRegion3 = s.Serialize<RLC_GraphicalFamily>(nextRegion3, name: "nextRegion3");
+				nextRegion4 = s.Serialize<RLC_GraphicalFamily>(nextRegion4, name: "nextRegion4");
+				forcedNextRegion = s.Serialize<RLC_GraphicalFamily>(forcedNextRegion, name: "forcedNextRegion");
 				nextRegionsChoiceNb = s.Serialize<uint>(nextRegionsChoiceNb, name: "nextRegionsChoiceNb");
 				nextRegionRandomDone = s.Serialize<bool>(nextRegionRandomDone, name: "nextRegionRandomDone");
 				revealedRegions = s.SerializeObject<CListP<RLC_GraphicalFamily>>(revealedRegions, name: "revealedRegions");
@@ -760,6 +790,7 @@ namespace UbiArt.ITF {
 				adventureEggRarityRevealed = s.Serialize<bool>(adventureEggRarityRevealed, name: "adventureEggRarityRevealed");
 				treeSeed = s.Serialize<uint>(treeSeed, name: "treeSeed");
 				adventureSeed = s.Serialize<uint>(adventureSeed, name: "adventureSeed");
+				treeRewardFamilyComplete = s.SerializeObject<CListO<StringID>>(treeRewardFamilyComplete, name: "treeRewardFamilyComplete");
 				RewardDojoRegionUnlocked = s.Serialize<bool>(RewardDojoRegionUnlocked, name: "RewardDojoRegionUnlocked");
 				saveBranchId = s.Serialize<uint>(saveBranchId, name: "saveBranchId");
 				fbToken = s.Serialize<string>(fbToken, name: "fbToken");
@@ -774,6 +805,7 @@ namespace UbiArt.ITF {
 				IncubatorElixirUtilisationsCountLtd4 = s.Serialize<uint>(IncubatorElixirUtilisationsCountLtd4, name: "IncubatorElixirUtilisationsCountLtd4");
 				IncubatorElixirUtilisationsCountLtd5 = s.Serialize<uint>(IncubatorElixirUtilisationsCountLtd5, name: "IncubatorElixirUtilisationsCountLtd5");
 				hatchingRitualInProgressCreatureId = s.SerializeObject<StringID>(hatchingRitualInProgressCreatureId, name: "hatchingRitualInProgressCreatureId");
+				hatchingRitualInProgressAcquisitionSource = s.Serialize<RLC_CreatureAcquisition>(hatchingRitualInProgressAcquisitionSource, name: "hatchingRitualInProgressAcquisitionSource");
 				hatchingRitualInProgressEggData = s.SerializeObject<RO2_PersistentGameData_Universe.RLC_EggData>(hatchingRitualInProgressEggData, name: "hatchingRitualInProgressEggData");
 				optionalData = s.SerializeObject<CMap<StringID, string>>(optionalData, name: "optionalData");
 				additionalDataBufferInt0 = s.Serialize<uint>(additionalDataBufferInt0, name: "additionalDataBufferInt0");
@@ -1329,6 +1361,23 @@ namespace UbiArt.ITF {
 			[Serialize("RLC_GraphicalFamily_LandOfTheDead")] LandOfTheDead = 7,
 			[Serialize("RLC_GraphicalFamily_Intro"        )] Intro = 8,
 			[Serialize("RLC_GraphicalFamily_Count"        )] Count = 9,
+		}
+		public enum RLC_CreatureAcquisition {
+			[Serialize("Unknown"             )] Unknown = 0,
+			[Serialize("AdventureEgg"        )] AdventureEgg = 1,
+			[Serialize("FindCharlie"         )] FindCharlie = 2,
+			[Serialize("LuckyTicket"         )] LuckyTicket = 3,
+			[Serialize("GoldenTicket"        )] GoldenTicket = 4,
+			[Serialize("Intro"               )] Intro = 5,
+			[Serialize("Cheat"               )] Cheat = 6,
+			[Serialize("Message"             )] Message = 7,
+			[Serialize("SeasonalTicket"      )] SeasonalTicket = 8,
+			[Serialize("SeasonalEgg"         )] SeasonalEgg = 9,
+			[Serialize("BuyNewCreature"      )] BuyNewCreature = 10,
+			[Serialize("DecoyEggIntro"       )] DecoyEggIntro = 0xb,
+			[Serialize("challengeTicket"     )] challengeTicket = 0xc,
+			[Serialize("BuyNewFamilyCreature")] BuyNewFamilyCreature = 0xd,
+			[Serialize("COUNT"               )] COUNT = 0xe,
 		}
 		public override uint? ClassCRC => 0xBAA85A3F;
 	}

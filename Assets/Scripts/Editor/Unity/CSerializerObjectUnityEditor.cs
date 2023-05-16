@@ -285,13 +285,19 @@ namespace UbiArt {
 
 		public override void Log(string logString, params object[] args) { }
 
-		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, string filename = null) {
+		protected override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, string filename = null) {
 			if (action == null)
 				throw new ArgumentNullException(nameof(action)); 
 			action();
 		}
 
 		public override void DoEncrypted(uint[] encryptionKey, Action action, string name = null) {
+			if (action == null)
+				throw new ArgumentNullException(nameof(action));
+			action();
+		}
+
+		public override void DoCompressed(Action action, string name = null) {
 			if (action == null)
 				throw new ArgumentNullException(nameof(action));
 			action();

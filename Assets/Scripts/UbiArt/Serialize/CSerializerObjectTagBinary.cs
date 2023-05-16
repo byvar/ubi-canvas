@@ -528,6 +528,7 @@ namespace UbiArt {
 				name = name,
 				type = type
 			};
+			var logPrefix = LogPrefix;
 			uint crc = Reader.ReadUInt32();
 			uint size = Reader.ReadUInt32();
 			uint requiredCRC = 0;
@@ -714,7 +715,7 @@ namespace UbiArt {
 
 		#region Encoding
 
-		public override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, string filename = null) {
+		protected override void DoEncoded(IStreamEncoder encoder, Action action, Endian? endianness = null, string filename = null) {
 			if (action == null)
 				throw new ArgumentNullException(nameof(action));
 
@@ -753,6 +754,7 @@ namespace UbiArt {
 				long decodedLength = Reader.BaseStream.Length;
 				Context.Loader.virtualFiles.Add(tuple);
 
+				//var test_export_path = $"{Context.BasePath}\\test_new_{encoder.Name}.lol";
 				//byte[] bytes = this.Reader.ReadBytes((int)decodedLength);
 				//Util.ByteArrayToFile(test_export_path, bytes);
 				//this.Reader.BaseStream.Position = 0;
@@ -775,6 +777,8 @@ namespace UbiArt {
 		public override void DoEncrypted(uint[] encryptionKey, Action action, string name = null) {
 			if (action == null)
 				throw new ArgumentNullException(nameof(action));
+			if(encryptionKey == null)
+				throw new ArgumentNullException(nameof(encryptionKey));
 
 			Crc crc = new Crc(new Parameters("CRC-32", 32, 0x04C11DB7, 0xFFFFFFFF, false, false, 0xFFFFFFFF, 0xCBF43926));
 			byte[] encryptionKeyBytes = new byte[encryptionKey.Length * 4];
@@ -794,6 +798,22 @@ namespace UbiArt {
 					DoEncoded(new Base64Encoder(Length), () => {
 						action();
 					});
+				});
+			}
+		}
+		public override void DoCompressed(Action action, string name = null) {
+			if (action == null)
+				throw new ArgumentNullException(nameof(action));
+
+			if (ReadTag(name, 300)) {
+				var end = endPos.Peek();
+				var endian = Reader.IsLittleEndian;
+				Reader.IsLittleEndian = true;
+				var decompLen = Reader.ReadUInt32();
+				Reader.IsLittleEndian = endian;
+				var len = end - CurrentPosition;
+				DoEncoded(new ZlibEncoder((uint)len, decompLen), () => {
+					action();
 				});
 			}
 		}
