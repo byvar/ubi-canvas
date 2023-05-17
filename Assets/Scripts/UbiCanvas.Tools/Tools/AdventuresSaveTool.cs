@@ -86,7 +86,6 @@ namespace UbiCanvas.Tools
 
 				using Stream inputStream = File.OpenRead(inputPath);
 				using Stream outputStream = File.Create(outputPath);
-				using Writer outputStreamWriter = new(outputStream, isLittleEndian: false);
 
 				// Compress
 				using Stream compressedStream = new MemoryStream();
@@ -109,12 +108,25 @@ namespace UbiCanvas.Tools
 				base64Stream.Position = 0;
 				new TeaEncoder(base64Stream.Length, teaKey).EncodeStream(base64Stream, teaStream);
 
-				// Save
-				outputStreamWriter.Write(save.header);
-				outputStreamWriter.Write(CalculateEncryptionCrc(teaKey, "CONTENT"));//3061729066U); // crc
-				outputStreamWriter.Write((uint)teaStream.Length); // size
+				using MemoryStream binaryTagStream = new MemoryStream();
 				teaStream.Position = 0;
-				teaStream.CopyTo(outputStream);
+				using Writer binaryTagStreamWriter = new(binaryTagStream, isLittleEndian: false);
+				binaryTagStreamWriter.Write(CalculateEncryptionCrc(teaKey, "CONTENT"));//3061729066U); // crc
+				binaryTagStreamWriter.Write((uint)teaStream.Length); // size
+				teaStream.CopyTo(binaryTagStream);
+				binaryTagStream.Position = 0;
+				byte[] binaryTagBytes = binaryTagStream.ToArray();
+
+
+				// Save
+				using Writer outputStreamWriter = new(outputStream, isLittleEndian: true);
+				outputStreamWriter.Write(save.header);
+				outputStreamWriter.BaseStream.Position = 0x108; // CRC
+				outputStreamWriter.Write(GetCRCFromBytes(binaryTagBytes));
+				outputStreamWriter.BaseStream.Position = 0x118; // Size
+				outputStreamWriter.Write(binaryTagBytes.Length);
+				outputStreamWriter.BaseStream.Position = 0x120; // Content
+				outputStreamWriter.Write(binaryTagBytes);
 			});
 
 			await context.Loader.LoadLoop();
@@ -138,6 +150,7 @@ namespace UbiCanvas.Tools
 					throw new Exception("GameConfig needs to be loaded to load save data!");
 
 				header = s.SerializeBytes(header, 0x120);
+				Pointer curPos = s.CurrentPointer;
 				s.DoEncrypted(GetTeaKey(s.Context), () => 
 				{
 					s.DoCompressed(() =>
@@ -149,7 +162,6 @@ namespace UbiCanvas.Tools
 		}
 
 		protected uint CalculateEncryptionCrc(uint[] encryptionKey, string name) {
-			Crc crc = new Crc(new Parameters("CRC-32", 32, 0x04C11DB7, 0xFFFFFFFF, false, false, 0xFFFFFFFF, 0xCBF43926));
 			byte[] encryptionKeyBytes = new byte[encryptionKey.Length * 4];
 			for (int i = 0; i < encryptionKey.Length; i++) {
 				encryptionKeyBytes[(i * 4) + 0] = (byte)((encryptionKey[i] >> 0) & 0xFF);
@@ -157,11 +169,16 @@ namespace UbiCanvas.Tools
 				encryptionKeyBytes[(i * 4) + 2] = (byte)((encryptionKey[i] >> 16) & 0xFF);
 				encryptionKeyBytes[(i * 4) + 3] = (byte)((encryptionKey[i] >> 24) & 0xFF);
 			}
-			uint computedCRC = CrcHelper.ToUInt32(crc.ComputeHash(encryptionKeyBytes));
+			uint computedCRC = GetCRCFromBytes(encryptionKeyBytes);
 			uint uafType = computedCRC;
 			return GetCRC(name, uafType);
 		}
 		public uint CalculateCompressionCrc(string name) => GetCRC(name, 300);
+		protected uint GetCRCFromBytes(byte[] bytes) {
+			Crc crc = new Crc(new Parameters("CRC-32", 32, 0x04C11DB7, 0xFFFFFFFF, false, false, 0xFFFFFFFF, 0xCBF43926));
+			uint computedCRC = CrcHelper.ToUInt32(crc.ComputeHash(bytes));
+			return computedCRC;
+		}
 		protected uint GetCRC(string str, uint? classTypeInt) {
 			byte[] stringBytes = ASCIIEncoding.ASCII.GetBytes(str);
 			Crc crc = new Crc(new Parameters("CRC-32", 32, 0x04C11DB7, 0xFFFFFFFF, false, false, 0xFFFFFFFF, 0xCBF43926));
