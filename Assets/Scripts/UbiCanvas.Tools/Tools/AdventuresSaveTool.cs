@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using UbiArt;
+using UbiArt.CRC;
 using UbiArt.ITF;
 using UbiCanvas.Helpers;
 using Path = UbiArt.Path;
@@ -77,10 +79,14 @@ namespace UbiCanvas.Tools
 			});
 			loader.LoadUncooked<RLC_BinarySaveData>("DefaultSavegameName_0.sav", save =>
 			{
+				uint[] teaKey = save.GetTeaKey(context);
+
 				string inputPath = System.IO.Path.Combine(context.BasePath, "DefaultSavegameName_0_decoded.sav");
 				string outputPath = System.IO.Path.Combine(context.BasePath, "DefaultSavegameName_0_encoded.sav");
 
 				using Stream inputStream = File.OpenRead(inputPath);
+				using Stream outputStream = File.Create(outputPath);
+				using Writer outputStreamWriter = new(outputStream, isLittleEndian: false);
 
 				// Compress
 				using Stream compressedStream = new MemoryStream();
@@ -88,7 +94,7 @@ namespace UbiCanvas.Tools
 				new ZlibEncoder(0, 0).EncodeStream(inputStream, compressedStream);
 				compressedStream.Position = 0;
 				using Writer compressedStreamWriter = new(compressedStream, isLittleEndian: false);
-				compressedStreamWriter.Write(2433158838U); // crc
+				compressedStreamWriter.Write(CalculateCompressionCrc("CONTENT")); //2433158838U); // crc
 				compressedStreamWriter.Write((uint)(compressedStream.Length - 8)); // size
 				compressedStreamWriter.IsLittleEndian = true;
 				compressedStreamWriter.Write((uint)inputStream.Length); // decompressed size
@@ -101,13 +107,11 @@ namespace UbiCanvas.Tools
 
 				using Stream teaStream = new MemoryStream();
 				base64Stream.Position = 0;
-				new TeaEncoder(base64Stream.Length, save.GetTeaKey(context)).EncodeStream(base64Stream, teaStream);
+				new TeaEncoder(base64Stream.Length, teaKey).EncodeStream(base64Stream, teaStream);
 
 				// Save
-				using Stream outputStream = File.Create(outputPath);
-				using Writer outputStreamWriter = new(outputStream, isLittleEndian: false);
 				outputStreamWriter.Write(save.header);
-				outputStreamWriter.Write(3061729066U); // crc
+				outputStreamWriter.Write(CalculateEncryptionCrc(teaKey, "CONTENT"));//3061729066U); // crc
 				outputStreamWriter.Write((uint)teaStream.Length); // size
 				teaStream.Position = 0;
 				teaStream.CopyTo(outputStream);
@@ -141,6 +145,33 @@ namespace UbiCanvas.Tools
 						CONTENT = s.SerializeBytes(CONTENT, s.Length);
 					}, name: "CONTENT");
 				}, name: "CONTENT");
+			}
+		}
+
+		protected uint CalculateEncryptionCrc(uint[] encryptionKey, string name) {
+			Crc crc = new Crc(new Parameters("CRC-32", 32, 0x04C11DB7, 0xFFFFFFFF, false, false, 0xFFFFFFFF, 0xCBF43926));
+			byte[] encryptionKeyBytes = new byte[encryptionKey.Length * 4];
+			for (int i = 0; i < encryptionKey.Length; i++) {
+				encryptionKeyBytes[(i * 4) + 0] = (byte)((encryptionKey[i] >> 0) & 0xFF);
+				encryptionKeyBytes[(i * 4) + 1] = (byte)((encryptionKey[i] >> 8) & 0xFF);
+				encryptionKeyBytes[(i * 4) + 2] = (byte)((encryptionKey[i] >> 16) & 0xFF);
+				encryptionKeyBytes[(i * 4) + 3] = (byte)((encryptionKey[i] >> 24) & 0xFF);
+			}
+			uint computedCRC = CrcHelper.ToUInt32(crc.ComputeHash(encryptionKeyBytes));
+			uint uafType = computedCRC;
+			return GetCRC(name, uafType);
+		}
+		public uint CalculateCompressionCrc(string name) => GetCRC(name, 300);
+		protected uint GetCRC(string str, uint? classTypeInt) {
+			byte[] stringBytes = ASCIIEncoding.ASCII.GetBytes(str);
+			Crc crc = new Crc(new Parameters("CRC-32", 32, 0x04C11DB7, 0xFFFFFFFF, false, false, 0xFFFFFFFF, 0xCBF43926));
+			uint computedCRC = CrcHelper.ToUInt32(crc.ComputeHash(stringBytes));
+			if (classTypeInt.HasValue) {
+				byte[] classType = BitConverter.GetBytes(classTypeInt.Value);
+				crc = new Crc(new Parameters("CRC-32", 32, 0x04C11DB7, computedCRC, false, false, 0xFFFFFFFF, 0xCBF43926));
+				return CrcHelper.ToUInt32(crc.ComputeHash(classType));
+			} else {
+				return computedCRC;
 			}
 		}
 	}

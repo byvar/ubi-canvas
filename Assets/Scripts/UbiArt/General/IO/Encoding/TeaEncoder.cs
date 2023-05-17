@@ -21,7 +21,7 @@ namespace UbiArt
 				long delta = (0x9E3779B9 * rounds) & uint.MaxValue;
 				for (int r = 0; r < rounds; r++) {
 					uint n = data[0];
-					uint di, t = 0;
+					uint di, t;
 					for (int i = count - 1; i >= 0; i--) {
 						t = i == 0 ? data[count - 1] : data[i - 1];
 						di = data[i];
@@ -49,10 +49,11 @@ namespace UbiArt
 			if (count > 1) {
 				//int rounds = (52 / count) + 6;
 				long targetDelta = (0x9E3779B9 * (52 / count) - 0x4AB325AA) & uint.MaxValue;
-				long delta = (0x100000000 - 0x61C88647) & uint.MaxValue;
+				long delta = 0;
 				while (delta != targetDelta) {
+					delta = (delta + 0x100000000 - 0x61C88647) & uint.MaxValue;
 					uint n = data[count - 1];
-					uint di, t = 0;
+					uint di, t;
 					for (int i = 0; i < count; i++) {
 						t = (i == count - 1) ? data[0] : data[i + 1];
 						di = data[i];
@@ -71,7 +72,6 @@ namespace UbiArt
 						n = (uint)(nlong & uint.MaxValue);
 						data[i] = n;
 					}
-					delta = (delta + 0x100000000 - 0x61C88647) & uint.MaxValue;
 				}
 			}
 		}
@@ -111,7 +111,7 @@ namespace UbiArt
 			}
 			EncodeInternal(data);
 			foreach (var d in data) {
-				if (d == 0) continue;
+				//if (d == 0) continue;
 				WriteChar((byte)((d >> 0) & 0xFF));
 				WriteChar((byte)((d >> 8) & 0xFF));
 				WriteChar((byte)((d >> 16) & 0xFF));
@@ -119,7 +119,7 @@ namespace UbiArt
 			}
 
 			void WriteChar(byte b) {
-				if (b != 0) output.WriteByte(b);
+				output.WriteByte(b);
 			}
 		}
     }
