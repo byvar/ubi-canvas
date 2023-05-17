@@ -69,6 +69,14 @@ public class UnityWindowTools : UnityWindow
 					await exportActionGameTool.InvokeAsync(outputDir);
 			}
 		}
+		else if (tool is MultiActionGameTool multiActionGameTool)
+		{
+			foreach (MultiActionGameTool.InvokableAction invokableAction in multiActionGameTool.Actions)
+			{
+				if (GUI.Button(EditorGUILayout.GetControlRect(), new GUIContent(invokableAction.Name)))
+					await invokableAction.Action();
+			}
+		}
 		else
 		{
 			EditorGUILayout.HelpBox($"The tool type {tool.GetType().Name} does not have a supported UI", MessageType.Error);

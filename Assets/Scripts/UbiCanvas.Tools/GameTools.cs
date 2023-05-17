@@ -5,6 +5,7 @@
 		public static GameTool[] Tools { get; } = 
 		{
 			new ExportEngineDataTool(),
+			new AdventuresSaveTool(),
 		};
 	}
 }
