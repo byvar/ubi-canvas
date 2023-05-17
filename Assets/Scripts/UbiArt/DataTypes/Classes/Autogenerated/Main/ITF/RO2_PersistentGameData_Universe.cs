@@ -429,6 +429,8 @@ namespace UbiArt.ITF {
 		public int reward39Failed;
 		public int isDemoRewardChecked;
 		public Message messageDummy;
+		public RO2_PersistentGameData_IAP iap;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
@@ -510,6 +512,7 @@ namespace UbiArt.ITF {
 				dummmyNodeData = s.SerializeObject<RO2_PersistentGameData_Universe.NodeDataStruct>(dummmyNodeData, name: "dummmyNodeData");
 			} else {
 				score = s.SerializeObject<RO2_PersistentGameData_Score>(score, name: "score");
+				iap = s.SerializeObject<RO2_PersistentGameData_IAP>(iap, name: "iap");
 				bubbleDreamer = s.SerializeObject<RO2_PersistentGameData_BubbleDreamerData>(bubbleDreamer, name: "bubbleDreamer");
 				unlockedPets = s.SerializeObject<CArrayP<int>>(unlockedPets, name: "unlockedPets");
 				petsDailyReward = s.SerializeObject<CListO<RO2_PersistentGameData_Universe.petRewardData>>(petsDailyReward, name: "petsDailyReward");
