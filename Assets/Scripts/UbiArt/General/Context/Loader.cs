@@ -405,6 +405,18 @@ namespace UbiArt {
 			await b.WriteBundle(Context, path);
 			Context.AsyncController.StopAsync();
 		}
+		public async Task WriteFilesRaw(string path, List<pair<Path, ICSerializable>> files) {
+			Bundle.BundleFile b = new Bundle.BundleFile();
+			foreach (pair<Path, ICSerializable> f in files) {
+				b.AddFile(f.Item1.CookedPath(Context), f.Item2);
+			}
+			await WriteFilesRaw(path, b);
+		}
+		public async Task WriteFilesRaw(string path, Bundle.BundleFile b) {
+			Context.AsyncController.StartAsync();
+			await b.WriteFilesRaw(Context, path);
+			Context.AsyncController.StopAsync();
+		}
 
 		public void LoadFile<T>(Path path, Action<T> onResult) where T : class, ICSerializable, new() {
 			var t = Cache.Get<T>(path.stringID);

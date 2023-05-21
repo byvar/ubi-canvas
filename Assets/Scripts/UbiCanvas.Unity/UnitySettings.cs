@@ -23,15 +23,21 @@ public class UnitySettings {
 
     public static string SelectedLevelFile { get; set; }
 
+	// Log
 	public static string LogFile { get; set; }
-
 	public static bool Log { get; set; }
 
 	public static bool BackupFiles { get; set; }
 
+	// Loading
 	public static bool LoadAnimations { get; set; } = true;
-
     public static bool LoadAllPaths { get; set; }
+	
+	// Export window
+	public static bool Export_UseRaw { get; set; } = false;
+	public static string Export_OutputPathFile { get; set; }
+	public static string Export_OutputPathFolder { get; set; }
+	public static string Export_OriginalBundleFile { get; set; }
 
 	/// <summary>
 	/// Static constructor loads in editor data at editor startup.
@@ -80,7 +86,12 @@ public class UnitySettings {
         BackupFiles = s.SerializeBool(nameof(BackupFiles), BackupFiles);
         Log = s.SerializeBool(nameof(Log), Log);
         LogFile = s.SerializeString(nameof(LogFile), LogFile);
-    }
+
+		Export_UseRaw = s.SerializeBool(nameof(Export_UseRaw), Export_UseRaw);
+		Export_OutputPathFile = s.SerializeString(nameof(Export_OutputPathFile), Export_OutputPathFile);
+		Export_OutputPathFolder = s.SerializeString(nameof(Export_OutputPathFolder), Export_OutputPathFolder);
+		Export_OriginalBundleFile = s.SerializeString(nameof(Export_OriginalBundleFile), Export_OriginalBundleFile);
+	}
 
     /// <summary>
     /// Saves the settings

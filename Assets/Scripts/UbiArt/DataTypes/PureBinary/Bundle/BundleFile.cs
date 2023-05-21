@@ -147,5 +147,30 @@ namespace UbiArt.Bundle {
 				}
 			}
 		}
+
+
+		public async Task WriteFilesRaw(Context context, string path) {
+			bootHeader.numFiles = (uint)files.Keys.Count + (uint)preProcessedFiles.Count;
+			byte[] serializedData = null;
+			foreach (KeyValuePair<Path, ICSerializable> kv in files) {
+				using (MemoryStream stream = new MemoryStream()) {
+					using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
+						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
+						Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
+						object toWrite = kv.Value;
+						w.Serialize(ref toWrite, kv.Value.GetType(), name: kv.Key.filename);
+						serializedData = stream.ToArray();
+					}
+				}
+				var outPath = $"{path}/{kv.Key.FullPath}";
+				Util.ByteArrayToFile(outPath, serializedData);
+				await TimeController.WaitIfNecessary();
+			}
+			foreach (var kv in preProcessedFiles) {
+				serializedData = kv.Value;
+				var outPath = $"{path}/{kv.Key.FullPath}";
+				Util.ByteArrayToFile(outPath, serializedData);
+			}
+		}
 	}
 }
