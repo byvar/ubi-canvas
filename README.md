@@ -7,7 +7,7 @@ Level viewer and editor for UbiArt games such as Rayman Legends and Rayman Adven
 - Rayman Origins (PC): work in progress, very limited viewing
 
 ## How to use
-1. Download and install Unity 2020
+1. Download and install Unity 2021.3.6
 2. Clone this project and open it with Unity
 3. In Unity, open the MapViewer scene (located in Assets/Scenes/).
 4. Open the Ubi-Canvas settings window (located under Ubi-Canvas in the toolbar)
