@@ -39,6 +39,14 @@ public class UnitySettings {
 	public static string Export_OutputPathFolder { get; set; }
 	public static string Export_OriginalBundleFile { get; set; }
 
+	// Build mod IPK tool
+	public static Settings.Mode Tools_BuildModIPK_GameMode { get; set; } = Settings.Mode.RaymanLegendsPC;
+	public static string Tools_BuildModIPK_InputPath { get; set; }
+	public static string Tools_BuildModIPK_OriginalBundlesPath { get; set; }
+	public static string Tools_BuildModIPK_BundleBaseName { get; set; }
+	public static string Tools_BuildModIPK_OutputPath { get; set; }
+	public static string Tools_BuildModIPK_BundleOrder { get; set; }
+
 	/// <summary>
 	/// Static constructor loads in editor data at editor startup.
 	/// This way, the data loads even if the editor window isn't active.
@@ -91,6 +99,15 @@ public class UnitySettings {
 		Export_OutputPathFile = s.SerializeString(nameof(Export_OutputPathFile), Export_OutputPathFile);
 		Export_OutputPathFolder = s.SerializeString(nameof(Export_OutputPathFolder), Export_OutputPathFolder);
 		Export_OriginalBundleFile = s.SerializeString(nameof(Export_OriginalBundleFile), Export_OriginalBundleFile);
+
+
+		modeString = s.SerializeString(nameof(Tools_BuildModIPK_GameMode), Tools_BuildModIPK_GameMode.ToString());
+		Tools_BuildModIPK_GameMode = Enum.TryParse<Settings.Mode>(modeString, out Settings.Mode gameModeIPK) ? gameModeIPK : Tools_BuildModIPK_GameMode;
+		Tools_BuildModIPK_BundleBaseName = s.SerializeString(nameof(Tools_BuildModIPK_BundleBaseName), Tools_BuildModIPK_BundleBaseName);
+		Tools_BuildModIPK_OriginalBundlesPath = s.SerializeString(nameof(Tools_BuildModIPK_OriginalBundlesPath), Tools_BuildModIPK_OriginalBundlesPath);
+		Tools_BuildModIPK_InputPath = s.SerializeString(nameof(Tools_BuildModIPK_InputPath), Tools_BuildModIPK_InputPath);
+		Tools_BuildModIPK_OutputPath = s.SerializeString(nameof(Tools_BuildModIPK_OutputPath), Tools_BuildModIPK_OutputPath);
+		Tools_BuildModIPK_BundleOrder = s.SerializeString(nameof(Tools_BuildModIPK_BundleOrder), Tools_BuildModIPK_BundleOrder);
 	}
 
     /// <summary>

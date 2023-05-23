@@ -12,6 +12,8 @@ namespace UbiArt.Bundle {
 		private Dictionary<Path, ICSerializable> files = new Dictionary<Path, ICSerializable>();
 		private Dictionary<Path, byte[]> preProcessedFiles = new Dictionary<Path, byte[]>();
 
+		public bool IsEmpty => !readFileData.Any() && !files.Any() && !preProcessedFiles.Any();
+
 		private Dictionary<Path, byte[]> readFileData = new Dictionary<Path, byte[]>();
 
 		public void Serialize(CSerializerObject s, string name) {
@@ -22,7 +24,7 @@ namespace UbiArt.Bundle {
 		public async Task SerializeAsync(CSerializerObject s, string name) {
 			await s.FillCacheForRead(11 * 4);
 			bootHeader = s.SerializeObject<BundleBootHeader>(bootHeader, name: nameof(bootHeader));
-			await s.FillCacheForRead(bootHeader.baseOffset);
+			await s.FillCacheForRead(bootHeader.BaseOffset);
 			packMaster = s.SerializeObject<FilePackMaster>(packMaster, name: nameof(packMaster));
 		}
 
@@ -46,7 +48,7 @@ namespace UbiArt.Bundle {
 				if (h != null) {
 					ulong off = h.offsets[0];
 					uint size = h.zSize != 0 ? h.zSize : h.size;
-					s.Goto((long)off + bootHeader.baseOffset);
+					s.Goto((long)off + bootHeader.BaseOffset);
 					await s.FillCacheForRead(size);
 					byte[] fileBytes = s.SerializeBytes(default, size);
 					if (fileBytes != null) {
@@ -79,7 +81,7 @@ namespace UbiArt.Bundle {
 		}
 
 		public async Task WriteBundle(Context context, string path) {
-			bootHeader.numFiles = (uint)files.Keys.Count + (uint)preProcessedFiles.Count;
+			bootHeader.FilesCount = (uint)files.Keys.Count + (uint)preProcessedFiles.Count;
 			List<byte[]> data = new List<byte[]>();
 			uint curOffset = 0;
 			byte[] serializedData = null;
@@ -129,7 +131,7 @@ namespace UbiArt.Bundle {
 				}
 			}
 			await TimeController.WaitIfNecessary();
-			bootHeader.baseOffset = (uint)serializedData.Length;
+			bootHeader.BaseOffset = (uint)serializedData.Length;
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
@@ -140,7 +142,7 @@ namespace UbiArt.Bundle {
 				}
 			}
 			await TimeController.WaitIfNecessary();
-			using (BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.Create))) {
+			using (BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.OpenOrCreate))) {
 				bw.Write(serializedData);
 				for (int i = 0; i < data.Count; i++) {
 					bw.Write(data[i]);
@@ -150,7 +152,7 @@ namespace UbiArt.Bundle {
 
 
 		public async Task WriteFilesRaw(Context context, string path) {
-			bootHeader.numFiles = (uint)files.Keys.Count + (uint)preProcessedFiles.Count;
+			bootHeader.FilesCount = (uint)files.Keys.Count + (uint)preProcessedFiles.Count;
 			byte[] serializedData = null;
 			foreach (KeyValuePair<Path, ICSerializable> kv in files) {
 				using (MemoryStream stream = new MemoryStream()) {

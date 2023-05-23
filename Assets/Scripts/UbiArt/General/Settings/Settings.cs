@@ -45,6 +45,8 @@ namespace UbiArt {
 		public bool loadFromIPK = false;
 		public static Encoding StringEncoding { get; set; } = Encoding.UTF8;
 		public string[] bundles;
+		public uint ipkVersion;
+		public uint engineSignature;
 
 		public bool IsLittleEndian {
 			get { return Endian == Endian.Little; }
@@ -89,6 +91,8 @@ namespace UbiArt {
 			Endian = Endian.Big,
 			versionFlags = VersionFlags.Origins,
 			usesSerializeFlags = false,
+			ipkVersion = 3,
+			engineSignature = 0x345429C7,
 			bundles = new string[] { "bundle" }
 		};
 		public static Settings RLPC = new Settings() {
@@ -97,6 +101,8 @@ namespace UbiArt {
 			platform = Platform.PC,
 			Endian = Endian.Big,
 			versionFlags = VersionFlags.Legends,
+			ipkVersion = 5,
+			engineSignature = 0x4BFC7C03,
 			bundles = new string[] {
 				"persistentLoading", "Bundle"
 			}
@@ -116,6 +122,8 @@ namespace UbiArt {
 			Endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures,
 			serializerType = SerializerType.TagBinary,
+			ipkVersion = 8,
+			engineSignature = 0x2FB967E7,
 			bundles = new string[] {
 				"bundle",
 				"bundlemain",
@@ -153,6 +161,8 @@ namespace UbiArt {
 			Endian = Endian.Big,
 			versionFlags = VersionFlags.Adventures,
 			serializerType = SerializerType.TagBinary,
+			ipkVersion = 8,
+			engineSignature = 0x2FB967E7,
 			bundles = new string[] { "bundle" }
 		};
 		public static Settings RLVita = new Settings() {
