@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UbiCanvas.Tools;
 using UnityEditor;
@@ -17,8 +18,8 @@ public class UnityWindowTools : UnityWindow
 		titleContent.text = "Game Tools";
 	}
 
-	private async void OnGUI() 
-	{
+	private async void OnGUI() {
+		Task currentTask = null;
 		EditorStyles.label.wordWrap = true;
 
 		foreach (GameTool tool in GameTools.Tools)
@@ -42,22 +43,29 @@ public class UnityWindowTools : UnityWindow
 					EditorGUILayout.HelpBox("The tool can not run due to the following requirements not being met:" +
 					                        $"{Environment.NewLine}" +
 					                        $"{String.Join(Environment.NewLine, notMetRequirements.Select(x => $"- {x.RequirementText}"))}", MessageType.Info);
+
+					EditorGUILayout.EndFoldoutHeaderGroup();
 					continue;
 				}
 
-				await ShowGameToolGUI(tool);
+				var newTask = ShowGameToolGUI(tool);
+				if(newTask != null) currentTask = newTask;
 			}
 
 			EditorGUILayout.EndFoldoutHeaderGroup();
 		}
+		if (currentTask != null) {
+			await currentTask.AsUniTask();
+		}
 	}
 
-	private async UniTask ShowGameToolGUI(GameTool tool)
+	private Task ShowGameToolGUI(GameTool tool)
 	{
+		Task task = null;
 		if (tool is ActionGameTool actionGameTool)
 		{
 			if (GUI.Button(EditorGUILayout.GetControlRect(), new GUIContent("Run action")))
-				await actionGameTool.InvokeAsync();
+				task = actionGameTool.InvokeAsync();
 		}
 		else if (tool is ExportActionGameTool exportActionGameTool)
 		{
@@ -66,7 +74,15 @@ public class UnityWindowTools : UnityWindow
 				string outputDir = EditorUtility.OpenFolderPanel("Select output directory", null, "");
 				
 				if (!String.IsNullOrWhiteSpace(outputDir))
-					await exportActionGameTool.InvokeAsync(outputDir);
+					task = exportActionGameTool.InvokeAsync(outputDir);
+			}
+		}
+		else if (tool is BuildModIPKTool buildModIPKTool)
+		{
+
+			foreach (MultiActionGameTool.InvokableAction invokableAction in buildModIPKTool.Actions) {
+				if (GUI.Button(EditorGUILayout.GetControlRect(), new GUIContent(invokableAction.Name)))
+					task = invokableAction.Action();
 			}
 		}
 		else if (tool is MultiActionGameTool multiActionGameTool)
@@ -74,13 +90,14 @@ public class UnityWindowTools : UnityWindow
 			foreach (MultiActionGameTool.InvokableAction invokableAction in multiActionGameTool.Actions)
 			{
 				if (GUI.Button(EditorGUILayout.GetControlRect(), new GUIContent(invokableAction.Name)))
-					await invokableAction.Action();
+					task = invokableAction.Action();
 			}
 		}
 		else
 		{
 			EditorGUILayout.HelpBox($"The tool type {tool.GetType().Name} does not have a supported UI", MessageType.Error);
 		}
+		return task;
 	}
 
 	private readonly Dictionary<GameTool, bool> _toolFoldouts = new();

@@ -6,6 +6,7 @@
 		{
 			new ExportEngineDataTool(),
 			new AdventuresSaveTool(),
+			new BuildModIPKTool(),
 		};
 	}
 }

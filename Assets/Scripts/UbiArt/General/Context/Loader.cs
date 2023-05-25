@@ -108,17 +108,20 @@ namespace UbiArt {
 		public async Task LoadBundles() {
 			string[] bnames = Settings.bundles;
 			foreach (var bname in bnames) {
-				if (!Bundles.ContainsKey(bname)) {
-					string fileName = $"{bname}_{Settings.PlatformString}.ipk";
-					string fullPath = $"{Context.BasePath}{fileName}";
-					await FileManager.PrepareBigFile(fullPath, 0);
-					if (!FileManager.FileExists(fullPath)) continue;
-					BigFiles[bname] = new BinaryBigFile(Context, fileName) {
-						Alias = bname
-					};
-					Bundles[bname] = new BundleFile();
-					await Bundles[bname].SerializeAsync(BigFiles[bname].Deserializer, bname);
-				}
+				await LoadBundle(bname);
+			}
+		}
+		public async Task LoadBundle(string bname) {
+			if (!Bundles.ContainsKey(bname)) {
+				string fileName = $"{bname}_{Settings.PlatformString}.ipk";
+				string fullPath = $"{Context.BasePath}{fileName}";
+				await FileManager.PrepareBigFile(fullPath, 0);
+				if (!FileManager.FileExists(fullPath)) return;
+				BigFiles[bname] = new BinaryBigFile(Context, fileName) {
+					Alias = bname
+				};
+				Bundles[bname] = new BundleFile();
+				await Bundles[bname].SerializeAsync(BigFiles[bname].Deserializer, bname);
 			}
 		}
 		public bool AnyBundleContainsFile(Path path) => Bundles.Any(b => b.Value.ContainsFile(path));

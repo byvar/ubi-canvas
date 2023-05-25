@@ -46,6 +46,7 @@ public class UnitySettings {
 	public static string Tools_BuildModIPK_BundleBaseName { get; set; }
 	public static string Tools_BuildModIPK_OutputPath { get; set; }
 	public static string Tools_BuildModIPK_BundleOrder { get; set; }
+	public static bool Tools_BuildModIPK_CreateSecureFatAfterIPK { get; set; }
 
 	/// <summary>
 	/// Static constructor loads in editor data at editor startup.
@@ -108,6 +109,7 @@ public class UnitySettings {
 		Tools_BuildModIPK_InputPath = s.SerializeString(nameof(Tools_BuildModIPK_InputPath), Tools_BuildModIPK_InputPath);
 		Tools_BuildModIPK_OutputPath = s.SerializeString(nameof(Tools_BuildModIPK_OutputPath), Tools_BuildModIPK_OutputPath);
 		Tools_BuildModIPK_BundleOrder = s.SerializeString(nameof(Tools_BuildModIPK_BundleOrder), Tools_BuildModIPK_BundleOrder);
+		Tools_BuildModIPK_CreateSecureFatAfterIPK = s.SerializeBool(nameof(Tools_BuildModIPK_CreateSecureFatAfterIPK), Tools_BuildModIPK_CreateSecureFatAfterIPK);
 	}
 
     /// <summary>
