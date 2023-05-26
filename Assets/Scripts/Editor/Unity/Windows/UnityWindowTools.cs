@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using UbiCanvas.Helpers;
 using UbiCanvas.Tools;
 using UnityEditor;
 using UnityEngine;
@@ -18,86 +19,88 @@ public class UnityWindowTools : UnityWindow
 		titleContent.text = "Game Tools";
 	}
 
-	private async void OnGUI() {
-		Task currentTask = null;
-		EditorStyles.label.wordWrap = true;
+	protected override void UpdateEditorFields() {
+		base.UpdateEditorFields();
 
 		foreach (GameTool tool in GameTools.Tools)
 		{
 			if (!_toolFoldouts.ContainsKey(tool))
 				_toolFoldouts.Add(tool, false);
 
-			bool foldout = _toolFoldouts[tool] = EditorGUILayout.BeginFoldoutHeaderGroup(_toolFoldouts[tool], tool.Name);
+			bool foldout = _toolFoldouts[tool] = EditorGUI.BeginFoldoutHeaderGroup(GetNextRect(ref YPos, vPadding: 2), _toolFoldouts[tool], tool.Name);
 
 			if (foldout)
 			{
 				string descr = tool.Description;
 
 				if (descr != null)
-					EditorGUILayout.LabelField(descr);
+					EditorGUI.LabelField(GetNextRect(ref YPos, vPaddingBottom: 4), descr, EditorStyles.miniLabel);
 
 				var notMetRequirements = tool.Requirements.Select(x => x.IsAvailable()).Where(x => !x.IsAvailable).ToList();
 
 				if (notMetRequirements.Any())
 				{
-					EditorGUILayout.HelpBox("The tool can not run due to the following requirements not being met:" +
+					EditorHelpBox("The tool can not run due to the following requirements not being met:" +
 					                        $"{Environment.NewLine}" +
-					                        $"{String.Join(Environment.NewLine, notMetRequirements.Select(x => $"- {x.RequirementText}"))}", MessageType.Info);
+					                        $"{String.Join(Environment.NewLine, notMetRequirements.Select(x => $"- {x.RequirementText}"))}", MessageType.Warning,
+											rect: GetNextRect(ref YPos, linesCount: (notMetRequirements.Count + 1)));
 
-					EditorGUILayout.EndFoldoutHeaderGroup();
+					EditorGUI.EndFoldoutHeaderGroup();
 					continue;
 				}
 
-				var newTask = ShowGameToolGUI(tool);
-				if(newTask != null) currentTask = newTask;
+				ShowGameToolGUI(tool);
 			}
 
-			EditorGUILayout.EndFoldoutHeaderGroup();
-		}
-		if (currentTask != null) {
-			await currentTask.AsUniTask();
+			EditorGUI.EndFoldoutHeaderGroup();
 		}
 	}
 
-	private Task ShowGameToolGUI(GameTool tool)
-	{
-		Task task = null;
+	private void ShowGameToolGUI(GameTool tool) {
 		if (tool is ActionGameTool actionGameTool)
 		{
-			if (GUI.Button(EditorGUILayout.GetControlRect(), new GUIContent("Run action")))
-				task = actionGameTool.InvokeAsync();
+			if(EditorButton("Run action"))
+				ExecuteTask(actionGameTool.InvokeAsync());
 		}
 		else if (tool is ExportActionGameTool exportActionGameTool)
 		{
-			if (GUI.Button(EditorGUILayout.GetControlRect(), new GUIContent("Export")))
+			if (EditorButton("Export"))
 			{
 				string outputDir = EditorUtility.OpenFolderPanel("Select output directory", null, "");
 				
 				if (!String.IsNullOrWhiteSpace(outputDir))
-					task = exportActionGameTool.InvokeAsync(outputDir);
+					ExecuteTask(exportActionGameTool.InvokeAsync(outputDir));
 			}
 		}
 		else if (tool is BuildModIPKTool buildModIPKTool)
 		{
+			UnitySettings.Tools_BuildModIPK_GameMode = EditorField<UbiArt.Settings.Mode>("Game", UnitySettings.Tools_BuildModIPK_GameMode);
+
+			UnitySettings.Tools_BuildModIPK_InputPath = DirectoryField(GetNextRect(ref YPos), "Mod folder (raw files)", UnitySettings.Tools_BuildModIPK_InputPath, true);
+			UnitySettings.Tools_BuildModIPK_OutputPath = DirectoryField(GetNextRect(ref YPos), "Output path", UnitySettings.Tools_BuildModIPK_OutputPath, true);
+			UnitySettings.Tools_BuildModIPK_OriginalBundlesPath = DirectoryField(GetNextRect(ref YPos), "Original bundles path", UnitySettings.Tools_BuildModIPK_OriginalBundlesPath, true);
+
+			UnitySettings.Tools_BuildModIPK_CreateSecureFatAfterIPK = EditorField("Create secure_fat", UnitySettings.Tools_BuildModIPK_CreateSecureFatAfterIPK);
+			UnitySettings.Tools_BuildModIPK_BundleBaseName = EditorField("Bundle base name", UnitySettings.Tools_BuildModIPK_BundleBaseName);
+			UnitySettings.Tools_BuildModIPK_BundleOrder = EditorField("Bundle order", UnitySettings.Tools_BuildModIPK_BundleOrder);
 
 			foreach (MultiActionGameTool.InvokableAction invokableAction in buildModIPKTool.Actions) {
-				if (GUI.Button(EditorGUILayout.GetControlRect(), new GUIContent(invokableAction.Name)))
-					task = invokableAction.Action();
+				if (EditorButton(invokableAction.Name))
+					ExecuteTask(invokableAction.Action());
 			}
 		}
 		else if (tool is MultiActionGameTool multiActionGameTool)
 		{
 			foreach (MultiActionGameTool.InvokableAction invokableAction in multiActionGameTool.Actions)
 			{
-				if (GUI.Button(EditorGUILayout.GetControlRect(), new GUIContent(invokableAction.Name)))
-					task = invokableAction.Action();
+				if (EditorButton(invokableAction.Name))
+					ExecuteTask(invokableAction.Action());
 			}
 		}
 		else
 		{
-			EditorGUILayout.HelpBox($"The tool type {tool.GetType().Name} does not have a supported UI", MessageType.Error);
+			EditorHelpBox($"The tool type {tool.GetType().Name} does not have a supported UI", MessageType.Error);
 		}
-		return task;
 	}
 
 	private readonly Dictionary<GameTool, bool> _toolFoldouts = new();

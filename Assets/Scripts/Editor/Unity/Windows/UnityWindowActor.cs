@@ -2,6 +2,8 @@
 using UbiArt;
 using UnityEngine;
 using UbiCanvas.Helpers;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 public class UnityWindowActor : UnityWindow {
 	[MenuItem("Ubi-Canvas/Actor Tools")]
@@ -12,8 +14,8 @@ public class UnityWindowActor : UnityWindow {
 		titleContent = EditorGUIUtility.IconContent("Favorite");
 		titleContent.text = "Actor Tools";
 	}
-	async void OnGUI() {
-		float yPos = 0f;
+	protected override void UpdateEditorFields() {
+		base.UpdateEditorFields();
 		if (EditorApplication.isPlaying) {
 			if (controller == null) controller = FindObjectOfType<Controller>();
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
@@ -23,8 +25,8 @@ public class UnityWindowActor : UnityWindow {
 					extension = "act_fake";
 				}
 				#region Add Actor
-				DrawHeader(ref yPos, "Add Actor");
-				Rect rect = GetNextRect(ref yPos, vPaddingBottom: 4f);
+				DrawHeader("Add Actor");
+				Rect rect = GetNextRect(vPaddingBottom: 4f);
 				string buttonString = "No actor file selected";
 				if (SelectedActorFile != null) {
 					buttonString = System.IO.Path.GetFileName(SelectedActorFile);
@@ -50,7 +52,7 @@ public class UnityWindowActor : UnityWindow {
 					Dirty = true;
 				}
 				if (!string.IsNullOrEmpty(SelectedActorFile)) {
-					EditorGUI.TextArea(GetNextRect(ref yPos), SelectedActorFile);
+					EditorGUI.TextArea(GetNextRect(), SelectedActorFile);
 				}
 				EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(SelectedActorFile));
 				UbiArt.ITF.Scene sc = Controller.Obj.MainScene.obj;
@@ -63,21 +65,21 @@ public class UnityWindowActor : UnityWindow {
 					}
 				}
 				if (sc != null) {
-					EditorGUI.LabelField(GetNextRect(ref yPos), new GUIContent("Selected scene"), new GUIContent(ssa == null ? "Main scene" : ssa.USERFRIENDLY));
+					EditorGUI.LabelField(GetNextRect(), new GUIContent("Selected scene"), new GUIContent(ssa == null ? "Main scene" : ssa.USERFRIENDLY));
 				}
 
-				if (GUI.Button(GetNextRect(ref yPos), new GUIContent("Load"))) {
+				if (EditorButton("Load")) {
 					string pathFolder = System.IO.Path.GetDirectoryName(SelectedActorFile);
 					string pathFile = System.IO.Path.GetFileName(SelectedActorFile);
 					if (sc != null) {
-						await controller.LoadActor(sc, pathFile, pathFolder);
+						ExecuteTask(controller.LoadActor(sc, pathFile, pathFolder));
 					}
 				}
 				EditorGUI.EndDisabledGroup();
 				#endregion
 
 				#region Export Actor
-				DrawHeader(ref yPos, "Export Actor");
+				DrawHeader("Export Actor");
 				UbiArt.ITF.Actor a = null;
 				if (Selection.activeGameObject != null) {
 					UnityPickable up = Selection.activeGameObject.GetComponent<UnityPickable>();
@@ -85,21 +87,24 @@ public class UnityWindowActor : UnityWindow {
 						a = up.pickable as UbiArt.ITF.Actor;
 					}
 				}
-				EditorGUI.LabelField(GetNextRect(ref yPos), new GUIContent("Selected actor"), new GUIContent(a == null ? "None" : a.USERFRIENDLY));
-				ActorPath = FileField(GetNextRect(ref yPos), "Actor path", ActorPath, true, extension);
+				EditorGUI.LabelField(GetNextRect(), new GUIContent("Selected actor"), new GUIContent(a == null ? "None" : a.USERFRIENDLY));
+				ActorPath = FileField(GetNextRect(), "Actor path", ActorPath, true, extension);
 
 				EditorGUI.BeginDisabledGroup(a == null || string.IsNullOrEmpty(ActorPath));
-				if (GUI.Button(GetNextRect(ref yPos), new GUIContent("Export"))) {
-					await controller.ExportActor(a, ActorPath);
-					recheckFiles = true;
+				if (EditorButton("Export")) {
+					async UniTask exportActor() {
+						await controller.ExportActor(a, ActorPath);
+						recheckFiles = true;
+					};
+					ExecuteTask(exportActor());
 				}
 				EditorGUI.EndDisabledGroup();
 				#endregion
 			} else {
-				EditorGUILayout.HelpBox("Loading...\nTo use this window, please wait until everything has loaded.", MessageType.Warning);
+				EditorHelpBox("Loading...\nTo use this window, please wait until everything has loaded.", MessageType.Warning);
 			}
 		} else {
-			EditorGUILayout.HelpBox("Please start the scene to use this window.", MessageType.Info);
+			EditorHelpBox("Please start the scene to use this window.", MessageType.Info);
 		}
 	}
 

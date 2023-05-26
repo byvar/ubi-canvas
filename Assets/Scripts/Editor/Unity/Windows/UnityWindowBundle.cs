@@ -18,74 +18,76 @@ public class UnityWindowBundle : UnityWindow {
 		titleContent = EditorGUIUtility.IconContent("SaveActive");
 		titleContent.text = "Bundle Export";
 	}
-	async void OnGUI() {
-		float yPos = 0f;
+	protected override void UpdateEditorFields() {
+		base.UpdateEditorFields();
 		if (EditorApplication.isPlaying) {
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
-				if (totalyPos == 0f) totalyPos = position.height;
-				scrollbarShown = totalyPos > position.height;
-				scrollPosition = GUI.BeginScrollView(new Rect(0,0, EditorGUIUtility.currentViewWidth, position.height), scrollPosition, new Rect(0, 0, EditorGUIUtility.currentViewWidth - (scrollbarShown ? scrollbarWidth : 0f), totalyPos));
-				DrawHeader(ref yPos, "Export Game Data");
-				UnitySettings.Export_UseRaw = EditorGUI.Toggle(GetNextRect(ref yPos), new GUIContent($"Export raw files"), UnitySettings.Export_UseRaw);
+				DrawHeader("Export Game Data");
+				UnitySettings.Export_UseRaw = EditorField($"Export raw files", UnitySettings.Export_UseRaw);
 				if (UnitySettings.Export_UseRaw) {
-					UnitySettings.Export_OutputPathFolder = DirectoryField(GetNextRect(ref yPos), "Mod folder", UnitySettings.Export_OutputPathFolder, true);
+					UnitySettings.Export_OutputPathFolder = DirectoryField(GetNextRect(), "Mod folder", UnitySettings.Export_OutputPathFolder, true);
 				} else {
-					UnitySettings.Export_OutputPathFile = FileField(GetNextRect(ref yPos), "Bundle file", UnitySettings.Export_OutputPathFile, true, "ipk");
+					UnitySettings.Export_OutputPathFile = FileField(GetNextRect(), "Bundle file", UnitySettings.Export_OutputPathFile, true, "ipk");
 				}
 
 				Loader l = Controller.MainContext.Loader;
-				DrawFoldout(ref yPos, "Scenes", l.isc);
-				DrawFoldout(ref yPos, "Generic", l.isg);
+				DrawFoldout("Scenes", l.isc);
+				DrawFoldout("Generic", l.isg);
 				//DrawFoldout("Actors", l.act);
-				DrawFoldout(ref yPos, "Frise Config", l.fcg);
-				DrawFoldout(ref yPos, "Actor Templates", l.tpl);
+				DrawFoldout("Frise Config", l.fcg);
+				DrawFoldout("Actor Templates", l.tpl);
 				bool canExport = false;
 				if(UnitySettings.Export_UseRaw)
 					canExport = !string.IsNullOrEmpty(UnitySettings.Export_OutputPathFolder);
 				else
 					canExport = !string.IsNullOrEmpty(UnitySettings.Export_OutputPathFile);
 				EditorGUI.BeginDisabledGroup(!canExport);
-				if (GUI.Button(GetNextRect(ref yPos), new GUIContent("Write"))) {
+				if (EditorButton("Write")) {
 					List<pair<Path, ICSerializable>> selection = new List<pair<Path, ICSerializable>>();
 					GetSelectedPaths(selection, l.isc);
 					GetSelectedPaths(selection, l.isg);
 					//GetSelectedPaths(selection, l.act);
 					GetSelectedPaths(selection, l.fcg);
 					GetSelectedPaths(selection, l.tpl);
-					using (Controller.MainContext) {
-						if(UnitySettings.Export_UseRaw)
-							await l.WriteFilesRaw(UnitySettings.Export_OutputPathFolder, selection);
-						else
-							await l.WriteBundle(UnitySettings.Export_OutputPathFile, selection);
+
+					async UniTask writeBundle() {
+						using (Controller.MainContext) {
+							if (UnitySettings.Export_UseRaw)
+								await l.WriteFilesRaw(UnitySettings.Export_OutputPathFolder, selection);
+							else
+								await l.WriteBundle(UnitySettings.Export_OutputPathFile, selection);
+						}
 					}
+					ExecuteTask(writeBundle());
 				}
-				DrawHeader(ref yPos, "Rayman Legends Export");
-				UnitySettings.Export_OriginalBundleFile = FileField(GetNextRect(ref yPos), "Original bundle file", UnitySettings.Export_OriginalBundleFile, false, "ipk");
-				if (GUI.Button(GetNextRect(ref yPos), new GUIContent("Write all for RL"))) {
-					await new AdventuresToLegendsConverter().Convert(
-						Controller.MainContext,
-						UnitySettings.Export_OriginalBundleFile,
-						UnitySettings.Export_UseRaw ? UnitySettings.Export_OutputPathFolder : UnitySettings.Export_OutputPathFile,
-						UnitySettings.Export_UseRaw);
+				DrawHeader("Rayman Legends Export");
+				UnitySettings.Export_OriginalBundleFile = FileField(GetNextRect(), "Original bundle file", UnitySettings.Export_OriginalBundleFile, false, "ipk");
+				if (EditorButton("Write all for RL")) {
+					async UniTask convert() {
+						await new AdventuresToLegendsConverter().Convert(
+							Controller.MainContext,
+							UnitySettings.Export_OriginalBundleFile,
+							UnitySettings.Export_UseRaw ? UnitySettings.Export_OutputPathFolder : UnitySettings.Export_OutputPathFile,
+							UnitySettings.Export_UseRaw);
+					}
+					ExecuteTask(convert());
 				}
 				EditorGUI.EndDisabledGroup();
-				totalyPos = yPos;
-				GUI.EndScrollView();
 			} else {
-				EditorGUILayout.HelpBox("Loading...\nTo use this window, please wait until everything has loaded.", MessageType.Warning);
+				EditorHelpBox("Loading...\nTo use this window, please wait until everything has loaded.", MessageType.Warning);
 			}
 		} else {
-			EditorGUILayout.HelpBox("Please start the scene to use this window.", MessageType.Info);
+			EditorHelpBox("Please start the scene to use this window.", MessageType.Info);
 		}
 	}
 
-	void DrawFoldout<T>(ref float yPos, string title, Dictionary<StringID, T> dict) where T : ICSerializable {
+	void DrawFoldout<T>(string title, Dictionary<StringID, T> dict) where T : ICSerializable {
 		if(dict == null)
 			return;
 		if (!foldouts.ContainsKey(title)) {
 			foldouts[title] = false;
 		}
-		foldouts[title] = EditorGUI.Foldout(GetNextRect(ref yPos), foldouts[title], title, true);
+		foldouts[title] = EditorGUI.Foldout(GetNextRect(), foldouts[title], title, true);
 		//foldouts[title] = EditorGUILayout.Foldout(foldouts[title], title, true);
 		if (foldouts[title]) {
 			Loader l = Controller.MainContext.Loader;
@@ -93,7 +95,7 @@ public class UnityWindowBundle : UnityWindow {
 				if (!selectedPaths.ContainsKey(sid)) {
 					selectedPaths[sid] = false;
 				}
-				selectedPaths[sid] = EditorGUI.ToggleLeft(GetNextRect(ref yPos), l.Paths[sid].FullPath, selectedPaths[sid]);
+				selectedPaths[sid] = EditorGUI.ToggleLeft(GetNextRect(), l.Paths[sid].FullPath, selectedPaths[sid]);
 			}
 		}
 	}
@@ -108,8 +110,6 @@ public class UnityWindowBundle : UnityWindow {
 		}
 	}
 
-	private float totalyPos = 0f;
-	private Vector2 scrollPosition = Vector2.zero;
 	private Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
 	private Dictionary<StringID, bool> selectedPaths = new Dictionary<StringID, bool>();
 }
