@@ -181,7 +181,7 @@ public class UnityWindow : EditorWindow {
 			return value;
 
 		if (!EnumOptions.ContainsKey(label))
-			EnumOptions[label] = getEnumOptions == null ? EnumHelpers.GetValues<T>().Select(x => x.ToString()).ToArray() : getEnumOptions();
+			EnumOptions[label] = getEnumOptions == null ? EnumHelpers.GetValues<T>().Select(x => x.GetDescription()).ToArray() : getEnumOptions();
 
 		return (T)(object)EditorGUI.Popup(rect ?? GetNextRect(ref YPos), label, (int)(object)value, EnumOptions[label]);
 	}
