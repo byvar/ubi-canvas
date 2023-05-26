@@ -320,6 +320,7 @@ namespace UbiArt {
 				case "tsc":
 				case "act":
 				case "ipk":
+				case "gf":
 					flags |= SerializeFlags.Flags7;
 					break;
 				case "fcg":
@@ -350,6 +351,7 @@ namespace UbiArt {
 				case "loc8":
 				case "ipk":
 				case "asc":
+				case "gf":
 				case null:
 					return true;
 				default:

@@ -122,8 +122,6 @@ namespace UbiCanvas.Tools
 				isMissingBundles = missingBundles.Any();
 			}
 
-			var fat = new UbiArt.GlobalFat.GlobalFat();
-
 			UpdateMissingBundles();
 
 			// Load unloaded bundles
@@ -166,9 +164,38 @@ namespace UbiCanvas.Tools
 				throw new Exception($"The following bundles could not be found: {string.Join(',',missingBundles.ToArray())}");
 			}
 
-			throw new NotImplementedException("Now that all bundles are loaded, write Secure_FAT using all files in those bundles");
+			// Create FAT
+			var fat = new UbiArt.GlobalFat.GlobalFat();
+			foreach (var bundleName in bundleNames) {
+				var bun = loadedBundles[bundleName];
+				UbiArt.GlobalFat.BundleDescriptor bd = fat.GetOrAddBundle(bundleName);
 
-			//outputContext.SystemLogger.LogInfo("Finished writing secure_fat.");
+				foreach (var p in bun.packMaster.files) {
+					var path = p.Item2;
+					UbiArt.GlobalFat.FileDescriptor f = fat.GetOrAddFile(path);
+					//fat.UnlinkFileAll(f);
+					fat.LinkFile(f, bd);
+				}
+			}
+
+			// Serialize FAT & write it
+			byte[] serializedData = null;
+			using Context context = CreateContext(
+				basePath: outputPath,
+				mode: mode,
+				loadAnimations: false, loadAllPaths: false);
+
+			using (MemoryStream stream = new MemoryStream()) {
+				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
+					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
+					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "gf");
+					object toWrite = fat;
+					w.Serialize(ref toWrite, GetType(), name: "FAT");
+					serializedData = stream.ToArray();
+				}
+			}
+			Util.ByteArrayToFile(System.IO.Path.Combine(outputPath, "secure_fat.gf"), serializedData);
+			context.SystemLogger.LogInfo("Finished writing secure_fat.");
 		}
 	}
 }

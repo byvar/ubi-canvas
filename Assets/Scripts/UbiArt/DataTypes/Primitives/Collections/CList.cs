@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Codice.CM.Common;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -93,6 +94,10 @@ namespace UbiArt {
 
 		IEnumerator IEnumerable.GetEnumerator() {
 			return container.GetEnumerator();
+		}
+
+		public int RemoveAll(System.Predicate<T> match) {
+			return container.RemoveAll(match);
 		}
 		#endregion
 	}

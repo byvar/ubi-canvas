@@ -76,7 +76,7 @@ public class UnityWindowTools : UnityWindow
 		{
 			UnitySettings.Tools_BuildModIPK_GameMode = EditorField<UbiArt.Settings.Mode>("Game", UnitySettings.Tools_BuildModIPK_GameMode);
 
-			UnitySettings.Tools_BuildModIPK_InputPath = DirectoryField(GetNextRect(ref YPos), "Mod folder (raw files)", UnitySettings.Tools_BuildModIPK_InputPath, true);
+			UnitySettings.Tools_BuildModIPK_InputPath = DirectoryField(GetNextRect(ref YPos), "Input path (raw files)", UnitySettings.Tools_BuildModIPK_InputPath, true);
 			UnitySettings.Tools_BuildModIPK_OutputPath = DirectoryField(GetNextRect(ref YPos), "Output path", UnitySettings.Tools_BuildModIPK_OutputPath, true);
 			UnitySettings.Tools_BuildModIPK_OriginalBundlesPath = DirectoryField(GetNextRect(ref YPos), "Original bundles path", UnitySettings.Tools_BuildModIPK_OriginalBundlesPath, true);
 

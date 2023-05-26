@@ -3,7 +3,7 @@ namespace UbiArt.GlobalFat {
 		public StringID id;
 		public ushort folder;
 		public string filename;
-		public CListP<byte> bundles;
+		public CListP<byte> bundles = new CListP<byte>();
 
 		public void Serialize(CSerializerObject s, string name) {
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
