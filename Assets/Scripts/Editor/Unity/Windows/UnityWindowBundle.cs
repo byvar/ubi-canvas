@@ -22,6 +22,8 @@ public class UnityWindowBundle : UnityWindow {
 		base.UpdateEditorFields();
 		if (EditorApplication.isPlaying) {
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
+				EditorGUI.BeginChangeCheck();
+
 				DrawHeader("Export Game Data");
 				UnitySettings.Export_UseRaw = EditorField($"Export raw files", UnitySettings.Export_UseRaw);
 				if (UnitySettings.Export_UseRaw) {
@@ -73,6 +75,10 @@ public class UnityWindowBundle : UnityWindow {
 					ExecuteTask(convert());
 				}
 				EditorGUI.EndDisabledGroup();
+
+				if (EditorGUI.EndChangeCheck()) {
+					UnitySettings.Save();
+				}
 			} else {
 				EditorHelpBox("Loading...\nTo use this window, please wait until everything has loaded.", MessageType.Warning);
 			}

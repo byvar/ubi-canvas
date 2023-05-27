@@ -165,7 +165,11 @@ namespace UbiCanvas.Conversion {
 
 				//Write patch
 				patch.AddFile(uvManagerPath, uvManager);
-				await rlContext.Loader.WriteBundle(System.IO.Path.Combine(basePath, "patch_PC.ipk"), patch);
+				if (exportRaw) {
+					await rlContext.Loader.WriteFilesRaw(outPath, patch);
+				} else {
+					await rlContext.Loader.WriteBundle(System.IO.Path.Combine(basePath, "patch_PC.ipk"), patch);
+				}
 			}
 		}
 

@@ -82,6 +82,7 @@ namespace UbiCanvas.Tools
 			}
 
 			outputContext.SystemLogger.LogInfo("Finished writing bundle(s).");
+			await TimeController.WaitIfNecessary();
 			if (UnitySettings.Tools_BuildModIPK_CreateSecureFatAfterIPK) {
 				Dictionary<string, UbiArt.Bundle.BundleFile> bundles = new Dictionary<string, UbiArt.Bundle.BundleFile>();
 				bundles[bundleName] = bun;
@@ -164,6 +165,13 @@ namespace UbiCanvas.Tools
 				throw new Exception($"The following bundles could not be found: {string.Join(',',missingBundles.ToArray())}");
 			}
 
+			using Context context = CreateContext(
+				basePath: outputPath,
+				mode: mode,
+				loadAnimations: false, loadAllPaths: false);
+			context.SystemLogger.LogInfo("Loaded bundle(s).");
+			await TimeController.WaitIfNecessary();
+
 			// Create FAT
 			var fat = new UbiArt.GlobalFat.GlobalFat();
 			foreach (var bundleName in bundleNames) {
@@ -177,14 +185,11 @@ namespace UbiCanvas.Tools
 					fat.LinkFile(f, bd);
 				}
 			}
+			context.SystemLogger.LogInfo("Finished creating secure_fat.");
+			await TimeController.WaitIfNecessary();
 
 			// Serialize FAT & write it
 			byte[] serializedData = null;
-			using Context context = CreateContext(
-				basePath: outputPath,
-				mode: mode,
-				loadAnimations: false, loadAllPaths: false);
-
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);

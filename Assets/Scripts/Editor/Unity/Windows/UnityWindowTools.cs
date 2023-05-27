@@ -74,6 +74,9 @@ public class UnityWindowTools : UnityWindow
 		}
 		else if (tool is BuildModIPKTool buildModIPKTool)
 		{
+
+			EditorGUI.BeginChangeCheck();
+
 			UnitySettings.Tools_BuildModIPK_GameMode = EditorField<UbiArt.Settings.Mode>("Game", UnitySettings.Tools_BuildModIPK_GameMode);
 
 			UnitySettings.Tools_BuildModIPK_InputPath = DirectoryField(GetNextRect(ref YPos), "Input path (raw files)", UnitySettings.Tools_BuildModIPK_InputPath, true);
@@ -83,6 +86,10 @@ public class UnityWindowTools : UnityWindow
 			UnitySettings.Tools_BuildModIPK_CreateSecureFatAfterIPK = EditorField("Create secure_fat", UnitySettings.Tools_BuildModIPK_CreateSecureFatAfterIPK);
 			UnitySettings.Tools_BuildModIPK_BundleBaseName = EditorField("Bundle base name", UnitySettings.Tools_BuildModIPK_BundleBaseName);
 			UnitySettings.Tools_BuildModIPK_BundleOrder = EditorField("Bundle order", UnitySettings.Tools_BuildModIPK_BundleOrder);
+			
+			if (EditorGUI.EndChangeCheck()) {
+				UnitySettings.Save();
+			}
 
 			foreach (MultiActionGameTool.InvokableAction invokableAction in buildModIPKTool.Actions) {
 				if (EditorButton(invokableAction.Name))
