@@ -96,22 +96,25 @@ namespace UbiCanvas.Conversion {
 				asyncController: new UniTaskAsyncController())) {
 				await rlContextExt.Loader.LoadInitial();
 				uvManager = rlContextExt.Loader.uvAtlasManager;
-				foreach (var uv in l.uvAtlasManager.atlas) {
+
+				// Add all keys present in Adventures and not in Legends
+				/*foreach (var uv in l.uvAtlasManager.atlas) {
 					if (!uvManager.atlas.ContainsKey(uv.Key)) uvManager.atlas.Add(uv);
-				}
+				}*/
+
 				// Add renamed UV atlas
 				foreach (var tex in structs[typeof(TextureCooked)]) {
 					var curPath = pathMapping[tex.Key];
 					if (l.uvAtlasManager.atlas.ContainsKey(curPath.stringID)) {
 						var convertedPath = new Path(curPath.FullPath);
 						convertedPath.ConvertPath(conversionSettings);
-						if (convertedPath != curPath) {
+						//if (convertedPath != curPath) { // If path isn't renamed, it's already added
 							if (uvManager.atlas.ContainsKey(convertedPath.stringID)) {
-								rlContextExt.SystemLogger?.LogWarning($"Cannot merge UV manager, already contains {convertedPath.stringID}");
+								//rlContextExt.SystemLogger?.LogWarning($"Cannot merge UV manager, already contains {convertedPath.stringID}");
 							} else {
 								uvManager.atlas[convertedPath.stringID] = l.uvAtlasManager.atlas[curPath.stringID];
 							}
-						}
+						//}
 					}
 				}
 				uvManagerPath = rlContextExt.Loader.CookedPaths[new Path("", "atlascontainer.ckd").stringID];

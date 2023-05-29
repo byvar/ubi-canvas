@@ -40,7 +40,7 @@ namespace UbiCanvas.Tools
 					var subfolderName = sceneName;
 					var outputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "data", subfolderName);
 					
-					// Delete directory if it exists. Any manual mods need to be added into a different subdirectory.
+					// Delete subdirectory if it exists. Any manual mods need to be added into a different subdirectory.
 					if(Directory.Exists(outputPath))
 						Directory.Delete(outputPath, true);
 					
