@@ -74,7 +74,6 @@ public class UnityWindowTools : UnityWindow
 		}
 		else if (tool is BuildModIPKTool buildModIPKTool)
 		{
-
 			EditorGUI.BeginChangeCheck();
 
 			UnitySettings.Tools_BuildModIPK_GameMode = EditorField<UbiArt.Settings.Mode>("Game", UnitySettings.Tools_BuildModIPK_GameMode);
@@ -92,6 +91,23 @@ public class UnityWindowTools : UnityWindow
 			}
 
 			foreach (MultiActionGameTool.InvokableAction invokableAction in buildModIPKTool.Actions) {
+				if (EditorButton(invokableAction.Name))
+					ExecuteTask(invokableAction.Action());
+			}
+		}
+		else if(tool is AdventuresToLegendsModTool adventuresToLegendsModTool)
+		{
+
+			EditorGUI.BeginChangeCheck();
+
+			UnitySettings.Tools_AdventuresToLegends_ProjectPath = DirectoryField(GetNextRect(ref YPos), "Project path", UnitySettings.Tools_AdventuresToLegends_ProjectPath, true);
+			UnitySettings.Tools_AdventuresToLegends_GamePath = DirectoryField(GetNextRect(ref YPos), "Game path", UnitySettings.Tools_AdventuresToLegends_GamePath, true);
+
+			if (EditorGUI.EndChangeCheck()) {
+				UnitySettings.Save();
+			}
+
+			foreach (MultiActionGameTool.InvokableAction invokableAction in adventuresToLegendsModTool.Actions) {
 				if (EditorButton(invokableAction.Name))
 					ExecuteTask(invokableAction.Action());
 			}

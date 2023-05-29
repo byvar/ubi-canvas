@@ -37,7 +37,6 @@ public class UnitySettings {
 	public static bool Export_UseRaw { get; set; } = false;
 	public static string Export_OutputPathFile { get; set; }
 	public static string Export_OutputPathFolder { get; set; }
-	public static string Export_OriginalBundleFile { get; set; }
 
 	// Build mod IPK tool
 	public static Settings.Mode Tools_BuildModIPK_GameMode { get; set; } = Settings.Mode.RaymanLegendsPC;
@@ -47,6 +46,10 @@ public class UnitySettings {
 	public static string Tools_BuildModIPK_OutputPath { get; set; }
 	public static string Tools_BuildModIPK_BundleOrder { get; set; }
 	public static bool Tools_BuildModIPK_CreateSecureFatAfterIPK { get; set; }
+
+	// Adventures to Legends converter
+	public static string Tools_AdventuresToLegends_ProjectPath { get; set; }
+	public static string Tools_AdventuresToLegends_GamePath { get; set; }
 
 	/// <summary>
 	/// Static constructor loads in editor data at editor startup.
@@ -99,7 +102,6 @@ public class UnitySettings {
 		Export_UseRaw = s.SerializeBool(nameof(Export_UseRaw), Export_UseRaw);
 		Export_OutputPathFile = s.SerializeString(nameof(Export_OutputPathFile), Export_OutputPathFile);
 		Export_OutputPathFolder = s.SerializeString(nameof(Export_OutputPathFolder), Export_OutputPathFolder);
-		Export_OriginalBundleFile = s.SerializeString(nameof(Export_OriginalBundleFile), Export_OriginalBundleFile);
 
 
 		modeString = s.SerializeString(nameof(Tools_BuildModIPK_GameMode), Tools_BuildModIPK_GameMode.ToString());
@@ -110,6 +112,9 @@ public class UnitySettings {
 		Tools_BuildModIPK_OutputPath = s.SerializeString(nameof(Tools_BuildModIPK_OutputPath), Tools_BuildModIPK_OutputPath);
 		Tools_BuildModIPK_BundleOrder = s.SerializeString(nameof(Tools_BuildModIPK_BundleOrder), Tools_BuildModIPK_BundleOrder);
 		Tools_BuildModIPK_CreateSecureFatAfterIPK = s.SerializeBool(nameof(Tools_BuildModIPK_CreateSecureFatAfterIPK), Tools_BuildModIPK_CreateSecureFatAfterIPK);
+
+		Tools_AdventuresToLegends_ProjectPath = s.SerializeString(nameof(Tools_AdventuresToLegends_ProjectPath), Tools_AdventuresToLegends_ProjectPath);
+		Tools_AdventuresToLegends_GamePath = s.SerializeString(nameof(Tools_AdventuresToLegends_GamePath), Tools_AdventuresToLegends_GamePath);
 	}
 
     /// <summary>

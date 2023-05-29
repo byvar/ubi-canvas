@@ -62,18 +62,6 @@ public class UnityWindowBundle : UnityWindow {
 					}
 					ExecuteTask(writeBundle());
 				}
-				DrawHeader("Rayman Legends Export");
-				UnitySettings.Export_OriginalBundleFile = FileField(GetNextRect(), "Original bundle file", UnitySettings.Export_OriginalBundleFile, false, "ipk");
-				if (EditorButton("Write all for RL")) {
-					async UniTask convert() {
-						await new AdventuresToLegendsConverter().Convert(
-							Controller.MainContext,
-							UnitySettings.Export_OriginalBundleFile,
-							UnitySettings.Export_UseRaw ? UnitySettings.Export_OutputPathFolder : UnitySettings.Export_OutputPathFile,
-							UnitySettings.Export_UseRaw);
-					}
-					ExecuteTask(convert());
-				}
 				EditorGUI.EndDisabledGroup();
 
 				if (EditorGUI.EndChangeCheck()) {

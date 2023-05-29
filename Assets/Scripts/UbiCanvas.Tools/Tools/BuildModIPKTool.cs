@@ -28,7 +28,7 @@ namespace UbiCanvas.Tools
         }
 
         public override string Name => "Mod IPK Creator";
-		public override string Description => "This tool builds patch & mod IPK files, for Rayman Legends only";
+		public override string Description => "This tool builds patch & mod IPK files";
 
 		private async Task CreateIPKAsync(bool patch)
 		{

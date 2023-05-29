@@ -11,8 +11,8 @@ using UnityEngine;
 
 namespace UbiCanvas.Conversion {
 	public class AdventuresToLegendsConverter {
-		public async UniTask Convert(Context mainContext, string rlPath, string outPath, bool exportRaw) {
-			var basePath = System.IO.Path.GetDirectoryName(rlPath);
+		public async UniTask Convert(Context mainContext, string rlPath, string outPath, string projectPath, bool exportRaw = true) {
+			var basePath = rlPath;
 			var settings = Settings.Init(Settings.Mode.RaymanLegendsPC);
 
 			Loader l = mainContext.Loader;
@@ -168,7 +168,8 @@ namespace UbiCanvas.Conversion {
 				if (exportRaw) {
 					await rlContext.Loader.WriteFilesRaw(outPath, patch);
 				} else {
-					await rlContext.Loader.WriteBundle(System.IO.Path.Combine(basePath, "patch_PC.ipk"), patch);
+					outPath = System.IO.Path.GetDirectoryName(outPath); // outpath is the name of the bundle, we need the directory name here
+					await rlContext.Loader.WriteBundle(System.IO.Path.Combine(outPath, "patch_PC.ipk"), patch);
 				}
 			}
 		}

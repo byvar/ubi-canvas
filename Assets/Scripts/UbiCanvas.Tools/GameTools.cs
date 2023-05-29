@@ -7,6 +7,7 @@
 			new ExportEngineDataTool(),
 			new AdventuresSaveTool(),
 			new BuildModIPKTool(),
+			new AdventuresToLegendsModTool(),
 		};
 	}
 }

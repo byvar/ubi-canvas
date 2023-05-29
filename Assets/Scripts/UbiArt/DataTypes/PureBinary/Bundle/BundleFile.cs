@@ -142,6 +142,7 @@ namespace UbiArt.Bundle {
 				}
 			}
 			await TimeController.WaitIfNecessary();
+			Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
 			using (BinaryWriter bw = new BinaryWriter(new FileStream(path, FileMode.OpenOrCreate))) {
 				bw.Write(serializedData);
 				for (int i = 0; i < data.Count; i++) {
