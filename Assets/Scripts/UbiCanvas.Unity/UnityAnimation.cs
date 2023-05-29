@@ -59,7 +59,7 @@ public class UnityAnimation : MonoBehaviour {
 			int numBones = Math.Min(animTrack.bonesLists.Count, bones.Length);
 			for (int i = 0; i < numBones; i++) {
 				AnimTrackBonesList bl = animTrack.bonesLists[i];
-				if (bl.amountPAS > 0) {
+				if (bl.amountPAS > 0) { // Position Angle Scale
 					for (int p = 0; p < bl.amountPAS; p++) {
 						AnimTrackBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
 						AnimTrackBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
@@ -69,7 +69,7 @@ public class UnityAnimation : MonoBehaviour {
 							Vector2 scl = pas.Scale.GetUnityVector();
 							if (next != pas) {
 								float nextFrame = next.frame < pas.frame ? next.frame + animTrack.length : next.frame;
-								float lerp = (currentFrame - pas.frame) / (nextFrame - pas.frame);
+								float lerp = (currentFrame - pas.frame) / (nextFrame - pas.frame); // TODO: maybe change to Math.Floor(currentFrame) if animations can't be interpolated. This fixed jittery feet for Rayman
 								pos = Vector2.Lerp(pos, next.Position.GetUnityVector(), lerp);
 								rot = Mathf.Lerp(rot, next.Rotation, lerp);
 								scl = Vector2.Lerp(scl, next.Scale.GetUnityVector(), lerp);
@@ -84,7 +84,7 @@ public class UnityAnimation : MonoBehaviour {
 						}
 					}
 				}
-				if (bl.amountZAL > 0) {
+				if (bl.amountZAL > 0) { // Z ALpha
 					for (int p = 0; p < bl.amountZAL; p++) {
 						AnimTrackBoneZAL zal = animTrack.boneZAL[bl.startZAL + p];
 						AnimTrackBoneZAL next = animTrack.boneZAL[bl.startZAL + ((p + 1) % bl.amountZAL)];

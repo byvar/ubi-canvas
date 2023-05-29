@@ -39,7 +39,11 @@ namespace UbiCanvas.Tools
 					if(sceneName.Contains('.')) sceneName = sceneName.Substring(0, sceneName.IndexOf('.'));
 					var subfolderName = sceneName;
 					var outputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "data", subfolderName);
-
+					
+					// Delete directory if it exists. Any manual mods need to be added into a different subdirectory.
+					if(Directory.Exists(outputPath))
+						Directory.Delete(outputPath, true);
+					
 					// Convert
 					await new AdventuresToLegendsConverter().Convert(
 							Controller.MainContext,

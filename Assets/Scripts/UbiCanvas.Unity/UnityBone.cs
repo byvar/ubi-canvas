@@ -68,8 +68,18 @@ public class UnityBone : MonoBehaviour {
 		}
 	}*/
 	private void Start() {
-		/*SpriteRenderer sr = gameObject.AddComponent<SpriteRenderer>();
-		sr.sprite = MapLoader.Loader.controller.GetIcon("bone");*/
+		// Uncomment to visualize
+		/*
+		var subobj = new GameObject("SR");
+		subobj.transform.SetParent(transform, false);
+		subobj.transform.localPosition = Vector3.zero;
+		subobj.transform.localRotation = Quaternion.Euler(0,0,0);
+		subobj.transform.localScale = new Vector3(1f, 0.1f, 0.1f);
+
+		SpriteRenderer sr = subobj.AddComponent<SpriteRenderer>();
+		sr.sprite = Controller.Obj.GetIcon("bone");
+		sr.sortingLayerName = "Gizmo";
+		*/
 	}
 	void Update() {
 		UpdateBone();
