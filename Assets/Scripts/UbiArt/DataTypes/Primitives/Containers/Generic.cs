@@ -7,6 +7,8 @@ namespace UbiArt {
 		public T obj;
 		public bool serializeClassName = true;
 
+		public string ClassName => obj?.ClassName;
+
 		public Generic() {
 			className = new StringID();
 		}

@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace UbiCanvas.Conversion {
 		public async UniTask Convert(Context mainContext, string rlPath, string outPath, string projectPath, bool exportRaw = true) {
 			var basePath = rlPath;
 			var settings = Settings.Init(Settings.Mode.RaymanLegendsPC);
+
+			string lvlPath = UnitySettings.SelectedLevelFile;
+			string sceneName = System.IO.Path.GetFileName(lvlPath);
+			if (sceneName.Contains('.')) sceneName = sceneName.Substring(0, sceneName.IndexOf('.'));
 
 			Loader l = mainContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -74,50 +79,45 @@ namespace UbiCanvas.Conversion {
 			// Step 1: create new paths dictionary
 			var ogDir = l.Settings.ITFDirectory;
 			var newDir = settings.ITFDirectory;
-			var pathMapping = new Dictionary<StringID, Path>();
+			var cookedPathMapping = new Dictionary<StringID, Path>();
+			var uncookedPathMapping = new Dictionary<StringID, Path>();
 			foreach (var structType in structs) {
 				foreach (var structMap in structType.Value) {
 					var ogPath = l.CookedPaths[structMap.Key];
 					if (ogPath.folder != null && ogPath.folder.Contains(ogDir)) {
-						pathMapping[structMap.Key] = new Path(ogPath.FullPath.Replace(ogDir, newDir), true);
+						cookedPathMapping[structMap.Key] = new Path(ogPath.FullPath.Replace(ogDir, newDir), true);
 					} else {
-						pathMapping[structMap.Key] = ogPath;
+						cookedPathMapping[structMap.Key] = new Path(ogPath.FullPath, true);
 					}
-					pathMapping[structMap.Key].ConvertPath(conversionSettings);
+					cookedPathMapping[structMap.Key].ConvertPath(conversionSettings);
+
+					uncookedPathMapping[structMap.Key] = new Path(l.Paths[structMap.Key].FullPath, true);
+					uncookedPathMapping[structMap.Key].ConvertPath(conversionSettings);
 				}
 			}
-			// Step 2, load uv atlas manager, and combine with adventures. Write patch_PC
-			UbiArt.UV.UVAtlasManager uvManager = null;
-			Path uvManagerPath = null;
+			// Step 2, load uv atlas manager from Legends, and make a list of all entries from Adventures required for the exported level.
+			Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
 			using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
 				Settings.Init(Settings.Mode.RaymanLegendsPC),
 				fileManager: new MapViewerFileManager(),
 				systemLogger: new UnitySystemLogger(),
 				asyncController: new UniTaskAsyncController())) {
 				await rlContextExt.Loader.LoadInitial();
-				uvManager = rlContextExt.Loader.uvAtlasManager;
+				var uvManager = rlContextExt.Loader.uvAtlasManager;
 
-				// Add all keys present in Adventures and not in Legends
-				/*foreach (var uv in l.uvAtlasManager.atlas) {
-					if (!uvManager.atlas.ContainsKey(uv.Key)) uvManager.atlas.Add(uv);
-				}*/
-
-				// Add renamed UV atlas
+				// For every texture, if there's an entry in the atlas manager, and if that entry isn't in Legends, then add it to "new entries".
 				foreach (var tex in structs[typeof(TextureCooked)]) {
-					var curPath = pathMapping[tex.Key];
-					if (l.uvAtlasManager.atlas.ContainsKey(curPath.stringID)) {
-						var convertedPath = new Path(curPath.FullPath);
-						convertedPath.ConvertPath(conversionSettings);
-						//if (convertedPath != curPath) { // If path isn't renamed, it's already added
-							if (uvManager.atlas.ContainsKey(convertedPath.stringID)) {
-								//rlContextExt.SystemLogger?.LogWarning($"Cannot merge UV manager, already contains {convertedPath.stringID}");
-							} else {
-								uvManager.atlas[convertedPath.stringID] = l.uvAtlasManager.atlas[curPath.stringID];
-							}
-						//}
+					var originalPathID = tex.Key;
+					var convertedPath = uncookedPathMapping[originalPathID];
+					if (l.uvAtlasManager.atlas.ContainsKey(originalPathID)) {
+						if (uvManager.atlas.ContainsKey(convertedPath.stringID) || newUVEntries.ContainsKey(convertedPath.FullPath)) {
+							//rlContextExt.SystemLogger?.LogWarning($"Cannot merge UV manager, already contains {convertedPath.stringID}");
+						} else {
+							newUVEntries[convertedPath.FullPath] = l.uvAtlasManager.atlas[originalPathID];
+							//uvManager.atlas[convertedPath.stringID] = l.uvAtlasManager.atlas[curPath.stringID];
+						}
 					}
 				}
-				uvManagerPath = rlContextExt.Loader.CookedPaths[new Path("", "atlascontainer.ckd").stringID];
 			}
 
 			// Step 3, load bundles, for each struct check if it's already present in the bundle, otherwise add it
@@ -126,8 +126,7 @@ namespace UbiCanvas.Conversion {
 				systemLogger: new UnitySystemLogger(),
 				asyncController: new UniTaskAsyncController())) {
 				await rlContext.Loader.LoadBundles();
-				var bun = new UbiArt.Bundle.BundleFile();
-				var patch = new UbiArt.Bundle.BundleFile();
+				var bun = new UbiArt.Bundle.BundleFile(rlContext);
 				var ogBun = rlContext.Loader.Bundles["Bundle"];
 
 				// Add all original files to new bundle
@@ -138,7 +137,7 @@ namespace UbiCanvas.Conversion {
 				// Add new data
 				foreach (var structType in structs) {
 					foreach (var structMap in structType.Value) {
-						var curPath = pathMapping[structMap.Key];
+						var curPath = cookedPathMapping[structMap.Key];
 						if (curPath.filename == "localisation.loc8") continue;
 						//if (!bun.HasPreprocessedFile(curPath)) {
 						if (!rlContext.Loader.AnyBundleContainsFile(curPath)) {
@@ -165,14 +164,50 @@ namespace UbiCanvas.Conversion {
 				} else {
 					await rlContext.Loader.WriteBundle(outPath, bun);
 				}
+			}
 
-				//Write patch
-				patch.AddFile(uvManagerPath, uvManager);
-				if (exportRaw) {
-					await rlContext.Loader.WriteFilesRaw(outPath, patch);
-				} else {
-					outPath = System.IO.Path.GetDirectoryName(outPath); // outpath is the name of the bundle, we need the directory name here
-					await rlContext.Loader.WriteBundle(System.IO.Path.Combine(outPath, "patch_PC.ipk"), patch);
+			// Write atlas list
+			if (newUVEntries.Any()) {
+				string exportFile = System.IO.Path.Combine(projectPath, "json", "atlascontainer", $"{sceneName}.json");
+				System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
+				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(newUVEntries, Formatting.Indented));
+				Debug.Log($"Exported json: {exportFile}");
+			}
+			Debug.Log($"Finished exporting {sceneName}.");
+		}
+
+		public async Task ImportAtlasContainer(string projectPath) {
+			var uvManagerPath = System.IO.Path.Combine(projectPath, "json", "atlascontainer");
+			var outPath = System.IO.Path.Combine(projectPath, "data", "patch");
+			var files = System.IO.Directory.Exists(uvManagerPath) ? System.IO.Directory.GetFiles(uvManagerPath, "*.json") : null;
+			if (files != null && files.Any()) {
+				files = files.OrderBy(f => f).ToArray();
+				Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
+				using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
+					Settings.Init(Settings.Mode.RaymanLegendsPC),
+					serializerLogger: new MapViewerSerializerLogger(),
+					fileManager: new MapViewerFileManager(),
+					systemLogger: new UnitySystemLogger(),
+					asyncController: new UniTaskAsyncController())) {
+					await rlContextExt.Loader.LoadInitial();
+					var uvManager = rlContextExt.Loader.uvAtlasManager;
+
+					foreach (var f in files) {
+						var json = System.IO.File.ReadAllText(f);
+						var curUVEntries = JsonConvert.DeserializeObject<Dictionary<string, UbiArt.UV.UVAtlas>>(json);
+						foreach (var entry in curUVEntries) {
+							if(!newUVEntries.ContainsKey(entry.Key)) // For high priority entries, prefix them with _ or something
+								newUVEntries[entry.Key] = entry.Value;
+						}
+					}
+					foreach (var entry in newUVEntries) {
+						var path = new Path(entry.Key, cooked: false);
+						if(!uvManager.atlas.ContainsKey(path.stringID))
+							uvManager.atlas.Add(path.stringID, entry.Value);
+					}
+					var bun = new UbiArt.Bundle.BundleFile();
+					bun.AddFile(rlContextExt.Loader.CookedPaths[new Path("atlascontainer").stringID], uvManager);
+					await rlContextExt.Loader.WriteFilesRaw(outPath, bun);
 				}
 			}
 		}

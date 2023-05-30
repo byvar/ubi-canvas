@@ -15,7 +15,7 @@ namespace UbiCanvas.Tools
 	{
 		public CRCCalculatorTool() { }
 
-        public override string Name => "UbiArt StringCRC Calculator";
+        public override string Name => "UbiArt CRC Utility";
 		public override string Description => "Useful for all kinds of CRC calculations";
 
 		public uint CalculateStringCRC(string str) => new StringID(str).stringID;

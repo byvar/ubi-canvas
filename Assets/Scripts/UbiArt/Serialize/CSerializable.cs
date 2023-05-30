@@ -54,6 +54,7 @@ namespace UbiArt {
 			return result;
 		}
 
+		[IgnoreDataMember]
 		public virtual string ClassName {
 			get {
 				Type t = GetType();

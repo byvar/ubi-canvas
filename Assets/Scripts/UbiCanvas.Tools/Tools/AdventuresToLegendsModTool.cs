@@ -12,6 +12,7 @@ using UbiCanvas.Helpers;
 using Path = UbiArt.Path;
 using Stream = System.IO.Stream;
 using UbiCanvas.Conversion;
+using System.Diagnostics;
 
 namespace UbiCanvas.Tools
 {
@@ -22,7 +23,7 @@ namespace UbiCanvas.Tools
 			Actions.AddRange(new[]
 			{
 				new InvokableAction("Export current map in Legends format", async () => await ExportCurrentMap()),
-				//new InvokableAction("Create config files from JSON", async () => await CreateSecureFATAsync()),
+				new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
 			});
         }
@@ -56,6 +57,12 @@ namespace UbiCanvas.Tools
 			} else {
 				UnityEngine.Debug.LogWarning("Please load a map before selecting this option.");
 			}
+		}
+
+		private async Task BuildJSON() {
+			await new AdventuresToLegendsConverter().ImportAtlasContainer(
+				UnitySettings.Tools_AdventuresToLegends_ProjectPath);
+			UnityEngine.Debug.Log("Finished building data JSON files.");
 		}
 
 		#region Build (mostly a copy of BuildModIPKTool)

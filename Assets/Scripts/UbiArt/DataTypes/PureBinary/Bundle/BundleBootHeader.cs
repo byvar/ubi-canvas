@@ -19,6 +19,8 @@ namespace UbiArt.Bundle {
 		public bool SupportsCompressedBlock => Version >= 6;
 
 		public void Serialize(CSerializerObject s, string name) {
+			Reinit(s.Context);
+
 			signature = s.Serialize<uint>(signature, name: nameof(signature));
 			Version = s.Serialize<uint>(Version, name: nameof(Version));
 			unk1 = s.Serialize<uint>(unk1, name: nameof(unk1));
@@ -38,20 +40,30 @@ namespace UbiArt.Bundle {
 			}
 		}
 		public BundleBootHeader() {
+			signature = staticSignature;
+			unk1 = 0;
+			unk2 = false;
+			unk3 = true;
+			unk4 = true;
+			unk5 = 0;
 		}
 
 		public BundleBootHeader(Context context) {
-			if (context.Settings.game == Settings.Game.RL) {
-				signature = staticSignature;
-				Version = context.Settings.ipkVersion;
-				unk1 = 0;
-				unk2 = false;
-				unk3 = true;
-				unk4 = true;
-				unk5 = 0;
-				EngineSignature = context.Settings.engineSignature;
+			signature = staticSignature;
+			unk1 = 0;
+			unk2 = false;
+			unk3 = true;
+			unk4 = true;
+			unk5 = 0;
+
+			Reinit(context);
+		}
+
+		void Reinit(Context context) {
+			Version = context.Settings.ipkVersion;
+			EngineSignature = context.Settings.engineSignature;
+			if(context.Settings.game == Settings.Game.RL)
 				EngineVersion = 0;
-			}
 		}
 	}
 }

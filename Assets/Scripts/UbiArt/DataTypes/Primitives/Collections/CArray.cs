@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -41,7 +42,7 @@ namespace UbiArt {
 
 		public int Count => ((IList<T>)container).Count;
 
-		public bool IsReadOnly => ((IList<T>)container).IsReadOnly;
+		public bool IsReadOnly => false;//((IList<T>)container).IsReadOnly;
 
 		public void Add(T item) {
 			Array.Resize(ref container, Count+1);
