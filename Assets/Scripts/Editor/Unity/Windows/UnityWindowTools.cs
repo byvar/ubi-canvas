@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using UbiArt;
 using UbiCanvas.Helpers;
 using UbiCanvas.Tools;
 using UnityEditor;
@@ -118,6 +119,22 @@ public class UnityWindowTools : UnityWindow
 			{
 				if (EditorButton(invokableAction.Name))
 					ExecuteTask(invokableAction.Action());
+			}
+		}
+		else if (tool is CRCCalculatorTool crcTool)
+		{
+			crcTool.CurrentString = EditorField("String", crcTool.CurrentString);
+			EditorGUI.TextField(GetNextRect(), "String CRC", crcTool.StringCRC);
+			crcTool.ShowRegularCRCDropdown = EditorGUI.Foldout(GetNextRect(vPadding: 2), crcTool.ShowRegularCRCDropdown, "Other CRC");
+			if (crcTool.ShowRegularCRCDropdown) {
+				EditorGUI.TextField(GetNextRect(), "CRC", crcTool.CRC(null));
+				foreach (var uafTag in EnumHelpers.GetValues<CSerializerObject.UAFTag>()) {
+					EditorGUI.TextField(GetNextRect(), $"CRC - {uafTag}", crcTool.CRC((uint)uafTag));
+				}
+				var rect = GetNextRect();
+				rect = EditorGUI.PrefixLabel(rect, new GUIContent("CRC - Custom number"));
+				crcTool.CustomType = (uint)EditorGUI.IntField(new Rect(rect.x, rect.y, rect.width / 4 - 4, rect.height), (int)crcTool.CustomType);
+				EditorGUI.TextField(new Rect(rect.x + rect.width / 4, rect.y, rect.width / 4 * 3, rect.height), crcTool.CRC(crcTool.CustomType));
 			}
 		}
 		else

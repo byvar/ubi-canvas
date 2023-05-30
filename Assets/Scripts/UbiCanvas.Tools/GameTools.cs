@@ -8,6 +8,7 @@
 			new AdventuresSaveTool(),
 			new BuildModIPKTool(),
 			new AdventuresToLegendsModTool(),
+			new CRCCalculatorTool(),
 		};
 	}
 }
