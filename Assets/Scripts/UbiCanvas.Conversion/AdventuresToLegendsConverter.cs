@@ -43,7 +43,7 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/"));
 
 				// FX - Sadly, can't just replace the whole textures folder (it breaks maps like spikyspinners), so... case by case
-				conversionSettings.PathConversionRules.Add(
+				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/textures/fireworks/", "world/common/fx/textures/fireworks_adv/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/textures/star/", "world/common/fx/textures/star_adv/"));
@@ -56,7 +56,13 @@ namespace UbiCanvas.Conversion {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/textures/smoke_adv/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));
 				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/pollen/", "world/common/fx/textures/pollen_adv/"));
+					new PathConversionRule("world/common/fx/textures/pollen/", "world/common/fx/textures/pollen_adv/"));*/
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures/", "world/common/fx/textures_adv/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures_adv/smoke/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));
+				// TODO: Find a solution for the ParticleGenerator "meshes" not being supported in RL
+
 				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/", "world/common/fx_/"));*/
 				/*conversionSettings.PathConversionRules.Add(
@@ -178,7 +184,7 @@ namespace UbiCanvas.Conversion {
 
 		public async Task ImportAtlasContainer(string projectPath) {
 			var uvManagerPath = System.IO.Path.Combine(projectPath, "json", "atlascontainer");
-			var outPath = System.IO.Path.Combine(projectPath, "data", "patch");
+			var outPath = System.IO.Path.Combine(projectPath, "data", "_patch");
 			var files = System.IO.Directory.Exists(uvManagerPath) ? System.IO.Directory.GetFiles(uvManagerPath, "*.json") : null;
 			if (files != null && files.Any()) {
 				files = files.OrderBy(f => f).ToArray();

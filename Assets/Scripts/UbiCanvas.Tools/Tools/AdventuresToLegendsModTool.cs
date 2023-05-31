@@ -91,13 +91,16 @@ namespace UbiCanvas.Tools
 			void AddData(string stringPath, byte[] data) {
 				Path path = new Path(stringPath, cooked: true);
 				if (inputLoader != null && inputLoader.AnyBundleContainsFile(path)) {
-					patchBun.AddFile(path, data);
+					if(!patchBun.HasPreprocessedFile(path))
+						patchBun.AddFile(path, data);
 				} else {
-					bun.AddFile(path, data);
+					if(!bun.HasPreprocessedFile(path))
+						bun.AddFile(path, data);
 				}
 			}
 
-			foreach (var dir in Directory.EnumerateDirectories(inputPath)) {
+			// Use alphabetical order. To prioritize a file being added, prefix the mod name with _
+			foreach (var dir in Directory.EnumerateDirectories(inputPath).OrderBy(p => p)) {
 				//string dirPath = dir.Substring(inputPath.Length).Replace('\\', '/').Trim('/');
 				string dirPath = dir.Replace('\\', '/').Trim('/');
 				foreach (string file in Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)) {

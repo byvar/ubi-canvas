@@ -8,8 +8,8 @@ namespace UbiArt.UV {
 		public CMap<int, UVdata> uvData;
 		public CMap<int, UVparameters> uvParams;
 		public CMap<int, Vec3d> pivots;
-		public float scaleX = 1f;
-		public float scaleY = 1f;
+		public float gridX = 1f;
+		public float gridY = 1f;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			version = s.Serialize<uint>(version, name: "version");
@@ -18,8 +18,8 @@ namespace UbiArt.UV {
 				uvParams = s.SerializeObject<CMap<int, UVparameters>>(uvParams, name: "uvParams");
 				if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
 					pivots = s.SerializeObject<CMap<int, Vec3d>>(pivots, name: "pivots");
-					scaleX = s.Serialize<float>(scaleX, name: "scaleX");
-					scaleY = s.Serialize<float>(scaleY, name: "scaleY");
+					gridX = s.Serialize<float>(gridX, name: "gridX");
+					gridY = s.Serialize<float>(gridY, name: "gridY");
 				}
 			}
 		}
@@ -27,16 +27,16 @@ namespace UbiArt.UV {
 		public void Reinit(Settings settings) {
 			if (settings.game == Settings.Game.RL && version >= versionLegends) {
 				version = versionLegends;
-				if (scaleX != 1f || scaleY != 1f) {
+				/*if (gridX != 1f || gridY != 1f) {
 					foreach (var uvdat in uvData) {
 						foreach (var uv in uvdat.Value.uvs) {
-							uv.x = uv.x / scaleX;
-							uv.y = uv.y / scaleY;
+							uv.x = uv.x * gridX;
+							uv.y = uv.y * gridY;
 						}
 					}
-					scaleX = 1f;
-					scaleY = 1f;
-				}
+					gridX = 1f;
+					gridY = 1f;
+				}*/
 				/*if (uvParams != null) {
 					foreach (var uvParam in uvParams) {
 						var val = uvParam.Value;
