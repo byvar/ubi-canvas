@@ -23,7 +23,7 @@ namespace UbiCanvas.Tools
 			Actions.AddRange(new[]
 			{
 				new InvokableAction("Export current map in Legends format", async () => await ExportCurrentMap()),
-				new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
+				//new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
 			});
         }
@@ -62,12 +62,16 @@ namespace UbiCanvas.Tools
 		private async Task BuildJSON() {
 			await new AdventuresToLegendsConverter().ImportAtlasContainer(
 				UnitySettings.Tools_AdventuresToLegends_ProjectPath);
-			UnityEngine.Debug.Log("Finished building data JSON files.");
+			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
 		#region Build (mostly a copy of BuildModIPKTool)
 		private async Task BuildProject(bool install = false)
 		{
+			await BuildJSON();
+			await TimeController.WaitIfNecessary();
+
+
 			var mode = Settings.Mode.RaymanLegendsPC;
 			var originalBundlesPath = UnitySettings.Tools_AdventuresToLegends_GamePath;
 			var inputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "data").Replace('\\', '/');

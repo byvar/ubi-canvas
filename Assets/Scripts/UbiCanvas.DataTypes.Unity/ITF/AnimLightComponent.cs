@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 			bool createdOne = false;
 			if (context.Settings.engineVersion > Settings.EngineVersion.RO) {
 				foreach (TextureBankPath bp in subAnimInfo.animPackage.textureBank) {
-					createdOne = ProcessTextureBank(bp, gao, tex_mat, subAnimInfo.animPackage.skel);
+					createdOne = ProcessTextureBank(bp, gao, tex_mat, subAnimInfo?.animPackage?.skel ?? tpl.animSet?.animPackage?.skel);
 					if (createdOne) break;
 				}
 				if (!createdOne) {
@@ -119,7 +119,7 @@ namespace UbiArt.ITF {
 
 		private bool ProcessTextureBank(TextureBankPath bp, GameObject gao, Material tex_mat, AnimSkeleton skeleton) {
 			var c = UbiArtContext;
-			if (bp != null && bp.textureSet != null && skeleton != null) {
+			if (bp?.textureSet?.tex_diffuse != null && skeleton != null) {
 				if (bp.pbk != null) {
 					patches = new GameObject[bp.pbk.templates.Count];
 					patchRenderers = new SkinnedMeshRenderer[patches.Length];

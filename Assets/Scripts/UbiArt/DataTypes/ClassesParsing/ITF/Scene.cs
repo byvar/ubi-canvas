@@ -14,10 +14,12 @@ namespace UbiArt.ITF {
 
 				if(name != null) {
 					int i = 0;
-					while(ACTORS.Any(ac => !ac.IsNull && ac.obj.USERFRIENDLY == a.USERFRIENDLY)) {
-						a.USERFRIENDLY = $"{name}@{i}";
+					var newName = name;
+					while(ACTORS.Any(ac => !ac.IsNull && ac.obj.USERFRIENDLY == newName)) {
+						newName = $"{name}@{i}";
 						i++;
 					}
+					a.USERFRIENDLY = newName;
 				}
 				ACTORS.Add(new Generic<Actor>(a));
 
