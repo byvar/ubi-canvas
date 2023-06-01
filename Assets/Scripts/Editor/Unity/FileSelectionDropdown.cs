@@ -9,7 +9,7 @@ using UnityEngine;
 class FileSelectionDropdown : AdvancedDropdown {
 	public string selection = null;
 	public string directory;
-	public string extension;
+	public string[] extensions;
 	public Settings.Mode mode;
 	public string[] files;
 	public string name;
@@ -18,9 +18,9 @@ class FileSelectionDropdown : AdvancedDropdown {
 	public FileSelectionDropdown(AdvancedDropdownState state) : base(state) {
 		minimumSize = new UnityEngine.Vector2(50, 400f);
 	}
-	public FileSelectionDropdown(AdvancedDropdownState state, string directory, string extension) : this(state) {
+	public FileSelectionDropdown(AdvancedDropdownState state, string directory, params string[] extensions) : this(state) {
 		this.directory = directory;
-		this.extension = extension;
+		this.extensions = extensions;
 		files = FindFiles().ToArray();
 	}
 
@@ -31,10 +31,11 @@ class FileSelectionDropdown : AdvancedDropdown {
 		// If the directory does not exist, return the empty list
 		if (!Directory.Exists(directory))
 			return output;
-		
+
 		// Add the found files containing the correct file extension
-		output.AddRange(from file in Directory.EnumerateFiles(directory, extension, SearchOption.AllDirectories) select file.Substring(directory.Length).Replace(System.IO.Path.DirectorySeparatorChar, '/'));
-		
+		foreach (var extension in extensions) {
+			output.AddRange(from file in Directory.EnumerateFiles(directory, extension, SearchOption.AllDirectories) select file.Substring(directory.Length).Replace(System.IO.Path.DirectorySeparatorChar, '/'));
+		}
 		// Return the output
 		return output;
 	}

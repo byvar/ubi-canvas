@@ -57,8 +57,9 @@ public class UnityWindowSettings : UnityWindow {
 				if (s.cooked) {
 					extension += ".ckd";
 				}
+				string[] extensions = new string[] { extension };
 
-				if (Dropdown == null || Dropdown.directory != directory || Dropdown.extension != extension || Dropdown.mode != UnitySettings.GameMode) {
+				if (Dropdown == null || Dropdown.directory != directory || Dropdown.extensions == null || !Enumerable.SequenceEqual(Dropdown.extensions, extensions) || Dropdown.mode != UnitySettings.GameMode) {
 					Dropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, extension) {
 						name = "Scene files",
 						mode = UnitySettings.GameMode

@@ -4,6 +4,7 @@ using UnityEngine;
 using UbiCanvas.Helpers;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 public class UnityWindowActor : UnityWindow {
 	[MenuItem("Ubi-Canvas/Actor Tools")]
@@ -17,12 +18,12 @@ public class UnityWindowActor : UnityWindow {
 	protected override void UpdateEditorFields() {
 		base.UpdateEditorFields();
 		if (EditorApplication.isPlaying) {
-			if (controller == null) controller = FindObjectOfType<Controller>();
+			if (controller == null) controller = Controller.Obj;
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
 				var c = Controller.MainContext;
-				string extension = "act" + (c.Settings.cooked ? ".ckd" : "");
+				string[] extensions = new string[] { $"*.act{(c.Settings.cooked ? ".ckd" : "")}" };
 				if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
-					extension = "act_fake";
+					extensions[0] = "*.act_fake";
 				}
 				#region Add Actor
 				DrawHeader("Add Actor");
@@ -37,8 +38,8 @@ public class UnityWindowActor : UnityWindow {
 					if (!directory.EndsWith("/")) directory += "/";
 					while (directory.Contains("//")) directory = directory.Replace("//", "/");
 
-					if (recheckFiles || Dropdown == null || Dropdown.directory != directory || Dropdown.extension != "*." + extension || Dropdown.mode != c.Settings.mode) {
-						Dropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, "*." + extension) {
+					if (recheckFiles || Dropdown == null || Dropdown.directory != directory || Dropdown.extensions == null || !Enumerable.SequenceEqual(Dropdown.extensions, extensions) || Dropdown.mode != c.Settings.mode) {
+						Dropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, extensions) {
 							name = "Actor files",
 							mode = c.Settings.mode
 						};
@@ -72,7 +73,7 @@ public class UnityWindowActor : UnityWindow {
 					string pathFolder = System.IO.Path.GetDirectoryName(SelectedActorFile);
 					string pathFile = System.IO.Path.GetFileName(SelectedActorFile);
 					if (sc != null) {
-						ExecuteTask(controller.LoadActor(sc, pathFile, pathFolder));
+						ExecuteTask(controller.AdditionalLoad(controller.LoadActor(sc, pathFile, pathFolder).AsTask()));
 					}
 				}
 				EditorGUI.EndDisabledGroup();
@@ -88,7 +89,7 @@ public class UnityWindowActor : UnityWindow {
 					}
 				}
 				EditorGUI.LabelField(GetNextRect(), new GUIContent("Selected actor"), new GUIContent(a == null ? "None" : a.USERFRIENDLY));
-				ActorPath = FileField(GetNextRect(), "Actor path", ActorPath, true, extension);
+				ActorPath = FileField(GetNextRect(), "Actor path", ActorPath, true, extensions[0].Substring(2));
 
 				EditorGUI.BeginDisabledGroup(a == null || string.IsNullOrEmpty(ActorPath));
 				if (EditorButton("Export")) {

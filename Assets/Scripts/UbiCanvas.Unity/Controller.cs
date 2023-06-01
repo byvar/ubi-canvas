@@ -100,8 +100,6 @@ public class Controller : MonoBehaviour {
 	}
 
 	public async UniTask LoadActor(Scene scene, string pathFile, string pathFolder) {
-		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
-		loadingScreen.Active = true;
 		ContainerFile<Actor> act = await MainContext.Loader.LoadExtraActor(pathFile, pathFolder);
 		if (act != null && act.obj != null) {
 			await TimeController.WaitFrame();
@@ -116,9 +114,19 @@ public class Controller : MonoBehaviour {
 			Controller.Obj.zListManager.Sort();
 			await TimeController.WaitFrame();
 		}
+	}
+
+	public async UniTask AdditionalLoad(Task task) {
+		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
+		loadingScreen.Active = true;
+
+		await task;
+
+		await TimeController.WaitFrame();
 		GlobalLoadState.DetailedState = "Finished";
 		GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
 		loadingScreen.Active = false;
+
 	}
 
 	public async UniTask ExportActor(Actor actor, string path) {
