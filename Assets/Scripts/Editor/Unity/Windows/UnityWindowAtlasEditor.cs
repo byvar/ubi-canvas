@@ -260,21 +260,77 @@ public class UnityWindowAtlasEditor : UnityWindow {
 				Dictionary<Link, AnimPatchPoint> points = tpl.patchPoints.ToDictionary(p => p.key, p => p);
 				var pointColor = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 0.8f, 0.8f, 1f, 1f, 1f);
 				foreach (var point in tpl.patchPoints) {
-					var uvPos = GetTexturePositionOnRect(new Vector2(point.uv.x, point.uv.y));
+					var uvPos = GetTexturePositionOnRect(point.uv.GetUnityVector());
 					Handles.DrawSolidRectangleWithOutline(
 						new Rect(
 							uvPos.x - pointSize / 2, uvPos.y - pointSize / 2, pointSize, pointSize), pointColor, Color.white);
 
 
 					var normalTest = point.uv + (point.normal * 0.01f);
-					var normalTestPos = GetTexturePositionOnRect(new Vector2(normalTest.x, normalTest.y));
+					var normalTestPos = GetTexturePositionOnRect(normalTest.GetUnityVector());
 					Handles.DrawLine(uvPos, normalTestPos, lineSize);
 
 				}
+				int patchesCount = tpl.patches.Count;
+				int curPatch = 0;
+
+				using (new Handles.DrawingScope(pointColor)) {
+					if (tpl.patchPoints.Count >= 2) {
+						var pt1 = tpl.patchPoints[0];
+						var pt2 = tpl.patchPoints[1];
+						var uv1 = pt1.uv;
+						var uv2 = pt2.uv;
+						var uvPos1 = GetTexturePositionOnRect(new Vector2(uv1.x, uv1.y));
+						var uvPos2 = GetTexturePositionOnRect(new Vector2(uv2.x, uv2.y));
+						Handles.DrawDottedLine(uvPos1, uvPos2, lineSize);
+					}
+					if (tpl.patchPoints.Count >= 3) {
+						var cnt = tpl.patchPoints.Count;
+						var pt1 = tpl.patchPoints[cnt - 2];
+						var pt2 = tpl.patchPoints[cnt - 1];
+						var uv1 = pt1.uv;
+						var uv2 = pt2.uv;
+						var uvPos1 = GetTexturePositionOnRect(new Vector2(uv1.x, uv1.y));
+						var uvPos2 = GetTexturePositionOnRect(new Vector2(uv2.x, uv2.y));
+						Handles.DrawDottedLine(uvPos1, uvPos2, lineSize);
+					}
+				}
+
 				foreach (var patch in tpl.patches) {
 					using (new Handles.DrawingScope(pointColor)) {
 						var count = patch.points.Length;
-						var pt1 = points[patch.points[(0 + 0) % count]];
+						if(count != 4) throw new System.Exception("Unexpected patch points count!");
+						/*Vec2d[] controlPoints = AnimTemplate.GetPatchControlPoints(
+							new Vec2d[] {
+								points[patch.points[0]].uv,
+								points[patch.points[1]].uv,
+								points[patch.points[2]].uv,
+								points[patch.points[3]].uv,
+							},
+							new Vec2d[] {
+								points[patch.points[0]].normal,
+								points[patch.points[1]].normal,
+								points[patch.points[2]].normal,
+								points[patch.points[3]].normal,
+							});*/
+
+						Vec2d[] controlPoints = AnimTemplate.GetPatchControlPoints(
+							new Vec2d[] {
+								points[patch.points[0]].uv,
+								points[patch.points[2]].uv,
+								points[patch.points[3]].uv,
+								points[patch.points[1]].uv,
+							},
+							new Vec2d[] {
+								points[patch.points[0]].normal,
+								points[patch.points[2]].normal,
+								points[patch.points[3]].normal,
+								points[patch.points[1]].normal,
+							});
+						DrawCubicBezier(rect, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3]);
+						DrawCubicBezier(rect, controlPoints[4], controlPoints[5], controlPoints[6], controlPoints[7]);
+
+						/*var pt1 = points[patch.points[(0 + 0) % count]];
 						var pt2 = points[patch.points[(0 + 1) % count]];
 						for (int i = 0; i < count - 2; i++) {
 							var pt3 = points[patch.points[(i + 2) % count]];
@@ -291,15 +347,51 @@ public class UnityWindowAtlasEditor : UnityWindow {
 							Handles.DrawDottedLine(uvPos3, uvPos1, lineSize);
 							pt1 = pt2;
 							pt2 = pt3;
-							/*var normalTest = pt1.uv + (pt1.normal * 0.01f);
-							var normalTestPos = GetTexturePositionOnRect(new Vector2(normalTest.x, normalTest.y));
-							Handles.DrawLine(uvPos1, normalTestPos, lineSize);*/
-						}
+						}*/
+						/*for (int i = 0; i < count - 1; i++) {
+							var pt1 = points[patch.points[(i) % count]];
+							var pt2 = points[patch.points[(i + 1) % count]];
+							var uv1 = pt1.uv;
+							var uv2 = pt2.uv;
+							var uvPos1 = GetTexturePositionOnRect(new Vector2(uv1.x, uv1.y));
+							var uvPos2 = GetTexturePositionOnRect(new Vector2(uv2.x, uv2.y));
+							Handles.DrawDottedLine(uvPos1, uvPos2, lineSize);
+						}*/
+						curPatch++;
 					}
 				}
 
 			}
 			Handles.EndGUI();
+		}
+	}
+
+	Vec2d CalculateCubicBezierPoint(float t, Vec2d p0, Vec2d p1, Vec2d p2, Vec2d p3) {
+		float u = 1 - t;
+		float tt = t * t;
+		float uu = u * u;
+		float uuu = uu * u;
+		float ttt = tt * t;
+
+		Vec2d p = p0 * uuu;
+		p += p1 * 3f * uu * t;
+		p += p2 * 3f * u * tt;
+		p += p3 * ttt;
+
+		return p;
+	}
+	void DrawCubicBezier(Rect rect, Vec2d p0, Vec2d p1, Vec2d p2, Vec2d p3) {
+
+		Vector2 GetTexturePositionOnRect(Vector2 pos) {
+			var size = Mathf.Max(rect.width, rect.height);
+			return rect.position + pos * size;
+		}
+		var numPoints = 16;
+		var lineSize = 0.1f;
+		Vec2d[] points = Enumerable.Range(0, numPoints).Select(i => CalculateCubicBezierPoint(i / (float)(numPoints - 1), p0,p1,p2,p3)).ToArray();
+		Vector2[] pointsConv = points.Select(p => GetTexturePositionOnRect(p.GetUnityVector())).ToArray();
+		for (int i = 0; i < points.Length - 1; i++) {
+			Handles.DrawDottedLine(pointsConv[i], pointsConv[i+1], lineSize);
 		}
 	}
 

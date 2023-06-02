@@ -10,7 +10,7 @@ namespace UbiArt.Animation {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			key = s.SerializeObject<Link>(key, name: "link");
+			key = s.SerializeObject<Link>(key, name: "key");
 			index = s.Serialize<uint>(index, name: "index");
 			uv = s.SerializeObject<Vec2d>(uv, name: "uv");
 			normal = s.SerializeObject<Vec2d>(normal, name: "normal");

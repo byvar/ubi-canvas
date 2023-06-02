@@ -40,6 +40,20 @@ namespace UbiArt.Animation {
 			}
 			return rootIndices;
 		}
+		public static Vec2d[] GetPatchControlPoints(Vec2d[] points, Vec2d[] normals) {
+			var N01 = (float)(points[0] - points[1]).Magnitude * 0.5f;
+			var N23 = (float)(points[2] - points[3]).Magnitude * 0.5f;
+			var result = new Vec2d[8];
+			result[0] = points[0];
+			result[1] = new Vec2d(points[0].x - normals[0].y * N01, points[0].y + normals[0].x * N01);
+			result[2] = new Vec2d(points[1].x + normals[1].y * N01, points[1].y - normals[1].x * N01);
+			result[3] = points[1];
+			result[4] = points[2];
+			result[5] = new Vec2d(points[2].x - normals[2].y * N23, points[2].y + normals[2].x * N01);
+			result[6] = new Vec2d(points[3].x + normals[3].y * N23, points[3].y - normals[3].x * N01);
+			result[7] = points[3];
+			return result;
+		}
 		public int[] GetBonesUpdateOrder(AnimSkeleton skeleton) {
 			int[] order = new int[bones.Count];
 			List<int> rootIndices = GetRootIndices();
