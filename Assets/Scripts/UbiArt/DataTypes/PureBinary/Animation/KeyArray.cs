@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace UbiArt.Animation {
 	public class KeyArray<T> : CSerializable {
 		public CArrayP<ulong> keys;
@@ -15,10 +17,19 @@ namespace UbiArt.Animation {
 		}
 
 		public int GetKeyIndex(StringID key) {
-			if (keysLegends != null) {
-				return keysLegends.IndexOf(key);
-			} else {
+			if (keys != null) {
 				return keys.IndexOf(key.stringID);
+			} else {
+				return keysLegends.IndexOf(key);
+			}
+		}
+		public ulong GetKeyFromValue(T value) {
+			var ind = values.IndexOf(value);
+			if(ind == -1) return ulong.MaxValue;
+			if (keys != null) {
+				return keys[ind];
+			} else {
+				return keysLegends[ind].stringID;
 			}
 		}
 

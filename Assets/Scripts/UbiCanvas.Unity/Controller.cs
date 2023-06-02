@@ -120,7 +120,9 @@ public class Controller : MonoBehaviour {
 		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
 		loadingScreen.Active = true;
 
-		await task;
+		using (MainContext) {
+			await task;
+		}
 
 		await TimeController.WaitFrame();
 		GlobalLoadState.DetailedState = "Finished";

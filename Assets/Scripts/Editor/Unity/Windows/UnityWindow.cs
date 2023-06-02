@@ -44,6 +44,17 @@ public class UnityWindow : EditorWindow {
 		value = EditorGUI.Toggle(new Rect(rect.x, rect.y, rect.height, rect.height), value);
 		return new Rect(rect.x + rect.height, rect.y, rect.width - rect.height, rect.height);
 	}
+	public Rect RowEntryRect(ref Rect rect, float width, Func<Rect> getNextRect) {
+		Rect miniRect = new Rect(rect.x, rect.y, width, rect.height);
+		var newW = rect.width - width;
+		Rect nextRect = new Rect(miniRect.xMax, rect.y, newW, rect.height);
+		if (newW < width) {
+			rect = getNextRect();
+		} else
+			rect = nextRect;
+
+		return miniRect;
+	}
 
 	protected void BrowseButton(Rect rect, string name, GUIContent content, Action action, int width) {
 		GUIStyle butStyle = EditorStyles.miniButtonRight;

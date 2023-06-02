@@ -25,10 +25,11 @@ public class UnityWindowTools : UnityWindow
 
 		foreach (GameTool tool in GameTools.Tools)
 		{
-			if (!_toolFoldouts.ContainsKey(tool))
-				_toolFoldouts.Add(tool, false);
+			var toolKey = tool.GetType().Name;
+			if (!_toolFoldouts.ContainsKey(toolKey))
+				_toolFoldouts.Add(toolKey, false);
 
-			bool foldout = _toolFoldouts[tool] = EditorGUI.BeginFoldoutHeaderGroup(GetNextRect(ref YPos, vPadding: 2), _toolFoldouts[tool], tool.Name);
+			bool foldout = _toolFoldouts[toolKey] = EditorGUI.BeginFoldoutHeaderGroup(GetNextRect(ref YPos, vPadding: 2), _toolFoldouts[toolKey], tool.Name);
 
 			if (foldout)
 			{
@@ -143,5 +144,5 @@ public class UnityWindowTools : UnityWindow
 		}
 	}
 
-	private readonly Dictionary<GameTool, bool> _toolFoldouts = new();
+	private readonly Dictionary<string, bool> _toolFoldouts = new();
 }
