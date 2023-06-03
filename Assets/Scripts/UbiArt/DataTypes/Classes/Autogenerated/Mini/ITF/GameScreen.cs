@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
-	public partial class AIAction : CSerializable {
+	[Games(GameFlags.RM)]
+	public partial class GameScreen : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}
-
-		public override uint? ClassCRC => 0x71353EC7;
+		public override uint? ClassCRC => 0xD491DDAE;
 	}
 }
 
