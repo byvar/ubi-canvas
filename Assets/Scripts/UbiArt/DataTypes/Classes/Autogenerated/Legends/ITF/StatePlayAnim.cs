@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RM)]
-	public partial class Unknown_RL_105_sub_A0B180 : CSerializable {
+	public partial class StatePlayAnim : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}
-		public override uint? ClassCRC => 0x206A857A;
+		public override uint? ClassCRC => 0x8DF6B756;
 	}
 }
 
