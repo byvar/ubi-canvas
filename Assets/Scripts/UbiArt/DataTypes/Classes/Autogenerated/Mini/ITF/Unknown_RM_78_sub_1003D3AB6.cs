@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RM)]
-	public partial class Unknown_RM_78_sub_1003D3AB6 : CSerializable {
+	public partial class DefaultCSharpClass_AIReceiveHitBehavior : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RM)]
-	public partial class Unknown_RL_53_sub_924360 : CSerializable {
+	public partial class RO2_GameSequence_TeleportWithTrail : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

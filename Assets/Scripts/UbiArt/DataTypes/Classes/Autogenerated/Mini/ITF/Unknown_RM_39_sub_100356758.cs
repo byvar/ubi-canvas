@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RM)]
-	public partial class Unknown_RM_39_sub_100356758 : CSerializable {
+	public partial class PlayTextBanner_evt : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

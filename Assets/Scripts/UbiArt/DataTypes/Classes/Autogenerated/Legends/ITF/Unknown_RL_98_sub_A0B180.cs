@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RM)]
-	public partial class Unknown_RL_98_sub_A0B180 : CSerializable {
+	public partial class StateCrushedByCharacter : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

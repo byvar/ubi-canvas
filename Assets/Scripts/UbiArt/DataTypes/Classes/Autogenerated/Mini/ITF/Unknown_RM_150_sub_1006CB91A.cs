@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RM)]
-	public partial class Unknown_RM_150_sub_1006CB91A : CSerializable {
+	public partial class RLC_TargetingCreatureDisplay : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_40_sub_4A7BB0 : CSerializable {
+	public partial class RO2_EventPlayerHpChanged : CSerializable {
 		public Placeholder sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RM)]
-	public partial class Unknown_RL_307_sub_A0B180 : CSerializable {
+	public partial class StateRevive : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

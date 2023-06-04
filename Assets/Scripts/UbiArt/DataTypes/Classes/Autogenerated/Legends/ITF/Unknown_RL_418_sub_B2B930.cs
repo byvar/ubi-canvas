@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RM)]
-	public partial class Unknown_RL_418_sub_B2B930 : CSerializable {
+	public partial class RO2_GS_MainMenu : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

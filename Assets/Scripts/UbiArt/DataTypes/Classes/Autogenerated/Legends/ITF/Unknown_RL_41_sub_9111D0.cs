@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RM)]
-	public partial class Unknown_RL_41_sub_9111D0 : CSerializable {
+	public partial class RO2_GameSequence_MurphyToRayman : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

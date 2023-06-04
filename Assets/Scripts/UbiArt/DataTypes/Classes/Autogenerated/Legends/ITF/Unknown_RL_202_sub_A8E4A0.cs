@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.RM)]
-	public partial class Unknown_RL_202_sub_A8E4A0 : CSerializable {
+	public partial class ActorPlugPlayableControllerInGameInfo : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

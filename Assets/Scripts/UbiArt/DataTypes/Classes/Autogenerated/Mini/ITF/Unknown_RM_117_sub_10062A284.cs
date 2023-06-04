@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RM)]
-	public partial class Unknown_RM_117_sub_10062A284 : CSerializable {
+	public partial class RLC_GameSequence_StartLevel : CSerializable {
 		public Placeholder RLC_GameSequence_StartLevel;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class Unknown_RL_85_sub_564E10 : CSerializable {
+	public partial class UIMenu_Template : CSerializable {
 		public bool is2D;
 		public float showingFadeDuration;
 		public float hidingFadeDuration;
