@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RM)]
-	public partial class Unknown_RL_86_sub_91D190 : CSerializable {
+	public partial class RO2_GS_ChallengeEndurance : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}
-		public override uint? ClassCRC => 0x002B90F4;
+		public override uint? ClassCRC => 0x93E13F56;
 	}
 }
 
