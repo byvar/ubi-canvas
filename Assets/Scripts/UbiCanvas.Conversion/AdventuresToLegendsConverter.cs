@@ -219,6 +219,118 @@ namespace UbiCanvas.Conversion {
 		}
 
 
+		public class JSON_LevelInfo {
+			public string MapID { get; set; }
+			public string MapName { get; set; } // LocId 4721 will be used for testing
+			public string MapPath { get; set; }
+			public string[] MapDependencies { get; set; } // list of MapIDs of maps you need to finish before this one
+			public string WorldID { get; set; }
+			//public int TeensyUnlockCount { get; set; } // Seems to be always 0
+			public string TexturePath { get; set; }
+			public int TeensyCount { get; set; } // 0, 3 or 10 only
+			public int LumsCount { get; set; }
+			public int Difficulty { get; set; }
+			public string ScoreRecapPath { get; set; }  // Path of score recap screen (null for default)
+			public string Loading { get; set; } // Path of loading screen when entering (null for default)
+			public string LoadingOut { get; set; } // Path of loading screen when exiting (null for default)
+			public bool StartLeft { get; set; } // Rayman starts the level facing left
+			public bool Horizontal { get; set; } // Painting is horizontal
+
+			public JSON_LockData Lock { get; set; }
+		}
+		public class JSON_WorldInfo {
+			// in gameconfig -> WorldConfig
+			public string WorldID { get; set; }
+			public string InteractiveLoadingPath { get; set; }
+			public string DefaultScoreRecapPath { get; set; }
+			public int TeensyUnlockCountRetro1 { get; set; } // Not sure what this does
+			public int TeensyUnlockCountRetro2 { get; set; }
+			public string Presence { get; set; } // for rich presence. Use "ToadStory" to get "On a rescue mission in Toad story!" for example.
+		}
+		public class JSON_HomePainting { // PackageDescriptor in home.isc
+			public string ID { get; set; } // Same as WorldID
+			public int Priority { get; set; }
+			public string DecorationBrickPath { get; set; }
+			public string MapPath { get; set; } // Path to an isc. Fill this in if painting leads to a map
+			public string HubPath { get; set; } // Path to an isc. Fill this in if painting leads to a hub
+
+			public JSON_LockData Lock { get; set; }
+		}
+		public class JSON_CostumeInfo { // CostumeDescriptor in home.isc
+			public string CostumeID { get; set; }
+			public string CostumeName { get; set; } // LocID
+			public string Family { get; set; } // Rayman, Globox, Teensy, Barbara are the options
+			public string ActorPath_Main { get; set; }
+			public string ActorPath_ScoreHUD { get; set; }
+			public string ActorPath_Moskito { get; set; }
+			public string ActorPath_Duck { get; set; }
+			public string IconPath { get; set; }
+			public Vec2d IconSize { get; set; }
+			public UbiArt.Color DeathBubbleColor { get; set; }
+
+			// Painting data
+			public string PaintingActorPath { get; set; } // .act for the painting (world/home/actor/costumes/costume*.act)
+			public UbiArt.Color PaintingBackgroundColor { get; set; }
+			public string PaintingLevelDependency { get; set; } // Unlock only after certain level is completed
+			public string DecorationBrickPath { get; set; } // Painting isc (only one exists for each of rayman, globox, teensy, barbara)
+			public int Priority { get; set; }
+			public RO2_CostumeDescriptor_Template.CostumeType2 CostumeType { get; set; }
+			public bool Unlockable { get; set; }
+
+			public JSON_LockData Lock { get; set; }
+		}
+		public class JSON_LockData {
+			public uint LockCount { get; set; }
+			public RO2_GameManagerConfig_Template.LockDataClass.MapLockType LockType { get; set; }
+			public string Parent { get; set; }
+			//public RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType BehaviorType { get; set; }
+		}
+		public class JSON_LevelsConfig {
+			public List<JSON_WorldInfo> Worlds { get; set; }
+			public List<JSON_LevelInfo> Levels { get; set; }
+			public List<JSON_CostumeInfo> Costumes { get; set; }
+
+			public List<JSON_HomePainting> MainPaintings { get; set; } // Add to home.isc sceneconfig[0].packageDescriptors
+
+		}
+
+		public async Task ImportLevelsAndCostumes(string projectPath) {
+			// TODO!!!
+			var uvManagerPath = System.IO.Path.Combine(projectPath, "json", "atlascontainer");
+			var outPath = System.IO.Path.Combine(projectPath, "data", "_patch");
+			var files = System.IO.Directory.Exists(uvManagerPath) ? System.IO.Directory.GetFiles(uvManagerPath, "*.json") : null;
+			if (files != null && files.Any()) {
+				files = files.OrderBy(f => f).ToArray();
+				Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
+				using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
+					Settings.Init(Settings.Mode.RaymanLegendsPC),
+					serializerLogger: new MapViewerSerializerLogger(),
+					fileManager: new MapViewerFileManager(),
+					systemLogger: new UnitySystemLogger(),
+					asyncController: new UniTaskAsyncController())) {
+					await rlContextExt.Loader.LoadInitial();
+					var uvManager = rlContextExt.Loader.uvAtlasManager;
+
+					foreach (var f in files) {
+						var json = System.IO.File.ReadAllText(f);
+						var curUVEntries = JsonConvert.DeserializeObject<Dictionary<string, UbiArt.UV.UVAtlas>>(json);
+						foreach (var entry in curUVEntries) {
+							if (!newUVEntries.ContainsKey(entry.Key)) // For high priority entries, prefix them with _ or something
+								newUVEntries[entry.Key] = entry.Value;
+						}
+					}
+					foreach (var entry in newUVEntries) {
+						var path = new Path(entry.Key, cooked: false);
+						if (!uvManager.atlas.ContainsKey(path.stringID))
+							uvManager.atlas.Add(path.stringID, entry.Value);
+					}
+					var bun = new UbiArt.Bundle.BundleFile();
+					bun.AddFile(rlContextExt.Loader.CookedPaths[new Path("atlascontainer").stringID], uvManager);
+					await rlContextExt.Loader.WriteFilesRaw(outPath, bun);
+				}
+			}
+		}
+
 		#region Specific adjustments
 		public void CreateFriseParents(Context oldContext, Settings newSettings, Scene scene) {
 			Loader l = oldContext.Loader;

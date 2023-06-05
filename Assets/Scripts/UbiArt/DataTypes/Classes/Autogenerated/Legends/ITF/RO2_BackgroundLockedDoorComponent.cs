@@ -15,9 +15,9 @@ namespace UbiArt.ITF {
 			}
 		}
 		public enum Enum_LockType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
+			[Serialize("LockType_retro1")] retro1 = 0,
+			[Serialize("LockType_retro2")] retro2 = 1,
+			[Serialize("LockType_costume")] costume = 2,
 		}
 		public override uint? ClassCRC => 0x6DED949C;
 	}

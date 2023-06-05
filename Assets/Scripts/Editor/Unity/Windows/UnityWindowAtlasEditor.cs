@@ -300,20 +300,6 @@ public class UnityWindowAtlasEditor : UnityWindow {
 					using (new Handles.DrawingScope(pointColor)) {
 						var count = patch.points.Length;
 						if(count != 4) throw new System.Exception("Unexpected patch points count!");
-						/*Vec2d[] controlPoints = AnimTemplate.GetPatchControlPoints(
-							new Vec2d[] {
-								points[patch.points[0]].uv,
-								points[patch.points[1]].uv,
-								points[patch.points[2]].uv,
-								points[patch.points[3]].uv,
-							},
-							new Vec2d[] {
-								points[patch.points[0]].normal,
-								points[patch.points[1]].normal,
-								points[patch.points[2]].normal,
-								points[patch.points[3]].normal,
-							});*/
-
 						Vec2d[] controlPoints = AnimTemplate.GetPatchControlPoints(
 							new Vec2d[] {
 								points[patch.points[0]].uv,
