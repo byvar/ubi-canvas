@@ -41,5 +41,6 @@ namespace UbiCanvas.Tools
 		public string CurrentString { get; set; } = "";
 		public uint CustomType { get; set; } = 200;
 		public bool ShowRegularCRCDropdown { get; set; }
+		public string CurrentReverseCRCString { get; set; } = "";
 	}
 }

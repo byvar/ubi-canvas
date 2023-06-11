@@ -126,6 +126,24 @@ public class UnityWindowTools : UnityWindow
 		{
 			crcTool.CurrentString = EditorField("String", crcTool.CurrentString);
 			EditorGUI.TextField(GetNextRect(), "String CRC", crcTool.StringCRC);
+			if (UnityEngine.Application.isPlaying) {
+				if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
+					crcTool.CurrentReverseCRCString = EditorField("Reverse CRC", crcTool.CurrentReverseCRCString);
+					string result = "Invalid CRC";
+					if (uint.TryParse(crcTool.CurrentReverseCRCString,
+						System.Globalization.NumberStyles.HexNumber,
+						System.Globalization.CultureInfo.InvariantCulture,
+						out uint crc)) {
+						var sid = new StringID(crc);
+						if (Controller.MainContext?.StringCache != null && Controller.MainContext.StringCache.ContainsKey(sid)) {
+							result = Controller.MainContext.StringCache[sid];
+						} else {
+							result = "Not found";
+						}
+					}
+					EditorGUI.TextField(GetNextRect(), "Reverse CRC: String", result);
+				}
+			}
 			crcTool.ShowRegularCRCDropdown = EditorGUI.Foldout(GetNextRect(vPadding: 2), crcTool.ShowRegularCRCDropdown, "Other CRC");
 			if (crcTool.ShowRegularCRCDropdown) {
 				EditorGUI.TextField(GetNextRect(), "CRC", crcTool.CRC(null));

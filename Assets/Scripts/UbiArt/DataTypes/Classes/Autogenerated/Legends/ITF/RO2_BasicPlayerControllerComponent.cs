@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RM)]
-	public partial class RO2_BasicPlayerControllerComponent : CSerializable {
+	public partial class RO2_BasicPlayerControllerComponent : PlayerControllerComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_InvasionEnemyComponent_Template : CSerializable {
+	public partial class RO2_InvasionEnemyComponent_Template : ActorComponent_Template {
 		public float hideDistance;
 		public float waitDistance;
 		public float hysteresis;

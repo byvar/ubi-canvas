@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_HomeNodeDailyComponent_Template : RO2_HomeComponent_Template {
+	public partial class RO2_HomeNodeDailyComponent_Template : RO2_HomeNodeComponent_Template {
 		public Vec2d mainNodeDefaultScale;
 		public Vec2d mainNodeRollOverScale;
 		public Vec2d defaultScale;

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_ShooterControllerComponent_Template : CSerializable {
+	public partial class RO2_ShooterControllerComponent_Template : RO2_BasicPlayerControllerComponent_Template {
 		public float minLocalSpeed;
 		public float maxLocalSpeed;
 		public float vaccumMoveSpeedBlendFactor;
@@ -25,11 +25,11 @@ namespace UbiArt.ITF {
 		public StringID gunBone;
 		public StringID swallowBone;
 		public float invincibilityTime;
-		public Placeholder vacuumSkill;
+		public VacuumSkill_Template vacuumSkill;
 		public Vec2d spitObjSpeed;
 		public Path baseSpawnBulletPath;
 		public Path deathSpawnFXPath;
-		public Placeholder heartShield;
+		public RO2_HeartShield_Template heartShield;
 		public float bubbleStateBlendFactor;
 		public float bubbleStateLocalSpeedMax;
 		public float bubbleStatePhantomRadius;
@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 		public float autoFireDelay;
 		public int DBG_CanVaccumIfFull;
 		public int DBG_VaccumAllowPressStop;
-		public Placeholder stateMachineTemplate;
+		public BasicStateMachine_Template stateMachineTemplate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			minLocalSpeed = s.Serialize<float>(minLocalSpeed, name: "minLocalSpeed");
@@ -67,11 +67,11 @@ namespace UbiArt.ITF {
 			gunBone = s.SerializeObject<StringID>(gunBone, name: "gunBone");
 			swallowBone = s.SerializeObject<StringID>(swallowBone, name: "swallowBone");
 			invincibilityTime = s.Serialize<float>(invincibilityTime, name: "invincibilityTime");
-			vacuumSkill = s.SerializeObject<Placeholder>(vacuumSkill, name: "vacuumSkill");
+			vacuumSkill = s.SerializeObject<VacuumSkill_Template>(vacuumSkill, name: "vacuumSkill");
 			spitObjSpeed = s.SerializeObject<Vec2d>(spitObjSpeed, name: "spitObjSpeed");
 			baseSpawnBulletPath = s.SerializeObject<Path>(baseSpawnBulletPath, name: "baseSpawnBulletPath");
 			deathSpawnFXPath = s.SerializeObject<Path>(deathSpawnFXPath, name: "deathSpawnFXPath");
-			heartShield = s.SerializeObject<Placeholder>(heartShield, name: "heartShield");
+			heartShield = s.SerializeObject<RO2_HeartShield_Template>(heartShield, name: "heartShield");
 			bubbleStateBlendFactor = s.Serialize<float>(bubbleStateBlendFactor, name: "bubbleStateBlendFactor");
 			bubbleStateLocalSpeedMax = s.Serialize<float>(bubbleStateLocalSpeedMax, name: "bubbleStateLocalSpeedMax");
 			bubbleStatePhantomRadius = s.Serialize<float>(bubbleStatePhantomRadius, name: "bubbleStatePhantomRadius");
@@ -82,7 +82,7 @@ namespace UbiArt.ITF {
 			autoFireDelay = s.Serialize<float>(autoFireDelay, name: "autoFireDelay");
 			DBG_CanVaccumIfFull = s.Serialize<int>(DBG_CanVaccumIfFull, name: "DBG_CanVaccumIfFull");
 			DBG_VaccumAllowPressStop = s.Serialize<int>(DBG_VaccumAllowPressStop, name: "DBG_VaccumAllowPressStop");
-			stateMachineTemplate = s.SerializeObject<Placeholder>(stateMachineTemplate, name: "stateMachineTemplate");
+			stateMachineTemplate = s.SerializeObject<BasicStateMachine_Template>(stateMachineTemplate, name: "stateMachineTemplate");
 		}
 		public override uint? ClassCRC => 0x6B926F43;
 	}

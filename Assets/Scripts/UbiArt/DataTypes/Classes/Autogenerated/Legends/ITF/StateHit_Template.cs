@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class StateHit_Template : CSerializable {
+	public partial class StateHit_Template : WithAnimStateImplement_Tempate {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}
