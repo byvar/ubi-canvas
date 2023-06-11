@@ -60,8 +60,8 @@ namespace UbiCanvas.Tools
 		}
 
 		private async Task BuildJSON() {
-			await new AdventuresToLegendsConverter().ImportAtlasContainer(
-				UnitySettings.Tools_AdventuresToLegends_ProjectPath);
+			await new AdventuresToLegendsConverter().ImportAtlasContainer(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
+			await new AdventuresToLegendsConverter().ImportLevelsAndCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 

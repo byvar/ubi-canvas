@@ -14,6 +14,14 @@ namespace UbiArt {
 			stringID = new StringID();
 		}
 
+		public Path(Path p) {
+			folder = p.folder;
+			filename = p.filename;
+			stringID = new StringID(p.stringID?.stringID ?? 0xFFFFFFFF);
+			flags = p.flags;
+			specialUncooked = p.specialUncooked;
+		}
+
 		public Path(string folder, string filename, bool cooked=false) {
 			folder = folder.Replace('\\', '/');
 			if (folder != null && folder != "" && !folder.EndsWith("/")) folder += "/";
@@ -28,6 +36,10 @@ namespace UbiArt {
 			}
 		}
 		public Path(string fullPath, bool cooked = false) {
+			if (fullPath == null) {
+				stringID = new StringID();
+				return;
+			}
 			fullPath = fullPath.Replace('\\', '/');
 			if (fullPath.Contains('/')) {
 				folder = fullPath.Substring(0, fullPath.LastIndexOf('/') + 1);
@@ -91,9 +103,13 @@ namespace UbiArt {
 
 		public string GetExtension(bool removeCooked = false) {
 			if (filename != null && filename.Contains('.')) {
-				string ext = filename.Substring(filename.IndexOf('.') + 1);
-				if (removeCooked && ext.EndsWith(".ckd")) ext = ext.Substring(0, ext.Length - 4);
-				return ext;
+				string filenameCopy = filename;
+				if (removeCooked && filenameCopy.EndsWith(".ckd"))
+					filenameCopy = filenameCopy.Substring(0, filenameCopy.Length - 4);
+				if (filenameCopy.Contains('.')) {
+					string ext = filenameCopy.Substring(filenameCopy.IndexOf('.') + 1);
+					return ext;
+				}
 			}
 			return "";
 		}

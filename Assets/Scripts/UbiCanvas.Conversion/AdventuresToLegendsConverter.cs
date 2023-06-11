@@ -243,7 +243,7 @@ namespace UbiCanvas.Conversion {
 			public string WorldID { get; set; }
 			public string InteractiveLoadingPath { get; set; }
 			public string DefaultScoreRecapPath { get; set; }
-			public int TeensyUnlockCountRetro1 { get; set; } // Not sure what this does
+			public int TeensyUnlockCountRetro1 { get; set; } // Not sure what this does.
 			public int TeensyUnlockCountRetro2 { get; set; }
 			public string Presence { get; set; } // for rich presence. Use "ToadStory" to get "On a rescue mission in Toad story!" for example.
 		}
@@ -282,7 +282,7 @@ namespace UbiCanvas.Conversion {
 		public class JSON_LockData {
 			public uint LockCount { get; set; }
 			public RO2_GameManagerConfig_Template.LockDataClass.MapLockType LockType { get; set; }
-			public string Parent { get; set; }
+			//public string Parent { get; set; }
 			//public RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType BehaviorType { get; set; }
 		}
 		public class JSON_LevelsConfig {
@@ -295,10 +295,10 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public async Task ImportLevelsAndCostumes(string projectPath) {
-			// TODO!!!
-			var uvManagerPath = System.IO.Path.Combine(projectPath, "json", "atlascontainer");
+			// WIP
+			var levelsJsonPath = System.IO.Path.Combine(projectPath, "json", "levels");
 			var outPath = System.IO.Path.Combine(projectPath, "data", "_patch");
-			var files = System.IO.Directory.Exists(uvManagerPath) ? System.IO.Directory.GetFiles(uvManagerPath, "*.json") : null;
+			var files = System.IO.Directory.Exists(levelsJsonPath) ? System.IO.Directory.GetFiles(levelsJsonPath, "*.json") : null;
 			if (files != null && files.Any()) {
 				files = files.OrderBy(f => f).ToArray();
 				Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
@@ -309,23 +309,122 @@ namespace UbiCanvas.Conversion {
 					systemLogger: new UnitySystemLogger(),
 					asyncController: new UniTaskAsyncController())) {
 					await rlContextExt.Loader.LoadInitial();
-					var uvManager = rlContextExt.Loader.uvAtlasManager;
+					ContainerFile<Scene> homeISC = null;
+					GenericFile<CSerializable> gameConfigISG = null;
+					UbiArt.SceneConfig.SceneConfigManager sceneConfigManager = null;
+					Path pSgsContainer = new Path("sgscontainer");
+					Path pGameConfig = new Path("enginedata/gameconfig/gameconfig.isg");
+					Path pHomeISC = new Path("world/home/level/home.isc");
+					Path pHomeSGS = new Path("world/home/level/home.sgs");
+					rlContextExt.Loader.LoadGenericFile(pGameConfig, isg => {
+						gameConfigISG = isg;
+						rlContextExt.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
+					});
+					rlContextExt.Loader.LoadFile<ContainerFile<Scene>>(pHomeISC, isc => {
+						homeISC = isc;
+					});
+					rlContextExt.Loader.LoadFile<UbiArt.SceneConfig.SceneConfigManager>(pSgsContainer, result =>
+						sceneConfigManager = result);
+					await rlContextExt.Loader.LoadLoop();
+					var gc = rlContextExt.Loader.gameConfig;
+					var homeConfig = homeISC.obj.sceneConfigs.sceneConfigs[0].obj as RO2_SceneConfig_Home;
+					var sgsHomeConfig = sceneConfigManager.sgsMap[pHomeISC.stringID].obj as RO2_SceneConfig_Home;
+
+					void AddLock(JSON_LockData l, string tag, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType behavior, string parent) {
+						if(l == null) return;
+						RO2_GameManagerConfig_Template.LockDataClass lockData = new RO2_GameManagerConfig_Template.LockDataClass() {
+							sizeOf = 28,
+							lockCount = l.LockCount,
+							lockType = l.LockType,
+							behaviorType = behavior,
+							tag = new StringID(tag),
+							parent = parent == null? new StringID(0x85A77AC7) : new StringID(parent) // TODO: what is the string that has ID 0x85A77AC7? it's used for the main gallery items
+						};
+						gc.lockData.Add(lockData);
+					}
+					void AddTagText(string tag, uint locId) {
+						gc.tagText.Add(new RO2_GameManagerConfig_Template.TagTextClass() {
+							sizeOf = 12,
+							tag = new StringID(tag),
+							locID = new LocalisationId(locId)
+						});
+					}
 
 					foreach (var f in files) {
 						var json = System.IO.File.ReadAllText(f);
-						var curUVEntries = JsonConvert.DeserializeObject<Dictionary<string, UbiArt.UV.UVAtlas>>(json);
-						foreach (var entry in curUVEntries) {
-							if (!newUVEntries.ContainsKey(entry.Key)) // For high priority entries, prefix them with _ or something
-								newUVEntries[entry.Key] = entry.Value;
+						var levelsConfig = JsonConvert.DeserializeObject<JSON_LevelsConfig>(json);
+						if (levelsConfig?.Worlds != null) {
+							foreach (var entry in levelsConfig.Worlds) {
+								RO2_GameManagerConfig_Template.WorldConfig world = new RO2_GameManagerConfig_Template.WorldConfig() {
+									sizeOf = 324,
+									tag = new StringID(entry.WorldID),
+									defaultScoreRecapPath = new Path(entry.DefaultScoreRecapPath),
+									interactiveLoadingPath = new Path(entry.InteractiveLoadingPath),
+									teensyUnlockCountRetro1 = (uint)entry.TeensyUnlockCountRetro1,
+									teensyUnlockCountRetro2 = (uint)entry.TeensyUnlockCountRetro2,
+									presence = new StringID(entry.Presence),
+								};
+								gc.worldsInfo.Add(world);
+								AddTagText(entry.WorldID, 4721);
+							}
+						}
+						if (levelsConfig?.Levels != null) {
+							foreach (var entry in levelsConfig.Levels) {
+								RO2_GameManagerConfig_Template.MapConfig map = new RO2_GameManagerConfig_Template.MapConfig() {
+									sizeOf = 984,
+									tag = new StringID(entry.MapID),
+									worldTag = new StringID(entry.WorldID),
+									mapPath = new Path(entry.MapPath),
+									mapNameId = new LocalisationId(4721),
+									texturePath = new Path(entry.TexturePath),
+									maxLumsCount = (uint)entry.LumsCount,
+									scoreRecapPath = new Path(entry.ScoreRecapPath),
+									loading = new Path(entry.Loading),
+									loadingOut = new Path(entry.LoadingOut),
+									mapType = RO2_GameManagerConfig_Template.MapConfig.MAPTYPE.NORMAL,
+
+									teensyCount = entry.TeensyCount switch {
+										0 => RO2_GameManagerConfig_Template.MapConfig.TeensyCount.None,
+										3 => RO2_GameManagerConfig_Template.MapConfig.TeensyCount._3,
+										10 => RO2_GameManagerConfig_Template.MapConfig.TeensyCount._10,
+										_ => throw new Exception($"Incorrect teensy count: {entry.TeensyCount}")
+									},
+									
+									horizontal = entry.Horizontal,
+									startLeft = entry.StartLeft,
+									difficulty = (uint)entry.Difficulty,
+								};
+								gc.levelsInfo.Add(map);
+								AddLock(entry.Lock, entry.MapID, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.Level, entry.WorldID);
+								AddTagText(entry.MapID, 4721);
+							}
+						}
+						if (levelsConfig?.MainPaintings != null) {
+							foreach (var entry in levelsConfig.MainPaintings) {
+								bool isWorld = entry.HubPath != null;
+								var lockType = isWorld ? RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.World
+									: RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.Level;
+
+								RO2_PackageDescriptor_Template painting = new RO2_PackageDescriptor_Template() {
+									mapName = entry.ID,
+									decorationBrickPath = new Path(entry.DecorationBrickPath),
+									hideDecoration = false,
+									hubPath = isWorld ? new Path(entry.HubPath) : null,
+									mapPath = !isWorld ? new Path(entry.MapPath) : null,
+									priority = entry.Priority,
+									alternatePriority = entry.Priority,
+								};
+								homeConfig.packageDescriptors.Add(painting);
+								sgsHomeConfig.packageDescriptors.Add(painting);
+								AddLock(entry.Lock, entry.ID, lockType, null);
+							}
 						}
 					}
-					foreach (var entry in newUVEntries) {
-						var path = new Path(entry.Key, cooked: false);
-						if (!uvManager.atlas.ContainsKey(path.stringID))
-							uvManager.atlas.Add(path.stringID, entry.Value);
-					}
+
 					var bun = new UbiArt.Bundle.BundleFile();
-					bun.AddFile(rlContextExt.Loader.CookedPaths[new Path("atlascontainer").stringID], uvManager);
+					bun.AddFile(rlContextExt.Loader.CookedPaths[pGameConfig.stringID], gameConfigISG);
+					bun.AddFile(rlContextExt.Loader.CookedPaths[pSgsContainer.stringID], sceneConfigManager);
+					bun.AddFile(rlContextExt.Loader.CookedPaths[pHomeISC.stringID], homeISC);
 					await rlContextExt.Loader.WriteFilesRaw(outPath, bun);
 				}
 			}

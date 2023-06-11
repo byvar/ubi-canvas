@@ -5,10 +5,10 @@ namespace UbiArt.ITF {
 
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (IsFirstLoad) {
+			/*if (IsFirstLoad) {
 				Loader l = s.Context.Loader;
 				l.LoadGenericFile(modePath, result => mode = result);
-			}
+			}*/
 		}
 	}
 }

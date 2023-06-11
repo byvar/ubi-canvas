@@ -333,6 +333,7 @@ namespace UbiArt {
 					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
 					break;
 				case null: // Save files
+				case "":
 					flags |= SerializeFlags.Flags7;
 					break;
 			}
@@ -372,7 +373,7 @@ namespace UbiArt {
 					Context.SystemLogger?.LogInfo($"{s.CurrentPointer}: Did not fully serialize file! Length: {s.Length:X8}");
 				}
 			} else {
-				pathsToLoad.Enqueue(new ObjectPlaceHolder(path, action));
+				pathsToLoad.Enqueue(new ObjectPlaceHolder(new Path(path), action));
 			}
 		}
 
