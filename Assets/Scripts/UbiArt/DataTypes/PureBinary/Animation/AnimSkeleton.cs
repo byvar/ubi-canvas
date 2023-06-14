@@ -8,18 +8,21 @@ namespace UbiArt.Animation {
 		public const uint VersionLegends = 0xF;
 
 		public uint version;
-		public CListO<StringID> boneTags;
+		public CListO<StringID> boneTags; // StringIDs of the bone names. Example in Rayman's skl: B_Ray_Head
 		public CListO<StringID> boneIndices;
+		public CListP<ulong> boneTagsAdv;
+
 		public CListO<StringID> boneTags2;
 		public CListO<StringID> boneIndices2;
-		public CListO<StringID> boneTags3;
-		public CListP<ulong> boneTagsAdv;
 		public CListP<ulong> boneTags2Adv;
-		public CListP<ulong> boneTags3Adv;
-		public CListO<StringID> boneIndices3;
+
+		public CListO<StringID> subskeletonTags; // Example names in Rayman's skl: Naked, Knight, Basic, Splinter, Mario, Demo.
+		public CListO<StringID> subskeletonIndices;
+		public CListP<ulong> subskeletonTagsAdv;
+
 		public CListO<AnimBone> bones;
 		public CListO<AnimBoneDyn> bonesDyn;
-		public CArrayO<CArrayP<byte>> byteArray;
+		public CArrayO<CArrayP<byte>> subskeletonConfigs; // Basically setups for which bones are enabled/visible in each skeleton
 		public byte[] byteArrayOrigins;
 		public uint bankId0;
 		public uint bankId;
@@ -34,22 +37,22 @@ namespace UbiArt.Animation {
 				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
 				boneTags2Adv = s.SerializeObject<CListP<ulong>>(boneTags2Adv, name: "boneTags2");
 				boneIndices2 = s.SerializeObject<CListO<StringID>>(boneIndices2, name: "boneIndices2");
-				boneTags3Adv = s.SerializeObject<CListP<ulong>>(boneTags3Adv, name: "boneTags3"); // matches subSkeleton
-				boneIndices3 = s.SerializeObject<CListO<StringID>>(boneIndices3, name: "boneIndices3");
+				subskeletonTagsAdv = s.SerializeObject<CListP<ulong>>(subskeletonTagsAdv, name: "subskeletonTags"); // matches subSkeleton
+				subskeletonIndices = s.SerializeObject<CListO<StringID>>(subskeletonIndices, name: "subskeletonIndices");
 			} else {
 				boneTags = s.SerializeObject<CListO<StringID>>(boneTags, name: "boneTags");
 				boneIndices = s.SerializeObject<CListO<StringID>>(boneIndices, name: "boneIndices");
 				boneTags2 = s.SerializeObject<CListO<StringID>>(boneTags2, name: "boneTags2");
 				boneIndices2 = s.SerializeObject<CListO<StringID>>(boneIndices2, name: "boneIndices2");
 				if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
-					boneTags3 = s.SerializeObject<CListO<StringID>>(boneTags3, name: "boneTags3"); // matches subSkeleton
-					boneIndices3 = s.SerializeObject<CListO<StringID>>(boneIndices3, name: "boneIndices3");
+					subskeletonTags = s.SerializeObject<CListO<StringID>>(subskeletonTags, name: "subskeletonTags"); // matches subSkeleton
+					subskeletonIndices = s.SerializeObject<CListO<StringID>>(subskeletonIndices, name: "subskeletonIndices");
 				}
 			}
 			bones = s.SerializeObject<CListO<AnimBone>>(bones, name: "bones");
 			bonesDyn = s.SerializeObject<CListO<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
-				byteArray = s.SerializeObject<CArrayO<CArrayP<byte>>>(byteArray, name: "byteArray");
+				subskeletonConfigs = s.SerializeObject<CArrayO<CArrayP<byte>>>(subskeletonConfigs, name: "subskeletonConfigs"); // subskeletonConfigs[numsubskeletons][numbones]
 			} else {
 				byteArrayOrigins = s.SerializeBytes(byteArrayOrigins, 8);
 			}
@@ -140,9 +143,9 @@ namespace UbiArt.Animation {
 					boneTags2 = new CListO<StringID>();
 					foreach(var bta in boneTags2Adv) boneTags2.Add(new StringID((uint)bta));
 				}
-				if (boneTags3 == null) {
-					boneTags3 = new CListO<StringID>();
-					foreach(var bta in boneTags3Adv) boneTags3.Add(new StringID((uint)bta));
+				if (subskeletonTags == null) {
+					subskeletonTags = new CListO<StringID>();
+					foreach(var bta in subskeletonTagsAdv) subskeletonTags.Add(new StringID((uint)bta));
 				}
 			}
 		}
