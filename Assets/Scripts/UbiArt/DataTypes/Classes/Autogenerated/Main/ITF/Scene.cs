@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags6)) {
 					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
-				if (s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
+				if (s.HasProperty(CSerializerObject.SerializerProperty.Binary)) {
 					DEPENDENCIES = s.SerializeObject<CArrayO<Path>>(DEPENDENCIES, name: "DEPENDENCIES");
 					MUSIC_THEME_PATH = s.SerializeObject<Path>(MUSIC_THEME_PATH, name: "MUSIC_THEME_PATH");
 				}
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags6)) {
 					ENGINE_VERSION = s.Serialize<uint>(ENGINE_VERSION, name: "ENGINE_VERSION");
 				}
-				if (s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
+				if (s.HasProperty(CSerializerObject.SerializerProperty.Binary)) {
 					DEPENDENCIES = s.SerializeObject<CArrayO<Path>>(DEPENDENCIES, name: "DEPENDENCIES");
 					MUSIC_THEME_PATH = s.SerializeObject<Path>(MUSIC_THEME_PATH, name: "MUSIC_THEME_PATH");
 				} else if (s.HasFlags(SerializeFlags.Flags_xC0)) {

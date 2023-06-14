@@ -32,7 +32,7 @@ namespace UbiArt.FileFormat {
 					} else {
 						CurrentSerializer = new CSerializerObjectBinary(Context, this);
 					}
-					Loader.ConfigureSerializeFlagsForExtension(ref CurrentSerializer.flags, ref CurrentSerializer.flagsOwn, Extension);
+					Loader.ConfigureSerializeFlagsForExtension(ref CurrentSerializer.flags, ref CurrentSerializer.properties, Extension);
 				}
 				return CurrentSerializer;
 			}

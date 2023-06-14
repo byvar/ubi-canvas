@@ -9,7 +9,7 @@ namespace UbiArt {
 	public class CSerializerObjectBinary : CSerializerObject {
 		public CSerializerObjectBinary(Context context, Reader reader) : base(context) {
 			Reader = reader;
-			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
+			properties = SerializerProperty.Binary | SerializerProperty.Flags4; // 0x11
 		}
 		public CSerializerObjectBinary(Context context, BinaryFile file) : this(context, file.CreateReader()) {
 			File = file;

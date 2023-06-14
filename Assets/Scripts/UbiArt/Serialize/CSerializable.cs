@@ -22,7 +22,7 @@ namespace UbiArt {
 		protected virtual void OnPreSerialize(CSerializerObject s) {}
 		protected virtual void OnPostSerialize(CSerializerObject s) {}
 		protected virtual void SerializeImpl(CSerializerObject s) {
-			if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)
+			if (s.HasProperty(CSerializerObject.SerializerProperty.StoreObjectSizes)
 				&& !s.Embedded
 				&& s.Settings.engineVersion > Settings.EngineVersion.RO
 				&& !(s is CSerializerObjectTagBinary)) {
@@ -36,7 +36,7 @@ namespace UbiArt {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, UbiArtContext.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(UbiArtContext, writer);
-					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, extension);
+					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, extension);
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "clone");
 					serializedData = stream.ToArray();
@@ -45,7 +45,7 @@ namespace UbiArt {
 			using (MemoryStream stream = new MemoryStream(serializedData)) {
 				using (Reader reader = new Reader(stream, UbiArtContext.Settings.IsLittleEndian)) {
 					CSerializerObject r = new CSerializerObjectBinary(UbiArtContext, reader);
-					Loader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.flagsOwn, extension);
+					Loader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.properties, extension);
 					object toRead = null;
 					r.Serialize(ref toRead, GetType(), name: "clone");
 					result = toRead as CSerializable;

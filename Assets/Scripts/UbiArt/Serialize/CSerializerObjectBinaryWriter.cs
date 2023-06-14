@@ -8,7 +8,7 @@ namespace UbiArt {
 		
 		public CSerializerObjectBinaryWriter(Context context, Writer writer) : base(context) {
 			this.Writer = writer;
-			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
+			properties = SerializerProperty.Binary | SerializerProperty.Flags4; // 0x11
 		}
 		public CSerializerObjectBinaryWriter(Context context, BinaryFile file) : this(context, file.CreateWriter()) {
 			File = file;

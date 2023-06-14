@@ -85,7 +85,7 @@ namespace UbiArt.ITF {
 					ConfigName = s.SerializeObject<Path>(ConfigName, name: "ConfigName");
 					SwitchTexturePipeExtremity = s.Serialize<uint>(SwitchTexturePipeExtremity, name: "SwitchTexturePipeExtremity");
 					if (s.HasFlags(SerializeFlags.Default)) {
-						if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
+						if (!s.HasProperty(CSerializerObject.SerializerProperty.Binary)) {
 							ColorFactor_Red = s.Serialize<float>(ColorFactor_Red, name: "ColorFactor_Red");
 							ColorFactor_Green = s.Serialize<float>(ColorFactor_Green, name: "ColorFactor_Green");
 							ColorFactor_Blu = s.Serialize<float>(ColorFactor_Blu, name: "ColorFactor_Blu");

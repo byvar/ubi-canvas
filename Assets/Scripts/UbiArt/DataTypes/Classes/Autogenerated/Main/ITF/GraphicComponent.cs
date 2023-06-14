@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
-					if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
+					if (!s.HasProperty(CSerializerObject.SerializerProperty.Binary)) {
 						ColorFog_Red = s.Serialize<float>(ColorFog_Red, name: "ColorFog_Red");
 						ColorFog_Green = s.Serialize<float>(ColorFog_Green, name: "ColorFog_Green");
 						ColorFog_Blu = s.Serialize<float>(ColorFog_Blu, name: "ColorFog_Blu");

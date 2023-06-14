@@ -7,7 +7,7 @@ namespace UbiArt.online {
 		public uint second;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.HasSerializerFlags(CSerializerObject.Flags.Flags0)) {
+			if (s.HasProperty(CSerializerObject.SerializerProperty.Binary)) {
 				value = s.Serialize<ulong>(value, name: "value");
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags8)) {

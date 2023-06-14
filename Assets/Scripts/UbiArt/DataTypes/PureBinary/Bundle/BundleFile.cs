@@ -89,7 +89,7 @@ namespace UbiArt.Bundle {
 				using (MemoryStream stream = new MemoryStream()) {
 					using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
-						Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
+						Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, kv.Key.GetExtension(removeCooked: true));
 						object toWrite = kv.Value;
 						w.Serialize(ref toWrite, kv.Value.GetType(), name: kv.Key.filename);
 						serializedData = stream.ToArray();
@@ -124,7 +124,7 @@ namespace UbiArt.Bundle {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
-					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
+					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, "ipk");
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "Bundle");
 					serializedData = stream.ToArray();
@@ -135,7 +135,7 @@ namespace UbiArt.Bundle {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
-					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "ipk");
+					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, "ipk");
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "Bundle");
 					serializedData = stream.ToArray();
@@ -159,7 +159,7 @@ namespace UbiArt.Bundle {
 				using (MemoryStream stream = new MemoryStream()) {
 					using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 						CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
-						Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, kv.Key.GetExtension(removeCooked: true));
+						Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, kv.Key.GetExtension(removeCooked: true));
 						object toWrite = kv.Value;
 						w.Serialize(ref toWrite, kv.Value.GetType(), name: kv.Key.filename);
 						serializedData = stream.ToArray();

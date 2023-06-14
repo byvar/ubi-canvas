@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
-				if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0) && s.HasFlags(SerializeFlags.Flags_xC0)) {
+				if (!s.HasProperty(CSerializerObject.SerializerProperty.Binary) && s.HasFlags(SerializeFlags.Flags_xC0)) {
 					drawDebug = s.Serialize<int>(drawDebug, name: "drawDebug");
 				}
 				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");

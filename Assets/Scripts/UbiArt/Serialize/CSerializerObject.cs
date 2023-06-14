@@ -9,7 +9,7 @@ using UbiArt.FileFormat;
 namespace UbiArt {
 	public abstract class CSerializerObject : IDisposable {
 		public SerializeFlags flags;
-		public Flags flagsOwn;
+		public SerializerProperty properties;
 		protected int indent;
 		public int Depth => indent;
 		protected Stack<int> embeddedLevels = new Stack<int>();
@@ -169,24 +169,24 @@ namespace UbiArt {
 		public bool HasFlags(SerializeFlags flags) {
 			switch (flags) {
 				case SerializeFlags.Flags8:
-					if ((this.flagsOwn & (Flags.Flags4 | Flags.Flags5)) == Flags.None) {
+					if ((this.properties & (SerializerProperty.Flags4 | SerializerProperty.Flags5)) == SerializerProperty.None) {
 						return ((this.flags & SerializeFlags.Flags6) != SerializeFlags.None);
 					}
 					return false;
 				case SerializeFlags.Flags9:
-					if ((this.flagsOwn & (Flags.Flags4 | Flags.Flags7)) == Flags.None) {
+					if ((this.properties & (SerializerProperty.Flags4 | SerializerProperty.Flags7)) == SerializerProperty.None) {
 						return ((this.flags & SerializeFlags.Default) != SerializeFlags.None);
 					}
 					return false;
 				case SerializeFlags.Flags10:
-					return (((this.flagsOwn & Flags.Flags0) != Flags.None) &&
+					return (((this.properties & SerializerProperty.Binary) != SerializerProperty.None) &&
 						((this.flags & SerializeFlags.Flags_xC0) != SerializeFlags.None));
 				default:
 					return ((this.flags & flags) != SerializeFlags.None);
 			}
 		}
-		public bool HasSerializerFlags(Flags flags) {
-			return ((this.flagsOwn & flags) != Flags.None);
+		public bool HasProperty(SerializerProperty properties) {
+			return ((this.properties & properties) != SerializerProperty.None);
 		}
 
 		protected void ConvertTypeBefore(ref object obj, string name, Type type, Type fieldType) {
@@ -232,9 +232,9 @@ namespace UbiArt {
 		}
 
 		[Flags]
-		public enum Flags {
+		public enum SerializerProperty {
 			None = 0,
-			Flags0 = 1,
+			Binary = 1,
 			Flags1 = 1 << 1,
 			Flags2 = 1 << 2,
 			StoreObjectSizes = 1 << 3,

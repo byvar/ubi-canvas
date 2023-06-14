@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					Children = s.SerializeObject<CListO<ChildEntry>>(Children, name: "Children");
 				}
-				if (!s.HasSerializerFlags(CSerializerObject.Flags.Flags0) && s.HasFlags(SerializeFlags.Flags6)) {
+				if (!s.HasProperty(CSerializerObject.SerializerProperty.Binary) && s.HasFlags(SerializeFlags.Flags6)) {
 					ChildrenObjId = s.SerializeObject<CListO<ObjectId>>(ChildrenObjId, name: "ChildrenObjId");
 					LinkedChildren = s.SerializeObject<CListO<ObjectPath>>(LinkedChildren, name: "LinkedChildren");
 				}

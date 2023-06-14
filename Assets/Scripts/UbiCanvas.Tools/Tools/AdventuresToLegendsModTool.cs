@@ -251,7 +251,7 @@ namespace UbiCanvas.Tools
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
-					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "gf");
+					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, "gf");
 					object toWrite = fat;
 					w.Serialize(ref toWrite, GetType(), name: "FAT");
 					serializedData = stream.ToArray();

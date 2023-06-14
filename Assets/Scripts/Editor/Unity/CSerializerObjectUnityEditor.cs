@@ -28,7 +28,7 @@ namespace UbiArt {
 
 
 		public CSerializerObjectUnityEditor(Context context) : base(context) {
-			flagsOwn = Flags.Flags0 | Flags.Flags4; // 0x11
+			properties = SerializerProperty.Binary | SerializerProperty.Flags4; // 0x11
 		}
 
 		public override Pointer CurrentPointer => new Pointer(CurrentPosition, null);

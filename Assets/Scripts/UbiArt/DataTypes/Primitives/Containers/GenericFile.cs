@@ -29,7 +29,7 @@ namespace UbiArt {
 		public void Serialize(CSerializerObject s, string name) {
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				read = s.Serialize<bool>(read, name: "read");
-				if (s.HasSerializerFlags(CSerializerObject.Flags.StoreObjectSizes)
+				if (s.HasProperty(CSerializerObject.SerializerProperty.StoreObjectSizes)
 					&& !s.Embedded
 					&& s.Settings.engineVersion > Settings.EngineVersion.RO
 					&& !(s is CSerializerObjectTagBinary)) {

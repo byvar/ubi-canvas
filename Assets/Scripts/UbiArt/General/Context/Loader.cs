@@ -314,7 +314,7 @@ namespace UbiArt {
 			}
 		}
 
-		public static void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref CSerializerObject.Flags ownFlags, string extension) {
+		public static void ConfigureSerializeFlagsForExtension(ref SerializeFlags flags, ref CSerializerObject.SerializerProperty ownFlags, string extension) {
 			switch (extension) {
 				case "isc":
 				case "tsc":
@@ -330,7 +330,7 @@ namespace UbiArt {
 				case "gmt":
 				case "cache":
 					flags |= SerializeFlags.Flags7;
-					ownFlags |= CSerializerObject.Flags.StoreObjectSizes;
+					ownFlags |= CSerializerObject.SerializerProperty.StoreObjectSizes;
 					break;
 				case null: // Save files
 				case "":
@@ -485,7 +485,7 @@ namespace UbiArt {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(Context, writer);
-					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.flagsOwn, "act");
+					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, "act");
 					object toWrite = container;
 					w.Serialize(ref toWrite, container.GetType(), name: act.USERFRIENDLY);
 					serializedData = stream.ToArray();
