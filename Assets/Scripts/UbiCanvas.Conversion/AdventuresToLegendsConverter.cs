@@ -479,6 +479,16 @@ namespace UbiCanvas.Conversion {
 									levelDependency = new StringID(entry.PaintingLevelDependency)
 								});
 
+								RO2_CostumeDescriptor_Template costumeDesc = new RO2_CostumeDescriptor_Template() {
+									costumeTag = new StringID(entry.CostumeID),
+									priority = entry.Priority,
+									decorationBrickPath = new Path(entry.DecorationBrickPath),
+									costumetype2 = entry.CostumeType,
+									unlockable = entry.Unlockable,
+								};
+								homeConfig.costumeDescriptors.Add(costumeDesc);
+								sgsHomeConfig.costumeDescriptors.Add(costumeDesc);
+
 								AddLock(entry.Lock, entry.CostumeID, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.CostumeFrame, "Costumes");
 								AddTagText(entry.CostumeID, entry.NameID);
 							}
