@@ -222,7 +222,7 @@ namespace UbiCanvas.Conversion {
 
 		public class JSON_LevelInfo {
 			public string MapID { get; set; }
-			public string MapName { get; set; } // LocId 4721 will be used for testing
+			public uint NameID { get; set; } // LocId 4721 will be used for testing
 			public string MapPath { get; set; }
 			public string[] MapDependencies { get; set; } // list of MapIDs of maps you need to finish before this one
 			public string WorldID { get; set; }
@@ -242,6 +242,7 @@ namespace UbiCanvas.Conversion {
 		public class JSON_WorldInfo {
 			// in gameconfig -> WorldConfig
 			public string WorldID { get; set; }
+			public uint NameID { get; set; }
 			public string InteractiveLoadingPath { get; set; }
 			public string DefaultScoreRecapPath { get; set; }
 			public int TeensyUnlockCountRetro1 { get; set; } // Not sure what this does.
@@ -259,7 +260,7 @@ namespace UbiCanvas.Conversion {
 		}
 		public class JSON_CostumeInfo { // CostumeDescriptor in home.isc
 			public string CostumeID { get; set; }
-			public string CostumeName { get; set; } // LocID
+			public uint NameID { get; set; } // LocID
 			public string Family { get; set; } // Rayman, Globox, Teensy, Barbara are the options
 			public string ActorPath_Main { get; set; }
 			public string ActorPath_ScoreHUD { get; set; }
@@ -381,6 +382,17 @@ namespace UbiCanvas.Conversion {
 					var homeConfig = homeISC.obj.sceneConfigs.sceneConfigs[0].obj as RO2_SceneConfig_Home;
 					var sgsHomeConfig = sceneConfigManager.sgsMap[pHomeISC.stringID].obj as RO2_SceneConfig_Home;
 
+
+					void EnableUbiRay() {
+						var ubiRayStringID = new StringID("Rayman_ubi");
+						var ubiRay = homeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == ubiRayStringID);
+						ubiRay.costumetype2 = RO2_CostumeDescriptor_Template.CostumeType2.Regular;
+						ubiRay.costumetype = RO2_CostumeDescriptor_Template.CostumeType.Regular;
+						ubiRay = sgsHomeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == ubiRayStringID);
+						ubiRay.costumetype2 = RO2_CostumeDescriptor_Template.CostumeType2.Regular;
+						ubiRay.costumetype = RO2_CostumeDescriptor_Template.CostumeType.Regular;
+					}
+
 					void AddLock(JSON_LockData l, string tag, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType behavior, string parent) {
 						if(l == null) return;
 						RO2_GameManagerConfig_Template.LockDataClass lockData = new RO2_GameManagerConfig_Template.LockDataClass() {
@@ -401,9 +413,78 @@ namespace UbiCanvas.Conversion {
 						});
 					}
 
+					EnableUbiRay();
 					foreach (var f in files) {
 						var json = System.IO.File.ReadAllText(f);
 						var levelsConfig = JsonConvert.DeserializeObject<JSON_LevelsConfig>(json);
+
+						if (levelsConfig?.Costumes != null) {
+							foreach (var entry in levelsConfig.Costumes) {
+								RO2_PlayerIDInfo player = new RO2_PlayerIDInfo() {
+									sizeOf = 264,
+									id = entry.CostumeID,
+									family = entry.Family,
+									iconTexturePath = new Path(entry.IconPath),
+									iconSizeInTexture = entry.IconSize,
+									deathBubbleColor = entry.DeathBubbleColor,
+									defaultGameScreenInfo = new PlayerIDInfo.GameScreenInfo() {
+										sizeOf = 28,
+										actors = new CListO<PlayerIDInfo.ActorInfo>()
+									},
+								};
+								player.defaultGameScreenInfo.actors.Add(new PlayerIDInfo.ActorInfo() {
+									sizeOf = 184,
+									file = new Path(entry.ActorPath_Main),
+									isAlwaysActive = false,
+									isPlayable = true,
+									gameModes = new CListP<uint>() { 0 },
+									isDynamicallyLoaded = false,
+									mainGameMode = 0xFFFFFFFF,
+								});
+								player.defaultGameScreenInfo.actors.Add(new PlayerIDInfo.ActorInfo() {
+									sizeOf = 184,
+									file = new Path(entry.ActorPath_ScoreHUD),
+									isAlwaysActive = true,
+									isPlayable = false,
+									gameModes = new CListP<uint>() { 0, 1, 2 },
+									isDynamicallyLoaded = false,
+									mainGameMode = 0xFFFFFFFF,
+								});
+								player.defaultGameScreenInfo.actors.Add(new PlayerIDInfo.ActorInfo() {
+									sizeOf = 184,
+									file = new Path(entry.ActorPath_Moskito),
+									isAlwaysActive = false,
+									isPlayable = true,
+									gameModes = new CListP<uint>() { 0, 1, 2 },
+									isDynamicallyLoaded = true,
+									mainGameMode = 1,
+								});
+								player.defaultGameScreenInfo.actors.Add(new PlayerIDInfo.ActorInfo() {
+									sizeOf = 184,
+									file = new Path(entry.ActorPath_Duck),
+									isAlwaysActive = false,
+									isPlayable = true,
+									gameModes = new CListP<uint>() { 2 },
+									isDynamicallyLoaded = true,
+									mainGameMode = 2,
+								});
+
+								gc.playerIDInfo.Add(new Generic<PlayerIDInfo>(player));
+
+								gc.costumes.Add(new RO2_CostumeInfo_Template() {
+									sizeOf = 180,
+									playerIDInfo = new StringID(entry.CostumeID),
+									painting = new Path(entry.PaintingActorPath),
+									backgroundColor = entry.PaintingBackgroundColor,
+									levelDependency = new StringID(entry.PaintingLevelDependency)
+								});
+
+								AddLock(entry.Lock, entry.CostumeID, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.CostumeFrame, "Costumes");
+								AddTagText(entry.CostumeID, entry.NameID);
+							}
+						}
+
+
 						if (levelsConfig?.Worlds != null) {
 							foreach (var entry in levelsConfig.Worlds) {
 								RO2_GameManagerConfig_Template.WorldConfig world = new RO2_GameManagerConfig_Template.WorldConfig() {
@@ -416,7 +497,7 @@ namespace UbiCanvas.Conversion {
 									presence = new StringID(entry.Presence),
 								};
 								gc.worldsInfo.Add(world);
-								AddTagText(entry.WorldID, 4721);
+								AddTagText(entry.WorldID, entry.NameID);
 							}
 						}
 						if (levelsConfig?.Levels != null) {
@@ -447,7 +528,7 @@ namespace UbiCanvas.Conversion {
 								};
 								gc.levelsInfo.Add(map);
 								AddLock(entry.Lock, entry.MapID, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.Level, entry.WorldID);
-								AddTagText(entry.MapID, 4721);
+								AddTagText(entry.MapID, entry.NameID);
 							}
 						}
 						if (levelsConfig?.MainPaintings != null) {

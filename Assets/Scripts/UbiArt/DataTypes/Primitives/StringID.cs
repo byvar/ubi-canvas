@@ -22,8 +22,14 @@ namespace UbiArt {
 			this.stringID = stringID;
 		}
 
-		public StringID(string str) : this(ASCIIEncoding.ASCII.GetBytes(str)) {}
+		public StringID(string str) : this(str != null ? ASCIIEncoding.ASCII.GetBytes(str) : null) {}
 		public StringID(byte[] array) {
+			if (array == null) {
+				stringID = 0xFFFFFFFF;
+				return;
+			}
+
+
 			uint v2; // r11@1
 			uint v3; // r4@1
 			uint pos; // r9@1
