@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UbiArt;
 using UbiArt.Animation;
 using UbiArt.ITF;
+using UbiArt.Localisation;
 using UnityEngine;
 
 namespace UbiCanvas.Conversion {
@@ -292,6 +293,56 @@ namespace UbiCanvas.Conversion {
 
 			public List<JSON_HomePainting> MainPaintings { get; set; } // Add to home.isc sceneconfig[0].packageDescriptors
 
+		}
+		public class JSON_LocalisationData {
+			public uint ID { get; set; }
+			public Dictionary<string, string> Text { get; set; }
+		}
+
+		public async Task ImportLocalisation(string projectPath) {
+			// WIP
+			var locJSONPath = System.IO.Path.Combine(projectPath, "json", "localisation");
+			var outPath = System.IO.Path.Combine(projectPath, "output");
+			var files = System.IO.Directory.Exists(locJSONPath) ? System.IO.Directory.GetFiles(locJSONPath, "*.json") : null;
+			if (files != null && files.Any()) {
+				files = files.OrderBy(f => f).ToArray();
+				using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
+					Settings.Init(Settings.Mode.RaymanLegendsPC),
+					serializerLogger: new MapViewerSerializerLogger(),
+					fileManager: new MapViewerFileManager(),
+					systemLogger: new UnitySystemLogger(),
+					asyncController: new UniTaskAsyncController())) {
+					await rlContextExt.Loader.LoadInitial();
+					var loc = rlContextExt.Loader.localisation;
+					Path pLoc = new Path("EngineData/Localisation/", "localisation.loc8") { specialUncooked = true };
+					var locales = loc.Locales;
+					Dictionary<string, int> langCodeMap = Enumerable.Range(0, locales.Length).ToDictionary(l => locales[l].ToUpperInvariant());
+
+					foreach (var f in files) {
+						var json = System.IO.File.ReadAllText(f);
+						var locData = JsonConvert.DeserializeObject<List<JSON_LocalisationData>>(json);
+						foreach (var l in locData) {
+							var id = new LocalisationId(l.ID);
+							foreach (var lang in l.Text) {
+								var k = lang.Key.ToUpperInvariant();
+								if (langCodeMap.ContainsKey(k)) {
+									var langIndex = langCodeMap[k];
+									if (loc.strings.ContainsKey(langIndex)) {
+										var langMap = loc.strings[langIndex];
+										langMap.Add(id, new LocText() { text = lang.Value });
+									}
+								} else {
+									throw new Exception($"Lang code not found: {lang.Key}");
+								}
+							}
+						}
+					}
+
+					var bun = new UbiArt.Bundle.BundleFile();
+					bun.AddFile(pLoc, loc);
+					await rlContextExt.Loader.WriteFilesRaw(outPath, bun);
+				}
+			}
 		}
 
 		public async Task ImportLevelsAndCostumes(string projectPath) {

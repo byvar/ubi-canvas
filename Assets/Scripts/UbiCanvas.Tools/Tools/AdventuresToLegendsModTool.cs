@@ -62,6 +62,7 @@ namespace UbiCanvas.Tools
 		private async Task BuildJSON() {
 			await new AdventuresToLegendsConverter().ImportAtlasContainer(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
 			await new AdventuresToLegendsConverter().ImportLevelsAndCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
+			await new AdventuresToLegendsConverter().ImportLocalisation(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
@@ -156,10 +157,18 @@ namespace UbiCanvas.Tools
 			}
 
 			if (install) {
+				// Secure_FAT
 				Backup("secure_fat.gf");
 				Copy("secure_fat.gf");
+
+				// Bundles
 				Copy($"{bundleName}_{outputLoader.Settings.PlatformString}.ipk");
 				Copy($"patch_{outputLoader.Settings.PlatformString}.ipk");
+
+				// Localisation
+				Backup("EngineData/Localisation/localisation.loc8");
+				Copy("EngineData/Localisation/localisation.loc8");
+
 				outputContext.SystemLogger.LogInfo("Copied files to game directory.");
 			}
 		}

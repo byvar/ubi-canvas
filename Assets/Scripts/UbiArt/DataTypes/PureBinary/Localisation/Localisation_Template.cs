@@ -5,8 +5,8 @@ namespace UbiArt.Localisation {
 		public CMap<int, CMap<LocalisationId, LocText>> strings;
 		public CMap<LocalisationId, LocAudio> audio;
 		public CListO<Path> paths;
-		public uint count;
-		public uint[] unk;
+		public uint maxLanguagesCount;
+		public uint[] languagesFlags;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -16,20 +16,47 @@ namespace UbiArt.Localisation {
 			// Special array with sometimes predefined size
 			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
 				// Adventures: length specified in file, but when writing, the script always writes 25.
-				count = s.Serialize<uint>(count, name: "count");
+				maxLanguagesCount = s.Serialize<uint>(maxLanguagesCount, name: "maxLanguagesCount");
 			} else {
 				// Legends: length not specified in file. When writing, the script always writes 19.
-				count = 19;
+				maxLanguagesCount = 19;
 			}
-			if (unk == null) {
-				unk = new uint[count];
+			if (languagesFlags == null) {
+				languagesFlags = new uint[maxLanguagesCount];
 			}
-			for (int i = 0; i < count; i++) {
-				if (s.ArrayEntryStart(name: nameof(unk), index: i)) {
-					unk[i] = s.Serialize<uint>(unk[i], name: nameof(unk), index: i);
+			for (int i = 0; i < maxLanguagesCount; i++) {
+				if (s.ArrayEntryStart(name: nameof(languagesFlags), index: i)) {
+					languagesFlags[i] = s.Serialize<uint>(languagesFlags[i], name: nameof(languagesFlags), index: i);
 					s.ArrayEntryStop();
 				}
 			}
 		}
+
+		public string[] Locales => new string[] {
+			"en-US",
+			"fr-FR",
+			"ja-JP",
+			"de-DE",
+			"es-ES",
+			"it-IT",
+			"ko-KR",
+			"zh-TW",
+			"pt-PT",
+			"zh-CN",
+			"pl-PL",
+			"ru-RU",
+			"nl-NL",
+			"da-DK",
+			"nb-NO",
+			"sv-SE",
+			"fi-FI",
+			"pt-BR",
+			"ms-MY",
+			"id-ID",
+			"tr-TR",
+			"ar-SA",
+			"ta-IN",
+			"th-TH",
+		};
 	}
 }
