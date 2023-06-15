@@ -220,7 +220,6 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-
 		public async Task ImportLocalisation(string projectPath) {
 			// WIP
 			var locJSONPath = System.IO.Path.Combine(projectPath, "json", "localisation");
@@ -490,6 +489,95 @@ namespace UbiCanvas.Conversion {
 					bun.AddFile(rlContextExt.Loader.CookedPaths[pHomeISC.stringID], homeISC);
 					await rlContextExt.Loader.WriteFilesRaw(outPath, bun);
 				}
+			}
+		}
+
+		public async Task ConvertCostumes(string projectPath) {
+			Path pGameConfig = new Path("enginedata/gameconfig/gameconfig.isg");
+			var levelsJsonPath = System.IO.Path.Combine(projectPath, "json", "levels");
+			var locJsonPath = System.IO.Path.Combine(projectPath, "json", "localisation", "localisation_costumes_mini.json");
+			var dataOutputPath = System.IO.Path.Combine(projectPath, "data", "costumes_mini");
+
+			int priority = 23;
+
+			List<JSON_LocalisationData> localisationList = new List<JSON_LocalisationData>();
+
+			uint AddLocalisation(Context c, uint baseID, uint id) {
+				var loc = c.Loader.localisation;
+				var locales = loc.Locales;
+				
+				var jsonData = new JSON_LocalisationData() {
+					ID = baseID + id,
+					Text = new Dictionary<string, string>()
+				};
+				foreach (var lang in loc.strings) {
+					if (lang.Value.ContainsKey(id)) {
+						jsonData.Text[locales[lang.Key]] = lang.Value[id].text;
+					}
+				}
+
+				localisationList.Add(jsonData);
+				return jsonData.ID;
+			}
+
+			using (var miniContext = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanMiniMacOS],
+				Settings.Init(Settings.Mode.RaymanMiniMacOS),
+				serializerLogger: new MapViewerSerializerLogger(),
+				fileManager: new MapViewerFileManager(),
+				systemLogger: new UnitySystemLogger(),
+				asyncController: new UniTaskAsyncController())) {
+				await miniContext.Loader.LoadInitial();
+				uint baseLocId = 9000;
+
+				miniContext.Loader.LoadGenericFile(pGameConfig, isg => {
+					miniContext.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
+				});
+				await miniContext.Loader.LoadLoop();
+
+				var playerIDInfo = miniContext.Loader.gameConfig.playerIDInfo;
+				var skin = playerIDInfo.FirstOrDefault(p => p?.obj is RO2_PlayerIDInfo pro2 && pro2.id == "Rayman_Werewolf");
+
+				// for loop on the skins later, but for now stick to rayman werewolf for testing
+				{
+					var player = skin.obj as RO2_PlayerIDInfo;
+					var playerJSON = new JSON_CostumeInfo() {
+						CostumeID = player.id,
+						NameID = AddLocalisation(miniContext, baseLocId, player.lineIdName),
+						Family = player.family,
+						ActorPath_Main = player.defaultGameScreenInfo.actors[0].file.FullPath, // TODO: path conversion & reading the contents
+						ActorPath_ScoreHUD = player.defaultGameScreenInfo.actors[1].file.FullPath, // TODO
+						ActorPath_Moskito = null, // TODO
+						ActorPath_Duck = null, // TODO
+						IconPath = player.iconTexturePath.FullPath,
+						IconSize = player.iconSizeInTexture,
+						DeathBubbleColor = player.deathBubbleColor,
+
+						PaintingActorPath = null, // TODO
+						PaintingBackgroundColor = new UbiArt.Color(0,0,0,1), // TODO
+						PaintingLevelDependency = null,
+						DecorationBrickPath = null, // TODO
+						Priority = priority++,
+						CostumeType = RO2_CostumeDescriptor_Template.CostumeType2.Regular,
+						Unlockable = false,
+
+						Lock = new JSON_LockData() {
+							LockCount = 0,
+							LockType = RO2_GameManagerConfig_Template.LockDataClass.MapLockType.None,
+						},
+					};
+				}
+
+			}
+
+
+			using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
+				Settings.Init(Settings.Mode.RaymanLegendsPC),
+				serializerLogger: new MapViewerSerializerLogger(),
+				fileManager: new MapViewerFileManager(),
+				systemLogger: new UnitySystemLogger(),
+				asyncController: new UniTaskAsyncController())) {
+				await rlContextExt.Loader.LoadInitial();
+
 			}
 		}
 
