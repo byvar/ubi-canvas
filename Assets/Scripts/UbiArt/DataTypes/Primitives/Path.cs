@@ -10,6 +10,8 @@ namespace UbiArt {
 		public uint flags;
 		public bool specialUncooked;
 
+		public ICSerializable Object { get; set; }
+
 		public Path() {
 			stringID = new StringID();
 		}
@@ -129,44 +131,48 @@ namespace UbiArt {
 			if (s.Context.Loader.LoadAllPaths) LoadObject(s.Context);
 		}
 
+		public T GetObject<T>() where T : ICSerializable {
+			return (T)Object;
+		}
+
 		public void LoadObject(Context c) {
 			if (!IsNull) {
 				switch (GetExtension()) {
 					case "anm":
-						c.Loader.LoadFile<AnimTrack>(this, null);
+						c.Loader.LoadFile<AnimTrack>(this, o => Object = o);
 						break;
 					case "skl":
-						c.Loader.LoadFile<AnimSkeleton>(this, null);
+						c.Loader.LoadFile<AnimSkeleton>(this, o => Object = o);
 						break;
 					case "pbk":
-						c.Loader.LoadFile<AnimPatchBank>(this, null);
+						c.Loader.LoadFile<AnimPatchBank>(this, o => Object = o);
 						break;
 					case "fcg":
-						c.Loader.LoadFile<GenericFile<FriseConfig>>(this, null);
+						c.Loader.LoadFile<GenericFile<FriseConfig>>(this, o => Object = o);
 						break;
 					case "isc":
 					case "tsc":
-						c.Loader.LoadFile<ContainerFile<ITF.Scene>>(this, null);
+						c.Loader.LoadFile<ContainerFile<ITF.Scene>>(this, o => Object = o);
 						break;
 					case "act":
-						c.Loader.LoadFile<ContainerFile<ITF.Actor>>(this, null);
+						c.Loader.LoadFile<ContainerFile<ITF.Actor>>(this, o => Object = o);
 						break;
 					case "tga":
 					case "dds":
 					case "png":
-						c.Loader.LoadTexture(this, null);
+						c.Loader.LoadTexture(this, o => Object = o);
 						break;
 					case "gmt":
-						c.Loader.LoadFile<GenericFile<GameMaterial_Template>>(this, null);
+						c.Loader.LoadFile<GenericFile<GameMaterial_Template>>(this, o => Object = o);
 						break;
 					case "msh":
-						c.Loader.LoadFile<GenericFile<GFXMaterialShader_Template>>(this, null);
+						c.Loader.LoadFile<GenericFile<GFXMaterialShader_Template>>(this, o => Object = o);
 						break;
 					case "tpl":
-						c.Loader.LoadFile<GenericFile<Actor_Template>>(this, null);
+						c.Loader.LoadFile<GenericFile<Actor_Template>>(this, o => Object = o);
 						break;
 					case "asc":
-						c.Loader.LoadFile<AnimMeshVertex>(this, null);
+						c.Loader.LoadFile<AnimMeshVertex>(this, o => Object = o);
 						// TODO: AnimMeshVertex::serialize purebinary
 						break;
 					case "wav":

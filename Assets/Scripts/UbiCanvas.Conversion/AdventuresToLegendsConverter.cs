@@ -502,6 +502,26 @@ namespace UbiCanvas.Conversion {
 
 			List<JSON_LocalisationData> localisationList = new List<JSON_LocalisationData>();
 
+			Dictionary<StringID, string> subskeletonDictionary = new Dictionary<StringID, string>();
+			CreateSubskeletonDictionary();
+
+			void CreateSubskeletonDictionary() {
+				void AddString(string str) {
+					subskeletonDictionary[new StringID(str)] = str;
+				}
+				// Rayman
+				AddString("Naked");
+				AddString("Knight");
+				AddString("Basic");
+				AddString("Splinter");
+				AddString("Mario");
+				AddString("Demo");
+				//TODO: There's one other added for adventures
+
+				// TODO: other characters
+			}
+			string GetSubskeleton(StringID sid) => subskeletonDictionary[sid];
+
 			uint AddLocalisation(Context c, uint baseID, uint id) {
 				var loc = c.Loader.localisation;
 				var locales = loc.Locales;
@@ -540,6 +560,18 @@ namespace UbiCanvas.Conversion {
 				// for loop on the skins later, but for now stick to rayman werewolf for testing
 				{
 					var player = skin.obj as RO2_PlayerIDInfo;
+
+					player.defaultGameScreenInfo.actors[0].file.LoadObject(miniContext);
+					//player.defaultGameScreenInfo.actors[1].file.LoadObject(miniContext);
+					await miniContext.Loader.LoadLoop();
+					var mainActor = player.defaultGameScreenInfo.actors[0].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
+					var mainPlayerControllerComponent = mainActor.obj.GetComponent<RO2_PlayerControllerComponent>();
+					var mainAnimatedComponent = mainActor.obj.GetComponent<AnimatedComponent>();
+
+					/*var scoreActor = player.defaultGameScreenInfo.actors[1].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
+					scoreActor.obj.GetComponent<RO2_PlayerHudScoreComponent>().characterMaterial.textureSet.diffuse = player.iconTexturePath;*/
+
+
 					var playerJSON = new JSON_CostumeInfo() {
 						CostumeID = player.id,
 						NameID = AddLocalisation(miniContext, baseLocId, player.lineIdName),
@@ -564,6 +596,14 @@ namespace UbiCanvas.Conversion {
 							LockCount = 0,
 							LockType = RO2_GameManagerConfig_Template.LockDataClass.MapLockType.None,
 						},
+
+						Main = new JSON_CostumeInfo.JSON_CostumeMain() {
+							TeleportTrail = mainPlayerControllerComponent.trailPath.FullPath,
+							PBKPath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].patchBank.FullPath,
+							DiffusePath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.diffuse.FullPath,
+							BacklightPath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.back_light.FullPath,
+							SubSkeleton = GetSubskeleton(mainAnimatedComponent.subSkeleton)
+						}
 					};
 				}
 

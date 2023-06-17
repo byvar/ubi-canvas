@@ -29,5 +29,16 @@ namespace UbiCanvas.Conversion.Json {
 		public bool Unlockable { get; set; }
 
 		public JSON_LockData Lock { get; set; }
+
+		public JSON_CostumeMain Main { get; set; }
+
+
+		public class JSON_CostumeMain {
+			public string TeleportTrail { get; set; }
+			public string PBKPath { get; set; }
+			public string DiffusePath { get; set; }
+			public string BacklightPath { get; set; }
+			public string SubSkeleton { get; set; }
+		}
 	}
 }
