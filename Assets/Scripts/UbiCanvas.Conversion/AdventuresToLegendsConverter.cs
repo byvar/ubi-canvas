@@ -325,11 +325,30 @@ namespace UbiCanvas.Conversion {
 									obj = newActor
 								};
 
+								// Load template too
+								originalActor.obj.LUA.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+								var originalActorTPL = originalActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+
 								var mainPlayerControllerComponent = newActor.GetComponent<RO2_PlayerControllerComponent>();
 								var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
+								var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
 
 								mainPlayerControllerComponent.trailPath = new Path(costume.TemplatePath_Trail);
 								mainAnimatedComponent.subSkeleton = new StringID(costume.Main.SubSkeleton);
+								foreach (var tpl_b in tplAnimatedComponent.animSet.animPackage.textureBank) {
+									if (!mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any(act_b => act_b.id == tpl_b.id)) {
+										mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Add(new TextureBankPath() {
+											sizeOf = 1340,
+											id = tpl_b.id,
+											materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+											textureSet = new GFXMaterialTexturePathSet() {
+												sizeOf = 1036,
+											},
+
+										});
+									}
+								}
 								foreach (var tb in mainAnimatedComponent.subAnimInfo.animPackage.textureBank) {
 									tb.patchBank = new Path(costume.Main.PBKPath);
 									tb.textureSet.diffuse = new Path(costume.Main.DiffusePath);
@@ -375,6 +394,7 @@ namespace UbiCanvas.Conversion {
 								var basePath = $"world/home/actor/costumes/";
 								var actorToClone = family switch {
 									"teensy" => $"{basePath}costumeteensy_classicking.act",
+									"barbara" => $"{basePath}costumebarbara_mainroom.act",
 									_ => $"{basePath}costume{family}.act"
 								};
 								var pOriginalActor = new Path(actorToClone);
@@ -578,6 +598,7 @@ namespace UbiCanvas.Conversion {
 								});
 
 								gc.playerIDInfo.Add(new Generic<PlayerIDInfo>(player));
+								gc.sizeOf += 2048;
 
 								gc.costumes.Add(new RO2_CostumeInfo_Template() {
 									sizeOf = 180,
@@ -710,6 +731,10 @@ namespace UbiCanvas.Conversion {
 
 			using var rlContextExt = CreateContext(Settings.Mode.RaymanLegendsPC);
 			await rlContextExt.Loader.LoadInitial();
+			rlContextExt.Loader.LoadGenericFile(new Path("enginedata/gameconfig/gameconfig.isg"), isg => {
+				rlContextExt.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
+			});
+			await rlContextExt.Loader.LoadLoop();
 
 			Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
 
@@ -729,6 +754,9 @@ namespace UbiCanvas.Conversion {
 				void AddString(string str) {
 					subskeletonDictionary[new StringID(str)] = str;
 				}
+				// General
+				AddString(null);
+
 				// Rayman
 				AddString("Naked");
 				AddString("Knight");
@@ -737,6 +765,8 @@ namespace UbiCanvas.Conversion {
 				AddString("Mario");
 				AddString("Demo");
 				// TODO: There's one other added for adventures
+
+				// Globox: doesn't have them
 
 				// TODO: other characters
 			}
@@ -774,17 +804,27 @@ namespace UbiCanvas.Conversion {
 				await miniContext.Loader.LoadLoop();
 
 				var playerIDInfo = miniContext.Loader.gameConfig.playerIDInfo;
-				var skin = playerIDInfo.FirstOrDefault(p => p?.obj is RO2_PlayerIDInfo pro2 && pro2.id == "Rayman_Werewolf");
 
-				// for loop on the skins later, but for now stick to rayman werewolf for testing
+				foreach(var skin in playerIDInfo)
 				{
 					var player = skin.obj as RO2_PlayerIDInfo;
+					//if(player.family != "Rayman" && player.family != "Globox" && player.family != "Barbara") continue;
+					if(rlContextExt.Loader.gameConfig.playerIDInfo.Any(c => c.obj.id == player.id)) continue;
 
 					player.defaultGameScreenInfo.actors[0].file.LoadObject(miniContext);
 					await miniContext.Loader.LoadLoop();
 					var mainActor = player.defaultGameScreenInfo.actors[0].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
 					var mainPlayerControllerComponent = mainActor.obj.GetComponent<RO2_PlayerControllerComponent>();
 					var mainAnimatedComponent = mainActor.obj.GetComponent<AnimatedComponent>();
+					var texBank = mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any() ? mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0] : null;
+					if (texBank == null) {
+						// Load the template and get it from there...
+						mainActor.obj.LUA.LoadObject(miniContext);
+						await miniContext.Loader.LoadLoop();
+						var tpl = mainActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+						var tplAnimatedComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
+						texBank = tplAnimatedComponent.animSet.animPackage.textureBank[0];
+					}
 
 					mainPlayerControllerComponent.trailPath.LoadObject(miniContext);
 					await miniContext.Loader.LoadLoop();
@@ -830,9 +870,9 @@ namespace UbiCanvas.Conversion {
 						},
 
 						Main = new JSON_CostumeInfo.JSON_CostumeMain() {
-							PBKPath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].patchBank.FullPath,
-							DiffusePath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.diffuse.FullPath,
-							BacklightPath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.back_light.FullPath,
+							PBKPath = texBank.patchBank.FullPath,
+							DiffusePath = texBank.textureSet.diffuse.FullPath,
+							BacklightPath = texBank.textureSet.back_light.FullPath,
 							SubSkeleton = GetSubskeleton(mainAnimatedComponent.subSkeleton)
 						},
 						TrailColor = trailTpl.obj.GetComponent<TextureGraphicComponent_Template>().defaultColor,
@@ -841,9 +881,9 @@ namespace UbiCanvas.Conversion {
 					levelsConfig.Costumes.Add(playerJSON);
 
 					// Load all assets to be exported
-					mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].patchBank.LoadObject(miniContext);
-					mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.diffuse.LoadObject(miniContext);
-					mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.back_light.LoadObject(miniContext);
+					texBank.patchBank.LoadObject(miniContext);
+					texBank.textureSet.diffuse.LoadObject(miniContext);
+					texBank.textureSet.back_light.LoadObject(miniContext);
 					player.iconTexturePath.LoadObject(miniContext);
 					await miniContext.Loader.LoadLoop();
 
@@ -853,9 +893,9 @@ namespace UbiCanvas.Conversion {
 					}
 
 					// Add all assets to be exported to bundle
-					AddPathToBundle(mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].patchBank);
-					AddPathToBundle(mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.diffuse);
-					AddPathToBundle(mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.back_light);
+					AddPathToBundle(texBank.patchBank);
+					AddPathToBundle(texBank.textureSet.diffuse);
+					AddPathToBundle(texBank.textureSet.back_light);
 					AddPathToBundle(player.iconTexturePath);
 				}
 

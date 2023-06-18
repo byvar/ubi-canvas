@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_PlayerIDInfo : PlayerIDInfo {
 		public Path iconTexturePath;
-		public Vec2d iconSizeInTexture;
+		public Vec2d iconSizeInTexture = Vec2d.One;
 		public Path loadingPath;
 		public Path treePath;
 		protected override void SerializeImpl(CSerializerObject s) {

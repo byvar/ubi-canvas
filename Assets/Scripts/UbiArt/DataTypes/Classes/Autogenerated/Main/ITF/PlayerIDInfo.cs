@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public CListO<PlayerIDInfo.GameScreenInfo> gameScreens;
 		public PlayerIDInfo.GameScreenInfo defaultGameScreenInfo;
 		public PlayerIDInfo.ActorInfo actorInfo;
-		public Color deathBubbleColor;
+		public Color deathBubbleColor = Color.White;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
