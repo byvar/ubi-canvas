@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -191,12 +192,7 @@ namespace UbiCanvas.Conversion {
 			if (files != null && files.Any()) {
 				files = files.OrderBy(f => f).ToArray();
 				Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
-				using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
-					Settings.Init(Settings.Mode.RaymanLegendsPC),
-					serializerLogger: new MapViewerSerializerLogger(),
-					fileManager: new MapViewerFileManager(),
-					systemLogger: new UnitySystemLogger(),
-					asyncController: new UniTaskAsyncController())) {
+				using (var rlContextExt = CreateContext(Settings.Mode.RaymanLegendsPC)) {
 					await rlContextExt.Loader.LoadInitial();
 					var uvManager = rlContextExt.Loader.uvAtlasManager;
 
@@ -227,12 +223,7 @@ namespace UbiCanvas.Conversion {
 			var files = System.IO.Directory.Exists(locJSONPath) ? System.IO.Directory.GetFiles(locJSONPath, "*.json") : null;
 			if (files != null && files.Any()) {
 				files = files.OrderBy(f => f).ToArray();
-				using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
-					Settings.Init(Settings.Mode.RaymanLegendsPC),
-					serializerLogger: new MapViewerSerializerLogger(),
-					fileManager: new MapViewerFileManager(),
-					systemLogger: new UnitySystemLogger(),
-					asyncController: new UniTaskAsyncController())) {
+				using (var rlContextExt = CreateContext(Settings.Mode.RaymanLegendsPC)) {
 					await rlContextExt.Loader.LoadInitial();
 					var loc = rlContextExt.Loader.localisation;
 					Path pLoc = new Path("EngineData/Localisation/", "localisation.loc8") { specialUncooked = true };
@@ -276,12 +267,7 @@ namespace UbiCanvas.Conversion {
 			if (files != null && files.Any()) {
 				files = files.OrderBy(f => f).ToArray();
 				Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
-				using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
-					Settings.Init(Settings.Mode.RaymanLegendsPC),
-					serializerLogger: new MapViewerSerializerLogger(),
-					fileManager: new MapViewerFileManager(),
-					systemLogger: new UnitySystemLogger(),
-					asyncController: new UniTaskAsyncController())) {
+				using (var rlContextExt = CreateContext(Settings.Mode.RaymanLegendsPC)) {
 					await rlContextExt.Loader.LoadInitial();
 					ContainerFile<Scene> homeISC = null;
 					GenericFile<CSerializable> gameConfigISG = null;
@@ -700,16 +686,41 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		protected Context CreateContext(Settings.Mode mode,
+			string basePath = null,
+			bool enableSerializerLog = true) {
+			if (basePath == null) basePath = UnitySettings.GameDirs[mode];
+
+			Context context = new(basePath, Settings.Init(mode),
+				serializerLogger: enableSerializerLog ? new MapViewerSerializerLogger() : null,
+				fileManager: new MapViewerFileManager(),
+				systemLogger: new UnitySystemLogger(),
+				asyncController: new UniTaskAsyncController());
+
+			return context;
+
+		}
+
 		public async Task ConvertCostumes(string projectPath) {
+			var mainMode = "mini";
+			var dataID = $"costumes_{mainMode}";
 			Path pGameConfig = new Path("enginedata/gameconfig/gameconfig.isg");
 			var levelsJsonPath = System.IO.Path.Combine(projectPath, "json", "levels");
-			var locJsonPath = System.IO.Path.Combine(projectPath, "json", "localisation", "localisation_costumes_mini.json");
-			var dataOutputPath = System.IO.Path.Combine(projectPath, "data", "costumes_mini");
+			var dataOutputPath = System.IO.Path.Combine(projectPath, "data", dataID);
+
+			using var rlContextExt = CreateContext(Settings.Mode.RaymanLegendsPC);
+			await rlContextExt.Loader.LoadInitial();
+
+			Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
 
 			var rnd = new System.Random();
 			int priority = 23;
 
+			UbiArt.Bundle.BundleFile bun = new UbiArt.Bundle.BundleFile();
 			List<JSON_LocalisationData> localisationList = new List<JSON_LocalisationData>();
+			JSON_LevelsConfig levelsConfig = new JSON_LevelsConfig() {
+				Costumes = new List<JSON_CostumeInfo>()
+			};
 
 			Dictionary<StringID, string> subskeletonDictionary = new Dictionary<StringID, string>();
 			CreateSubskeletonDictionary();
@@ -725,7 +736,7 @@ namespace UbiCanvas.Conversion {
 				AddString("Splinter");
 				AddString("Mario");
 				AddString("Demo");
-				//TODO: There's one other added for adventures
+				// TODO: There's one other added for adventures
 
 				// TODO: other characters
 			}
@@ -749,12 +760,11 @@ namespace UbiCanvas.Conversion {
 				return jsonData.ID;
 			}
 
-			using (var miniContext = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanMiniMacOS],
-				Settings.Init(Settings.Mode.RaymanMiniMacOS),
-				serializerLogger: new MapViewerSerializerLogger(),
-				fileManager: new MapViewerFileManager(),
-				systemLogger: new UnitySystemLogger(),
-				asyncController: new UniTaskAsyncController())) {
+			void AddPathToBundle(Path p) {
+				if(!p.IsNull && p.Object != null) bun.AddFile(p.CookedPath(rlContextExt), p.Object);
+			}
+
+			using (var miniContext = CreateContext(Settings.Mode.RaymanMiniMacOS)) {
 				await miniContext.Loader.LoadInitial();
 				uint baseLocId = 9000;
 
@@ -828,19 +838,56 @@ namespace UbiCanvas.Conversion {
 						TrailColor = trailTpl.obj.GetComponent<TextureGraphicComponent_Template>().defaultColor,
 
 					};
+					levelsConfig.Costumes.Add(playerJSON);
+
+					// Load all assets to be exported
+					mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].patchBank.LoadObject(miniContext);
+					mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.diffuse.LoadObject(miniContext);
+					mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.back_light.LoadObject(miniContext);
+					player.iconTexturePath.LoadObject(miniContext);
+					await miniContext.Loader.LoadLoop();
+
+					// Add atlas entry for icon texture
+					if (miniContext.Loader.uvAtlasManager.atlas.ContainsKey(player.iconTexturePath.stringID)) {
+						newUVEntries[player.iconTexturePath.FullPath] = miniContext.Loader.uvAtlasManager.atlas[player.iconTexturePath.stringID];
+					}
+
+					// Add all assets to be exported to bundle
+					AddPathToBundle(mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].patchBank);
+					AddPathToBundle(mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.diffuse);
+					AddPathToBundle(mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.back_light);
+					AddPathToBundle(player.iconTexturePath);
 				}
 
 			}
 
+			if (!bun.IsEmpty) {
+				await rlContextExt.Loader.WriteFilesRaw(dataOutputPath, bun);
+				Debug.Log($"Exported data: {dataOutputPath}");
+			}
 
-			using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
-				Settings.Init(Settings.Mode.RaymanLegendsPC),
-				serializerLogger: new MapViewerSerializerLogger(),
-				fileManager: new MapViewerFileManager(),
-				systemLogger: new UnitySystemLogger(),
-				asyncController: new UniTaskAsyncController())) {
-				await rlContextExt.Loader.LoadInitial();
+			// Write atlas list
+			if (newUVEntries.Any()) {
+				string exportFile = System.IO.Path.Combine(projectPath, "json", "atlascontainer", $"{dataID}.json");
+				System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
+				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(newUVEntries, Formatting.Indented));
+				Debug.Log($"Exported json: {exportFile}");
+			}
 
+			// Write localisation
+			if (localisationList.Any()) {
+				var exportFile = System.IO.Path.Combine(projectPath, "json", "localisation", $"localisation_{dataID}.json");
+				System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
+				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(localisationList, Formatting.Indented));
+				Debug.Log($"Exported json: {exportFile}");
+			}
+
+			// Write levels config
+			if (levelsConfig.Costumes.Any()) {
+				var exportFile = System.IO.Path.Combine(projectPath, "json", "levels", $"{dataID}.json");
+				System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
+				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(levelsConfig, Formatting.Indented));
+				Debug.Log($"Exported json: {exportFile}");
 			}
 		}
 

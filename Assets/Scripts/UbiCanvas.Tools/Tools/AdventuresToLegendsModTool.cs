@@ -23,6 +23,7 @@ namespace UbiCanvas.Tools
 			Actions.AddRange(new[]
 			{
 				new InvokableAction("Export current map in Legends format", async () => await ExportCurrentMap()),
+				new InvokableAction("Export costumes (requires manual edits)", async () => await ExportCostumes()),
 				//new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
 			});
@@ -57,6 +58,10 @@ namespace UbiCanvas.Tools
 			} else {
 				UnityEngine.Debug.LogWarning("Please load a map before selecting this option.");
 			}
+		}
+
+		private async Task ExportCostumes() {
+			await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
 		}
 
 		private async Task BuildJSON() {
