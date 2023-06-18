@@ -318,15 +318,15 @@ namespace UbiCanvas.Conversion {
 					}
 
 					async Task BuildCostume(JSON_CostumeInfo costume) {
-						if (!string.IsNullOrWhiteSpace(costume.ActorPath_Main) && costume.Main != null) {
+						var family = costume.Family.ToLowerInvariant();
+
+						if (!string.IsNullOrWhiteSpace(costume.ActorPath_Main)) {
 							var cookedPath = new Path(costume.ActorPath_Main).CookedPath(rlContextExt);
 							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
-								var actorToClone = costume.Family.ToLowerInvariant() switch {
-									"rayman"  => "world/common/playablecharacter/rayman/rayman.act",
-									"teensy"  => "world/common/playablecharacter/teensy/teensy_classicking.act",
-									"globox"  => "world/common/playablecharacter/globox/globox.act",
-									"barbara" => "world/common/playablecharacter/barbara/barbara.act",
-									_ => throw new NotImplementedException($"Unknown family: {costume.Family}")
+								var basePath = $"world/common/playablecharacter/{family}/";
+								var actorToClone = family switch {
+									"teensy"  => $"{basePath}teensy_classicking.act",
+									_ => $"{basePath}{family}.act"
 								};
 								var pOriginalActor = new Path(actorToClone);
 								pOriginalActor.LoadObject(rlContextExt);
@@ -342,7 +342,7 @@ namespace UbiCanvas.Conversion {
 								var mainPlayerControllerComponent = newActor.GetComponent<RO2_PlayerControllerComponent>();
 								var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
 
-								mainPlayerControllerComponent.trailPath = new Path(costume.Main.TeleportTrail);
+								mainPlayerControllerComponent.trailPath = new Path(costume.TemplatePath_Trail);
 								mainAnimatedComponent.subSkeleton = new StringID(costume.Main.SubSkeleton);
 								foreach (var tb in mainAnimatedComponent.subAnimInfo.animPackage.textureBank) {
 									tb.patchBank = new Path(costume.Main.PBKPath);
@@ -361,12 +361,10 @@ namespace UbiCanvas.Conversion {
 						if (!string.IsNullOrWhiteSpace(costume.ActorPath_ScoreHUD)) {
 							var cookedPath = new Path(costume.ActorPath_ScoreHUD).CookedPath(rlContextExt);
 							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
-								var actorToClone = costume.Family.ToLowerInvariant() switch {
-									"rayman"  => "world/common/ui/common/playerscore/scorehud_rayman.act",
-									"teensy"  => "world/common/ui/common/playerscore/scorehud_teensyclassicking.act",
-									"globox"  => "world/common/ui/common/playerscore/scorehud_globox.act",
-									"barbara" => "world/common/ui/common/playerscore/scorehud_barbara.act",
-									_ => throw new NotImplementedException($"Unknown family: {costume.Family}")
+								var basePath = $"world/common/ui/common/playerscore/";
+								var actorToClone = family switch {
+									"teensy" => $"{basePath}scorehud_teensyclassicking.act",
+									_ => $"{basePath}scorehud_{family}.act"
 								};
 								var pOriginalActor = new Path(actorToClone);
 								pOriginalActor.LoadObject(rlContextExt);
@@ -384,6 +382,123 @@ namespace UbiCanvas.Conversion {
 								costumesBun.AddFile(cookedPath, newActorContainer);
 							}
 						}
+
+						if (!string.IsNullOrWhiteSpace(costume.ActorPath_Painting)) {
+							var cookedPath = new Path(costume.ActorPath_Painting).CookedPath(rlContextExt);
+							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
+								var basePath = $"world/home/actor/costumes/";
+								var actorToClone = family switch {
+									"teensy" => $"{basePath}costumeteensy_classicking.act",
+									_ => $"{basePath}costume{family}.act"
+								};
+								var pOriginalActor = new Path(actorToClone);
+								pOriginalActor.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+
+								var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+								var newActor = (Actor)(await rlContextExt.Loader.Clone(originalActor.obj, "act"));
+								var newActorContainer = new ContainerFile<Actor>() {
+									read = true,
+									obj = newActor
+								};
+
+								newActor.LUA = new Path(costume.TemplatePath_Painting);
+
+								var costumeComponent = newActor.GetComponent<RO2_PlayerCostumeComponent>();
+								costumeComponent.costumeId = new StringID(costume.CostumeID);
+								costumeComponent.nameLocId = new LocalisationId(costume.NameID);
+								costumeComponent.descriptionLocId = new LocalisationId(costume.DescriptionID);
+
+								costumesBun.AddFile(cookedPath, newActorContainer);
+							}
+						}
+
+						if (!string.IsNullOrWhiteSpace(costume.TemplatePath_Painting)) {
+							var cookedPath = new Path(costume.TemplatePath_Painting).CookedPath(rlContextExt);
+							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
+								var basePath = $"world/home/actor/costumes/components/";
+								var actorToClone = family switch {
+									"teensy" => $"{basePath}costumeteensy_classicking.tpl",
+									_ => $"{basePath}costume{family}.tpl"
+								};
+								var pOriginalActor = new Path(actorToClone);
+								var animPath = new Path($"world/common/playablecharacter/{family}/animation/{costume.Painting.Animation}.anm");
+								pOriginalActor.LoadObject(rlContextExt);
+								animPath.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+
+								var paintingAnim = animPath.GetObject<AnimTrack>();
+								var originalTPL = pOriginalActor.GetObject<GenericFile<Actor_Template>>();
+								var newTPL = (Actor_Template)(await rlContextExt.Loader.Clone(originalTPL.obj, "tpl"));
+								var newTPLContainer = new GenericFile<Actor_Template>(newTPL);
+
+								var animComponent = newTPL.GetComponent<AnimLightComponent_Template>();
+								var subAnim = animComponent.animSet.animations.FirstOrDefault(a => a.friendlyName == new StringID("Available"));
+								var ogAnimPath = subAnim.name;
+								subAnim.name = animPath;
+								var aabb = animComponent.animSet.animPackage.animPathAABB.FirstOrDefault(a => a.path == ogAnimPath);
+								aabb.path = animPath;
+								aabb.name = new StringID(costume.Painting.Animation);
+								// TODO: Also adjust aabb.aabb here
+
+								// Add texture banks required by animation
+								//animComponent.animSet.animPackage.textureBank.Clear();
+								var textureBank = animComponent.animSet.animPackage.textureBank;
+								foreach (var bml in paintingAnim.bml) {
+									foreach (var entry in bml.entries) {
+										var bankID = entry.textureBankId;
+										if (!textureBank.Any(tb => tb.id == bankID)) {
+											textureBank.Add(new TextureBankPath() {
+												sizeOf = 1340,
+												id = bankID,
+												materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+												textureSet = new GFXMaterialTexturePathSet() {
+													sizeOf = 1036,
+												}
+											});
+										}
+									}
+								}
+								// Fill in costume texture/pbk references
+								foreach (var tb in textureBank) {
+									tb.patchBank = new Path(costume.Main.PBKPath);
+									tb.textureSet.diffuse = new Path(costume.Main.DiffusePath);
+									tb.textureSet.back_light = new Path(costume.Main.BacklightPath);
+								}
+
+								costumesBun.AddFile(cookedPath, newTPLContainer);
+							}
+						}
+
+						if (!string.IsNullOrWhiteSpace(costume.TemplatePath_Trail)) {
+							var cookedPath = new Path(costume.TemplatePath_Trail).CookedPath(rlContextExt);
+							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
+								var basePath = $"world/common/fx/actors/trails/";
+								var actorToClone = family switch {
+									"teensy" => $"{basePath}teleporttrail_teensyclassicking.tpl",
+									_ => $"{basePath}teleporttrail_{family}.tpl"
+								};
+								var pOriginalActor = new Path(actorToClone);
+								pOriginalActor.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+
+								var originalTPL = pOriginalActor.GetObject<GenericFile<Actor_Template>>();
+								var newTPL = (Actor_Template)(await rlContextExt.Loader.Clone(originalTPL.obj, "tpl"));
+								var newTPLContainer = new GenericFile<Actor_Template>(newTPL);
+
+								// The trail color is set in 3 places:
+								newTPL.GetComponent<TextureGraphicComponent_Template>().defaultColor = costume.TrailColor;
+
+								var t3dc = newTPL.GetComponent<Trail3DComponent_Template>();
+								foreach(var trail in t3dc.trailList) trail.color = costume.TrailColor;
+
+								var fxc = newTPL.GetComponent<FxBankComponent_Template>();
+								fxc.Fx[0].gen._params.defaultColor = costume.TrailColor;
+
+								costumesBun.AddFile(cookedPath, newTPLContainer);
+							}
+						}
+
 					}
 
 					void AddLock(JSON_LockData l, string tag, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType behavior, string parent) {
@@ -413,6 +528,20 @@ namespace UbiCanvas.Conversion {
 
 						if (levelsConfig?.Costumes != null) {
 							foreach (var entry in levelsConfig.Costumes) {
+								// Fill in actor paths based on costumeID
+								entry.ActorPath_Main = $"world/common/playablecharacter/{entry.Family.ToLowerInvariant()}/{entry.CostumeID.ToLowerInvariant()}.act";
+								entry.ActorPath_ScoreHUD = $"world/common/ui/common/playerscore/scorehud_{entry.ScoreHudID.ToLowerInvariant()}.act";
+								entry.ActorPath_Painting = $"world/home/actor/costumes/costume{entry.CostumeID.ToLowerInvariant()}.act";
+								entry.TemplatePath_Painting = $"world/home/actor/costumes/components/costume{entry.CostumeID.ToLowerInvariant()}.tpl";
+								entry.TemplatePath_Trail = $"world/common/fx/actors/trails/teleporttrail_{entry.CostumeID.ToLowerInvariant().Replace("_","")}.tpl";
+								// TODO: duck, moskito
+
+								// Determine decoration brick path
+								var decFamily = entry.Family.ToLowerInvariant();
+								if(decFamily == "barbara") decFamily += "_cr";
+								var decorationBrickPath = $"world/home/paintings_and_notifications/painting_costumes/painting_costume_{decFamily}.isc";
+
+
 								RO2_PlayerIDInfo player = new RO2_PlayerIDInfo() {
 									sizeOf = 264,
 									id = entry.CostumeID,
@@ -467,17 +596,17 @@ namespace UbiCanvas.Conversion {
 								gc.costumes.Add(new RO2_CostumeInfo_Template() {
 									sizeOf = 180,
 									playerIDInfo = new StringID(entry.CostumeID),
-									painting = new Path(entry.PaintingActorPath),
-									backgroundColor = entry.PaintingBackgroundColor,
-									levelDependency = new StringID(entry.PaintingLevelDependency)
+									painting = new Path(entry.ActorPath_Painting),
+									backgroundColor = entry.Painting.BackgroundColor,
+									levelDependency = new StringID(entry.Painting.LevelDependency)
 								});
 
 								RO2_CostumeDescriptor_Template costumeDesc = new RO2_CostumeDescriptor_Template() {
 									costumeTag = new StringID(entry.CostumeID),
-									priority = entry.Priority,
-									decorationBrickPath = new Path(entry.DecorationBrickPath),
+									priority = entry.Painting.Priority,
+									decorationBrickPath = new Path(decorationBrickPath),
 									costumetype2 = entry.CostumeType,
-									unlockable = entry.Unlockable,
+									unlockable = entry.Painting.Unlockable,
 								};
 								homeConfig.costumeDescriptors.Add(costumeDesc);
 								sgsHomeConfig.costumeDescriptors.Add(costumeDesc);
@@ -577,6 +706,7 @@ namespace UbiCanvas.Conversion {
 			var locJsonPath = System.IO.Path.Combine(projectPath, "json", "localisation", "localisation_costumes_mini.json");
 			var dataOutputPath = System.IO.Path.Combine(projectPath, "data", "costumes_mini");
 
+			var rnd = new System.Random();
 			int priority = 23;
 
 			List<JSON_LocalisationData> localisationList = new List<JSON_LocalisationData>();
@@ -641,35 +771,48 @@ namespace UbiCanvas.Conversion {
 					var player = skin.obj as RO2_PlayerIDInfo;
 
 					player.defaultGameScreenInfo.actors[0].file.LoadObject(miniContext);
-					//player.defaultGameScreenInfo.actors[1].file.LoadObject(miniContext);
 					await miniContext.Loader.LoadLoop();
 					var mainActor = player.defaultGameScreenInfo.actors[0].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
 					var mainPlayerControllerComponent = mainActor.obj.GetComponent<RO2_PlayerControllerComponent>();
 					var mainAnimatedComponent = mainActor.obj.GetComponent<AnimatedComponent>();
 
-					/*var scoreActor = player.defaultGameScreenInfo.actors[1].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
-					scoreActor.obj.GetComponent<RO2_PlayerHudScoreComponent>().characterMaterial.textureSet.diffuse = player.iconTexturePath;*/
+					mainPlayerControllerComponent.trailPath.LoadObject(miniContext);
+					await miniContext.Loader.LoadLoop();
+					var trailTpl = mainPlayerControllerComponent.trailPath.GetObject<GenericFile<Actor_Template>>();
+
+					string GetRandomCostumeAnimation() {
+						var family = player.family.ToLowerInvariant();
+						int count = family switch {
+							"rayman" => 7,
+							"globox" => 6,
+							"teensy" => 11,
+							"barbara" => 10,
+							_ => throw new NotImplementedException($"Invalid family {player.family}")
+						};
+						int selection = rnd.Next(1, count+1);
+						return $"costume_{selection:D2}";
+					}
 
 
 					var playerJSON = new JSON_CostumeInfo() {
 						CostumeID = player.id,
 						NameID = AddLocalisation(miniContext, baseLocId, player.lineIdName),
+						DescriptionID = AddLocalisation(miniContext, baseLocId, player.lineIdDescription),
 						Family = player.family,
-						ActorPath_Main = player.defaultGameScreenInfo.actors[0].file.FullPath, // TODO: path conversion
-						ActorPath_ScoreHUD = player.defaultGameScreenInfo.actors[1].file.FullPath, // TODO: path conversion
-						ActorPath_Moskito = null, // TODO
-						ActorPath_Duck = null, // TODO
+						ScoreHudID = player.defaultGameScreenInfo.actors[1].file.filename.Replace("scorehud_","").Replace(".act",""),
+
 						IconPath = player.iconTexturePath.FullPath,
 						IconSize = player.iconSizeInTexture,
 						DeathBubbleColor = player.deathBubbleColor,
 
-						PaintingActorPath = null, // TODO
-						PaintingBackgroundColor = new UbiArt.Color(0,0,0,1), // TODO
-						PaintingLevelDependency = null,
-						DecorationBrickPath = null, // TODO
-						Priority = priority++,
+						Painting = new JSON_CostumeInfo.JSON_CostumePainting() {
+							BackgroundColor = player.deathBubbleColor, //new UbiArt.Color(0, 0, 0, 1), // TODO
+							LevelDependency = null,
+							Priority = priority++,
+							Unlockable = false,
+							Animation = GetRandomCostumeAnimation(),
+						},
 						CostumeType = RO2_CostumeDescriptor_Template.CostumeType2.Regular,
-						Unlockable = false,
 
 						Lock = new JSON_LockData() {
 							LockCount = 0,
@@ -677,12 +820,13 @@ namespace UbiCanvas.Conversion {
 						},
 
 						Main = new JSON_CostumeInfo.JSON_CostumeMain() {
-							TeleportTrail = mainPlayerControllerComponent.trailPath.FullPath,
 							PBKPath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].patchBank.FullPath,
 							DiffusePath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.diffuse.FullPath,
 							BacklightPath = mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0].textureSet.back_light.FullPath,
 							SubSkeleton = GetSubskeleton(mainAnimatedComponent.subSkeleton)
-						}
+						},
+						TrailColor = trailTpl.obj.GetComponent<TextureGraphicComponent_Template>().defaultColor,
+
 					};
 				}
 
