@@ -270,6 +270,8 @@ namespace UbiCanvas.Conversion {
 			// WIP
 			var levelsJsonPath = System.IO.Path.Combine(projectPath, "json", "levels");
 			var outPath = System.IO.Path.Combine(projectPath, "data", "_patch");
+			var costumesBuildPath = System.IO.Path.Combine(projectPath, "data", "_costumes_build");
+
 			var files = System.IO.Directory.Exists(levelsJsonPath) ? System.IO.Directory.GetFiles(levelsJsonPath, "*.json") : null;
 			if (files != null && files.Any()) {
 				files = files.OrderBy(f => f).ToArray();
@@ -288,6 +290,8 @@ namespace UbiCanvas.Conversion {
 					Path pGameConfig = new Path("enginedata/gameconfig/gameconfig.isg");
 					Path pHomeISC = new Path("world/home/level/home.isc");
 					Path pHomeSGS = new Path("world/home/level/home.sgs");
+					var costumesBun = new UbiArt.Bundle.BundleFile();
+
 					rlContextExt.Loader.LoadGenericFile(pGameConfig, isg => {
 						gameConfigISG = isg;
 						rlContextExt.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
@@ -311,6 +315,75 @@ namespace UbiCanvas.Conversion {
 						ubiRay = sgsHomeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == ubiRayStringID);
 						ubiRay.costumetype2 = RO2_CostumeDescriptor_Template.CostumeType2.Regular;
 						ubiRay.costumetype = RO2_CostumeDescriptor_Template.CostumeType.Regular;
+					}
+
+					async Task BuildCostume(JSON_CostumeInfo costume) {
+						if (!string.IsNullOrWhiteSpace(costume.ActorPath_Main) && costume.Main != null) {
+							var cookedPath = new Path(costume.ActorPath_Main).CookedPath(rlContextExt);
+							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
+								var actorToClone = costume.Family.ToLowerInvariant() switch {
+									"rayman"  => "world/common/playablecharacter/rayman/rayman.act",
+									"teensy"  => "world/common/playablecharacter/teensy/teensy_classicking.act",
+									"globox"  => "world/common/playablecharacter/globox/globox.act",
+									"barbara" => "world/common/playablecharacter/barbara/barbara.act",
+									_ => throw new NotImplementedException($"Unknown family: {costume.Family}")
+								};
+								var pOriginalActor = new Path(actorToClone);
+								pOriginalActor.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+
+								var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+								var newActor = (Actor)(await rlContextExt.Loader.Clone(originalActor.obj, "act"));
+								var newActorContainer = new ContainerFile<Actor>() {
+									read = true,
+									obj = newActor
+								};
+
+								var mainPlayerControllerComponent = newActor.GetComponent<RO2_PlayerControllerComponent>();
+								var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
+
+								mainPlayerControllerComponent.trailPath = new Path(costume.Main.TeleportTrail);
+								mainAnimatedComponent.subSkeleton = new StringID(costume.Main.SubSkeleton);
+								foreach (var tb in mainAnimatedComponent.subAnimInfo.animPackage.textureBank) {
+									tb.patchBank = new Path(costume.Main.PBKPath);
+									tb.textureSet.diffuse = new Path(costume.Main.DiffusePath);
+									tb.textureSet.back_light = new Path(costume.Main.BacklightPath);
+								}
+
+								/*var scoreActor = player.defaultGameScreenInfo.actors[1].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
+								scoreActor.obj.GetComponent<RO2_PlayerHudScoreComponent>().characterMaterial.textureSet.diffuse = player.iconTexturePath;*/
+
+
+								costumesBun.AddFile(cookedPath, newActorContainer);
+							}
+						}
+
+						if (!string.IsNullOrWhiteSpace(costume.ActorPath_ScoreHUD)) {
+							var cookedPath = new Path(costume.ActorPath_ScoreHUD).CookedPath(rlContextExt);
+							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
+								var actorToClone = costume.Family.ToLowerInvariant() switch {
+									"rayman"  => "world/common/ui/common/playerscore/scorehud_rayman.act",
+									"teensy"  => "world/common/ui/common/playerscore/scorehud_teensyclassicking.act",
+									"globox"  => "world/common/ui/common/playerscore/scorehud_globox.act",
+									"barbara" => "world/common/ui/common/playerscore/scorehud_barbara.act",
+									_ => throw new NotImplementedException($"Unknown family: {costume.Family}")
+								};
+								var pOriginalActor = new Path(actorToClone);
+								pOriginalActor.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+
+								var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+								var newActor = (Actor)(await rlContextExt.Loader.Clone(originalActor.obj, "act"));
+								var newActorContainer = new ContainerFile<Actor>() {
+									read = true,
+									obj = newActor
+								};
+
+								newActor.GetComponent<RO2_PlayerHudScoreComponent>().characterMaterial.textureSet.diffuse = new Path(costume.IconPath);
+
+								costumesBun.AddFile(cookedPath, newActorContainer);
+							}
+						}
 					}
 
 					void AddLock(JSON_LockData l, string tag, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType behavior, string parent) {
@@ -411,6 +484,8 @@ namespace UbiCanvas.Conversion {
 
 								AddLock(entry.Lock, entry.CostumeID, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.CostumeFrame, "Costumes");
 								AddTagText(entry.CostumeID, entry.NameID);
+
+								await BuildCostume(entry);
 							}
 						}
 
@@ -488,6 +563,10 @@ namespace UbiCanvas.Conversion {
 					bun.AddFile(rlContextExt.Loader.CookedPaths[pSgsContainer.stringID], sceneConfigManager);
 					bun.AddFile(rlContextExt.Loader.CookedPaths[pHomeISC.stringID], homeISC);
 					await rlContextExt.Loader.WriteFilesRaw(outPath, bun);
+
+					if (!costumesBun.IsEmpty) {
+						await rlContextExt.Loader.WriteFilesRaw(costumesBuildPath, costumesBun);
+					}
 				}
 			}
 		}
@@ -576,8 +655,8 @@ namespace UbiCanvas.Conversion {
 						CostumeID = player.id,
 						NameID = AddLocalisation(miniContext, baseLocId, player.lineIdName),
 						Family = player.family,
-						ActorPath_Main = player.defaultGameScreenInfo.actors[0].file.FullPath, // TODO: path conversion & reading the contents
-						ActorPath_ScoreHUD = player.defaultGameScreenInfo.actors[1].file.FullPath, // TODO
+						ActorPath_Main = player.defaultGameScreenInfo.actors[0].file.FullPath, // TODO: path conversion
+						ActorPath_ScoreHUD = player.defaultGameScreenInfo.actors[1].file.FullPath, // TODO: path conversion
 						ActorPath_Moskito = null, // TODO
 						ActorPath_Duck = null, // TODO
 						IconPath = player.iconTexturePath.FullPath,
