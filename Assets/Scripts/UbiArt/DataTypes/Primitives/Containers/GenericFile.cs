@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace UbiArt {
+	// TODO: No such thing actually exists in UbiArt. It's done in ITF::CSerializerLoadInPlace::Init.
 	public class GenericFile<T> : ICSerializable, IObjectContainer {
 		[Serialize("read"       )] public bool read = true;
 		[Serialize("sizeof"     )] public uint sizeOf = 0x100000;

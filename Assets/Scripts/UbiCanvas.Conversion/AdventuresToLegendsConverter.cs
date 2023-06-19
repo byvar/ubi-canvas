@@ -436,7 +436,9 @@ namespace UbiCanvas.Conversion {
 								var paintingAnim = animPath.GetObject<AnimTrack>();
 								var originalTPL = pOriginalActor.GetObject<GenericFile<Actor_Template>>();
 								var newTPL = (Actor_Template)(await rlContextExt.Loader.Clone(originalTPL.obj, "tpl"));
-								var newTPLContainer = new GenericFile<Actor_Template>(newTPL);
+								var newTPLContainer = new GenericFile<Actor_Template>(newTPL) {
+									sizeOf = originalTPL.sizeOf
+								};
 
 								var animComponent = newTPL.GetComponent<AnimLightComponent_Template>();
 								var subAnim = animComponent.animSet.animations.FirstOrDefault(a => a.friendlyName == new StringID("Available"));
@@ -462,6 +464,7 @@ namespace UbiCanvas.Conversion {
 													sizeOf = 1036,
 												}
 											});
+											newTPLContainer.sizeOf += 1340 + 1036;
 										}
 									}
 								}
@@ -490,7 +493,9 @@ namespace UbiCanvas.Conversion {
 
 								var originalTPL = pOriginalActor.GetObject<GenericFile<Actor_Template>>();
 								var newTPL = (Actor_Template)(await rlContextExt.Loader.Clone(originalTPL.obj, "tpl"));
-								var newTPLContainer = new GenericFile<Actor_Template>(newTPL);
+								var newTPLContainer = new GenericFile<Actor_Template>(newTPL) {
+									sizeOf = originalTPL.sizeOf
+								};
 
 								// The trail color is set in 3 places:
 								newTPL.GetComponent<TextureGraphicComponent_Template>().defaultColor = costume.TrailColor;
@@ -598,7 +603,8 @@ namespace UbiCanvas.Conversion {
 								});
 
 								gc.playerIDInfo.Add(new Generic<PlayerIDInfo>(player));
-								gc.sizeOf += 2048;
+								//gc.sizeOf += 2048;
+								gameConfigISG.sizeOf += 2048;
 
 								gc.costumes.Add(new RO2_CostumeInfo_Template() {
 									sizeOf = 180,
