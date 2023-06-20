@@ -258,7 +258,6 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public async Task ImportLevelsAndCostumes(string projectPath) {
-			// WIP
 			var levelsJsonPath = System.IO.Path.Combine(projectPath, "json", "levels");
 			var outPath = System.IO.Path.Combine(projectPath, "data", "_patch");
 			var costumesBuildPath = System.IO.Path.Combine(projectPath, "data", "_costumes_build");
@@ -306,6 +305,18 @@ namespace UbiCanvas.Conversion {
 					async Task BuildCostume(JSON_CostumeInfo costume) {
 						var family = costume.Family.ToLowerInvariant();
 
+						JSON_CostumeInfo.JSON_TextureBank GetBankByID(StringID sid) {
+							// Try to get specific bank from dictionary first.
+							if (costume.TextureBanks != null) {
+								var tbs = costume.TextureBanks.ToDictionary(kv => new StringID(kv.Key));
+								if (tbs.ContainsKey(sid)) {
+									return tbs[sid].Value;
+								}
+							}
+							// Fall back to main texture bank otherwise
+							return costume.TextureBank;
+						}
+
 						if (!string.IsNullOrWhiteSpace(costume.ActorPath_Main)) {
 							var cookedPath = new Path(costume.ActorPath_Main).CookedPath(rlContextExt);
 							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
@@ -335,7 +346,7 @@ namespace UbiCanvas.Conversion {
 								var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
 
 								mainPlayerControllerComponent.trailPath = new Path(costume.TemplatePath_Trail);
-								mainAnimatedComponent.subSkeleton = new StringID(costume.Main.SubSkeleton);
+								mainAnimatedComponent.subSkeleton = new StringID(costume.SubSkeleton);
 								foreach (var tpl_b in tplAnimatedComponent.animSet.animPackage.textureBank) {
 									if (!mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any(act_b => act_b.id == tpl_b.id)) {
 										mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Add(new TextureBankPath() {
@@ -350,9 +361,10 @@ namespace UbiCanvas.Conversion {
 									}
 								}
 								foreach (var tb in mainAnimatedComponent.subAnimInfo.animPackage.textureBank) {
-									tb.patchBank = new Path(costume.Main.PBKPath);
-									tb.textureSet.diffuse = new Path(costume.Main.DiffusePath);
-									tb.textureSet.back_light = new Path(costume.Main.BacklightPath);
+									var jsonb = GetBankByID(tb.id);
+									tb.patchBank = new Path(jsonb.PBK);
+									tb.textureSet.diffuse = new Path(jsonb.Diffuse);
+									tb.textureSet.back_light = new Path(jsonb.Backlight);
 								}
 
 								/*var scoreActor = player.defaultGameScreenInfo.actors[1].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
@@ -470,9 +482,10 @@ namespace UbiCanvas.Conversion {
 								}
 								// Fill in costume texture/pbk references
 								foreach (var tb in textureBank) {
-									tb.patchBank = new Path(costume.Main.PBKPath);
-									tb.textureSet.diffuse = new Path(costume.Main.DiffusePath);
-									tb.textureSet.back_light = new Path(costume.Main.BacklightPath);
+									var jsonb = GetBankByID(tb.id);
+									tb.patchBank = new Path(jsonb.PBK);
+									tb.textureSet.diffuse = new Path(jsonb.Diffuse);
+									tb.textureSet.back_light = new Path(jsonb.Backlight);
 								}
 
 								costumesBun.AddFile(cookedPath, newTPLContainer);
@@ -754,29 +767,35 @@ namespace UbiCanvas.Conversion {
 			};
 
 			Dictionary<StringID, string> subskeletonDictionary = new Dictionary<StringID, string>();
-			CreateSubskeletonDictionary();
+			Dictionary<StringID, string> texBankDictionary = new Dictionary<StringID, string>();
+			CreateStringIDDictionaries();
 
-			void CreateSubskeletonDictionary() {
-				void AddString(string str) {
-					subskeletonDictionary[new StringID(str)] = str;
-				}
+			void CreateStringIDDictionaries() {
+				void AddSkeletonString(string str) => subskeletonDictionary[new StringID(str)] = str;
+				void AddTexBankString(string str) => texBankDictionary[new StringID(str)] = str;
 				// General
-				AddString(null);
+				AddSkeletonString(null);
+				AddTexBankString(null);
 
-				// Rayman
-				AddString("Naked");
-				AddString("Knight");
-				AddString("Basic");
-				AddString("Splinter");
-				AddString("Mario");
-				AddString("Demo");
+				// Rayman subskeletons. Other characters don't have them
 				// TODO: There's one other added for adventures
+				AddSkeletonString("Naked");
+				AddSkeletonString("Knight");
+				AddSkeletonString("Basic");
+				AddSkeletonString("Splinter");
+				AddSkeletonString("Mario");
+				AddSkeletonString("Demo");
 
-				// Globox: doesn't have them
+				// BankIDs
+				for (char i = 'a'; i < 'k'; i++) AddTexBankString($"rayman_{i}1");
+				for (char i = 'a'; i < 'k'; i++) AddTexBankString($"globox_{i}1");
+				for (char i = 'a'; i < 'k'; i++) AddTexBankString($"teensy_{i}1");
+				for (char i = 'a'; i < 'k'; i++) AddTexBankString($"barbara_{i}1");
 
-				// TODO: other characters
+
 			}
 			string GetSubskeleton(StringID sid) => subskeletonDictionary[sid];
+			string GetTexBankID(StringID sid) => texBankDictionary[sid];
 
 			uint AddLocalisation(Context c, uint baseID, uint id) {
 				var loc = c.Loader.localisation;
@@ -815,26 +834,58 @@ namespace UbiCanvas.Conversion {
 				{
 					var player = skin.obj as RO2_PlayerIDInfo;
 					//if(player.family != "Rayman" && player.family != "Globox" && player.family != "Barbara") continue;
-					if(rlContextExt.Loader.gameConfig.playerIDInfo.Any(c => c.obj.id == player.id)) continue;
+					if(rlContextExt.Loader.gameConfig.playerIDInfo.Any(c => c.obj.id.ToUpperInvariant() == player.id.ToUpperInvariant())) continue;
 
+					// Load main actor & template
 					player.defaultGameScreenInfo.actors[0].file.LoadObject(miniContext);
 					await miniContext.Loader.LoadLoop();
 					var mainActor = player.defaultGameScreenInfo.actors[0].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
 					var mainPlayerControllerComponent = mainActor.obj.GetComponent<RO2_PlayerControllerComponent>();
 					var mainAnimatedComponent = mainActor.obj.GetComponent<AnimatedComponent>();
-					var texBank = mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any() ? mainAnimatedComponent.subAnimInfo.animPackage.textureBank[0] : null;
-					if (texBank == null) {
-						// Load the template and get it from there...
-						mainActor.obj.LUA.LoadObject(miniContext);
-						await miniContext.Loader.LoadLoop();
-						var tpl = mainActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
-						var tplAnimatedComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
-						texBank = tplAnimatedComponent.animSet.animPackage.textureBank[0];
-					}
-
+					
 					mainPlayerControllerComponent.trailPath.LoadObject(miniContext);
+					mainActor.obj.LUA.LoadObject(miniContext);
 					await miniContext.Loader.LoadLoop();
+
+					var tpl = mainActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+					var tplAnimatedComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
 					var trailTpl = mainPlayerControllerComponent.trailPath.GetObject<GenericFile<Actor_Template>>();
+
+					// Make list of texture banks
+					var gameTexBanks = new List<TextureBankPath>();
+					gameTexBanks.AddRange(mainAnimatedComponent.subAnimInfo.animPackage.textureBank);
+					foreach (var tb in tplAnimatedComponent.animSet.animPackage.textureBank) {
+						if(!gameTexBanks.Any(t => t.id == tb.id)) gameTexBanks.Add(tb);
+					}
+					Dictionary<string, JSON_CostumeInfo.JSON_TextureBank> jsonTexBanks = new Dictionary<string, JSON_CostumeInfo.JSON_TextureBank>();
+					foreach (var tb in gameTexBanks) {
+						jsonTexBanks[GetTexBankID(tb.id)] = new JSON_CostumeInfo.JSON_TextureBank() {
+							PBK = tb.patchBank.FullPath,
+							Diffuse = tb.textureSet.diffuse.FullPath,
+							Backlight = tb.textureSet.back_light.FullPath,
+
+							GameBank = tb
+						};
+					}
+					JSON_CostumeInfo.JSON_TextureBank packBank = null;
+					if (jsonTexBanks.Any()) {
+						packBank = jsonTexBanks.FirstOrDefault().Value;
+						if (jsonTexBanks.Any(tb => tb.Value.PBK != packBank.PBK || tb.Value.Diffuse != packBank.Diffuse || tb.Value.Backlight != packBank.Backlight)) {
+							packBank = null;
+						}
+					}
+					if (packBank != null) jsonTexBanks = null;
+
+					void ResolveBank(TextureBankPath tb) {
+						tb.patchBank.LoadObject(miniContext);
+						tb.textureSet.diffuse.LoadObject(miniContext);
+						tb.textureSet.back_light.LoadObject(miniContext);
+					}
+					void AddBankToBundle(TextureBankPath tb) {
+						AddPathToBundle(tb.patchBank);
+						AddPathToBundle(tb.textureSet.diffuse);
+						AddPathToBundle(tb.textureSet.back_light);
+					}
 
 					string GetRandomCostumeAnimation() {
 						var family = player.family.ToLowerInvariant();
@@ -848,7 +899,6 @@ namespace UbiCanvas.Conversion {
 						int selection = rnd.Next(1, count+1);
 						return $"costume_{selection:D2}";
 					}
-
 
 					var playerJSON = new JSON_CostumeInfo() {
 						CostumeID = player.id,
@@ -875,21 +925,24 @@ namespace UbiCanvas.Conversion {
 							LockType = RO2_GameManagerConfig_Template.LockDataClass.MapLockType.None,
 						},
 
-						Main = new JSON_CostumeInfo.JSON_CostumeMain() {
-							PBKPath = texBank.patchBank.FullPath,
-							DiffusePath = texBank.textureSet.diffuse.FullPath,
-							BacklightPath = texBank.textureSet.back_light.FullPath,
-							SubSkeleton = GetSubskeleton(mainAnimatedComponent.subSkeleton)
-						},
+						SubSkeleton = GetSubskeleton(mainAnimatedComponent.subSkeleton),
+
+						TextureBank = packBank,
+						TextureBanks = jsonTexBanks,
+
 						TrailColor = trailTpl.obj.GetComponent<TextureGraphicComponent_Template>().defaultColor,
 
 					};
 					levelsConfig.Costumes.Add(playerJSON);
 
 					// Load all assets to be exported
-					texBank.patchBank.LoadObject(miniContext);
-					texBank.textureSet.diffuse.LoadObject(miniContext);
-					texBank.textureSet.back_light.LoadObject(miniContext);
+					if (jsonTexBanks != null) {
+						foreach (var tb in jsonTexBanks) {
+							ResolveBank(tb.Value.GameBank);
+						}
+					} else if (packBank != null) {
+						ResolveBank(packBank.GameBank);
+					}
 					player.iconTexturePath.LoadObject(miniContext);
 					await miniContext.Loader.LoadLoop();
 
@@ -899,9 +952,13 @@ namespace UbiCanvas.Conversion {
 					}
 
 					// Add all assets to be exported to bundle
-					AddPathToBundle(texBank.patchBank);
-					AddPathToBundle(texBank.textureSet.diffuse);
-					AddPathToBundle(texBank.textureSet.back_light);
+					if (jsonTexBanks != null) {
+						foreach (var tb in jsonTexBanks) {
+							AddBankToBundle(tb.Value.GameBank);
+						}
+					} else if (packBank != null) {
+						AddBankToBundle(packBank.GameBank);
+					}
 					AddPathToBundle(player.iconTexturePath);
 				}
 
@@ -978,6 +1035,7 @@ namespace UbiCanvas.Conversion {
 					if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
 						l.Context.SystemLogger?.LogInfo($"Duplicating template (Frise with Components): {ogPath.FullPath}");
 						var newTpl = new GenericFile<Actor_Template>(Merger.Merge<Actor_Template>(config));
+						newTpl.sizeOf = f.config.sizeOf;
 						var oldCookedPath = l.CookedPaths[ogPath.stringID];
 						var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".fcg", "__friseparent.tpl"), true);
 						l.CookedPaths[newPath.stringID] = newCookedPath;
@@ -1119,6 +1177,7 @@ namespace UbiCanvas.Conversion {
 					if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
 						l.Context.SystemLogger?.LogInfo($"Duplicating template (STARTPAUSE): {ogPath.FullPath}");
 						var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl") as Actor_Template);
+						newTpl.sizeOf = ogTpl.sizeOf;
 						newTpl.obj.STARTPAUSED = true;
 						var oldCookedPath = l.CookedPaths[ogPath.stringID];
 						var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", "__startpaused.tpl"), true);

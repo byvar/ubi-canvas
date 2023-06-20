@@ -36,22 +36,26 @@ namespace UbiCanvas.Conversion.Json {
 		public string IconPath { get; set; }
 		public Vec2d IconSize { get; set; }
 		public UbiArt.Color DeathBubbleColor { get; set; }
+		public UbiArt.Color TrailColor { get; set; }
 
 		public RO2_CostumeDescriptor_Template.CostumeType2 CostumeType { get; set; }
 
-		public JSON_LockData Lock { get; set; }
+		public string SubSkeleton { get; set; }
 
-		public JSON_CostumeMain Main { get; set; }
+		public JSON_TextureBank TextureBank { get; set; }
+		public Dictionary<string, JSON_TextureBank> TextureBanks { get; set; }
+
 		public JSON_CostumePainting Painting { get; set; }
 
-		public UbiArt.Color TrailColor { get; set; }
+		public JSON_LockData Lock { get; set; }
 
+		public class JSON_TextureBank {
+			public string PBK { get; set; }
+			public string Diffuse { get; set; }
+			public string Backlight { get; set; }
 
-		public class JSON_CostumeMain {
-			public string PBKPath { get; set; }
-			public string DiffusePath { get; set; }
-			public string BacklightPath { get; set; }
-			public string SubSkeleton { get; set; }
+			[JsonIgnore]
+			public TextureBankPath GameBank { get; set; }
 		}
 
 		public class JSON_CostumePainting {
