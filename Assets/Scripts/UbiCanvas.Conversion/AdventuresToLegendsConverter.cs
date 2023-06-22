@@ -305,16 +305,29 @@ namespace UbiCanvas.Conversion {
 					async Task BuildCostume(JSON_CostumeInfo costume) {
 						var family = costume.Family.ToLowerInvariant();
 
-						JSON_CostumeInfo.JSON_TextureBank GetBankByID(StringID sid) {
+						if (costume.TrailColor == null && costume.DeathBubbleColor != null) {
+							var c = costume.DeathBubbleColor;
+							costume.TrailColor = new UbiArt.Color(c.r, c.g, c.b, 0.5019608f);
+						}
+						var textureBanksDict = costume.TextureBanks?.ToDictionary(kv => new StringID(kv.Key));
+						foreach (var bnk in costume.TextureBanks) {
+							bnk.Value.ID = bnk.Key;
+						}
+
+						JSON_CostumeInfo.JSON_TextureBank GetBankByID(StringID sid, string fallback = null) {
 							// Try to get specific bank from dictionary first.
 							if (costume.TextureBanks != null) {
-								var tbs = costume.TextureBanks.ToDictionary(kv => new StringID(kv.Key));
-								if (tbs.ContainsKey(sid)) {
-									return tbs[sid].Value;
+								if (textureBanksDict.ContainsKey(sid)) {
+									return textureBanksDict[sid].Value;
 								}
+								if (fallback != null) {
+									if(costume.TextureBanks.ContainsKey(fallback))
+										return costume.TextureBanks[fallback];
+								}
+								if(costume.TextureBanks.ContainsKey("pack"))
+									return costume.TextureBanks["pack"];
 							}
-							// Fall back to main texture bank otherwise
-							return costume.TextureBank;
+							return null;
 						}
 
 						if (!string.IsNullOrWhiteSpace(costume.ActorPath_Main)) {
@@ -370,6 +383,85 @@ namespace UbiCanvas.Conversion {
 								/*var scoreActor = player.defaultGameScreenInfo.actors[1].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
 								scoreActor.obj.GetComponent<RO2_PlayerHudScoreComponent>().characterMaterial.textureSet.diffuse = player.iconTexturePath;*/
 
+
+								costumesBun.AddFile(cookedPath, newActorContainer);
+							}
+						}
+
+						if (!string.IsNullOrWhiteSpace(costume.ActorPath_Moskito)) {
+							var cookedPath = new Path(costume.ActorPath_Moskito).CookedPath(rlContextExt);
+							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
+								var moskitoFamily = family switch {
+									"rayman" => "ray",
+									"globox" => "glob",
+									_ => family
+								};
+								var basePath = $"world/common/shooter/playablecharacter/shootermoskito{moskitoFamily}/";
+								var actorToClone = family switch {
+									"teensy" => $"{basePath}shootermoskitoteensy_classicking.act",
+									_ => $"{basePath}shootermoskito{moskitoFamily}.act"
+								};
+								var pOriginalActor = new Path(actorToClone);
+								pOriginalActor.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+
+								var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+								var newActor = (Actor)(await rlContextExt.Loader.Clone(originalActor.obj, "act"));
+								var newActorContainer = new ContainerFile<Actor>() {
+									read = true,
+									obj = newActor
+								};
+
+								// Load template too
+								originalActor.obj.LUA.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+								var originalActorTPL = originalActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+
+								var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
+								var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
+
+								// No need to set the subskeleton for the Moskito actor! It's always null
+								//mainAnimatedComponent.subSkeleton = new StringID(costume.SubSkeleton);
+								
+								foreach (var tpl_b in tplAnimatedComponent.animSet.animPackage.textureBank) {
+									if (!mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any(act_b => act_b.id == tpl_b.id)) {
+										mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Add(new TextureBankPath() {
+											sizeOf = 1340,
+											id = tpl_b.id,
+											materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+											textureSet = new GFXMaterialTexturePathSet() {
+												sizeOf = 1036,
+											},
+
+										});
+									}
+								}
+								foreach (var tb in mainAnimatedComponent.subAnimInfo.animPackage.textureBank) {
+									var jsonb = GetBankByID(tb.id, fallback: "pack_shootermoskito");
+									if (jsonb.ID != "pack") {
+										// Source is a version that has Moskito sprites. Use this patchbank for everything.
+										tb.patchBank = new Path(jsonb.PBK);
+
+										if (jsonb.ID != "pack_shootermoskito"
+											|| (tb.id != new StringID("shootermoskitodeath")  // These two are never included in pack_shootermoskito 
+												&& tb.id != new StringID($"shootermoskitoray_a"))
+											) {
+											tb.textureSet.diffuse = new Path(jsonb.Diffuse);
+											tb.textureSet.back_light = new Path(jsonb.Backlight);
+										}
+									} else {
+										// Source is the main packed sprite sheet. No Moskito sprites in this, so use the default PBK for those instead.
+										if (tb.id != new StringID("shootermoskitodeath")
+											&& tb.id != new StringID($"shootermoskitoray_a") // Used for teensy & barbara too
+											&& tb.id != new StringID($"shootermoskitoglob_a") // Only Globox has his own bank
+										) {
+											tb.patchBank = new Path(jsonb.PBK);
+
+											tb.textureSet.diffuse = new Path(jsonb.Diffuse);
+											tb.textureSet.back_light = new Path(jsonb.Backlight);
+										}
+									}
+								}
 
 								costumesBun.AddFile(cookedPath, newActorContainer);
 							}
@@ -482,7 +574,7 @@ namespace UbiCanvas.Conversion {
 								}
 								// Fill in costume texture/pbk references
 								foreach (var tb in textureBank) {
-									var jsonb = GetBankByID(tb.id);
+									var jsonb = GetBankByID(tb.id, fallback: "pack_costume");
 									tb.patchBank = new Path(jsonb.PBK);
 									tb.textureSet.diffuse = new Path(jsonb.Diffuse);
 									tb.textureSet.back_light = new Path(jsonb.Backlight);
@@ -553,12 +645,21 @@ namespace UbiCanvas.Conversion {
 						if (levelsConfig?.Costumes != null) {
 							foreach (var entry in levelsConfig.Costumes) {
 								// Fill in actor paths based on costumeID
+								var moskitoFamily = entry.Family.ToLowerInvariant() switch {
+									"rayman" => "ray",
+									"globox" => "glob",
+									_ => entry.Family.ToLowerInvariant()
+								};
+								if (entry.MoskitoID == null) {
+									entry.MoskitoID = entry.CostumeID.ToLowerInvariant().Replace(entry.Family.ToLowerInvariant(), moskitoFamily);
+								}
 								entry.ActorPath_Main = $"world/common/playablecharacter/{entry.Family.ToLowerInvariant()}/{entry.CostumeID.ToLowerInvariant()}.act";
 								entry.ActorPath_ScoreHUD = $"world/common/ui/common/playerscore/scorehud_{entry.ScoreHudID.ToLowerInvariant()}.act";
+								entry.ActorPath_Moskito = $"world/common/shooter/playablecharacter/shootermoskito{moskitoFamily}/shootermoskito{entry.MoskitoID.ToLowerInvariant()}.act";
 								entry.ActorPath_Painting = $"world/home/actor/costumes/costume{entry.CostumeID.ToLowerInvariant()}.act";
 								entry.TemplatePath_Painting = $"world/home/actor/costumes/components/costume{entry.CostumeID.ToLowerInvariant()}.tpl";
 								entry.TemplatePath_Trail = $"world/common/fx/actors/trails/teleporttrail_{entry.CostumeID.ToLowerInvariant().Replace("_","")}.tpl";
-								// TODO: duck, moskito
+								// TODO: duck
 
 								// Determine decoration brick path
 								var decFamily = entry.Family.ToLowerInvariant();
@@ -867,14 +968,16 @@ namespace UbiCanvas.Conversion {
 							GameBank = tb
 						};
 					}
-					JSON_CostumeInfo.JSON_TextureBank packBank = null;
 					if (jsonTexBanks.Any()) {
-						packBank = jsonTexBanks.FirstOrDefault().Value;
+						var packBank = jsonTexBanks.FirstOrDefault().Value;
 						if (jsonTexBanks.Any(tb => tb.Value.PBK != packBank.PBK || tb.Value.Diffuse != packBank.Diffuse || tb.Value.Backlight != packBank.Backlight)) {
 							packBank = null;
 						}
+						if (packBank != null) {
+							jsonTexBanks.Clear();
+							jsonTexBanks.Add("pack", packBank);
+						}
 					}
-					if (packBank != null) jsonTexBanks = null;
 
 					void ResolveBank(TextureBankPath tb) {
 						tb.patchBank.LoadObject(miniContext);
@@ -906,6 +1009,7 @@ namespace UbiCanvas.Conversion {
 						DescriptionID = AddLocalisation(miniContext, baseLocId, player.lineIdDescription),
 						Family = player.family,
 						ScoreHudID = player.defaultGameScreenInfo.actors[1].file.filename.Replace("scorehud_","").Replace(".act",""),
+						MoskitoID = player.id.ToLowerInvariant().Replace("rayman", "ray").Replace("globox", "glob"),
 
 						IconPath = player.iconTexturePath.FullPath,
 						IconSize = player.iconSizeInTexture,
@@ -927,7 +1031,6 @@ namespace UbiCanvas.Conversion {
 
 						SubSkeleton = GetSubskeleton(mainAnimatedComponent.subSkeleton),
 
-						TextureBank = packBank,
 						TextureBanks = jsonTexBanks,
 
 						TrailColor = trailTpl.obj.GetComponent<TextureGraphicComponent_Template>().defaultColor,
@@ -940,8 +1043,6 @@ namespace UbiCanvas.Conversion {
 						foreach (var tb in jsonTexBanks) {
 							ResolveBank(tb.Value.GameBank);
 						}
-					} else if (packBank != null) {
-						ResolveBank(packBank.GameBank);
 					}
 					player.iconTexturePath.LoadObject(miniContext);
 					await miniContext.Loader.LoadLoop();
@@ -956,8 +1057,6 @@ namespace UbiCanvas.Conversion {
 						foreach (var tb in jsonTexBanks) {
 							AddBankToBundle(tb.Value.GameBank);
 						}
-					} else if (packBank != null) {
-						AddBankToBundle(packBank.GameBank);
 					}
 					AddPathToBundle(player.iconTexturePath);
 				}

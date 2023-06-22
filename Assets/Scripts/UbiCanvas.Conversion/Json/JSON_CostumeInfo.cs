@@ -17,6 +17,7 @@ namespace UbiCanvas.Conversion.Json {
 		public string Family { get; set; } // Rayman, Globox, Teensy, Barbara are the options
 
 		public string ScoreHudID { get; set; } // world/common/ui/common/playerscore/scorehud_{ScoreHudID}.act
+		public string MoskitoID { get; set; } // world/common/shooter/playablecharacter/shootermoskito{MoskitoFamily}/shootermoskito{MoskitoID}.act
 
 		[JsonIgnore]
 		public string ActorPath_Main { get; set; }
@@ -42,7 +43,6 @@ namespace UbiCanvas.Conversion.Json {
 
 		public string SubSkeleton { get; set; }
 
-		public JSON_TextureBank TextureBank { get; set; }
 		public Dictionary<string, JSON_TextureBank> TextureBanks { get; set; }
 
 		public JSON_CostumePainting Painting { get; set; }
@@ -56,6 +56,8 @@ namespace UbiCanvas.Conversion.Json {
 
 			[JsonIgnore]
 			public TextureBankPath GameBank { get; set; }
+			[JsonIgnore]
+			public string ID { get; set; }
 		}
 
 		public class JSON_CostumePainting {
