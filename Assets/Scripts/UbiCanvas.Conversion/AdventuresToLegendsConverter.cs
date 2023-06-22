@@ -491,8 +491,8 @@ namespace UbiCanvas.Conversion {
 								var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
 								var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
 
-								// No need to set the subskeleton for the Moskito actor! It's always null
-								//mainAnimatedComponent.subSkeleton = new StringID(costume.SubSkeleton);
+								// The subskeleton for the duck actor is the family name
+								mainAnimatedComponent.subSkeleton = new StringID(costume.Family);
 
 								foreach (var tpl_b in tplAnimatedComponent.animSet.animPackage.textureBank) {
 									if (!mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any(act_b => act_b.id == tpl_b.id)) {
