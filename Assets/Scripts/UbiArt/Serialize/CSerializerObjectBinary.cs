@@ -261,6 +261,9 @@ namespace UbiArt {
 		#region Logging
 
 		protected string LogPrefix => IsSerializerLoggerEnabled ? $"(R) {CurrentPointer}:{new string(' ', (Depth + 1) * 2)}" : null;
+		//protected string LogPrefix => IsSerializerLoggerEnabled ? $"{new string(' ', (Depth + 1) * 2)}" : null;
+
+
 		public override void Log(string logString, params object[] args) {
 			if (IsSerializerLoggerEnabled)
 				Context.SerializerLogger.Log(LogPrefix + String.Format(logString, args));

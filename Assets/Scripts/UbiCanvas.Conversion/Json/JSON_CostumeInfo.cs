@@ -18,6 +18,7 @@ namespace UbiCanvas.Conversion.Json {
 
 		public string ScoreHudID { get; set; } // world/common/ui/common/playerscore/scorehud_{ScoreHudID}.act
 		public string MoskitoID { get; set; } // world/common/shooter/playablecharacter/shootermoskito{MoskitoFamily}/shootermoskito{MoskitoID}.act
+		public string DuckID { get; set; } // world/common/shooter/playablecharacter/duck/duck_{DuckID.ToLowerInvariant()}.act
 
 		[JsonIgnore]
 		public string ActorPath_Main { get; set; }
@@ -42,6 +43,7 @@ namespace UbiCanvas.Conversion.Json {
 		public RO2_CostumeDescriptor_Template.CostumeType2 CostumeType { get; set; }
 
 		public string SubSkeleton { get; set; }
+		public JSON_DuckType DuckType { get; set; }
 
 		public Dictionary<string, JSON_TextureBank> TextureBanks { get; set; }
 
@@ -66,6 +68,11 @@ namespace UbiCanvas.Conversion.Json {
 			public string LevelDependency { get; set; } // Unlock only after certain level is completed
 			public int Priority { get; set; }
 			public bool Unlockable { get; set; }
+		}
+
+		public enum JSON_DuckType : int {
+			Normal = 0,
+			Naked = 1
 		}
 	}
 }

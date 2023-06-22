@@ -467,6 +467,87 @@ namespace UbiCanvas.Conversion {
 							}
 						}
 
+						if (!string.IsNullOrWhiteSpace(costume.ActorPath_Duck)) {
+							var cookedPath = new Path(costume.ActorPath_Duck).CookedPath(rlContextExt);
+							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
+								var basePath = $"world/common/playablecharacter/duck/";
+								var actorToClone = $"{basePath}duck_{family}.act";
+								var pOriginalActor = new Path(actorToClone);
+								pOriginalActor.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+
+								var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+								var newActor = (Actor)(await rlContextExt.Loader.Clone(originalActor.obj, "act"));
+								var newActorContainer = new ContainerFile<Actor>() {
+									read = true,
+									obj = newActor
+								};
+
+								// Load template too
+								originalActor.obj.LUA.LoadObject(rlContextExt);
+								await rlContextExt.Loader.LoadLoop();
+								var originalActorTPL = originalActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+
+								var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
+								var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
+
+								// No need to set the subskeleton for the Moskito actor! It's always null
+								//mainAnimatedComponent.subSkeleton = new StringID(costume.SubSkeleton);
+
+								foreach (var tpl_b in tplAnimatedComponent.animSet.animPackage.textureBank) {
+									if (!mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any(act_b => act_b.id == tpl_b.id)) {
+										mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Add(new TextureBankPath() {
+											sizeOf = 1340,
+											id = tpl_b.id,
+											materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+											textureSet = new GFXMaterialTexturePathSet() {
+												sizeOf = 1036,
+											},
+
+										});
+									}
+								}
+								foreach (var tb in mainAnimatedComponent.subAnimInfo.animPackage.textureBank) {
+									void ConfigureTexturesBasedOnDuckType() {
+										var duckTypeInt = (((int)costume.DuckType) + 1);
+										var duckPath = $"world/common/playablecharacter/duck/animation/";
+										if (tb.id == new StringID("duck_a1")) {
+											duckPath += $"duck_a{duckTypeInt}";
+										} else {
+											duckPath += $"duck_c{duckTypeInt}";
+										}
+										tb.textureSet.diffuse = new Path($"{duckPath}.tga");
+										tb.textureSet.back_light = new Path($"{duckPath}_back.tga");
+									}
+									var jsonb = GetBankByID(tb.id, fallback: "pack_duck");
+									if (jsonb.ID != "pack" && jsonb.ID != "pack_duck") {
+										// Source is a version that has Duck sprites. Use this patchbank regardless
+										tb.patchBank = new Path(jsonb.PBK);
+
+										// To allow for easier json editing, automatically determine the duck body sprites to use based on duck type enum.
+										// You can still specify the sprites too, this only happens if diffuse is null
+										if (jsonb.Diffuse == null && (tb.id == new StringID("duck_a1") || tb.id == new StringID("duck_c1"))) { // Duck bodies
+											ConfigureTexturesBasedOnDuckType();
+										} else {
+											tb.textureSet.diffuse = new Path(jsonb.Diffuse);
+											tb.textureSet.back_light = new Path(jsonb.Backlight);
+										}
+									} else {
+										if (tb.id == new StringID("duck_a1") || tb.id == new StringID("duck_c1")) {
+											// Don't change PBK
+											ConfigureTexturesBasedOnDuckType();
+										} else {
+											tb.patchBank = new Path(jsonb.PBK);
+											tb.textureSet.diffuse = new Path(jsonb.Diffuse);
+											tb.textureSet.back_light = new Path(jsonb.Backlight);
+										}
+									}
+								}
+
+								costumesBun.AddFile(cookedPath, newActorContainer);
+							}
+						}
+
 						if (!string.IsNullOrWhiteSpace(costume.ActorPath_ScoreHUD)) {
 							var cookedPath = new Path(costume.ActorPath_ScoreHUD).CookedPath(rlContextExt);
 							if (!System.IO.File.Exists(System.IO.Path.Combine(costumesBuildPath, cookedPath.FullPath))) {
@@ -653,13 +734,15 @@ namespace UbiCanvas.Conversion {
 								if (entry.MoskitoID == null) {
 									entry.MoskitoID = entry.CostumeID.ToLowerInvariant().Replace(entry.Family.ToLowerInvariant(), moskitoFamily);
 								}
+								if (entry.DuckID == null) entry.DuckID = entry.CostumeID.ToLowerInvariant();
+
 								entry.ActorPath_Main = $"world/common/playablecharacter/{entry.Family.ToLowerInvariant()}/{entry.CostumeID.ToLowerInvariant()}.act";
 								entry.ActorPath_ScoreHUD = $"world/common/ui/common/playerscore/scorehud_{entry.ScoreHudID.ToLowerInvariant()}.act";
 								entry.ActorPath_Moskito = $"world/common/shooter/playablecharacter/shootermoskito{moskitoFamily}/shootermoskito{entry.MoskitoID.ToLowerInvariant()}.act";
+								entry.ActorPath_Duck = $"world/common/playablecharacter/duck/duck_{entry.DuckID.ToLowerInvariant()}.act";
 								entry.ActorPath_Painting = $"world/home/actor/costumes/costume{entry.CostumeID.ToLowerInvariant()}.act";
 								entry.TemplatePath_Painting = $"world/home/actor/costumes/components/costume{entry.CostumeID.ToLowerInvariant()}.tpl";
 								entry.TemplatePath_Trail = $"world/common/fx/actors/trails/teleporttrail_{entry.CostumeID.ToLowerInvariant().Replace("_","")}.tpl";
-								// TODO: duck
 
 								// Determine decoration brick path
 								var decFamily = entry.Family.ToLowerInvariant();
@@ -1010,6 +1093,7 @@ namespace UbiCanvas.Conversion {
 						Family = player.family,
 						ScoreHudID = player.defaultGameScreenInfo.actors[1].file.filename.Replace("scorehud_","").Replace(".act",""),
 						MoskitoID = player.id.ToLowerInvariant().Replace("rayman", "ray").Replace("globox", "glob"),
+						DuckID = player.id.ToLowerInvariant(),
 
 						IconPath = player.iconTexturePath.FullPath,
 						IconSize = player.iconSizeInTexture,
@@ -1030,6 +1114,8 @@ namespace UbiCanvas.Conversion {
 						},
 
 						SubSkeleton = GetSubskeleton(mainAnimatedComponent.subSkeleton),
+
+						DuckType = JSON_CostumeInfo.JSON_DuckType.Normal,
 
 						TextureBanks = jsonTexBanks,
 
