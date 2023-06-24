@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using ImageMagick;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System;
@@ -915,6 +916,7 @@ namespace UbiCanvas.Conversion {
 			var outPath = System.IO.Path.Combine(projectPath, "data", "_build_textures");
 
 			using var rlContext = CreateContext(Settings.Mode.RaymanLegendsPC);
+			var bun = new UbiArt.Bundle.BundleFile();
 
 			// Use alphabetical order. To prioritize a file being added, prefix the mod name with _
 			foreach (var dir in System.IO.Directory.EnumerateDirectories(inPath).OrderBy(p => p)) {
@@ -922,20 +924,76 @@ namespace UbiCanvas.Conversion {
 				string dirPath = dir.Replace('\\', '/').Trim('/');
 				foreach (string file in System.IO.Directory.GetFiles(dir, "*.*", System.IO.SearchOption.AllDirectories)) {
 					string relativePath = file.Substring(dirPath.Length).Replace('\\', '/').TrimStart('/');
-					byte[] data = System.IO.File.ReadAllBytes(file);
+					byte[] data = null;
 
 					string uncookedPath = relativePath;
-					uncookedPath = uncookedPath.Substring(uncookedPath.LastIndexOf('.'));
+					bool isDDS = uncookedPath.ToLowerInvariant().EndsWith(".dds");
+					uncookedPath = uncookedPath.Substring(0, uncookedPath.LastIndexOf('.'));
 
 					if(!uncookedPath.ToLowerInvariant().EndsWith(".png") && !uncookedPath.ToLowerInvariant().EndsWith(".tga"))
 						uncookedPath = $"{uncookedPath}.tga";
 					var cookedPath = new Path(uncookedPath).CookedPath(rlContext);
 
-					// TODO: Process texture
-					var tex = new TextureCooked() {
-						texData = data
+					// Process texture
+					ushort w, h;
+					uint pixelsCountAlpha0 = 0, pixelsCountAlpha1 = 0;
+
+					void CountPixels(MagickImage img) {
+						if (img.HasAlpha) {
+							var pixels = img.GetPixels();
+							foreach (var pixel in pixels) {
+								var col = pixel.ToColor();
+								if (col.A == 0xFF) {
+									pixelsCountAlpha1++;
+								} else if (col.A == 0) {
+									pixelsCountAlpha0++;
+								}
+							}
+						} else {
+							pixelsCountAlpha0 = 0;
+							pixelsCountAlpha1 = (uint)w * h;
+						}
+					}
+
+					if (isDDS) {
+						data = System.IO.File.ReadAllBytes(file);
+						using (var img = new MagickImage(data, MagickFormat.Dds)) {
+							w = (ushort)img.Width;
+							h = (ushort)img.Height;
+
+							CountPixels(img);
+						}
+					} else {
+						using (var img = new MagickImage(file)) {
+							img.Format = MagickFormat.Dds;
+							w = (ushort)img.Width;
+							h = (ushort)img.Height;
+							CountPixels(img);
+							data = img.ToByteArray();
+						}
+					}
+					var tex = new TextureCooked(rlContext) {
+						texData = data,
+						BPP = 32,
+						CompressionType = 0,
+						DataSize = (uint)data.Length,
+						DataSize2 = (uint)data.Length,
+						ImagesCount = 1,
+						WrapModeU = TextureCooked.WrapMode.Repeat,
+						WrapModeV = TextureCooked.WrapMode.Repeat,
+						UnknownCRC = 0xFFFFFFFF,
+						Width = w,
+						Height = h,
+						PixelsCountAlpha0 = pixelsCountAlpha0,
+						PixelsCountAlpha1 = pixelsCountAlpha1
 					};
+					bun.AddFile(cookedPath, tex);
 				}
+			}
+
+
+			if (!bun.IsEmpty) {
+				await rlContext.Loader.WriteFilesRaw(outPath, bun);
 			}
 		}
 

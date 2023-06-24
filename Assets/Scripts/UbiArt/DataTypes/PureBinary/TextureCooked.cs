@@ -9,7 +9,7 @@ namespace UbiArt {
 		public uint DataSize { get; set; }
 		public ushort Width { get; set; }
 		public ushort Height { get; set; }
-		public ushort unk_factor { get; set; } = 1; // unk1 & unk2 are both divided by (width * height * unk_factor) to determine something. Always 1 in Legends? Mip levels maybe?
+		public ushort ImagesCount { get; set; } = 1; // Always 1 in Legends? Maybe for animated textures?
 		public byte BPP { get; set; } = 32;
 		public byte CompressionType { get; set; } = 0; // Unused on PC? On Android: 3 - PVRTC, 4 - ATC
 		public byte V16_Byte0 { get; set; } // Only first byte seems used?
@@ -18,8 +18,8 @@ namespace UbiArt {
 		public byte V16_Byte3 { get; set; }
 		public uint DataSize2 { get; set; }
 		public uint unk0 { get; set; } // Always 0 in Legends?
-		public uint PixelsCountAlpha1 { get; set; } // Pixels where alpha == 1, before compression.Verified with uncompressed RL PS4 textures
-		public uint PixelsCountAlpha0 { get; set; } // Pixels where alpha == 0, before compression.Verified with uncompressed RL PS4 textures
+		public uint PixelsCountAlpha1 { get; set; } // Pixels where alpha == 1, before compression. Verified with uncompressed RL PS4 textures
+		public uint PixelsCountAlpha0 { get; set; } // Pixels where alpha == 0, before compression. This and PixelsCountAlpha1 are divided by (Width * Height * ImagesCount) to calculate ratios.
 		public uint UnknownCRC { get; set; } // Seems to be a CRC. Doesn't seem to be used at all by the game. Some kind of tag, only for the editor?
 		public WrapMode WrapModeU { get; set; } = WrapMode.Repeat;
 		public WrapMode WrapModeV { get; set; } = WrapMode.Repeat;
@@ -30,10 +30,10 @@ namespace UbiArt {
 
 		public UV.UVAtlas atlas = null;
 
-		public string filename;
+		//public string filename;
 
 		public void Serialize(CSerializerObject s, string name) {
-			filename = s.CurrentPointer.File.DisplayName;
+			//filename = s.CurrentPointer.File.DisplayName;
 			Reinit(s.Settings);
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				Version = s.Serialize<uint>(Version);
@@ -42,7 +42,7 @@ namespace UbiArt {
 				DataSize = s.Serialize<uint>(DataSize);
 				Width = s.Serialize<ushort>(Width);
 				Height = s.Serialize<ushort>(Height);
-				unk_factor = s.Serialize<ushort>(unk_factor);
+				ImagesCount = s.Serialize<ushort>(ImagesCount);
 				BPP = s.Serialize<byte>(BPP, name: nameof(BPP));
 				CompressionType = s.Serialize<byte>(CompressionType, name: nameof(CompressionType));
 				if (Version >= 16) {
@@ -79,6 +79,8 @@ namespace UbiArt {
 			if (context.Settings.game == Settings.Game.RL) {
 				Version = 13;
 				HeaderSize = 0x34;
+				Padding1 = 0xCC;
+				Padding2 = 0xCC;
 			}
 		}
 

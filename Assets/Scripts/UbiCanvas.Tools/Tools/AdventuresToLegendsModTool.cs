@@ -68,6 +68,7 @@ namespace UbiCanvas.Tools
 			await new AdventuresToLegendsConverter().ImportAtlasContainer(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
 			await new AdventuresToLegendsConverter().ImportLevelsAndCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
 			await new AdventuresToLegendsConverter().ImportLocalisation(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
+			await new AdventuresToLegendsConverter().CookTextures(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
