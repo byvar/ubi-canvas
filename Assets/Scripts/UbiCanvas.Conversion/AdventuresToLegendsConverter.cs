@@ -260,7 +260,7 @@ namespace UbiCanvas.Conversion {
 		public async Task ImportLevelsAndCostumes(string projectPath) {
 			var levelsJsonPath = System.IO.Path.Combine(projectPath, "json", "levels");
 			var outPath = System.IO.Path.Combine(projectPath, "data", "_patch");
-			var costumesBuildPath = System.IO.Path.Combine(projectPath, "data", "_costumes_build");
+			var costumesBuildPath = System.IO.Path.Combine(projectPath, "data", "_build_costumes");
 
 			var files = System.IO.Directory.Exists(levelsJsonPath) ? System.IO.Directory.GetFiles(levelsJsonPath, "*.json") : null;
 			if (files != null && files.Any()) {
@@ -906,6 +906,35 @@ namespace UbiCanvas.Conversion {
 					if (!costumesBun.IsEmpty) {
 						await rlContextExt.Loader.WriteFilesRaw(costumesBuildPath, costumesBun);
 					}
+				}
+			}
+		}
+
+		public async Task CookTextures(string projectPath) {
+			var inPath = System.IO.Path.Combine(projectPath, "textures");
+			var outPath = System.IO.Path.Combine(projectPath, "data", "_build_textures");
+
+			using var rlContext = CreateContext(Settings.Mode.RaymanLegendsPC);
+
+			// Use alphabetical order. To prioritize a file being added, prefix the mod name with _
+			foreach (var dir in System.IO.Directory.EnumerateDirectories(inPath).OrderBy(p => p)) {
+				//string dirPath = dir.Substring(inputPath.Length).Replace('\\', '/').Trim('/');
+				string dirPath = dir.Replace('\\', '/').Trim('/');
+				foreach (string file in System.IO.Directory.GetFiles(dir, "*.*", System.IO.SearchOption.AllDirectories)) {
+					string relativePath = file.Substring(dirPath.Length).Replace('\\', '/').TrimStart('/');
+					byte[] data = System.IO.File.ReadAllBytes(file);
+
+					string uncookedPath = relativePath;
+					uncookedPath = uncookedPath.Substring(uncookedPath.LastIndexOf('.'));
+
+					if(!uncookedPath.ToLowerInvariant().EndsWith(".png") && !uncookedPath.ToLowerInvariant().EndsWith(".tga"))
+						uncookedPath = $"{uncookedPath}.tga";
+					var cookedPath = new Path(uncookedPath).CookedPath(rlContext);
+
+					// TODO: Process texture
+					var tex = new TextureCooked() {
+						texData = data
+					};
 				}
 			}
 		}
