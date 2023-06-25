@@ -367,7 +367,10 @@ namespace UbiCanvas.Conversion {
 											sizeOf = 1340,
 											id = tpl_b.id,
 											materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+											patchBank = new Path(tpl_b.patchBank),
 											textureSet = new GFXMaterialTexturePathSet() {
+												diffuse = new Path(tpl_b.textureSet.diffuse),
+												back_light = new Path(tpl_b.textureSet.back_light),
 												sizeOf = 1036,
 											},
 
@@ -430,7 +433,10 @@ namespace UbiCanvas.Conversion {
 											sizeOf = 1340,
 											id = tpl_b.id,
 											materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+											patchBank = new Path(tpl_b.patchBank),
 											textureSet = new GFXMaterialTexturePathSet() {
+												diffuse = new Path(tpl_b.textureSet.diffuse),
+												back_light = new Path(tpl_b.textureSet.back_light),
 												sizeOf = 1036,
 											},
 
@@ -439,14 +445,22 @@ namespace UbiCanvas.Conversion {
 								}
 								foreach (var tb in mainAnimatedComponent.subAnimInfo.animPackage.textureBank) {
 									var jsonb = GetBankByID(tb.id, fallback: "pack_shootermoskito");
-									if (jsonb.ID != "pack") {
-										// Source is a version that has Moskito sprites. Use this patchbank for everything.
+
+									if (jsonb.ID != "pack" && jsonb.ID != "pack_shootermoskito") {
+										// Source is a version that has Moskito sprites. Use this patchbank regardless
 										tb.patchBank = new Path(jsonb.PBK);
 
-										if (jsonb.ID != "pack_shootermoskito"
-											|| (tb.id != new StringID("shootermoskitodeath")  // These two are never included in pack_shootermoskito 
-												&& tb.id != new StringID($"shootermoskitoray_a"))
-											) {
+										// To allow for easier json editing, allow leaving moskito sprite blank
+										if (jsonb.Diffuse != null || (tb.id != new StringID("shootermoskitodeath") && tb.id != new StringID("shootermoskitoray_a"))) { // Moskito bodies
+											UnityEngine.Debug.Log($"{costume.CostumeID}: {tb.id} - {jsonb.ID}");
+											tb.textureSet.diffuse = new Path(jsonb.Diffuse);
+											tb.textureSet.back_light = new Path(jsonb.Backlight);
+										}
+									} else if(jsonb.ID == "pack_shootermoskito") {
+										if (tb.id == new StringID("shootermoskitodeath") || tb.id == new StringID("shootermoskitoray_a")) {
+											// Don't change PBK or texture for these
+										} else {
+											tb.patchBank = new Path(jsonb.PBK);
 											tb.textureSet.diffuse = new Path(jsonb.Diffuse);
 											tb.textureSet.back_light = new Path(jsonb.Backlight);
 										}
@@ -501,7 +515,10 @@ namespace UbiCanvas.Conversion {
 											sizeOf = 1340,
 											id = tpl_b.id,
 											materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+											patchBank = new Path(tpl_b.patchBank),
 											textureSet = new GFXMaterialTexturePathSet() {
+												diffuse = new Path(tpl_b.textureSet.diffuse),
+												back_light = new Path(tpl_b.textureSet.back_light),
 												sizeOf = 1036,
 											},
 
@@ -940,7 +957,23 @@ namespace UbiCanvas.Conversion {
 
 					void CountPixels(MagickImage img) {
 						if (img.HasAlpha) {
-							var pixels = img.GetPixels();
+							using (var pc = img.GetPixels()) {
+								int channelsCount = pc.Channels;
+								for (int y = 0; y < img.Height; y++) {
+									var pcv = pc.GetArea(0, y, img.Width, 1);
+									for (int x = 0; x < pcv.Length; x += channelsCount) {
+										switch (pcv[x + channelsCount - 1]) {
+											case 0x00:
+												pixelsCountAlpha0++; break;
+											case 0xFF:
+												pixelsCountAlpha1++; break;
+										}
+									}
+								}
+							}
+
+							// Below: easier code, but super slow
+							/*var pixels = img.GetPixels();
 							foreach (var pixel in pixels) {
 								var col = pixel.ToColor();
 								if (col.A == 0xFF) {
@@ -948,7 +981,7 @@ namespace UbiCanvas.Conversion {
 								} else if (col.A == 0) {
 									pixelsCountAlpha0++;
 								}
-							}
+							}*/
 						} else {
 							pixelsCountAlpha0 = 0;
 							pixelsCountAlpha1 = (uint)w * h;
