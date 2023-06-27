@@ -213,6 +213,7 @@ namespace UbiCanvas.Conversion {
 			}
 			var dataID = $"costumes_{mainMode}";
 			Path pGameConfig = new Path("enginedata/gameconfig/gameconfig.isg");
+			Path pGameConfigExtended = new Path("enginedata/gameconfigextended/gameconfigextended.isg");
 			var levelsJsonPath = System.IO.Path.Combine(projectPath, "json", "levels");
 			var dataOutputPath = System.IO.Path.Combine(projectPath, "data", dataID);
 
@@ -284,18 +285,28 @@ namespace UbiCanvas.Conversion {
 			}
 
 			void AddPathToBundle(Path p) {
-				if(!p.IsNull && p.Object != null) bun.AddFile(p.CookedPath(rlContextExt), p.Object);
+				if(p != null && !p.IsNull && p.Object != null) bun.AddFile(p.CookedPath(rlContextExt), p.Object);
 			}
 
 			using (var sourceContext = CreateContext(sourceMode)) {
 				await sourceContext.Loader.LoadInitial();
 
+				RO2_GameConfigExtended_Template gcExtended = null;
+
 				sourceContext.Loader.LoadGenericFile(pGameConfig, isg => {
 					sourceContext.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
 				});
+				if (sourceMode == Settings.Mode.RaymanAdventuresAndroid) {
+					sourceContext.Loader.LoadGenericFile(pGameConfigExtended, isg => {
+						gcExtended = isg.obj as RO2_GameConfigExtended_Template;
+					});
+				}
 				await sourceContext.Loader.LoadLoop();
 
-				var playerIDInfo = sourceContext.Loader.gameConfig.playerIDInfo;
+				var playerIDInfo = sourceContext.Loader.gameConfig.playerIDInfo.ToList();
+				if (gcExtended.playerIDInfo != null) {
+					playerIDInfo.AddRange(gcExtended.playerIDInfo);
+				}
 
 				foreach(var skin in playerIDInfo)
 				{
@@ -326,10 +337,11 @@ namespace UbiCanvas.Conversion {
 					}
 					Dictionary<string, JSON_CostumeInfo.JSON_TextureBank> jsonTexBanks = new Dictionary<string, JSON_CostumeInfo.JSON_TextureBank>();
 					foreach (var tb in gameTexBanks) {
+						//UnityEngine.Debug.Log($"{player.id} - {GetTexBankID(tb.id)}");
 						jsonTexBanks[GetTexBankID(tb.id)] = new JSON_CostumeInfo.JSON_TextureBank() {
-							PBK = tb.patchBank.FullPath,
-							Diffuse = tb.textureSet.diffuse.FullPath,
-							Backlight = tb.textureSet.back_light.FullPath,
+							PBK = tb.patchBank?.FullPath,
+							Diffuse = tb.textureSet?.diffuse?.FullPath,
+							Backlight = tb.textureSet?.back_light?.FullPath,
 
 							GameBank = tb
 						};
@@ -346,14 +358,14 @@ namespace UbiCanvas.Conversion {
 					}
 
 					void ResolveBank(TextureBankPath tb) {
-						tb.patchBank.LoadObject(sourceContext);
-						tb.textureSet.diffuse.LoadObject(sourceContext);
-						tb.textureSet.back_light.LoadObject(sourceContext);
+						tb.patchBank?.LoadObject(sourceContext);
+						tb.textureSet?.diffuse?.LoadObject(sourceContext);
+						tb.textureSet?.back_light?.LoadObject(sourceContext);
 					}
 					void AddBankToBundle(TextureBankPath tb) {
 						AddPathToBundle(tb.patchBank);
-						AddPathToBundle(tb.textureSet.diffuse);
-						AddPathToBundle(tb.textureSet.back_light);
+						AddPathToBundle(tb.textureSet?.diffuse);
+						AddPathToBundle(tb.textureSet?.back_light);
 					}
 
 					string GetRandomCostumeAnimation() {

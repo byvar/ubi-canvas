@@ -232,7 +232,7 @@ namespace UbiCanvas.Conversion {
 
 							// To allow for easier json editing, allow leaving moskito sprite blank
 							if (jsonb.Diffuse != null || (tb.id != new StringID("shootermoskitodeath") && tb.id != new StringID("shootermoskitoray_a"))) { // Moskito bodies
-								UnityEngine.Debug.Log($"{costume.CostumeID}: {tb.id} - {jsonb.ID}");
+								//UnityEngine.Debug.Log($"{costume.CostumeID}: {tb.id} - {jsonb.ID}");
 								tb.textureSet.diffuse = new Path(jsonb.Diffuse);
 								tb.textureSet.back_light = new Path(jsonb.Backlight);
 							}
