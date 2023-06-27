@@ -53,7 +53,7 @@ namespace UbiCanvas.Conversion {
 
 			if (!string.IsNullOrWhiteSpace(costume.ActorPath_Main)) {
 				var cookedPath = new Path(costume.ActorPath_Main).CookedPath(TargetContext);
-				if (!System.IO.File.Exists(System.IO.Path.Combine(BuildPath, cookedPath.FullPath))) {
+				if (!FileIsAlreadyBuilt(cookedPath)) {
 					var basePath = $"world/common/playablecharacter/{family}/";
 					var actorToClone = family switch {
 						"teensy" => $"{basePath}teensy_classicking.act",
@@ -114,7 +114,7 @@ namespace UbiCanvas.Conversion {
 
 			if (!string.IsNullOrWhiteSpace(costume.ActorPath_Moskito)) {
 				var cookedPath = new Path(costume.ActorPath_Moskito).CookedPath(TargetContext);
-				if (!System.IO.File.Exists(System.IO.Path.Combine(BuildPath, cookedPath.FullPath))) {
+				if (!FileIsAlreadyBuilt(cookedPath)) {
 					var moskitoFamily = family switch {
 						"rayman" => "ray",
 						"globox" => "glob",
@@ -267,7 +267,7 @@ namespace UbiCanvas.Conversion {
 
 			if (!string.IsNullOrWhiteSpace(costume.ActorPath_Duck)) {
 				var cookedPath = new Path(costume.ActorPath_Duck).CookedPath(TargetContext);
-				if (!System.IO.File.Exists(System.IO.Path.Combine(BuildPath, cookedPath.FullPath))) {
+				if (!FileIsAlreadyBuilt(cookedPath)) {
 					var basePath = $"world/common/playablecharacter/duck/";
 					var actorToClone = $"{basePath}duck_{family}.act";
 					var pOriginalActor = new Path(actorToClone);
@@ -337,7 +337,7 @@ namespace UbiCanvas.Conversion {
 							if (tb.id == new StringID("duck_a1") || tb.id == new StringID("duck_c1")) {
 								// Don't change PBK
 								ConfigureTexturesBasedOnDuckType();
-							} else if(jsonb.ID != "pack_duck") {
+							} else if(jsonb.ID != "pack") {
 								tb.patchBank = new Path(jsonb.PBK);
 								tb.textureSet.diffuse = new Path(jsonb.Diffuse);
 								tb.textureSet.back_light = new Path(jsonb.Backlight);
@@ -352,7 +352,7 @@ namespace UbiCanvas.Conversion {
 
 			if (!string.IsNullOrWhiteSpace(costume.ActorPath_ScoreHUD)) {
 				var cookedPath = new Path(costume.ActorPath_ScoreHUD).CookedPath(TargetContext);
-				if (!System.IO.File.Exists(System.IO.Path.Combine(BuildPath, cookedPath.FullPath))) {
+				if (!FileIsAlreadyBuilt(cookedPath)) {
 					var basePath = $"world/common/ui/common/playerscore/";
 					var actorToClone = family switch {
 						"teensy" => $"{basePath}scorehud_teensyclassicking.act",
@@ -377,7 +377,7 @@ namespace UbiCanvas.Conversion {
 
 			if (!string.IsNullOrWhiteSpace(costume.ActorPath_Painting)) {
 				var cookedPath = new Path(costume.ActorPath_Painting).CookedPath(TargetContext);
-				if (!System.IO.File.Exists(System.IO.Path.Combine(BuildPath, cookedPath.FullPath))) {
+				if (!FileIsAlreadyBuilt(cookedPath)) {
 					var basePath = $"world/home/actor/costumes/";
 					var actorToClone = family switch {
 						"teensy" => $"{basePath}costumeteensy_classicking.act",
@@ -408,7 +408,7 @@ namespace UbiCanvas.Conversion {
 
 			if (!string.IsNullOrWhiteSpace(costume.TemplatePath_Painting)) {
 				var cookedPath = new Path(costume.TemplatePath_Painting).CookedPath(TargetContext);
-				if (!System.IO.File.Exists(System.IO.Path.Combine(BuildPath, cookedPath.FullPath))) {
+				if (!FileIsAlreadyBuilt(cookedPath)) {
 					var basePath = $"world/home/actor/costumes/components/";
 					var actorToClone = family switch {
 						"teensy" => $"{basePath}costumeteensy_classicking.tpl",
@@ -469,7 +469,7 @@ namespace UbiCanvas.Conversion {
 
 			if (!string.IsNullOrWhiteSpace(costume.TemplatePath_Trail)) {
 				var cookedPath = new Path(costume.TemplatePath_Trail).CookedPath(TargetContext);
-				if (!System.IO.File.Exists(System.IO.Path.Combine(BuildPath, cookedPath.FullPath))) {
+				if (!FileIsAlreadyBuilt(cookedPath)) {
 					var basePath = $"world/common/fx/actors/trails/";
 					var actorToClone = family switch {
 						"teensy" => $"{basePath}teleporttrail_teensyclassicking.tpl",

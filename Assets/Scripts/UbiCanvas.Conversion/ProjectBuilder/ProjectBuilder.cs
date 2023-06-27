@@ -84,5 +84,15 @@ namespace UbiCanvas.Conversion {
 			}
 			return default;
 		}
+
+		protected bool FileIsAlreadyBuilt(Path path) {
+			if(!path.IsCooked(TargetContext)) 
+				return FileIsAlreadyBuilt(path.CookedPath(TargetContext));
+			
+			return (Bundle?.ContainsFile(path) ?? false) || System.IO.File.Exists(System.IO.Path.Combine(BuildPath, path.FullPath));
+		}
+		protected bool IsBuilt(string path) {
+			return System.IO.File.Exists(System.IO.Path.Combine(BuildPath, path));
+		}
 	}
 }
