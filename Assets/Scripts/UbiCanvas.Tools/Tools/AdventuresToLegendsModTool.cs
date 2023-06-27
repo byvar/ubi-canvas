@@ -26,6 +26,7 @@ namespace UbiCanvas.Tools
 				new InvokableAction("Export costumes (requires manual edits)", async () => await ExportCostumes()),
 				//new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
+				new InvokableAction("Clean, build & install project", async () => await BuildProject(install: true, clean: true)),
 			});
         }
 
@@ -61,20 +62,29 @@ namespace UbiCanvas.Tools
 		}
 
 		private async Task ExportCostumes() {
-			await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
+			//await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Settings.Mode.RaymanMiniMacOS);
+			await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Settings.Mode.RaymanAdventuresAndroid);
 		}
 
 		private async Task BuildJSON() {
-			await new AdventuresToLegendsConverter().ImportAtlasContainer(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
-			await new AdventuresToLegendsConverter().ImportLevelsAndCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
-			await new AdventuresToLegendsConverter().ImportLocalisation(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
-			await new AdventuresToLegendsConverter().CookTextures(UnitySettings.Tools_AdventuresToLegends_ProjectPath);
+			await new AtlasBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new HomeBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
+		private void Clean() {
+			new AtlasBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			new HomeBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+		}
+
 		#region Build (mostly a copy of BuildModIPKTool)
-		private async Task BuildProject(bool install = false)
+		private async Task BuildProject(bool install = false, bool clean = false)
 		{
+			if(clean) Clean();
 			await BuildJSON();
 			await TimeController.WaitIfNecessary();
 

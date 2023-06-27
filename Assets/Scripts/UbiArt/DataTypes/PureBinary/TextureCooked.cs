@@ -36,13 +36,13 @@ namespace UbiArt {
 			//filename = s.CurrentPointer.File.DisplayName;
 			Reinit(s.Settings);
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
-				Version = s.Serialize<uint>(Version);
-				Signature = s.Serialize<uint>(Signature);
-				HeaderSize = s.Serialize<uint>(HeaderSize);
-				DataSize = s.Serialize<uint>(DataSize);
-				Width = s.Serialize<ushort>(Width);
-				Height = s.Serialize<ushort>(Height);
-				ImagesCount = s.Serialize<ushort>(ImagesCount);
+				Version = s.Serialize<uint>(Version, name: nameof(Version));
+				Signature = s.Serialize<uint>(Signature, name: nameof(Signature));
+				HeaderSize = s.Serialize<uint>(HeaderSize, name: nameof(HeaderSize));
+				DataSize = s.Serialize<uint>(DataSize, name: nameof(DataSize));
+				Width = s.Serialize<ushort>(Width, name: nameof(Width));
+				Height = s.Serialize<ushort>(Height, name: nameof(Height));
+				ImagesCount = s.Serialize<ushort>(ImagesCount, name: nameof(ImagesCount));
 				BPP = s.Serialize<byte>(BPP, name: nameof(BPP));
 				CompressionType = s.Serialize<byte>(CompressionType, name: nameof(CompressionType));
 				if (Version >= 16) {
@@ -51,11 +51,11 @@ namespace UbiArt {
 					V16_Byte2 = s.Serialize<byte>(V16_Byte2, name: nameof(V16_Byte2));
 					V16_Byte3 = s.Serialize<byte>(V16_Byte3, name: nameof(V16_Byte3));
 				}
-				DataSize2 = s.Serialize<uint>(DataSize2);
-				unk0 = s.Serialize<uint>(unk0);
+				DataSize2 = s.Serialize<uint>(DataSize2, name: nameof(DataSize2));
+				unk0 = s.Serialize<uint>(unk0, name: nameof(unk0));
 				PixelsCountAlpha1 = s.Serialize<uint>(PixelsCountAlpha1, name: nameof(PixelsCountAlpha1));
 				PixelsCountAlpha0 = s.Serialize<uint>(PixelsCountAlpha0, name: nameof(PixelsCountAlpha0));
-				UnknownCRC = s.Serialize<uint>(UnknownCRC);
+				UnknownCRC = s.Serialize<uint>(UnknownCRC, name: nameof(UnknownCRC));
 				WrapModeU = (WrapMode)s.Serialize<byte>((byte)WrapModeU, name: nameof(WrapModeU));
 				WrapModeV = (WrapMode)s.Serialize<byte>((byte)WrapModeV, name: nameof(WrapModeV));
 				Padding1 = s.Serialize<byte>(Padding1, name: nameof(Padding1));
