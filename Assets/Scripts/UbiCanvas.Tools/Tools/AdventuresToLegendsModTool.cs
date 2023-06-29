@@ -23,7 +23,7 @@ namespace UbiCanvas.Tools
 			Actions.AddRange(new[]
 			{
 				new InvokableAction("Export current map in Legends format", async () => await ExportCurrentMap()),
-				new InvokableAction("Export costumes (requires manual edits)", async () => await ExportCostumes()),
+				//new InvokableAction("Export costumes (requires manual edits)", async () => await ExportCostumes()),
 				//new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
 				new InvokableAction("Clean, build & install project", async () => await BuildProject(install: true, clean: true)),
@@ -62,8 +62,9 @@ namespace UbiCanvas.Tools
 		}
 
 		private async Task ExportCostumes() {
+			await Task.CompletedTask;
 			//await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Settings.Mode.RaymanMiniMacOS);
-			await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Settings.Mode.RaymanAdventuresAndroid);
+			//await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Settings.Mode.RaymanAdventuresAndroid);
 		}
 
 		private async Task BuildJSON() {

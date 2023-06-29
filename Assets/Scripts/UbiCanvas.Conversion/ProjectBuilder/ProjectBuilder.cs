@@ -64,7 +64,7 @@ namespace UbiCanvas.Conversion {
 
 		}
 
-		protected async Task<T> LoadFileFromPatchData<T>(Context context, string file) where T : ICSerializable, new() {
+		protected async Task<T> LoadFileFromPatchData<T>(Context context, string file) where T : class, ICSerializable, new() {
 			Path uncookedPath = new Path(file);
 			Path cookedPath = uncookedPath.CookedPath(context);
 			var cookedFullPath = cookedPath.FullPath;
@@ -82,7 +82,10 @@ namespace UbiCanvas.Conversion {
 					return outputObject;
 				}
 			}
-			return default;
+
+			context.Loader.LoadFile<T>(uncookedPath, (t) => outputObject = t); 
+			await context.Loader.LoadLoop();
+			return outputObject;
 		}
 
 		protected bool FileIsAlreadyBuilt(Path path) {

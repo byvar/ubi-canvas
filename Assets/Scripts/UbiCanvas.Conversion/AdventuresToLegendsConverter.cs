@@ -205,10 +205,10 @@ namespace UbiCanvas.Conversion {
 			var mainMode = "";
 			uint baseLocId = 0;
 			if (sourceMode == Settings.Mode.RaymanMiniMacOS) {
-				mainMode = "mini";
+				mainMode = "mini2";
 				baseLocId = 9000;
 			} else if (sourceMode == Settings.Mode.RaymanAdventuresAndroid) {
-				mainMode = "adventures";
+				mainMode = "adventures2";
 				baseLocId = 20000;
 			}
 			var dataID = $"costumes_{mainMode}";
@@ -304,7 +304,7 @@ namespace UbiCanvas.Conversion {
 				await sourceContext.Loader.LoadLoop();
 
 				var playerIDInfo = sourceContext.Loader.gameConfig.playerIDInfo.ToList();
-				if (gcExtended.playerIDInfo != null) {
+				if (gcExtended?.playerIDInfo != null) {
 					playerIDInfo.AddRange(gcExtended.playerIDInfo);
 				}
 
@@ -312,7 +312,7 @@ namespace UbiCanvas.Conversion {
 				{
 					var player = skin.obj as RO2_PlayerIDInfo;
 					//if(player.family != "Rayman" && player.family != "Globox" && player.family != "Barbara") continue;
-					if(rlContextExt.Loader.gameConfig.playerIDInfo.Any(c => c.obj.id.ToUpperInvariant() == player.id.ToUpperInvariant())) continue;
+					//if(rlContextExt.Loader.gameConfig.playerIDInfo.Any(c => c.obj.id.ToUpperInvariant() == player.id.ToUpperInvariant())) continue;
 
 					// Load main actor & template
 					player.defaultGameScreenInfo.actors[0].file.LoadObject(sourceContext);

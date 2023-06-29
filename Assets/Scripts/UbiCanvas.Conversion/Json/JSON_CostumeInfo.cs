@@ -37,8 +37,8 @@ namespace UbiCanvas.Conversion.Json {
 
 		public string IconPath { get; set; }
 		public Vec2d IconSize { get; set; }
-		public UbiArt.Color DeathBubbleColor { get; set; }
-		public UbiArt.Color TrailColor { get; set; }
+		public JSON_Color DeathBubbleColor { get; set; }
+		public JSON_Color TrailColor { get; set; }
 
 		public RO2_CostumeDescriptor_Template.CostumeType2 CostumeType { get; set; }
 
@@ -64,7 +64,7 @@ namespace UbiCanvas.Conversion.Json {
 
 		public class JSON_CostumePainting {
 			public string Animation { get; set; } // world/common/playablecharacter/{Family.ToLower}/animation/{Animation}.anm
-			public UbiArt.Color BackgroundColor { get; set; }
+			public JSON_Color BackgroundColor { get; set; }
 			public string LevelDependency { get; set; } // Unlock only after certain level is completed
 			public int Priority { get; set; }
 			public bool Unlockable { get; set; }
