@@ -270,34 +270,47 @@ namespace UbiCanvas.Conversion {
 			ContainerFile<Scene> costumesISC = null;
 			Path pCostumesISC = new Path("world/home/level/costumes/costume_main.isc");
 
-			var minX = -60;
-			var maxX = +60;
-			var extendMinX = -200;
-			var extendMaxX = +200;
+			var minX = -30;
+			var maxX = +30;
+			var extendMinX = -300;
+			var extendMaxX = +300;
 
 			TargetContext.Loader.LoadFile<ContainerFile<Scene>>(pCostumesISC, isc => {
 				costumesISC = isc;
 			});
 			await TargetContext.Loader.LoadLoop();
 
-			var light2 = costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@2");
-			var light4 = costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@4");
+			// Frises
+			//ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@2").Result);
+			//ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@4").Result);
+			RescalePickable((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@2").Result);
+			RescalePickable((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@4").Result);
+			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "fx_particlesuspension_fill").Result);
 
-			ProcessFrise((Frise)light2.Result);
-			ProcessFrise((Frise)light4.Result);
+			// Lighting actors
+			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "resolvebothmask@1").Result);
+			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "clearcolor").Result);
+
+			// Sound triggers
+			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "triggersound_amb_home_house_int").Result);
+			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "music_stop_5s@1").Result);
+
 
 			Bundle.AddFile(pCostumesISC.CookedPath(TargetContext), costumesISC);
 
+
 			void ProcessFrise(Frise f) {
 				float ExtendGlobalToLocal(float extend) => extend / f.SCALE.x;
-				Vec2d LocalToGlobal(Vec2d point) => ((point - f.POS2D) * f.SCALE) + f.POS2D;
+				Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
 
 				foreach (var vert in f.meshBuildData.value.StaticVertexList) {
 					var gpos = LocalToGlobal(new Vec2d(vert.pos.x, vert.pos.y));
 					if (gpos.x < minX) {
 						vert.pos.x += ExtendGlobalToLocal(extendMinX);
+						vert.uv.x += ExtendGlobalToLocal(extendMinX) / f.config.obj.fill.scale.x;
 					} else if (gpos.x > maxX) {
 						vert.pos.x += ExtendGlobalToLocal(extendMaxX);
+						vert.uv.x += ExtendGlobalToLocal(extendMaxX) / f.config.obj.fill.scale.x;
 					}
 				}
 				var localAABB = f.meshStaticData.value.LocalAABB;
@@ -323,6 +336,19 @@ namespace UbiCanvas.Conversion {
 					worldAABB.MAX.x += extendMinX;
 				} else if (worldAABB.MAX.x > maxX) {
 					worldAABB.MAX.x += extendMaxX;
+				}
+			}
+
+			void RescalePickable(Pickable p) {
+				p.SCALE.x *= 4f;
+				if (p is Frise f) {
+					Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
+
+					var aabb = f.meshStaticData?.value;
+					if (aabb?.LocalAABB != null) {
+						aabb.WorldAABB.MIN = LocalToGlobal(aabb.LocalAABB.MIN);
+						aabb.WorldAABB.MAX = LocalToGlobal(aabb.LocalAABB.MAX);
+					}
 				}
 			}
 		}
