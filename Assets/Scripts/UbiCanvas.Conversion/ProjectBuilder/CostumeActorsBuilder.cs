@@ -18,12 +18,26 @@ namespace UbiCanvas.Conversion {
 
 		public List<JSON_CostumeInfo> Costumes { get; set; } = new List<JSON_CostumeInfo>();
 
+		public Dictionary<string, string> SpecialActors { get; set; } = new Dictionary<string, string>() {
+			["lividstone"] = "world/common/enemy/lividstone/lividstone_drag.act",
+			["toad"] = "world/mountain/level/mo_rl_1_flyingshield_inv/page/subscene/ld/actors/basictoad_parachute_startleft.act",
+			["alinferno"] = "world/food/common/enemy/alinferno/alinferno_drag.act",
+			["mexicanskeleton"] = "world/food/common/enemy/mexicanskeleton/mexicanskeleton_drag.act",
+			["stoneman"] = "world/mountain/common/enemy/stoneman/stoneman_drag.act",
+			["minotaur"] = "world/mountain/common/enemy/minotaur/minotaur_grab.act",
+			["darktoon"] = "custom/darktoon_basic.act"
+		};
+
 		protected override async Task BuildInternal() {
 			foreach(var c in Costumes) await BuildCostume(c);
 		}
 
 
 		async Task BuildCostume(JSON_CostumeInfo costume) {
+			if(SpecialActors.ContainsKey(costume.CostumeID.ToLowerInvariant())) {
+				await BuildCostumeSpecial(costume);
+				return;
+			}
 			var family = costume.Family.ToLowerInvariant();
 
 			if (costume.TrailColor == null && costume.DeathBubbleColor != null) {
@@ -462,6 +476,317 @@ namespace UbiCanvas.Conversion {
 						tb.textureSet.diffuse = new Path(jsonb.Diffuse);
 						tb.textureSet.back_light = new Path(jsonb.Backlight);
 					}
+
+					Bundle.AddFile(cookedPath, newTPLContainer);
+				}
+			}
+
+			if (!string.IsNullOrWhiteSpace(costume.TemplatePath_Trail)) {
+				var cookedPath = new Path(costume.TemplatePath_Trail).CookedPath(TargetContext);
+				if (!FileIsAlreadyBuilt(cookedPath)) {
+					var basePath = $"world/common/fx/actors/trails/";
+					var actorToClone = family switch {
+						"teensy" => $"{basePath}teleporttrail_teensyclassicking.tpl",
+						_ => $"{basePath}teleporttrail_{family}.tpl"
+					};
+					var pOriginalActor = new Path(actorToClone);
+					pOriginalActor.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+
+					var originalTPL = pOriginalActor.GetObject<GenericFile<Actor_Template>>();
+					var newTPL = (Actor_Template)(await TargetContext.Loader.Clone(originalTPL.obj, "tpl"));
+					var newTPLContainer = new GenericFile<Actor_Template>(newTPL) {
+						sizeOf = originalTPL.sizeOf
+					};
+
+					// The trail color is set in 3 places:
+					newTPL.GetComponent<TextureGraphicComponent_Template>().defaultColor = costume.TrailColor;
+
+					var t3dc = newTPL.GetComponent<Trail3DComponent_Template>();
+					foreach (var trail in t3dc.trailList) trail.color = costume.TrailColor;
+
+					var fxc = newTPL.GetComponent<FxBankComponent_Template>();
+					fxc.Fx[0].gen._params.defaultColor = costume.TrailColor;
+
+					Bundle.AddFile(cookedPath, newTPLContainer);
+				}
+			}
+
+		}
+
+
+		async Task BuildCostumeSpecial(JSON_CostumeInfo costume) {
+			var family = costume.Family.ToLowerInvariant();
+
+			if (costume.TrailColor == null && costume.DeathBubbleColor != null) {
+				var c = costume.DeathBubbleColor;
+				costume.TrailColor = new UbiArt.Color(c.r, c.g, c.b, 0.5019608f);
+			}
+
+			if (!string.IsNullOrWhiteSpace(costume.ActorPath_Main)) {
+				var cookedPath = new Path(costume.ActorPath_Main).CookedPath(TargetContext);
+				if (!FileIsAlreadyBuilt(cookedPath)) {
+					var basePath = $"world/common/playablecharacter/{family}/";
+					var actorToClone = family switch {
+						"teensy" => $"{basePath}teensy_classicking.act",
+						_ => $"{basePath}{family}.act"
+					};
+					var specialActorToClone = SpecialActors[costume.CostumeID.ToLowerInvariant()];
+					var pOriginalActor = new Path(actorToClone);
+					var pSpecialActor = new Path(specialActorToClone);
+					pOriginalActor.LoadObject(TargetContext);
+					pSpecialActor.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+
+					var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+					var specialActor = pSpecialActor.GetObject<ContainerFile<Actor>>();
+					var newActor = (Actor)(await TargetContext.Loader.Clone(originalActor.obj, "act"));
+					var newActorContainer = new ContainerFile<Actor>() {
+						read = true,
+						obj = newActor
+					};
+
+					// Load template too
+					originalActor.obj.LUA.LoadObject(TargetContext);
+					specialActor.obj.LUA.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+					var originalActorTPL = originalActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+					var specialActorTPL = specialActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+
+					var newActorTPL = (Actor_Template)(await TargetContext.Loader.Clone(originalActorTPL.obj, "tpl"));
+					var newActorTPLContainer = new GenericFile<Actor_Template>(newActorTPL) {
+						sizeOf = originalActorTPL.sizeOf
+					};
+					var pNewTPL = new Path(newActor.LUA.folder, $"{costume.CostumeID.ToLowerInvariant()}.tpl");
+					newActor.LUA = pNewTPL;
+
+					var mainPlayerControllerComponent = newActor.GetComponent<RO2_PlayerControllerComponent>();
+					var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
+					var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
+
+					mainPlayerControllerComponent.trailPath = new Path(costume.TemplatePath_Trail);
+					mainAnimatedComponent.subSkeleton = new StringID(costume.SubSkeleton);
+					foreach (var tpl_b in tplAnimatedComponent.animSet.animPackage.textureBank) {
+						if (!mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any(act_b => act_b.id == tpl_b.id)) {
+							mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Add(new TextureBankPath() {
+								sizeOf = 1340,
+								id = tpl_b.id,
+								materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+								patchBank = new Path(tpl_b.patchBank),
+								textureSet = new GFXMaterialTexturePathSet() {
+									diffuse = new Path(tpl_b.textureSet.diffuse),
+									back_light = new Path(tpl_b.textureSet.back_light),
+									sizeOf = 1036,
+								},
+
+							});
+						}
+					}
+
+					/*var scoreActor = player.defaultGameScreenInfo.actors[1].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
+					scoreActor.obj.GetComponent<RO2_PlayerHudScoreComponent>().characterMaterial.textureSet.diffuse = player.iconTexturePath;*/
+
+					var animComponents = newActor.COMPONENTS.Where(c => c.obj is AnimatedComponent).ToList();
+					var animComponentsTPL = newActorTPL.COMPONENTS.Where(c => c.obj is AnimatedComponent_Template).ToList();
+					newActor.COMPONENTS.Remove(animComponents.First());
+					newActorTPL.COMPONENTS.Remove(animComponentsTPL.First());
+					newActor.AddComponent<AnimatedComponent>(specialActor.obj.GetComponent<AnimatedComponent>());
+					newActorTPL.AddComponent<AnimatedComponent_Template>(specialActorTPL.obj.GetComponent<AnimatedComponent_Template>());
+
+					Bundle.AddFile(cookedPath, newActorContainer);
+					Bundle.AddFile(pNewTPL.CookedPath(TargetContext), newActorTPLContainer);
+				}
+			}
+
+			if (!string.IsNullOrWhiteSpace(costume.ActorPath_Moskito)) {
+				var cookedPath = new Path(costume.ActorPath_Moskito).CookedPath(TargetContext);
+				if (!FileIsAlreadyBuilt(cookedPath)) {
+					var moskitoFamily = family switch {
+						"rayman" => "ray",
+						"globox" => "glob",
+						_ => family
+					};
+					var basePath = $"world/common/shooter/playablecharacter/shootermoskito{moskitoFamily}/";
+					var actorToClone = family switch {
+						"teensy" => $"{basePath}shootermoskitoteensy_classicking.act",
+						_ => $"{basePath}shootermoskito{moskitoFamily}.act"
+					};
+					var pOriginalActor = new Path(actorToClone);
+					pOriginalActor.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+
+					var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+					var newActor = (Actor)(await TargetContext.Loader.Clone(originalActor.obj, "act"));
+					var newActorContainer = new ContainerFile<Actor>() {
+						read = true,
+						obj = newActor
+					};
+
+					// Load template too
+					originalActor.obj.LUA.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+					var originalActorTPL = originalActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+
+					var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
+					var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
+
+					// No need to set the subskeleton for the Moskito actor! It's always null
+					//mainAnimatedComponent.subSkeleton = new StringID(costume.SubSkeleton);
+
+					foreach (var tpl_b in tplAnimatedComponent.animSet.animPackage.textureBank) {
+						if (!mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any(act_b => act_b.id == tpl_b.id)) {
+							mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Add(new TextureBankPath() {
+								sizeOf = 1340,
+								id = tpl_b.id,
+								materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+								patchBank = new Path(tpl_b.patchBank),
+								textureSet = new GFXMaterialTexturePathSet() {
+									diffuse = new Path(tpl_b.textureSet.diffuse),
+									back_light = new Path(tpl_b.textureSet.back_light),
+									sizeOf = 1036,
+								},
+
+							});
+						}
+					}
+
+					Bundle.AddFile(cookedPath, newActorContainer);
+				}
+			}
+
+			if (!string.IsNullOrWhiteSpace(costume.ActorPath_Duck)) {
+				var cookedPath = new Path(costume.ActorPath_Duck).CookedPath(TargetContext);
+				if (!FileIsAlreadyBuilt(cookedPath)) {
+					var basePath = $"world/common/playablecharacter/duck/";
+					var actorToClone = $"{basePath}duck_{family}.act";
+					var pOriginalActor = new Path(actorToClone);
+					pOriginalActor.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+
+					var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+					var newActor = (Actor)(await TargetContext.Loader.Clone(originalActor.obj, "act"));
+					var newActorContainer = new ContainerFile<Actor>() {
+						read = true,
+						obj = newActor
+					};
+
+					// Load template too
+					originalActor.obj.LUA.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+					var originalActorTPL = originalActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
+
+					var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
+					var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
+
+					// The subskeleton for the duck actor is the family name
+					mainAnimatedComponent.subSkeleton = new StringID(costume.Family);
+
+					foreach (var tpl_b in tplAnimatedComponent.animSet.animPackage.textureBank) {
+						if (!mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Any(act_b => act_b.id == tpl_b.id)) {
+							mainAnimatedComponent.subAnimInfo.animPackage.textureBank.Add(new TextureBankPath() {
+								sizeOf = 1340,
+								id = tpl_b.id,
+								materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+								patchBank = new Path(tpl_b.patchBank),
+								textureSet = new GFXMaterialTexturePathSet() {
+									diffuse = new Path(tpl_b.textureSet.diffuse),
+									back_light = new Path(tpl_b.textureSet.back_light),
+									sizeOf = 1036,
+								},
+
+							});
+						}
+					}
+
+					Bundle.AddFile(cookedPath, newActorContainer);
+				}
+			}
+
+			if (!string.IsNullOrWhiteSpace(costume.ActorPath_ScoreHUD)) {
+				var cookedPath = new Path(costume.ActorPath_ScoreHUD).CookedPath(TargetContext);
+				if (!FileIsAlreadyBuilt(cookedPath)) {
+					var basePath = $"world/common/ui/common/playerscore/";
+					var actorToClone = family switch {
+						"teensy" => $"{basePath}scorehud_teensyclassicking.act",
+						_ => $"{basePath}scorehud_{family}.act"
+					};
+					var pOriginalActor = new Path(actorToClone);
+					pOriginalActor.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+
+					var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+					var newActor = (Actor)(await TargetContext.Loader.Clone(originalActor.obj, "act"));
+					var newActorContainer = new ContainerFile<Actor>() {
+						read = true,
+						obj = newActor
+					};
+
+					newActor.GetComponent<RO2_PlayerHudScoreComponent>().characterMaterial.textureSet.diffuse = new Path(costume.IconPath);
+
+					Bundle.AddFile(cookedPath, newActorContainer);
+				}
+			}
+
+			if (!string.IsNullOrWhiteSpace(costume.ActorPath_Painting)) {
+				var cookedPath = new Path(costume.ActorPath_Painting).CookedPath(TargetContext);
+				if (!FileIsAlreadyBuilt(cookedPath)) {
+					var basePath = $"world/home/actor/costumes/";
+					var actorToClone = family switch {
+						"teensy" => $"{basePath}costumeteensy_classicking.act",
+						"barbara" => $"{basePath}costumebarbara_mainroom.act",
+						_ => $"{basePath}costume{family}.act"
+					};
+					var pOriginalActor = new Path(actorToClone);
+					pOriginalActor.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+
+					var originalActor = pOriginalActor.GetObject<ContainerFile<Actor>>();
+					var newActor = (Actor)(await TargetContext.Loader.Clone(originalActor.obj, "act"));
+					var newActorContainer = new ContainerFile<Actor>() {
+						read = true,
+						obj = newActor
+					};
+
+					newActor.LUA = new Path(costume.TemplatePath_Painting);
+
+					var costumeComponent = newActor.GetComponent<RO2_PlayerCostumeComponent>();
+					costumeComponent.costumeId = new StringID(costume.CostumeID);
+					costumeComponent.nameLocId = new LocalisationId(costume.NameID);
+					costumeComponent.descriptionLocId = new LocalisationId(costume.DescriptionID);
+
+					Bundle.AddFile(cookedPath, newActorContainer);
+				}
+			}
+
+			if (!string.IsNullOrWhiteSpace(costume.TemplatePath_Painting)) {
+				var cookedPath = new Path(costume.TemplatePath_Painting).CookedPath(TargetContext);
+				if (!FileIsAlreadyBuilt(cookedPath)) {
+					var basePath = $"world/home/actor/costumes/components/";
+					var actorToClone = family switch {
+						"teensy" => $"{basePath}costumeteensy_classicking.tpl",
+						_ => $"{basePath}costume{family}.tpl"
+					};
+					var pOriginalActor = new Path(actorToClone);
+					var animPath = new Path($"world/common/playablecharacter/{family}/animation/{costume.Painting.Animation}.anm");
+					pOriginalActor.LoadObject(TargetContext);
+					animPath.LoadObject(TargetContext);
+					await TargetContext.Loader.LoadLoop();
+
+					var paintingAnim = animPath.GetObject<AnimTrack>();
+					var originalTPL = pOriginalActor.GetObject<GenericFile<Actor_Template>>();
+					var newTPL = (Actor_Template)(await TargetContext.Loader.Clone(originalTPL.obj, "tpl"));
+					var newTPLContainer = new GenericFile<Actor_Template>(newTPL) {
+						sizeOf = originalTPL.sizeOf
+					};
+
+					/*var animComponent = newTPL.GetComponent<AnimLightComponent_Template>();
+					var subAnim = animComponent.animSet.animations.FirstOrDefault(a => a.friendlyName == new StringID("Available"));
+					var ogAnimPath = subAnim.name;
+					subAnim.name = animPath;
+					var aabb = animComponent.animSet.animPackage.animPathAABB.FirstOrDefault(a => a.path == ogAnimPath);
+					aabb.path = animPath;
+					aabb.name = new StringID(costume.Painting.Animation);*/
+					// TODO: Also adjust aabb.aabb here
 
 					Bundle.AddFile(cookedPath, newTPLContainer);
 				}

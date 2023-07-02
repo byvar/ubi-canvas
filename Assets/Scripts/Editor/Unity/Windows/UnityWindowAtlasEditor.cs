@@ -46,9 +46,15 @@ public class UnityWindowAtlasEditor : UnityWindow {
 								YPos -= canvas.height - subcanvas.height;
 
 								EditorGUI.DrawRect(subcanvas, BackgroundColor);
+								/*GUI.DrawTextureWithTexCoords(subcanvas,
+									tex.GetUnityTexture(Controller.MainContext).Texture,
+									new Rect(0, 0, 1, -1));*/
 								GUI.DrawTextureWithTexCoords(subcanvas,
 									tex.GetUnityTexture(Controller.MainContext).Texture,
-									new Rect(0, 0, 1, -1));
+									new Rect(0, 0, 1, -1), AlphaBlending);
+
+								AlphaBlending = EditorField("Alpha Blending", AlphaBlending);
+
 
 								var rect = GetNextRect();
 								rect = EditorGUI.PrefixLabel(rect, new GUIContent("UV Source"));
@@ -489,4 +495,6 @@ public class UnityWindowAtlasEditor : UnityWindow {
 
 	private bool ResetPBK { get; set; }
 	public Color BackgroundColor { get; set; } = new Color(0,0,0,0.2f);
+
+	public bool AlphaBlending { get; set; } = true;
 }
