@@ -44,6 +44,8 @@ namespace UbiCanvas.Conversion.Json {
 
 		public string SubSkeleton { get; set; }
 		public JSON_DuckType DuckType { get; set; }
+		public float? Scale { get; set; }
+		//public string SkeletonPath { get; set; }
 
 		public Dictionary<string, JSON_TextureBank> TextureBanks { get; set; }
 

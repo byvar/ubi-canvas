@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,6 +93,13 @@ namespace UbiCanvas.Conversion {
 					var mainPlayerControllerComponent = newActor.GetComponent<RO2_PlayerControllerComponent>();
 					var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
 					var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();
+
+					// Set scale
+					if(costume.Scale.HasValue) newActor.SCALE = Vec2d.One * costume.Scale.Value;
+
+					// Set skeleton (only used by some special actors!)
+					//if(!string.IsNullOrWhiteSpace(costume.SkeletonPath))
+					//	mainAnimatedComponent.subAnimInfo.animPackage.skeleton = new Path(costume.SkeletonPath);
 
 					mainPlayerControllerComponent.trailPath = new Path(costume.TemplatePath_Trail);
 					mainAnimatedComponent.subSkeleton = new StringID(costume.SubSkeleton);
@@ -448,6 +456,7 @@ namespace UbiCanvas.Conversion {
 					var aabb = animComponent.animSet.animPackage.animPathAABB.FirstOrDefault(a => a.path == ogAnimPath);
 					aabb.path = animPath;
 					aabb.name = new StringID(costume.Painting.Animation);
+					//TargetContext?.SystemLogger?.LogInfo($"{aabb.aabb.MIN} - {aabb.aabb.MAX}");
 					// TODO: Also adjust aabb.aabb here
 
 					// Add texture banks required by animation

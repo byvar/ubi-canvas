@@ -31,13 +31,13 @@ namespace UbiArt.ITF {
 		}
 		protected void SetEvaluationStringID() {
 			eval = evaluation switch {
-				Enum_evaluation.LessThan => new StringID(0x8b2df96c),
-				Enum_evaluation.LessThanOrEquals => new StringID(0x15285401),
-				Enum_evaluation.GreaterThan => new StringID(0x8caece26),
-				Enum_evaluation.GreaterThanOrEquals => new StringID(0x4d07b33f),
-				Enum_evaluation.Equals => new StringID(0x158d0faf),
-				Enum_evaluation.NotEquals => new StringID(0xfb9ae83),
-				Enum_evaluation.And => new StringID(0x2166158f),
+				Enum_evaluation.LessThan => new StringID("<"),
+				Enum_evaluation.LessThanOrEquals => new StringID("<="),
+				Enum_evaluation.GreaterThan => new StringID(">"),
+				Enum_evaluation.GreaterThanOrEquals => new StringID(">="),
+				Enum_evaluation.Equals => new StringID("=="),
+				Enum_evaluation.NotEquals => new StringID("!="),
+				Enum_evaluation.And => new StringID("&"),
 				_ => new StringID()
 			};
 		}

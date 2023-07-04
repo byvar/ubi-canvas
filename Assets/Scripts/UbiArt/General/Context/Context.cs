@@ -187,10 +187,34 @@ namespace UbiArt {
 		#region String Cache
 		public Dictionary<StringID, string> StringCache = new Dictionary<StringID, string>();
 
+		private List<string> AdditionalStrings = new List<string>() {
+			// Evaluation
+			">", ">=", "<", "<=", "&", "==", "!=",
+
+			// Animation inputs
+			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "MoveCursor", "InAir",
+			"MoveX", "MoveY", "SpeedX", "SpeedY", "SpeedZ",
+			"AcrobaticStage", "StargateStage", "CoopMode", "CrushReleased",
+			"WaitType", "DeathType", "HangType", "IdleTime",
+			"GroundAngle", "OnLoop", "BounceToLayer",
+			"PunchDistance", "PunchLevel", "PunchOrientation", "PunchHitType", "PunchReleaseResult", "PunchWalk",
+			"AirPose", "ActionPose", 
+
+			// Enemy animation inputs
+			"AnimCursor", "OrientationCursor", "TargetCursor",
+			"BlockingContact", "BoneAlpha", "EjectionState", "FishingMode", "HasCage", "HasFruit", "Health", "HurtMode",
+			"MoveAttack", "ParachuteMode", "Pedestal", "PerformCharge", "SplinterCell", "State",
+			"StunBullet", "Stunned", "WallOrientation", "WindForce"
+		};
+
+
 		protected void InitStringCache() {
 			// Init String Cache
 			foreach (uint sid in ObjectFactory.classes.Keys) {
 				StringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
+			}
+			foreach (var str in AdditionalStrings) {
+				StringCache.Add(new StringID(str), str);
 			}
 		}
 
