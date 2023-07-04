@@ -22,7 +22,7 @@ namespace UbiCanvas.Conversion {
 		protected override async Task BuildInternal() {
 			var levelsJsonPath = System.IO.Path.Combine(ProjectPath, "json", "levels");
 
-			var files = System.IO.Directory.Exists(levelsJsonPath) ? System.IO.Directory.GetFiles(levelsJsonPath, "*.json") : null;
+			var files = System.IO.Directory.Exists(levelsJsonPath) ? System.IO.Directory.GetFiles(levelsJsonPath, "*.json", System.IO.SearchOption.AllDirectories) : null;
 			if (files != null && files.Any()) {
 				files = files.OrderBy(f => f).ToArray();
 				Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();

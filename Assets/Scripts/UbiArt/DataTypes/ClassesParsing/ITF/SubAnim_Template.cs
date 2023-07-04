@@ -11,6 +11,15 @@ namespace UbiArt.ITF {
 				if (l.LoadAnimations) {
 					l.LoadFile<AnimTrack>(name, result => anim = result);
 				}
+				AddToStringCache(s);
+			}
+		}
+
+		protected void AddToStringCache(CSerializerObject s) {
+			if (!string.IsNullOrWhiteSpace(name?.filename)) {
+				var newname = name.filename;
+				if(newname.EndsWith(".anm")) newname = newname.Substring(0, newname.Length - 4);
+				s.Context.AddToStringCache(newname);
 			}
 		}
 	}

@@ -192,19 +192,21 @@ namespace UbiArt {
 			">", ">=", "<", "<=", "&", "==", "!=",
 
 			// Animation inputs
-			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "MoveCursor", "InAir",
+			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "MoveCursor", "InAir", "IsPathBlocked",
 			"MoveX", "MoveY", "SpeedX", "SpeedY", "SpeedZ",
-			"AcrobaticStage", "StargateStage", "CoopMode", "CrushReleased",
+			"AcrobaticStage", "StargateStage", "CoopMode", "CrushReleased", "CrushTravelTime",
 			"WaitType", "DeathType", "HangType", "IdleTime",
 			"GroundAngle", "OnLoop", "BounceToLayer",
 			"PunchDistance", "PunchLevel", "PunchOrientation", "PunchHitType", "PunchReleaseResult", "PunchWalk",
-			"AirPose", "ActionPose", 
+			"ReceivedHitLevel", "ReceivedHitType",
+			"AirPose", "ActionPose", "OrientationPose", "PrepareHitCursor",
 
 			// Enemy animation inputs
+			"ReceivedHitCount", "ReceivedHitDirection",
 			"AnimCursor", "OrientationCursor", "TargetCursor",
 			"BlockingContact", "BoneAlpha", "EjectionState", "FishingMode", "HasCage", "HasFruit", "Health", "HurtMode",
 			"MoveAttack", "ParachuteMode", "Pedestal", "PerformCharge", "SplinterCell", "State",
-			"StunBullet", "Stunned", "WallOrientation", "WindForce"
+			"StunBullet", "Stunned", "WallOrientation", "WindForce", "IsNaked", "InputLumsColor", "IsInAir",
 		};
 
 
