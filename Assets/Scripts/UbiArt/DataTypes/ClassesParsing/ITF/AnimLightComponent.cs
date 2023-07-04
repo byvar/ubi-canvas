@@ -6,7 +6,9 @@
 			base.OnPostSerialize(s);
 			if (IsFirstLoad) {
 				Loader l = s.Context.Loader;
-				l.LoadFile<GenericFile<GFXMaterialShader_Template>>(MatShader, result => shader = result);
+				if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+					l.LoadFile<GenericFile<GFXMaterialShader_Template>>(MatShader, result => shader = result);
+				}
 			}
 		}
 	}

@@ -13,9 +13,9 @@ namespace UbiArt.ITF {
 			if (IsFirstLoad) {
 				Loader l = s.Context.Loader;
 
-				l.LoadFile<GenericFile<GFXMaterialShader_Template>>(MatShader, result => shader = result);
-
 				if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+					l.LoadFile<GenericFile<GFXMaterialShader_Template>>(MatShader, result => shader = result);
+
 					l.LoadFile<GenericFile<FriseConfig>>(ConfigName, result => {
 						config = result;
 						if (config != null)

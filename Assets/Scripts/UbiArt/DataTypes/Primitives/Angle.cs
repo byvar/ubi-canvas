@@ -16,7 +16,7 @@ namespace UbiArt {
 		
 		// Casts
 		public static implicit operator float(Angle a) {
-			return a.angle;
+			return a?.angle ?? 0;
 		}
 		public static implicit operator Angle(float a) {
 			return new Angle { angle = a };

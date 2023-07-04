@@ -192,14 +192,15 @@ namespace UbiArt {
 			">", ">=", "<", "<=", "&", "==", "!=",
 
 			// Animation inputs
-			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "MoveCursor", "InAir", "IsPathBlocked",
+			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "InAir", "IsPathBlocked",
 			"MoveX", "MoveY", "SpeedX", "SpeedY", "SpeedZ",
 			"AcrobaticStage", "StargateStage", "CoopMode", "CrushReleased", "CrushTravelTime",
 			"WaitType", "DeathType", "HangType", "IdleTime",
 			"GroundAngle", "OnLoop", "BounceToLayer",
 			"PunchDistance", "PunchLevel", "PunchOrientation", "PunchHitType", "PunchReleaseResult", "PunchWalk",
 			"ReceivedHitLevel", "ReceivedHitType",
-			"AirPose", "ActionPose", "OrientationPose", "PrepareHitCursor",
+			"AirPose", "ActionPose", "OrientationPose",
+			"MoveCursor", "PrepareHitCursor", "SwimCurveCursor",
 
 			// Enemy animation inputs
 			"ReceivedHitCount", "ReceivedHitDirection",

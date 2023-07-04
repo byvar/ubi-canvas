@@ -3,6 +3,7 @@ namespace UbiArt.Animation {
 	// pbk.ckd file
 	public class AnimPatchBank : CSerializable {
 		public const uint VersionLegends = 0x10;
+		public const uint VersionFiestaRun = 0xD;
 
 		public uint version;
 		public Link bankId;
@@ -20,8 +21,10 @@ namespace UbiArt.Animation {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.game == Settings.Game.RL && version >= VersionLegends) {
-				version = VersionLegends;
+			if (settings.game == Settings.Game.RL) {
+				if (version >= VersionLegends || version <= VersionFiestaRun) {
+					version = VersionLegends;
+				}
 			}
 		}
 		protected override void OnPreSerialize(CSerializerObject s) {
