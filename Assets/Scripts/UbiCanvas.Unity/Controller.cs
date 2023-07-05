@@ -123,11 +123,7 @@ public class Controller : MonoBehaviour {
 
 		if (tpl?.obj != null) {
 			await TimeController.WaitFrame();
-			CSerializable c = await MainContext.Loader.Clone(tpl.obj, MainContext.Settings.engineVersion == Settings.EngineVersion.RO ? "act" : "tpl");
-			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
-
-			Actor_Template atpl = c as Actor_Template;
-			Actor a = atpl.Instantiate(p);
+			Actor a = tpl.obj.Instantiate(p);
 			bool isAdded = scene.AddActor(a, pathFile.Substring(0, pathFile.IndexOf('.')));
 			if (isAdded) {
 				var sceneGao = await scene.GetGameObject();

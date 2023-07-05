@@ -21,7 +21,7 @@ public class UnityWindowActor : UnityWindow {
 			if (controller == null) controller = Controller.Obj;
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
 				var c = Controller.MainContext;
-				string[] extensions = new string[] { $"*.act{(c.Settings.cooked ? ".ckd" : "")}" };
+				string[] extensions = new string[] { $"*.act{(c.Settings.cooked ? ".ckd" : "")}", $"*.tpl{(c.Settings.cooked ? ".ckd" : "")}" };
 				if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
 					extensions = new string[] { $"*.act{(c.Settings.cooked ? ".ckd" : "")}", "*.act_fake" };
 				}
@@ -73,7 +73,8 @@ public class UnityWindowActor : UnityWindow {
 					string pathFolder = System.IO.Path.GetDirectoryName(SelectedActorFile);
 					string pathFile = System.IO.Path.GetFileName(SelectedActorFile);
 					if (sc != null) {
-						if (c.Settings.engineVersion == Settings.EngineVersion.RO && !pathFile.ToLowerInvariant().EndsWith(".act_fake")) {
+						if (c.Settings.engineVersion == Settings.EngineVersion.RO && !pathFile.ToLowerInvariant().EndsWith(".act_fake")
+							|| pathFile.ToLowerInvariant().EndsWith($".tpl{(c.Settings.cooked ? ".ckd" : "")}")) {
 							ExecuteTask(
 								controller.AdditionalLoad(controller.LoadTemplateAndCreateActor(sc, pathFile, pathFolder).AsTask())
 							);

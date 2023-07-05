@@ -90,7 +90,7 @@ namespace UbiArt.ITF {
 				return c;
 			}
 			act.COMPONENTS = new CArrayO<Generic<ActorComponent>>(COMPONENTS.Select(c => new Generic<ActorComponent>(InstantiateComponent(c.obj))).ToArray());
-			return act;
+			return (Actor)act.Clone("act");
 		}
 	}
 }

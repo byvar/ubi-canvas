@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
 			bool createdOne = false;
 			if (context.Settings.engineVersion > Settings.EngineVersion.RO) {
-				foreach (TextureBankPath bp in subAnimInfo.animPackage.textureBank) {
+				foreach (TextureBankPath bp in subAnimInfo?.animPackage?.textureBank) {
 					createdOne = ProcessTextureBank(bp, gao, tex_mat, subAnimInfo?.animPackage?.skel ?? tpl.animSet?.animPackage?.skel);
 					if (createdOne) break;
 				}
