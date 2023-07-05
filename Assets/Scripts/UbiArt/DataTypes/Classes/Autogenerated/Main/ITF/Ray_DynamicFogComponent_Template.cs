@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
-	public partial class Ray_DynamicFogComponent_Template : CSerializable {
+	public partial class Ray_DynamicFogComponent_Template : ActorComponent_Template {
 		public int useDynamicFog;
 		public Color dynamicFogDefaultColor;
 		public float dynamicFogMaxDepth;

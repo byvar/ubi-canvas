@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_TalkingHatAIComponent_Template : CSerializable {
+	public partial class Ray_TalkingHatAIComponent_Template : ActorComponent_Template {
 		public float playerDetectRadiusAppear;
 		public float playerDetectRadiusDisappear;
 		public StringID bubbleBone;

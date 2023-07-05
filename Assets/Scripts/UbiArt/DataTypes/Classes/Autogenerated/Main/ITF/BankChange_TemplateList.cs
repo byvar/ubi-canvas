@@ -2,9 +2,14 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class BankChange_TemplateList : CSerializable {
 		public CListO<TextureBankPath> redirectList;
+		public CListO<BankChange_Template> redirectList_Origins;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			redirectList = s.SerializeObject<CListO<TextureBankPath>>(redirectList, name: "redirectList");
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+				redirectList_Origins = s.SerializeObject<CListO<BankChange_Template>>(redirectList_Origins, name: "redirectList");
+			} else {
+				redirectList = s.SerializeObject<CListO<TextureBankPath>>(redirectList, name: "redirectList");
+			}
 		}
 	}
 }

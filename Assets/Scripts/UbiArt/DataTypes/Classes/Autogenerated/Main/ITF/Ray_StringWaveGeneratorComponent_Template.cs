@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_StringWaveGeneratorComponent_Template : CSerializable {
+	public partial class Ray_StringWaveGeneratorComponent_Template : ActorComponent_Template {
 		public int sync;
 		public float syncOffset;
 		public float syncRatio;

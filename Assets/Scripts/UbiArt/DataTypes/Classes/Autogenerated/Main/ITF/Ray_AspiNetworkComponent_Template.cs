@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
-	public partial class Ray_AspiNetworkComponent_Template : CSerializable {
+	public partial class Ray_AspiNetworkComponent_Template : ActorComponent_Template {
 		public float enterDuration;
 		public float enterBezierMultiplier;
 		public float speed;

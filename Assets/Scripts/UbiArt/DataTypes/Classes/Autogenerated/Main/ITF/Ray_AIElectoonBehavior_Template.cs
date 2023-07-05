@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIElectoonBehavior_Template : TemplateAIBehavior {
-		public Placeholder walk;
+		public Nullable<AIWalkInDirAction_Template> walk;
 		public float minTimeBeforeWalking;
 		public float maxTimeBeforeWalking;
 		public float minTimeWalking;
@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public float maxDeltaYToFollow;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			walk = s.SerializeObject<Placeholder>(walk, name: "walk");
+			walk = s.SerializeObject<Nullable<AIWalkInDirAction_Template>>(walk, name: "walk");
 			minTimeBeforeWalking = s.Serialize<float>(minTimeBeforeWalking, name: "minTimeBeforeWalking");
 			maxTimeBeforeWalking = s.Serialize<float>(maxTimeBeforeWalking, name: "maxTimeBeforeWalking");
 			minTimeWalking = s.Serialize<float>(minTimeWalking, name: "minTimeWalking");

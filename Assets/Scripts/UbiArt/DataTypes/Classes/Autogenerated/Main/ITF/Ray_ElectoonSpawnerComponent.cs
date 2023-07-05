@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_ElectoonSpawnerComponent : CSerializable {
+	public partial class Ray_ElectoonSpawnerComponent : ActorComponent {
 		public uint numToSpawn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_PushButtonComponent_Template : CSerializable {
+	public partial class Ray_PushButtonComponent_Template : ActorComponent_Template {
 		public float onOffDuration;
 		public float delay;
 		public int activateChildren;
@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public int triggerOnHit;
 		public int isProgressive;
 		public float progressiveSpeed;
-		public Placeholder progressiveHitLevels;
+		public CArrayP<uint> progressiveHitLevels;
 		public int stayOn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 			triggerOnHit = s.Serialize<int>(triggerOnHit, name: "triggerOnHit");
 			isProgressive = s.Serialize<int>(isProgressive, name: "isProgressive");
 			progressiveSpeed = s.Serialize<float>(progressiveSpeed, name: "progressiveSpeed");
-			progressiveHitLevels = s.SerializeObject<Placeholder>(progressiveHitLevels, name: "progressiveHitLevels");
+			progressiveHitLevels = s.SerializeObject<CArrayP<uint>>(progressiveHitLevels, name: "progressiveHitLevels");
 			stayOn = s.Serialize<int>(stayOn, name: "stayOn");
 		}
 		public override uint? ClassCRC => 0x9308A6E7;

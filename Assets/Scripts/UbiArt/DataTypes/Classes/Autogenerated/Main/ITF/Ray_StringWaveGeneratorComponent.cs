@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_StringWaveGeneratorComponent : CSerializable {
+	public partial class Ray_StringWaveGeneratorComponent : ActorComponent {
 		public int startsActivated;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

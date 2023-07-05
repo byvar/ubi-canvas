@@ -48,8 +48,8 @@ public class FriseEditorBehaviour : MonoBehaviour {
 	public void CreatePoints() {
 		var fr = currentSelectedObject.GetComponent<UnityFrise>();
 		if (fr != null) {
-			var pointsList = fr.frise.PointsList?.LocalPoints;
-			var loop = fr.frise.PointsList?.Loop ?? true;
+			var pointsList = fr.frise.PointsList?.LocalPoints ?? fr.frise.LOCAL_POINTS;
+			var loop = ((fr.frise.UbiArtContext?.Settings?.engineVersion > Settings.EngineVersion.RO) ? fr.frise.PointsList?.Loop : fr.frise.LOOP) ?? true;
 			var frTransform = fr.gameObject.transform;
 			Points = new FriseEditorPointBehaviour[pointsList.Count];
 

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_ElectoonSpawnerComponent_Template : CSerializable {
+	public partial class Ray_ElectoonSpawnerComponent_Template : ActorComponent_Template {
 		public Path path;
 		public float maxTangeantLength;
 		public float minTangeantLength;

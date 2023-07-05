@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIFruitTrapBehavior_Template : CSerializable {
+	public partial class Ray_AIFruitTrapBehavior_Template : TemplateAIBehavior {
 		public float delay;
 		public float weightThreshold;
 		public Generic<AIAction_Template> standAction;

@@ -4960,6 +4960,15 @@ namespace UbiArt {
 			// Origins
 			{ 0x51057FA6, typeof(ITF.Ray_BigMamaAIComponent) },
 			{ 0x7BBCA414, typeof(ITF.Ray_CreditsManagerAIComponent) },
+			{ 0xF42C3130, typeof(ITF.Ray_SinkingPlatformComponent) },
+			{ 0xA45B9DC1, typeof(ITF.Ray_WaterFloatingPlatformComponent) },
+			{ 0xF9FC2A46, typeof(ITF.Ray_WaterPerturbationComponent) },
+			{ 0xEA54E2CB, typeof(ITF.Ray_DarkToonAIComponent) },
+			{ 0x9200D461, typeof(ITF.Ray_AIGroundBaseBehavior) },
+			{ 0xB1F00CDD, typeof(ITF.Ray_AIGroundBaseMovementBehavior) },
+			{ 0xFF8A5359, typeof(ITF.Ray_AIGroundBaseMovementAttackBehavior) },
+			{ 0x7A91C809, typeof(ITF.Ray_AIGroundBaseBehavior_Template) },
+
 
 			// Mini
 			{ 0x6F81A08D, typeof(ITF.FluidBankComponent_Template) },

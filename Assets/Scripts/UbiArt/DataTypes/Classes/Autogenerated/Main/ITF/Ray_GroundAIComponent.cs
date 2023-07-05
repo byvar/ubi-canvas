@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR)]
-	public partial class Ray_GroundAIComponent : CSerializable {
+	public partial class Ray_GroundAIComponent : Ray_AIComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

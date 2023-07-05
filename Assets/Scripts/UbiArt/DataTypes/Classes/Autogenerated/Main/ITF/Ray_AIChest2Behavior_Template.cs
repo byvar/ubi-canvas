@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 		public int sendBreakEventsDirectly;
 		public int disableAfterBreakEvents;
 		public int snapBreakSequencePlayer;
-		public Placeholder breakEvents;
+		public CArrayO<Generic<Event>> breakEvents;
 		public float detectDelay;
 		public float hideTimeout;
 		public int canReverse;
@@ -69,7 +69,7 @@ namespace UbiArt.ITF {
 			sendBreakEventsDirectly = s.Serialize<int>(sendBreakEventsDirectly, name: "sendBreakEventsDirectly");
 			disableAfterBreakEvents = s.Serialize<int>(disableAfterBreakEvents, name: "disableAfterBreakEvents");
 			snapBreakSequencePlayer = s.Serialize<int>(snapBreakSequencePlayer, name: "snapBreakSequencePlayer");
-			breakEvents = s.SerializeObject<Placeholder>(breakEvents, name: "breakEvents");
+			breakEvents = s.SerializeObject<CArrayO<Generic<Event>>>(breakEvents, name: "breakEvents");
 			detectDelay = s.Serialize<float>(detectDelay, name: "detectDelay");
 			hideTimeout = s.Serialize<float>(hideTimeout, name: "hideTimeout");
 			canReverse = s.Serialize<int>(canReverse, name: "canReverse");

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_WaterPerturbationComponent_Template : CSerializable {
+	public partial class Ray_WaterPerturbationComponent_Template : ActorComponent_Template {
 		public Path fxFile;
 		public float noiseAmplitudeX;
 		public float noiseFrequencyX;

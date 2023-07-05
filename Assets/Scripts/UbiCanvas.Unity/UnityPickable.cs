@@ -66,6 +66,9 @@ public class UnityPickable : MonoBehaviour {
 						spr = sprLoc;
 					}
 				}
+				if (spr == null) {
+					spr = c.GetIcon("frieze", selected);
+				}
 			} else if (pickable is Actor) {
 				if (pickable is SubSceneActor) {
 					SubSceneActor ssa = pickable as SubSceneActor;
