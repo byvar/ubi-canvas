@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -106,6 +105,29 @@ public class Controller : MonoBehaviour {
 			CSerializable c = await MainContext.Loader.Clone(act.obj, "act");
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
 			Actor a = c as Actor;
+			bool isAdded = scene.AddActor(a, pathFile.Substring(0, pathFile.IndexOf('.')));
+			if (isAdded) {
+				var sceneGao = await scene.GetGameObject();
+				await a.SetGameObjectParent(sceneGao);
+			}
+			Controller.Obj.zListManager.Sort();
+			await TimeController.WaitFrame();
+		}
+	}
+
+	public async UniTask LoadTemplateAndCreateActor(Scene scene, string pathFile, string pathFolder) {
+		var p = new UbiArt.Path(pathFolder, pathFile);
+		p.LoadObject(MainContext, removeCooked: true);
+		await MainContext.Loader.LoadLoop();
+		var tpl = p.GetObject<GenericFile<Actor_Template>>();
+
+		if (tpl?.obj != null) {
+			await TimeController.WaitFrame();
+			CSerializable c = await MainContext.Loader.Clone(tpl.obj, MainContext.Settings.engineVersion == Settings.EngineVersion.RO ? "act" : "tpl");
+			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
+
+			Actor_Template atpl = c as Actor_Template;
+			Actor a = atpl.Instantiate(p);
 			bool isAdded = scene.AddActor(a, pathFile.Substring(0, pathFile.IndexOf('.')));
 			if (isAdded) {
 				var sceneGao = await scene.GetGameObject();

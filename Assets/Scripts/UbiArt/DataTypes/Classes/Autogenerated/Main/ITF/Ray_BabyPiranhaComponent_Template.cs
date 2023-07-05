@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
-	public partial class Ray_BabyPiranhaComponent_Template : CSerializable {
+	public partial class Ray_BabyPiranhaComponent_Template : ActorComponent_Template {
 		public ITF_ParticleGenerator_Template particleGeneratorStand;
 		public ITF_ParticleGenerator_Template particleGeneratorAttack;
 		public Path texture;

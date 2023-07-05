@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion)]
-	public partial class Ray_CameraLimiterComponent_Template : CSerializable {
+	public partial class Ray_CameraLimiterComponent_Template : ActorComponent_Template {
 		public int useEjectMargin;
 		public Margin ejectMargin;
 		public int ejectMarginDetachesPlayer;

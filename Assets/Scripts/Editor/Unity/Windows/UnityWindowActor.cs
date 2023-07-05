@@ -23,7 +23,7 @@ public class UnityWindowActor : UnityWindow {
 				var c = Controller.MainContext;
 				string[] extensions = new string[] { $"*.act{(c.Settings.cooked ? ".ckd" : "")}" };
 				if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
-					extensions[0] = "*.act_fake";
+					extensions = new string[] { $"*.act{(c.Settings.cooked ? ".ckd" : "")}", "*.act_fake" };
 				}
 				#region Add Actor
 				DrawHeader("Add Actor");
@@ -73,7 +73,13 @@ public class UnityWindowActor : UnityWindow {
 					string pathFolder = System.IO.Path.GetDirectoryName(SelectedActorFile);
 					string pathFile = System.IO.Path.GetFileName(SelectedActorFile);
 					if (sc != null) {
-						ExecuteTask(controller.AdditionalLoad(controller.LoadActor(sc, pathFile, pathFolder).AsTask()));
+						if (c.Settings.engineVersion == Settings.EngineVersion.RO && !pathFile.ToLowerInvariant().EndsWith(".act_fake")) {
+							ExecuteTask(
+								controller.AdditionalLoad(controller.LoadTemplateAndCreateActor(sc, pathFile, pathFolder).AsTask())
+							);
+						} else {
+							ExecuteTask(controller.AdditionalLoad(controller.LoadActor(sc, pathFile, pathFolder).AsTask()));
+						}
 					}
 				}
 				EditorGUI.EndDisabledGroup();

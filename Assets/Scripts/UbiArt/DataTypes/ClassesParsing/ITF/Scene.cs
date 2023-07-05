@@ -34,11 +34,6 @@ namespace UbiArt.ITF {
 			Reinit(s.Context, s.Settings);
 		}
 
-		public Scene() { }
-		public Scene(Context c) {
-			UbiArtContext = c;
-		}
-
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {

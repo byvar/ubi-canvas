@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR)]
-	public partial class Ray_BossPlantArenaAIComponent : CSerializable {
+	public partial class Ray_BossPlantArenaAIComponent : AIComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

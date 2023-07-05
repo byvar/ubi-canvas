@@ -4957,6 +4957,10 @@ namespace UbiArt {
 			{ 0xFFF82AD2, typeof(ITF.RO2_BTActionPerformPedestal_Template) },
 			{ 0xFFFEE8A4, typeof(ITF.RO2_BTActionReceiveCameraEjectHit_Template) },
 
+			// Origins
+			{ 0x51057FA6, typeof(ITF.Ray_BigMamaAIComponent) },
+			{ 0x7BBCA414, typeof(ITF.Ray_CreditsManagerAIComponent) },
+
 			// Mini
 			{ 0x6F81A08D, typeof(ITF.FluidBankComponent_Template) },
 			{ 0xF7488362, typeof(ITF.FluidBankComponent) },

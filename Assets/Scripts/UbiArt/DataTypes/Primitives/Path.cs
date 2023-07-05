@@ -135,9 +135,9 @@ namespace UbiArt {
 			return (T)Object;
 		}
 
-		public void LoadObject(Context c) {
+		public void LoadObject(Context c, bool removeCooked = false) {
 			if (!IsNull) {
-				switch (GetExtension()) {
+				switch (GetExtension(removeCooked: removeCooked)) {
 					case "anm":
 						c.Loader.LoadFile<AnimTrack>(this, o => Object = o);
 						break;
@@ -155,7 +155,11 @@ namespace UbiArt {
 						c.Loader.LoadFile<ContainerFile<ITF.Scene>>(this, o => Object = o);
 						break;
 					case "act":
-						c.Loader.LoadFile<ContainerFile<ITF.Actor>>(this, o => Object = o);
+						if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
+							c.Loader.LoadFile<GenericFile<Actor_Template>>(this, o => Object = o);
+						} else {
+							c.Loader.LoadFile<ContainerFile<ITF.Actor>>(this, o => Object = o);
+						}
 						break;
 					case "tga":
 					case "dds":

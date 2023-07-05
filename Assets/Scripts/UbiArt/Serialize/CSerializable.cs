@@ -11,8 +11,12 @@ namespace UbiArt {
 		[IgnoreDataMember]
 		public uint sizeOf = 0;
 
+		public void InitContext(Context c) {
+			UbiArtContext = c;
+		}
+
 		public void Serialize(CSerializerObject s, string name) {
-			UbiArtContext = s.Context;
+			InitContext(s.Context);
 			OnPreSerialize(s);
 			SerializeImpl(s);
 			OnPostSerialize(s);

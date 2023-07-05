@@ -63,5 +63,34 @@ namespace UbiArt.ITF {
 			COMPONENTS.Add(new Generic<ActorComponent_Template>(t));
 			return t;
 		}
+
+		public Actor Instantiate(Path templatePath) {
+			var basename = System.IO.Path.GetFileNameWithoutExtension(templatePath?.filename);
+			var act = new Actor() {
+				POS2D = Vec2d.Zero,
+				USERFRIENDLY = basename,
+				LUA = templatePath,
+				template = new GenericFile<Actor_Template>(this),
+				templatePickable = this,
+			};
+			act.InitContext(UbiArtContext);
+			ActorComponent InstantiateComponent(ActorComponent_Template ctpl) {
+				var tplType = ctpl.GetType();
+				var typeName = tplType.FullName;
+				if(typeName.Contains("_Template"))
+					typeName = typeName.Replace("_Template","");
+
+				Type type = Type.GetType(typeName);
+
+				// Check whether the class exists
+				if (type == null) throw new Exception($"Could not create instance class of component {tplType.FullName}");
+
+				var c = (ActorComponent)Activator.CreateInstance(type);
+				c.InitContext(UbiArtContext);
+				return c;
+			}
+			act.COMPONENTS = new CArrayO<Generic<ActorComponent>>(COMPONENTS.Select(c => new Generic<ActorComponent>(InstantiateComponent(c.obj))).ToArray());
+			return act;
+		}
 	}
 }
