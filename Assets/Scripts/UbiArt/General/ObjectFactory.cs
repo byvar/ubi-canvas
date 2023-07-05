@@ -4968,6 +4968,8 @@ namespace UbiArt {
 			{ 0xB1F00CDD, typeof(ITF.Ray_AIGroundBaseMovementBehavior) },
 			{ 0xFF8A5359, typeof(ITF.Ray_AIGroundBaseMovementAttackBehavior) },
 			{ 0x7A91C809, typeof(ITF.Ray_AIGroundBaseBehavior_Template) },
+			{ 0x296A7757, typeof(ITF.Ray_BubbleDreamerAIComponent) },
+			{ 0xFC157114, typeof(ITF.SynchronizedAnimComponent) },
 
 
 			// Mini
