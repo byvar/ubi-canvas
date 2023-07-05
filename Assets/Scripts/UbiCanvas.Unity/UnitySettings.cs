@@ -51,6 +51,12 @@ public class UnitySettings {
 	public static string Tools_AdventuresToLegends_ProjectPath { get; set; }
 	public static string Tools_AdventuresToLegends_GamePath { get; set; }
 
+	// Mode conversion tool
+	public static Settings.Mode Tools_ModeConversion_InputMode { get; set; } = Settings.Mode.RaymanOriginsPC;
+	public static string Tools_ModeConversion_InputPath { get; set; }
+	public static Settings.Mode Tools_ModeConversion_OutputMode { get; set; } = Settings.Mode.RaymanLegendsPC;
+	public static string Tools_ModeConversion_OutputPath { get; set; }
+
 	/// <summary>
 	/// Static constructor loads in editor data at editor startup.
 	/// This way, the data loads even if the editor window isn't active.
@@ -115,6 +121,13 @@ public class UnitySettings {
 
 		Tools_AdventuresToLegends_ProjectPath = s.SerializeString(nameof(Tools_AdventuresToLegends_ProjectPath), Tools_AdventuresToLegends_ProjectPath);
 		Tools_AdventuresToLegends_GamePath = s.SerializeString(nameof(Tools_AdventuresToLegends_GamePath), Tools_AdventuresToLegends_GamePath);
+
+		modeString = s.SerializeString(nameof(Tools_ModeConversion_InputMode), Tools_ModeConversion_InputMode.ToString());
+		Tools_ModeConversion_InputMode = Enum.TryParse<Settings.Mode>(modeString, out Settings.Mode gameModeConvInput) ? gameModeConvInput : Tools_ModeConversion_InputMode;
+		Tools_ModeConversion_InputPath = s.SerializeString(nameof(Tools_ModeConversion_InputPath), Tools_ModeConversion_InputPath);
+		modeString = s.SerializeString(nameof(Tools_ModeConversion_OutputMode), Tools_ModeConversion_OutputMode.ToString());
+		Tools_ModeConversion_OutputMode = Enum.TryParse<Settings.Mode>(modeString, out Settings.Mode gameModeConvOutput) ? gameModeConvOutput : Tools_ModeConversion_OutputMode;
+		Tools_ModeConversion_OutputPath = s.SerializeString(nameof(Tools_ModeConversion_OutputPath), Tools_ModeConversion_OutputPath);
 	}
 
     /// <summary>

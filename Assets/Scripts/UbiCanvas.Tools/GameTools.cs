@@ -8,6 +8,7 @@
 			new ExportLocalisationTool(),
 			new AdventuresSaveTool(),
 			new BuildModIPKTool(),
+			new ModeConversionTool(),
 			new AdventuresToLegendsModTool(),
 			new CRCCalculatorTool(),
 		};

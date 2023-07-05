@@ -101,7 +101,6 @@ public class UnityWindowTools : UnityWindow
 		{
 
 			EditorGUI.BeginChangeCheck();
-
 			UnitySettings.Tools_AdventuresToLegends_ProjectPath = DirectoryField(GetNextRect(ref YPos), "Project path", UnitySettings.Tools_AdventuresToLegends_ProjectPath, true);
 			UnitySettings.Tools_AdventuresToLegends_GamePath = DirectoryField(GetNextRect(ref YPos), "Game path", UnitySettings.Tools_AdventuresToLegends_GamePath, true);
 
@@ -113,6 +112,22 @@ public class UnityWindowTools : UnityWindow
 				if (EditorButton(invokableAction.Name))
 					ExecuteTask(invokableAction.Action());
 			}
+		}
+		else if (tool is ModeConversionTool modeConversionTool)
+		{
+			EditorGUI.BeginChangeCheck();
+
+			UnitySettings.Tools_ModeConversion_InputMode = EditorField<UbiArt.Settings.Mode>("Input game mode", UnitySettings.Tools_ModeConversion_InputMode);
+			UnitySettings.Tools_ModeConversion_InputPath = DirectoryField(GetNextRect(ref YPos, vPaddingBottom: 10), "Input path", UnitySettings.Tools_ModeConversion_InputPath, true);
+
+			UnitySettings.Tools_ModeConversion_OutputMode = EditorField<UbiArt.Settings.Mode>("Output game mode", UnitySettings.Tools_ModeConversion_OutputMode); 
+			UnitySettings.Tools_ModeConversion_OutputPath = DirectoryField(GetNextRect(ref YPos, vPaddingBottom: 10), "Output path", UnitySettings.Tools_ModeConversion_OutputPath, true);
+
+			if (EditorGUI.EndChangeCheck()) {
+				UnitySettings.Save();
+			}
+			if (EditorButton("Convert"))
+				ExecuteTask(modeConversionTool.Convert());
 		}
 		else if (tool is MultiActionGameTool multiActionGameTool)
 		{
