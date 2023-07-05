@@ -22,13 +22,31 @@ namespace UbiArt.Animation {
 
 		public void Reinit(Settings settings) {
 			if (settings.game == Settings.Game.RL) {
-				if (version >= VersionLegends || version <= VersionFiestaRun) {
+				if (version >= VersionLegends) {
 					version = VersionLegends;
 				}
 			}
 		}
 		protected override void OnPreSerialize(CSerializerObject s) {
 			base.OnPreSerialize(s);
+			if (s.Context.HasSettings<ConversionSettings>()) {
+				var conv = s.Context.GetSettings<ConversionSettings>();
+				if (conv.OldSettings.engineVersion <= Settings.EngineVersion.RO && conv.OldSettings.engineVersion > Settings.EngineVersion.RO) {
+					version = VersionLegends;
+
+					// Convert PBK
+					if (templates != null) {
+						foreach (var template in templates) {
+							if (template?.bonesDyn != null) {
+								foreach (var boneDyn in template.bonesDyn) {
+									boneDyn.scale.x *= boneDyn.xScale;
+									boneDyn.xScale = 1f;
+								}
+							}
+						}
+					}
+				}
+			}
 			Reinit(s.Settings);
 		}
 	}

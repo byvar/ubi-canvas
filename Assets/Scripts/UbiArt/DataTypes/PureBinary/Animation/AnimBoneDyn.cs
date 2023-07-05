@@ -3,7 +3,7 @@ namespace UbiArt.Animation {
 	public class AnimBoneDyn : CSerializable {
 		public Vec2d vec0;
 		public float float1;
-		public float xOffset;
+		public float xScale = 1f;
 		public Vec2d position;
 		public Angle angle;
 		public float z;
@@ -14,7 +14,7 @@ namespace UbiArt.Animation {
 			vec0 = s.SerializeObject<Vec2d>(vec0, name: "vec0");
 			float1 = s.Serialize<float>(float1, name: "float1");
 			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
-				xOffset = s.Serialize<float>(xOffset, name: "xOffset");
+				xScale = s.Serialize<float>(xScale, name: "xScale");
 			}
 			position = s.SerializeObject<Vec2d>(position, name: "position");
 			angle = s.SerializeObject<Angle>(angle, name: "angle");

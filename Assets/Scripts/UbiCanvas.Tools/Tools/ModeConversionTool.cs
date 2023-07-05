@@ -33,6 +33,13 @@ namespace UbiCanvas.Tools
 				mode: UnitySettings.Tools_ModeConversion_OutputMode,
 				loadAnimations: false, loadAllPaths: false);
 
+
+			// Create conversion settings
+			var conversionSettings = new ConversionSettings() {
+				OldSettings = inputContext.Settings,
+			};
+			outputContext.AddSettings<ConversionSettings>(conversionSettings);
+
 			BundleFile outBundle = new BundleFile(outputContext);
 
 
