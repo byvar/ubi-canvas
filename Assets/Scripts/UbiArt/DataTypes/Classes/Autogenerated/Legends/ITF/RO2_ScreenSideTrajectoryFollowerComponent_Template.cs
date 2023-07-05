@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_ScreenSideTrajectoryFollowerComponent_Template : CSerializable {
+	public partial class RO2_ScreenSideTrajectoryFollowerComponent_Template : TrajectoryFollowerComponent_Template {
 		public float distanceFromSide;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_AIBTOrderComponent_Template : CSerializable {
+	public partial class Ray_AIBTOrderComponent_Template : ActorComponent_Template {
 		public BTAIORDER type;
 		public StringID detectionArea;
 		public int removeOnExit;

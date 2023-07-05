@@ -4970,6 +4970,15 @@ namespace UbiArt {
 			{ 0x7A91C809, typeof(ITF.Ray_AIGroundBaseBehavior_Template) },
 			{ 0x296A7757, typeof(ITF.Ray_BubbleDreamerAIComponent) },
 			{ 0xFC157114, typeof(ITF.SynchronizedAnimComponent) },
+			{ 0x95182E71, typeof(ITF.Ray_BasculePlatformComponent) },
+			{ 0x99BF7C36, typeof(ITF.Ray_SpikyShellTrapComponent) },
+			{ 0xBD738CFB, typeof(ITF.Ray_AIBTOrderComponent) },
+			{ 0x451EF396, typeof(ITF.Ray_GroundAIControllerComponent) },
+			{ 0x2C9AABA5, typeof(ITF.Ray_GroundAIControllerComponent_Template) },
+			{ 0x1EFDD4D0, typeof(ITF.Ray_BTActionUseTeleport_Template) },
+			{ 0x677BFBD1, typeof(ITF.Ray_BTActionWaypointPathFind_Template) },
+			{ 0xE10CCC13, typeof(ITF.Ray_BTActionWalkToTargetSprintWithPlayer_Template) },
+			{ 0x497E354F, typeof(ITF.Ray_PlatformEnemyAIComponent) },
 
 
 			// Mini

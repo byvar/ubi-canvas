@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.LegendsAndUp)]
+	[Games(GameFlags.All)]
 	public partial class GroundAIControllerComponent : BaseAIControllerComponent {
 		public bool AppearDisablePhysic;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.engineVersion <= Settings.EngineVersion.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
 			} else {
 				AppearDisablePhysic = s.Serialize<bool>(AppearDisablePhysic, name: "AppearDisablePhysic");
 			}
