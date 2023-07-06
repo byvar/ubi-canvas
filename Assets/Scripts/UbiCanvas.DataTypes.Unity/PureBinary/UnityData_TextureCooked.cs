@@ -66,6 +66,9 @@ namespace UbiCanvas {
 				Texture2D tex = Texture;
 				if (squareTexture == null && tex != null) {
 					if (tex.width == tex.height) return tex;
+					// TODO: This is only correct if width > height!
+					// If height < width, UVs are still multiplied with width to get coordinate in pixels.
+					// In other words. V can be over 1 and still inside the texture!
 					int size = Math.Max(tex.width, tex.height);
 					squareTexture = new Texture2D(size, size);
 					squareTexture.SetPixels(0, 0, tex.width, tex.height, tex.GetPixels(0, 0, tex.width, tex.height));

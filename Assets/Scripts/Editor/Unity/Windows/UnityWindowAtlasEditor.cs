@@ -247,7 +247,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	void DrawPatchBank(TextureCooked tex, Rect rect, AnimPatchBank pbk) {
 
 		Vector2 GetTexturePositionOnRect(Vector2 pos) {
-			var size = Mathf.Max(rect.width, rect.height);
+			var size = rect.width; //Mathf.Max(rect.width, rect.height);
 			return rect.position + pos * size;
 		}
 		if (pbk != null) {
@@ -375,7 +375,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	void DrawCubicBezier(Rect rect, Vec2d p0, Vec2d p1, Vec2d p2, Vec2d p3) {
 
 		Vector2 GetTexturePositionOnRect(Vector2 pos) {
-			var size = Mathf.Max(rect.width, rect.height);
+			var size = rect.width; //Mathf.Max(rect.width, rect.height);
 			return rect.position + pos * size;
 		}
 		var numPoints = 16;
