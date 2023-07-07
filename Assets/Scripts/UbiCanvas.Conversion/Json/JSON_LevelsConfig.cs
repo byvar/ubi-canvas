@@ -14,5 +14,6 @@ namespace UbiCanvas.Conversion.Json {
 
 		public List<JSON_HomePainting> MainPaintings { get; set; } // Add to home.isc sceneconfig[0].packageDescriptors
 
+		public Dictionary<int, string> CostumesOrder { get; set; }
 	}
 }

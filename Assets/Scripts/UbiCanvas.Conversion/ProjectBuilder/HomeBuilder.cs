@@ -26,6 +26,8 @@ namespace UbiCanvas.Conversion {
 			if (files != null && files.Any()) {
 				files = files.OrderBy(f => f).ToArray();
 				Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
+
+				List<JSON_LevelsConfig> PostProcessCostumesOrder = new List<JSON_LevelsConfig>();
 				
 				ContainerFile<Scene> homeISC = null;
 				GenericFile<CSerializable> gameConfigISG = null;
@@ -190,6 +192,8 @@ namespace UbiCanvas.Conversion {
 							CostumesBuilder.Costumes.Add(entry);
 						}
 					}
+					if(levelsConfig?.CostumesOrder != null && levelsConfig.CostumesOrder.Any())
+						PostProcessCostumesOrder.Add(levelsConfig);
 
 					if (levelsConfig?.Worlds != null) {
 						foreach (var entry in levelsConfig.Worlds) {
@@ -259,10 +263,45 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 
+				// Now reassign costume priorities
+				foreach (var levelsConfig in PostProcessCostumesOrder) {
+					var order = levelsConfig.CostumesOrder;
+					foreach (var entry in order) {
+						int priority = entry.Key;
+						string costumeID = entry.Value;
+						StringID costumeSID = new StringID(costumeID);
+
+						var desc = homeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == costumeSID);
+						if (desc == null) {
+							TargetContext?.SystemLogger?.LogInfo($"Costume descriptor not found: {costumeID}");
+						} else {
+							desc.priority = priority;
+							desc = sgsHomeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == costumeSID);
+							desc.priority = priority;
+						}
+					}
+				}
+				//UnityEngine.Debug.Log(PrintCostumeOrder(gc, homeConfig));
+				
+
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pGameConfig.stringID], gameConfigISG);
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pSgsContainer.stringID], sceneConfigManager);
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pHomeISC.stringID], homeISC);
 			}
+		}
+
+		private string PrintCostumeOrder(RO2_GameManagerConfig_Template gc, RO2_SceneConfig_Home homeConfig) {
+			StringBuilder b = new StringBuilder();
+			Dictionary<StringID, string> players = new Dictionary<StringID, string>();
+			var ordered = homeConfig.costumeDescriptors.OrderBy(c => c.priority);
+			
+			foreach(var player in gc.playerIDInfo)
+				players.Add(new StringID(player.obj.id), player.obj.id);
+
+			foreach(var desc in ordered)
+				b.AppendLine($"\"{desc.priority}\": {players[desc.costumeTag]},");
+
+			return b.ToString();
 		}
 
 		private async Task ExtendCostumeRoom() {
