@@ -7,19 +7,22 @@ namespace UbiCanvas.Helpers {
 	#region DDSImage Class
 	public class DDSImage : IDisposable {
 		#region Variables
+		private bool m_makeNoLongerReadable = false;
 		private bool m_isValid = false;
 		private Texture2D m_bitmap = null;
 		#endregion
 
 		#region Constructor/Destructor
-		public DDSImage(byte[] ddsImage) {
+		public DDSImage(byte[] ddsImage, bool makeNoLongerReadable = true) {
+			m_makeNoLongerReadable = makeNoLongerReadable;
 			if (ddsImage == null) return;
 			if (ddsImage.Length == 0) return;
 
 			this.Parse(ddsImage);
 		}
 
-		public DDSImage(Stream ddsImage) {
+		public DDSImage(Stream ddsImage, bool makeNoLongerReadable = true) {
+			m_makeNoLongerReadable = makeNoLongerReadable;
 			if (ddsImage == null) return;
 			if (!ddsImage.CanRead) return;
 
@@ -28,7 +31,8 @@ namespace UbiCanvas.Helpers {
 			}
 		}
 
-		private DDSImage(Texture2D bitmap) {
+		private DDSImage(Texture2D bitmap, bool makeNoLongerReadable = true) {
+			m_makeNoLongerReadable = makeNoLongerReadable;
 			this.m_bitmap = bitmap;
 		}
 		#endregion
@@ -124,7 +128,7 @@ namespace UbiCanvas.Helpers {
 			Texture2D bitmap = new Texture2D(width, height, TextureFormat.RGBA32, false);
 			bitmap.LoadRawTextureData(rawData);
 			if (width == height) {
-				bitmap.Apply(true, true);
+				bitmap.Apply(true, m_makeNoLongerReadable);
 			} else {
 				bitmap.Apply(true, false);
 			}

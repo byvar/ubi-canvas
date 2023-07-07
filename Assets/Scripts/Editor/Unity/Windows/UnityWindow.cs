@@ -55,6 +55,13 @@ public class UnityWindow : EditorWindow {
 
 		return miniRect;
 	}
+	public Rect[] DivideRectHorizontally(Rect rect, int count) {
+		Rect[] rects = new Rect[count];
+		for (int i = 0; i < rects.Length; i++) {
+			rects[i] = new Rect(rect.x + (rect.width / count) * i, rect.y, rect.width / count, rect.height);
+		}
+		return rects;
+	}
 
 	protected void BrowseButton(Rect rect, string name, GUIContent content, Action action, int width) {
 		GUIStyle butStyle = EditorStyles.miniButtonRight;

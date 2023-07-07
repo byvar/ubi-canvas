@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace UbiCanvas {
 	public class UnityData_TextureCooked : UnityData<TextureCooked> {
+		public bool MakeNoLongerReadable { get; set; } = false;
+
 		private Texture2D texture;
 		private Texture2D squareTexture;
 		private Texture2D[] subtextures;
@@ -23,9 +25,9 @@ namespace UbiCanvas {
 						texture.Apply();
 					}*/
 					//UnityEngine.Debug.Log($"Texture - {texData.Length} - {width} - {height}");
-					texture = LoadTextureDXT(LinkedObject.texData);
+					texture = LoadTextureDXT(LinkedObject.texData, makeNoLongerReadable: MakeNoLongerReadable);
 					if (texture == null) {
-						using (DDSImage dds = new DDSImage(LinkedObject.texData)) {
+						using (DDSImage dds = new DDSImage(LinkedObject.texData, makeNoLongerReadable: MakeNoLongerReadable)) {
 							texture = dds.BitmapImage;
 						}
 					}
@@ -72,13 +74,13 @@ namespace UbiCanvas {
 					int size = Math.Max(tex.width, tex.height);
 					squareTexture = new Texture2D(size, size);
 					squareTexture.SetPixels(0, 0, tex.width, tex.height, tex.GetPixels(0, 0, tex.width, tex.height));
-					squareTexture.Apply(true, true);
+					squareTexture.Apply(true, MakeNoLongerReadable);
 				}
 				return squareTexture;
 			}
 		}
 
-		private static Texture2D LoadTextureDXT(byte[] ddsBytes) {
+		private static Texture2D LoadTextureDXT(byte[] ddsBytes, bool makeNoLongerReadable = true) {
 			TextureFormat format = TextureFormat.DXT5;
 			switch (ddsBytes[87]) { // 84 - 87: DXT1 or DXT5 in ASCII
 				case 0x31: // DXT1
@@ -107,7 +109,7 @@ namespace UbiCanvas {
 			Texture2D texture = new Texture2D(width, height, format, false);
 			texture.LoadRawTextureData(dxtBytes);
 			if (width == height) {
-				texture.Apply(true, true);
+				texture.Apply(true, makeNoLongerReadable);
 			} else {
 				texture.Apply(true, false);
 			}

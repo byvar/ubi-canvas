@@ -53,7 +53,16 @@ public class UnityWindowAtlasEditor : UnityWindow {
 									tex.GetUnityTexture(Controller.MainContext).Texture,
 									new Rect(0, 0, 1, -1), AlphaBlending);
 
-								AlphaBlending = EditorField("Alpha Blending", AlphaBlending);
+								var rects = DivideRectHorizontally(GetNextRect(), 2);
+								AlphaBlending = EditorField("Alpha Blending", AlphaBlending, rect: rects[0]);
+								if (EditorButton("Export as PNG", rect: rects[1])) {
+									var defaultName = texPath.filename;
+									defaultName = System.IO.Path.GetFileNameWithoutExtension(defaultName);
+									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
+
+									if (!string.IsNullOrWhiteSpace(filePath))
+										SaveAsPNG(tex, filePath, hasTransparency: AlphaBlending);
+								}
 
 
 								var rect = GetNextRect();
@@ -242,6 +251,18 @@ public class UnityWindowAtlasEditor : UnityWindow {
 				}
 			}
 		}
+	}
+
+	void SaveAsPNG(TextureCooked tex, string outputPath, bool hasTransparency = true) {
+		var tex2d = tex.GetUnityTexture(Controller.MainContext).Texture;
+		byte[] png;
+		if (hasTransparency) {
+			png = tex2d.Copy(flipY: true).EncodeToPNG();
+		} else {
+			png = tex2d.Copy(removeTransparency: true, flipY: true).EncodeToPNG();
+		}
+
+		Util.ByteArrayToFile(outputPath, png);
 	}
 
 	void DrawPatchBank(TextureCooked tex, Rect rect, AnimPatchBank pbk) {

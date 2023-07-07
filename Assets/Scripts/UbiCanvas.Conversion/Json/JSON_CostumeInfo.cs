@@ -70,6 +70,7 @@ namespace UbiCanvas.Conversion.Json {
 			public string LevelDependency { get; set; } // Unlock only after certain level is completed
 			public int Priority { get; set; }
 			public bool Unlockable { get; set; }
+			public bool FlipX { get; set; }
 		}
 
 		public enum JSON_DuckType : int {

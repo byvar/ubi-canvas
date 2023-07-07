@@ -459,6 +459,8 @@ namespace UbiCanvas.Conversion {
 					//TargetContext?.SystemLogger?.LogInfo($"{aabb.aabb.MIN} - {aabb.aabb.MAX}");
 					// TODO: Also adjust aabb.aabb here
 
+					if(costume.Painting.FlipX) animComponent.flip = !animComponent.flip;
+
 					// Add texture banks required by animation
 					//animComponent.animSet.animPackage.textureBank.Clear();
 					var textureBank = animComponent.animSet.animPackage.textureBank;
