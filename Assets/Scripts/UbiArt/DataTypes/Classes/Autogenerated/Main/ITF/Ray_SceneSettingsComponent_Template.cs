@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_SceneSettingsComponent_Template : CSerializable {
+	public partial class Ray_SceneSettingsComponent_Template : ActorComponent_Template {
 		public uint maxPlayers;
 		public int allowFriendlyFire;
 		public int allowPlayerCrush;

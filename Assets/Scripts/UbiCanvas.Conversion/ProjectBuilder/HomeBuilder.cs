@@ -311,8 +311,9 @@ namespace UbiCanvas.Conversion {
 
 			var minX = -30;
 			var maxX = +30;
-			var extendMinX = -300;
-			var extendMaxX = +300;
+			var extendMinX = -500;
+			var extendMaxX = +500;
+			var scaleFactorX = 7f;
 
 			TargetContext.Loader.LoadFile<ContainerFile<Scene>>(pCostumesISC, isc => {
 				costumesISC = isc;
@@ -325,6 +326,11 @@ namespace UbiCanvas.Conversion {
 			RescalePickable((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@2").Result);
 			RescalePickable((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@4").Result);
 			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "fx_particlesuspension_fill").Result);
+			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundwood").Result, uvScale: 3.5f);
+			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundwood@1").Result, uvScale: 3.5f);
+			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundsandy").Result, uvScale: 3.5f);
+			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "invisibleground_woodhome").Result);
+			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "tent_background@1").Result, uvScale: 8f);
 
 			// Lighting actors
 			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "resolvebothmask@1").Result);
@@ -338,48 +344,73 @@ namespace UbiCanvas.Conversion {
 			Bundle.AddFile(pCostumesISC.CookedPath(TargetContext), costumesISC);
 
 
-			void ProcessFrise(Frise f) {
+			void ProcessFrise(Frise f, float uvScale = 1f) {
 				float ExtendGlobalToLocal(float extend) => extend / f.SCALE.x;
 				Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
 
-				foreach (var vert in f.meshBuildData.value.StaticVertexList) {
-					var gpos = LocalToGlobal(new Vec2d(vert.pos.x, vert.pos.y));
-					if (gpos.x < minX) {
-						vert.pos.x += ExtendGlobalToLocal(extendMinX);
-						vert.uv.x += ExtendGlobalToLocal(extendMinX) / f.config.obj.fill.scale.x;
-					} else if (gpos.x > maxX) {
-						vert.pos.x += ExtendGlobalToLocal(extendMaxX);
-						vert.uv.x += ExtendGlobalToLocal(extendMaxX) / f.config.obj.fill.scale.x;
+				ProcessPolyPointList(f.PointsList, false);
+				if (f.collisionData?.value?.LocalCollisionList != null) {
+					foreach (var lst in f.collisionData?.value?.LocalCollisionList) {
+						ProcessPolyPointList(lst, false);
 					}
 				}
-				var localAABB = f.meshStaticData.value.LocalAABB;
-				var globalMin = LocalToGlobal(localAABB.MIN);
-				if (globalMin.x < minX) {
-					localAABB.MIN.x += ExtendGlobalToLocal(extendMinX);
-				} else if (globalMin.x > maxX) {
-					localAABB.MIN.x += ExtendGlobalToLocal(extendMaxX);
+				if (f.collisionData?.value?.WorldCollisionList != null) {
+					foreach (var lst in f.collisionData?.value?.WorldCollisionList) {
+						ProcessPolyPointList(lst?.PolyPointList, true);
+						if (lst?.PolyPointList != null) {
+							lst.AABB.MIN.x = lst.PolyPointList.LocalPoints.Min(p => p.POS.x);
+							lst.AABB.MIN.y = lst.PolyPointList.LocalPoints.Min(p => p.POS.y);
+							lst.AABB.MAX.x = lst.PolyPointList.LocalPoints.Max(p => p.POS.x);
+							lst.AABB.MAX.y = lst.PolyPointList.LocalPoints.Max(p => p.POS.y);
+						}
+					}
 				}
-				var globalMax = LocalToGlobal(localAABB.MAX);
-				if (globalMax.x < minX) {
-					localAABB.MAX.x += ExtendGlobalToLocal(extendMinX);
-				} else if (globalMax.x > maxX) {
-					localAABB.MAX.x += ExtendGlobalToLocal(extendMaxX);
+
+				if (f.meshBuildData?.value?.StaticVertexList != null) {
+					foreach (var vert in f.meshBuildData.value.StaticVertexList) {
+						var gpos = LocalToGlobal(new Vec2d(vert.pos.x, vert.pos.y));
+						if (gpos.x < minX) {
+							vert.pos.x += ExtendGlobalToLocal(extendMinX);
+							vert.uv.x += ExtendGlobalToLocal(extendMinX) / (f.config.obj.fill.scale.x * uvScale); // Haven't figured out how this works yet sadly, so I need to specify uv scale manually. Seems to be related to both scale in "fill" and "width" value in config.
+						} else if (gpos.x > maxX) {
+							vert.pos.x += ExtendGlobalToLocal(extendMaxX);
+							vert.uv.x += ExtendGlobalToLocal(extendMaxX) / (f.config.obj.fill.scale.x * uvScale);
+						}
+					}
 				}
-				var worldAABB = f.meshStaticData.value.WorldAABB;
-				if (worldAABB.MIN.x < minX) {
-					worldAABB.MIN.x += extendMinX;
-				} else if (worldAABB.MIN.x > maxX) {
-					worldAABB.MIN.x += extendMaxX;
+				void ProcessPolyPointList(PolyPointList pts, bool isGlobal) {
+					if(pts == null) return;
+					foreach (var pt in pts.LocalPoints) {
+						ExtendVec2d(pt.POS, isGlobal);
+					}
+					pts.RecomputeData();
 				}
-				if (worldAABB.MAX.x < minX) {
-					worldAABB.MAX.x += extendMinX;
-				} else if (worldAABB.MAX.x > maxX) {
-					worldAABB.MAX.x += extendMaxX;
+				void ExtendVec2d(Vec2d vec, bool isGlobal) {
+					if(vec == null) return;
+					if (isGlobal) {
+						if (vec.x < minX) {
+							vec.x += extendMinX;
+						} else if (vec.x > maxX) {
+							vec.x += extendMaxX;
+						}
+					} else {
+						var global = LocalToGlobal(vec);
+						if (global.x < minX) {
+							vec.x += ExtendGlobalToLocal(extendMinX);
+						} else if (global.x > maxX) {
+							vec.x += ExtendGlobalToLocal(extendMaxX);
+						}
+					}
 				}
+				ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MIN, false);
+				ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MAX, false);
+
+				ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MIN, true);
+				ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MAX, true);
 			}
 
 			void RescalePickable(Pickable p) {
-				p.SCALE.x *= 4f;
+				p.SCALE.x *= scaleFactorX;
 				if (p is Frise f) {
 					Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
 
