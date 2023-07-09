@@ -78,12 +78,19 @@ namespace UbiCanvas.Helpers
 			Util.ByteArrayToFile(filePath, texture2D.EncodeToPNG());
 		}
 
-		public static Texture2D Copy(this Texture2D texture2D, bool removeTransparency = false, bool flipY = false) {
+		public static Texture2D Copy(this Texture2D texture2D,
+			bool removeTransparency = false, bool alphaChannelOnly = false, bool flipY = false) {
 			var pixels = texture2D.GetPixels();
 			Texture2D newTex = new Texture2D(texture2D.width, texture2D.height);
-			if (removeTransparency) {
+			if (alphaChannelOnly) {
 				for (int i = 0; i < pixels.Length; i++) {
-					pixels[i] = new Color(pixels[i].r, pixels[i].g, pixels[i].b, 1f);
+					pixels[i] = new Color(pixels[i].a, pixels[i].a, pixels[i].a, 1f);
+				}
+			} else {
+				if (removeTransparency) {
+					for (int i = 0; i < pixels.Length; i++) {
+						pixels[i] = new Color(pixels[i].r, pixels[i].g, pixels[i].b, 1f);
+					}
 				}
 			}
 

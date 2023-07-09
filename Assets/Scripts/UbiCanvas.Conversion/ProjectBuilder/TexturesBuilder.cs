@@ -84,6 +84,7 @@ namespace UbiCanvas.Conversion {
 						} else {
 							using (var img = new MagickImage(file)) {
 								img.Format = MagickFormat.Dds;
+								img.AutoOrient(); // Orient TGA based on origin point
 								w = (ushort)img.Width;
 								h = (ushort)img.Height;
 								CountPixels(img);

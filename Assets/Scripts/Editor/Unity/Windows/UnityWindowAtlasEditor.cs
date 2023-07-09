@@ -53,7 +53,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 									tex.GetUnityTexture(Controller.MainContext).Texture,
 									new Rect(0, 0, 1, -1), AlphaBlending);
 
-								var rects = DivideRectHorizontally(GetNextRect(), 2);
+								var rects = DivideRectHorizontally(GetNextRect(), 4);
 								AlphaBlending = EditorField("Alpha Blending", AlphaBlending, rect: rects[0]);
 								if (EditorButton("Export as PNG", rect: rects[1])) {
 									var defaultName = texPath.filename;
@@ -61,7 +61,23 @@ public class UnityWindowAtlasEditor : UnityWindow {
 									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
 
 									if (!string.IsNullOrWhiteSpace(filePath))
-										SaveAsPNG(tex, filePath, hasTransparency: AlphaBlending);
+										SaveAsPNG(tex, filePath, hasTransparency: true);
+								}
+								if (EditorButton("Export (No Transparency)", rect: rects[2])) {
+									var defaultName = texPath.filename;
+									defaultName = System.IO.Path.GetFileNameWithoutExtension(defaultName);
+									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
+
+									if (!string.IsNullOrWhiteSpace(filePath))
+										SaveAsPNG(tex, filePath, hasTransparency: false);
+								}
+								if (EditorButton("Export (Alpha Channel)", rect: rects[3])) {
+									var defaultName = texPath.filename;
+									defaultName = System.IO.Path.GetFileNameWithoutExtension(defaultName);
+									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
+
+									if (!string.IsNullOrWhiteSpace(filePath))
+										SaveAsPNG(tex, filePath, alphaChannelOnly: true);
 								}
 
 
@@ -253,13 +269,17 @@ public class UnityWindowAtlasEditor : UnityWindow {
 		}
 	}
 
-	void SaveAsPNG(TextureCooked tex, string outputPath, bool hasTransparency = true) {
+	void SaveAsPNG(TextureCooked tex, string outputPath, bool hasTransparency = true, bool alphaChannelOnly = false) {
 		var tex2d = tex.GetUnityTexture(Controller.MainContext).Texture;
 		byte[] png;
-		if (hasTransparency) {
-			png = tex2d.Copy(flipY: true).EncodeToPNG();
+		if (alphaChannelOnly) {
+			png = tex2d.Copy(alphaChannelOnly: true, flipY: true).EncodeToPNG();
 		} else {
-			png = tex2d.Copy(removeTransparency: true, flipY: true).EncodeToPNG();
+			if (hasTransparency) {
+				png = tex2d.Copy(flipY: true).EncodeToPNG();
+			} else {
+				png = tex2d.Copy(removeTransparency: true, flipY: true).EncodeToPNG();
+			}
 		}
 
 		Util.ByteArrayToFile(outputPath, png);
