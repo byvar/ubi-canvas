@@ -8,9 +8,11 @@ namespace UbiArt.ITF {
 
 		protected static Dictionary<string, Material> mats;
 
-		public static Material GetShaderMaterial(GFXMaterialShader_Template shader = null) {
+		public static Material GetShaderMaterial(GFXMaterialShader_Template shader = null, bool transparent = true) {
+			Material GetBaseMaterial() => transparent ? Controller.Obj.baseTransparentMaterial : Controller.Obj.baseMaterial;
+
 			if (shader == null) {
-				return Controller.Obj.baseTransparentMaterial;
+				return GetBaseMaterial();
 			} else {
 				BlendMode blendSrc = BlendMode.SrcAlpha;
 				BlendMode blendDst = BlendMode.OneMinusSrcAlpha;
@@ -52,14 +54,14 @@ namespace UbiArt.ITF {
 						mats = new Dictionary<string, Material>();
 					}
 					if (!mats.ContainsKey(key)) {
-						mats[key] = new Material(Controller.Obj.baseTransparentMaterial);
+						mats[key] = new Material(GetBaseMaterial());
 						mats[key].SetInt("_ZWrite", (int)zwrite);
 						mats[key].SetFloat("_BlendSrc", (int)blendSrc);
 						mats[key].SetFloat("_BlendDst", (int)blendDst);
 					}
 					return mats[key];
 				}
-				return Controller.Obj.baseTransparentMaterial;
+				return GetBaseMaterial();
 			}
 		}
 

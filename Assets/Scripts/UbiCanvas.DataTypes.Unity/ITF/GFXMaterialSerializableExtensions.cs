@@ -4,9 +4,9 @@ namespace UbiArt.ITF {
 	public static class GFXMaterialSerializableExtensions {
 		private static MaterialPropertyBlock mpb;
 
-		public static Material GetShaderMaterial(this GFXMaterialSerializable gfxmat, GFXMaterialShader_Template shader = null) {
+		public static Material GetShaderMaterial(this GFXMaterialSerializable gfxmat, GFXMaterialShader_Template shader = null, bool transparent = true) {
 			if (shader == null) shader = (gfxmat.shader != null ? gfxmat.shader.obj : null);
-			return GFXMaterialShader_Template.GetShaderMaterial(shader);
+			return GFXMaterialShader_Template.GetShaderMaterial(shader, transparent: transparent);
 		}
 
 		public static void FillUnityMaterialPropertyBlock(this GFXMaterialSerializable gfxmat, Context c, Renderer r, int index = 0, GFXMaterialShader_Template shader = null) {

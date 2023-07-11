@@ -1,5 +1,6 @@
 ﻿using System;
 using UbiArt.Animation;
+using UbiArt.Engine3D;
 using UbiArt.ITF;
 
 namespace UbiArt {
@@ -177,15 +178,18 @@ namespace UbiArt {
 						break;
 					case "asc":
 						c.Loader.LoadFile<AnimMeshVertex>(this, o => Object = o);
-						// TODO: AnimMeshVertex::serialize purebinary
+						break;
+					case "m3d":
+						c.Loader.LoadFile<Mesh3D>(this, o => Object = o);
 						break;
 					case "wav":
 					case "tfn":
 						// TODO
 						break;
-					case "ilu":
-						// Doesn't seem to be included
-						break;
+					//case "ilu":
+						// Uncompiled files! Not included in the game, but still!
+						// Commented out for now because I want to find out where these were referenced
+						//break;
 					case "":
 						break;
 					default:

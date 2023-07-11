@@ -352,6 +352,7 @@ namespace UbiArt {
 				case "loc8":
 				case "ipk":
 				case "asc":
+				case "m3d":
 				case "gf":
 				case null:
 					return true;
