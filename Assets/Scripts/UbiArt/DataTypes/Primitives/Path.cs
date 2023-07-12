@@ -186,10 +186,10 @@ namespace UbiArt {
 					case "tfn":
 						// TODO
 						break;
-					//case "ilu":
-						// Uncompiled files! Not included in the game, but still!
-						// Commented out for now because I want to find out where these were referenced
-						//break;
+					case "ilu":
+						// Uncompiled files! Not included in the game though.
+						// These are referenced in "iluFile" in PlaySpawn_evtTemplate
+						break;
 					case "":
 						break;
 					default:

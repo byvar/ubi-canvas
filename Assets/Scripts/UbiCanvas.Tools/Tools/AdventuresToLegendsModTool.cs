@@ -72,6 +72,7 @@ namespace UbiCanvas.Tools
 			await new HomeBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
@@ -80,6 +81,7 @@ namespace UbiCanvas.Tools
 			new HomeBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 		}
 
 		#region Build (mostly a copy of BuildModIPKTool)
