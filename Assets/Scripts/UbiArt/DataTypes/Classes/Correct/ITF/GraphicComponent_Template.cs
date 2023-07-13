@@ -66,6 +66,7 @@ namespace UbiArt.ITF {
 				blendmode2 = s.Serialize<GFX_BLEND2>(blendmode2, name: "blendmode");
 				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype");
 			} else if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.platform == Settings.Platform.Vita && this is RO2_RopeComponent_Template) return;
 				patchLevel = s.Serialize<uint>(patchLevel, name: "patchLevel");
 				patchHLevel = s.Serialize<uint>(patchHLevel, name: "patchHLevel");
 				patchVLevel = s.Serialize<uint>(patchVLevel, name: "patchVLevel");

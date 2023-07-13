@@ -30,7 +30,9 @@ namespace UbiArt.ITF {
 				animations = s.SerializeObject<CListO<SubAnim_Template>>(animations, name: "animations");
 				banksChangeId = s.SerializeObject<CListO<BankIdChange>>(banksChangeId, name: "banksChangeId");
 				animPackage = s.SerializeObject<AnimResourcePackage>(animPackage, name: "animPackage");
-				ignoreTexturesLoading = s.Serialize<bool>(ignoreTexturesLoading, name: "ignoreTexturesLoading");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					ignoreTexturesLoading = s.Serialize<bool>(ignoreTexturesLoading, name: "ignoreTexturesLoading");
+				}
 			}
 		}
 	}

@@ -23,6 +23,7 @@ namespace UbiArt.ITF {
 		public Color color = Color.White;
 		public Color fogColor;
 		public UV_MODE uvMode;
+		public byte Vita_00 { get; set; }
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -62,6 +63,10 @@ namespace UbiArt.ITF {
 				primitiveParameters = s.SerializeObject<GFXPrimitiveParam>(primitiveParameters, name: "primitiveParameters");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					texture = s.SerializeObject<Path>(texture, name: "texture");
+				}
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					uvMode = s.Serialize<UV_MODE>(uvMode, name: "uvMode");
+					Vita_00 = s.Serialize<byte>(Vita_00, name: nameof(Vita_00));
 				}
 				material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
 				divMode = s.Serialize<BezierDivMode>(divMode, name: "divMode");

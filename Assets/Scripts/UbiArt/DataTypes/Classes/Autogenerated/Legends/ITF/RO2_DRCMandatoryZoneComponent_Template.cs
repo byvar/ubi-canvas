@@ -11,10 +11,12 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			enter = s.Serialize<int>(enter, name: "enter");
 			hi5Event = s.SerializeObject<Generic<Event>>(hi5Event, name: "hi5Event");
-			autoMurphy = s.Serialize<int>(autoMurphy, name: "autoMurphy");
-			autoMurphyMultiAllowed = s.Serialize<int>(autoMurphyMultiAllowed, name: "autoMurphyMultiAllowed");
-			AMSoundEventList = s.SerializeObject<CListO<Generic<Event>>>(AMSoundEventList, name: "AMSoundEventList");
-			AMSoundMapList = s.SerializeObject<CListO<StringID>>(AMSoundMapList, name: "AMSoundMapList");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				autoMurphy = s.Serialize<int>(autoMurphy, name: "autoMurphy");
+				autoMurphyMultiAllowed = s.Serialize<int>(autoMurphyMultiAllowed, name: "autoMurphyMultiAllowed");
+				AMSoundEventList = s.SerializeObject<CListO<Generic<Event>>>(AMSoundEventList, name: "AMSoundEventList");
+				AMSoundMapList = s.SerializeObject<CListO<StringID>>(AMSoundMapList, name: "AMSoundMapList");
+			}
 		}
 		public override uint? ClassCRC => 0x68D44447;
 	}

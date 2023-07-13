@@ -5,7 +5,9 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
-				isActive = s.Serialize<int>(isActive, name: "isActive");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					isActive = s.Serialize<int>(isActive, name: "isActive");
+				}
 			} else {
 			}
 		}

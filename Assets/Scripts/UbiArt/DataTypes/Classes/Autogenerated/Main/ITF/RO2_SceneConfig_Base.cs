@@ -5,6 +5,11 @@ namespace UbiArt.ITF {
 		public StringID fade;
 		public RO2_PackageDescriptor_Template packageDescriptor;
 		public bool istouchScreenMap;
+
+
+		public uint Vita_00 { get; set; }
+		public uint Vita_01 { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			DRCGameplayMode = s.Serialize<Enum_DRCGameplayMode>(DRCGameplayMode, name: "DRCGameplayMode");
@@ -12,6 +17,10 @@ namespace UbiArt.ITF {
 			packageDescriptor = s.SerializeObject<RO2_PackageDescriptor_Template>(packageDescriptor, name: "packageDescriptor");
 			if (s.Settings.platform != Settings.Platform.Vita) {
 				istouchScreenMap = s.Serialize<bool>(istouchScreenMap, name: "istouchScreenMap");
+			}
+			if (s.Settings.platform == Settings.Platform.Vita) {
+				Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
+				Vita_01 = s.Serialize<uint>(Vita_01, name: nameof(Vita_01));
 			}
 		}
 		public enum Enum_DRCGameplayMode {

@@ -33,7 +33,9 @@ namespace UbiArt.ITF {
 				physWindSpeedLimit = s.Serialize<float>(physWindSpeedLimit, name: "physWindSpeedLimit");
 				physWindScaleFactorWhenSpeedIsOpposite = s.Serialize<float>(physWindScaleFactorWhenSpeedIsOpposite, name: "physWindScaleFactorWhenSpeedIsOpposite");
 				physFanForceMultiplier = s.Serialize<float>(physFanForceMultiplier, name: "physFanForceMultiplier");
-				physWaterMinPerturbation = s.Serialize<float>(physWaterMinPerturbation, name: "physWaterMinPerturbation");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					physWaterMinPerturbation = s.Serialize<float>(physWaterMinPerturbation, name: "physWaterMinPerturbation");
+				}
 			} else {
 				physGravityMultiplier = s.Serialize<float>(physGravityMultiplier, name: "physGravityMultiplier");
 			}

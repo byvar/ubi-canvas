@@ -18,6 +18,8 @@ namespace UbiArt.ITF {
 					isBroken = s.Serialize<bool>(isBroken, name: "isBroken");
 					checkpointAngle = s.Serialize<float>(checkpointAngle, name: "checkpointAngle");
 					checkpointPos = s.SerializeObject<Vec2d>(checkpointPos, name: "checkpointPos");
+				} else if (s.Settings.platform == Settings.Platform.Vita) {
+					isBroken = s.Serialize<bool>(isBroken, name: "isBroken");
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {

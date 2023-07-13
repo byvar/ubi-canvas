@@ -8,7 +8,9 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			priority = s.Serialize<uint>(priority, name: "priority");
 			ignoreZ = s.Serialize<bool>(ignoreZ, name: "ignoreZ");
-			interactionBoneID = s.SerializeObject<StringID>(interactionBoneID, name: "interactionBoneID");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				interactionBoneID = s.SerializeObject<StringID>(interactionBoneID, name: "interactionBoneID");
+			}
 		}
 		public override uint? ClassCRC => 0x866D16A7;
 	}

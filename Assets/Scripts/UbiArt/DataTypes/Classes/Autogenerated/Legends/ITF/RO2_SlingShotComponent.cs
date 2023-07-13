@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_SlingShotComponent : CSerializable {
+	public partial class RO2_SlingShotComponent : ActorComponent {
 		public int CanBeManipulatedAtStart;
 		public int BlindControl;
 		public float Sling_Size;

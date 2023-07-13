@@ -11,6 +11,8 @@ namespace UbiArt.ITF {
 		public Generic<Event> successfulEvent;
 		public float fadeTotalTime;
 		public Vec2d tutoScale = Vec2d.One;
+
+		public CListO<Path> tutosVita;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			tutos3d = s.SerializeObject<SpawnActorPathList>(tutos3d, name: "tutos3d");

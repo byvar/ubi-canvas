@@ -16,12 +16,16 @@ namespace UbiArt.ITF {
 		public bool useRehitStim = true;
 		public float speedMaxBullet = 30f;
 		public bool acceptRoofCrash = true;
+
+		public StringID animImpact2_vita;
+		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			anim = s.SerializeObject<StringID>(anim, name: "anim");
 			animDrop = s.SerializeObject<StringID>(animDrop, name: "animDrop");
 			animFreeFall = s.SerializeObject<StringID>(animFreeFall, name: "animFreeFall");
 			animImpact = s.SerializeObject<StringID>(animImpact, name: "animImpact");
+			animImpact2_vita = s.SerializeObject<StringID>(animImpact2_vita, name: nameof(animImpact2_vita));
 			animReceiveHitDrag = s.SerializeObject<StringID>(animReceiveHitDrag, name: "animReceiveHitDrag");
 			bulletTouchDirNormThreshold = s.Serialize<float>(bulletTouchDirNormThreshold, name: "bulletTouchDirNormThreshold");
 			DRCSpeedSmoothFactor = s.Serialize<float>(DRCSpeedSmoothFactor, name: "DRCSpeedSmoothFactor");

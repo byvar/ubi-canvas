@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_SlingShotComponent_Template : CSerializable {
-		public Placeholder TrailTemplate;
+	public partial class RO2_SlingShotComponent_Template : ActorComponent_Template {
+		public Trail_Template TrailTemplate;
 		public Path BulletPath;
 		public Path BasePath;
 		public float BackgroundDistance;
@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public float SpringDepthOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			TrailTemplate = s.SerializeObject<Placeholder>(TrailTemplate, name: "TrailTemplate");
+			TrailTemplate = s.SerializeObject<Trail_Template>(TrailTemplate, name: "TrailTemplate");
 			BulletPath = s.SerializeObject<Path>(BulletPath, name: "BulletPath");
 			BasePath = s.SerializeObject<Path>(BasePath, name: "BasePath");
 			BackgroundDistance = s.Serialize<float>(BackgroundDistance, name: "BackgroundDistance");

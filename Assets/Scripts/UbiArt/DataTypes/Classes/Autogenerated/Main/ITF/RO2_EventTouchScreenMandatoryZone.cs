@@ -8,7 +8,9 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			enter = s.Serialize<bool>(enter, name: "enter");
 			unswapDRCPlayerIfSwapped = s.Serialize<bool>(unswapDRCPlayerIfSwapped, name: "unswapDRCPlayerIfSwapped");
-			autoMurphy = s.Serialize<bool>(autoMurphy, name: "autoMurphy");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				autoMurphy = s.Serialize<bool>(autoMurphy, name: "autoMurphy");
+			}
 		}
 		public override uint? ClassCRC => 0xF9AD72C0;
 	}

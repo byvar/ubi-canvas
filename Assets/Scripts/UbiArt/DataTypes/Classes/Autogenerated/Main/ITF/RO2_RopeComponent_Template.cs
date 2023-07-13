@@ -53,6 +53,9 @@ namespace UbiArt.ITF {
 		public StringID animMeshEnding;
 		public Angle animMeshVertexAngleOffset;
 		public CutFade fullDisappearOnCut;
+
+		public Path VitaCutGameMaterial { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
@@ -74,6 +77,9 @@ namespace UbiArt.ITF {
 				cutSectionGameMaterial = s.SerializeObject<Path>(cutSectionGameMaterial, name: "cutSectionGameMaterial");
 				cutGameMaterial = s.SerializeObject<Path>(cutGameMaterial, name: "cutGameMaterial");
 				cutEndGameMaterial = s.SerializeObject<Path>(cutEndGameMaterial, name: "cutEndGameMaterial");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					VitaCutGameMaterial = s.SerializeObject<Path>(VitaCutGameMaterial, name: nameof(VitaCutGameMaterial));
+				}
 				movingPolyForce = s.Serialize<float>(movingPolyForce, name: "movingPolyForce");
 				weightMultiplier = s.Serialize<float>(weightMultiplier, name: "weightMultiplier");
 				landSpeedMultiplier = s.Serialize<float>(landSpeedMultiplier, name: "landSpeedMultiplier");

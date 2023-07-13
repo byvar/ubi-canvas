@@ -41,7 +41,9 @@ namespace UbiArt.ITF {
 				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 				bone = s.SerializeObject<StringID>(bone, name: "bone");
-				bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
+				}
 			} else if (s.Settings.game == Settings.Game.COL) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
