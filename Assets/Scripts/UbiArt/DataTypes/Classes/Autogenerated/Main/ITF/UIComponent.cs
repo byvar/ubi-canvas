@@ -50,10 +50,12 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					transition = s.Serialize<bool>(transition, name: "transition");
 					display = s.Serialize<bool>(display, name: "display");
-					leftComponent = s.Serialize<string>(leftComponent, name: "leftComponent");
-					rightComponent = s.Serialize<string>(rightComponent, name: "rightComponent");
-					upComponent = s.Serialize<string>(upComponent, name: "upComponent");
-					downComponent = s.Serialize<string>(downComponent, name: "downComponent");
+					if (s.Settings.platform != Settings.Platform.Vita) {
+						leftComponent = s.Serialize<string>(leftComponent, name: "leftComponent");
+						rightComponent = s.Serialize<string>(rightComponent, name: "rightComponent");
+						upComponent = s.Serialize<string>(upComponent, name: "upComponent");
+						downComponent = s.Serialize<string>(downComponent, name: "downComponent");
+					}
 					displayMask = s.Serialize<View>(displayMask, name: "displayMask");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {

@@ -9,6 +9,9 @@ namespace UbiArt.ITF {
 		public uint groupIndex = 0xFFFFFFFF;
 		public StringID startSet;
 		public CListO<TweenComponent.InstructionSet> instructionSets;
+
+		public uint Vita_00 { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
@@ -22,7 +25,7 @@ namespace UbiArt.ITF {
 					instructionSets = s.SerializeObject<CListO<TweenComponent.InstructionSet>>(instructionSets, name: "instructionSets");
 				}
 			} else if (s.Settings.game == Settings.Game.RL) {
-				if (s.HasFlags(SerializeFlags.Persistent)) {
+				if (s.HasFlags(SerializeFlags.Persistent) || s.Settings.platform == Settings.Platform.Vita) {
 					trigOnCheckPoint = s.Serialize<bool>(trigOnCheckPoint, name: "trigOnCheckPoint");
 				}
 				if (s.HasFlags(SerializeFlags.Default)) {
@@ -31,6 +34,9 @@ namespace UbiArt.ITF {
 					skipInstructionSetSyncOffset = s.Serialize<bool>(skipInstructionSetSyncOffset, name: "skipInstructionSetSyncOffset", options: CSerializerObject.Options.BoolAsByte);
 					autoStart = s.Serialize<bool>(autoStart, name: "autoStart", options: CSerializerObject.Options.BoolAsByte);
 					groupIndex = s.Serialize<uint>(groupIndex, name: "groupIndex");
+					if (s.Settings.platform == Settings.Platform.Vita) {
+						Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
+					}
 					if (s.HasFlags(SerializeFlags.Editor)) {
 						startSet = s.SerializeChoiceListObject<StringID>(startSet, name: "startSet", empty: "- None -");
 					} else {

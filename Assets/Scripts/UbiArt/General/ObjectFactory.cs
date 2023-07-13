@@ -36,7 +36,6 @@ namespace UbiArt {
 			{ 0x341013E5, typeof(ITF.Ray_ForceFieldComponent) },
 			{ 0x020E95E0, typeof(ITF.Ray_EnterDoorComponent) },
 			{ 0xA595F825, typeof(ITF.Ray_TutorialComponent) },
-			{ 0x7EB87D5E, typeof(ITF.CatchThemAllComponent) },
 			{ 0x0013B956, typeof(ITF.RO2_BlackSwarmSpawnerComponent) },
 			{ 0x001A132B, typeof(ITF.EventSyncActorUpdate) },
 			{ 0x001E7845, typeof(ITF.ParLifeTimeCurve) },
@@ -5131,6 +5130,16 @@ namespace UbiArt {
 			{ 0xC4B94B1F, typeof(ITF.OpenGraphObject) },
 			{ 0xBBD78B77, typeof(ITF.RO2_AdversarialSkullCoinModeComponent) },
 			{ 0x97223F2C, typeof(ITF.RO2_AdversarialSkullCoinModeComponent_Template) },
+
+			// RL Vita only
+			{ 0x7EB87D5E, typeof(ITF.ColorComponent) },
+			{ 0xC3173B7D, typeof(ITF.ColorComponent_Template) },
+			{ 0x8631DE9E, typeof(ITF.DynamicLightZoneComponent) },
+			{ 0xB8AFB5C9, typeof(ITF.DynamicLightZoneComponent_Template) },
+			{ 0x28097124, typeof(ITF.GFXParamsModifierComponent) },
+			{ 0xD733B701, typeof(ITF.GFXParamsModifierComponent_Template) },
+			{ 0xB475B1E0, typeof(ITF.SectoComponent) },
+			{ 0x581AAC2E, typeof(ITF.SectoComponent_Template) },
 		};
 	}
 }

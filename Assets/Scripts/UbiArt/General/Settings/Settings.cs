@@ -57,6 +57,7 @@ namespace UbiArt {
 					case Platform.PC: return "PC";
 					case Platform.Android: return "android";
 					case Platform.MacOS: return "macos";
+					case Platform.Vita: return "VITA";
 					default: return null;
 				}
 			}

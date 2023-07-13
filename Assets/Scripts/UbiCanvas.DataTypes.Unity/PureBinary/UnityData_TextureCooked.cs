@@ -13,6 +13,11 @@ namespace UbiCanvas {
 		public Texture2D Texture {
 			get {
 				if (texture == null && LinkedObject.texData != null) {
+					if (Context.Settings.platform == Settings.Platform.Vita) {
+						//texture = new Texture2D(LinkedObject.Width, LinkedObject.Height);
+						texture = TextureHelpers.CreateDummyTexture();
+						return texture;
+					}
 					// For jpg & png:
 					/*texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
 					texture.LoadImage(texData);

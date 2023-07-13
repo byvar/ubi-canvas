@@ -245,11 +245,13 @@ namespace UbiArt {
 				ContainerFile<ITF.Scene> scene = null;
 				var pathFile = path.filename;
 				if (pathFile.EndsWith(".isc.ckd") || pathFile.EndsWith(".isc") || pathFile.EndsWith(".tsc.ckd") || pathFile.EndsWith(".tsc")) {
+					
+					//Settings.isCatchThemAll = true;
 					LoadFile<ContainerFile<ITF.Scene>>(path, result => {
 						scene = result;
 
 						// Hack
-						Settings.isCatchThemAll = false;
+						//Settings.isCatchThemAll = false;
 					});
 				}
 				await LoadLoop();

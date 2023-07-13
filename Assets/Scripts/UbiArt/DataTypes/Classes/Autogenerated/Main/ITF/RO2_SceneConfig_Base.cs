@@ -10,7 +10,9 @@ namespace UbiArt.ITF {
 			DRCGameplayMode = s.Serialize<Enum_DRCGameplayMode>(DRCGameplayMode, name: "DRCGameplayMode");
 			fade = s.SerializeObject<StringID>(fade, name: "fade");
 			packageDescriptor = s.SerializeObject<RO2_PackageDescriptor_Template>(packageDescriptor, name: "packageDescriptor");
-			istouchScreenMap = s.Serialize<bool>(istouchScreenMap, name: "istouchScreenMap");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				istouchScreenMap = s.Serialize<bool>(istouchScreenMap, name: "istouchScreenMap");
+			}
 		}
 		public enum Enum_DRCGameplayMode {
 			[Serialize("Normal"        )] Normal = 0,

@@ -21,7 +21,9 @@ namespace UbiArt.ITF {
 				stopOnNext = s.Serialize<uint>(stopOnNext, name: "stopOnNext");
 				eventDelay = s.Serialize<float>(eventDelay, name: "eventDelay");
 				priority = s.Serialize<uint>(priority, name: "priority");
-				setPriority = s.Serialize<uint>(setPriority, name: "setPriority");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					setPriority = s.Serialize<uint>(setPriority, name: "setPriority");
+				}
 			} else {
 			}
 		}

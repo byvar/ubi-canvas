@@ -354,8 +354,10 @@ namespace UbiArt.ITF {
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");
 				forceNoDynamicFog = s.Serialize<bool>(forceNoDynamicFog, name: "forceNoDynamicFog");
 				renderInReflection = s.Serialize<bool>(renderInReflection, name: "renderInReflection");
-				dieFadeTime = s.Serialize<float>(dieFadeTime, name: "dieFadeTime");
-				emitterMaxLifeTime = s.Serialize<float>(emitterMaxLifeTime, name: "emitterMaxLifeTime");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					dieFadeTime = s.Serialize<float>(dieFadeTime, name: "dieFadeTime");
+					emitterMaxLifeTime = s.Serialize<float>(emitterMaxLifeTime, name: "emitterMaxLifeTime");
+				}
 				pos = s.SerializeObject<Vec3d>(pos, name: "pos");
 				pivot = s.SerializeObject<Vec2d>(pivot, name: "pivot");
 				velNorm = s.Serialize<float>(velNorm, name: "velNorm");
@@ -370,8 +372,10 @@ namespace UbiArt.ITF {
 				freq = s.Serialize<float>(freq, name: "freq");
 				freqDelta = s.Serialize<float>(freqDelta, name: "freqDelta");
 				forceEmitAtStart_int = s.Serialize<int>(forceEmitAtStart_int, name: "forceEmitAtStart");
-				emitBatchCount = s.Serialize<uint>(emitBatchCount, name: "emitBatchCount");
-				emitBatchCount_AAO = s.Serialize<uint>(emitBatchCount_AAO, name: "emitBatchCount_AAO");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					emitBatchCount = s.Serialize<uint>(emitBatchCount, name: "emitBatchCount");
+					emitBatchCount_AAO = s.Serialize<uint>(emitBatchCount_AAO, name: "emitBatchCount_AAO");
+				}
 				initAngle = s.SerializeObject<Angle>(initAngle, name: "initAngle");
 				angleDelta = s.SerializeObject<Angle>(angleDelta, name: "angleDelta");
 				angularSpeed = s.SerializeObject<Angle>(angularSpeed, name: "angularSpeed");
@@ -421,28 +425,33 @@ namespace UbiArt.ITF {
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
 				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
-				curveSize = s.SerializeObject<ParLifeTimeCurve>(curveSize, name: "curveSize");
-				curveSizeY = s.SerializeObject<ParLifeTimeCurve>(curveSizeY, name: "curveSizeY");
-				curveAlpha = s.SerializeObject<ParLifeTimeCurve>(curveAlpha, name: "curveAlpha");
-				curveRGB = s.SerializeObject<ParLifeTimeCurve>(curveRGB, name: "curveRGB");
-				curveRGB1 = s.SerializeObject<ParLifeTimeCurve>(curveRGB1, name: "curveRGB1");
-				curveRGB2 = s.SerializeObject<ParLifeTimeCurve>(curveRGB2, name: "curveRGB2");
-				curveRGB3 = s.SerializeObject<ParLifeTimeCurve>(curveRGB3, name: "curveRGB3");
-				curveAnim = s.SerializeObject<ParLifeTimeCurve>(curveAnim, name: "curveAnim");
-				parEmitVelocity = s.SerializeObject<EmitLifeTimeCurve>(parEmitVelocity, name: "parEmitVelocity");
-				parEmitVelocityAngle = s.SerializeObject<EmitLifeTimeCurve>(parEmitVelocityAngle, name: "parEmitVelocityAngle");
-				parEmitAngle = s.SerializeObject<EmitLifeTimeCurve>(parEmitAngle, name: "parEmitAngle");
-				parEmitAngularSpeed = s.SerializeObject<EmitLifeTimeCurve>(parEmitAngularSpeed, name: "parEmitAngularSpeed");
-				curveFreq = s.SerializeObject<EmitLifeTimeCurve>(curveFreq, name: "curveFreq");
-				curveParLifeTime = s.SerializeObject<EmitLifeTimeCurve>(curveParLifeTime, name: "curveParLifeTime");
-				curveEmitAlpha = s.SerializeObject<EmitLifeTimeCurve>(curveEmitAlpha, name: "curveEmitAlpha");
-				curveEmitColorFactor = s.SerializeObject<EmitLifeTimeCurve>(curveEmitColorFactor, name: "curveEmitColorFactor");
-				curveEmitSizeXY = s.SerializeObject<EmitLifeTimeCurve>(curveEmitSizeXY, name: "curveEmitSizeXY");
-				curveEmitAcceleration = s.SerializeObject<EmitLifeTimeCurve>(curveEmitAcceleration, name: "curveEmitAcceleration");
-				curveEmitGravity = s.SerializeObject<EmitLifeTimeCurve>(curveEmitGravity, name: "curveEmitGravity");
-				genGenType = s.Serialize<PARGEN_GEN>(genGenType, name: "genGenType");
-				genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
-				genEmitMode = s.Serialize<PARGEN_EMITMODE>(genEmitMode, name: "genEmitMode");
+				if (!s.Settings.isCatchThemAll) {
+					curveSize = s.SerializeObject<ParLifeTimeCurve>(curveSize, name: "curveSize");
+					curveSizeY = s.SerializeObject<ParLifeTimeCurve>(curveSizeY, name: "curveSizeY");
+					curveAlpha = s.SerializeObject<ParLifeTimeCurve>(curveAlpha, name: "curveAlpha");
+					curveRGB = s.SerializeObject<ParLifeTimeCurve>(curveRGB, name: "curveRGB");
+					curveRGB1 = s.SerializeObject<ParLifeTimeCurve>(curveRGB1, name: "curveRGB1");
+					curveRGB2 = s.SerializeObject<ParLifeTimeCurve>(curveRGB2, name: "curveRGB2");
+					curveRGB3 = s.SerializeObject<ParLifeTimeCurve>(curveRGB3, name: "curveRGB3");
+					curveAnim = s.SerializeObject<ParLifeTimeCurve>(curveAnim, name: "curveAnim");
+					parEmitVelocity = s.SerializeObject<EmitLifeTimeCurve>(parEmitVelocity, name: "parEmitVelocity");
+					parEmitVelocityAngle = s.SerializeObject<EmitLifeTimeCurve>(parEmitVelocityAngle, name: "parEmitVelocityAngle");
+					parEmitAngle = s.SerializeObject<EmitLifeTimeCurve>(parEmitAngle, name: "parEmitAngle");
+					parEmitAngularSpeed = s.SerializeObject<EmitLifeTimeCurve>(parEmitAngularSpeed, name: "parEmitAngularSpeed");
+					curveFreq = s.SerializeObject<EmitLifeTimeCurve>(curveFreq, name: "curveFreq");
+					curveParLifeTime = s.SerializeObject<EmitLifeTimeCurve>(curveParLifeTime, name: "curveParLifeTime");
+					curveEmitAlpha = s.SerializeObject<EmitLifeTimeCurve>(curveEmitAlpha, name: "curveEmitAlpha");
+					curveEmitColorFactor = s.SerializeObject<EmitLifeTimeCurve>(curveEmitColorFactor, name: "curveEmitColorFactor");
+					curveEmitSizeXY = s.SerializeObject<EmitLifeTimeCurve>(curveEmitSizeXY, name: "curveEmitSizeXY");
+					curveEmitAcceleration = s.SerializeObject<EmitLifeTimeCurve>(curveEmitAcceleration, name: "curveEmitAcceleration");
+					curveEmitGravity = s.SerializeObject<EmitLifeTimeCurve>(curveEmitGravity, name: "curveEmitGravity");
+					genGenType = s.Serialize<PARGEN_GEN>(genGenType, name: "genGenType");
+					genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
+					genEmitMode = s.Serialize<PARGEN_EMITMODE>(genEmitMode, name: "genEmitMode");
+				} else {
+					genGenType = s.Serialize<PARGEN_GEN>(genGenType, name: "genGenType");
+					genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
+				}
 			} else if (s.Settings.game == Settings.Game.VH) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");

@@ -40,7 +40,9 @@ namespace UbiArt.ITF {
 				absFlag = s.Serialize<int>(absFlag, name: "abs");
 				addFlag = s.Serialize<int>(addFlag, name: "add");
 				sinFlag = s.Serialize<int>(sinFlag, name: "sin");
-				curve = s.SerializeObject<Spline>(curve, name: "curve");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					curve = s.SerializeObject<Spline>(curve, name: "curve");
+				}
 			} else {
 				input = s.SerializeObject<StringID>(input, name: "input");
 				min = s.Serialize<float>(min, name: "min");

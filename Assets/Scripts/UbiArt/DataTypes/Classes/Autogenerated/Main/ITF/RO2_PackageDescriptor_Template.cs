@@ -14,7 +14,11 @@ namespace UbiArt.ITF {
 			decorationBrickPath = s.SerializeObject<Path>(decorationBrickPath, name: "decorationBrickPath");
 			hideDecoration = s.Serialize<bool>(hideDecoration, name: "hideDecoration");
 			priority = s.Serialize<int>(priority, name: "priority");
-			alternatePriority = s.Serialize<int>(alternatePriority, name: "alternatePriority");
+			if (s.Settings.platform == Settings.Platform.Vita) {
+				alternatePriority = priority;
+			} else {
+				alternatePriority = s.Serialize<int>(alternatePriority, name: "alternatePriority");
+			}
 			mapName = s.Serialize<string>(mapName, name: "mapName");
 			subHubPaths = s.SerializeObject<CArrayP<string>>(subHubPaths, name: "subHubPaths");
 			mapPath = s.SerializeObject<PathRef>(mapPath, name: "mapPath");

@@ -8,11 +8,19 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
-				screenPosition = s.SerializeObject<Vec2d>(screenPosition, name: "screenPosition");
-				actorPosAtCheckpointSave = s.SerializeObject<Vec3d>(actorPosAtCheckpointSave, name: "actorPosAtCheckpointSave");
-				useScreenPos = s.Serialize<bool>(useScreenPos, name: "useScreenPos");
-				if (s.HasFlags(SerializeFlags.Persistent)) {
-					state = s.Serialize<State>(state, name: "state");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					screenPosition = s.SerializeObject<Vec2d>(screenPosition, name: "screenPosition");
+					useScreenPos = s.Serialize<bool>(useScreenPos, name: "useScreenPos");
+					if (s.HasFlags(SerializeFlags.Persistent)) {
+						state = s.Serialize<State>(state, name: "state");
+					}
+				} else {
+					screenPosition = s.SerializeObject<Vec2d>(screenPosition, name: "screenPosition");
+					actorPosAtCheckpointSave = s.SerializeObject<Vec3d>(actorPosAtCheckpointSave, name: "actorPosAtCheckpointSave");
+					useScreenPos = s.Serialize<bool>(useScreenPos, name: "useScreenPos");
+					if (s.HasFlags(SerializeFlags.Persistent)) {
+						state = s.Serialize<State>(state, name: "state");
+					}
 				}
 			} else {
 				screenPosition = s.SerializeObject<Vec2d>(screenPosition, name: "screenPosition");

@@ -10,7 +10,9 @@ namespace UbiArt.ITF {
 			name = s.SerializeObject<SmartLocId>(name, name: "name");
 			world = s.SerializeObject<StringID>(world, name: "world");
 			locationID = s.SerializeObject<SmartLocId>(locationID, name: "locationID");
-			presence = s.SerializeObject<StringID>(presence, name: "presence");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				presence = s.SerializeObject<StringID>(presence, name: "presence");
+			}
 		}
 		public override uint? ClassCRC => 0x8E4C8FC7;
 	}

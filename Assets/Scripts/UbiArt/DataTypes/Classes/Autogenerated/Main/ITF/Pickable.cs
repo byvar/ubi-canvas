@@ -58,11 +58,10 @@ namespace UbiArt.ITF {
 					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
 					UPDATEDEPENDENCYLIST = s.SerializeObject<CArrayO<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 				}
-				if (s.Settings.isCatchThemAll) {
-					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
-					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
-					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
-					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					if (s.HasFlags(SerializeFlags.Flags_xC0)) {
+						AABB_RELATIVE = s.SerializeObject<AABB>(AABB_RELATIVE, name: "AABB_RELATIVE");
+					}
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);

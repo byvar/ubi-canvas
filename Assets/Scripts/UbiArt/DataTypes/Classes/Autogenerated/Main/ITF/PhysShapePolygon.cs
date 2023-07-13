@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 				if (this is PhysShapeBox) return;
 				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
 			} else {
-				if (s.Settings.isCatchThemAll) return;
+				if (s.Settings.platform == Settings.Platform.Vita && (this is PhysShapeBox)) return;
 				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					normals = s.SerializeObject<CListO<Vec2d>>(normals, name: "normals");

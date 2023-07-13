@@ -39,7 +39,9 @@ namespace UbiArt.ITF {
 				separateAlpha = s.Serialize<bool>(separateAlpha, name: "separateAlpha");
 				textureBlend = s.Serialize<bool>(textureBlend, name: "textureBlend");
 				renderToTexture = s.Serialize<int>(renderToTexture, name: "renderToTexture");
-				animInTex = s.SerializeObject<CListO<GFXMatAnimImpostor>>(animInTex, name: "animInTex");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					animInTex = s.SerializeObject<CListO<GFXMatAnimImpostor>>(animInTex, name: "animInTex");
+				}
 				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype");
 				lightingType = s.Serialize<GFX_MAT_SHADER>(lightingType, name: "lightingType");
 				matParams = s.SerializeObject<GFX_MaterialParams>(matParams, name: "matParams");

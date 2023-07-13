@@ -65,14 +65,20 @@ namespace UbiArt.ITF {
 				filesBodyOption = s.SerializeObject<CListO<Unknown_RL_12955_sub_591530>>(filesBodyOption, name: "filesBodyOption");
 				filesOutro = s.SerializeObject<CListO<Path>>(filesOutro, name: "filesOutro");
 				serialPlayingMode = s.Serialize<Enum_serialPlayingMode>(serialPlayingMode, name: "serialPlayingMode");
-				serialStoppingMode = s.Serialize<Enum_serialStoppingMode>(serialStoppingMode, name: "serialStoppingMode");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					serialStoppingMode = s.Serialize<Enum_serialStoppingMode>(serialStoppingMode, name: "serialStoppingMode");
+				}
 				_params = s.SerializeObject<SoundParams>(_params, name: "params");
-				pauseInsensitiveFlags = s.Serialize<uint>(pauseInsensitiveFlags, name: "pauseInsensitiveFlags");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					pauseInsensitiveFlags = s.Serialize<uint>(pauseInsensitiveFlags, name: "pauseInsensitiveFlags");
+				}
 				outDevices = s.Serialize<uint>(outDevices, name: "outDevices");
 				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");
 				soundPlayFadeAfterdestroy = s.Serialize<int>(soundPlayFadeAfterdestroy, name: "soundPlayFadeAfterdestroy");
-				noDrop = s.Serialize<int>(noDrop, name: "noDrop");
-				Priority = s.Serialize<uint>(Priority, name: "Priority");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					noDrop = s.Serialize<int>(noDrop, name: "noDrop");
+					Priority = s.Serialize<uint>(Priority, name: "Priority");
+				}
 			} else if(s.Settings.game == Settings.Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				spawnEvent = s.SerializeObject<SoundGUID>(spawnEvent, name: "spawnEvent");

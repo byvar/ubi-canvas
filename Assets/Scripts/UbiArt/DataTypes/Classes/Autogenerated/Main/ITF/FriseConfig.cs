@@ -73,6 +73,9 @@ namespace UbiArt.ITF {
 		public bool smoothVisual;
 		public GFXPrimitiveParam PrimitiveParameters;
 		public Frieze3DConfig frieze3D;
+
+		public float Vita_00 { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
@@ -96,6 +99,9 @@ namespace UbiArt.ITF {
 				isUvFlipY = s.Serialize<bool>(isUvFlipY, name: "isUvFlipY");
 				isRatioFixed = s.Serialize<bool>(isRatioFixed, name: "isRatioFixed");
 				smoothFactorVisual = s.Serialize<float>(smoothFactorVisual, name: "smoothFactorVisual");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					Vita_00 = s.Serialize<float>(Vita_00, name: nameof(Vita_00));
+				}
 				scale = s.Serialize<float>(scale, name: "scale");
 				density = s.Serialize<float>(density, name: "density");
 				collision = s.SerializeObject<CollisionFrieze>(collision, name: "collision");
@@ -120,7 +126,9 @@ namespace UbiArt.ITF {
 				isDigShape = s.Serialize<bool>(isDigShape, name: "isDigShape");
 				isLockedDigShape = s.Serialize<bool>(isLockedDigShape, name: "isLockedDigShape");
 				switchExtremityAuto = s.Serialize<bool>(switchExtremityAuto, name: "switchExtremityAuto");
-				offsetExtremity = s.Serialize<float>(offsetExtremity, name: "offsetExtremity");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					offsetExtremity = s.Serialize<float>(offsetExtremity, name: "offsetExtremity");
+				}
 				if (s.HasFlags(SerializeFlags.Flags9)) {
 					slope_180 = s.SerializeObject<StringID>(slope_180, name: "slope_180");
 					slope_202 = s.SerializeObject<StringID>(slope_202, name: "slope_202");

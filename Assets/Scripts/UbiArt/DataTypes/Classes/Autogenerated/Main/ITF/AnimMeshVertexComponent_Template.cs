@@ -25,7 +25,9 @@ namespace UbiArt.ITF {
 				useDataAnims = s.Serialize<bool>(useDataAnims, name: "useDataAnims");
 				useActorScale = s.Serialize<bool>(useActorScale, name: "useActorScale");
 				stopDuration = s.Serialize<float>(stopDuration, name: "stopDuration");
-				animPackage = s.SerializeObject<AnimResourcePackage>(animPackage, name: "animPackage");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					animPackage = s.SerializeObject<AnimResourcePackage>(animPackage, name: "animPackage");
+				}
 			} else {
 				defaultUpdate = s.Serialize<bool>(defaultUpdate, name: "defaultUpdate");
 				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");

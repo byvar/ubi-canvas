@@ -29,10 +29,14 @@ namespace UbiArt.ITF {
 					offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 					scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 					area = s.SerializeObject<Vec2d>(area, name: "area");
-					maxWidth = s.Serialize<float>(maxWidth, name: "maxWidth");
+					if (s.Settings.platform != Settings.Platform.Vita) {
+						maxWidth = s.Serialize<float>(maxWidth, name: "maxWidth");
+					}
 					rawText = s.Serialize<string>(rawText, name: "rawText");
 					locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
-					scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
+					if (s.Settings.platform != Settings.Platform.Vita) {
+						scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
+					}
 					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
 					autoScrollWaitTime = s.Serialize<float>(autoScrollWaitTime, name: "autoScrollWaitTime");
 					overridingColor = s.SerializeObject<Color>(overridingColor, name: "overridingColor");

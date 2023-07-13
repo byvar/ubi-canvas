@@ -13,11 +13,20 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
-				startCursor = s.Serialize<float>(startCursor, name: "startCursor");
-				useSameSpeed = s.Serialize<bool>(useSameSpeed, name: "useSameSpeed", options: CSerializerObject.Options.BoolAsByte);
-				growSpeed = s.Serialize<float>(growSpeed, name: "growSpeed");
-				retractSpeed = s.Serialize<float>(retractSpeed, name: "retractSpeed");
-				easeMode = s.Serialize<EaseMode>(easeMode, name: "easeMode");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					startCursor = s.Serialize<float>(startCursor, name: "startCursor");
+					growSpeed = s.Serialize<float>(growSpeed, name: "growSpeed");
+					easeMode = s.Serialize<EaseMode>(easeMode, name: "easeMode");
+
+					useSameSpeed = true;
+					retractSpeed = growSpeed;
+				} else {
+					startCursor = s.Serialize<float>(startCursor, name: "startCursor");
+					useSameSpeed = s.Serialize<bool>(useSameSpeed, name: "useSameSpeed", options: CSerializerObject.Options.BoolAsByte);
+					growSpeed = s.Serialize<float>(growSpeed, name: "growSpeed");
+					retractSpeed = s.Serialize<float>(retractSpeed, name: "retractSpeed");
+					easeMode = s.Serialize<EaseMode>(easeMode, name: "easeMode");
+				}
 			} else {
 				startCursor = s.Serialize<float>(startCursor, name: "startCursor");
 				minCursor = s.Serialize<float>(minCursor, name: "minCursor");
