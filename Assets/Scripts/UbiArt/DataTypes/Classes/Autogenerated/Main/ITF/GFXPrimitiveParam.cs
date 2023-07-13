@@ -64,15 +64,24 @@ namespace UbiArt.ITF {
 		public Color Color__19;
 		public Color Color__20;
 		public float float__21;
+
+
+		public uint Vita_00 { get; set; }
+		public byte Vita_01 { get; set; }
+		public Color Vita_02 { get; set; }
+		public byte Vita_03 { get; set; }
+		public byte Vita_04 { get; set; }
+		public byte Vita_05 { get; set; }
+		public uint Vita_06 { get; set; }
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
-				if (s.Settings.isCatchThemAll) {
-					colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
-					uint__15 = (uint)s.Serialize<byte>((byte)uint__15, name: "uint__15");
-					uint__15 = (uint)s.Serialize<byte>((byte)uint__15, name: "uint__15");
-					uint__15 = (uint)s.Serialize<byte>((byte)uint__15, name: "uint__15");
-					uint__15 = s.Serialize<uint>(uint__15, name: "uint__15");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					Vita_02 = s.SerializeObject<Color>(Vita_02, name: nameof(Vita_02));
+					Vita_03 = s.Serialize<byte>(Vita_03, name: nameof(Vita_03));
+					Vita_04 = s.Serialize<byte>(Vita_04, name: nameof(Vita_04));
+					Vita_05 = s.Serialize<byte>(Vita_05, name: nameof(Vita_05));
+					Vita_06 = s.Serialize<uint>(Vita_06, name: nameof(Vita_06));
 				}
 				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");
@@ -87,6 +96,10 @@ namespace UbiArt.ITF {
 					RenderToTexture = s.Serialize<bool>(RenderToTexture, name: "RenderToTexture");
 				}
 				gfxOccludeInfo2 = s.Serialize<GFX_OCCLUDE_INFO2>(gfxOccludeInfo2, name: "gfxOccludeInfo");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
+					Vita_01 = s.Serialize<byte>(Vita_01, name: nameof(Vita_01));
+				}
 			} else if (s.Settings.game == Settings.Game.VH) {
 				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");

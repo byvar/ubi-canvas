@@ -46,10 +46,6 @@ namespace UbiArt.ITF {
 					}
 					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
 					colorComputerTagId = s.Serialize<uint>(colorComputerTagId, name: "colorComputerTagId");
-					if (s.Settings.isCatchThemAll) {
-						renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
-						renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget", options: CSerializerObject.Options.ForceAsByte);
-					}
 					renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
 					disableLight = s.Serialize<int>(disableLight, name: "disableLight");
 					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");

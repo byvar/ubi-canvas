@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
 	public partial class RO2_HomeNodeComponent_Template : RO2_HomeComponent_Template {
-		public float maxSpeedToFocusCostumeFrame;
+		public float maxSpeedToFocusCostumeFrame = 1f;
 		public Vec2d paintScale;
 		public float nodeDialogsDelay;
 		public string challengersDialogSeparator;
@@ -25,9 +25,12 @@ namespace UbiArt.ITF {
 		public EventInstructionDialog HomeNodeDialog_CostumeDescription;
 		public EventInstructionDialog HomeNodeDialog_Highlight;
 		public EventInstructionDialog HomeNodeDialog_NeedOnline;
+		public EventInstructionDialog HomeNodeDialog_NotAvailableInMultiplayer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			maxSpeedToFocusCostumeFrame = s.Serialize<float>(maxSpeedToFocusCostumeFrame, name: "maxSpeedToFocusCostumeFrame");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				maxSpeedToFocusCostumeFrame = s.Serialize<float>(maxSpeedToFocusCostumeFrame, name: "maxSpeedToFocusCostumeFrame");
+			}
 			paintScale = s.SerializeObject<Vec2d>(paintScale, name: "paintScale");
 			nodeDialogsDelay = s.Serialize<float>(nodeDialogsDelay, name: "nodeDialogsDelay");
 			challengersDialogSeparator = s.Serialize<string>(challengersDialogSeparator, name: "challengersDialogSeparator");
@@ -35,7 +38,9 @@ namespace UbiArt.ITF {
 			unlockingDuration = s.Serialize<float>(unlockingDuration, name: "unlockingDuration");
 			unteasingDuration = s.Serialize<float>(unteasingDuration, name: "unteasingDuration");
 			paintTransitionDuration = s.Serialize<float>(paintTransitionDuration, name: "paintTransitionDuration");
-			invasionFrameDisplayDelay = s.Serialize<uint>(invasionFrameDisplayDelay, name: "invasionFrameDisplayDelay");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				invasionFrameDisplayDelay = s.Serialize<uint>(invasionFrameDisplayDelay, name: "invasionFrameDisplayDelay");
+			}
 			HomeNodeDialog_Lock = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_Lock, name: "HomeNodeDialog_Lock");
 			HomeNodeDialog_Challengers = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_Challengers, name: "HomeNodeDialog_Challengers");
 			HomeNodeDialog_DiamondCup = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_DiamondCup, name: "HomeNodeDialog_DiamondCup");
@@ -51,6 +56,10 @@ namespace UbiArt.ITF {
 			HomeNodeDialog_CostumeDescription = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_CostumeDescription, name: "HomeNodeDialog_CostumeDescription");
 			HomeNodeDialog_Highlight = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_Highlight, name: "HomeNodeDialog_Highlight");
 			HomeNodeDialog_NeedOnline = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_NeedOnline, name: "HomeNodeDialog_NeedOnline");
+
+			if (s.Settings.platform == Settings.Platform.Vita) {
+				HomeNodeDialog_NotAvailableInMultiplayer = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_NotAvailableInMultiplayer, name: "HomeNodeDialog_NotAvailableInMultiplayer");
+			}
 		}
 		public override uint? ClassCRC => 0x426FB0B9;
 	}

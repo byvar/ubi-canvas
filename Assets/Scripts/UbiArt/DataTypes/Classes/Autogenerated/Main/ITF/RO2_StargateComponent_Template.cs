@@ -11,7 +11,9 @@ namespace UbiArt.ITF {
 			detectShape = s.SerializeObject<Generic<PhysShape>>(detectShape, name: "detectShape");
 			pressUpShape = s.SerializeObject<Generic<PhysShape>>(pressUpShape, name: "pressUpShape");
 			flashFX = s.SerializeObject<Path>(flashFX, name: "flashFX");
-			flashFXStart = s.SerializeObject<Path>(flashFXStart, name: "flashFXStart");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				flashFXStart = s.SerializeObject<Path>(flashFXStart, name: "flashFXStart");
+			}
 			flashOffset = s.SerializeObject<Vec3d>(flashOffset, name: "flashOffset");
 		}
 		public override uint? ClassCRC => 0x59B9970A;

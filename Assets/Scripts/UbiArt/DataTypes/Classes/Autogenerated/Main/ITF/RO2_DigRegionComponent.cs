@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 		public GFXPrimitiveParam PrimitiveParameters;
 		public bool Brush_Enabled;
 		public bool IsDiggable;
-		public byte[] VitaBytes { get; set; }
+		public uint Vita_00 { get; set; }
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
@@ -70,7 +70,7 @@ namespace UbiArt.ITF {
 					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
 				}
 				if (s.Settings.platform == Settings.Platform.Vita) {
-					VitaBytes = s.SerializeBytes(VitaBytes, 9);
+					Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
 				}
 			} else {
 				if (s.HasFlags(SerializeFlags.Flags8)) {

@@ -158,14 +158,13 @@ namespace UbiArt.ITF {
 							renderInRelection = s.Serialize<bool>(renderInRelection, name: "renderInRelection");
 						}
 						PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
-						DepthOffset = s.Serialize<float>(DepthOffset, name: "DepthOffset");
+						if (s.Settings.platform != Settings.Platform.Vita) {
+							DepthOffset = s.Serialize<float>(DepthOffset, name: "DepthOffset");
+						}
 						UvX_Offset = s.Serialize<float>(UvX_Offset, name: "UvX_Offset");
 						UvY_Offset = s.Serialize<float>(UvY_Offset, name: "UvY_Offset");
 						UvX_Flip = s.Serialize<bool>(UvX_Flip, name: "UvX_Flip", options: CSerializerObject.Options.ForceAsByte);
 						UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
-						if (s.Settings.isCatchThemAll) {
-							UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
-						}
 						uvY_Tile = s.Serialize<float>(uvY_Tile, name: "uvY_Tile");
 						Filling_OffSetUv = s.SerializeObject<Vec2d>(Filling_OffSetUv, name: "Filling_OffSetUv");
 						Anim_SyncGlobal = s.Serialize<float>(Anim_SyncGlobal, name: "Anim_SyncGlobal");
