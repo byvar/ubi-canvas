@@ -19,13 +19,15 @@ namespace UbiArt.ITF {
 				input = s.SerializeObject<StringID>(input, name: "input");
 				catchFrontEnabled = s.Serialize<bool>(catchFrontEnabled, name: "catchFrontEnabled");
 				noInteraction = s.Serialize<bool>(noInteraction, name: "noInteraction");
-				tapGaugeFullEvent = s.SerializeObject<Generic<Event>>(tapGaugeFullEvent, name: "tapGaugeFullEvent");
-				tapGaugeEmptyEvent = s.SerializeObject<Generic<Event>>(tapGaugeEmptyEvent, name: "tapGaugeEmptyEvent");
-				tapGaugeFullValue = s.Serialize<float>(tapGaugeFullValue, name: "tapGaugeFullValue");
-				tapGaugeEmptyValue = s.Serialize<float>(tapGaugeEmptyValue, name: "tapGaugeEmptyValue");
-				tapGaugeFillTapValue = s.Serialize<float>(tapGaugeFillTapValue, name: "tapGaugeFillTapValue");
-				tapGaugeEmptyValuePerSec = s.Serialize<float>(tapGaugeEmptyValuePerSec, name: "tapGaugeEmptyValuePerSec");
-				tapGaugeHoldAsTapDuration = s.Serialize<float>(tapGaugeHoldAsTapDuration, name: "tapGaugeHoldAsTapDuration");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					tapGaugeFullEvent = s.SerializeObject<Generic<Event>>(tapGaugeFullEvent, name: "tapGaugeFullEvent");
+					tapGaugeEmptyEvent = s.SerializeObject<Generic<Event>>(tapGaugeEmptyEvent, name: "tapGaugeEmptyEvent");
+					tapGaugeFullValue = s.Serialize<float>(tapGaugeFullValue, name: "tapGaugeFullValue");
+					tapGaugeEmptyValue = s.Serialize<float>(tapGaugeEmptyValue, name: "tapGaugeEmptyValue");
+					tapGaugeFillTapValue = s.Serialize<float>(tapGaugeFillTapValue, name: "tapGaugeFillTapValue");
+					tapGaugeEmptyValuePerSec = s.Serialize<float>(tapGaugeEmptyValuePerSec, name: "tapGaugeEmptyValuePerSec");
+					tapGaugeHoldAsTapDuration = s.Serialize<float>(tapGaugeHoldAsTapDuration, name: "tapGaugeHoldAsTapDuration");
+				}
 			} else {
 				ListenToSwipe = s.Serialize<bool>(ListenToSwipe, name: "ListenToSwipe");
 				input = s.SerializeObject<StringID>(input, name: "input");

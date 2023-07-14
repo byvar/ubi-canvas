@@ -32,9 +32,11 @@ namespace UbiArt.ITF {
 				clampAnglesList = s.SerializeObject<CArrayO<Angle>>(clampAnglesList, name: "clampAnglesList");
 				spawnAngleOffset = s.SerializeObject<Angle>(spawnAngleOffset, name: "spawnAngleOffset");
 				transmitAlwaysActive = s.Serialize<bool>(transmitAlwaysActive, name: "transmitAlwaysActive");
-				spawnMinPreAllocModifier = s.Serialize<uint>(spawnMinPreAllocModifier, name: "spawnMinPreAllocModifier");
-				spawnMaxPreAllocModifier = s.Serialize<uint>(spawnMaxPreAllocModifier, name: "spawnMaxPreAllocModifier");
-				requestSpawnOnLoad = s.Serialize<bool>(requestSpawnOnLoad, name: "requestSpawnOnLoad");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					spawnMinPreAllocModifier = s.Serialize<uint>(spawnMinPreAllocModifier, name: "spawnMinPreAllocModifier");
+					spawnMaxPreAllocModifier = s.Serialize<uint>(spawnMaxPreAllocModifier, name: "spawnMaxPreAllocModifier");
+					requestSpawnOnLoad = s.Serialize<bool>(requestSpawnOnLoad, name: "requestSpawnOnLoad");
+				}
 			} else if (s.Settings.game == Settings.Game.COL) {
 				path = s.SerializeObject<Path>(path, name: "path");
 				bonePosName = s.SerializeObject<StringID>(bonePosName, name: "bonePosName");

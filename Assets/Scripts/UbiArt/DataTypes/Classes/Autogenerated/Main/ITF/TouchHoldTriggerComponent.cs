@@ -11,7 +11,9 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					onHoldEvent = s.SerializeObject<EventSender>(onHoldEvent, name: "onHoldEvent");
 					onReleaseEvent = s.SerializeObject<EventSender>(onReleaseEvent, name: "onReleaseEvent");
-					useTapGauge = s.Serialize<bool>(useTapGauge, name: "useTapGauge", options: CSerializerObject.Options.ForceAsByte);
+					if (s.Settings.platform != Settings.Platform.Vita) {
+						useTapGauge = s.Serialize<bool>(useTapGauge, name: "useTapGauge", options: CSerializerObject.Options.ForceAsByte);
+					}
 				}
 			} else if (s.Settings.game == Settings.Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {

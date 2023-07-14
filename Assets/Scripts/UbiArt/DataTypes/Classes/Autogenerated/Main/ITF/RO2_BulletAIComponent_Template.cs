@@ -84,6 +84,9 @@ namespace UbiArt.ITF {
 		public bool autoStart;
 		public bool drcEventEnabled;
 		public bool reactToFlyingPlatform;
+
+		public StringID Vita_00 { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			launchBehavior = s.SerializeObject<Generic<TemplateAIBehavior>>(launchBehavior, name: "launchBehavior");
@@ -149,6 +152,9 @@ namespace UbiArt.ITF {
 			deathOnRelease = s.Serialize<bool>(deathOnRelease, name: "deathOnRelease");
 			deathTimer = s.Serialize<float>(deathTimer, name: "deathTimer");
 			snapPlayer = s.Serialize<bool>(snapPlayer, name: "snapPlayer");
+			if (s.Settings.platform == Settings.Platform.Vita) {
+				Vita_00 = s.SerializeObject<StringID>(Vita_00, name: nameof(Vita_00));
+			}
 			snapPlayerOffset = s.Serialize<float>(snapPlayerOffset, name: "snapPlayerOffset");
 			snapBone = s.SerializeObject<StringID>(snapBone, name: "snapBone");
 			explodeOnEnemy = s.Serialize<bool>(explodeOnEnemy, name: "explodeOnEnemy");
@@ -164,11 +170,14 @@ namespace UbiArt.ITF {
 			specificNoseShape = s.SerializeObject<Generic<PhysShape>>(specificNoseShape, name: "specificNoseShape");
 			acceptEventUpdateRegisteredSubjectStatus = s.Serialize<bool>(acceptEventUpdateRegisteredSubjectStatus, name: "acceptEventUpdateRegisteredSubjectStatus");
 			allowTouchScreenInputDisabled = s.Serialize<bool>(allowTouchScreenInputDisabled, name: "allowTouchScreenInputDisabled");
-			dragEnabled = s.Serialize<bool>(dragEnabled, name: "dragEnabled");
-			sendTriggerOnDrcEventEnabled = s.Serialize<bool>(sendTriggerOnDrcEventEnabled, name: "sendTriggerOnDrcEventEnabled");
-			autoStart = s.Serialize<bool>(autoStart, name: "autoStart");
-			drcEventEnabled = s.Serialize<bool>(drcEventEnabled, name: "drcEventEnabled");
-			reactToFlyingPlatform = s.Serialize<bool>(reactToFlyingPlatform, name: "reactToFlyingPlatform");
+
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				dragEnabled = s.Serialize<bool>(dragEnabled, name: "dragEnabled");
+				sendTriggerOnDrcEventEnabled = s.Serialize<bool>(sendTriggerOnDrcEventEnabled, name: "sendTriggerOnDrcEventEnabled");
+				autoStart = s.Serialize<bool>(autoStart, name: "autoStart");
+				drcEventEnabled = s.Serialize<bool>(drcEventEnabled, name: "drcEventEnabled");
+				reactToFlyingPlatform = s.Serialize<bool>(reactToFlyingPlatform, name: "reactToFlyingPlatform");
+			}
 		}
 		public override uint? ClassCRC => 0xBAA3F606;
 	}

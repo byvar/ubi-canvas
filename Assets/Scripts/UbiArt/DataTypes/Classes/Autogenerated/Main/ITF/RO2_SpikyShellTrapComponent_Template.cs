@@ -46,6 +46,10 @@ namespace UbiArt.ITF {
 		public float syncOffset;
 		public float syncIndexOffset;
 		public bool useAdditionalSpikes;
+
+		public float baseHeightVita { get; set; }
+
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			spikeMaterial = s.SerializeObject<GFXMaterialSerializable>(spikeMaterial, name: "spikeMaterial");
@@ -59,6 +63,9 @@ namespace UbiArt.ITF {
 			minScaleFactor = s.Serialize<float>(minScaleFactor, name: "minScaleFactor");
 			minSpacing = s.Serialize<float>(minSpacing, name: "minSpacing");
 			maxSpacing = s.Serialize<float>(maxSpacing, name: "maxSpacing");
+			if (s.Settings.platform == Settings.Platform.Vita) {
+				baseHeightVita = s.Serialize<float>(baseHeightVita, name: "baseHeight2");
+			}
 			restHeightPercent = s.Serialize<float>(restHeightPercent, name: "restHeightPercent");
 			shakeHeightPercent = s.Serialize<float>(shakeHeightPercent, name: "shakeHeightPercent");
 			risenHeightPercent = s.Serialize<float>(risenHeightPercent, name: "risenHeightPercent");

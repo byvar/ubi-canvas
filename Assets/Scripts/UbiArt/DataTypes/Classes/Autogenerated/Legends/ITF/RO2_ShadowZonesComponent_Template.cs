@@ -41,6 +41,10 @@ namespace UbiArt.ITF {
 		public float shadowUVx1Quad;
 		public float shadowUVx2Quad;
 		public int smoothAllEdges;
+
+		public float Vita_00 { get; set; }
+		public float Vita_01 { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Flags8)) {
@@ -90,6 +94,12 @@ namespace UbiArt.ITF {
 			shadowUVx3 = s.Serialize<float>(shadowUVx3, name: "shadowUVx3");
 			shadowUVx1Quad = s.Serialize<float>(shadowUVx1Quad, name: "shadowUVx1Quad");
 			shadowUVx2Quad = s.Serialize<float>(shadowUVx2Quad, name: "shadowUVx2Quad");
+
+			if (s.Settings.platform == Settings.Platform.Vita) {
+				Vita_00 = s.Serialize<float>(Vita_00, name: nameof(Vita_00));
+				Vita_01 = s.Serialize<float>(Vita_01, name: nameof(Vita_01));
+			}
+
 			smoothAllEdges = s.Serialize<int>(smoothAllEdges, name: "smoothAllEdges");
 		}
 		public override uint? ClassCRC => 0xAD8E713C;
