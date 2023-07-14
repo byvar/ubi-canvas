@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 namespace UbiArt {
-	public class TextureCooked : ICSerializable {
+	public class TextureCookedHeader : ICSerializable {
 		public static uint ExpectedSignature = 0x54455800; // TEX\0
 		public uint Version { get; set; } // 0xD for legends, 0x11 for adventures
 		public uint Signature { get; set; } = ExpectedSignature;
@@ -26,7 +26,6 @@ namespace UbiArt {
 		public byte Padding1 { get; set; } // 0xCC in Legends, 0 in Adventures
 		public byte Padding2 { get; set; }
 		public uint HeaderEndCode { get; set; } = 0x00010203; // 0 1 2 3
-		public byte[] texData { get; set; }
 
 		public UV.UVAtlas atlas = null;
 
@@ -37,7 +36,9 @@ namespace UbiArt {
 			Reinit(s.Settings);
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				Version = s.Serialize<uint>(Version, name: nameof(Version));
-				Signature = s.Serialize<uint>(Signature, name: nameof(Signature));
+				s.DoEndian(() => {
+					Signature = s.Serialize<uint>(Signature, name: nameof(Signature));
+				}, Endian.Big);
 				HeaderSize = s.Serialize<uint>(HeaderSize, name: nameof(HeaderSize));
 				DataSize = s.Serialize<uint>(DataSize, name: nameof(DataSize));
 				Width = s.Serialize<ushort>(Width, name: nameof(Width));
@@ -55,16 +56,23 @@ namespace UbiArt {
 				unk0 = s.Serialize<uint>(unk0, name: nameof(unk0));
 				PixelsCountAlpha1 = s.Serialize<uint>(PixelsCountAlpha1, name: nameof(PixelsCountAlpha1));
 				PixelsCountAlpha0 = s.Serialize<uint>(PixelsCountAlpha0, name: nameof(PixelsCountAlpha0));
-				UnknownCRC = s.Serialize<uint>(UnknownCRC, name: nameof(UnknownCRC));
+				if (Version > 10) {
+					UnknownCRC = s.Serialize<uint>(UnknownCRC, name: nameof(UnknownCRC));
+				}
 				WrapModeU = (WrapMode)s.Serialize<byte>((byte)WrapModeU, name: nameof(WrapModeU));
 				WrapModeV = (WrapMode)s.Serialize<byte>((byte)WrapModeV, name: nameof(WrapModeV));
 				Padding1 = s.Serialize<byte>(Padding1, name: nameof(Padding1));
 				Padding2 = s.Serialize<byte>(Padding2, name: nameof(Padding2));
-				HeaderEndCode = s.Serialize<uint>(HeaderEndCode, name: nameof(HeaderEndCode));
+				if (Version > 10) {
+					HeaderEndCode = s.Serialize<uint>(HeaderEndCode, name: nameof(HeaderEndCode));
+				}
+
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					DataSize = (uint)(s.Length - (HeaderSize * 2));
+				}
 			} else {
-				DataSize = s.SerializeFileSize(DataSize);
+				DataSize = (uint)s.Length;// s.SerializeFileSize(DataSize);
 			}
-			texData = s.SerializeBytes(texData, (int)DataSize);
 		}
 
 		public void Reinit(Settings settings) {
@@ -74,8 +82,8 @@ namespace UbiArt {
 			}
 		}
 
-		public TextureCooked() { }
-		public TextureCooked(Context context) {
+		public TextureCookedHeader() { }
+		public TextureCookedHeader(Context context) {
 			if (context.Settings.game == Settings.Game.RL) {
 				Version = 13;
 				HeaderSize = 0x34;

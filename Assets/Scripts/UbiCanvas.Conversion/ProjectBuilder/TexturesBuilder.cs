@@ -92,19 +92,21 @@ namespace UbiCanvas.Conversion {
 							}
 						}
 						var tex = new TextureCooked(TargetContext) {
-							texData = data,
-							BPP = 32,
-							CompressionType = 0,
-							DataSize = (uint)data.Length,
-							DataSize2 = (uint)data.Length,
-							ImagesCount = 1,
-							WrapModeU = TextureCooked.WrapMode.Repeat,
-							WrapModeV = TextureCooked.WrapMode.Repeat,
-							UnknownCRC = 0xFFFFFFFF,
-							Width = w,
-							Height = h,
-							PixelsCountAlpha0 = pixelsCountAlpha0,
-							PixelsCountAlpha1 = pixelsCountAlpha1
+							Data = data,
+							Header = new TextureCookedHeader(TargetContext) {
+								BPP = 32,
+								CompressionType = 0,
+								DataSize = (uint)data.Length,
+								DataSize2 = (uint)data.Length,
+								ImagesCount = 1,
+								WrapModeU = TextureCookedHeader.WrapMode.Repeat,
+								WrapModeV = TextureCookedHeader.WrapMode.Repeat,
+								UnknownCRC = 0xFFFFFFFF,
+								Width = w,
+								Height = h,
+								PixelsCountAlpha0 = pixelsCountAlpha0,
+								PixelsCountAlpha1 = pixelsCountAlpha1
+							}
 						};
 						Bundle.AddFile(cookedPath, tex);
 					}

@@ -334,6 +334,19 @@ namespace UbiArt {
 		public override void DoCompressed(Action action, string name = null) {
 			throw new NotImplementedException();
 		}
+
+		public override void DoEndian(Action action, Endian endianness) {
+			if (action == null)
+				throw new ArgumentNullException(nameof(action));
+
+			var curEndian = Reader.IsLittleEndian;
+			try {
+				Reader.IsLittleEndian = endianness == Endian.Little;
+				action();
+			} finally {
+				Reader.IsLittleEndian = curEndian;
+			}
+		}
 		#endregion
 	}
 }

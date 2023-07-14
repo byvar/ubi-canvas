@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UbiArt;
 using UbiCanvas.Helpers;
 using UnityEngine;
@@ -12,10 +13,13 @@ namespace UbiCanvas {
 		private Texture2D[] subtextures;
 		public Texture2D Texture {
 			get {
-				if (texture == null && LinkedObject.texData != null) {
+				if (texture == null && LinkedObject.Data != null) {
 					if (Context.Settings.platform == Settings.Platform.Vita) {
 						//texture = new Texture2D(LinkedObject.Width, LinkedObject.Height);
-						texture = TextureHelpers.CreateDummyTexture();
+						using MemoryStream ms = new MemoryStream(LinkedObject.Data);
+						var gxt = new GXTConvert.FileFormat.GxtBinary(ms);
+						texture = gxt.Textures[0];
+						//texture = TextureHelpers.CreateDummyTexture();
 						return texture;
 					}
 					// For jpg & png:
@@ -30,9 +34,9 @@ namespace UbiCanvas {
 						texture.Apply();
 					}*/
 					//UnityEngine.Debug.Log($"Texture - {texData.Length} - {width} - {height}");
-					texture = LoadTextureDXT(LinkedObject.texData, makeNoLongerReadable: MakeNoLongerReadable);
+					texture = LoadTextureDXT(LinkedObject.Data, makeNoLongerReadable: MakeNoLongerReadable);
 					if (texture == null) {
-						using (DDSImage dds = new DDSImage(LinkedObject.texData, makeNoLongerReadable: MakeNoLongerReadable)) {
+						using (DDSImage dds = new DDSImage(LinkedObject.Data, makeNoLongerReadable: MakeNoLongerReadable)) {
 							texture = dds.BitmapImage;
 						}
 					}

@@ -72,6 +72,10 @@ namespace UbiArt {
 			Action action,
 			string name = null);
 
+		public abstract void DoEndian(
+			Action action,
+			Endian endianness);
+
 		#endregion
 
 		public abstract void Serialize(ref object obj, Type type, string name = null);
