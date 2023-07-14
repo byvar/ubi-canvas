@@ -1,5 +1,5 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL)] // Only on Vita!
+	[Games(GameFlags.RL, platforms: PlatformFlags.Vita)] // Only on Vita!
 	public partial class DynamicLightZoneComponent : ActorComponent {
 		public bool Vita_Bool { get; set; }
 		public Vec2d Vita_Vec_00 { get; set; } // Some of these are colors probably

@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game) {
+				if (previousSettings.game != settings.game || previousSettings.platform != settings.platform) {
 					if (COMPONENTS != null) {
 						List<Generic<ActorComponent_Template>> RemovedComponents = new List<Generic<ActorComponent_Template>>();
 						// Check components, remove all that don't have the right gameflags
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 							if (compobj != null) {
 								var attr = (GamesAttribute)Attribute.GetCustomAttribute(compobj.GetType(), typeof(GamesAttribute));
 								if (attr != null) {
-									if (!attr.HasGame(settings.game)) {
+									if (!attr.HasGame(settings.game) || !attr.HasPlatform(settings.platform)) {
 										c.SystemLogger?.LogInfo("Removing actor_template component: {0}", compobj.GetType());
 										RemovedComponents.Add(COMPONENTS[i]);
 									}

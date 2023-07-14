@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game) {
+				if (previousSettings.game != settings.game || previousSettings.platform != settings.platform) {
 					if (sceneConfigs != null) {
 						List<Generic<SceneConfig>> RemovedComponents = new List<Generic<SceneConfig>>();
 						// Check components, remove all that don't have the right gameflags
@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 							var compobj = sceneConfigs[i].obj;
 							var attr = (GamesAttribute)Attribute.GetCustomAttribute(compobj.GetType(), typeof(GamesAttribute));
 							if (attr != null) {
-								if (!attr.HasGame(settings.game)) {
+								if (!attr.HasGame(settings.game) || !attr.HasPlatform(settings.platform)) {
 									c.SystemLogger?.LogInfo("Removing SceneConfig: {0}", compobj.GetType());
 									RemovedComponents.Add(sceneConfigs[i]);
 								}

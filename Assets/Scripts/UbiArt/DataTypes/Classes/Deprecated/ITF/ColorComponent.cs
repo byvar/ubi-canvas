@@ -1,5 +1,5 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL)] // Only on Vita!
+	[Games(GameFlags.RL, platforms: PlatformFlags.Vita)] // Only on Vita!
 	public partial class ColorComponent : ActorComponent {
 		public Color float3;
 		public Color float7;

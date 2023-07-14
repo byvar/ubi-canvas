@@ -291,6 +291,10 @@ namespace UbiArt {
 								Context.SystemLogger?.LogInfo($"{s.CurrentPointer}: Did not fully serialize file! Length: {s.Length:X8}");
 							}
 							f.Dispose();
+						} else {
+							if (LoadAllPaths) {
+								Context.SystemLogger?.LogInfo($"Path does not exist: {o.path.FullPath}");
+							}
 						}
 					} else if (o.virtualFile != null) {
 						using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {

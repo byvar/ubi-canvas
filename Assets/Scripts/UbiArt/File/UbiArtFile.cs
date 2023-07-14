@@ -58,6 +58,21 @@ namespace UbiArt.FileFormat {
 				} else return null;
 			}
 		}
+
+		public string UncookedExtension {
+			get {
+				if (FilePath.Contains(".")) {
+					string filenameCopy = FilePath;
+					if (filenameCopy.EndsWith(".ckd"))
+						filenameCopy = filenameCopy.Substring(0, filenameCopy.Length - 4);
+					if (filenameCopy.Contains('.')) {
+						string ext = filenameCopy.Substring(filenameCopy.IndexOf('.') + 1);
+						return ext;
+					}
+				}
+				return null;
+			}
+		}
 		#endregion
 
 		public CSerializerObject CurrentSerializer { get; protected set; }

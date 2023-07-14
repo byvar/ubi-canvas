@@ -1,5 +1,5 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL)] // Only on Vita!
+	[Games(GameFlags.RL, platforms: PlatformFlags.Vita)] // Only on Vita!
 	public partial class SectoComponent_Template : ActorComponent_Template {
 		public uint Vita_00 { get; set; }
 		protected override void SerializeImpl(CSerializerObject s) {
