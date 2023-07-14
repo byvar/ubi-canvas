@@ -98,6 +98,7 @@ namespace UbiArt.ITF {
 			registerCameraEnabled = s.Serialize<bool>(registerCameraEnabled, name: "registerCameraEnabled");
 			forceBreakable = s.Serialize<bool>(forceBreakable, name: "forceBreakable");
 			cineLaunchEnabled = s.Serialize<bool>(cineLaunchEnabled, name: "cineLaunchEnabled");
+
 			crushEnabled = s.Serialize<bool>(crushEnabled, name: "crushEnabled");
 			hitLumDropEnabled = s.Serialize<bool>(hitLumDropEnabled, name: "hitLumDropEnabled");
 			hitLumDropCount = s.Serialize<uint>(hitLumDropCount, name: "hitLumDropCount");

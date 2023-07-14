@@ -10,8 +10,10 @@ namespace UbiArt.ITF {
 				Points = s.SerializeObject<CListO<Spline.SplinePoint>>(Points, name: "Points");
 			} else {
 				Points = s.SerializeObject<CListO<Spline.SplinePoint>>(Points, name: "Points");
-				TimeLoopMode = s.Serialize<uint>(TimeLoopMode, name: "TimeLoopMode");
-				TimeLoop = s.Serialize<float>(TimeLoop, name: "TimeLoop");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					TimeLoopMode = s.Serialize<uint>(TimeLoopMode, name: "TimeLoopMode");
+					TimeLoop = s.Serialize<float>(TimeLoop, name: "TimeLoop");
+				}
 			}
 		}
 		[Games(GameFlags.RFR | GameFlags.VH | GameFlags.RA)]

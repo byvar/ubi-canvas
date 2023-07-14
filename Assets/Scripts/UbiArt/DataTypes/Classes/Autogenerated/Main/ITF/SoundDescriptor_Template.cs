@@ -62,16 +62,14 @@ namespace UbiArt.ITF {
 				localizedFiles = s.SerializeObject<CListO<LocalizedPath>>(localizedFiles, name: "localizedFiles");
 				filesIntro = s.SerializeObject<CListO<Path>>(filesIntro, name: "filesIntro");
 				filesBody = s.SerializeObject<CListO<Path>>(filesBody, name: "filesBody");
-				filesBodyOption = s.SerializeObject<CListO<Unknown_RL_12955_sub_591530>>(filesBodyOption, name: "filesBodyOption");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					filesBodyOption = s.SerializeObject<CListO<Unknown_RL_12955_sub_591530>>(filesBodyOption, name: "filesBodyOption");
+				}
 				filesOutro = s.SerializeObject<CListO<Path>>(filesOutro, name: "filesOutro");
 				serialPlayingMode = s.Serialize<Enum_serialPlayingMode>(serialPlayingMode, name: "serialPlayingMode");
-				if (s.Settings.platform != Settings.Platform.Vita) {
-					serialStoppingMode = s.Serialize<Enum_serialStoppingMode>(serialStoppingMode, name: "serialStoppingMode");
-				}
+				serialStoppingMode = s.Serialize<Enum_serialStoppingMode>(serialStoppingMode, name: "serialStoppingMode");
 				_params = s.SerializeObject<SoundParams>(_params, name: "params");
-				if (s.Settings.platform != Settings.Platform.Vita) {
-					pauseInsensitiveFlags = s.Serialize<uint>(pauseInsensitiveFlags, name: "pauseInsensitiveFlags");
-				}
+				pauseInsensitiveFlags = s.Serialize<uint>(pauseInsensitiveFlags, name: "pauseInsensitiveFlags");
 				outDevices = s.Serialize<uint>(outDevices, name: "outDevices");
 				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");
 				soundPlayFadeAfterdestroy = s.Serialize<int>(soundPlayFadeAfterdestroy, name: "soundPlayFadeAfterdestroy");

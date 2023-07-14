@@ -31,6 +31,9 @@ namespace UbiArt.ITF {
 		public float playRateMin = 1f;
 		public float playRateMax = 1f;
 		public bool uTurnEnabled;
+
+		public uint Vita_00 { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
@@ -77,6 +80,9 @@ namespace UbiArt.ITF {
 				playRateMin = s.Serialize<float>(playRateMin, name: "playRateMin");
 				playRateMax = s.Serialize<float>(playRateMax, name: "playRateMax");
 				uTurnEnabled = s.Serialize<bool>(uTurnEnabled, name: "uTurnEnabled");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
+				}
 			}
 		}
 		public override uint? ClassCRC => 0x5D6B650C;

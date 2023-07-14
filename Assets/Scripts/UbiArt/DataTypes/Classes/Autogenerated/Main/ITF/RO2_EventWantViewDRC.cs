@@ -6,7 +6,9 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			wantView = s.Serialize<bool>(wantView, name: "wantView");
-			cut = s.Serialize<bool>(cut, name: "cut");
+			if (s.Settings.platform != Settings.Platform.Vita) {
+				cut = s.Serialize<bool>(cut, name: "cut");
+			}
 		}
 		public override uint? ClassCRC => 0x762E1E4B;
 	}

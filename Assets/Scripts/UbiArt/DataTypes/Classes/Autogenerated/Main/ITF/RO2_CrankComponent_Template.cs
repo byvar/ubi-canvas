@@ -8,10 +8,15 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
-				textPath = s.SerializeObject<Path>(textPath, name: "textPath");
-				tvoffTextPath = s.SerializeObject<Path>(tvoffTextPath, name: "tvoffTextPath");
-				registerToCamera = s.Serialize<bool>(registerToCamera, name: "registerToCamera");
-				hideTvoffTutoAngle = s.Serialize<float>(hideTvoffTutoAngle, name: "hideTvoffTutoAngle");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					textPath = s.SerializeObject<Path>(textPath, name: "textPath");
+					tvoffTextPath = s.SerializeObject<Path>(tvoffTextPath, name: "tvoffTextPath");
+					registerToCamera = s.Serialize<bool>(registerToCamera, name: "registerToCamera");
+					hideTvoffTutoAngle = s.Serialize<float>(hideTvoffTutoAngle, name: "hideTvoffTutoAngle");
+				} else {
+					textPath = s.SerializeObject<Path>(textPath, name: "textPath");
+					registerToCamera = s.Serialize<bool>(registerToCamera, name: "registerToCamera");
+				}
 			} else {
 				textPath = s.SerializeObject<Path>(textPath, name: "textPath");
 				tvoffTextPath = s.SerializeObject<Path>(tvoffTextPath, name: "tvoffTextPath");

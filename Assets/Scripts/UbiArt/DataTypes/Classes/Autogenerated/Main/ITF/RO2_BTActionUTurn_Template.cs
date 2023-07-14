@@ -8,7 +8,9 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
 				animTurn = s.SerializeObject<StringID>(animTurn, name: "animTurn");
-				endAnim = s.SerializeObject<StringID>(endAnim, name: "endAnim");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					endAnim = s.SerializeObject<StringID>(endAnim, name: "endAnim");
+				}
 			} else {
 				animTurn = s.SerializeObject<StringID>(animTurn, name: "animTurn");
 				endAnim = s.SerializeObject<StringID>(endAnim, name: "endAnim");

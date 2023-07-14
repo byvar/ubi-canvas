@@ -25,7 +25,9 @@ namespace UbiArt.ITF {
 			animDrop = s.SerializeObject<StringID>(animDrop, name: "animDrop");
 			animFreeFall = s.SerializeObject<StringID>(animFreeFall, name: "animFreeFall");
 			animImpact = s.SerializeObject<StringID>(animImpact, name: "animImpact");
-			animImpact2_vita = s.SerializeObject<StringID>(animImpact2_vita, name: nameof(animImpact2_vita));
+			if (s.Settings.platform == Settings.Platform.Vita) {
+				animImpact2_vita = s.SerializeObject<StringID>(animImpact2_vita, name: nameof(animImpact2_vita));
+			}
 			animReceiveHitDrag = s.SerializeObject<StringID>(animReceiveHitDrag, name: "animReceiveHitDrag");
 			bulletTouchDirNormThreshold = s.Serialize<float>(bulletTouchDirNormThreshold, name: "bulletTouchDirNormThreshold");
 			DRCSpeedSmoothFactor = s.Serialize<float>(DRCSpeedSmoothFactor, name: "DRCSpeedSmoothFactor");

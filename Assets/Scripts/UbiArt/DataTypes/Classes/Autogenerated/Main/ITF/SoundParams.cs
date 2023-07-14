@@ -44,7 +44,9 @@ namespace UbiArt.ITF {
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				playOnNext = s.Serialize<uint>(playOnNext, name: "playOnNext");
 				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");
-				isMusic = s.Serialize<int>(isMusic, name: "isMusic");
+				if (s.Settings.platform != Settings.Platform.Vita) {
+					isMusic = s.Serialize<int>(isMusic, name: "isMusic");
+				}
 			} else {
 				numChannels = s.Serialize<uint>(numChannels, name: "numChannels");
 				loop = s.Serialize<int>(loop, name: "loop");

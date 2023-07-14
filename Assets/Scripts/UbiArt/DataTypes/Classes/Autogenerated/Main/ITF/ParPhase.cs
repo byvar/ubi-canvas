@@ -13,6 +13,8 @@ namespace UbiArt.ITF {
 		public bool animstretchtime;
 		public bool blendtonextphase = true;
 
+		public uint Vita_00 { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
@@ -36,8 +38,13 @@ namespace UbiArt.ITF {
 				animend = s.Serialize<int>(animend, name: "animend");
 				animname = s.SerializeObject<StringID>(animname, name: "animname");
 				deltaphasetime = s.Serialize<float>(deltaphasetime, name: "deltaphasetime");
-				animstretchtime = s.Serialize<bool>(animstretchtime, name: "animstretchtime");
-				blendtonextphase = s.Serialize<bool>(blendtonextphase, name: "blendtonextphase");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					animstretchtime = s.Serialize<int>(animstretchtime ? 1 : 0, name: "animstretchtime") != 0;
+					blendtonextphase = s.Serialize<bool>(blendtonextphase, name: "blendtonextphase");
+				} else {
+					animstretchtime = s.Serialize<bool>(animstretchtime, name: "animstretchtime");
+					blendtonextphase = s.Serialize<bool>(blendtonextphase, name: "blendtonextphase");
+				}
 			}
 		}
 	}

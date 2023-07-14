@@ -77,10 +77,10 @@ namespace UbiArt.ITF {
 				notifyAnimUpdate = s.Serialize<bool>(notifyAnimUpdate, name: "notifyAnimUpdate");
 				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 				useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset");
-				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
 				if (s.Settings.platform == Settings.Platform.Vita) {
 					Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
 				}
+				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
 			} else if (s.Settings.game == Settings.Game.COL) {
 				useBase = s.Serialize<bool>(useBase, name: "useBase", options: CSerializerObject.Options.BoolAsByte);
 				smoothAnim = s.Serialize<bool>(smoothAnim, name: "smoothAnim", options: CSerializerObject.Options.BoolAsByte);

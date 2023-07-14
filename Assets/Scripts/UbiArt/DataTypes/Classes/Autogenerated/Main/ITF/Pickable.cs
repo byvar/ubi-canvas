@@ -26,6 +26,9 @@ namespace UbiArt.ITF {
 
 		public Enum_VH_0 Enum_VH_0__22;
 
+		public Vec2d Vita_00 { get; set; }
+		public Vec2d Vita_01 { get; set; }
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR) {
@@ -59,9 +62,8 @@ namespace UbiArt.ITF {
 					UPDATEDEPENDENCYLIST = s.SerializeObject<CArrayO<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 				}
 				if (s.Settings.platform == Settings.Platform.Vita) {
-					if (s.HasFlags(SerializeFlags.Flags_xC0)) {
-						AABB_RELATIVE = s.SerializeObject<AABB>(AABB_RELATIVE, name: "AABB_RELATIVE");
-					}
+					Vita_00 = s.SerializeObject<Vec2d>(Vita_00, name: nameof(Vita_00));
+					Vita_01 = s.SerializeObject<Vec2d>(Vita_01, name: nameof(Vita_01));
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled", options: CSerializerObject.Options.BoolAsByte);

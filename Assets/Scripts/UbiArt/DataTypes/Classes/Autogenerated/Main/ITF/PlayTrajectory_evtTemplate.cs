@@ -49,8 +49,12 @@ namespace UbiArt.ITF {
 				startFrameCameraBlend = s.Serialize<int>(startFrameCameraBlend, name: "startFrameCameraBlend");
 				coeffCameraIn = s.Serialize<float>(coeffCameraIn, name: "coeffCameraIn");
 				coeffCameraOut = s.Serialize<float>(coeffCameraOut, name: "coeffCameraOut");
-				depthZ = s.Serialize<float>(depthZ, name: "depthZ");
-				dynamicDeltaFogZ = s.Serialize<bool>(dynamicDeltaFogZ, name: "dynamicDeltaFogZ");
+				if (s.Settings.platform == Settings.Platform.Vita) {
+					depthZ = -1f;
+				} else {
+					depthZ = s.Serialize<float>(depthZ, name: "depthZ");
+					dynamicDeltaFogZ = s.Serialize<bool>(dynamicDeltaFogZ, name: "dynamicDeltaFogZ");
+				}
 				cameraMask = s.Serialize<uint>(cameraMask, name: "cameraMask");
 				Flip = s.SerializeObject<BoolEventList>(Flip, name: "Flip");
 				Color = s.SerializeObject<Spline>(Color, name: "Color");
