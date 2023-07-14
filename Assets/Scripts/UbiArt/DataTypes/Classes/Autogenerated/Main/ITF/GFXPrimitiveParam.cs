@@ -76,14 +76,14 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {
+				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				if (s.Settings.platform == Settings.Platform.Vita) {
-					Vita_02 = s.SerializeObject<Color>(Vita_02, name: nameof(Vita_02));
 					Vita_03 = s.Serialize<byte>(Vita_03, name: nameof(Vita_03));
 					Vita_04 = s.Serialize<byte>(Vita_04, name: nameof(Vita_04));
 					Vita_05 = s.Serialize<byte>(Vita_05, name: nameof(Vita_05));
 					Vita_06 = s.Serialize<uint>(Vita_06, name: nameof(Vita_06));
+					Vita_02 = s.SerializeObject<Color>(Vita_02, name: nameof(Vita_02));
 				}
-				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");
 				FrontLightContrast = s.Serialize<float>(FrontLightContrast, name: "FrontLightContrast");
 				BackLightBrightness = s.Serialize<float>(BackLightBrightness, name: "BackLightBrightness");
