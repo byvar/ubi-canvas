@@ -66,7 +66,7 @@ namespace UbiArt.FileFormat {
 					if (filenameCopy.EndsWith(".ckd"))
 						filenameCopy = filenameCopy.Substring(0, filenameCopy.Length - 4);
 					if (filenameCopy.Contains('.')) {
-						string ext = filenameCopy.Substring(filenameCopy.IndexOf('.') + 1);
+						string ext = filenameCopy.Substring(filenameCopy.LastIndexOf('.') + 1);
 						return ext;
 					}
 				}
