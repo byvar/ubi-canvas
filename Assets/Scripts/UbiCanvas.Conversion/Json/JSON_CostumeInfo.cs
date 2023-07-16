@@ -48,6 +48,7 @@ namespace UbiCanvas.Conversion.Json {
 		//public string SkeletonPath { get; set; }
 
 		public Dictionary<string, JSON_TextureBank> TextureBanks { get; set; }
+		public Dictionary<string, string> RedirectSymmetryPatches { get; set; }
 
 		public JSON_CostumePainting Painting { get; set; }
 

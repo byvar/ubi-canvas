@@ -24,6 +24,7 @@ namespace UbiArt {
 
 		public static Vec2d Zero => new Vec2d();
 		public static Vec2d One => new Vec2d(1f, 1f);
+		public static Vec2d MinusInfinity => new Vec2d(float.MinValue, float.MinValue);
 		public static Vec2d Infinity => new Vec2d(float.MaxValue, float.MaxValue);
 
 		[IgnoreDataMember]

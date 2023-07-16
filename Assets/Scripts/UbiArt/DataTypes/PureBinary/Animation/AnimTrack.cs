@@ -1,3 +1,5 @@
+using UbiArt.ITF;
+
 namespace UbiArt.Animation {
 	// See: ITF::AnimTrack::serialize
 	// anm.ckd file
@@ -17,10 +19,8 @@ namespace UbiArt.Animation {
 		public CListO<AnimTrackFrameEvents> frameEvents;
 		public CListO<AnimTrackFrameSoundEvents> soundEvents;
 		public CListO<Vec2d> vectors;
-		public Vec2d vec0;
-		public Vec2d vec1;
-		public Vec2d vec2;
-		public Vec2d vec3;
+		public AABB LocalAABB;
+		public AABB WorldAABB = new AABB() { MIN = Vec2d.Infinity, MAX = Vec2d.MinusInfinity };
 		public pair<StringID, Path> skeleton;
 		public pair<StringID, CString> skeletonOrigins;
 		public KeyArray<int> texturePathKeysOrigins;
@@ -47,10 +47,8 @@ namespace UbiArt.Animation {
 			frameEvents = s.SerializeObject<CListO<AnimTrackFrameEvents>>(frameEvents, name: "frameEvents");
 			soundEvents = s.SerializeObject<CListO<AnimTrackFrameSoundEvents>>(soundEvents, name: "soundEvents");
 			vectors = s.SerializeObject<CListO<Vec2d>>(vectors, name: "vectors");
-			vec0 = s.SerializeObject<Vec2d>(vec0, name: "vec0");
-			vec1 = s.SerializeObject<Vec2d>(vec1, name: "vec1");
-			vec2 = s.SerializeObject<Vec2d>(vec2, name: "vec2");
-			vec3 = s.SerializeObject<Vec2d>(vec3, name: "vec3");
+			LocalAABB = s.SerializeObject<AABB>(LocalAABB, name: "LocalAABB");
+			WorldAABB = s.SerializeObject<AABB>(LocalAABB, name: "WorldAABB");
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				skeleton = s.SerializeObject<pair<StringID, Path>>(skeleton, name: "skeleton");
 				texturePaths = s.SerializeObject<CListO<pair<StringID, Path>>>(texturePaths, name: "textures");

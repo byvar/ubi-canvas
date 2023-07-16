@@ -9,6 +9,7 @@ using UbiArt;
 using UbiArt.Animation;
 using UbiArt.ITF;
 using UbiCanvas.Conversion.Json;
+using UbiCanvas.Helpers;
 
 namespace UbiCanvas.Conversion {
 	public class CostumeActorsBuilder : ProjectBuilder {
@@ -48,6 +49,45 @@ namespace UbiCanvas.Conversion {
 			var textureBanksDict = costume.TextureBanks?.ToDictionary(kv => new StringID(kv.Key));
 			foreach (var bnk in costume.TextureBanks) {
 				bnk.Value.ID = bnk.Key;
+			}
+			Dictionary<string, List<RedirectSymmetryPatch>> redirectSymmetryPatchesDict = new Dictionary<string, List<RedirectSymmetryPatch>>();
+
+			string GetRedirectSymmetryPatchesPath(string key, string fallback = null) {
+				if (costume.RedirectSymmetryPatches != null) {
+					if (costume.RedirectSymmetryPatches.ContainsKey(key))
+						return costume.RedirectSymmetryPatches[key];
+					if (fallback != null) {
+						if (costume.RedirectSymmetryPatches.ContainsKey(fallback))
+							return costume.RedirectSymmetryPatches[fallback];
+					}
+					if (costume.RedirectSymmetryPatches.ContainsKey("all"))
+						return costume.RedirectSymmetryPatches["all"];
+				}
+				return null;
+			}
+			List<RedirectSymmetryPatch> GetRedirectSymmetryPatches(string key, string fallback = null) {
+				var path = GetRedirectSymmetryPatchesPath(key, fallback: fallback);
+				if (path != null) {
+					if (!redirectSymmetryPatchesDict.ContainsKey(path)) {
+						var absolutePath = System.IO.Path.Combine(ProjectPath, "redirectsymmetry", path);
+						if (System.IO.File.Exists(absolutePath)) {
+							var fileBytes = System.IO.File.ReadAllBytes(absolutePath);
+							using var ms = new System.IO.MemoryStream(fileBytes);
+							using var r = new Reader(ms, false);
+							var patches = new List<RedirectSymmetryPatch>();
+							for( int i = 0; i < r.BaseStream.Length / 12; i++) {
+								var p = new RedirectSymmetryPatch();
+								p.mainPatch = new StringID(r.ReadUInt32());
+								p.boneName = new StringID(r.ReadUInt32());
+								p.symmetryPatch = new StringID(r.ReadUInt32());
+								patches.Add(p);
+							}
+							redirectSymmetryPatchesDict[path] = patches;
+						}
+					}
+					return redirectSymmetryPatchesDict.TryGetItem(path);
+				}
+				return null;
 			}
 
 			JSON_CostumeInfo.JSON_TextureBank GetBankByID(StringID sid, string fallback = null) {
@@ -124,6 +164,11 @@ namespace UbiCanvas.Conversion {
 						tb.patchBank = new Path(jsonb.PBK);
 						tb.textureSet.diffuse = new Path(jsonb.Diffuse);
 						tb.textureSet.back_light = new Path(jsonb.Backlight);
+					}
+
+					var redirectPatches = GetRedirectSymmetryPatches("main");
+					if (redirectPatches != null) {
+						mainAnimatedComponent.subAnimInfo.redirectSymmetryPatches = new CListO<RedirectSymmetryPatch>(redirectPatches);
 					}
 
 					/*var scoreActor = player.defaultGameScreenInfo.actors[1].file.GetObject<ContainerFile<UbiArt.ITF.Actor>>();
@@ -266,8 +311,8 @@ namespace UbiCanvas.Conversion {
 								tb.textureSet.diffuse = new Path(jsonb.Diffuse);
 								tb.textureSet.back_light = new Path(jsonb.Backlight);
 							}
-						} 
-						
+						}
+
 						// DISABLED: Using "pack" PBK does not work for any family, when duplicated it works for all families except Globox.
 						/*else {
 							// Source is the main packed sprite sheet. No Moskito sprites in this, so use the default PBK for those instead.
@@ -281,6 +326,10 @@ namespace UbiCanvas.Conversion {
 								tb.textureSet.back_light = new Path(jsonb.Backlight);
 							}
 						}*/
+					}
+					var redirectPatches = GetRedirectSymmetryPatches("shootermoskito");
+					if (redirectPatches != null) {
+						mainAnimatedComponent.subAnimInfo.redirectSymmetryPatches = new CListO<RedirectSymmetryPatch>(redirectPatches);
 					}
 
 					Bundle.AddFile(cookedPath, newActorContainer);
@@ -367,6 +416,10 @@ namespace UbiCanvas.Conversion {
 							// If only "pack" is present, we don't adjust anything.
 						}
 					}
+					var redirectPatches = GetRedirectSymmetryPatches("duck");
+					if (redirectPatches != null) {
+						mainAnimatedComponent.subAnimInfo.redirectSymmetryPatches = new CListO<RedirectSymmetryPatch>(redirectPatches);
+					}
 
 					Bundle.AddFile(cookedPath, newActorContainer);
 				}
@@ -424,6 +477,13 @@ namespace UbiCanvas.Conversion {
 					costumeComponent.nameLocId = new LocalisationId(costume.NameID);
 					costumeComponent.descriptionLocId = new LocalisationId(costume.DescriptionID);
 
+
+					var redirectPatches = GetRedirectSymmetryPatches("costume");
+					if (redirectPatches != null) {
+						var animComponent = newActor.GetComponent<AnimLightComponent>();
+						animComponent.subAnimInfo.redirectSymmetryPatches = new CListO<RedirectSymmetryPatch>(redirectPatches);
+					}
+
 					Bundle.AddFile(cookedPath, newActorContainer);
 				}
 			}
@@ -457,9 +517,16 @@ namespace UbiCanvas.Conversion {
 					aabb.path = animPath;
 					aabb.name = new StringID(costume.Painting.Animation);
 					//TargetContext?.SystemLogger?.LogInfo($"{aabb.aabb.MIN} - {aabb.aabb.MAX}");
-					// TODO: Also adjust aabb.aabb here
 
-					if(costume.Painting.FlipX) animComponent.flip = !animComponent.flip;
+
+					// TODO: Also adjust aabb.aabb here. Seems to do nothing though.
+					// AABB taken from barbara_mexicandark (ninja animation that goes outside of each painting boundary)
+					//aabb.aabb.MIN = new Vec2d(-2.321101f, -5.283033f);
+					//aabb.aabb.MAX = new Vec2d(3.221961f, 0.642587f);
+					//aabb.aabb.MIN = new Vec2d(10000f, 10000f);
+					//aabb.aabb.MAX = new Vec2d(-10000f, -10000f);
+
+					if (costume.Painting.FlipX) animComponent.flip = !animComponent.flip;
 
 					// Add texture banks required by animation
 					//animComponent.animSet.animPackage.textureBank.Clear();
