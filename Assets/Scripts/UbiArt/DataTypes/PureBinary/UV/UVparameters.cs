@@ -2,7 +2,7 @@ namespace UbiArt.UV {
 	public class UVparameters : CSerializable {
 		public float unkFloat;
 		public string unkString;
-		public CArrayO<Parameters> parameters;
+		public CArrayO<Parameters> parameters; // Number of vertices used by the triangles
 		public CArrayO<Triangle> triangles;
 
 		protected override void SerializeImpl(CSerializerObject s) {

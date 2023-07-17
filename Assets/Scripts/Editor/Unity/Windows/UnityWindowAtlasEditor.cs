@@ -86,7 +86,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 								CurrentTab = (Tab)GUI.Toolbar(rect, (int)CurrentTab, new string[] { "Atlas Container", "Patch Bank" });
 								switch (CurrentTab) {
 									case Tab.AtlasContainer:
-										DrawAtlas(tex, subcanvas);
+										DrawAtlasUI(tex, subcanvas);
 										break;
 									case Tab.PatchBank:
 										DrawPatchBankUI(tex, subcanvas);
@@ -137,6 +137,16 @@ public class UnityWindowAtlasEditor : UnityWindow {
 
 	}
 
+	void DrawAtlasUI(TextureCooked tex, Rect rect) {
+		DrawAtlas(tex, rect);
+
+		var atlas = tex.atlas;
+		if (atlas != null) {
+			EditorField("GridX", atlas.gridX);
+			EditorField("GridY", atlas.gridY);
+		}
+	}
+
 	void DrawAtlas(TextureCooked tex, Rect rect) {
 
 		Vector2 GetTexturePositionOnRect(Vector2 pos) {
@@ -144,19 +154,50 @@ public class UnityWindowAtlasEditor : UnityWindow {
 		}
 		if (tex.atlas != null) {
 			var pointSize = 6;
+			var pivotSize = 10;
+			var pivotThickness = 0f;
 			var lineSize = 0.1f;
 			Handles.BeginGUI();
 			var atlas = tex.atlas;
 			UnityEngine.Random.InitState(12675);
+
+			// Draw grid
+			if (atlas.gridX > 1f) {
+				var col = Color.grey;
+				float step = 1f / atlas.gridX;
+				for (float i = step; i < 1f; i += step) {
+					using (new Handles.DrawingScope(col)) {
+						var uvPos1 = GetTexturePositionOnRect(new Vector2(i, 0));
+						var uvPos2 = GetTexturePositionOnRect(new Vector2(i, 1));
+						Handles.DrawDottedLine(uvPos1, uvPos2, lineSize);
+					}
+				}
+			}
+			if (atlas.gridY > 1f) {
+				var col = Color.grey;
+				float step = 1f / atlas.gridY;
+				for (float i = step; i < 1f; i += step) {
+					using (new Handles.DrawingScope(col)) {
+						var uvPos1 = GetTexturePositionOnRect(new Vector2(0, i));
+						var uvPos2 = GetTexturePositionOnRect(new Vector2(1, i));
+						Handles.DrawDottedLine(uvPos1, uvPos2, lineSize);
+					}
+				}
+			}
+
+			// Draw UVs
 			foreach (var uvPair in atlas.uvData) {
 				UVdata uvdata = uvPair.Value;
 				var pointColor = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 0.8f, 0.8f, 1f, 1f, 1f);
+				// Draw points
 				foreach (var uv in uvdata.uvs) {
 					var uvPos = GetTexturePositionOnRect(new Vector2(uv.x, uv.y));
 					Handles.DrawSolidRectangleWithOutline(
 						new Rect(
 							uvPos.x - pointSize / 2, uvPos.y - pointSize / 2, pointSize, pointSize), pointColor, Color.white);
 				}
+
+				// Connect points
 				int count = uvdata.uvs.Count;
 				if (count == 2) {
 					using (new Handles.DrawingScope(pointColor)) {
@@ -207,6 +248,21 @@ public class UnityWindowAtlasEditor : UnityWindow {
 							}
 						}
 					}
+				}
+
+				// Draw pivot
+				if (atlas.pivots != null && atlas.pivots.ContainsKey(uvPair.Key)) {
+					var pivot = atlas.pivots[uvPair.Key];
+					var uvPos = GetTexturePositionOnRect(new Vector2(pivot.x, pivot.y));
+
+					using (new Handles.DrawingScope(pointColor)) {
+						Handles.DrawLine(uvPos - new Vector2(pivotSize / 2f, 0f), uvPos + new Vector2(pivotSize / 2f, 0f), pivotThickness);
+						Handles.DrawLine(uvPos - new Vector2(0f, pivotSize / 2f), uvPos + new Vector2(0f, pivotSize / 2f), pivotThickness);
+					}
+					/*Handles.Draw
+					Handles.DrawSolidRectangleWithOutline(
+						new Rect(
+							uvPos.x - pivotSize / 2, uvPos.y - pivotSize / 2, pivotSize, pivotSize), pointColor, Color.black);*/
 				}
 			}
 			Handles.EndGUI();
