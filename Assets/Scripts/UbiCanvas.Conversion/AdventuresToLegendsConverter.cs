@@ -63,8 +63,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/fx/textures/pollen/", "world/common/fx/textures/pollen_adv/"));*/
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/textures/", "world/common/fx/textures_adv/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures_adv/smoke/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));
+				/*conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/textures_adv/smoke/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));*/
 				// TODO: Find a solution for the ParticleGenerator "meshes" not being supported in RL
 
 				/*conversionSettings.PathConversionRules.Add(
@@ -79,6 +79,7 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
 
+			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
@@ -475,6 +476,70 @@ namespace UbiCanvas.Conversion {
 		}
 
 		#region Specific adjustments
+		public void DowngradeFxUV(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if(actorTemplates == null) return;
+
+			Dictionary<Path, UbiArt.UV.UVAtlas> textures = new Dictionary<Path, UbiArt.UV.UVAtlas>();
+			void AddAtlas(Path p) {
+				var atlas = l.uvAtlasManager.GetAtlasIfExists(p);
+				if(atlas != null) textures[p] = atlas;
+			}
+
+			foreach (var tplPair in actorTemplates) {
+				var tpl = tplPair.Value as GenericFile<Actor_Template>;
+				if(tpl?.obj == null) continue;
+				var fxc = tpl.obj.GetComponent<FxBankComponent_Template>();
+				if(fxc?.Fx == null) continue;
+				foreach (var fx in fxc.Fx) {
+					var textureSet = fx?.material?.textureSet;
+					AddAtlas(textureSet?.diffuse);
+					AddAtlas(textureSet?.back_light);
+				}
+			}
+
+			foreach (var texturePair in textures) {
+				var atlas = texturePair.Value;
+				if (atlas != null) {
+					if(atlas.uvParams != null && atlas.uvParams.Any())
+						atlas.uvParams = new CMap<int, UbiArt.UV.UVparameters>();
+
+					foreach (var uvPair in atlas.uvData) {
+						var uvdata = uvPair.Value;
+						if (uvdata.uvs == null || uvdata.uvs.Count == 0) continue;
+						int count = uvdata.uvs.Count;
+						if (count != 2) {
+							// TODO: We need to fix this one...
+							Vec2d min = new Vec2d(uvdata.uvs.Min(uv => uv.x), uvdata.uvs.Min(uv => uv.y));
+							Vec2d max = new Vec2d(uvdata.uvs.Max(uv => uv.x), uvdata.uvs.Max(uv => uv.y));
+							Vec2d pivot = min + ((max - min) / 2f);
+							if (atlas.pivots != null && atlas.pivots.ContainsKey(uvPair.Key)) {
+								var oldPivot = atlas.pivots[uvPair.Key];
+								var newPivot = new Vec2d(oldPivot.x, oldPivot.y);
+								if (pivot.x != newPivot.x || pivot.y != newPivot.y) {
+									pivot = newPivot;
+									var maxDist = max - pivot;
+									var minDist = pivot - min;
+									var halfDimensions = new Vec2d(
+										System.MathF.Max(maxDist.x, minDist.x),
+										System.MathF.Max(maxDist.y, minDist.y));
+									min = pivot - halfDimensions;
+									max = pivot + halfDimensions;
+								}
+							}
+							uvdata.uvs = new CArrayO<Vec2d>(new Vec2d[] {
+								min, max
+							});
+						}
+					}
+				}
+			}
+		}
 		public void CreateFriseParents(Context oldContext, Settings newSettings, Scene scene) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;

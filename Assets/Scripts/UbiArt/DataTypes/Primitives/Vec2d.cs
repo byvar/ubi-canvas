@@ -34,7 +34,7 @@ namespace UbiArt {
 		public static Vec2d operator -(Vec2d a, Vec2d b) => new Vec2d(a.x - b.x, a.y - b.y);
 		public static Vec2d operator *(Vec2d a, Vec2d b) => new Vec2d(a.x * b.x, a.y * b.y);
 		public static Vec2d operator *(Vec2d a, float b) => new Vec2d(a.x * b, a.y * b);
-		public static Vec2d operator /(Vec2d a, float b) => a * 1/b;
+		public static Vec2d operator /(Vec2d a, float b) => new Vec2d(a.x / b, a.y / b);
 		public Vec2d Normalize() => (x != 0 || y != 0) ? this / (float)Magnitude : this;
 
 		// In radians
