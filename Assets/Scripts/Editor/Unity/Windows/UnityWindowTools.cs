@@ -74,6 +74,20 @@ public class UnityWindowTools : UnityWindow
 					ExecuteTask(exportActionGameTool.InvokeAsync(outputDir));
 			}
 		}
+		else if (tool is ExportTimelineTool exportTimelineTool)
+		{
+			if (EditorButton("Export"))
+			{
+
+				string inputDir = EditorUtility.OpenFolderPanel("Select input directory containing IPKs", null, "");
+				if (!String.IsNullOrWhiteSpace(inputDir)) {
+					string outputDir = EditorUtility.OpenFolderPanel("Select output directory", null, "");
+
+					if (!String.IsNullOrWhiteSpace(outputDir))
+						ExecuteTask(exportTimelineTool.InvokeAsync(inputDir, outputDir));
+				}
+			}
+		}
 		else if (tool is BuildModIPKTool buildModIPKTool)
 		{
 			EditorGUI.BeginChangeCheck();

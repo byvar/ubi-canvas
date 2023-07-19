@@ -5,7 +5,7 @@ namespace UbiArt.Bundle {
 		public uint numOffsets;
 		public uint size;
 		public uint zSize;
-		public ulong timeStamp;
+		public ulong timeStamp; // LastTimeWriteAccess
 		public ulong[] offsets;
 
 		public void Serialize(CSerializerObject s, string name) {

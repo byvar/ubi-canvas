@@ -172,7 +172,8 @@ namespace UbiArt {
 			platform = Platform.Vita,
 			Endian = Endian.Big,
 			versionFlags = VersionFlags.Legends,
-			isCatchThemAll = true
+			isCatchThemAll = true,
+			bundles = new string[] { "Bundle" }
 		};
 
 

@@ -9,14 +9,14 @@ namespace UbiArt.ITF {
 		public Generic<TemplateAIBehavior> stuckBehavior;
 		public Generic<TemplateAIBehavior> snappedBehavior;
 		public int isHanging;
-		public float nonStickableTime;
+		public float nonStickableTime = 1f;
 		public int reinitWhenBecomesInactive;
-		public int canReceiveHit;
-		public float shooterHitForce;
-		public float shooterHitSpeedMultiplier;
-		public float squashPenetrationRadiusPercent;
+		public int canReceiveHit = 1;
+		public float shooterHitForce = 600f;
+		public float shooterHitSpeedMultiplier = 0.8f;
+		public float squashPenetrationRadiusPercent = 0.8f;
 		public int fruitsOverlap;
-		public float jamMaxTime;
+		public float jamMaxTime = 3f;
 		public Path eyePath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

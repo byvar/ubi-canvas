@@ -6,6 +6,7 @@
 		{
 			new ExportEngineDataTool(),
 			new ExportLocalisationTool(),
+			new ExportTimelineTool(),
 			new AdventuresSaveTool(),
 			new BuildModIPKTool(),
 			new ModeConversionTool(),
