@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 				}
 			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
 				if (this is Frise) return;
-				if (s.Settings.isCatchThemAll) {
+				if (s.Settings.platform == Settings.Platform.Vita) {
 					uint lol = 0;
 					lol = s.Serialize<uint>(lol, name: "placeholder");
 					lol = s.Serialize<uint>(lol, name: "placeholder");

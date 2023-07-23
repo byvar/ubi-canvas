@@ -9,7 +9,9 @@ namespace UbiArt {
 			[System.ComponentModel.Description("Rayman Legends (PSV)")] RaymanLegendsVitaCatchThemAll,
 			//RaymanAdventuresIOS,
 			[System.ComponentModel.Description("Rayman Adventures (Android)")] RaymanAdventuresAndroid,
-			[System.ComponentModel.Description("Rayman Mini (MacOS)")] RaymanMiniMacOS
+			[System.ComponentModel.Description("Rayman Mini (MacOS)")] RaymanMiniMacOS,
+
+			[System.ComponentModel.Description("Child of Light (PC)")] ChildOfLightPC
 		};
 		public Mode mode = Mode.RaymanLegendsPC;
 
@@ -20,6 +22,7 @@ namespace UbiArt {
 			{ "rl_vita", Mode.RaymanLegendsVitaCatchThemAll },
 			{ "ra_android", Mode.RaymanAdventuresAndroid },
 			{ "rm_mac", Mode.RaymanMiniMacOS },
+			{ "col_pc", Mode.ChildOfLightPC },
 		};
 
 
@@ -30,7 +33,7 @@ namespace UbiArt {
 			RL = 1
 		};
 		public enum Game { None, RO, RL, RA, RJR, RFR, COL, VH, RM };
-		public enum Platform { None, PC, iOS, Android, WiiU, Vita, MacOS };
+		public enum Platform { None, PC, iOS, Android, WiiU, Vita, MacOS, PC32 };
 		public enum SerializerType { Binary, TagBinary };
 
 		public EngineVersion engineVersion;
@@ -58,6 +61,7 @@ namespace UbiArt {
 					case Platform.Android: return "android";
 					case Platform.MacOS: return "macos";
 					case Platform.Vita: return "VITA";
+					case Platform.PC32: return "PC32";
 					default: return null;
 				}
 			}
@@ -176,6 +180,15 @@ namespace UbiArt {
 			bundles = new string[] { "Bundle" }
 		};
 
+		public static Settings COLPC = new Settings() {
+			engineVersion = EngineVersion.RL,
+			game = Game.COL,
+			platform = Platform.PC32,
+			Endian = Endian.Big,
+			versionFlags = VersionFlags.Legends,
+			ipkVersion = 5,
+			engineSignature = 0x4BFC7C03,
+		};
 
 		public static readonly Dictionary<Mode, Settings> settingsDict = new Dictionary<Mode, Settings>() {
 			{ Mode.RaymanOriginsPC, ROPC },
@@ -183,6 +196,7 @@ namespace UbiArt {
 			{ Mode.RaymanLegendsVitaCatchThemAll, RLVita },
 			{ Mode.RaymanAdventuresAndroid, RAAndroid },
 			{ Mode.RaymanMiniMacOS, RMMac },
+			{ Mode.ChildOfLightPC, COLPC },
 		};
 	}
 }
