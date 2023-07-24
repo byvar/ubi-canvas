@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>(UbiArt) Serialize value</Title>
+      <Description>(UbiArt) Serialize value</Description>
+      <Shortcut>uaser</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp" Kind="method body">
+        <![CDATA[$Property$ = s.Serialize<$Type$>($Property$, name: "$Property$");$end$]]>
+      </Code>
+      <Declarations>
+        <Literal>
+          <ID>Property</ID>
+          <ToolTip>Choose the property to serialize</ToolTip>
+          <Default>Property</Default>
+        </Literal>
+        <Literal>
+          <ID>Type</ID>
+          <ToolTip>Choose the property type</ToolTip>
+          <Default>Type</Default>
+        </Literal>
+      </Declarations>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

@@ -49,6 +49,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					syncOffset = s.Serialize<float>(syncOffset, name: "syncOffset");
 					startOffset = s.Serialize<float>(startOffset, name: "startOffset");
+					subAnimInfo = s.SerializeObject<SubAnimSet>(subAnimInfo, name: "subAnimInfo");
 					MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");
 					subSkeleton = s.SerializeObject<StringID>(subSkeleton, name: "subSkeleton");
 					defaultAnim = s.SerializeObject<StringID>(defaultAnim, name: "defaultAnim");

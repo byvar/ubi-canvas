@@ -13,6 +13,9 @@ namespace UbiArt.ITF {
 		public bool animstretchtime;
 		public bool blendtonextphase = true;
 
+		[Description("A 2D vector specifying the (min, max) range of alpha that will get remapped to (0, 1). Negative values and values > 1 are allowed.")]
+		public Vec2d remapAlpha = new Vec2d(0,1);
+
 		public uint Vita_00 { get; set; }
 
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -28,6 +31,19 @@ namespace UbiArt.ITF {
 				deltaphasetime = s.Serialize<float>(deltaphasetime, name: "deltaphasetime");
 				animstretchtime = s.Serialize<bool>(animstretchtime, name: "animstretchtime");
 				blendtonextphase = s.Serialize<bool>(blendtonextphase, name: "blendtonextphase");
+			} else if(s.Settings.game == Settings.Game.COL) {
+				phaseTime = s.Serialize<float>(phaseTime, name: "phaseTime");
+				colorMin = s.SerializeObject<Color>(colorMin, name: "colorMin");
+				colorMax = s.SerializeObject<Color>(colorMax, name: "colorMax");
+				sizeMin = s.SerializeObject<Vec2d>(sizeMin, name: "sizeMin");
+				sizeMax = s.SerializeObject<Vec2d>(sizeMax, name: "sizeMax");
+				remapAlpha = s.SerializeObject<Vec2d>(remapAlpha, name: "remapAlpha");
+				animstart = s.Serialize<int>(animstart, name: "animstart");
+				animend = s.Serialize<int>(animend, name: "animend");
+				animname = s.SerializeObject<StringID>(animname, name: "animname");
+				deltaphasetime = s.Serialize<float>(deltaphasetime, name: "deltaphasetime");
+				animstretchtime = s.Serialize<bool>(animstretchtime, name: "animstretchtime", options: CSerializerObject.Options.BoolAsByte);
+				blendtonextphase = s.Serialize<bool>(blendtonextphase, name: "blendtonextphase", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 				phaseTime = s.Serialize<float>(phaseTime, name: "phaseTime");
 				colorMin = s.SerializeObject<Color>(colorMin, name: "colorMin");

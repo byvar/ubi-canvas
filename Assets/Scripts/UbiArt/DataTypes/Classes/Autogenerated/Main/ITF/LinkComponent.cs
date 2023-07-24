@@ -14,7 +14,6 @@ namespace UbiArt.ITF {
 					ChildrenObjId = s.SerializeObject<CListO<ObjectId>>(ChildrenObjId, name: "ChildrenObjId");
 					LinkedChildren = s.SerializeObject<CListO<ObjectPath>>(LinkedChildren, name: "LinkedChildren");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					Children = s.SerializeObject<CListO<ChildEntry>>(Children, name: "Children");

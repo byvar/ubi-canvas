@@ -56,7 +56,7 @@ namespace UbiArt.Animation {
 			} else {
 				byteArrayOrigins = s.SerializeBytes(byteArrayOrigins, 8);
 			}
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 			}
 			bankId = s.Serialize<uint>(bankId, name: "bankId");

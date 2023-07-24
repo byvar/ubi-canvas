@@ -3,7 +3,7 @@
 		public uint id;
 
 		public void Serialize(CSerializerObject s, string name) {
-			s.Context.SystemLogger?.LogError(s.CurrentPointer + ": Figure out SoundGUID format");
+			//s.Context.SystemLogger?.LogError(s.CurrentPointer + ": Figure out SoundGUID format");
 			id = s.Serialize<uint>(id);
 		}
 

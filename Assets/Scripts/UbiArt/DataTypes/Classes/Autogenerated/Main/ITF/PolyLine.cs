@@ -11,12 +11,6 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_x30 | SerializeFlags.Default)) {
 					POINTS = s.SerializeObject<CListO<PolyLineEdge>>(POINTS, name: "POINTS");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
-				PolyPointList = s.SerializeObject<PolyPointList>(PolyPointList, name: "PolyPointList");
-				AABB = s.SerializeObject<AABB>(AABB, name: "AABB");
-				if (s.HasFlags(SerializeFlags.Flags10)) {
-					AABB = s.SerializeObject<AABB>(AABB, name: "AABB");
-				}
 			} else {
 				PolyPointList = s.SerializeObject<PolyPointList>(PolyPointList, name: "PolyPointList");
 				AABB = s.SerializeObject<AABB>(AABB, name: "AABB");

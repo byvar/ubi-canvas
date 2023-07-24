@@ -51,6 +51,21 @@ namespace UbiArt.ITF {
 					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");
 					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}
+			} else if (s.Settings.game == Settings.Game.COL) {
+				if (s.HasFlags(SerializeFlags.Default)) {
+					if (s.HasFlags(SerializeFlags.Flags8)) {
+						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
+						ColorFog = s.SerializeObject<Color>(ColorFog, name: "ColorFog");
+						useStaticFog = s.Serialize<bool>(useStaticFog != 0, name: "useStaticFog", options: CSerializerObject.Options.BoolAsByte) ? 1 : 0;
+						renderInReflection = s.Serialize<bool>(renderInReflection != 0, name: "renderInReflection", options: CSerializerObject.Options.BoolAsByte) ? 1 : 0;
+					}
+					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
+					colorComputerTagId = s.Serialize<uint>(colorComputerTagId, name: "colorComputerTagId");
+					renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget", options: CSerializerObject.Options.BoolAsByte);
+					disableLight = s.Serialize<int>(disableLight, name: "disableLight");
+					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");
+					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
+				}
 			} else if (s.Settings.game == Settings.Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {

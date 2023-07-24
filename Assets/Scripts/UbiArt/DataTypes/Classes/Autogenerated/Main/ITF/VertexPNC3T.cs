@@ -14,7 +14,9 @@ namespace UbiArt.ITF {
 			uv1 = s.SerializeObject<Vec2d>(uv1, name: "uv1");
 			uv2 = s.SerializeObject<GFX_Vector4>(uv2, name: "uv2");
 			uv3 = s.SerializeObject<GFX_Vector4>(uv3, name: "uv3");
-			uv4 = s.SerializeObject<Vec2d>(uv4, name: "uv4");
+			if (s.Settings.game != Settings.Game.COL) {
+				uv4 = s.SerializeObject<Vec2d>(uv4, name: "uv4");
+			}
 		}
 	}
 }

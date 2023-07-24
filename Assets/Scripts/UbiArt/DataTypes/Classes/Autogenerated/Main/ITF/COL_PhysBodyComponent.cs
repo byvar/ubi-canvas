@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_PhysBodyComponent : CSerializable {
+	public partial class COL_PhysBodyComponent : ActorComponent {
 		public int isStatic;
 		public Enum_collisionGroup collisionGroup;
 		public float weight;

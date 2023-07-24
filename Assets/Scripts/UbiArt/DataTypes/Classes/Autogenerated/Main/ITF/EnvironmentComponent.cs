@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class EnvironmentComponent : CSerializable {
+	public partial class EnvironmentComponent : ActorComponent {
 		public SoundGUID Environment;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

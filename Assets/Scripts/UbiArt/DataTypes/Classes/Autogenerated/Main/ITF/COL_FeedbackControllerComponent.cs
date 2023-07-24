@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_FeedbackControllerComponent : CSerializable {
+	public partial class COL_FeedbackControllerComponent : FXControllerComponent {
 		public StringID feedbackContextTag;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

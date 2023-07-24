@@ -88,6 +88,9 @@ namespace UbiArt.ITF {
 				defaultBlendFrames = s.Serialize<uint>(defaultBlendFrames, name: "defaultBlendFrames");
 				draw2D = s.Serialize<uint>(draw2D, name: "draw2D");
 				visualAABBanimID = s.SerializeObject<StringID>(visualAABBanimID, name: "visualAABBanimID");
+				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
+					animSet = s.SerializeObject<SubAnimSet_Template>(animSet, name: "animSet");
+				}
 				defaultAnimation = s.SerializeObject<StringID>(defaultAnimation, name: "defaultAnimation");
 				subSkeleton = s.SerializeObject<StringID>(subSkeleton, name: "subSkeleton");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
@@ -102,6 +105,7 @@ namespace UbiArt.ITF {
 				notifyAnimUpdate = s.Serialize<bool>(notifyAnimUpdate, name: "notifyAnimUpdate", options: CSerializerObject.Options.BoolAsByte);
 				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 				useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset", options: CSerializerObject.Options.BoolAsByte);
+				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
 			} else if (s.Settings.game == Settings.Game.VH) {
 				useBase = s.Serialize<bool>(useBase, name: "useBase");
 				smoothAnim = s.Serialize<bool>(smoothAnim, name: "smoothAnim");

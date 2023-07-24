@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public StringID input;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.COL) {
 			} else {
 				input = s.SerializeObject<StringID>(input, name: "input");
 			}

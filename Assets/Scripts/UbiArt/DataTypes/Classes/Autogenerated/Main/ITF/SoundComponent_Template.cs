@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public Volume volume;
 		public CListO<Generic<Event>> musicList;
 		public CListO<Generic<Event>> busMixList;
-		public bool RegisterRtpcListener;
+		public int RegisterRtpcListener;
 		public bool UseDefaultEmitter;
 		public bool unk_RFR;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				WwiseBankList2 = s.SerializeObject<CListO<Path>>(WwiseBankList2, name: "WwiseBankList");
 				WwiseInputList = s.SerializeObject<CListO<WwiseInputDesc>>(WwiseInputList, name: "WwiseInputList");
-				RegisterRtpcListener = s.Serialize<bool>(RegisterRtpcListener, name: "RegisterRtpcListener");
+				RegisterRtpcListener = s.Serialize<int>(RegisterRtpcListener, name: "RegisterRtpcListener");
 				UseDefaultEmitter = s.Serialize<bool>(UseDefaultEmitter, name: "UseDefaultEmitter");
 			} else if (s.Settings.game == Settings.Game.RL) {
 				soundList = s.SerializeObject<CListO<SoundDescriptor_Template>>(soundList, name: "soundList");

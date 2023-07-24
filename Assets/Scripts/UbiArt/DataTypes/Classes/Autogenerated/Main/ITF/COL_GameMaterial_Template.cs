@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_GameMaterial_Template : CSerializable {
+	public partial class COL_GameMaterial_Template : GameMaterial_Template {
 		public bool climbable;
 		public bool dangerous;
 		protected override void SerializeImpl(CSerializerObject s) {

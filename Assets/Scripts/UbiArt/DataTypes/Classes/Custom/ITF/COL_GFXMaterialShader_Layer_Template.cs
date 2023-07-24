@@ -7,6 +7,8 @@ namespace UbiArt.ITF {
 		public int Filtering;
 		public Color DiffuseColor;
 		public Enum_TextureUsage TextureUsage;
+		public CListO<COL_GFXMaterialShader_Layer_UVModifier> UVModifiers;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			Enabled = s.Serialize<int>(Enabled, name: "Enabled");
@@ -15,6 +17,7 @@ namespace UbiArt.ITF {
 			Filtering = s.Serialize<int>(Filtering, name: "Filtering");
 			DiffuseColor = s.SerializeObject<Color>(DiffuseColor, name: "DiffuseColor");
 			TextureUsage = s.Serialize<Enum_TextureUsage>(TextureUsage, name: "TextureUsage");
+			UVModifiers = s.SerializeObject<CListO<COL_GFXMaterialShader_Layer_UVModifier>>(UVModifiers, name: "UVModifiers");
 		}
 		public enum Enum_TexAdressingMode {
 			[Serialize("Value_0")] Value_0 = 0,

@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public StringID triggerFx;
 		public StringID defaultFx;
 		public CMap<StringID, FXControllerComponent_Template.sFXSwitch> FXSwitch;
-		public Placeholder defaultFxList;
+		public CListO<StringID> defaultFxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
@@ -20,9 +20,10 @@ namespace UbiArt.ITF {
 				defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
 			} else if (s.Settings.game == Settings.Game.COL) {
 				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
+				fxControlList = s.SerializeObject<CListO<FXControl>>(fxControlList, name: "fxControlList");
 				triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
 				defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
-				defaultFxList = s.SerializeObject<Placeholder>(defaultFxList, name: "defaultFxList");
+				defaultFxList = s.SerializeObject<CListO<StringID>>(defaultFxList, name: "defaultFxList");
 			} else {
 				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				fxControlList = s.SerializeObject<CListO<FXControl>>(fxControlList, name: "fxControlList");

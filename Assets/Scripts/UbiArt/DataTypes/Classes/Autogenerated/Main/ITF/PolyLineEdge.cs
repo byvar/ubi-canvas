@@ -1,5 +1,5 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.VH | GameFlags.RA)]
+	[Games(GameFlags.All)]
 	public partial class PolyLineEdge : CSerializable {
 		public Vec2d POS;
 		public float Scale = 1f;
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 					Scale = s.Serialize<float>(Scale, name: "Scale");
 					SwitchTexture = s.Serialize<bool>(SwitchTexture, name: "SwitchTexture");
 				}
-			} else if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				POS = s.SerializeObject<Vec2d>(POS, name: "POS");
 				Scale = s.Serialize<float>(Scale, name: "Scale");
 				SwitchTexture = s.Serialize<bool>(SwitchTexture, name: "SwitchTexture");

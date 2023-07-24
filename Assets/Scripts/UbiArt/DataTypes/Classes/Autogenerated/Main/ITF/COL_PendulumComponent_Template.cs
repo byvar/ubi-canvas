@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_PendulumComponent_Template : CSerializable {
+	public partial class COL_PendulumComponent_Template : ActorComponent_Template {
 		public StringID fxOnHit;
 		public StringID fxOnStartMove;
 		protected override void SerializeImpl(CSerializerObject s) {

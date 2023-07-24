@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_PendulumComponent : CSerializable {
+	public partial class COL_PendulumComponent : ActorComponent {
 		public float phantomHitMultiplier;
 		public Enum_collisionFilter collisionFilter;
 		public int useFixedLength;
