@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_BattleTriggerComponent : CSerializable {
+	public partial class COL_BattleTriggerComponent : COL_BaseInteractiveComponent {
 		public Placeholder battleSetupsConfigOverride;
 		[Description("Ally CharacterId to force on the first spawn setup")]
 		public StringID forcedCharacterId_1;

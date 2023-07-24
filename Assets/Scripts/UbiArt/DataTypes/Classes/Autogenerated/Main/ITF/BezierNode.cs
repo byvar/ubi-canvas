@@ -12,7 +12,9 @@ namespace UbiArt.ITF {
 			tangent = s.SerializeObject<Vec2d>(tangent, name: "tangent");
 			scale = s.Serialize<float>(scale, name: "scale");
 			tween = s.SerializeObject<Nullable<BezierTween>>(tween, name: "tween");
-			lumChainSpeedMultiplier = s.Serialize<float>(lumChainSpeedMultiplier, name: "lumChainSpeedMultiplier");
+			if (s.Settings.game != Settings.Game.COL) {
+				lumChainSpeedMultiplier = s.Serialize<float>(lumChainSpeedMultiplier, name: "lumChainSpeedMultiplier");
+			}
 		}
 	}
 }

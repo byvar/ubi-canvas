@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class Unknown_COL_24_sub_9589F0 : CSerializable {
+	public partial class Unknown_COL_24_sub_9589F0 : BoxInterpolatorComponent {
 		public SoundGUID OnEnter;
 		public SoundGUID OnExit;
 		public float DepthOffset;

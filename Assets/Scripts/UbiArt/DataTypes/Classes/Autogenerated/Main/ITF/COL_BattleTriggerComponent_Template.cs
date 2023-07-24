@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_BattleTriggerComponent_Template : CSerializable {
+	public partial class COL_BattleTriggerComponent_Template : COL_BaseInteractiveComponent_Template {
 		public Placeholder battleSetupsConfig;
 		public Enum_battleType battleType;
 		public bool playSoundOnTrigger;

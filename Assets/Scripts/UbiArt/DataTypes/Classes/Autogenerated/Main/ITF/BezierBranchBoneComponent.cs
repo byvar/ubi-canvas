@@ -4,10 +4,7 @@ namespace UbiArt.ITF {
 		public CListO<BezierBone> bones;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
-			} else {
-				bones = s.SerializeObject<CListO<BezierBone>>(bones, name: "bones");
-			}
+			bones = s.SerializeObject<CListO<BezierBone>>(bones, name: "bones");
 		}
 		public override uint? ClassCRC => 0xEB3B53B8;
 	}

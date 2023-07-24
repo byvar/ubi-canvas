@@ -21,6 +21,14 @@ namespace UbiArt.ITF {
 			[Serialize("LinkMode_FirstLinkOrTag")] FirstLinkOrTag = 1,
 			[Serialize("LinkMode_TagOnly"       )] TagOnly = 2,
 		}
+		public void SerializeEmbedded(CSerializerObject s) {
+			sampleCount = s.Serialize<uint>(sampleCount, name: "sampleCount");
+			widthForAABB = s.Serialize<float>(widthForAABB, name: "widthForAABB");
+			linkMainBranch = s.Serialize<LinkMode>(linkMainBranch, name: "linkMainBranch");
+			branchComponents = s.SerializeObject<CArrayO<Generic<BezierBranchComponent_Template>>>(branchComponents, name: "branchComponents");
+			tweenInterpreter = s.SerializeObject<TweenInterpreter_Template>(tweenInterpreter, name: "tweenInterpreter");
+			lengthCursorInput = s.SerializeObject<StringID>(lengthCursorInput, name: "lengthCursorInput");
+		}
 	}
 }
 
