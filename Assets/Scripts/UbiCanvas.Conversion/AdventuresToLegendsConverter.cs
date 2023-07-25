@@ -46,7 +46,6 @@ namespace UbiCanvas.Conversion {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/"));
 
-				// FX - Sadly, can't just replace the whole textures folder (it breaks maps like spikyspinners), so... case by case
 				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/textures/fireworks/", "world/common/fx/textures/fireworks_adv/"));
 				conversionSettings.PathConversionRules.Add(
@@ -79,6 +78,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
 
+			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
+			LevelSpecificChanges(mainContext, settings, Controller.Obj.MainScene.obj);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			DuplicateActorTemplatesForStartPaused(mainContext);
@@ -476,6 +477,86 @@ namespace UbiCanvas.Conversion {
 		}
 
 		#region Specific adjustments
+		public void LevelSpecificChanges(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
+			var loadedScene = loadedScenes.FirstOrDefault(s => ((ContainerFile<Scene>)s.Value).obj == scene);
+			var scenePath = l.Paths[loadedScene.Key];
+
+			switch (scenePath.FullPath) {
+				case "world/rlc_dojo/festivalofspeed/dojo_festivalofspeed_nmi.isc":
+				{
+					var pickableTree = new PickableTree(scene);
+					var ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("chainrope_attach_zipline"));
+					foreach (var z in ziplines) {
+						var link = z.Result.GetComponent<LinkComponent>();
+						if (link == null) continue;
+						var ziplineTarget = link.Children[0].Path;
+
+						var targetNode = pickableTree.FollowObjectPath(z.Path, ziplineTarget);
+						if (targetNode.Pickable.POS2D.x < z.Result.POS2D.x) { // Zipline goes left
+							ZiplineToRope(oldContext, newSettings, z.Result);
+						}
+					}
+				}
+				break;
+			}
+		}
+
+		public void AllZiplinesToRopes(Context oldContext, Settings newSettings, ConversionSettings conversionSettings) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates == null) return;
+
+			conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("chainrope_attach_zipline.tpl", "chainrope_attach_zipline_adv.tpl"));
+
+			foreach (var tplPair in actorTemplates) {
+				var tpl = tplPair.Value as GenericFile<Actor_Template>;
+				if (tpl?.obj == null) continue;
+				var rope = tpl.obj.GetComponent<RopeComponent_Template>();
+				if (rope == null) continue;
+				rope.gameMaterial = new Path("gamematerial/basicliana_h.gmt");
+				rope.cutSectionGameMaterial = rope.gameMaterial;
+			}
+
+		}
+		public void ZiplineToRope(Context oldContext, Settings newSettings, Actor act) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			if (!structs.ContainsKey(typeof(GenericFile<Actor_Template>)))
+				structs[typeof(GenericFile<Actor_Template>)] = new Dictionary<StringID, ICSerializable>();
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+
+			var ogTPLPath = act.LUA;
+			var newTPLPath = new Path(act.LUA.FullPath.Replace("chainrope_attach_zipline.tpl", "chainrope_attach_ziprope.tpl"));
+			if (!actorTemplates.ContainsKey(newTPLPath.stringID)) {
+				var newTPL = new GenericFile<Actor_Template>(act.template.obj.Clone("tpl") as Actor_Template);
+				newTPL.sizeOf = act.template.sizeOf;
+				actorTemplates[newTPLPath.stringID] = newTPL;
+				l.Paths[newTPLPath.stringID] = newTPLPath;
+				l.CookedPaths[newTPLPath.stringID] = newTPLPath.CookedPath(oldContext);
+
+
+				var rope = newTPL.obj.GetComponent<RopeComponent_Template>();
+				if (rope != null) {
+					// TODO: Change game material sound, change texture so you can distinguish ropes from ziplines
+					rope.gameMaterial = new Path("gamematerial/basicliana_h.gmt");
+					rope.cutSectionGameMaterial = rope.gameMaterial;
+				}
+			}
+		}
 		public void DowngradeFxUV(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
 			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
@@ -514,7 +595,7 @@ namespace UbiCanvas.Conversion {
 						if (uvdata.uvs == null || uvdata.uvs.Count == 0) continue;
 						int count = uvdata.uvs.Count;
 						if (count != 2) {
-							// TODO: We need to fix this one...
+							// We need to fix this one...
 							Vec2d min = new Vec2d(uvdata.uvs.Min(uv => uv.x), uvdata.uvs.Min(uv => uv.y));
 							Vec2d max = new Vec2d(uvdata.uvs.Max(uv => uv.x), uvdata.uvs.Max(uv => uv.y));
 							Vec2d pivot = min + ((max - min) / 2f);
