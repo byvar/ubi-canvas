@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_BaseInteractiveComponentNew_Template : CSerializable {
+	public partial class COL_BaseInteractiveComponentNew_Template : ActorComponent_Template {
 		public float interactButtonYOffset;
 		public float interactButtonZOffsetFromAurora;
 		protected override void SerializeImpl(CSerializerObject s) {

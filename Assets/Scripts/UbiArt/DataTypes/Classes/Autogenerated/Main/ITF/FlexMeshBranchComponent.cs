@@ -4,10 +4,7 @@ namespace UbiArt.ITF {
 		public CListO<FlexMeshBranchComponent.FlexMesh> meshes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
-			} else {
-				meshes = s.SerializeObject<CListO<FlexMeshBranchComponent.FlexMesh>>(meshes, name: "meshes");
-			}
+			meshes = s.SerializeObject<CListO<FlexMeshBranchComponent.FlexMesh>>(meshes, name: "meshes");
 		}
 		[Games(GameFlags.RA)]
 		public partial class FlexMesh : CSerializable {
