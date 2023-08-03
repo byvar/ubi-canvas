@@ -5,5 +5,7 @@ namespace UbiArt {
 		public Settings OldSettings { get; set; }
 
 		public List<PathConversionRule> PathConversionRules { get; set; } = new List<PathConversionRule>();
+
+		public WwiseConversionSettings WwiseConversionSettings { get; set; } = new WwiseConversionSettings();
 	}
 }

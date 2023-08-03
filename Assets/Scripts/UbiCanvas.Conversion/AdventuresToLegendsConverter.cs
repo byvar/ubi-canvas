@@ -31,6 +31,7 @@ namespace UbiCanvas.Conversion {
 			// Create conversion settings
 			var conversionSettings = new ConversionSettings() {
 				OldSettings = oldSettings,
+				WwiseConversionSettings = await LoadWwiseConfig(mainContext, projectPath)
 			};
 			if (oldSettings.game == Settings.Game.RA || oldSettings.game == Settings.Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -474,6 +475,48 @@ namespace UbiCanvas.Conversion {
 				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(levelsConfig, Formatting.Indented));
 				Debug.Log($"Exported json: {exportFile}");
 			}
+		}
+
+		public async Task<WwiseConversionSettings> LoadWwiseConfig(Context context, string projectPath) {
+			var inPath = System.IO.Path.Combine(projectPath, "wwise");
+
+			List<JSON_WwiseEntry> wwiseList = new List<JSON_WwiseEntry>();
+
+			var wwiseName = context.Settings.game == Settings.Game.RA ? "adventures" : "mini";
+			var json = System.IO.File.ReadAllText(System.IO.Path.Combine(inPath, $"sounds_{wwiseName}.json"));
+			wwiseList = JsonConvert.DeserializeObject<List<JSON_WwiseEntry>>(json);
+
+			// Create dictionaries for better performance
+			Dictionary<long, List<JSON_WwiseEntry>> wwiseLookup =
+				wwiseList
+				.GroupBy(w => w.EventID)
+				.Select(g => g.OrderBy(k => k.RandomIndex).ToList())
+				.ToDictionary(l => l.FirstOrDefault().EventID);
+
+			var conversionSettings = new WwiseConversionSettings();
+
+			GenericFile<CSerializable> soundConfigISG = null;
+
+			context.Loader.LoadGenericFile(new Path("enginedata/gameconfig/soundconfig.isg"), (isg) => soundConfigISG = isg);
+			await context.Loader.LoadLoop();
+
+			var soundConfig = (SoundConfig_Template)(soundConfigISG.obj);
+			foreach (var entry in wwiseLookup) {
+				var wwiseID = entry.Key;
+				var wwiseItem = soundConfig.WwiseLookUpTable.FirstOrDefault(w => w.ID == wwiseID);
+				var busWwiseID = entry.Value.FirstOrDefault().BusID;
+				var wwiseBusItem = soundConfig.WwiseLookUpTable.FirstOrDefault(w => w.ID == busWwiseID);
+
+				conversionSettings.Entries.Add(wwiseItem.GUID, new WwiseConversionSettings.Entry() {
+					Item = wwiseItem,
+					Name = entry.Value.FirstOrDefault().EventName,
+					IsLoop = entry.Value.FirstOrDefault().IsLoop,
+					Bus = wwiseBusItem.name,
+					Files = entry.Value.Select(e => $"sound/{e.FileName}").ToList()
+				});
+			}
+
+			return conversionSettings;
 		}
 
 		#region Specific adjustments
