@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 
 namespace UbiArt {
-	public class Vec2d : ICSerializable {
+	public class Vec2d : ICSerializable, IEquatable<Vec2d> {
 		public float x;
 		public float y;
 
@@ -50,5 +50,28 @@ namespace UbiArt {
 		public static Vec2d Right => new Vec2d(1, 0);
 		public static Vec2d Up => new Vec2d(0, 1);
 		public static Vec2d Down => new Vec2d(0, -1);
+
+		#region Equals
+		public override bool Equals(object obj) {
+			return obj is Vec2d && this == (Vec2d)obj;
+		}
+		public override int GetHashCode() {
+			return x.GetHashCode() ^ y.GetHashCode() << 2;
+		}
+
+		public bool Equals(Vec2d other) {
+			return this == (Vec2d)other;
+		}
+
+		public static bool operator ==(Vec2d a, Vec2d b) {
+			if (ReferenceEquals(a, b)) return true;
+			if (ReferenceEquals(a, null)) return false;
+			if (ReferenceEquals(b, null)) return false;
+			return a.x == b.x && a.y == b.y;
+		}
+		public static bool operator !=(Vec2d x, Vec2d y) {
+			return !(x == y);
+		}
+		#endregion
 	}
 }

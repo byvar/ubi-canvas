@@ -1,18 +1,18 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AILumsKingComponent_Template : ActorComponent_Template {
-		public float lumKingMusicTimer;
-		public Volume lumKingMusicVolume;
-		public uint lumKingValue;
-		public float playerDetectorMultiplierInWater;
-		public float DRCTouchDistance;
+		public float lumKingMusicTimer = 10f;
+		public Volume lumKingMusicVolume = new Volume(1f);
+		public uint lumKingValue = 5;
+		public float playerDetectorMultiplierInWater = 1.5f;
+		public float DRCTouchDistance = 1f;
 		public StringID YellowStand;
 		public StringID YellowPicked;
 		public StringID PurpleStand;
 		public StringID PurplePicked;
-		public float grabAttractiveForceValue;
-		public float grabDampingFactor;
-		public float timeBeforeTaken;
+		public float grabAttractiveForceValue = 50f;
+		public float grabDampingFactor = 10f;
+		public float timeBeforeTaken = 0.8f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.game == Settings.Game.RL) {

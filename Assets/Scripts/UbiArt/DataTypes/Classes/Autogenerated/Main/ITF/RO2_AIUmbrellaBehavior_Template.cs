@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		public Generic<AIAction_Template> openingAction;
 		public Generic<AIAction_Template> closingAction;
 		public Generic<AIAction_Template> warningAction;
-		public float closedStateTime;
-		public float warningStateTime;
-		public float weightThreshold;
+		public float closedStateTime = 0.5f;
+		public float warningStateTime = 1f;
+		public float weightThreshold = 0.6f;
 		public bool closeWithWeight;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

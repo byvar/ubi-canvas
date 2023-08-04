@@ -7,6 +7,12 @@
 			throw new Exception(s.Position + ": Figure out Volume format");*/
 			volume = s.Serialize<float>(volume);
 		}
-		
+
+		public Volume() { }
+		public Volume(float volume) { this.volume = volume; }
+
+		public override string ToString() {
+			return $"Volume({volume})";
+		}
 	}
 }
