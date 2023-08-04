@@ -186,6 +186,15 @@ namespace UbiCanvas.Conversion {
 				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(newUVEntries, Formatting.Indented));
 				Debug.Log($"Exported json: {exportFile}");
 			}
+			// Write list of wwise files required by this map
+			if (conversionSettings.WwiseConversionSettings.UsedEntries.Any()) {
+				string exportFile = System.IO.Path.Combine(projectPath, "json", "wwise", $"{sceneName}.json");
+				System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
+				var usedEntries = conversionSettings.WwiseConversionSettings.UsedEntries;
+				var usedFiles = usedEntries.SelectMany(ue => conversionSettings.WwiseConversionSettings.Entries[ue].Files).ToList();
+				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(usedFiles, Formatting.Indented));
+				Debug.Log($"Exported json: {exportFile}");
+			}
 			Debug.Log($"Finished exporting {sceneName}.");
 		}
 
@@ -512,7 +521,7 @@ namespace UbiCanvas.Conversion {
 					Name = entry.Value.FirstOrDefault().EventName,
 					IsLoop = entry.Value.FirstOrDefault().IsLoop,
 					Bus = wwiseBusItem.name,
-					Files = entry.Value.Select(e => $"sound/{e.FileName}").ToList()
+					Files = entry.Value.Select(e => $"sound/wwise/{e.FileName}").ToList()
 				});
 			}
 

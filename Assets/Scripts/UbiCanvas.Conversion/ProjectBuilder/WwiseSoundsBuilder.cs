@@ -24,7 +24,7 @@ namespace UbiCanvas.Conversion {
 
 		protected override async Task BuildInternal() {
 			await Task.CompletedTask;
-			var soundsPath = System.IO.Path.Combine(ProjectPath, "wwise", "sound");
+			var soundsPath = System.IO.Path.Combine(ProjectPath, "wwise");
 
 			var jsonPath = System.IO.Path.Combine(ProjectPath, "json", "wwise");
 			var files = System.IO.Directory.Exists(jsonPath) ? System.IO.Directory.GetFiles(jsonPath, "*.json") : null;
@@ -35,6 +35,9 @@ namespace UbiCanvas.Conversion {
 					var json = System.IO.File.ReadAllText(f);
 					var requiredFilenames = JsonConvert.DeserializeObject<List<string>>(json);
 					// TODO: use
+					foreach (var reqFilename in requiredFilenames) {
+						BuildFile(System.IO.Path.Combine(soundsPath, reqFilename), reqFilename);
+					}
 				}
 			}
 		}
@@ -55,6 +58,9 @@ namespace UbiCanvas.Conversion {
 			var cookedPath = new Path(uncookedPath).CookedPath(TargetContext);
 
 			if (!FileIsAlreadyBuilt(cookedPath)) {
+				if(!System.IO.File.Exists(wavFilePath))
+					UnityEngine.Debug.LogWarning($"Could not find wave file: {wavFilePath}");
+
 				byte[] data = null;
 
 				/*byte[] pcmData = null;

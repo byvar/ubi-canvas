@@ -73,6 +73,7 @@ namespace UbiCanvas.Tools
 			await new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
