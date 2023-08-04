@@ -1,12 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UbiArt.ITF;
 
 namespace UbiArt {
 	public class WwiseConversionSettings {
 		public Dictionary<StringID, Entry> Entries { get; set; } = new Dictionary<StringID, Entry>();
 
+		public HashSet<StringID> UsedEntries { get; private set; } = new HashSet<StringID>();
+
 		//public PlaySound_evtTemplate ConvertWwiseEvent(PlayWwise_evtTemplate wwiseEvt) {
 		//}
+
+		public void ResetUsedEntries() {
+			UsedEntries.Clear();
+		}
 
 		public SoundParams GetParams(Entry entry) {
 			if(entry == null) return null;
@@ -38,13 +45,33 @@ namespace UbiArt {
 			{
 				if (Entries.ContainsKey(evtGUID)) {
 					var entry = Entries[evtGUID];
+					if(!UsedEntries.Contains(evtGUID)) UsedEntries.Add(evtGUID);
 					tpl.WwiseEventGUID = null; // Mark as processed
 					tpl._params = GetParams(entry);
 					tpl.maxInstances = 5; // or leave it be
 					tpl.category = entry.Bus;
+					tpl.files = new CListO<Path>(entry.Files.Select(f => new Path(f)).ToList());
 					return tpl;
 				} else {
 					return null;
+				}
+			}
+		}
+		public PlaySound_evtTemplate ConvertPlaySound_evtTemplate(PlayWwise_evtTemplate wwiseEvent) {
+			var evtGUID = wwiseEvent.WwiseEventGUID;
+			var tpl = new PlaySound_evtTemplate();
+			if (evtGUID == null)
+				return tpl;
+			else {
+				if (Entries.ContainsKey(evtGUID)) {
+					var entry = Entries[evtGUID];
+					if (!UsedEntries.Contains(evtGUID)) UsedEntries.Add(evtGUID);
+					tpl.Params = GetParams(entry);
+					tpl.Category2 = entry.Bus;
+					tpl.Sound = new Path(entry.Files.First());
+					return tpl;
+				} else {
+					return tpl;
 				}
 			}
 		}

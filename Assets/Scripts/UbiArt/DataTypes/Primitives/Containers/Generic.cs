@@ -143,7 +143,12 @@ namespace UbiArt {
 									obj = (T)(object)newEv;
 									className = new StringID(obj.ClassCRC.Value);
 								} else if (obj is PlayWwise_evtTemplate wwiseEvtTpl) {
-									var newEv = Merger.Merge<PlaySound_evtTemplate>(wwiseEvtTpl);
+									PlaySound_evtTemplate newEv;
+									if (c.HasSettings<ConversionSettings>()) {
+										newEv = c.GetSettings<ConversionSettings>().WwiseConversionSettings?.ConvertPlaySound_evtTemplate(wwiseEvtTpl);
+									} else {
+										newEv = Merger.Merge<PlaySound_evtTemplate>(wwiseEvtTpl);
+									}
 									obj = (T)(object)newEv;
 									className = new StringID(obj.ClassCRC.Value);
 								} else {

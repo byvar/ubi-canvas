@@ -25,7 +25,15 @@ namespace UbiArt.ITF {
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
 				if (previousSettings.game != settings.game) {
-					//name = new StringID();
+					if ((previousSettings.game == Settings.Game.RA || previousSettings.game == Settings.Game.RM)
+						&& settings.game == Settings.Game.RL) {
+						if (c.HasSettings<ConversionSettings>()) {
+							var conv = c.GetSettings<ConversionSettings>();
+							if (conv.WwiseConversionSettings != null) {
+								conv.WwiseConversionSettings.ConvertSoundDescriptor(this);
+							}
+						}
+					}
 				}
 			}
 			previousSettings = settings;

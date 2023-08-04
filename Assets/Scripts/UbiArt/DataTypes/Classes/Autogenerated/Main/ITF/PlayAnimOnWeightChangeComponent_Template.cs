@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 		public StringID enterAnimIdle;
 		public StringID exitAnim;
 		public StringID exitAnimIdle;
-		public bool listenToTrigger;
-		public bool listenToWeight;
+		public bool listenToTrigger = true;
+		public bool listenToWeight = true;
 		public Generic<Event> listenToEvent;
 		public bool stayOnEnter;
 		public float weightThreshold;
