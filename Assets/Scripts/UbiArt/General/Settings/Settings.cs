@@ -79,6 +79,19 @@ namespace UbiArt {
 				}
 			}
 		}
+		public string ITFCacheDirectory {
+			get {
+				if (cooked) {
+					if (engineVersion > EngineVersion.RO) {
+						return "cache/itf_cache/" + PlatformString.ToLower() + "/";
+					} else {
+						return "itf_cache/" + PlatformString.ToLower() + "/";
+					}
+				} else {
+					return "";
+				}
+			}
+		}
 
 		public static Settings Init(Mode mode) {
 			Settings s = null;
