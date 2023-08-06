@@ -48,7 +48,7 @@ namespace UbiArt.Animation {
 			soundEvents = s.SerializeObject<CListO<AnimTrackFrameSoundEvents>>(soundEvents, name: "soundEvents");
 			vectors = s.SerializeObject<CListO<Vec2d>>(vectors, name: "vectors");
 			LocalAABB = s.SerializeObject<AABB>(LocalAABB, name: "LocalAABB");
-			WorldAABB = s.SerializeObject<AABB>(LocalAABB, name: "WorldAABB");
+			WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
 			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
 				skeleton = s.SerializeObject<pair<StringID, Path>>(skeleton, name: "skeleton");
 				texturePaths = s.SerializeObject<CListO<pair<StringID, Path>>>(texturePaths, name: "textures");

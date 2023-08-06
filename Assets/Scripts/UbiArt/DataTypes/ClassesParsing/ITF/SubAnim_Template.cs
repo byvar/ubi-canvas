@@ -13,6 +13,18 @@ namespace UbiArt.ITF {
 				}
 				AddToStringCache(s);
 			}
+			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+				metronome = (METRONOME_TYPE)(int)metronome2;
+				metronome3 = (METRONOME_TYPE3)(int)metronome2;
+			} else if (s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.RL) {
+				metronome = (METRONOME_TYPE)(int)metronome3;
+				metronome2 = (METRONOME_TYPE2)(int)metronome3;
+				forceZOffset = forceZOffset2 == BOOL._true;
+			} else {
+				metronome2 = (METRONOME_TYPE2)(int)metronome;
+				metronome3 = (METRONOME_TYPE3)(int)metronome;
+				forceZOffset2 = forceZOffset ? BOOL._true : BOOL._false;
+			}
 		}
 
 		protected void AddToStringCache(CSerializerObject s) {

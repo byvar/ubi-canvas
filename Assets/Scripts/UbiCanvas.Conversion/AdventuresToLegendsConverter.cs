@@ -45,9 +45,7 @@ namespace UbiCanvas.Conversion {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("lightingmushroom.tpl", "lightingmushroom_adv.tpl"));
 				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("classic/components/umbrella.tpl", "classic/components/umbrella_adv.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("umbrellaclassic_pack_basic_001", "umbrellaadventures_pack_basic_001"));
+					new PathConversionRule("umbrella/classic/", "umbrella/adv/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/"));
 
