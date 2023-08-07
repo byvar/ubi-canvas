@@ -24,22 +24,26 @@ namespace UbiArt.ITF {
 				if (FRISE != null) {
 					foreach (Frise f in FRISE) {
 						await f.SetGameObjectParent(gao);
+						await f.SetContainingScene(this);
 					}
 				}
 				if (ACTORS != null) {
 					foreach (Generic<Actor> a in ACTORS) {
 						await a.obj.SetGameObjectParent(gao);
+						await a.obj.SetContainingScene(this);
 					}
 				}
 			} else {
 				if (FRISE_ORIGINS != null) {
 					foreach (Generic<Pickable> f in FRISE_ORIGINS) {
 						await f.obj.SetGameObjectParent(gao);
+						await f.obj.SetContainingScene(this);
 					}
 				}
 				if (ACTORS_ORIGINS != null) {
 					foreach (Generic<Pickable> a in ACTORS_ORIGINS) {
 						await a.obj.SetGameObjectParent(gao);
+						await a.obj.SetContainingScene(this);
 					}
 				}
 			}

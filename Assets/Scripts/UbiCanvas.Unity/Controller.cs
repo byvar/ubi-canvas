@@ -109,6 +109,7 @@ public class Controller : MonoBehaviour {
 			if (isAdded) {
 				var sceneGao = await scene.GetGameObject();
 				await a.SetGameObjectParent(sceneGao);
+				await a.SetContainingScene(scene);
 			}
 			Controller.Obj.zListManager.Sort();
 			await TimeController.WaitFrame();
@@ -128,6 +129,7 @@ public class Controller : MonoBehaviour {
 			if (isAdded) {
 				var sceneGao = await scene.GetGameObject();
 				await a.SetGameObjectParent(sceneGao);
+				await a.SetContainingScene(scene);
 			}
 			Controller.Obj.zListManager.Sort();
 			await TimeController.WaitFrame();

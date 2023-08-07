@@ -34,5 +34,12 @@ namespace UbiArt.ITF {
 			gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
 			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
 		}
+		public async UniTask SetContainingScene(Scene sc) {
+			if (gao == null) {
+				await GetGameObject();
+			}
+			var pickable = gao.GetComponent<UnityPickable>();
+			pickable.ContainingScene = sc;
+		}
 	}
 }

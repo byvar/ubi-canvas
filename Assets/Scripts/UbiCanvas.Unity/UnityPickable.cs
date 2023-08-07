@@ -8,6 +8,7 @@ public class UnityPickable : MonoBehaviour {
 	public Pickable pickable;
 	private SpriteRenderer sr;
 	private SphereCollider sc;
+	public Scene ContainingScene;
 	private bool inited = false;
 
 	private void Init() {
@@ -47,6 +48,14 @@ public class UnityPickable : MonoBehaviour {
 			if (new Vector2(transform.localScale.x, transform.localScale.y) != new Vector2((pickable.xFLIPPED ? -1f : 1f) * pickable.SCALE.x, pickable.SCALE.y)) {
 				pickable.SCALE = new Vec2d(Mathf.Abs(transform.localScale.x), transform.localScale.y);
 				pickable.xFLIPPED = transform.localScale.x < 0;
+			}
+			if (ContainingScene != null && transform.parent.gameObject != null) {
+				var parentScene = transform.parent.gameObject.GetComponent<UnityScene>();
+				if (parentScene != null && parentScene.scene != ContainingScene) {
+					RemoveFromContainingScene();
+					ContainingScene = parentScene.scene;
+					AddToContainingScene();
+				}
 			}
 		}
 	}
@@ -126,6 +135,49 @@ public class UnityPickable : MonoBehaviour {
 	}
 	public void Select() {
 		UpdateGizmo(true);
+	}
+
+	public void OnDestroy() {
+		RemoveFromContainingScene();
+	}
+
+	void RemoveFromContainingScene() {
+		if (ContainingScene != null && pickable != null) {
+			if (pickable is Frise) {
+				if (ContainingScene.FRISE != null) {
+					var matchingActors = ContainingScene.FRISE.Where(a => a == pickable).ToList();
+					if (matchingActors != null && matchingActors.Any()) {
+						foreach (var act in matchingActors)
+							ContainingScene.FRISE.Remove(act);
+					}
+				}
+			}
+			if (pickable is Actor) {
+				if (ContainingScene.ACTORS != null) {
+					var matchingActors = ContainingScene.ACTORS.Where(a => a.obj == pickable).ToList();
+					if (matchingActors != null && matchingActors.Any()) {
+						foreach (var act in matchingActors)
+							ContainingScene.ACTORS.Remove(act);
+					}
+				}
+			}
+		}
+	}
+
+	void AddToContainingScene() {
+		if (ContainingScene != null && pickable != null) {
+			if (pickable is Frise f) {
+				if (ContainingScene.FRISE == null) ContainingScene.FRISE = new CListO<Frise>();
+				if (!ContainingScene.FRISE.Contains(f)) {
+					ContainingScene.FRISE.Add(f);
+				}
+			} else if (pickable is Actor a) {
+				if (ContainingScene.ACTORS == null) ContainingScene.ACTORS = new CArrayO<Generic<Actor>>();
+				if (!ContainingScene.ACTORS.Any(act => act?.obj == a)) {
+					ContainingScene.ACTORS.Add(new Generic<Actor>(a));
+				}
+			}
+		}
 	}
 
 	void CreateMesh() {
