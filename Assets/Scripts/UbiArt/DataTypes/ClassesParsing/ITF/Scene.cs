@@ -28,6 +28,41 @@ namespace UbiArt.ITF {
 			return false;
 		}
 
+		public void DeletePickable(Pickable pickable) {
+			if (pickable is Frise) {
+				if (FRISE != null) {
+					var matchingActors = FRISE.Where(a => a == pickable).ToList();
+					if (matchingActors != null && matchingActors.Any()) {
+						foreach (var act in matchingActors)
+							FRISE.Remove(act);
+					}
+				}
+				if (FRISE_ORIGINS != null) {
+					var matchingActors = FRISE_ORIGINS.Where(a => a.obj == pickable).ToList();
+					if (matchingActors != null && matchingActors.Any()) {
+						foreach (var act in matchingActors)
+							FRISE_ORIGINS.Remove(act);
+					}
+				}
+			}
+			if (pickable is Actor) {
+				if (ACTORS != null) {
+					var matchingActors = ACTORS.Where(a => a.obj == pickable).ToList();
+					if (matchingActors != null && matchingActors.Any()) {
+						foreach (var act in matchingActors)
+							ACTORS.Remove(act);
+					}
+				}
+				if (ACTORS_ORIGINS != null) {
+					var matchingActors = ACTORS_ORIGINS.Where(a => a.obj == pickable).ToList();
+					if (matchingActors != null && matchingActors.Any()) {
+						foreach (var act in matchingActors)
+							ACTORS_ORIGINS.Remove(act);
+					}
+				}
+			}
+		}
+
 
 		protected override void OnPreSerialize(CSerializerObject s) {
 			base.OnPreSerialize(s);

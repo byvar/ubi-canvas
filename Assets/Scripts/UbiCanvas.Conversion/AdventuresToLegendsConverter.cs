@@ -560,6 +560,16 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
+						var fadeFog = scene.FindPickables(a => 
+						a.USERFRIENDLY == "FadeFog" 
+						|| a.USERFRIENDLY == "FadeFog@10" 
+						|| a.USERFRIENDLY == "FadeFog@11"); // Why do these 3 not have fade triggers?
+						foreach (var f in fadeFog) {
+							f.ContainingScene.DeletePickable(f.Result);
+						}
+						break;
+					}
 			}
 		}
 

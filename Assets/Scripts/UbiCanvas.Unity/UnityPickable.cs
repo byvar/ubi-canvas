@@ -143,24 +143,7 @@ public class UnityPickable : MonoBehaviour {
 
 	void RemoveFromContainingScene() {
 		if (ContainingScene != null && pickable != null) {
-			if (pickable is Frise) {
-				if (ContainingScene.FRISE != null) {
-					var matchingActors = ContainingScene.FRISE.Where(a => a == pickable).ToList();
-					if (matchingActors != null && matchingActors.Any()) {
-						foreach (var act in matchingActors)
-							ContainingScene.FRISE.Remove(act);
-					}
-				}
-			}
-			if (pickable is Actor) {
-				if (ContainingScene.ACTORS != null) {
-					var matchingActors = ContainingScene.ACTORS.Where(a => a.obj == pickable).ToList();
-					if (matchingActors != null && matchingActors.Any()) {
-						foreach (var act in matchingActors)
-							ContainingScene.ACTORS.Remove(act);
-					}
-				}
-			}
+			ContainingScene.DeletePickable(pickable);
 		}
 	}
 
