@@ -48,7 +48,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("umbrella/classic/", "umbrella/adv/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/"));
-
+				//conversionSettings.PathConversionRules.Add(
+				//	new PathConversionRule("world/common/friendly/lumschain/components/lumschain.tpl", "world/common/friendly/lumschain/components/lumschain_adv.tpl"));
 				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/textures/fireworks/", "world/common/fx/textures/fireworks_adv/"));
 				conversionSettings.PathConversionRules.Add(
@@ -67,8 +68,7 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/fx/textures/", "world/common/fx/textures_adv/"));
 				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/textures_adv/smoke/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));*/
-				// TODO: Find a solution for the ParticleGenerator "meshes" not being supported in RL
-
+				
 				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/", "world/common/fx_/"));*/
 				/*conversionSettings.PathConversionRules.Add(
@@ -82,6 +82,7 @@ namespace UbiCanvas.Conversion {
 			}
 
 			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
+			//FixAllLumsChainSpawnMode(mainContext, settings, Controller.Obj.MainScene.obj);
 			LevelSpecificChanges(mainContext, settings, Controller.Obj.MainScene.obj);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
@@ -542,23 +543,125 @@ namespace UbiCanvas.Conversion {
 			var scenePath = l.Paths[loadedScene.Key];
 
 			switch (scenePath.FullPath) {
-				case "world/rlc_dojo/festivalofspeed/dojo_festivalofspeed_nmi.isc":
-				{
-					var pickableTree = new PickableTree(scene);
-					var ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("chainrope_attach_zipline"));
-					foreach (var z in ziplines) {
-						var link = z.Result.GetComponent<LinkComponent>();
-						if (link == null) continue;
-						var ziplineTarget = link.Children[0].Path;
+				case "world/rlc_dojo/festivalofspeed/dojo_festivalofspeed_nmi.isc": {
+						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
+						break;
+					}
+				case "world/rlc_dojo/iseethelight/dojo_iseethelight_lum_base.isc": {
+						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 
-						var targetNode = pickableTree.FollowObjectPath(z.Path, ziplineTarget);
-						if (targetNode.Pickable.POS2D.x < z.Result.POS2D.x) { // Zipline goes left
-							ZiplineToRope(oldContext, newSettings, z.Result);
+						// Fix ungrabbable lum chains
+						List<string> userFriendly = new List<string>() {
+							"lumschain@2", "lumschain@4","lumschain@5", // 3 combined lum chains
+							"lumschain", "lumschain@6", "lumschain@8", "lumschain@9", "lumschain@10", "lumschain@11", "lumschain@12", "lumschain@13", // At end
+						};
+						foreach (var lc in userFriendly) {
+							FixOneLumsChainSpawnMode(oldContext, newSettings, scene.FindActor(a => a.USERFRIENDLY == lc).Result);
+						}
+						break;
+					}
+			}
+		}
+
+		public void ZiplineToRope_OnlyLeft(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			var pickableTree = new PickableTree(scene);
+			var ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("chainrope_attach_zipline"));
+			foreach (var z in ziplines) {
+				var link = z.Result.GetComponent<LinkComponent>();
+				if (link == null) continue;
+				var ziplineTarget = link.Children[0].Path;
+
+				var targetNode = pickableTree.FollowObjectPath(z.Path, ziplineTarget);
+				if (targetNode.Pickable.POS2D.x < z.Result.POS2D.x) { // Zipline goes left
+					ZiplineToRope(oldContext, newSettings, z.Result);
+				}
+			}
+		}
+		public void TriggerAllLumChains(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			var lumChains = scene.FindActors(a => a.LUA?.FullPath == "world/common/friendly/lumschain/components/lumschain.tpl");
+			foreach (var lc in lumChains) {
+				var containingScene = lc.ContainingScene;
+				var lcActor = lc.Result;
+				var bezier = lcActor.GetComponent<RO2_BezierTreeComponent>();
+				var firstPos = bezier.branch.nodes.FirstOrDefault().pos;
+				List<Vec3d> positions = new List<Vec3d>();
+				Vec3d curPos = Vec3d.Zero;
+				foreach (var node in bezier.branch.nodes) {
+					curPos = curPos + node.pos;
+					positions.Add(curPos);
+				}
+				var chain = lcActor.GetComponent<RO2_LumsChainComponent>();
+				var minX = positions.Min(n => n.x) * lcActor.SCALE.x + lcActor.POS2D.x;
+				var minY = positions.Min(n => n.y) * lcActor.SCALE.y + lcActor.POS2D.y;
+				var maxX = positions.Max(n => n.x) * lcActor.SCALE.x + lcActor.POS2D.x;
+				var maxY = positions.Max(n => n.y) * lcActor.SCALE.y + lcActor.POS2D.y;
+				var trigger = new Actor() {
+					USERFRIENDLY = "trigger_box_once",
+					LUA = new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"),
+					POS2D = new Vec2d((maxX - minX) / 2f, (maxY - minY) / 2f),
+					SCALE = new Vec2d((maxX - minX) + 1f, (maxY - minY) + 1f),
+				};
+				var l = trigger.AddComponent<LinkComponent>();
+				l.Children = new CListO<ChildEntry>() {
+					new ChildEntry() {
+						Path = new ObjectPath() {
+							id = lcActor.USERFRIENDLY
+						},
+						TagValues = new CListO<TagValue>() {
+							new TagValue() {
+								Tag = new StringID(0x099FC5CF),
+								Value = "0.5"
+							}
 						}
 					}
-				}
-				break;
+				};
+				var pdc = trigger.AddComponent<PlayerDetectorComponent>();
+				pdc.useShapeTransform = false;
+				var t = trigger.AddComponent<TriggerComponent>();
+				t.mode = TriggerComponent.Mode.Multiple;
+				containingScene.AddActor(trigger, trigger.USERFRIENDLY);
+				oldContext?.SystemLogger?.LogInfo($"Added trigger: {trigger.USERFRIENDLY}");
 			}
+		}
+
+		public void FixAllLumsChainSpawnMode(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			var lumChains = scene.FindActors(a => a.GetComponent<RO2_LumsChainComponent>()?.spawnMode == RO2_LumsChainComponent.SpawnMode.StartSpawned_Begin_Delayed);
+			foreach (var lc in lumChains) {
+				var containingScene = lc.ContainingScene;
+				var lcActor = lc.Result;
+				var bezier = lcActor.GetComponent<RO2_BezierTreeComponent>();
+				/*bool hasTween = false;
+				foreach (var node in bezier.branch.nodes) {
+					if (node.tween?.value != null) {
+						hasTween = true;
+						break;
+					}
+				}
+				if(hasTween) continue;*/
+
+				var chain = lcActor.GetComponent<RO2_LumsChainComponent>();
+				if (chain.trajectory == RO2_LumsChainComponent.Trajectory.GoToTheEnd) {
+					chain.spawnMode = RO2_LumsChainComponent.SpawnMode.StartSpawned_Begin;
+					chain.trajectory = RO2_LumsChainComponent.Trajectory.FollowChain;
+				}
+			}
+		}
+		public void FixOneLumsChainSpawnMode(Context oldContext, Settings newSettings, Actor act) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			var chain = act.GetComponent<RO2_LumsChainComponent>();
+			chain.spawnMode = RO2_LumsChainComponent.SpawnMode.StartSpawned_Begin;
+			chain.trajectory = RO2_LumsChainComponent.Trajectory.FollowChain;
 		}
 
 		public void AllZiplinesToRopes(Context oldContext, Settings newSettings, ConversionSettings conversionSettings) {
@@ -595,6 +698,7 @@ namespace UbiCanvas.Conversion {
 
 			var ogTPLPath = act.LUA;
 			var newTPLPath = new Path(act.LUA.FullPath.Replace("chainrope_attach_zipline.tpl", "chainrope_attach_ziprope.tpl"));
+			act.LUA = newTPLPath;
 			if (!actorTemplates.ContainsKey(newTPLPath.stringID)) {
 				var newTPL = new GenericFile<Actor_Template>(act.template.obj.Clone("tpl") as Actor_Template);
 				newTPL.sizeOf = act.template.sizeOf;
@@ -605,9 +709,25 @@ namespace UbiCanvas.Conversion {
 
 				var rope = newTPL.obj.GetComponent<RopeComponent_Template>();
 				if (rope != null) {
-					// TODO: Change game material sound, change texture so you can distinguish ropes from ziplines
+					// TODO: Change game material sound
 					rope.gameMaterial = new Path("gamematerial/basicliana_h.gmt");
 					rope.cutSectionGameMaterial = rope.gameMaterial;
+
+					// Change texture so you can distinguish ropes from ziplines
+					rope.bezierRenderer.material.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope.tga");
+					rope.bezierRenderer.material.textureSet.back_light = new Path("world/common/platform/rope/texture/rope_back.tga");
+					rope.bezierRenderer.beginLength = 0.05f;
+					rope.bezierRenderer.endLength = 0.1f;
+					rope.bezierRenderer.beginWidth = 0.7f;
+					rope.bezierRenderer.midWidth = 0.7f;
+					rope.bezierRenderer.endWidth = 0.7f;
+					rope.bezierRenderer.tileLength = 5.6f;
+					rope.bezierRenderer.tessellationLength = 0.3f;
+					rope.bezierRenderer.divMode = BezierCurveRenderer_Template.BezierDivMode.Fix82;
+					rope.beginMaterial.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope_extremity_01.tga");
+					rope.beginMaterial.textureSet.back_light = new Path("world/common/platform/rope/texture/rope_extremity_01_back.tga");
+					rope.endMaterial.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope_extremity_02.tga");
+					rope.endMaterial.textureSet.back_light = new Path("world/common/platform/rope/texture/rope_extremity_02_back.tga");
 				}
 			}
 		}

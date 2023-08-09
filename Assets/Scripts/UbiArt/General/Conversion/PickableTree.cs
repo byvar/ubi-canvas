@@ -65,9 +65,9 @@ namespace UbiArt {
 				if (path.levels != null && levelsProcessed < path.levels.Count) {
 					var curLevel = path.levels[levelsProcessed];
 					if(curLevel.parent)
-						return Parent;
+						return Parent.GetNodeWithObjectPath(path, levelsProcessed: levelsProcessed + 1);
 					if (Children.TryGetValue(curLevel.name, out Node levelNode)) {
-						return levelNode.GetNodeWithObjectPath(path, levelsProcessed: levelsProcessed+1);
+						return levelNode.GetNodeWithObjectPath(path, levelsProcessed: levelsProcessed + 1);
 					} else {
 						throw new KeyNotFoundException($"Could not resolve ObjectPath with level name {curLevel.name}");
 					}
