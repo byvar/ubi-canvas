@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 		public int debug;
 		public float disappearSequenceDialogDuration;
 		public float appearSequenceDuration;
-		public Enum_appearSequenceTravelType appearSequenceTravelType;
+		public AccelType appearSequenceTravelType;
 		public StringID appearSequenceFXName;
 		public Vec2d appearSequenceDestPosOffset;
 		public StringID appearSequenceFXPosBoneName;
@@ -112,7 +112,7 @@ namespace UbiArt.ITF {
 			debug = s.Serialize<int>(debug, name: "debug");
 			disappearSequenceDialogDuration = s.Serialize<float>(disappearSequenceDialogDuration, name: "disappearSequenceDialogDuration");
 			appearSequenceDuration = s.Serialize<float>(appearSequenceDuration, name: "appearSequenceDuration");
-			appearSequenceTravelType = s.Serialize<Enum_appearSequenceTravelType>(appearSequenceTravelType, name: "appearSequenceTravelType");
+			appearSequenceTravelType = s.Serialize<AccelType>(appearSequenceTravelType, name: "appearSequenceTravelType");
 			appearSequenceFXName = s.SerializeObject<StringID>(appearSequenceFXName, name: "appearSequenceFXName");
 			appearSequenceDestPosOffset = s.SerializeObject<Vec2d>(appearSequenceDestPosOffset, name: "appearSequenceDestPosOffset");
 			appearSequenceFXPosBoneName = s.SerializeObject<StringID>(appearSequenceFXPosBoneName, name: "appearSequenceFXPosBoneName");
@@ -124,16 +124,16 @@ namespace UbiArt.ITF {
 			forceMoveWaitingDurationMax = s.Serialize<float>(forceMoveWaitingDurationMax, name: "forceMoveWaitingDurationMax");
 			murphyFlipOnTouchRadius = s.Serialize<float>(murphyFlipOnTouchRadius, name: "murphyFlipOnTouchRadius");
 		}
-		public enum Enum_appearSequenceTravelType {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-			[Serialize("Value_5")] Value_5 = 5,
-			[Serialize("Value_6")] Value_6 = 6,
-			[Serialize("Value_7")] Value_7 = 7,
-			[Serialize("Value_8")] Value_8 = 8,
+		public enum AccelType {
+			[Serialize("AccelType_Linear")] Linear = 0,
+			[Serialize("AccelType_X2"    )] X2 = 1,
+			[Serialize("AccelType_X3"    )] X3 = 2,
+			[Serialize("AccelType_X4"    )] X4 = 3,
+			[Serialize("AccelType_X5"    )] X5 = 4,
+			[Serialize("AccelType_InvX2" )] InvX2 = 5,
+			[Serialize("AccelType_InvX3" )] InvX3 = 6,
+			[Serialize("AccelType_InvX4" )] InvX4 = 7,
+			[Serialize("AccelType_InvX5" )] InvX5 = 8,
 		}
 		public override uint? ClassCRC => 0xC9214390;
 	}

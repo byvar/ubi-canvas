@@ -342,19 +342,6 @@ namespace UbiArt.ITF {
 			[Serialize("RECEIVEDHITTYPE_EARTHQUAKE" )] EARTHQUAKE = 6,
 			[Serialize("RECEIVEDHITTYPE_SHOOTER"    )] SHOOTER = 7,
 		}
-		public enum Enum_ballMode_ShotBasic {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-			[Serialize("Value_4")] Value_4 = 4,
-		}
-		public enum Enum_ballMode_Pass {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-		}
 		public override uint? ClassCRC => 0xEB75D38E;
 	}
 }

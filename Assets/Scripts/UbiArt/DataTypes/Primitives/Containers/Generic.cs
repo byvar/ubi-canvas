@@ -108,9 +108,11 @@ namespace UbiArt {
 									newBT.animRun = btDash.animDash;
 									newBT.animEndRun = btDash.animEndDash;
 									newBT.animAnticip = btDash.animAnticip;
+									//newBT.animAnticip = btDash.animDash;
 									newBT.animHitWall = btDash.animHitWall;
 									newBT.animHoleStop = btDash.animHoleStop;
 									newBT.distMaxCharge = btDash.distMaxCharge;
+									newBT.timePatinage = 0.5f;
 									newBT.name = btDash.name;
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);

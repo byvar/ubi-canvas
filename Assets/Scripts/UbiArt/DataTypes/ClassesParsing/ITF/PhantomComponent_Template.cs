@@ -4,7 +4,7 @@
 			base.Convert(actor, oldSettings, newSettings);
 			if (oldSettings.game != newSettings.game) {
 				if (oldSettings.game == Settings.Game.RA || oldSettings.game == Settings.Game.RM) {
-					collisionGroup = (Enum_collisionGroup)collisionGroup2;
+					collisionGroup = (ECOLLISIONGROUP)collisionGroup2;
 				} else {
 					collisionGroup2 = (uint)collisionGroup;
 				}

@@ -7,12 +7,12 @@ namespace UbiArt.ITF {
 		public uint loop;
 		public Path amvPath;
 		public uint useUVRandom;
-		public int animstart;
-		public int animend;
+		public int animstart = -1;
+		public int animend = -1;
 		public StringID animname;
 		public float AnimUVfreq = 1f;
 		public ParticleGeneratorParameters _params;
-		public DeviceInfo__Device_Speed ObjectDeviceSpeed;
+		public DeviceInfo__Device_Speed ObjectDeviceSpeed = (DeviceInfo__Device_Speed)(-1);
 		public PARGEN_ZSORT zSortMode;
 		public bool is2D;
 		public uint phaseLoopStartIndex;

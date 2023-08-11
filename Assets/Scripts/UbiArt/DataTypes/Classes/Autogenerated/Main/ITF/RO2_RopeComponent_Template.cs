@@ -184,17 +184,6 @@ namespace UbiArt.ITF {
 			[Serialize("CutFade_Begin")] Begin = 2,
 			[Serialize("CutFade_End"  )] End = 3,
 		}
-		public enum Enum_precision {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-		}
-		public enum Enum_fullDisappearOnCut {
-			[Serialize("Value_0")] Value_0 = 0,
-			[Serialize("Value_1")] Value_1 = 1,
-			[Serialize("Value_2")] Value_2 = 2,
-			[Serialize("Value_3")] Value_3 = 3,
-		}
 		public override uint? ClassCRC => 0x7559AA65;
 	}
 }
