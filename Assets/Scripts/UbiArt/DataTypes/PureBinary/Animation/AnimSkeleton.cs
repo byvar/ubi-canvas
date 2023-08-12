@@ -101,6 +101,17 @@ namespace UbiArt.Animation {
 				return boneTags.IndexOf(tag);
 			}
 		}
+		public int GetBoneIndexFromTag2(StringID tag) {
+			if (UbiArtContext.Settings.game == Settings.Game.RA || UbiArtContext.Settings.game == Settings.Game.RM) {
+				if (boneTags2Adv.Any(b => tag.stringID == b)) {
+					return boneTags2Adv.IndexOf(boneTags2Adv.First(b => tag.stringID == b));
+				} else {
+					return -1;
+				}
+			} else {
+				return boneTags2.IndexOf(tag);
+			}
+		}
 
 		public List<int> GetRootIndices() {
 			List<int> rootIndices = new List<int>();

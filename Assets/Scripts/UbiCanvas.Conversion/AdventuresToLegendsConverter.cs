@@ -84,6 +84,7 @@ namespace UbiCanvas.Conversion {
 			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
 			//FixAllLumsChainSpawnMode(mainContext, settings, Controller.Obj.MainScene.obj);
 			LevelSpecificChanges(mainContext, settings, Controller.Obj.MainScene.obj);
+			FixNinjas(mainContext, settings, Controller.Obj.MainScene.obj);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			DuplicateActorTemplatesForStartPaused(mainContext);
@@ -573,6 +574,28 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public void FixNinjas(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates == null) return;
+
+			foreach (var tplPair in actorTemplates) {
+				var tpl = tplPair.Value as GenericFile<Actor_Template>;
+				if (tpl?.obj == null) continue;
+				var animatedComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
+				if (animatedComponent == null) continue;
+				if(animatedComponent?.animSet?.animations == null) continue;
+				var anticip = animatedComponent.animSet.animations.FirstOrDefault(a => a.friendlyName?.stringID == 0xFE5F88A2);
+				if (anticip != null) anticip.loop = false;
+				var endDash = animatedComponent.animSet.animations.FirstOrDefault(a => a.friendlyName?.stringID == 0xAFC27BAE);
+				if(endDash != null) endDash.loop = false;
+			}
+
+		}
 		public void ZiplineToRope_OnlyLeft(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
 			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;

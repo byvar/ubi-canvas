@@ -4,7 +4,7 @@ namespace UbiArt.Animation {
 		public CListO<AnimPolylinePoint> points;
 		public KeyArray<int> keys;
 		public StringID name;
-		public bool unk;
+		public bool loop;
 		public uint unk2;
 
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -12,7 +12,7 @@ namespace UbiArt.Animation {
 			points = s.SerializeObject<CListO<AnimPolylinePoint>>(points, name: "points");
 			keys = s.SerializeObject<KeyArray<int>>(keys, name: "keys");
 			name = s.SerializeObject<StringID>(name, name: "name");
-			unk = s.Serialize<bool>(unk, name: "unk");
+			loop = s.Serialize<bool>(loop, name: "loop");
 			unk2 = s.Serialize<uint>(unk2, name: "unk2");
 		}
 	}
