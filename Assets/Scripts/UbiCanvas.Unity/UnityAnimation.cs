@@ -23,6 +23,7 @@ public class UnityAnimation : MonoBehaviour {
 	public SkinnedMeshRenderer[] patchRenderers;
 	public bool playAnimation = true;
 	public bool DisplayPolylines;
+	public bool DisplayInactivePolylines;
 	public float animationSpeed = 30f;
 	public int zValue = 0;
 	bool loaded = false;
@@ -64,13 +65,14 @@ public class UnityAnimation : MonoBehaviour {
 		if ((skeleton?.bank?.value?.polylines?.Count ?? 0) > 0) {
 			foreach (var l in skeleton?.bank?.value?.polylines) {
 				var lr = new GameObject($"Polyline {l.name}").AddComponent<LineRenderer>();
+				lr.material = new Material(FindObjectOfType<FriseEditorBehaviour>().lineMaterial);
 				lr.positionCount = l.points.Count;
 				lr.loop = l.loop;
 
 				lr.useWorldSpace = false;
 				lr.widthMultiplier = 0.15f;
 				lr.sortingLayerName = "Gizmo-Line";
-				var color = UnityEngine.Color.white;
+				var color = UnityEngine.Color.green;
 				lr.material.color = color;
 				lr.startColor = color;
 				lr.endColor = color;
@@ -87,14 +89,32 @@ public class UnityAnimation : MonoBehaviour {
 	public void UpdateLines() {
 		if(linesGao != null) linesGao.SetActive(DisplayPolylines);
 		if (DisplayPolylines) {
-			if(animTrack?.polylines?.Count > 0 && (skeleton?.bank?.value?.polylines?.Count ?? 0) > 0) {
-				var lastPolyLineList = animTrack.polylines.LastOrDefault(p => p.frame <= currentFrame);
-				if (lastPolyLineList != null) {
-					foreach (var l in lastPolyLineList.entries) {
-						var lr = lines[l];
-						if (!lr.gameObject.activeSelf) lr.gameObject.SetActive(true);
-						// Update line positions here
-						var polyline = skeleton?.bank?.value?.polylines.FirstOrDefault(pl => pl.name == l);
+			if((skeleton?.bank?.value?.polylines?.Count ?? 0) > 0) {
+				AnimTrackPolyline lastPolyLineList = null;
+				if (animTrack?.polylines?.Count > 0) {
+					lastPolyLineList = animTrack.polylines.LastOrDefault(p => p.frame <= currentFrame);
+				}
+				foreach (var l in lines) {
+					var lr = l.Value;
+					var gao = lr.gameObject;
+					if (lastPolyLineList?.entries.Contains(l.Key) ?? false) {
+						var color = UnityEngine.Color.green;
+						lr.material.color = color;
+						lr.startColor = color;
+						lr.endColor = color;
+						if (gao.activeSelf != true) gao.SetActive(true);
+					} else {
+						if (DisplayInactivePolylines) {
+							var color = UnityEngine.Color.red;
+							lr.material.color = color;
+							lr.startColor = color;
+							lr.endColor = color;
+						}
+						if (gao.activeSelf != DisplayInactivePolylines) gao.SetActive(DisplayInactivePolylines);
+					}
+					if (DisplayInactivePolylines || (lastPolyLineList?.entries.Contains(l.Key) ?? false)) {
+						var polyline = skeleton?.bank?.value?.polylines.FirstOrDefault(pl => pl.name == l.Key);
+
 						var positions = polyline.points.Select(point => {
 							var boneName = point.name;
 							var boneIndex = skeleton.GetBoneIndexFromTag2(boneName);
@@ -106,11 +126,7 @@ public class UnityAnimation : MonoBehaviour {
 							return Vector3.zero;
 						});
 						lr.SetPositions(positions.ToArray());
-
-					}
-				} else {
-					foreach (var l in lines) {
-						if (!l.Value.gameObject.activeSelf) l.Value.gameObject.SetActive(false);
+						lr.numCornerVertices = 5;
 					}
 				}
 			}
