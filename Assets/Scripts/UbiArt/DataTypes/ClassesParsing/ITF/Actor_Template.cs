@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 						// Check components, remove all that don't have the right gameflags
 						for (int i = 0; i < COMPONENTS.Count; i++) {
 							var compobj = COMPONENTS[i].obj;
-							var newobj = compobj?.Convert(this, previousSettings, settings);
+							var newobj = compobj?.Convert(c, this, previousSettings, settings);
 							if (newobj != compobj) {
 								if (newobj == null) {
 									RemovedComponents.Add(COMPONENTS[i]);

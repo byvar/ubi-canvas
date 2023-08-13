@@ -21,7 +21,6 @@ namespace UbiArt.ITF {
 		public SoundGUID deathEvent;
 		public SoundGUID onEnterZone;
 		public SoundGUID onExitZone;
-		public bool soundPlayAfterDestroy;
 		public LimiterDef.LimiterMode limitModeEnum = LimiterDef.LimiterMode.StopOldest;
 		public int isPrefetched;
 		public CListO<LocalizedPath> localizedFiles;
@@ -84,7 +83,7 @@ namespace UbiArt.ITF {
 				deathEvent = s.SerializeObject<SoundGUID>(deathEvent, name: "deathEvent");
 				onEnterZone = s.SerializeObject<SoundGUID>(onEnterZone, name: "onEnterZone");
 				onExitZone = s.SerializeObject<SoundGUID>(onExitZone, name: "onExitZone");
-				soundPlayAfterDestroy = s.Serialize<bool>(soundPlayAfterDestroy, name: "soundPlayAfterDestroy", options: CSerializerObject.Options.BoolAsByte);
+				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterDestroy", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");
