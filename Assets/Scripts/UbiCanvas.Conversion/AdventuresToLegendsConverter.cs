@@ -587,12 +587,38 @@ namespace UbiCanvas.Conversion {
 				var tpl = tplPair.Value as GenericFile<Actor_Template>;
 				if (tpl?.obj == null) continue;
 				var animatedComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
-				if (animatedComponent == null) continue;
-				if(animatedComponent?.animSet?.animations == null) continue;
-				var anticip = animatedComponent.animSet.animations.FirstOrDefault(a => a.friendlyName?.stringID == 0xFE5F88A2);
-				if (anticip != null) anticip.loop = false;
-				var endDash = animatedComponent.animSet.animations.FirstOrDefault(a => a.friendlyName?.stringID == 0xAFC27BAE);
-				if(endDash != null) endDash.loop = false;
+				if (animatedComponent?.animSet?.animPackage?.skeleton?.FullPath == "world/rlc_dojo/common/enemy/ninja/animation/ninja_squeleton.skl") {
+					if (animatedComponent?.animSet?.animations == null) continue;
+					var anticip = animatedComponent.animSet.animations.FirstOrDefault(a => a.friendlyName?.stringID == 0xFE5F88A2);
+					if (anticip != null) anticip.loop = false;
+					var endDash = animatedComponent.animSet.animations.FirstOrDefault(a => a.friendlyName?.stringID == 0xAFC27BAE);
+					if (endDash != null) endDash.loop = false;
+
+					var poly = tpl.obj.GetComponent<PolylineComponent_Template>();
+					// Danger polylines
+					poly.polylineParams.Add(new PolylineParameters() {
+						sizeOf = 240,
+						environment = true,
+						usePhantom = false,
+						gameMaterial = new Path("gamematerial/enemy_danger.gmt"),
+						polylines = new CListO<StringID>() {
+							//new StringID(0xCD8DBD3C), // Hit
+							new StringID(0x74B9C0D0), // Dash - inner
+							new StringID(0x2A16222C) // Dash - outer
+						}
+					});
+					// Ignored polylines
+					poly.polylineParams.Add(new PolylineParameters() {
+						sizeOf = 240,
+						environment = false,
+						usePhantom = false,
+						polylines = new CListO<StringID>() {
+							new StringID(0xCD8DBD3C), // Hit
+							//new StringID(0x74B9C0D0), // Dash - inner
+							//new StringID(0x2A16222C) // Dash - outer
+						}
+					});
+				}
 			}
 
 		}

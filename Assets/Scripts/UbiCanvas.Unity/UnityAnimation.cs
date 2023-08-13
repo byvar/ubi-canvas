@@ -70,7 +70,7 @@ public class UnityAnimation : MonoBehaviour {
 				lr.loop = l.loop;
 
 				lr.useWorldSpace = false;
-				lr.widthMultiplier = 0.15f;
+				lr.widthMultiplier = 0.03f;
 				lr.sortingLayerName = "Gizmo-Line";
 				var color = UnityEngine.Color.green;
 				lr.material.color = color;
