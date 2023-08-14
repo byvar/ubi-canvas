@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 						if (c.HasSettings<ConversionSettings>()) {
 							var conv = c.GetSettings<ConversionSettings>();
 							if (conv.WwiseConversionSettings != null) {
-								conv.WwiseConversionSettings.ConvertSoundDescriptor(this);
+								//conv.WwiseConversionSettings.ConvertSoundDescriptor(this);
 							}
 						}
 					}

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace UbiArt.ITF {
 	public partial class SoundComponent_Template {
@@ -14,9 +15,19 @@ namespace UbiArt.ITF {
 						if (context.HasSettings<ConversionSettings>()) {
 							var conv = context.GetSettings<ConversionSettings>();
 							if (conv.WwiseConversionSettings != null) {
-								var newSounds = soundList.SelectMany(s => conv.WwiseConversionSettings.CreateSoundDescriptorsFromWwiseDescriptor(s));
+								var newSounds = soundList.SelectMany(s => conv.WwiseConversionSettings.CreateSoundDescriptorsFromWwiseDescriptor(s)).ToList();
 								foreach (var s in newSounds) {
-									soundList.Add(s);
+									if (!soundList.Any(snd => snd.name == s.name)) soundList.Add(s);
+								}
+								var fxComponent = actor.GetComponent<FXControllerComponent_Template>();
+								if (fxComponent != null) {
+									foreach (var fx in fxComponent.fxControlList) {
+										if (fx.sounds != null && fx.sounds.Any()) {
+											var soundDescs = fx.sounds.Select(sid => soundList.FirstOrDefault(s => s.name == sid));
+											var newNames = soundDescs.SelectMany(s => s == null ? new List<SoundDescriptor_Template>() : conv.WwiseConversionSettings.CreateSoundDescriptorsFromWwiseDescriptor(s)).Select(s => s.name);
+											fx.sounds = new CListO<StringID>(newNames.ToList());
+										}
+									}
 								}
 							}
 						}

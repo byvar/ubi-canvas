@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 							if (conv.WwiseConversionSettings != null) {
 								var newSounds = soundList.SelectMany(s => conv.WwiseConversionSettings.CreateSoundDescriptorsFromWwiseDescriptor(s));
 								foreach (var s in newSounds) {
-									soundList.Add(s);
+									if(!soundList.Any(snd => snd.name == s.name)) soundList.Add(s);
 								}
 							}
 						}

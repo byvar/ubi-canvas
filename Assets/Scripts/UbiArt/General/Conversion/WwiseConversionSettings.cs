@@ -52,7 +52,7 @@ namespace UbiArt {
 			foreach (var act in ev.Actions) {
 				if(act.IsStop) continue;
 				var newTPL = new SoundDescriptor_Template() {
-					name = new StringID($"{act.ID}"),
+					name = new StringID((uint)act.ID),
 					maxInstances = 5, // or leave it be
 					_params = GetParams(act),
 					WwiseEventGUID = null, // Mark as processed

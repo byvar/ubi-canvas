@@ -17,6 +17,7 @@ namespace UbiArt.Animation {
 			public StringID name;
 			public uint eventData0;
 			public float eventData1;
+			public StringID polyline;
 
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
@@ -36,7 +37,7 @@ namespace UbiArt.Animation {
 						}
 						break;
 					case 4: // AnimPolylineEvent
-						eventData0 = s.Serialize<uint>(eventData0, name: "eventData0");
+						polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 						break;
 					case 5: // AnimPartitionEvent
 						eventData1 = s.Serialize<float>(eventData1, name: "eventData1");

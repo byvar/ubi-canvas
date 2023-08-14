@@ -505,9 +505,15 @@ namespace UbiCanvas.Conversion {
 			wwiseInfo = JsonConvert.DeserializeObject<JSON_WwiseInfo>(json);
 
 			// Create dictionaries for better performance
-			Dictionary<long, JSON_WwiseEvent> wwiseEventsLookup = wwiseInfo.Events.ToDictionary(l => l.ID);
-			Dictionary<long, JSON_WwiseAction> wwiseActionsLookup = wwiseInfo.Actions.ToDictionary(l => l.ID);
+			Dictionary<long, JSON_WwiseEvent> wwiseEventsLookup = new Dictionary<long, JSON_WwiseEvent>();
+			Dictionary<long, JSON_WwiseAction> wwiseActionsLookup = new Dictionary<long, JSON_WwiseAction>();
 			Dictionary<long, WwiseConversionSettings.Action> wwiseActionsClassesLookup = new Dictionary<long, WwiseConversionSettings.Action>();
+			foreach (var ev in wwiseInfo.Events) {
+				wwiseEventsLookup[ev.ID] = ev;
+			}
+			foreach (var act in wwiseInfo.Actions) {
+				wwiseActionsLookup[act.ID] = act;
+			}
 
 			var conversionSettings = new WwiseConversionSettings();
 
@@ -526,7 +532,7 @@ namespace UbiCanvas.Conversion {
 					ExtID = entry.Value.ExtID,
 					IsLoop = entry.Value.IsLoop,
 					IsStop = entry.Value.IsStop,
-					Bus = wwiseBusItem.name,
+					Bus = wwiseBusItem?.name,
 					Sounds = entry.Value.Sounds.Select(s => new WwiseConversionSettings.Sound() {
 						Filename = $"sound/wwise/{s.Filename}"
 					}).ToList()
