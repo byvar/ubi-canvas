@@ -12,6 +12,7 @@ using UbiArt.Animation;
 using UbiArt.ITF;
 using UbiArt.Localisation;
 using UbiCanvas.Conversion.Json;
+using UbiCanvas.Helpers;
 using UnityEngine;
 
 namespace UbiCanvas.Conversion {
@@ -85,6 +86,7 @@ namespace UbiCanvas.Conversion {
 			//FixAllLumsChainSpawnMode(mainContext, settings, Controller.Obj.MainScene.obj);
 			LevelSpecificChanges(mainContext, settings, Controller.Obj.MainScene.obj);
 			FixNinjas(mainContext, settings, Controller.Obj.MainScene.obj);
+			UpdateSoundFXReferences(mainContext, settings, conversionSettings, Controller.Obj.MainScene.obj);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			DuplicateActorTemplatesForStartPaused(mainContext);
@@ -813,6 +815,182 @@ namespace UbiCanvas.Conversion {
 					rope.endMaterial.textureSet.back_light = new Path("world/common/platform/rope/texture/rope_extremity_02_back.tga");
 				}
 			}
+		}
+		public void UpdateSoundFXReferences(Context oldContext, Settings newSettings, ConversionSettings conversionSettings, Scene scene) {
+			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
+			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates != null) {
+				foreach (var tplPair in actorTemplates) {
+					var tpl = tplPair.Value as GenericFile<Actor_Template>;
+					if (tpl?.obj == null) continue;
+					var soundComponent = tpl.obj.GetComponent<SoundComponent_Template>();
+					var fxComponent = tpl.obj.GetComponent<FXControllerComponent_Template>();
+					if(soundComponent?.soundList == null || fxComponent?.fxControlList == null) continue; // Needs a sound component
+					
+					bool hasStop = false;
+					Dictionary<StringID, StringID> StopLinksSndDesc = new Dictionary<StringID, StringID>();
+					Dictionary<StringID, StringID> StopLinksFx = new Dictionary<StringID, StringID>();
+
+					foreach (var fx in fxComponent.fxControlList) {
+						if(fx.sounds == null) continue;
+						foreach (var snd in fx.sounds) {
+							var sndDesc = soundComponent.soundList.FirstOrDefault(s => s?.name == snd);
+							if(sndDesc == null) continue;
+							var wwEventID = sndDesc.WwiseEventGUID;
+							var wwEvent = conversionSettings.WwiseConversionSettings.Events.TryGetItem(wwEventID);
+							if (wwEvent == null) continue;
+
+							foreach (var a in wwEvent.Actions) {
+								if (a.IsStop) {
+									if (StopLinksSndDesc.ContainsKey(sndDesc.name)) continue;
+									var extId = a.ExtID;
+									var firstEventThatThisStops = soundComponent.soundList
+										.FirstOrDefault(s => conversionSettings.WwiseConversionSettings.Events
+										.TryGetItem(s.WwiseEventGUID)?.Actions.Any(ac => !ac.IsStop && ac.ExtID == extId) ?? false);
+									if (firstEventThatThisStops != null) {
+										StopLinksSndDesc[sndDesc.name] = firstEventThatThisStops.name;
+										var firstFXThatThisStops = fxComponent.fxControlList.FirstOrDefault(f => f.sounds.Contains(firstEventThatThisStops.name));
+										if (firstFXThatThisStops != null) {
+											StopLinksFx[fx.name] = firstFXThatThisStops.name;
+										}
+									}
+									hasStop = true;
+									
+								}
+							}
+
+							//hasStop = hasStop | wwEvent.Actions.Any(a => a.IsStop);
+
+
+							//if(hasStop) break;
+						}
+						//if (hasStop) break;
+					}
+					if(!hasStop) continue;
+					if (StopLinksFx.Any()) {
+						/*UnityEngine.Debug.LogWarning($"{oldContext.Loader.Paths[tplPair.Key]}: Has StopLinksFX:");
+						foreach (var fx in StopLinksFx) {
+							UnityEngine.Debug.LogWarning($"{oldContext.Loader.Paths[tplPair.Key]}: {fx.Key}-{fx.Value}");
+						}*/
+						UnityEngine.Debug.LogWarning($"{oldContext.Loader.Paths[tplPair.Key].filename}: Has StopLinksFX");
+					}
+
+					void ProcessInstructionSet(TweenComponent_Template.InstructionSet set) {
+						List<Generic<TweenInstruction_Template>> instructions = new List<Generic<TweenInstruction_Template>>();
+						foreach (var instr in set.instructions) {
+							if (instr?.obj is TweenFX_Template fx) {
+								if (!fx.stop && StopLinksFx.ContainsKey(fx.fx)) {
+									instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+										duration = 0,
+										name = new StringID(),
+										stop = true,
+										fx = StopLinksFx[fx.fx],
+										useLocalInitialPos = fx.useLocalInitialPos,
+										sizeOf = fx.sizeOf
+									}));
+								}
+							}
+							instructions.Add(instr);
+						}
+						set.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
+					}
+					void ProcessInstructionSet2(TweenInstructionSet_Template set) {
+						List<Generic<TweenInstruction_Template>> instructions = new List<Generic<TweenInstruction_Template>>();
+						foreach (var instr in set.instructions) {
+							if (instr?.obj is TweenFX_Template fx) {
+								if (!fx.stop && StopLinksFx.ContainsKey(fx.fx)) {
+									instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+										duration = 0,
+										name = new StringID(),
+										stop = true,
+										fx = StopLinksFx[fx.fx],
+										useLocalInitialPos = fx.useLocalInitialPos,
+										sizeOf = fx.sizeOf
+									}));
+								}
+							}
+							instructions.Add(instr);
+						}
+						set.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
+					}
+					void ProcessTweenComponent_Template(TweenComponent_Template tweenComponent) {
+						if (tweenComponent != null) {
+							// Check for FX
+							var instructionSets = tweenComponent.instructionSets;
+							var preInstructionSets = tweenComponent.preInstructionSets;
+							if (instructionSets != null) {
+								foreach (var set in instructionSets) {
+									ProcessInstructionSet(set);
+								}
+							}
+							if (preInstructionSets != null) {
+								foreach (var set in preInstructionSets) {
+									ProcessInstructionSet(set);
+								}
+							}
+						}
+					}
+
+					var tweenComponent = tpl.obj.GetComponent<TweenComponent_Template>();
+					if (tweenComponent != null) {
+						ProcessTweenComponent_Template(tweenComponent);
+						var sceneActors = scene.FindActors(a => a.template?.obj == tpl.obj && a.GetComponent<TweenComponent>() != null);
+						foreach (var act in sceneActors) {
+							var tween = act.Result.GetComponent<TweenComponent>();
+							if (tween != null) {
+								if (tween?.instanceTemplate?.value != null) {
+									tweenComponent = act.Result.GetComponent<TweenComponent>().instanceTemplate.value;
+									ProcessTweenComponent_Template(tweenComponent);
+								}
+								if (tween.instructionSets != null) {
+									foreach (var set in tween.instructionSets) {
+										var template = tweenComponent.instructionSets.FirstOrDefault(i => i.name == set.name);
+										if (template.instructions.Count > set.instructions.Count) {
+											// We added a new instruction, have to add it here too
+
+											List<Generic<TweenInstruction>> instructions = new List<Generic<TweenInstruction>>();
+											int curInstructionIndex = 0; 
+											foreach (var instr in set.instructions) {
+												var templateInstruction = template.instructions[curInstructionIndex];
+												while (templateInstruction?.obj is TweenFX_Template fxTPL && fxTPL.stop) {
+													instructions.Add(new Generic<TweenInstruction>(new TweenFX() {
+														name = fxTPL.name
+													}));
+													curInstructionIndex++;
+													if(curInstructionIndex >= template.instructions.Count) break;
+													templateInstruction = template.instructions[curInstructionIndex];
+												}
+												if (instr?.obj is TweenFX fx) {
+													if ((fx.target?.levels?.Count ?? 0) != 0 || !string.IsNullOrWhiteSpace(fx.target?.id)) {
+														// ObjectPath is not null
+														//throw new Exception("TweenFX is targeting another object!");
+													}
+												}
+												instructions.Add(instr);
+												curInstructionIndex++;
+											}
+											set.instructions = new CArrayO<Generic<TweenInstruction>>(instructions.ToArray());
+										}
+									}
+								}
+							}
+						}
+					}
+					var bezierTree = tpl.obj.GetComponent<RO2_BezierTreeComponent_Template>();
+					if (bezierTree != null) {
+						// Check for FX
+						var instructionSets = bezierTree.tweenInterpreter?.instructionSets;
+						foreach (var set in instructionSets) {
+							ProcessInstructionSet2(set);
+						}
+					}
+				}
+			}
+
 		}
 		public void DowngradeFxUV(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;

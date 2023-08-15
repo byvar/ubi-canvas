@@ -11,40 +11,49 @@ namespace UbiArt.Animation {
 		}
 
 		public class AnimMarkerEvent : CSerializable {
-			public int type;
+			public AnimMarkerEventType type;
 			public StringID marker;
 			public Vec2d posLocal;
 			public StringID name;
-			public uint eventData0;
+			public bool enableFX;
 			public float eventData1;
 			public StringID polyline;
 
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				type = s.Serialize<int>(type, name: "type");
-				marker = s.SerializeObject<StringID>(marker, name: "marker"); // matches markerStart, markerStop
+				type = s.Serialize<AnimMarkerEventType>(type, name: "type");
+				marker = s.SerializeObject<StringID>(marker, name: "marker"); // matches markerStart, markerStop (in case of AnimationEvent) or FX name (in case of FX event)
 				posLocal = s.SerializeObject<Vec2d>(posLocal, name: "posLocal");
 				name = s.SerializeObject<StringID>(name, name: "name");
 				switch (type) {
-					case 1: // AnimFXEvent
-						eventData0 = s.Serialize<uint>(eventData0, name: "eventData0");
+					case AnimMarkerEventType.AnimFXEvent:
+						enableFX = s.Serialize<bool>(enableFX, name: "enableFX"); // true: FX on, false: FX off
 						break;
-					case 2: // AnimAnimationEvent
+					case AnimMarkerEventType.AnimAnimationEvent:
 						break;
-					case 3: // AnimGameplayEvent
+					case AnimMarkerEventType.AnimGameplayEvent:
 						if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
 							eventData1 = s.Serialize<float>(eventData1, name: "eventData1");
 						}
 						break;
-					case 4: // AnimPolylineEvent
+					case AnimMarkerEventType.AnimPolylineEvent:
 						polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 						break;
-					case 5: // AnimPartitionEvent
+					case AnimMarkerEventType.AnimPartitionEvent:
 						eventData1 = s.Serialize<float>(eventData1, name: "eventData1");
 						break;
 					default:
 						break;
 				}
+			}
+
+			public enum AnimMarkerEventType : uint {
+				None = 0,
+				AnimFXEvent = 1,
+				AnimAnimationEvent = 2,
+				AnimGameplayEvent = 3,
+				AnimPolylineEvent = 4,
+				AnimPartitionEvent = 5,
 			}
 		}
 	}
