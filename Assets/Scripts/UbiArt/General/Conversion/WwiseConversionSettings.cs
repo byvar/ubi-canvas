@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UbiArt.ITF;
 
@@ -37,6 +38,42 @@ namespace UbiArt {
 					}),
 				}
 			};
+
+			// Pitch calculation
+			float pitchMin = 0f, pitchMax = 0f;
+			float CalculateLegendsPitch(float value) => (float)Math.Pow(2, value / 1200f); // wwise pitch is in cents
+			foreach (var prop in action.Properties) {
+				if (prop.Name == "0x02 [Pitch]") {
+					pitchMin = prop.Value;
+					pitchMax = prop.Value;
+				}
+			}
+			foreach (var prop in action.RangedProperties) {
+				if (prop.Name == "0x02 [Pitch]") {
+					pitchMin += prop.Min;
+					pitchMax += prop.Max;
+				}
+			}
+			sp.randomPitchMin = CalculateLegendsPitch(pitchMin);
+			sp.randomPitchMax = CalculateLegendsPitch(pitchMax);
+
+			// Volume calculation
+			float volMin = 0f, volMax = 0f;
+
+			foreach (var prop in action.Properties) {
+				if (prop.Name == "0x00 [Volume]") {
+					volMin = prop.Value;
+					volMax = prop.Value;
+				}
+			}
+			foreach (var prop in action.RangedProperties) {
+				if (prop.Name == "0x00 [Volume]") {
+					volMin += prop.Min;
+					volMax += prop.Max;
+				}
+			}
+			sp.randomVolMin = new Volume(volMin);
+			sp.randomVolMax = new Volume(volMax);
 			return sp;
 		}
 
@@ -116,9 +153,20 @@ namespace UbiArt {
 			public bool IsStop { get; set; }
 			public StringID Bus { get; set; }
 			public List<Sound> Sounds { get; set; } = new List<Sound>();
+			public List<Property> Properties { get; set; } = new List<Property>();
+			public List<RangedProperty> RangedProperties { get; set; } = new List<RangedProperty>();
 		}
 		public class Sound {
 			public string Filename { get; set; }
+		}
+		public class Property {
+			public string Name { get; set; }
+			public float Value { get; set; }
+		}
+		public class RangedProperty {
+			public string Name { get; set; }
+			public float Min { get; set; }
+			public float Max { get; set; }
 		}
 	}
 }

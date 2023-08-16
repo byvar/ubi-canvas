@@ -17,10 +17,10 @@ namespace UbiCanvas.Conversion.Json {
 		public bool IsStop { get; set; }
 		public long? BusID { get; set; }
 		public List<JSON_WwiseSound> Sounds { get; set; } = new List<JSON_WwiseSound>();
+		public JSON_Properties Properties { get; set; }
 	}
 	public class JSON_WwiseSound {
 		public string Filename { get; set; }
-		public JSON_Properties Properties { get; set; }
 	}
 
 	public class JSON_Properties {

@@ -539,6 +539,21 @@ namespace UbiCanvas.Conversion {
 						Filename = $"sound/wwise/{s.Filename}"
 					}).ToList()
 				};
+				if (entry.Value.Properties != null) {
+					foreach (var prop in entry.Value.Properties.Properties) {
+						act.Properties.Add(new WwiseConversionSettings.Property() {
+							Name = prop.Name,
+							Value = prop.Value
+						});
+					}
+					foreach (var prop in entry.Value.Properties.RangedProperties) {
+						act.RangedProperties.Add(new WwiseConversionSettings.RangedProperty() {
+							Name = prop.Name,
+							Min = prop.Min,
+							Max = prop.Max
+						});
+					}
+				}
 				wwiseActionsClassesLookup.Add(act.ID, act);
 			}
 			foreach (var entry in wwiseEventsLookup) {
