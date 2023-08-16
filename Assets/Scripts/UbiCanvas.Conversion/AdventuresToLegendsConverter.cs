@@ -988,6 +988,38 @@ namespace UbiCanvas.Conversion {
 							ProcessInstructionSet2(set);
 						}
 					}
+
+					// Process sound FX events in animations
+					var animComponent = tpl.obj.GetComponent<AnimLightComponent_Template>();
+					if (animComponent != null) {
+						var anims = animComponent.animSet?.animations;
+						if (anims != null) {
+							foreach (var animTPL in anims) {
+								var anim = animTPL?.name?.GetObject<AnimTrack>();
+								if(anim == null || anim.frameEvents == null) continue;
+								foreach (var fr in anim.frameEvents) {
+									if(fr.events == null || fr.events.Count == 0 || !fr.events.Any(f => f.type == AnimTrackFrameEvents.AnimMarkerEvent.AnimMarkerEventType.AnimFXEvent)) continue;
+									List<AnimTrackFrameEvents.AnimMarkerEvent> events = new List<AnimTrackFrameEvents.AnimMarkerEvent>();
+									foreach (var ev in fr.events) {
+										if (ev.type == AnimTrackFrameEvents.AnimMarkerEvent.AnimMarkerEventType.AnimFXEvent) {
+											if (ev.enableFX && StopLinksFx.ContainsKey(ev.marker)) {
+												events.Add(new AnimTrackFrameEvents.AnimMarkerEvent() {
+													type = AnimTrackFrameEvents.AnimMarkerEvent.AnimMarkerEventType.AnimFXEvent,
+													marker = StopLinksFx[ev.marker],
+													enableFX = false,
+													sizeOf = ev.sizeOf,
+													posLocal = ev.posLocal,
+													name = new StringID(),
+												});
+											}
+										}
+										events.Add(ev);
+									}
+									fr.events = new CListO<AnimTrackFrameEvents.AnimMarkerEvent>(events);
+								}
+							}
+						}
+					}
 				}
 			}
 
