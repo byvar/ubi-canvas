@@ -87,7 +87,7 @@ namespace UbiCanvas.Conversion {
 			LevelSpecificChanges(mainContext, settings, Controller.Obj.MainScene.obj);
 			FixNinjas(mainContext, settings, Controller.Obj.MainScene.obj);
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, Controller.Obj.MainScene.obj);
-			//FixLumKingMusic(mainContext, settings, Controller.Obj.MainScene.obj);
+			FixLumKingMusic(mainContext, settings, Controller.Obj.MainScene.obj);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			DuplicateActorTemplatesForStartPaused(mainContext);
@@ -635,7 +635,7 @@ namespace UbiCanvas.Conversion {
 
 			sndComponent.soundList.Add(new SoundDescriptor_Template() {
 				name = new StringID(0x6FB3BF00),
-				volume = new Volume(-3),
+				volume = new Volume(-3 - 8),
 				category = new StringID(0xF03C38A1),
 				maxInstances = 4,
 				limitMode = 1,
@@ -689,7 +689,7 @@ namespace UbiCanvas.Conversion {
 
 			sndComponent.soundList.Add(new SoundDescriptor_Template() {
 				name = new StringID(0xAC205A3F),
-				volume = new Volume(-9),
+				volume = new Volume(-9 - 8),
 				category = new StringID(0xF03C38A1),
 				limitCategory = new StringID(0x39283153),
 				maxInstances = 4,
@@ -732,7 +732,7 @@ namespace UbiCanvas.Conversion {
 
 			sndComponent.soundList.Add(new SoundDescriptor_Template() {
 				name = new StringID(0xB131152D),
-				volume = new Volume(-3),
+				volume = new Volume(-3 - 8),
 				category = new StringID(0xF03C38A1),
 				maxInstances = 4,
 				limitMode = 1,
@@ -770,7 +770,7 @@ namespace UbiCanvas.Conversion {
 
 			sndComponent.soundList.Add(new SoundDescriptor_Template() {
 				name = new StringID(0x506D5E97),
-				volume = new Volume(-3),
+				volume = new Volume(-3 - 8),
 				category = new StringID(0xF03C38A1),
 				maxInstances = 4,
 				limitMode = 1,
@@ -808,7 +808,7 @@ namespace UbiCanvas.Conversion {
 
 			sndComponent.soundList.Add(new SoundDescriptor_Template() {
 				name = new StringID(0xEB7569D6),
-				volume = new Volume(-6),
+				volume = new Volume(-6 - 8),
 				category = new StringID(0xF03C38A1),
 				limitMode = 0,
 				limitModeEnum = LimiterDef.LimiterMode.RejectNew,
@@ -841,7 +841,7 @@ namespace UbiCanvas.Conversion {
 
 			sndComponent.soundList.Add(new SoundDescriptor_Template() {
 				name = new StringID(0xE2C196EA),
-				volume = new Volume(-7),
+				volume = new Volume(-7 - 8),
 				category = new StringID(0xF03C38A1),
 				limitCategory = new StringID(0x0DF47974),
 				limitMode = 1,
@@ -865,7 +865,7 @@ namespace UbiCanvas.Conversion {
 
 			sndComponent.soundList.Add(new SoundDescriptor_Template() {
 				name = new StringID(0x83E80B90),
-				volume = new Volume(-7),
+				volume = new Volume(-7 - 8),
 				category = new StringID(0xF03C38A1),
 				limitCategory = new StringID(0x0DF47974),
 				limitMode = 1,
