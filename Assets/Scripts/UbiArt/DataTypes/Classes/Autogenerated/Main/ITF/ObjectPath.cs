@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ObjectPath : CSerializable {
@@ -23,6 +25,28 @@ namespace UbiArt.ITF {
 				name = s.Serialize<string>(name, name: "name");
 				parent = s.Serialize<bool>(parent, name: "parent");
 			}
+		}
+
+		public override string ToString() {
+			StringBuilder b = new();
+			b.Append("ObjectPath(");
+			if (levels != null) {
+				foreach (var l in levels) {
+					if (l.parent) {
+						b.Append("../");
+					} else {
+						b.Append(l.name);
+						b.Append('/');
+					}
+				}
+			}
+			if (id != null) {
+				b.Append(id);
+			}
+			b.Append(", ");
+			b.Append(absolute);
+			b.Append(')');
+			return b.ToString();
 		}
 	}
 }

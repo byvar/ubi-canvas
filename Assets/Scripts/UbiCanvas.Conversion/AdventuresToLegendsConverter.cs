@@ -90,6 +90,7 @@ namespace UbiCanvas.Conversion {
 			FixLumKingMusic(mainContext, settings, Controller.Obj.MainScene.obj);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
+			MakeFrisesStartPaused(mainContext, settings, Controller.Obj.MainScene.obj);
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
@@ -626,6 +627,10 @@ namespace UbiCanvas.Conversion {
 						|| a.USERFRIENDLY == "FadeFog@11"); // Why do these 3 not have fade triggers?
 						foreach (var f in fadeFog) {
 							f.ContainingScene.DeletePickable(f.Result);
+							/*var fr = f.Result as Frise;
+							fr.PrimitiveParameters.colorFactor = UbiArt.Color.Zero;
+							fr.PrimitiveParameters.RenderRegular = false;
+							fr.PrimitiveParameters.RenderInReflections = false;*/
 						}
 						break;
 					}
@@ -1505,6 +1510,8 @@ namespace UbiCanvas.Conversion {
 				if (!(newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM)) {
 					if (f.parentBind != null && f.parentBind.read == true)
 						return true;
+					//if(f.STARTPAUSE)
+					//	return true;
 					if (f.COMPONENTS != null && f.COMPONENTS.Any(c => c?.obj != null))
 						return true;
 				}
@@ -1520,6 +1527,8 @@ namespace UbiCanvas.Conversion {
 						FRISE = new CListO<Frise>() { newFrise }
 					}
 				};
+				//parent.IS_SINGLE_PIECE = true;
+				//parent.ZFORCED = true;
 
 				var config = f.config?.obj;
 				if (config?.COMPONENTS != null && config.COMPONENTS.Any(c => c?.obj != null)) {
@@ -1594,6 +1603,7 @@ namespace UbiCanvas.Conversion {
 								parentActors.Add(parentActor);
 							}
 						} catch (Exception ex) {
+							oldContext?.SystemLogger?.LogWarning($"Error: {linkResult.Result.USERFRIENDLY} - {linkComponent.Children.Count}");
 							oldContext?.SystemLogger?.LogWarning(ex);
 						}
 					}
@@ -1658,6 +1668,51 @@ namespace UbiCanvas.Conversion {
 						linkComponent.Children.Add(newChild);
 						l.Context.SystemLogger?.LogInfo($"Duplicating LinkComponent for duplicated Frise: {newChild.Path.id}");
 					}
+				}
+			}
+		}
+
+		public void MakeFrisesStartPaused(Context oldContext, Settings newSettings, Scene scene) {
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var sceneTree = new PickableTree(scene);
+			var startpauseFrises = scene.FindPickables(p => p.STARTPAUSE && p is Frise);
+			if (startpauseFrises.Any()) {
+				// Create pauseswitch actor
+				var pauseswitch = new Actor() {
+					USERFRIENDLY = "pauseswitch",
+					LUA = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl"),
+				};
+				var link = pauseswitch.AddComponent<LinkComponent>();
+				link.Children = new CListO<ChildEntry>();
+				var tween = pauseswitch.AddComponent<TweenComponent>();
+				tween.startSet = new StringID("Pause");
+				tween.instructionSets = new CListO<TweenComponent.InstructionSet>(new List<TweenComponent.InstructionSet>() {
+					new TweenComponent.InstructionSet() {
+						name = "Pause",
+						instructions = new CArrayO<Generic<TweenInstruction>>(new Generic<TweenInstruction>[] {
+							new Generic<TweenInstruction>(new TweenEvent() {
+							})
+						})
+					},
+					new TweenComponent.InstructionSet() {
+						name = "Unpause",
+						instructions = new CArrayO<Generic<TweenInstruction>>(new Generic<TweenInstruction>[] {
+							new Generic<TweenInstruction>(new TweenEvent() {
+							})
+						})
+					},
+				});
+				scene.AddActor(pauseswitch, "pauseswitch");
+
+				// Link all frises that were STARTPAUSE in the pauseswitch
+				foreach (var f in startpauseFrises) {
+					f.Result.STARTPAUSE = false;
+					link.Children.Add(new ChildEntry() {
+						Path = f.Path
+					});
+					l.Context.SystemLogger?.LogInfo($"Linking frise to pauseswitch: {f.Path}");
 				}
 			}
 		}
