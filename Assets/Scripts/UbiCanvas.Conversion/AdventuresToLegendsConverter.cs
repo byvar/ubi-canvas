@@ -620,20 +620,6 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
-				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
-						var fadeFog = scene.FindPickables(a => 
-						a.USERFRIENDLY == "FadeFog" 
-						|| a.USERFRIENDLY == "FadeFog@10" 
-						|| a.USERFRIENDLY == "FadeFog@11"); // Why do these 3 not have fade triggers?
-						foreach (var f in fadeFog) {
-							f.ContainingScene.DeletePickable(f.Result);
-							/*var fr = f.Result as Frise;
-							fr.PrimitiveParameters.colorFactor = UbiArt.Color.Zero;
-							fr.PrimitiveParameters.RenderRegular = false;
-							fr.PrimitiveParameters.RenderInReflections = false;*/
-						}
-						break;
-					}
 			}
 		}
 
@@ -1682,8 +1668,22 @@ namespace UbiCanvas.Conversion {
 				// Create pauseswitch actor
 				var pauseswitch = new Actor() {
 					USERFRIENDLY = "pauseswitch",
-					LUA = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl"),
+					LUA = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl")
 				};
+				var spawnPoint = scene.FindActor(a => a.GetComponent<RO2_CheckpointComponent>()?.INDEX == 0);
+				var pos = spawnPoint.Result.POS2D;
+				if (spawnPoint.Path.levels?.Count > 0) {
+					var node = sceneTree.Root.GetNodeWithObjectPath(spawnPoint.Path);
+					while (node.Parent != null) {
+						node = node.Parent;
+						if (node.Pickable != null) {
+							pos = node.Pickable.POS2D + node.Pickable.SCALE * pos;
+						}
+					}
+				}
+				// Calculate global position
+				pauseswitch.POS2D = pos;
+
 				var link = pauseswitch.AddComponent<LinkComponent>();
 				link.Children = new CListO<ChildEntry>();
 				var tween = pauseswitch.AddComponent<TweenComponent>();
