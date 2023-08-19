@@ -601,6 +601,22 @@ namespace UbiCanvas.Conversion {
 						foreach (var lc in userFriendly) {
 							FixOneLumsChainSpawnMode(oldContext, newSettings, scene.FindActor(a => a.USERFRIENDLY == lc).Result);
 						}
+						var lumKingLink = scene.FindActor(a => a.USERFRIENDLY == "lumking").Result.GetComponent<LinkComponent>();
+						List<string> endLums = new List<string>() {
+							"lumschain", "lumschain@6", "lumschain@8", "lumschain@9", "lumschain@10", "lumschain@11", "lumschain@12", "lumschain@13", // At end
+						};
+						foreach (var endLum in endLums) {
+							lumKingLink.Children.Add(new ChildEntry() {
+								Path = new ObjectPath() {
+									id = endLum,
+									levels = new CListO<ObjectPath.Level>() {
+										new ObjectPath.Level() {
+											name = "grp@4"
+										}
+									}
+								}
+							});
+						}
 						break;
 					}
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
@@ -896,6 +912,100 @@ namespace UbiCanvas.Conversion {
 					act.Result.AddComponent<RO2_LumMusicManagerAIComponent>();
 				}
 			}
+
+			
+			// Uncomment to add murfy actors to lum kings
+			/*var lumKingPath = new Path("world/common/friendly/lums/components/lumking.tpl");
+			if (!actorTemplates.ContainsKey(lumKingPath.stringID)) return;
+
+			// Now that this is done, find all objects that use it in the scene and add the lummusic component
+			var lumKingActors = scene.FindActors(a => a.LUA == lumKingPath);
+
+			foreach (var lumKingActor in lumKingActors) {
+				AddMurfyGenericTouchActor(oldContext, newSettings, lumKingActor.ContainingScene, lumKingActor.Result);
+			}*/
+		}
+		public void AddMurfyGenericTouchActor(Context oldContext, Settings newSettings, Scene scene, Actor act) {
+
+			// Create murfy activation action
+			var murfyTrigger = new Actor() {
+				LUA = new Path("world/common/logicactor/automurphy/component/trigger_box_automurphyactivation.tpl"),
+				USERFRIENDLY = "trigger_box_automurphyactivation",
+				POS2D = act.POS2D
+			};
+			murfyTrigger.AddComponent<LinkComponent>();
+
+			var playerDetector = murfyTrigger.AddComponent<PlayerDetectorComponent>();
+			playerDetector.localOffset = new Vec2d(0, 0);
+			playerDetector.localScale = new Vec2d(3f, 3f);
+			playerDetector.useShapeTransform = true;
+
+			murfyTrigger.AddComponent<RO2_DRCMandatoryZoneComponent>();
+
+			if (scene.AddActor(murfyTrigger, "trigger_box_automurphyactivation")) {
+				oldContext?.SystemLogger?.LogInfo($"Added Murfy activation actor for {act.USERFRIENDLY}");
+			}
+
+			// Create murfy forced action: touch crank (gyro)
+			var murfyAction = new Actor() {
+				LUA = new Path("world/common/logicactor/automurphy/component/trigger_box_murphyforcedaction.tpl"),
+				USERFRIENDLY = "trigger_box_murphyforcedaction",
+				POS2D = act.POS2D,
+				RELATIVEZ = 0f,
+				SCALE = new Vec2d(7.5f, 7.5f)
+			};
+			var murfyActionLink = murfyAction.AddComponent<LinkComponent>(); // Link to gyrocontroller later
+			var murfyActionShape = murfyAction.AddComponent<ShapeComponent>();
+			murfyActionShape.useShapeTransform = false;
+			murfyActionShape.localScale = new Vec2d(10, 10);
+			var forcedAction = murfyAction.AddComponent<RO2_DRCForceActionComponent>();
+			forcedAction.forcedAction = RO2_DRCForceActionComponent.Enum_forcedAction.GenericTouch;
+			forcedAction.autoAction = false;
+			forcedAction.useToTargetTravel = true;
+			forcedAction.toTargetTravel = new RO2_TravelData() {
+				duration = 0.3f,
+				accelType = RO2_TravelData.AccelType.InvX2,
+				speedType = RO2_TravelData.SpeedType.Uniform
+			};
+			forcedAction.actionTravel = new RO2_TravelData() {
+				duration = 0.2f,
+				accelType = RO2_TravelData.AccelType.X2,
+				speedType = RO2_TravelData.SpeedType.Uniform
+			};
+			forcedAction.canBackward = false;
+			forcedAction.activationData = new RO2_DRCForceActionComponent.ActivationData() {
+				activationMode = RO2_DRCForceActionComponent.ActivationData.Enum_activationMode.Multiple,
+				stopOnZoneExit = true,
+				canRestartAction = true,
+				saveBackward = true,
+				saveBackwardOnActionExit = true
+			};
+			if (scene.AddActor(murfyAction, "trigger_box_murphyforcedaction")) {
+				oldContext?.SystemLogger?.LogInfo($"Added Murfy forced action actor for {act.USERFRIENDLY}");
+			}
+
+			// Add gyro controller
+			var trajectoryNode = new Actor() {
+				USERFRIENDLY = "am_trajectorynode",
+				LUA = new Path("world/common/logicactor/automurphy/component/am_trajectorynode.tpl"),
+				POS2D = act.POS2D,
+				RELATIVEZ = 0.145384f,
+				SCALE = new Vec2d(2.228791f, 2.228791f),
+			};
+			var trajectoryComponent = trajectoryNode.AddComponent<RO2_FATrajectoryComponent>();
+			var linkComponent = trajectoryNode.AddComponent<LinkComponent>();
+
+			if (scene.AddActor(trajectoryNode, "am_trajectorynode")) {
+				oldContext?.SystemLogger?.LogInfo($"Added trajectorynode actor for {act.USERFRIENDLY}");
+			}
+			// Create links
+			murfyActionLink.Children = new CListO<ChildEntry>() {
+				new ChildEntry() {
+					Path = new ObjectPath() {
+						id = trajectoryNode.USERFRIENDLY
+					},
+				},
+			};
 		}
 
 		public void FixNinjas(Context oldContext, Settings newSettings, Scene scene) {
@@ -1805,7 +1915,7 @@ namespace UbiCanvas.Conversion {
 				var scfg = scene.sceneConfigs;
 				if (scfg.sceneConfigs == null) scfg.sceneConfigs = new CArrayO<Generic<SceneConfig>>();
 				var obj = new RO2_SceneConfig_Platform() {
-					DRCGameplayMode = RO2_SceneConfig_Base.Enum_DRCGameplayMode.Coop,
+					DRCGameplayMode = RO2_SceneConfig_Base.Enum_DRCGameplayMode.Coop
 				};
 				scfg.sceneConfigs.Add(new Generic<SceneConfig>(obj));
 

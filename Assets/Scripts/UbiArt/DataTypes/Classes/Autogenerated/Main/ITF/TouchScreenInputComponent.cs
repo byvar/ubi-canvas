@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public string viewName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM || s.Settings.isCatchThemAll) {
+			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM || s.Settings.platform == Settings.Platform.Vita) {
 				viewName = s.Serialize<string>(viewName, name: "viewName");
 			}
 		}
