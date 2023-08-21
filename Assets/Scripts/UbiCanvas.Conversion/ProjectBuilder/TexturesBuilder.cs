@@ -29,6 +29,26 @@ namespace UbiCanvas.Conversion {
 					bool isDDS = uncookedPath.ToLowerInvariant().EndsWith(".dds");
 					uncookedPath = uncookedPath.Substring(0, uncookedPath.LastIndexOf('.'));
 
+					// Check if this is a RGB texture that should be combined with an alpha texture
+					if(uncookedPath.ToLowerInvariant().EndsWith(".a"))
+						continue;
+					bool isRGB = uncookedPath.ToLowerInvariant().EndsWith(".rgb");
+					string alphaPath = null;
+					if (isRGB) {
+						alphaPath = file.Replace(".rgb", ".a");
+						if (!System.IO.File.Exists(alphaPath)) {
+							// .rgb and .a files might not have the same extension - workaround
+							var newAlphaPath = alphaPath.ToLowerInvariant();
+							newAlphaPath = newAlphaPath.Substring(0, newAlphaPath.LastIndexOf('.'));
+							var matchingFile = System.IO.Directory
+								.EnumerateFiles(dir, "*.*", System.IO.SearchOption.AllDirectories)
+								.FirstOrDefault(f => f.Substring(0, f.LastIndexOf('.')).ToLowerInvariant() == newAlphaPath);
+							if(matchingFile != null)
+								alphaPath = matchingFile;
+						}
+						uncookedPath = uncookedPath.Substring(0, uncookedPath.LastIndexOf('.'));
+					}
+
 					if (!uncookedPath.ToLowerInvariant().EndsWith(".png") && !uncookedPath.ToLowerInvariant().EndsWith(".tga"))
 						uncookedPath = $"{uncookedPath}.tga";
 					var cookedPath = new Path(uncookedPath).CookedPath(TargetContext);
@@ -82,13 +102,41 @@ namespace UbiCanvas.Conversion {
 								CountPixels(img);
 							}
 						} else {
-							using (var img = new MagickImage(file)) {
-								img.Format = MagickFormat.Dds;
-								img.AutoOrient(); // Orient TGA based on origin point
-								w = (ushort)img.Width;
-								h = (ushort)img.Height;
-								CountPixels(img);
-								data = img.ToByteArray();
+							if (isRGB && alphaPath != null) {
+								// Separate RGB and A texture to be combined!
+								using (var img = new MagickImage(file)) {
+									using (var img_a = new MagickImage(alphaPath)) {
+										img.Format = MagickFormat.Dds;
+										img.AutoOrient(); // Orient TGA based on origin point
+										w = (ushort)img.Width;
+										h = (ushort)img.Height;
+
+										img_a.Format = MagickFormat.Dds;
+										img_a.AutoOrient(); // Orient TGA based on origin point
+										if (w != (ushort)img_a.Width || h != (ushort)img_a.Height) {
+											throw new Exception("Wrong alpha image dimensions");
+										}
+										// Step 1: Turn off the alpha channel for both input images
+										img.Alpha(AlphaOption.Off);
+										img_a.Alpha(AlphaOption.Off);
+
+										// Step 2: Composite with the CopyAlpha operator
+										img.Composite(img_a, CompositeOperator.CopyAlpha);
+										
+
+										CountPixels(img);
+										data = img.ToByteArray();
+									}
+								}
+							} else {
+								using (var img = new MagickImage(file)) {
+									img.Format = MagickFormat.Dds;
+									img.AutoOrient(); // Orient TGA based on origin point
+									w = (ushort)img.Width;
+									h = (ushort)img.Height;
+									CountPixels(img);
+									data = img.ToByteArray();
+								}
 							}
 						}
 						var tex = new TextureCooked(TargetContext) {

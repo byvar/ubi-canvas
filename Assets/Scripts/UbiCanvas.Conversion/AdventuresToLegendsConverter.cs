@@ -620,6 +620,16 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
+						var breakables = scene.FindPickables(a => a.USERFRIENDLY == "invisibleground_nowallslide_nowallrun@2");
+						foreach (var b in breakables) {
+							b.Result.STARTPAUSE = true;
+						}
+						// TODO: Disable or remove other invisiblegrounds added for these lum jars.
+						// A lot of these have "StartDisable" in the stick to polyline component
+						// Maybe deleting the component is a decent solution too?
+						break;
+					}
 			}
 		}
 
