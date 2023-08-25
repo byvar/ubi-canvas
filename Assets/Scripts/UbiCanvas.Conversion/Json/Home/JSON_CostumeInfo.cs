@@ -10,7 +10,7 @@ using UbiArt.ITF;
 namespace UbiCanvas.Conversion.Json {
 	public class JSON_CostumeInfo { // CostumeDescriptor in home.isc
 		public string CostumeID { get; set; }
-		
+
 		public uint NameID { get; set; } // LocID
 		public uint DescriptionID { get; set; } // LocID
 
