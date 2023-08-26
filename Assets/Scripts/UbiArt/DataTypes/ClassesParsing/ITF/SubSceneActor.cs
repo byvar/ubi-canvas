@@ -17,19 +17,13 @@ namespace UbiArt.ITF {
 						if (l.Settings.engineVersion <= Settings.EngineVersion.RO) {
 							SCENE_ORIGINS = new Generic<Scene>(sceneFile.obj);
 						} else {
-							SCENE = new Nullable<Scene>() {
-								read = true,
-								value = sceneFile.obj
-							};
+							SCENE = new Nullable<Scene>(sceneFile.obj);
 						}
 					}
 				});
 			}
 			if (EMBED_SCENE && (SCENE == null || SCENE.IsNull)) {
-				SCENE = new Nullable<Scene>() {
-					read = true,
-					value = new Scene()
-				};
+				SCENE = new Nullable<Scene>(new Scene());
 				SCENE.value.InitContext(s.Context);
 			}
 		}

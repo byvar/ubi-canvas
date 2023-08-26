@@ -52,6 +52,8 @@ namespace UbiCanvas.Conversion.Json {
 
 		[JsonIgnore]
 		public UbiArt.Color Color => new Color(r,g,b,a);
+		[JsonIgnore]
+		public UbiArt.ColorInteger ColorInteger => new ColorInteger(r, g, b, a);
 
 		public static JSON_Color FromColor(Color c) {
 			if(c == null) return null;

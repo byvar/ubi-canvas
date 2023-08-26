@@ -12,5 +12,13 @@
 		}
 
 		public bool IsNull => !read;
+
+		public Nullable() { }
+		public Nullable(T value) {
+			if (value != null) {
+				read = true;
+				this.value = value;
+			}
+		}
 	}
 }

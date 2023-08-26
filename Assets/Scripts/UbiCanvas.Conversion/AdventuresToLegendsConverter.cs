@@ -1517,12 +1517,9 @@ namespace UbiCanvas.Conversion {
 				var newFrise = f.Clone("isc") as Frise;
 				var parent = Merger.Merge<SubSceneActor>(f);
 				parent.EMBED_SCENE = true;
-				parent.SCENE = new UbiArt.Nullable<Scene>() {
-					read = true,
-					value = new Scene() {
-						FRISE = new CListO<Frise>() { newFrise }
-					}
-				};
+				parent.SCENE = new UbiArt.Nullable<Scene>(new Scene() {
+					FRISE = new CListO<Frise>() { newFrise }
+				});
 				//parent.IS_SINGLE_PIECE = true;
 				//parent.ZFORCED = true;
 
