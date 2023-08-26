@@ -26,7 +26,8 @@ namespace UbiCanvas.Tools
 				//new InvokableAction("Export costumes (requires manual edits)", async () => await ExportCostumes()),
 				//new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
-				new InvokableAction("Clean, build & install project", async () => await BuildProject(install: true, clean: true)),
+				new InvokableAction("Fast clean, build & install project", async () => await BuildProject(install: true, clean: true, fullClean: false)),
+				new InvokableAction("Full clean, build & install project", async () => await BuildProject(install: true, clean: true, fullClean: true)),
 			});
         }
 
@@ -74,21 +75,26 @@ namespace UbiCanvas.Tools
 			await new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new SimpleObjectBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
-		private void Clean() {
+		private void Clean(bool fullClean = false) {
 			new AtlasBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new HomeBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			if (fullClean) {
+				new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			}
+			new SimpleObjectBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 		}
 
 		#region Build (mostly a copy of BuildModIPKTool)
-		private async Task BuildProject(bool install = false, bool clean = false)
+		private async Task BuildProject(bool install = false, bool clean = false, bool fullClean = false)
 		{
-			if(clean) Clean();
+			if(clean) Clean(fullClean: fullClean);
 			await BuildJSON();
 			await TimeController.WaitIfNecessary();
 

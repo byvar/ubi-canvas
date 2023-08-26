@@ -15,6 +15,8 @@ namespace UbiCanvas.Conversion.Json {
 
 		public JSON_PolyPointList Points { get; set; }
 
+		public bool HasCollision { get; set; } = true;
+
 		public class JSON_Point {
 			public Vec2d Position { get; set; }
 			public float Scale { get; set; }

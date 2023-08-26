@@ -96,6 +96,7 @@ namespace UbiCanvas.Conversion {
 			return act;
 		}
 		protected async Task<Frise> CreateFrise(JSON_SimpleFrise simple) {
+			await Task.CompletedTask;
 			Frise fr = new Frise();
 			FillPickable(fr, simple);
 
@@ -110,29 +111,31 @@ namespace UbiCanvas.Conversion {
 			fr.PointsList = CreatePolyPointList(simple.Points);
 
 			// Collision
-			fr.collisionData = new UbiArt.Nullable<Frise.CollisionData>(
-				new Frise.CollisionData() {
-					LocalCollisionList = new CListO<PolyPointList>() {
+			if (simple.HasCollision) {
+				fr.collisionData = new UbiArt.Nullable<Frise.CollisionData>(
+					new Frise.CollisionData() {
+						LocalCollisionList = new CListO<PolyPointList>() {
 						CreatePolyPointList(simple.Points),
-					},
-					WorldCollisionList = new CListO<PolyLine>() {
-						new PolyLine() {
-							PolyPointList = CreatePolyPointList(simple.Points), // TODO: make world coordinates
 						},
-					},
+						WorldCollisionList = new CListO<PolyLine>() {
+							new PolyLine() {
+								PolyPointList = CreatePolyPointList(simple.Points),
+							},
+						},
+					}
+				);
+				// "Globalize" global polypointlist
+				var globalList = fr.collisionData.value.WorldCollisionList[0].PolyPointList;
+				foreach (var p in globalList.LocalPoints) {
+					p.POS = LocalToGlobal(p.POS);
 				}
-			);
-			// "Globalize" global polypointlist
-			var globalList = fr.collisionData.value.WorldCollisionList[0].PolyPointList;
-			foreach (var p in globalList.LocalPoints) {
-				p.POS = LocalToGlobal(p.POS);
-			}
-			globalList.RecomputeData();
+				globalList.RecomputeData();
 
-			fr.collisionData.value.WorldCollisionList[0].AABB = new AABB() {
-				MIN = new Vec2d(globalList.LocalPoints.Min(p => p.POS.x), globalList.LocalPoints.Min(p => p.POS.y)),
-				MAX = new Vec2d(globalList.LocalPoints.Max(p => p.POS.x), globalList.LocalPoints.Max(p => p.POS.y)),
-			};
+				fr.collisionData.value.WorldCollisionList[0].AABB = new AABB() {
+					MIN = new Vec2d(globalList.LocalPoints.Min(p => p.POS.x), globalList.LocalPoints.Min(p => p.POS.y)),
+					MAX = new Vec2d(globalList.LocalPoints.Max(p => p.POS.x), globalList.LocalPoints.Max(p => p.POS.y)),
+				};
+			}
 
 			// Fill in visual data
 			fr.meshBuildData = new UbiArt.Nullable<Frise.MeshBuildData>(new Frise.MeshBuildData() {
@@ -156,16 +159,20 @@ namespace UbiCanvas.Conversion {
 			}
 
 			// Fill in meshStaticAABB based on visual data
-			fr.meshStaticData = new UbiArt.Nullable<Frise.MeshStaticData>(new Frise.MeshStaticData() {
-				LocalAABB = new AABB() {
-					MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.y)),
-					MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.y))
-				},
-				WorldAABB = new AABB() {
-					MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
-					MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).y))
-				},
-			});
+			if (fr.meshBuildData.value?.StaticVertexList?.Any() ?? false) {
+				fr.meshStaticData = new UbiArt.Nullable<Frise.MeshStaticData>(new Frise.MeshStaticData() {
+					LocalAABB = new AABB() {
+						MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.y)),
+						MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.y))
+					},
+					WorldAABB = new AABB() {
+						MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
+						MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).y))
+					},
+				});
+				fr.AABB_MinZ = fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.z);
+				fr.AABB_MaxZ = fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.z);
+			}
 
 			return fr;
 		}
