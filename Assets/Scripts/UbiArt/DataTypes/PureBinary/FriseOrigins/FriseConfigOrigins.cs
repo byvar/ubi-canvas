@@ -22,14 +22,14 @@ namespace UbiArt.FriseOrigins {
 		public int int1;
 		public float flt1;
 		public int int2;
-		public float flt2;
+		public float visualOffset;
 		public float flt3;
 		public int int3;
 		public float flt4;
 		public float flt5;
 		public float flt6;
-		public float flt7;
-		public float flt8;
+		public float height;
+		public float width;
 
 
 		public uint methode;
@@ -46,9 +46,9 @@ namespace UbiArt.FriseOrigins {
 		public uint uint0;
 		public CollisionFrieze collision;
 
-		public float flt9;
-		public float flt10;
-		public Vec2d vec0;
+		public float fillOffset;
+		public Angle fillAngle;
+		public Vec2d fillScale;
 
 		public ITF.VertexAnim VertexAnim;
 
@@ -89,14 +89,14 @@ namespace UbiArt.FriseOrigins {
 			int1 = s.Serialize<int>(int1, name: "int1");
 			flt1 = s.Serialize<float>(flt1, name: "flt1");
 			int2 = s.Serialize<int>(int2, name: "int2");
-			flt2 = s.Serialize<float>(flt2, name: "flt2");
+			visualOffset = s.Serialize<float>(visualOffset, name: "visualOffset");
 			flt3 = s.Serialize<float>(flt3, name: "flt3");
 			int3 = s.Serialize<int>(int3, name: "int3");
 			flt4 = s.Serialize<float>(flt4, name: "flt4");
 			flt5 = s.Serialize<float>(flt5, name: "flt5");
 			flt6 = s.Serialize<float>(flt6, name: "flt6");
-			flt7 = s.Serialize<float>(flt7, name: "flt7");
-			flt8 = s.Serialize<float>(flt8, name: "flt8");
+			height = s.Serialize<float>(height, name: "height");
+			width = s.Serialize<float>(width, name: "witdh");
 
 			methode = s.Serialize<uint>(methode, name: "methode");
 			snapCoeff = s.Serialize<float>(snapCoeff, name: "snapCoeff");
@@ -112,9 +112,10 @@ namespace UbiArt.FriseOrigins {
 			uint0 = s.Serialize<uint>(uint0, name: "uint0");
 			collision = s.SerializeObject<CollisionFrieze>(collision, name: "collision");
 
-			flt9 = s.Serialize<float>(flt9, name: "flt9");
-			flt10 = s.Serialize<float>(flt10, name: "flt10");
-			vec0 = s.SerializeObject<Vec2d>(vec0, name: "vec0");
+			fillOffset = s.Serialize<float>(fillOffset, name: "fillOffset");
+			fillAngle = s.SerializeObject<Angle>(fillAngle, name: "fillAngle");
+			fillScale = s.SerializeObject<Vec2d>(fillScale, name: "fillScale");
+
 			VertexAnim = s.SerializeObject<ITF.VertexAnim>(VertexAnim, name: "VertexAnim");
 
 			col = s.SerializeObject<ColorInteger>(col, name: "col");

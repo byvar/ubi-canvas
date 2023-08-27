@@ -16,8 +16,8 @@ namespace UbiArt.FriseOrigins {
 		public Vec2d vecA;
 		public Vec2d vecB;
 		public float flt8;
-		public Path path;
-		public CString str3;
+		public Path gameMaterial;
+		public CString friendly;
 		public ColorInteger color2;
 		public CollisionFrieze collision1;
 		public CollisionFrieze collision2;
@@ -55,8 +55,8 @@ namespace UbiArt.FriseOrigins {
 			vecA = s.SerializeObject<Vec2d>(vecA, name: "vecA");
 			vecB = s.SerializeObject<Vec2d>(vecB, name: "vecB");
 			flt8 = s.Serialize<float>(flt8, name: "flt8");
-			path = s.SerializeObject<Path>(path, name: "path");
-			str3 = s.Serialize<CString>(str3, name: "str3");
+			gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
+			friendly = s.Serialize<CString>(friendly, name: "friendly");
 			color2 = s.SerializeObject<ColorInteger>(color2, name: "color2");
 			collision1 = s.SerializeObject<CollisionFrieze>(collision1, name: "collision1");
 			collision2 = s.SerializeObject<CollisionFrieze>(collision2, name: "collision2");
