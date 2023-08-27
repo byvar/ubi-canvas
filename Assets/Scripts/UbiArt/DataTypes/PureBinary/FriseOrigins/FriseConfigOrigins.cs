@@ -1,3 +1,5 @@
+using UbiArt.ITF;
+
 namespace UbiArt.FriseOrigins {
 	// See: ITF::FriseConfig::serialize
 	// fcg.ckd file
@@ -51,43 +53,8 @@ namespace UbiArt.FriseOrigins {
 		public ITF.VertexAnim VertexAnim;
 
 		public ColorInteger col;
-		public float flt11;
-		public float flt12;
-		public float flt13;
-		public float flt14;
-		public float flt15;
-		public float flt16;
-		public float flt17;
-		public float flt18;
-		public float flt19;
-		public float flt20;
-		public float flt21;
-		public float flt22;
-		public uint uint1;
-		public float flt23;
-		public float flt24;
-		public float flt25;
-		public uint uint2;
-		public uint uint3;
-		public float flt26;
-		public float flt27;
-		public float flt28;
-		public Vec2d vec1;
-		public uint uint4;
-		public float flt29;
-		public float flt30;
-		public float flt31;
-		public float flt32;
-		public uint uint5;
-		public float flt33;
-		public float flt34;
-		public float flt35;
-		public float flt36;
-		public float flt37;
-		public float flt38;
-		public float flt39;
-		public uint uint6;
-		public CListO<FluidFriseLayer> Layers;
+		public ITF.FluidConfig Fluid;
+
 		public uint uint7;
 		public int int4;
 		public float flt40;
@@ -151,43 +118,8 @@ namespace UbiArt.FriseOrigins {
 			VertexAnim = s.SerializeObject<ITF.VertexAnim>(VertexAnim, name: "VertexAnim");
 
 			col = s.SerializeObject<ColorInteger>(col, name: "col");
-			flt11 = s.Serialize<float>(flt11, name: "flt11");
-			flt12 = s.Serialize<float>(flt12, name: "flt12");
-			flt13 = s.Serialize<float>(flt13, name: "flt13");
-			flt14 = s.Serialize<float>(flt14, name: "flt14");
-			flt15 = s.Serialize<float>(flt15, name: "flt15");
-			flt16 = s.Serialize<float>(flt16, name: "flt16");
-			flt17 = s.Serialize<float>(flt17, name: "flt17");
-			flt18 = s.Serialize<float>(flt18, name: "flt18");
-			flt19 = s.Serialize<float>(flt19, name: "flt19");
-			flt20 = s.Serialize<float>(flt20, name: "flt20");
-			flt21 = s.Serialize<float>(flt21, name: "flt21");
-			flt22 = s.Serialize<float>(flt22, name: "flt22");
-			uint1 = s.Serialize<uint>(uint1, name: "uint1");
-			flt23 = s.Serialize<float>(flt23, name: "flt23");
-			flt24 = s.Serialize<float>(flt24, name: "flt24");
-			flt25 = s.Serialize<float>(flt25, name: "flt25");
-			uint2 = s.Serialize<uint>(uint2, name: "uint2");
-			uint3 = s.Serialize<uint>(uint3, name: "uint3");
-			flt26 = s.Serialize<float>(flt26, name: "flt26");
-			flt27 = s.Serialize<float>(flt27, name: "flt27");
-			flt28 = s.Serialize<float>(flt28, name: "flt28");
-			vec1 = s.SerializeObject<Vec2d>(vec1, name: "vec1");
-			uint4 = s.Serialize<uint>(uint4, name: "uint4");
-			flt29 = s.Serialize<float>(flt29, name: "flt29");
-			flt30 = s.Serialize<float>(flt30, name: "flt30");
-			flt31 = s.Serialize<float>(flt31, name: "flt31");
-			flt32 = s.Serialize<float>(flt32, name: "flt32");
-			uint5 = s.Serialize<uint>(uint5, name: "uint5");
-			flt33 = s.Serialize<float>(flt33, name: "flt33");
-			flt34 = s.Serialize<float>(flt34, name: "flt34");
-			flt35 = s.Serialize<float>(flt35, name: "flt35");
-			flt36 = s.Serialize<float>(flt36, name: "flt36");
-			flt37 = s.Serialize<float>(flt37, name: "flt37");
-			flt38 = s.Serialize<float>(flt38, name: "flt38");
-			flt39 = s.Serialize<float>(flt39, name: "flt39");
-			uint6 = s.Serialize<uint>(uint6, name: "uint6");
-			Layers = s.SerializeObject<CListO<FluidFriseLayer>>(Layers, name: "Layers");
+			Fluid = s.SerializeObject<FluidConfig>(Fluid, name: "Fluid");
+
 			uint7 = s.Serialize<uint>(uint7, name: "uint7");
 			int4 = s.Serialize<int>(int4, name: "int4");
 			flt40 = s.Serialize<float>(flt40, name: "flt40");

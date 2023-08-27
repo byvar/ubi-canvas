@@ -31,7 +31,7 @@ namespace UbiCanvas.Conversion {
 					uncookedPath = uncookedPath.Substring(0, uncookedPath.LastIndexOf('.'));
 					var cookedPath = new Path(uncookedPath).CookedPath(TargetContext);
 
-					if (!FileIsAlreadyBuilt(cookedPath)) {
+					if (true || !FileIsAlreadyBuilt(cookedPath)) {
 						var json = System.IO.File.ReadAllText(file);
 
 						if (uncookedPath.ToLowerInvariant().EndsWith(".isc")) {
@@ -60,9 +60,7 @@ namespace UbiCanvas.Conversion {
 							Bundle.AddFile(cookedPath, iscFile);
 						} else if (uncookedPath.ToLowerInvariant().EndsWith(".fcg")) {
 							var simpleFCG = JsonConvert.DeserializeObject<JSON_SimpleFriseConfig>(json);
-							var fcg = new FriseConfig();
-
-							// TODO
+							var fcg = await CreateFriseConfig(simpleFCG);
 
 							var fcgFile = new GenericFile<FriseConfig>(fcg);
 							Bundle.AddFile(cookedPath, fcgFile);
@@ -73,10 +71,10 @@ namespace UbiCanvas.Conversion {
 		}
 
 		protected void FillPickable(Pickable pickable, JSON_SimplePickable simple) {
-			pickable.POS2D = simple.Position;
-			pickable.SCALE = simple.Scale;
+			pickable.POS2D = simple.Position ?? Vec2d.Zero;
+			pickable.SCALE = simple.Scale ?? Vec2d.One;
 			pickable.RELATIVEZ = simple.Z;
-			pickable.ANGLE = simple.Angle;
+			pickable.ANGLE = new Angle(simple.Angle);
 			pickable.USERFRIENDLY = simple.Name;
 			pickable.xFLIPPED = simple.XFlip;
 		}
@@ -109,6 +107,8 @@ namespace UbiCanvas.Conversion {
 			fr.ConfigName = new Path(simple.TemplatePath);
 
 			fr.PointsList = CreatePolyPointList(simple.Points);
+
+			fr.PreComputedForCook = simple.Precomputed;
 
 			// Collision
 			if (simple.HasCollision) {
@@ -177,6 +177,25 @@ namespace UbiCanvas.Conversion {
 			return fr;
 		}
 
+		protected async Task<FriseConfig> CreateFriseConfig(JSON_SimpleFriseConfig simple) {
+			await Task.CompletedTask;
+			var fcg = new FriseConfig() {
+				TAGS = new CListP<string>(new List<string>() {
+					"frieze"
+				}),
+				textureConfigs = new CListO<FriseTextureConfig>(simple.Textures.Select(t => new FriseTextureConfig() {
+					material = new GFXMaterialSerializable() {
+						textureSet = new GFXMaterialTexturePathSet() {
+							diffuse = new Path(t.Diffuse),
+							back_light = new Path(t.Backlight)
+						},
+						shaderPath = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+					},
+				}).ToList()),
+				gameMaterial = new Path(simple.GameMaterial)
+			};
+			return fcg;
+		}
 		protected PolyPointList CreatePolyPointList(JSON_SimpleFrise.JSON_PolyPointList simple) {
 			var points = new PolyPointList() {
 				LocalPoints = new CListO<PolyLineEdge>(simple.Points.Select(p => new PolyLineEdge() {

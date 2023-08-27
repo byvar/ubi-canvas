@@ -17,6 +17,9 @@ namespace UbiArt.ITF {
 				color = s.SerializeObject<Color>(color, name: "color");
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				backsideGameMaterial = s.SerializeObject<Path>(backsideGameMaterial, name: "backsideGameMaterial");
+				collisionHeight = s.Serialize<float>(collisionHeight, name: "collisionHeight");
+				erosion = s.Serialize<uint>(erosion, name: "erosion");
+				hasBacksideInversion = s.Serialize<bool>(hasBacksideInversion, name: "hasBacksideInversion");
 				forcedHeightWhenNotColored = s.Serialize<float>(forcedHeightWhenNotColored, name: "forcedHeightWhenNotColored");
 				hasForcedHeightWhenNotColored = s.Serialize<bool>(hasForcedHeightWhenNotColored, name: "hasForcedHeightWhenNotColored");
 			} else {

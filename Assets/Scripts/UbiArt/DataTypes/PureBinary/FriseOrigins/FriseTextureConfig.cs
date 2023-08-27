@@ -1,7 +1,7 @@
 namespace UbiArt.FriseOrigins {
 	// See: ITF::FriseTextureConfig::serialize
 	public class FriseTextureConfig : CSerializable {
-		public CString texture1;
+		public CString diffuse;
 		public CString texture2;
 		public CString texture3;
 		public float flt3;
@@ -40,7 +40,7 @@ namespace UbiArt.FriseOrigins {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			texture1 = s.Serialize<CString>(texture1, name: "texture1");
+			diffuse = s.Serialize<CString>(diffuse, name: "diffuse");
 			texture2 = s.Serialize<CString>(texture2, name: "texture2");
 			texture3 = s.Serialize<CString>(texture3, name: "texture3");
 			flt3 = s.Serialize<float>(flt3, name: "flt3");

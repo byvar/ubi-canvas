@@ -40,9 +40,56 @@ namespace UbiArt.ITF {
 		public float BlendFactor;
 		public Path FxActor;
 		public CListO<FluidFriseLayer> Layers;
+
+		public float Origins_00;
+		public float Origins_01;
+		public float Origins_02;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
+				Elasticity = s.Serialize<float>(Elasticity, name: "Elasticity");
+				Velocity = s.Serialize<float>(Velocity, name: "Velocity");
+				Viscosity = s.Serialize<float>(Viscosity, name: "Viscosity");
+				Origins_00 = s.Serialize<float>(Origins_00, name: "Origins_00");
+				Origins_01 = s.Serialize<float>(Origins_01, name: "Origins_01");
+				Origins_02 = s.Serialize<float>(Origins_02, name: "Origins_02");
+				TargetHeight = s.Serialize<float>(TargetHeight, name: "TargetHeight");
+				Amplification = s.Serialize<float>(Amplification, name: "Amplification");
+				TargetMaxHeight = s.Serialize<float>(TargetMaxHeight, name: "TargetMaxHeight");
+				TargetMinHeight = s.Serialize<float>(TargetMinHeight, name: "TargetMinHeight");
+				TargetAddHeight = s.Serialize<float>(TargetAddHeight, name: "TargetAddHeight");
+				UnityWidth = s.Serialize<float>(UnityWidth, name: "UnityWidth");
+				PolylineUnityMult = s.Serialize<uint>(PolylineUnityMult, name: "PolylineUnityMult");
+				EnterMult = s.Serialize<float>(EnterMult, name: "EnterMult");
+				LeaveMult = s.Serialize<float>(LeaveMult, name: "LeaveMult");
+				MaxDstInfluence = s.Serialize<float>(MaxDstInfluence, name: "MaxDstInfluence");
+				LevelsFront = s.Serialize<uint>(LevelsFront, name: "LevelsFront");
+				LevelsBack = s.Serialize<uint>(LevelsBack, name: "LevelsBack");
+				LevelDelta = s.SerializeObject<Vec3d>(LevelDelta, name: "LevelDelta");
+				UVDelta = s.SerializeObject<Vec2d>(UVDelta, name: "UVDelta");
+				PerpendicularBack = s.Serialize<uint>(PerpendicularBack, name: "PerpendicularBack");
+				PerpendicularBackZ = s.Serialize<float>(PerpendicularBackZ, name: "PerpendicularBackZ");
+				PerpendicularBackScale = s.Serialize<float>(PerpendicularBackScale, name: "PerpendicularBackScale");
+				PerpendicularBackPos = s.Serialize<float>(PerpendicularBackPos, name: "PerpendicularBackPos");
+				PerpendicularBackPosZ = s.Serialize<float>(PerpendicularBackPosZ, name: "PerpendicularBackPosZ");
+				PerpendicularFront = s.Serialize<uint>(PerpendicularFront, name: "PerpendicularFront");
+				PerpendicularFrontZ = s.Serialize<float>(PerpendicularFrontZ, name: "PerpendicularFrontZ");
+				PerpendicularFrontScale = s.Serialize<float>(PerpendicularFrontScale, name: "PerpendicularFrontScale");
+				PerpendicularFrontPos = s.Serialize<float>(PerpendicularFrontPos, name: "PerpendicularFrontPos");
+				PerpendicularFrontPosZ = s.Serialize<float>(PerpendicularFrontPosZ, name: "PerpendicularFrontPosZ");
+				WeightMultiplier = s.Serialize<float>(WeightMultiplier, name: "WeightMultiplier");
+				dstInfluenceMultiplier = s.Serialize<float>(dstInfluenceMultiplier, name: "dstInfluenceMultiplier");
+				//AbsorptionAtEdgeStart = s.Serialize<float>(AbsorptionAtEdgeStart, name: "AbsorptionAtEdgeStart");
+				//AbsorptionAtEdgeEnd = s.Serialize<float>(AbsorptionAtEdgeEnd, name: "AbsorptionAtEdgeEnd");
+				//AbsorptionAtEdge_Length = s.Serialize<float>(AbsorptionAtEdge_Length, name: "AbsorptionAtEdge_Length");
+				InfluenceLimit = s.Serialize<float>(InfluenceLimit, name: "InfluenceLimit");
+				SideCount = s.Serialize<uint>(SideCount, name: "SideCount");
+				//LayerCount = s.Serialize<uint>(LayerCount, name: "LayerCount");
+				//BlendFactor = s.Serialize<float>(BlendFactor, name: "BlendFactor");
+				//FxActor = s.SerializeObject<Path>(FxActor, name: "FxActor");
+				Layers = s.SerializeObject<CListO<FluidFriseLayer>>(Layers, name: "Layers");
+			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
 				Elasticity = s.Serialize<float>(Elasticity, name: "Elasticity");
 				Velocity = s.Serialize<float>(Velocity, name: "Velocity");
 				Viscosity = s.Serialize<float>(Viscosity, name: "Viscosity");
