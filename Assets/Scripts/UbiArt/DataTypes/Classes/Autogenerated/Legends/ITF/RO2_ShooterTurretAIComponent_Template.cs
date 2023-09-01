@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_ShooterTurretAIComponent_Template : CSerializable {
+	public partial class RO2_ShooterTurretAIComponent_Template : RO2_MultiPiecesActorAIComponent_Template {
 		public Placeholder idleBehavior;
 		public Placeholder attackBehavior;
 		public Placeholder receiveHitBehavior;

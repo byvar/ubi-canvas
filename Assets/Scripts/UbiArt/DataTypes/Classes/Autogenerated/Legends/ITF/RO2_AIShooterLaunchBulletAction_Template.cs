@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_AIShooterLaunchBulletAction_Template : CSerializable {
+	public partial class RO2_AIShooterLaunchBulletAction_Template : RO2_AIPerformHitAction_Template {
 		public StringID bulletExitBone;
 		public int useBonesEnd;
 		public Path bullet;

@@ -16,13 +16,14 @@ namespace UbiCanvas.Conversion.Json {
 		public JSON_PolyPointList Points { get; set; }
 
 		public bool HasCollision { get; set; } = true;
+		public List<JSON_PolyPointList> CollisionPoints { get; set; }
 
 		public bool Precomputed { get; set; } = true;
 
 		public class JSON_Point {
 			public Vec2d Position { get; set; }
-			public float Scale { get; set; }
-			public string GameMaterialOverride { get; set; }
+			public float Scale { get; set; } = 1f;
+			public string GameMaterial { get; set; }
 		}
 		public class JSON_PolyPointList {
 			public bool Loop { get; set; }

@@ -112,29 +112,28 @@ namespace UbiCanvas.Conversion {
 
 			// Collision
 			if (simple.HasCollision) {
+				var collisions = simple.CollisionPoints ?? new List<JSON_SimpleFrise.JSON_PolyPointList>() { simple.Points };
 				fr.collisionData = new UbiArt.Nullable<Frise.CollisionData>(
 					new Frise.CollisionData() {
-						LocalCollisionList = new CListO<PolyPointList>() {
-						CreatePolyPointList(simple.Points),
-						},
-						WorldCollisionList = new CListO<PolyLine>() {
-							new PolyLine() {
-								PolyPointList = CreatePolyPointList(simple.Points),
+						LocalCollisionList = new CListO<PolyPointList>(collisions.Select(c => CreatePolyPointList(c)).ToList()),
+						WorldCollisionList = new CListO<PolyLine>(collisions.Select(c => new PolyLine() {
+							PolyPointList = CreatePolyPointList(c),
+							connection = new PolyLine.Connection() {
 							},
-						},
+						}).ToList())
 					}
 				);
 				// "Globalize" global polypointlist
-				var globalList = fr.collisionData.value.WorldCollisionList[0].PolyPointList;
-				foreach (var p in globalList.LocalPoints) {
-					p.POS = LocalToGlobal(p.POS);
+				foreach (var globalList in fr.collisionData.value.WorldCollisionList) {
+					foreach (var p in globalList.PolyPointList.LocalPoints) {
+						p.POS = LocalToGlobal(p.POS);
+					}
+					globalList.PolyPointList.RecomputeData();
+					globalList.AABB = new AABB() {
+						MIN = new Vec2d(globalList.PolyPointList.LocalPoints.Min(p => p.POS.x), globalList.PolyPointList.LocalPoints.Min(p => p.POS.y)),
+						MAX = new Vec2d(globalList.PolyPointList.LocalPoints.Max(p => p.POS.x), globalList.PolyPointList.LocalPoints.Max(p => p.POS.y)),
+					};
 				}
-				globalList.RecomputeData();
-
-				fr.collisionData.value.WorldCollisionList[0].AABB = new AABB() {
-					MIN = new Vec2d(globalList.LocalPoints.Min(p => p.POS.x), globalList.LocalPoints.Min(p => p.POS.y)),
-					MAX = new Vec2d(globalList.LocalPoints.Max(p => p.POS.x), globalList.LocalPoints.Max(p => p.POS.y)),
-				};
 			}
 
 			// Fill in visual data
@@ -200,7 +199,7 @@ namespace UbiCanvas.Conversion {
 			var points = new PolyPointList() {
 				LocalPoints = new CListO<PolyLineEdge>(simple.Points.Select(p => new PolyLineEdge() {
 					POS = p.Position,
-					GMatOverride = string.IsNullOrWhiteSpace(p.GameMaterialOverride) ? new StringID() : new StringID(p.GameMaterialOverride),
+					GameMaterial = string.IsNullOrWhiteSpace(p.GameMaterial) ? new StringID() : new StringID(p.GameMaterial),
 					Scale = p.Scale,
 				}).ToList()),
 				Loop = simple.Loop,
@@ -208,7 +207,7 @@ namespace UbiCanvas.Conversion {
 			if (simple.Loop) {
 				points.LocalPoints.Add(new PolyLineEdge() {
 					POS = simple.Points[0].Position,
-					GMatOverride = simple.Points[0].GameMaterialOverride,
+					GameMaterial = simple.Points[0].GameMaterial,
 					Scale = simple.Points[0].Scale,
 				});
 			}

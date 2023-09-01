@@ -29,8 +29,16 @@ public class FriseEditorPointBehaviour : MonoBehaviour {
 
 	void UpdateLine() {
 		if (target != null) {
-			lr.positionCount = 2;
-			lr.SetPositions(new Vector3[] { transform.position, target.transform.position });
+			lr.positionCount = 5;
+			var lerp = Vector3.Lerp(transform.position, target.transform.position, 0.5f);
+			var perp = Vector2.Perpendicular(target.transform.position - transform.position).normalized * 0.2f;
+			lr.SetPositions(new Vector3[] {
+				transform.position,
+				lerp,
+				new Vector3(lerp.x + perp.x, lerp.y + perp.y, lerp.z),
+				lerp,
+				target.transform.position
+			});
 		}
 	}
 	void CreateMesh() {

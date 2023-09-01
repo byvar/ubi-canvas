@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_AIShooterAttackBehavior_Template : CSerializable {
-		public Placeholder idle;
-		public Placeholder hit;
-		public Placeholder giveup;
+	public partial class RO2_AIShooterAttackBehavior_Template : TemplateAIBehavior {
+		public Generic<AIAction_Template> idle;
+		public Generic<AIAction_Template> hit;
+		public Generic<AIAction_Template> giveup;
 		public float attackDistance;
 		public StringID gunPivotBone;
 		public int rotateUsingAnimation;
@@ -24,9 +24,9 @@ namespace UbiArt.ITF {
 		public StringID canonExtremityBoneName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			idle = s.SerializeObject<Placeholder>(idle, name: "idle");
-			hit = s.SerializeObject<Placeholder>(hit, name: "hit");
-			giveup = s.SerializeObject<Placeholder>(giveup, name: "giveup");
+			idle = s.SerializeObject<Generic<AIAction_Template>>(idle, name: "idle");
+			hit = s.SerializeObject<Generic<AIAction_Template>>(hit, name: "hit");
+			giveup = s.SerializeObject<Generic<AIAction_Template>>(giveup, name: "giveup");
 			attackDistance = s.Serialize<float>(attackDistance, name: "attackDistance");
 			gunPivotBone = s.SerializeObject<StringID>(gunPivotBone, name: "gunPivotBone");
 			rotateUsingAnimation = s.Serialize<int>(rotateUsingAnimation, name: "rotateUsingAnimation");
