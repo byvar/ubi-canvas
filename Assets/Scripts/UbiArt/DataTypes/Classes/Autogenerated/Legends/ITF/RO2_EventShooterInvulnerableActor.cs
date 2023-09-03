@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_EventShooterInvulnerableActor : CSerializable {
+	public partial class RO2_EventShooterInvulnerableActor : Event {
 		public int invulnerable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

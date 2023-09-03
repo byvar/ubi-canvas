@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_AIShooterVacuumBehavior_Template : CSerializable {
+	public partial class RO2_AIShooterVacuumBehavior_Template : TemplateAIBehavior {
 		public VacuumSkill_Template vacuumSkill;
 		public Generic<AIAction_Template> waitAction;
 		public Generic<AIAction_Template> vacuumAction;
@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public StringID startVacuumMarker;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			vacuumSkill = s.SerializeObject<VacuumSkill_Template> (vacuumSkill, name: "vacuumSkill");
+			vacuumSkill = s.SerializeObject<VacuumSkill_Template>(vacuumSkill, name: "vacuumSkill");
 			waitAction = s.SerializeObject<Generic<AIAction_Template>>(waitAction, name: "waitAction");
 			vacuumAction = s.SerializeObject<Generic<AIAction_Template>>(vacuumAction, name: "vacuumAction");
 			spitAction = s.SerializeObject<Generic<AIAction_Template>>(spitAction, name: "spitAction");

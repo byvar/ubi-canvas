@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_ShooterGardianAIComponent_Template : CSerializable {
+	public partial class RO2_ShooterGardianAIComponent_Template : RO2_SimpleAIComponent_Template {
 		public uint minHitStunLevel;
 		public float multiPlayerLifePointFactor;
 		public Path deathRewardSpawnPath;
