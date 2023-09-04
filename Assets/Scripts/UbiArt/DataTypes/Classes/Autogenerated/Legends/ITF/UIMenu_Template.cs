@@ -1,14 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class UIMenu_Template : CSerializable {
-		public bool is2D;
-		public float showingFadeDuration;
-		public float hidingFadeDuration;
+	public partial class UIMenu_Template : UIItem_Template {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			is2D = s.Serialize<bool>(is2D, name: "is2D", options: CSerializerObject.Options.BoolAsByte);
-			showingFadeDuration = s.Serialize<float>(showingFadeDuration, name: "showingFadeDuration");
-			hidingFadeDuration = s.Serialize<float>(hidingFadeDuration, name: "hidingFadeDuration");
 		}
 		public override uint? ClassCRC => 0x3ACB8EAC;
 	}

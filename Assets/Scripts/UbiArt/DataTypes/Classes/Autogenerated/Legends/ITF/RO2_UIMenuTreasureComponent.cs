@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuTreasureComponent : CSerializable {
+	public partial class RO2_UIMenuTreasureComponent : UIMenu {
 		public StringID treasureTextFriendly;
 		public StringID participationTextFriendly;
 		public float treasureValueSpeed;

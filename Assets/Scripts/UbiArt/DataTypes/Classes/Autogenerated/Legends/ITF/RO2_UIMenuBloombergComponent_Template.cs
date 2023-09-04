@@ -1,13 +1,13 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuBloombergComponent_Template : CSerializable {
+	public partial class RO2_UIMenuBloombergComponent_Template : UIMenu_Template {
 		public uint cycleDisplayCountByMessage;
 		public float cycleDelay;
 		public Path itemPath;
 		public uint itemPoolSize;
 		public float itemSpace;
 		public float itemSpeed;
-		public Placeholder iconeReferences;
+		public CListO<Path> iconeReferences;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			cycleDisplayCountByMessage = s.Serialize<uint>(cycleDisplayCountByMessage, name: "cycleDisplayCountByMessage");
@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 			itemPoolSize = s.Serialize<uint>(itemPoolSize, name: "itemPoolSize");
 			itemSpace = s.Serialize<float>(itemSpace, name: "itemSpace");
 			itemSpeed = s.Serialize<float>(itemSpeed, name: "itemSpeed");
-			iconeReferences = s.SerializeObject<Placeholder>(iconeReferences, name: "iconeReferences");
+			iconeReferences = s.SerializeObject<CListO<Path>>(iconeReferences, name: "iconeReferences");
 		}
 		public override uint? ClassCRC => 0x28166084;
 	}

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuPlayerStatsComponent : CSerializable {
+	public partial class RO2_UIMenuPlayerStatsComponent : UIMenuBasic {
 		public int useSwitchChallenge;
 		public Vec2d blockerOffset;
 		protected override void SerializeImpl(CSerializerObject s) {

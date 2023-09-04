@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuLeaderboardComponent : CSerializable {
+	public partial class RO2_UIMenuLeaderboardComponent : UIMenuScroll {
 		public StringID textTitleNameLeft;
 		public StringID textDateNameLeft;
 		public StringID textTitleName;

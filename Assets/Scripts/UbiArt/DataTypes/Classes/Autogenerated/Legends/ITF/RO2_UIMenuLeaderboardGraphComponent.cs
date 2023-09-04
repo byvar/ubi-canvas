@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuLeaderboardGraphComponent : CSerializable {
-		public Placeholder canvas;
+	public partial class RO2_UIMenuLeaderboardGraphComponent : UIMenuBasic {
+		public AABB canvas;
 		public byte NameAlwaysLeft;
 		public int NameDisplayedMax;
 		public float NameAABBInflateX;
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 		public Color MedalIcon_colorFront;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			canvas = s.SerializeObject<Placeholder>(canvas, name: "canvas");
+			canvas = s.SerializeObject<AABB>(canvas, name: "canvas");
 			NameAlwaysLeft = s.Serialize<byte>(NameAlwaysLeft, name: "NameAlwaysLeft");
 			NameDisplayedMax = s.Serialize<int>(NameDisplayedMax, name: "NameDisplayedMax");
 			NameAABBInflateX = s.Serialize<float>(NameAABBInflateX, name: "NameAABBInflateX");

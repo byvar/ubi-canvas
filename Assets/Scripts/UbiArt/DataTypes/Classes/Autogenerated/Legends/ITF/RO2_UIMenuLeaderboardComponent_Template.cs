@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuLeaderboardComponent_Template : CSerializable {
+	public partial class RO2_UIMenuLeaderboardComponent_Template : UIMenuScroll_Template {
 		public int bufferWantedSize;
 		public int bufferQuerySize;
 		public int spawnItemsByFrame;

@@ -1,14 +1,14 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuPlayerCardComponent_Template : CSerializable {
-		public Placeholder pendingFriendText;
-		public Placeholder addFriendText;
+	public partial class RO2_UIMenuPlayerCardComponent_Template : UIMenuBasic_Template {
+		public SmartLocId pendingFriendText;
+		public SmartLocId addFriendText;
 		public float cupPulseScale;
 		public float cupPulsePeriod;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			pendingFriendText = s.SerializeObject<Placeholder>(pendingFriendText, name: "pendingFriendText");
-			addFriendText = s.SerializeObject<Placeholder>(addFriendText, name: "addFriendText");
+			pendingFriendText = s.SerializeObject<SmartLocId>(pendingFriendText, name: "pendingFriendText");
+			addFriendText = s.SerializeObject<SmartLocId>(addFriendText, name: "addFriendText");
 			cupPulseScale = s.Serialize<float>(cupPulseScale, name: "cupPulseScale");
 			cupPulsePeriod = s.Serialize<float>(cupPulsePeriod, name: "cupPulsePeriod");
 		}

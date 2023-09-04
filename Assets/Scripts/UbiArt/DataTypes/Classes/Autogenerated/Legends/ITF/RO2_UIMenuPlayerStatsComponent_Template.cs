@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuPlayerStatsComponent_Template : CSerializable {
+	public partial class RO2_UIMenuPlayerStatsComponent_Template : UIMenuBasic_Template {
 		public Color challengeExpertColor;
 		public float challengeSwitchDelay;
 		public float challengeSwitchSpeed;

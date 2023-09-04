@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuAutoMurphyChoiceComponent : CSerializable {
+	public partial class RO2_UIMenuAutoMurphyChoiceComponent : UIMenuBasic {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

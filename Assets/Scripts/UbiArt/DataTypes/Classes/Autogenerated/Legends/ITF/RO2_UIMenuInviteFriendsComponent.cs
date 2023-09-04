@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuInviteFriendsComponent : CSerializable {
+	public partial class RO2_UIMenuInviteFriendsComponent : RO2_UIMenuFriendsComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

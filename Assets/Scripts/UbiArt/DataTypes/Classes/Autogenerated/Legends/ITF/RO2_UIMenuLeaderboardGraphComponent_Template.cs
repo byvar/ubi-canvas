@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIMenuLeaderboardGraphComponent_Template : CSerializable {
+	public partial class RO2_UIMenuLeaderboardGraphComponent_Template : UIMenuBasic_Template {
 		public int useFilterStickControl;
 		public Path graduationActorPath;
 		public uint graduationPoolSize;
@@ -21,13 +21,13 @@ namespace UbiArt.ITF {
 		public float canvasTopOffset;
 		public uint numColumn;
 		public uint numRow;
-		public Placeholder materialHistoBarFill;
-		public Placeholder materialHistoBarTop;
-		public Placeholder materialLevel;
-		public Placeholder materialCountry;
-		public Placeholder materialMedal;
-		public Placeholder rankingText;
-		public Placeholder emptyRankingText;
+		public GFXMaterialSerializable materialHistoBarFill;
+		public GFXMaterialSerializable materialHistoBarTop;
+		public GFXMaterialSerializable materialLevel;
+		public GFXMaterialSerializable materialCountry;
+		public GFXMaterialSerializable materialMedal;
+		public SmartLocId rankingText;
+		public SmartLocId emptyRankingText;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			useFilterStickControl = s.Serialize<int>(useFilterStickControl, name: "useFilterStickControl");
@@ -50,13 +50,13 @@ namespace UbiArt.ITF {
 			canvasTopOffset = s.Serialize<float>(canvasTopOffset, name: "canvasTopOffset");
 			numColumn = s.Serialize<uint>(numColumn, name: "numColumn");
 			numRow = s.Serialize<uint>(numRow, name: "numRow");
-			materialHistoBarFill = s.SerializeObject<Placeholder>(materialHistoBarFill, name: "materialHistoBarFill");
-			materialHistoBarTop = s.SerializeObject<Placeholder>(materialHistoBarTop, name: "materialHistoBarTop");
-			materialLevel = s.SerializeObject<Placeholder>(materialLevel, name: "materialLevel");
-			materialCountry = s.SerializeObject<Placeholder>(materialCountry, name: "materialCountry");
-			materialMedal = s.SerializeObject<Placeholder>(materialMedal, name: "materialMedal");
-			rankingText = s.SerializeObject<Placeholder>(rankingText, name: "rankingText");
-			emptyRankingText = s.SerializeObject<Placeholder>(emptyRankingText, name: "emptyRankingText");
+			materialHistoBarFill = s.SerializeObject<GFXMaterialSerializable>(materialHistoBarFill, name: "materialHistoBarFill");
+			materialHistoBarTop = s.SerializeObject< GFXMaterialSerializable>(materialHistoBarTop, name: "materialHistoBarTop");
+			materialLevel = s.SerializeObject<GFXMaterialSerializable>(materialLevel, name: "materialLevel");
+			materialCountry = s.SerializeObject<GFXMaterialSerializable>(materialCountry, name: "materialCountry");
+			materialMedal = s.SerializeObject<GFXMaterialSerializable>(materialMedal, name: "materialMedal");
+			rankingText = s.SerializeObject<SmartLocId>(rankingText, name: "rankingText");
+			emptyRankingText = s.SerializeObject<SmartLocId>(emptyRankingText, name: "emptyRankingText");
 		}
 		public override uint? ClassCRC => 0xFE013942;
 	}
