@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 		public CListO<StringID> flippableTags;
 		public uint decoBrickCooldown;
 		public uint decoBrickMaxActiveCount;
-		public CListO<RO2_DecoBrick_Template> decoBricks;
-		public CListO<RO2_DecoBrick_Template> specialDecoBricks;
+		public CListO<Generic<RO2_DecoBrick_Template>> decoBricks;
+		public CListO<Generic<RO2_DecoBrick_Template>> specialDecoBricks;
 		public CListO<RO2_EnduranceMode_Template.DecoRange> decoRanges;
 		public uint treasureRopeCount;
 		public float treasureRopeInterval;
@@ -17,8 +17,8 @@ namespace UbiArt.ITF {
 			flippableTags = s.SerializeObject<CListO<StringID>>(flippableTags, name: "flippableTags");
 			decoBrickCooldown = s.Serialize<uint>(decoBrickCooldown, name: "decoBrickCooldown");
 			decoBrickMaxActiveCount = s.Serialize<uint>(decoBrickMaxActiveCount, name: "decoBrickMaxActiveCount");
-			decoBricks = s.SerializeObject<CListO<RO2_DecoBrick_Template>>(decoBricks, name: "decoBricks");
-			specialDecoBricks = s.SerializeObject<CListO<RO2_DecoBrick_Template>>(specialDecoBricks, name: "specialDecoBricks");
+			decoBricks = s.SerializeObject<CListO<Generic<RO2_DecoBrick_Template>>>(decoBricks, name: "decoBricks");
+			specialDecoBricks = s.SerializeObject<CListO<Generic<RO2_DecoBrick_Template>>>(specialDecoBricks, name: "specialDecoBricks");
 			decoRanges = s.SerializeObject<CListO<RO2_EnduranceMode_Template.DecoRange>>(decoRanges, name: "decoRanges");
 			treasureRopeCount = s.Serialize<uint>(treasureRopeCount, name: "treasureRopeCount");
 			treasureRopeInterval = s.Serialize<float>(treasureRopeInterval, name: "treasureRopeInterval");
