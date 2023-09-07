@@ -426,6 +426,20 @@ namespace UbiArt {
 			Context.AsyncController.StopAsync();
 		}
 
+		public void LoadFile<T>(Path path) where T : class, ICSerializable, new()
+		{
+			var t = Cache.Get<T>(path.stringID);
+			if (t == null) {
+				Load(path, (CSerializerObject s) => {
+					var cachedObject = Cache.Get<T>(path.stringID);
+					if (cachedObject == null) {
+						cachedObject = s.SerializeObject<T>(cachedObject);
+						Cache.Add<T>(path.stringID, cachedObject);
+					}
+				});
+			}
+		}
+
 		public void LoadFile<T>(Path path, Action<T> onResult) where T : class, ICSerializable, new() {
 			var t = Cache.Get<T>(path.stringID);
 			if (t != null) {

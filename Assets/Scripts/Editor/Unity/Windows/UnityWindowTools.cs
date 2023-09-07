@@ -185,6 +185,14 @@ public class UnityWindowTools : UnityWindow
 				EditorGUI.TextField(new Rect(rect.x + rect.width / 4, rect.y, rect.width / 4 * 3, rect.height), crcTool.CRC(crcTool.CustomType));
 			}
 		}
+		else if (tool is LogFileTool logFileTool)
+		{
+			logFileTool.FilePath = EditorField("File path", logFileTool.FilePath);
+			logFileTool.Type = EditorField("File type", logFileTool.Type);
+
+			if (EditorButton("Deserialize"))
+				ExecuteTask(logFileTool.DeserializeAsync());
+		}
 		else
 		{
 			EditorHelpBox($"The tool type {tool.GetType().Name} does not have a supported UI", MessageType.Error);

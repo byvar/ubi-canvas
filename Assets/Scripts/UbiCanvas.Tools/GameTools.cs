@@ -12,6 +12,7 @@
 			new ModeConversionTool(),
 			new AdventuresToLegendsModTool(),
 			new CRCCalculatorTool(),
+			new LogFileTool(),
 		};
 	}
 }
