@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				animations = s.SerializeObject<CListO<SubAnim_Template>>(animations, name: "animations");
 				banks = s.SerializeObject<CListO<BankChange_Template>>(banks, name: "banks");
 				skipFiles = s.SerializeObject<CListP<string>>(skipFiles, name: "skipFiles");
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 				animations = s.SerializeObject<CListO<SubAnim_Template>>(animations, name: "animations");
 				banksChangeId = s.SerializeObject<CListO<BankIdChange>>(banksChangeId, name: "banksChangeId");
 				animPackage = s.SerializeObject<AnimResourcePackage>(animPackage, name: "animPackage");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					ignoreTexturesLoading = s.Serialize<bool>(ignoreTexturesLoading, name: "ignoreTexturesLoading");
 				}
 			}

@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				friendlyName = s.SerializeObject<StringID>(friendlyName, name: "friendlyName");
 				name = s.SerializeObject<Path>(name, name: "name");
 				playRate = s.Serialize<float>(playRate, name: "playRate");
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 				allowSyncOffset = s.Serialize<bool>(allowSyncOffset, name: "allowSyncOffset");
 				shadowMul = s.Serialize<float>(shadowMul, name: "shadowMul");
 				metronome2 = s.Serialize<METRONOME_TYPE2>(metronome2, name: "metronome");
-			} else if(s.Settings.game == Settings.Game.RL) {
+			} else if(s.Settings.Game == Game.RL) {
 				friendlyName = s.SerializeObject<StringID>(friendlyName, name: "friendlyName");
 				name = s.SerializeObject<Path>(name, name: "name");
 				playRate = s.Serialize<float>(playRate, name: "playRate");
@@ -62,7 +62,7 @@ namespace UbiArt.ITF {
 				shadowMul = s.Serialize<float>(shadowMul, name: "shadowMul");
 				metronome3 = s.Serialize<METRONOME_TYPE3>(metronome3, name: "metronome");
 				forceZOffset2 = s.Serialize<BOOL>(forceZOffset2, name: "forceZOffset");
-			} else if(s.Settings.game == Settings.Game.COL) {
+			} else if(s.Settings.Game == Game.COL) {
 				friendlyName = s.SerializeObject<StringID>(friendlyName, name: "friendlyName");
 				name = s.SerializeObject<Path>(name, name: "name");
 				playRate = s.Serialize<float>(playRate, name: "playRate");

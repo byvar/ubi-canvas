@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool dead;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				standOnce = s.Serialize<bool>(standOnce, name: "standOnce", options: CSerializerObject.Options.BoolAsByte);
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					dead = s.Serialize<bool>(dead, name: "dead");

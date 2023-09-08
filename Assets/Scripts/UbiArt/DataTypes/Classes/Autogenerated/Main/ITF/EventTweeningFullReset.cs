@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool resetSelectedSet;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				resetSelectedSet = s.Serialize<bool>(resetSelectedSet, name: "resetSelectedSet", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 			}

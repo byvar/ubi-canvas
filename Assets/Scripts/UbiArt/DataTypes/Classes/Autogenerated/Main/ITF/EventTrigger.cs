@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool toggle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game != Settings.Game.RA && s.Settings.game != Settings.Game.RM) {
+			if (s.Settings.Game != Game.RA && s.Settings.Game != Game.RM) {
 				activated = s.Serialize<bool>(activated, name: "activated");
 				activator = (ObjectRef)s.Serialize<uint>(activator, name: "activator");
 			} else {

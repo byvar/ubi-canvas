@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public bool alwaysUseFirstPlayer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				input = s.SerializeObject<StringID>(input, name: "input");
 				mode = s.Serialize<Enum_mode>(mode, name: "mode");
 				useMainCharacter = s.Serialize<bool>(useMainCharacter, name: "useMainCharacter", options: CSerializerObject.Options.BoolAsByte);

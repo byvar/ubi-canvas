@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public SequencePlayerComponent__State state;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				state2 = s.Serialize<Enum_state>(state2, name: "state");
 				label = s.Serialize<string>(label, name: "label");
 				forceLabel = s.Serialize<bool>(forceLabel, name: "forceLabel");

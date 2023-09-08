@@ -10,8 +10,8 @@ namespace UbiArt.ITF {
 		public bool destroyOnEnd;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO
-				|| s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO
+				|| s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				alpha = s.Serialize<float>(alpha, name: "alpha");
 				transitionTime = s.Serialize<float>(transitionTime, name: "transitionTime");
 				overrideColor = s.Serialize<bool>(overrideColor, name: "overrideColor");

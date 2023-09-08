@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public Vec2d outerSize;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				ParticlesMaxNb = s.Serialize<uint>(ParticlesMaxNb, name: "ParticlesMaxNb");
 				FluidSimulation = s.SerializeObject<RO2_FluidSimulation>(FluidSimulation, name: "FluidSimulation");
 				downColor = s.SerializeObject<Color>(downColor, name: "downColor");

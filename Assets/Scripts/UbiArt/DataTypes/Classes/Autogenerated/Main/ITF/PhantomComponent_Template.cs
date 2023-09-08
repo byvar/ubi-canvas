@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public uint collisionGroup2 = 1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+			if (s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 				collisionGroup2 = s.Serialize<uint>(collisionGroup2, name: "collisionGroup");
 			} else {
 				collisionGroup = s.Serialize<ECOLLISIONGROUP>(collisionGroup, name: "collisionGroup");

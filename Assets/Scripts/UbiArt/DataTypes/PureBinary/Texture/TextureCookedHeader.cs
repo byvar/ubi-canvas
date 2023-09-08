@@ -34,7 +34,7 @@ namespace UbiArt {
 		public void Serialize(CSerializerObject s, string name) {
 			//filename = s.CurrentPointer.File.DisplayName;
 			Reinit(s.Settings);
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				Version = s.Serialize<uint>(Version, name: nameof(Version));
 				s.DoEndian(() => {
 					Signature = s.Serialize<uint>(Signature, name: nameof(Signature));
@@ -67,7 +67,7 @@ namespace UbiArt {
 					HeaderEndCode = s.Serialize<uint>(HeaderEndCode, name: nameof(HeaderEndCode));
 				}
 
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					DataSize = (uint)(s.Length - (HeaderSize * 2));
 				}
 			} else {
@@ -76,7 +76,7 @@ namespace UbiArt {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.game == Settings.Game.RL && Version >= 16) {
+			if (settings.Game == Game.RL && Version >= 16) {
 				Version = 13;
 				HeaderSize = 0x34;
 			}
@@ -84,7 +84,7 @@ namespace UbiArt {
 
 		public TextureCookedHeader() { }
 		public TextureCookedHeader(Context context) {
-			if (context.Settings.game == Settings.Game.RL) {
+			if (context.Settings.Game == Game.RL) {
 				Version = 13;
 				HeaderSize = 0x34;
 				Padding1 = 0xCC;

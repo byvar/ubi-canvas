@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool Enable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+			if (s.Settings.Game == Game.VH || s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 				Enable = s.Serialize<bool>(Enable, name: "Enable");
 			}
 		}

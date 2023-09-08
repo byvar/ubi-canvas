@@ -22,8 +22,8 @@ namespace UbiArt.ITF {
 		public bool bool__10;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				trajectoryPointCount = s.Serialize<uint>(trajectoryPointCount, name: "trajectoryPointCount");
 				barFrameCount = s.Serialize<uint>(barFrameCount, name: "barFrameCount");
 				beatFrameCount = s.Serialize<uint>(beatFrameCount, name: "beatFrameCount");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 				halfBeatColor = s.SerializeObject<Color>(halfBeatColor, name: "halfBeatColor");
 				leftButtonColor = s.SerializeObject<Color>(leftButtonColor, name: "leftButtonColor");
 				rightButtonColor = s.SerializeObject<Color>(rightButtonColor, name: "rightButtonColor");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				uint__0 = s.Serialize<uint>(uint__0, name: "uint__0");
 				uint__1 = s.Serialize<uint>(uint__1, name: "uint__1");
 				uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");

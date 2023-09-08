@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 			if (!context.Loader.LoadAnimations) return;
 			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
 			bool createdOne = false;
-			if (context.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (context.Settings.EngineVersion > EngineVersion.RO) {
 				foreach (TextureBankPath bp in subAnimInfo?.animPackage?.textureBank) {
 					createdOne = ProcessTextureBank(bp, gao, tex_mat, subAnimInfo?.animPackage?.skel ?? tpl.animSet?.animPackage?.skel);
 					if (createdOne) break;
@@ -218,7 +218,7 @@ namespace UbiArt.ITF {
 		private void FillMaterialParams(Renderer r, int index = 0) {
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
-			if (UbiArtContext.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (UbiArtContext.Settings.EngineVersion > EngineVersion.RO) {
 				GFXPrimitiveParam param = PrimitiveParameters;
 				mpb.SetColor("_ColorFactor", param.colorFactor.GetUnityColor());
 				mpb.SetColor("_LightConfig", new Vector4(

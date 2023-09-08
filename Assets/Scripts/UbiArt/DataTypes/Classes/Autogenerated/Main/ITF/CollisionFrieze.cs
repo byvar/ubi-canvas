@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public bool isSmooth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				build = s.Serialize<bool>(build, name: "build");
 				offset = s.Serialize<float>(offset, name: "offset");
 				extremity = s.SerializeObject<Vec2d>(extremity, name: "extremity");

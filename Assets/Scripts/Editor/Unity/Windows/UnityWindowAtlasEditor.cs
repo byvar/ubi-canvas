@@ -487,8 +487,8 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	void DrawTextureSelection() {
 		var c = Controller.MainContext;
 		string[] extensions = new string[] {
-			$"*.tga{(c.Settings.cooked ? ".ckd" : "")}",
-			$"*.png{(c.Settings.cooked ? ".ckd" : "")}"
+			$"*.tga{(c.Settings.Cooked ? ".ckd" : "")}",
+			$"*.png{(c.Settings.Cooked ? ".ckd" : "")}"
 		};
 		Rect rect = GetNextRect(vPaddingBottom: 4f);
 		string buttonString = "No texture selected";
@@ -501,10 +501,10 @@ public class UnityWindowAtlasEditor : UnityWindow {
 			if (!directory.EndsWith("/")) directory += "/";
 			while (directory.Contains("//")) directory = directory.Replace("//", "/");
 
-			if (recheckFiles || Dropdown == null || Dropdown.directory != directory || Dropdown.extensions == null || !Enumerable.SequenceEqual(Dropdown.extensions, extensions) || Dropdown.mode != c.Settings.mode) {
+			if (recheckFiles || Dropdown == null || Dropdown.directory != directory || Dropdown.extensions == null || !Enumerable.SequenceEqual(Dropdown.extensions, extensions) || Dropdown.mode != c.Settings.Mode) {
 				Dropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, extensions) {
 					name = "Texture files",
-					mode = c.Settings.mode
+					mode = c.Settings.Mode
 				};
 				recheckFiles = false;
 			}
@@ -522,7 +522,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	void DrawPatchBankSelection() {
 		var c = Controller.MainContext;
 		string[] PBKextensions = new string[] {
-			$"*.pbk{(c.Settings.cooked ? ".ckd" : "")}"
+			$"*.pbk{(c.Settings.Cooked ? ".ckd" : "")}"
 		};
 		Rect rect = GetNextRect(vPaddingBottom: 4f);
 		if (ResetPBK) {
@@ -542,10 +542,10 @@ public class UnityWindowAtlasEditor : UnityWindow {
 			if (!directory.EndsWith("/")) directory += "/";
 			while (directory.Contains("//")) directory = directory.Replace("//", "/");
 
-			if (recheckFiles || PBKDropdown == null || PBKDropdown.directory != directory || PBKDropdown.extensions == null || !Enumerable.SequenceEqual(PBKDropdown.extensions, PBKextensions) || PBKDropdown.mode != c.Settings.mode) {
+			if (recheckFiles || PBKDropdown == null || PBKDropdown.directory != directory || PBKDropdown.extensions == null || !Enumerable.SequenceEqual(PBKDropdown.extensions, PBKextensions) || PBKDropdown.mode != c.Settings.Mode) {
 				PBKDropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, PBKextensions) {
 					name = "Patch bank files",
-					mode = c.Settings.mode
+					mode = c.Settings.Mode
 				};
 				recheckFiles = false;
 			}

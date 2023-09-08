@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 	public partial class BTAIComponent_Template {
 		public override ActorComponent_Template Convert(Context context, Actor_Template actor, Settings oldSettings, Settings newSettings) {
 			base.Convert(context, actor, oldSettings, newSettings);
-			if ((oldSettings.game == Settings.Game.RA || oldSettings.game == Settings.Game.RM) && newSettings.game == Settings.Game.RL) {
+			if ((oldSettings.Game == Game.RA || oldSettings.Game == Game.RM) && newSettings.Game == Game.RL) {
 				var root = behaviorTree.root?.node?.obj;
 				CListO<BTNodeTemplate_Ref> nodesToCopy = null;
 				if (root is BTDecider_Template rootDec) {

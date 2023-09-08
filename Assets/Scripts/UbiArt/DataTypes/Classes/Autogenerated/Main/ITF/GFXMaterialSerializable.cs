@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				textureSet = s.SerializeObject<GFXMaterialTexturePathSet>(textureSet, name: "textureSet");
 				ATL_Channel = s.Serialize<uint>(ATL_Channel, name: "ATL_Channel");
 				shaderPath = s.SerializeObject<Path>(shaderPath, name: "shaderPath");
@@ -34,12 +34,12 @@ namespace UbiArt.ITF {
 				depthBias = s.Serialize<float>(depthBias, name: "depthBias");
 				generateBackBrightContrast = s.SerializeObject<Vec2d>(generateBackBrightContrast, name: "generateBackBrightContrast");
 				backfaceModulation = s.Serialize<uint>(backfaceModulation, name: "backfaceModulation");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				textureSet = s.SerializeObject<GFXMaterialTexturePathSet>(textureSet, name: "textureSet");
 				shaderPath = s.SerializeObject<Path>(shaderPath, name: "shaderPath");
 				materialParams = s.SerializeObject<GFXMaterialSerializableParam>(materialParams, name: "materialParams");
 				stencilTest = s.Serialize<bool>(stencilTest, name: "stencilTest");
-				if (!s.Settings.isCatchThemAll) {
+				if (!s.Settings.IsCatchThemAll) {
 					skipDepthTest = s.Serialize<bool>(skipDepthTest, name: "skipDepthTest");
 				}
 				alphaTest = s.Serialize<uint>(alphaTest, name: "alphaTest");

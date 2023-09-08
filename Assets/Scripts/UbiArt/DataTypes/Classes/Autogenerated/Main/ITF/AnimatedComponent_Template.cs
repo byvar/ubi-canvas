@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 			if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				tree = s.SerializeObject<AnimTree_Template>(tree, name: "tree");
-				if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+				if (s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 					usefullParameter = s.Serialize<uint>(usefullParameter, name: "usefullParameter");
 				}
 			}

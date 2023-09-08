@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		public bool bool__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion == Settings.EngineVersion.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
-			} else if (s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.EngineVersion == EngineVersion.RO || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
+			} else if (s.Settings.Game == Game.VH) {
 				bool__0 = s.Serialize<bool>(bool__0, name: "bool__0");
 			} else {
 				DoCompleteFrameResetAfterLoop = s.Serialize<bool>(DoCompleteFrameResetAfterLoop, name: "DoCompleteFrameResetAfterLoop");

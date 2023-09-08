@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public bool debugActorPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				showCollider = s.Serialize<bool>(showCollider, name: "showCollider");
 				showTrajectory = s.Serialize<bool>(showTrajectory, name: "showTrajectory");
 				debugController = s.Serialize<bool>(debugController, name: "debugController");

@@ -20,12 +20,12 @@ namespace UbiArt.ITF {
 		public Vec2d cursorOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					defaultItem = s.SerializeObject<StringID>(defaultItem, name: "defaultItem");
 					backItem = s.SerializeObject<StringID>(backItem, name: "backItem");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					defaultItem = s.SerializeObject<StringID>(defaultItem, name: "defaultItem");
 					backItem = s.SerializeObject<StringID>(backItem, name: "backItem");

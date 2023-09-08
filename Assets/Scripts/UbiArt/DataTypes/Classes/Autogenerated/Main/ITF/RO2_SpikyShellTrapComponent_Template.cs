@@ -63,7 +63,7 @@ namespace UbiArt.ITF {
 			minScaleFactor = s.Serialize<float>(minScaleFactor, name: "minScaleFactor");
 			minSpacing = s.Serialize<float>(minSpacing, name: "minSpacing");
 			maxSpacing = s.Serialize<float>(maxSpacing, name: "maxSpacing");
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				baseHeightVita = s.Serialize<float>(baseHeightVita, name: "baseHeight2");
 			}
 			restHeightPercent = s.Serialize<float>(restHeightPercent, name: "restHeightPercent");

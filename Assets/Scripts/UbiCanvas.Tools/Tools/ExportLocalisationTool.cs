@@ -47,7 +47,7 @@ namespace UbiCanvas.Tools
 				locDataList.Add(jsonData);
 			}
 
-			string exportFile = System.IO.Path.Combine(outputDir, $"localisation_{context.Settings.mode}.json");
+			string exportFile = System.IO.Path.Combine(outputDir, $"localisation_{context.Settings.Mode}.json");
 			Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
 			File.WriteAllText(exportFile, JsonConvert.SerializeObject(locDataList, Formatting.Indented));
 		}

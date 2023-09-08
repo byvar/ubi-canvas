@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public bool canReceiveCrush = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				retaliationDuration = s.Serialize<float>(retaliationDuration, name: "retaliationDuration");
 				squashDeathPenetration = s.Serialize<float>(squashDeathPenetration, name: "squashDeathPenetration");
 				darktoonSpawn = s.SerializeObject<Path>(darktoonSpawn, name: "darktoonSpawn");

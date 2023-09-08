@@ -4,13 +4,13 @@ namespace UbiArt.ITF {
 		public ObjectRef sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR
-				|| s.Settings.game == Settings.Game.RO
-				|| s.Settings.game == Settings.Game.RFR
-				|| s.Settings.game == Settings.Game.RL
-				|| s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RJR
+				|| s.Settings.Game == Game.RO
+				|| s.Settings.Game == Game.RFR
+				|| s.Settings.Game == Game.RL
+				|| s.Settings.Game == Game.COL) {
 				sender = (ObjectRef)s.Serialize<uint>((uint)sender, name: "sender");
-			} else if(s.Settings.game == Settings.Game.VH) {
+			} else if(s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					sender = s.SerializeObject<ObjectRef>(sender, name: "sender");
 				}

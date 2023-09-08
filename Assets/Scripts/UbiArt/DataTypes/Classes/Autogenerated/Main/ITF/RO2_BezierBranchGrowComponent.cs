@@ -12,8 +12,8 @@ namespace UbiArt.ITF {
 		public float retractSpeed = 10f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
-				if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Game == Game.RL) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					startCursor = s.Serialize<float>(startCursor, name: "startCursor");
 					growSpeed = s.Serialize<float>(growSpeed, name: "growSpeed");
 					easeMode = s.Serialize<EaseMode>(easeMode, name: "easeMode");

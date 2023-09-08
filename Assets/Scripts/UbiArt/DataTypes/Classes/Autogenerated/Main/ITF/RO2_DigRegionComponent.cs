@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 		public uint Vita_00 { get; set; }
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					Brush_State = s.Serialize<Action>(Brush_State, name: "Brush_State");
 					Brush_Action = s.Serialize<Action>(Brush_Action, name: "Brush_Action");
@@ -69,7 +69,7 @@ namespace UbiArt.ITF {
 					Brush_ActionFill = s.Serialize<bool>(Brush_ActionFill, name: "Brush_ActionFill");
 					PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
 				}
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
 				}
 			} else {

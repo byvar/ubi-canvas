@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 		public Nullable<FxKit> fxkit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				type = s.SerializeObject<StringID>(type, name: "type");
 				archetype = s.SerializeObject<StringID>(archetype, name: "archetype");
 				solid = s.Serialize<bool>(solid, name: "solid");
@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 				WaterResistance = s.Serialize<float>(WaterResistance, name: "WaterResistance");
 				amount = s.Serialize<uint>(amount, name: "amount");
 				fxkit = s.SerializeObject<Nullable<FxKit>>(fxkit, name: "fxkit");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				solid = s.Serialize<bool>(solid, name: "solid");
 				nostim = s.Serialize<bool>(nostim, name: "nostim");
@@ -58,7 +58,7 @@ namespace UbiArt.ITF {
 				WaterResistance = s.Serialize<float>(WaterResistance, name: "WaterResistance");
 				amount = s.Serialize<uint>(amount, name: "amount");
 				collisionGroup = s.Serialize<uint>(collisionGroup, name: "collisionGroup");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				solid = s.Serialize<bool>(solid, name: "solid");
 				filter = s.Serialize<uint>(filter, name: "filter");

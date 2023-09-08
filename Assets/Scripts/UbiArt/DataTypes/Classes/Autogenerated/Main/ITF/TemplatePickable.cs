@@ -12,16 +12,16 @@ namespace UbiArt.ITF {
 		public CListP<string> TAGS;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				ANGLE = s.SerializeObject<Angle>(ANGLE, name: "ANGLE");
 				SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
 				ObjectFamily = s.Serialize<uint>(ObjectFamily, name: "ObjectFamily");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				TAGS = s.SerializeObject<CListP<string>>(TAGS, name: "TAGS");
 				WIP = s.Serialize<bool>(WIP, name: "WIP", options: CSerializerObject.Options.BoolAsByte);
 				LOWUPDATE = s.Serialize<bool>(LOWUPDATE, name: "LOWUPDATE", options: CSerializerObject.Options.BoolAsByte);
 				UPDATELAYER = s.Serialize<WorldUpdateLayer>(UPDATELAYER, name: "UPDATELAYER");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				TAGS = s.SerializeObject<CListP<string>>(TAGS, name: "TAGS");
 				WIP = s.Serialize<bool>(WIP, name: "WIP", options: CSerializerObject.Options.BoolAsByte);
 				LOWUPDATE = s.Serialize<bool>(LOWUPDATE, name: "LOWUPDATE", options: CSerializerObject.Options.BoolAsByte);

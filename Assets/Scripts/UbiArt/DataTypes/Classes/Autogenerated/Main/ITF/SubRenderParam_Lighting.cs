@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			GlobalStaticFog = s.SerializeObject<Color>(GlobalStaticFog, name: "GlobalStaticFog");
 			GlobalFogOpacity = s.Serialize<float>(GlobalFogOpacity, name: "GlobalFogOpacity");
 			GlobalBrightness = s.Serialize<float>(GlobalBrightness, name: "GlobalBrightness");
-			if (s.Settings.game == Settings.Game.RM) {
+			if (s.Settings.Game == Game.RM) {
 				DisableLightingOnLowDevice = s.Serialize<bool>(DisableLightingOnLowDevice, name: "DisableLightingOnLowDevice");
 			}
 		}

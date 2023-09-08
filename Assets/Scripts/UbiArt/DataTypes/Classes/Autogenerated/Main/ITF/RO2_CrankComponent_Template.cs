@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		public float hideTvoffTutoAngle;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
-				if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Game == Game.RL) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					textPath = s.SerializeObject<Path>(textPath, name: "textPath");
 					tvoffTextPath = s.SerializeObject<Path>(tvoffTextPath, name: "tvoffTextPath");
 					registerToCamera = s.Serialize<bool>(registerToCamera, name: "registerToCamera");

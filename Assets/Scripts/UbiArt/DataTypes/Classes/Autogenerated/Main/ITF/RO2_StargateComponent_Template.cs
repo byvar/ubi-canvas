@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			detectShape = s.SerializeObject<Generic<PhysShape>>(detectShape, name: "detectShape");
 			pressUpShape = s.SerializeObject<Generic<PhysShape>>(pressUpShape, name: "pressUpShape");
 			flashFX = s.SerializeObject<Path>(flashFX, name: "flashFX");
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				flashFXStart = s.SerializeObject<Path>(flashFXStart, name: "flashFXStart");
 			}
 			flashOffset = s.SerializeObject<Vec3d>(flashOffset, name: "flashOffset");

@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public CArrayO<Path> modelActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL || s.Settings.Game == Game.VH) {
 				modelActorPaths = s.SerializeObject<CArrayO<Path>>(modelActorPaths, name: "modelActorPaths");
 				modelSperatorIndex = s.Serialize<int>(modelSperatorIndex, name: "modelSperatorIndex");
 				movingSelectionDelay = s.Serialize<float>(movingSelectionDelay, name: "movingSelectionDelay");

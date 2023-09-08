@@ -95,7 +95,7 @@ namespace UbiArt.ITF {
 			shadowUVx1Quad = s.Serialize<float>(shadowUVx1Quad, name: "shadowUVx1Quad");
 			shadowUVx2Quad = s.Serialize<float>(shadowUVx2Quad, name: "shadowUVx2Quad");
 
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				Vita_00 = s.Serialize<float>(Vita_00, name: nameof(Vita_00));
 				Vita_01 = s.Serialize<float>(Vita_01, name: nameof(Vita_01));
 			}

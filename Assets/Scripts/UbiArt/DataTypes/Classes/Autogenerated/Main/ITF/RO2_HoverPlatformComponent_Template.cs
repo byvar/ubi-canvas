@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public int animDeathEnabled;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				movePhase = s.Serialize<float>(movePhase, name: "movePhase");
 				waitPhase = s.Serialize<float>(waitPhase, name: "waitPhase");
 				fxReactor01Enabled = s.Serialize<bool>(fxReactor01Enabled, name: "fxReactor01Enabled");

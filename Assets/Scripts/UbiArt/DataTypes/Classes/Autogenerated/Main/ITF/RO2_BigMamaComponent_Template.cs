@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public CListO<EventPlayMusic> musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				eyesHitPoints = s.Serialize<uint>(eyesHitPoints, name: "eyesHitPoints");
 				eyesPerHit = s.Serialize<uint>(eyesPerHit, name: "eyesPerHit");
 				eyeSpawn = s.SerializeObject<Path>(eyeSpawn, name: "eyeSpawn");

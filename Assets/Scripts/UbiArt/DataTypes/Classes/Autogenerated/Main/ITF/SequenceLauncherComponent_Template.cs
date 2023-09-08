@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public EventSequenceControl eventPlaySequence;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 			} else {
 				eventPlaySequence = s.SerializeObject<EventSequenceControl>(eventPlaySequence, name: "eventPlaySequence");
 			}

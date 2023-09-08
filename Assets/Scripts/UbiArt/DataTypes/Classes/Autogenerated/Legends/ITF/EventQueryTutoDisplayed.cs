@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public uint sender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				sender = s.Serialize<uint>(sender, name: "sender");
 			} else {
 			}

@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		public CArrayO<ObjectPath> sequenceAlreadySeen;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				Levels = s.SerializeObject<CMapGeneric<StringID, PersistentGameData_Level>>(Levels, name: "Levels");
-			} else if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+			} else if (s.Settings.Game == Game.VH || s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 				Levels = s.SerializeObject<CMapGeneric<StringID, PersistentGameData_Level>>(Levels, name: "Levels");
 				Rewards = s.SerializeObject<GameStatsManager.SaveSession>(Rewards, name: "Rewards");
 				sequenceAlreadySeen = s.SerializeObject<CArrayO<ObjectPath>>(sequenceAlreadySeen, name: "sequenceAlreadySeen");

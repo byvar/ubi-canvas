@@ -152,7 +152,7 @@ namespace UbiArt.ITF {
 			deathOnRelease = s.Serialize<bool>(deathOnRelease, name: "deathOnRelease");
 			deathTimer = s.Serialize<float>(deathTimer, name: "deathTimer");
 			snapPlayer = s.Serialize<bool>(snapPlayer, name: "snapPlayer");
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				Vita_00 = s.SerializeObject<StringID>(Vita_00, name: nameof(Vita_00));
 			}
 			snapPlayerOffset = s.Serialize<float>(snapPlayerOffset, name: "snapPlayerOffset");
@@ -171,7 +171,7 @@ namespace UbiArt.ITF {
 			acceptEventUpdateRegisteredSubjectStatus = s.Serialize<bool>(acceptEventUpdateRegisteredSubjectStatus, name: "acceptEventUpdateRegisteredSubjectStatus");
 			allowTouchScreenInputDisabled = s.Serialize<bool>(allowTouchScreenInputDisabled, name: "allowTouchScreenInputDisabled");
 
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				dragEnabled = s.Serialize<bool>(dragEnabled, name: "dragEnabled");
 				sendTriggerOnDrcEventEnabled = s.Serialize<bool>(sendTriggerOnDrcEventEnabled, name: "sendTriggerOnDrcEventEnabled");
 				autoStart = s.Serialize<bool>(autoStart, name: "autoStart");

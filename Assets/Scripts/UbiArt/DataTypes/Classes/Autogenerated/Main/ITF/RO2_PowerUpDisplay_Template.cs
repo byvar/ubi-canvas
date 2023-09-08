@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public string debugName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				id = s.SerializeObject<StringID>(id, name: "id");
 			} else {
 				id = s.SerializeObject<StringID>(id, name: "id");

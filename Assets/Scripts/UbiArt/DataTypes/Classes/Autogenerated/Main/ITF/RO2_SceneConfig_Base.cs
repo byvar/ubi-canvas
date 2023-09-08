@@ -15,10 +15,10 @@ namespace UbiArt.ITF {
 			DRCGameplayMode = s.Serialize<Enum_DRCGameplayMode>(DRCGameplayMode, name: "DRCGameplayMode");
 			fade = s.SerializeObject<StringID>(fade, name: "fade");
 			packageDescriptor = s.SerializeObject<RO2_PackageDescriptor_Template>(packageDescriptor, name: "packageDescriptor");
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				istouchScreenMap = s.Serialize<bool>(istouchScreenMap, name: "istouchScreenMap");
 			}
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
 				Vita_01 = s.Serialize<uint>(Vita_01, name: nameof(Vita_01));
 			}

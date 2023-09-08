@@ -5,13 +5,13 @@ namespace UbiCanvas.Tools
 {
 	public abstract class GameTool
 	{
-		protected Context CreateContext(string basePath = null, Settings.Mode? mode = null,
+		protected Context CreateContext(string basePath = null, Mode? mode = null,
 			bool enableSerializerLog = true, bool? loadAnimations = null, bool? loadAllPaths = null)
 		{
 			if (!mode.HasValue) mode = UnitySettings.GameMode;
 			if (basePath == null) basePath = UnitySettings.GameDirs[mode.Value];
 
-			Context context = new(basePath, Settings.Init(mode.Value),
+			Context context = new(basePath, Settings.FromMode(mode.Value),
 				serializerLogger: enableSerializerLog ? new MapViewerSerializerLogger() : null,
 				fileManager: new MapViewerFileManager(),
 				systemLogger: new UnitySystemLogger(),

@@ -21,9 +21,9 @@ public class UnityWindowActor : UnityWindow {
 			if (controller == null) controller = Controller.Obj;
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
 				var c = Controller.MainContext;
-				string[] extensions = new string[] { $"*.act{(c.Settings.cooked ? ".ckd" : "")}", $"*.tpl{(c.Settings.cooked ? ".ckd" : "")}" };
-				if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
-					extensions = new string[] { $"*.act{(c.Settings.cooked ? ".ckd" : "")}", "*.act_fake" };
+				string[] extensions = new string[] { $"*.act{(c.Settings.Cooked ? ".ckd" : "")}", $"*.tpl{(c.Settings.Cooked ? ".ckd" : "")}" };
+				if (c.Settings.EngineVersion == EngineVersion.RO) {
+					extensions = new string[] { $"*.act{(c.Settings.Cooked ? ".ckd" : "")}", "*.act_fake" };
 				}
 				#region Add Actor
 				DrawHeader("Add Actor");
@@ -38,10 +38,10 @@ public class UnityWindowActor : UnityWindow {
 					if (!directory.EndsWith("/")) directory += "/";
 					while (directory.Contains("//")) directory = directory.Replace("//", "/");
 
-					if (recheckFiles || Dropdown == null || Dropdown.directory != directory || Dropdown.extensions == null || !Enumerable.SequenceEqual(Dropdown.extensions, extensions) || Dropdown.mode != c.Settings.mode) {
+					if (recheckFiles || Dropdown == null || Dropdown.directory != directory || Dropdown.extensions == null || !Enumerable.SequenceEqual(Dropdown.extensions, extensions) || Dropdown.mode != c.Settings.Mode) {
 						Dropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, extensions) {
 							name = "Actor files",
-							mode = c.Settings.mode
+							mode = c.Settings.Mode
 						};
 						recheckFiles = false;
 					}
@@ -73,8 +73,8 @@ public class UnityWindowActor : UnityWindow {
 					string pathFolder = System.IO.Path.GetDirectoryName(SelectedActorFile);
 					string pathFile = System.IO.Path.GetFileName(SelectedActorFile);
 					if (sc != null) {
-						if (c.Settings.engineVersion == Settings.EngineVersion.RO && !pathFile.ToLowerInvariant().EndsWith(".act_fake")
-							|| pathFile.ToLowerInvariant().EndsWith($".tpl{(c.Settings.cooked ? ".ckd" : "")}")) {
+						if (c.Settings.EngineVersion == EngineVersion.RO && !pathFile.ToLowerInvariant().EndsWith(".act_fake")
+							|| pathFile.ToLowerInvariant().EndsWith($".tpl{(c.Settings.Cooked ? ".ckd" : "")}")) {
 							ExecuteTask(
 								controller.AdditionalLoad(controller.LoadTemplateAndCreateActor(sc, pathFile, pathFolder).AsTask())
 							);

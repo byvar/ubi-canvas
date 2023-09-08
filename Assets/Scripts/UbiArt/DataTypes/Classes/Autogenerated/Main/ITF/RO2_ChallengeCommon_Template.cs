@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		public CListO<CListP<string>> filterOrder;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				unitSize = s.SerializeObject<Vec2d>(unitSize, name: "unitSize");
 				gameplayBricks = s.SerializeObject<CArrayO<Generic<RO2_Brick_Template>>>(gameplayBricks, name: "gameplayBricks");

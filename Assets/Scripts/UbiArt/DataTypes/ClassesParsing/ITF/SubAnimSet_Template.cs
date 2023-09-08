@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (s.Settings.engineVersion <= Settings.EngineVersion.RO && IsFirstLoad) {
+			if (s.Settings.EngineVersion <= EngineVersion.RO && IsFirstLoad) {
 				Loader l = s.Context.Loader;
 				if (l.LoadAnimations) {
 					resources = new ICSerializable[resourceTypeList.Count];

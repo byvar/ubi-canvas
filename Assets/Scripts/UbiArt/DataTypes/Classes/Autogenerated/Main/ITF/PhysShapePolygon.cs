@@ -7,11 +7,11 @@ namespace UbiArt.ITF {
 		public CArrayP<float> distances;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 				if (this is PhysShapeBox) return;
 				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
 			} else {
-				if (s.Settings.platform == Settings.Platform.Vita && (this is PhysShapeBox)) return;
+				if (s.Settings.Platform == GamePlatform.Vita && (this is PhysShapeBox)) return;
 				Points = s.SerializeObject<CListO<Vec2d>>(Points, name: "Points");
 				if (s.HasFlags(SerializeFlags.Flags10)) {
 					normals = s.SerializeObject<CListO<Vec2d>>(normals, name: "normals");

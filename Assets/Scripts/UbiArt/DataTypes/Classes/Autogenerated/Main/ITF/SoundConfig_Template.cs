@@ -18,11 +18,11 @@ namespace UbiArt.ITF {
 		public float engineStopFade;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				busses = s.SerializeObject<CListO<BusDef>>(busses, name: "busses");
 				limiters = s.SerializeObject<CListO<LimiterDef>>(limiters, name: "limiters");
 				busMixBank = s.SerializeObject<Placeholder>(busMixBank, name: "busMixBank");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				busses = s.SerializeObject<CListO<BusDef>>(busses, name: "busses");
 				limiters = s.SerializeObject<CListO<LimiterDef>>(limiters, name: "limiters");
 				pauseFadeIn = s.Serialize<float>(pauseFadeIn, name: "pauseFadeIn");
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 				playerNumberBusMix = s.SerializeObject<CListO<PlayerNumberBusMix>>(playerNumberBusMix, name: "playerNumberBusMix");
 				limiterStopFade = s.Serialize<float>(limiterStopFade, name: "limiterStopFade");
 				engineStopFade = s.Serialize<float>(engineStopFade, name: "engineStopFade");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				busses = s.SerializeObject<CListO<BusDef>>(busses, name: "busses");
 				pauseFadeIn = s.Serialize<float>(pauseFadeIn, name: "pauseFadeIn");
 				pauseFadeOut = s.Serialize<float>(pauseFadeOut, name: "pauseFadeOut");

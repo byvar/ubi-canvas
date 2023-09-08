@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public uint PhaseIdx;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					SlowDownDistValidation = s.Serialize<float>(SlowDownDistValidation, name: "SlowDownDistValidation");
 					BaseTimeToReachMaxSpeed = s.Serialize<float>(BaseTimeToReachMaxSpeed, name: "BaseTimeToReachMaxSpeed");

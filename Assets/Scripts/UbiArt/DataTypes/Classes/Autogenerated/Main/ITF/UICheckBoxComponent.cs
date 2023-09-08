@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public StringID checkBoxUncheckedID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 			} else {
 				checkBoxCheckedID = s.SerializeObject<StringID>(checkBoxCheckedID, name: "checkBoxCheckedID");
 				checkBoxUncheckedID = s.SerializeObject<StringID>(checkBoxUncheckedID, name: "checkBoxUncheckedID");

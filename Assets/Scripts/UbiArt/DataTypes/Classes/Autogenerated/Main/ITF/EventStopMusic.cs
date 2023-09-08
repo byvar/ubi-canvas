@@ -11,17 +11,17 @@ namespace UbiArt.ITF {
 		public uint setPriority;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				fadeTime = s.Serialize<float>(fadeTime, name: "fadeTime");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				fadeOutTime = s.Serialize<float>(fadeOutTime, name: "fadeOutTime");
 				stopOnNext = s.Serialize<uint>(stopOnNext, name: "stopOnNext");
 				eventDelay = s.Serialize<float>(eventDelay, name: "eventDelay");
 				priority = s.Serialize<uint>(priority, name: "priority");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					setPriority = s.Serialize<uint>(setPriority, name: "setPriority");
 				}
 			} else {

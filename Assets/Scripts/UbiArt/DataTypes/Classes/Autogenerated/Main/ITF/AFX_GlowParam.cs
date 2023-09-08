@@ -13,8 +13,8 @@ namespace UbiArt.ITF {
 		public float thresholdScale;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.RL) {
-				if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.VH || s.Settings.Game == Game.COL || s.Settings.Game == Game.RL) {
+				if (s.Settings.Game == Game.COL) {
 					use = s.Serialize<bool>(use, name: "use", options: CSerializerObject.Options.BoolAsByte);
 				} else {
 					use = s.Serialize<bool>(use, name: "use");

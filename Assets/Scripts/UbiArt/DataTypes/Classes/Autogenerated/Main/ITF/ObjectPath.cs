@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool absolute;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				levels = s.SerializeObject<CListO<ObjectPath.Level>>(levels, name: "levels");
 				id = s.Serialize<string>(id, name: "id");
 				absolute = s.Serialize<bool>(absolute, name: "absolute");

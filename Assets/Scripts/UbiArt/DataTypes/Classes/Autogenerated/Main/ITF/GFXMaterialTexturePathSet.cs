@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public Path diffuse_4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				diffuse = s.SerializeObject<Path>(diffuse, name: "diffuse");
 				back_light = s.SerializeObject<Path>(back_light, name: "back_light");
 				normal = s.SerializeObject<Path>(normal, name: "normal");
@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 				diffuse_2 = s.SerializeObject<Path>(diffuse_2, name: "diffuse_2");
 				back_light_2 = s.SerializeObject<Path>(back_light_2, name: "back_light_2");
 				anim_impostor = s.SerializeObject<Path>(anim_impostor, name: "anim_impostor");
-			} else if (s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.COL || s.Settings.Game == Game.VH) {
 				diffuse = s.SerializeObject<Path>(diffuse, name: "diffuse");
 				back_light = s.SerializeObject<Path>(back_light, name: "back_light");
 				normal = s.SerializeObject<Path>(normal, name: "normal");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 				anim_impostor = s.SerializeObject<Path>(anim_impostor, name: "anim_impostor");
 				diffuse_3 = s.SerializeObject<Path>(diffuse_3, name: "diffuse_3");
 				diffuse_4 = s.SerializeObject<Path>(diffuse_4, name: "diffuse_4");
-			} else if (s.Settings.game == Settings.Game.RM) {
+			} else if (s.Settings.Game == Game.RM) {
 				diffuse = s.SerializeObject<Path>(diffuse, name: "diffuse");
 				back_light = s.SerializeObject<Path>(back_light, name: "back_light");
 				normal = s.SerializeObject<Path>(normal, name: "normal");

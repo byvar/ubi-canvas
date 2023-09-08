@@ -72,7 +72,7 @@ namespace UbiArt.ITF {
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game) {
+				if (previousSettings.Game != settings.Game) {
 					ENGINE_VERSION = 0;
 				}
 			}

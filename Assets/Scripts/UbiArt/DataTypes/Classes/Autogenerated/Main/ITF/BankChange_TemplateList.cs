@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public CListO<BankChange_Template> redirectList_Origins;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 				redirectList_Origins = s.SerializeObject<CListO<BankChange_Template>>(redirectList_Origins, name: "redirectList");
 			} else {
 				redirectList = s.SerializeObject<CListO<TextureBankPath>>(redirectList, name: "redirectList");

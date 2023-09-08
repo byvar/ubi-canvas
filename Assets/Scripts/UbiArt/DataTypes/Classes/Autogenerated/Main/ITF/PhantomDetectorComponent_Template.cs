@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		public Enum_VH_0 Enum_VH_0__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				factionToDetect = s.Serialize<uint>(factionToDetect, name: "factionToDetect");
 				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				factionToDetect = s.Serialize<uint>(factionToDetect, name: "factionToDetect");
 				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
 				Enum_VH_0__2 = s.Serialize<Enum_VH_0>(Enum_VH_0__2, name: "Enum_VH_0__2");

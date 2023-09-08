@@ -10,8 +10,8 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
-			} else if(s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
+			} else if(s.Settings.Game == Game.COL) {
 				Name = s.SerializeObject<StringID>(Name, name: "Name");
 				soundList = s.SerializeObject<CListO<SoundDescriptor_Template>>(soundList, name: "soundList");
 				UseTriggeringZone = s.Serialize<bool>(UseTriggeringZone, name: "UseTriggeringZone", options: CSerializerObject.Options.BoolAsByte);

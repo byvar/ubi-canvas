@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public float maxTime = -1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				groundAnim = s.SerializeObject<StringID>(groundAnim, name: "groundAnim");
 				swimAnim = s.SerializeObject<StringID>(swimAnim, name: "swimAnim");
 				fallAnim = s.SerializeObject<StringID>(fallAnim, name: "fallAnim");

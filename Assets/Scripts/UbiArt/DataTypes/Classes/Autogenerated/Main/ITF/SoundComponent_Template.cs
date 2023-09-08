@@ -16,18 +16,18 @@ namespace UbiArt.ITF {
 		public bool unk_RFR;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RO) {
 				soundList = s.SerializeObject<CListO<SoundDescriptor_Template>>(soundList, name: "soundList");
 				defaultSound = s.SerializeObject<StringID>(defaultSound, name: "defaultSound");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
-			} else if (s.Settings.game == Settings.Game.RFR) {
+			} else if (s.Settings.Game == Game.RFR) {
 				soundList = s.SerializeObject<CListO<SoundDescriptor_Template>>(soundList, name: "soundList");
 				defaultSound = s.SerializeObject<StringID>(defaultSound, name: "defaultSound");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				unk_RFR = s.Serialize<bool>(unk_RFR, name: "unk_RFR");
-			} else if( s.Settings.game == Settings.Game.COL) {
+			} else if( s.Settings.Game == Game.COL) {
 				soundList = s.SerializeObject<CListO<SoundDescriptor_Template>>(soundList, name: "soundList");
 				defaultSound = s.SerializeObject<StringID>(defaultSound, name: "defaultSound");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
@@ -35,7 +35,7 @@ namespace UbiArt.ITF {
 				WwiseInputList = s.SerializeObject<CListO<WwiseInputDesc>>(WwiseInputList, name: "WwiseInputList");
 				RegisterRtpcListener = s.Serialize<int>(RegisterRtpcListener, name: "RegisterRtpcListener");
 				UseDefaultEmitter = s.Serialize<bool>(UseDefaultEmitter, name: "UseDefaultEmitter");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				soundList = s.SerializeObject<CListO<SoundDescriptor_Template>>(soundList, name: "soundList");
 				defaultSound = s.SerializeObject<StringID>(defaultSound, name: "defaultSound");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");

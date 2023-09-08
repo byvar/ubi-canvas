@@ -10,12 +10,12 @@ namespace UbiArt.ITF {
 		public float zTolerance;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					CM = s.SerializeObject<CamModifier>(CM, name: "CM");
 					CM_override = s.SerializeObject<CamModifierOverride>(CM_override, name: "CM_override");
 				}
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					cameraView = s.Serialize<uint>(cameraView, name: "cameraView");
 					ignoreAABB = s.Serialize<bool>(ignoreAABB, name: "ignoreAABB");
@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					localAABB = s.SerializeObject<AABB>(localAABB, name: "localAABB");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					cameraView = s.Serialize<uint>(cameraView, name: "cameraView");
 					ignoreAABB = s.Serialize<bool>(ignoreAABB, name: "ignoreAABB", options: CSerializerObject.Options.BoolAsByte);

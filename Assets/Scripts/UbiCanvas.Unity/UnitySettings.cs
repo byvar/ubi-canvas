@@ -16,10 +16,10 @@ public class UnitySettings {
 	private const string settingsFile = "Settings.txt";
 
 
-	public static Dictionary<Settings.Mode, string> GameDirs = new Dictionary<Settings.Mode, string>();
-	public static Dictionary<Settings.Mode, string> GameDirsWeb = new Dictionary<Settings.Mode, string>();
+	public static Dictionary<Mode, string> GameDirs = new Dictionary<Mode, string>();
+	public static Dictionary<Mode, string> GameDirsWeb = new Dictionary<Mode, string>();
 
-	public static Settings.Mode GameMode { get; set; } = Settings.Mode.RaymanLegendsPC;
+	public static Mode GameMode { get; set; } = Mode.RaymanLegendsPC;
 
     public static string SelectedLevelFile { get; set; }
 
@@ -39,7 +39,7 @@ public class UnitySettings {
 	public static string Export_OutputPathFolder { get; set; }
 
 	// Build mod IPK tool
-	public static Settings.Mode Tools_BuildModIPK_GameMode { get; set; } = Settings.Mode.RaymanLegendsPC;
+	public static Mode Tools_BuildModIPK_GameMode { get; set; } = Mode.RaymanLegendsPC;
 	public static string Tools_BuildModIPK_InputPath { get; set; }
 	public static string Tools_BuildModIPK_OriginalBundlesPath { get; set; }
 	public static string Tools_BuildModIPK_BundleBaseName { get; set; }
@@ -52,10 +52,20 @@ public class UnitySettings {
 	public static string Tools_AdventuresToLegends_GamePath { get; set; }
 
 	// Mode conversion tool
-	public static Settings.Mode Tools_ModeConversion_InputMode { get; set; } = Settings.Mode.RaymanOriginsPC;
+	public static Mode Tools_ModeConversion_InputMode { get; set; } = Mode.RaymanOriginsPC;
 	public static string Tools_ModeConversion_InputPath { get; set; }
-	public static Settings.Mode Tools_ModeConversion_OutputMode { get; set; } = Settings.Mode.RaymanLegendsPC;
+	public static Mode Tools_ModeConversion_OutputMode { get; set; } = Mode.RaymanLegendsPC;
 	public static string Tools_ModeConversion_OutputPath { get; set; }
+
+	private static readonly Dictionary<string, Mode> cmdModeNameDict = new() 
+	{
+		{ "ro_pc", Mode.RaymanOriginsPC },
+		{ "rl_pc", Mode.RaymanLegendsPC },
+		{ "rl_vita", Mode.RaymanLegendsVitaCatchThemAll },
+		{ "ra_android", Mode.RaymanAdventuresAndroid },
+		{ "rm_mac", Mode.RaymanMiniMacOS },
+		{ "col_pc", Mode.ChildOfLightPC },
+	};
 
 	/// <summary>
 	/// Static constructor loads in editor data at editor startup.
@@ -70,24 +80,24 @@ public class UnitySettings {
 
     private static void SerializeSettings(ISerializer s, bool cmdLine = false) {
         if (!cmdLine) {
-            Settings.Mode[] modes = (Settings.Mode[])Enum.GetValues(typeof(Settings.Mode));
-            foreach (Settings.Mode mode in modes) {
+            Mode[] modes = (Mode[])Enum.GetValues(typeof(Mode));
+            foreach (Mode mode in modes) {
                 string dir = GameDirs.ContainsKey(mode) ? GameDirs[mode] : "";
                 GameDirs[mode] = s.SerializeString("Directory" + mode.ToString(), dir);
             }
             if (Application.isEditor) {
-                foreach (Settings.Mode mode in modes) {
+                foreach (Mode mode in modes) {
                     string dir = GameDirsWeb.ContainsKey(mode) ? GameDirsWeb[mode] : "";
                     GameDirsWeb[mode] = s.SerializeString("WebDirectory" + mode.ToString(), dir);
                 }
             }
         }
         string modeString = s.SerializeString(nameof(GameMode), GameMode.ToString(), "mode", "m");
-        GameMode = Enum.TryParse<Settings.Mode>(modeString, out Settings.Mode gameMode) ? gameMode : GameMode;
+        GameMode = Enum.TryParse<Mode>(modeString, out Mode gameMode) ? gameMode : GameMode;
         if (cmdLine) {
-            if (Settings.cmdModeNameDict.ContainsKey(modeString)) {
-                GameMode = Settings.cmdModeNameDict[modeString];
-            }
+            if (cmdModeNameDict.TryGetValue(modeString, out Mode m)) {
+                GameMode = m;
+	        }
             if (FileSystem.mode == FileSystem.Mode.Web) {
                 string dir = GameDirsWeb.ContainsKey(GameMode) ? GameDirsWeb[GameMode] : "";
                 GameDirsWeb[GameMode] = s.SerializeString("WebDirectory", dir, "dir", "directory", "folder", "f", "d");
@@ -111,7 +121,7 @@ public class UnitySettings {
 
 
 		modeString = s.SerializeString(nameof(Tools_BuildModIPK_GameMode), Tools_BuildModIPK_GameMode.ToString());
-		Tools_BuildModIPK_GameMode = Enum.TryParse<Settings.Mode>(modeString, out Settings.Mode gameModeIPK) ? gameModeIPK : Tools_BuildModIPK_GameMode;
+		Tools_BuildModIPK_GameMode = Enum.TryParse<Mode>(modeString, out Mode gameModeIPK) ? gameModeIPK : Tools_BuildModIPK_GameMode;
 		Tools_BuildModIPK_BundleBaseName = s.SerializeString(nameof(Tools_BuildModIPK_BundleBaseName), Tools_BuildModIPK_BundleBaseName);
 		Tools_BuildModIPK_OriginalBundlesPath = s.SerializeString(nameof(Tools_BuildModIPK_OriginalBundlesPath), Tools_BuildModIPK_OriginalBundlesPath);
 		Tools_BuildModIPK_InputPath = s.SerializeString(nameof(Tools_BuildModIPK_InputPath), Tools_BuildModIPK_InputPath);
@@ -123,10 +133,10 @@ public class UnitySettings {
 		Tools_AdventuresToLegends_GamePath = s.SerializeString(nameof(Tools_AdventuresToLegends_GamePath), Tools_AdventuresToLegends_GamePath);
 
 		modeString = s.SerializeString(nameof(Tools_ModeConversion_InputMode), Tools_ModeConversion_InputMode.ToString());
-		Tools_ModeConversion_InputMode = Enum.TryParse<Settings.Mode>(modeString, out Settings.Mode gameModeConvInput) ? gameModeConvInput : Tools_ModeConversion_InputMode;
+		Tools_ModeConversion_InputMode = Enum.TryParse<Mode>(modeString, out Mode gameModeConvInput) ? gameModeConvInput : Tools_ModeConversion_InputMode;
 		Tools_ModeConversion_InputPath = s.SerializeString(nameof(Tools_ModeConversion_InputPath), Tools_ModeConversion_InputPath);
 		modeString = s.SerializeString(nameof(Tools_ModeConversion_OutputMode), Tools_ModeConversion_OutputMode.ToString());
-		Tools_ModeConversion_OutputMode = Enum.TryParse<Settings.Mode>(modeString, out Settings.Mode gameModeConvOutput) ? gameModeConvOutput : Tools_ModeConversion_OutputMode;
+		Tools_ModeConversion_OutputMode = Enum.TryParse<Mode>(modeString, out Mode gameModeConvOutput) ? gameModeConvOutput : Tools_ModeConversion_OutputMode;
 		Tools_ModeConversion_OutputPath = s.SerializeString(nameof(Tools_ModeConversion_OutputPath), Tools_ModeConversion_OutputPath);
 	}
 

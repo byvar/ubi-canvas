@@ -5,8 +5,8 @@ namespace UbiArt.ITF {
 	public partial class CriteriaDesc {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR
-				|| s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR
+			                                || s.Settings.Game == Game.RO || s.Settings.Game == Game.RL) {
 				SetEvaluationEnum();
 			} else {
 				if (evaluation == Enum_evaluation.Undefined) {

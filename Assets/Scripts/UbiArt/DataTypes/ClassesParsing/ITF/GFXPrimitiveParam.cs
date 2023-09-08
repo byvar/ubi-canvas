@@ -11,8 +11,8 @@ namespace UbiArt.ITF {
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game) {
-					if ((previousSettings.game == Settings.Game.RA || previousSettings.game == Settings.Game.RM) && settings.game == Settings.Game.RL) {
+				if (previousSettings.Game != settings.Game) {
+					if ((previousSettings.Game == Game.RA || previousSettings.Game == Game.RM) && settings.Game == Game.RL) {
 						if (gfxOccludeInfo != GFX_OCCLUDE_INFO.ZPASS_ONLY) {
 							gfxOccludeInfo2 = (GFX_OCCLUDE_INFO2)(int)gfxOccludeInfo;
 						}

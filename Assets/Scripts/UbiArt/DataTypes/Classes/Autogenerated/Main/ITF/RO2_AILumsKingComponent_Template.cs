@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public float timeBeforeTaken = 0.8f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				lumKingMusicTimer = s.Serialize<float>(lumKingMusicTimer, name: "lumKingMusicTimer");
 				lumKingMusicVolume = s.SerializeObject<Volume>(lumKingMusicVolume, name: "lumKingMusicVolume");
 				lumKingValue = s.Serialize<uint>(lumKingValue, name: "lumKingValue");

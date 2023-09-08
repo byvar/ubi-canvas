@@ -60,9 +60,9 @@ namespace UbiArt.Bundle {
 		}
 
 		void Reinit(Context context) {
-			Version = context.Settings.ipkVersion;
-			EngineSignature = context.Settings.engineSignature;
-			if(context.Settings.game == Settings.Game.RL)
+			Version = context.Settings.IpkVersion;
+			EngineSignature = context.Settings.EngineSignature;
+			if(context.Settings.Game == Game.RL)
 				EngineVersion = 0;
 		}
 	}

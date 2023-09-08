@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public float pitch;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				bus = s.SerializeObject<StringID>(bus, name: "bus");
 				pitch = s.Serialize<float>(pitch, name: "pitch");
 			}

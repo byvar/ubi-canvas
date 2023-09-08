@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public float sequenceSpawnDelta;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				bones = s.SerializeObject<CArrayO<StringID>>(bones, name: "bones");
 				arrivalAnimDuration = s.Serialize<float>(arrivalAnimDuration, name: "arrivalAnimDuration");
 				sequenceDuration = s.Serialize<float>(sequenceDuration, name: "sequenceDuration");

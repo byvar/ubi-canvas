@@ -1,148 +1,117 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿#nullable enable
+using System;
 
-namespace UbiArt {
-	public class Settings {
-		public enum Mode {
-			[System.ComponentModel.Description("Rayman Origins (PC)")] RaymanOriginsPC,
-			[System.ComponentModel.Description("Rayman Legends (PC)")] RaymanLegendsPC,
-			[System.ComponentModel.Description("Rayman Legends (PSV)")] RaymanLegendsVitaCatchThemAll,
-			//RaymanAdventuresIOS,
-			[System.ComponentModel.Description("Rayman Adventures (Android)")] RaymanAdventuresAndroid,
-			[System.ComponentModel.Description("Rayman Mini (MacOS)")] RaymanMiniMacOS,
+namespace UbiArt
+{
+	public class Settings
+	{
+		#region Public Properties
 
-			[System.ComponentModel.Description("Child of Light (PC)")] ChildOfLightPC
+		// TODO: The default values are a bit all over the place. Perhaps pick one to use as default? Or require parameters from constructor?
+		public Mode Mode { get; set; } = Mode.RaymanLegendsPC;
+		public EngineVersion EngineVersion { get; set; } = EngineVersion.RO;
+		public Game Game { get; set; } = Game.None;
+		public GamePlatform Platform { get; set; } = GamePlatform.None;
+		public SerializerType SerializerType { get; set; } = SerializerType.Binary;
+		public Endian Endian { get; set; } = Endian.Little;
+		public VersionFlags VersionFlags { get; set; } = VersionFlags.None;
+		public bool SsesSerializeFlags { get; set; } = true;
+		public bool IsCatchThemAll { get; set; }
+		public bool Cooked { get; set; } = true;
+		public bool LoadFromIpk { get; set; }
+		public string[]? Bundles { get; set; }
+		public uint IpkVersion { get; set; }
+		public uint EngineSignature { get; set; }
+
+		public bool IsLittleEndian => Endian == Endian.Little;
+
+		public string PlatformString => Platform switch
+		{
+			GamePlatform.PC => "PC",
+			GamePlatform.Android => "android",
+			GamePlatform.MacOS => "macos",
+			GamePlatform.Vita => "VITA",
+			GamePlatform.PC32 => "PC32",
+			_ => throw new InvalidOperationException($"Can not get a platform string for the platform {Platform}")
 		};
-		public Mode mode = Mode.RaymanLegendsPC;
 
-
-		public static readonly Dictionary<string, Mode> cmdModeNameDict = new Dictionary<string, Mode>() {
-			{ "ro_pc", Mode.RaymanOriginsPC },
-			{ "rl_pc", Mode.RaymanLegendsPC },
-			{ "rl_vita", Mode.RaymanLegendsVitaCatchThemAll },
-			{ "ra_android", Mode.RaymanAdventuresAndroid },
-			{ "rm_mac", Mode.RaymanMiniMacOS },
-			{ "col_pc", Mode.ChildOfLightPC },
-		};
-
-
-		// TODO: Move these enums out of Settings folder into Enums
-		public enum EngineVersion {
-			None = -1,
-			RO = 0,
-			RL = 1
-		};
-		public enum Game { None, RO, RL, RA, RJR, RFR, COL, VH, RM };
-		public enum Platform { None, PC, iOS, Android, WiiU, Vita, MacOS, PC32 };
-		public enum SerializerType { Binary, TagBinary };
-
-		public EngineVersion engineVersion;
-		public Game game;
-		public Platform platform;
-		public Endian Endian { get; set; }
-		public VersionFlags versionFlags;
-		public SerializerType serializerType = SerializerType.Binary;
-		public bool usesSerializeFlags = true;
-		public bool isCatchThemAll = false;
-		public bool cooked = true;
-		public bool loadFromIPK = false;
-		public static Encoding StringEncoding { get; set; } = Encoding.UTF8;
-		public string[] bundles;
-		public uint ipkVersion;
-		public uint engineSignature;
-
-		public bool IsLittleEndian {
-			get { return Endian == Endian.Little; }
-		}
-		public string PlatformString {
-			get {
-				switch (platform) {
-					case Platform.PC: return "PC";
-					case Platform.Android: return "android";
-					case Platform.MacOS: return "macos";
-					case Platform.Vita: return "VITA";
-					case Platform.PC32: return "PC32";
-					default: return null;
-				}
-			}
-		}
-		public string ITFDirectory {
-			get {
-				if (cooked) {
-					if (engineVersion > EngineVersion.RO) {
-						return "cache/itf_cooked/" + PlatformString.ToLower() + "/";
-					} else {
-						return "itf_cooked/" + PlatformString.ToLower() + "/";
-					}
-				} else {
-					return "";
-				}
-			}
-		}
-		public string ITFCacheDirectory {
-			get {
-				if (cooked) {
-					if (engineVersion > EngineVersion.RO) {
-						return "cache/itf_cache/" + PlatformString.ToLower() + "/";
-					} else {
-						return "itf_cache/" + PlatformString.ToLower() + "/";
-					}
-				} else {
-					return "";
-				}
+		public string ITFDirectory
+		{
+			get
+			{
+				if (!Cooked)
+					return String.Empty;
+				else if (EngineVersion > EngineVersion.RO)
+					return "cache/itf_cooked/" + PlatformString.ToLower() + "/";
+				else
+					return "itf_cooked/" + PlatformString.ToLower() + "/";
 			}
 		}
 
-		public static Settings Init(Mode mode) {
-			Settings s = null;
-			if (settingsDict.ContainsKey(mode)) {
-				s = settingsDict[mode];
+		public string ITFCacheDirectory
+		{
+			get
+			{
+				if (!Cooked)
+					return String.Empty;
+				else if (EngineVersion > EngineVersion.RO)
+					return "cache/itf_cache/" + PlatformString.ToLower() + "/";
+				else
+					return "itf_cache/" + PlatformString.ToLower() + "/";
 			}
-			if (s != null) s.mode = mode;
-			return s;
 		}
 
-		public static Settings ROPC = new Settings() {
-			engineVersion = EngineVersion.RO,
-			game = Game.RO,
-			platform = Platform.PC,
+		#endregion
+
+		#region Defined Settings
+
+		public static Settings RO_PC = new()
+		{
+			EngineVersion = EngineVersion.RO,
+			Game = Game.RO,
+			Platform = GamePlatform.PC,
 			Endian = Endian.Big,
-			versionFlags = VersionFlags.Origins,
-			usesSerializeFlags = false,
-			ipkVersion = 3,
-			engineSignature = 0x345429C7,
-			bundles = new string[] { "bundle" }
+			VersionFlags = VersionFlags.Origins,
+			SsesSerializeFlags = false,
+			IpkVersion = 3,
+			EngineSignature = 0x345429C7,
+			Bundles = new[] { "bundle" }
 		};
-		public static Settings RLPC = new Settings() {
-			engineVersion = EngineVersion.RL,
-			game = Game.RL,
-			platform = Platform.PC,
+
+		public static Settings RL_PC = new()
+		{
+			EngineVersion = EngineVersion.RL,
+			Game = Game.RL,
+			Platform = GamePlatform.PC,
 			Endian = Endian.Big,
-			versionFlags = VersionFlags.Legends,
-			ipkVersion = 5,
-			engineSignature = 0x4BFC7C03,
-			bundles = new string[] {
-				"persistentLoading", "Bundle"
-			}
+			VersionFlags = VersionFlags.Legends,
+			IpkVersion = 5,
+			EngineSignature = 0x4BFC7C03,
+			Bundles = new[] { "persistentLoading", "Bundle" }
 		};
-		public static Settings RAIOS = new Settings() {
-			engineVersion = EngineVersion.RL,
-			game = Game.RA,
-			platform = Platform.iOS,
+
+		public static Settings RA_iOS = new()
+		{
+			EngineVersion = EngineVersion.RL,
+			Game = Game.RA,
+			Platform = GamePlatform.iOS,
 			Endian = Endian.Big,
-			versionFlags = VersionFlags.Adventures,
-			serializerType = SerializerType.TagBinary
+			VersionFlags = VersionFlags.Adventures,
+			SerializerType = SerializerType.TagBinary
 		};
-		public static Settings RAAndroid = new Settings() {
-			engineVersion = EngineVersion.RL,
-			game = Game.RA,
-			platform = Platform.Android,
+
+		public static Settings RA_Android = new()
+		{
+			EngineVersion = EngineVersion.RL,
+			Game = Game.RA,
+			Platform = GamePlatform.Android,
 			Endian = Endian.Big,
-			versionFlags = VersionFlags.Adventures,
-			serializerType = SerializerType.TagBinary,
-			ipkVersion = 8,
-			engineSignature = 0x2FB967E7,
-			bundles = new string[] {
+			VersionFlags = VersionFlags.Adventures,
+			SerializerType = SerializerType.TagBinary,
+			IpkVersion = 8,
+			EngineSignature = 0x2FB967E7,
+			Bundles = new[] 
+			{
 				"bundle",
 				"bundlemain",
 				"bundleonboardingadv1",
@@ -172,44 +141,65 @@ namespace UbiArt {
 
 			}
 		};
-		public static Settings RMMac = new Settings() {
-			engineVersion = EngineVersion.RL,
-			game = Game.RM,
-			platform = Platform.MacOS,
+
+		public static Settings RM_MacOS = new()
+		{
+			EngineVersion = EngineVersion.RL,
+			Game = Game.RM,
+			Platform = GamePlatform.MacOS,
 			Endian = Endian.Big,
-			versionFlags = VersionFlags.Adventures,
-			serializerType = SerializerType.TagBinary,
-			ipkVersion = 8,
-			engineSignature = 0x2FB967E7,
-			bundles = new string[] { "bundle" }
-		};
-		public static Settings RLVita = new Settings() {
-			engineVersion = EngineVersion.RL,
-			game = Game.RL,
-			platform = Platform.Vita,
-			Endian = Endian.Big,
-			versionFlags = VersionFlags.Legends,
-			isCatchThemAll = true,
-			bundles = new string[] { "Bundle" }
+			VersionFlags = VersionFlags.Adventures,
+			SerializerType = SerializerType.TagBinary,
+			IpkVersion = 8,
+			EngineSignature = 0x2FB967E7,
+			Bundles = new[] { "bundle" }
 		};
 
-		public static Settings COLPC = new Settings() {
-			engineVersion = EngineVersion.RL,
-			game = Game.COL,
-			platform = Platform.PC32,
+		public static Settings RL_Vita = new()
+		{
+			EngineVersion = EngineVersion.RL,
+			Game = Game.RL,
+			Platform = GamePlatform.Vita,
 			Endian = Endian.Big,
-			versionFlags = VersionFlags.Legends,
-			ipkVersion = 5,
-			engineSignature = 0x4BFC7C03,
+			VersionFlags = VersionFlags.Legends,
+			IsCatchThemAll = true,
+			Bundles = new[] { "Bundle" }
 		};
 
-		public static readonly Dictionary<Mode, Settings> settingsDict = new Dictionary<Mode, Settings>() {
-			{ Mode.RaymanOriginsPC, ROPC },
-			{ Mode.RaymanLegendsPC, RLPC },
-			{ Mode.RaymanLegendsVitaCatchThemAll, RLVita },
-			{ Mode.RaymanAdventuresAndroid, RAAndroid },
-			{ Mode.RaymanMiniMacOS, RMMac },
-			{ Mode.ChildOfLightPC, COLPC },
+		public static Settings COL_PC32 = new()
+		{
+			EngineVersion = EngineVersion.RL,
+			Game = Game.COL,
+			Platform = GamePlatform.PC32,
+			Endian = Endian.Big,
+			VersionFlags = VersionFlags.Legends,
+			IpkVersion = 5,
+			EngineSignature = 0x4BFC7C03,
 		};
+
+		#endregion
+
+		#region Public Methods
+
+		public static Settings? FromMode(Mode mode)
+		{
+			Settings? settings = mode switch
+			{
+				Mode.RaymanOriginsPC => RO_PC,
+				Mode.RaymanLegendsPC => RL_PC,
+				Mode.RaymanLegendsVitaCatchThemAll => RL_Vita,
+				Mode.RaymanAdventuresAndroid => RA_Android,
+				Mode.RaymanMiniMacOS => RM_MacOS,
+				Mode.ChildOfLightPC => COL_PC32,
+				_ => null,
+			};
+
+			if (settings != null)
+				settings.Mode = mode;
+
+			return settings;
+		}
+
+		#endregion
 	}
 }

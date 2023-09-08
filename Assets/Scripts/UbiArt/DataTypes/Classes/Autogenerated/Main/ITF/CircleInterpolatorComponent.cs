@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public float outerRadius;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				innerRadius = s.Serialize<float>(innerRadius, name: "innerRadius");
 				outerRadius = s.Serialize<float>(outerRadius, name: "outerRadius");
 			} else {

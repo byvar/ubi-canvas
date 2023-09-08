@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Enum_RFR_0 Enum_RFR_0__3;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RFR) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					float__0 = s.Serialize<float>(float__0, name: "float__0");
 					float__1 = s.Serialize<float>(float__1, name: "float__1");

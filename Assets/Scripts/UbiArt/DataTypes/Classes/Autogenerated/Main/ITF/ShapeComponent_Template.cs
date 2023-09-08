@@ -15,14 +15,14 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
 				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
-			} else if (s.Settings.game == Settings.Game.RO) {
+			} else if (s.Settings.Game == Game.RO) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 				}
 				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
@@ -41,10 +41,10 @@ namespace UbiArt.ITF {
 				shapes = s.SerializeObject<CListO<ShapeData_Template>>(shapes, name: "shapes");
 				useAABBShape = s.Serialize<bool>(useAABBShape, name: "useAABBShape");
 				bone = s.SerializeObject<StringID>(bone, name: "bone");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					bone3D = s.SerializeObject<StringID>(bone3D, name: "bone3D");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");

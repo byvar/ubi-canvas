@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public float weight = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				animationName = s.SerializeObject<StringID>(animationName, name: "animationName");
 				usePatches = s.Serialize<bool>(usePatches, name: "usePatches");
 				useEvents = s.Serialize<bool>(useEvents, name: "useEvents");

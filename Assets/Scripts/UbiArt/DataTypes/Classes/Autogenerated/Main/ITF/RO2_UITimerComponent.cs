@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public bool isHudEventSensitive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				displayIcon = s.Serialize<bool>(displayIcon, name: "displayIcon");
 				inTextIntgration = s.SerializeObject<SmartLocId>(inTextIntgration, name: "inTextIntgration");
 				counterType = s.Serialize<CounterType>(counterType, name: "counterType");

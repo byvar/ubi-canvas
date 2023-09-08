@@ -128,7 +128,7 @@ namespace UbiArt.ITF {
 					mesh.uv = meshBuildData.value.AnimVertexList.Select(v => v.uv1.GetUnityVector()).ToArray();
 					mesh.SetUVs(1, meshBuildData.value.AnimVertexList.Select(v => v.uv2.GetUnityVector()).ToList());
 					mesh.SetUVs(2, meshBuildData.value.AnimVertexList.Select(v => v.uv3.GetUnityVector()).ToList());
-					if (UbiArtContext.Settings.game != Settings.Game.COL) {
+					if (UbiArtContext.Settings.Game != Game.COL) {
 						mesh.SetUVs(3, meshBuildData.value.AnimVertexList.Select(v => v.uv4.GetUnityVector()).ToList());
 					}
 					mesh.colors = meshBuildData.value.AnimVertexList.Select(v => v.color.GetUnityColor()).ToArray();

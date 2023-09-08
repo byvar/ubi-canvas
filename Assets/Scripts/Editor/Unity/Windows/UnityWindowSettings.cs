@@ -31,7 +31,7 @@ public class UnityWindowSettings : UnityWindow {
 		EditorGUI.BeginChangeCheck();
 		// Game Mode
 		DrawHeader("Mode");
-		UnitySettings.GameMode = EditorField<Settings.Mode>("Game", UnitySettings.GameMode);
+		UnitySettings.GameMode = EditorField<Mode>("Game", UnitySettings.GameMode);
 
 
 		// Scene file
@@ -49,12 +49,12 @@ public class UnityWindowSettings : UnityWindow {
 		} else {
 			if (EditorGUI.DropdownButton(rect, new GUIContent(buttonString), FocusType.Passive)) {
 				// Initialize settings
-				var s = Settings.Init(UnitySettings.GameMode);
+				var s = Settings.FromMode(UnitySettings.GameMode);
 				string directory = (CurrentGameDataDir + "/" + s.ITFDirectory).Replace(Path.DirectorySeparatorChar, '/');
 				if (!directory.EndsWith("/")) directory += "/";
 				while (directory.Contains("//")) directory = directory.Replace("//", "/");
 				string extension = "*.isc";
-				if (s.cooked) {
+				if (s.Cooked) {
 					extension += ".ckd";
 				}
 				string[] extensions = new string[] { extension };
@@ -79,13 +79,13 @@ public class UnityWindowSettings : UnityWindow {
 
 		// Directories
 		DrawHeader("Directories" + (fileMode == FileSystem.Mode.Web ? " (Web)" : ""));
-		Settings.Mode[] modes = (Settings.Mode[])Enum.GetValues(typeof(Settings.Mode));
+		Mode[] modes = (Mode[])Enum.GetValues(typeof(Mode));
 		if (fileMode == FileSystem.Mode.Web) {
-			foreach (Settings.Mode mode in modes) {
+			foreach (Mode mode in modes) {
 				UnitySettings.GameDirsWeb[mode] = EditorField(mode.GetDescription(), UnitySettings.GameDirsWeb.ContainsKey(mode) ? UnitySettings.GameDirsWeb[mode] : "");
 			}
 		} else {
-			foreach (Settings.Mode mode in modes) {
+			foreach (Mode mode in modes) {
 				UnitySettings.GameDirs[mode] = DirectoryField(GetNextRect(), mode.GetDescription(), UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "");
 			}
 		}
@@ -136,7 +136,7 @@ public class UnityWindowSettings : UnityWindow {
 
 	private string CurrentGameDataDir {
 		get {
-			Dictionary<Settings.Mode, string> GameDirs =
+			Dictionary<Mode, string> GameDirs =
 				EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL ? UnitySettings.GameDirsWeb : UnitySettings.GameDirs;
 			if (GameDirs.ContainsKey(UnitySettings.GameMode)) {
 				return (GameDirs[UnitySettings.GameMode] ?? "");

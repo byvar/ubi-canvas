@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 		public uint nbTickleRewarded;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
 					appearType2 = s.Serialize<Enum_appearType2>(appearType2, name: "appearType");

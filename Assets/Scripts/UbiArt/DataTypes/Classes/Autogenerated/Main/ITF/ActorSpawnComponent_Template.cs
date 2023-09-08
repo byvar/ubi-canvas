@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool transmitAlwaysActive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				spawnDelayed = s.Serialize<bool>(spawnDelayed, name: "spawnDelayed");
 				spawnActors = s.SerializeObject<CListO<ActorSpawnComponent_Template.SpawnData>>(spawnActors, name: "spawnActors");
 			} else {
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 			public BasicString spawnActorBoneNameB;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+				if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 					actorLua = s.SerializeObject<Path>(actorLua, name: "actorLua");
 					spawnActorBoneNameB = s.SerializeObject<BasicString>(spawnActorBoneNameB, name: "spawnActorBoneNameB");
 					polyline = s.SerializeObject<StringID>(polyline, name: "polyline");

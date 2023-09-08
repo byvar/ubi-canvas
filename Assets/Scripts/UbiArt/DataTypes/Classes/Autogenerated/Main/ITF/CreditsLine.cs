@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 				type = s.Serialize<uint>(type, name: "type");
 				flag = s.Serialize<uint>(flag, name: "flag");
 				text = s.Serialize<CString>(text, name: "text");

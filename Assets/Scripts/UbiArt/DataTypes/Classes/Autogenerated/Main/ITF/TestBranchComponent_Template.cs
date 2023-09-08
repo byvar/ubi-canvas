@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public uint debugMode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				width = s.Serialize<float>(width, name: "width");
 				attachToEnd = s.Serialize<bool>(attachToEnd, name: "attachToEnd", options: CSerializerObject.Options.BoolAsByte);
 				tileLength = s.Serialize<float>(tileLength, name: "tileLength");

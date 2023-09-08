@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 			if (IsFirstLoad) {
 				Loader l = s.Context.Loader;
 
-				if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+				if (s.Settings.EngineVersion > EngineVersion.RO) {
 					l.LoadFile<GenericFile<GFXMaterialShader_Template>>(MatShader, result => shader = result);
 
 					l.LoadFile<GenericFile<FriseConfig>>(ConfigName, result => {
@@ -31,9 +31,9 @@ namespace UbiArt.ITF {
 
 		protected override void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game) {
-					if ((previousSettings.game == Settings.Game.RA || previousSettings.game == Settings.Game.RM) &&
-						!(settings.game == Settings.Game.RA || settings.game == Settings.Game.RM)) {
+				if (previousSettings.Game != settings.Game) {
+					if ((previousSettings.Game == Game.RA || previousSettings.Game == Game.RM) &&
+						!(settings.Game == Game.RA || settings.Game == Game.RM)) {
 						// Check components
 						if (COMPONENTS != null && COMPONENTS.Count > 0) {
 							c.SystemLogger?.LogWarning($"Frise with components: {USERFRIENDLY}");

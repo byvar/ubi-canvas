@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public Generic<Event> deathMusicEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				faction = s.Serialize<uint>(faction, name: "faction");
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				tutoPath = s.SerializeObject<Path>(tutoPath, name: "tutoPath");

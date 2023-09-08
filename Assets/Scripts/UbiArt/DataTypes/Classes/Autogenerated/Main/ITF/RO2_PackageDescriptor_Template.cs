@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 			decorationBrickPath = s.SerializeObject<Path>(decorationBrickPath, name: "decorationBrickPath");
 			hideDecoration = s.Serialize<bool>(hideDecoration, name: "hideDecoration");
 			priority = s.Serialize<int>(priority, name: "priority");
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				alternatePriority = priority;
 			} else {
 				alternatePriority = s.Serialize<int>(alternatePriority, name: "alternatePriority");

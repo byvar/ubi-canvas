@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		public float moveSavedCurrentCursor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					saveOnCheckpoint = s.Serialize<bool>(saveOnCheckpoint, name: "saveOnCheckpoint");
 					touchDetectCooldown = s.Serialize<uint>(touchDetectCooldown, name: "touchDetectCooldown");

@@ -10,10 +10,10 @@ namespace UbiArt.ITF {
 		public bool fullscreenMenu;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				loadResource = s.Serialize<bool>(loadResource, name: "loadResource");
 				menuType2 = s.Serialize<MenuType2>(menuType2, name: "menuType");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				loadResource = s.Serialize<bool>(loadResource, name: "loadResource");
 				afxDuration = s.Serialize<float>(afxDuration, name: "afxDuration");
 				menuType3 = s.Serialize<MenuType3>(menuType3, name: "menuType");

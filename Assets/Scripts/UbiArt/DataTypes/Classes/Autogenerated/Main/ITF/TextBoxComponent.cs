@@ -23,18 +23,18 @@ namespace UbiArt.ITF {
 		public Vec2d offsetLangage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					style = s.Serialize<uint>(style, name: "style");
 					offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 					scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 					area = s.SerializeObject<Vec2d>(area, name: "area");
-					if (s.Settings.platform != Settings.Platform.Vita) {
+					if (s.Settings.Platform != GamePlatform.Vita) {
 						maxWidth = s.Serialize<float>(maxWidth, name: "maxWidth");
 					}
 					rawText = s.Serialize<string>(rawText, name: "rawText");
 					locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
-					if (s.Settings.platform != Settings.Platform.Vita) {
+					if (s.Settings.Platform != GamePlatform.Vita) {
 						scaleToMatchWithArea = s.Serialize<bool>(scaleToMatchWithArea, name: "scaleToMatchWithArea");
 					}
 					autoScrollSpeed = s.Serialize<float>(autoScrollSpeed, name: "autoScrollSpeed");
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 					overridingVAlignment = s.Serialize<FONT>(overridingVAlignment, name: "overridingVAlignment");
 					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					style = s.Serialize<uint>(style, name: "style");
 					offset = s.SerializeObject<Vec2d>(offset, name: "offset");

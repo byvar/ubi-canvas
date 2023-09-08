@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public StringID impostorBoneName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH) {
 				forcedAABB = s.SerializeObject<AABB>(forcedAABB, name: "forcedAABB");
 				materialList = s.SerializeObject<CListO<GFXMaterialSerializable>>(materialList, name: "materialList");
 				mesh3D = s.SerializeObject<Path>(mesh3D, name: "mesh3D");
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				force2DRender = s.Serialize<bool>(force2DRender, name: "force2DRender");
 				animationNode = s.SerializeObject<StringID>(animationNode, name: "animationNode");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				forcedAABB = s.SerializeObject<AABB>(forcedAABB, name: "forcedAABB");
 				materialList = s.SerializeObject<CListO<GFXMaterialSerializable>>(materialList, name: "materialList");
 				mesh3D = s.SerializeObject<Path>(mesh3D, name: "mesh3D");

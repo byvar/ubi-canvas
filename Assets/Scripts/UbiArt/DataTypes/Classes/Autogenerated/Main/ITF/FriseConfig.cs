@@ -78,9 +78,9 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
+			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RJR) {
 				throw new Exception(s.CurrentPointer + " - FriseConfig is internal/purebinary in RO version, but you can figure it out with RFR. TODO!");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				gameMaterialExtremityStart = s.SerializeObject<Path>(gameMaterialExtremityStart, name: "gameMaterialExtremityStart");
 				gameMaterialExtremityStop = s.SerializeObject<Path>(gameMaterialExtremityStop, name: "gameMaterialExtremityStop");
@@ -99,7 +99,7 @@ namespace UbiArt.ITF {
 				isUvFlipY = s.Serialize<bool>(isUvFlipY, name: "isUvFlipY");
 				isRatioFixed = s.Serialize<bool>(isRatioFixed, name: "isRatioFixed");
 				smoothFactorVisual = s.Serialize<float>(smoothFactorVisual, name: "smoothFactorVisual");
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					Vita_00 = s.Serialize<float>(Vita_00, name: nameof(Vita_00));
 				}
 				scale = s.Serialize<float>(scale, name: "scale");
@@ -126,7 +126,7 @@ namespace UbiArt.ITF {
 				isDigShape = s.Serialize<bool>(isDigShape, name: "isDigShape");
 				isLockedDigShape = s.Serialize<bool>(isLockedDigShape, name: "isLockedDigShape");
 				switchExtremityAuto = s.Serialize<bool>(switchExtremityAuto, name: "switchExtremityAuto");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					offsetExtremity = s.Serialize<float>(offsetExtremity, name: "offsetExtremity");
 				}
 				if (s.HasFlags(SerializeFlags.Flags9)) {
@@ -155,7 +155,7 @@ namespace UbiArt.ITF {
 					smoothVisual = s.Serialize<bool>(smoothVisual, name: "smoothVisual");
 				}
 				PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				gameMaterialExtremityStart = s.SerializeObject<Path>(gameMaterialExtremityStart, name: "gameMaterialExtremityStart");
 				gameMaterialExtremityStop = s.SerializeObject<Path>(gameMaterialExtremityStop, name: "gameMaterialExtremityStop");
@@ -225,7 +225,7 @@ namespace UbiArt.ITF {
 					smoothVisual = s.Serialize<bool>(smoothVisual, name: "smoothVisual", options: CSerializerObject.Options.BoolAsByte);
 				}
 				PrimitiveParameters = s.SerializeObject<GFXPrimitiveParam>(PrimitiveParameters, name: "PrimitiveParameters");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				gameMaterial = s.SerializeObject<Path>(gameMaterial, name: "gameMaterial");
 				gameMaterialExtremityStart = s.SerializeObject<Path>(gameMaterialExtremityStart, name: "gameMaterialExtremityStart");
 				gameMaterialExtremityStop = s.SerializeObject<Path>(gameMaterialExtremityStop, name: "gameMaterialExtremityStop");

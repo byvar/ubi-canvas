@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public EValueType2 type2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.VH || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");
 				type2 = s.Serialize<EValueType2>(type2, name: "type");

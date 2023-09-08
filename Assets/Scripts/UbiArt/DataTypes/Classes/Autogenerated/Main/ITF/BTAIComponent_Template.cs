@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public uint faction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				behaviorTree = s.SerializeObject<BehaviorTree_Template>(behaviorTree, name: "behaviorTree");
 			} else {
 				behaviorTree = s.SerializeObject<BehaviorTree_Template>(behaviorTree, name: "behaviorTree");

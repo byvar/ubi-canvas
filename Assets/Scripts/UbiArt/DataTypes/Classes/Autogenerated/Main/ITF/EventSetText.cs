@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public uint styleIndex;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				smartLocId = s.SerializeObject<Placeholder>(smartLocId, name: "smartLocId");
 				styleIndex = s.Serialize<uint>(styleIndex, name: "styleIndex");
 			} else {

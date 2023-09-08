@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public GFX_BLEND blendmode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR) {
 				texture = s.SerializeObject<Path>(texture, name: "texture");
 				nbFrames = s.Serialize<uint>(nbFrames, name: "nbFrames");
 				trailFaidingTime = s.Serialize<float>(trailFaidingTime, name: "trailFaidingTime");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
 				color = s.SerializeObject<Color>(color, name: "color");
 				attachBone = s.SerializeObject<StringID>(attachBone, name: "attachBone");
-			} else if(s.Settings.game == Settings.Game.RL) {
+			} else if(s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}

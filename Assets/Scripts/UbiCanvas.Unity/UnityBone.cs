@@ -107,7 +107,7 @@ public class UnityBone : MonoBehaviour {
 				globalAngle = bindRotation + localRotation;
 			}
 			computedScale = Vector3.Scale(localScale, bindScale);
-			if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
+			if (c.Settings.EngineVersion == EngineVersion.RO) {
 				transform.localScale = new Vector3(computedScale.x * xScaleMultiplier, computedScale.y, 1f);
 			} else {
 				transform.localScale = computedScale;

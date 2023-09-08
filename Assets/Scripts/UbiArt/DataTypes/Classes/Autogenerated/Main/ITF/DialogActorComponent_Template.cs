@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public float widthTextAreaMax;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				balloonPath = s.SerializeObject<Path>(balloonPath, name: "balloonPath");
 				balloon3DPath = s.SerializeObject<Path>(balloon3DPath, name: "balloon3DPath");
 				actorSnapBone = s.SerializeObject<StringID>(actorSnapBone, name: "actorSnapBone");

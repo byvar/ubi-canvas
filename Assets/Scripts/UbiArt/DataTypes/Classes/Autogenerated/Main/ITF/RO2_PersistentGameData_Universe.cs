@@ -433,7 +433,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				score = s.SerializeObject<RO2_PersistentGameData_Score>(score, name: "score");
 				profile = s.SerializeObject<RichProfile>(profile, name: "profile");
 				bubbleDreamer = s.SerializeObject<RO2_PersistentGameData_BubbleDreamerData>(bubbleDreamer, name: "bubbleDreamer");

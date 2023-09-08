@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public bool disableCollisions = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				movement = s.SerializeObject<Vec3d>(movement, name: "movement");
 				tangentMode = s.Serialize<TangentMode>(tangentMode, name: "tangentMode");
 				startTangent = s.SerializeObject<Vec3d>(startTangent, name: "startTangent");

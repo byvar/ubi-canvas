@@ -8,11 +8,11 @@ namespace UbiArt.ITF {
 		public int StopOnDestroy;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				WwiseEventGUID = s.SerializeObject<StringID>(WwiseEventGUID, name: "WwiseEventGUID");
 				WwiseMetronomeID2 = s.Serialize<Enum_WwiseMetronomeID>(WwiseMetronomeID2, name: "WwiseMetronomeID");
 				StopOnDestroy = s.Serialize<int>(StopOnDestroy, name: "StopOnDestroy");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				WwiseEventGUID = s.SerializeObject<StringID>(WwiseEventGUID, name: "WwiseEventGUID");
 				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");
 			} else {

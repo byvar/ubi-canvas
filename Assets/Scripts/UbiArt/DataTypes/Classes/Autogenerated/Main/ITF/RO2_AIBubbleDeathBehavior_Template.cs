@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 		public bool skipMurphyHit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				reward = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward, name: "reward");
 				rewardAtStart = s.SerializeObject<Generic<RO2_EventSpawnReward>>(rewardAtStart, name: "rewardAtStart");
 				fx = s.SerializeObject<Path>(fx, name: "fx");

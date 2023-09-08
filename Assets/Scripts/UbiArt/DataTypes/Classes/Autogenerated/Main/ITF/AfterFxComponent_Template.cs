@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		public GFX_BLEND2 finalblend2 = GFX_BLEND2.ALPHA;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO || s.Settings.Game == Game.VH) {
 				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype");
 				finalblend2 = s.Serialize<GFX_BLEND2>(finalblend2, name: "finalblend");
 				startRank = s.Serialize<float>(startRank, name: "startRank");
@@ -52,7 +52,7 @@ namespace UbiArt.ITF {
 				alphaFadeTotalDuration = s.Serialize<float>(alphaFadeTotalDuration, name: "alphaFadeTotalDuration");
 				forcedAABB = s.SerializeObject<AABB>(forcedAABB, name: "forcedAABB");
 				deactivateAfterFade = s.Serialize<bool>(deactivateAfterFade, name: "deactivateAfterFade");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype");
 				finalblend = s.Serialize<GFX_BLEND>(finalblend, name: "finalblend");
 				startRank = s.Serialize<float>(startRank, name: "startRank");
@@ -76,7 +76,7 @@ namespace UbiArt.ITF {
 				alphaFadeTotalDuration = s.Serialize<float>(alphaFadeTotalDuration, name: "alphaFadeTotalDuration");
 				forcedAABB = s.SerializeObject<AABB>(forcedAABB, name: "forcedAABB");
 				deactivateAfterFade = s.Serialize<bool>(deactivateAfterFade, name: "deactivateAfterFade");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				afxtype2 = s.Serialize<AFX2>(afxtype2, name: "afxtype");
 				finalblend = s.Serialize<GFX_BLEND>(finalblend, name: "finalblend");
 				startRank = s.Serialize<float>(startRank, name: "startRank");

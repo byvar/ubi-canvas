@@ -75,9 +75,9 @@ namespace UbiArt.ITF {
 		public uint Vita_06 { get; set; }
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					Vita_03 = s.Serialize<byte>(Vita_03, name: nameof(Vita_03));
 					Vita_04 = s.Serialize<byte>(Vita_04, name: nameof(Vita_04));
 					Vita_05 = s.Serialize<byte>(Vita_05, name: nameof(Vita_05));
@@ -96,11 +96,11 @@ namespace UbiArt.ITF {
 					RenderToTexture = s.Serialize<bool>(RenderToTexture, name: "RenderToTexture");
 				}
 				gfxOccludeInfo2 = s.Serialize<GFX_OCCLUDE_INFO2>(gfxOccludeInfo2, name: "gfxOccludeInfo");
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
 					Vita_01 = s.Serialize<byte>(Vita_01, name: nameof(Vita_01));
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");
 				FrontLightContrast = s.Serialize<float>(FrontLightContrast, name: "FrontLightContrast");
@@ -111,7 +111,7 @@ namespace UbiArt.ITF {
 				useStaticFog = s.Serialize<bool>(useStaticFog, name: "useStaticFog", options: CSerializerObject.Options.BoolAsByte);
 				RenderInReflections = s.Serialize<bool>(RenderInReflections, name: "RenderInReflections", options: CSerializerObject.Options.BoolAsByte);
 				gfxOccludeInfo2 = s.Serialize<GFX_OCCLUDE_INFO2>(gfxOccludeInfo2, name: "gfxOccludeInfo");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");
 				FrontLightContrast = s.Serialize<float>(FrontLightContrast, name: "FrontLightContrast");
@@ -163,7 +163,7 @@ namespace UbiArt.ITF {
 				colorFog = s.SerializeObject<Color>(colorFog, name: "colorFog");
 				DynamicFogFactor = s.Serialize<float>(DynamicFogFactor, name: "DynamicFogFactor");
 
-				if (s.Settings.game == Settings.Game.RM) {
+				if (s.Settings.Game == Game.RM) {
 					NormalLightParam2 = s.SerializeObject<NormalLightingParam>(NormalLightParam2, name: "NormalLightParam");
 				}
 
@@ -177,7 +177,7 @@ namespace UbiArt.ITF {
 				colorForMask3 = s.SerializeObject<Color>(colorForMask3, name: "colorForMask3");
 				saturation = s.Serialize<float>(saturation, name: "saturation");
 				GridFluidEmitterIntensity = s.Serialize<float>(GridFluidEmitterIntensity, name: "GridFluidEmitterIntensity");
-				if (s.Settings.game == Settings.Game.RM) {
+				if (s.Settings.Game == Game.RM) {
 					GridFluidEmitterFilter = s.Serialize<uint>(GridFluidEmitterFilter, name: "GridFluidEmitterFilter");
 				}
 				FrontLightFactor = s.Serialize<float>(FrontLightFactor, name: "FrontLightFactor");

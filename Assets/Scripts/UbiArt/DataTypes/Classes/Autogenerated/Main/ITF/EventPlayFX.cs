@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public bool StopImmediate;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH || s.Settings.Game == Game.COL) {
 			} else {
 				FXName = s.SerializeObject<StringID>(FXName, name: "FXName");
 				Action = s.Serialize<FX_St>(Action, name: "Action");

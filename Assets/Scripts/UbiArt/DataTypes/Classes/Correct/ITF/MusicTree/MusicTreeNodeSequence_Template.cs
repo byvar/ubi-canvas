@@ -6,11 +6,11 @@ namespace UbiArt.ITF {
 		public bool useIntro;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				startingLeaf = s.Serialize<uint>(startingLeaf, name: "startingLeaf");
 				looping = s.Serialize<bool>(looping, name: "looping", options: CSerializerObject.Options.BoolAsByte);
 				useIntro = s.Serialize<bool>(useIntro, name: "useIntro", options: CSerializerObject.Options.BoolAsByte);
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				startingLeaf = s.Serialize<uint>(startingLeaf, name: "startingLeaf");
 				looping = s.Serialize<bool>(looping, name: "looping");
 				useIntro = s.Serialize<bool>(useIntro, name: "useIntro");

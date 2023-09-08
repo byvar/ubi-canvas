@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public AnimResourcePackage animPackage;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				defaultUpdate = s.Serialize<bool>(defaultUpdate, name: "defaultUpdate");
 				draw2D = s.Serialize<bool>(draw2D, name: "draw2D");
 				amvPath = s.SerializeObject<Path>(amvPath, name: "amvPath");
@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 				useDataAnims = s.Serialize<bool>(useDataAnims, name: "useDataAnims");
 				useActorScale = s.Serialize<bool>(useActorScale, name: "useActorScale");
 				stopDuration = s.Serialize<float>(stopDuration, name: "stopDuration");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					animPackage = s.SerializeObject<AnimResourcePackage>(animPackage, name: "animPackage");
 				}
 			} else {

@@ -10,8 +10,8 @@ namespace UbiArt.ITF {
 		public float gradientEnd;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
-			} else if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL) {
+			} else if (s.Settings.Game == Game.COL) {
 				gradientStart = s.Serialize<float>(gradientStart, name: "gradientStart");
 				gradientEnd = s.Serialize<float>(gradientEnd, name: "gradientEnd");
 			} else {

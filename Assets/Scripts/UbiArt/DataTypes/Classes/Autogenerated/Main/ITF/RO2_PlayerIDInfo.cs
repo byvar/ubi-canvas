@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Path treePath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				iconTexturePath = s.SerializeObject<Path>(iconTexturePath, name: "iconTexturePath");
 				iconSizeInTexture = s.SerializeObject<Vec2d>(iconSizeInTexture, name: "iconSizeInTexture");
 				deathBubbleColor = s.SerializeObject<Color>(deathBubbleColor, name: "deathBubbleColor");

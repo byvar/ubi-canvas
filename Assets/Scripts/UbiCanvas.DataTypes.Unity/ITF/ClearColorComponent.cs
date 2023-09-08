@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 					Camera.main.backgroundColor = (clearColor.ClearColor ?? Color.Black).GetUnityColor();
 					shaderManager.frontLightCamera.backgroundColor = (clearColor.ClearFrontLightColor ?? Color.Black).GetUnityColor();
 					shaderManager.backLightCamera.backgroundColor = (clearColor.ClearBackLightColor ?? Color.Black).GetUnityColor();
-				} else if (context.Settings.game == Settings.Game.RL || context.Settings.game == Settings.Game.COL) {
+				} else if (context.Settings.Game == Game.RL || context.Settings.Game == Game.COL) {
 					Camera.main.backgroundColor = (clearColor2 ?? Color.Black).GetUnityColor();
 					shaderManager.frontLightCamera.backgroundColor = (clearFrontLightColor ?? Color.Black).GetUnityColor();
 					shaderManager.backLightCamera.backgroundColor = (clearBackLightColor ?? Color.Black).GetUnityColor();

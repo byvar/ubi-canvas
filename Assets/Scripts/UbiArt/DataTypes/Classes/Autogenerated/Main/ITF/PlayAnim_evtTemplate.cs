@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 		public Spline Alpha;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				TypeAnim = s.Serialize<type>(TypeAnim, name: "TypeAnim");
 				AnimRO = s.Serialize<string>(AnimRO, name: "Anim");
 				Loop = s.Serialize<bool>(Loop, name: "Loop");
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 				usePatches = s.SerializeObject<BoolEventList>(usePatches, name: "usePatches");
 				Color = s.SerializeObject<Spline>(Color, name: "Color");
 				Alpha = s.SerializeObject<Spline>(Alpha, name: "Alpha");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				TypeAnim = s.Serialize<type>(TypeAnim, name: "TypeAnim");
 				Anim = s.SerializeObject<Path>(Anim, name: "Anim");
 				Loop = s.Serialize<bool>(Loop, name: "Loop");

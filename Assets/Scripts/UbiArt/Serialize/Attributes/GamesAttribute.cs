@@ -15,27 +15,27 @@ namespace UbiArt {
 		public bool HasFlag(GameFlags flag) => flags.HasFlag(flag);
 		public bool HasPlatform(PlatformFlags flag) => platforms.HasFlag(flag);
 
-		public bool HasGame(Settings.Game game) {
+		public bool HasGame(Game game) {
 			return game switch {
-				Settings.Game.RO =>  HasFlag(GameFlags.RO),
-				Settings.Game.RJR => HasFlag(GameFlags.RJR),
-				Settings.Game.RFR => HasFlag(GameFlags.RFR),
-				Settings.Game.RL =>  HasFlag(GameFlags.RL),
-				Settings.Game.RA =>  HasFlag(GameFlags.RA),
-				Settings.Game.RM =>  HasFlag(GameFlags.RM),
-				Settings.Game.VH =>  HasFlag(GameFlags.VH),
-				Settings.Game.COL => HasFlag(GameFlags.COL),
+				Game.RO =>  HasFlag(GameFlags.RO),
+				Game.RJR => HasFlag(GameFlags.RJR),
+				Game.RFR => HasFlag(GameFlags.RFR),
+				Game.RL =>  HasFlag(GameFlags.RL),
+				Game.RA =>  HasFlag(GameFlags.RA),
+				Game.RM =>  HasFlag(GameFlags.RM),
+				Game.VH =>  HasFlag(GameFlags.VH),
+				Game.COL => HasFlag(GameFlags.COL),
 				_ => false
 			};
 		}
-		public bool HasPlatform(Settings.Platform platform) {
+		public bool HasPlatform(GamePlatform platform) {
 			return platform switch {
-				Settings.Platform.PC => HasPlatform(PlatformFlags.PC),
-				Settings.Platform.Android => HasPlatform(PlatformFlags.Android),
-				Settings.Platform.iOS => HasPlatform(PlatformFlags.iOS),
-				Settings.Platform.MacOS => HasPlatform(PlatformFlags.MacOS),
-				Settings.Platform.Vita => HasPlatform(PlatformFlags.Vita),
-				Settings.Platform.WiiU => HasPlatform(PlatformFlags.WiiU),
+				GamePlatform.PC => HasPlatform(PlatformFlags.PC),
+				GamePlatform.Android => HasPlatform(PlatformFlags.Android),
+				GamePlatform.iOS => HasPlatform(PlatformFlags.iOS),
+				GamePlatform.MacOS => HasPlatform(PlatformFlags.MacOS),
+				GamePlatform.Vita => HasPlatform(PlatformFlags.Vita),
+				GamePlatform.WiiU => HasPlatform(PlatformFlags.WiiU),
 				_ => false
 			};;
 		}

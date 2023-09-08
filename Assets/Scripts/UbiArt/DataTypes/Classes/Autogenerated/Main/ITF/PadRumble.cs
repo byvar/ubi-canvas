@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public float float__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.VH || s.Settings.Game == Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				intensity = s.Serialize<float>(intensity, name: "intensity");
 				duration = s.Serialize<float>(duration, name: "duration");

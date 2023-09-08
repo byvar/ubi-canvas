@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool activated;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.platform == Settings.Platform.Vita) return;
+			if (s.Settings.Platform == GamePlatform.Vita) return;
 			if (s.HasFlags(SerializeFlags.Default)) {
 				AMDisplayTuto = s.Serialize<bool>(AMDisplayTuto, name: "AMDisplayTuto", options: CSerializerObject.Options.BoolAsByte);
 				if (s.HasFlags(SerializeFlags.Editor)) {

@@ -16,11 +16,11 @@ namespace UbiArt.ITF {
 		public Vec2d size;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						texture = s.SerializeObject<Path>(texture, name: "texture");
@@ -28,12 +28,12 @@ namespace UbiArt.ITF {
 					anchor = s.Serialize<TEXTURE_ANCHOR>(anchor, name: "anchor");
 					material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
 					spriteIndex = s.Serialize<uint>(spriteIndex, name: "spriteIndex");
-					if (!s.Settings.isCatchThemAll) {
+					if (!s.Settings.IsCatchThemAll) {
 						uvRatio = s.SerializeObject<Vec2d>(uvRatio, name: "uvRatio");
 						uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 					}
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						texture = s.SerializeObject<Path>(texture, name: "texture");
@@ -45,7 +45,7 @@ namespace UbiArt.ITF {
 					uvRatio = s.SerializeObject<Vec2d>(uvRatio, name: "uvRatio");
 					uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 				}
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						texture = s.SerializeObject<Path>(texture, name: "texture");

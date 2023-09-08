@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 	public partial class ShapeDetectorComponent_Template {
 		public override ActorComponent_Template Convert(Context context, Actor_Template actor, Settings oldSettings, Settings newSettings) {
 			base.Convert(context, actor, oldSettings, newSettings);
-			if (newSettings.game == Settings.Game.RL) {
+			if (newSettings.Game == Game.RL) {
 				if (animPolylineID == null || animPolylineID.IsNull) {
 					if (animPolylineIDList != null) {
 						animPolylineID = animPolylineIDList

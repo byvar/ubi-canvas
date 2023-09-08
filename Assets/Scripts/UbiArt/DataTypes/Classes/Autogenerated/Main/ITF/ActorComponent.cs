@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public DeviceInfo__Device_Speed ObjectDeviceSpeed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+			if (s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 				UpdateDisabled = s.Serialize<bool>(UpdateDisabled, name: "UpdateDisabled");
 				ObjectDeviceSpeed = s.Serialize<DeviceInfo__Device_Speed>(ObjectDeviceSpeed, name: "ObjectDeviceSpeed");
 			}

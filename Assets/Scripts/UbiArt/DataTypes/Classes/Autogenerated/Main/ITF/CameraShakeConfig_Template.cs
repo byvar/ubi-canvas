@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public CListO<CameraShake> shakes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 			} else {
 				shakes = s.SerializeObject<CListO<CameraShake>>(shakes, name: "shakes");
 			}

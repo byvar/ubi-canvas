@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool overrideActorAABB;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				bankState = s.Serialize<uint>(bankState, name: "bankState");
 			} else {
 				bankState = s.Serialize<uint>(bankState, name: "bankState");

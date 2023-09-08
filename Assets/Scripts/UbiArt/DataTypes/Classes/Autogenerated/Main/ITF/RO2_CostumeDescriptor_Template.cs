@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public bool unlockable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				decorationBrickPath = s.SerializeObject<Path>(decorationBrickPath, name: "decorationBrickPath");
 				priority = s.Serialize<int>(priority, name: "priority");
 				costumeTag = s.SerializeObject<StringID>(costumeTag, name: "costumeTag");

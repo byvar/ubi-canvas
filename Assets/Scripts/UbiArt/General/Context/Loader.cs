@@ -81,9 +81,9 @@ namespace UbiArt {
 
 		protected bool GameFileExists(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
-			if (Settings.loadFromIPK && Settings.bundles != null) {
+			if (Settings.LoadFromIpk && Settings.Bundles != null) {
 				Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
-				string[] bnames = Settings.bundles;
+				string[] bnames = Settings.Bundles;
 				foreach (var bname in bnames) {
 					if (Bundles.ContainsKey(bname) && Bundles[bname].HasReadFile(path)) return true;
 				}
@@ -94,9 +94,9 @@ namespace UbiArt {
 		}
 		public Stream GetGameFileStream(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
-			if (Settings.loadFromIPK && Settings.bundles != null) {
+			if (Settings.LoadFromIpk && Settings.Bundles != null) {
 				Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
-				string[] bnames = Settings.bundles;
+				string[] bnames = Settings.Bundles;
 				foreach (var bname in bnames) {
 					if (Bundles.ContainsKey(bname) && Bundles[bname].HasReadFile(path)) return Bundles[bname].GetFileStream(path);
 				}
@@ -106,7 +106,7 @@ namespace UbiArt {
 			}
 		}
 		public async Task LoadBundles() {
-			string[] bnames = Settings.bundles;
+			string[] bnames = Settings.Bundles;
 			foreach (var bname in bnames) {
 				await LoadBundle(bname);
 			}
@@ -130,7 +130,7 @@ namespace UbiArt {
 		public async Task<byte[]> GetFileFromBundles(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
 			Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
-			string[] bnames = Settings.bundles;
+			string[] bnames = Settings.Bundles;
 			// Loop 1: try to find an already loaded bundle and an already loaded file
 			foreach (var bname in bnames) {
 				if (Bundles.ContainsKey(bname) && Bundles[bname].HasReadFile(path)) {
@@ -167,7 +167,7 @@ namespace UbiArt {
 		}
 		protected async Task PrepareGameFile(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
-			if (Settings.loadFromIPK && Settings.bundles != null) {
+			if (Settings.LoadFromIpk && Settings.Bundles != null) {
 				string s = LoadingState;
 				LoadingState = $"Downloading\n{p.FullPath}";
 				await PrepareGameFile_Internal();
@@ -175,7 +175,7 @@ namespace UbiArt {
 
 				async Task PrepareGameFile_Internal() {
 					Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
-					string[] bnames = Settings.bundles;
+					string[] bnames = Settings.Bundles;
 					// Loop 1: try to find an already loaded bundle and an already loaded file
 					foreach (var bname in bnames) {
 						if (Bundles.ContainsKey(bname) && Bundles[bname].HasReadFile(path)) return;
@@ -264,7 +264,7 @@ namespace UbiArt {
 						StringID id = o.path.stringID;
 						Paths[id] = o.path;
 						if (!files.ContainsKey(id)) {
-							bool ckd = Settings.cooked && !o.path.specialUncooked;
+							bool ckd = Settings.Cooked && !o.path.specialUncooked;
 							string cookedFolder = ckd ? Settings.ITFDirectory : "";
 							await PrepareGameFile(o.path, ckd);
 							if (GameFileExists(o.path, ckd)) {

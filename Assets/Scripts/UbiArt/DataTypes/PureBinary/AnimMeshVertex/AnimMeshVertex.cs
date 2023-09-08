@@ -27,7 +27,7 @@ namespace UbiArt.Animation {
 			base.SerializeImpl(s);
 			version = s.Serialize<uint>(version, name: "version");
 
-			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+			if (s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 				animFriendly_adv = s.SerializeObject<CListP<ulong>>(animFriendly_adv, name: "animFriendly");
 			} else {
 				animFriendly = s.SerializeObject<CListO<StringID>>(animFriendly, name: "animFriendly");
@@ -43,7 +43,7 @@ namespace UbiArt.Animation {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.game == Settings.Game.RL && version >= VersionLegends) {
+			if (settings.Game == Game.RL && version >= VersionLegends) {
 				version = VersionLegends;
 				if (animFriendly == null && animFriendly_adv != null) {
 					animFriendly = new CListO<StringID>();

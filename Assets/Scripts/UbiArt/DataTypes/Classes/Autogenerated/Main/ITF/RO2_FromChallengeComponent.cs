@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public CListO<CListP<string>> filterOrder;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				filter = s.SerializeObject<CListP<string>>(filter, name: "filter");
 				filterOrder = s.SerializeObject<CListO<CListP<string>>>(filterOrder, name: "filterOrder");
 			} else {

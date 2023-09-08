@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public Placeholder costumeTags;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				costumeTags = s.SerializeObject<Placeholder>(costumeTags, name: "costumeTags");
 			} else {
 			}

@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion == EngineVersion.RO) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				category = s.SerializeObject<StringID>(category, name: "category");
@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 				isStream = s.Serialize<int>(isStream, name: "isStream");
 				files = s.SerializeObject<CListO<Path>>(files, name: "files");
 				_params = s.SerializeObject<SoundParams>(_params, name: "params");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				category = s.SerializeObject<StringID>(category, name: "category");
@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 				localizedFiles = s.SerializeObject<CListO<LocalizedPath>>(localizedFiles, name: "localizedFiles");
 				filesIntro = s.SerializeObject<CListO<Path>>(filesIntro, name: "filesIntro");
 				filesBody = s.SerializeObject<CListO<Path>>(filesBody, name: "filesBody");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					filesBodyOption = s.SerializeObject<CListO<Unknown_RL_12955_sub_591530>>(filesBodyOption, name: "filesBodyOption");
 				}
 				filesOutro = s.SerializeObject<CListO<Path>>(filesOutro, name: "filesOutro");
@@ -72,11 +72,11 @@ namespace UbiArt.ITF {
 				outDevices = s.Serialize<uint>(outDevices, name: "outDevices");
 				soundPlayAfterdestroy = s.Serialize<bool>(soundPlayAfterdestroy, name: "soundPlayAfterdestroy");
 				soundPlayFadeAfterdestroy = s.Serialize<int>(soundPlayFadeAfterdestroy, name: "soundPlayFadeAfterdestroy");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					noDrop = s.Serialize<int>(noDrop, name: "noDrop");
 					Priority = s.Serialize<uint>(Priority, name: "Priority");
 				}
-			} else if(s.Settings.game == Settings.Game.COL) {
+			} else if(s.Settings.Game == Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				spawnEvent = s.SerializeObject<SoundGUID>(spawnEvent, name: "spawnEvent");
 				livingEvent = s.SerializeObject<SoundGUID>(livingEvent, name: "livingEvent");

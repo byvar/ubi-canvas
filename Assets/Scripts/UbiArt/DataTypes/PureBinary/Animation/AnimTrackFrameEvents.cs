@@ -32,7 +32,7 @@ namespace UbiArt.Animation {
 					case AnimMarkerEventType.AnimAnimationEvent:
 						break;
 					case AnimMarkerEventType.AnimGameplayEvent:
-						if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+						if (s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 							eventData1 = s.Serialize<float>(eventData1, name: "eventData1");
 						}
 						break;

@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 			name = s.SerializeObject<SmartLocId>(name, name: "name");
 			world = s.SerializeObject<StringID>(world, name: "world");
 			locationID = s.SerializeObject<SmartLocId>(locationID, name: "locationID");
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				presence = s.SerializeObject<StringID>(presence, name: "presence");
 			}
 		}

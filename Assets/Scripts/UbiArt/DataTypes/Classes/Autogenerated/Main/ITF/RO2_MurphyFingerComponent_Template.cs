@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public float scratchAnimDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				speedMax = s.Serialize<float>(speedMax, name: "speedMax");
 				acceleration = s.Serialize<float>(acceleration, name: "acceleration");
 				friction = s.Serialize<float>(friction, name: "friction");

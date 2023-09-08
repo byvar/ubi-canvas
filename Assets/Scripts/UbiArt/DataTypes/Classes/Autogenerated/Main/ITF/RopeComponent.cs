@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		public uint cutSender;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					useBeginTexture = s.Serialize<bool>(useBeginTexture, name: "useBeginTexture");
 					useEndTexture = s.Serialize<bool>(useEndTexture, name: "useEndTexture");

@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public StringID groupAction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				groupIndex = s.Serialize<uint>(groupIndex, name: "groupIndex");
 				groupAction = s.SerializeObject<StringID>(groupAction, name: "groupAction");
 			} else {

@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public CListO<BTNode> nodes;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.COL) {
 			} else {
 				nodes = s.SerializeObject<CListO<BTNode>>(nodes, name: "nodes");
 			}

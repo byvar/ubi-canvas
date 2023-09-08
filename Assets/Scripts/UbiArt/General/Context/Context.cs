@@ -4,15 +4,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace UbiArt {
-	public class Context : IDisposable {
-
-		#region Constructors
-		public Context(string basePath, Settings settings,
+namespace UbiArt
+{
+	public class Context : IDisposable
+	{
+		#region Constructor
+	
+		public Context(
+			string basePath, 
+			Settings settings,
 			ISerializerLogger serializerLogger = null,
 			IFileManager fileManager = null,
 			ISystemLogger systemLogger = null,
-			IAsyncController asyncController = null) {
+			IAsyncController asyncController = null)
+		{
 			// Set properties from parameters
 			FileManager = fileManager ?? new DefaultFileManager();
 			SystemLogger = systemLogger;
@@ -65,7 +70,8 @@ namespace UbiArt {
 		public Settings Settings { get; }
 
 		protected Dictionary<Type, object> AdditionalSettings { get; }
-		public T GetSettings<T>(bool throwIfNotFound = true) {
+		public T GetSettings<T>(bool throwIfNotFound = true)
+		{
 			var s = AdditionalSettings.TryGetValue(typeof(T), out object settings) ? settings : null;
 
 			if (s != null)
@@ -76,27 +82,32 @@ namespace UbiArt {
 
 			return default;
 		}
-		public T AddSettings<T>(T settings) {
+		public T AddSettings<T>(T settings)
+		{
 			AdditionalSettings[typeof(T)] = settings;
 			return settings;
 		}
-		public void AddSettings(object settings, Type settingsType) {
+		public void AddSettings(object settings, Type settingsType)
+		{
 			AdditionalSettings[settingsType] = settings;
 		}
-		public void RemoveSettings<T>() {
+		public void RemoveSettings<T>()
+		{
 			AdditionalSettings.Remove(typeof(T));
 		}
-		public bool HasSettings<T>() {
+		public bool HasSettings<T>()
+		{
 			return AdditionalSettings.ContainsKey(typeof(T));
 		}
 
 		#endregion
-		
+
 		#region Storage
 
 		protected Dictionary<string, object> ObjectStorage { get; }
 
-		public T GetStoredObject<T>(string id, bool throwIfNotFound = false) {
+		public T GetStoredObject<T>(string id, bool throwIfNotFound = false)
+		{
 			if (ObjectStorage.ContainsKey(id))
 				return (T)ObjectStorage[id];
 
@@ -106,11 +117,13 @@ namespace UbiArt {
 			return default;
 		}
 
-		public void RemoveStoredObject(string id) {
+		public void RemoveStoredObject(string id)
+		{
 			ObjectStorage.Remove(id);
 		}
 
-		public T StoreObject<T>(string id, T obj) {
+		public T StoreObject<T>(string id, T obj)
+		{
 			ObjectStorage[id] = obj;
 			return obj;
 		}
@@ -121,41 +134,44 @@ namespace UbiArt {
 
 
 		private char SeparatorChar => FileManager.SeparatorCharacter switch
-        {
-            PathSeparatorChar.ForwardSlash => '/',
-            PathSeparatorChar.BackSlash => '\\',
-            _ => '/',
-        };
+		{
+			PathSeparatorChar.ForwardSlash => '/',
+			PathSeparatorChar.BackSlash => '\\',
+			_ => '/',
+		};
 
-		public Stream GetFileStream(string relativePath) {
+		public Stream GetFileStream(string relativePath)
+		{
 			Stream str = FileManager.GetFileReadStream(GetAbsoluteFilePath(NormalizePath(relativePath, false)));
 			return str;
 		}
-		public UbiArtFile GetFile(string relativePath) {
+		public UbiArtFile GetFile(string relativePath)
+		{
 			string path = NormalizePath(relativePath, false);
 			return Files.FirstOrDefault<UbiArtFile>(f => f.FilePath?.ToLower() == path?.ToLower() || f.Alias?.ToLower() == relativePath?.ToLower());
 		}
 		public virtual string GetAbsoluteFilePath(string relativePath) => BasePath + relativePath;
-        public virtual string NormalizePath(string path, bool isDirectory)
-        {
-            // Get the path separator character
-            string separatorChar = SeparatorChar.ToString();
+		public virtual string NormalizePath(string path, bool isDirectory)
+		{
+			// Get the path separator character
+			string separatorChar = SeparatorChar.ToString();
 
-            // Normalize the path
-            string newPath = FileManager.SeparatorCharacter switch
-            {
-                PathSeparatorChar.ForwardSlash => path.Replace('\\', '/'),
-                PathSeparatorChar.BackSlash => path.Replace('/', '\\'),
-                _ => throw new ArgumentOutOfRangeException(nameof(FileManager.SeparatorCharacter), FileManager.SeparatorCharacter, null)
-            };
+			// Normalize the path
+			string newPath = FileManager.SeparatorCharacter switch
+			{
+				PathSeparatorChar.ForwardSlash => path.Replace('\\', '/'),
+				PathSeparatorChar.BackSlash => path.Replace('/', '\\'),
+				_ => throw new ArgumentOutOfRangeException(nameof(FileManager.SeparatorCharacter), FileManager.SeparatorCharacter, null)
+			};
 
-            // Make sure a directory path ends with the separator
-            if (isDirectory && !newPath.EndsWith(separatorChar) && !String.IsNullOrWhiteSpace(path)) 
-                newPath += separatorChar;
-            
-            return newPath;
+			// Make sure a directory path ends with the separator
+			if (isDirectory && !newPath.EndsWith(separatorChar) && !String.IsNullOrWhiteSpace(path))
+				newPath += separatorChar;
+
+			return newPath;
 		}
-		public T AddFile<T>(T file) where T : UbiArtFile {
+		public T AddFile<T>(T file) where T : UbiArtFile
+		{
 			if (Files.Any(x => x.FilePath == file.FilePath))
 				throw new ContextException($"A file with the path '{file.FilePath}' has already been added to the context");
 
@@ -166,7 +182,8 @@ namespace UbiArt {
 			return file;
 		}
 		public void RemoveFile(string filePath) => RemoveFile(GetFile(filePath));
-		public void RemoveFile(UbiArtFile file) {
+		public void RemoveFile(UbiArtFile file)
+		{
 			if (file is null)
 				return;
 
@@ -175,10 +192,12 @@ namespace UbiArt {
 
 			SystemLogger?.LogTrace("Removed file {0}", file.FilePath);
 		}
-		public bool FileExists(UbiArtFile file) {
+		public bool FileExists(UbiArtFile file)
+		{
 			return Files.Contains(file);
 		}
-		public bool FileExists(string relativePath) {
+		public bool FileExists(string relativePath)
+		{
 			UbiArtFile f = GetFile(relativePath);
 			return f != null;
 		}
@@ -211,42 +230,61 @@ namespace UbiArt {
 		};
 
 
-		protected void InitStringCache() {
+		protected void InitStringCache()
+		{
 			// Init String Cache
-			foreach (uint sid in ObjectFactory.classes.Keys) {
+			foreach (uint sid in ObjectFactory.classes.Keys)
+			{
 				StringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
 			}
-			foreach (var str in AdditionalStrings) {
+			foreach (var str in AdditionalStrings)
+			{
 				StringCache.Add(new StringID(str), str);
 			}
 		}
 
-		public void AddToStringCache(object obj) {
-			if (obj != null) {
+		public void AddToStringCache(object obj)
+		{
+			if (obj != null)
+			{
 				Type type = obj.GetType();
-				if (type == typeof(string)) {
+				if (type == typeof(string))
+				{
 					string str = ((string)obj);
-					if (!string.IsNullOrEmpty(str)) {
+					if (!string.IsNullOrEmpty(str))
+					{
 						StringCache[new StringID(str)] = str;
 					}
-				} else if (type == typeof(CString)) {
+				}
+				else if (type == typeof(CString))
+				{
 					string str = ((CString)obj).str;
-					if (!string.IsNullOrEmpty(str)) {
+					if (!string.IsNullOrEmpty(str))
+					{
 						StringCache[new StringID(str)] = str;
 					}
-				} else if (type == typeof(BasicString)) {
+				}
+				else if (type == typeof(BasicString))
+				{
 					string str = ((BasicString)obj).str;
-					if (!string.IsNullOrEmpty(str)) {
+					if (!string.IsNullOrEmpty(str))
+					{
 						StringCache[new StringID(str)] = str;
 					}
-				} else if (type == typeof(Path)) {
+				}
+				else if (type == typeof(Path))
+				{
 					Path p = ((Path)obj);
-					if (!p.IsNull) {
+					if (!p.IsNull)
+					{
 						StringCache[p.stringID] = p.FullPath;
 					}
-				} else if (type == typeof(PathRef)) {
+				}
+				else if (type == typeof(PathRef))
+				{
 					PathRef p = ((PathRef)obj);
-					if (!p.IsNull) {
+					if (!p.IsNull)
+					{
 						StringCache[p.stringID] = p.FullPath;
 					}
 				}
@@ -263,13 +301,15 @@ namespace UbiArt {
 
 		#region Dispose
 
-		public void Close() {
+		public void Close()
+		{
 			foreach (var file in Files)
 				file?.Dispose();
 
 			SerializerLogger.Dispose();
 		}
-		public void Dispose() {
+		public void Dispose()
+		{
 			Close();
 			Disposed?.Invoke(this, EventArgs.Empty);
 		}

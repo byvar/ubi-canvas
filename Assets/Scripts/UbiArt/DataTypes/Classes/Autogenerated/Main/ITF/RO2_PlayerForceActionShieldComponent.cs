@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool testPlayerOnShield;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					testShieldInZone = s.Serialize<bool>(testShieldInZone, name: "testShieldInZone", options: CSerializerObject.Options.BoolAsByte);
 					removeShieldCollision = s.Serialize<bool>(removeShieldCollision, name: "removeShieldCollision", options: CSerializerObject.Options.BoolAsByte);

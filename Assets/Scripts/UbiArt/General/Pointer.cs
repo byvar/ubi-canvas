@@ -1,52 +1,46 @@
-﻿using UbiArt.FileFormat;
+﻿#nullable enable
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+using UbiArt.FileFormat;
 
-namespace UbiArt {
-	public class Pointer : IEquatable<Pointer> {
-		public long Offset { get; set; }
-		public UbiArtFile File { get; set; }
+namespace UbiArt
+{
+	public readonly struct Pointer : IEquatable<Pointer> 
+	{
+		#region Constructor
 
-		public Pointer(long offset, UbiArtFile file) {
-			this.Offset = offset;
-			this.File = file;
-		}
-
-		public override bool Equals(System.Object obj) {
-			return obj is Pointer && this == (Pointer)obj;
-		}
-		public override int GetHashCode() {
-			return Offset.GetHashCode() ^ File.GetHashCode();
+		public Pointer(long offset, UbiArtFile? file) 
+		{
+			Offset = offset;
+			File = file;
 		}
 
-		public bool Equals(Pointer other) {
-			return this == (Pointer)other;
-		}
+		#endregion
 
-		public static bool operator ==(Pointer x, Pointer y) {
-			if (ReferenceEquals(x, y)) return true;
-			if (ReferenceEquals(x, null)) return false;
-			if (ReferenceEquals(y, null)) return false;
-			return x.Offset == y.Offset && x.File == y.File;
-		}
-		public static bool operator !=(Pointer x, Pointer y) {
-			return !(x == y);
-		}
-		public static Pointer operator +(Pointer x, long y) {
-			return new Pointer((x.Offset + y), x.File);
-		}
-		public static Pointer operator -(Pointer x, long y) {
-			return new Pointer((x.Offset - y), x.File);
-		}
-		public override string ToString() {
-			if (File != null) {
-				return File.FilePath + "|" + String.Format("0x{0:X8}", Offset);
-			} else {
-				return "FakeFile|" + String.Format("0x{0:X8}", Offset);
-			}
-		}
+		#region Public Properties
+
+		public long Offset { get; }
+		public UbiArtFile? File { get; }
+
+		#endregion
+
+		#region Operators
+
+		public static bool operator ==(Pointer x, Pointer y) => x.Offset == y.Offset && x.File == y.File;
+		public static bool operator !=(Pointer x, Pointer y) => !(x == y);
+
+		public static Pointer operator +(Pointer x, long y) => new(x.Offset + y, x.File);
+		public static Pointer operator -(Pointer x, long y) => new(x.Offset - y, x.File);
+
+		#endregion
+
+		#region Public Methods
+
+		public bool Equals(Pointer other) => this == other;
+
+		public override bool Equals(object? obj) => obj is Pointer pointer && this == pointer;
+		public override int GetHashCode() => File != null ? Offset.GetHashCode() ^ File.GetHashCode() : Offset.GetHashCode();
+		public override string ToString() => $"{File?.FilePath ?? "FakeFile"}|0x{Offset:X8}";
+
+		#endregion
 	}
 }

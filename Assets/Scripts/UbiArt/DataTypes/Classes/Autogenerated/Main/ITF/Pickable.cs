@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RO || s.Settings.Game == Game.RFR) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					POS2D = s.SerializeObject<Vec2d>(POS2D, name: "POS2D");
 					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 					ISALLOWEDFORCELL = s.Serialize<int>(ISALLOWEDFORCELL, name: "ISALLOWEDFORCELL");
 					isEnabled = s.Serialize<bool>(isEnabled, name: "isEnabled");
 				}
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
 					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 					USERFRIENDLY = s.Serialize<string>(USERFRIENDLY, name: "USERFRIENDLY");
 					UPDATEDEPENDENCYLIST = s.SerializeObject<CArrayO<ObjectPath>>(UPDATEDEPENDENCYLIST, name: "UPDATEDEPENDENCYLIST");
 				}
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					Vita_00 = s.SerializeObject<Vec2d>(Vita_00, name: nameof(Vita_00));
 					Vita_01 = s.SerializeObject<Vec2d>(Vita_01, name: nameof(Vita_01));
 				}
@@ -73,7 +73,7 @@ namespace UbiArt.ITF {
 					ANGLE = s.SerializeObject<Angle>(ANGLE, name: "ANGLE");
 					INSTANCEDATAFILE = s.SerializeObject<Path>(INSTANCEDATAFILE, name: "INSTANCEDATAFILE");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					RELATIVEZ = s.Serialize<float>(RELATIVEZ, name: "RELATIVEZ");
 					SCALE = s.SerializeObject<Vec2d>(SCALE, name: "SCALE");
@@ -90,7 +90,7 @@ namespace UbiArt.ITF {
 					INSTANCEDATAFILE = s.SerializeObject<Path>(INSTANCEDATAFILE, name: "INSTANCEDATAFILE");
 					OBJECTID = s.SerializeObject<ObjectId>(OBJECTID, name: "OBJECTID");
 				}
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Flags16)) {
 					globalPos = s.SerializeObject<Vec3d>(globalPos, name: "globalPos");
 				}

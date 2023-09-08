@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 		public Vec3d stunStarsOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				phases = s.SerializeObject<CListO<RO2_BossLuchadoreComponent_Template.SequencePhase>>(phases, name: "phases");
 				opportunityInputLockedDuration = s.Serialize<float>(opportunityInputLockedDuration, name: "opportunityInputLockedDuration");
 				recoverTargetBlendSpeed = s.Serialize<float>(recoverTargetBlendSpeed, name: "recoverTargetBlendSpeed");
@@ -149,7 +149,7 @@ namespace UbiArt.ITF {
 				activateTweenOnHole = s.Serialize<bool>(activateTweenOnHole, name: "activateTweenOnHole");
 				secondaryActivateTweenName = s.SerializeObject<StringID>(secondaryActivateTweenName, name: "secondaryActivateTweenName");
 				secondaryActivateTweenOnHole = s.Serialize<bool>(secondaryActivateTweenOnHole, name: "secondaryActivateTweenOnHole");
-				if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.Game == Game.RL) {
 					handHitShapeOffset = s.SerializeObject<Vec2d>(handHitShapeOffset, name: "handHitShapeOffset");
 					handHitShapeScale = s.Serialize<float>(handHitShapeScale, name: "handHitShapeScale");
 				}
@@ -179,7 +179,7 @@ namespace UbiArt.ITF {
 				animHit = s.SerializeObject<StringID>(animHit, name: "animHit");
 				instructions = s.SerializeObject<CListO<RO2_BossLuchadoreComponent_Template.SequenceInstruction>>(instructions, name: "instructions");
 				forbiddenZones = s.SerializeObject<CListO<RO2_BossLuchadoreComponent_Template.ForbiddenZone>>(forbiddenZones, name: "forbiddenZones");
-				if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.Game == Game.RL) {
 					changedHitMaterialTarget = s.Serialize<uint>(changedHitMaterialTarget, name: "changedHitMaterialTarget");
 					changedHitMaterialSource = s.Serialize<uint>(changedHitMaterialSource, name: "changedHitMaterialSource");
 				}

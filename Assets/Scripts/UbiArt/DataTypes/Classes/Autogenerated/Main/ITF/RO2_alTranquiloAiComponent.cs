@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public bool useTuto;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					bubbleLifetime = s.Serialize<float>(bubbleLifetime, name: "bubbleLifetime");
 					useTuto = s.Serialize<bool>(useTuto, name: "useTuto", options: CSerializerObject.Options.BoolAsByte);

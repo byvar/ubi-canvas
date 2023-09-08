@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public AnimationAtlas AnimationAtlas__6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RFR) {
 				int__0 = s.Serialize<int>(int__0, name: "int__0");
 				uint__1 = s.Serialize<uint>(uint__1, name: "uint__1");
 				AnimationAtlas__2 = s.SerializeObject<AnimationAtlas>(AnimationAtlas__2, name: "AnimationAtlas__2");

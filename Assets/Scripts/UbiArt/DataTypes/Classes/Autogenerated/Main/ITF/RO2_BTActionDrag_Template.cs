@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 			animDrop = s.SerializeObject<StringID>(animDrop, name: "animDrop");
 			animFreeFall = s.SerializeObject<StringID>(animFreeFall, name: "animFreeFall");
 			animImpact = s.SerializeObject<StringID>(animImpact, name: "animImpact");
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				animImpact2_vita = s.SerializeObject<StringID>(animImpact2_vita, name: nameof(animImpact2_vita));
 			}
 			animReceiveHitDrag = s.SerializeObject<StringID>(animReceiveHitDrag, name: "animReceiveHitDrag");

@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Placeholder TimedSpawnerData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				timedSpawnerData = s.SerializeObject<TimedSpawnerData>(timedSpawnerData, name: "timedSpawnerData");
 				TimedSpawnerData = s.SerializeObject<Placeholder>(TimedSpawnerData, name: "TimedSpawnerData");
 				useInstanceValues = s.Serialize<bool>(useInstanceValues, name: "useInstanceValues");

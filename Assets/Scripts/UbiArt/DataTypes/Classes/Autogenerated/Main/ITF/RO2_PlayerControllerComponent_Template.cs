@@ -461,7 +461,7 @@ namespace UbiArt.ITF {
 		public CMap<uint, Phys2dImpulseConfig> impulsePerHitType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				abilities = s.Serialize<uint>(abilities, name: "abilities");
 				controllerHeight = s.Serialize<float>(controllerHeight, name: "controllerHeight");
 				controllerFlyModeSpeed = s.Serialize<float>(controllerFlyModeSpeed, name: "controllerFlyModeSpeed");

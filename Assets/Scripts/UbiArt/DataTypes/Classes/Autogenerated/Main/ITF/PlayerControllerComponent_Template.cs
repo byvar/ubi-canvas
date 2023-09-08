@@ -7,11 +7,11 @@ namespace UbiArt.ITF {
 		public float touchReviveInteractionCircleRadius = 1.5f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				phantomShape = s.SerializeObject<Generic<PhysShape>>(phantomShape, name: "phantomShape");
 				faction = s.Serialize<uint>(faction, name: "faction");
 				deadSoulFaction = s.Serialize<uint>(deadSoulFaction, name: "deadSoulFaction");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				phantomShape = s.SerializeObject<Generic<PhysShape>>(phantomShape, name: "phantomShape");
 				faction = s.Serialize<uint>(faction, name: "faction");
 				deadSoulFaction = s.Serialize<uint>(deadSoulFaction, name: "deadSoulFaction");

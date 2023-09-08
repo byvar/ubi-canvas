@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public bool bool__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.VH) {
 				Generic_Event__0 = s.SerializeObject<Generic<Event>>(Generic_Event__0, name: "Generic<Event>__0");
 				float__1 = s.Serialize<float>(float__1, name: "float__1");
 				bool__2 = s.Serialize<bool>(bool__2, name: "bool__2");

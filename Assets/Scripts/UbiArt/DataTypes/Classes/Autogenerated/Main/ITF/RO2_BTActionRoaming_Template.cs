@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool useFlipEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				animWalk = s.SerializeObject<StringID>(animWalk, name: "animWalk");
 				animUTurn = s.SerializeObject<StringID>(animUTurn, name: "animUTurn");
 			} else {

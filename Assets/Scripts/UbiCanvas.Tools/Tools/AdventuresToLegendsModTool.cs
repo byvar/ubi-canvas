@@ -99,7 +99,7 @@ namespace UbiCanvas.Tools
 			await TimeController.WaitIfNecessary();
 
 
-			var mode = Settings.Mode.RaymanLegendsPC;
+			var mode = Mode.RaymanLegendsPC;
 			var originalBundlesPath = UnitySettings.Tools_AdventuresToLegends_GamePath;
 			var inputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "data").Replace('\\', '/');
 			var outputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "output").Replace('\\', '/');
@@ -200,7 +200,7 @@ namespace UbiCanvas.Tools
 		}
 
 		private async Task CreateSecureFATAsync(Dictionary<string, UbiArt.Bundle.BundleFile> preLoadedBundles = null) {
-			var mode = Settings.Mode.RaymanLegendsPC;
+			var mode = Mode.RaymanLegendsPC;
 			var originalBundlesPath = UnitySettings.Tools_AdventuresToLegends_GamePath;
 			var outputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "output").Replace('\\', '/');
 

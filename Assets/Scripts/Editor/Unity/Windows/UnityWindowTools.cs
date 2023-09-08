@@ -92,7 +92,7 @@ public class UnityWindowTools : UnityWindow
 		{
 			EditorGUI.BeginChangeCheck();
 
-			UnitySettings.Tools_BuildModIPK_GameMode = EditorField<UbiArt.Settings.Mode>("Game", UnitySettings.Tools_BuildModIPK_GameMode);
+			UnitySettings.Tools_BuildModIPK_GameMode = EditorField<Mode>("Game", UnitySettings.Tools_BuildModIPK_GameMode);
 
 			UnitySettings.Tools_BuildModIPK_InputPath = DirectoryField(GetNextRect(ref YPos), "Input path (raw files)", UnitySettings.Tools_BuildModIPK_InputPath, true);
 			UnitySettings.Tools_BuildModIPK_OutputPath = DirectoryField(GetNextRect(ref YPos), "Output path", UnitySettings.Tools_BuildModIPK_OutputPath, true);
@@ -131,10 +131,10 @@ public class UnityWindowTools : UnityWindow
 		{
 			EditorGUI.BeginChangeCheck();
 
-			UnitySettings.Tools_ModeConversion_InputMode = EditorField<UbiArt.Settings.Mode>("Input game mode", UnitySettings.Tools_ModeConversion_InputMode);
+			UnitySettings.Tools_ModeConversion_InputMode = EditorField<Mode>("Input game mode", UnitySettings.Tools_ModeConversion_InputMode);
 			UnitySettings.Tools_ModeConversion_InputPath = DirectoryField(GetNextRect(ref YPos, vPaddingBottom: 10), "Input path", UnitySettings.Tools_ModeConversion_InputPath, true);
 
-			UnitySettings.Tools_ModeConversion_OutputMode = EditorField<UbiArt.Settings.Mode>("Output game mode", UnitySettings.Tools_ModeConversion_OutputMode); 
+			UnitySettings.Tools_ModeConversion_OutputMode = EditorField<Mode>("Output game mode", UnitySettings.Tools_ModeConversion_OutputMode); 
 			UnitySettings.Tools_ModeConversion_OutputPath = DirectoryField(GetNextRect(ref YPos, vPaddingBottom: 10), "Output path", UnitySettings.Tools_ModeConversion_OutputPath, true);
 
 			if (EditorGUI.EndChangeCheck()) {

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool lockOnMaxReached;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					minAngle = s.SerializeObject<AngleAmount>(minAngle, name: "minAngle");
 					maxAngle = s.SerializeObject<AngleAmount>(maxAngle, name: "maxAngle");

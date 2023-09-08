@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool useComponentAlpha;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				useActorFlip = s.Serialize<bool>(useActorFlip, name: "useActorFlip", options: CSerializerObject.Options.BoolAsByte);
 				useComponentAlpha = s.Serialize<bool>(useComponentAlpha, name: "useComponentAlpha", options: CSerializerObject.Options.BoolAsByte);
 			} else {

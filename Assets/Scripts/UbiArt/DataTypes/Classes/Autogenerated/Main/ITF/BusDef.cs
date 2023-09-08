@@ -19,8 +19,8 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
-			} else if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR) {
+			} else if (s.Settings.Game == Game.RO) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				outputs = s.SerializeObject<CListO<StringID>>(outputs, name: "outputs");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 				reverbPreset = s.Serialize<ReverbPreset>(reverbPreset, name: "reverbPreset");
 				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");
 				pauseSensitive = s.Serialize<int>(pauseSensitive, name: "pauseSensitive");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				outputs = s.SerializeObject<CListO<StringID>>(outputs, name: "outputs");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");

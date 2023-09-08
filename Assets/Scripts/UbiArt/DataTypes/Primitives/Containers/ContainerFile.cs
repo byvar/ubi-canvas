@@ -10,7 +10,7 @@
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				read = s.Serialize<bool>(read, name: "read");
 			}
 			if (read) { // Read scene

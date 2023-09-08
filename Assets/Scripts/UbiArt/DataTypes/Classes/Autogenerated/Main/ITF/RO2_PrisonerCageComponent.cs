@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public Vec2d checkpointPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					shape = s.SerializeObject<EditableShape>(shape, name: "shape");
 					savePosOnCheckpoint = s.Serialize<bool>(savePosOnCheckpoint, name: "savePosOnCheckpoint");
@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 					isBroken = s.Serialize<bool>(isBroken, name: "isBroken");
 					checkpointAngle = s.Serialize<float>(checkpointAngle, name: "checkpointAngle");
 					checkpointPos = s.SerializeObject<Vec2d>(checkpointPos, name: "checkpointPos");
-				} else if (s.Settings.platform == Settings.Platform.Vita) {
+				} else if (s.Settings.Platform == GamePlatform.Vita) {
 					isBroken = s.Serialize<bool>(isBroken, name: "isBroken");
 				}
 			} else {

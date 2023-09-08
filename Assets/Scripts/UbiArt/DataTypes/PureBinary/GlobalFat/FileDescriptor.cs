@@ -6,7 +6,7 @@ namespace UbiArt.GlobalFat {
 		public CListP<byte> bundles = new CListP<byte>();
 
 		public void Serialize(CSerializerObject s, string name) {
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				id = s.SerializeObject<StringID>(id, name: "id");
 				bundles = s.SerializeObject<CListP<byte>>(bundles, name: "bundles");
 			} else {

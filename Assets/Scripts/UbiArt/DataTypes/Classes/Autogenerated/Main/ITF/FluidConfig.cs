@@ -47,7 +47,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RJR) {
+			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RJR) {
 				Elasticity = s.Serialize<float>(Elasticity, name: "Elasticity");
 				Velocity = s.Serialize<float>(Velocity, name: "Velocity");
 				Viscosity = s.Serialize<float>(Viscosity, name: "Viscosity");
@@ -89,7 +89,7 @@ namespace UbiArt.ITF {
 				//BlendFactor = s.Serialize<float>(BlendFactor, name: "BlendFactor");
 				//FxActor = s.SerializeObject<Path>(FxActor, name: "FxActor");
 				Layers = s.SerializeObject<CListO<FluidFriseLayer>>(Layers, name: "Layers");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				Elasticity = s.Serialize<float>(Elasticity, name: "Elasticity");
 				Velocity = s.Serialize<float>(Velocity, name: "Velocity");
 				Viscosity = s.Serialize<float>(Viscosity, name: "Viscosity");
