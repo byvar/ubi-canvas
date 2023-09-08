@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RFR || s.Settings.Game == Game.VH) {
 				Type_2 = s.Serialize<AFX_2>(Type_2, name: "Type");
 			} else {
 				Type = s.Serialize<AFX>(Type, name: "Type");

@@ -7,15 +7,15 @@ namespace UbiArt.ITF {
 		public bool useTapGauge;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					onHoldEvent = s.SerializeObject<EventSender>(onHoldEvent, name: "onHoldEvent");
 					onReleaseEvent = s.SerializeObject<EventSender>(onReleaseEvent, name: "onReleaseEvent");
-					if (s.Settings.platform != Settings.Platform.Vita) {
+					if (s.Settings.Platform != GamePlatform.Vita) {
 						useTapGauge = s.Serialize<bool>(useTapGauge, name: "useTapGauge", options: CSerializerObject.Options.ForceAsByte);
 					}
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					onHoldEvent = s.SerializeObject<EventSender>(onHoldEvent, name: "onHoldEvent");
 					onReleaseEvent = s.SerializeObject<EventSender>(onReleaseEvent, name: "onReleaseEvent");

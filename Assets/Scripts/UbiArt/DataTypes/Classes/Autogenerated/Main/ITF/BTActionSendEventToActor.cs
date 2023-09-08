@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public Generic<Event> _event;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 			} else {
 				_event = s.SerializeObject<Generic<Event>>(_event, name: "event");
 			}

@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				speed = s.Serialize<float>(speed, name: "speed");
 				speedSmoothFactor = s.Serialize<float>(speedSmoothFactor, name: "speedSmoothFactor");
 				cameraRelative = s.Serialize<bool>(cameraRelative, name: "cameraRelative");
@@ -80,7 +80,7 @@ namespace UbiArt.ITF {
 				playRateMin = s.Serialize<float>(playRateMin, name: "playRateMin");
 				playRateMax = s.Serialize<float>(playRateMax, name: "playRateMax");
 				uTurnEnabled = s.Serialize<bool>(uTurnEnabled, name: "uTurnEnabled");
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
 				}
 			}

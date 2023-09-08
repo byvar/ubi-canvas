@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 		public float girlFriendModeScorePosXOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				relativeWidth = s.Serialize<float>(relativeWidth, name: "relativeWidth");
 				relativeSpacing = s.Serialize<float>(relativeSpacing, name: "relativeSpacing");
 				actualWidthPercent = s.Serialize<float>(actualWidthPercent, name: "actualWidthPercent");

@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public ObjectId OBJECTID;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion == EngineVersion.RO) {
 				OBJECTID = s.SerializeObject<ObjectId>(OBJECTID, name: "OBJECTID");
 			}
 		}

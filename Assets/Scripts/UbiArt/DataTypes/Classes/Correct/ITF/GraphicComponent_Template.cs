@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 		public float float__66;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				if (this is FxBankComponent_Template || this is ParticleGeneratorComponent_Template || this is ProceduralSoftPlatformComponent_Template) return;
 				patchLevel = s.Serialize<uint>(patchLevel, name: "patchLevel");
 				patchHLevel = s.Serialize<uint>(patchHLevel, name: "patchHLevel");
@@ -65,8 +65,8 @@ namespace UbiArt.ITF {
 				angleLimit = s.Serialize<float>(angleLimit, name: "angleLimit");
 				blendmode2 = s.Serialize<GFX_BLEND2>(blendmode2, name: "blendmode");
 				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype");
-			} else if (s.Settings.game == Settings.Game.RL) {
-				if (s.Settings.platform == Settings.Platform.Vita && this is RO2_RopeComponent_Template) return;
+			} else if (s.Settings.Game == Game.RL) {
+				if (s.Settings.Platform == GamePlatform.Vita && this is RO2_RopeComponent_Template) return;
 				patchLevel = s.Serialize<uint>(patchLevel, name: "patchLevel");
 				patchHLevel = s.Serialize<uint>(patchHLevel, name: "patchHLevel");
 				patchVLevel = s.Serialize<uint>(patchVLevel, name: "patchVLevel");
@@ -91,7 +91,7 @@ namespace UbiArt.ITF {
 				shadowDist = s.Serialize<float>(shadowDist, name: "shadowDist");
 				shadowOffsetPos = s.SerializeObject<Vec3d>(shadowOffsetPos, name: "shadowOffsetPos");
 				angleLimit = s.Serialize<float>(angleLimit, name: "angleLimit");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				patchLevel = s.Serialize<uint>(patchLevel, name: "patchLevel");
 				patchHLevel = s.Serialize<uint>(patchHLevel, name: "patchHLevel");
 				patchVLevel = s.Serialize<uint>(patchVLevel, name: "patchVLevel");
@@ -117,7 +117,7 @@ namespace UbiArt.ITF {
 				shadowDist = s.Serialize<float>(shadowDist, name: "shadowDist");
 				shadowOffsetPos = s.SerializeObject<Vec3d>(shadowOffsetPos, name: "shadowOffsetPos");
 				angleLimit = s.Serialize<float>(angleLimit, name: "angleLimit");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				patchLevel = s.Serialize<uint>(patchLevel, name: "patchLevel");
 				patchHLevel = s.Serialize<uint>(patchHLevel, name: "patchHLevel");
 				patchVLevel = s.Serialize<uint>(patchVLevel, name: "patchVLevel");

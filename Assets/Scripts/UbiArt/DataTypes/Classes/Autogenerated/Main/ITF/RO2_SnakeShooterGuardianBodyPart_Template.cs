@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 		public StringID attackAnimation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				health = s.Serialize<int>(health, name: "health");
 				damageLevels = s.SerializeObject<CListP<uint>>(damageLevels, name: "damageLevels");
 				multiPlayerLifePointFactor = s.Serialize<float>(multiPlayerLifePointFactor, name: "multiPlayerLifePointFactor");

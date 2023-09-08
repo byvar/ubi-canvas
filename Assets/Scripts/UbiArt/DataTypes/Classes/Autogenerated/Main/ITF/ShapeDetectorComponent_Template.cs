@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 				animRefPosPointID = s.SerializeObject<StringID>(animRefPosPointID, name: "animRefPosPointID");
 				animShapePosPointID = s.SerializeObject<StringID>(animShapePosPointID, name: "animShapePosPointID");
 				shapeIsConcave = s.Serialize<bool>(shapeIsConcave, name: "shapeIsConcave");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 				animRefPosPointID = s.SerializeObject<StringID>(animRefPosPointID, name: "animRefPosPointID");
 				animShapePosPointID = s.SerializeObject<StringID>(animShapePosPointID, name: "animShapePosPointID");
 				shapeIsConcave = s.Serialize<bool>(shapeIsConcave, name: "shapeIsConcave");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");
@@ -43,7 +43,7 @@ namespace UbiArt.ITF {
 				animShapePosPointID = s.SerializeObject<StringID>(animShapePosPointID, name: "animShapePosPointID");
 				shapeIsConcave = s.Serialize<bool>(shapeIsConcave, name: "shapeIsConcave");
 				useFriezeShape = s.Serialize<bool>(useFriezeShape, name: "useFriezeShape", options: CSerializerObject.Options.BoolAsByte);
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				shape = s.SerializeObject<Generic<PhysShape>>(shape, name: "shape");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				attachPolyline = s.SerializeObject<StringID>(attachPolyline, name: "attachPolyline");

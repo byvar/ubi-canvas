@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 			public Path thai;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+				if (s.Settings.Game == Game.VH || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 					_default = s.SerializeObject<Path>(_default, name: "default");
 					japanese = s.SerializeObject<Path>(japanese, name: "japanese");
 					korean = s.SerializeObject<Path>(korean, name: "korean");
@@ -60,7 +60,7 @@ namespace UbiArt.ITF {
 			public float charSpacing;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (s.Settings.game == Settings.Game.COL) {
+				if (s.Settings.Game == Game.COL) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						fontPath = s.SerializeObject<Path>(fontPath, name: "fontPath");
 					}
@@ -79,7 +79,7 @@ namespace UbiArt.ITF {
 					gradientOffset = s.Serialize<float>(gradientOffset, name: "gradientOffset");
 					gradientColor = s.SerializeObject<Color>(gradientColor, name: "gradientColor");
 					charSpacing = s.Serialize<float>(charSpacing, name: "charSpacing");
-				} else if (s.Settings.game == Settings.Game.RL) {
+				} else if (s.Settings.Game == Game.RL) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						fontPath = s.SerializeObject<Path>(fontPath, name: "fontPath");
 					}
@@ -98,7 +98,7 @@ namespace UbiArt.ITF {
 					gradientOffset = s.Serialize<float>(gradientOffset, name: "gradientOffset");
 					gradientColor = s.SerializeObject<Color>(gradientColor, name: "gradientColor");
 					charSpacing = s.Serialize<float>(charSpacing, name: "charSpacing");
-				} else if (s.Settings.game == Settings.Game.VH) {
+				} else if (s.Settings.Game == Game.VH) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						fontPath = s.SerializeObject<Path>(fontPath, name: "fontPath");
 					}

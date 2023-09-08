@@ -284,7 +284,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");
@@ -348,13 +348,13 @@ namespace UbiArt.ITF {
 				blendMode = s.Serialize<GFX_BLEND>(blendMode, name: "blendMode");
 				genGenType2 = s.Serialize<PARGEN_GEN2>(genGenType2, name: "genGenType");
 				genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");
 				forceNoDynamicFog = s.Serialize<bool>(forceNoDynamicFog, name: "forceNoDynamicFog");
 				renderInReflection = s.Serialize<bool>(renderInReflection, name: "renderInReflection");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					dieFadeTime = s.Serialize<float>(dieFadeTime, name: "dieFadeTime");
 					emitterMaxLifeTime = s.Serialize<float>(emitterMaxLifeTime, name: "emitterMaxLifeTime");
 				}
@@ -372,7 +372,7 @@ namespace UbiArt.ITF {
 				freq = s.Serialize<float>(freq, name: "freq");
 				freqDelta = s.Serialize<float>(freqDelta, name: "freqDelta");
 				forceEmitAtStart_int = s.Serialize<int>(forceEmitAtStart_int, name: "forceEmitAtStart");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					emitBatchCount = s.Serialize<uint>(emitBatchCount, name: "emitBatchCount");
 					emitBatchCount_AAO = s.Serialize<uint>(emitBatchCount_AAO, name: "emitBatchCount_AAO");
 				}
@@ -425,7 +425,7 @@ namespace UbiArt.ITF {
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
 				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
-				if (!s.Settings.isCatchThemAll) {
+				if (!s.Settings.IsCatchThemAll) {
 					curveSize = s.SerializeObject<ParLifeTimeCurve>(curveSize, name: "curveSize");
 					curveSizeY = s.SerializeObject<ParLifeTimeCurve>(curveSizeY, name: "curveSizeY");
 					curveAlpha = s.SerializeObject<ParLifeTimeCurve>(curveAlpha, name: "curveAlpha");
@@ -452,7 +452,7 @@ namespace UbiArt.ITF {
 					genGenType = s.Serialize<PARGEN_GEN>(genGenType, name: "genGenType");
 					genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
 				}
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");
@@ -569,7 +569,7 @@ namespace UbiArt.ITF {
 				genGenType = s.Serialize<PARGEN_GEN>(genGenType, name: "genGenType");
 				genMode = s.Serialize<PARGEN_MODE>(genMode, name: "genMode");
 				genEmitMode = s.Serialize<PARGEN_EMITMODE>(genEmitMode, name: "genEmitMode");
-			} else if(s.Settings.game == Settings.Game.COL) {
+			} else if(s.Settings.Game == Game.COL) {
 				maxParticles = s.Serialize<uint>(maxParticles, name: "maxParticles");
 				defaultColor = s.SerializeObject<Color>(defaultColor, name: "defaultColor");
 				emitParticlesCount = s.Serialize<uint>(emitParticlesCount, name: "emitParticlesCount");

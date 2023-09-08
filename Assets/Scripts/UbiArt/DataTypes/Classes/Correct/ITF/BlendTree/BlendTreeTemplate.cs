@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			nodes = s.SerializeObject<CListO<Generic<BlendTreeNodeTemplate<T>>>>(nodes, name: "nodes");
 			nodeTransitions = s.SerializeObject<CListO<BlendTreeTransition_Template<T>>>(nodeTransitions, name: "nodeTransitions");
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				additiveLayers = s.SerializeObject<CListO<AdditiveLayer_Template<T>>>(additiveLayers, name: "additiveLayers");
 			}
 		}

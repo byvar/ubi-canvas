@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 		public bool useActorPosForBounce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				phantom = s.SerializeObject<Generic<PhysShape>>(phantom, name: "phantom");
 				hurtLevel = s.Serialize<uint>(hurtLevel, name: "hurtLevel");
 				bounceType = s.Serialize<BOUNCETYPE>(bounceType, name: "bounceType");

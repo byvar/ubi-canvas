@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public Path textPath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				textPath = s.SerializeObject<Path>(textPath, name: "textPath");
 			} else {
 			}

@@ -7,10 +7,10 @@ namespace UbiArt.ITF {
 		public uint MaxActiveInstance = 20;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR) {
 				Fx = s.SerializeObject<CListO<FxDescriptor_Template>>(Fx, name: "Fx");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				Fx = s.SerializeObject<CListO<FxDescriptor_Template>>(Fx, name: "Fx");
 				inputs = s.SerializeObject<CListO<InputDesc>>(inputs, name: "inputs");
 				visibilityTest = s.Serialize<bool>(visibilityTest, name: "visibilityTest", options: CSerializerObject.Options.BoolAsByte);

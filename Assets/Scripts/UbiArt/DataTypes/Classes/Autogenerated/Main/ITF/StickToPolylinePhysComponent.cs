@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool StartDisable;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RO || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 			} else {
 				ForceVerticalBanking = s.Serialize<bool>(ForceVerticalBanking, name: "ForceVerticalBanking");
 				IgnoreAngle = s.Serialize<bool>(IgnoreAngle, name: "IgnoreAngle");

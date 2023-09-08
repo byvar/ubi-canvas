@@ -7,9 +7,9 @@ namespace UbiArt.ITF {
 		public CArrayO<StringID> CArray_StringID__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				ISDs = s.SerializeObject<CMapGeneric<StringID, Ray_PersistentGameData_ISD>>(ISDs, name: "ISDs");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				id = s.SerializeObject<StringID>(id, name: "id");
 				string__1 = s.Serialize<string>(string__1, name: "string__1");
 				if (s.HasFlags(SerializeFlags.Flags10)) {

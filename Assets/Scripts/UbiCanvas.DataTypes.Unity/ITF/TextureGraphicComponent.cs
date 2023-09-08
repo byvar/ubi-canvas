@@ -50,7 +50,7 @@ namespace UbiArt.ITF {
 				}
 			}
 			Vector3[] vertices = new Vector3[4];
-			if (UbiArtContext.Settings.game == Settings.Game.COL) {
+			if (UbiArtContext.Settings.Game == Game.COL) {
 				vertices[0] = new Vector3(-size.x / 2f, -size.y / 2f, 0f);
 				vertices[1] = new Vector3(-size.x / 2f, size.y / 2f, 0f);
 				vertices[2] = new Vector3(size.x / 2f, -size.y / 2f, 0f);

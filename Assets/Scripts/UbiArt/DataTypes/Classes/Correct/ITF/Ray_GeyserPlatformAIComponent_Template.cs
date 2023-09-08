@@ -145,7 +145,7 @@ namespace UbiArt.ITF {
 			regions = s.SerializeObject<CListO<Ray_GeyserPlatformAIComponent_Template.RegionData>>(regions, name: "regions");
 			isGeyserBehavior = s.Serialize<int>(isGeyserBehavior, name: "isGeyserBehavior");
 			registerToAIManager = s.Serialize<int>(registerToAIManager, name: "registerToAIManager");
-			if (s.Settings.game == Settings.Game.RO && !s.HasProperty(CSerializerObject.SerializerProperty.Binary) && s.HasFlags(SerializeFlags.Flags_xC0)) {
+			if (s.Settings.Game == Game.RO && !s.HasProperty(CSerializerObject.SerializerProperty.Binary) && s.HasFlags(SerializeFlags.Flags_xC0)) {
 				minAngle = s.SerializeObject<Angle>(minAngle, name: "minAngle");
 				maxAngle = s.SerializeObject<Angle>(maxAngle, name: "maxAngle");
 				debugForce = s.Serialize<int>(debugForce, name: "debugForce");

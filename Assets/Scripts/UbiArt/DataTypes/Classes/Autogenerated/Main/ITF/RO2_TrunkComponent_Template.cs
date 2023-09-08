@@ -25,7 +25,7 @@ namespace UbiArt.ITF {
 			length = s.Serialize<float>(length, name: "length");
 			angularAccel = s.SerializeObject<Angle>(angularAccel, name: "angularAccel");
 			angularSpeedMax = s.SerializeObject<Angle>(angularSpeedMax, name: "angularSpeedMax");
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				Vita_00 = s.SerializeObject<Angle>(Vita_00, name: nameof(Vita_00));
 				Vita_01 = s.Serialize<float>(Vita_01, name: nameof(Vita_01));
 				Vita_02 = s.Serialize<float>(Vita_02, name: nameof(Vita_02));
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 			debugDraw = s.Serialize<bool>(debugDraw, name: "debugDraw");
 			angularSpeedStart = s.SerializeObject<Angle>(angularSpeedStart, name: "angularSpeedStart");
 			fakeFreedom = s.Serialize<bool>(fakeFreedom, name: "fakeFreedom");
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				collisionShape = s.SerializeObject<Generic<PhysShape>>(collisionShape, name: "collisionShape");
 			}
 		}

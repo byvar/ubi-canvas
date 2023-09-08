@@ -58,7 +58,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					beginTexture = s.SerializeObject<Path>(beginTexture, name: "beginTexture");
 					endTexture = s.SerializeObject<Path>(endTexture, name: "endTexture");
@@ -77,7 +77,7 @@ namespace UbiArt.ITF {
 				cutSectionGameMaterial = s.SerializeObject<Path>(cutSectionGameMaterial, name: "cutSectionGameMaterial");
 				cutGameMaterial = s.SerializeObject<Path>(cutGameMaterial, name: "cutGameMaterial");
 				cutEndGameMaterial = s.SerializeObject<Path>(cutEndGameMaterial, name: "cutEndGameMaterial");
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					VitaCutGameMaterial = s.SerializeObject<Path>(VitaCutGameMaterial, name: nameof(VitaCutGameMaterial));
 				}
 				movingPolyForce = s.Serialize<float>(movingPolyForce, name: "movingPolyForce");

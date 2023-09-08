@@ -18,14 +18,14 @@ namespace UbiArt.ITF {
 		public StringID bus;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				nodeName = s.SerializeObject<StringID>(nodeName, name: "nodeName");
 				fadeTime = s.Serialize<float>(fadeTime, name: "fadeTime");
 				volume = s.SerializeObject<Volume>(volume, name: "volume");
 				playOnNext = s.Serialize<uint>(playOnNext, name: "playOnNext");
 				stopAndPlay = s.Serialize<int>(stopAndPlay, name: "stopAndPlay");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				nodeName = s.SerializeObject<StringID>(nodeName, name: "nodeName");

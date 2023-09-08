@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				if (this is FriseConfig) return;
 				scaleForced = s.SerializeObject<Vec2d>(scaleForced, name: "scaleForced");
 				scaleMin = s.SerializeObject<Vec2d>(scaleMin, name: "scaleMin");
@@ -35,13 +35,13 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
 				}
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				if (this is FriseConfig) return;
 				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL", options: CSerializerObject.Options.BoolAsByte);
 				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED", options: CSerializerObject.Options.BoolAsByte);
 				FORCEISENVIRONMENT = s.Serialize<bool>(FORCEISENVIRONMENT, name: "FORCEISENVIRONMENT", options: CSerializerObject.Options.BoolAsByte);
 				COMPONENTS = s.SerializeObject<CArrayO<Generic<ActorComponent_Template>>>(COMPONENTS, name: "COMPONENTS");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				if (this is FriseConfig) return;
 				PROCEDURAL = s.Serialize<bool>(PROCEDURAL, name: "PROCEDURAL");
 				STARTPAUSED = s.Serialize<bool>(STARTPAUSED, name: "STARTPAUSED");

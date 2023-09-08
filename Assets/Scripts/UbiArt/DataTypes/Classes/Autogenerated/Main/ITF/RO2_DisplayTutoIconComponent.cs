@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public bool tutoSucceeded;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					tutoType2 = s.Serialize<TutoType2>(tutoType2, name: "tutoType");
 					scale = s.Serialize<float>(scale, name: "scale");
@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 					cyclePauseDuration = s.Serialize<float>(cyclePauseDuration, name: "cyclePauseDuration");
 					cycleDisplayDuration = s.Serialize<float>(cycleDisplayDuration, name: "cycleDisplayDuration");
 					testSceneDepthRef = s.Serialize<bool>(testSceneDepthRef, name: "testSceneDepthRef", options: CSerializerObject.Options.BoolAsByte);
-					if (!s.Settings.isCatchThemAll) {
+					if (!s.Settings.IsCatchThemAll) {
 						AMActionCountMax = s.Serialize<int>(AMActionCountMax, name: "AMActionCountMax");
 					}
 				}

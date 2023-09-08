@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool autoStart;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					autoStart = s.Serialize<bool>(autoStart, name: "autoStart", options: CSerializerObject.Options.BoolAsByte);
 				}

@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 		public CListP<float> DuplicateLumChainsOffsets;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					moveSpeed = s.Serialize<float>(moveSpeed, name: "moveSpeed");
 					useGlobalSpeedFactor = s.Serialize<bool>(useGlobalSpeedFactor, name: "useGlobalSpeedFactor", options: CSerializerObject.Options.BoolAsByte);

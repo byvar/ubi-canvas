@@ -40,7 +40,7 @@ namespace UbiArt {
 			folder = s.Serialize<string>(folder);
 			filename = s.Serialize<string>(filename);
 			stringID = s.SerializeObject<StringID>(stringID);
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				flags = s.Serialize<uint>(flags);
 				if (flags != 0) s.Context.SystemLogger?.LogInfo("PathRef with nonzero flags: " + this + " - " + flags);
 			}

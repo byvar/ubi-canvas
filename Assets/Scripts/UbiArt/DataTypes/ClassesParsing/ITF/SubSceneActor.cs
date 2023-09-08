@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 					sceneFile = result;
 
 					if (sceneFile != null) {
-						if (l.Settings.engineVersion <= Settings.EngineVersion.RO) {
+						if (l.Settings.EngineVersion <= EngineVersion.RO) {
 							SCENE_ORIGINS = new Generic<Scene>(sceneFile.obj);
 						} else {
 							SCENE = new Nullable<Scene>(sceneFile.obj);

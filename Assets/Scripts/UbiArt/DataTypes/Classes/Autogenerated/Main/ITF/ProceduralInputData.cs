@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public Spline curve;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				input = s.SerializeObject<StringID>(input, name: "input");
 				min = s.Serialize<float>(min, name: "min");
 				max = s.Serialize<float>(max, name: "max");
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 				modFlag = s.Serialize<int>(modFlag, name: "mod");
 				absFlag = s.Serialize<int>(absFlag, name: "abs");
 				addFlag = s.Serialize<int>(addFlag, name: "add");
-			} else if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.VH || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				input = s.SerializeObject<StringID>(input, name: "input");
 				min = s.Serialize<float>(min, name: "min");
 				max = s.Serialize<float>(max, name: "max");
@@ -40,7 +40,7 @@ namespace UbiArt.ITF {
 				absFlag = s.Serialize<int>(absFlag, name: "abs");
 				addFlag = s.Serialize<int>(addFlag, name: "add");
 				sinFlag = s.Serialize<int>(sinFlag, name: "sin");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					curve = s.SerializeObject<Spline>(curve, name: "curve");
 				}
 			} else {

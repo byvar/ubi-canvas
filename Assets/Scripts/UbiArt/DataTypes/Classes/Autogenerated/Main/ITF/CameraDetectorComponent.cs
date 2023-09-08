@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool remote;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 			} else {
 				remote = s.Serialize<bool>(remote, name: "remote");
 			}

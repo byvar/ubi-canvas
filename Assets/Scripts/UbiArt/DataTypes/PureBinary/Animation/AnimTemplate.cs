@@ -14,7 +14,7 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			boneKeys = s.SerializeObject<KeyArray<int>>(boneKeys, name: "boneKeys");
-			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 				unkfloat = s.Serialize<float>(unkfloat, name: "unkfloat");
 			}
 			bones = s.SerializeObject<CListO<AnimBone>>(bones, name: "bones");

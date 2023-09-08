@@ -6,7 +6,7 @@ namespace UbiArt.SceneConfig {
 		public SgsKey sgsMapAdv;
 
 		protected override void SerializeImpl(CSerializerObject s) {
-			if(s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+			if(s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 				unk = s.SerializeGenericPureBinary<uint>(unk, name: "unk");
 				sgsMapAdv = s.SerializeObject<SgsKey>(sgsMapAdv, name: "sgsMap");
 			} else {

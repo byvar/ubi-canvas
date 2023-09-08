@@ -125,7 +125,7 @@ namespace UbiArt {
 			folder = s.Serialize<string>(folder);
 			filename = s.Serialize<string>(filename);
 			stringID = s.SerializeObject<StringID>(stringID);
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				flags = s.Serialize<uint>(flags);
 				//if (flags != 0) MapLoader.Loader.print("Path with nonzero flags: " + this + " - " + flags);
 			}
@@ -156,7 +156,7 @@ namespace UbiArt {
 						c.Loader.LoadFile<ContainerFile<ITF.Scene>>(this, o => Object = o);
 						break;
 					case "act":
-						if (c.Settings.engineVersion == Settings.EngineVersion.RO) {
+						if (c.Settings.EngineVersion == EngineVersion.RO) {
 							c.Loader.LoadFile<GenericFile<Actor_Template>>(this, o => Object = o);
 						} else {
 							c.Loader.LoadFile<ContainerFile<ITF.Actor>>(this, o => Object = o);

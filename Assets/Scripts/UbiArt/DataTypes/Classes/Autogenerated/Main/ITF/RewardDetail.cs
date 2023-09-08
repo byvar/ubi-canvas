@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public string string__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.VH) {
 				id = s.SerializeObject<StringID>(id, name: "id");
 				name = s.SerializeObject<StringID>(name, name: "name");
 				platformId = s.Serialize<uint>(platformId, name: "platformId");
@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 				string__7 = s.Serialize<string>(string__7, name: "string__7");
 				string__8 = s.Serialize<string>(string__8, name: "string__8");
 				REWARD_TRIGGER = s.SerializeObject<CArrayO<Generic<RewardTrigger_Base>>>(REWARD_TRIGGER, name: "REWARD_TRIGGER");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				id = s.SerializeObject<StringID>(id, name: "id");
 				name = s.SerializeObject<StringID>(name, name: "name");
 				platformId = s.Serialize<uint>(platformId, name: "platformId");

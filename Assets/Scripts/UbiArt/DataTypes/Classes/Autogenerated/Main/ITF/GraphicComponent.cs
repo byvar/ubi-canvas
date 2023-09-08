@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (!s.HasProperty(CSerializerObject.SerializerProperty.Binary)) {
 						ColorFog_Red = s.Serialize<float>(ColorFog_Red, name: "ColorFog_Red");
@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 					renderInTarget = s.Serialize<bool>(renderInTarget, name: "renderInTarget");
 					disableLight = s.Serialize<int>(disableLight, name: "disableLight");
 				}
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
@@ -51,7 +51,7 @@ namespace UbiArt.ITF {
 					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");
 					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");
@@ -66,7 +66,7 @@ namespace UbiArt.ITF {
 					disableShadow = s.Serialize<int>(disableShadow, name: "disableShadow");
 					depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				}
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (s.HasFlags(SerializeFlags.Flags8)) {
 						ColorFactor = s.SerializeObject<Color>(ColorFactor, name: "ColorFactor");

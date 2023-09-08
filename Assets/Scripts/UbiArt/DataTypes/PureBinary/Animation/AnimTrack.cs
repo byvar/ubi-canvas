@@ -49,10 +49,10 @@ namespace UbiArt.Animation {
 			vectors = s.SerializeObject<CListO<Vec2d>>(vectors, name: "vectors");
 			LocalAABB = s.SerializeObject<AABB>(LocalAABB, name: "LocalAABB");
 			WorldAABB = s.SerializeObject<AABB>(WorldAABB, name: "WorldAABB");
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				skeleton = s.SerializeObject<pair<StringID, Path>>(skeleton, name: "skeleton");
 				texturePaths = s.SerializeObject<CListO<pair<StringID, Path>>>(texturePaths, name: "textures");
-				if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.Game == Game.RL) {
 					bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 				}
 				bankId = s.Serialize<uint>(bankId, name: "bankId");
@@ -72,7 +72,7 @@ namespace UbiArt.Animation {
 		protected override void OnPostSerialize(CSerializerObject s) {
 			base.OnPostSerialize(s);
 			Loader l = s.Context.Loader;
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				if (skeleton != null && skeleton.Item2 != null && IsFirstLoad) {
 					l.LoadFile<AnimSkeleton>(skeleton.Item2, result => skel = result);
 				}
@@ -105,7 +105,7 @@ namespace UbiArt.Animation {
 			Reinit(s.Settings);
 		}
 		public void Reinit(Settings settings) {
-			if (settings.game == Settings.Game.RL && version >= VersionLegends) {
+			if (settings.Game == Game.RL && version >= VersionLegends) {
 				version = VersionLegends;
 			}
 		}

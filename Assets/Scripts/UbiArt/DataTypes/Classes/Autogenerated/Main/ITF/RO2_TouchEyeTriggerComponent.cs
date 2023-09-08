@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool invertSentOpenCloseEvent;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					startOpen = s.Serialize<bool>(startOpen, name: "startOpen", options: CSerializerObject.Options.BoolAsByte);
 					openDuration = s.Serialize<float>(openDuration, name: "openDuration");

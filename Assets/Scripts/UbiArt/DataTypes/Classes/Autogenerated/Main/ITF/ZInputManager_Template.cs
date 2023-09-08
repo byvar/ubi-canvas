@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public StringID mode;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				config = s.SerializeObject<StringID>(config, name: "config");
 				mode = s.SerializeObject<StringID>(mode, name: "mode");

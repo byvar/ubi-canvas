@@ -13,10 +13,10 @@ namespace UbiArt.ITF {
 				}
 				AddToStringCache(s);
 			}
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				metronome = (METRONOME_TYPE)(int)metronome2;
 				metronome3 = (METRONOME_TYPE3)(int)metronome2;
-			} else if (s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.COL || s.Settings.Game == Game.RL) {
 				metronome = (METRONOME_TYPE)(int)metronome3;
 				metronome2 = (METRONOME_TYPE2)(int)metronome3;
 				forceZOffset = forceZOffset2 == BOOL._true;

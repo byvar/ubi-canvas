@@ -28,7 +28,7 @@ namespace UbiArt {
 		protected virtual void SerializeImpl(CSerializerObject s) {
 			if (s.HasProperty(CSerializerObject.SerializerProperty.StoreObjectSizes)
 				&& !s.Embedded
-				&& s.Settings.engineVersion > Settings.EngineVersion.RO
+				&& s.Settings.EngineVersion > EngineVersion.RO
 				&& !(s is CSerializerObjectTagBinary)) {
 				sizeOf = s.Serialize<uint>(sizeOf, name: "sizeof");
 			}

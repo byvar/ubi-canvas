@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 			health = s.Serialize<int>(health, name: "health");
 			damageLevels = s.SerializeObject<CArrayP<uint>>(damageLevels, name: "damageLevels");
 			useHealth = s.Serialize<bool>(useHealth, name: "useHealth");
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				Vita_faction = s.Serialize<uint>(Vita_faction, name: nameof(Vita_faction));
 			}
 		}

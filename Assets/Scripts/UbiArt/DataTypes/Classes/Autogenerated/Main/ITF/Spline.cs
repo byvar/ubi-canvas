@@ -6,11 +6,11 @@ namespace UbiArt.ITF {
 		public float TimeLoop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion == EngineVersion.RO) {
 				Points = s.SerializeObject<CListO<Spline.SplinePoint>>(Points, name: "Points");
 			} else {
 				Points = s.SerializeObject<CListO<Spline.SplinePoint>>(Points, name: "Points");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					TimeLoopMode = s.Serialize<uint>(TimeLoopMode, name: "TimeLoopMode");
 					TimeLoop = s.Serialize<float>(TimeLoop, name: "TimeLoop");
 				}
@@ -34,7 +34,7 @@ namespace UbiArt.ITF {
 				NormalInTime = s.SerializeObject<Vec3d>(NormalInTime, name: "NormalInTime");
 				NormalOut = s.SerializeObject<Vec3d>(NormalOut, name: "NormalOut");
 				NormalOutTime = s.SerializeObject<Vec3d>(NormalOutTime, name: "NormalOutTime");
-				if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
+				if (s.Settings.EngineVersion == EngineVersion.RO) {
 					Interpolation_RO = s.Serialize<interp_RO>(Interpolation_RO, name: "Interpolation");
 				} else {
 					Interpolation = s.Serialize<interp>(Interpolation, name: "Interpolation");

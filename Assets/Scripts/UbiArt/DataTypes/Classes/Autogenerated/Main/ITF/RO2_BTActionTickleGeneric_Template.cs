@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public float laughingTime = 0.1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				animLaugh = s.SerializeObject<StringID>(animLaugh, name: "animLaugh");
 				animLaugh_ToStand = s.SerializeObject<StringID>(animLaugh_ToStand, name: "animLaugh_ToStand");
 				laughingTime = s.Serialize<float>(laughingTime, name: "laughingTime");

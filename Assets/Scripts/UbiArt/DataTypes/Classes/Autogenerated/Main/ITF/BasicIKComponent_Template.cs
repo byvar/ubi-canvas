@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool bool__1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.VH) {
 				CArray_StringID__0 = s.SerializeObject<CArrayO<StringID>>(CArray_StringID__0, name: "CArray<StringID>__0");
 				bool__1 = s.Serialize<bool>(bool__1, name: "bool__1");
 			} else {

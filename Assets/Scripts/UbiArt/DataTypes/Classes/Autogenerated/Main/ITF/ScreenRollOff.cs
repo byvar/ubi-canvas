@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public bool useMetricUnit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				distanceMin = s.Serialize<float>(distanceMin, name: "distanceMin");
 				distanceMax = s.Serialize<float>(distanceMax, name: "distanceMax");
 				useMetricUnit = s.Serialize<bool>(useMetricUnit, name: "useMetricUnit");

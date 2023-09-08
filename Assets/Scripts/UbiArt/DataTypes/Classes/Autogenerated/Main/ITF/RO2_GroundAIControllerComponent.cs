@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool canDrown;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					canDrown = s.Serialize<bool>(canDrown, name: "canDrown");

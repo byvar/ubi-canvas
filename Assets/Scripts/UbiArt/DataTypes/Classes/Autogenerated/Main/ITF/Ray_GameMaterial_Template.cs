@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 		public float float__19;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RFR) {
 				Bounce = s.Serialize<int>(Bounce, name: "Bounce");
 				BounceType = s.Serialize<BOUNCETYPE>(BounceType, name: "BounceType");
 				Wave = s.Serialize<int>(Wave, name: "Wave");

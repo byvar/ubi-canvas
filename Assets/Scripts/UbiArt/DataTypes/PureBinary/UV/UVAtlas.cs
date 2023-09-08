@@ -14,9 +14,9 @@ namespace UbiArt.UV {
 		protected override void SerializeImpl(CSerializerObject s) {
 			version = s.Serialize<uint>(version, name: "version");
 			uvData = s.SerializeObject<CMap<int, UVdata>>(uvData, name: "uvData");
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				uvParams = s.SerializeObject<CMap<int, UVparameters>>(uvParams, name: "uvParams");
-				if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+				if (s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 					pivots = s.SerializeObject<CMap<int, Vec3d>>(pivots, name: "pivots");
 					gridX = s.Serialize<float>(gridX, name: "gridX");
 					gridY = s.Serialize<float>(gridY, name: "gridY");
@@ -25,7 +25,7 @@ namespace UbiArt.UV {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.game == Settings.Game.RL && version >= versionLegends) {
+			if (settings.Game == Game.RL && version >= versionLegends) {
 				version = versionLegends;
 				/*if (gridX != 1f || gridY != 1f) {
 					foreach (var uvdat in uvData) {

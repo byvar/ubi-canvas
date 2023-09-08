@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 		public float BlendDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				XAudio2ReflectionsDelay = s.Serialize<uint>(XAudio2ReflectionsDelay, name: "XAudio2ReflectionsDelay");
 				XAudio2ReverbDelay = s.Serialize<char>(XAudio2ReverbDelay, name: "XAudio2ReverbDelay");
 				XAudio2RearDelay = s.Serialize<char>(XAudio2RearDelay, name: "XAudio2RearDelay");

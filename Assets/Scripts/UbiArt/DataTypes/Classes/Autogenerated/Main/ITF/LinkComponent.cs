@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<ObjectPath> LinkedChildren;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					Children = s.SerializeObject<CListO<ChildEntry>>(Children, name: "Children");
 				}

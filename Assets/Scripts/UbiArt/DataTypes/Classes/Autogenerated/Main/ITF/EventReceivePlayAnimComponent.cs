@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public bool displayPhantom;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				startValue = s.Serialize<float>(startValue, name: "startValue");
 				if (s.HasFlags(SerializeFlags.Editor)) {
 					displayPhantom = s.Serialize<bool>(displayPhantom, name: "displayPhantom");

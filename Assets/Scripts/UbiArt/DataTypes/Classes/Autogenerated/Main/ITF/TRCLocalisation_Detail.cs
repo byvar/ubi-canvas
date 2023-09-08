@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				TRCError = s.Serialize<uint>(TRCError, name: "TRCError");
 				messageText = s.Serialize<string>(messageText, name: "messageText");
 				messageId = s.SerializeObject<LocalisationId>(messageId, name: "messageId");
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 				buttonLeft = s.SerializeObject<SmartLocId>(buttonLeft, name: "buttonLeft");
 				buttonRight = s.SerializeObject<SmartLocId>(buttonRight, name: "buttonRight");
 				defaultButton = s.Serialize<Button>(defaultButton, name: "defaultButton");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				TRCError = s.Serialize<uint>(TRCError, name: "TRCError");
 				messageText = s.Serialize<string>(messageText, name: "messageText");
 				messageId = s.SerializeObject<LocalisationId>(messageId, name: "messageId");

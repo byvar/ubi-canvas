@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				animationPath = s.SerializeObject<Path>(animationPath, name: "animationPath");
 				useBase = s.Serialize<bool>(useBase, name: "useBase");
 				smoothAnim = s.Serialize<bool>(smoothAnim, name: "smoothAnim");
@@ -53,7 +53,7 @@ namespace UbiArt.ITF {
 				restoreStateAtCheckpoint = s.Serialize<bool>(restoreStateAtCheckpoint, name: "restoreStateAtCheckpoint");
 				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
 				disableVisiblePrediction = s.Serialize<bool>(disableVisiblePrediction, name: "disableVisiblePrediction");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				useBase = s.Serialize<bool>(useBase, name: "useBase");
 				smoothAnim = s.Serialize<bool>(smoothAnim, name: "smoothAnim");
 				canonizeTransitions = s.Serialize<bool>(canonizeTransitions, name: "canonizeTransitions");
@@ -77,11 +77,11 @@ namespace UbiArt.ITF {
 				notifyAnimUpdate = s.Serialize<bool>(notifyAnimUpdate, name: "notifyAnimUpdate");
 				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 				useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset");
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					Vita_00 = s.Serialize<uint>(Vita_00, name: nameof(Vita_00));
 				}
 				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				useBase = s.Serialize<bool>(useBase, name: "useBase", options: CSerializerObject.Options.BoolAsByte);
 				smoothAnim = s.Serialize<bool>(smoothAnim, name: "smoothAnim", options: CSerializerObject.Options.BoolAsByte);
 				canonizeTransitions = s.Serialize<bool>(canonizeTransitions, name: "canonizeTransitions", options: CSerializerObject.Options.BoolAsByte);
@@ -106,7 +106,7 @@ namespace UbiArt.ITF {
 				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
 				useZOffset = s.Serialize<bool>(useZOffset, name: "useZOffset", options: CSerializerObject.Options.BoolAsByte);
 				boneList = s.SerializeObject<CListO<BoneMapping>>(boneList, name: "boneList");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				useBase = s.Serialize<bool>(useBase, name: "useBase");
 				smoothAnim = s.Serialize<bool>(smoothAnim, name: "smoothAnim");
 				canonizeTransitions = s.Serialize<bool>(canonizeTransitions, name: "canonizeTransitions");

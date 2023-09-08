@@ -10,7 +10,7 @@ class FileSelectionDropdown : AdvancedDropdown {
 	public string selection = null;
 	public string directory;
 	public string[] extensions;
-	public Settings.Mode mode;
+	public Mode mode;
 	public string[] files;
 	public string name;
 	//public SerializedProperty property;

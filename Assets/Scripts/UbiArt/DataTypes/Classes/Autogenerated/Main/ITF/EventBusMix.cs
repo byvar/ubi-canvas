@@ -6,10 +6,10 @@ namespace UbiArt.ITF {
 		public StringID name;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion == EngineVersion.RO) {
 				activate = s.Serialize<int>(activate, name: "activate");
 				busMix = s.SerializeObject<BusMix>(busMix, name: "busMix");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				activate = s.Serialize<int>(activate, name: "activate");
 				busMix = s.SerializeObject<BusMix>(busMix, name: "busMix");

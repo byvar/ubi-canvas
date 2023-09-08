@@ -55,7 +55,7 @@ namespace UbiArt.ITF {
 		public CutFade fullDisappearOnCut;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					beginTexture = s.SerializeObject<Path>(beginTexture, name: "beginTexture");
 					endTexture = s.SerializeObject<Path>(endTexture, name: "endTexture");

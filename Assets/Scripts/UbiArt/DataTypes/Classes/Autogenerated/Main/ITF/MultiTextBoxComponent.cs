@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public CListO<MultiTextBoxComponent.TextBox> textBoxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 			} else {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					textBoxList = s.SerializeObject<CListO<MultiTextBoxComponent.TextBox>>(textBoxList, name: "textBoxList");
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.Game == Game.VH || s.Settings.Game == Game.RL) {
 					if (s.HasFlags(SerializeFlags.Default)) {
 						text = s.SerializeObject<SmartLocId>(text, name: "text");
 						area = s.SerializeObject<Vec2d>(area, name: "area");

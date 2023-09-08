@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 		public StringID CamShakeType;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				debugTrajectory = s.Serialize<bool>(debugTrajectory, name: "debugTrajectory");
 				debugIK = s.Serialize<bool>(debugIK, name: "debugIK");
 				debugAttackShape = s.Serialize<bool>(debugAttackShape, name: "debugAttackShape");

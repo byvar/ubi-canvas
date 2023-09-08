@@ -46,11 +46,11 @@ namespace UbiArt.ITF {
 		public float minDelayBeforeAppearing;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				animVictoryPlayer = s.SerializeObject<StringID>(animVictoryPlayer, name: "animVictoryPlayer");
 				animFlying = s.SerializeObject<StringID>(animFlying, name: "animFlying");
 				animAfterJumpAnim = s.SerializeObject<StringID>(animAfterJumpAnim, name: "animAfterJumpAnim");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					minDelayBeforeAppearing = s.Serialize<float>(minDelayBeforeAppearing, name: "minDelayBeforeAppearing");
 				}
 				maxDelayBeforeAppearing = s.Serialize<float>(maxDelayBeforeAppearing, name: "maxDelayBeforeAppearing");
@@ -65,7 +65,7 @@ namespace UbiArt.ITF {
 				teensieOffsetOnRune = s.SerializeObject<Vec3d>(teensieOffsetOnRune, name: "teensieOffsetOnRune");
 				teleportDuration = s.Serialize<float>(teleportDuration, name: "teleportDuration");
 				murphyPodiumOffset = s.SerializeObject<Vec3d>(murphyPodiumOffset, name: "murphyPodiumOffset");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					murphyInAirOffset = s.SerializeObject<Vec3d>(murphyInAirOffset, name: "murphyInAirOffset");
 				}
 				podiumBoneList = s.SerializeObject<CListO<StringID>>(podiumBoneList, name: "podiumBoneList");
@@ -78,7 +78,7 @@ namespace UbiArt.ITF {
 				minTimeBetweenFireworks = s.Serialize<float>(minTimeBetweenFireworks, name: "minTimeBetweenFireworks");
 				maxTimeBetweenFireworks = s.Serialize<float>(maxTimeBetweenFireworks, name: "maxTimeBetweenFireworks");
 				cameraOffset = s.SerializeObject<Vec3d>(cameraOffset, name: "cameraOffset");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					cameraOffsetInAir = s.SerializeObject<Vec3d>(cameraOffsetInAir, name: "cameraOffsetInAir");
 				}
 				cameraBlend = s.Serialize<float>(cameraBlend, name: "cameraBlend");
@@ -93,7 +93,7 @@ namespace UbiArt.ITF {
 				onStartFadeEvent = s.SerializeObject<Generic<Event>>(onStartFadeEvent, name: "onStartFadeEvent");
 				onFadeFinishedEvent = s.SerializeObject<Generic<Event>>(onFadeFinishedEvent, name: "onFadeFinishedEvent");
 				isUsedInCinematic = s.Serialize<bool>(isUsedInCinematic, name: "isUsedInCinematic");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					isUsedInInvasion = s.Serialize<bool>(isUsedInInvasion, name: "isUsedInInvasion");
 				}
 				transformFlashFX = s.SerializeObject<Path>(transformFlashFX, name: "transformFlashFX");

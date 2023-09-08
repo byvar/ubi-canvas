@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public CListO<StringID> worldsList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				locId = s.SerializeObject<LocalisationId>(locId, name: "locId");
 				worldsList = s.SerializeObject<CListO<StringID>>(worldsList, name: "worldsList");
 				FXFirework = s.SerializeObject<StringID>(FXFirework, name: "FXFirework");

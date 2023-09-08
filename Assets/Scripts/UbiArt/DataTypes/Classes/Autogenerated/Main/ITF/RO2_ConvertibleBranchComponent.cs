@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public uint seed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 			} else {
 				seed = s.Serialize<uint>(seed, name: "seed");
 			}

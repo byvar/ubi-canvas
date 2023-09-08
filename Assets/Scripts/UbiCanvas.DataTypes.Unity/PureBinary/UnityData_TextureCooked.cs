@@ -14,7 +14,7 @@ namespace UbiCanvas {
 		public Texture2D Texture {
 			get {
 				if (texture == null && LinkedObject.Data != null) {
-					if (Context.Settings.platform == Settings.Platform.Vita) {
+					if (Context.Settings.Platform == GamePlatform.Vita) {
 						//texture = new Texture2D(LinkedObject.Width, LinkedObject.Height);
 						using MemoryStream ms = new MemoryStream(LinkedObject.Data);
 						var gxt = new GXTConvert.FileFormat.GxtBinary(ms);

@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public bool DBG_speed;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				prevNodeCount = s.Serialize<uint>(prevNodeCount, name: "prevNodeCount");
 				speedMultiplierMinValue = s.Serialize<float>(speedMultiplierMinValue, name: "speedMultiplierMinValue");
 				speedMultiplierMaxValue = s.Serialize<float>(speedMultiplierMaxValue, name: "speedMultiplierMaxValue");

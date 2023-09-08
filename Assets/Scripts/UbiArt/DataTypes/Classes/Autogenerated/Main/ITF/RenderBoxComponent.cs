@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				size = s.SerializeObject<Vec2d>(size, name: "size");
 				offset = s.SerializeObject<Vec2d>(offset, name: "offset");
 				uvPreTranslation = s.SerializeObject<Vec2d>(uvPreTranslation, name: "uvPreTranslation");
@@ -30,7 +30,7 @@ namespace UbiArt.ITF {
 				uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 				uvRotationSpeed = s.SerializeObject<Angle>(uvRotationSpeed, name: "uvRotationSpeed");
 				uvPivot = s.SerializeObject<Vec2d>(uvPivot, name: "uvPivot");
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				imageResolution = s.SerializeObject<Vec2d>(imageResolution, name: "imageResolution");
 				autoSize = s.Serialize<bool>(autoSize, name: "autoSize");
 				Vector2__2 = s.SerializeObject<Vec2d>(Vector2__2, name: "Vector2__2");

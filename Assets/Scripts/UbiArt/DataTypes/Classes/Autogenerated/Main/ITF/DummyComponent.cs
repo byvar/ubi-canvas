@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool is2D;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+			if (s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 				is2D = s.Serialize<bool>(is2D, name: "is2D");
 			}
 		}

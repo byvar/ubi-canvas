@@ -3,7 +3,7 @@
 		public long id;
 
 		public void Serialize(CSerializerObject s, string name) {
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				id = s.Serialize<int>((int)id);
 			} else {
 				id = s.Serialize<long>(id);

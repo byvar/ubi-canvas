@@ -42,7 +42,7 @@ public class Controller : MonoBehaviour {
 	async UniTaskVoid Start() {
 		Obj = this;
 
-		Settings.Mode mode = UnitySettings.GameMode;
+		Mode mode = UnitySettings.GameMode;
 		string gameDataBinFolder = UnitySettings.GameDirs.ContainsKey(mode) ? UnitySettings.GameDirs[mode] : "";
 
 		if (FileSystem.mode == FileSystem.Mode.Web) {
@@ -52,7 +52,7 @@ public class Controller : MonoBehaviour {
 		icons = Resources.LoadAll<Sprite>("tagicons");
 
 		loadingScreen.Active = true;
-		var settings = Settings.Init(mode);
+		var settings = Settings.FromMode(mode);
 		MainContext = new Context(gameDataBinFolder, settings,
 			serializerLogger: new MapViewerSerializerLogger(),
 			fileManager: new MapViewerFileManager(),

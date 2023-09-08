@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public Angle gradientAngleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				radius = s.Serialize<float>(radius, name: "radius");
 				angleStart = s.SerializeObject<Angle>(angleStart, name: "angleStart");
 				angleEnd = s.SerializeObject<Angle>(angleEnd, name: "angleEnd");

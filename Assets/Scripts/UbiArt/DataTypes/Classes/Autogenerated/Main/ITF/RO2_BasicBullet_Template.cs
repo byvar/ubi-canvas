@@ -42,7 +42,7 @@ namespace UbiArt.ITF {
 		public StringID fxNameTrail;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				stimShape = s.SerializeObject<Generic<PhysShape>>(stimShape, name: "stimShape");
 				envContactShape = s.SerializeObject<Generic<PhysShape>>(envContactShape, name: "envContactShape");
 				faction = s.Serialize<Enum_faction>(faction, name: "faction");

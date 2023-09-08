@@ -13,18 +13,18 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion == EngineVersion.RO) {
 				id = s.Serialize<string>(id, name: "id");
 				family = s.Serialize<string>(family, name: "family");
 				deathBubbleColor = s.SerializeObject<Color>(deathBubbleColor, name: "deathBubbleColor");
 				gameScreens = s.SerializeObject<CListO<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				id = s.Serialize<string>(id, name: "id");
 				family = s.Serialize<string>(family, name: "family");
 				gameScreens = s.SerializeObject<CListO<PlayerIDInfo.GameScreenInfo>>(gameScreens, name: "gameScreens");
 				defaultGameScreenInfo = s.SerializeObject<PlayerIDInfo.GameScreenInfo>(defaultGameScreenInfo, name: "defaultGameScreenInfo");
-			} else if (s.Settings.game == Settings.Game.COL) {
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.COL) {
+			} else if (s.Settings.Game == Game.VH) {
 				actorInfo = s.SerializeObject<PlayerIDInfo.ActorInfo>(actorInfo, name: "actorInfo");
 				id = s.Serialize<string>(id, name: "id");
 				family = s.Serialize<string>(family, name: "family");
@@ -55,7 +55,7 @@ namespace UbiArt.ITF {
 				isAlwaysActive = s.Serialize<bool>(isAlwaysActive, name: "isAlwaysActive");
 				isPlayable = s.Serialize<bool>(isPlayable, name: "isPlayable");
 				gameModes = s.SerializeObject<CListP<uint>>(gameModes, name: "gameModes");
-				if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+				if (s.Settings.EngineVersion > EngineVersion.RO) {
 					isDynamicallyLoaded = s.Serialize<bool>(isDynamicallyLoaded, name: "isDynamicallyLoaded");
 					mainGameMode = s.Serialize<uint>(mainGameMode, name: "mainGameMode");
 				}

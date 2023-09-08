@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public CArrayO<Vec3d> medalOffsets3Slots;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				stand = s.SerializeObject<StringID>(stand, name: "stand");
 				shake = s.SerializeObject<StringID>(shake, name: "shake");
 				slotTimeInterval = s.Serialize<float>(slotTimeInterval, name: "slotTimeInterval");

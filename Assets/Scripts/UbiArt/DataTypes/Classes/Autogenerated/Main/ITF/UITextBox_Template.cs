@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 		public CListO<Path> preSpawnedActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				fontName = s.SerializeObject<Path>(fontName, name: "fontName");
 				textMode = s.Serialize<uint>(textMode, name: "textMode");
 				textModeY = s.Serialize<uint>(textModeY, name: "textModeY");
@@ -48,7 +48,7 @@ namespace UbiArt.ITF {
 				textShadowOffset = s.SerializeObject<Vec2d>(textShadowOffset, name: "textShadowOffset");
 				textShadowColor = s.SerializeObject<Color>(textShadowColor, name: "textShadowColor");
 				lineSpacingFactor = s.Serialize<float>(lineSpacingFactor, name: "lineSpacingFactor");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				styles = s.SerializeObject<CListO<FontTextArea.Style>>(styles, name: "styles");
 				preSpawnedActorPaths = s.SerializeObject<CListO<Path>>(preSpawnedActorPaths, name: "preSpawnedActorPaths");
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");

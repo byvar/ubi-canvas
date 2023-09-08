@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public uint uint__2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.VH) {
 				float__0 = s.Serialize<float>(float__0, name: "float__0");
 				Enum_VH_0__1 = s.Serialize<Enum_VH_0>(Enum_VH_0__1, name: "Enum_VH_0__1");
 				uint__2 = s.Serialize<uint>(uint__2, name: "uint__2");

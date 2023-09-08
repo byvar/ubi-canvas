@@ -10,18 +10,18 @@ namespace UbiArt.ITF {
 		public CListO<StringID> defaultFxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					triggerFXisActive = s.Serialize<int>(triggerFXisActive, name: "triggerFXisActive");
 				}
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
 					defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
 					allowBusMixEvents = s.Serialize<bool>(allowBusMixEvents, name: "allowBusMixEvents", options: CSerializerObject.Options.BoolAsByte);
 					allowMusicEvents = s.Serialize<bool>(allowMusicEvents, name: "allowMusicEvents", options: CSerializerObject.Options.BoolAsByte);
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
 					defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 					allowBusMixEvents = s.Serialize<bool>(allowBusMixEvents, name: "allowBusMixEvents", options: CSerializerObject.Options.BoolAsByte);
 					allowMusicEvents = s.Serialize<bool>(allowMusicEvents, name: "allowMusicEvents", options: CSerializerObject.Options.BoolAsByte);
 				}
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					allowBusMixEvents = s.Serialize<bool>(allowBusMixEvents, name: "allowBusMixEvents");
 					allowMusicEvents = s.Serialize<bool>(allowMusicEvents, name: "allowMusicEvents");

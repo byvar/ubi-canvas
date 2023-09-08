@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public float sampleLength;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				bones = s.SerializeObject<CListO<StringID>>(bones, name: "bones");
 			} else {
 				bones = s.SerializeObject<CListO<StringID>>(bones, name: "bones");

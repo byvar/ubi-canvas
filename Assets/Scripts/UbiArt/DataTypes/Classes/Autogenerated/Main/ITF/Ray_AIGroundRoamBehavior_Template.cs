@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 			canPush = s.Serialize<int>(canPush, name: "canPush");
 			pushForce = s.Serialize<float>(pushForce, name: "pushForce");
 			lowWallHeight = s.Serialize<float>(lowWallHeight, name: "lowWallHeight");
-			if (s.Settings.game == Settings.Game.RO && s.HasFlags(SerializeFlags.Flags_xC0)) {
+			if (s.Settings.Game == Game.RO && s.HasFlags(SerializeFlags.Flags_xC0)) {
 				drawDebug = s.Serialize<int>(drawDebug, name: "drawDebug");
 			}
 		}

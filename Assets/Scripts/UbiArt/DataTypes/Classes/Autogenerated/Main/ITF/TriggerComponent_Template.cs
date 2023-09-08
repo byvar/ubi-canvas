@@ -24,7 +24,7 @@ namespace UbiArt.ITF {
 		public bool triggerOnWind;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				activateChildren = s.Serialize<int>(activateChildren, name: "activateChildren");
 				triggerOnce = s.Serialize<int>(triggerOnce, name: "triggerOnce");
 				resetOnCheckpoint = s.Serialize<bool>(resetOnCheckpoint, name: "resetOnCheckpoint");

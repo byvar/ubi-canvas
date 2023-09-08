@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public CArrayO<Path> inputs;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL || s.Settings.Game == Game.VH) {
 				inputs = s.SerializeObject<CArrayO<Path>>(inputs, name: "inputs");
 			} else {
 			}

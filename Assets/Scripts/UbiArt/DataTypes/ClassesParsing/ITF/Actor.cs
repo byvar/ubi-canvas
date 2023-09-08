@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		protected Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game || previousSettings.platform != settings.platform) {
+				if (previousSettings.Game != settings.Game || previousSettings.Platform != settings.Platform) {
 					//COMPONENTS = null;
 					//LUA = new Path("enginedata/actortemplates/subscene.tpl");
 					if (COMPONENTS != null && COMPONENTS.Count > 0) {
@@ -49,7 +49,7 @@ namespace UbiArt.ITF {
 							if (compobj != null) {
 								var attr = (GamesAttribute)Attribute.GetCustomAttribute(compobj.GetType(), typeof(GamesAttribute));
 								if (attr != null) {
-									if (!attr.HasGame(settings.game) || !attr.HasPlatform(settings.platform)) {
+									if (!attr.HasGame(settings.Game) || !attr.HasPlatform(settings.Platform)) {
 										c.SystemLogger?.LogInfo("Removing actor component: {0}", compobj.GetType());
 										RemovedComponents.Add(COMPONENTS[i]);
 									}

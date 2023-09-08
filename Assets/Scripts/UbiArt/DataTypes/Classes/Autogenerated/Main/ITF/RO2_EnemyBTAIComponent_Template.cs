@@ -51,7 +51,7 @@ namespace UbiArt.ITF {
 		public float hideTextureDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				squashDeathPenetration = s.Serialize<float>(squashDeathPenetration, name: "squashDeathPenetration");
 				timeFight = s.Serialize<float>(timeFight, name: "timeFight");
 				disabledPhys = s.Serialize<bool>(disabledPhys, name: "disabledPhys");
@@ -93,7 +93,7 @@ namespace UbiArt.ITF {
 				allowOwnProjectileHit = s.Serialize<bool>(allowOwnProjectileHit, name: "allowOwnProjectileHit");
 				useBumperPolyline = s.Serialize<bool>(useBumperPolyline, name: "useBumperPolyline");
 				heartShieldData = s.SerializeObject<CListO<RO2_HeartShield_Template>>(heartShieldData, name: "heartShieldData");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					AMCheckTouch = s.Serialize<bool>(AMCheckTouch, name: "AMCheckTouch");
 					hideTextureDuration = s.Serialize<float>(hideTextureDuration, name: "hideTextureDuration");
 				}
@@ -177,7 +177,7 @@ namespace UbiArt.ITF {
 				softColForce = s.Serialize<float>(softColForce, name: "softColForce");
 				startLevel = s.Serialize<uint>(startLevel, name: "startLevel");
 				stiltsOriginCenter = s.SerializeObject<Vec2d>(stiltsOriginCenter, name: "stiltsOriginCenter");
-				if (s.Settings.game == Settings.Game.RL && s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Game == Game.RL && s.Settings.Platform != GamePlatform.Vita) {
 					phantomShape = s.SerializeObject<StringID>(phantomShape, name: "phantomShape");
 				}
 			}

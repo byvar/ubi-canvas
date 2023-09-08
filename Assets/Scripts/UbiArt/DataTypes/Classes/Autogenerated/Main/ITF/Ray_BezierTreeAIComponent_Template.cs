@@ -68,7 +68,7 @@ namespace UbiArt.ITF {
 			ai = s.SerializeObject<Ray_PlatformTreeComponent_Template>(ai, name: "ai");
 			polylineDisableOnTransition = s.Serialize<int>(polylineDisableOnTransition, name: "polylineDisableOnTransition");
 
-			if (s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RFR) {
 				int__56 = s.Serialize<int>(int__56, name: "int__56");
 				int__57 = s.Serialize<int>(int__57, name: "int__57");
 				float__58 = s.Serialize<float>(float__58, name: "float__58");

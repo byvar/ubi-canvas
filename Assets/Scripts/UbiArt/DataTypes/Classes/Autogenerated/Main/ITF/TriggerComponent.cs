@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 		
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					retriggerOnCheckpoint = s.Serialize<int>(retriggerOnCheckpoint, name: "retriggerOnCheckpoint");
 				}
@@ -47,18 +47,18 @@ namespace UbiArt.ITF {
 					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
 					activator = s.Serialize<uint>(activator, name: "activator");
 				}
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					mode = s.Serialize<Mode>(mode, name: "mode");
 				}
-				if (s.Settings.isCatchThemAll) {
+				if (s.Settings.IsCatchThemAll) {
 					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone", options: CSerializerObject.Options.ForceAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {
 					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone");
 					activator = s.Serialize<uint>(activator, name: "activator");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					mode = s.Serialize<Mode>(mode, name: "mode");
 					onEnterEvent = s.SerializeObject<Generic<Event>>(onEnterEvent, name: "onEnterEvent");
@@ -87,7 +87,7 @@ namespace UbiArt.ITF {
 					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone", options: CSerializerObject.Options.BoolAsByte);
 					activator = s.Serialize<uint>(activator, name: "activator");
 				}
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					mode = s.Serialize<Mode>(mode, name: "mode");
 				}

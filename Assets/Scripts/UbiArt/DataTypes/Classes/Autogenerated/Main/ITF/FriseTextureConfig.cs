@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 			collision = s.SerializeObject<CollisionTexture>(collision, name: "collision");
 			scrollUV = s.SerializeObject<Vec2d>(scrollUV, name: "scrollUV");
 			scrollAngle = s.Serialize<float>(scrollAngle, name: "scrollAngle");
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				useUV2 = s.Serialize<bool>(useUV2, name: "useUV2", options: CSerializerObject.Options.BoolAsByte);
 			} else {
 				useUV2 = s.Serialize<bool>(useUV2, name: "useUV2");

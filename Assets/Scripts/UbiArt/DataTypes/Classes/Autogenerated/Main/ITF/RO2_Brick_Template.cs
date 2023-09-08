@@ -10,7 +10,7 @@ namespace UbiArt.ITF {
 		public ArchiveMemory archive;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				name = s.SerializeObject<StringID>(name, name: "name");
 				path = s.SerializeObject<Path>(path, name: "path");
 				spawnCooldown = s.Serialize<uint>(spawnCooldown, name: "spawnCooldown");

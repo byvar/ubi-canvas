@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public float physWaterMinPerturbation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				physRadius = s.Serialize<float>(physRadius, name: "physRadius");
 				physWeight = s.Serialize<float>(physWeight, name: "physWeight");
 				physGravityMultiplier = s.Serialize<float>(physGravityMultiplier, name: "physGravityMultiplier");
@@ -23,7 +23,7 @@ namespace UbiArt.ITF {
 				physWindSpeedLimit = s.Serialize<float>(physWindSpeedLimit, name: "physWindSpeedLimit");
 				physWindScaleFactorWhenSpeedIsOpposite = s.Serialize<float>(physWindScaleFactorWhenSpeedIsOpposite, name: "physWindScaleFactorWhenSpeedIsOpposite");
 				physFanForceMultiplier = s.Serialize<float>(physFanForceMultiplier, name: "physFanForceMultiplier");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				physRadius = s.Serialize<float>(physRadius, name: "physRadius");
 				physWeight = s.Serialize<float>(physWeight, name: "physWeight");
 				physGravityMultiplier = s.Serialize<float>(physGravityMultiplier, name: "physGravityMultiplier");
@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 				physWindSpeedLimit = s.Serialize<float>(physWindSpeedLimit, name: "physWindSpeedLimit");
 				physWindScaleFactorWhenSpeedIsOpposite = s.Serialize<float>(physWindScaleFactorWhenSpeedIsOpposite, name: "physWindScaleFactorWhenSpeedIsOpposite");
 				physFanForceMultiplier = s.Serialize<float>(physFanForceMultiplier, name: "physFanForceMultiplier");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					physWaterMinPerturbation = s.Serialize<float>(physWaterMinPerturbation, name: "physWaterMinPerturbation");
 				}
 			} else {

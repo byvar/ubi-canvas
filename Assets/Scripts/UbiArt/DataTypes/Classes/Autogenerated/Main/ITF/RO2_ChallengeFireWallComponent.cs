@@ -7,8 +7,8 @@ namespace UbiArt.ITF {
 		public bool useScreenPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
-				if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Game == Game.RL) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					screenPosition = s.SerializeObject<Vec2d>(screenPosition, name: "screenPosition");
 					useScreenPos = s.Serialize<bool>(useScreenPos, name: "useScreenPos");
 					if (s.HasFlags(SerializeFlags.Persistent)) {

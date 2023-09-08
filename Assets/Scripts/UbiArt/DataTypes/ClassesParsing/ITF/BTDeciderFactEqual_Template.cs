@@ -11,9 +11,9 @@ namespace UbiArt.ITF {
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game) {
-					if ((previousSettings.game == Settings.Game.RA || previousSettings.game == Settings.Game.RM) 
-						&& settings.game == Settings.Game.RL) {
+				if (previousSettings.Game != settings.Game) {
+					if ((previousSettings.Game == Game.RA || previousSettings.Game == Game.RM) 
+						&& settings.Game == Game.RL) {
 						type = (EValueType)(int)typeRA;
 						inferiorEnum = inferior ? type : 0;
 						superiorEnum = superior ? type : 0;

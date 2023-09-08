@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				RestoreInitialPos = s.Serialize<bool>(RestoreInitialPos, name: "RestoreInitialPos");
 				Keyframes = s.SerializeObject<Trajectory_Template>(Keyframes, name: "Keyframes");
 				startFrameCameraBlend = s.Serialize<int>(startFrameCameraBlend, name: "startFrameCameraBlend");
@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 				coeffTwoCamera = s.Serialize<float>(coeffTwoCamera, name: "coeffTwoCamera");
 				coeffOneCameraOut = s.Serialize<float>(coeffOneCameraOut, name: "coeffOneCameraOut");
 				coeffTwoCameraOut = s.Serialize<float>(coeffTwoCameraOut, name: "coeffTwoCameraOut");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					coeffOneCamera = s.Serialize<float>(coeffOneCamera, name: "coeffOneCamera");
 					coeffOneCameraOut = s.Serialize<float>(coeffOneCameraOut, name: "coeffOneCameraOut");
@@ -49,7 +49,7 @@ namespace UbiArt.ITF {
 				startFrameCameraBlend = s.Serialize<int>(startFrameCameraBlend, name: "startFrameCameraBlend");
 				coeffCameraIn = s.Serialize<float>(coeffCameraIn, name: "coeffCameraIn");
 				coeffCameraOut = s.Serialize<float>(coeffCameraOut, name: "coeffCameraOut");
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					depthZ = -1f;
 				} else {
 					depthZ = s.Serialize<float>(depthZ, name: "depthZ");
@@ -60,7 +60,7 @@ namespace UbiArt.ITF {
 				Color = s.SerializeObject<Spline>(Color, name: "Color");
 				Alpha = s.SerializeObject<Spline>(Alpha, name: "Alpha");
 				UseSequenceInitialPos = s.Serialize<bool>(UseSequenceInitialPos, name: "UseSequenceInitialPos");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					coeffOneCamera = s.Serialize<float>(coeffOneCamera, name: "coeffOneCamera");
 					coeffOneCameraOut = s.Serialize<float>(coeffOneCameraOut, name: "coeffOneCameraOut");
@@ -82,7 +82,7 @@ namespace UbiArt.ITF {
 				Color = s.SerializeObject<Spline>(Color, name: "Color");
 				Alpha = s.SerializeObject<Spline>(Alpha, name: "Alpha");
 				UseSequenceInitialPos = s.Serialize<bool>(UseSequenceInitialPos, name: "UseSequenceInitialPos", options: CSerializerObject.Options.BoolAsByte);
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					coeffOneCamera = s.Serialize<float>(coeffOneCamera, name: "coeffOneCamera");
 					coeffOneCameraOut = s.Serialize<float>(coeffOneCameraOut, name: "coeffOneCameraOut");

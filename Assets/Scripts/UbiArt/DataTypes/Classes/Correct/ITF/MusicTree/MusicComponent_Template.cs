@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CArrayO<InputDesc> inputs;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				musicPartSet = s.SerializeObject<MusicPartSet_Template>(musicPartSet, name: "musicPartSet");
 				musicTree = s.SerializeObject<MusicTree_Template>(musicTree, name: "musicTree");
 				inputs = s.SerializeObject<CArrayO<InputDesc>>(inputs, name: "inputs");

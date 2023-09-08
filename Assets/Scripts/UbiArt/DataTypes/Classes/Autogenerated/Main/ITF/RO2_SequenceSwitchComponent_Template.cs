@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public int reverse;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				reverse = s.Serialize<int>(reverse, name: "reverse");
 			} else {
 			}

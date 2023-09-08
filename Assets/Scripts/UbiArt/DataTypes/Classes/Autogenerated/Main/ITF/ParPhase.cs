@@ -20,7 +20,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				phaseTime = s.Serialize<float>(phaseTime, name: "phaseTime");
 				colorMin = s.SerializeObject<Color>(colorMin, name: "colorMin");
 				colorMax = s.SerializeObject<Color>(colorMax, name: "colorMax");
@@ -31,7 +31,7 @@ namespace UbiArt.ITF {
 				deltaphasetime = s.Serialize<float>(deltaphasetime, name: "deltaphasetime");
 				animstretchtime = s.Serialize<bool>(animstretchtime, name: "animstretchtime");
 				blendtonextphase = s.Serialize<bool>(blendtonextphase, name: "blendtonextphase");
-			} else if(s.Settings.game == Settings.Game.COL) {
+			} else if(s.Settings.Game == Game.COL) {
 				phaseTime = s.Serialize<float>(phaseTime, name: "phaseTime");
 				colorMin = s.SerializeObject<Color>(colorMin, name: "colorMin");
 				colorMax = s.SerializeObject<Color>(colorMax, name: "colorMax");
@@ -54,7 +54,7 @@ namespace UbiArt.ITF {
 				animend = s.Serialize<int>(animend, name: "animend");
 				animname = s.SerializeObject<StringID>(animname, name: "animname");
 				deltaphasetime = s.Serialize<float>(deltaphasetime, name: "deltaphasetime");
-				if (s.Settings.platform == Settings.Platform.Vita) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					animstretchtime = s.Serialize<int>(animstretchtime ? 1 : 0, name: "animstretchtime") != 0;
 					blendtonextphase = s.Serialize<bool>(blendtonextphase, name: "blendtonextphase");
 				} else {

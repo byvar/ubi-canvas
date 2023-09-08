@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 		public EventInstructionDialog HomeNodeDialog_NotAvailableInMultiplayer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				maxSpeedToFocusCostumeFrame = s.Serialize<float>(maxSpeedToFocusCostumeFrame, name: "maxSpeedToFocusCostumeFrame");
 			}
 			paintScale = s.SerializeObject<Vec2d>(paintScale, name: "paintScale");
@@ -38,7 +38,7 @@ namespace UbiArt.ITF {
 			unlockingDuration = s.Serialize<float>(unlockingDuration, name: "unlockingDuration");
 			unteasingDuration = s.Serialize<float>(unteasingDuration, name: "unteasingDuration");
 			paintTransitionDuration = s.Serialize<float>(paintTransitionDuration, name: "paintTransitionDuration");
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				invasionFrameDisplayDelay = s.Serialize<uint>(invasionFrameDisplayDelay, name: "invasionFrameDisplayDelay");
 			}
 			HomeNodeDialog_Lock = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_Lock, name: "HomeNodeDialog_Lock");
@@ -57,7 +57,7 @@ namespace UbiArt.ITF {
 			HomeNodeDialog_Highlight = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_Highlight, name: "HomeNodeDialog_Highlight");
 			HomeNodeDialog_NeedOnline = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_NeedOnline, name: "HomeNodeDialog_NeedOnline");
 
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				HomeNodeDialog_NotAvailableInMultiplayer = s.SerializeObject<EventInstructionDialog>(HomeNodeDialog_NotAvailableInMultiplayer, name: "HomeNodeDialog_NotAvailableInMultiplayer");
 			}
 		}

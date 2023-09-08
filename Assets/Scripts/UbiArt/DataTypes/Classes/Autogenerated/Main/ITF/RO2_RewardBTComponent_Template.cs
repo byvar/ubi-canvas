@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public Generic<RO2_EventSpawnReward> fallbackReward;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				addHp = s.Serialize<bool>(addHp, name: "addHp");
 				fallbackReward = s.SerializeObject<Generic<RO2_EventSpawnReward>>(fallbackReward, name: "fallbackReward");
 			} else {

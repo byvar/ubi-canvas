@@ -27,7 +27,7 @@ namespace UbiArt.FileFormat {
 					}
 				}
 				if (CurrentSerializer == null) {
-					if (Context.Settings.serializerType == Settings.SerializerType.TagBinary && !Context.Loader.IsPureBinary(FilePath, UncookedExtension)) {
+					if (Context.Settings.SerializerType == SerializerType.TagBinary && !Context.Loader.IsPureBinary(FilePath, UncookedExtension)) {
 						CurrentSerializer = new CSerializerObjectTagBinary(Context, this);
 					} else {
 						CurrentSerializer = new CSerializerObjectBinary(Context, this);

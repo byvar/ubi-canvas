@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public float zOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				zOffset = s.Serialize<float>(zOffset, name: "zOffset");
 			} else {
 			}

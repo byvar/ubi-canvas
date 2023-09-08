@@ -28,16 +28,16 @@ namespace UbiArt {
 		}
 
 		public void Serialize(CSerializerObject s, string name) {
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				read = s.Serialize<bool>(read, name: "read");
 				if (s.HasProperty(CSerializerObject.SerializerProperty.StoreObjectSizes)
 					&& !s.Embedded
-					&& s.Settings.engineVersion > Settings.EngineVersion.RO
+					&& s.Settings.EngineVersion > EngineVersion.RO
 					&& !(s is CSerializerObjectTagBinary)) {
 					sizeOf = s.Serialize<uint>(sizeOf, name: "sizeof");
 				}
 				Pointer pos = s.CurrentPointer;
-				if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+				if (s.Settings.EngineVersion <= EngineVersion.RO) {
 					className = s.SerializeObject<StringID>(className, name: "NAME");
 				} else {
 					className = s.SerializeObject<StringID>(className, name: "$ClassName$");

@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 		public COL_GFXMaterialShader_Layer_Template Layer4;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				flags = s.Serialize<uint>(flags, name: "flags");
 				renderRegular = s.Serialize<bool>(renderRegular, name: "renderRegular");
 				renderFrontLight = s.Serialize<bool>(renderFrontLight, name: "renderFrontLight");
@@ -39,14 +39,14 @@ namespace UbiArt.ITF {
 				separateAlpha = s.Serialize<bool>(separateAlpha, name: "separateAlpha");
 				textureBlend = s.Serialize<bool>(textureBlend, name: "textureBlend");
 				renderToTexture = s.Serialize<int>(renderToTexture, name: "renderToTexture");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					animInTex = s.SerializeObject<CListO<GFXMatAnimImpostor>>(animInTex, name: "animInTex");
 				}
 				materialtype2 = s.Serialize<GFX_MAT2>(materialtype2, name: "materialtype");
 				lightingType = s.Serialize<GFX_MAT_SHADER>(lightingType, name: "lightingType");
 				matParams = s.SerializeObject<GFX_MaterialParams>(matParams, name: "matParams");
 				blendmode = s.Serialize<GFX_BLEND>(blendmode, name: "blendmode");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				flags = s.Serialize<uint>(flags, name: "flags");
 				renderRegular = s.Serialize<bool>(renderRegular, name: "renderRegular", options: CSerializerObject.Options.BoolAsByte);
 				renderGenerateBack = s.Serialize<bool>(renderGenerateBack, name: "renderGenerateBack", options: CSerializerObject.Options.BoolAsByte);

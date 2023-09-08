@@ -26,7 +26,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				numChannels = s.Serialize<uint>(numChannels, name: "numChannels");
 				loop = s.Serialize<int>(loop, name: "loop");
 				playMode2 = s.Serialize<PlayMode2>(playMode2, name: "playMode");
@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 				metronomeType = s.Serialize<uint>(metronomeType, name: "metronomeType");
 				playOnNext = s.Serialize<uint>(playOnNext, name: "playOnNext");
 				modifiers = s.SerializeObject<CArrayO<Generic<SoundModifier>>>(modifiers, name: "modifiers");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					isMusic = s.Serialize<int>(isMusic, name: "isMusic");
 				}
 			} else {

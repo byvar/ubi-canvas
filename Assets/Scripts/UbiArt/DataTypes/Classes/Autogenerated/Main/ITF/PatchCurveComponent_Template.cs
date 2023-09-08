@@ -18,7 +18,7 @@ namespace UbiArt.ITF {
 		public bool childBoneEnd;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				texture = s.SerializeObject<Path>(texture, name: "texture");
 				width = s.Serialize<float>(width, name: "width");
 				tileLength = s.Serialize<float>(tileLength, name: "tileLength");
@@ -29,7 +29,7 @@ namespace UbiArt.ITF {
 				childBone = s.SerializeObject<StringID>(childBone, name: "childBone");
 				childOrientationInfluence = s.Serialize<float>(childOrientationInfluence, name: "childOrientationInfluence");
 				attachToChild = s.Serialize<bool>(attachToChild, name: "attachToChild");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					texture = s.SerializeObject<Path>(texture, name: "texture");
 				}

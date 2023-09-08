@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 		public CListO<RO2_BTActionThrowObject_Template.ProjectileData> projectileData;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				enemyDetectionRange = s.SerializeObject<Generic<PhysShape>>(enemyDetectionRange, name: "enemyDetectionRange");
 				anim = s.SerializeObject<StringID>(anim, name: "anim");
 				markerSpawn = s.SerializeObject<StringID>(markerSpawn, name: "markerSpawn");

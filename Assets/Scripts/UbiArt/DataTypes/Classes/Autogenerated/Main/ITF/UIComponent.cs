@@ -33,7 +33,7 @@ namespace UbiArt.ITF {
 		public float float__8;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion == Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion == EngineVersion.RO) {
 				if (this is UITextBox) return;
 				if (s.HasFlags(SerializeFlags.Default)) {
 					RELATIVEPOSX = s.Serialize<float>(RELATIVEPOSX, name: "RELATIVEPOSX");
@@ -46,11 +46,11 @@ namespace UbiArt.ITF {
 					defaultSelectedByInstance = s.Serialize<int>(defaultSelectedByInstance, name: "defaultSelectedByInstance");
 					align = s.Serialize<Align>(align, name: "align");
 				}
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					transition = s.Serialize<bool>(transition, name: "transition");
 					display = s.Serialize<bool>(display, name: "display");
-					if (s.Settings.platform != Settings.Platform.Vita) {
+					if (s.Settings.Platform != GamePlatform.Vita) {
 						leftComponent = s.Serialize<string>(leftComponent, name: "leftComponent");
 						rightComponent = s.Serialize<string>(rightComponent, name: "rightComponent");
 						upComponent = s.Serialize<string>(upComponent, name: "upComponent");
@@ -61,7 +61,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					screenSpace = s.SerializeObject<Vec2d>(screenSpace, name: "screenSpace");
 				}
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					transition = s.Serialize<bool>(transition, name: "transition");
 					display = s.Serialize<bool>(display, name: "display");
@@ -70,7 +70,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					screenSpace = s.SerializeObject<Vec2d>(screenSpace, name: "screenSpace");
 				}
-			} else if (s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.VH) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					transition = s.Serialize<bool>(transition, name: "transition");
 					display = s.Serialize<bool>(display, name: "display");

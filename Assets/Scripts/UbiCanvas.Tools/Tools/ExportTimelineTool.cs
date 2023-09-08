@@ -46,7 +46,7 @@ namespace UbiCanvas.Tools
 			foreach (var kv in timelineList) {
 				b.AppendLine($"{kv.Key:ddd, dd/MM/yyyy - HH:mm:ss}\t{kv.Value}");
 			}
-			File.WriteAllText(System.IO.Path.Combine(outputDir, $"timeline_{context.Settings.mode}.txt"), b.ToString());
+			File.WriteAllText(System.IO.Path.Combine(outputDir, $"timeline_{context.Settings.Mode}.txt"), b.ToString());
 		}
 	}
 }

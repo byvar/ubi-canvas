@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 		public uint priority;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				action2 = s.Serialize<PlayerForcedAction2>(action2, name: "action");
 				enable = s.Serialize<bool>(enable, name: "enable");
 				direction = s.SerializeObject<Vec2d>(direction, name: "direction");

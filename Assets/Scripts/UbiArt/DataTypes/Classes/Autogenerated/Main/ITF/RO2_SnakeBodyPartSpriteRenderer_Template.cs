@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public Placeholder otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				anim = s.SerializeObject<AnimationAtlas>(anim, name: "anim");
 				drawAABB = s.SerializeObject<AABB>(drawAABB, name: "drawAABB");
 				color = s.SerializeObject<Color>(color, name: "color");

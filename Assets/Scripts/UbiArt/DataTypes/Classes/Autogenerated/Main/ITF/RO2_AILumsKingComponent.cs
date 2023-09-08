@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool useReveal = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 			} else {
 				useReveal = s.Serialize<bool>(useReveal, name: "useReveal");
 			}

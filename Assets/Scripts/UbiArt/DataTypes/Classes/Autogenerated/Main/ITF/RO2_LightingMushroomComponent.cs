@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public bool triggerSpawn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					IsMoving = s.Serialize<bool>(IsMoving, name: "IsMoving");
 					ScaleMin = s.Serialize<float>(ScaleMin, name: "ScaleMin");
@@ -54,7 +54,7 @@ namespace UbiArt.ITF {
 			public float flareSpeed;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.Game == Game.RL) {
 					if (s.HasFlags(SerializeFlags.Default)) {
 						Position = s.SerializeObject<Vec3d>(Position, name: "Position");
 						ExplosionTimer = s.Serialize<float>(ExplosionTimer, name: "ExplosionTimer");

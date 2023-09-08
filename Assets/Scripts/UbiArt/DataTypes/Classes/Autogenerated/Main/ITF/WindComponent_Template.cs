@@ -9,9 +9,9 @@ namespace UbiArt.ITF {
 		public Enum_flags flags;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				windAreasOrigins = s.SerializeObject<CListO<PhysForceModifier>>(windAreasOrigins, name: "windAreas");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				windAreas = s.SerializeObject<CListO<Generic<PhysForceModifier_Template>>>(windAreas, name: "windAreas");
 			} else {
 				windAreas = s.SerializeObject<CListO<Generic<PhysForceModifier_Template>>>(windAreas, name: "windAreas");

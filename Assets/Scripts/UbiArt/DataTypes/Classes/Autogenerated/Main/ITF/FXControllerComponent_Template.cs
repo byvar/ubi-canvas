@@ -9,16 +9,16 @@ namespace UbiArt.ITF {
 		public CListO<StringID> defaultFxList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				fxControlList = s.SerializeObject<CListO<FXControl>>(fxControlList, name: "fxControlList");
 				triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
 				defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
-			} else if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH) {
 				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				fxControlList = s.SerializeObject<CListO<FXControl>>(fxControlList, name: "fxControlList");
 				triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");
 				defaultFx = s.SerializeObject<StringID>(defaultFx, name: "defaultFx");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				feedbackTags = s.SerializeObject<CListO<StringID>>(feedbackTags, name: "feedbackTags");
 				fxControlList = s.SerializeObject<CListO<FXControl>>(fxControlList, name: "fxControlList");
 				triggerFx = s.SerializeObject<StringID>(triggerFx, name: "triggerFx");

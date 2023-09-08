@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public float bounceMultiplier;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 			} else {
 				characterSize = s.Serialize<CHARACTERSIZE>(characterSize, name: "characterSize");
 				direction = s.SerializeObject<Vec2d>(direction, name: "direction");

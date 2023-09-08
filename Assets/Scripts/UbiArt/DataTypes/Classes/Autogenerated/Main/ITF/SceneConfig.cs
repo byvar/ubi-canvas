@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public StringID OnEnterFade;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH) {
 				gameModeParametersList = s.SerializeObject<CArrayO<Generic<GameModeParameters>>>(gameModeParametersList, name: "gameModeParametersList");
 			} else {
 				gameModeParametersList = s.SerializeObject<CArrayO<Generic<GameModeParameters>>>(gameModeParametersList, name: "gameModeParametersList");

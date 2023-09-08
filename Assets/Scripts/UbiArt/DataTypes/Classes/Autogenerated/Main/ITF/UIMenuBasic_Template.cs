@@ -9,9 +9,9 @@ namespace UbiArt.ITF {
 		public int useDiagonalNavigation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				validateItemSounds = s.SerializeObject<CListO<ValidateItemSound>>(validateItemSounds, name: "validateItemSounds");
-			} else if (s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
+			} else if (s.Settings.Game == Game.COL || s.Settings.Game == Game.VH) {
 				validateItemSounds = s.SerializeObject<CListO<ValidateItemSound>>(validateItemSounds, name: "validateItemSounds");
 				nextItemMinAngle = s.Serialize<float>(nextItemMinAngle, name: "nextItemMinAngle");
 				nextItemMaxAngle = s.Serialize<float>(nextItemMaxAngle, name: "nextItemMaxAngle");

@@ -8,7 +8,7 @@ namespace UbiArt.Animation {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RA || s.Settings.game == Settings.Game.RM) {
+			if (s.Settings.Game == Game.RA || s.Settings.Game == Game.RM) {
 				keys = s.SerializeObject<CArrayP<ulong>>(keys, name: "keys");
 			} else {
 				keysLegends = s.SerializeObject<CArrayO<StringID>>(keysLegends, name: "keysLegends");

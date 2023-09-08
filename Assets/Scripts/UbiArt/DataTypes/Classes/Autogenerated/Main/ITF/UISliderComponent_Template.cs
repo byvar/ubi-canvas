@@ -8,12 +8,12 @@ namespace UbiArt.ITF {
 		public float scalefactor;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				scaleOnSelected = s.Serialize<float>(scaleOnSelected, name: "scaleOnSelected");
 				isCursor = s.Serialize<int>(isCursor, name: "isCursor");
 				colorOnSelected = s.SerializeObject<Color>(colorOnSelected, name: "colorOnSelected");
 				speedCursor = s.Serialize<float>(speedCursor, name: "speedCursor");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				scalefactor = s.Serialize<float>(scalefactor, name: "scalefactor");
 				speedCursor = s.Serialize<float>(speedCursor, name: "speedCursor");
 			} else {

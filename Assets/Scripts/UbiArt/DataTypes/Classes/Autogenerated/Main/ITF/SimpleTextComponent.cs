@@ -12,7 +12,7 @@ namespace UbiArt.ITF {
 		public bool centerText;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RO) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					TextLabel = (string)s.Serialize<CString>((CString)TextLabel, name: "TextLabel");
 					lineId = s.SerializeObject<LocalisationId>(lineId, name: "lineId");

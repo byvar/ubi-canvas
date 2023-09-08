@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public bool rotateOnFlip;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					ScaleZ = s.Serialize<float>(ScaleZ, name: "ScaleZ");
 					materialList = s.SerializeObject<CListO<GFXMaterialSerializable>>(materialList, name: "materialList");

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			enter = s.Serialize<bool>(enter, name: "enter");
 			unswapDRCPlayerIfSwapped = s.Serialize<bool>(unswapDRCPlayerIfSwapped, name: "unswapDRCPlayerIfSwapped");
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				autoMurphy = s.Serialize<bool>(autoMurphy, name: "autoMurphy");
 			}
 		}

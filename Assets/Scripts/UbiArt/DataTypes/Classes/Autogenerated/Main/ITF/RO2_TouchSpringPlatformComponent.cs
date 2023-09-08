@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 			public bool checkLinearMove;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.Game == Game.RL) {
 					start = s.Serialize<bool>(start, name: "start", options: CSerializerObject.Options.BoolAsByte);
 					invertPivot = s.Serialize<bool>(invertPivot, name: "invertPivot", options: CSerializerObject.Options.BoolAsByte);
 					checkLinearMove = s.Serialize<bool>(checkLinearMove, name: "checkLinearMove", options: CSerializerObject.Options.BoolAsByte);

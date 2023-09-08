@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public Angle angleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				isRadial = s.Serialize<bool>(isRadial, name: "isRadial");
 				force = s.SerializeObject<Vec2d>(force, name: "force");
 				gradientPercentage = s.Serialize<float>(gradientPercentage, name: "gradientPercentage");

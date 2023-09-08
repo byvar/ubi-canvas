@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_AspiNetworkComponent_Template {
 		public override ActorComponent_Template Convert(Context context, Actor_Template actor, Settings oldSettings, Settings newSettings) {
 			base.Convert(context, actor, oldSettings, newSettings);
-			if (newSettings.game == Settings.Game.RL) {
+			if (newSettings.Game == Game.RL) {
 				if (fxData == null || fxData.Count == 0) {
 					fxData.Add(new FxDataNet() {
 						playerFamily = "rayman",

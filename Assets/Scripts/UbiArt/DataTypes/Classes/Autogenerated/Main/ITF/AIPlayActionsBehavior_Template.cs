@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public bool resetAnimTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				actions = s.SerializeObject<CArrayO<Generic<AIAction_Template>>>(actions, name: "actions");
 			} else {
 				actions = s.SerializeObject<CArrayO<Generic<AIAction_Template>>>(actions, name: "actions");

@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 		public AFX_RefractionParam refraction;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH || s.Settings.Game == Game.COL) {
 				blur = s.SerializeObject<AFX_BlurParam>(blur, name: "blur");
 				glow = s.SerializeObject<AFX_GlowParam>(glow, name: "glow");
 				colorSetting = s.SerializeObject<AFX_ColorSettingParam>(colorSetting, name: "colorSetting");

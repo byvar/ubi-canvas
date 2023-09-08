@@ -29,7 +29,7 @@ namespace UbiArt {
 		}
 
 		public void SerializeClassName(CSerializerObject s) {
-			if (s.Settings.engineVersion <= Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 				className = s.SerializeObject<StringID>(className, name: "NAME");
 			} else {
 				className = s.SerializeObject<StringID>(className, name: "$ClassName$");
@@ -82,7 +82,7 @@ namespace UbiArt {
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game || previousSettings.platform != settings.platform) {
+				if (previousSettings.Game != settings.Game || previousSettings.Platform != settings.Platform) {
 					if (obj != null) {
 						if (obj is ITF.Event e) {
 							if (e.IsAdventuresExclusive()) MakeNull();
@@ -91,7 +91,7 @@ namespace UbiArt {
 					if (obj != null) {
 						var attr = (GamesAttribute)Attribute.GetCustomAttribute(obj.GetType(), typeof(GamesAttribute));
 						if (attr != null) {
-							if (!attr.HasGame(settings.game) || !attr.HasPlatform(settings.platform)) {
+							if (!attr.HasGame(settings.Game) || !attr.HasPlatform(settings.Platform)) {
 								if (obj is RO2_BTActionCovertWithHat_Template btHat) {
 									var newBT = Merger.Merge<RO2_BTActionCovertFromTarget_Template>(btHat);
 									newBT.animStandUp = btHat.animIdle;

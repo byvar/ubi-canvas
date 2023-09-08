@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public CListO<Path> preSpawnedActorPaths;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				styles = s.SerializeObject<CListO<FontTextArea.Style>>(styles, name: "styles");
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
 				preSpawnedActorPaths = s.SerializeObject<CListO<Path>>(preSpawnedActorPaths, name: "preSpawnedActorPaths");

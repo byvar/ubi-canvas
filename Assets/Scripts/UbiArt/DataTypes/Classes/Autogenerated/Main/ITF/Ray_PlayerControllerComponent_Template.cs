@@ -836,7 +836,7 @@ namespace UbiArt.ITF {
 			stargateTravelTrailPath = s.SerializeObject<Path>(stargateTravelTrailPath, name: "stargateTravelTrailPath");
 			deadSoulInactiveOptOutTime = s.Serialize<float>(deadSoulInactiveOptOutTime, name: "deadSoulInactiveOptOutTime");
 			heartShield = s.SerializeObject<Ray_HeartShield_Template>(heartShield, name: "heartShield");
-			if (s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RFR) {
 				magnet = s.SerializeObject<Ray_Magnet_Template>(magnet, name: "magnet");
 				phoenixGadget = s.SerializeObject<Ray_PhoenixGadget_Template>(phoenixGadget, name: "phoenixGadget");
 			}

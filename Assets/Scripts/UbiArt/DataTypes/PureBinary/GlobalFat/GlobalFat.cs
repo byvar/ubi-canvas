@@ -9,15 +9,15 @@ namespace UbiArt.GlobalFat {
 		public CListO<FolderDescriptor> folders = new CListO<FolderDescriptor>();
 
 		public void Serialize(CSerializerObject s, string name) {
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				bundles = s.SerializeObject<CListO<BundleDescriptor>>(bundles, name: "bundles");
 				files = s.SerializeObject<CListO<FileDescriptor>>(files, name: "files");
-				if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.Game == Game.RL) {
 					folders = s.SerializeObject<CListO<FolderDescriptor>>(folders, name: "folders");
 				}
 				UpdateLookupTables();
 
-				if (s.Settings.game == Settings.Game.RL) {
+				if (s.Settings.Game == Game.RL) {
 					if (s is CSerializerObjectBinary s_read) {
 						var filesCount = files.Count;
 						for (int i = 0; i < filesCount; i++) {

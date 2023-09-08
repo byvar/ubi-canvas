@@ -27,7 +27,7 @@ namespace UbiArt.ITF {
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RO || s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR) {
+			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR) {
 				beginLength = s.Serialize<float>(beginLength, name: "beginLength");
 				endLength = s.Serialize<float>(endLength, name: "endLength");
 				beginWidth = s.Serialize<float>(beginWidth, name: "beginWidth");

@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public ObjectPath SendTo;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game != Settings.Game.COL) {
+			if (s.Settings.Game != Game.COL) {
 				WwiseMetronomeID = s.Serialize<METRONOME_TYPE>(WwiseMetronomeID, name: "WwiseMetronomeID");
 				WwisePlayAt = s.Serialize<AUDIO_SYNC_PLAY>(WwisePlayAt, name: "WwisePlayAt");
 				WwisePlayAtCue = s.SerializeObject<StringID>(WwisePlayAtCue, name: "WwisePlayAtCue");

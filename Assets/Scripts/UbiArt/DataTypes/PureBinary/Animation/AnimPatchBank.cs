@@ -21,7 +21,7 @@ namespace UbiArt.Animation {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.game == Settings.Game.RL) {
+			if (settings.Game == Game.RL) {
 				if (version >= VersionLegends) {
 					version = VersionLegends;
 				}
@@ -31,7 +31,7 @@ namespace UbiArt.Animation {
 			base.OnPreSerialize(s);
 			if (s.Context.HasSettings<ConversionSettings>()) {
 				var conv = s.Context.GetSettings<ConversionSettings>();
-				if (conv.OldSettings.engineVersion <= Settings.EngineVersion.RO && conv.OldSettings.engineVersion > Settings.EngineVersion.RO) {
+				if (conv.OldSettings.EngineVersion <= EngineVersion.RO && conv.OldSettings.EngineVersion > EngineVersion.RO) {
 					version = VersionLegends;
 
 					// Convert PBK

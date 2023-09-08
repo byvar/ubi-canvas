@@ -14,13 +14,13 @@ namespace UbiArt.ITF {
 		public bool allowAIControlledPlayer;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RJR || s.Settings.game == Settings.Game.RFR || s.Settings.game == Settings.Game.RO) {
+			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
 				playerId = s.Serialize<int>(playerId, name: "playerId");
 				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
 				firstPlayerOnly = s.Serialize<bool>(firstPlayerOnly, name: "firstPlayerOnly");
 				allPlayerInMode = s.Serialize<uint>(allPlayerInMode, name: "allPlayerInMode");
 				maxDetectionRadius = s.Serialize<float>(maxDetectionRadius, name: "maxDetectionRadius");
-			} else if (s.Settings.game == Settings.Game.RL) {
+			} else if (s.Settings.Game == Game.RL) {
 				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
 				firstPlayerOnly = s.Serialize<bool>(firstPlayerOnly, name: "firstPlayerOnly");
 				allPlayerInMode = s.Serialize<uint>(allPlayerInMode, name: "allPlayerInMode");
@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 				allowTouchScreenPlayer = s.Serialize<bool>(allowTouchScreenPlayer, name: "allowTouchScreenPlayer");
 				ignoreZ = s.Serialize<bool>(ignoreZ, name: "ignoreZ");
 				drcPlayerOnly = s.Serialize<bool>(drcPlayerOnly, name: "drcPlayerOnly");
-			} else if (s.Settings.game == Settings.Game.COL) {
+			} else if (s.Settings.Game == Game.COL) {
 				allowDeadActors = s.Serialize<bool>(allowDeadActors, name: "allowDeadActors");
 				playerToDetect = s.Serialize<int>(playerToDetect, name: "playerToDetect");
 				allPlayerInMode = s.Serialize<uint>(allPlayerInMode, name: "allPlayerInMode");

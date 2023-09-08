@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public CListO<MonologComponent_Template.TextData> textDataList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.COL) {
 			} else {
 				textDataList = s.SerializeObject<CListO<MonologComponent_Template.TextData>>(textDataList, name: "textDataList");
 			}

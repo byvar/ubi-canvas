@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public Path[] TutorialsVita1 { get; set; } = new Path[54];
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.platform == Settings.Platform.Vita) {
+			if (s.Settings.Platform == GamePlatform.Vita) {
 				for (int i = 0; i < TutorialsVita0.Length; i++) {
 					TutorialsVita0[i] = s.SerializeObject<Path>(TutorialsVita0[i], name: $"{nameof(TutorialsVita0)}[{i}]");
 				}

@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 	public partial class SubSceneActor {
 		protected override async UniTask InitGameObject() {
 			await base.InitGameObject();
-			if (UbiArtContext.Settings.engineVersion > Settings.EngineVersion.RO) {
+			if (UbiArtContext.Settings.EngineVersion > EngineVersion.RO) {
 				if (SCENE != null && SCENE.read) {
 					await SCENE.value.SetGameObjectParent(gao, this);
 				}

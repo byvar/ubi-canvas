@@ -98,7 +98,7 @@ namespace UbiArt.ITF {
 		public float playerHitLifeTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				impulseForce_Ground = s.Serialize<float>(impulseForce_Ground, name: "impulseForce_Ground");
 				impulseForce_Wall = s.Serialize<float>(impulseForce_Wall, name: "impulseForce_Wall");
 				impulseForce_Hit = s.Serialize<float>(impulseForce_Hit, name: "impulseForce_Hit");

@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public CArrayP<string> animList;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL || s.Settings.Game == Game.VH) {
 				allowUpdate = s.Serialize<bool>(allowUpdate, name: "allowUpdate");
 				baseParts = s.SerializeObject<CArrayP<string>>(baseParts, name: "baseParts");
 				animList = s.SerializeObject<CArrayP<string>>(animList, name: "animList");

@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public GFXMaterialSerializable luigiMaterial;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				transitionTime = s.Serialize<float>(transitionTime, name: "transitionTime");
 				frameMaterial = s.SerializeObject<GFXMaterialSerializable>(frameMaterial, name: "frameMaterial");
 				frameSize = s.SerializeObject<Vec2d>(frameSize, name: "frameSize");

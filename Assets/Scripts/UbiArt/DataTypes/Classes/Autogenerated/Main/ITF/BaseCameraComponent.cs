@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public int remote;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.VH) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH) {
 				remote = s.Serialize<int>(remote, name: "remote");
 			} else {
 			}

@@ -8,7 +8,7 @@
 		Settings previousSettings = null;
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
-				if (previousSettings.game != settings.game) {
+				if (previousSettings.Game != settings.Game) {
 					if(eventToListen?.obj?.IsAdventuresExclusive() ?? false)
 						eventToListen = null;
 					if(eventToRelay?.obj?.IsAdventuresExclusive() ?? false)

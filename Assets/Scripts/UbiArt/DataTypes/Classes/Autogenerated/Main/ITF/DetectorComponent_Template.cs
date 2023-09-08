@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public bool resetOnCheckpoint = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion > Settings.EngineVersion.RO || !(this is FriezeContactDetectorComponent_Template)) {
+			if (s.Settings.EngineVersion > EngineVersion.RO || !(this is FriezeContactDetectorComponent_Template)) {
 				resetOnCheckpoint = s.Serialize<bool>(resetOnCheckpoint, name: "resetOnCheckpoint");
 			}
 		}

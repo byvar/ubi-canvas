@@ -19,7 +19,7 @@ namespace UbiCanvas.Conversion {
 	public class AdventuresToLegendsConverter {
 		public async UniTask Convert(Context mainContext, string rlPath, string outPath, string projectPath, bool exportRaw = true) {
 			var basePath = rlPath;
-			var settings = Settings.Init(Settings.Mode.RaymanLegendsPC);
+			var settings = Settings.FromMode(Mode.RaymanLegendsPC);
 
 			string lvlPath = UnitySettings.SelectedLevelFile;
 			string sceneName = System.IO.Path.GetFileName(lvlPath);
@@ -34,7 +34,7 @@ namespace UbiCanvas.Conversion {
 				OldSettings = oldSettings,
 				WwiseConversionSettings = await LoadWwiseConfig(mainContext, projectPath)
 			};
-			if (oldSettings.game == Settings.Game.RA || oldSettings.game == Settings.Game.RM) {
+			if (oldSettings.Game == Game.RA || oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/matshader/", "common/matshader_adv/"));
 				conversionSettings.PathConversionRules.Add(
@@ -77,7 +77,7 @@ namespace UbiCanvas.Conversion {
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/common/ldfrieze/polystyrene/frieze/", "world/common/ldfrieze/polystyrene/frieze_adv/"));
 			}
-			if (oldSettings.game == Settings.Game.RM) {
+			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
@@ -118,8 +118,8 @@ namespace UbiCanvas.Conversion {
 			}
 			// Step 2, load uv atlas manager from Legends, and make a list of all entries from Adventures required for the exported level.
 			Dictionary<string, UbiArt.UV.UVAtlas> newUVEntries = new Dictionary<string, UbiArt.UV.UVAtlas>();
-			using (var rlContextExt = new Context(UnitySettings.GameDirs[Settings.Mode.RaymanLegendsPC],
-				Settings.Init(Settings.Mode.RaymanLegendsPC),
+			using (var rlContextExt = new Context(UnitySettings.GameDirs[Mode.RaymanLegendsPC],
+				Settings.FromMode(Mode.RaymanLegendsPC),
 				fileManager: new MapViewerFileManager(),
 				systemLogger: new UnitySystemLogger(),
 				asyncController: new UniTaskAsyncController())) {
@@ -211,12 +211,12 @@ namespace UbiCanvas.Conversion {
 			Debug.Log($"Finished exporting {sceneName}.");
 		}
 
-		protected Context CreateContext(Settings.Mode mode,
+		protected Context CreateContext(Mode mode,
 			string basePath = null,
 			bool enableSerializerLog = true) {
 			if (basePath == null) basePath = UnitySettings.GameDirs[mode];
 
-			Context context = new(basePath, Settings.Init(mode),
+			Context context = new(basePath, Settings.FromMode(mode),
 				serializerLogger: enableSerializerLog ? new MapViewerSerializerLogger() : null,
 				fileManager: new MapViewerFileManager(),
 				systemLogger: new UnitySystemLogger(),
@@ -226,13 +226,13 @@ namespace UbiCanvas.Conversion {
 
 		}
 
-		public async Task ConvertCostumes(string projectPath, Settings.Mode sourceMode) {
+		public async Task ConvertCostumes(string projectPath, Mode sourceMode) {
 			var mainMode = "";
 			uint baseLocId = 0;
-			if (sourceMode == Settings.Mode.RaymanMiniMacOS) {
+			if (sourceMode == Mode.RaymanMiniMacOS) {
 				mainMode = "mini2";
 				baseLocId = 9000;
-			} else if (sourceMode == Settings.Mode.RaymanAdventuresAndroid) {
+			} else if (sourceMode == Mode.RaymanAdventuresAndroid) {
 				mainMode = "adventures2";
 				baseLocId = 20000;
 			}
@@ -242,7 +242,7 @@ namespace UbiCanvas.Conversion {
 			var levelsJsonPath = System.IO.Path.Combine(projectPath, "json", "levels");
 			var dataOutputPath = System.IO.Path.Combine(projectPath, "data", dataID);
 
-			using var rlContextExt = CreateContext(Settings.Mode.RaymanLegendsPC);
+			using var rlContextExt = CreateContext(Mode.RaymanLegendsPC);
 			await rlContextExt.Loader.LoadInitial();
 			rlContextExt.Loader.LoadGenericFile(new Path("enginedata/gameconfig/gameconfig.isg"), isg => {
 				rlContextExt.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
@@ -321,7 +321,7 @@ namespace UbiCanvas.Conversion {
 				sourceContext.Loader.LoadGenericFile(pGameConfig, isg => {
 					sourceContext.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
 				});
-				if (sourceMode == Settings.Mode.RaymanAdventuresAndroid) {
+				if (sourceMode == Mode.RaymanAdventuresAndroid) {
 					sourceContext.Loader.LoadGenericFile(pGameConfigExtended, isg => {
 						gcExtended = isg.obj as RO2_GameConfigExtended_Template;
 					});
@@ -504,7 +504,7 @@ namespace UbiCanvas.Conversion {
 
 			JSON_WwiseInfo wwiseInfo = null;
 
-			var wwiseName = context.Settings.game == Settings.Game.RA ? "adventures" : "mini";
+			var wwiseName = context.Settings.Game == Game.RA ? "adventures" : "mini";
 			var json = System.IO.File.ReadAllText(System.IO.Path.Combine(inPath, $"sounds_{wwiseName}.json"));
 			wwiseInfo = JsonConvert.DeserializeObject<JSON_WwiseInfo>(json);
 
@@ -577,8 +577,8 @@ namespace UbiCanvas.Conversion {
 
 		#region Specific adjustments
 		public void LevelSpecificChanges(Context oldContext, Settings newSettings, Scene scene) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -1010,8 +1010,8 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public void FixNinjas(Context oldContext, Settings newSettings, Scene scene) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -1058,8 +1058,8 @@ namespace UbiCanvas.Conversion {
 
 		}
 		public void ZiplineToRope_OnlyLeft(Context oldContext, Settings newSettings, Scene scene) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			var pickableTree = new PickableTree(scene);
 			var ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("chainrope_attach_zipline"));
@@ -1075,8 +1075,8 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 		public void TriggerAllLumChains(Context oldContext, Settings newSettings, Scene scene) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			var lumChains = scene.FindActors(a => a.LUA?.FullPath == "world/common/friendly/lumschain/components/lumschain.tpl");
 			foreach (var lc in lumChains) {
@@ -1125,8 +1125,8 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public void FixAllLumsChainSpawnMode(Context oldContext, Settings newSettings, Scene scene) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			var lumChains = scene.FindActors(a => a.GetComponent<RO2_LumsChainComponent>()?.spawnMode == RO2_LumsChainComponent.SpawnMode.StartSpawned_Begin_Delayed);
 			foreach (var lc in lumChains) {
@@ -1150,8 +1150,8 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 		public void FixOneLumsChainSpawnMode(Context oldContext, Settings newSettings, Actor act) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			var chain = act.GetComponent<RO2_LumsChainComponent>();
 			chain.spawnMode = RO2_LumsChainComponent.SpawnMode.StartSpawned_Begin;
@@ -1159,8 +1159,8 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public void AllZiplinesToRopes(Context oldContext, Settings newSettings, ConversionSettings conversionSettings) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -1181,8 +1181,8 @@ namespace UbiCanvas.Conversion {
 
 		}
 		public void ZiplineToRope(Context oldContext, Settings newSettings, Actor act) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -1226,8 +1226,8 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 		public void UpdateSoundFXReferences(Context oldContext, Settings newSettings, ConversionSettings conversionSettings, Scene scene) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -1434,8 +1434,8 @@ namespace UbiCanvas.Conversion {
 
 		}
 		public void DowngradeFxUV(Context oldContext, Settings newSettings) {
-			if (oldContext.Settings.game != Settings.Game.RA && oldContext.Settings.game != Settings.Game.RM) return;
-			if (newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM) return;
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -1503,7 +1503,7 @@ namespace UbiCanvas.Conversion {
 			List<SubSceneActor> parentActors = new List<SubSceneActor>();
 
 			bool ShouldCreateParentActorForFrise(Frise f) {
-				if (!(newSettings.game == Settings.Game.RA || newSettings.game == Settings.Game.RM)) {
+				if (!(newSettings.Game == Game.RA || newSettings.Game == Game.RM)) {
 					if (f.parentBind != null && f.parentBind.read == true)
 						return true;
 					//if(f.STARTPAUSE)

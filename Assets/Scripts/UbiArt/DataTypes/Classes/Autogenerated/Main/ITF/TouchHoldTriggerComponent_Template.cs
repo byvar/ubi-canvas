@@ -14,12 +14,12 @@ namespace UbiArt.ITF {
 		public float tapGaugeHoldAsTapDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL || s.Settings.game == Settings.Game.COL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				ListenToSwipe = s.Serialize<bool>(ListenToSwipe, name: "ListenToSwipe");
 				input = s.SerializeObject<StringID>(input, name: "input");
 				catchFrontEnabled = s.Serialize<bool>(catchFrontEnabled, name: "catchFrontEnabled");
 				noInteraction = s.Serialize<bool>(noInteraction, name: "noInteraction");
-				if (s.Settings.platform != Settings.Platform.Vita) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					tapGaugeFullEvent = s.SerializeObject<Generic<Event>>(tapGaugeFullEvent, name: "tapGaugeFullEvent");
 					tapGaugeEmptyEvent = s.SerializeObject<Generic<Event>>(tapGaugeEmptyEvent, name: "tapGaugeEmptyEvent");
 					tapGaugeFullValue = s.Serialize<float>(tapGaugeFullValue, name: "tapGaugeFullValue");

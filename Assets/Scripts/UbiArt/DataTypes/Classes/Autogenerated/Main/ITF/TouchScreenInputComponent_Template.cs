@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			priority = s.Serialize<uint>(priority, name: "priority");
 			ignoreZ = s.Serialize<bool>(ignoreZ, name: "ignoreZ");
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				interactionBoneID = s.SerializeObject<StringID>(interactionBoneID, name: "interactionBoneID");
 			}
 		}

@@ -107,7 +107,7 @@ namespace UbiArt.Engine3D {
 		}
 
 		public void Reinit(Settings settings) {
-			if (settings.game == Settings.Game.RL && Version >= VersionLegends) {
+			if (settings.Game == Game.RL && Version >= VersionLegends) {
 				Version = VersionLegends;
 			}
 		}

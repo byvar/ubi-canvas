@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public float stateBeforeRestartDuration;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.engineVersion == Settings.EngineVersion.RL) {
+			if (s.Settings.EngineVersion == EngineVersion.RL) {
 				vacuumForce_RL = s.SerializeObject<PhysForceModifier_Template>(vacuumForce_RL, name: "vacuumForce");
 				vacuumZonePolylineName = s.SerializeObject<StringID>(vacuumZonePolylineName, name: "vacuumZonePolylineName");
 			} else {

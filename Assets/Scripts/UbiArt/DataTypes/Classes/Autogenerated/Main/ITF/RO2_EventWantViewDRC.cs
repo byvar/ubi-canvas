@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			wantView = s.Serialize<bool>(wantView, name: "wantView");
-			if (s.Settings.platform != Settings.Platform.Vita) {
+			if (s.Settings.Platform != GamePlatform.Vita) {
 				cut = s.Serialize<bool>(cut, name: "cut");
 			}
 		}

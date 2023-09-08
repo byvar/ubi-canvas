@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 		public StringID invincibilityWwiseEvent_Stop;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.game == Settings.Game.RL) {
+			if (s.Settings.Game == Game.RL) {
 				superPunchBasicMaxAmmo = s.Serialize<uint>(superPunchBasicMaxAmmo, name: "superPunchBasicMaxAmmo");
 				superPunchSeekingMaxAmmo = s.Serialize<uint>(superPunchSeekingMaxAmmo, name: "superPunchSeekingMaxAmmo");
 				swarmRepellerMaxAmmo = s.Serialize<uint>(swarmRepellerMaxAmmo, name: "swarmRepellerMaxAmmo");

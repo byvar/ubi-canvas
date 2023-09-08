@@ -28,7 +28,7 @@ namespace UbiCanvas.Conversion {
 		protected abstract Task BuildInternal();
 
 		public virtual async Task Build() {
-			using (TargetContext = CreateContext(Settings.Mode.RaymanLegendsPC)) {
+			using (TargetContext = CreateContext(Mode.RaymanLegendsPC)) {
 				TargetContext?.SystemLogger?.LogInfo($"Building: {ID}");
 				await TargetContext.Loader.LoadInitial();
 				await BuildInternal();
@@ -49,12 +49,12 @@ namespace UbiCanvas.Conversion {
 			if(!Bundle.IsEmpty) await TargetContext.Loader.WriteFilesRaw(BuildPath, Bundle);
 		}
 
-		protected Context CreateContext(Settings.Mode mode,
+		protected Context CreateContext(Mode mode,
 			string basePath = null,
 			bool enableSerializerLog = true) {
 			if (basePath == null) basePath = UnitySettings.GameDirs[mode];
 
-			Context context = new(basePath, Settings.Init(mode),
+			Context context = new(basePath, Settings.FromMode(mode),
 				serializerLogger: enableSerializerLog ? new MapViewerSerializerLogger() : null,
 				fileManager: new MapViewerFileManager(),
 				systemLogger: new UnitySystemLogger(),
