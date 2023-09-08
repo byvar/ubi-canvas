@@ -2,8 +2,9 @@
 {
 	public static class GameTools
 	{
-		public static GameTool[] Tools { get; } = 
+		public static GameTool[] Tools { get; } =
 		{
+			new LogFileTool(),
 			new ExportEngineDataTool(),
 			new ExportLocalisationTool(),
 			new ExportTimelineTool(),
@@ -12,7 +13,6 @@
 			new ModeConversionTool(),
 			new AdventuresToLegendsModTool(),
 			new CRCCalculatorTool(),
-			new LogFileTool(),
 		};
 	}
 }

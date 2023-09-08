@@ -91,6 +91,37 @@ namespace UbiCanvas.Conversion {
 			}
 
 			FillPickable(act, simple);
+			if (simple.ExtraOptions != null) {
+				foreach (var opt in simple.ExtraOptions) {
+					switch (opt.Key) {
+						case "CameraModifierComponent.localAABB": {
+								var cm = act?.GetComponent<CameraModifierComponent>();
+								var values = opt.Value.Split(';');
+								//cm.ignoreAABB = true;
+								if (cm != null) {
+									cm.localAABB = new AABB() {
+										MIN = new Vec2d(float.Parse(values[0]), float.Parse(values[1])),
+										MAX = new Vec2d(float.Parse(values[2]), float.Parse(values[3])),
+									};
+								}
+								if(cm.CM == null) cm.CM = new CamModifier();
+								//cm.CM.lookAtOffset = new Vec3d(0,0,13);
+								//cm.CM.lookAtOffsetMax = new Vec3d(0,0,13);
+								/*void TreatConstraint(ConstraintExtended constraint) {
+									constraint.timeToWaitBeforeDecrease = 0f;
+									constraint.timeToDecrease = 0f;
+									constraint.timeToIncrease = 0f;
+								}
+								TreatConstraint(cm.CM.constraintExtendedTop);
+								TreatConstraint(cm.CM.constraintExtendedBottom);
+								TreatConstraint(cm.CM.constraintExtendedLeft);
+								TreatConstraint(cm.CM.constraintExtendedRight);*/
+							}
+							break;
+					}
+				}
+			}
+
 			return act;
 		}
 		protected async Task<Frise> CreateFrise(JSON_SimpleFrise simple) {

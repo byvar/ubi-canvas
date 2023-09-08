@@ -18,5 +18,7 @@ namespace UbiCanvas.Conversion.Json {
 		public float Z { get; set; }
 		public float Angle { get; set; }
 		public bool XFlip { get; set; }
+
+		public Dictionary<string, string> ExtraOptions { get; set; }
 	}
 }

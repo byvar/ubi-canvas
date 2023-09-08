@@ -74,21 +74,8 @@ namespace UbiArt.ITF {
 				templatePickable = this,
 			};
 			act.InitContext(UbiArtContext);
-			ActorComponent InstantiateComponent(ActorComponent_Template ctpl) {
-				var tplType = ctpl.GetType();
-				var typeName = tplType.FullName;
-				if(typeName.Contains("_Template"))
-					typeName = typeName.Replace("_Template","");
+			ActorComponent InstantiateComponent(ActorComponent_Template ctpl) => ctpl?.Instantiate(UbiArtContext);
 
-				Type type = Type.GetType(typeName);
-
-				// Check whether the class exists
-				if (type == null) throw new Exception($"Could not create instance class of component {tplType.FullName}");
-
-				var c = (ActorComponent)Activator.CreateInstance(type);
-				c.InitContext(UbiArtContext);
-				return c;
-			}
 			act.COMPONENTS = new CArrayO<Generic<ActorComponent>>(COMPONENTS.Select(c => new Generic<ActorComponent>(InstantiateComponent(c.obj))).ToArray());
 			return (Actor)act.Clone("act");
 		}

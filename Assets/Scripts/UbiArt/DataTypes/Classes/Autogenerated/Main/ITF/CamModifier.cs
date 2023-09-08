@@ -15,6 +15,7 @@ namespace UbiArt.ITF {
 		public Vec2d zoneNeutral;
 		public bool useRotationCurve;
 		public Angle rotationAngle;
+		public Spline rotationCurve;
 		public bool UseDynamicRotation;
 		public float rotationSpeed = 0.1f;
 		public Angle rotationUpDownAngle;
@@ -30,11 +31,11 @@ namespace UbiArt.ITF {
 		public bool constraintTopIsActive = true;
 		public bool constraintBottomIsActive = true;
 		public bool constraintMatchView;
-		public ConstraintExtended constraintExtendedLeft;
-		public ConstraintExtended constraintExtendedRight;
-		public ConstraintExtended constraintExtendedTop;
-		public ConstraintExtended constraintExtendedBottom;
-		public bool useDecentering;
+		public ConstraintExtended constraintExtendedLeft = new ConstraintExtended();
+		public ConstraintExtended constraintExtendedRight = new ConstraintExtended();
+		public ConstraintExtended constraintExtendedTop = new ConstraintExtended();
+		public ConstraintExtended constraintExtendedBottom = new ConstraintExtended();
+		public bool useDecentering = true;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -143,8 +144,16 @@ namespace UbiArt.ITF {
 					blendingZoneStop = s.Serialize<float>(blendingZoneStop, name: "blendingZoneStop");
 					zoneNeutral = s.SerializeObject<Vec2d>(zoneNeutral, name: "zoneNeutral");
 					useRotationCurve = s.Serialize<bool>(useRotationCurve, name: "useRotationCurve");
-					rotationAngle = s.SerializeObject<Angle>(rotationAngle, name: "rotationAngle");
-					rotationAngle = s.SerializeObject<Angle>(rotationAngle, name: "rotationAngle");
+					if (s.HasFlags(SerializeFlags.Flags15)) {
+						rotationAngle = s.SerializeObject<Angle>(rotationAngle, name: "rotationAngle");
+						rotationCurve = s.SerializeObject<Spline>(rotationCurve, name: "rotationCurve");
+					} else {
+						if (useRotationCurve) {
+							rotationCurve = s.SerializeObject<Spline>(rotationCurve, name: "rotationCurve");
+						} else {
+							rotationAngle = s.SerializeObject<Angle>(rotationAngle, name: "rotationAngle");
+						}
+					}
 					UseDynamicRotation = s.Serialize<bool>(UseDynamicRotation, name: "UseDynamicRotation");
 					rotationSpeed = s.Serialize<float>(rotationSpeed, name: "rotationSpeed");
 					rotationUpDownAngle = s.SerializeObject<Angle>(rotationUpDownAngle, name: "rotationUpDownAngle");
