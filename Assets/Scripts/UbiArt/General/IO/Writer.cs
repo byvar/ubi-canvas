@@ -6,7 +6,7 @@ namespace UbiArt {
     public class Writer : BinaryWriter {
 		#region Constructors
 
-		public Writer(Stream stream, bool isLittleEndian = true, bool leaveOpen = false) : base(new StreamWrapper(stream), new UTF8Encoding(), leaveOpen) {
+		public Writer(Stream stream, bool isLittleEndian = true, bool leaveOpen = false) : base(stream, new UTF8Encoding(), leaveOpen) {
 			IsLittleEndian = isLittleEndian;
 		}
 
@@ -15,7 +15,6 @@ namespace UbiArt {
 		#region Public Properties
 
 		public bool IsLittleEndian { get; set; }
-		public new StreamWrapper BaseStream => (StreamWrapper)base.BaseStream;
 
 		#endregion
 
@@ -23,15 +22,6 @@ namespace UbiArt {
 
 		protected uint BytesSinceAlignStart { get; set; }
         protected bool AutoAlignOn { get; set; }
-
-		protected IXORCalculator XORCalculator {
-			get => BaseStream.XORCalculator;
-			set => BaseStream.XORCalculator = value;
-		}
-		protected IChecksumCalculator ChecksumCalculator {
-			get => BaseStream.ChecksumCalculator;
-			set => BaseStream.ChecksumCalculator = value;
-		}
 
 		#endregion
 
@@ -184,26 +174,5 @@ namespace UbiArt {
         }
 
 		#endregion
-
-		#region XOR & Checksum
-
-		public void BeginXOR(IXORCalculator xorCalculator) => XORCalculator = xorCalculator;
-		public void EndXOR() => XORCalculator = null;
-		public IXORCalculator GetXORCalculator() => XORCalculator;
-
-		public void BeginCalculateChecksum(IChecksumCalculator checksumCalculator) => ChecksumCalculator = checksumCalculator;
-		public IChecksumCalculator PauseCalculateChecksum() {
-			IChecksumCalculator c = ChecksumCalculator;
-			ChecksumCalculator = null;
-			return c;
-
-		}
-		public T EndCalculateChecksum<T>() {
-			IChecksumCalculator c = ChecksumCalculator;
-			ChecksumCalculator = null;
-			return ((IChecksumCalculator<T>)c).ChecksumValue;
-		}
-
-		#endregion
-	}
+    }
 }

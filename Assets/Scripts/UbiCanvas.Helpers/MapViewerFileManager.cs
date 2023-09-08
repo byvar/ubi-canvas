@@ -19,7 +19,7 @@ namespace UbiCanvas {
 
 		public async Task FillCacheForReadAsync(long length, Reader reader)
 		{
-			if (reader.BaseStream.InnerStream is PartialHttpStream httpStream)
+			if (reader.BaseStream is PartialHttpStream httpStream)
 				await httpStream.FillCacheForRead(length);
 		}
 

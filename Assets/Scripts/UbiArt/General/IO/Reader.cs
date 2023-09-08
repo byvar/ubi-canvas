@@ -12,9 +12,8 @@ namespace UbiArt {
     public class Reader : BinaryReader {
 		#region Constructors
 		public Reader(Stream stream, bool isLittleEndian = true, bool leaveOpen = false)
-			// Wrap the stream to be read in a StreamWrapper so that we can easily process the bytes which get read
 			// The encoding passed in to the base ctor is irrelevant since we have re-implemented the string reading
-			: base(new StreamWrapper(stream), new UTF8Encoding(), leaveOpen) {
+			: base(stream, new UTF8Encoding(), leaveOpen) {
 			IsLittleEndian = isLittleEndian;
 		}
 		#endregion
@@ -32,21 +31,11 @@ namespace UbiArt {
         protected uint BytesSinceAlignStart { get; set; }
         protected bool AutoAlignOn { get; set; }
 
-		protected IXORCalculator XORCalculator {
-			get => BaseStream.XORCalculator;
-			set => BaseStream.XORCalculator = value;
-		}
-		protected IChecksumCalculator ChecksumCalculator {
-			get => BaseStream.ChecksumCalculator;
-			set => BaseStream.ChecksumCalculator = value;
-		}
-
 		#endregion
 
 		#region Public Properties
 
 		public bool IsLittleEndian { get; set; }
-		public new StreamWrapper BaseStream => (StreamWrapper)base.BaseStream;
 
 		#endregion
 
@@ -234,24 +223,5 @@ namespace UbiArt {
             }
         }
 		#endregion
-
-		#region XOR & Checksum
-
-		public void BeginXOR(IXORCalculator xorCalculator) => XORCalculator = xorCalculator;
-		public void EndXOR() => XORCalculator = null;
-		public IXORCalculator GetXORCalculator() => XORCalculator;
-		public void BeginCalculateChecksum(IChecksumCalculator checksumCalculator) => ChecksumCalculator = checksumCalculator;
-		public IChecksumCalculator PauseCalculateChecksum() {
-			IChecksumCalculator c = ChecksumCalculator;
-			ChecksumCalculator = null;
-			return c;
-		}
-		public T EndCalculateChecksum<T>() {
-			IChecksumCalculator c = ChecksumCalculator;
-			ChecksumCalculator = null;
-			return ((IChecksumCalculator<T>)c).ChecksumValue;
-		}
-
-		#endregion
-	}
+    }
 }
