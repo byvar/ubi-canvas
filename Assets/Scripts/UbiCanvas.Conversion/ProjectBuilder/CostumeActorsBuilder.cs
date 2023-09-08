@@ -31,6 +31,7 @@ namespace UbiCanvas.Conversion {
 		};
 
 		protected override async Task BuildInternal() {
+			//await BuildGloToad();
 			foreach(var c in Costumes) await BuildCostume(c);
 		}
 
@@ -901,6 +902,20 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 
+		}
+
+
+		async Task BuildGloToad() {
+			Path pBasicToad = new Path("world/common/enemy/toad/basictoad/components/basictoad.tpl");
+			Path pGloToad = new Path("personal/jim/glotoad/glotoad.tpl");
+			var gloToad = await LoadFileFromPatchData<GenericFile<Actor_Template>>(TargetContext, pGloToad.FullPath);
+			var basicToad = await LoadFileFromPatchData<GenericFile<Actor_Template>>(TargetContext, pBasicToad.FullPath);
+
+			var newAnimComponent = gloToad.obj.GetComponent<AnimatedComponent_Template>();
+
+			var cContainer = basicToad.obj.COMPONENTS.FirstOrDefault(c => c.obj is AnimatedComponent_Template);
+			cContainer.obj = newAnimComponent;
+			Bundle.AddFile(pBasicToad.CookedPath(TargetContext), basicToad);
 		}
 	}
 }
