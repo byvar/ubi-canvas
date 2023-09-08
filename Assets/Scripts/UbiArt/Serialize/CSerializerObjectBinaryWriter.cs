@@ -163,7 +163,6 @@ namespace UbiArt {
 		}
 
 		public override T Serialize<T>(T obj, string name = null, int? index = null, Options options = Options.None) {
-			Pointer pos = IsSerializerLoggerEnabled && name != null ? CurrentPointer : null;
 			obj = (T)WritePrimitive<T>(obj, name: name, options: options);
 			if (IsSerializerLoggerEnabled && name != null) {
 				Context.SerializerLogger.Log($"{LogPrefix}({typeof(T)}) {name} - {ShortLog(obj)}");
