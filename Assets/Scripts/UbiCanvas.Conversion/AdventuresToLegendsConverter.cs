@@ -88,6 +88,7 @@ namespace UbiCanvas.Conversion {
 			FixNinjas(mainContext, settings, Controller.Obj.MainScene.obj);
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, Controller.Obj.MainScene.obj);
 			FixLumKingMusic(mainContext, settings, Controller.Obj.MainScene.obj);
+			FixCameraModifierBlend(mainContext, settings, Controller.Obj.MainScene.obj);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			MakeFrisesStartPaused(mainContext, settings, Controller.Obj.MainScene.obj);
@@ -631,6 +632,24 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 			}
+		}
+
+		public void FixCameraModifierBlend(Context oldContext, Settings newSettings, Scene scene) {
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates == null) return;
+			foreach (var tplPair in actorTemplates) {
+				var tpl = tplPair.Value as GenericFile<Actor_Template>;
+				var CM = tpl?.obj?.GetComponent<CameraModifierComponent_Template>();
+				if (CM != null) {
+					CM.CM.modifierBlend = 0.006f;
+					CM.CM.modifierInertie = 0.82f;
+					CM.CM.constraintDelayToActivate = Vec3d.One * 2f;
+					CM.CM.constraintDelayToDisable = Vec3d.One * 2f;
+				}
+			}
+
 		}
 
 		public void FixLumKingMusic(Context oldContext, Settings newSettings, Scene scene) {
