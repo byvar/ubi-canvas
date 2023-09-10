@@ -8,9 +8,6 @@
 						ClearColor.ClearFrontLightColor = Lighting.GlobalColor; // Hack
 					}*/
 
-					// TODO: Try to fix lighting by creating a subscene under this actor (if it doesn't already exist).
-					// To that subscene, add a lighting frise using the size from the BoxInterpolator (if that exists, otherwise 1)
-
 					return new ClearColorComponent() {
 						clearColor = ClearColor
 					}.Convert(context, actor, oldSettings, newSettings);

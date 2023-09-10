@@ -92,6 +92,7 @@ namespace UbiCanvas.Conversion {
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			MakeFrisesStartPaused(mainContext, settings, Controller.Obj.MainScene.obj);
+			CreateLightingFrisesForRenderParams(mainContext, settings, Controller.Obj.MainScene.obj);
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
@@ -1740,6 +1741,202 @@ namespace UbiCanvas.Conversion {
 					});
 					l.Context.SystemLogger?.LogInfo($"Linking frise to pauseswitch: {f.Path}");
 				}
+			}
+		}
+
+		public void CreateLightingFrisesForRenderParams(Context oldContext, Settings newSettings, Scene scene) {
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var sceneTree = new PickableTree(scene);
+			var renderParams = scene.FindActors(a => a?.GetComponent<RenderParamComponent>()?.Lighting?.Enable == true);
+			if (!renderParams.Any()) return;
+
+			foreach (var rpResult in renderParams) {
+				var act = rpResult.Result;
+				var rpScene = rpResult.ContainingScene;
+				var rp = act.GetComponent<RenderParamComponent>();
+				var lighting = rp.Lighting;
+				var box = act.GetComponent<BoxInterpolatorComponent>();
+				var aabb = box?.innerBox;
+				if(aabb == null) aabb = new AABB() {
+					MIN = Vec2d.One * -1f / 0.5f,
+					MAX = Vec2d.One * 1f / 0.5f,
+				};
+				var outerAABB = box?.outerBox;
+
+				void CreateMaskResolver(string name, string template, float z) {
+					var newAct = new Actor() {
+						POS2D = act.POS2D,
+						ANGLE = act.ANGLE,
+						SCALE = act.SCALE,
+						RELATIVEZ = act.RELATIVEZ + z,
+						USERFRIENDLY = $"{act.USERFRIENDLY}_{name}",
+						xFLIPPED = act.xFLIPPED,
+						LUA = new Path(template),
+					};
+					var mr = newAct.AddComponent<MaskResolverComponent>(new MaskResolverComponent() {
+						clearBackLightBuffer = false,
+						clearFrontLightBuffer = false
+					});
+					if (rp.ClearColor != null && rp.ClearColor.Enable) {
+						mr.clearBackLightBuffer = true;
+						mr.clearFrontLightBuffer = true;
+						mr.clearBackLightColor = rp.ClearColor.ClearBackLightColor;
+						mr.clearFrontLightColor = rp.ClearColor.ClearFrontLightColor;
+					}
+					if (box != null) {
+						var outerAABB = box.outerBox;
+						var scale = outerAABB.MAX - outerAABB.MIN;
+						var center = outerAABB.MIN + (scale / 2f);
+						newAct.POS2D = act.POS2D + center;
+						newAct.SCALE = act.SCALE * scale;
+					}
+					rpScene.AddActor(newAct, newAct.USERFRIENDLY);
+				}
+				CreateMaskResolver("resolvebothmask", "world/common/levelart/light/lightresolver/components/resolvebothmask.tpl", z: -3f);
+
+				// Create lighting frise
+				PolyPointList CreatePolyPointList(Vec2d[] vectors, bool loop = true) {
+					var points = new PolyPointList() {
+						LocalPoints = new CListO<PolyLineEdge>(vectors.Select(p => new PolyLineEdge() {
+							POS = p,
+							Scale = 1f,
+						}).ToList()),
+						Loop = loop,
+					};
+					if (loop) {
+						points.LocalPoints.Add(new PolyLineEdge() {
+							POS = vectors[0],
+							Scale = 1f,
+						});
+					}
+					points.RecomputeData();
+					return points;
+				}
+
+				void CreateFrise(string name, string template, float z = 0) {
+					var fr = new Frise() {
+						POS2D = act.POS2D,
+						ANGLE = act.ANGLE,
+						SCALE = act.SCALE,
+						RELATIVEZ = act.RELATIVEZ + z,
+						USERFRIENDLY = $"{act.USERFRIENDLY}_{name}",
+						xFLIPPED = act.xFLIPPED,
+
+						PreComputedForCook = true,
+						ConfigName = new Path(template),
+
+					};
+					Vec2d LocalToGlobal(Vec2d point) => (point * fr.SCALE).Rotate(fr.ANGLE) + fr.POS2D;
+					Vec3d LocalToGlobal3D(Vec3d point) {
+						var v2d = LocalToGlobal(new Vec2d(point.x, point.y));
+						return new Vec3d(v2d.x, v2d.y, point.z + fr.RELATIVEZ);
+					}
+
+					fr.PointsList = CreatePolyPointList(new Vec2d[] {
+						aabb.MIN, new Vec2d(aabb.MIN.x, aabb.MAX.y), aabb.MAX, new Vec2d(aabb.MAX.x, aabb.MIN.y)
+					});
+
+
+					// Fill in visual data
+					fr.meshBuildData = new UbiArt.Nullable<Frise.MeshBuildData>(new Frise.MeshBuildData() {
+						StaticIndexList = new CListO<Frise.IndexList>(),
+						StaticVertexList = new CListO<VertexPCT>()
+					});
+					var indices = new CListP<ushort>();
+					var vertices = new CListO<VertexPCT>();
+
+					void AddSquare(Vec2d min, Vec2d max,
+						float alphaBottomLeft = 1f, float alphaBottomRight = 1f,
+						float alphaTopLeft = 1f, float alphaTopRight = 1f) {
+						int vertsCount = vertices.Count;
+						indices.Add((ushort)(vertsCount + 0));
+						indices.Add((ushort)(vertsCount + 1));
+						indices.Add((ushort)(vertsCount + 2));
+						indices.Add((ushort)(vertsCount + 1));
+						indices.Add((ushort)(vertsCount + 3));
+						indices.Add((ushort)(vertsCount + 2));
+						vertices.Add(new VertexPCT() {
+							pos = new Vec3d(min.x, max.y, 0f),
+							uv = new Vec2d(0, 0),
+							color = new ColorInteger(1, 1, 1, alphaTopLeft)
+						});
+						vertices.Add(new VertexPCT() {
+							pos = new Vec3d(max.x, max.y, 0f),
+							uv = new Vec2d(1, 0),
+							color = new ColorInteger(1, 1, 1, alphaTopRight)
+						});
+						vertices.Add(new VertexPCT() {
+							pos = new Vec3d(min.x, min.y, 0f),
+							uv = new Vec2d(0, 1),
+							color = new ColorInteger(1, 1, 1, alphaBottomLeft)
+						});
+						vertices.Add(new VertexPCT() {
+							pos = new Vec3d(max.x, min.y, 0f),
+							uv = new Vec2d(1, 1),
+							color = new ColorInteger(1, 1, 1, alphaBottomRight)
+						});
+					}
+					fr.meshBuildData.value.StaticIndexList = new CListO<Frise.IndexList>(
+						new List<Frise.IndexList>() {
+							new Frise.IndexList() {
+								IdTexConfig = 0,
+								List = indices
+							}
+						}
+					);
+					fr.meshBuildData.value.StaticVertexList = vertices;
+					AddSquare(aabb.MIN, aabb.MAX);
+					if (outerAABB != null) {
+						// Sides
+						if(outerAABB.MIN.x < aabb.MIN.x)
+							AddSquare(new Vec2d(outerAABB.MIN.x, aabb.MIN.y), new Vec2d(aabb.MIN.x, aabb.MAX.y), alphaBottomLeft: 0f, alphaTopLeft: 0f); // Left side
+						if(outerAABB.MAX.x > aabb.MAX.x)
+							AddSquare(new Vec2d(aabb.MAX.x, aabb.MIN.y), new Vec2d(outerAABB.MAX.x, aabb.MAX.y), alphaBottomRight: 0f, alphaTopRight: 0f); // Right side
+						if(outerAABB.MIN.y < aabb.MIN.y)
+							AddSquare(new Vec2d(aabb.MIN.x, outerAABB.MIN.y), new Vec2d(aabb.MAX.x, aabb.MIN.y), alphaBottomLeft: 0f, alphaBottomRight: 0f); // Bottom side
+						if(outerAABB.MAX.y > aabb.MAX.y)
+							AddSquare(new Vec2d(aabb.MIN.x, aabb.MAX.y), new Vec2d(aabb.MAX.x, outerAABB.MAX.y), alphaTopLeft: 0f, alphaTopRight: 0f); // Top side
+
+						// Corners
+						if (outerAABB.MIN.x < aabb.MIN.x && outerAABB.MIN.y < aabb.MIN.y)
+							AddSquare(new Vec2d(outerAABB.MIN.x, outerAABB.MIN.y), new Vec2d(aabb.MIN.x, aabb.MIN.y), alphaBottomLeft: 0f, alphaBottomRight: 0f, alphaTopLeft: 0f); // Bottom left corner
+						if (outerAABB.MAX.x > aabb.MAX.x && outerAABB.MIN.y < aabb.MIN.y)
+							AddSquare(new Vec2d(aabb.MAX.x, outerAABB.MIN.y), new Vec2d(outerAABB.MAX.x, aabb.MIN.y), alphaBottomLeft: 0f, alphaBottomRight: 0f, alphaTopRight: 0f); // Bottom right corner
+						if (outerAABB.MIN.x < aabb.MIN.x && outerAABB.MAX.y > aabb.MAX.y)
+							AddSquare(new Vec2d(outerAABB.MIN.x, aabb.MAX.y), new Vec2d(aabb.MIN.x, outerAABB.MAX.y), alphaTopLeft: 0f, alphaTopRight: 0f, alphaBottomLeft: 0f); // Top left corner
+						if (outerAABB.MAX.x > aabb.MAX.x && outerAABB.MAX.y > aabb.MAX.y)
+							AddSquare(new Vec2d(aabb.MAX.x, aabb.MAX.y), new Vec2d(outerAABB.MAX.x, outerAABB.MAX.y), alphaTopLeft: 0f, alphaTopRight: 0f, alphaBottomRight: 0f); // Top right corner
+					}
+
+					// Fill in meshStaticAABB based on visual data
+					if (fr.meshBuildData.value?.StaticVertexList?.Any() ?? false) {
+						fr.meshStaticData = new UbiArt.Nullable<Frise.MeshStaticData>(new Frise.MeshStaticData() {
+							LocalAABB = new AABB() {
+								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.y)),
+								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.y))
+							},
+							WorldAABB = new AABB() {
+								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
+								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).y))
+							},
+						});
+						fr.AABB_MinZ = fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.z);
+						fr.AABB_MaxZ = fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.z);
+					}
+
+					fr.PrimitiveParameters.colorFactor = lighting.GlobalColor;
+					fr.PrimitiveParameters.colorFog = UbiArt.Color.White;
+
+					rpScene.FRISE.Add(fr);
+				}
+
+				CreateFrise("frontlightfill", "world/common/levelart/light/lightfrieze/frontlightfill.fcg", z: -2f);
+
+				// Remove lighting from RenderParamComponent
+				rp.Lighting.Enable = false;
+				rp.Lighting = null;
 			}
 		}
 		public void DuplicateActorTemplatesForStartPaused(Context oldContext) {
