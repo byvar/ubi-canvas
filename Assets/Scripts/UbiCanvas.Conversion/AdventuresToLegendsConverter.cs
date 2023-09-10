@@ -1385,13 +1385,20 @@ namespace UbiCanvas.Conversion {
 											int curInstructionIndex = 0; 
 											foreach (var instr in set.instructions) {
 												var templateInstruction = template.instructions[curInstructionIndex];
-												while (templateInstruction?.obj is TweenFX_Template fxTPL && fxTPL.stop) {
-													instructions.Add(new Generic<TweenInstruction>(new TweenFX() {
-														name = fxTPL.name
-													}));
-													curInstructionIndex++;
-													if(curInstructionIndex >= template.instructions.Count) break;
-													templateInstruction = template.instructions[curInstructionIndex];
+												if (templateInstruction?.obj is TweenFX_Template fxTPL && fxTPL.stop) {
+													// Check if this stop instruction was added!
+													if (curInstructionIndex + 1 < template.instructions.Count) {
+														var nextTemplateInstruction = template.instructions[curInstructionIndex+1];
+														if (nextTemplateInstruction?.obj is TweenFX_Template fxTPL2 && !fxTPL2.stop && StopLinksFx.ContainsKey(fxTPL2.fx) && StopLinksFx[fxTPL2.fx] == fxTPL.fx) {
+															// This is an added StopFX. So add it here too.
+															instructions.Add(new Generic<TweenInstruction>(new TweenFX() {
+																name = new StringID()
+															}));
+															curInstructionIndex++;
+															if (curInstructionIndex >= template.instructions.Count) break;
+															templateInstruction = template.instructions[curInstructionIndex];
+														}
+													}
 												}
 												if (instr?.obj is TweenFX fx) {
 													if ((fx.target?.levels?.Count ?? 0) != 0 || !string.IsNullOrWhiteSpace(fx.target?.id)) {
