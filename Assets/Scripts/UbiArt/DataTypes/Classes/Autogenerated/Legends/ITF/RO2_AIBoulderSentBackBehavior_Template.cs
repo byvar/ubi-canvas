@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_AIBoulderSentBackBehavior_Template : CSerializable {
+	public partial class RO2_AIBoulderSentBackBehavior_Template : TemplateAIBehavior {
 		public float gravity;
 		public float friction;
 		protected override void SerializeImpl(CSerializerObject s) {
