@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_SnakeDRCAIComponent_Template : CSerializable {
+	public partial class RO2_SnakeDRCAIComponent_Template : RO2_AIComponent_Template {
 		public float tapAccelerationMultiplier;
 		public float gettimePlayRate;
 		protected override void SerializeImpl(CSerializerObject s) {

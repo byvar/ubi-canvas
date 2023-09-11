@@ -1,13 +1,13 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_AbyssalHandAIComponent_Template : CSerializable {
+	public partial class RO2_AbyssalHandAIComponent_Template : ActorComponent_Template {
 		public float handForwardSpeed;
 		public float handBackwardSpeed;
 		public float handEscapeSpeed;
 		public float handAcceleration;
-		public Placeholder bezierRenderer;
+		public BezierCurveRenderer_Template bezierRenderer;
 		public float zOffset;
-		public Placeholder detectionShape;
+		public PhysShapePolygon detectionShape;
 		public float handLightDistance;
 		public Angle handRotationSpeed;
 		public StringID endCurveBoneName;
@@ -26,9 +26,9 @@ namespace UbiArt.ITF {
 			handBackwardSpeed = s.Serialize<float>(handBackwardSpeed, name: "handBackwardSpeed");
 			handEscapeSpeed = s.Serialize<float>(handEscapeSpeed, name: "handEscapeSpeed");
 			handAcceleration = s.Serialize<float>(handAcceleration, name: "handAcceleration");
-			bezierRenderer = s.SerializeObject<Placeholder>(bezierRenderer, name: "bezierRenderer");
+			bezierRenderer = s.SerializeObject<BezierCurveRenderer_Template>(bezierRenderer, name: "bezierRenderer");
 			zOffset = s.Serialize<float>(zOffset, name: "zOffset");
-			detectionShape = s.SerializeObject<Placeholder>(detectionShape, name: "detectionShape");
+			detectionShape = s.SerializeObject<PhysShapePolygon>(detectionShape, name: "detectionShape");
 			handLightDistance = s.Serialize<float>(handLightDistance, name: "handLightDistance");
 			handRotationSpeed = s.SerializeObject<Angle>(handRotationSpeed, name: "handRotationSpeed");
 			endCurveBoneName = s.SerializeObject<StringID>(endCurveBoneName, name: "endCurveBoneName");

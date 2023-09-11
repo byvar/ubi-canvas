@@ -24,7 +24,6 @@ namespace UbiArt.ITF {
 				objectToTriggerOnEnter = s.SerializeObject<ObjectPath>(objectToTriggerOnEnter, name: "objectToTriggerOnEnter");
 				objectToTriggerOnExit = s.SerializeObject<ObjectPath>(objectToTriggerOnExit, name: "objectToTriggerOnExit");
 				missileRegions = s.SerializeObject<CArrayO<ObjectPath>>(missileRegions, name: "missileRegions");
-				missileRegions = s.SerializeObject<CArrayO<ObjectPath>>(missileRegions, name: "missileRegions");
 			}
 		}
 		public override uint? ClassCRC => 0x872E7CD7;

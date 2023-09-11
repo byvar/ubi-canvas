@@ -1399,7 +1399,7 @@ namespace UbiArt {
 			{ 0x46B080AC, typeof(ITF.Unknown_RL_223_sub_91D190) },
 			{ 0x46B4D8E3, typeof(ITF.RO2_SuperPunchRitualComponent_Template) },
 			{ 0x46B5C939, typeof(ITF.ShadowZoneDetectorComponent) },
-			{ 0x46C4A26B, typeof(ITF.Unknown_RL_357_sub_70E590) },
+			{ 0x46C4A26B, typeof(ITF.RO2_SnakeDRCAIComponent) },
 			{ 0x46CC1AB6, typeof(ITF.RO2_EventWallJump) },
 			{ 0x46EA8D63, typeof(ITF.RO2_ExtraLumsComponent_Template) },
 			{ 0x46FD171F, typeof(ITF.Ray_AIOceanSpiderBehavior) },

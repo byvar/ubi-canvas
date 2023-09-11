@@ -28,7 +28,8 @@ namespace UbiArt.ITF {
 		public float BackLightBlurFactor = 1f;
 
 
-		public bool useStaticFog;
+		public bool useStaticFog { get => useStaticFogInt != 0; set => useStaticFogInt = value ? 1 : 0; }
+		public int useStaticFogInt = 0;
 		public bool RenderInReflections = true;
 		public bool RenderToTexture;
 		
@@ -90,7 +91,7 @@ namespace UbiArt.ITF {
 				BackLightContrast = s.Serialize<float>(BackLightContrast, name: "BackLightContrast");
 				colorFog = s.SerializeObject<Color>(colorFog, name: "colorFog");
 				DynamicFogFactor = s.Serialize<float>(DynamicFogFactor, name: "DynamicFogFactor");
-				useStaticFog = s.Serialize<bool>(useStaticFog, name: "useStaticFog");
+				useStaticFogInt = s.Serialize<int>(useStaticFogInt, name: "useStaticFog");
 				RenderInReflections = s.Serialize<bool>(RenderInReflections, name: "RenderInReflections");
 				if (s.HasFlags(SerializeFlags.Flags8)) {
 					RenderToTexture = s.Serialize<bool>(RenderToTexture, name: "RenderToTexture");

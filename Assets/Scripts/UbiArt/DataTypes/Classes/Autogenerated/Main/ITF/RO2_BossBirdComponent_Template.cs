@@ -19,7 +19,7 @@ namespace UbiArt.ITF {
 		public float birdXSpace;
 		public float birdYSpace;
 		public uint maxLums;
-		public Placeholder musics;
+		public CListO<EventPlayMusic> musics;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RL) {
@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 				birdXSpace = s.Serialize<float>(birdXSpace, name: "birdXSpace");
 				birdYSpace = s.Serialize<float>(birdYSpace, name: "birdYSpace");
 				maxLums = s.Serialize<uint>(maxLums, name: "maxLums");
-				musics = s.SerializeObject<Placeholder>(musics, name: "musics");
+				musics = s.SerializeObject<CListO<EventPlayMusic>>(musics, name: "musics");
 			} else {
 				buboBone = s.SerializeObject<StringID>(buboBone, name: "buboBone");
 				isMecha = s.Serialize<bool>(isMecha, name: "isMecha");
