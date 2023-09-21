@@ -210,8 +210,13 @@ namespace UbiArt
 			// Evaluation
 			">", ">=", "<", "<=", "&", "==", "!=",
 
-			// Functions
-			"Delay",
+			// Link Tags
+			"After", "Ambiance", "Ambiance_Off", "Angle", "AngleOffset", "Delay", "Anim", "AnimBone", "Attack", "AutoStart",
+			"BaseJump", "Before", "BlendFrise", "BoneName", "Branch", "Breakable", "Bubo", "Cam", "Camera", "ChangeScale", "Checkpoint", "CineOutro", "Curve",
+			"Death", "Delay", "Disabled", "Disappear", "Door", "Drag", "Duration", "Eject", "Fishing", "Flame", "Flip", "FollowCam", "Ghost", "Hang",
+			"IgnoreCamera", "Keep_Orientation", "Lock", "Lookat", "LookatPhase", "MaxSpeed", "MinSpeed", "Moving", "NoLook", "NoTree", "Node", "Number",
+			"Offset", "ProceduralBone", "Roll", "RopeEnd", "SafeDistance", "Spawn", "SpawnPos", "Speed", "SpeedMax", "Screenshot",
+			"TakeCamera", "Target", "Teleport", "Torture", "Trigger", "Type", 
 
 			// Animation inputs
 			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "InAir", "IsPathBlocked",
@@ -230,6 +235,9 @@ namespace UbiArt
 			"BlockingContact", "BoneAlpha", "EjectionState", "FishingMode", "HasCage", "HasFruit", "Health", "HurtMode",
 			"MoveAttack", "ParachuteMode", "Pedestal", "PerformCharge", "SplinterCell", "State",
 			"StunBullet", "Stunned", "WallOrientation", "WindForce", "IsNaked", "InputLumsColor", "IsInAir",
+
+			// RO2: Familiies
+			"Rayman", "Globox", "Barbara", "Teensy"
 		};
 
 
@@ -241,12 +249,15 @@ namespace UbiArt
 				var name = ObjectFactory.classes[sid].Name;
 				var stringID = new StringID(sid);
 				if (stringID == new StringID(name)) { // Avoid adding "unknown" classes where the name doesn't yet match the StringID
-					StringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
+					StringCache[new StringID(sid)] = ObjectFactory.classes[sid].Name;
 				}
 			}
 			foreach (var str in AdditionalStrings)
 			{
-				StringCache.Add(new StringID(str), str);
+				var stringID = new StringID(str);
+				if (!StringCache.ContainsKey(stringID)) {
+					StringCache.Add(stringID, str);
+				}
 			}
 		}
 
