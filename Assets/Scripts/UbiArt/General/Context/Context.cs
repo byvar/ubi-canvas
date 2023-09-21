@@ -210,6 +210,9 @@ namespace UbiArt
 			// Evaluation
 			">", ">=", "<", "<=", "&", "==", "!=",
 
+			// Functions
+			"Delay",
+
 			// Animation inputs
 			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "InAir", "IsPathBlocked",
 			"MoveX", "MoveY", "SpeedX", "SpeedY", "SpeedZ",
@@ -235,7 +238,11 @@ namespace UbiArt
 			// Init String Cache
 			foreach (uint sid in ObjectFactory.classes.Keys)
 			{
-				StringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
+				var name = ObjectFactory.classes[sid].Name;
+				var stringID = new StringID(sid);
+				if (stringID == new StringID(name)) { // Avoid adding "unknown" classes where the name doesn't yet match the StringID
+					StringCache.Add(new StringID(sid), ObjectFactory.classes[sid].Name);
+				}
 			}
 			foreach (var str in AdditionalStrings)
 			{
