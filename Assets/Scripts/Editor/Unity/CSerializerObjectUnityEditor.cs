@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEditor;
+using UbiCanvas.Helpers;
 
 namespace UbiArt {
 	public class CSerializerObjectUnityEditor : CSerializerObject {
@@ -61,6 +62,10 @@ namespace UbiArt {
 			} else if (type == typeof(Path)) {
 				Path p = (Path)obj;
 				DrawPath(name, ref p);
+				obj = p;
+			} else if (type == typeof(ITF.ObjectPath)) {
+				ITF.ObjectPath p = (ITF.ObjectPath)obj;
+				DrawObjectPath(name, ref p);
 				obj = p;
 			} else if (type == typeof(StringID)) {
 				StringID sid = (StringID)obj;
@@ -144,15 +149,60 @@ namespace UbiArt {
 				p = new Path(newPath);
 			}
 		}
-		public void DrawStringID(string name, ref StringID sid) {
-			if (sid == null) sid = new StringID();
+		public void DrawObjectPath(string name, ref ITF.ObjectPath p) {
+			if (p == null) p = new ITF.ObjectPath();
 			//EditorGUILayout.PrefixLabel(name);
 			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
 			//texPreviewRect = EditorGUI.PrefixLabel(texPreviewRect, new GUIContent(name));
-			string stringIdToString = sid.ToString(Controller.MainContext);
-			//EditorGUI.BeginDisabledGroup(true);
-			string newStringID = EditorGUI.TextField(rect, new GUIContent(name), stringIdToString);
-			//EditorGUI.EndDisabledGroup();
+			string fullPath = p.FullPath;
+			//var indent = EditorGUI.indentLevel;
+			//EditorGUI.indentLevel = 0;
+			string newPath = EditorGUI.TextField(rect, new GUIContent(name), fullPath);
+			//EditorGUI.indentLevel = indent;
+			if (newPath != fullPath) {
+				p = new ITF.ObjectPath(newPath);
+			}
+		}
+		public void DrawStringID(string name, ref StringID sid) {
+			if (sid == null) sid = new StringID();
+			var context = Controller.MainContext;
+			//EditorGUILayout.PrefixLabel(name);
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			rect = EditorGUI.PrefixLabel(rect, new GUIContent(name));
+
+			var indent = EditorGUI.indentLevel;
+			EditorGUI.indentLevel = 0;
+
+			var sidWidth = EditorGUIUtility.singleLineHeight * 5;
+			var sidRect = new Rect(rect.position, new Vector2(sidWidth, rect.height));
+			var strRect = new Rect(rect.position + new Vector2(sidWidth, 0), new Vector2(rect.width - sidWidth, rect.height));
+
+			// Draw StringID UI (hex)
+			var curSidHex = $"{sid.stringID:X8}";
+			var newSidHex = EditorGUI.DelayedTextField(sidRect, curSidHex);
+			if (curSidHex != newSidHex) {
+				if (uint.TryParse(newSidHex, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out uint newHex)) {
+					sid = new StringID(newHex);
+				}
+			}
+
+			// Draw StringID UI (string)
+			bool useString = context.StringCache.ContainsKey(sid);
+			if (!useString) {
+				if (GUI.Button(strRect, new GUIContent("Use string input"))) {
+					sid = new StringID("");
+					context.AddToStringCache("");
+				}
+			} else {
+				var curSidStr = context.StringCache.TryGetItem(sid, "");
+				var newSidStr = EditorGUI.TextField(strRect, curSidStr);
+				if (curSidStr != newSidStr) {
+					sid = new StringID(newSidStr);
+					context.AddToStringCache(newSidStr);
+				}
+			}
+
+			EditorGUI.indentLevel = indent;
 		}
 		public void DrawLocId(string name, ref LocalisationId locId) {
 			if (locId == null) locId = new LocalisationId();
@@ -244,6 +294,10 @@ namespace UbiArt {
 			if (type == typeof(Path)) {
 				Path p = (Path)(object)obj;
 				DrawPath(name, ref p);
+				obj = (T)(object)p;
+			} else if (type == typeof(ITF.ObjectPath)) {
+				ITF.ObjectPath p = (ITF.ObjectPath)(object)obj;
+				DrawObjectPath(name, ref p);
 				obj = (T)(object)p;
 			} else if (type == typeof(StringID)) {
 				StringID sid = (StringID)(object)obj;

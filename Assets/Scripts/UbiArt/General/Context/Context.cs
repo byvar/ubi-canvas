@@ -245,32 +245,29 @@ namespace UbiArt
 
 		public void AddToStringCache(object obj)
 		{
+			void AddString(string str) {
+				if(str == null) return;
+				var sid = new StringID(str);
+				if (!StringCache.ContainsKey(sid)) StringCache[sid] = str;
+			}
+
 			if (obj != null)
 			{
 				Type type = obj.GetType();
 				if (type == typeof(string))
 				{
 					string str = ((string)obj);
-					if (!string.IsNullOrEmpty(str))
-					{
-						StringCache[new StringID(str)] = str;
-					}
+					AddString(str);
 				}
 				else if (type == typeof(CString))
 				{
 					string str = ((CString)obj).str;
-					if (!string.IsNullOrEmpty(str))
-					{
-						StringCache[new StringID(str)] = str;
-					}
+					AddString(str);
 				}
 				else if (type == typeof(BasicString))
 				{
 					string str = ((BasicString)obj).str;
-					if (!string.IsNullOrEmpty(str))
-					{
-						StringCache[new StringID(str)] = str;
-					}
+					AddString(str);
 				}
 				else if (type == typeof(Path))
 				{
