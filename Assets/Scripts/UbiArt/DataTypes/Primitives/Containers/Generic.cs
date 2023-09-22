@@ -2,12 +2,24 @@
 using UbiArt.ITF;
 
 namespace UbiArt {
-	public class Generic<T> : ICSerializable, IObjectContainer where T : CSerializable {
+	public class Generic<T> : ICSerializable, IObjectContainer, IGeneric where T : CSerializable {
 		[Serialize("$ClassName$")] public StringID className;
 		public T obj;
 		public bool serializeClassName = true;
 
 		public string ClassName => obj?.ClassName;
+		public Type ObjectType {
+			get {
+				Type type = ObjectFactory.classes[className.stringID];
+				if (type.ContainsGenericParameters) {
+					if (!typeof(T).IsGenericType) {
+						throw new Exception($"Generic parameters error with type {type}. Expecting type {typeof(T)}.");
+					}
+					type = type.MakeGenericType(typeof(T).GetGenericArguments());
+				}
+				return type;
+			}
+		}
 
 		public Generic() {
 			className = new StringID();
@@ -28,6 +40,9 @@ namespace UbiArt {
 			}
 		}
 
+		public object GenericObject { get => obj; set => obj = (T)value; }
+		public StringID GenericClassName { get => className; set => className = value; }
+
 		public void SerializeClassName(CSerializerObject s) {
 			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 				className = s.SerializeObject<StringID>(className, name: "NAME");
@@ -36,12 +51,7 @@ namespace UbiArt {
 			}
 		}
 
-		public void Serialize(CSerializerObject s, string name) {
-			Reinit(s.Context, s.Settings);
-			Pointer pos = s.CurrentPointer;
-			if (serializeClassName) {
-				SerializeClassName(s);
-			}
+		public void SerializeObject(CSerializerObject s) {
 			/*s.Serialize(this, GetType().GetField(nameof(className)),
 				(SerializeAttribute)GetType().GetField(nameof(className)).GetCustomAttributes(typeof(SerializeAttribute), false).First());*/
 			if (className.IsNull) {
@@ -76,6 +86,14 @@ namespace UbiArt {
 					}
 				}
 			}
+		}
+
+		public void Serialize(CSerializerObject s, string name) {
+			Reinit(s.Context, s.Settings);
+			if (serializeClassName) {
+				SerializeClassName(s);
+			}
+			SerializeObject(s);
 		}
 
 

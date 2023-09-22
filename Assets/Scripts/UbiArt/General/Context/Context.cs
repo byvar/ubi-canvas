@@ -216,7 +216,7 @@ namespace UbiArt
 			"Death", "Delay", "Disabled", "Disappear", "Door", "Drag", "Duration", "Eject", "Fishing", "Flame", "Flip", "FollowCam", "Ghost", "Hang",
 			"IgnoreCamera", "Keep_Orientation", "Lock", "Lookat", "LookatPhase", "MaxSpeed", "MinSpeed", "Moving", "NoLook", "NoTree", "Node", "Number",
 			"Offset", "ProceduralBone", "Roll", "RopeEnd", "SafeDistance", "Spawn", "SpawnPos", "Speed", "SpeedMax", "Screenshot",
-			"TakeCamera", "Target", "Teleport", "Torture", "Trigger", "Type", 
+			"TakeCamera", "Target", "Teleport", "TouchScreen", "Torture", "Trigger", "Type", 
 
 			// Animation inputs
 			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "InAir", "IsPathBlocked",

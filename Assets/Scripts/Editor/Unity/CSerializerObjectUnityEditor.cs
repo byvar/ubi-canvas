@@ -13,6 +13,7 @@ namespace UbiArt {
 		private Dictionary<object, bool> foldouts = new Dictionary<object, bool>();
 		public uint position = 0;
 		private LocalisationIdDropdown localisationDropdown = null;
+		private GenericClassSelectorDropdown genericDropdown = null;
 
 		private static CSerializerObjectUnityEditor serializer;
 		public static CSerializerObjectUnityEditor Serializer(Context context) {
@@ -71,7 +72,7 @@ namespace UbiArt {
 				StringID sid = (StringID)obj;
 				DrawStringID(name, ref sid);
 				obj = sid;
-			} else if(type == typeof(LocalisationId)) {
+			} else if (type == typeof(LocalisationId)) {
 				LocalisationId locId = (LocalisationId)obj;
 				DrawLocId(name, ref locId);
 				obj = locId;
@@ -87,6 +88,11 @@ namespace UbiArt {
 				obj = (ColorInteger)(EditorGUILayout.ColorField(name, ((ColorInteger)obj ?? new ColorInteger()).GetUnityColor()).GetUbiArtColorInteger());
 			} else if (type == typeof(CString)) {
 				obj = new CString(EditorGUILayout.TextField(name, ((CString)obj ?? new CString()).str));
+			} else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Generic<>)){
+				var t = type.GetGenericArguments()[0];
+				IGeneric gen = (IGeneric)obj;
+				DrawGenericClassSelector(name, ref gen, type, t);
+				obj = gen;
 			} else {
 				if (obj == null) {
 					var ctor = type.GetConstructor(Type.EmptyTypes);
@@ -241,6 +247,81 @@ namespace UbiArt {
 			EditorGUI.indentLevel = indent;
 		}
 
+		public void DrawGenericClassSelector(string name, ref IGeneric gen, Type genType, Type t) {
+			if (gen == null) {
+				var ctor = genType.GetConstructor(Type.EmptyTypes);
+				if (ctor == null) {
+					throw new Exception("Constructor is null");
+				}
+				gen = (IGeneric)ctor.Invoke(new object[] { });
+			}
+
+			if (!foldouts.ContainsKey(gen)) {
+				foldouts[gen] = false;
+			}
+			foldouts[gen] = EditorGUILayout.Foldout(foldouts[gen], name, true);
+			if (!foldouts[gen]) return;
+			// Increase indent level
+			EditorGUI.indentLevel++;
+			IncreaseLevel();
+
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			rect = EditorGUI.PrefixLabel(rect, new GUIContent(name));
+
+			var genTypeName = t.Name;
+
+
+			int indent = EditorGUI.indentLevel;
+			string genPreview;
+			if (gen.IsNull) {
+				genPreview = "None";
+			} else {
+				Type type = ObjectFactory.classes[gen.GenericClassName.stringID];
+				genPreview = type.Name;
+			}
+
+			EditorGUI.indentLevel = 0;
+			if (EditorGUI.DropdownButton(rect, new GUIContent(genPreview), FocusType.Passive)) {
+				if (genericDropdown == null || genericDropdown.type != t) {
+					genericDropdown = new GenericClassSelectorDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState()) {
+						name = $"Generic<{genTypeName}>",
+						type = t
+					};
+				}
+				genericDropdown.rect = rect;
+				genericDropdown.Show(rect);
+			}
+			if (genericDropdown != null && genericDropdown.selection != null && genericDropdown.rect == rect) {
+				var newGenID = genericDropdown.selection.Value;
+				genericDropdown.selection = null;
+
+				if (newGenID != gen.GenericClassName?.stringID) {
+					// Create new object
+					/*var newType = ObjectFactory.classes[newGenID];
+					if (newType.ContainsGenericParameters) {
+						if (!genType.IsGenericType) {
+							EditorGUI.indentLevel = indent;
+							return; // Don't make this change
+						}
+						newType = newType.MakeGenericType(genType.GetGenericArguments());
+					}*/
+					gen.GenericClassName = new StringID(newGenID);
+					gen.GenericObject = null;
+				}
+			}
+
+			EditorGUI.indentLevel = indent;
+
+			if (!gen.IsNull) {
+				gen.SerializeObject(this);
+			}
+
+			// Decrease indent level
+			DecreaseLevel();
+			EditorGUI.indentLevel--;
+
+		}
+
 		public override T SerializeGenericPureBinary<T>(T obj, Type type = null, string name = null, int? index = null) {
 			return SerializeGeneric<T>(obj, type: type, name: name, index: index);
 		}
@@ -317,6 +398,12 @@ namespace UbiArt {
 				obj = (T)(object)(Color)(EditorGUILayout.ColorField(name, ((Color)(object)obj ?? new Color()).GetUnityColor()).GetUbiArtColor());
 			} else if (type == typeof(ColorInteger)) {
 				obj = (T)(object)(ColorInteger)(EditorGUILayout.ColorField(name, ((ColorInteger)(object)obj ?? new ColorInteger()).GetUnityColor()).GetUbiArtColorInteger());
+
+			} else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Generic<>)) {
+				var t = type.GetGenericArguments()[0];
+				IGeneric gen = (IGeneric)(object)obj;
+				DrawGenericClassSelector(name, ref gen, type, t);
+				obj = (T)(object)gen;
 			} else {
 				if (obj == null) {
 					obj = new T();
