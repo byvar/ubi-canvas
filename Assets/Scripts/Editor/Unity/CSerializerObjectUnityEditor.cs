@@ -38,6 +38,7 @@ namespace UbiArt {
 		public override long Length => 0;
 
 		public override void Serialize(ref object obj, Type type, string name = null) {
+			if (name == null) name = $"({type.GetFormattedName()})";
 			if (type.IsEnum) {
 				if (type.GetCustomAttributes<FlagsAttribute>().Any()) {
 					obj = EditorGUILayout.EnumFlagsField(name, (Enum)obj);
@@ -268,7 +269,7 @@ namespace UbiArt {
 			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
 			rect = EditorGUI.PrefixLabel(rect, new GUIContent(name));
 
-			var genTypeName = t.Name;
+			var genTypeName = t.GetFormattedName();
 
 
 			int indent = EditorGUI.indentLevel;
@@ -277,7 +278,7 @@ namespace UbiArt {
 				genPreview = "None";
 			} else {
 				Type type = ObjectFactory.classes[gen.GenericClassName.stringID];
-				genPreview = type.Name;
+				genPreview = type.GetFormattedName();
 			}
 
 			EditorGUI.indentLevel = 0;
@@ -372,6 +373,7 @@ namespace UbiArt {
 		public override T SerializeObject<T>(T obj, Action<T> onPreSerialize = null, string name = null, int? index = null, Options options = Options.None) {
 			// Get the type
 			var type = typeof(T);
+			if(name == null) name = $"({type.GetFormattedName()})";
 			if (type == typeof(Path)) {
 				Path p = (Path)(object)obj;
 				DrawPath(name, ref p);

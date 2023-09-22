@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UbiArt;
 using UnityEngine;
+using UbiCanvas.Helpers;
 
 [CustomEditor(typeof(UnityGenericObject))]
 public class UnityGenericObjectEditor : Editor {
@@ -17,7 +18,7 @@ public class UnityGenericObjectEditor : Editor {
 
 		UnityGenericObject ugo = target as UnityGenericObject;
 		if (ugo != null && ugo.obj != null) {
-			string header = ugo.obj.GetType().Name;
+			string header = ugo.obj.GetType().GetFormattedName();
 			EditorGUI.LabelField(rect, header, EditorStyles.boldLabel);
 		} else {
 			EditorGUI.LabelField(rect, "Unity Generic Object (null)", EditorStyles.boldLabel);

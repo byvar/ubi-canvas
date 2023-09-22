@@ -5,6 +5,7 @@ using System.Linq;
 using UbiArt;
 using UnityEngine;
 using System;
+using UbiCanvas.Helpers;
 
 class GenericClassSelectorDropdown : AdvancedDropdown {
 	public uint? selection = null;
@@ -39,12 +40,12 @@ class GenericClassSelectorDropdown : AdvancedDropdown {
 			}
 		}
 		int CompareTypeName(KeyValuePair<uint, Type> a, KeyValuePair<uint, Type> b) {
-			return a.Value.Name.CompareTo(b.Value.Name);
+			return a.Value.GetFormattedName().CompareTo(b.Value.GetFormattedName());
 		}
 		types.Sort(CompareTypeName);
 
 		foreach (var t in types) {
-			root.AddChild(new AdvancedDropdownItem(t.Value.Name) {
+			root.AddChild(new AdvancedDropdownItem(t.Value.GetFormattedName()) {
 				id = (int)t.Key
 			});
 		}

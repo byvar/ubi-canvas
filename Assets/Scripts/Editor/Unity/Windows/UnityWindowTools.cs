@@ -25,7 +25,7 @@ public class UnityWindowTools : UnityWindow
 
 		foreach (GameTool tool in GameTools.Tools)
 		{
-			var toolKey = tool.GetType().Name;
+			var toolKey = tool.GetType().GetFormattedName();
 			if (!_toolFoldouts.ContainsKey(toolKey))
 				_toolFoldouts.Add(toolKey, false);
 
@@ -195,7 +195,7 @@ public class UnityWindowTools : UnityWindow
 		}
 		else
 		{
-			EditorHelpBox($"The tool type {tool.GetType().Name} does not have a supported UI", MessageType.Error);
+			EditorHelpBox($"The tool type {tool.GetType().GetFormattedName()} does not have a supported UI", MessageType.Error);
 		}
 	}
 

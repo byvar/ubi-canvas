@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UbiArt;
 using UnityEngine;
+using UbiCanvas.Helpers;
 
 [CustomEditor(typeof(UnityActorComponentTemplate))]
 public class UnityActorComponentTemplateEditor : Editor {
@@ -17,7 +18,7 @@ public class UnityActorComponentTemplateEditor : Editor {
 
 		UnityActorComponentTemplate uac = target as UnityActorComponentTemplate;
 		if (uac != null && uac.component != null) {
-			string header = uac.component.GetType().Name;
+			string header = uac.component.GetType().GetFormattedName();
 			EditorGUI.LabelField(rect, header, EditorStyles.boldLabel);
 		} else {
 

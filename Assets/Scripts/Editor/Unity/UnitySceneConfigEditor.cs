@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UbiArt;
 using UnityEngine;
+using UbiCanvas.Helpers;
 
 [CustomEditor(typeof(UnitySceneConfig))]
 public class UnitySceneConfigEditor : Editor {
@@ -17,7 +18,7 @@ public class UnitySceneConfigEditor : Editor {
 		
 		UnitySceneConfig sc = target as UnitySceneConfig;
 		if (sc != null && sc.config != null) {
-			string header = sc.config.GetType().Name;
+			string header = sc.config.GetType().GetFormattedName();
 			EditorGUI.LabelField(rect, header, EditorStyles.boldLabel);
 		} else {
 
