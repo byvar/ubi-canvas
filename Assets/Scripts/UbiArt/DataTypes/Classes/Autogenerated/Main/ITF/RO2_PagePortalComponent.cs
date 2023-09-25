@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_PagePortalComponent : RO2_TeleportPortalComponent {
-		public float enterExitDist;
+		public float enterExitDist = 2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {
