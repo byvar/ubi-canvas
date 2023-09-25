@@ -4,6 +4,8 @@ namespace UbiArt.ITF {
 	public partial class ObjectPath {
 		public override string ToString() => $"ObjectPath({FullPath})";
 
+		public const char PathSeparator = '|';
+
 		public ObjectPath() { }
 		public ObjectPath(string path) {
 			FullPath = path;
@@ -12,20 +14,18 @@ namespace UbiArt.ITF {
 		public string FullPath {
 			get {
 				StringBuilder b = new();
-				if(absolute)
-					b.Append('/');
 				if (levels != null) {
 					foreach (var l in levels) {
 						if (l.parent) {
-							b.Append("../");
+							b.Append("..");
 						} else {
-							b.Append(l.name);
-							b.Append('/');
+							b.Append(l.name ?? "");
 						}
+						b.Append(PathSeparator);
 					}
 				}
 				if (id != null) {
-					b.Append(id);
+					b.Append(id ?? "");
 				}
 				return b.ToString();
 			}
@@ -35,14 +35,18 @@ namespace UbiArt.ITF {
 					id = "";
 					levels = new CListO<Level>();
 				} else {
-					// Absolute path?
 					var str = value.Trim();
-					absolute = (str.StartsWith('/'));
-					if (absolute) str = str.Substring(1);
+
+					// Absolute path?
+					if (str.Contains(PathSeparator)) {
+						absolute = (str.Contains(".isc") && (str.IndexOf(".isc") < str.IndexOf(PathSeparator)));
+					} else {
+						absolute = false;
+					}
 
 					// Has levels?
-					if (str.Contains('/')) {
-						var strs = str.Split('/');
+					if (str.Contains(PathSeparator)) {
+						var strs = str.Split(PathSeparator);
 						levels = new CListO<Level>();
 						for (int i = 0; i < strs.Length - 1; i++) {
 							var levelStr = strs[i];
