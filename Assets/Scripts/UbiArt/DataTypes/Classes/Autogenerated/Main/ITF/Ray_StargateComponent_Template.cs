@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
-	public partial class Ray_StargateComponent_Template : CSerializable {
+	public partial class Ray_StargateComponent_Template : ActorComponent_Template {
 		public float speed;
 		public StringID boneStart;
 		public StringID teleportArea;

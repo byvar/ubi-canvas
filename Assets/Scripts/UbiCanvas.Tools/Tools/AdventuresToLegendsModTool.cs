@@ -76,6 +76,7 @@ namespace UbiCanvas.Tools
 			await new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new SimpleObjectBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new CombinedSceneBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
@@ -89,6 +90,7 @@ namespace UbiCanvas.Tools
 				new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			}
 			new SimpleObjectBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			new CombinedSceneBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 		}
 
 		#region Build (mostly a copy of BuildModIPKTool)
