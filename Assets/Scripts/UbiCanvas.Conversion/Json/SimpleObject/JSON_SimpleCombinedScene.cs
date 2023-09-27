@@ -15,7 +15,7 @@ namespace UbiCanvas.Conversion.Json {
 
 			[JsonIgnore]
 			public Scene Data { get; set; }
-			[JsonIgnore]
+
 			public string ActorName { get; set; }
 		}
 	}

@@ -51,8 +51,10 @@ namespace UbiCanvas.Conversion {
 									var subscene = simpleISC.Subscenes[i];
 									var scene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, subscene.Path);
 									subscene.Data = scene.obj;
-									var pathNoExtension = subscene.Path.Substring(0, subscene.Path.IndexOf('.'));
-									subscene.ActorName = pathNoExtension;
+									if (string.IsNullOrWhiteSpace(subscene.ActorName)) {
+										var pathNoExtension = subscene.Path.Substring(0, subscene.Path.IndexOf('.'));
+										subscene.ActorName = pathNoExtension;
+									}
 									if (subscene.Position != null) pos = subscene.Position;
 
 									// Add subsceneActor
@@ -76,31 +78,27 @@ namespace UbiCanvas.Conversion {
 									var subscene = simpleISC.Subscenes[i];
 									var scene = subscene.Data;
 									// Add exit triggers
+
+									// 1. Find all exits of the current scene
 									var exits = scene.FindActors(a => a.LUA?.FullPath?.EndsWith("exitflag.tpl") ?? false);
 									if (exits == null || exits.Count == 0) {
 										exits = scene.FindActors(a => a.LUA?.FullPath?.EndsWith("exitflag__startpaused.tpl") ?? false);
 									}
+									// 2. Find first checkpoint of the next scene
 									var nextScene = (i+1) < simpleISC.Subscenes.Count ? simpleISC.Subscenes[i+1] : null;
 									var nextCheckpoint = nextScene?.Data?.FindActor(a => a.GetComponent<CheckpointComponent>()?.INDEX == 0);
 
 									if (nextCheckpoint != null) {
-										// Exit trigger is a page portal to the next scene
+										// There is a "next checkpoint" -> exit trigger becomes a page portal to the next scene
 
-										// 1. create portal object for next scene's entry checkpoint
-										//var nextCheckpointChangePageActor = CreatePagePortal();
-										//nextCheckpointChangePageActor.POS2D = nextCheckpoint.Result.POS2D;
-										//nextCheckpointChangePageActor.RELATIVEZ = nextCheckpoint.Result.RELATIVEZ;
-										//nextCheckpoint.ContainingScene.AddActor(nextCheckpointChangePageActor, nextCheckpointChangePageActor.USERFRIENDLY);
-										//var checkPointResult = nextScene.Data.FindActor(a => a == nextCheckpointChangePageActor);
-										//var checkpointPath = $"{nextScene.Path}|{nextCheckpoint.Path.FullPath}";
-
-										// 2. Add portal object for each exit leading to previously created portal object
+										// 3. Add portal object for each exit leading to previously created portal object
 										foreach (var exit in exits) {
 											var exitScene = exit.ContainingScene;
 											var exitChangePageActor = CreatePagePortal();
 											exitScene.AddActor(exitChangePageActor, exitChangePageActor.USERFRIENDLY);
 											exitChangePageActor.POS2D = exit.Result.POS2D;
 											exitChangePageActor.RELATIVEZ = exit.Result.RELATIVEZ;
+											exitChangePageActor.xFLIPPED = exit.Result.xFLIPPED;
 
 											string checkpointPath = "..|";
 											if (exit.Path.levels != null) {
@@ -114,6 +112,8 @@ namespace UbiCanvas.Conversion {
 											});
 										}
 									} else {
+										// There is no "next checkpoint" -> exit trigger becomes an exit map ritual trigger!
+
 										foreach (var exit in exits) {
 
 										}
@@ -170,7 +170,7 @@ namespace UbiCanvas.Conversion {
 			//pdc.localScale = 
 			var ppc = pagePortal.AddComponent<RO2_PagePortalComponent>();
 			ppc.oneWay = false;
-			ppc.enterExitDist = 0;
+			//ppc.enterExitDist = 0;
 			var vlc = pagePortal.AddComponent<VirtualLinkComponent>();
 			return pagePortal;
 		}

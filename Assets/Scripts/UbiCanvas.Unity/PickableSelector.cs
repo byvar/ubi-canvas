@@ -9,6 +9,9 @@ public class PickableSelector : MonoBehaviour {
 	public UnityPickable highlighted;
 	public UnityPickable selected;
 
+	public PickableOutlineDisplay selectionDisplay;
+	public PickableOutlineDisplay highlightDisplay;
+
 	public bool IsSelecting { get; private set; } = false;
 
     private void HandleCollision() {
@@ -81,6 +84,10 @@ public class PickableSelector : MonoBehaviour {
         //outline.Highlight = highlightedPerso != null ? highlightedPerso.gameObject : null;
         //outline.selecting = IsSelecting;
     }
+	private void UpdateOutlineDisplays() {
+		if(selectionDisplay != null) selectionDisplay.pickable = selected;
+		if(highlightDisplay != null) highlightDisplay.pickable = selected != highlighted ? highlighted : null;
+	}
     void Update() {
         highlighted = null;
         UpdateHighlight();
@@ -91,5 +98,6 @@ public class PickableSelector : MonoBehaviour {
         if (IsSelecting && !UnityEngine.Input.GetMouseButton(0)) {
             IsSelecting = false;
         }
+		UpdateOutlineDisplays();
     }
 }

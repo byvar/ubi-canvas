@@ -54,10 +54,11 @@ public class FriseEditorBehaviour : MonoBehaviour {
 			Points = new FriseEditorPointBehaviour[pointsList.Count];
 
 			for (int i = 0; i < Points.Length; i++) {
+				if (pointsList[i] == null) pointsList[i] = new PolyLineEdge();
 				var edge = pointsList[i];
 				var gao = new GameObject($"Point {i}");
 				gao.transform.SetParent(transform, false);
-				gao.transform.localPosition = frTransform.TransformPoint(new Vector3(edge.POS.x, edge.POS.y, 0));
+				gao.transform.localPosition = frTransform.TransformPoint(new Vector3(edge.POS?.x ?? 0, edge.POS?.y ?? 0, 0));
 				gao.transform.localScale = Vector3.one;
 				gao.transform.localRotation = Quaternion.identity;
 

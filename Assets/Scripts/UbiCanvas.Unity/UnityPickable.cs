@@ -109,6 +109,7 @@ public class UnityPickable : MonoBehaviour {
 				} else {
 					if (t != null && t.TAGS != null && t.TAGS.Count > 0) {
 						foreach (string tag in t.TAGS) {
+							if(string.IsNullOrWhiteSpace(tag)) continue;
 							Sprite sprLoc = c.GetIcon(tag, selected);
 							if (sprLoc == null) {
 								print("Actor: Untreated tag " + tag);
