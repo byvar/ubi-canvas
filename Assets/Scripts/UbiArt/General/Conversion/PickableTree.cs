@@ -15,10 +15,13 @@ namespace UbiArt {
 		}
 		public bool SearchForPickable(Node start, Pickable toFind) {
 		}*/
-		public Node FollowObjectPath(ObjectPath start, ObjectPath toFind) {
-			var startNode = Root.GetNodeWithObjectPath(start);
+		public Node FollowObjectPath(ObjectPath start, ObjectPath toFind, bool throwIfNotFound = true) {
+			var startNode = Root.GetNodeWithObjectPath(start, throwIfNotFound: throwIfNotFound);
 			//UnityEngine.Debug.Log(startNode.Pickable?.USERFRIENDLY ?? "null");
-			return startNode.Parent.GetNodeWithObjectPath(toFind);
+			return startNode.Parent.GetNodeWithObjectPath(toFind, throwIfNotFound: throwIfNotFound);
+		}
+		public Node FollowObjectPath(ObjectPath toFind, bool throwIfNotFound = true) {
+			return Root.GetNodeWithObjectPath(toFind, throwIfNotFound: throwIfNotFound);
 		}
 
 		public class Node {
@@ -58,18 +61,21 @@ namespace UbiArt {
 				}
 			}
 
-			public Node GetNodeWithObjectPath(ObjectPath path, int levelsProcessed = 0) {
+			public Node GetNodeWithObjectPath(ObjectPath path, int levelsProcessed = 0, bool throwIfNotFound = true) {
 				if((path == null) || ((path.levels == null || path.levels.Count == 0) && string.IsNullOrEmpty(path.id)))
 					return null;
 
 				if (path.levels != null && levelsProcessed < path.levels.Count) {
 					var curLevel = path.levels[levelsProcessed];
 					if(curLevel.parent)
-						return Parent.GetNodeWithObjectPath(path, levelsProcessed: levelsProcessed + 1);
+						return Parent?.GetNodeWithObjectPath(path, levelsProcessed: levelsProcessed + 1, throwIfNotFound: throwIfNotFound);
 					if (Children.TryGetValue(curLevel.name, out Node levelNode)) {
-						return levelNode.GetNodeWithObjectPath(path, levelsProcessed: levelsProcessed + 1);
+						return levelNode?.GetNodeWithObjectPath(path, levelsProcessed: levelsProcessed + 1, throwIfNotFound: throwIfNotFound);
 					} else {
-						throw new KeyNotFoundException($"Could not resolve ObjectPath with level name {curLevel.name}");
+						if (throwIfNotFound) {
+							throw new KeyNotFoundException($"Could not resolve ObjectPath with level name {curLevel.name}");
+						}
+						return null;
 					}
 				}
 
@@ -79,7 +85,10 @@ namespace UbiArt {
 				if (Children.TryGetValue(path.id, out Node node)) {
 					return node;
 				} else {
-					throw new KeyNotFoundException($"Could not resolve ObjectPath with id {path.id}");
+					if (throwIfNotFound) {
+						throw new KeyNotFoundException($"Could not resolve ObjectPath with id {path.id}");
+					}
+					return null;
 				}
 
 			}

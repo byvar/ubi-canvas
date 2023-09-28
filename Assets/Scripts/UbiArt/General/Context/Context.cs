@@ -237,7 +237,10 @@ namespace UbiArt
 			"StunBullet", "Stunned", "WallOrientation", "WindForce", "IsNaked", "InputLumsColor", "IsInAir",
 
 			// RO2: Familiies
-			"Rayman", "Globox", "Barbara", "Teensy"
+			"Rayman", "Globox", "Barbara", "Teensy",
+
+			// Bones
+			"Root",
 		};
 
 

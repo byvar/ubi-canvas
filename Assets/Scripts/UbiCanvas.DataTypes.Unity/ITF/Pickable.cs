@@ -9,6 +9,9 @@ namespace UbiArt.ITF {
 			if (gao == null) {
 				await InitGameObject();
 			}
+			return GetPrecreatedGameObject();
+		}
+		public GameObject GetPrecreatedGameObject() {
 			return gao;
 		}
 

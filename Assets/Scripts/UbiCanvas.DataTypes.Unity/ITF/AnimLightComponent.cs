@@ -99,6 +99,7 @@ namespace UbiArt.ITF {
 			ua.patchRenderers = patchRenderers;
 			ua.pbk = pbk;
 			ua.alc = this;
+			ua.alc_tpl = tpl;
 			/*List<Path> animPaths = new List<Path>();
 			foreach (SubAnim_Template sat in tpl.animSet.animations) {
 				animPaths.Add(sat.name);
@@ -163,6 +164,7 @@ namespace UbiArt.ITF {
 					ua.patchRenderers = patchRenderers;
 					ua.pbk = bp.pbk;
 					ua.alc = this;
+					ua.alc_tpl = tpl;
 					foreach (SubAnim_Template sat in tpl.animSet.animations) {
 						animPaths.Add(sat.name);
 					}

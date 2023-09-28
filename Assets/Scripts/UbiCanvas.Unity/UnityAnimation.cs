@@ -20,6 +20,7 @@ public class UnityAnimation : MonoBehaviour {
 	public AnimPatchBank pbk;
 	public GameObject[] patches;
 	public AnimLightComponent alc;
+	public AnimLightComponent_Template alc_tpl;
 	public SkinnedMeshRenderer[] patchRenderers;
 	public bool playAnimation = true;
 	public bool DisplayPolylines;
@@ -148,49 +149,56 @@ public class UnityAnimation : MonoBehaviour {
 				currentFrame %= animTrack.length;
 			}
 			int numBones = Math.Min(animTrack.bonesLists.Count, bones.Length);
+			int rootIndex = skeleton.GetBoneIndexFromTag(new StringID("Root"));
 			for (int i = 0; i < numBones; i++) {
-				AnimTrackBonesList bl = animTrack.bonesLists[i];
-				if (bl.amountPAS > 0) { // Position Angle Scale
-					for (int p = 0; p < bl.amountPAS; p++) {
-						AnimTrackBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
-						AnimTrackBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
-						if (p == bl.amountPAS - 1 || (currentFrame >= pas.frame && currentFrame < next.frame)) {
-							Vector2 pos = pas.Position.GetUnityVector();
-							Angle rot = pas.Rotation;
-							Vector2 scl = pas.Scale.GetUnityVector();
-							if (next != pas) {
-								float nextFrame = next.frame < pas.frame ? next.frame + animTrack.length : next.frame;
-								float lerp = (Mathf.Floor(currentFrame) - pas.frame) / (Mathf.Floor(nextFrame) - pas.frame); // TODO: maybe change to Math.Floor(currentFrame) if animations can't be interpolated. This fixed jittery feet for Rayman
-								pos = Vector2.Lerp(pos, next.Position.GetUnityVector(), lerp);
-								rot = Mathf.Lerp(rot, next.Rotation, lerp);
-								scl = Vector2.Lerp(scl, next.Scale.GetUnityVector(), lerp);
+				if (((!alc_tpl?.useRootBone) ?? false) && i == rootIndex) {
+					bones[i].localPosition = Vector3.zero;
+					bones[i].localScale = Vector3.one;
+					bones[i].localRotation = 0f;
+				} else {
+					AnimTrackBonesList bl = animTrack.bonesLists[i];
+					if (bl.amountPAS > 0) { // Position Angle Scale
+						for (int p = 0; p < bl.amountPAS; p++) {
+							AnimTrackBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
+							AnimTrackBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
+							if (p == bl.amountPAS - 1 || (currentFrame >= pas.frame && currentFrame < next.frame)) {
+								Vector2 pos = pas.Position.GetUnityVector();
+								Angle rot = pas.Rotation;
+								Vector2 scl = pas.Scale.GetUnityVector();
+								if (next != pas) {
+									float nextFrame = next.frame < pas.frame ? next.frame + animTrack.length : next.frame;
+									float lerp = (Mathf.Floor(currentFrame) - pas.frame) / (Mathf.Floor(nextFrame) - pas.frame); // TODO: maybe change to Math.Floor(currentFrame) if animations can't be interpolated. This fixed jittery feet for Rayman
+									pos = Vector2.Lerp(pos, next.Position.GetUnityVector(), lerp);
+									rot = Mathf.Lerp(rot, next.Rotation, lerp);
+									scl = Vector2.Lerp(scl, next.Scale.GetUnityVector(), lerp);
+								}
+								pos *= animTrack.multiplierP;
+								rot *= animTrack.multiplierA;
+								scl *= animTrack.multiplierS;
+								bones[i].localPosition = pos;
+								bones[i].localScale = scl;
+								bones[i].localRotation = rot;
+								break;
 							}
-							pos *= animTrack.multiplierP;
-							rot *= animTrack.multiplierA;
-							scl *= animTrack.multiplierS;
-							bones[i].localPosition = pos;
-							bones[i].localScale = scl;
-							bones[i].localRotation = rot;
-							break;
 						}
 					}
-				}
-				if (bl.amountZAL > 0) { // Z ALpha
-					for (int p = 0; p < bl.amountZAL; p++) {
-						AnimTrackBoneZAL zal = animTrack.boneZAL[bl.startZAL + p];
-						AnimTrackBoneZAL next = animTrack.boneZAL[bl.startZAL + ((p + 1) % bl.amountZAL)];
-						if (p == bl.amountZAL - 1 || (currentFrame >= zal.frame && currentFrame < next.frame)) {
-							float z = zal.z;
-							float alpha = zal.alpha / 255f;
-							if (next != zal) {
-								float nextFrame = next.frame < zal.frame ? next.frame + animTrack.length : next.frame;
-								float lerp = (currentFrame - zal.frame) / (nextFrame - zal.frame);
-								z = Mathf.Lerp(z, next.z, lerp);
-								alpha = Mathf.Lerp(alpha, next.alpha / 255f, lerp);
+					if (bl.amountZAL > 0) { // Z ALpha
+						for (int p = 0; p < bl.amountZAL; p++) {
+							AnimTrackBoneZAL zal = animTrack.boneZAL[bl.startZAL + p];
+							AnimTrackBoneZAL next = animTrack.boneZAL[bl.startZAL + ((p + 1) % bl.amountZAL)];
+							if (p == bl.amountZAL - 1 || (currentFrame >= zal.frame && currentFrame < next.frame)) {
+								float z = zal.z;
+								float alpha = zal.alpha / 255f;
+								if (next != zal) {
+									float nextFrame = next.frame < zal.frame ? next.frame + animTrack.length : next.frame;
+									float lerp = (currentFrame - zal.frame) / (nextFrame - zal.frame);
+									z = Mathf.Lerp(z, next.z, lerp);
+									alpha = Mathf.Lerp(alpha, next.alpha / 255f, lerp);
+								}
+								bones[i].localZ = z;
+								bones[i].localAlpha = alpha;
+								break;
 							}
-							bones[i].localZ = z;
-							bones[i].localAlpha = alpha;
-							break;
 						}
 					}
 				}
