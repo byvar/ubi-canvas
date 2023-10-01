@@ -12,8 +12,7 @@ namespace UbiArt.ITF {
 		public bool displayTuto;
 		public bool flip;
 		public bool isPos2D;
-		public bool activateByTrigger { get => activateByTriggerInt != 0; set => activateByTriggerInt = value ? 1 : 0; }
-		public int activateByTriggerInt;
+		public bool activateByTrigger;
 		public float cyclePauseDuration;
 		public float cycleDisplayDuration = 99999f;
 		public bool testSceneDepthRef = true;
@@ -33,7 +32,7 @@ namespace UbiArt.ITF {
 					displayTuto = s.Serialize<bool>(displayTuto, name: "displayTuto", options: CSerializerObject.Options.BoolAsByte);
 					flip = s.Serialize<bool>(flip, name: "flip", options: CSerializerObject.Options.BoolAsByte);
 					isPos2D = s.Serialize<bool>(isPos2D, name: "isPos2D", options: CSerializerObject.Options.BoolAsByte);
-					activateByTriggerInt = s.Serialize<int>(activateByTriggerInt, name: "activateByTrigger");
+					activateByTrigger = s.Serialize<bool>(activateByTrigger, name: "activateByTrigger");
 					cyclePauseDuration = s.Serialize<float>(cyclePauseDuration, name: "cyclePauseDuration");
 					cycleDisplayDuration = s.Serialize<float>(cycleDisplayDuration, name: "cycleDisplayDuration");
 					testSceneDepthRef = s.Serialize<bool>(testSceneDepthRef, name: "testSceneDepthRef", options: CSerializerObject.Options.BoolAsByte);

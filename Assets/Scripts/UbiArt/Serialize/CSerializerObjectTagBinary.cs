@@ -167,8 +167,8 @@ namespace UbiArt {
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
-							throw new Exception(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
-							//obj = false;
+							Context?.SystemLogger?.LogWarning(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
+							return true;
 						} else {
 							return false;
 						}
@@ -177,8 +177,8 @@ namespace UbiArt {
 						if (tmp == 1) {
 							return true;
 						} else if (tmp != 0) {
-							throw new Exception(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
-							//obj = false;
+							Context?.SystemLogger?.LogWarning(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
+							return true;
 						} else {
 							return false;
 						}
@@ -236,8 +236,8 @@ namespace UbiArt {
 						if (tmp == 1) {
 							obj = true;
 						} else if (tmp != 0) {
-							throw new Exception(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
-							//obj = false;
+							Context?.SystemLogger?.LogWarning(CurrentPointer + ": Bool with name " + name + " was " + tmp + "!");
+							obj = true;
 						} else {
 							obj = false;
 						}
