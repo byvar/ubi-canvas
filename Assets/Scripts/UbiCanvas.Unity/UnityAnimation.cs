@@ -10,18 +10,45 @@ using UbiCanvas.Helpers;
 using UnityEngine;
 
 public class UnityAnimation : MonoBehaviour {
+	public class UnityPatchBank {
+		public StringID ID { get; set; }
+		public StringID TextureID { get; set; }
+
+		public AnimPatchBank PBK { get; set; }
+		public GameObject[] Patches { get; set; }
+		public TextureBankPath TextureBankPath { get; set; }
+		public Path TexturePathOrigins { get; set; }
+		public SkinnedMeshRenderer[] PatchRenderers { get; set; }
+		
+		// Current animation data
+		public bool[] CurrentActive { get; set; }
+	}
+	public class UnityAnimationTrack {
+		public StringID ID { get; set; }
+		public Path Path { get; set; }
+		public AnimTrack Track { get; set; }
+		public SubAnim_Template SubAnim { get; set; }
+	}
 	//public AnimLightComponent animLightComponent;
-	public AnimTrack animTrack;
+	public AnimTrack animTrack => Animation?.Track;
+	public UnityAnimationTrack Animation {
+		get {
+			if (anims != null && animIndex >= 0 && animIndex < anims.Length) {
+				return anims[animIndex];
+			}
+			return null;
+		}
+	}
 	public int animIndex = -1;
 	public float lastBmlFrame = -1;
-	public List<Tuple<Path, AnimTrack>> anims;
+	public UnityAnimationTrack[] anims;
 	public AnimSkeleton skeleton;
 	public UnityBone[] bones;
-	public AnimPatchBank pbk;
-	public GameObject[] patches;
+	public UnityPatchBank[] AllPatchBanks;
+	public Dictionary<StringID, UnityPatchBank> patchBanks; // Index: bank ID
+	public Dictionary<StringID, UnityPatchBank> patchBanksOrigins; // Index: texture path StringID
 	public AnimLightComponent alc;
 	public AnimLightComponent_Template alc_tpl;
-	public SkinnedMeshRenderer[] patchRenderers;
 	public bool playAnimation = true;
 	public bool DisplayPolylines;
 	public bool DisplayInactivePolylines;
@@ -150,36 +177,49 @@ public class UnityAnimation : MonoBehaviour {
 			}
 			int numBones = Math.Min(animTrack.bonesLists.Count, bones.Length);
 			int rootIndex = skeleton.GetBoneIndexFromTag(new StringID("Root"));
+			bool useRoot = (alc_tpl?.useRootBone) ?? true;
+			bool useRootRotation = Animation?.SubAnim?.useRootRotation ?? true;
+			bool defaultFlip = Animation?.SubAnim?.defaultFlip ?? false;
 			for (int i = 0; i < numBones; i++) {
-				if (((!alc_tpl?.useRootBone) ?? false) && i == rootIndex) {
+				bool isRoot = i == rootIndex;
+				/*if (((!alc_tpl?.useRootBone) ?? false) && isRoot) {
 					bones[i].localPosition = Vector3.zero;
 					bones[i].localScale = Vector3.one;
 					bones[i].localRotation = 0f;
-				} else {
-					AnimTrackBonesList bl = animTrack.bonesLists[i];
-					if (bl.amountPAS > 0) { // Position Angle Scale
-						for (int p = 0; p < bl.amountPAS; p++) {
-							AnimTrackBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
-							AnimTrackBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
-							if (p == bl.amountPAS - 1 || (currentFrame >= pas.frame && currentFrame < next.frame)) {
-								Vector2 pos = pas.Position.GetUnityVector();
-								Angle rot = pas.Rotation;
-								Vector2 scl = pas.Scale.GetUnityVector();
-								if (next != pas) {
-									float nextFrame = next.frame < pas.frame ? next.frame + animTrack.length : next.frame;
-									float lerp = (Mathf.Floor(currentFrame) - pas.frame) / (Mathf.Floor(nextFrame) - pas.frame); // TODO: maybe change to Math.Floor(currentFrame) if animations can't be interpolated. This fixed jittery feet for Rayman
-									pos = Vector2.Lerp(pos, next.Position.GetUnityVector(), lerp);
-									rot = Mathf.Lerp(rot, next.Rotation, lerp);
-									scl = Vector2.Lerp(scl, next.Scale.GetUnityVector(), lerp);
-								}
-								pos *= animTrack.multiplierP;
-								rot *= animTrack.multiplierA;
-								scl *= animTrack.multiplierS;
-								bones[i].localPosition = pos;
-								bones[i].localScale = scl;
-								bones[i].localRotation = rot;
-								break;
+				} else {*/
+				AnimTrackBonesList bl = animTrack.bonesLists[i];
+				if (bl.amountPAS > 0) { // Position Angle Scale
+					for (int p = 0; p < bl.amountPAS; p++) {
+						AnimTrackBonePAS pas = animTrack.bonePAS[bl.startPAS + p];
+						AnimTrackBonePAS next = animTrack.bonePAS[bl.startPAS + ((p + 1) % bl.amountPAS)];
+						if (p == bl.amountPAS - 1 || (currentFrame >= pas.frame && currentFrame < next.frame)) {
+							Vector2 pos = pas.Position.GetUnityVector();
+							Angle rot = pas.Rotation;
+							Vector2 scl = pas.Scale.GetUnityVector();
+							if (next != pas) {
+								float nextFrame = next.frame < pas.frame ? next.frame + animTrack.length : next.frame;
+								float lerp = (Mathf.Floor(currentFrame) - pas.frame) / (Mathf.Floor(nextFrame) - pas.frame); // TODO: maybe change to Math.Floor(currentFrame) if animations can't be interpolated. This fixed jittery feet for Rayman
+								pos = Vector2.Lerp(pos, next.Position.GetUnityVector(), lerp);
+								rot = Mathf.Lerp(rot, next.Rotation, lerp);
+								scl = Vector2.Lerp(scl, next.Scale.GetUnityVector(), lerp);
 							}
+							pos *= animTrack.multiplierP;
+							rot *= animTrack.multiplierA;
+							scl *= animTrack.multiplierS;
+
+							if (isRoot) {
+								if (!useRoot) {
+									pos = Vector2.zero;
+									scl = Vector2.one;
+									if(!useRootRotation) rot = 0f;
+								}
+								if(defaultFlip) scl = new Vector2(-scl.x, scl.y);
+							}
+
+							bones[i].localPosition = pos;
+							bones[i].localScale = scl;
+							bones[i].localRotation = rot;
+							break;
 						}
 					}
 					if (bl.amountZAL > 0) { // Z ALpha
@@ -220,27 +260,36 @@ public class UnityAnimation : MonoBehaviour {
 			}
 			if(bml != null && bml.frame != lastBmlFrame) {
 				lastBmlFrame = bml.frame;
-				List<int> indexes = new List<int>();
 				Context l = Controller.MainContext;
+				foreach (var pbk in AllPatchBanks) {
+					if (pbk.CurrentActive == null) {
+						pbk.CurrentActive = new bool[pbk.Patches.Length];
+					}
+					for(int p = 0; p < pbk.CurrentActive.Length; p++) pbk.CurrentActive[p] = false;
+				}
 				foreach (AnimTrackBML.Entry entry in bml.entries) {
 					StringID templateId = entry.templateId;
-					int ind = pbk.templateKeys.GetKeyIndex(templateId);
+					var bank = LookupTextureBankId(entry.textureBankId);
+					if(bank == null) continue;
+					int ind = bank.PBK.templateKeys.GetKeyIndex(templateId);
 					if (ind != -1) {
-						indexes.Add(ind);
+						bank.CurrentActive[ind] = true;
 						if (l.Settings.EngineVersion == EngineVersion.RO) {
-							int texInd = animTrack.texturePathKeysOrigins.GetKeyIndex(entry.textureBankId);
-							if (texInd != -1) {
-								pair<StringID, CString> texPath = animTrack.texturePathsOrigins[texInd];
-								if (l.Loader.tex.ContainsKey(texPath.Item1)) {
-									alc.SetMaterialTextureOrigins((TextureCooked)l.Loader.tex[texPath.Item1], patchRenderers[ind]);
+							var texPath = GetTexturePathOrigins(entry.textureBankId);
+							if (texPath != null) {
+								if (l.Loader.tex.ContainsKey(texPath.stringID)) {
+									alc.SetMaterialTextureOrigins((TextureCooked)l.Loader.tex[texPath.stringID], bank.PatchRenderers[ind]);
 								}
 							}
 						}
 					}
 				}
-				for(int i = 0; i < patches.Length; i++) {
-					if (patches[i] != null) {
-						patches[i].SetActive(indexes.Contains(i));
+				foreach (var pbk in AllPatchBanks) {
+					for (int p = 0; p < pbk.CurrentActive.Length; p++) {
+						if (pbk.Patches[p] != null) {
+							pbk.Patches[p].SetActive(pbk.CurrentActive[p]);
+							//pbk.Value.CurrentActive[p] = false;
+						}
 					}
 				}
 			}
@@ -255,52 +304,46 @@ public class UnityAnimation : MonoBehaviour {
 				bml = animTrack.bml.ToList().FindLast(b => b.frame == lastBmlFrame);
 			}
 			if (bml != null) {
-				List<int> indexes = new List<int>();
-				foreach (AnimTrackBML.Entry entry in bml.entries) {
-					StringID templateId = entry.templateId;
-					int ind = pbk.templateKeys.GetKeyIndex(templateId);
-					if (ind != -1) {
-						indexes.Add(ind);
-					}
-				}
-				for (int i = 0; i < patches.Length; i++) {
-					if (patches[i] == null || pbk.templates[i].bones.Count == 0) continue;
-					bool patchActive = indexes.Contains(i);
-					if (patchActive) {
-						//int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
-						int[] boneIndices = pbk.templates[i].bones.Select(b => skeleton.GetBoneIndexFromTag(b.tag)).ToArray();
-						List<float> alphas = new List<float>();
-						List<float> zs = new List<float>();
-						for (int b = 0; b < boneIndices.Length; b++) {
-							if (boneIndices[b] != -1) {
-								int boneIndex = boneIndices[b];
-								alphas.Add(bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha);
-								zs.Add(bones[boneIndex].bindZ + bones[boneIndex].localZ);
+				foreach (var patchData in AllPatchBanks) {
+					for (int i = 0; i < patchData.Patches.Length; i++) {
+						if (patchData.Patches[i] == null || patchData.PBK.templates[i].bones.Count == 0) continue;
+						bool patchActive = patchData.CurrentActive[i];
+						if (patchActive) {
+							//int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
+							int[] boneIndices = patchData.PBK.templates[i].bones.Select(b => skeleton.GetBoneIndexFromTag(b.tag)).ToArray();
+							List<float> alphas = new List<float>();
+							List<float> zs = new List<float>();
+							for (int b = 0; b < boneIndices.Length; b++) {
+								if (boneIndices[b] != -1) {
+									int boneIndex = boneIndices[b];
+									alphas.Add(bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha);
+									zs.Add(bones[boneIndex].bindZ + bones[boneIndex].localZ);
+								}
 							}
-						}
-						if (alphas.Count > 0) {
-							alc.SetColor(new UnityEngine.Color(1f, 1f, 1f, alphas.Average()), patchRenderers[i]);
-						}
-						if (zs.Count > 0) {
-							zman.zDict[patchRenderers[i]] = transform.position.z - zs.Average() / 10000f;
-							//patchRenderers[i].transform.localPosition = new Vector3(0,0,zs.Average() / 10000f);
-						} else {
-							zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
-						}
-						/*if (boneIndex != -1) {
-							patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
-							//zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
-							zman.zDict[patchRenderers[i]] = transform.position.z - (bones[boneIndex].bindZ + bones[boneIndex].localZ) / 100f;
+							if (alphas.Count > 0) {
+								alc.SetColor(new UnityEngine.Color(1f, 1f, 1f, alphas.Average()), patchData.PatchRenderers[i]);
+							}
+							if (zs.Count > 0) {
+								zman.zDict[patchData.PatchRenderers[i]] = transform.position.z - zs.Average() / 10000f;
+								//patchRenderers[i].transform.localPosition = new Vector3(0,0,zs.Average() / 10000f);
+							} else {
+								zman.zDict[patchData.PatchRenderers[i]] = transform.position.z - (i / 10000f);
+							}
+							/*if (boneIndex != -1) {
+								patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
+								//zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+								zman.zDict[patchRenderers[i]] = transform.position.z - (bones[boneIndex].bindZ + bones[boneIndex].localZ) / 100f;
 
-							if (anims.Count > 0 && anims[animIndex].Item1.filename.Contains("stand_back")) {
-								print(i + " - " + pbk.templates[i].bones[0].tag);
-							}
+								if (anims.Count > 0 && anims[animIndex].Item1.filename.Contains("stand_back")) {
+									print(i + " - " + pbk.templates[i].bones[0].tag);
+								}
+							} else {
+								zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+							}*/
 						} else {
-							zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
-						}*/
-					} else {
-						if (zman.zDict.ContainsKey(patchRenderers[i])) {
-							zman.zDict.Remove(patchRenderers[i]);
+							if (zman.zDict.ContainsKey(patchData.PatchRenderers[i])) {
+								zman.zDict.Remove(patchData.PatchRenderers[i]);
+							}
 						}
 					}
 				}
@@ -332,4 +375,30 @@ public class UnityAnimation : MonoBehaviour {
 		list.Sort((k1, k2) => k2.Value.CompareTo(k1.Value));
 	}*/
 
+	UnityPatchBank LookupTextureBankId(StringID id) {
+		if(patchBanks.ContainsKey(id)) return patchBanks[id];
+
+		// Origins specific
+		Context l = Controller.MainContext;
+		if (l.Settings.EngineVersion <= EngineVersion.RO) {
+			int texInd = animTrack.texturePathKeysOrigins.GetKeyIndex(id);
+			if (texInd != -1) {
+				pair<StringID, CString> texPath = animTrack.texturePathsOrigins[texInd];
+				var key = texPath.Item1;
+				if(patchBanksOrigins.ContainsKey(key)) return patchBanksOrigins[key];
+			}
+		}
+		return null;
+	}
+	Path GetTexturePathOrigins(StringID id) {
+		if (patchBanks.ContainsKey(id)) return patchBanks[id].TexturePathOrigins;
+
+		// Origins specific
+		int texInd = animTrack.texturePathKeysOrigins.GetKeyIndex(id);
+		if (texInd != -1) {
+			pair<StringID, CString> texPath = animTrack.texturePathsOrigins[texInd];
+			return new Path(texPath.Item2.str);
+		}
+		return null;
+	}
 }

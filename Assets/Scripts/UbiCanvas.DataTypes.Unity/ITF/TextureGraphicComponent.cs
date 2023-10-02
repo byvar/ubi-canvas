@@ -8,13 +8,16 @@ namespace UbiArt.ITF {
 		public UnityTextureGraphicComponent tex_gao_component;
 		public Material tex_mat;
 		public MeshRenderer tex_renderer;
+		public TextureGraphicComponent_Template tpl;
 
 		public override void InitUnityComponent(Actor act, GameObject gao, ActorComponent_Template template, int index) {
 			base.InitUnityComponent(act, gao, template, index);
+			if (template != null && template is TextureGraphicComponent_Template) {
+				tpl = template as TextureGraphicComponent_Template;
+			}
 			if (material != null && material.textureSet != null && material.textureSet.tex_diffuse != null) {
 				CreateGameObject(gao, material);
-			} else if (template != null && template is TextureGraphicComponent_Template) {
-				TextureGraphicComponent_Template tpl = template as TextureGraphicComponent_Template;
+			} else if (tpl != null) {
 				if (tpl.material != null && tpl.material.textureSet != null && tpl.material.textureSet.tex_diffuse != null) {
 					CreateGameObject(gao, tpl.material);
 				}
@@ -27,6 +30,12 @@ namespace UbiArt.ITF {
 			tex_gao.transform.localPosition = Vector3.zero;
 			tex_gao.transform.localRotation = Quaternion.identity;
 			tex_gao.transform.localScale = Vector3.one;
+			if (tpl != null) {
+				var scl = tpl?.size?.GetUnityVector();
+				if (scl != null) {
+					tex_gao.transform.localScale = new Vector3(scl.Value.x, scl.Value.y, 1f);
+				}
+			}
 			tex_gao_component = tex_gao.AddComponent<UnityTextureGraphicComponent>();
 			tex_gao_component.tgc = this;
 			

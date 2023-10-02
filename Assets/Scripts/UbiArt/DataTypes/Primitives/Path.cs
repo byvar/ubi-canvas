@@ -116,6 +116,20 @@ namespace UbiArt {
 			}
 			return "";
 		}
+		public string GetFilenameWithoutExtension(bool fullPath = false, bool removeCooked = false) {
+			var basename = fullPath ? FullPath : filename; 
+			if (basename != null) {
+				if (basename.Contains('.')) {
+					if (removeCooked && basename.EndsWith(".ckd"))
+						basename = basename.Substring(0, basename.Length - 4);
+					if (basename.Contains('.')) {
+						basename = basename.Substring(0, basename.LastIndexOf('.'));
+					}
+				}
+				return basename;
+			}
+			return "";
+		}
 
 		public void Serialize(CSerializerObject s, string name) {
 			if (s.Context.HasSettings<ConversionSettings>()) {

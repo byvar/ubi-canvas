@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UbiArt;
@@ -38,7 +39,9 @@ public class UnityWindowAtlasEditor : UnityWindow {
 					if (cache != null && cache.ContainsKey(typeof(TextureCooked)) && cache[typeof(TextureCooked)].ContainsKey(texPath.stringID)) {
 						var tex = cache[typeof(TextureCooked)][texPath.stringID] as TextureCooked;
 						if (tex != null) {
-							var unityTex = tex.GetUnityTexture(Controller.MainContext).Texture;
+							var t = tex.GetUnityTexture(Controller.MainContext);
+							var heightFactor = t.HeightFactor;
+							var unityTex = t.Texture;
 							if (unityTex != null) {
 								var canvas = GetNextRect(height: 512, vPadding: 4);
 								Event e = Event.current;
@@ -50,7 +53,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 									tex.GetUnityTexture(Controller.MainContext).Texture,
 									new Rect(0, 0, 1, -1));*/
 								GUI.DrawTextureWithTexCoords(subcanvas,
-									tex.GetUnityTexture(Controller.MainContext).Texture,
+									t.Texture,
 									new Rect(0, 0, 1, -1), AlphaBlending);
 
 								var rects = DivideRectHorizontally(GetNextRect(), 4);
@@ -342,10 +345,12 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	}
 
 	void DrawPatchBank(TextureCooked tex, Rect rect, AnimPatchBank pbk) {
+		var t = tex?.GetUnityTexture(Controller.MainContext);
+		var heightFactor = t?.HeightFactor;
 
 		Vector2 GetTexturePositionOnRect(Vector2 pos) {
 			var size = rect.width; //Mathf.Max(rect.width, rect.height);
-			return rect.position + pos * size;
+			return rect.position + pos * new Vector2(size, size);
 		}
 		if (pbk != null) {
 			var pointSize = 6;
@@ -416,8 +421,8 @@ public class UnityWindowAtlasEditor : UnityWindow {
 								points[patch.points[3]].normal,
 								points[patch.points[1]].normal,
 							});
-						DrawCubicBezier(rect, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3]);
-						DrawCubicBezier(rect, controlPoints[4], controlPoints[5], controlPoints[6], controlPoints[7]);
+						DrawCubicBezier(rect, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3], GetTexturePositionOnRect);
+						DrawCubicBezier(rect, controlPoints[4], controlPoints[5], controlPoints[6], controlPoints[7], GetTexturePositionOnRect);
 
 						/*var pt1 = points[patch.points[(0 + 0) % count]];
 						var pt2 = points[patch.points[(0 + 1) % count]];
@@ -469,12 +474,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 
 		return p;
 	}
-	void DrawCubicBezier(Rect rect, Vec2d p0, Vec2d p1, Vec2d p2, Vec2d p3) {
-
-		Vector2 GetTexturePositionOnRect(Vector2 pos) {
-			var size = rect.width; //Mathf.Max(rect.width, rect.height);
-			return rect.position + pos * size;
-		}
+	void DrawCubicBezier(Rect rect, Vec2d p0, Vec2d p1, Vec2d p2, Vec2d p3, Func<Vector2, Vector2> GetTexturePositionOnRect) {
 		var numPoints = 16;
 		var lineSize = 0.1f;
 		Vec2d[] points = Enumerable.Range(0, numPoints).Select(i => CalculateCubicBezierPoint(i / (float)(numPoints - 1), p0,p1,p2,p3)).ToArray();

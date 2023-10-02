@@ -2,17 +2,13 @@
 using System.Linq;
 using UbiArt.Animation;
 using UbiCanvas;
+using UbiCanvas.Helpers;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace UbiArt.ITF {
 	public partial class AnimLightComponent {
 		private AnimLightComponent_Template tpl;
-		private GameObject[] patches = new GameObject[0];
-		private SkinnedMeshRenderer[] patchRenderers = new SkinnedMeshRenderer[0];
-		private GameObject skeleton_gao;
-		private UnityBone[] bones;
-		//private int zValue = 0;
 		private UnityAnimation ua;
 		MaterialPropertyBlock mpb;
 
@@ -29,160 +25,246 @@ namespace UbiArt.ITF {
 			var context = UbiArtContext;
 			if (!context.Loader.LoadAnimations) return;
 			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: shader?.obj);
-			bool createdOne = false;
 			if (context.Settings.EngineVersion > EngineVersion.RO) {
-				foreach (TextureBankPath bp in subAnimInfo?.animPackage?.textureBank) {
-					createdOne = ProcessTextureBank(bp, gao, tex_mat, subAnimInfo?.animPackage?.skel ?? tpl.animSet?.animPackage?.skel);
-					if (createdOne) break;
-				}
-				if (!createdOne) {
-					foreach (TextureBankPath bp in tpl.animSet.animPackage.textureBank) {
-						createdOne = ProcessTextureBank(bp, gao, tex_mat, tpl.animSet.animPackage.skel);
-						if (createdOne) break;
-					}
-				}
+				CreateUnityAnimation(gao, tex_mat);
 			} else {
 				ProcessOrigins(gao, tex_mat);
 			}
 		}
 
 		private void ProcessOrigins(GameObject gao, Material tex_mat) {
-			ICSerializable[] resources = tpl.animSet.resources;
+			var c = UbiArtContext;
 			if (!UbiArtContext.Loader.LoadAnimations) return;
-			ICSerializable pbkRes = resources.Where(res => res is AnimPatchBank).FirstOrDefault();
-			AnimPatchBank pbk = pbkRes != null ? (AnimPatchBank)pbkRes : null;
-			ICSerializable sklRes = resources.Where(res => res is AnimSkeleton).FirstOrDefault();
-			AnimSkeleton skeleton = sklRes != null ? (AnimSkeleton)sklRes : null;
-			if (pbk == null || skeleton == null) return;
-			patches = new GameObject[pbk.templates.Count];
-			patchRenderers = new SkinnedMeshRenderer[patches.Length];
-			skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
+
+			// Create skeleton
+			var skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
 			skeleton_gao.transform.SetParent(gao.transform, false);
 			skeleton_gao.transform.localPosition = Vector3.zero;
 			skeleton_gao.transform.localRotation = Quaternion.identity;
 			skeleton_gao.transform.localScale = Vector3.one;
 
-			var c = UbiArtContext;
+			// Collect resources
+			ICSerializable[] resources = tpl.animSet.resources;
+			var resourceList = tpl.animSet.resourceList;
+			ICSerializable sklRes = resources.Where(res => res is AnimSkeleton).FirstOrDefault();
+			AnimSkeleton skeleton = sklRes != null ? (AnimSkeleton)sklRes : null;
+			if (skeleton == null) return;
 
-			bones = skeleton.CreateBones(c, skeleton_gao);
-			for (int i = 0; i < pbk.templates.Count; i++) {
-				AnimTemplate at = pbk.templates[i];
-				Mesh mesh = at.CreateMesh();
-				if (mesh == null) continue;
+			var bones = skeleton.CreateBones(c, skeleton_gao);
 
-				GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
-				patch_gao.transform.SetParent(gao.transform, false);
-				patch_gao.transform.localPosition = Vector3.zero;
-				patch_gao.transform.localRotation = Quaternion.identity;
-				patch_gao.transform.localScale = Vector3.one;
+			// Create list of patchbanks
+			List<UnityAnimation.UnityPatchBank> pbksOrigins = new List<UnityAnimation.UnityPatchBank>();
+			for(int i = 0; i < resources.Length; i++) {
+				var res = resources[i];
+				if (res is TextureCooked tex) {
+					var texPath = tpl.animSet.resourceList[i];
+					var pbkPathLower = $"{texPath.GetFilenameWithoutExtension(fullPath: true).ToLowerInvariant()}.pbk";
+					for (int j = 0; j < resources.Length; j++) {
+						if (resources[j] is AnimPatchBank pbk && resourceList[j].FullPath.ToLowerInvariant() == pbkPathLower) {
+							var pbkPath = tpl.animSet.resourceList[j];
+							pbksOrigins.Add(new UnityAnimation.UnityPatchBank() {
+								PBK = pbk,
+								TextureID = texPath.stringID
+							});
+						}
+					}
+				}
+			}
+			Dictionary<StringID, UnityAnimation.UnityPatchBank> unityPBKsOrigins = pbksOrigins.ToDictionary(tb => tb.TextureID);
+			Dictionary<StringID, UnityAnimation.UnityPatchBank> unityPBKs = new Dictionary<StringID, UnityAnimation.UnityPatchBank>();
+			// Now add the "bank change" entries
+			foreach (var bankChange in tpl.animSet.banks) {
+				var texturePath = bankChange.bankPath;
+				var fullPath = bankChange.pbkPath;
+				if(bankChange.state != uint.MaxValue) continue; // Only changed in specific cases
 
-				UnityBone[] mesh_bones = at.GetBones(c, mesh, skeleton_gao, skeleton, bones);
-				//Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
-				//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
-				//mf.sharedMesh = mesh;
-				SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
-				mr.bones = mesh_bones.Select(b => b?.transform).ToArray();
-				mr.sharedMaterial = tex_mat;
-				mr.sharedMesh = mesh;
-				FillMaterialParams(mr);
-				List<int> roots = at.GetRootIndices();
-				if (roots.Count > 0) mr.rootBone = mr.bones[roots[0]];
-				patches[i] = patch_gao;
-				patchRenderers[i] = mr;
+				if(bankChange.pbk != null) {
+					unityPBKs[bankChange.bankName] = new UnityAnimation.UnityPatchBank() {
+						PBK = bankChange.pbk,
+						ID = bankChange.bankName,
+						TexturePathOrigins = texturePath
+					};
+				}
+			}
+
+			// Create templates
+			foreach (var pbk in unityPBKs.Concat(unityPBKsOrigins)) {
+				var bank = pbk.Value;
+				bank.Patches = new GameObject[bank.PBK.templates.Count];
+				bank.PatchRenderers = new SkinnedMeshRenderer[bank.Patches.Length];
+
+				for (int i = 0; i < bank.PBK.templates.Count; i++) {
+					AnimTemplate at = bank.PBK.templates[i];
+					Mesh mesh = at.CreateMesh();
+					if (mesh == null) continue;
+
+					GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
+					patch_gao.transform.SetParent(gao.transform, false);
+					patch_gao.transform.localPosition = Vector3.zero;
+					patch_gao.transform.localRotation = Quaternion.identity;
+					patch_gao.transform.localScale = Vector3.one;
+
+					UnityBone[] mesh_bones = at.GetBones(c, mesh, skeleton_gao, skeleton, bones);
+					//Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
+					//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
+					//mf.sharedMesh = mesh;
+					SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
+					mr.bones = mesh_bones.Select(b => b != null ? b.transform : null).ToArray();
+					mr.sharedMaterial = tex_mat;
+					mr.sharedMesh = mesh;
+					FillMaterialParams(mr);
+					//SetMaterialTextures(bank.TextureBankPath.textureSet, mr);
+
+					List<int> roots = at.GetRootIndices();
+					if (roots.Count > 0) mr.rootBone = mr.bones[roots[0]];
+
+					bank.Patches[i] = patch_gao;
+					bank.PatchRenderers[i] = mr;
+				}
 			}
 			skeleton.ResetBones(c, bones);
 			ua = skeleton_gao.AddComponent<UnityAnimation>();
 			ua.bones = bones;
 			ua.skeleton = skeleton;
-			ua.anims = new List<System.Tuple<Path, AnimTrack>>();
-			ua.patches = patches;
-			ua.patchRenderers = patchRenderers;
-			ua.pbk = pbk;
 			ua.alc = this;
 			ua.alc_tpl = tpl;
+			ua.patchBanks = unityPBKs;
+			ua.patchBanksOrigins = unityPBKsOrigins;
+			ua.AllPatchBanks = unityPBKs.Concat(unityPBKsOrigins).Select(v => v.Value).Distinct().ToArray();
 			/*List<Path> animPaths = new List<Path>();
 			foreach (SubAnim_Template sat in tpl.animSet.animations) {
 				animPaths.Add(sat.name);
 			}*/
 
-			ua.anims = new List<System.Tuple<Path, AnimTrack>>();
-			for (int i = 0; i < resources.Length; i++) {
-				if (resources[i] != null && resources[i] is AnimTrack) {
-					ua.anims.Add(new System.Tuple<Path, AnimTrack>(tpl.animSet.resourceList[i], resources[i] as AnimTrack));
+			List<UnityAnimation.UnityAnimationTrack> anims = new List<UnityAnimation.UnityAnimationTrack>();
+			foreach (SubAnim_Template sat in tpl.animSet.animations) {
+				var fullPath = new Path($"{tpl.animationPath?.FullPath ?? ""}{sat.name?.FullPath ?? ""}");
+
+				var resourceIndex = resourceList.FindItemIndex(p => p == fullPath);
+
+				if (resourceIndex != -1) {
+					anims.Add(new UnityAnimation.UnityAnimationTrack() {
+						ID = sat.friendlyName,
+						Path = resourceList[resourceIndex],
+						Track = resources[resourceIndex] as AnimTrack,
+						SubAnim = sat
+					});
 				}
 			}
-			if (ua.anims.Count > 0) {
+			ua.anims = anims.ToArray();
+			if (ua.anims.Length > 0) {
 				ua.animIndex = 0;
-				ua.animTrack = ua.anims[0].Item2;
 			}
 			ua.Init();
 		}
 
-		private bool ProcessTextureBank(TextureBankPath bp, GameObject gao, Material tex_mat, AnimSkeleton skeleton) {
+		private void CreateUnityAnimation(GameObject gao, Material tex_mat) {
 			var c = UbiArtContext;
-			if (bp?.textureSet?.tex_diffuse != null && skeleton != null) {
-				if (bp.pbk != null) {
-					patches = new GameObject[bp.pbk.templates.Count];
-					patchRenderers = new SkinnedMeshRenderer[patches.Length];
-					skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
-					skeleton_gao.transform.SetParent(gao.transform, false);
-					skeleton_gao.transform.localPosition = Vector3.zero;
-					skeleton_gao.transform.localRotation = Quaternion.identity;
-					skeleton_gao.transform.localScale = Vector3.one;
-					bones = skeleton.CreateBones(c, skeleton_gao);
-					for (int i = 0; i < bp.pbk.templates.Count; i++) {
-						AnimTemplate at = bp.pbk.templates[i];
-						Mesh mesh = at.CreateMesh();
-						if (mesh == null) continue;
+			if (!UbiArtContext.Loader.LoadAnimations) return;
 
-						GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
-						patch_gao.transform.SetParent(gao.transform, false);
-						patch_gao.transform.localPosition = Vector3.zero;
-						patch_gao.transform.localRotation = Quaternion.identity;
-						patch_gao.transform.localScale = Vector3.one;
+			AnimSkeleton skeleton = subAnimInfo?.animPackage?.skel ?? tpl.animSet?.animPackage?.skel;
+			if(skeleton == null) return;
 
-						UnityBone[] mesh_bones = at.GetBones(c, mesh, skeleton_gao, skeleton, bones);
-						//Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
-						//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
-						//mf.sharedMesh = mesh;
-						SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
-						mr.bones = mesh_bones.Select(b => b != null ? b.transform : null).ToArray();
-						mr.sharedMaterial = tex_mat;
-						mr.sharedMesh = mesh;
-						FillMaterialParams(mr);
-						SetMaterialTextures(bp.textureSet, mr);
-						patches[i] = patch_gao;
-						patchRenderers[i] = mr;
-					}
-					skeleton.ResetBones(c, bones);
-					ua = skeleton_gao.AddComponent<UnityAnimation>();
-					ua.bones = bones;
-					ua.skeleton = skeleton;
-					List<Path> animPaths = new List<Path>();
-					ua.anims = new List<System.Tuple<Path, AnimTrack>>();
-					ua.patches = patches;
-					ua.patchRenderers = patchRenderers;
-					ua.pbk = bp.pbk;
-					ua.alc = this;
-					ua.alc_tpl = tpl;
-					foreach (SubAnim_Template sat in tpl.animSet.animations) {
-						animPaths.Add(sat.name);
-					}
-					Loader l = UbiArtContext.Loader;
-					ua.anims = animPaths.Distinct().Select(p => l.anm.ContainsKey(p.stringID) ? new System.Tuple<Path, AnimTrack>(p, (AnimTrack)l.anm[p.stringID]) : null).Where(t => t != null).ToList();
-					if (ua.anims.Count > 0) {
-						ua.animIndex = 0;
-						ua.animTrack = ua.anims[0].Item2;
-					}
-					ua.Init();
-					/*for (int i = 0; i < bp.pbk.templates.Count; i++) {
-						AnimTemplate at = bp.pbk.templates[i];
-						at.ResetBones(bones, skeleton);
-					}*/
-					return true;
+			// Create skeleton
+			var skeleton_gao = new GameObject("AnimLightComponent - Skeleton");
+			skeleton_gao.transform.SetParent(gao.transform, false);
+			skeleton_gao.transform.localPosition = Vector3.zero;
+			skeleton_gao.transform.localRotation = Quaternion.identity;
+			skeleton_gao.transform.localScale = Vector3.one;
+			var bones = skeleton.CreateBones(c, skeleton_gao);
+
+			// Create list of texture banks
+			Dictionary<StringID, TextureBankPath> textureBanks = new Dictionary<StringID, TextureBankPath>();
+			foreach (TextureBankPath bp in tpl.animSet.animPackage.textureBank) {
+				if (bp?.pbk == null) continue;
+				textureBanks[bp.id] = bp;
+			}
+			foreach (TextureBankPath bp in subAnimInfo?.animPackage?.textureBank) {
+				if(bp?.pbk == null) continue;
+				textureBanks[bp.id] = bp;
+			}
+			Dictionary<StringID, UnityAnimation.UnityPatchBank> unityPBKs = textureBanks
+				.Select(tb => new UnityAnimation.UnityPatchBank() {
+					ID = tb.Key,
+					PBK = tb.Value.pbk,
+					TextureBankPath = tb.Value
+				}).ToDictionary(tb => tb.ID);
+
+			// Create templates
+			foreach (var pbk in unityPBKs) {
+				var bank = pbk.Value;
+				bank.Patches = new GameObject[bank.PBK.templates.Count];
+				bank.PatchRenderers = new SkinnedMeshRenderer[bank.Patches.Length];
+
+				for (int i = 0; i < bank.PBK.templates.Count; i++) {
+					AnimTemplate at = bank.PBK.templates[i];
+					Mesh mesh = at.CreateMesh();
+					if (mesh == null) continue;
+
+					GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
+					patch_gao.transform.SetParent(gao.transform, false);
+					patch_gao.transform.localPosition = Vector3.zero;
+					patch_gao.transform.localRotation = Quaternion.identity;
+					patch_gao.transform.localScale = Vector3.one;
+
+					UnityBone[] mesh_bones = at.GetBones(c, mesh, skeleton_gao, skeleton, bones);
+					//Transform[] mesh_bones = at.GetBones(mesh, skeleton_gao, skeleton, bones);
+					//MeshFilter mf = patch_gao.AddComponent<MeshFilter>();
+					//mf.sharedMesh = mesh;
+					SkinnedMeshRenderer mr = patch_gao.AddComponent<SkinnedMeshRenderer>();
+					mr.bones = mesh_bones.Select(b => b != null ? b.transform : null).ToArray();
+					mr.sharedMaterial = tex_mat;
+					mr.sharedMesh = mesh;
+					FillMaterialParams(mr);
+					SetMaterialTextures(bank.TextureBankPath.textureSet, mr);
+					bank.Patches[i] = patch_gao;
+					bank.PatchRenderers[i] = mr;
 				}
 			}
-			return false;
+
+
+			skeleton.ResetBones(c, bones);
+			ua = skeleton_gao.AddComponent<UnityAnimation>();
+			ua.bones = bones;
+			ua.skeleton = skeleton;
+			ua.patchBanks = unityPBKs;
+			ua.AllPatchBanks = unityPBKs.Select(v => v.Value).Distinct().ToArray();
+			ua.alc = this;
+			ua.alc_tpl = tpl;
+
+
+			List<UnityAnimation.UnityAnimationTrack> anims = new List<UnityAnimation.UnityAnimationTrack>();
+			foreach (SubAnim_Template sat in subAnimInfo.animations) {
+				if (sat.anim == null) continue;
+				anims.Add(new UnityAnimation.UnityAnimationTrack() {
+					ID = sat.friendlyName,
+					Path = sat.name,
+					Track = sat.anim,
+					SubAnim = sat
+				});
+			}
+			foreach (SubAnim_Template sat in tpl.animSet.animations) {
+				if(sat.anim == null) continue;
+				if(anims.Any(a => a.ID == sat.friendlyName)) continue;
+				anims.Add(new UnityAnimation.UnityAnimationTrack() {
+					ID = sat.friendlyName,
+					Path = sat.name,
+					Track = sat.anim,
+					SubAnim = sat
+				});
+			}
+			ua.anims = anims.ToArray();
+			// Set default animation if possible
+			if (ua.anims.Length > 0) {
+				ua.animIndex = 0;
+			}
+			var defaultAnim = this.defaultAnim;
+			if(defaultAnim == null || defaultAnim.IsNull) defaultAnim = tpl.defaultAnimation;
+			if (defaultAnim != null && !defaultAnim.IsNull) {
+				//ua.anims.FindItemIndex(anm => anm.Item1.stringID == 
+			}
+			ua.Init();
+
 		}
 
 		private Mesh CreateMesh(TextureCooked tex) {
@@ -274,16 +356,19 @@ namespace UbiArt.ITF {
 					textureSet.tex_separateAlpha != null ? 1f : 0f));
 
 				if (textureSet.tex_diffuse != null) {
-					mpb.SetTexture("_Diffuse", textureSet.tex_diffuse.GetUnityTexture(UbiArtContext).SquareTexture);
-					mpb.SetVector("_Diffuse_ST", new Vector4(1, 1, 0, 0));
+					var t = textureSet.tex_diffuse.GetUnityTexture(UbiArtContext);
+					mpb.SetTexture("_Diffuse", t.Texture);
+					mpb.SetVector("_Diffuse_ST", new Vector4(1, t.HeightFactor, 0, 0));
 				}
 				if (textureSet.tex_back_light != null) {
-					mpb.SetTexture("_BackLight", textureSet.tex_back_light.GetUnityTexture(UbiArtContext).SquareTexture);
-					mpb.SetVector("_BackLight_ST", new Vector4(1, 1, 0, 0));
+					var t = textureSet.tex_back_light.GetUnityTexture(UbiArtContext);
+					mpb.SetTexture("_BackLight", t.Texture);
+					mpb.SetVector("_BackLight_ST", new Vector4(1, t.HeightFactor, 0, 0));
 				}
 				if (textureSet.tex_separateAlpha != null) {
-					mpb.SetTexture("_SeparateAlpha", textureSet.tex_separateAlpha.GetUnityTexture(UbiArtContext).Texture);
-					mpb.SetVector("_SeparateAlpha_ST", new Vector4(1, 1, 0, 0));
+					var t = textureSet.tex_separateAlpha.GetUnityTexture(UbiArtContext);
+					mpb.SetTexture("_SeparateAlpha", t.Texture);
+					mpb.SetVector("_SeparateAlpha_ST", new Vector4(1, t.HeightFactor, 0, 0));
 				}
 			}
 			r.SetPropertyBlock(mpb, index);
@@ -292,9 +377,10 @@ namespace UbiArt.ITF {
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
 			if (r != null && tex != null) {
+				var t = tex.GetUnityTexture(UbiArtContext);
 				mpb.SetVector("_UseTextures", new Vector4(1, 0, 0, 0));
-				mpb.SetTexture("_Diffuse", tex.GetUnityTexture(UbiArtContext).SquareTexture);
-				mpb.SetVector("_Diffuse_ST", new Vector4(1, 1, 0, 0));
+				mpb.SetTexture("_Diffuse", t.Texture);
+				mpb.SetVector("_Diffuse_ST", new Vector4(1, t.HeightFactor, 0, 0));
 			}
 			r.SetPropertyBlock(mpb, index);
 		}

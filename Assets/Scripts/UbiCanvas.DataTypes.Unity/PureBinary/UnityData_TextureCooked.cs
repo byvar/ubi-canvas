@@ -89,6 +89,17 @@ namespace UbiCanvas {
 			}
 		}
 
+		public float HeightFactor {
+			get {
+				Texture2D tex = Texture;
+				if (tex != null) {
+					return (float)tex.width / (float)tex.height;
+				} else {
+					return (float)LinkedObject.Header.Width / (float)LinkedObject.Header.Height;
+				}
+			}
+		}
+
 		private static Texture2D LoadTextureDXT(byte[] ddsBytes, bool makeNoLongerReadable = true) {
 			TextureFormat format = TextureFormat.DXT5;
 			switch (ddsBytes[87]) { // 84 - 87: DXT1 or DXT5 in ASCII
