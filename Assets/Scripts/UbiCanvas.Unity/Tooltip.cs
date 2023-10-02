@@ -27,6 +27,7 @@ public class Tooltip : MonoBehaviour {
 		Vector2 localPoint;
 		var screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, worldPos);
 		RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas, screenPoint, null, out localPoint);
+		localPoint += Vector2.right * 5f;
 		transform.localPosition = localPoint;
 	}
 

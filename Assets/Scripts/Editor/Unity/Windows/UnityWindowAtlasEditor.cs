@@ -350,7 +350,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 
 		Vector2 GetTexturePositionOnRect(Vector2 pos) {
 			var size = rect.width; //Mathf.Max(rect.width, rect.height);
-			return rect.position + pos * new Vector2(size, size);
+			return rect.position + pos * size;
 		}
 		if (pbk != null) {
 			var pointSize = 6;

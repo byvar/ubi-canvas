@@ -40,7 +40,7 @@ public class UnityAnimation : MonoBehaviour {
 		}
 	}
 	public int animIndex = -1;
-	public float lastBmlFrame = -1;
+	public float currentBMLFrame = -1;
 	public UnityAnimationTrack[] anims;
 	public AnimSkeleton skeleton;
 	public UnityBone[] bones;
@@ -67,7 +67,7 @@ public class UnityAnimation : MonoBehaviour {
 		Context l = Controller.MainContext;
 		if (animIndex >= 0 && skeleton != null) {
 			currentFrame = 0;
-			lastBmlFrame = -1;
+			currentBMLFrame = -1;
 			skeleton.ResetBones(l, bones);
 			InitLines();
 			UpdateAnimation();
@@ -163,7 +163,7 @@ public class UnityAnimation : MonoBehaviour {
 
 	public void Update() {
 		if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished && loaded && animTrack != null) {
-			if(playAnimation) currentFrame += Time.deltaTime * animationSpeed;
+			if(playAnimation) currentFrame += Time.deltaTime * animationSpeed * (Animation?.SubAnim?.playRate ?? 1f);
 			UpdateAnimation();
 		}
 	}
@@ -246,20 +246,23 @@ public class UnityAnimation : MonoBehaviour {
 
 			// Activate the correct patches
 			AnimTrackBML bml = null;
-			bool checkHigher = false;
 			if (animTrack.bml.Count > 0) {
-				int index = lastBmlFrame == -1 ? 0 : (animTrack.bml.ToList().FindLastIndex(b => b.frame == lastBmlFrame) + 1) % animTrack.bml.Count;
-				if (lastBmlFrame > currentFrame) {
-					checkHigher = true;
+				// Reset BML at end of animation - except if current BML frame is the first frame
+				if (currentBMLFrame > currentFrame && currentBMLFrame != animTrack.bml[0].frame) {
+					currentBMLFrame = -1;
 				}
-				for (int i = 0; i < animTrack.bml.Count; i++) {
-					AnimTrackBML curB = animTrack.bml[(i + index) % animTrack.bml.Count];
-					if ((curB.frame > currentFrame) && !(checkHigher && curB.frame > lastBmlFrame)) break;
-					bml = curB;
+				// Find last index that matches current BML
+				int currentBMLIndex = currentBMLFrame == -1 ? 0 : (animTrack.bml.ToList().FindLastIndex(b => b.frame == currentBMLFrame) % animTrack.bml.Count);
+				
+				for (int i = currentBMLIndex; i < animTrack.bml.Count; i++) {
+					AnimTrackBML currentBML = animTrack.bml[i];
+					if (currentBML.frame > currentFrame) break;
+					//if ((curB.frame > currentFrame) && !(checkHigher && curB.frame > lastBmlFrame)) break;
+					bml = currentBML;
 				}
 			}
-			if(bml != null && bml.frame != lastBmlFrame) {
-				lastBmlFrame = bml.frame;
+			if(bml != null && bml.frame != currentBMLFrame) {
+				currentBMLFrame = bml.frame;
 				Context l = Controller.MainContext;
 				foreach (var pbk in AllPatchBanks) {
 					if (pbk.CurrentActive == null) {
@@ -301,7 +304,7 @@ public class UnityAnimation : MonoBehaviour {
 			// Configure Z for all patches
 			ZListManager zman = Controller.Obj.zListManager;
 			if (bml == null) {
-				bml = animTrack.bml.ToList().FindLast(b => b.frame == lastBmlFrame);
+				bml = animTrack.bml.ToList().FindLast(b => b.frame == currentBMLFrame);
 			}
 			if (bml != null) {
 				foreach (var patchData in AllPatchBanks) {

@@ -98,7 +98,7 @@ namespace UbiArt.ITF {
 					Mesh mesh = at.CreateMesh();
 					if (mesh == null) continue;
 
-					GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
+					GameObject patch_gao = new GameObject($"AnimLightComponent - {bank.ID ?? bank.TextureID} - Template {i}");
 					patch_gao.transform.SetParent(gao.transform, false);
 					patch_gao.transform.localPosition = Vector3.zero;
 					patch_gao.transform.localRotation = Quaternion.identity;
@@ -200,8 +200,8 @@ namespace UbiArt.ITF {
 					AnimTemplate at = bank.PBK.templates[i];
 					Mesh mesh = at.CreateMesh();
 					if (mesh == null) continue;
-
-					GameObject patch_gao = new GameObject("AnimLightComponent - Template " + i);
+					
+					GameObject patch_gao = new GameObject($"AnimLightComponent - {bank.ID ?? bank.TextureID} - Template {i}");
 					patch_gao.transform.SetParent(gao.transform, false);
 					patch_gao.transform.localPosition = Vector3.zero;
 					patch_gao.transform.localRotation = Quaternion.identity;
