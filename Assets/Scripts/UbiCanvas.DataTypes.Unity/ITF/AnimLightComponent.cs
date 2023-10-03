@@ -155,6 +155,11 @@ namespace UbiArt.ITF {
 			if (ua.anims.Length > 0) {
 				ua.animIndex = 0;
 			}
+			var defaultAnim = tpl.defaultAnimation;
+			if (defaultAnim != null && !defaultAnim.IsNull) {
+				var newAnimIndex = ua.anims.FindItemIndex(anm => anm.ID == defaultAnim);
+				if (newAnimIndex != -1) ua.animIndex = newAnimIndex;
+			}
 			ua.Init();
 		}
 
@@ -261,7 +266,8 @@ namespace UbiArt.ITF {
 			var defaultAnim = this.defaultAnim;
 			if(defaultAnim == null || defaultAnim.IsNull) defaultAnim = tpl.defaultAnimation;
 			if (defaultAnim != null && !defaultAnim.IsNull) {
-				//ua.anims.FindItemIndex(anm => anm.Item1.stringID == 
+				var newAnimIndex = ua.anims.FindItemIndex(anm => anm.ID == defaultAnim);
+				if(newAnimIndex != -1) ua.animIndex = newAnimIndex;
 			}
 			ua.Init();
 

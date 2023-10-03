@@ -31,10 +31,11 @@ namespace UbiArt.ITF {
 			tex_gao.transform.localRotation = Quaternion.identity;
 			tex_gao.transform.localScale = Vector3.one;
 			if (tpl != null) {
-				var scl = tpl?.size?.GetUnityVector();
-				if (scl != null) {
-					tex_gao.transform.localScale = new Vector3(scl.Value.x, scl.Value.y, 1f);
-				}
+				var pos = tpl?.posOffset?.GetUnityVector() ?? Vector2.zero;
+				tex_gao.transform.localPosition = new Vector3(pos.x, pos.y, -tpl.zOffset);
+
+				var scl = tpl?.size?.GetUnityVector() ?? Vector2.one;
+				tex_gao.transform.localScale = new Vector3(scl.x, scl.y, 1f);
 			}
 			tex_gao_component = tex_gao.AddComponent<UnityTextureGraphicComponent>();
 			tex_gao_component.tgc = this;
