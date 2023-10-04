@@ -4,7 +4,7 @@ using System.Text;
 namespace UbiCanvas.Helpers {
     public static class TypeExtensions {
 		public static string GetFormattedName(this Type t) {
-			if (!t.IsGenericType)
+			if (!t.IsGenericType || t.Name.IndexOf('`') == -1)
 				return t.Name;
 
 			StringBuilder sb = new StringBuilder();

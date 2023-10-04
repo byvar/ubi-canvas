@@ -89,6 +89,7 @@ namespace UbiCanvas.Conversion {
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, Controller.Obj.MainScene.obj);
 			FixLumKingMusic(mainContext, settings, Controller.Obj.MainScene.obj);
 			FixCameraModifierBlend(mainContext, settings, Controller.Obj.MainScene.obj);
+			AddCaptainAI(mainContext, settings, Controller.Obj.MainScene.obj);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
 			MakeFrisesStartPaused(mainContext, settings, Controller.Obj.MainScene.obj);
@@ -651,6 +652,182 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 
+		}
+
+
+		public void AddCaptainAI(Context oldContext, Settings newSettings, Scene scene) {
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates == null) return;
+
+			var exitflagPath = new Path("world/rlc/common/gpe/exitflag/components/exitflag.tpl");
+			if (!actorTemplates.ContainsKey(exitflagPath.stringID)) return;
+
+			var tpl = actorTemplates[exitflagPath.stringID] as GenericFile<Actor_Template>;
+
+			if (tpl?.obj == null) return;
+			//tpl.obj.AddComponent<LinkComponent_Template>();
+
+			// Add & configure new AnimatedComponent input
+			var animComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
+			if(animComponent.inputs == null) animComponent.inputs = new CListO<InputDesc>();
+			animComponent.inputs.Add(new InputDesc() {
+				name = "captain_state",
+				varType = InputDesc.InputType.U32
+			});
+			animComponent.tree = new AnimTree_Template() {
+				nodes = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>(),
+				nodeTransitions = new CListO<BlendTreeTransition_Template<AnimTreeResult>>()
+			};
+			animComponent.tree.nodes.Add(new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new BlendTreeNodeChooseBranch_Template<AnimTreeResult>() {
+				nodeName = new StringID("state_machine"),
+				leafs = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>() {
+					new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+						nodeName = new StringID("sm_speedrun_go"),
+						animationName = new StringID("speedrun_go")
+					}),
+					new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+						nodeName = new StringID("sm_shaking_flags"),
+						animationName = new StringID("shaking_flags")
+					}),
+					new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+						nodeName = new StringID("sm_stand"),
+						animationName = new StringID("stand")
+					}),
+				},
+				leafsCriterias = new CListO<BlendTreeNodeChooseBranch_Template<AnimTreeResult>.BlendLeaf>() {
+					new BlendTreeNodeChooseBranch_Template<AnimTreeResult>.BlendLeaf() {
+						criterias = new CListO<CriteriaDesc>() {
+							new CriteriaDesc() {
+								name = new StringID("captain_state"),
+								eval = "==",
+								evaluation = CriteriaDesc.Enum_evaluation.Equals,
+								value = 2
+							}
+						},
+					},
+					new BlendTreeNodeChooseBranch_Template<AnimTreeResult>.BlendLeaf() {
+						criterias = new CListO<CriteriaDesc>() {
+							new CriteriaDesc() {
+								name = new StringID("captain_state"),
+								eval = "==",
+								evaluation = CriteriaDesc.Enum_evaluation.Equals,
+								value = 1
+							}
+						},
+					},
+					new BlendTreeNodeChooseBranch_Template<AnimTreeResult>.BlendLeaf() {
+						// No criteria for this last one
+					},
+				},
+			}));
+			animComponent.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
+				from = new CArrayO<StringID>() { new StringID("sm_stand") },
+				to = new CArrayO<StringID>() { new StringID("sm_shaking_flags") },
+				blend = 3,
+				node = new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+					animationName = new StringID(0xBB5E3A4C)
+				})
+			});
+			animComponent.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
+				from = new CArrayO<StringID>() { new StringID("sm_shaking_flags") },
+				to = new CArrayO<StringID>() { new StringID("sm_stand") },
+				blend = 3,
+				node = new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+					animationName = new StringID(0xC160B565)
+				})
+			});
+			animComponent.defaultAnimation = new StringID("state_machine");
+			
+
+			// Add BT AI
+			var btAI = tpl.obj.AddComponent<RO2_BTAIComponent_Template>();
+			btAI.registerToAIManager = false;
+			btAI.faction = 37;
+			btAI.behaviorTree = new BehaviorTree_Template() {
+				root = new BTNodeTemplate_Ref() {
+					node = new Generic<BTNode_Template>(new BTDecider_Template() {
+						nodes = new CListO<BTNodeTemplate_Ref>() {
+							new BTNodeTemplate_Ref() {
+								node = new Generic<BTNode_Template>(new BTSequence_Template() {
+									nodes = new CListO<BTNodeTemplate_Ref>() {
+										new BTNodeTemplate_Ref() { nameId = new StringID("action_playanim_idle") },
+										new BTNodeTemplate_Ref() { nameId = new StringID("decider_isnear_shakeflags") },
+										new BTNodeTemplate_Ref() { nameId = new StringID("decider_isnear_go") },
+									}
+								})
+							}
+						},
+					}),
+				},
+				nodes = new CArrayO<Generic<BTNode_Template>>() {
+					new Generic<BTNode_Template>(new BTDeciderHasPlayerNear_Template() {
+						name = new StringID("decider_isnear_go"),
+						nodes = new CListO<BTNodeTemplate_Ref>() {
+							new BTNodeTemplate_Ref() {
+								node = new Generic<BTNode_Template>(new BTSequence_Template() {
+									nodes = new CListO<BTNodeTemplate_Ref>() {
+										new BTNodeTemplate_Ref() { nameId = "set_fact" },
+										new BTNodeTemplate_Ref() {
+											node = new Generic<BTNode_Template>(new BTActionSendEventToActor_Template() {
+												_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
+													inputName = new StringID("captain_state"),
+													inputValue = 2
+												}),
+											})
+										}
+									}
+								})
+							}
+						},
+						radius = 2.5f,
+					}),
+					new Generic<BTNode_Template>(new BTDeciderHasPlayerNear_Template() {
+						name = new StringID("decider_isnear_shakeflags"),
+						nodes = new CListO<BTNodeTemplate_Ref>() {
+							new BTNodeTemplate_Ref() {
+								node = new Generic<BTNode_Template>(new BTSequence_Template() {
+									nodes = new CListO<BTNodeTemplate_Ref>() {
+										new BTNodeTemplate_Ref() { nameId = "set_fact" },
+										new BTNodeTemplate_Ref() {
+											node = new Generic<BTNode_Template>(new BTActionSendEventToActor_Template() {
+												_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
+													inputName = new StringID("captain_state"),
+													inputValue = 1
+												}),
+											})
+										}
+									}
+								})
+							}
+						},
+						radius = 6f,
+					}),
+					new Generic<BTNode_Template>(new BTActionSendEventToActor_Template() {
+						name = new StringID("action_playanim_idle"),
+						_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
+							inputName = new StringID("captain_state"),
+							inputValue = 0
+						}),
+					}),
+					new Generic<BTNode_Template>(new BTActionSetFact_Template() {
+						name = new StringID("set_fact"),
+						fact = new StringID("fact_setanimation"),
+						type = BTActionSetFact_Template.EValueType2.UInteger32,
+						value = "1"
+					}),
+				}
+			};
+
+			// Now that this is done, find all objects that use it in the scene and add the RO2_BTAIComponent
+			var exitActors = scene.FindActors(a => a.LUA == exitflagPath);
+			foreach (var act in exitActors) {
+				if (act.Result.GetComponent<RO2_BTAIComponent>() == null) {
+					act.Result.AddComponent<RO2_BTAIComponent>();
+					//act.Result.AddComponent<RO2_BTAIComponent>();
+				}
+			}
 		}
 
 		public void FixLumKingMusic(Context oldContext, Settings newSettings, Scene scene) {

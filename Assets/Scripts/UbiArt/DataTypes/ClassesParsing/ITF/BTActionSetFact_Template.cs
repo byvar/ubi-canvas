@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 				if (previousSettings.Game != settings.Game) {
 					if ((previousSettings.Game == Game.RA || previousSettings.Game == Game.RM) 
 						&& settings.Game == Game.RL) {
-						type2 = (EValueType2)(int)type;
+						type = (EValueType2)(int)typeRA;
 					}
 				}
 			}

@@ -1,5 +1,5 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.RO | GameFlags.COL | GameFlags.VH | GameFlags.RA)]
+	[Games(GameFlags.RO | GameFlags.LegendsAndUp)]
 	public partial class BTDeciderHasPlayerNear_Template : BTDecider_Template {
 		public StringID fact;
 		public float radius = 2f;

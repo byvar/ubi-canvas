@@ -3,19 +3,19 @@ namespace UbiArt.ITF {
 	public partial class BTActionSetFact_Template : BTAction_Template {
 		public StringID fact;
 		public string value;
-		public EValueType type;
-		public SetFactOperationType operation;
-		public EValueType2 type2;
+		public EValueType typeRA = EValueType.StringId;
+		public SetFactOperationType operation = SetFactOperationType.Set;
+		public EValueType2 type = EValueType2.StringId;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.VH || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");
-				type2 = s.Serialize<EValueType2>(type2, name: "type");
+				type = s.Serialize<EValueType2>(type, name: "type");
 			} else {
 				fact = s.SerializeObject<StringID>(fact, name: "fact");
 				value = s.Serialize<string>(value, name: "value");
-				type = s.Serialize<EValueType>(type, name: "type");
+				typeRA = s.Serialize<EValueType>(typeRA, name: "type");
 				operation = s.Serialize<SetFactOperationType>(operation, name: "operation");
 			}
 		}
