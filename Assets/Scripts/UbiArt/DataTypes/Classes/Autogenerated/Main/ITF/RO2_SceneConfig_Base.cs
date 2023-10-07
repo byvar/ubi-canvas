@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public Enum_DRCGameplayMode DRCGameplayMode;
 		public StringID fade;
 		public RO2_PackageDescriptor_Template packageDescriptor;
-		public bool istouchScreenMap;
+		public bool istouchScreenMap = true;
 
 
 		public uint Vita_00 { get; set; }

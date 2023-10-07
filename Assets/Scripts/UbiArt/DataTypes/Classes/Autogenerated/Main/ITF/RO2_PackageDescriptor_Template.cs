@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class RO2_PackageDescriptor_Template : PackageDescriptor_Template {
 		public Path decorationBrickPath;
 		public bool hideDecoration;
-		public int priority;
-		public int alternatePriority;
+		public int priority = 1;
+		public int alternatePriority = 1;
 		public string mapName;
 		public CArrayP<string> subHubPaths;
 		public PathRef mapPath;

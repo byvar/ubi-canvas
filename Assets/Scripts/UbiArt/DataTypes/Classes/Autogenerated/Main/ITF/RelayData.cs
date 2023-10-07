@@ -1,5 +1,5 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
+	[Games(GameFlags.All)]
 	public partial class RelayData : CSerializable {
 		public Generic<Event> eventToListen;
 		public Generic<Event> eventToRelay;
@@ -20,7 +20,9 @@ namespace UbiArt.ITF {
 			triggerBroadcast = s.Serialize<bool>(triggerBroadcast, name: "triggerBroadcast");
 			replaceSender = s.Serialize<bool>(replaceSender, name: "replaceSender");
 			replaceSenderByActivator = s.Serialize<bool>(replaceSenderByActivator, name: "replaceSenderByActivator");
-			resetTimerOnRetrigger = s.Serialize<bool>(resetTimerOnRetrigger, name: "resetTimerOnRetrigger");
+			if (!(s.Settings.Game == Game.RO || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RJR)) {
+				resetTimerOnRetrigger = s.Serialize<bool>(resetTimerOnRetrigger, name: "resetTimerOnRetrigger");
+			}
 		}
 		public override uint? ClassCRC => 0xE5F9BFFB;
 	}

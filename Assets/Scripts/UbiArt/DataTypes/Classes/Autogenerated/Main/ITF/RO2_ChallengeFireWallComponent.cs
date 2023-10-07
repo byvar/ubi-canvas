@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_ChallengeFireWallComponent : ActorComponent {
-		public Vec2d screenPosition;
+		public Vec2d screenPosition = new Vec2d(0.5f, 0.5f);
 		public Vec3d actorPosAtCheckpointSave;
 		public State state;
 		public bool useScreenPos;

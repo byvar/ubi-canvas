@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class AFX_RadialParam : CSerializable {
 		public bool use;
 		public Vec2d centerOffset;
-		public float strength;
-		public float size;
+		public float strength = 1f;
+		public float size = 10f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.COL) {

@@ -2,11 +2,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFX_ColorSettingParam : CSerializable {
 		public bool use;
-		public float saturation;
+		public float saturation = 1f;
 		public float contrast;
-		public float contrastScale;
+		public float contrastScale = 1f;
 		public float bright;
-		public Color colorCorrection;
+		public Color colorCorrection = Color.White;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.COL) {

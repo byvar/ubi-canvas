@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 		public StringID name;
 		public string name2;
 		public Path path;
-		public uint spawnCooldown;
-		public uint difficulty;
+		public uint spawnCooldown = uint.MaxValue;
+		public uint difficulty = uint.MaxValue;
 		public eMM murphymode;
 		public ArchiveMemory archive;
 		protected override void SerializeImpl(CSerializerObject s) {

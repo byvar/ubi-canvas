@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_SceneConfig_ChallengeTraining : RO2_SceneConfig_Base {
 		public Path modePath;
 		public uint debugForcedSeed;
-		public uint debugCurrentSeed;
+		public uint debugCurrentSeed = 0xFFFFFFFF;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

@@ -2,17 +2,17 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_ChallengeCommon_Template : TemplateObj {
 		public StringID name;
-		public Vec2d unitSize;
+		public Vec2d unitSize = new Vec2d(20, 10);
 		public CArrayO<Generic<RO2_Brick_Template>> gameplayBricks;
-		public uint initialSpawnCount;
-		public uint duplicateSpawnCooldown;
+		public uint initialSpawnCount = 3;
+		public uint duplicateSpawnCooldown = 3;
 		public CListO<StringID> firstBricks;
 		public CListO<StringID> continueStartBrick;
 		public CListO<StringID> lastBricks;
 		public CListO<RO2_ChallengeCommon_Template.DifficultyRange> difficultyRanges;
 		public CListO<RO2_EnduranceRule_Template> gameplayRules;
 		public CListP<string> filter;
-		public StringID menuId;
+		public StringID menuId = new StringID(0xec4c9c03);
 		public StringID debugMenuId;
 		public Path countdownPath;
 		public Nullable<EventPlayMusic> inGameMusic;
@@ -69,8 +69,8 @@ namespace UbiArt.ITF {
 		public partial class DifficultyRange : CSerializable {
 			public StringID name;
 			public float min;
-			public float max;
-			public float camSpeed;
+			public float max = float.MaxValue;
+			public float camSpeed = 5f;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				name = s.SerializeObject<StringID>(name, name: "name");

@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFX_EyeFishParam : CSerializable {
 		public bool use;
-		public float height;
-		public float scale;
+		public float height = 2f;
+		public float scale = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.COL) {

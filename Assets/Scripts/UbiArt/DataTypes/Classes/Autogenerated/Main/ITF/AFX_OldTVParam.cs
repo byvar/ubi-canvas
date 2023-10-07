@@ -2,11 +2,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFX_OldTVParam : CSerializable {
 		public bool use;
-		public float lineFade;
+		public float lineFade = 0.5f;
 		public bool useScanLine;
-		public float scanLineFade;
-		public float scanLineSpeed;
-		public float scanLineSize;
+		public float scanLineFade = 0.5f;
+		public float scanLineSpeed = 2f;
+		public float scanLineSize = 0.2f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.COL) {

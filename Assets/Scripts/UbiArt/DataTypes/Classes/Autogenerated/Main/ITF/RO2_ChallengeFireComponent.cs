@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_ChallengeFireComponent : ActorComponent {
-		public float distanceFromCheckpoint;
-		public float speedFactor;
+		public float distanceFromCheckpoint = 15f;
+		public float speedFactor = 1f;
 		public bool hasMoved;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

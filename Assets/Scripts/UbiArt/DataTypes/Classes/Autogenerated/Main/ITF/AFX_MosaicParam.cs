@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFX_MosaicParam : CSerializable {
 		public bool use;
-		public float pixelSize;
+		public float pixelSize = 2f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.COL) {

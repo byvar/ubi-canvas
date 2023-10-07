@@ -2,20 +2,20 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PlayerForceActionComponent : ActorComponent {
 		public PlayerForcedAction Action;
-		public bool enabledOnInit;
+		public bool enabledOnInit = true;
 		public uint OverallPriority;
 		public uint priority;
 		public bool Hold;
 		public bool Sprint;
-		public bool KeepDirection;
+		public bool KeepDirection = true;
 		public float WaitDuration;
 		public Enum_WaitType WaitType;
 		public Generic<Event> eventToListen;
 		public bool waitSpecificAngle;
 		public Vec2d waitSpecificAngleRange;
-		public bool checkEventOnlyInZone;
+		public bool checkEventOnlyInZone = true;
 		public RO2_PlayerForceActionComponent.ActorUpdateInfoStruct actorUpdateInfo;
-		public bool isEnabled;
+		public bool isEnabled = true;
 		public PlayerForcedAction2 Action2;
 		public bool shadowActorGroupTest;
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -79,7 +79,7 @@ namespace UbiArt.ITF {
 			public Angle specificOrientation;
 			public bool axisRecenter_StopActionInCorridor;
 			public bool axisRecenter_FollowDRCInteractActor;
-			public float retriggerOrderDelay;
+			public float retriggerOrderDelay = -1f;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				orientationUpdateType = s.Serialize<Enum_orientationUpdateType>(orientationUpdateType, name: "orientationUpdateType");

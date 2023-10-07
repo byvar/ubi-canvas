@@ -1,17 +1,17 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RAVersion)]
 	public partial class RO2_FirePatchAIComponent_Template : GraphicComponent_Template {
-		public float sidePatchLength;
-		public float sidePatchWidth;
-		public float spaceMinBetween2Start;
-		public float spaceMaxBetween2Start;
+		public float sidePatchLength = 1f;
+		public float sidePatchWidth = 1f;
+		public float spaceMinBetween2Start = 1f;
+		public float spaceMaxBetween2Start = 1f;
 		public float offsetMin;
 		public float offsetMax;
-		public float scaleMin;
-		public float scaleMax;
-		public uint modTileMin;
-		public uint modTileMax;
-		public float openSpeed;
+		public float scaleMin = 1f;
+		public float scaleMax = 2f;
+		public uint modTileMin = 2;
+		public uint modTileMax = 2;
+		public float openSpeed = 10f;
 		public uint startOpen;
 		public uint endOpen;
 		public uint startLoop;
@@ -25,14 +25,14 @@ namespace UbiArt.ITF {
 		public uint smokeStartClose;
 		public uint smokeEndClose;
 		public bool useSmoke;
-		public float smokeForwardOffset;
+		public float smokeForwardOffset = 2f;
 		public float smokeBackwardOffset;
 		public GFXMaterialSerializable sideMaterial;
 		public GFXMaterialSerializable smokeMaterial;
-		public float tessellationLength;
+		public float tessellationLength = 0.1f;
 		public uint faction;
-		public float stimBezierLength;
-		public float stimBezierWidth;
+		public float stimBezierLength = 2f;
+		public float stimBezierWidth = 1f;
 		public float distSafeHead;
 		public float stimOffsetTail;
 		public uint sideMode;
@@ -43,8 +43,8 @@ namespace UbiArt.ITF {
 		public bool stopDeployOnStop;
 		public bool useOptimAABB;
 		public bool registerToAIManager;
-		public uint countHitHysteresisTrame;
-		public bool fireUseStim;
+		public uint countHitHysteresisTrame = 60;
+		public bool fireUseStim = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			sidePatchLength = s.Serialize<float>(sidePatchLength, name: "sidePatchLength");

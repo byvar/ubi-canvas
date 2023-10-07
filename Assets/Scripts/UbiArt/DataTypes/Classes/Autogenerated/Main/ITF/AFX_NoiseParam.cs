@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFX_NoiseParam : CSerializable {
 		public bool use;
-		public float blendFactor;
-		public float size;
+		public float blendFactor = 0.5f;
+		public float size = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.COL) {

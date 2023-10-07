@@ -2,11 +2,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFX_GlowParam : CSerializable {
 		public bool use;
-		public float factor;
-		public float blurSize;
-		public bool bigBlur;
+		public float factor = 1f;
+		public float blurSize = 3f;
+		public bool bigBlur = true;
 		public float threshold;
-		public float thresholdSmooth;		
+		public float thresholdSmooth = 1f;	
 		public uint pixelSize;
 		public uint quality;
 		public bool useToneMap;

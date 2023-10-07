@@ -2,11 +2,11 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_EnduranceBrickComponent : ActorComponent {
 		public bool canFlip;
-		public Vec2d size;
+		public Vec2d size = Vec2d.One;
 		public Vec2d inPos;
-		public BrickSide inSide;
-		public Vec2d outPos;
-		public BrickSide outSide;
+		public BrickSide inSide = BrickSide.Left;
+		public Vec2d outPos = Vec2d.Right;
+		public BrickSide outSide = BrickSide.Right;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RL) {

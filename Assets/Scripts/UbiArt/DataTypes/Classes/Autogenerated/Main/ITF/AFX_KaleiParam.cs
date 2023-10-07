@@ -2,10 +2,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFX_KaleiParam : CSerializable {
 		public bool use;
-		public float pixelSize;
-		public Vec2d UV1;
-		public Vec2d UV2;
-		public Vec2d UV3;
+		public float pixelSize = 1f;
+		public Vec2d UV1 = new Vec2d(0,1);
+		public Vec2d UV2 = new Vec2d(1,1);
+		public Vec2d UV3 = new Vec2d(1,0);
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.COL) {

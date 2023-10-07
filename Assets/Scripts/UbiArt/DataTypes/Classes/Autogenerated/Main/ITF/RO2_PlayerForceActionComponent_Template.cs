@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PlayerForceActionComponent_Template : ActorComponent_Template {
-		public bool stackAction;
+		public bool stackAction = true;
 		public bool DRCInteractActorInZoneTest;
 		public int inShadowTest;
 		protected override void SerializeImpl(CSerializerObject s) {
