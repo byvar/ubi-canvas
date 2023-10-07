@@ -12,6 +12,7 @@ namespace UbiCanvas.Tools
 
 		public string FilePath { get; set; }
 		public string Type { get; set; }
+		public bool UseContainer { get; set; }
 
 		public async Task DeserializeAsync()
 		{
@@ -25,7 +26,12 @@ namespace UbiCanvas.Tools
 			else
 			{
 				MethodInfo laodMethodInfo = typeof(Loader).GetMethod(nameof(Loader.LoadFile), new[] { typeof(Path) } );
-				laodMethodInfo = laodMethodInfo!.MakeGenericMethod(System.Type.GetType($"UbiArt.ITF.{Type}"));
+
+				if (UseContainer)
+					laodMethodInfo = laodMethodInfo!.MakeGenericMethod(typeof(ContainerFile<>).MakeGenericType(System.Type.GetType($"UbiArt.ITF.{Type}")));
+				else
+					laodMethodInfo = laodMethodInfo!.MakeGenericMethod(System.Type.GetType($"UbiArt.ITF.{Type}"));
+
 				laodMethodInfo.Invoke(context.Loader, new object[] { new Path(FilePath) });
 			}
 
