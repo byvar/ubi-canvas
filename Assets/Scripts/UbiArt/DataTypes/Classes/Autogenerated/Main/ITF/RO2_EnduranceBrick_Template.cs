@@ -4,11 +4,11 @@ namespace UbiArt.ITF {
 		public CListO<StringID> inTags;
 		public CListO<StringID> outTags;
 		public bool canFlip;
-		public Vec2d size;
+		public Vec2d size = Vec2d.One;
 		public Vec2d inPos;
-		public BrickSide inSide;
-		public Vec2d outPos;
-		public BrickSide outSide;
+		public BrickSide inSide = BrickSide.Left;
+		public Vec2d outPos = Vec2d.Right;
+		public BrickSide outSide = BrickSide.Right;
 		public float length;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

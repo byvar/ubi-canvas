@@ -2,9 +2,9 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AFX_BlurParam : CSerializable {
 		public bool use;
-		public float pixelSize;
-		public bool bigBlur;
-		public uint pixelSize2;
+		public float pixelSize = 2f;
+		public bool bigBlur = true;
+		public uint pixelSize2 = 2;
 		public uint quality;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
