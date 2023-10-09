@@ -29,6 +29,7 @@ namespace UbiArt
 		{
 			GamePlatform.PC => "PC",
 			GamePlatform.Android => "android",
+			GamePlatform.iOS => "ios",
 			GamePlatform.MacOS => "macos",
 			GamePlatform.Vita => "VITA",
 			GamePlatform.PC32 => "PC32",
@@ -97,7 +98,39 @@ namespace UbiArt
 			Platform = GamePlatform.iOS,
 			Endian = Endian.Big,
 			VersionFlags = VersionFlags.Adventures,
-			SerializerType = SerializerType.TagBinary
+			SerializerType = SerializerType.TagBinary,
+			IpkVersion = 8,
+			EngineSignature = 0x2FB967E7,
+			Bundles = new[]
+			{
+				"bundle",
+				"bundlemain",
+				"bundleonboardingadv1",
+				"bundleonboardingadv2",
+				"bundleonboardingadv3",
+				"bundlepersonal",
+				"bundlemedieval",
+				"bundleshaolin",
+				"bundletoadstory",
+				"bundleunderwater",
+				"bundledesert",
+				"bundlegreece",
+				"bundlelod",
+				"fulllogic",
+				"fulllogicmain",
+				"fulllogiconboardingadv1",
+				"fulllogiconboardingadv2",
+				"fulllogiconboardingadv3",
+				"fulllogicpersonal",
+				"fulllogicmedieval",
+				"fulllogicshaolin",
+				"fulllogictoadstory",
+				"fulllogicunderwater",
+				"fulllogicdesert",
+				"fulllogicgreece",
+				"fulllogiclod"
+
+			}
 		};
 
 		public static Settings RA_Android = new()
@@ -189,6 +222,7 @@ namespace UbiArt
 				Mode.RaymanLegendsPC => RL_PC,
 				Mode.RaymanLegendsVitaCatchThemAll => RL_Vita,
 				Mode.RaymanAdventuresAndroid => RA_Android,
+				Mode.RaymanAdventuresiOS => RA_iOS,
 				Mode.RaymanMiniMacOS => RM_MacOS,
 				Mode.ChildOfLightPC => COL_PC32,
 				_ => null,

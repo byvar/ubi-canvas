@@ -63,6 +63,7 @@ public class UnitySettings {
 		{ "rl_pc", Mode.RaymanLegendsPC },
 		{ "rl_vita", Mode.RaymanLegendsVitaCatchThemAll },
 		{ "ra_android", Mode.RaymanAdventuresAndroid },
+		{ "ra_ios", Mode.RaymanAdventuresiOS },
 		{ "rm_mac", Mode.RaymanMiniMacOS },
 		{ "col_pc", Mode.ChildOfLightPC },
 	};

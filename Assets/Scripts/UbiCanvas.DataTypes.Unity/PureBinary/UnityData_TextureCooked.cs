@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PVRImageWrapper;
+using System;
 using System.IO;
 using UbiArt;
 using UbiCanvas.Helpers;
@@ -9,18 +10,28 @@ namespace UbiCanvas {
 		public bool MakeNoLongerReadable { get; set; } = false;
 
 		private Texture2D texture;
-		private Texture2D squareTexture;
-		private Texture2D[] subtextures;
+		//private Texture2D squareTexture;
+		//private Texture2D[] subtextures;
 		public Texture2D Texture {
 			get {
 				if (texture == null && LinkedObject.Data != null) {
+					var data = LinkedObject.Data;
 					if (Context.Settings.Platform == GamePlatform.Vita) {
 						//texture = new Texture2D(LinkedObject.Width, LinkedObject.Height);
-						using MemoryStream ms = new MemoryStream(LinkedObject.Data);
+						using MemoryStream ms = new MemoryStream(data);
 						var gxt = new GXTConvert.FileFormat.GxtBinary(ms);
 						texture = gxt.Textures[0];
 						//texture = TextureHelpers.CreateDummyTexture();
 						return texture;
+					} else if (Context.Settings.Platform == GamePlatform.iOS) {
+						if (LinkedObject.Header.CompressionType == 2 || LinkedObject.Header.CompressionType == 3) {
+							// This is a PVR!
+							var pvr = new PVRImage(data);
+							texture = pvr.LoadIntoTexture();
+							texture.wrapMode = TextureWrapMode.Repeat;
+							texture.Apply();
+							return texture;
+						}
 					}
 					// For jpg & png:
 					/*texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
@@ -34,9 +45,9 @@ namespace UbiCanvas {
 						texture.Apply();
 					}*/
 					//UnityEngine.Debug.Log($"Texture - {texData.Length} - {width} - {height}");
-					texture = LoadTextureDXT(LinkedObject.Data, makeNoLongerReadable: MakeNoLongerReadable);
+					texture = LoadTextureDXT(data, makeNoLongerReadable: MakeNoLongerReadable);
 					if (texture == null) {
-						using (DDSImage dds = new DDSImage(LinkedObject.Data, makeNoLongerReadable: MakeNoLongerReadable)) {
+						using (DDSImage dds = new DDSImage(data, makeNoLongerReadable: MakeNoLongerReadable)) {
 							texture = dds.BitmapImage;
 						}
 					}
@@ -72,7 +83,7 @@ namespace UbiCanvas {
 			}
 		}*/
 
-		public Texture2D SquareTexture {
+		/*public Texture2D SquareTexture {
 			get {
 				Texture2D tex = Texture;
 				if (squareTexture == null && tex != null) {
@@ -87,7 +98,7 @@ namespace UbiCanvas {
 				}
 				return squareTexture;
 			}
-		}
+		}*/
 
 		public float HeightFactor {
 			get {

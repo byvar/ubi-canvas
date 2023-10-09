@@ -17,11 +17,13 @@ using UnityEngine;
 
 namespace UbiCanvas.Conversion {
 	public class AdventuresToLegendsConverter {
-		public async UniTask Convert(Context mainContext, string rlPath, string outPath, string projectPath, bool exportRaw = true) {
+		public async UniTask Convert(Context mainContext, string rlPath, string outPath, string projectPath,
+			bool exportRaw = true, string lvlPath = null, Scene scene = null) {
 			var basePath = rlPath;
 			var settings = Settings.FromMode(Mode.RaymanLegendsPC);
 
-			string lvlPath = UnitySettings.SelectedLevelFile;
+			lvlPath ??= UnitySettings.SelectedLevelFile;
+			scene ??= Controller.Obj.MainScene.obj;
 			string sceneName = System.IO.Path.GetFileName(lvlPath);
 			if (sceneName.Contains('.')) sceneName = sceneName.Substring(0, sceneName.IndexOf('.'));
 
@@ -83,21 +85,21 @@ namespace UbiCanvas.Conversion {
 			}
 
 			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
-			//FixAllLumsChainSpawnMode(mainContext, settings, Controller.Obj.MainScene.obj);
-			LevelSpecificChanges(mainContext, settings, Controller.Obj.MainScene.obj);
-			FixNinjas(mainContext, settings, Controller.Obj.MainScene.obj);
-			UpdateSoundFXReferences(mainContext, settings, conversionSettings, Controller.Obj.MainScene.obj);
-			FixLumKingMusic(mainContext, settings, Controller.Obj.MainScene.obj);
-			FixCameraModifierBlend(mainContext, settings, Controller.Obj.MainScene.obj);
-			AddCaptainAI(mainContext, settings, Controller.Obj.MainScene.obj);
+			//FixAllLumsChainSpawnMode(mainContext, settings, scene);
+			LevelSpecificChanges(mainContext, settings, scene);
+			FixNinjas(mainContext, settings, scene);
+			UpdateSoundFXReferences(mainContext, settings, conversionSettings, scene);
+			FixLumKingMusic(mainContext, settings, scene);
+			FixCameraModifierBlend(mainContext, settings, scene);
+			AddCaptainAI(mainContext, settings, scene);
 			DowngradeFxUV(mainContext, settings);
-			CreateFriseParents(mainContext, settings, Controller.Obj.MainScene.obj);
-			MakeFrisesStartPaused(mainContext, settings, Controller.Obj.MainScene.obj);
-			CreateLightingFrisesForRenderParams(mainContext, settings, Controller.Obj.MainScene.obj);
+			CreateFriseParents(mainContext, settings, scene);
+			MakeFrisesStartPaused(mainContext, settings, scene);
+			CreateLightingFrisesForRenderParams(mainContext, settings, scene);
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
-			AddSceneConfigForRotatingPlatform(mainContext, settings, Controller.Obj.MainScene.obj);
+			AddSceneConfigForRotatingPlatform(mainContext, settings, scene);
 
 
 			// Step 1: create new paths dictionary
@@ -235,7 +237,7 @@ namespace UbiCanvas.Conversion {
 			if (sourceMode == Mode.RaymanMiniMacOS) {
 				mainMode = "mini2";
 				baseLocId = 9000;
-			} else if (sourceMode == Mode.RaymanAdventuresAndroid) {
+			} else if (sourceMode == Mode.RaymanAdventuresAndroid || sourceMode == Mode.RaymanAdventuresiOS) {
 				mainMode = "adventures2";
 				baseLocId = 20000;
 			}
@@ -324,7 +326,7 @@ namespace UbiCanvas.Conversion {
 				sourceContext.Loader.LoadGenericFile(pGameConfig, isg => {
 					sourceContext.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
 				});
-				if (sourceMode == Mode.RaymanAdventuresAndroid) {
+				if (sourceMode == Mode.RaymanAdventuresAndroid || sourceMode == Mode.RaymanAdventuresiOS) {
 					sourceContext.Loader.LoadGenericFile(pGameConfigExtended, isg => {
 						gcExtended = isg.obj as RO2_GameConfigExtended_Template;
 					});

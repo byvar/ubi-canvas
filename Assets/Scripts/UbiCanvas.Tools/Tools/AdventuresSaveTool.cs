@@ -22,7 +22,7 @@ namespace UbiCanvas.Tools
 				new InvokableAction("Decode", DecodeAsync),
 				new InvokableAction("Encode", EncodeAsync),
 			});
-			Requirements.Add(new ModeGameToolRequirement(Mode.RaymanAdventuresAndroid));
+			Requirements.Add(new ModeGameToolRequirement(Mode.RaymanAdventuresAndroid, Mode.RaymanAdventuresiOS));
         }
 
         public override string Name => "Adventures Save Decoder";

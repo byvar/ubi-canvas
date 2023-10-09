@@ -14,6 +14,9 @@
 		[System.ComponentModel.Description("Rayman Adventures (Android)")] 
 		RaymanAdventuresAndroid,
 
+		[System.ComponentModel.Description("Rayman Adventures (iOS)")]
+		RaymanAdventuresiOS,
+
 		[System.ComponentModel.Description("Rayman Mini (MacOS)")] 
 		RaymanMiniMacOS,
 

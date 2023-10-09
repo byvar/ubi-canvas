@@ -10,7 +10,12 @@ namespace UbiArt {
 
 		public void Serialize(CSerializerObject s, string name) {
 			Header = s.SerializeObject<TextureCookedHeader>(Header, name: nameof(Header));
-			Data = s.SerializeBytes(Data, (int)(Header?.DataSize ?? (s.Length - s.CurrentPosition)));
+			var dataSize = (int)(Header?.DataSize ?? (s.Length - s.CurrentPosition));
+			if(s.Settings.Platform == GamePlatform.iOS && (Header?.CompressionType ?? 0) != 0 && dataSize == 0) {
+				dataSize = (int)(s.Length - s.CurrentPosition);
+			}
+
+			Data = s.SerializeBytes(Data, dataSize);
 			if (s.Settings.Platform == GamePlatform.Vita) {
 				// Header is also appended to bottom of file, probably a leftover from their uncooked version.
 				// Jade also has this where the header is at the top in the built version, but at the bottom in raw files.
