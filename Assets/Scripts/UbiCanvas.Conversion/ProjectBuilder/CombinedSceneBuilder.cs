@@ -115,6 +115,29 @@ namespace UbiCanvas.Conversion {
 										// There is no "next checkpoint" -> exit trigger becomes an exit map ritual trigger!
 
 										foreach (var exit in exits) {
+											if (exit.Result?.GetComponent<AnimatedComponent>() != null) {
+												var ac = exit.Result.GetComponent<AnimatedComponent>();
+												ac.defaultAnim = new StringID("state_machine_lastpage");
+											}
+
+											var exitScene = exit.ContainingScene;
+											var exitRitualActor = CreateExitRitualManager(simpleISC.TeensiesCount);
+											exitScene.AddActor(exitRitualActor, exitRitualActor.USERFRIENDLY);
+											exitRitualActor.POS2D = exit.Result.POS2D;
+											exitRitualActor.RELATIVEZ = exit.Result.RELATIVEZ;
+											exitRitualActor.xFLIPPED = exit.Result.xFLIPPED;
+
+											var triggerActor = CreateTriggerBoxExitRitual();
+											exitScene.AddActor(triggerActor, triggerActor.USERFRIENDLY);
+											triggerActor.POS2D = exit.Result.POS2D;
+											triggerActor.RELATIVEZ = exit.Result.RELATIVEZ;
+											triggerActor.xFLIPPED = exit.Result.xFLIPPED;
+											triggerActor.SCALE = new Vec2d(2,2);
+
+											var triggerLink = triggerActor.GetComponent<LinkComponent>();
+											triggerLink.Children.Add(new ChildEntry() {
+												Path = new ObjectPath(exitRitualActor.USERFRIENDLY)
+											});
 
 										}
 									}
@@ -173,6 +196,47 @@ namespace UbiCanvas.Conversion {
 			//ppc.enterExitDist = 0;
 			var vlc = pagePortal.AddComponent<VirtualLinkComponent>();
 			return pagePortal;
+		}
+
+		protected Actor CreateExitRitualManager(int teensyCount) {
+			if(teensyCount < 3) teensyCount = 3;
+			var exitRitual = new Actor() {
+				LUA = new Path($"world/common/logicactor/exitritual/exitritualmanager/components/exitritualmanager_retro_{teensyCount}.tpl"),
+				USERFRIENDLY = "exitritualmanager"
+			};
+			var lc = exitRitual.AddComponent<LinkComponent>();
+			lc.Children = new CListO<ChildEntry>();
+			var ermc = exitRitual.AddComponent<RO2_ExitRitualManagerComponent>();
+			var pc = exitRitual.AddComponent<PolylineComponent>();
+			var ac = exitRitual.AddComponent<AnimatedComponent>();
+			ac.disableLight = 0;
+			if (teensyCount == 3) {
+				var ptc = exitRitual.AddComponent<PrefetchTargetComponent>();
+				ptc.ZONE = new EditableShape() {
+					shape = new Generic<PhysShape>(new PhysShapeBox() {
+						Extent = new Vec2d(10, 10)
+					}),
+				};
+			}
+			var fccc = exitRitual.AddComponent<FXControllerComponent>();
+			var fbc = exitRitual.AddComponent<FxBankComponent>();
+			fbc.disableLight = 0;
+			var sc = exitRitual.AddComponent<SoundComponent>();
+			return exitRitual;
+		}
+
+		protected Actor CreateTriggerBoxExitRitual() {
+			var trig = new Actor() {
+				LUA = new Path("world/common/logicactor/trigger/components/trigger_box_startexitritual.tpl"),
+				USERFRIENDLY = "trigger_box_startexitritual"
+			};
+			var lc = trig.AddComponent<LinkComponent>();
+			lc.Children = new CListO<ChildEntry>();
+			var pdc = trig.AddComponent<PlayerDetectorComponent>();
+			var tc = trig.AddComponent<TriggerComponent>();
+			tc.mode = TriggerComponent.Mode.OnceAndRetrigger;
+
+			return trig;
 		}
 	}
 }

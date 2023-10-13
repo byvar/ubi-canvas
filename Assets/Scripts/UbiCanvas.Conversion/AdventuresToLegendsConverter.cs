@@ -663,6 +663,8 @@ namespace UbiCanvas.Conversion {
 			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
 			if (actorTemplates == null) return;
 
+			const string captainStateInput = "captain_state";
+
 			var exitflagPath = new Path("world/rlc/common/gpe/exitflag/components/exitflag.tpl");
 			if (!actorTemplates.ContainsKey(exitflagPath.stringID)) return;
 
@@ -675,34 +677,35 @@ namespace UbiCanvas.Conversion {
 			var animComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
 			if(animComponent.inputs == null) animComponent.inputs = new CListO<InputDesc>();
 			animComponent.inputs.Add(new InputDesc() {
-				name = "captain_state",
+				name = captainStateInput,
 				varType = InputDesc.InputType.U32
 			});
 			animComponent.tree = new AnimTree_Template() {
 				nodes = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>(),
 				nodeTransitions = new CListO<BlendTreeTransition_Template<AnimTreeResult>>()
 			};
-			animComponent.tree.nodes.Add(new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new BlendTreeNodeChooseBranch_Template<AnimTreeResult>() {
-				nodeName = new StringID("state_machine"),
-				leafs = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>() {
+			void AddStateMachine(string name, string prefix, string topAnimation) {
+				animComponent.tree.nodes.Add(new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new BlendTreeNodeChooseBranch_Template<AnimTreeResult>() {
+					nodeName = new StringID(name),
+					leafs = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>() {
 					new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
-						nodeName = new StringID("sm_speedrun_go"),
-						animationName = new StringID("speedrun_go")
+						nodeName = new StringID($"{prefix}_{topAnimation}"),
+						animationName = new StringID($"{topAnimation}")
 					}),
 					new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
-						nodeName = new StringID("sm_shaking_flags"),
+						nodeName = new StringID($"{prefix}_shaking_flags"),
 						animationName = new StringID("shaking_flags")
 					}),
 					new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
-						nodeName = new StringID("sm_stand"),
+						nodeName = new StringID($"{prefix}_stand"),
 						animationName = new StringID("stand")
 					}),
 				},
-				leafsCriterias = new CListO<BlendTreeNodeChooseBranch_Template<AnimTreeResult>.BlendLeaf>() {
+					leafsCriterias = new CListO<BlendTreeNodeChooseBranch_Template<AnimTreeResult>.BlendLeaf>() {
 					new BlendTreeNodeChooseBranch_Template<AnimTreeResult>.BlendLeaf() {
 						criterias = new CListO<CriteriaDesc>() {
 							new CriteriaDesc() {
-								name = new StringID("captain_state"),
+								name = new StringID(captainStateInput),
 								eval = "==",
 								evaluation = CriteriaDesc.Enum_evaluation.Equals,
 								value = 2
@@ -712,7 +715,7 @@ namespace UbiCanvas.Conversion {
 					new BlendTreeNodeChooseBranch_Template<AnimTreeResult>.BlendLeaf() {
 						criterias = new CListO<CriteriaDesc>() {
 							new CriteriaDesc() {
-								name = new StringID("captain_state"),
+								name = new StringID(captainStateInput),
 								eval = "==",
 								evaluation = CriteriaDesc.Enum_evaluation.Equals,
 								value = 1
@@ -723,23 +726,26 @@ namespace UbiCanvas.Conversion {
 						// No criteria for this last one
 					},
 				},
-			}));
-			animComponent.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
-				from = new CArrayO<StringID>() { new StringID("sm_stand") },
-				to = new CArrayO<StringID>() { new StringID("sm_shaking_flags") },
-				blend = 3,
-				node = new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
-					animationName = new StringID(0xBB5E3A4C)
-				})
-			});
-			animComponent.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
-				from = new CArrayO<StringID>() { new StringID("sm_shaking_flags") },
-				to = new CArrayO<StringID>() { new StringID("sm_stand") },
-				blend = 3,
-				node = new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
-					animationName = new StringID(0xC160B565)
-				})
-			});
+				}));
+				animComponent.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
+					from = new CArrayO<StringID>() { new StringID($"{prefix}_stand") },
+					to = new CArrayO<StringID>() { new StringID($"{prefix}_shaking_flags") },
+					blend = 3,
+					node = new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+						animationName = new StringID(0xBB5E3A4C)
+					})
+				});
+				animComponent.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
+					from = new CArrayO<StringID>() { new StringID($"{prefix}_shaking_flags") },
+					to = new CArrayO<StringID>() { new StringID($"{prefix}_stand") },
+					blend = 3,
+					node = new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+						animationName = new StringID(0xC160B565)
+					})
+				});
+			}
+			AddStateMachine("state_machine", "sm", "speedrun_go");
+			AddStateMachine("state_machine_lastpage", "smlp", "yeah");
 			animComponent.defaultAnimation = new StringID("state_machine");
 			
 
@@ -774,7 +780,7 @@ namespace UbiCanvas.Conversion {
 										new BTNodeTemplate_Ref() {
 											node = new Generic<BTNode_Template>(new BTActionSendEventToActor_Template() {
 												_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
-													inputName = new StringID("captain_state"),
+													inputName = new StringID(captainStateInput),
 													inputValue = 2
 												}),
 											})
@@ -795,7 +801,7 @@ namespace UbiCanvas.Conversion {
 										new BTNodeTemplate_Ref() {
 											node = new Generic<BTNode_Template>(new BTActionSendEventToActor_Template() {
 												_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
-													inputName = new StringID("captain_state"),
+													inputName = new StringID(captainStateInput),
 													inputValue = 1
 												}),
 											})
@@ -809,7 +815,7 @@ namespace UbiCanvas.Conversion {
 					new Generic<BTNode_Template>(new BTActionSendEventToActor_Template() {
 						name = new StringID("action_playanim_idle"),
 						_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
-							inputName = new StringID("captain_state"),
+							inputName = new StringID(captainStateInput),
 							inputValue = 0
 						}),
 					}),
