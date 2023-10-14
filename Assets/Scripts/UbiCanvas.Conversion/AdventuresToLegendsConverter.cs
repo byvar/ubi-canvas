@@ -745,7 +745,7 @@ namespace UbiCanvas.Conversion {
 				});
 			}
 			AddStateMachine("state_machine", "sm", "speedrun_go");
-			AddStateMachine("state_machine_lastpage", "smlp", "yeah");
+			AddStateMachine("state_machine_lastpage", "smlp", "yeah2");
 			animComponent.defaultAnimation = new StringID("state_machine");
 			
 
