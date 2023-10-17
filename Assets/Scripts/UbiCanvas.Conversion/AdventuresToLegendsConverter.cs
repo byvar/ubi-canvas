@@ -83,11 +83,17 @@ namespace UbiCanvas.Conversion {
 				// Enemy animations
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/enemy/jacquouille/animation/", "world/common/enemy/jacquouille/animation_rlc/"));
+
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
+
+
+			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
 
 			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
 			//FixAllLumsChainSpawnMode(mainContext, settings, scene);
@@ -96,6 +102,7 @@ namespace UbiCanvas.Conversion {
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, scene);
 			FixLumKingMusic(mainContext, settings, scene);
 			FixCameraModifierBlend(mainContext, settings, scene);
+			FixStaticMeshVertexComponentCulling(mainContext, settings, scene);
 			AddCaptainAI(mainContext, settings, scene);
 			DowngradeFxUV(mainContext, settings);
 			CreateFriseParents(mainContext, settings, scene);
@@ -220,6 +227,7 @@ namespace UbiCanvas.Conversion {
 			}
 			//mainContext.ChangeSettings(settings);
 			Debug.Log($"Finished exporting {sceneName}.");
+			GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
 		}
 
 		protected Context CreateContext(Mode mode,
@@ -662,6 +670,42 @@ namespace UbiCanvas.Conversion {
 
 		}
 
+		public void FixStaticMeshVertexComponentCulling(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates == null) return;
+
+
+			var exitflagPath = new Path("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl");
+			if (!actorTemplates.ContainsKey(exitflagPath.stringID)) return;
+
+			var tpl = actorTemplates[exitflagPath.stringID] as GenericFile<Actor_Template>;
+
+			if (tpl?.obj == null) return;
+
+			// Add a box interpolator - this will overwrite the culling for the static mesh vertex component
+			tpl?.obj?.AddComponent<BoxInterpolatorComponent_Template>();
+
+			var smvs = scene.FindActors(a => a.GetComponent<StaticMeshVertexComponent>() != null);
+			foreach (var smva in smvs) {
+				var smvc = smva.Result.GetComponent<StaticMeshVertexComponent>();
+
+				// Enlarge AABB
+				if (smvc.localAABB == null) smvc.localAABB = new AABB();
+				var aabb = smvc.localAABB;
+				aabb.MIN = aabb.MIN - new Vec2d(100, 100);
+				aabb.MAX = aabb.MAX + new Vec2d(100, 100);
+
+				// Add box interpolator
+				var box = smva.Result.AddComponent<BoxInterpolatorComponent>();
+				box.innerBox = aabb;
+				box.outerBox = aabb;
+			}
+		}
 
 		public void AddCaptainAI(Context oldContext, Settings newSettings, Scene scene) {
 			Loader l = oldContext.Loader;
