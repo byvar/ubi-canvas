@@ -74,6 +74,9 @@ namespace UbiArt.ITF {
 			mf.sharedMesh = mesh;
 			mr_static = mr;
 
+			var zsort = mesh_static.AddComponent<UnityZSortedRenderer>();
+			zsort.Renderer = mr_static;
+
 			return mesh_static;
 		}
 

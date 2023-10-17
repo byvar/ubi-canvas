@@ -93,6 +93,8 @@ namespace UbiCanvas.Conversion {
 			}
 
 
+			Controller.Obj.loadingScreen.Active = true;
+			GlobalLoadState.DetailedState = "Exporting map";
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
 
 			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
@@ -227,7 +229,9 @@ namespace UbiCanvas.Conversion {
 			}
 			//mainContext.ChangeSettings(settings);
 			Debug.Log($"Finished exporting {sceneName}.");
+			GlobalLoadState.DetailedState = "Finished";
 			GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
+			Controller.Obj.loadingScreen.Active = false;
 		}
 
 		protected Context CreateContext(Mode mode,
