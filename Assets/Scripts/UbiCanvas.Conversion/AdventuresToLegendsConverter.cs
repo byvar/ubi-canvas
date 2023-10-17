@@ -704,6 +704,12 @@ namespace UbiCanvas.Conversion {
 				var box = smva.Result.AddComponent<BoxInterpolatorComponent>();
 				box.innerBox = aabb;
 				box.outerBox = aabb;
+
+				/*box.innerBox = new AABB() {
+					MIN = new Vec2d(float.MinValue, float.MinValue),
+					MAX = new Vec2d(float.MaxValue, float.MaxValue)
+				};
+				box.outerBox = box.innerBox;*/
 			}
 		}
 
@@ -2006,6 +2012,12 @@ namespace UbiCanvas.Conversion {
 					MAX = Vec2d.One * 1f / 0.5f,
 				};
 				var outerAABB = box?.outerBox;
+				Vec2d totalMin = new Vec2d(
+					MathF.Min(aabb.MIN.x, outerAABB?.MIN?.x ?? aabb.MIN.x),
+					MathF.Min(aabb.MIN.y, outerAABB?.MIN?.y ?? aabb.MIN.y));
+				Vec2d totalMax = new Vec2d(
+					MathF.Max(aabb.MAX.x, outerAABB?.MAX?.x ?? aabb.MAX.x),
+					MathF.Max(aabb.MAX.y, outerAABB?.MAX?.y ?? aabb.MAX.y));
 
 				void CreateMaskResolver(string name, string template, float z) {
 					var newAct = new Actor() {
@@ -2077,7 +2089,7 @@ namespace UbiCanvas.Conversion {
 					}
 
 					fr.PointsList = CreatePolyPointList(new Vec2d[] {
-						aabb.MIN, new Vec2d(aabb.MIN.x, aabb.MAX.y), aabb.MAX, new Vec2d(aabb.MAX.x, aabb.MIN.y)
+						totalMin, new Vec2d(totalMin.x, totalMax.y), totalMax, new Vec2d(totalMax.x, totalMin.y)
 					});
 
 
