@@ -10,11 +10,11 @@ namespace UbiArt.ITF {
 		public Generic<RO2_AIHitWallBehavior_Template> hitWallBehavior;
 		public Generic<RO2_AISleepBehavior_Template> sleepBehavior;
 		public Generic<PhysShape> closeRangeDetectionShape;
-		public float closeRangeAttackPushBackForce;
-		public float squashPenetrationRadius;
-		public bool dieInWater;
-		public float rayCastDist;
-		public bool checkSquash;
+		public float closeRangeAttackPushBackForce = 600f;
+		public float squashPenetrationRadius = 0.6f;
+		public bool dieInWater = true;
+		public float rayCastDist = 5f;
+		public bool checkSquash = true;
 		public bool unbindChildrenOnHit;
 		public bool checkStickForCloseRangeAttack;
 		public bool detectHunterOwnBullet;

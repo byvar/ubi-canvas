@@ -2,16 +2,16 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_AIReceiveHitBehavior_Template : AIReceiveHitBehavior_Template {
 		public CListO<RO2_AIReceiveHitBehavior_Template.ReceiveHitData> receiveHits;
-		public bool canReceiveRehits;
-		public float hurtDuration;
-		public uint maxNumberOfSuccessiveHits;
+		public bool canReceiveRehits = true;
+		public float hurtDuration = 0.5f;
+		public uint maxNumberOfSuccessiveHits = 5;
 		public Generic<PhysShape> dominoHitShape;
 		public bool canRehit;
-		public float dominoHitSpeedMultiplier;
-		public uint minHitLevelForDomino;
+		public float dominoHitSpeedMultiplier = 0.2f;
+		public uint minHitLevelForDomino = 1;
 		public bool disableStickOnWallsOnHit;
-		public bool receiveDamageFromDomino;
-		public bool canBubblize;
+		public bool receiveDamageFromDomino = true;
+		public bool canBubblize = true;
 		public Generic<AIAction_Template> ceilingAction;
 		public Generic<AIAction_Template> wallAction;
 		public StringID deathMarkerName;

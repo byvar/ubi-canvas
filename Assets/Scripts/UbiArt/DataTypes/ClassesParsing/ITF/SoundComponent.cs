@@ -6,6 +6,12 @@ namespace UbiArt.ITF {
 	public partial class SoundComponent {
 		public override ActorComponent Convert(Context context, Actor actor, Settings oldSettings, Settings newSettings) {
 			base.Convert(context, actor, oldSettings, newSettings);
+			if (newSettings.Game == Game.RL) {
+				var firstComponent = actor.GetComponent<SoundComponent>();
+				if (firstComponent != null && this != firstComponent) {
+					return null;
+				}
+			}
 			if (oldSettings.Game != newSettings.Game) {
 				//soundList = null;
 				if (soundList != null) {
@@ -20,13 +26,6 @@ namespace UbiArt.ITF {
 								}
 							}
 						}
-					}
-				}
-			}
-			if (newSettings.Game == Game.RL) {
-				foreach (var comp in actor.COMPONENTS) {
-					if (comp?.obj is SoundComponent c) {
-						return (this == c) ? this : null;
 					}
 				}
 			}

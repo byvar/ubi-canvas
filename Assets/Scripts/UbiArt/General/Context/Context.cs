@@ -67,7 +67,11 @@ namespace UbiArt
 
 		#region Settings
 
-		public Settings Settings { get; }
+		public Settings Settings { get; protected set; }
+
+		public void ChangeSettings(Settings newSettings) {
+			Settings = newSettings;
+		}
 
 		protected Dictionary<Type, object> AdditionalSettings { get; }
 		public T GetSettings<T>(bool throwIfNotFound = true)

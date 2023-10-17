@@ -3,10 +3,9 @@
 		public override ActorComponent_Template Convert(Context context, Actor_Template actor, Settings oldSettings, Settings newSettings) {
 			base.Convert(context, actor, oldSettings, newSettings);
 			if (newSettings.Game == Game.RL) {
-				foreach (var comp in actor.COMPONENTS) {
-					if (comp?.obj is PlayerDetectorComponent_Template pdc) {
-						return (this == pdc) ? this : null;
-					}
+				var firstComponent = actor.GetComponent<PlayerDetectorComponent_Template>();
+				if (firstComponent != null && this != firstComponent) {
+					return null;
 				}
 			}
 			return this;

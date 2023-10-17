@@ -50,6 +50,10 @@ namespace UbiCanvas.Conversion {
 								for (int i = 0; i < simpleISC.Subscenes.Count; i++) {
 									var subscene = simpleISC.Subscenes[i];
 									var scene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, subscene.Path);
+									if (scene == null) {
+										TargetContext?.SystemLogger?.LogWarning($"{GetType().Name}: Couldn't find scene: {subscene.Path}");
+										continue;
+									}
 									subscene.Data = scene.obj;
 									if (string.IsNullOrWhiteSpace(subscene.ActorName)) {
 										var pathNoExtension = subscene.Path.Substring(0, subscene.Path.IndexOf('.'));
@@ -77,6 +81,7 @@ namespace UbiCanvas.Conversion {
 								for (int i = 0; i < simpleISC.Subscenes.Count; i++) {
 									var subscene = simpleISC.Subscenes[i];
 									var scene = subscene.Data;
+									if(scene == null) continue;
 									// Add exit triggers
 
 									// 1. Find all exits of the current scene

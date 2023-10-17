@@ -6,10 +6,9 @@ namespace UbiArt.ITF {
 		public override ActorComponent Convert(Context context, Actor actor, Settings oldSettings, Settings newSettings) {
 			base.Convert(context, actor, oldSettings, newSettings);
 			if (newSettings.Game == Game.RL) {
-				foreach (var comp in actor.COMPONENTS) {
-					if (comp?.obj is GraphicComponent c) {
-						//return (this == c) ? this : null;
-					}
+				var firstComponent = actor.GetComponent<GraphicComponent>();
+				if (firstComponent != null && this != firstComponent) {
+					//return null;
 				}
 			}
 			return this;

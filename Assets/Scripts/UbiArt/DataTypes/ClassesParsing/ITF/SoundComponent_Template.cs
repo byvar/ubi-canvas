@@ -5,6 +5,12 @@ namespace UbiArt.ITF {
 	public partial class SoundComponent_Template {
 		public override ActorComponent_Template Convert(Context context, Actor_Template actor, Settings oldSettings, Settings newSettings) {
 			base.Convert(context, actor, oldSettings, newSettings);
+			if (newSettings.Game == Game.RL) {
+				var firstComponent = actor.GetComponent<SoundComponent_Template>();
+				if(firstComponent != null && this != firstComponent) {
+					return null;
+				}
+			}
 			if (oldSettings.Game != newSettings.Game) {
 				/*soundList = null;
 				inputs = null;
@@ -31,13 +37,6 @@ namespace UbiArt.ITF {
 								}
 							}
 						}
-					}
-				}
-			}
-			if (newSettings.Game == Game.RL) {
-				foreach (var comp in actor.COMPONENTS) {
-					if (comp?.obj is SoundComponent_Template c) {
-						return (this == c) ? this : null;
 					}
 				}
 			}

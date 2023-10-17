@@ -11,7 +11,12 @@ namespace UbiArt.ITF {
 					for(int i = 0; i < rootDec.nodes.Count; i++) {
 						var rootNode = rootDec.nodes[i];
 						var name = rootNode.nameId;
-						var treeNode = behaviorTree.nodes.FirstOrDefault(n => n.obj.name == name);
+						Generic<BTNode_Template> treeNode = null;
+						if (name == null || name.IsNull) {
+							treeNode = rootNode.node;
+						} else {
+							treeNode = behaviorTree.nodes.FirstOrDefault(n => n.obj.name == name);
+						}
 						if (treeNode == null) {
 							UbiArtContext?.SystemLogger?.LogWarning($"BTAI tree conversion: Node with name {name} was not found");
 							continue;

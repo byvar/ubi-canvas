@@ -78,6 +78,11 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/fx/lifeelements2/dust/", "world/common/fx/lifeelements2/dust_adv/"));*/
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/common/ldfrieze/polystyrene/frieze/", "world/common/ldfrieze/polystyrene/frieze_adv/"));
+
+
+				// Enemy animations
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/enemy/jacquouille/animation/", "world/common/enemy/jacquouille/animation_rlc/"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -213,6 +218,7 @@ namespace UbiCanvas.Conversion {
 				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(usedFiles, Formatting.Indented));
 				Debug.Log($"Exported json: {exportFile}");
 			}
+			//mainContext.ChangeSettings(settings);
 			Debug.Log($"Finished exporting {sceneName}.");
 		}
 
