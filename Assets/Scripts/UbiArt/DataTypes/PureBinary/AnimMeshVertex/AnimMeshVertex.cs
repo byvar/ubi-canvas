@@ -14,11 +14,11 @@ namespace UbiArt.Animation {
 
 		public CListP<uint> animIndex; // Index of an animation is found using animIndex[IndexOf(stringID, animFriendly)]
 
-		public CListO<CListO<FrameMeshInfo>> frameMeshInfo;
-		public CListP<uint> unk3; // Vec2ds indices?
-		public uint unk4;
+		public CListO<CListO<FrameMeshInfo>> frameMeshInfo; // frameMeshInfo[animIndex][frame]
+		public CListP<uint> uvStartIndices; // Vec2ds indices?
+		public CListO<CListP<uint>> unk4;
 		public CListO<AABB> animAABB;
-		public CListO<Vec2d> vec2ds;
+		public CListO<Vec2d> uvs;
 		public CListO<PatchData> patches;
 		public CListP<string> animNames;
 
@@ -34,10 +34,10 @@ namespace UbiArt.Animation {
 			}
 			animIndex = s.SerializeObject<CListP<uint>>(animIndex, name: "animIndex");
 			frameMeshInfo = s.SerializeObject<CListO<CListO<FrameMeshInfo>>>(frameMeshInfo, name: "frameMeshInfo");
-			unk3 = s.SerializeObject<CListP<uint>>(unk3, name: "unk3");
-			unk4 = s.Serialize<uint>(unk4, name: "unk4");
+			uvStartIndices = s.SerializeObject<CListP<uint>>(uvStartIndices, name: "uvStartIndices");
+			unk4 = s.SerializeObject<CListO<CListP<uint>>>(unk4, name: "unk4");
 			animAABB = s.SerializeObject<CListO<AABB>>(animAABB, name: "aabb");
-			vec2ds = s.SerializeObject<CListO<Vec2d>>(vec2ds, name: "vec2ds");
+			uvs = s.SerializeObject<CListO<Vec2d>>(uvs, name: "uvs");
 			patches = s.SerializeObject<CListO<PatchData>>(patches, name: "patches");
 			animNames = s.SerializeObject<CListP<string>>(animNames, name: "animNames");
 		}

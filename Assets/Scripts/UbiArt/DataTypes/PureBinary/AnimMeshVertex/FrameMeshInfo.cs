@@ -7,7 +7,7 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			patchIndex = s.Serialize<uint>(patchIndex, name: "patchIndex");
-			patchesCount = s.Serialize<uint>(patchesCount, name: "mesh");
+			patchesCount = s.Serialize<uint>(patchesCount, name: "patchesCount");
 		}
 	}
 }

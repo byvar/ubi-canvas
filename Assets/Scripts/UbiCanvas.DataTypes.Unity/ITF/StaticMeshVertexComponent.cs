@@ -25,11 +25,11 @@ namespace UbiArt.ITF {
 			var context = UbiArtContext;
 			Material tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: material?.shader?.obj);
 			foreach (var element in staticMeshElements) {
-				CreateGameObject(element, gao);
+				CreateGameObject(element, gao, tex_mat);
 			}
 		}
 
-		private GameObject CreateGameObject(StaticMeshElement element, GameObject gao) {
+		private GameObject CreateGameObject(StaticMeshElement element, GameObject gao, Material tex_mat) {
 			GameObject mesh_static;
 			MeshRenderer mr_static;
 			mesh_static = new GameObject($"{element?.frisePath?.id}");
@@ -47,9 +47,8 @@ namespace UbiArt.ITF {
 
 			MeshFilter mf = mesh_static.AddComponent<MeshFilter>();
 			MeshRenderer mr = mesh_static.AddComponent<MeshRenderer>();
-			Material mat = material.GetShaderMaterial();
 
-			mr.sharedMaterial = mat;
+			mr.sharedMaterial = tex_mat;
 				
 			int trisCount = element.staticIndexList.Count;
 			int[] tris = new int[trisCount];
