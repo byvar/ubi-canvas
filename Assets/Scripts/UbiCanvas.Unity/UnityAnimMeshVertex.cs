@@ -122,6 +122,7 @@ public class UnityAnimMeshVertex : MonoBehaviour {
 					Patches[i].Mesh.uv = points.Select((p, j) => AMV.uvs[patch.uvsIndex + j].GetUnityVector()).ToArray();
 					//Patches[i].Filter.sharedMesh = Patches[i].Mesh;
 
+					AnimMeshVertexComponent.SetColor(new UnityEngine.Color(1f, 1f, 1f, patch.alpha1 / 255f), Patches[i].Renderer);
 
 					var obj = Patches[i].Object;
 					if (!obj.activeSelf) obj.SetActive(true);

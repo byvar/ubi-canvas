@@ -104,5 +104,13 @@ namespace UbiArt.ITF {
 			}
 			r.SetPropertyBlock(mpb, index);
 		}
+
+		public void SetColor(UnityEngine.Color col, Renderer r, int index = 0) {
+			if (mpb == null) mpb = new MaterialPropertyBlock();
+			r.GetPropertyBlock(mpb, index);
+			mpb.SetColor("_ColorFactor", col);
+			r.SetPropertyBlock(mpb, index);
+		}
+
 	}
 }
