@@ -86,6 +86,10 @@ namespace UbiCanvas.Conversion {
 
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/blocker/drc/mechadoor/actor/tweening/door1.tpl", "world/common/blocker/drc/mechadoor/actor/tweening/door1_rlc.tpl"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/landofthedead/common/enemy/balancingaxe/", "world/landofthedead/common/enemy/balancingaxe_rlc/"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(

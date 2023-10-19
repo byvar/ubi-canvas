@@ -37,7 +37,7 @@ namespace UbiArt.ITF {
 						for (int i = 0; i < COMPONENTS.Count; i++) {
 							var compobj = COMPONENTS[i].obj;
 							var newobj = compobj?.Convert(c, this, previousSettings, settings);
-							if (newobj != compobj) {
+							if (newobj != compobj || compobj == null) {
 								if (newobj == null) {
 									RemovedComponents.Add(COMPONENTS[i]);
 								} else {

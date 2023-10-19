@@ -25,6 +25,7 @@ namespace UbiArt.ITF {
 
 		private void CreateGameObjects(GameObject gao) {
 			var context = UbiArtContext;
+			if (!context.Loader.LoadAnimations) return;
 			tex_mat = GFXMaterialShader_Template.GetShaderMaterial(shader: tpl?.material?.shader?.obj);
 
 			var parentGao = new GameObject($"AnimMeshVertex");
