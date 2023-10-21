@@ -24,6 +24,9 @@ namespace UbiArt {
 
 			return (T)Structs[type][id];
 		}
+		public T Get<T>(Path path)
+			where T : class, ICSerializable => Get<T>(path?.stringID);
+
 
 		public void Add<T>(StringID id, T serializable)
 			where T : class, ICSerializable {

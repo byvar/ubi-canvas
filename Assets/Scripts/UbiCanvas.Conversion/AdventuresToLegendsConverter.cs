@@ -83,7 +83,9 @@ namespace UbiCanvas.Conversion {
 				// Enemy animations
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/enemy/jacquouille/animation/", "world/common/enemy/jacquouille/animation_rlc/"));
-
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/mountain/common/enemy/minotaur/animation/", "world/mountain/common/enemy/minotaur/animation_rlc/"));
+				
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl"));
 				conversionSettings.PathConversionRules.Add(
@@ -105,6 +107,7 @@ namespace UbiCanvas.Conversion {
 			//FixAllLumsChainSpawnMode(mainContext, settings, scene);
 			LevelSpecificChanges(mainContext, settings, scene);
 			FixNinjas(mainContext, settings, scene);
+			FixMinotaurUTurnAnimation(mainContext, settings);
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, scene);
 			FixLumKingMusic(mainContext, settings, scene);
 			FixCameraModifierBlend(mainContext, settings, scene);
@@ -660,6 +663,51 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public void FixMinotaurUTurnAnimation(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var anim = oldContext.Cache.Get<AnimTrack>(new Path("world/mountain/common/enemy/minotaur/animation/stand_uturn.anm").stringID);
+			if (anim != null) {
+				/*anim.length = 20;
+				anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f.frame <= 20 && f.frame != 19).ToList());
+				foreach (var b in anim.bonesLists) {
+					if(b.amountPAS > 0) b.amountPAS--;
+				}*/
+				anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f.frame != 19).ToList());
+				anim.frameEvents.FirstOrDefault(f => f.frame == 20).frame = 19;
+			}
+			anim = oldContext.Cache.Get<AnimTrack>(new Path("world/mountain/common/enemy/minotaur/animation/fight_stand_uturn.anm").stringID);
+			if (anim != null) {
+				/*anim.length = 25;
+				anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f.frame <= 25 && f.frame != 24).ToList());
+				foreach (var b in anim.bonesLists) {
+					if(b.amountPAS > 0) b.amountPAS--;
+				}*/
+				anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f.frame != 24).ToList());
+				anim.frameEvents.FirstOrDefault(f => f.frame == 25).frame = 24;
+			}
+
+			/*Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates == null) return;
+
+			foreach (var tplPair in actorTemplates) {
+				var tpl = tplPair.Value as GenericFile<Actor_Template>;
+				if (tpl?.obj == null) continue;
+				var animatedComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
+				if (animatedComponent?.animSet?.animPackage?.skeleton?.FullPath == "world/mountain/common/enemy/minotaur/animation/minotaur_squeleton.skl") {
+					if (animatedComponent?.animSet?.animations == null) continue;
+					var badAnim = new StringID(0x2AB01C44);
+					if (animatedComponent?.tree?.nodes?.Any(n => n?.obj?.nodeName == badAnim) ?? false) {
+						animatedComponent.tree.nodes = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>(
+							animatedComponent.tree.nodes.Where(n => n?.obj?.nodeName != badAnim).ToList());
+					}
+				}
+			}*/
+		}
+
 		public void FixCameraModifierBlend(Context oldContext, Settings newSettings, Scene scene) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -682,16 +730,7 @@ namespace UbiCanvas.Conversion {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
-			Loader l = oldContext.Loader;
-			var structs = l.Context.Cache.Structs;
-			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
-			if (actorTemplates == null) return;
-
-
-			var exitflagPath = new Path("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl");
-			if (!actorTemplates.ContainsKey(exitflagPath.stringID)) return;
-
-			var tpl = actorTemplates[exitflagPath.stringID] as GenericFile<Actor_Template>;
+			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(new Path("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl"));
 
 			if (tpl?.obj == null) return;
 
@@ -722,17 +761,9 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public void AddCaptainAI(Context oldContext, Settings newSettings, Scene scene) {
-			Loader l = oldContext.Loader;
-			var structs = l.Context.Cache.Structs;
-			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
-			if (actorTemplates == null) return;
-
 			const string captainStateInput = "captain_state";
-
 			var exitflagPath = new Path("world/rlc/common/gpe/exitflag/components/exitflag.tpl");
-			if (!actorTemplates.ContainsKey(exitflagPath.stringID)) return;
-
-			var tpl = actorTemplates[exitflagPath.stringID] as GenericFile<Actor_Template>;
+			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(exitflagPath);
 
 			if (tpl?.obj == null) return;
 			//tpl.obj.AddComponent<LinkComponent_Template>();
@@ -904,15 +935,8 @@ namespace UbiCanvas.Conversion {
 
 		public void FixLumKingMusic(Context oldContext, Settings newSettings, Scene scene) {
 			// Note: music manager works and starts the song, but lum king doesn't turn any lums purple :(
-			Loader l = oldContext.Loader;
-			var structs = l.Context.Cache.Structs;
-			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
-			if (actorTemplates == null) return;
-
 			var musicManagerPath = new Path("sound/common/modifiers/lums/junglelummusicmanager.tpl");
-			if(!actorTemplates.ContainsKey(musicManagerPath.stringID)) return;
-
-			var tpl = actorTemplates[musicManagerPath.stringID] as GenericFile<Actor_Template>;
+			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(musicManagerPath);
 
 			if (tpl?.obj == null) return;
 			var sndComponent = tpl.obj.GetComponent<SoundComponent_Template>();

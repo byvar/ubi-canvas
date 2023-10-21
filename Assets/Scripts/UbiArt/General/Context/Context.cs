@@ -232,13 +232,18 @@ namespace UbiArt
 			"ReceivedHitLevel", "ReceivedHitType",
 			"AirPose", "ActionPose", "OrientationPose",
 			"MoveCursor", "PrepareHitCursor", "SwimCurveCursor",
+			"AngleRangeMin", "AngleRangeMax",
 
 			// Enemy animation inputs
 			"ReceivedHitCount", "ReceivedHitDirection",
 			"AnimCursor", "OrientationCursor", "TargetCursor",
-			"BlockingContact", "BoneAlpha", "EjectionState", "FishingMode", "HasCage", "HasFruit", "Health", "HurtMode",
+			"BlockingContact", "BoneAlpha", "EjectionState", "Fight", "FishingMode",
+			"HasCage", "HasFruit", "Health", "HurtMode",
 			"MoveAttack", "ParachuteMode", "Pedestal", "PerformCharge", "SplinterCell", "State",
 			"StunBullet", "Stunned", "WallOrientation", "WindForce", "IsNaked", "InputLumsColor", "IsInAir",
+
+			// Common BTAI node names
+			"ReceiveHit", "ReceiveCrush", "Roaming", "Idle", "SpotTarget", "Charge", "Stun", "TickleGeneric", "Drown",
 
 			// RO2: Familiies
 			"Rayman", "Globox", "Barbara", "Teensy",

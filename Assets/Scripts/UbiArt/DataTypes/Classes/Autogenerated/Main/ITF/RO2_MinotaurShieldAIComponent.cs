@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_MinotaurShieldAIComponent : RO2_AIComponent {
-		public bool standOnce;
-		public bool useDestructionDelay;
+		public bool standOnce = true;
+		public bool useDestructionDelay = true;
 		public bool dead;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
