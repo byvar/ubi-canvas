@@ -107,7 +107,7 @@ namespace UbiCanvas.Conversion {
 			//FixAllLumsChainSpawnMode(mainContext, settings, scene);
 			LevelSpecificChanges(mainContext, settings, scene);
 			FixNinjas(mainContext, settings, scene);
-			FixMinotaurUTurnAnimation(mainContext, settings);
+			FixAllUTurnAnimations(mainContext, settings);
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, scene);
 			FixLumKingMusic(mainContext, settings, scene);
 			FixCameraModifierBlend(mainContext, settings, scene);
@@ -664,51 +664,40 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void FixMinotaurUTurnAnimation(Context oldContext, Settings newSettings) {
+		public void FixAllUTurnAnimations(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			// Note: Caused by UTurn animation having extra unflipped frames after UTurn AnimGameplayEvent event (0xB3EF049E) not supported in Legends
+			// Stop event = 0xD42CA04D
+			var structs = oldContext.Cache.Structs;
+			var anims = structs[typeof(AnimTrack)];
+			if (anims == null) return;
 
-			var anim = oldContext.Cache.Get<AnimTrack>(new Path("world/mountain/common/enemy/minotaur/animation/stand_uturn.anm").stringID);
-			if (anim != null) {
-				/*anim.length = 20;
-				anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f.frame <= 20 && f.frame != 19).ToList());
-				foreach (var b in anim.bonesLists) {
-					if(b.amountPAS > 0) b.amountPAS--;
-				}*/
-				anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f.frame != 19).ToList());
-				anim.frameEvents.FirstOrDefault(f => f.frame == 20).frame = 19;
-			}
-			anim = oldContext.Cache.Get<AnimTrack>(new Path("world/mountain/common/enemy/minotaur/animation/fight_stand_uturn.anm").stringID);
-			if (anim != null) {
-				/*anim.length = 25;
-				anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f.frame <= 25 && f.frame != 24).ToList());
-				foreach (var b in anim.bonesLists) {
-					if(b.amountPAS > 0) b.amountPAS--;
-				}*/
-				anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f.frame != 24).ToList());
-				anim.frameEvents.FirstOrDefault(f => f.frame == 25).frame = 24;
-			}
+			var flipMarker = new StringID(0xB3EF049E);
+			var stopMarker = new StringID(0xD42CA04D);
+			bool IsFlip(AnimTrackFrameEvents.AnimMarkerEvent e) => e.type == AnimTrackFrameEvents.AnimMarkerEvent.AnimMarkerEventType.AnimGameplayEvent && e.marker == flipMarker;
+			bool IsStop(AnimTrackFrameEvents.AnimMarkerEvent e) => e.type == AnimTrackFrameEvents.AnimMarkerEvent.AnimMarkerEventType.AnimAnimationEvent && e.marker == stopMarker;
 
-			/*Loader l = oldContext.Loader;
-			var structs = l.Context.Cache.Structs;
-			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
-			if (actorTemplates == null) return;
+			foreach (var animPair in anims) {
+				var anim = animPair.Value as AnimTrack;
+				if (anim.frameEvents != null) {
+					var frameFlip = anim.frameEvents.FirstOrDefault(f => f.events?.Any(e => IsFlip(e)) ?? false);
+					if(frameFlip == null) continue;
+					var frameStop = anim.frameEvents.FirstOrDefault(f => f.events?.Any(e => IsStop(e)) ?? false);
+					if(frameStop == null) continue;
+					if(frameFlip.frame != frameStop.frame - 1) continue;
 
-			foreach (var tplPair in actorTemplates) {
-				var tpl = tplPair.Value as GenericFile<Actor_Template>;
-				if (tpl?.obj == null) continue;
-				var animatedComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
-				if (animatedComponent?.animSet?.animPackage?.skeleton?.FullPath == "world/mountain/common/enemy/minotaur/animation/minotaur_squeleton.skl") {
-					if (animatedComponent?.animSet?.animations == null) continue;
-					var badAnim = new StringID(0x2AB01C44);
-					if (animatedComponent?.tree?.nodes?.Any(n => n?.obj?.nodeName == badAnim) ?? false) {
-						animatedComponent.tree.nodes = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>(
-							animatedComponent.tree.nodes.Where(n => n?.obj?.nodeName != badAnim).ToList());
+					// Remove flip event
+					frameFlip.events = new CListO<AnimTrackFrameEvents.AnimMarkerEvent>(frameFlip.events.Where(e => !IsFlip(e)).ToList());
+					// Add stop events to flip frame
+					foreach (var ev in frameStop.events) {
+						frameFlip.events.Add(ev);
 					}
+					// Remove stop frame
+					anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f != frameStop).ToList());
 				}
-			}*/
+			}
 		}
 
 		public void FixCameraModifierBlend(Context oldContext, Settings newSettings, Scene scene) {
