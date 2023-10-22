@@ -112,6 +112,7 @@ namespace UbiCanvas.Conversion {
 			FixLumKingMusic(mainContext, settings, scene);
 			FixCameraModifierBlend(mainContext, settings, scene);
 			PerformHangSpotWorkaround(mainContext, settings, scene);
+			AddPreInstructionSets(mainContext, settings, scene);
 			FixStaticMeshVertexComponentCulling(mainContext, settings, scene);
 			AddCaptainAI(mainContext, settings, scene);
 			DowngradeFxUV(mainContext, settings);
@@ -849,6 +850,75 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 
+		}
+
+		public void AddPreInstructionSets(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var structs = oldContext.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates == null) return;
+
+			void ProcessTweenComponent(TweenComponent tween, TweenComponent_Template tpl) {
+				if (tween.instructionSets == null) tween.instructionSets = new CListO<TweenComponent.InstructionSet>();
+				// Instantiate the preInstructionSets, add them to beginning of instruction sets list
+				List<TweenComponent.InstructionSet> preInstructionSets = new List<TweenComponent.InstructionSet>();
+				foreach (var pre in tpl.preInstructionSets) {
+					var set = new TweenComponent.InstructionSet() {
+						name = pre.name
+					};
+					TweenInstruction InstantiateInstruction(TweenInstruction_Template ctpl) => ctpl?.Instantiate(oldContext);
+					set.instructions = new CArrayO<Generic<TweenInstruction>>(pre.instructions.Select(c => new Generic<TweenInstruction>(InstantiateInstruction(c.obj))).ToArray());
+					preInstructionSets.Add(set);
+				}
+
+				tween.instructionSets = new CListO<TweenComponent.InstructionSet>(preInstructionSets.Concat(tween.instructionSets).ToList());
+			}
+			void ProcessTweenComponentTPL(TweenComponent_Template tpl) {
+				// Link preInstructionSets
+				for (int i = 0; i < tpl.preInstructionSets.Count; i++) {
+					var set = tpl.preInstructionSets[i];
+					var nextSet = (i+1) < tpl.preInstructionSets.Count ? tpl.preInstructionSets[i+1] : tpl.instructionSets.FirstOrDefault();
+					if(nextSet == null) continue;
+					if(set.nextSet == null || set.nextSet.IsNull) set.nextSet = nextSet.name;
+				}
+				// Add preInstructionSets to beginning of instruction sets list
+				tpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>(tpl.preInstructionSets.Concat(tpl.instructionSets).ToList());
+			}
+
+			// Process every actor template that has TweenComponent
+			foreach (var tplPair in actorTemplates) {
+				var tpl = tplPair.Value as GenericFile<Actor_Template>;
+				if (tpl?.obj == null) continue;
+				var tweenComponentTPL = tpl.obj.GetComponent<TweenComponent_Template>();
+				if(tweenComponentTPL?.preInstructionSets == null || tweenComponentTPL.preInstructionSets.Count == 0) continue;
+
+				// Found a template that uses preInstructionSets.
+				// Now find every actor in the scene that uses this template without instanceTemplate
+				var tweenActors = scene.FindActors(a => a.template?.obj == tpl?.obj);
+				foreach (var res in tweenActors) {
+					var act = res.Result;
+					var tweenComponent = act.GetComponent<TweenComponent>();
+					if(tweenComponent?.instanceTemplate?.value != null) continue; // Actor uses instance template, leave for later
+
+					ProcessTweenComponent(tweenComponent, tweenComponentTPL);
+				}
+				ProcessTweenComponentTPL(tweenComponentTPL);
+			}
+
+			// Now, same for tween components that use instanceTemplate
+			var tweenComponents = scene.FindActors(a => a.GetComponent<TweenComponent>() != null);
+			foreach (var res in tweenComponents) {
+				var act = res.Result;
+				var tweenComponent = act.GetComponent<TweenComponent>();
+				var tweenComponentTPL = tweenComponent?.instanceTemplate?.value;
+				if(tweenComponentTPL?.preInstructionSets == null || tweenComponentTPL.preInstructionSets.Count == 0)
+					continue;
+
+				ProcessTweenComponent(tweenComponent, tweenComponentTPL);
+				ProcessTweenComponentTPL(tweenComponentTPL);
+			}
 		}
 
 		public void FixStaticMeshVertexComponentCulling(Context oldContext, Settings newSettings, Scene scene) {
