@@ -111,6 +111,7 @@ namespace UbiCanvas.Conversion {
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, scene);
 			FixLumKingMusic(mainContext, settings, scene);
 			FixCameraModifierBlend(mainContext, settings, scene);
+			PerformHangSpotWorkaround(mainContext, settings, scene);
 			FixStaticMeshVertexComponentCulling(mainContext, settings, scene);
 			AddCaptainAI(mainContext, settings, scene);
 			DowngradeFxUV(mainContext, settings);
@@ -723,6 +724,139 @@ namespace UbiCanvas.Conversion {
 					CM.CM.modifierInertie = 0.82f;
 					CM.CM.constraintDelayToActivate = Vec3d.One * 2f;
 					CM.CM.constraintDelayToDisable = Vec3d.One * 2f;
+				}
+			}
+
+		}
+
+
+		public void PerformHangSpotWorkaround(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var hangspots = scene.FindActors(a => a.GetComponent<RO2_HangSpotComponent>() != null);
+			foreach (var res in hangspots) {
+				var act = res.Result;
+				var tpl = act.template?.obj;
+				var hangspotTPL = tpl.GetComponent<RO2_HangSpotComponent_Template>();
+				var hangspotLinks = act.GetComponent<LinkComponent>();
+				if (hangspotTPL != null && !hangspotTPL.allowOneHangOnly && (hangspotLinks?.Children?.Any() ?? false)) {
+					Actor CreateHangRelay(string suffix, Generic<UbiArt.ITF.Event> listenEvent, Generic<UbiArt.ITF.Event> relayEvent, bool once) {
+						var newPath = new Path(act.LUA.FullPath.Replace(".tpl", $"_{suffix}.tpl"));
+						var newCookedPath = new Path(l.CookedPaths[act.LUA.stringID].FullPath.Replace(".tpl", $"_{suffix}.tpl"), true);
+						var relay = new Actor() {
+							LUA = newPath,
+							USERFRIENDLY = $"{act.USERFRIENDLY}_{suffix}",
+							POS2D = act.POS2D
+						};
+						var links = relay.AddComponent<LinkComponent>();
+						links.Children = new CListO<ChildEntry>(hangspotLinks.Children.ToList());
+
+						if (once) {
+							// If it can only occur once, we have to abuse a TweenComponent and set the template to STARTPAUSED.
+							// We make sure the tweening autostarts and is limited to 1 iteration.
+							// Then, we set the template to STARTPAUSED, this way we can control when it starts.
+							var tween = relay.AddComponent<TweenComponent>();
+							tween.startSet = new StringID("Set");
+							tween.instructionSets = new CListO<TweenComponent.InstructionSet>() {
+								new TweenComponent.InstructionSet() {
+									name = new StringID("Set"),
+									instructions = new CArrayO<Generic<TweenInstruction>>() {
+										new Generic<TweenInstruction>(new TweenEvent())
+									}
+								}
+							};
+						} else {
+							// If the event can occur multiple times, we can simply relay the event
+							relay.AddComponent<RelayEventComponent>();
+						}
+
+						if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
+							l.Context.SystemLogger?.LogInfo($"Creating relay template (HANG): {newPath.FullPath}");
+							var newTPL = new Actor_Template();
+							newTPL.AddComponent<LinkComponent_Template>();
+							if (once) {
+								newTPL.STARTPAUSED = true;
+								var tweenTPL = newTPL.AddComponent<TweenComponent_Template>();
+								tweenTPL.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+									new TweenComponent_Template.InstructionSet() {
+										name = new StringID("Set"),
+										iterationCount = 1,
+										instructions = new CListO<Generic<TweenInstruction_Template>>() {
+											new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+												triggerSelf = false,
+												triggerChildren = true,
+												_event = relayEvent,
+											})
+										}
+									}
+								};
+							} else {
+								var relayTPL = newTPL.AddComponent<RelayEventComponent_Template>();
+								relayTPL.relays = new CListO<RelayData>(new List<RelayData>() {
+									new RelayData() {
+										triggerChildren = true,
+										triggerSelf = false,
+										eventToListen = listenEvent,
+										eventToRelay = relayEvent
+									},
+								});
+								if (once) {
+									relayTPL.relays.Add(new RelayData() {
+										triggerSelf = true,
+										triggerChildren = false,
+										eventToListen = new Generic<UbiArt.ITF.Event>(new EventPause() {
+											pause = true
+										}),
+										eventToRelay = new Generic<UbiArt.ITF.Event>(new EventPause() {
+											pause = true
+										})
+									});
+								}
+							}
+							var newTPLContainer = new GenericFile<Actor_Template>(newTPL);
+							l.CookedPaths[newPath.stringID] = newCookedPath;
+							l.Paths[newPath.stringID] = newPath;
+							structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTPLContainer;
+						}
+						res.ContainingScene.AddActor(relay, relay.USERFRIENDLY);
+
+						return relay;
+					}
+
+					List<Actor> createdRelays = new List<Actor>();
+					if ((hangspotTPL.hangEventTriggerOnce && hangspotTPL.onHangEvent?.obj != null)
+						|| (hangspotTPL.unHangEventTriggerOnce && hangspotTPL.onUnhangEvent?.obj != null)) {
+						// We use nonsensical hang events, if we use a relay (i.e. when not "once") this can be captured easily and "converted" into the actual event
+						// We can't just use the original events here because Relay doesn't recognize the parameters (e.g. trigger event on/off)
+						var newHangEvent = new Generic<UbiArt.ITF.Event>(new RO2_EventCommandAttackStart());
+						var newUnhangEvent = new Generic<UbiArt.ITF.Event>(new RO2_EventCommandAttackStop());
+						// If the event should only be sent once, we use a different approach with a TweenComponent that autostarts when unpaused.
+						// So the hang events should become unpause events in that case.
+						if(hangspotTPL.hangEventTriggerOnce)
+							newHangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventPause() { pause = false });
+						if (hangspotTPL.unHangEventTriggerOnce)
+							newUnhangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventPause() { pause = false });
+
+						var relay = CreateHangRelay("relay_hang", newHangEvent, hangspotTPL.onHangEvent, hangspotTPL.hangEventTriggerOnce);
+						createdRelays.Add(relay);
+						relay = CreateHangRelay("relay_unhang", newUnhangEvent, hangspotTPL.onUnhangEvent, hangspotTPL.unHangEventTriggerOnce);
+						createdRelays.Add(relay);
+
+						hangspotTPL.onHangEvent = newHangEvent;
+						hangspotTPL.onUnhangEvent = newUnhangEvent;
+					}
+					if (createdRelays.Any()) {
+						hangspotLinks.Children = new CListO<ChildEntry>();
+						foreach (var r in createdRelays) {
+							hangspotLinks.Children.Add(new ChildEntry() {
+								Path = new ObjectPath(r.USERFRIENDLY)
+							});
+						}
+					}
 				}
 			}
 
