@@ -5,6 +5,7 @@ using UbiCanvas.Helpers;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using System.Linq;
+using UbiArt.ITF;
 
 public class UnityWindowActor : UnityWindow {
 	[MenuItem("Ubi-Canvas/Actor Tools")]
@@ -21,12 +22,20 @@ public class UnityWindowActor : UnityWindow {
 			if (controller == null) controller = Controller.Obj;
 			if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
 				var c = Controller.MainContext;
-				string[] extensions = new string[] { $"*.act{(c.Settings.Cooked ? ".ckd" : "")}", $"*.tpl{(c.Settings.Cooked ? ".ckd" : "")}" };
-				if (c.Settings.EngineVersion == EngineVersion.RO) {
-					extensions = new string[] { $"*.act{(c.Settings.Cooked ? ".ckd" : "")}", "*.act_fake" };
-				}
+				string ExtensionActor = c.Settings.EngineVersion == EngineVersion.RO ? "uca" : "act";
+				string ExtensionActorTemplate = c.Settings.EngineVersion == EngineVersion.RO ? "act" : "tpl";
+				string ExtensionFrise = $"ucf";
+				//string ExtensionFriseConfig = $"*.fcg{(c.Settings.Cooked ? ".ckd" : "")}";
+				string ExtensionSubSceneActor = $"ucs";
+
+				string[] extensions = new string[] {
+					$"*.{ExtensionActor}{(c.Settings.Cooked ? ".ckd" : "")}",
+					$"*.{ExtensionActorTemplate}{(c.Settings.Cooked ? ".ckd" : "")}",
+					$"*.{ExtensionFrise}{(c.Settings.Cooked ? ".ckd" : "")}",
+					$"*.{ExtensionSubSceneActor}{(c.Settings.Cooked ? ".ckd" : "")}"
+				};
 				#region Add Actor
-				DrawHeader("Add Actor");
+				DrawHeader("Import Actor");
 				Rect rect = GetNextRect(vPaddingBottom: 4f);
 				string buttonString = "No actor file selected";
 				if (SelectedActorFile != null) {
@@ -72,14 +81,19 @@ public class UnityWindowActor : UnityWindow {
 				if (EditorButton("Load")) {
 					string pathFolder = System.IO.Path.GetDirectoryName(SelectedActorFile);
 					string pathFile = System.IO.Path.GetFileName(SelectedActorFile);
+					UbiArt.Path path = new Path(pathFolder, pathFile);
+					var extension = path.GetExtension(removeCooked: true).ToLowerInvariant();
 					if (sc != null) {
-						if (c.Settings.EngineVersion == EngineVersion.RO && !pathFile.ToLowerInvariant().EndsWith(".act_fake")
-							|| pathFile.ToLowerInvariant().EndsWith($".tpl{(c.Settings.Cooked ? ".ckd" : "")}")) {
+						if (extension == ExtensionActorTemplate) {
 							ExecuteTask(
-								controller.AdditionalLoad(controller.LoadTemplateAndCreateActor(sc, pathFile, pathFolder).AsTask())
+								controller.AdditionalLoad(controller.LoadTemplateAndCreateActor(sc, path).AsTask())
 							);
-						} else {
-							ExecuteTask(controller.AdditionalLoad(controller.LoadActor(sc, pathFile, pathFolder).AsTask()));
+						} else if (extension == ExtensionActor) {
+							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<Actor>(sc, path).AsTask()));
+						} else if (extension == ExtensionFrise) {
+							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<Frise>(sc, path).AsTask()));
+						} else if (extension == ExtensionSubSceneActor) {
+							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<SubSceneActor>(sc, path).AsTask()));
 						}
 					}
 				}
@@ -91,17 +105,26 @@ public class UnityWindowActor : UnityWindow {
 				UbiArt.ITF.Actor a = null;
 				if (Selection.activeGameObject != null) {
 					UnityPickable up = Selection.activeGameObject.GetComponent<UnityPickable>();
-					if (up != null && up.pickable != null && up.pickable.GetType() == typeof(UbiArt.ITF.Actor)) {
-						a = up.pickable as UbiArt.ITF.Actor;
+					if (up?.pickable != null && up.pickable is Actor act) {
+						a = act;
 					}
 				}
 				EditorGUI.LabelField(GetNextRect(), new GUIContent("Selected actor"), new GUIContent(a == null ? "None" : a.USERFRIENDLY));
-				ActorPath = FileField(GetNextRect(), "Actor path", ActorPath, true, extensions[0].Substring(2));
+				var chosenExtension = ExtensionActor;
+				if (a is Frise f) {
+					chosenExtension = ExtensionFrise;
+				} else if (a is SubSceneActor s) {
+					chosenExtension = ExtensionSubSceneActor;
+				}
+				if (c.Settings.Cooked) {
+					chosenExtension += ".ckd";
+				}
+				ActorPath = FileField(GetNextRect(), "Actor path", ActorPath, true, chosenExtension);
 
 				EditorGUI.BeginDisabledGroup(a == null || string.IsNullOrEmpty(ActorPath));
 				if (EditorButton("Export")) {
 					async UniTask exportActor() {
-						await controller.ExportActor(a, ActorPath);
+						await controller.ExportActorContainer(a, ActorPath);
 						recheckFiles = true;
 					};
 					ExecuteTask(exportActor());
@@ -115,6 +138,7 @@ public class UnityWindowActor : UnityWindow {
 			EditorHelpBox("Please start the scene to use this window.", MessageType.Info);
 		}
 	}
+
 
 	private Controller controller;
 

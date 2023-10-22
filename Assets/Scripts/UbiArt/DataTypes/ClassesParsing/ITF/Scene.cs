@@ -7,23 +7,56 @@ namespace UbiArt.ITF {
 	public partial class Scene {
 		// Returns whether actor was added to scene successfully
 		public bool AddActor(Actor a, string name) {
-			if (ACTORS == null) ACTORS = new CArrayO<Generic<Actor>>();
-			if (a != null && !ACTORS.Any(ac => ac?.obj == a)) {
-				if(string.IsNullOrEmpty(name))
-					name = a.USERFRIENDLY;
+			if(a == null) return false;
 
-				if(name != null) {
-					int i = 0;
-					var newName = name;
-					while(ACTORS.Any(ac => !ac.IsNull && ac.obj.USERFRIENDLY == newName)) {
-						newName = $"{name}@{i}";
-						i++;
+			if (UbiArtContext?.Settings?.EngineVersion == EngineVersion.RO) {
+				if(ACTORS_ORIGINS == null) ACTORS_ORIGINS = new CArrayO<Generic<Pickable>>();
+				if(FRISE_ORIGINS == null) FRISE_ORIGINS = new CArrayO<Generic<Pickable>>();
+				if (a != null && !ACTORS_ORIGINS.Any(ac => ac?.obj == a) && !FRISE_ORIGINS.Any(f => f?.obj == a)) {
+					if (string.IsNullOrEmpty(name))
+						name = a.USERFRIENDLY;
+
+					if (name != null) {
+						int i = 0;
+						var newName = name;
+						while (FindByName(newName) != null) {
+							newName = $"{name}@{i}";
+							i++;
+						}
+						a.USERFRIENDLY = newName;
 					}
-					a.USERFRIENDLY = newName;
-				}
-				ACTORS.Add(new Generic<Actor>(a));
+					if (a is Frise f) {
+						FRISE_ORIGINS.Add(new Generic<Pickable>(f));
+					} else {
+						ACTORS_ORIGINS.Add(new Generic<Pickable>(a));
+					}
 
-				return true;
+					return true;
+				}
+			} else {
+				if (ACTORS == null) ACTORS = new CArrayO<Generic<Actor>>();
+				if (FRISE == null) FRISE = new CListO<Frise>();
+				if (a != null && !ACTORS.Any(ac => ac?.obj == a) && !FRISE.Any(f => f == a)) {
+					if (string.IsNullOrEmpty(name))
+						name = a.USERFRIENDLY;
+
+					if (name != null) {
+						int i = 0;
+						var newName = name;
+						while (FindByName(newName) != null) {
+							newName = $"{name}@{i}";
+							i++;
+						}
+						a.USERFRIENDLY = newName;
+					}
+					if (a is Frise f) {
+						FRISE.Add(f);
+					} else {
+						ACTORS.Add(new Generic<Actor>(a));
+					}
+
+					return true;
+				}
 			}
 			return false;
 		}
@@ -80,6 +113,16 @@ namespace UbiArt.ITF {
 		}
 
 		#region Search
+		public Pickable FindByName(string name) {
+			if(name == null) return null;
+
+			Pickable p = ACTORS?.FirstOrDefault(act => act?.obj?.USERFRIENDLY == name)?.obj;
+			if (p == null) p = FRISE?.FirstOrDefault(f => f.USERFRIENDLY == name);
+			if (p == null) p = ACTORS_ORIGINS?.FirstOrDefault(act => act?.obj?.USERFRIENDLY == name)?.obj;
+			if (p == null) p = FRISE_ORIGINS?.FirstOrDefault(act => act?.obj?.USERFRIENDLY == name)?.obj;
+
+			return p;
+		}
 		public SearchResult<Pickable> FindPickable(Predicate<Pickable> p, SearchFlags flags = SearchFlags.AllRecursive) {
 			if (flags.HasFlag(SearchFlags.Frise)) {
 				if (FRISE != null) {

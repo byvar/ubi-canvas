@@ -667,6 +667,8 @@ namespace UbiCanvas.Conversion {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
+			// Note: Caused by UTurn animation having extra unflipped frames after UTurn AnimGameplayEvent event (0xB3EF049E) not supported in Legends
+
 			var anim = oldContext.Cache.Get<AnimTrack>(new Path("world/mountain/common/enemy/minotaur/animation/stand_uturn.anm").stringID);
 			if (anim != null) {
 				/*anim.length = 20;

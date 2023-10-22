@@ -98,14 +98,16 @@ public class Controller : MonoBehaviour {
 		loadingScreen.Active = false;
 	}
 
-	public async UniTask LoadActor(Scene scene, string pathFile, string pathFolder) {
-		ContainerFile<Actor> act = await MainContext.Loader.LoadExtraActor(pathFile, pathFolder);
+	public async UniTask LoadActorContainer<T>(Scene scene, UbiArt.Path path) where T : Actor, new() {
+		var ext = path.GetExtension(removeCooked: true);
+		var name = path.GetFilenameWithoutExtension(removeCooked: true);
+		ContainerFile<T> act = await MainContext.Loader.LoadExtra<ContainerFile<T>>(path);
 		if (act != null && act.obj != null) {
 			await TimeController.WaitFrame();
-			CSerializable c = await MainContext.Loader.Clone(act.obj, "act");
+			CSerializable c = await MainContext.Loader.Clone(act.obj, ext);
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
 			Actor a = c as Actor;
-			bool isAdded = scene.AddActor(a, pathFile.Substring(0, pathFile.IndexOf('.')));
+			bool isAdded = scene.AddActor(a, name);
 			if (isAdded) {
 				var sceneGao = await scene.GetGameObject();
 				await a.SetGameObjectParent(sceneGao);
@@ -115,17 +117,34 @@ public class Controller : MonoBehaviour {
 			await TimeController.WaitFrame();
 		}
 	}
+	public async UniTask ExportActorContainer(Actor actor, string path) {
+		string extension = MainContext?.Settings?.EngineVersion == EngineVersion.RO ? "uca" : "act";
+		if (actor is Frise f) {
+			extension = "ucf";
+		} else if (actor is SubSceneActor ssa) {
+			extension = "ucs";
+		}
+		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
+		loadingScreen.Active = true;
+		byte[] actorBytes = await MainContext.Loader.WriteActorFile(actor, extension);
+		if (actorBytes != null)
+			Util.ByteArrayToFile(path, actorBytes);
 
-	public async UniTask LoadTemplateAndCreateActor(Scene scene, string pathFile, string pathFolder) {
-		var p = new UbiArt.Path(pathFolder, pathFile);
-		p.LoadObject(MainContext, removeCooked: true);
+		GlobalLoadState.DetailedState = "Finished";
+		GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
+		loadingScreen.Active = false;
+	}
+
+	public async UniTask LoadTemplateAndCreateActor(Scene scene, UbiArt.Path path) {
+		path.LoadObject(MainContext, removeCooked: true);
+		var name = path.GetFilenameWithoutExtension(removeCooked: true);
 		await MainContext.Loader.LoadLoop();
-		var tpl = p.GetObject<GenericFile<Actor_Template>>();
+		var tpl = path.GetObject<GenericFile<Actor_Template>>();
 
 		if (tpl?.obj != null) {
 			await TimeController.WaitFrame();
-			Actor a = tpl.obj.Instantiate(p);
-			bool isAdded = scene.AddActor(a, pathFile.Substring(0, pathFile.IndexOf('.')));
+			Actor a = tpl.obj.Instantiate(path);
+			bool isAdded = scene.AddActor(a, name);
 			if (isAdded) {
 				var sceneGao = await scene.GetGameObject();
 				await a.SetGameObjectParent(sceneGao);
@@ -149,18 +168,6 @@ public class Controller : MonoBehaviour {
 		GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
 		loadingScreen.Active = false;
 
-	}
-
-	public async UniTask ExportActor(Actor actor, string path) {
-		GlobalLoadState.LoadState = GlobalLoadState.State.Loading;
-		loadingScreen.Active = true;
-		byte[] actorBytes = await MainContext.Loader.WriteActorFile(actor);
-		if (actorBytes != null)
-			Util.ByteArrayToFile(path, actorBytes);
-
-		GlobalLoadState.DetailedState = "Finished";
-		GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
-		loadingScreen.Active = false;
 	}
 
 	// Update is called once per frame

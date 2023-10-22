@@ -322,6 +322,11 @@ namespace UbiArt {
 				case "act":
 				case "ipk":
 				case "gf":
+
+                            // Custom extensions:
+				case "uca": // UbiCanvasActor
+				case "ucs": // UbiCanvas(Sub)Scene(Actor)
+				case "ucf": // UbiCanvasFrieze
 					flags |= SerializeFlags.Flags7;
 					break;
 				case "fcg":
@@ -383,12 +388,11 @@ namespace UbiArt {
 			pathsToLoad.Enqueue(new ObjectPlaceHolder(name, mem, action));
 		}
 
-		public async Task<ContainerFile<ITF.Actor>> LoadExtraActor(string pathFile, string pathFolder) {
-			if (pathFile.EndsWith(".act") || pathFile.EndsWith(".act.ckd")) {
-				Path p = new Path(pathFolder, pathFile);
+		public async Task<T> LoadExtra<T>(Path p) where T : class, ICSerializable, new() {
+			if (p != null && !p.IsNull) {
 				Loader l = this;
-				ContainerFile<ITF.Actor> a = null;
-				l.LoadFile<ContainerFile<ITF.Actor>>(p, result => a = result);
+				T a = null;
+				l.LoadFile<T>(p, result => a = result);
 				await LoadLoop();
 				return a;
 			}
@@ -477,11 +481,11 @@ namespace UbiArt {
 		public void LoadSaveFileOrigins(string path, Action<Ray_SaveData> onResult) => LoadUncooked<Ray_SaveData>(path, onResult);
 		public void LoadSaveFileAdventures(string path, Action<RLC_SaveData> onResult) => LoadUncooked<RLC_SaveData>(path, onResult);
 
-		public async Task<byte[]> WriteActorFile(ITF.Actor act) {
+		public async Task<byte[]> WriteActorFile(ITF.Actor act, string extension) {
 			Context.AsyncController.StartAsync();
 
 			// Clone actor
-			CSerializable c = await Clone(act, "act");
+			CSerializable c = await Clone(act, extension);
 			ITF.Actor actClone = c as ITF.Actor;
 			// Reset clone transform
 			actClone.SCALE = Vec2d.One;
@@ -501,7 +505,7 @@ namespace UbiArt {
 			using (MemoryStream stream = new MemoryStream()) {
 				using (Writer writer = new Writer(stream, Settings.IsLittleEndian)) {
 					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(Context, writer);
-					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, "act");
+					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, extension);
 					object toWrite = container;
 					w.Serialize(ref toWrite, container.GetType(), name: act.USERFRIENDLY);
 					serializedData = stream.ToArray();
