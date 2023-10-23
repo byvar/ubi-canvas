@@ -663,6 +663,19 @@ namespace UbiCanvas.Conversion {
 						// Maybe deleting the component is a decent solution too?
 						break;
 					}
+				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
+						// Move trigger a bit. This one doesn't trigger on retries, I think because Rayman spawns inside it rather than "entering" it.
+						// ActivatedOnGo also doesn't exxist in Legends.
+						var pickableTree = new PickableTree(scene);
+						var triggerNode = pickableTree.FollowObjectPath(new ObjectPath("jewelthief_ld|trigger_box_once@12"));
+						var trigger = triggerNode.Pickable as Actor;
+						trigger.SCALE = new Vec2d(2f,2f);
+						trigger.POS2D = new Vec2d(94.22f, 14.86f);
+						var trig = trigger.GetComponent<TriggerComponent>();
+						trig.mode = TriggerComponent.Mode.Multiple;
+						trig.activatedOnGo = false;
+						break;
+					}
 			}
 		}
 
