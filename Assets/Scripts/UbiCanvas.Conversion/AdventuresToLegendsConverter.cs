@@ -113,6 +113,7 @@ namespace UbiCanvas.Conversion {
 			FixCameraModifierBlend(mainContext, settings, scene);
 			PerformHangSpotWorkaround(mainContext, settings, scene);
 			AddPreInstructionSets(mainContext, settings, scene);
+			AddTriggerMoreEventTweens(mainContext, settings, scene);
 			FixStaticMeshVertexComponentCulling(mainContext, settings, scene);
 			AddCaptainAI(mainContext, settings, scene);
 			DowngradeFxUV(mainContext, settings);
@@ -918,6 +919,85 @@ namespace UbiCanvas.Conversion {
 
 				ProcessTweenComponent(tweenComponent, tweenComponentTPL);
 				ProcessTweenComponentTPL(tweenComponentTPL);
+			}
+		}
+
+		public void AddTriggerMoreEventTweens(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var triggers = scene.FindActors(a => a.GetComponent<TriggerComponent>() != null);
+			foreach (var res in triggers) {
+				var act = res.Result;
+				var triggerComponent = act.GetComponent<TriggerComponent>();
+				if(!(triggerComponent.onEnterMoreEvent?.Any() ?? false) && !(triggerComponent.onExitMoreEvent?.Any() ?? false))
+					continue;
+				var tpl = act.template?.obj;
+				var triggerTPL = tpl.GetComponent<TriggerComponent_Template>();
+				var triggerLinks = act.GetComponent<LinkComponent>();
+				if(!(triggerLinks?.Children?.Any() ?? false))
+					continue;
+
+				if (!(triggerTPL.onEnterEvent?.obj is EventTrigger) && (triggerTPL.onExitEvent?.obj != null)) {
+					oldContext?.SystemLogger?.LogWarning($"Unexpected moreEvents with trigger template: {act.LUA?.FullPath}");
+				}
+
+
+				if ((triggerComponent.onEnterMoreEvent?.Any() ?? false)) {
+					CreateTween("entermoreevent", triggerComponent.onEnterMoreEvent);
+				}
+				if ((triggerComponent.onExitMoreEvent?.Any() ?? false)) {
+					oldContext?.SystemLogger?.LogWarning($"Trigger has exit events: {act.USERFRIENDLY}");
+					CreateTween("exitmoreevent", triggerComponent.onExitMoreEvent);
+				}
+
+				Actor CreateTween(string suffix, CListO<Generic<UbiArt.ITF.Event>> events) {
+					var luaPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
+					var tweenAct = new Actor() {
+						LUA = luaPath,
+						USERFRIENDLY = $"{act.USERFRIENDLY}_{suffix}",
+						POS2D = act.POS2D
+					};
+					var tween = tweenAct.AddComponent<TweenComponent>();
+					var links = tweenAct.AddComponent<LinkComponent>();
+					links.Children = new CListO<ChildEntry>(triggerLinks.Children.ToList());
+
+					tween.startSet = new StringID("Set");
+					var instructions = events.Select(e => new Generic<TweenInstruction>(new TweenEvent())).ToArray();
+					var instructionsTPL = events.Select(e => new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+						triggerSelf = false,
+						triggerChildren = true,
+						_event = e,
+						duration = 0
+					})).ToList();
+					tween.instructionSets = new CListO<TweenComponent.InstructionSet>() {
+						new TweenComponent.InstructionSet() {
+							name = new StringID("Set"),
+							instructions = new CArrayO<Generic<TweenInstruction>>(instructions)
+						}
+					};
+					tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template());
+					var tpl = tween.instanceTemplate.value;
+					tpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+						new TweenComponent_Template.InstructionSet() {
+							name = new StringID("Set"),
+							iterationCount = 1,
+							triggable = true,
+							instructions = new CListO<Generic<TweenInstruction_Template>>(instructionsTPL)
+						}
+					};
+					tween.autoStart = false;
+
+					res.ContainingScene.AddActor(tweenAct, tweenAct.USERFRIENDLY);
+					triggerLinks.Children.Add(new ChildEntry() {
+						Path = new ObjectPath(tweenAct.USERFRIENDLY)
+					});
+
+					return tweenAct;
+				}
 			}
 		}
 

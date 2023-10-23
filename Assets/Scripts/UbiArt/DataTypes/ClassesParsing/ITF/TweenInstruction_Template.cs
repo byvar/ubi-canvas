@@ -15,6 +15,7 @@ namespace UbiArt.ITF {
 
 			var c = (TweenInstruction)Activator.CreateInstance(type);
 			c.InitContext(context);
+			c.name = new StringID(name?.stringID ?? uint.MaxValue);
 			return c;
 		}
 	}
