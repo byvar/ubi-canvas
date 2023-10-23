@@ -144,7 +144,15 @@ namespace UbiArt {
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);
 								} else if (obj is RO2_BTActionAppearBackground_Rope_Template btRope) {
-									var newBT = Merger.Merge<RO2_BTActionAppearBackgroundLadders_Template>(btRope);
+									//var newBT = Merger.Merge<RO2_BTActionAppearBackgroundLadders_Template>(btRope);
+									var newBT = Merger.Merge<RO2_BTActionAppearBackground_Template>(btRope);
+									newBT.animAnticipBack = btRope.animClimbBack;
+									newBT.animAnticipFore = btRope.animClimbFore;
+									newBT.animStandHideBack = btRope.animStandBack;
+									newBT.animStandHideFore = btRope.animStandFore;
+									newBT.animLandingBack = btRope.animLandBack;
+									newBT.animLandingFore = btRope.animLandFore;
+
 									newBT.name = btRope.name;
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);
