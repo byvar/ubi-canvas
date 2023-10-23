@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AlwaysActiveActorComponent_Template : ActorComponent_Template {
-		public float safeTimeOutDuration;
+		public float safeTimeOutDuration = -1f;
 		public bool stopOnScreenLeaving;
 		public Generic<Event> startEvent;
 		public Generic<Event> stopEvent;

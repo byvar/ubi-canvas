@@ -90,8 +90,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/blocker/drc/mechadoor/actor/tweening/door1.tpl", "world/common/blocker/drc/mechadoor/actor/tweening/door1_rlc.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/landofthedead/common/enemy/balancingaxe/", "world/landofthedead/common/enemy/balancingaxe_rlc/"));
+				//conversionSettings.PathConversionRules.Add(
+				//	new PathConversionRule("world/landofthedead/common/enemy/balancingaxe/", "world/landofthedead/common/enemy/balancingaxe_rlc/"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -111,6 +111,7 @@ namespace UbiCanvas.Conversion {
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, scene);
 			FixLumKingMusic(mainContext, settings, scene);
 			FixCameraModifierBlend(mainContext, settings, scene);
+			FixAspiNetworks(mainContext, settings, scene);
 			PerformHangSpotWorkaround(mainContext, settings, scene);
 			AddPreInstructionSets(mainContext, settings, scene);
 			AddTriggerMoreEventTweens(mainContext, settings, scene);
@@ -733,6 +734,27 @@ namespace UbiCanvas.Conversion {
 
 		}
 
+		public void FixAspiNetworks(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var apis = scene.FindActors(a => a.GetComponent<RO2_AspiNetworkComponent>() != null);
+			foreach (var res in apis) {
+				var act = res.Result;
+				var tpl = act.template?.obj;
+				if (tpl.GetComponent<BoxInterpolatorComponent_Template>() == null) {
+					var tplBoxInterplator = tpl.AddComponent<BoxInterpolatorComponent_Template>();
+				}
+				if (act.GetComponent<BoxInterpolatorComponent>() == null) {
+					var box = act.AddComponent<BoxInterpolatorComponent>();
+					box.innerBox = new AABB() {
+						MIN = new Vec2d(-100f, -100f),
+						MAX = new Vec2d(100f, 100f),
+					};
+					box.outerBox = box.innerBox;
+				}
+			}
+		}
 
 		public void PerformHangSpotWorkaround(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
@@ -2167,6 +2189,10 @@ namespace UbiCanvas.Conversion {
 					var linkPath = linkResult.Path;
 
 					var linkComponent = linkResult.Result.GetComponent<LinkComponent>();
+					
+					// Special case: Aspi networks need to be linked to the frise and its actor only!
+					if(linkResult.Result.GetComponent<RO2_AspiNetworkComponent>() != null) continue;
+
 					foreach (var linkChild in linkComponent.Children) {
 						try {
 							PickableTree.Node result = sceneTree.FollowObjectPath(linkPath, linkChild.Path);
@@ -2219,6 +2245,10 @@ namespace UbiCanvas.Conversion {
 					var linkPath = linkResult.Path;
 
 					var linkComponent = linkResult.Result.GetComponent<LinkComponent>();
+					
+					// Special case: Aspi networks need to be linked to the frise and its actor only!
+					if (linkResult.Result.GetComponent<RO2_AspiNetworkComponent>() != null) continue;
+
 					List<pair<Pickable, ChildEntry>> childrenToDuplicate = new List<pair<Pickable, ChildEntry>>();
 					foreach (var linkChild in linkComponent.Children) {
 						try {
