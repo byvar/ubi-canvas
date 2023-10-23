@@ -2245,7 +2245,7 @@ namespace UbiCanvas.Conversion {
 			var structs = l.Context.Cache.Structs;
 
 			var sceneTree = new PickableTree(scene);
-			var startpauseFrises = scene.FindPickables(p => p.STARTPAUSE && p is Frise);
+			var startpauseFrises = scene.FindPickables(p => p.STARTPAUSE && (p is Frise || p is SubSceneActor));
 			if (startpauseFrises.Any()) {
 				// Create pauseswitch actor
 				var pauseswitch = new Actor() {
@@ -2506,7 +2506,7 @@ namespace UbiCanvas.Conversion {
 
 			for(int i = 0; i < l.LoadedActors.Count; i++) { // Not foreach, as actors can be added during the loop
 				var act = l.LoadedActors[i];
-				if (act.STARTPAUSE && !(act.template?.obj?.STARTPAUSED ?? false)) {
+				if (act.STARTPAUSE && !(act.template?.obj?.STARTPAUSED ?? false) && !(act is SubSceneActor)) {
 
 					var ogPath = act.LUA;
 					var ogTpl = act.template;
