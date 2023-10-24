@@ -154,12 +154,7 @@ namespace UbiCanvas.Conversion {
 			var mainContext= MainContext;
 			var conversionSettings = ConversionSettings;
 
-			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
-			//FixAllLumsChainSpawnMode(mainContext, settings, scene);
 			LevelSpecificChanges(mainContext, settings, scene);
-
-			UpdateSoundFXReferences(mainContext, settings, conversionSettings, scene);
-			FixLumKingMusic(mainContext, settings, scene);
 
 			PerformHangSpotWorkaround(mainContext, settings, scene);
 
@@ -181,16 +176,18 @@ namespace UbiCanvas.Conversion {
 
 			FixNinjas(mainContext, settings);
 			FixAllUTurnAnimations(mainContext, settings);
-
+			UpdateSoundFXReferences(mainContext, settings, conversionSettings);
+			FixLumKingMusic(mainContext, settings);
 			FixCameraModifierBlend(mainContext, settings);
 			FixAspiNetworks(mainContext, settings);
 			FixTeensies(mainContext, settings);
-
+			PerformHangSpotWorkaround_TPLFix(mainContext, settings);
 			AddPreInstructionSets(mainContext, settings);
 
 			FixStaticMeshVertexComponentCulling(mainContext, settings);
 			AddCaptainAI(mainContext, settings);
 			DowngradeFxUV(mainContext, settings);
+
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
@@ -1003,8 +1000,9 @@ namespace UbiCanvas.Conversion {
 						relay = CreateHangRelay("relay_unhang", newUnhangEvent, hangspotTPL.onUnhangEvent, hangspotTPL.unHangEventTriggerOnce);
 						createdRelays.Add(relay);
 
-						hangspotTPL.onHangEvent = newHangEvent;
-						hangspotTPL.onUnhangEvent = newUnhangEvent;
+						// Moved to TPLFix function called way later in the process
+						//hangspotTPL.onHangEvent = newHangEvent;
+						//hangspotTPL.onUnhangEvent = newUnhangEvent;
 					}
 					if (createdRelays.Any()) {
 						hangspotLinks.Children = new CListO<ChildEntry>();
@@ -1017,6 +1015,40 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 
+		}
+
+		public void PerformHangSpotWorkaround_TPLFix(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates == null) return;
+
+			foreach (var tplPair in actorTemplates) {
+				var tpl = (GenericFile<Actor_Template>)tplPair.Value;
+				var hangspotTPL = tpl?.obj?.GetComponent<RO2_HangSpotComponent_Template>();
+				if(hangspotTPL == null) continue;
+
+
+				if ((hangspotTPL.hangEventTriggerOnce && hangspotTPL.onHangEvent?.obj != null)
+					|| (hangspotTPL.unHangEventTriggerOnce && hangspotTPL.onUnhangEvent?.obj != null)) {
+					// We use nonsensical hang events, if we use a relay (i.e. when not "once") this can be captured easily and "converted" into the actual event
+					// We can't just use the original events here because Relay doesn't recognize the parameters (e.g. trigger event on/off)
+					var newHangEvent = new Generic<UbiArt.ITF.Event>(new RO2_EventCommandAttackStart());
+					var newUnhangEvent = new Generic<UbiArt.ITF.Event>(new RO2_EventCommandAttackStop());
+					// If the event should only be sent once, we use a different approach with a TweenComponent that autostarts when unpaused.
+					// So the hang events should become unpause events in that case.
+					if (hangspotTPL.hangEventTriggerOnce)
+						newHangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventPause() { pause = false });
+					if (hangspotTPL.unHangEventTriggerOnce)
+						newUnhangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventPause() { pause = false });
+					
+					hangspotTPL.onHangEvent = newHangEvent;
+					hangspotTPL.onUnhangEvent = newUnhangEvent;
+				}
+			}
 		}
 
 		public void AddPreInstructionSets(Context oldContext, Settings newSettings) {
@@ -1374,7 +1406,7 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void FixLumKingMusic(Context oldContext, Settings newSettings, Scene scene) {
+		public void FixLumKingMusic(Context oldContext, Settings newSettings) {
 			// Note: music manager works and starts the song, but lum king doesn't turn any lums purple :(
 			var musicManagerPath = new Path("sound/common/modifiers/lums/junglelummusicmanager.tpl");
 			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(musicManagerPath);
@@ -1641,10 +1673,10 @@ namespace UbiCanvas.Conversion {
 			var lummusic = tpl.obj.AddComponent<RO2_LumMusicManagerAIComponent_Template>();
 
 			// Now that this is done, find all objects that use it in the scene and add the lummusic component
-			var lumMusicActors = scene.FindActors(a => a.LUA == musicManagerPath);
+			var lumMusicActors = oldContext.Loader.LoadedActors.Where(a => a.LUA == musicManagerPath);
 			foreach (var act in lumMusicActors) {
-				if (act.Result.GetComponent<RO2_LumMusicManagerAIComponent>() == null) {
-					act.Result.AddComponent<RO2_LumMusicManagerAIComponent>();
+				if (act.GetComponent<RO2_LumMusicManagerAIComponent>() == null) {
+					act.AddComponent<RO2_LumMusicManagerAIComponent>();
 				}
 			}
 
@@ -1963,7 +1995,7 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 		}
-		public void UpdateSoundFXReferences(Context oldContext, Settings newSettings, ConversionSettings conversionSettings, Scene scene) {
+		public void UpdateSoundFXReferences(Context oldContext, Settings newSettings, ConversionSettings conversionSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
@@ -2085,12 +2117,12 @@ namespace UbiCanvas.Conversion {
 					var tweenComponent = tpl.obj.GetComponent<TweenComponent_Template>();
 					if (tweenComponent != null) {
 						ProcessTweenComponent_Template(tweenComponent);
-						var sceneActors = scene.FindActors(a => a.template?.obj == tpl.obj && a.GetComponent<TweenComponent>() != null);
+						var sceneActors = l.LoadedActors.Where(a => a.template?.obj == tpl.obj && a.GetComponent<TweenComponent>() != null);
 						foreach (var act in sceneActors) {
-							var tween = act.Result.GetComponent<TweenComponent>();
+							var tween = act.GetComponent<TweenComponent>();
 							if (tween != null) {
 								if (tween?.instanceTemplate?.value != null) {
-									tweenComponent = act.Result.GetComponent<TweenComponent>().instanceTemplate.value;
+									tweenComponent = act.GetComponent<TweenComponent>().instanceTemplate.value;
 									ProcessTweenComponent_Template(tweenComponent);
 								}
 								if (tween.instructionSets != null) {
