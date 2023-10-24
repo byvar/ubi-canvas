@@ -16,26 +16,41 @@ using UbiCanvas.Helpers;
 using UnityEngine;
 
 namespace UbiCanvas.Conversion {
-	public class AdventuresToLegendsConverter {
-		public async UniTask Convert(Context mainContext, string rlPath, string outPath, string projectPath,
-			bool exportRaw = true, string lvlPath = null, Scene scene = null) {
-			var basePath = rlPath;
-			var settings = Settings.FromMode(Mode.RaymanLegendsPC);
+	public class AdventuresToLegendsConverter : IDisposable {
+		public Context LegendsContext { get; set; }
+		public Context MainContext { get; set; }
+		public ConversionSettings ConversionSettings { get; set; }
+		public Settings OldSettings { get; set; }
+		public Settings NewSettings { get; set; }
+		public string ProjectPath { get; set; }
+		public string ExportID { get; set; }
+		public string LegendsPath { get; set; }
 
-			lvlPath ??= UnitySettings.SelectedLevelFile;
-			scene ??= Controller.Obj.MainScene.obj;
-			string sceneName = System.IO.Path.GetFileName(lvlPath);
-			if (sceneName.Contains('.')) sceneName = sceneName.Substring(0, sceneName.IndexOf('.'));
+		public AdventuresToLegendsConverter(Context mainContext, string rlPath, string projectPath, string exportID = null) {
+			MainContext = mainContext;
+			if (exportID == null) {
+				var lvlPath = UnitySettings.SelectedLevelFile;
+				string sceneName = System.IO.Path.GetFileName(lvlPath);
+				if (sceneName.Contains('.')) sceneName = sceneName.Substring(0, sceneName.IndexOf('.'));
+				exportID = sceneName;
+			}
+			ExportID = exportID;
 
 			Loader l = mainContext.Loader;
 			var structs = l.Context.Cache.Structs;
 			var oldSettings = l.Settings;
 
+			ProjectPath = projectPath;
+			LegendsPath = rlPath;
+			OldSettings = oldSettings;
+			var settings = Settings.FromMode(Mode.RaymanLegendsPC);
+			NewSettings = settings;
+
 			// Create conversion settings
 			var conversionSettings = new ConversionSettings() {
-				OldSettings = oldSettings,
-				WwiseConversionSettings = await LoadWwiseConfig(mainContext, projectPath)
+				OldSettings = oldSettings
 			};
+			ConversionSettings = conversionSettings;
 			if (oldSettings.Game == Game.RA || oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/matshader/", "common/matshader_adv/"));
@@ -71,7 +86,7 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/fx/textures/", "world/common/fx/textures_adv/"));
 				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/textures_adv/smoke/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));*/
-				
+
 				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/", "world/common/fx_/"));*/
 				/*conversionSettings.PathConversionRules.Add(
@@ -90,7 +105,7 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/enemy/jacquouille/animation/", "world/common/enemy/jacquouille/animation_rlc/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/mountain/common/enemy/minotaur/animation/", "world/mountain/common/enemy/minotaur/animation_rlc/"));
-				
+
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl"));
 				conversionSettings.PathConversionRules.Add(
@@ -103,10 +118,34 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
 
+			LegendsContext = CreateContext(Mode.RaymanLegendsPC, enableSerializerLog: false);
+		}
 
+		public async Task Init() {
+			StartLoadingScreen();
+
+			ConversionSettings.WwiseConversionSettings = await LoadWwiseConfig(MainContext, ProjectPath);
+			await LegendsContext.Loader.LoadInitial();
+			await LegendsContext.Loader.LoadLoop();
+		}
+
+		protected void StartLoadingScreen() {
 			Controller.Obj.loadingScreen.Active = true;
 			GlobalLoadState.DetailedState = "Exporting map";
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
+		}
+		protected void StopLoadingScreen() {
+			Debug.Log($"Finished exporting {ExportID}.");
+			GlobalLoadState.DetailedState = "Finished";
+			GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
+			Controller.Obj.loadingScreen.Active = false;
+		}
+
+		public async Task ProcessScene(Scene scene = null) {
+			scene ??= Controller.Obj.MainScene.obj;
+			var settings = NewSettings;
+			var mainContext= MainContext;
+			var conversionSettings = ConversionSettings;
 
 			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
 			//FixAllLumsChainSpawnMode(mainContext, settings, scene);
@@ -132,6 +171,20 @@ namespace UbiCanvas.Conversion {
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
 			AddSceneConfigForRotatingPlatform(mainContext, settings, scene);
 
+			await Task.CompletedTask;
+		}
+
+		public async Task Write(string outPath, bool exportRaw = true) {
+			var mainContext = MainContext;
+			var settings = NewSettings;
+			var exportID = ExportID;
+			var projectPath = ProjectPath;
+			var basePath = LegendsPath;
+
+			Loader l = mainContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var oldSettings = OldSettings;
+			var conversionSettings = ConversionSettings;
 
 			// Step 1: create new paths dictionary
 			var ogDir = l.Settings.ITFDirectory;
@@ -225,14 +278,14 @@ namespace UbiCanvas.Conversion {
 
 			// Write atlas list
 			if (newUVEntries.Any()) {
-				string exportFile = System.IO.Path.Combine(projectPath, "json", "atlascontainer", $"{sceneName}.json");
+				string exportFile = System.IO.Path.Combine(projectPath, "json", "atlascontainer", $"{exportID}.json");
 				System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
 				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(newUVEntries, Formatting.Indented));
 				Debug.Log($"Exported json: {exportFile}");
 			}
 			// Write list of wwise files required by this map
 			if (conversionSettings.WwiseConversionSettings.UsedEvents.Any()) {
-				string exportFile = System.IO.Path.Combine(projectPath, "json", "wwise", $"{sceneName}.json");
+				string exportFile = System.IO.Path.Combine(projectPath, "json", "wwise", $"{exportID}.json");
 				System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(exportFile));
 				var usedEvents = conversionSettings.WwiseConversionSettings.UsedEvents;
 				var usedFiles = usedEvents
@@ -244,11 +297,6 @@ namespace UbiCanvas.Conversion {
 				System.IO.File.WriteAllText(exportFile, JsonConvert.SerializeObject(usedFiles, Formatting.Indented));
 				Debug.Log($"Exported json: {exportFile}");
 			}
-			//mainContext.ChangeSettings(settings);
-			Debug.Log($"Finished exporting {sceneName}.");
-			GlobalLoadState.DetailedState = "Finished";
-			GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
-			Controller.Obj.loadingScreen.Active = false;
 		}
 
 		protected Context CreateContext(Mode mode,
@@ -265,6 +313,18 @@ namespace UbiCanvas.Conversion {
 			return context;
 
 		}
+
+
+		protected async Task<T> LoadFile<T>(Context context, Path file) where T : class, ICSerializable, new() {
+			Path uncookedPath = file;
+			T outputObject = default;
+
+			context.Loader.LoadFile<T>(uncookedPath, (t) => outputObject = t);
+			await context.Loader.LoadLoop();
+			return outputObject;
+		}
+		protected async Task<T> LoadFileLegends<T>(Path file) where T : class, ICSerializable, new()
+			=> await LoadFile<T>(LegendsContext, file);
 
 		public async Task ConvertCostumes(string projectPath, Mode sourceMode) {
 			var mainMode = "";
@@ -3046,6 +3106,19 @@ namespace UbiCanvas.Conversion {
 				},
 			};
 		}
+		#endregion
+
+
+		#region Dispose
+
+		public void Close() {
+			StopLoadingScreen();
+			LegendsContext?.Dispose();
+		}
+		public void Dispose() {
+			Close();
+		}
+
 		#endregion
 	}
 }

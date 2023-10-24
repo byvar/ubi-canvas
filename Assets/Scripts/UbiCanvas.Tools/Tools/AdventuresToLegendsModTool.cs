@@ -47,13 +47,15 @@ namespace UbiCanvas.Tools
 					// Delete subdirectory if it exists. Any manual mods need to be added into a different subdirectory.
 					if(Directory.Exists(outputPath))
 						Directory.Delete(outputPath, true);
-					
+
 					// Convert
-					await new AdventuresToLegendsConverter().Convert(
-							Controller.MainContext,
-							UnitySettings.Tools_AdventuresToLegends_GamePath,
-							outputPath,
-							UnitySettings.Tools_AdventuresToLegends_ProjectPath);
+					using (var converter = new AdventuresToLegendsConverter(Controller.MainContext,
+						UnitySettings.Tools_AdventuresToLegends_GamePath,
+						UnitySettings.Tools_AdventuresToLegends_ProjectPath)) {
+						await converter.Init();
+						await converter.ProcessScene();
+						await converter.Write(outputPath);
+					}
 				} else {
 					UnityEngine.Debug.LogWarning("Please wait until the map is fully loaded before selecting this option.");
 				}
