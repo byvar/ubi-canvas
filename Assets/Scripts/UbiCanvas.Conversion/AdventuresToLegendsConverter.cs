@@ -2341,6 +2341,9 @@ namespace UbiCanvas.Conversion {
 					LUA = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl")
 				};
 				var spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>()?.INDEX == 0);
+				if (spawnPoint?.Result == null) {
+					spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>() != null);
+				}
 				var pos = spawnPoint.Result.POS2D;
 				if (spawnPoint.Path.levels?.Count > 0) {
 					var node = sceneTree.Root.GetNodeWithObjectPath(spawnPoint.Path);
