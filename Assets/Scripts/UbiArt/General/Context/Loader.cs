@@ -78,6 +78,9 @@ namespace UbiArt {
 		public Dictionary<StringID, Path> CookedPaths { get; private set; } = new Dictionary<StringID, Path>();
 
 		public List<Actor> LoadedActors = new List<Actor>();
+		public void AddLoadedActor(Actor a) {
+			LoadedActors.Add(a);
+		}
 
 		protected bool GameFileExists(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";

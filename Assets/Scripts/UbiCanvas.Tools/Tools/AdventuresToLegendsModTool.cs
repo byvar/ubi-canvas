@@ -54,6 +54,7 @@ namespace UbiCanvas.Tools
 						UnitySettings.Tools_AdventuresToLegends_ProjectPath)) {
 						await converter.Init();
 						await converter.ProcessScene();
+						await converter.ProcessNonScene();
 						await converter.Write(outputPath);
 					}
 				} else {

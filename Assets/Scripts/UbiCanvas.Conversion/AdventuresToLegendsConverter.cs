@@ -51,6 +51,15 @@ namespace UbiCanvas.Conversion {
 				OldSettings = oldSettings
 			};
 			ConversionSettings = conversionSettings;
+			InitPathConversionRules();
+
+			LegendsContext = CreateContext(Mode.RaymanLegendsPC, enableSerializerLog: false);
+		}
+
+		protected void InitPathConversionRules() {
+			var conversionSettings = ConversionSettings;
+			var oldSettings = OldSettings;
+
 			if (oldSettings.Game == Game.RA || oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/matshader/", "common/matshader_adv/"));
@@ -117,8 +126,6 @@ namespace UbiCanvas.Conversion {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
-
-			LegendsContext = CreateContext(Mode.RaymanLegendsPC, enableSerializerLog: false);
 		}
 
 		public async Task Init() {
@@ -150,26 +157,43 @@ namespace UbiCanvas.Conversion {
 			//AllZiplinesToRopes(mainContext, settings, conversionSettings);
 			//FixAllLumsChainSpawnMode(mainContext, settings, scene);
 			LevelSpecificChanges(mainContext, settings, scene);
-			FixNinjas(mainContext, settings, scene);
-			FixAllUTurnAnimations(mainContext, settings);
+
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings, scene);
 			FixLumKingMusic(mainContext, settings, scene);
-			FixCameraModifierBlend(mainContext, settings, scene);
-			FixAspiNetworks(mainContext, settings, scene);
-			FixTeensies(mainContext, settings, scene);
+
 			PerformHangSpotWorkaround(mainContext, settings, scene);
-			AddPreInstructionSets(mainContext, settings, scene);
+
 			AddTriggerMoreEventTweens(mainContext, settings, scene);
-			FixStaticMeshVertexComponentCulling(mainContext, settings, scene);
-			AddCaptainAI(mainContext, settings, scene);
-			DowngradeFxUV(mainContext, settings);
+
 			CreateFriseParents(mainContext, settings, scene);
 			MakeFrisesStartPaused(mainContext, settings, scene);
 			CreateLightingFrisesForRenderParams(mainContext, settings, scene);
+
+			AddSceneConfigForRotatingPlatform(mainContext, settings, scene);
+
+			await Task.CompletedTask;
+		}
+
+		public async Task ProcessNonScene() {
+			var settings = NewSettings;
+			var mainContext = MainContext;
+			var conversionSettings = ConversionSettings;
+
+			FixNinjas(mainContext, settings);
+			FixAllUTurnAnimations(mainContext, settings);
+
+			FixCameraModifierBlend(mainContext, settings);
+			FixAspiNetworks(mainContext, settings);
+			FixTeensies(mainContext, settings);
+
+			AddPreInstructionSets(mainContext, settings);
+
+			FixStaticMeshVertexComponentCulling(mainContext, settings);
+			AddCaptainAI(mainContext, settings);
+			DowngradeFxUV(mainContext, settings);
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
-			AddSceneConfigForRotatingPlatform(mainContext, settings, scene);
 
 			await Task.CompletedTask;
 		}
@@ -787,7 +811,7 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void FixCameraModifierBlend(Context oldContext, Settings newSettings, Scene scene) {
+		public void FixCameraModifierBlend(Context oldContext, Settings newSettings) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
 			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
@@ -805,13 +829,14 @@ namespace UbiCanvas.Conversion {
 
 		}
 
-		public void FixAspiNetworks(Context oldContext, Settings newSettings, Scene scene) {
+		public void FixAspiNetworks(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
-			var apis = scene.FindActors(a => a.GetComponent<RO2_AspiNetworkComponent>() != null);
-			foreach (var res in apis) {
-				var act = res.Result;
+			var l = oldContext.Loader;
+			foreach (var act in l.LoadedActors) {
+				if(act.GetComponent<RO2_AspiNetworkComponent>() == null) continue;
+
 				var tpl = act.template?.obj;
 				if (tpl.GetComponent<BoxInterpolatorComponent_Template>() == null) {
 					var tplBoxInterplator = tpl.AddComponent<BoxInterpolatorComponent_Template>();
@@ -827,15 +852,15 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void FixTeensies(Context oldContext, Settings newSettings, Scene scene) {
+		public void FixTeensies(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			var teensyPath = new Path("world/common/friendly/bt_friendly/teensy/components/teensy.tpl");
 
-			var apis = scene.FindActors(a => a.STARTPAUSE && a.GetComponent<RO2_FriendlyBTAIComponent>()?.prisonerType == RO2_FriendlyBTAIComponent.Enum_prisonerType.Pole);
-			foreach (var res in apis) {
-				var act = res.Result;
+			var l = oldContext.Loader;
+			foreach (var act in l.LoadedActors) {
+				if (!(act.STARTPAUSE && act.GetComponent<RO2_FriendlyBTAIComponent>()?.prisonerType == RO2_FriendlyBTAIComponent.Enum_prisonerType.Pole)) continue;
 				act.STARTPAUSE = false;
 			}
 
@@ -883,6 +908,7 @@ namespace UbiCanvas.Conversion {
 							USERFRIENDLY = $"{act.USERFRIENDLY}_{suffix}",
 							POS2D = act.POS2D
 						};
+						l.AddLoadedActor(relay);
 						var links = relay.AddComponent<LinkComponent>();
 						links.Children = new CListO<ChildEntry>(hangspotLinks.Children.ToList());
 
@@ -993,13 +1019,14 @@ namespace UbiCanvas.Conversion {
 
 		}
 
-		public void AddPreInstructionSets(Context oldContext, Settings newSettings, Scene scene) {
+		public void AddPreInstructionSets(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			var structs = oldContext.Cache.Structs;
 			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
 			if (actorTemplates == null) return;
+			var l = oldContext.Loader;
 
 			void ProcessTweenComponent(TweenComponent tween, TweenComponent_Template tpl) {
 				if (tween.instructionSets == null) tween.instructionSets = new CListO<TweenComponent.InstructionSet>();
@@ -1037,9 +1064,8 @@ namespace UbiCanvas.Conversion {
 
 				// Found a template that uses preInstructionSets.
 				// Now find every actor in the scene that uses this template without instanceTemplate
-				var tweenActors = scene.FindActors(a => a.template?.obj == tpl?.obj);
-				foreach (var res in tweenActors) {
-					var act = res.Result;
+				var tweenActors = l.LoadedActors.Where(a => a.template?.obj == tpl?.obj);
+				foreach (var act in tweenActors) {
 					var tweenComponent = act.GetComponent<TweenComponent>();
 					if(tweenComponent?.instanceTemplate?.value != null) continue; // Actor uses instance template, leave for later
 
@@ -1049,9 +1075,8 @@ namespace UbiCanvas.Conversion {
 			}
 
 			// Now, same for tween components that use instanceTemplate
-			var tweenComponents = scene.FindActors(a => a.GetComponent<TweenComponent>() != null);
-			foreach (var res in tweenComponents) {
-				var act = res.Result;
+			var tweenComponents = l.LoadedActors.Where(a => a.GetComponent<TweenComponent>() != null);
+			foreach (var act in tweenComponents) {
 				var tweenComponent = act.GetComponent<TweenComponent>();
 				var tweenComponentTPL = tweenComponent?.instanceTemplate?.value;
 				if(tweenComponentTPL?.preInstructionSets == null || tweenComponentTPL.preInstructionSets.Count == 0)
@@ -1101,6 +1126,7 @@ namespace UbiCanvas.Conversion {
 						USERFRIENDLY = $"{act.USERFRIENDLY}_{suffix}",
 						POS2D = act.POS2D
 					};
+					l.AddLoadedActor(tweenAct);
 					var tween = tweenAct.AddComponent<TweenComponent>();
 					var links = tweenAct.AddComponent<LinkComponent>();
 					links.Children = new CListO<ChildEntry>(triggerLinks.Children.ToList());
@@ -1141,7 +1167,7 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void FixStaticMeshVertexComponentCulling(Context oldContext, Settings newSettings, Scene scene) {
+		public void FixStaticMeshVertexComponentCulling(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
@@ -1152,9 +1178,9 @@ namespace UbiCanvas.Conversion {
 			// Add a box interpolator - this will overwrite the culling for the static mesh vertex component
 			tpl?.obj?.AddComponent<BoxInterpolatorComponent_Template>();
 
-			var smvs = scene.FindActors(a => a.GetComponent<StaticMeshVertexComponent>() != null);
+			var smvs = oldContext.Loader.LoadedActors.Where(a => a.GetComponent<StaticMeshVertexComponent>() != null);
 			foreach (var smva in smvs) {
-				var smvc = smva.Result.GetComponent<StaticMeshVertexComponent>();
+				var smvc = smva.GetComponent<StaticMeshVertexComponent>();
 
 				// Enlarge AABB
 				if (smvc.localAABB == null) smvc.localAABB = new AABB();
@@ -1163,7 +1189,7 @@ namespace UbiCanvas.Conversion {
 				aabb.MAX = aabb.MAX + new Vec2d(100, 100);
 
 				// Add box interpolator
-				var box = smva.Result.AddComponent<BoxInterpolatorComponent>();
+				var box = smva.AddComponent<BoxInterpolatorComponent>();
 				box.innerBox = aabb;
 				box.outerBox = aabb;
 
@@ -1175,7 +1201,7 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void AddCaptainAI(Context oldContext, Settings newSettings, Scene scene) {
+		public void AddCaptainAI(Context oldContext, Settings newSettings) {
 			const string captainStateInput = "captain_state";
 			var exitflagPath = new Path("world/rlc/common/gpe/exitflag/components/exitflag.tpl");
 			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(exitflagPath);
@@ -1339,10 +1365,10 @@ namespace UbiCanvas.Conversion {
 			};
 
 			// Now that this is done, find all objects that use it in the scene and add the RO2_BTAIComponent
-			var exitActors = scene.FindActors(a => a.LUA == exitflagPath);
+			var exitActors = oldContext.Loader.LoadedActors.Where(a => a.LUA == exitflagPath);
 			foreach (var act in exitActors) {
-				if (act.Result.GetComponent<RO2_BTAIComponent>() == null) {
-					act.Result.AddComponent<RO2_BTAIComponent>();
+				if (act.GetComponent<RO2_BTAIComponent>() == null) {
+					act.AddComponent<RO2_BTAIComponent>();
 					//act.Result.AddComponent<RO2_BTAIComponent>();
 				}
 			}
@@ -1635,13 +1661,14 @@ namespace UbiCanvas.Conversion {
 			}*/
 		}
 		public void AddMurfyGenericTouchActor(Context oldContext, Settings newSettings, Scene scene, Actor act) {
-
+			var l = oldContext.Loader;
 			// Create murfy activation action
 			var murfyTrigger = new Actor() {
 				LUA = new Path("world/common/logicactor/automurphy/component/trigger_box_automurphyactivation.tpl"),
 				USERFRIENDLY = "trigger_box_automurphyactivation",
 				POS2D = act.POS2D
 			};
+			l.AddLoadedActor(murfyTrigger);
 			murfyTrigger.AddComponent<LinkComponent>();
 
 			var playerDetector = murfyTrigger.AddComponent<PlayerDetectorComponent>();
@@ -1663,6 +1690,7 @@ namespace UbiCanvas.Conversion {
 				RELATIVEZ = 0f,
 				SCALE = new Vec2d(7.5f, 7.5f)
 			};
+			l.AddLoadedActor(murfyAction);
 			var murfyActionLink = murfyAction.AddComponent<LinkComponent>(); // Link to gyrocontroller later
 			var murfyActionShape = murfyAction.AddComponent<ShapeComponent>();
 			murfyActionShape.useShapeTransform = false;
@@ -1701,6 +1729,7 @@ namespace UbiCanvas.Conversion {
 				RELATIVEZ = 0.145384f,
 				SCALE = new Vec2d(2.228791f, 2.228791f),
 			};
+			l.AddLoadedActor(trajectoryNode);
 			var trajectoryComponent = trajectoryNode.AddComponent<RO2_FATrajectoryComponent>();
 			var linkComponent = trajectoryNode.AddComponent<LinkComponent>();
 
@@ -1717,7 +1746,7 @@ namespace UbiCanvas.Conversion {
 			};
 		}
 
-		public void FixNinjas(Context oldContext, Settings newSettings, Scene scene) {
+		public void FixNinjas(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
@@ -1809,6 +1838,7 @@ namespace UbiCanvas.Conversion {
 					POS2D = new Vec2d((maxX - minX) / 2f, (maxY - minY) / 2f),
 					SCALE = new Vec2d((maxX - minX) + 1f, (maxY - minY) + 1f),
 				};
+				oldContext.Loader.AddLoadedActor(trigger);
 				var l = trigger.AddComponent<LinkComponent>();
 				l.Children = new CListO<ChildEntry>() {
 					new ChildEntry() {
@@ -2400,6 +2430,7 @@ namespace UbiCanvas.Conversion {
 					USERFRIENDLY = "pauseswitch",
 					LUA = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl")
 				};
+				l.AddLoadedActor(pauseswitch);
 				var spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>()?.INDEX == 0);
 				if (spawnPoint?.Result == null) {
 					spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>() != null);
@@ -2487,6 +2518,7 @@ namespace UbiCanvas.Conversion {
 						xFLIPPED = act.xFLIPPED,
 						LUA = new Path(template),
 					};
+					l.AddLoadedActor(newAct);
 					var mr = newAct.AddComponent<MaskResolverComponent>(new MaskResolverComponent() {
 						clearBackLightBuffer = false,
 						clearFrontLightBuffer = false
@@ -2956,6 +2988,7 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 		public void AddMurfyActorsForRotatingPlatform(Context oldContext, Scene scene, Actor act, string parentName) {
+			var l = oldContext.Loader;
 
 			// Create murfy activation action
 			var murfyTrigger = new Actor() {
@@ -2963,6 +2996,7 @@ namespace UbiCanvas.Conversion {
 				USERFRIENDLY = "trigger_box_automurphyactivation",
 				POS2D = act.POS2D
 			};
+			l.AddLoadedActor(murfyTrigger);
 			murfyTrigger.AddComponent<LinkComponent>();
 
 			var playerDetector = murfyTrigger.AddComponent<PlayerDetectorComponent>();
@@ -2984,6 +3018,7 @@ namespace UbiCanvas.Conversion {
 				RELATIVEZ = 0.17f,
 				SCALE = new Vec2d(7.5f, 7.5f)
 			};
+			l.AddLoadedActor(murfyAction);
 			var murfyActionLink = murfyAction.AddComponent<LinkComponent>(); // Link to gyrocontroller later
 			var murfyActionShape = murfyAction.AddComponent<ShapeComponent>();
 			murfyActionShape.useShapeTransform = false;
@@ -3022,6 +3057,7 @@ namespace UbiCanvas.Conversion {
 				RELATIVEZ = 0.145384f,
 				SCALE = new Vec2d(2.228791f, 2.228791f),
 			};
+			l.AddLoadedActor(gyroController);
 			var gyroTex = gyroController.AddComponent<TextureGraphicComponent>();
 			gyroTex.disableLight = 0;
 			gyroTex.PrimitiveParameters = new GFXPrimitiveParam() {

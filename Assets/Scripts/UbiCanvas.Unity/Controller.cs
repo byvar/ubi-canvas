@@ -144,6 +144,7 @@ public class Controller : MonoBehaviour {
 		if (tpl?.obj != null) {
 			await TimeController.WaitFrame();
 			Actor a = tpl.obj.Instantiate(path);
+			MainContext.Loader.AddLoadedActor(a);
 			bool isAdded = scene.AddActor(a, name);
 			if (isAdded) {
 				var sceneGao = await scene.GetGameObject();
