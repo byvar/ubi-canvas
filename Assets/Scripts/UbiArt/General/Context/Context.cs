@@ -219,8 +219,8 @@ namespace UbiArt
 			"BaseJump", "Before", "BlendFrise", "BoneName", "Branch", "Breakable", "Bubo", "Cam", "Camera", "ChangeScale", "Checkpoint", "CineOutro", "Curve",
 			"Death", "Delay", "Disabled", "Disappear", "Door", "Drag", "Duration", "Eject", "Fishing", "Flame", "Flip", "FollowCam", "Ghost", "Hang",
 			"IgnoreCamera", "Keep_Orientation", "Lock", "Lookat", "LookatPhase", "MaxSpeed", "MinSpeed", "Moving", "NoLook", "NoTree", "Node", "Number",
-			"Offset", "ProceduralBone", "Roll", "RopeEnd", "SafeDistance", "Spawn", "SpawnPos", "Speed", "SpeedMax", "Screenshot",
-			"TakeCamera", "Target", "Teleport", "TouchScreen", "Torture", "Trigger", "Type", 
+			"Offset", "ProceduralBone", "RadarTarget", "Roll", "RopeEnd", "SafeDistance", "Spawn", "SpawnPos", "Speed", "SpeedMax", "Screenshot",
+			"TakeCamera", "Target", "Teleport", "TouchScreen", "Torture", "Trigger", "Type", "Waypoint",
 
 			// Animation inputs
 			"Move", "Jump", "Angle", "IsSprinting", "Speed", "Stance", "UTurn", "InAir", "IsPathBlocked",

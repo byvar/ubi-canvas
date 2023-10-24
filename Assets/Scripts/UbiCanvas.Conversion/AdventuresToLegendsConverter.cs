@@ -79,6 +79,11 @@ namespace UbiCanvas.Conversion {
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/common/ldfrieze/polystyrene/frieze/", "world/common/ldfrieze/polystyrene/frieze_adv/"));
 
+				// Teensies
+				//conversionSettings.PathConversionRules.Add(
+				//	new PathConversionRule("world/common/friendly/bt_friendly/teensy/components/teensy.tpl", "world/common/friendly/bt_friendly/teensy/components/teensy_rlc.tpl"));
+				//conversionSettings.PathConversionRules.Add(
+				//	new PathConversionRule("world/common/breakable/post/components/post.tpl", "world/common/breakable/post/components/post_rlc.tpl"));
 
 				// Enemy animations
 				conversionSettings.PathConversionRules.Add(
@@ -112,6 +117,7 @@ namespace UbiCanvas.Conversion {
 			FixLumKingMusic(mainContext, settings, scene);
 			FixCameraModifierBlend(mainContext, settings, scene);
 			FixAspiNetworks(mainContext, settings, scene);
+			FixTeensies(mainContext, settings, scene);
 			PerformHangSpotWorkaround(mainContext, settings, scene);
 			AddPreInstructionSets(mainContext, settings, scene);
 			AddTriggerMoreEventTweens(mainContext, settings, scene);
@@ -756,6 +762,40 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public void FixTeensies(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var teensyPath = new Path("world/common/friendly/bt_friendly/teensy/components/teensy.tpl");
+
+			var apis = scene.FindActors(a => a.STARTPAUSE && a.GetComponent<RO2_FriendlyBTAIComponent>()?.prisonerType == RO2_FriendlyBTAIComponent.Enum_prisonerType.Pole);
+			foreach (var res in apis) {
+				var act = res.Result;
+				act.STARTPAUSE = false;
+			}
+
+			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(teensyPath);
+			if (tpl != null) {
+				var btai = tpl.obj.GetComponent<RO2_FriendlyBTAIComponent_Template>();
+				var nodes = btai.behaviorTree.nodes;
+				foreach (var node in nodes) {
+					switch (node?.obj) {
+						case RO2_BTActionPrisonerRope_Template rope:
+							if(rope.countLumsReward == 100) rope.countLumsReward = 25;
+							break;
+						case RO2_BTActionPrisonerCage_Template cage:
+							if(cage.countLumsReward == 100) cage.countLumsReward = 25;
+							break;
+						case RO2_BTActionPrisonerPole_Template pole:
+							if(pole.countLumsReward == 100) pole.countLumsReward = 25;
+							break;
+						case RO2_BTActionPrisonerTorture_Template torture:
+							if(torture.countLumsReward == 100) torture.countLumsReward = 25;
+							break;
+					}
+				}
+			}
+		}
 		public void PerformHangSpotWorkaround(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
