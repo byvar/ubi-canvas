@@ -661,9 +661,14 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
-						var breakables = scene.FindPickables(a => a.USERFRIENDLY == "invisibleground_nowallslide_nowallrun@2");
+						/*var breakables = scene.FindPickables(a => a.USERFRIENDLY == "invisibleground_nowallslide_nowallrun@2");
 						foreach (var b in breakables) {
 							b.Result.STARTPAUSE = true;
+						}*/
+						var path = new Path("world/common/breakable/lumsjar/components/lumjar_nocol_nophys.tpl");
+						var breakables = scene.FindActors(a => a.LUA == path);
+						foreach (var b in breakables) {
+							FixLumJarNoPhys(oldContext, b.Result);
 						}
 						// TODO: Disable or remove other invisiblegrounds added for these lum jars.
 						// A lot of these have "StartDisable" in the stick to polyline component
@@ -2613,6 +2618,50 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 		}
+
+		public void FixLumJarNoPhys(Context oldContext, Actor act) {
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var physComponent = act.GetComponent<StickToPolylinePhysComponent>();
+			var disabled = physComponent.StartDisable;
+			var ogPath = act.LUA;
+			var ogTpl = act.template;
+
+			var suffix = disabled ? "disablephys" : "modphys";
+			var newPath = new Path(ogPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"));
+			var oldCookedPath = l.CookedPaths[ogPath.stringID];
+			var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"), true);
+			act.LUA = new Path(newPath.FullPath);
+
+			if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
+				l.Context.SystemLogger?.LogInfo($"Duplicating template (MODPHYS): {ogPath.FullPath}");
+				var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl") as Actor_Template);
+				newTpl.sizeOf = ogTpl.sizeOf;
+
+				var newTplPhys = newTpl.obj.GetComponent<StickToPolylinePhysComponent_Template>();
+				if (disabled) {
+					newTplPhys.physGravityMultiplier = 0f;
+					newTplPhys.physWeight = 0f;
+					newTplPhys.physForce2Speed = 0f;
+					newTplPhys.physFriction = 0f;
+					newTplPhys.physAngularAirMultiplier = 0f;
+					newTplPhys.physFanForceMultiplier = 0f;
+					newTplPhys.physWindMultiplier = 0f;
+					newTplPhys.physWaterMultiplier = 0f;
+				}
+				newTplPhys.physRadius = 0f;
+				var animTPL = newTpl.obj.GetComponent<AnimatedComponent_Template>();
+				animTPL.posOffset = new Vec2d(0,-0.8f);
+
+				l.CookedPaths[newPath.stringID] = newCookedPath;
+				l.Paths[newPath.stringID] = newPath;
+				structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
+			}
+			act.template = (GenericFile<Actor_Template>)structs[typeof(GenericFile<Actor_Template>)][newPath.stringID];
+		}
+
+
 		public void DuplicateLightingMushroomForGPEColor(Context oldContext, Settings newSettings) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
