@@ -34,12 +34,13 @@ namespace UbiArt {
 			}
 		}
 
-		public virtual CSerializable Clone(string extension) {
+		public virtual CSerializable Clone(string extension, Context context = null) {
 			byte[] serializedData = null;
+			context ??= UbiArtContext;
 			CSerializable result = null;
 			using (MemoryStream stream = new MemoryStream()) {
-				using (Writer writer = new Writer(stream, UbiArtContext.Settings.IsLittleEndian)) {
-					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(UbiArtContext, writer);
+				using (Writer writer = new Writer(stream, context.Settings.IsLittleEndian)) {
+					CSerializerObjectBinaryWriter w = new CSerializerObjectBinaryWriter(context, writer);
 					Loader.ConfigureSerializeFlagsForExtension(ref w.flags, ref w.properties, extension);
 					object toWrite = this;
 					w.Serialize(ref toWrite, GetType(), name: "clone");
@@ -47,8 +48,8 @@ namespace UbiArt {
 				}
 			}
 			using (MemoryStream stream = new MemoryStream(serializedData)) {
-				using (Reader reader = new Reader(stream, UbiArtContext.Settings.IsLittleEndian)) {
-					CSerializerObject r = new CSerializerObjectBinary(UbiArtContext, reader);
+				using (Reader reader = new Reader(stream, context.Settings.IsLittleEndian)) {
+					CSerializerObject r = new CSerializerObjectBinary(context, reader);
 					Loader.ConfigureSerializeFlagsForExtension(ref r.flags, ref r.properties, extension);
 					object toRead = null;
 					r.Serialize(ref toRead, GetType(), name: "clone");

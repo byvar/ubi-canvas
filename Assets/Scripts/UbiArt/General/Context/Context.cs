@@ -235,6 +235,7 @@ namespace UbiArt
 			"AngleRangeMin", "AngleRangeMax",
 
 			// Enemy animation inputs
+			"Carrying",
 			"ReceivedHitCount", "ReceivedHitDirection",
 			"AnimCursor", "OrientationCursor", "TargetCursor",
 			"BlockingContact", "BoneAlpha", "EjectionState", "Fight", "FishingMode",

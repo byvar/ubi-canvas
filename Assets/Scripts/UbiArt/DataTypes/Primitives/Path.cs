@@ -214,10 +214,8 @@ namespace UbiArt {
 		}
 
 		public void ConvertPath(ConversionSettings conversion) {
-			if (conversion?.PathConversionRules == null) return;
-			foreach (var rule in conversion.PathConversionRules) {
-				rule.Apply(this);
-			}
+			if(conversion == null) return;
+			conversion.ConvertPath(this);
 		}
 
 		public override string ToString() {

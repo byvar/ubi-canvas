@@ -54,6 +54,9 @@ namespace UbiCanvas.Conversion {
 			InitPathConversionRules();
 
 			LegendsContext = CreateContext(Mode.RaymanLegendsPC, enableSerializerLog: false);
+			LegendsContext.AddSettings<ConversionSettings>(new ConversionSettings() {
+				LockPaths = true
+			});
 		}
 
 		protected void InitPathConversionRules() {
@@ -188,6 +191,8 @@ namespace UbiCanvas.Conversion {
 			AddCaptainAI(mainContext, settings);
 			DowngradeFxUV(mainContext, settings);
 
+			FixEnemiesWithShieldUp(mainContext, settings);
+
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
 			AddStickToPolylinePhysComponentForSoccerBall(mainContext, settings);
@@ -206,6 +211,9 @@ namespace UbiCanvas.Conversion {
 			var structs = l.Context.Cache.Structs;
 			var oldSettings = OldSettings;
 			var conversionSettings = ConversionSettings;
+			// Add locked paths from Legends context
+			conversionSettings.LockPaths = true;
+			conversionSettings.LockedPaths = LegendsContext.GetSettings<ConversionSettings>().LockedPaths;
 
 			// Step 1: create new paths dictionary
 			var ogDir = l.Settings.ITFDirectory;
@@ -847,6 +855,54 @@ namespace UbiCanvas.Conversion {
 					box.outerBox = box.innerBox;
 				}
 			}
+		}
+		public async void FixEnemiesWithShieldUp(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var shieldJacqouillePath = new Path("world/rlc/common/enemy/jacquouille/shieldjacquouille/components/shieldjacquouilleshieldup.tpl");
+			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(shieldJacqouillePath);
+			if (tpl != null) {
+				var legendsPath = new Path("world/common/enemy/jacquouille/stackjacquouille/components/stackjacquouille_bottom.tpl");
+				var newTPL = await LoadFileLegends<GenericFile<Actor_Template>>(legendsPath);
+
+				/*var components = tpl.obj.COMPONENTS;
+				var newComponents = newTPL.obj.COMPONENTS;
+				components
+					.FirstOrDefault(c => c.obj is AnimatedComponent_Template)
+					.obj = newComponents.FirstOrDefault(c => c.obj is AnimatedComponent_Template).obj;
+				
+				components
+					.FirstOrDefault(c => c.obj is RO2_EnemyBTAIComponent_Template)
+					.obj = newComponents.FirstOrDefault(c => c.obj is RO2_EnemyBTAIComponent_Template).obj;
+				
+				components
+					.FirstOrDefault(c => c.obj is SoundComponent_Template)
+					.obj = newComponents.FirstOrDefault(c => c.obj is SoundComponent_Template).obj;
+				*/
+				/*var oldComponents = tpl.obj.COMPONENTS;
+				var newComponents = newTPL.obj.COMPONENTS;
+				newComponents
+					.FirstOrDefault(c => c.obj is StickToPolylinePhysComponent_Template)
+					.obj = oldComponents.FirstOrDefault(c => c.obj is StickToPolylinePhysComponent_Template).obj;
+				newComponents
+					.FirstOrDefault(c => c.obj is RO2_GroundAIControllerComponent_Template)
+					.obj = oldComponents.FirstOrDefault(c => c.obj is RO2_GroundAIControllerComponent_Template).obj;*/
+				var btai = newTPL.obj.GetComponent<RO2_EnemyBTAIComponent_Template>();
+				btai.disabledPhys = false;
+				btai.hitReward = 10; // Match Adventures enemies
+				btai.rehitReward = 10;
+
+				tpl.obj = newTPL.obj;
+				tpl.sizeOf = newTPL.sizeOf + 0x10000;
+
+				var l = oldContext.Loader;
+				foreach (var act in l.LoadedActors.Where(a => a.template == tpl)) {
+					act.AddComponent<RO2_DRC_FXGrabComponent>();
+				}
+			}
+
+			// TODO: Toad shieldup
 		}
 
 		public void FixTeensies(Context oldContext, Settings newSettings) {
@@ -2731,7 +2787,7 @@ namespace UbiCanvas.Conversion {
 
 					if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
 						l.Context.SystemLogger?.LogInfo($"Duplicating template (STARTPAUSE): {ogPath.FullPath}");
-						var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl") as Actor_Template);
+						var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl"/*, context: LegendsContext*/) as Actor_Template);
 						newTpl.sizeOf = ogTpl.sizeOf;
 						newTpl.obj.STARTPAUSED = true;
 						var oldCookedPath = l.CookedPaths[ogPath.stringID];
@@ -2822,7 +2878,7 @@ namespace UbiCanvas.Conversion {
 							if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
 								l.Context.SystemLogger?.LogInfo($"Duplicating template (LightingMushroom.GPEColor): {ogPath.FullPath}");
 
-								var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl") as Actor_Template);
+								var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl"/*, context: LegendsContext*/) as Actor_Template);
 
 								newTpl.obj.COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>();
 								foreach (var c in ogTpl.obj.COMPONENTS) {
