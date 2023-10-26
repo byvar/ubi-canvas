@@ -164,7 +164,7 @@ namespace UbiCanvas.Conversion {
 			AddTriggerMoreEventTweens(mainContext, settings, scene);
 
 			CreateFriseParents(mainContext, settings, scene);
-			MakeFrisesStartPaused(mainContext, settings, scene);
+			await MakeFrisesStartPaused(mainContext, settings, scene);
 			CreateLightingFrisesForRenderParams(mainContext, settings, scene);
 
 			AddSceneConfigForRotatingPlatform(mainContext, settings, scene);
@@ -866,36 +866,16 @@ namespace UbiCanvas.Conversion {
 				var legendsPath = new Path("world/common/enemy/jacquouille/stackjacquouille/components/stackjacquouille_bottom.tpl");
 				var newTPL = await LoadFileLegends<GenericFile<Actor_Template>>(legendsPath);
 
-				/*var components = tpl.obj.COMPONENTS;
-				var newComponents = newTPL.obj.COMPONENTS;
-				components
-					.FirstOrDefault(c => c.obj is AnimatedComponent_Template)
-					.obj = newComponents.FirstOrDefault(c => c.obj is AnimatedComponent_Template).obj;
-				
-				components
-					.FirstOrDefault(c => c.obj is RO2_EnemyBTAIComponent_Template)
-					.obj = newComponents.FirstOrDefault(c => c.obj is RO2_EnemyBTAIComponent_Template).obj;
-				
-				components
-					.FirstOrDefault(c => c.obj is SoundComponent_Template)
-					.obj = newComponents.FirstOrDefault(c => c.obj is SoundComponent_Template).obj;
-				*/
-				/*var oldComponents = tpl.obj.COMPONENTS;
-				var newComponents = newTPL.obj.COMPONENTS;
-				newComponents
-					.FirstOrDefault(c => c.obj is StickToPolylinePhysComponent_Template)
-					.obj = oldComponents.FirstOrDefault(c => c.obj is StickToPolylinePhysComponent_Template).obj;
-				newComponents
-					.FirstOrDefault(c => c.obj is RO2_GroundAIControllerComponent_Template)
-					.obj = oldComponents.FirstOrDefault(c => c.obj is RO2_GroundAIControllerComponent_Template).obj;*/
 				var btai = newTPL.obj.GetComponent<RO2_EnemyBTAIComponent_Template>();
 				btai.disabledPhys = false;
 				btai.hitReward = 10; // Match Adventures enemies
 				btai.rehitReward = 10;
 
+				// Change original TPL to this modified Legends TPL
 				tpl.obj = newTPL.obj;
 				tpl.sizeOf = newTPL.sizeOf + 0x10000;
 
+				// Modify all actors to match
 				var l = oldContext.Loader;
 				foreach (var act in l.LoadedActors.Where(a => a.template == tpl)) {
 					act.AddComponent<RO2_DRC_FXGrabComponent>();
@@ -2506,17 +2486,39 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void MakeFrisesStartPaused(Context oldContext, Settings newSettings, Scene scene) {
+		public async Task MakeFrisesStartPaused(Context oldContext, Settings newSettings, Scene scene) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
+
+			async Task<Path> GetModdedPauseSwitch() {
+				var ogPath = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl");
+				var newPath = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch_modaabb.tpl");
+				if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
+					l.Context.SystemLogger?.LogInfo($"Duplicating template (MOD ABBB): {ogPath.FullPath}");
+					var ogTpl = await LoadFileLegends<GenericFile<Actor_Template>>(ogPath);
+					var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl"/*, context: LegendsContext*/) as Actor_Template);
+					newTpl.sizeOf = ogTpl.sizeOf + 0x10000;
+					newTpl.obj.AddComponent<BoxInterpolatorComponent_Template>();
+
+					var oldCookedPath = l.CookedPaths[ogPath.stringID];
+					var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", "_modaabb.tpl"), true);
+					l.CookedPaths[newPath.stringID] = newCookedPath;
+					l.Paths[newPath.stringID] = newPath;
+					structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
+				}
+
+				return newPath;
+			}
 
 			var sceneTree = new PickableTree(scene);
 			var startpauseFrises = scene.FindPickables(p => p.STARTPAUSE && (p is Frise || p is SubSceneActor));
 			if (startpauseFrises.Any()) {
+				var moddedPauseSwitchPath = await GetModdedPauseSwitch();
+
 				// Create pauseswitch actor
 				var pauseswitch = new Actor() {
-					USERFRIENDLY = "pauseswitch",
-					LUA = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl")
+					USERFRIENDLY = "pauseswitch_modaabb",
+					LUA = moddedPauseSwitchPath
 				};
 				l.AddLoadedActor(pauseswitch);
 				var spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>()?.INDEX == 0);
@@ -2556,7 +2558,13 @@ namespace UbiCanvas.Conversion {
 						})
 					},
 				});
-				scene.AddActor(pauseswitch, "pauseswitch");
+				var box = pauseswitch.AddComponent<BoxInterpolatorComponent>();
+				box.innerBox = new AABB() {
+					MIN = new Vec2d(-10000, -10000),
+					MAX = new Vec2d( 10000,  10000)
+				};
+				box.outerBox = box.innerBox;
+				scene.AddActor(pauseswitch, "pauseswitch_modaabb");
 
 				// Link all frises that were STARTPAUSE in the pauseswitch
 				foreach (var f in startpauseFrises) {
