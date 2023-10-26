@@ -425,7 +425,7 @@ namespace UbiArt.ITF {
 				actorTranslationOffset = s.SerializeObject<Vec2d>(actorTranslationOffset, name: "actorTranslationOffset");
 				disableLight = s.Serialize<bool>(disableLight, name: "disableLight");
 				phases = s.SerializeObject<CListO<ParPhase>>(phases, name: "phases");
-				if (!s.Settings.IsCatchThemAll) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					curveSize = s.SerializeObject<ParLifeTimeCurve>(curveSize, name: "curveSize");
 					curveSizeY = s.SerializeObject<ParLifeTimeCurve>(curveSizeY, name: "curveSizeY");
 					curveAlpha = s.SerializeObject<ParLifeTimeCurve>(curveAlpha, name: "curveAlpha");

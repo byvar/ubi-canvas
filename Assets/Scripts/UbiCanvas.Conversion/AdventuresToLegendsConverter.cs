@@ -1916,29 +1916,52 @@ namespace UbiCanvas.Conversion {
 					if (endDash != null) endDash.loop = false;
 
 					var poly = tpl.obj.GetComponent<PolylineComponent_Template>();
-					// Danger polylines
-					poly.polylineParams.Add(new PolylineParameters() {
-						sizeOf = 240,
-						environment = true,
-						usePhantom = false,
-						gameMaterial = new Path("gamematerial/enemy_danger.gmt"),
-						polylines = new CListO<StringID>() {
-							//new StringID(0xCD8DBD3C), // Hit
-							new StringID(0x74B9C0D0), // Dash - inner
-							new StringID(0x2A16222C) // Dash - outer
+					if (poly != null) {
+						// Danger polylines
+						poly.polylineParams.Add(new PolylineParameters() {
+								sizeOf = 240,
+								environment = true,
+								usePhantom = false,
+								gameMaterial = new Path("gamematerial/enemy_danger.gmt"),
+								polylines = new CListO<StringID>() {
+								//new StringID(0xCD8DBD3C), // Hit
+								new StringID(0x74B9C0D0), // Dash - inner
+								new StringID(0x2A16222C) // Dash - outer
+							}
+						});
+						// Ignored polylines
+						poly.polylineParams.Add(new PolylineParameters() {
+								sizeOf = 240,
+								environment = false,
+								usePhantom = false,
+								polylines = new CListO<StringID>() {
+								new StringID(0xCD8DBD3C), // Hit
+								//new StringID(0x74B9C0D0), // Dash - inner
+								//new StringID(0x2A16222C) // Dash - outer
+							}
+						});
+					}
+
+					// Try to find fireFX to make it stop after a bit as a workaround for no stop event
+					var fxComponent = tpl.obj.GetComponent<FxBankComponent_Template>();
+					if (fxComponent?.Fx != null) {
+						var fireFX = fxComponent.Fx.Where(fx =>
+							fx.name == new StringID(0x4BAAEDA4) ||
+							fx.name == new StringID(0x58B79F4F) ||
+							fx.name == new StringID(0xE60FAEB1));
+						if (fireFX != null) {
+							foreach (var fx in fireFX) {
+								fx.gen._params.emitterMaxLifeTime = 1.5f;
+							}
 						}
-					});
-					// Ignored polylines
-					poly.polylineParams.Add(new PolylineParameters() {
-						sizeOf = 240,
-						environment = false,
-						usePhantom = false,
-						polylines = new CListO<StringID>() {
-							new StringID(0xCD8DBD3C), // Hit
-							//new StringID(0x74B9C0D0), // Dash - inner
-							//new StringID(0x2A16222C) // Dash - outer
+					}
+					/*var fxController = tpl.obj.GetComponent<FXControllerComponent_Template>();
+					if (fxController?.fxControlList != null) {
+						var fireFX = fxController.fxControlList.FirstOrDefault(fx => fx.name == new StringID(0xBC2A0802));
+						if (fireFX != null) {
+							fireFX.fxStopOnEndAnim = true;
 						}
-					});
+					}*/
 				}
 			}
 
