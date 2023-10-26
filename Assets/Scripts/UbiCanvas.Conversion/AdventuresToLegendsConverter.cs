@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using ImageMagick;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -117,6 +116,12 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/enemy/jacquouille/animation/", "world/common/enemy/jacquouille/animation_rlc/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/mountain/common/enemy/minotaur/animation/", "world/mountain/common/enemy/minotaur/animation_rlc/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/enemy/toad/animation/", "world/common/enemy/toad/animation_rlc"));
+				/*conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/enemy/toad/", "world/common/enemy/toad_rlc/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/enemy/jacquouille/", "world/common/enemy/jacquouille_rlc/"));*/
 
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl"));
@@ -882,7 +887,83 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 
-			// TODO: Toad shieldup
+			// Toad shieldup
+			var shieldToadPath = new Path("world/rlc/common/enemy/toad/shieldtoad/components/shieldtoadshieldup.tpl");
+			tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(shieldToadPath);
+			if (tpl != null) {
+				var animComponent = tpl.obj.GetComponent<AnimatedComponent_Template>();
+				var animTree = animComponent.tree;
+
+				if (animTree != null) {
+					// We always choose the path where standup input (0x7145406F) should be equal to 1, and make that the only choice 
+					void ReplaceNode(int index, BlendTreeNodeTemplate<AnimTreeResult> node) {
+						var nodename = animTree.nodes[index].obj.nodeName;
+						node.nodeName = nodename;
+						animTree.nodes[index] = new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(node);
+					}
+
+
+					// HitReflex uses animation: AF6E8A0B. This is a huge decider that checks what state the toad is in. This is not necessary. Use the "standup" one only. (This needs to be purely 0x0D20E1EA)
+					var hitReflexNode = animTree.nodes[6];
+					ReplaceNode(6, ((BlendTreeNodeChooseBranch_Template<AnimTreeResult>)((BlendTreeNodeChooseBranch_Template<AnimTreeResult>)hitReflexNode.obj).leafs[1].obj).leafs[1].obj);
+					//hitReflexNode.obj.nodeName = new StringID(0xAF6E8A0B);
+
+					var appearGroundNode = animTree.nodes[8]; // Use shield version of appearground only
+					ReplaceNode(8, ((BlendTreeNodeChooseBranch_Template<AnimTreeResult>)appearGroundNode.obj).leafs[1].obj);
+					//appearGroundNode.obj.nodeName = new StringID(0x75BACA2E);
+
+					// Idle animation (0x6158A88A) should choose the "standup" branch (0xAC4C2BC4) by default
+					var idleNode = animTree.nodes[14];
+					ReplaceNode(14, ((BlendTreeNodeChooseBranch_Template<AnimTreeResult>)((BlendTreeNodeChooseBranch_Template<AnimTreeResult>)idleNode.obj).leafs[0].obj).leafs[2].obj);
+					//idleNode.obj.nodeName = new StringID(0x6158A88A);
+
+					var uturnNode = animTree.nodes[15];
+					ReplaceNode(15, ((BlendTreeNodeChooseBranch_Template<AnimTreeResult>)((BlendTreeNodeChooseBranch_Template<AnimTreeResult>)uturnNode.obj).leafs[0].obj).leafs[0].obj);
+					//uturnNode.obj.nodeName = new StringID(0xC2FA619D);
+
+					// Transitions:
+					// Remove transitions: 0 1 2 3 4 5 6 9 10 11 12
+					// Change transition 7:
+					// from: idlenode.nodename
+					// to: hitreflexnode.nodename
+					// and 8: the opposite
+					var transition7 = animTree.nodeTransitions[7];
+					var transition8 = animTree.nodeTransitions[8];
+					var transition13 = animTree.nodeTransitions[13];
+					animTree.nodeTransitions = new CListO<BlendTreeTransition_Template<AnimTreeResult>>() {
+						transition7, transition8, transition13
+					};
+					transition7.from = new CArrayO<StringID>() { idleNode.obj.nodeName };
+					transition7.to = new CArrayO<StringID>() { hitReflexNode.obj.nodeName };
+					transition8.from = transition7.to;
+					transition8.to = transition7.from;
+				}
+
+				var btTree = tpl.obj.GetComponent<RO2_EnemyBTAIComponent_Template>().behaviorTree;
+
+				// BT: Get rid of RO2_BTActionHitTarget_Template
+				// First node in sequence is removeFact. The other one is HitTarget. We want to remove HitTarget
+				var hitTargetDecider = (BTDeciderHasFact_Template)btTree.nodes[8].obj;
+				var removeFactNode = ((BTSequence_Template)hitTargetDecider.nodes[0].node.obj).nodes[0];
+				hitTargetDecider.nodes[0] = removeFactNode;
+
+				var idleDecider1 = (BTDecider_Template)btTree.nodes[0].obj;
+				var idleDecider2 = (BTDeciderHasFact_Template)idleDecider1.nodes[2].node.obj;
+				idleDecider2.nodes = new CListO<BTNodeTemplate_Ref>() {
+					idleDecider2.nodes[2] // Remove shield-related nodes
+				};
+
+				//tree.nodes
+
+				/*
+				 * BT: HitReflex uses animation: AF6E8A0B. This needs to be purely 0x0D20E1EA
+				 * BT: Get rid of:
+				 * - RO2_BTActionHitTarget_Template
+				 * - RO2_BTActionCovertFromTarget_Template
+				 * - the sequence that plays 0xBA3DAC4A (or maybe just set shield to false)
+				 * 
+				 * */
+			}
 		}
 
 		public void FixTeensies(Context oldContext, Settings newSettings) {
@@ -2500,7 +2581,7 @@ namespace UbiCanvas.Conversion {
 					newTpl.sizeOf = ogTpl.sizeOf + 0x10000;
 					newTpl.obj.AddComponent<BoxInterpolatorComponent_Template>();
 
-					var oldCookedPath = l.CookedPaths[ogPath.stringID];
+					var oldCookedPath = LegendsContext.Loader.CookedPaths[ogPath.stringID];
 					var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", "_modaabb.tpl"), true);
 					l.CookedPaths[newPath.stringID] = newCookedPath;
 					l.Paths[newPath.stringID] = newPath;
