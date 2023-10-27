@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public AABB localAABB;
 		public float mergeRange = 0.1f;
 		public ObjectPath friseGroupPath;
-		public int forceMatrixUpdate;
+		public int forceMatrixUpdate = 1;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {

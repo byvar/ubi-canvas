@@ -784,6 +784,17 @@ namespace UbiCanvas.Conversion {
 						trig.activatedOnGo = false;
 						break;
 					}
+				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
+				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc":
+				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc": {
+						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("clearcolo"));
+						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
+						var ogColor = rp.Lighting.GlobalColor;
+						var mul = 0.7f;
+						var alphaMul = 1f;
+						rp.Lighting.GlobalColor = new UbiArt.Color(ogColor.r * mul, ogColor.g * mul, ogColor.b * mul, ogColor.a * alphaMul);
+						break;
+					}
 			}
 		}
 
