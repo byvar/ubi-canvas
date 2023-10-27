@@ -167,6 +167,7 @@ namespace UbiCanvas.Conversion {
 			PerformHangSpotWorkaround(mainContext, settings, scene);
 
 			AddTriggerMoreEventTweens(mainContext, settings, scene);
+			CreateTemplatesForInstanceRelays(mainContext, settings, scene);
 
 			CreateFriseParents(mainContext, settings, scene);
 			await MakeFrisesStartPaused(mainContext, settings, scene);
@@ -197,6 +198,7 @@ namespace UbiCanvas.Conversion {
 			DowngradeFxUV(mainContext, settings);
 
 			FixEnemiesWithShieldUp(mainContext, settings);
+			//FixSwimmingToads(mainContext, settings);
 
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
@@ -966,6 +968,33 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public async void FixSwimmingToads(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var swimToadPath = new Path("world/rlc/common/enemy/toad/shootingtoad/shootingtoad_nemo/components/shootingtoad_swim.tpl");
+			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(swimToadPath);
+			if (tpl != null) {
+				var legendsPath = new Path("world/common/enemy/toad/shootingtoad_underwater/components/shootingtoad_underwater.tpl");
+				var newTPL = await LoadFileLegends<GenericFile<Actor_Template>>(legendsPath);
+
+				var btai = newTPL.obj.GetComponent<RO2_EnemyBTAIComponent_Template>();
+				//btai.disabledPhys = false;
+				btai.hitReward = 10; // Match Adventures enemies
+				btai.rehitReward = 10;
+
+				// Change original TPL to this modified Legends TPL
+				tpl.obj = newTPL.obj;
+				tpl.sizeOf = newTPL.sizeOf + 0x10000;
+
+				// Modify all actors to match
+				/*var l = oldContext.Loader;
+				foreach (var act in l.LoadedActors.Where(a => a.template == tpl)) {
+					act.AddComponent<RO2_DRC_FXGrabComponent>();
+				}*/
+			}
+		}
+
 		public void FixTeensies(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
@@ -1314,6 +1343,57 @@ namespace UbiCanvas.Conversion {
 					return tweenAct;
 				}
 			}
+		}
+
+
+		public void CreateTemplatesForInstanceRelays(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
+			var loadedScene = loadedScenes.FirstOrDefault(s => ((ContainerFile<Scene>)s.Value).obj == scene);
+			var scenePath = l.Paths[loadedScene.Key];
+
+			int index = 1;
+			var pathBase = $"{scenePath.GetFilenameWithoutExtension(fullPath: true, removeCooked: true)}_instancerelays/";
+
+			var relays = scene.FindActors(a => a.GetComponent<RelayEventComponent>()?.relays?.Any() ?? false);
+			foreach (var res in relays) {
+				var act = res.Result;
+				var tpl = act.template;
+				var relayComponent = act.GetComponent<RelayEventComponent>();
+				var relayTPL = tpl.obj.GetComponent<RelayEventComponent_Template>();
+
+				if(relayTPL.relays == null) relayTPL.relays = new CListO<RelayData>();
+				var newRelays = relayTPL.relays.Concat(relayComponent.relays).ToList();
+				relayComponent.relays = new CListO<RelayData>(); // Empty instance relays
+
+				var newPath = new Path($"{pathBase}relay_{index}.tpl");
+				while (structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
+					index++;
+					newPath = new Path($"{pathBase}relay_{index}.tpl");
+				}
+				index++;
+
+				l.Context.SystemLogger?.LogInfo($"Creating relay template (INSTANCE RELAY): {newPath.FullPath}");
+				var newTpl = new GenericFile<Actor_Template>(tpl?.obj.Clone("tpl"/*, context: LegendsContext*/) as Actor_Template);
+				newTpl.sizeOf = tpl.sizeOf + 0x10000;
+				
+				newTpl.obj.GetComponent<RelayEventComponent_Template>().relays = new CListO<RelayData>(newRelays);
+
+				var newCookedPath = newPath.CookedPath(MainContext);
+				l.CookedPaths[newPath.stringID] = newCookedPath;
+				l.Paths[newPath.stringID] = newPath;
+				structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
+
+				act.template = newTpl;
+				act.templatePickable = newTpl.obj;
+				act.LUA = newPath;
+			}
+
 		}
 
 		public void FixStaticMeshVertexComponentCulling(Context oldContext, Settings newSettings) {

@@ -244,7 +244,7 @@ namespace UbiArt
 			"StunBullet", "Stunned", "WallOrientation", "WindForce", "IsNaked", "InputLumsColor", "IsInAir",
 
 			// Common BTAI node names
-			"ReceiveHit", "ReceiveCrush", "Roaming", "Idle", "SpotTarget", "Charge", "Stun", "TickleGeneric", "Drown",
+			"ReceiveHit", "ReceiveCrush", "Roaming", "RoamingUnderwater", "Idle", "SpotTarget", "Charge", "Stun", "TickleGeneric", "Drown",
 
 			// RO2: Familiies
 			"Rayman", "Globox", "Barbara", "Teensy",

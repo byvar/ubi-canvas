@@ -101,9 +101,18 @@ namespace UbiArt {
 		protected virtual void Reinit(Context c, Settings settings) {
 			if (previousSettings != null) {
 				if (previousSettings.Game != settings.Game || previousSettings.Platform != settings.Platform) {
-					if (obj != null) {
-						if (obj is ITF.Event e) {
-							if (e.IsAdventuresExclusive()) MakeNull();
+					if ((previousSettings.Game == Game.RA || previousSettings.Game == Game.RM)
+						&& !(settings.Game == Game.RA || settings.Game == Game.RM)) {
+						if (obj != null) {
+							if (obj is ITF.Event e) {
+								var workaroundEvent = e.GetWorkaroundEvent();
+								if (workaroundEvent != null) {
+									e = workaroundEvent;
+									obj = (T)(object)e;
+									className = new StringID(obj.ClassCRC.Value);
+								}
+								if (e.IsAdventuresExclusive()) MakeNull();
+							}
 						}
 					}
 					if (obj != null) {

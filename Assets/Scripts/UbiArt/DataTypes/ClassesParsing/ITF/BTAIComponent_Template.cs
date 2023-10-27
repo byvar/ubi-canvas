@@ -6,6 +6,29 @@ namespace UbiArt.ITF {
 			base.Convert(context, actor, oldSettings, newSettings);
 			if ((oldSettings.Game == Game.RA || oldSettings.Game == Game.RM) && newSettings.Game == Game.RL) {
 				var root = behaviorTree.root?.node?.obj;
+				if (behaviorTree != null) {
+					if (this is RO2_EnemyBTAIComponent_Template enemy && enemy.canSwim) {
+						// Remove drown nodes if the enemy can swim
+						var drown = new StringID("Drown");
+						if (root != null) {
+							if (root is BTDecider_Template dec) {
+								dec.nodes = new CListO<BTNodeTemplate_Ref>(dec.nodes.Where(n => n.nameId != drown && n.node?.obj?.name != drown).ToList());
+							}
+						}
+						if (behaviorTree.nodes != null) {
+							behaviorTree.nodes = new CArrayO<Generic<BTNode_Template>>(behaviorTree.nodes.Where(n => n?.obj?.name != drown).ToArray());
+							foreach (var node in behaviorTree.nodes) {
+								if(node == null) continue;
+
+								if (node?.obj is BTDecider_Template dec) {
+									if (dec?.nodes == null) continue;
+									dec.nodes = new CListO<BTNodeTemplate_Ref>(dec.nodes.Where(n => n.nameId != drown && n.node?.obj?.name != drown).ToList());
+
+								}
+							}
+						}
+					}
+				}
 				CListO<BTNodeTemplate_Ref> nodesToCopy = null;
 				if (root is BTDecider_Template rootDec) {
 					for(int i = 0; i < rootDec.nodes.Count; i++) {
