@@ -9,7 +9,7 @@ namespace UbiArt {
 		protected List<T> container = new List<T>();
 
 		public CList() { }
-		public CList(List<T> list) { container = list; }
+		public CList(List<T> list) { if(list != null) container = list; }
 
 		public virtual void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)container.Count;

@@ -9,7 +9,7 @@ namespace UbiArt {
 		protected T[] container = new T[0];
 
 		public CArray() {}
-		public CArray(T[] array) { container = array; }
+		public CArray(T[] array) { if (array != null) container = array; }
 
 		public virtual void Serialize(CSerializerObject s, string name) {
 			uint count = (uint)Count;

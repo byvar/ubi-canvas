@@ -97,6 +97,7 @@ namespace UbiArt {
 					files = new CListO<Path>(act.Sounds.Select(f => new Path(f.Filename)).ToList()),
 					soundPlayAfterdestroy = tpl.soundPlayAfterdestroy
 				};
+				newTPL.soundPlayAfterdestroy = (newTPL._params?.loop ?? 0) == 0;
 				soundDescriptors.Add(newTPL);
 			}
 			SoundDescriptorMapping[tpl] = soundDescriptors;

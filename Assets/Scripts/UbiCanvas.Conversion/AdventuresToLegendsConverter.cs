@@ -117,7 +117,9 @@ namespace UbiCanvas.Conversion {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/mountain/common/enemy/minotaur/animation/", "world/mountain/common/enemy/minotaur/animation_rlc/"));
 				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/enemy/toad/animation/", "world/common/enemy/toad/animation_rlc"));
+					new PathConversionRule("world/common/enemy/toad/animation/", "world/common/enemy/toad/animation_rlc/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/mountain/common/friendly/light_bulbalums/animation/", "world/mountain/common/friendly/light_bulbalums/animation_rlc/"));
 				/*conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/enemy/toad/", "world/common/enemy/toad_rlc/"));
 				conversionSettings.PathConversionRules.Add(
@@ -127,6 +129,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/blocker/drc/mechadoor/actor/tweening/door1.tpl", "world/common/blocker/drc/mechadoor/actor/tweening/door1_rlc.tpl"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/mountain/mecha/playground/enemy/buzzsaw/", "world/mountain/mecha/playground/enemy/buzzsaw_rlc/"));
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/landofthedead/common/enemy/balancingaxe/", "world/landofthedead/common/enemy/balancingaxe_rlc/"));
 			}
@@ -2240,7 +2244,11 @@ namespace UbiCanvas.Conversion {
 					var soundComponent = tpl.obj.GetComponent<SoundComponent_Template>();
 					var fxComponent = tpl.obj.GetComponent<FXControllerComponent_Template>();
 					if(soundComponent?.soundList == null || fxComponent?.fxControlList == null) continue; // Needs a sound component
-					
+
+					// Remove broken sound descriptor which can occur in Adventures
+					var sounds = soundComponent.soundList.Where(snd => snd != null && (!(snd.WwiseEventGUID?.IsNull ?? true) || snd.files != null));
+					soundComponent.soundList = new CListO<SoundDescriptor_Template>(sounds?.ToList());
+
 					bool hasStop = false;
 					Dictionary<StringID, StringID> StopLinksSndDesc = new Dictionary<StringID, StringID>();
 					Dictionary<StringID, StringID> StopLinksFx = new Dictionary<StringID, StringID>();
