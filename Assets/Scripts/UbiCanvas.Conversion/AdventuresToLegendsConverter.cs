@@ -166,6 +166,19 @@ namespace UbiCanvas.Conversion {
 			Controller.Obj.loadingScreen.Active = false;
 		}
 
+		public async Task ProcessAllLoadedScenes() {
+			var mainContext = MainContext;
+			var structs = mainContext.Cache.Structs;
+			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
+			var scenes = loadedScenes.ToArray();
+			foreach (var scene in scenes) {
+				var sc =(ContainerFile<Scene>)(scene.Value);
+				if (sc?.obj != null) {
+					await ProcessScene(sc.obj);
+				}
+			}
+		}
+
 		public async Task ProcessScene(Scene scene = null) {
 			scene ??= Controller.Obj.MainScene.obj;
 			var settings = NewSettings;
