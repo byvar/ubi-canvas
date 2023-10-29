@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 							var conv = context.GetSettings<ConversionSettings>();
 							if (conv.WwiseConversionSettings != null) {
 								// Remove broken sound descriptor which can occur in Adventures
-								var sounds = soundList.Where(snd => snd != null && (!(snd.WwiseEventGUID?.IsNull ?? true) || snd.files != null));
+								var sounds = soundList.Where(snd => snd != null && (snd.HasWwiseEvent || snd.HasFiles));
 								soundList = new CListO<SoundDescriptor_Template>(sounds?.ToList());
 
 

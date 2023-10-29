@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UbiArt.ITF {
 	public partial class SoundDescriptor_Template {
@@ -38,5 +39,9 @@ namespace UbiArt.ITF {
 			}
 			previousSettings = settings;
 		}
+
+		public bool HasFiles
+			=> ((files?.Any() ?? false) || (filesBody?.Any() ?? false) || (filesIntro?.Any() ?? false) || (filesOutro?.Any() ?? false));
+		public bool HasWwiseEvent => !(WwiseEventGUID?.IsNull ?? true);
 	}
 }

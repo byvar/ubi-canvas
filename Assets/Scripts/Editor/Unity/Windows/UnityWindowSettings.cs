@@ -53,14 +53,15 @@ public class UnityWindowSettings : UnityWindow {
 				string directory = (CurrentGameDataDir + "/" + s.ITFDirectory).Replace(Path.DirectorySeparatorChar, '/');
 				if (!directory.EndsWith("/")) directory += "/";
 				while (directory.Contains("//")) directory = directory.Replace("//", "/");
-				string extension = "*.isc";
-				if (s.Cooked) {
-					extension += ".ckd";
-				}
-				string[] extensions = new string[] { extension };
+				string ExtensionScene = "isc";
+				string ExtensionScene2 = "tsc";
+				string[] extensions = new string[] {
+					$"*.{ExtensionScene}{(s.Cooked ? ".ckd" : "")}",
+					$"*.{ExtensionScene2}{(s.Cooked ? ".ckd" : "")}",
+				};
 
 				if (Dropdown == null || Dropdown.directory != directory || Dropdown.extensions == null || !Enumerable.SequenceEqual(Dropdown.extensions, extensions) || Dropdown.mode != UnitySettings.GameMode) {
-					Dropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, extension) {
+					Dropdown = new FileSelectionDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), directory, extensions) {
 						name = "Scene files",
 						mode = UnitySettings.GameMode
 					};

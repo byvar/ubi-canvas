@@ -2278,7 +2278,7 @@ namespace UbiCanvas.Conversion {
 					if(soundComponent?.soundList == null || fxComponent?.fxControlList == null) continue; // Needs a sound component
 
 					// Remove broken sound descriptor which can occur in Adventures
-					var sounds = soundComponent.soundList.Where(snd => snd != null && (!(snd.WwiseEventGUID?.IsNull ?? true) || snd.files != null));
+					var sounds = soundComponent.soundList.Where(snd => snd != null && (snd.HasWwiseEvent || snd.HasFiles));
 					soundComponent.soundList = new CListO<SoundDescriptor_Template>(sounds?.ToList());
 
 					bool hasStop = false;
