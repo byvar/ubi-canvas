@@ -133,6 +133,12 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/mountain/mecha/playground/enemy/buzzsaw/", "world/mountain/mecha/playground/enemy/buzzsaw_rlc/"));
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/landofthedead/common/enemy/balancingaxe/", "world/landofthedead/common/enemy/balancingaxe_rlc/"));
+
+				// Tweening (rename for sounds)
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/logicactor/tweening/tweeneditortype/components/", "world/common/logicactor/tweening/tweeneditortype/components_rlc/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/logicactor/tweening/tweeneditortype/components_rlc/tween_notype.tpl", "world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -660,6 +666,21 @@ namespace UbiCanvas.Conversion {
 			}
 
 			var conversionSettings = new WwiseConversionSettings();
+			WwiseConversionSettings.Curve CreateCurve(JSON_WwiseCurve curve) {
+				if(curve == null) return null;
+				return new WwiseConversionSettings.Curve() {
+					Points = curve.Points.Select(p => new WwiseConversionSettings.CurvePoint() {
+						X = p.X,
+						Y = p.Y
+					}).ToArray()
+				};
+			}
+			foreach (var att in wwiseInfo.Attenuations) {
+				conversionSettings.Attenuations.Add(att.ID, new WwiseConversionSettings.Attenuation() {
+					Volume = CreateCurve(att.Volume),
+					Spread = CreateCurve(att.Spread),
+				});
+			}
 
 			GenericFile<CSerializable> soundConfigISG = null;
 
@@ -680,6 +701,7 @@ namespace UbiCanvas.Conversion {
 					KillNewest = entry.Value.KillNewest,
 					IsSequence = entry.Value.IsSequence,
 					AvoidRepeat = entry.Value.AvoidRepeatCount > 0,
+					Attenuation = entry.Value.Attenuation,
 					Bus = wwiseBusItem?.name,
 					Sounds = entry.Value.Sounds.Select(s => new WwiseConversionSettings.Sound() {
 						Filename = $"sound/wwise/{s.Filename}"
@@ -801,6 +823,12 @@ namespace UbiCanvas.Conversion {
 						var mul = 0.7f;
 						var alphaMul = 1f;
 						rp.Lighting.GlobalColor = new UbiArt.Color(ogColor.r * mul, ogColor.g * mul, ogColor.b * mul, ogColor.a * alphaMul);
+						break;
+					}
+				case "world/rlc_nemo/pollutedbay/nemo_pollutedbay_nmi_base.isc": {
+						// There's a toad that usually gets stuck in the floor and dies offscreen. Move it up a unit to fix it
+						var disappearingToad = scene.FindActor(a => a.USERFRIENDLY == "basictoad_nemo@1");
+						disappearingToad.Result.POS2D = disappearingToad.Result.POS2D + new Vec2d(0f, 1f);
 						break;
 					}
 			}

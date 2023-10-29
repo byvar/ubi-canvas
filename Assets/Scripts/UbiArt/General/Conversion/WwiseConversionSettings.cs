@@ -9,6 +9,8 @@ namespace UbiArt {
 
 		public HashSet<StringID> UsedEvents { get; private set; } = new HashSet<StringID>();
 
+		public Dictionary<long, Attenuation> Attenuations { get; set; } = new Dictionary<long, Attenuation>();
+
 		public Dictionary<SoundDescriptor_Template, List<SoundDescriptor_Template>> SoundDescriptorMapping { get; set; } = new Dictionary<SoundDescriptor_Template, List<SoundDescriptor_Template>>();
 
 		//public PlaySound_evtTemplate ConvertWwiseEvent(PlayWwise_evtTemplate wwiseEvt) {
@@ -25,7 +27,7 @@ namespace UbiArt {
 				loop = action.IsLoop ? 1 : 0,
 				playMode = action.IsSequence ? SoundParams.PlayMode.Sequence : (action.AvoidRepeat ? SoundParams.PlayMode.RandomRememberLast : SoundParams.PlayMode.Random),
 				playMode2 = action.IsSequence ? SoundParams.PlayMode2.Sequence : (action.AvoidRepeat ? SoundParams.PlayMode2.RandomRememberLast : SoundParams.PlayMode2.Random),
-				modifiers = new CArrayO<Generic<SoundModifier>>() {
+				/*modifiers = new CArrayO<Generic<SoundModifier>>() {
 					new Generic<SoundModifier>(new SpatializedPanning() {
 						sizeOf = 12,
 						widthMin = 0.5f,
@@ -36,8 +38,26 @@ namespace UbiArt {
 						distanceMin = 0.5f,
 						distanceMax = 2f,
 					}),
-				}
+				}*/
 			};
+			if (action.Attenuation.HasValue) {
+				var att = Attenuations[action.Attenuation.Value];
+				sp.modifiers = new CArrayO<Generic<SoundModifier>>(att.GetModifiers().Select(m => new Generic<SoundModifier>(m)).ToArray());
+			} else {
+				// TODO
+				sp.modifiers = new CArrayO<Generic<SoundModifier>>() {
+					new Generic<SoundModifier>(new SpatializedPanning() {
+						sizeOf = 12,
+						widthMin = 100,
+						widthMax = 1000
+					}),
+					new Generic<SoundModifier>(new ScreenRollOff() {
+						sizeOf = 16,
+						distanceMin = 100,
+						distanceMax = 1000,
+					}),
+				};
+			}
 
 			// Pitch calculation
 			float pitchMin = 0f, pitchMax = 0f;
@@ -72,6 +92,8 @@ namespace UbiArt {
 					volMax += prop.Max;
 				}
 			}
+			//volMin += 8;
+			//volMax += 8; // Volume difference should be about this because Adventures is much quieter
 			sp.randomVolMin = new Volume(volMin);
 			sp.randomVolMax = new Volume(volMax);
 			return sp;
@@ -99,7 +121,7 @@ namespace UbiArt {
 					limitModeEnum = act.KillNewest ? LimiterDef.LimiterMode.RejectNew : LimiterDef.LimiterMode.StopOldest,
 					maxInstances = (uint)(act.MaxInstances ?? uint.MaxValue)
 				};
-				//newTPL.soundPlayAfterdestroy = (newTPL._params?.loop ?? 0) == 0;
+				newTPL.soundPlayAfterdestroy = (newTPL._params?.loop ?? 0) == 0;
 				soundDescriptors.Add(newTPL);
 			}
 			SoundDescriptorMapping[tpl] = soundDescriptors;
@@ -163,6 +185,7 @@ namespace UbiArt {
 			public bool IsSequence { get; set; }
 			public long? MaxInstances { get; set; }
 			public bool AvoidRepeat { get; set; }
+			public long? Attenuation { get; set; }
 		}
 		public class Sound {
 			public string Filename { get; set; }
@@ -175,6 +198,44 @@ namespace UbiArt {
 			public string Name { get; set; }
 			public float Min { get; set; }
 			public float Max { get; set; }
+		}
+		public class Attenuation {
+			public Curve Volume { get; set; }
+			public Curve Spread { get; set; }
+
+			private SoundModifier[] Modifiers { get; set; }
+			public SoundModifier[] GetModifiers() {
+				if (Modifiers == null) {
+					var modifiers = new List<SoundModifier>();
+
+					if (Spread != null) {
+						var multi = Spread.Points.Max(p => p.X) / 18f;
+						modifiers.Add(new SpatializedPanning() {
+							sizeOf = 12,
+							widthMin = 0.5f * multi,
+							widthMax = 2f * multi
+						});
+					}
+					if (Volume != null) {
+						var multi = Volume.Points.Max(p => p.X) / 18f;
+						modifiers.Add(new ScreenRollOff() {
+							distanceMin = 0.5f * multi,
+							distanceMax = 2f * multi
+						});
+					}
+
+					Modifiers = modifiers.ToArray();
+				}
+				return Modifiers;
+
+			}
+		}
+		public class Curve {
+			public CurvePoint[] Points { get; set; }
+		}
+		public class CurvePoint {
+			public float X { get; set; }
+			public float Y { get; set; }
 		}
 	}
 }
