@@ -23,8 +23,8 @@ namespace UbiArt {
 
 			var sp = new SoundParams() {
 				loop = action.IsLoop ? 1 : 0,
-				playMode = SoundParams.PlayMode.Random,
-				playMode2 = SoundParams.PlayMode2.Random,
+				playMode = action.IsSequence ? SoundParams.PlayMode.Sequence : (action.AvoidRepeat ? SoundParams.PlayMode.RandomRememberLast : SoundParams.PlayMode.Random),
+				playMode2 = action.IsSequence ? SoundParams.PlayMode2.Sequence : (action.AvoidRepeat ? SoundParams.PlayMode2.RandomRememberLast : SoundParams.PlayMode2.Random),
 				modifiers = new CArrayO<Generic<SoundModifier>>() {
 					new Generic<SoundModifier>(new SpatializedPanning() {
 						sizeOf = 12,
@@ -90,14 +90,16 @@ namespace UbiArt {
 				if(act.IsStop) continue;
 				var newTPL = new SoundDescriptor_Template() {
 					name = new StringID((uint)act.ID),
-					maxInstances = 5, // or leave it be
+					//maxInstances = 5, // or leave it be
 					_params = GetParams(act),
 					WwiseEventGUID = null, // Mark as processed
 					category = act.Bus,
 					files = new CListO<Path>(act.Sounds.Select(f => new Path(f.Filename)).ToList()),
-					soundPlayAfterdestroy = tpl.soundPlayAfterdestroy
+					soundPlayAfterdestroy = tpl.soundPlayAfterdestroy,
+					limitModeEnum = act.KillNewest ? LimiterDef.LimiterMode.RejectNew : LimiterDef.LimiterMode.StopOldest,
+					maxInstances = (uint)(act.MaxInstances ?? uint.MaxValue)
 				};
-				newTPL.soundPlayAfterdestroy = (newTPL._params?.loop ?? 0) == 0;
+				//newTPL.soundPlayAfterdestroy = (newTPL._params?.loop ?? 0) == 0;
 				soundDescriptors.Add(newTPL);
 			}
 			SoundDescriptorMapping[tpl] = soundDescriptors;
@@ -156,6 +158,11 @@ namespace UbiArt {
 			public List<Sound> Sounds { get; set; } = new List<Sound>();
 			public List<Property> Properties { get; set; } = new List<Property>();
 			public List<RangedProperty> RangedProperties { get; set; } = new List<RangedProperty>();
+
+			public bool KillNewest { get; set; }
+			public bool IsSequence { get; set; }
+			public long? MaxInstances { get; set; }
+			public bool AvoidRepeat { get; set; }
 		}
 		public class Sound {
 			public string Filename { get; set; }

@@ -676,6 +676,10 @@ namespace UbiCanvas.Conversion {
 					ExtID = entry.Value.ExtID,
 					IsLoop = entry.Value.IsLoop,
 					IsStop = entry.Value.IsStop,
+					MaxInstances = entry.Value.MaxInstances > 0 ? ((long?)entry.Value.MaxInstances) : null,
+					KillNewest = entry.Value.KillNewest,
+					IsSequence = entry.Value.IsSequence,
+					AvoidRepeat = entry.Value.AvoidRepeatCount > 0,
 					Bus = wwiseBusItem?.name,
 					Sounds = entry.Value.Sounds.Select(s => new WwiseConversionSettings.Sound() {
 						Filename = $"sound/wwise/{s.Filename}"
