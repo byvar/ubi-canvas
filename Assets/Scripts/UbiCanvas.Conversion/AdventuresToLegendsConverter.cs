@@ -1277,7 +1277,7 @@ namespace UbiCanvas.Conversion {
 					act.AddComponent<RelayEventComponent>();
 
 
-					Actor CreateTween(string suffix, CListO<ChildEntry> links, CListO<Generic<UbiArt.ITF.Event>> events) {
+					Actor CreateTween(string suffix, IEnumerable<ChildEntry> links, CListO<Generic<UbiArt.ITF.Event>> events, double distance) {
 						var luaPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
 						var tweenAct = new Actor() {
 							LUA = luaPath,
@@ -1297,19 +1297,20 @@ namespace UbiCanvas.Conversion {
 							_event = e,
 							duration = 0
 						})).ToList();
-						var firstExplosion = mushroomComponent?.MushroomTargets?.Min(p => p.Position?.Magnitude ?? 0);
-						var fireworkSpeed = mushroomTPL.Speed;
-						var timeBeforeTrigger = firstExplosion / fireworkSpeed;
+						if (distance > 0) {
+							var fireworkSpeed = mushroomTPL.Speed;
+							var timeBeforeTrigger = distance / fireworkSpeed;
 
-						if (timeBeforeTrigger.HasValue && timeBeforeTrigger.Value > 0) {
-							instructions = new List<Generic<TweenInstruction>>() {
-								new Generic<TweenInstruction>(new TweenWait())
-							}.Concat(instructions).ToList();
-							instructionsTPL = new List<Generic<TweenInstruction_Template>>() {
-								new Generic<TweenInstruction_Template>(new TweenWait_Template() {
-									duration = (float)(timeBeforeTrigger.Value)
-								})
-							}.Concat(instructionsTPL).ToList();
+							if (timeBeforeTrigger > 0) {
+								instructions = new List<Generic<TweenInstruction>>() {
+									new Generic<TweenInstruction>(new TweenWait())
+								}.Concat(instructions).ToList();
+								instructionsTPL = new List<Generic<TweenInstruction_Template>>() {
+									new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+										duration = (float)timeBeforeTrigger
+									})
+								}.Concat(instructionsTPL).ToList();
+							}
 						}
 						if (once) {
 							float waitTimeAfterExplosion = MathF.Max(mushroomTPL.LightingTimer, mushroomTPL.TimeToFade);
@@ -1349,11 +1350,6 @@ namespace UbiCanvas.Conversion {
 						tween.autoStart = false;
 
 						res.ContainingScene.AddActor(tweenAct, tweenAct.USERFRIENDLY);
-						mushroomLinks.Children = new CListO<ChildEntry>() {
-							new ChildEntry() {
-								Path = new ObjectPath(tweenAct.USERFRIENDLY)
-							}
-						};
 
 						return tweenAct;
 					}
@@ -1401,14 +1397,52 @@ namespace UbiCanvas.Conversion {
 						return pauseswitch;
 					}
 					// Move links to new tween actor
+					var explosionIndexTag = new StringID(0xB8E2264A);
+					var triggerOnFireTag = new StringID(0xE060828E);
+
+					List<ChildEntry> GetCleanedCopyOfLinks(IEnumerable<ChildEntry> links) {
+						var newLinks = links.Select(l => new ChildEntry() {
+							Path = l.Path,
+							TagValues = new CListO<TagValue>(l.TagValues?.Where(t => t.Tag != explosionIndexTag && t.Tag != triggerOnFireTag).ToList())
+						});
+						return newLinks.ToList();
+					}
+					void LinkTween(Actor act) {
+						mushroomLinks.Children.Add(new ChildEntry() {
+							Path = new ObjectPath(act.USERFRIENDLY)
+						});
+					}
+
+
 					var links = mushroomLinks.Children;
-					var tween = CreateTween("tween", links, new CListO<Generic<UbiArt.ITF.Event>>() {
-						new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true })
-					});
-					if (once) {
-						// We're not done yet. Need to create a pauseswitch with the mushroom actor as target
-						// And the tween as parentBind
-						CreatePauseSwitch("pauseswitch", tween);
+					mushroomLinks.Children = new CListO<ChildEntry>();
+					var linksOnFire = links.Where(l => l.HasTag(triggerOnFireTag));
+					if (linksOnFire.Any()) {
+						var tween = CreateTween("tween_onfire", GetCleanedCopyOfLinks(linksOnFire), new CListO<Generic<UbiArt.ITF.Event>>() {
+							new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true })
+						}, 0);
+						LinkTween(tween);
+					}
+					var linksOnExplosion = links.Where(l => !l.HasTag(triggerOnFireTag));
+					var tweenDistances = mushroomComponent.MushroomTargets.Select(t => t?.Position?.Magnitude ?? 0).ToArray();
+					var maxDistance = tweenDistances.Max();
+					int maxDistanceIndex = Array.IndexOf(tweenDistances, maxDistance);
+
+					for (int i = 0; i < mushroomComponent.MushroomTargets.Count; i++) {
+						var linksOnExplosion_i = linksOnExplosion.Where(l => 
+						(i == 0 && (!l.TryGetTagValue<uint>(explosionIndexTag, out _))) // if target index isn't specified, default to 0
+						|| (l.TryGetTagValue<uint>(explosionIndexTag, out uint t) && t == i));
+
+						var tween = CreateTween($"tween_target_{i}", GetCleanedCopyOfLinks(linksOnExplosion_i), new CListO<Generic<UbiArt.ITF.Event>>() {
+							new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true })
+						}, tweenDistances[i]);
+						LinkTween(tween);
+
+						if (once && i == maxDistanceIndex) {
+							// We're not done yet. Need to create a pauseswitch with the mushroom actor as target
+							// And the tween as parentBind
+							CreatePauseSwitch("pauseswitch", tween);
+						}
 					}
 				}
 			}
