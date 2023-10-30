@@ -185,9 +185,17 @@ namespace UbiCanvas.Conversion {
 			var mainContext= MainContext;
 			var conversionSettings = ConversionSettings;
 
+			// Print scene path
+			var structs = mainContext.Cache.Structs;
+			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
+			var loadedScene = loadedScenes.FirstOrDefault(s => ((ContainerFile<Scene>)s.Value).obj == scene);
+			var scenePath = mainContext.Loader.Paths[loadedScene.Key];
+			UnityEngine.Debug.Log($"Processing scene: {scenePath}");
+
 			LevelSpecificChanges(mainContext, settings, scene);
 
 			PerformHangSpotWorkaround(mainContext, settings, scene);
+			AddRelayToMushrooms(mainContext, settings, scene);
 
 			AddTriggerMoreEventTweens(mainContext, settings, scene);
 			CreateTemplatesForInstanceRelays(mainContext, settings, scene);
@@ -1217,6 +1225,185 @@ namespace UbiCanvas.Conversion {
 								Path = new ObjectPath(r.USERFRIENDLY)
 							});
 						}
+					}
+				}
+			}
+
+		}
+
+		public void AddRelayToMushrooms(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var mushrooms = scene.FindActors(a => a.GetComponent<RO2_LightingMushroomComponent>() != null);
+			foreach (var res in mushrooms) {
+				var act = res.Result;
+				var tpl = act.template?.obj;
+				var mushroomComponent = act.GetComponent<RO2_LightingMushroomComponent>();
+				var mushroomTPL = tpl.GetComponent<RO2_LightingMushroomComponent_Template>();
+				var mushroomLinks = act.GetComponent<LinkComponent>();
+				var triggerTPL = tpl.GetComponent<TriggerComponent_Template>();
+				var triggerComponent = act.GetComponent<TriggerComponent>();
+
+				bool IsGoodTrigger() => triggerTPL != null && triggerTPL.triggerChildren && triggerTPL.triggerOnHit && !triggerTPL.triggerOnDetector && !triggerTPL.triggerSelf && (triggerTPL.onEnterEvent?.obj is EventTrigger);
+
+				if (mushroomTPL != null && (mushroomLinks?.Children?.Any() ?? false) && !IsGoodTrigger()) {
+
+					// Make trigger 
+					var ogPath = act.LUA;
+					var ogTpl = act.template;
+					var suffix = "triggermushroom";
+					bool once = mushroomComponent.fireOnce;
+					if (once) suffix += "_once";
+					if (CloneTemplateIfNecessary(ogPath, suffix, "TRIGGER MUSHROOM", ogTpl, out var newTpl, act)) {
+						triggerTPL = newTpl.obj.GetComponent<TriggerComponent_Template>();
+						triggerTPL.triggerSelf = false;
+						triggerTPL.triggerChildren = true;
+						triggerTPL.triggerOnHit = true;
+						triggerTPL.triggerOnCrush = true;
+						triggerTPL.triggerOnDetector = false;
+						triggerTPL.onEnterEvent = new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true });
+						mushroomTPL = newTpl.obj.GetComponent<RO2_LightingMushroomComponent_Template>();
+						if (once) {
+							mushroomTPL.RestartTimer = 1000;
+						}
+					}
+					if (once) {
+						triggerComponent.mode = TriggerComponent.Mode.Once;
+					}
+
+
+					Actor CreateTween(string suffix, CListO<ChildEntry> links, CListO<Generic<UbiArt.ITF.Event>> events) {
+						var luaPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
+						var tweenAct = new Actor() {
+							LUA = luaPath,
+							USERFRIENDLY = $"{act.USERFRIENDLY}_{suffix}",
+							POS2D = act.POS2D
+						};
+						l.AddLoadedActor(tweenAct);
+						var tween = tweenAct.AddComponent<TweenComponent>();
+						var linkComponent = tweenAct.AddComponent<LinkComponent>();
+						linkComponent.Children = new CListO<ChildEntry>(links.ToList());
+
+						tween.startSet = new StringID("Set");
+						var instructions = events.Select(e => new Generic<TweenInstruction>(new TweenEvent())).ToList();
+						var instructionsTPL = events.Select(e => new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+							triggerSelf = false,
+							triggerChildren = true,
+							_event = e,
+							duration = 0
+						})).ToList();
+						var firstExplosion = mushroomComponent?.MushroomTargets?.Min(p => p.Position?.Magnitude ?? 0);
+						var fireworkSpeed = mushroomTPL.Speed;
+						var timeBeforeTrigger = firstExplosion / fireworkSpeed;
+
+						if (timeBeforeTrigger.HasValue && timeBeforeTrigger.Value > 0) {
+							instructions = new List<Generic<TweenInstruction>>() {
+								new Generic<TweenInstruction>(new TweenWait())
+							}.Concat(instructions).ToList();
+							instructionsTPL = new List<Generic<TweenInstruction_Template>>() {
+								new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+									duration = (float)(timeBeforeTrigger.Value)
+								})
+							}.Concat(instructionsTPL).ToList();
+						}
+						if (once) {
+							float waitTimeAfterExplosion = 10f;
+
+							instructions.Add(new Generic<TweenInstruction>(new TweenWait()));
+							instructions.Add(new Generic<TweenInstruction>(new TweenEvent()));
+							instructionsTPL.Add(new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+								duration = waitTimeAfterExplosion
+							}));
+							instructionsTPL.Add(new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+								triggerSelf = false,
+								triggerBoundChildren = true, // Trigger child linked by parentBind only - the pause switch
+								_event = new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true })
+							}));
+							mushroomComponent.fireOnce = false;
+						}
+
+						tween.instructionSets = new CListO<TweenComponent.InstructionSet>() {
+							new TweenComponent.InstructionSet() {
+								name = new StringID("Set"),
+								instructions = new CArrayO<Generic<TweenInstruction>>(instructions.ToArray())
+							}
+						};
+						tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template());
+						var tpl = tween.instanceTemplate.value;
+						tpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+							new TweenComponent_Template.InstructionSet() {
+								name = new StringID("Set"),
+								iterationCount = 1,
+								triggable = true,
+								instructions = new CListO<Generic<TweenInstruction_Template>>(instructionsTPL)
+							}
+						};
+						tween.autoStart = false;
+
+						res.ContainingScene.AddActor(tweenAct, tweenAct.USERFRIENDLY);
+						mushroomLinks.Children = new CListO<ChildEntry>() {
+							new ChildEntry() {
+								Path = new ObjectPath(tweenAct.USERFRIENDLY)
+							}
+						};
+
+						return tweenAct;
+					}
+					Actor CreatePauseSwitch(string suffix, Actor parent) {
+						var pausePath = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl");
+
+						var pauseswitch = new Actor() {
+							USERFRIENDLY = $"{act.USERFRIENDLY}_{suffix}",
+							LUA = pausePath
+						};
+						if (parent != null) {
+							pauseswitch.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+								parentPath = new ObjectPath(parent.USERFRIENDLY)
+							});
+						}
+						l.AddLoadedActor(pauseswitch);
+
+						var link = pauseswitch.AddComponent<LinkComponent>();
+						link.Children = new CListO<ChildEntry>() {
+							new ChildEntry() {
+								Path = new ObjectPath(act.USERFRIENDLY) // Link to mushroom actor
+							}
+						};
+						var tween = pauseswitch.AddComponent<TweenComponent>();
+						tween.startSet = new StringID("Pause");
+						tween.instructionSets = new CListO<TweenComponent.InstructionSet>(new List<TweenComponent.InstructionSet>() {
+							new TweenComponent.InstructionSet() {
+								name = "Pause",
+								instructions = new CArrayO<Generic<TweenInstruction>>(new Generic<TweenInstruction>[] {
+									new Generic<TweenInstruction>(new TweenEvent() {
+									})
+								})
+							},
+							new TweenComponent.InstructionSet() {
+								name = "Unpause",
+								instructions = new CArrayO<Generic<TweenInstruction>>(new Generic<TweenInstruction>[] {
+									new Generic<TweenInstruction>(new TweenEvent() {
+									})
+								})
+							},
+						});
+						scene.AddActor(pauseswitch, pauseswitch.USERFRIENDLY);
+
+						return pauseswitch;
+					}
+					// Move links to new tween actor
+					var links = mushroomLinks.Children;
+					var tween = CreateTween("tween", links, new CListO<Generic<UbiArt.ITF.Event>>() {
+						new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true })
+					});
+					if (once) {
+						// We're not done yet. Need to create a pauseswitch with the mushroom actor as target
+						// And the tween as parentBind
+						CreatePauseSwitch("pauseswitch", tween);
 					}
 				}
 			}
@@ -2741,6 +2928,7 @@ namespace UbiCanvas.Conversion {
 			async Task<Path> GetModdedPauseSwitch() {
 				var ogPath = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl");
 				var newPath = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch_modaabb.tpl");
+
 				if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
 					l.Context.SystemLogger?.LogInfo($"Duplicating template (MOD ABBB): {ogPath.FullPath}");
 					var ogTpl = await LoadFileLegends<GenericFile<Actor_Template>>(ogPath);
@@ -3038,21 +3226,9 @@ namespace UbiCanvas.Conversion {
 					var ogPath = act.LUA;
 					var ogTpl = act.template;
 
-					var newPath = new Path(ogPath.FullPath.Replace(".tpl", "__startpaused.tpl"));
-					act.LUA = new Path(newPath.FullPath);
-
-					if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
-						l.Context.SystemLogger?.LogInfo($"Duplicating template (STARTPAUSE): {ogPath.FullPath}");
-						var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl"/*, context: LegendsContext*/) as Actor_Template);
-						newTpl.sizeOf = ogTpl.sizeOf;
+					if (CloneTemplateIfNecessary(ogPath, "startpaused", "STARTPAUSE", ogTpl, out var newTpl, act)) {
 						newTpl.obj.STARTPAUSED = true;
-						var oldCookedPath = l.CookedPaths[ogPath.stringID];
-						var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", "__startpaused.tpl"), true);
-						l.CookedPaths[newPath.stringID] = newCookedPath;
-						l.Paths[newPath.stringID] = newPath;
-						structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
 					}
-					act.template = (GenericFile<Actor_Template>)structs[typeof(GenericFile<Actor_Template>)][newPath.stringID];
 					act.STARTPAUSE = false;
 				}
 			}
@@ -3068,16 +3244,8 @@ namespace UbiCanvas.Conversion {
 			var ogTpl = act.template;
 
 			var suffix = disabled ? "disablephys" : "modphys";
-			var newPath = new Path(ogPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"));
-			var oldCookedPath = l.CookedPaths[ogPath.stringID];
-			var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"), true);
-			act.LUA = new Path(newPath.FullPath);
 
-			if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
-				l.Context.SystemLogger?.LogInfo($"Duplicating template (MODPHYS): {ogPath.FullPath}");
-				var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl") as Actor_Template);
-				newTpl.sizeOf = ogTpl.sizeOf;
-
+			if (CloneTemplateIfNecessary(ogPath, suffix, "MODPHYS", ogTpl, out var newTpl, act)) {
 				var newTplPhys = newTpl.obj.GetComponent<StickToPolylinePhysComponent_Template>();
 				if (disabled) {
 					newTplPhys.physGravityMultiplier = 0f;
@@ -3092,14 +3260,8 @@ namespace UbiCanvas.Conversion {
 				newTplPhys.physRadius = 0f;
 				var animTPL = newTpl.obj.GetComponent<AnimatedComponent_Template>();
 				animTPL.posOffset = new Vec2d(0,-0.8f);
-
-				l.CookedPaths[newPath.stringID] = newCookedPath;
-				l.Paths[newPath.stringID] = newPath;
-				structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
 			}
-			act.template = (GenericFile<Actor_Template>)structs[typeof(GenericFile<Actor_Template>)][newPath.stringID];
 		}
-
 
 		public void DuplicateLightingMushroomForGPEColor(Context oldContext, Settings newSettings) {
 			Loader l = oldContext.Loader;
@@ -3109,53 +3271,28 @@ namespace UbiCanvas.Conversion {
 				var act = l.LoadedActors[i];
 				var lightingMushroom = act.GetComponent<RO2_LightingMushroomComponent>();
 				if (lightingMushroom != null) {
-
-					// Trigger hack (Adventures & Mini send trigger events when the mushroom is hit) TODO: Improve.
-					var tmpl = act.template?.obj?.GetComponent<TriggerComponent_Template>();
-					if (tmpl != null) {
-						tmpl.triggerChildren = true;
-						tmpl.triggerOnHit = true;
-						tmpl.triggerOnDetector = false;
-						tmpl.onEnterEvent = new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true });
-						tmpl.onEnterEvent.className = new StringID(tmpl.onEnterEvent.obj.ClassCRC ?? uint.MaxValue);
-						tmpl.onExitEvent = null;
-					}
-					// TODO: Change restartTimer in template as well if fireOnce is set
-
 					var gpeColor = lightingMushroom.GPEColor;
 					if (gpeColor != uint.MaxValue) {
 						if (act.template?.obj?.GetComponent<AnimMeshVertexComponent_Template>() != null) {
 							var ogPath = act.LUA;
 							var ogTpl = act.template;
 
-							var newPath = new Path(ogPath.FullPath.Replace(".tpl", $"__gpe{gpeColor}.tpl"));
-							act.LUA = new Path(newPath.FullPath);
-
-							if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
-								l.Context.SystemLogger?.LogInfo($"Duplicating template (LightingMushroom.GPEColor): {ogPath.FullPath}");
-
-								var newTpl = new GenericFile<Actor_Template>(ogTpl.obj?.Clone("tpl"/*, context: LegendsContext*/) as Actor_Template);
-
-								newTpl.obj.COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>();
-								foreach (var c in ogTpl.obj.COMPONENTS) {
+							if (CloneTemplateIfNecessary(ogPath, $"gpe{gpeColor}", "LightingMushroom.GPEColor", ogTpl, out var newTpl, act)) {
+								var newComponents = new List<Generic<ActorComponent_Template>>();
+								foreach (var c in newTpl.obj.COMPONENTS) {
 									if (c?.obj is AnimMeshVertexComponent_Template amvComponent) {
 										var ogAMVPath = amvComponent.amvPath;
 										var newAmvComponent = Merger.Merge<AnimMeshVertexComponent_Template>(amvComponent);
 										newAmvComponent.amvPath = new Path(ogAMVPath.FullPath.Replace(".asc", $"__gpe{gpeColor}.asc"));
 										var newC = new Generic<ActorComponent_Template>(newAmvComponent);
-										newTpl.obj.COMPONENTS.Add(newC);
+										newComponents.Add(newC);
 									} else {
-										newTpl.obj.COMPONENTS.Add(c);
+										newComponents.Add(c);
 									}
 
 								}
-								var oldCookedPath = l.CookedPaths[ogPath.stringID];
-								var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", $"__gpe{gpeColor}.tpl"), true);
-								l.CookedPaths[newPath.stringID] = newCookedPath;
-								l.Paths[newPath.stringID] = newPath;
-								structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTpl;
+								newTpl.obj.COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>(newComponents.ToArray());
 							}
-							act.template = (GenericFile<Actor_Template>)structs[typeof(GenericFile<Actor_Template>)][newPath.stringID];
 						}
 					}
 				}
@@ -3485,6 +3622,37 @@ namespace UbiCanvas.Conversion {
 					}
 				},
 			};
+		}
+
+		// Returns true if the new template was created with this call
+		public bool CloneTemplateIfNecessary(Path ogPath, string suffix, string reason, GenericFile<Actor_Template> ogTPL, out GenericFile<Actor_Template> newTPL, Actor act = null) {
+			var oldContext = MainContext;
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var newPath = new Path(ogPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"));
+
+			bool clonedTemplate = false;
+			if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
+				clonedTemplate = true;
+				l.Context.SystemLogger?.LogInfo($"Duplicating template ({reason}): {ogPath.FullPath}");
+				newTPL = new GenericFile<Actor_Template>(ogTPL.obj?.Clone("tpl"/*, context: LegendsContext*/) as Actor_Template);
+				newTPL.sizeOf = ogTPL.sizeOf;
+
+				var oldCookedPath = l.CookedPaths[ogPath.stringID];
+				var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"), true);
+				l.CookedPaths[newPath.stringID] = newCookedPath;
+				l.Paths[newPath.stringID] = newPath;
+				structs[typeof(GenericFile<Actor_Template>)][newPath.stringID] = newTPL;
+			} else {
+				newTPL = (GenericFile<Actor_Template>)structs[typeof(GenericFile<Actor_Template>)][newPath.stringID];
+			}
+			if (act != null) {
+				act.LUA = new Path(newPath.FullPath);
+				act.template = newTPL;
+			}
+
+			return clonedTemplate;
 		}
 		#endregion
 
