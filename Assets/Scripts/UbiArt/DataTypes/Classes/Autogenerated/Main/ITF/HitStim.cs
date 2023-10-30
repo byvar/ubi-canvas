@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class HitStim : EventStim {
 		public uint level;
 		public Vec2d direction;
-		public uint faction;
+		public uint faction = uint.MaxValue;
 		public Vec3d fxPos;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

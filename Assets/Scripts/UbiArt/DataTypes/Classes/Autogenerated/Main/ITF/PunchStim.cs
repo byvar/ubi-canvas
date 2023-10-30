@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public RECEIVEDHITTYPE hitType;
 		public float pushBackDistance;
 		public bool radial;
-		public float bounceMultiplier;
+		public float bounceMultiplier = 1f;
 		public uint identifier;
 		public bool hitEnemiesOnce;
 		protected override void SerializeImpl(CSerializerObject s) {
