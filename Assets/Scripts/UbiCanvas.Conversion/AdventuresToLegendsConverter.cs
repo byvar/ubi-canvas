@@ -1242,11 +1242,11 @@ namespace UbiCanvas.Conversion {
 				var mushroomTPL = tpl.GetComponent<RO2_LightingMushroomComponent_Template>();
 				var mushroomLinks = act.GetComponent<LinkComponent>();
 				var triggerTPL = tpl.GetComponent<TriggerComponent_Template>();
-				var triggerComponent = act.GetComponent<TriggerComponent>();
+				//var triggerComponent = act.GetComponent<TriggerComponent>();
 
-				bool IsGoodTrigger() => act.GetComponent<RelayEventComponent>() != null;//triggerTPL != null && triggerTPL.triggerChildren && triggerTPL.triggerOnHit && !triggerTPL.triggerOnDetector && !triggerTPL.triggerSelf && (triggerTPL.onEnterEvent?.obj is EventTrigger);
+				bool HasRelayComponent() => act.GetComponent<RelayEventComponent>() != null;//triggerTPL != null && triggerTPL.triggerChildren && triggerTPL.triggerOnHit && !triggerTPL.triggerOnDetector && !triggerTPL.triggerSelf && (triggerTPL.onEnterEvent?.obj is EventTrigger);
 
-				if (mushroomTPL != null && (mushroomLinks?.Children?.Any() ?? false) && !IsGoodTrigger()) {
+				if (mushroomTPL != null && (mushroomLinks?.Children?.Any() ?? false) && !HasRelayComponent()) {
 
 					// Make trigger 
 					var ogPath = act.LUA;
@@ -1256,17 +1256,11 @@ namespace UbiCanvas.Conversion {
 					if (once) suffix += "_once";
 					if (CloneTemplateIfNecessary(ogPath, suffix, "TRIGGER MUSHROOM", ogTpl, out var newTpl, act)) {
 						triggerTPL = newTpl.obj.GetComponent<TriggerComponent_Template>();
-						triggerTPL.triggerSelf = false;
-						triggerTPL.triggerChildren = true;
-						triggerTPL.triggerOnHit = true;
-						triggerTPL.triggerOnCrush = true;
-						triggerTPL.triggerOnDetector = false;
-						triggerTPL.onEnterEvent = new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true });
 						mushroomTPL = newTpl.obj.GetComponent<RO2_LightingMushroomComponent_Template>();
 						if (once) {
 							mushroomTPL.RestartTimer = float.MaxValue;
 						}
-						/*newTpl.sizeOf += 0x10000;
+						newTpl.sizeOf += 0x10000;
 						var rel = newTpl.obj.AddComponent<RelayEventComponent_Template>();
 						rel.relays = new CListO<RelayData> {
 							new RelayData() {
@@ -1275,12 +1269,12 @@ namespace UbiCanvas.Conversion {
 								triggerSelf = false,
 								triggerChildren = true
 							}
-						};*/
+						};
 					}
-					if (once) {
+					/*if (once) {
 						triggerComponent.mode = TriggerComponent.Mode.Once;
-					}
-					//act.AddComponent<RelayEventComponent>();
+					}*/
+					act.AddComponent<RelayEventComponent>();
 
 
 					Actor CreateTween(string suffix, CListO<ChildEntry> links, CListO<Generic<UbiArt.ITF.Event>> events) {
@@ -1327,11 +1321,11 @@ namespace UbiCanvas.Conversion {
 							}));
 							instructionsTPL.Add(new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
 								triggerSelf = false,
-								//triggerChildren = false,
-								//triggerBoundChildren = true,
-								//_event = new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true })
-								triggerChildren = true,
-								_event = new Generic<UbiArt.ITF.Event>(new RO2_EventLightingMushroomExplosion()) // Fitting rubbish event only used by final boss for some reason
+								triggerChildren = false,
+								triggerBoundChildren = true,
+								_event = new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = true })
+								//triggerChildren = true,
+								//_event = new Generic<UbiArt.ITF.Event>(new RO2_EventLightingMushroomExplosion()) // Fitting rubbish event only used by final boss for some reason
 							}));
 							mushroomComponent.fireOnce = false;
 						}
@@ -1362,40 +1356,6 @@ namespace UbiCanvas.Conversion {
 						};
 
 						return tweenAct;
-					}
-					Actor CreateRelayMushroom(string suffix) {
-						var relayPath = new Path("world/common/logicactor/trigger/relay/relay_mushroom_once.tpl");
-
-						var relayActor = new Actor() {
-							USERFRIENDLY = $"{act.USERFRIENDLY}_{suffix}",
-							LUA = relayPath
-						};
-						l.AddLoadedActor(relayActor);
-
-						var link = relayActor.AddComponent<LinkComponent>();
-						link.Children = new CListO<ChildEntry>() {
-							new ChildEntry() {
-								Path = new ObjectPath(act.USERFRIENDLY) // Link to mushroom actor
-							}
-						};
-						var relay = relayActor.AddComponent<RelayEventComponent>();
-
-						res.ContainingScene.AddActor(relayActor, relayActor.USERFRIENDLY);
-
-						if (CreateTemplateIfNecessary(relayPath, "RELAY MUSHROOM", out var newTPLContainer, relayActor)) {
-							var newTPL = newTPLContainer.obj;
-							newTPL.AddComponent<LinkComponent_Template>();
-							var relayTPL = newTPL.AddComponent<RelayEventComponent_Template>();
-							relayTPL.relays = new CListO<RelayData>(new List<RelayData>() {
-								new RelayData() {
-									triggerChildren = true,
-									triggerSelf = false,
-									eventToListen = new Generic<UbiArt.ITF.Event>(new RO2_EventLightingMushroomExplosion()),
-									eventToRelay = new Generic<UbiArt.ITF.Event>(new EventPause() { pause = true })
-								},
-							});
-						}
-						return relayActor;
 					}
 					Actor CreatePauseSwitch(string suffix, Actor parent) {
 						var pausePath = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl");
@@ -1448,12 +1408,7 @@ namespace UbiCanvas.Conversion {
 					if (once) {
 						// We're not done yet. Need to create a pauseswitch with the mushroom actor as target
 						// And the tween as parentBind
-						//CreatePauseSwitch("pauseswitch", tween);
-
-						var relay = CreateRelayMushroom("pause");
-						tween.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
-							Path = new ObjectPath(relay.USERFRIENDLY)
-						});
+						CreatePauseSwitch("pauseswitch", tween);
 					}
 				}
 			}
