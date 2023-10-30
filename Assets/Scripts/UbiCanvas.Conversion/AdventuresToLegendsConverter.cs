@@ -139,6 +139,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/logicactor/tweening/tweeneditortype/components/", "world/common/logicactor/tweening/tweeneditortype/components_rlc/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/logicactor/tweening/tweeneditortype/components_rlc/tween_notype.tpl", "world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/fx/lifeelements/musical/", "world/common/fx/lifeelements_rlc/musical/"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(

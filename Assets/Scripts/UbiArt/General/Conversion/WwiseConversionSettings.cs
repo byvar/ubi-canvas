@@ -20,11 +20,12 @@ namespace UbiArt {
 			UsedEvents.Clear();
 		}
 
-		public SoundParams GetParams(Action action) {
+		public SoundParams GetParams(Action action, bool? playAfterDestroy) {
 			if(action == null) return null;
 
 			var sp = new SoundParams() {
 				loop = action.IsLoop ? 1 : 0,
+				fadeOutTime = 0.01f,
 				playMode = action.IsSequence ? SoundParams.PlayMode.Sequence : (action.AvoidRepeat ? SoundParams.PlayMode.RandomRememberLast : SoundParams.PlayMode.Random),
 				playMode2 = action.IsSequence ? SoundParams.PlayMode2.Sequence : (action.AvoidRepeat ? SoundParams.PlayMode2.RandomRememberLast : SoundParams.PlayMode2.Random),
 				/*modifiers = new CArrayO<Generic<SoundModifier>>() {
@@ -40,6 +41,10 @@ namespace UbiArt {
 					}),
 				}*/
 			};
+			if (playAfterDestroy.HasValue && playAfterDestroy == true) {
+				sp.fadeOutTime = 5f;
+				//fadeOutTime = playAfterDestroy == true ? 5f : (playAfterDestroy == false ? (action.IsLoop ? 0.01f : 5f,
+			}
 			if (action.Attenuation.HasValue) {
 				var att = Attenuations[action.Attenuation.Value];
 				sp.modifiers = new CArrayO<Generic<SoundModifier>>(att.GetModifiers().Select(m => new Generic<SoundModifier>(m)).ToArray());
@@ -113,15 +118,16 @@ namespace UbiArt {
 				var newTPL = new SoundDescriptor_Template() {
 					name = new StringID((uint)act.ID),
 					//maxInstances = 5, // or leave it be
-					_params = GetParams(act),
+					_params = GetParams(act, tpl.soundPlayAfterdestroy),
 					WwiseEventGUID = null, // Mark as processed
 					category = act.Bus,
 					files = new CListO<Path>(act.Sounds.Select(f => new Path(f.Filename)).ToList()),
 					soundPlayAfterdestroy = tpl.soundPlayAfterdestroy,
 					limitModeEnum = act.KillNewest ? LimiterDef.LimiterMode.RejectNew : LimiterDef.LimiterMode.StopOldest,
-					maxInstances = (uint)(act.MaxInstances ?? uint.MaxValue)
+					maxInstances = (uint)(act.MaxInstances ?? uint.MaxValue),
+					//limitCategory = new StringID((uint)act.ID)
 				};
-				newTPL.soundPlayAfterdestroy = (newTPL._params?.loop ?? 0) == 0;
+				newTPL.soundPlayAfterdestroy = newTPL.soundPlayAfterdestroy || (newTPL._params?.loop ?? 0) == 0;
 				soundDescriptors.Add(newTPL);
 			}
 			SoundDescriptorMapping[tpl] = soundDescriptors;
@@ -155,7 +161,7 @@ namespace UbiArt {
 					var action = entry.Actions.FirstOrDefault(act => !act.IsStop);
 					if (action != null) {
 						if (!UsedEvents.Contains(evtGUID)) UsedEvents.Add(evtGUID);
-						tpl.Params = GetParams(action);
+						tpl.Params = GetParams(action, null);
 						tpl.Category2 = action.Bus;
 						tpl.Sound = new Path(action.Sounds.FirstOrDefault()?.Filename);
 					}
