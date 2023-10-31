@@ -1587,7 +1587,7 @@ namespace UbiCanvas.Conversion {
 						return tweenAct;
 					}
 					Actor CreatePauseSwitch(string suffix, Actor parent) {
-						var pausePath = new Path("world/jungle/level/ju_rl_1_castle/actor/pauseswitch.tpl");
+						var pausePath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
 
 						var pauseswitch = new Actor() {
 							USERFRIENDLY = $"{act.USERFRIENDLY}_{suffix}",
@@ -1600,13 +1600,15 @@ namespace UbiCanvas.Conversion {
 						}
 						l.AddLoadedActor(pauseswitch);
 
-						var link = pauseswitch.AddComponent<LinkComponent>();
-						link.Children = new CListO<ChildEntry>() {
+
+						var tween = pauseswitch.AddComponent<TweenComponent>();
+						var linkComponent = pauseswitch.AddComponent<LinkComponent>();
+						linkComponent.Children = new CListO<ChildEntry>() {
 							new ChildEntry() {
 								Path = new ObjectPath(act.USERFRIENDLY) // Link to mushroom actor
 							}
 						};
-						var tween = pauseswitch.AddComponent<TweenComponent>();
+
 						tween.startSet = new StringID("Pause");
 						tween.autoStart = false;
 						tween.instructionSets = new CListO<TweenComponent.InstructionSet>(new List<TweenComponent.InstructionSet>() {
@@ -1617,14 +1619,28 @@ namespace UbiCanvas.Conversion {
 									})
 								})
 							},
-							new TweenComponent.InstructionSet() {
-								name = "Unpause",
-								instructions = new CArrayO<Generic<TweenInstruction>>(new Generic<TweenInstruction>[] {
-									new Generic<TweenInstruction>(new TweenEvent() {
-									})
-								})
-							},
 						});
+						tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template());
+						var tpl = tween.instanceTemplate.value;
+						tpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+							new TweenComponent_Template.InstructionSet() {
+								name = new StringID("Pause"),
+								iterationCount = 1,
+								triggable = true,
+								instructions = new CListO<Generic<TweenInstruction_Template>>() {
+									new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+										triggerSelf = false,
+										triggerChildren = true,
+										_event = new Generic<UbiArt.ITF.Event>(new EventShow() {
+											alpha = 0f,
+											transitionTime = 1f,
+											pauseOnEnd = true
+										}),
+										duration = 0
+									})
+								}
+							}
+						};
 						res.ContainingScene.AddActor(pauseswitch, pauseswitch.USERFRIENDLY);
 
 						return pauseswitch;
