@@ -16,5 +16,26 @@ namespace UbiArt.ITF {
 				}
 			}
 		}
+
+		protected override void OnPreSerialize(CSerializerObject s) {
+			base.OnPreSerialize(s);
+			Reinit(s.Context, s.Settings);
+		}
+
+		Settings previousSettings = null;
+		protected virtual void Reinit(Context c, Settings settings) {
+			if (previousSettings != null) {
+				if (previousSettings.Game != settings.Game) {
+					if ((previousSettings.Game == Game.RA || previousSettings.Game == Game.RM) && settings.Game == Game.RL) {
+						if (!(textureSet?.diffuse?.IsNull ?? true)) {
+							if (materialShader == null || materialShader.IsNull) {
+								materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh");
+							}
+						}
+					}
+				}
+			}
+			previousSettings = settings;
+		}
 	}
 }

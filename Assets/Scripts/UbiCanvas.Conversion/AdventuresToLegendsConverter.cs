@@ -141,6 +141,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/logicactor/tweening/tweeneditortype/components_rlc/tween_notype.tpl", "world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/fx/lifeelements/musical/", "world/common/fx/lifeelements_rlc/musical/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/friendly/skullcoin/components/skullcoin.tpl", "world/common/friendly/skullcoin/components/skullcoin_rlc.tpl"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -859,6 +861,56 @@ namespace UbiCanvas.Conversion {
 						AllSMVToFrise(oldContext, scene);
 						break;
 					}*/
+				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc": {
+						ApplySpecialRenderParamsToScene(scene);
+						break;
+					}
+			}
+		}
+
+		public void ApplySpecialRenderParamsToScene(Scene scene, RenderParamComponent rp = null) {
+			if (rp == null) {
+				// Find first RenderParam in scene
+				rp = scene.FindActor(a => a.GetComponent<RenderParamComponent>() != null).Result.GetComponent<RenderParamComponent>();
+			}
+			var globalStaticFog = rp.Lighting.GlobalStaticFog;
+			var globalBrightness = rp.Lighting.GlobalBrightness;
+			var globalFogOpacity = rp.Lighting.GlobalFogOpacity;
+
+			void ApplyToPrimitiveParameters(GFXPrimitiveParam pp) {
+				if (pp.UseGlobalLighting) {
+					if (pp.useStaticFog) {
+						pp.colorFog = /*pp.colorFactor * globalStaticFog*/ globalStaticFog * new UbiArt.Color(1, 1, 1, ((globalFogOpacity + 1f) / 2f));
+					}
+					pp.FrontLightBrightness = globalBrightness;
+				}
+			}
+
+			/*var animatedActors = scene.FindActors(a => a.GetComponent<AnimLightComponent>() != null);
+			foreach (var act in animatedActors) {
+				var anim = act.Result.GetComponent<AnimLightComponent>();
+				if(anim.PrimitiveParameters == null) anim.PrimitiveParameters = new GFXPrimitiveParam();
+				ApplyToPrimitiveParameters(anim.PrimitiveParameters);
+			}*/
+			var graphicActors = scene.FindActors(a => a.GetComponent<GraphicComponent>() != null);
+			foreach (var act in graphicActors) {
+				var graphicsComponents = act.Result.GetComponents<GraphicComponent>();
+				foreach (var gc in graphicsComponents) {
+					if (gc.PrimitiveParameters == null) gc.PrimitiveParameters = new GFXPrimitiveParam();
+					ApplyToPrimitiveParameters(gc.PrimitiveParameters);
+				}
+			}
+			// Manually set Global Static Fog on frises
+			/*var frises = scene.FindPickables(p => p is Frise f && f.PrimitiveParameters.useStaticFog && f.PrimitiveParameters.UseGlobalLighting);
+			foreach (var f in frises) {
+				var fr = (Frise)f.Result;
+				fr.PrimitiveParameters.colorFog = fr.PrimitiveParameters.colorFactor * globalStaticFog;
+			}*/
+			var frises = scene.FindPickables(p => p is Frise f && f.PrimitiveParameters.UseGlobalLighting);
+			foreach (var f in frises) {
+				var fr = (Frise)f.Result;
+				if (fr.PrimitiveParameters == null) fr.PrimitiveParameters = new GFXPrimitiveParam();
+				ApplyToPrimitiveParameters(fr.PrimitiveParameters);
 			}
 		}
 
