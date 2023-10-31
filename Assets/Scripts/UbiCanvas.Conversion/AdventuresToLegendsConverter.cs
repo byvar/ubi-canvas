@@ -900,12 +900,6 @@ namespace UbiCanvas.Conversion {
 					ApplyToPrimitiveParameters(gc.PrimitiveParameters);
 				}
 			}
-			// Manually set Global Static Fog on frises
-			/*var frises = scene.FindPickables(p => p is Frise f && f.PrimitiveParameters.useStaticFog && f.PrimitiveParameters.UseGlobalLighting);
-			foreach (var f in frises) {
-				var fr = (Frise)f.Result;
-				fr.PrimitiveParameters.colorFog = fr.PrimitiveParameters.colorFactor * globalStaticFog;
-			}*/
 			var frises = scene.FindPickables(p => p is Frise f && f.PrimitiveParameters.UseGlobalLighting);
 			foreach (var f in frises) {
 				var fr = (Frise)f.Result;
