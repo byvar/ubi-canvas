@@ -810,18 +810,11 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
-						/*var breakables = scene.FindPickables(a => a.USERFRIENDLY == "invisibleground_nowallslide_nowallrun@2");
-						foreach (var b in breakables) {
-							b.Result.STARTPAUSE = true;
-						}*/
 						var path = new Path("world/common/breakable/lumsjar/components/lumjar_nocol_nophys.tpl");
 						var breakables = scene.FindActors(a => a.LUA == path);
 						foreach (var b in breakables) {
 							FixLumJarNoPhys(oldContext, b.Result);
 						}
-						// TODO: Disable or remove other invisiblegrounds added for these lum jars.
-						// A lot of these have "StartDisable" in the stick to polyline component
-						// Maybe deleting the component is a decent solution too?
 						break;
 					}
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
@@ -852,6 +845,13 @@ namespace UbiCanvas.Conversion {
 						// There's a toad that usually gets stuck in the floor and dies offscreen. Move it up a unit to fix it
 						var disappearingToad = scene.FindActor(a => a.USERFRIENDLY == "basictoad_nemo@1");
 						disappearingToad.Result.POS2D = disappearingToad.Result.POS2D + new Vec2d(0f, 1f);
+						break;
+					}
+				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
+						var smvs = scene.FindActors(a => a.GetComponent<StaticMeshVertexComponent>() != null);// && a.USERFRIENDLY.StartsWith("dojo_int_background_rembarde"));
+						foreach (var smv in smvs) {
+							SMVToFriseGroup(oldContext, smv.Result, scene, containingScene: smv.ContainingScene);
+						}
 						break;
 					}
 			}
@@ -1063,6 +1063,219 @@ namespace UbiCanvas.Conversion {
 					act.AddComponent<RO2_DRC_FXGrabComponent>();
 				}*/
 			}
+		}
+
+		public SubSceneActor SMVToFriseGroup(Context oldContext, Actor smvActor, Scene mainScene, Scene containingScene = null) {
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
+			var loadedScene = loadedScenes.FirstOrDefault(s => ((ContainerFile<Scene>)s.Value).obj == mainScene);
+			var scenePath = l.Paths[loadedScene.Key];
+
+			StaticMeshVertexComponent smv = smvActor.GetComponent<StaticMeshVertexComponent>();
+			SubSceneActor friseScene = new SubSceneActor() {
+				USERFRIENDLY = smvActor.USERFRIENDLY,
+				POS2D = smvActor.POS2D,
+				SCALE = smvActor.SCALE,
+				xFLIPPED = smvActor.xFLIPPED,
+				parentBind = smvActor.parentBind,
+				UPDATEDEPENDENCYLIST = smvActor.UPDATEDEPENDENCYLIST,
+				RELATIVEZ = smvActor.RELATIVEZ,
+				STARTPAUSE = smvActor.STARTPAUSE,
+				INSTANCEDATAFILE = smvActor.INSTANCEDATAFILE,
+				USEVIEWFRUSTUMFLAG = smvActor.USEVIEWFRUSTUMFLAG,
+				persistenceId = smvActor.persistenceId,
+
+				LUA = new Path("enginedata/actortemplates/subscene.tpl"),
+
+				EMBED_SCENE = true,
+				ZFORCED = true,
+				SCENE = new UbiArt.Nullable<Scene>(new Scene())
+			};
+			var scene = friseScene.SCENE.value;
+
+			// Now, we create a frise config based on the SMV's material settting
+			var fcg = new GenericFile<FriseConfig>(new FriseConfig() {
+				TAGS = new CListP<string>(new List<string>() {
+					"frieze"
+				}),
+				textureConfigs = new CListO<FriseTextureConfig>() {
+					new FriseTextureConfig() {
+						material = smv.material
+					}
+				},
+				gameMaterial = new Path() // Null, no collision
+			});
+
+			int index = 1;
+			var pathBase = $"{scenePath.GetFilenameWithoutExtension(fullPath: true, removeCooked: true)}_smvfrieze/";
+			var newPath = new Path($"{pathBase}smv_{index}.fcg");
+			while (structs[typeof(GenericFile<FriseConfig>)].ContainsKey(newPath.stringID)) {
+				// Check the previously exported configs to see if they match
+
+				var otherFCG = l.Context.Cache.Get<GenericFile<FriseConfig>>(newPath);
+				if ((otherFCG.obj.textureConfigs?.Count ?? 0) == 1) {
+					var texConfig = otherFCG.obj.textureConfigs.FirstOrDefault();
+					var mat = texConfig.material;
+					if (mat?.shaderPath == smv.material?.shaderPath
+						&& mat?.textureSet?.diffuse == smv.material?.textureSet?.diffuse) {
+						// The rest will match too, consider this identical
+						fcg = otherFCG;
+						break;
+					}
+				}
+
+				index++;
+				newPath = new Path($"{pathBase}smv_{index}.fcg");
+			}
+			if (!structs[typeof(GenericFile<FriseConfig>)].ContainsKey(newPath.stringID)) {
+				var newCookedPath = newPath.CookedPath(MainContext);
+				l.CookedPaths[newPath.stringID] = newCookedPath;
+				l.Paths[newPath.stringID] = newPath;
+				structs[typeof(GenericFile<FriseConfig>)][newPath.stringID] = fcg;
+			}
+
+			// Now, convert the SMV to a bunch of frises
+			foreach (var mesh in smv.staticMeshElements) {
+				var fr = new Frise() {
+					USERFRIENDLY = mesh.frisePath.id,
+					POS2D = new Vec2d(mesh.pos?.x ?? 0, mesh.pos?.y ?? 0),
+					RELATIVEZ = mesh.pos?.z ?? 0,
+					PrimitiveParameters = (GFXPrimitiveParam)smv.PrimitiveParameters.Clone("isc"),
+
+					PreComputedForCook = true,
+					ConfigName = new Path(newPath.FullPath),
+				};
+				fr.ColorFactor  = fr.ColorFactor * mesh.color;
+				
+				Vec2d LocalToGlobal(Vec2d point) => (point * fr.SCALE).Rotate(fr.ANGLE) + fr.POS2D;
+				Vec3d LocalToGlobal3D(Vec3d point) {
+					var v2d = LocalToGlobal(new Vec2d(point.x, point.y));
+					return new Vec3d(v2d.x, v2d.y, point.z + fr.RELATIVEZ);
+				}
+				Vec2d TransformPoint(Vec2d v) => v - fr.POS2D;
+				Vec3d TransformPoint3D(Vec3d v) => new Vec3d(v.x - fr.POS2D.x, v.y - fr.POS2D.y, v.z - fr.RELATIVEZ);
+
+
+				Vec2d totalMin = TransformPoint(new Vec2d(
+					mesh.staticVertexList.Min(v => v.pos?.x ?? 0),
+					mesh.staticVertexList.Min(v => v.pos?.y ?? 0)));
+				Vec2d totalMax = TransformPoint(new Vec2d(
+					mesh.staticVertexList.Max(v => v.pos?.x ?? 0),
+					mesh.staticVertexList.Max(v => v.pos?.y ?? 0)));
+
+				fr.PointsList = CreatePolyPointList(new Vec2d[] {
+						totalMin, new Vec2d(totalMin.x, totalMax.y), totalMax, new Vec2d(totalMax.x, totalMin.y)
+					});
+
+				PolyPointList CreatePolyPointList(Vec2d[] vectors, bool loop = true) {
+					var points = new PolyPointList() {
+						LocalPoints = new CListO<PolyLineEdge>(vectors.Select(p => new PolyLineEdge() {
+							POS = p,
+							Scale = 1f,
+						}).ToList()),
+						Loop = loop,
+					};
+					if (loop) {
+						points.LocalPoints.Add(new PolyLineEdge() {
+							POS = vectors[0],
+							Scale = 1f,
+						});
+					}
+					points.RecomputeData();
+					return points;
+				}
+
+				if (!mesh.animated) {
+					fr.meshBuildData = new UbiArt.Nullable<Frise.MeshBuildData>(new Frise.MeshBuildData() {
+						StaticIndexList = new CListO<Frise.IndexList>(),
+						StaticVertexList = new CListO<VertexPCT>()
+					});
+					var indices = mesh.staticIndexList;
+					var vertices = mesh.staticVertexList.Select(v => new VertexPCT() {
+						pos = TransformPoint3D(v.pos),
+						color = v.color,
+						uv = v.uv1
+					});
+					fr.meshBuildData.value.StaticIndexList = new CListO<Frise.IndexList>(
+						new List<Frise.IndexList>() {
+							new Frise.IndexList() {
+								IdTexConfig = 0,
+								List = new CListP<ushort>(indices.ToList())
+							}
+						}
+					);
+					fr.meshBuildData.value.StaticVertexList = new CListO<VertexPCT>(vertices.ToList());
+
+					// Fill in meshStaticAABB based on visual data
+					if (fr.meshBuildData.value?.StaticVertexList?.Any() ?? false) {
+						fr.meshStaticData = new UbiArt.Nullable<Frise.MeshStaticData>(new Frise.MeshStaticData() {
+							LocalAABB = new AABB() {
+								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.y)),
+								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.y))
+							},
+							WorldAABB = new AABB() {
+								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
+								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).y))
+							},
+						});
+						fr.AABB_MinZ = fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.z);
+						fr.AABB_MaxZ = fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.z);
+					}
+				} else if (mesh.animated) {
+					fr.meshBuildData = new UbiArt.Nullable<Frise.MeshBuildData>(new Frise.MeshBuildData() {
+						AnimIndexList = new CListO<Frise.IndexList>(),
+						AnimVertexList = new CListO<VertexPNC3T>()
+					});
+					var indices = mesh.staticIndexList;
+					var vertices = mesh.staticVertexList.Select(v => new VertexPNC3T() {
+						pos = TransformPoint3D(v.pos),
+						color = v.color,
+						uv1 = v.uv1,
+						uv2 = v.uv2,
+						uv3 = v.uv3,
+						uv4 = v.uv4,
+					});
+					fr.meshBuildData.value.AnimIndexList = new CListO<Frise.IndexList>(
+						new List<Frise.IndexList>() {
+							new Frise.IndexList() {
+								IdTexConfig = 0,
+								List = new CListP<ushort>(indices.ToList())
+							}
+						}
+					);
+					fr.meshBuildData.value.AnimVertexList = new CListO<VertexPNC3T>(vertices.ToList());
+
+					// Fill in meshAnimAABB based on visual data
+					if (fr.meshBuildData.value?.AnimVertexList?.Any() ?? false) {
+						fr.meshAnimData = new UbiArt.Nullable<Frise.MeshAnimData>(new Frise.MeshAnimData() {
+							LocalAABB = new AABB() {
+								MIN = new Vec2d(fr.meshBuildData.value.AnimVertexList.Min(v => v.pos.x), fr.meshBuildData.value.AnimVertexList.Min(v => v.pos.y)),
+								MAX = new Vec2d(fr.meshBuildData.value.AnimVertexList.Max(v => v.pos.x), fr.meshBuildData.value.AnimVertexList.Max(v => v.pos.y))
+							},
+							WorldAABB = new AABB() {
+								MIN = new Vec2d(fr.meshBuildData.value.AnimVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.AnimVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
+								MAX = new Vec2d(fr.meshBuildData.value.AnimVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.AnimVertexList.Max(v => LocalToGlobal3D(v.pos).y))
+							},
+						});
+						fr.AABB_MinZ = fr.meshBuildData.value.AnimVertexList.Min(v => v.pos.z);
+						fr.AABB_MaxZ = fr.meshBuildData.value.AnimVertexList.Max(v => v.pos.z);
+					}
+				}
+
+				scene.AddActor(fr, fr.USERFRIENDLY);
+			}
+
+
+
+
+			if (containingScene != null) {
+				containingScene.DeletePickable(smvActor);
+				containingScene.AddActor(friseScene, friseScene.USERFRIENDLY);
+			}
+
+			return friseScene;
 		}
 
 		public void FixTeensies(Context oldContext, Settings newSettings) {
