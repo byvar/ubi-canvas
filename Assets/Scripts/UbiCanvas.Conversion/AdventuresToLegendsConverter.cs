@@ -848,12 +848,17 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
-						var smvs = scene.FindActors(a => a.GetComponent<StaticMeshVertexComponent>() != null);// && a.USERFRIENDLY.StartsWith("dojo_int_background_rembarde"));
-						foreach (var smv in smvs) {
-							SMVToFriseGroup(oldContext, smv.Result, scene, containingScene: smv.ContainingScene);
-						}
+						AllSMVToFrise(oldContext, scene);
 						break;
 					}
+				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc": {
+						AllSMVToFrise(oldContext, scene);
+						break;
+					}
+				/*case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc": {
+						AllSMVToFrise(oldContext, scene);
+						break;
+					}*/
 			}
 		}
 
@@ -1065,6 +1070,12 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public void AllSMVToFrise(Context oldContext, Scene scene, Predicate<Actor> criteria = null) {
+			var smvs = scene.FindActors(a => a.GetComponent<StaticMeshVertexComponent>() != null && (criteria?.Invoke(a) ?? true));
+			foreach (var smv in smvs) {
+				SMVToFriseGroup(oldContext, smv.Result, scene, containingScene: smv.ContainingScene);
+			}
+		}
 		public SubSceneActor SMVToFriseGroup(Context oldContext, Actor smvActor, Scene mainScene, Scene containingScene = null) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -1078,6 +1089,7 @@ namespace UbiCanvas.Conversion {
 				USERFRIENDLY = smvActor.USERFRIENDLY,
 				POS2D = smvActor.POS2D,
 				SCALE = smvActor.SCALE,
+				ANGLE = smvActor.ANGLE,
 				xFLIPPED = smvActor.xFLIPPED,
 				parentBind = smvActor.parentBind,
 				UPDATEDEPENDENCYLIST = smvActor.UPDATEDEPENDENCYLIST,
@@ -1188,6 +1200,7 @@ namespace UbiCanvas.Conversion {
 				}
 
 				if (!mesh.animated) {
+					// Mesh is static
 					fr.meshBuildData = new UbiArt.Nullable<Frise.MeshBuildData>(new Frise.MeshBuildData() {
 						StaticIndexList = new CListO<Frise.IndexList>(),
 						StaticVertexList = new CListO<VertexPCT>()
@@ -1216,6 +1229,8 @@ namespace UbiCanvas.Conversion {
 								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.y))
 							},
 							WorldAABB = new AABB() {
+								//MIN = new Vec2d(float.NegativeInfinity, float.NegativeInfinity),
+								//MAX = new Vec2d(float.PositiveInfinity, float.PositiveInfinity),
 								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
 								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).y))
 							},
@@ -1223,7 +1238,8 @@ namespace UbiCanvas.Conversion {
 						fr.AABB_MinZ = fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.z);
 						fr.AABB_MaxZ = fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.z);
 					}
-				} else if (mesh.animated) {
+				} else {
+					// Mesh is animated
 					fr.meshBuildData = new UbiArt.Nullable<Frise.MeshBuildData>(new Frise.MeshBuildData() {
 						AnimIndexList = new CListO<Frise.IndexList>(),
 						AnimVertexList = new CListO<VertexPNC3T>()
@@ -1255,6 +1271,8 @@ namespace UbiCanvas.Conversion {
 								MAX = new Vec2d(fr.meshBuildData.value.AnimVertexList.Max(v => v.pos.x), fr.meshBuildData.value.AnimVertexList.Max(v => v.pos.y))
 							},
 							WorldAABB = new AABB() {
+								//MIN = new Vec2d(float.NegativeInfinity, float.NegativeInfinity),
+								//MAX = new Vec2d(float.PositiveInfinity, float.PositiveInfinity),
 								MIN = new Vec2d(fr.meshBuildData.value.AnimVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.AnimVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
 								MAX = new Vec2d(fr.meshBuildData.value.AnimVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.AnimVertexList.Max(v => LocalToGlobal3D(v.pos).y))
 							},
