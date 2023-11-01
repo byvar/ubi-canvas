@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			data = s.SerializeObject<RO2_SnakeNetworkNodeComponent.NodeData>(data, name: "data");
 		}
-		[Games(GameFlags.RA)]
+		[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 		public partial class NodeData : CSerializable {
 			public float speedMultiplier = 1f;
 			public bool forceApplySpeed;

@@ -4025,14 +4025,17 @@ namespace UbiCanvas.Conversion {
 			};
 			gyroControllerLink.Children = new CListO<ChildEntry>() {
 				new ChildEntry() {
-					Path = new ObjectPath() {
+					/*Path = new ObjectPath() {
 						id = parentName ?? scene.ACTORS[1].obj.USERFRIENDLY,
 						levels = parentName != null ? new CListO<ObjectPath.Level>() {
 							new ObjectPath.Level() {
-								name = parentName,
+								//name = parentName,
 								parent = true,
 							},
 						} : null,
+					},*/
+					Path = new ObjectPath() {
+						id = act.USERFRIENDLY,
 					},
 					TagValues = new CListO<TagValue>() {
 						new TagValue() {
