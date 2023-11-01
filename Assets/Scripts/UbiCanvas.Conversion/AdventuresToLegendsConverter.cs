@@ -864,6 +864,10 @@ namespace UbiCanvas.Conversion {
 						hangHelper.RELATIVEZ = 0.03f;
 						break;
 					}
+				case "world/rlc_dojo/tothemarket/dojo_tothemarket_exp_base.isc": {
+						AllSMVToFrise(oldContext, scene);
+						break;
+					}
 				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc": {
 						AllSMVToFrise(oldContext, scene);
 						break;
