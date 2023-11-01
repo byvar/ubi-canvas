@@ -196,7 +196,7 @@ namespace UbiCanvas.Conversion {
 			var scenePath = mainContext.Loader.Paths[loadedScene.Key];
 			UnityEngine.Debug.Log($"Processing scene: {scenePath}");
 
-			LevelSpecificChanges(mainContext, settings, scene);
+			await LevelSpecificChanges(mainContext, settings, scene);
 
 			PerformHangSpotWorkaround(mainContext, settings, scene);
 			AddRelayToMushrooms(mainContext, settings, scene);
@@ -767,7 +767,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 		#region Specific adjustments
-		public void LevelSpecificChanges(Context oldContext, Settings newSettings, Scene scene) {
+		public async Task LevelSpecificChanges(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
@@ -851,6 +851,15 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
 						AllSMVToFrise(oldContext, scene);
+						/* ring_hangtriggermulti */
+						/*var hangHelper = await AddNewActor(scene, new Path("world/common/platform/ring/components/ring.tpl"), 
+							parentPath: "forbiddencity_ld|grp@2",
+							name: "ring_jumphelp", contextToLoadFrom: LegendsContext);*/
+						var hangHelper = await AddNewActor(scene, new Path("world/common/gpe/ring/components/ring_hangtriggermulti.tpl"),
+							parentPath: "forbiddencity_ld|grp@2",
+							name: "ring_jumphelp");
+						hangHelper.POS2D = new Vec2d(-8.49f, 4.19f);
+						hangHelper.RELATIVEZ = 0.03f;
 						break;
 					}
 				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc": {
@@ -866,6 +875,39 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 			}
+		}
+
+		public async Task<Actor> AddNewActor(Scene scene, Path path,
+			string parentPath = null, string name = null, Context contextToLoadFrom = null) {
+			if(contextToLoadFrom == null) contextToLoadFrom = MainContext;
+			path.LoadObject(contextToLoadFrom, removeCooked: true);
+			await contextToLoadFrom.Loader.LoadLoop();
+
+			Actor newActor = null;
+
+			switch (path.GetExtension(removeCooked: true).ToLowerInvariant()) {
+				case "tpl":
+					var tpl = path.GetObject<GenericFile<Actor_Template>>();
+					newActor = tpl?.obj?.Instantiate(path);
+					break;
+				case "act":
+					var act = path.GetObject<ContainerFile<Actor>>();
+					newActor = (Actor)(await contextToLoadFrom.Loader.Clone(act?.obj, "act"));
+					break;
+			}
+			MainContext.Loader.AddLoadedActor(newActor);
+
+			var containingScene = scene;
+			if (!string.IsNullOrWhiteSpace(parentPath)) {
+				var pickableTree = new PickableTree(scene);
+				var resultNode = pickableTree.FollowObjectPath(new ObjectPath(parentPath));
+				containingScene = resultNode.Scene;
+			}
+			if (containingScene != null) {
+				containingScene.AddActor(newActor, name ?? newActor.USERFRIENDLY);
+			}
+
+			return newActor;
 		}
 
 		public void ApplySpecialRenderParamsToScene(Scene scene, RenderParamComponent rp = null) {
