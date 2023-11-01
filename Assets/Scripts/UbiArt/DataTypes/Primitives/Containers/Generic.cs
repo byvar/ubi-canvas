@@ -144,6 +144,7 @@ namespace UbiArt {
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);
 								} else if (obj is RO2_BTActionJumpAttack_Template btJump) {
+									// TODO: Doesn't work properly (dualswordman uses it)
 									var newBT = Merger.Merge<RO2_BTActionJumpJanod_Template>(btJump);
 									newBT.animJump = btJump.animJump;
 									newBT.animLanding = btJump.animReception;
@@ -166,9 +167,27 @@ namespace UbiArt {
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);
 								} else if (obj is RO2_BTActionAppearBasket_Template btBasket) {
-									var newBT = Merger.Merge<RO2_BTActionAppearFromGround_Template>(btBasket);
+									/*var newBT = Merger.Merge<RO2_BTActionAppearFromGround_Template>(btBasket);
 									newBT.anim = btBasket.animAppear;
-									newBT.name = btBasket.name;
+									newBT.name = btBasket.name;*/
+									var newBT = Merger.Merge<RO2_BTActionAppearBackgroundNinja_Template>(btBasket);
+									newBT.animAnticipBack = btBasket.animStand;
+									newBT.animAnticipFore = btBasket.animStand;
+									newBT.animStandHideBack = btBasket.animStand;
+									newBT.animStandHideFore = btBasket.animStand;
+									newBT.animJumpBack = btBasket.animAppear;
+									newBT.animJumpFore = btBasket.animAppear;
+									newBT.animFallBack = btBasket.animAppear;
+									newBT.animFallFore = btBasket.animAppear;
+									newBT.animNinjaBack = btBasket.animAppear;
+									newBT.animNinjaFore = btBasket.animAppear;
+									newBT.heightNinja = 0f;
+									newBT.fallTime = 0f;
+									newBT.jumpToActorMinTime = 0f;
+									newBT.jumpToActorYFuncPoint1Dist = 0f;
+									newBT.jumpToActorXZFuncPoint1T = 0.001f;
+									newBT.animLandingBack = btBasket.animAppear;
+									newBT.animLandingFore = btBasket.animAppear;
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);
 								} else if (obj is EventBreakableBreak evbreak) {

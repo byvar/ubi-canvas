@@ -6,7 +6,7 @@
 				if (newSettings.Game == Game.RL) {
 					switch (appearType) {
 						case Enum_appearType.Basket:
-							appearType2 = Enum_appearType2.FromGround;
+							appearType2 = Enum_appearType2.JumpFromZ_Ninja;
 							break;
 						case Enum_appearType.Rope:
 							appearType2 = Enum_appearType2.JumpFromZ;

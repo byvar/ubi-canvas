@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class RO2_BTActionAppearBasket_Template : BTAction_Template {
 		public StringID animStand;
 		public StringID animAppear;
-		public bool waitForTrigger;
+		public bool waitForTrigger = true;
 		public bool disablePhys;
 		public bool resetAngle;
 		protected override void SerializeImpl(CSerializerObject s) {

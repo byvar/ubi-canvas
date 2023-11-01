@@ -198,6 +198,8 @@ namespace UbiCanvas.Conversion {
 
 			await LevelSpecificChanges(mainContext, settings, scene);
 
+			FixBasketNinjas(mainContext, settings, scene);
+
 			PerformHangSpotWorkaround(mainContext, settings, scene);
 			AddRelayToMushrooms(mainContext, settings, scene);
 
@@ -2598,6 +2600,42 @@ namespace UbiCanvas.Conversion {
 			};
 		}
 
+		public void FixBasketNinjas(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			Loader l = oldContext.Loader;
+
+			var enemies = scene.FindActors(a => a.GetComponent<RO2_EnemyBTAIComponent>() != null);
+			var zjumpTag = new StringID(0x75BACA2E);
+			foreach (var res in enemies) {
+				var act = res.Result;
+				var nmi = act.GetComponent<RO2_EnemyBTAIComponent>();
+				if (nmi.appearType == RO2_EnemyBTAIComponent.Enum_appearType.Basket) {
+					var lnk = act.GetComponent<LinkComponent>();
+					if (lnk.Children == null) lnk.Children = new CListO<ChildEntry>();
+					if (lnk.Children.Any(c => c.HasTag(zjumpTag))) continue;
+					AddBounceTarget(res.ContainingScene, act);
+				}
+			}
+			void AddBounceTarget(Scene containingScene, Actor act) {
+				var bouncetarget = new Actor() {
+					USERFRIENDLY = "bouncetarget",
+					POS2D = act.POS2D + new Vec2d(0f, 0f), // Position difference is required!
+					xFLIPPED = act.xFLIPPED,
+					LUA = new Path("world/common/logicactor/bouncetarget.tpl"),
+					ANGLE = act.ANGLE,
+					SCALE = act.SCALE,
+					RELATIVEZ = act.RELATIVEZ + 3f, // Position difference is required!
+				};
+				containingScene.AddActor(bouncetarget, bouncetarget.USERFRIENDLY);
+				var newChild = new ChildEntry() {
+					Path = new ObjectPath(bouncetarget.USERFRIENDLY)
+				};
+				newChild.AddTag(zjumpTag, "");
+				act.GetComponent<LinkComponent>().Children.Add(newChild);
+			}
+		}
 		public void FixNinjas(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
@@ -2617,6 +2655,8 @@ namespace UbiCanvas.Conversion {
 					if (anticip != null) anticip.loop = false;
 					var endDash = animatedComponent.animSet.animations.FirstOrDefault(a => a.friendlyName?.stringID == 0xAFC27BAE);
 					if (endDash != null) endDash.loop = false;
+					var basket = animatedComponent.animSet.animations.FirstOrDefault(a => a.friendlyName?.stringID == 0x4224699B);
+					if(basket != null) basket.loop = false;
 
 					var poly = tpl.obj.GetComponent<PolylineComponent_Template>();
 					if (poly != null) {
