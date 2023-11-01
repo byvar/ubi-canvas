@@ -53,9 +53,13 @@ namespace UbiCanvas.Tools
 						UnitySettings.Tools_AdventuresToLegends_GamePath,
 						UnitySettings.Tools_AdventuresToLegends_ProjectPath)) {
 						await converter.Init();
-						await converter.ProcessScene();
-						//await converter.ProcessAllLoadedScenes();
-						await converter.ProcessNonScene();
+						if (converter.MainContext.Settings.Game == Game.RM || converter.MainContext.Settings.Game == Game.RA) {
+							await converter.ProcessScene();
+							//await converter.ProcessAllLoadedScenes();
+							await converter.ProcessNonScene();
+						} else if (converter.MainContext.Settings.Platform == GamePlatform.Vita) {
+							await converter.ProcessSceneVita();
+						}
 						await converter.Write(outputPath);
 					}
 				} else {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace UbiArt {
@@ -6,6 +7,8 @@ namespace UbiArt {
 		public Settings OldSettings { get; set; }
 
 		public WwiseConversionSettings WwiseConversionSettings { get; set; } = new WwiseConversionSettings();
+
+		public Action<Context, ConversionSettings, TextureCooked> TextureConversion { get; set; }
 
 
 		#region Path Conversion

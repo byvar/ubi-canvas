@@ -27,6 +27,9 @@ namespace UbiArt.ITF {
 					tradChinese = s.SerializeObject<Path>(tradChinese, name: "tradChinese");
 					simpleChinese = s.SerializeObject<Path>(simpleChinese, name: "simpleChinese");
 					russian = s.SerializeObject<Path>(russian, name: "russian");
+					if (s.Settings.Platform == GamePlatform.Vita) {
+						arabic = s.SerializeObject<Path>(arabic, name: "arabic");
+					}
 				} else {
 					_default = s.SerializeObject<Path>(_default, name: "default");
 					japanese = s.SerializeObject<Path>(japanese, name: "japanese");

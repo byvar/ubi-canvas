@@ -12,9 +12,11 @@ namespace UbiArt.ITF {
 			levelPainting = s.SerializeObject<Path>(levelPainting, name: "levelPainting");
 			teensyRecap10 = s.SerializeObject<CListO<Path>>(teensyRecap10, name: "teensyRecap10");
 			teensyRecap3 = s.SerializeObject<CListO<Path>>(teensyRecap3, name: "teensyRecap3");
-			levelPaintingH = s.SerializeObject<Path>(levelPaintingH, name: "levelPaintingH");
-			teensyRecap10H = s.SerializeObject<CListO<Path>>(teensyRecap10H, name: "teensyRecap10H");
-			teensyRecap3H = s.SerializeObject<CListO<Path>>(teensyRecap3H, name: "teensyRecap3H");
+			if (s.Settings.Platform != GamePlatform.Vita) {
+				levelPaintingH = s.SerializeObject<Path>(levelPaintingH, name: "levelPaintingH");
+				teensyRecap10H = s.SerializeObject<CListO<Path>>(teensyRecap10H, name: "teensyRecap10H");
+				teensyRecap3H = s.SerializeObject<CListO<Path>>(teensyRecap3H, name: "teensyRecap3H");
+			}
 		}
 		public override uint? ClassCRC => 0x368D19B7;
 	}

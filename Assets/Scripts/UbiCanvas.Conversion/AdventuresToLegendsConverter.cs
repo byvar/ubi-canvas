@@ -148,12 +148,17 @@ namespace UbiCanvas.Conversion {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
+			if (oldSettings.Platform == GamePlatform.Vita) {
+				conversionSettings.TextureConversion = ConvertTextureVita;
+			}
 		}
 
 		public async Task Init() {
 			StartLoadingScreen();
 
-			ConversionSettings.WwiseConversionSettings = await LoadWwiseConfig(MainContext, ProjectPath);
+			if (MainContext.Settings.Game == Game.RA || MainContext.Settings.Game == Game.RM) {
+				ConversionSettings.WwiseConversionSettings = await LoadWwiseConfig(MainContext, ProjectPath);
+			}
 			await LegendsContext.Loader.LoadInitial();
 			await LegendsContext.Loader.LoadLoop();
 		}
@@ -183,6 +188,73 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public void ConvertTextureVita(Context context, ConversionSettings conv, TextureCooked tex) {
+			if(tex?.Data == null) return;
+
+			if (conv.OldSettings.Platform == GamePlatform.Vita && context.Settings.Platform != GamePlatform.Vita) {
+				using System.IO.MemoryStream ms = new System.IO.MemoryStream(tex.Data);
+				var gxt = new GXTConvert.FileFormat.GxtBinary(ms);
+				var texture = gxt.Textures[0];
+				var pngTex = texture.EncodeToPNG();
+
+				using (var img = new MagickImage(pngTex)) {
+					img.Format = MagickFormat.Dds;
+					img.AutoOrient(); // Orient TGA based on origin point
+					var w = (ushort)img.Width;
+					var h = (ushort)img.Height;
+					tex.Data = img.ToByteArray();
+					tex.Header.DataSize = (uint)tex.Data.Length;
+					tex.Header.Width = w;
+					tex.Header.Height = h;
+					tex.Header.CompressionType = 0;
+					tex.Header.DataSize2 = tex.Header.DataSize;
+				}
+			}
+		}
+
+		public async Task ProcessSceneVita(Scene scene = null) {
+			await Task.CompletedTask;
+			scene ??= Controller.Obj.MainScene.obj;
+			if (scene.sceneConfigs == null) scene.sceneConfigs = new SceneConfigs();
+			var scfg = scene.sceneConfigs;
+			if (scfg.sceneConfigs == null) scfg.sceneConfigs = new CArrayO<Generic<SceneConfig>>();
+			var obj = new RO2_SceneConfig_Platform() {
+				DRCGameplayMode = RO2_SceneConfig_Base.Enum_DRCGameplayMode.AutoPlayerOnly,
+				istouchScreenMap = true
+			};
+			scfg.sceneConfigs.Add(new Generic<SceneConfig>(obj));
+
+
+			var spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>()?.INDEX == 0);
+			if (spawnPoint?.Result == null) {
+				spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>() != null);
+			}
+			var drcs = scene.FindActors(a => a.GetComponent<RO2_DRCMandatoryZoneComponent>() != null);
+			foreach (var res in drcs) {
+				var act = res.Result;
+				var tpl = act.template;
+				var drcTPL = tpl.obj.GetComponent<RO2_DRCMandatoryZoneComponent_Template>();
+				drcTPL.autoMurphy = 1;
+			}
+			/*var pos = spawnPoint.Result.POS2D;
+			var murfyTrigger = await AddNewActor(spawnPoint.ContainingScene, new Path("world/common/logicactor/automurphy/component/trigger_box_automurphyactivation.tpl"), contextToLoadFrom: LegendsContext);
+			murfyTrigger.POS2D = pos + new Vec2d(2f, 0f);
+			murfyTrigger.RELATIVEZ = spawnPoint.Result.RELATIVEZ;
+			murfyTrigger.ANGLE = spawnPoint.Result.ANGLE;
+			//murfyTrigger.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Once;
+			var playerDetector = murfyTrigger.GetComponent<PlayerDetectorComponent>();
+			playerDetector.localOffset = new Vec2d(0, 0);
+			playerDetector.localScale = new Vec2d(3f, 3f);
+			playerDetector.useShapeTransform = true;
+
+			MainContext.Loader.CookedPaths[murfyTrigger.LUA.stringID] = murfyTrigger.LUA.CookedPath(MainContext);
+
+			if (CloneTemplateIfNecessary(murfyTrigger.LUA, "nonauto", "NON AUTOMURFY", murfyTrigger.template, out var newTPL, act: murfyTrigger)) {
+				var drc = newTPL.obj.GetComponent<RO2_DRCMandatoryZoneComponent_Template>();
+				drc.autoMurphyMultiAllowed = 0;
+				drc.autoMurphy = 0;
+			}*/
+		}
 		public async Task ProcessScene(Scene scene = null) {
 			scene ??= Controller.Obj.MainScene.obj;
 			var settings = NewSettings;

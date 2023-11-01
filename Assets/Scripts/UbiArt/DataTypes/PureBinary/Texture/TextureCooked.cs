@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace UbiArt {
 	public class TextureCooked : ICSerializable {
 		public TextureCookedHeader Header { get; set; }
@@ -9,6 +7,7 @@ namespace UbiArt {
 		public UV.UVAtlas atlas = null;
 
 		public void Serialize(CSerializerObject s, string name) {
+			Reinit(s.Context);
 			Header = s.SerializeObject<TextureCookedHeader>(Header, name: nameof(Header));
 			var dataSize = (int)(Header?.DataSize ?? (s.Length - s.CurrentPosition));
 			if(s.Settings.Platform == GamePlatform.iOS && (Header?.CompressionType ?? 0) != 0 && dataSize == 0) {
@@ -30,6 +29,15 @@ namespace UbiArt {
 		}
 		public TextureCooked(Context context) {
 			Header = new TextureCookedHeader(context);
+		}
+
+		void Reinit(Context context) {
+			if (context.HasSettings<ConversionSettings>()) {
+				var conv = context.GetSettings<ConversionSettings>();
+				if (conv.TextureConversion != null) {
+					conv.TextureConversion(context, conv, this);
+				}
+			}
 		}
 	}
 }

@@ -9,7 +9,9 @@ namespace UbiArt.ITF {
 			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				styles = s.SerializeObject<CListO<FontTextArea.Style>>(styles, name: "styles");
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
-				preSpawnedActorPaths = s.SerializeObject<CListO<Path>>(preSpawnedActorPaths, name: "preSpawnedActorPaths");
+				if (s.Settings.Platform != GamePlatform.Vita) {
+					preSpawnedActorPaths = s.SerializeObject<CListO<Path>>(preSpawnedActorPaths, name: "preSpawnedActorPaths");
+				}
 			} else {
 				styles = s.SerializeObject<CListO<FontTextArea.Style>>(styles, name: "styles");
 				depthOffset = s.Serialize<float>(depthOffset, name: "depthOffset");
