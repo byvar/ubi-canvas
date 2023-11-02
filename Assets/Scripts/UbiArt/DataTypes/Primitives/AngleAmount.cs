@@ -7,6 +7,16 @@ namespace UbiArt {
 			angle = s.Serialize<float>(angle);
 		}
 
+		// Constructors
+		public AngleAmount() { }
+		public AngleAmount(float angle, bool degrees = false) {
+			if (degrees) {
+				EulerAngle = angle;
+			} else {
+				this.angle = angle;
+			}
+		}
+
 		// Casts
 		public static implicit operator float(AngleAmount a) {
 			return a?.angle ?? 0;

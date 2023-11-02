@@ -63,6 +63,12 @@ namespace UbiArt.ITF {
 			COMPONENTS.Add(new Generic<ActorComponent_Template>(t));
 			return t;
 		}
+		public void RemoveComponent<T>(T t = null) where T : ActorComponent_Template, new() {
+			if (COMPONENTS == null) COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>();
+			if (t == null) t = GetComponent<T>();
+			var cmpObj = COMPONENTS.FirstOrDefault(c => c?.obj == t);
+			COMPONENTS.Remove(cmpObj);
+		}
 
 		public Actor Instantiate(Path templatePath) {
 			var basename = System.IO.Path.GetFileNameWithoutExtension(templatePath?.filename);

@@ -952,6 +952,26 @@ namespace UbiCanvas.Conversion {
 						ApplySpecialRenderParamsToScene(scene);
 						break;
 					}
+				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {
+						var platToRemove = scene.FindActor(a => a.USERFRIENDLY == "dojo_platform_single@1");
+						platToRemove.ContainingScene.DeletePickable(platToRemove.Result);
+						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 0.5f, waitTime: 1f);
+						AllSMVToFrise(oldContext, scene);
+
+						// TODO: Fix with trigger_fadeout?
+						/*var tweenToCorrect = scene.FindActor(a => a.USERFRIENDLY == "tween_notype@2");
+						var t = tweenToCorrect.Result.GetComponent<TweenComponent>();
+						var tpl = t.instanceTemplate.value;
+						tpl.instructionSets[1].instructions[0].obj.duration = 1f;
+						var ev = ((TweenEvent_Template)tpl.instructionSets[1].instructions[0].obj)._event?.obj as EventShow;
+						ev.alpha = 0f;
+						ev.transitionTime = 1f;
+						tpl.instructionSets[1].instructions.Add(new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+							duration = 1f
+						}));
+						t.instructionSets[1].instructions.Add(new Generic<TweenInstruction>(new TweenWait()));*/
+						break;
+					}
 			}
 		}
 
@@ -1234,6 +1254,59 @@ namespace UbiCanvas.Conversion {
 					act.AddComponent<RO2_DRC_FXGrabComponent>();
 				}*/
 			}
+		}
+
+		public void AllRotatingPlatformsToTweens(Context oldContext, Scene scene, Predicate<Actor> criteria = null, float rotateTime = 0.5f, float waitTime = 1f, bool clockwise = true) {
+			var acts = scene.FindActors(a => a.GetComponent<RLC_RotatingPlatformComponent>() != null);
+			foreach (var act in acts) {
+				RotatingPlatformToTween(oldContext, act.Result, rotateTime: rotateTime, waitTime: waitTime, clockwise: clockwise);
+			}
+		}
+		public void RotatingPlatformToTween(Context oldContext, Actor actor, float rotateTime = 0.5f, float waitTime = 1f, bool clockwise = true) {
+			if(actor.GetComponent<RLC_RotatingPlatformComponent>()== null) return;
+			var plat = actor.GetComponent<RLC_RotatingPlatformComponent>();
+			var tplplat = actor.template.obj.GetComponent<RLC_RotatingPlatformComponent_Template>();
+
+			if (CloneTemplateIfNecessary(actor.LUA, "rptween", "ROTPLAT -> TWEEN", actor.template, out var newTPL, actor)) {
+				newTPL.sizeOf += 0x10000;
+				newTPL.obj.RemoveComponent<RLC_RotatingPlatformComponent_Template>();
+				newTPL.obj.AddComponent<TweenComponent_Template>();
+			}
+			actor.RemoveComponent<RLC_RotatingPlatformComponent>();
+			var tween = actor.AddComponent<TweenComponent>();
+			tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template() {
+				instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+					new TweenComponent_Template.InstructionSet() {
+						name = new StringID("Set"),
+						instructions = new CListO<Generic<TweenInstruction_Template>>() {
+							new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0xe1bb334e),
+								duration = 0f,
+							}),
+							new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0x34ab572e),
+								duration = 0f,
+							}),
+							new Generic<TweenInstruction_Template>(new TweenCircle_Template() {
+								duration = rotateTime,
+								angle = new AngleAmount((clockwise ? -360 : 360) / 4f, degrees: true),
+							}),
+							new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0x80fe8585),
+								duration = 0f,
+							}),
+							new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+								duration = waitTime,
+							}),
+						}
+					}
+				}
+			});
+			TweenInstruction InstantiateInstruction(TweenInstruction_Template ctpl) => ctpl?.Instantiate(oldContext);
+			tween.instructionSets = new CListO<TweenComponent.InstructionSet>(tween.instanceTemplate.value.instructionSets.Select(set => new TweenComponent.InstructionSet() {
+				name = set.name,
+				instructions = new CArrayO<Generic<TweenInstruction>>(set.instructions.Select(c => new Generic<TweenInstruction>(InstantiateInstruction(c.obj))).ToArray())
+			}).ToList());
 		}
 
 		public void AllSMVToFrise(Context oldContext, Scene scene, Predicate<Actor> criteria = null) {

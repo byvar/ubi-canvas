@@ -71,7 +71,7 @@ namespace UbiArt.ITF {
 		/// <typeparam name="T">Component type</typeparam>
 		/// <returns>Component of the requested type</returns>
 		public T GetComponent<T>() where T : ActorComponent {
-			if(COMPONENTS == null) return null;
+			if (COMPONENTS == null) return null;
 			return COMPONENTS.FirstOrDefault(c => (c?.obj as T) != null)?.obj as T;
 		}
 		public IEnumerable<T> GetComponents<T>() where T : ActorComponent {
@@ -80,10 +80,16 @@ namespace UbiArt.ITF {
 		}
 
 		public T AddComponent<T>(T t = null) where T : ActorComponent, new() {
-			if(COMPONENTS == null) COMPONENTS = new CArrayO<Generic<ActorComponent>>();
-			if(t == null) t = new T();
+			if (COMPONENTS == null) COMPONENTS = new CArrayO<Generic<ActorComponent>>();
+			if (t == null) t = new T();
 			COMPONENTS.Add(new Generic<ActorComponent>(t));
 			return t;
+		}
+		public void RemoveComponent<T>(T t = null) where T : ActorComponent, new() {
+			if (COMPONENTS == null) COMPONENTS = new CArrayO<Generic<ActorComponent>>();
+			if (t == null) t = GetComponent<T>();
+			var cmpObj = COMPONENTS.FirstOrDefault(c => c?.obj == t);
+			COMPONENTS.Remove(cmpObj);
 		}
 	}
 }

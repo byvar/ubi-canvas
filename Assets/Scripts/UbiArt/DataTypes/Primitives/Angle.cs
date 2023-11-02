@@ -10,10 +10,14 @@ namespace UbiArt {
 
 		// Constructors
 		public Angle() { }
-		public Angle(float angle) {
-			this.angle = angle;
+		public Angle(float angle, bool degrees = false) {
+			if (degrees) {
+				EulerAngle = angle;
+			} else {
+				this.angle = angle;
+			}
 		}
-		
+
 		// Casts
 		public static implicit operator float(Angle a) {
 			return a?.angle ?? 0;
