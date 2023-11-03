@@ -70,6 +70,8 @@ namespace UbiCanvas.Conversion {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/platform/aspinetwork/", "common/platform/aspinetwork_adv/"));
 				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/music/castlesiege/playground/", "world/music/castlesiege/playground_rlc/"));
+				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("rotation_biggear.tpl", "rotation_biggear_adv.tpl"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("lightingmushroom.tpl", "lightingmushroom_adv.tpl"));
@@ -952,6 +954,34 @@ namespace UbiCanvas.Conversion {
 					}*/
 				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc": {
 						ApplySpecialRenderParamsToScene(scene);
+						break;
+					}
+				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc": {
+						var act = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
+						act.Result.RELATIVEZ = 3;
+						ApplySpecialRenderParamsToScene(scene);
+						break;
+					}
+				case "world/rlc_castle/siegeattack/castleexterior_siegeattack_nmi_base.isc": {
+						var act = scene.FindActor(a => a.USERFRIENDLY == "mood1");
+						var rp = act.Result.GetComponent<RenderParamComponent>();
+						rp.ClearColor.ClearFrontLightColor = rp.ClearColor.ClearColor;
+						//act.Result.GetComponent<RenderParamComponent>().Lighting.GlobalColor.a = 0.8f;
+						break;
+					}
+				case "world/rlc_castle/siegeslide/castleexterior_siegeslide_nmi.isc": {
+						var act = scene.FindActor(a => a.USERFRIENDLY == "clearcolor@1");
+						var rp = act.Result.GetComponent<RenderParamComponent>();
+						rp.Lighting.GlobalColor.a = 0.8f;
+						rp.ClearColor.ClearFrontLightColor *= new UbiArt.Color(0.5f, 0.5f, 0.5f, 1f);
+						break;
+					}
+				case "world/rlc_castle/tumblingtowers/castleexterior_tumblingtowers_spd_base.isc": {
+						var act = scene.FindActor(a => a?.USERFRIENDLY == "clearcolor");
+						var rp = act.Result.GetComponent<RenderParamComponent>();
+						rp.Lighting.Enable = true;
+						rp.Lighting.GlobalColor.a = 0.1f;
+						//rp.ClearColor.ClearFrontLightColor *= new UbiArt.Color(0.3f, 0.3f, 0.3f, 1f);
 						break;
 					}
 				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {
