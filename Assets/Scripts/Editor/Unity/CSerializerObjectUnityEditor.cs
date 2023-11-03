@@ -451,5 +451,9 @@ namespace UbiArt {
 				throw new ArgumentNullException(nameof(action));
 			action();
 		}
+
+		public override bool SerializeEditorButton(string name) {
+			return GUILayout.Button(name);
+		}
 	}
 }

@@ -1397,11 +1397,7 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 			});
-			TweenInstruction InstantiateInstruction(TweenInstruction_Template ctpl) => ctpl?.Instantiate(oldContext);
-			tween.instructionSets = new CListO<TweenComponent.InstructionSet>(tween.instanceTemplate.value.instructionSets.Select(set => new TweenComponent.InstructionSet() {
-				name = set.name,
-				instructions = new CArrayO<Generic<TweenInstruction>>(set.instructions.Select(c => new Generic<TweenInstruction>(InstantiateInstruction(c.obj))).ToArray())
-			}).ToList());
+			tween.InstantiateFromInstanceTemplate(oldContext);
 		}
 
 		public void AllSMVToFrise(Context oldContext, Scene scene, Predicate<Actor> criteria = null) {

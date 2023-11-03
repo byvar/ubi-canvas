@@ -135,6 +135,11 @@ namespace UbiArt {
 		public virtual void ArrayEntryStop() {
 			DecreaseLevel();
 		}
+
+		public virtual bool SerializeEditorButton(string name) {
+			return false;
+		}
+
 		public uint GetTagCode(Type type) {
 			if (Type.GetTypeCode(type) != TypeCode.Object) {
 				switch (Type.GetTypeCode(type)) {
