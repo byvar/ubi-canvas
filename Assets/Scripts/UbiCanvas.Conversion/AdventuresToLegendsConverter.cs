@@ -958,8 +958,16 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc": {
 						var act = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
-						act.Result.RELATIVEZ = 3;
-						ApplySpecialRenderParamsToScene(scene);
+						//act.Result.RELATIVEZ = 3;
+						//ApplySpecialRenderParamsToScene(scene);
+						break;
+					}
+				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
+						var act = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
+						var rp = act.Result.GetComponent<RenderParamComponent>();
+						rp.Lighting.GlobalColor *= new UbiArt.Color(0.6f, 0.6f, 0.6f, 1f);
+						act = scene.FindActor(a => a.USERFRIENDLY == "mobilespikes@13");
+						act.ContainingScene.DeletePickable(act.Result);
 						break;
 					}
 				case "world/rlc_castle/siegeattack/castleexterior_siegeattack_nmi_base.isc": {
