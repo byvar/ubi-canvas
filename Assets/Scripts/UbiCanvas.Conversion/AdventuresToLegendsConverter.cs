@@ -302,6 +302,8 @@ namespace UbiCanvas.Conversion {
 			PerformHangSpotWorkaround_TPLFix(mainContext, settings);
 			AddPreInstructionSets(mainContext, settings);
 
+			FixBubblesFX(mainContext, settings);
+
 			FixStaticMeshVertexComponentCulling(mainContext, settings);
 			AddCaptainAI(mainContext, settings);
 			DowngradeFxUV(mainContext, settings);
@@ -953,14 +955,42 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {
-						var platToRemove = scene.FindActor(a => a.USERFRIENDLY == "dojo_platform_single@1");
-						platToRemove.ContainingScene.DeletePickable(platToRemove.Result);
+						// Remove rotating platform to access secret place
+						var actToRemove = scene.FindActor(a => a.USERFRIENDLY == "dojo_platform_single@1");
+						actToRemove.ContainingScene.DeletePickable(actToRemove.Result);
+						var friseToRemove = scene.FindPickable(a => a.USERFRIENDLY == "dojo_int_ldground_woodpipe@3");
+						friseToRemove.ContainingScene.DeletePickable(friseToRemove.Result);
+						friseToRemove = scene.FindPickable(a => a.USERFRIENDLY == "invisibleground@3");
+						friseToRemove.ContainingScene.DeletePickable(friseToRemove.Result);
+
+						// Configure auto-rotating platforms
+						var sceneTree = new PickableTree(scene);
+						var act = sceneTree.FollowObjectPath(new ObjectPath("DojoProto3_ld|dojo_platform_straight@1|rotatingplatform_straight"));
+						RotatingPlatformToTween(oldContext, act.Pickable as Actor, totalAngle: 180f, rotateTime: 0.65f, waitTime: 0.65f, clockwise: false);
+						act = sceneTree.FollowObjectPath(new ObjectPath("DojoProto3_ld|dojo_platform_tshape@2|rotatingplatform_straight"));
+						RotatingPlatformToTween(oldContext, act.Pickable as Actor, waitTime: 0.375f, rotateTime: 0.375f, clockwise: false);
 						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 0.5f, waitTime: 1f);
+
+						// Convert all SMV to frise
 						AllSMVToFrise(oldContext, scene);
 
-						// TODO: Fix with trigger_fadeout?
-						/*var tweenToCorrect = scene.FindActor(a => a.USERFRIENDLY == "tween_notype@2");
-						var t = tweenToCorrect.Result.GetComponent<TweenComponent>();
+						// Fix with trigger_fadeout? ---> Doesn't work
+						//var tweenToCorrect = scene.FindActor(a => a.USERFRIENDLY == "tween_notype@2");
+						/*var tween = tweenToCorrect.Result;
+						tweenToCorrect.ContainingScene.DeletePickable(tween);
+
+						var newActor = await AddNewActor(tweenToCorrect.ContainingScene, new Path("world/common/logicactor/trigger/components/trigger_fade_out.tpl"), name: tween.USERFRIENDLY);
+						newActor.GetComponent<LinkComponent>().Children = tweenToCorrect.Result.GetComponent<LinkComponent>().Children;
+						newActor.POS2D = tween.POS2D;
+						newActor.ANGLE = tween.ANGLE;
+						newActor.SCALE = tween.SCALE;
+						newActor.RELATIVEZ = tween.RELATIVEZ;
+						newActor.xFLIPPED = tween.xFLIPPED;
+						newActor.parentBind = tween.parentBind;
+						newActor.USERFRIENDLY = tween.USERFRIENDLY;*/
+
+						// Fix with extra tween instructions? ---> Doesn't work
+						/*var t = tweenToCorrect.Result.GetComponent<TweenComponent>();
 						var tpl = t.instanceTemplate.value;
 						tpl.instructionSets[1].instructions[0].obj.duration = 1f;
 						var ev = ((TweenEvent_Template)tpl.instructionSets[1].instructions[0].obj)._event?.obj as EventShow;
@@ -1262,7 +1292,7 @@ namespace UbiCanvas.Conversion {
 				RotatingPlatformToTween(oldContext, act.Result, rotateTime: rotateTime, waitTime: waitTime, clockwise: clockwise);
 			}
 		}
-		public void RotatingPlatformToTween(Context oldContext, Actor actor, float rotateTime = 0.5f, float waitTime = 1f, bool clockwise = true) {
+		public void RotatingPlatformToTween(Context oldContext, Actor actor, float totalAngle = 360/4f, float rotateTime = 0.5f, float waitTime = 1f, bool clockwise = true) {
 			if(actor.GetComponent<RLC_RotatingPlatformComponent>()== null) return;
 			var plat = actor.GetComponent<RLC_RotatingPlatformComponent>();
 			var tplplat = actor.template.obj.GetComponent<RLC_RotatingPlatformComponent_Template>();
@@ -1289,7 +1319,7 @@ namespace UbiCanvas.Conversion {
 							}),
 							new Generic<TweenInstruction_Template>(new TweenCircle_Template() {
 								duration = rotateTime,
-								angle = new AngleAmount((clockwise ? -360 : 360) / 4f, degrees: true),
+								angle = new AngleAmount((clockwise ? -totalAngle : totalAngle), degrees: true),
 							}),
 							new Generic<TweenInstruction_Template>(new TweenFX_Template() {
 								fx = new StringID(0x80fe8585),
@@ -1967,6 +1997,54 @@ namespace UbiCanvas.Conversion {
 					
 					hangspotTPL.onHangEvent = newHangEvent;
 					hangspotTPL.onUnhangEvent = newUnhangEvent;
+				}
+			}
+		}
+
+
+		public void FixBubblesFX(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+			
+			var tplPaths = new string[] {
+				"world/common/fx/lifeelements2/water/fx_bubbles_01.tpl",
+				"world/common/fx/lifeelements2/water/fx_bubbles_02.tpl",
+				"world/common/fx/lifeelements2/water/fx_bubbles_03.tpl",
+				"world/common/fx/lifeelements2/water/fx_bubbles_02white.tpl",
+				"world/common/fx/lifeelements2/water/fx_bubbles_03white.tpl",
+			}.Select(s => new Path(s));
+
+			foreach (var p in tplPaths) {
+				var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(p);
+				if (tpl?.obj == null) continue;
+				var fxc = tpl?.obj.GetComponent<FxBankComponent_Template>();
+				if(fxc?.Fx == null) continue;
+				foreach (var fx in fxc?.Fx) {
+					var par = fx?.gen?._params;
+					//par.velNorm *= 0.5f;
+					if (par?.parEmitVelocity?.curve?.Points?.Any() ?? false) {
+						foreach (var pt in par.parEmitVelocity.curve.Points) {
+							if(pt?.Point == null) continue;
+							pt.Point = pt.Point * 0.4f;
+						}
+					}
+
+					float x = 0f, y = 0f, z = 0f;
+
+					float GetStaticValue(ParLifeTimeCurve curve, Func<Spline.SplinePoint, float> func) {
+						if (curve?.curve?.Points?.Any() ?? false) {
+							return func(curve.curve.Points.LastOrDefault());
+						}
+						return 0f;
+					}
+					x = GetStaticValue(par.curveAccelX, pt => pt.Point?.x ?? 0f);
+					y = GetStaticValue(par.curveAccelY, pt => pt.Point?.y ?? 0f);
+					z = GetStaticValue(par.curveAccelZ, pt => pt.Point?.z ?? 0f);
+
+					if(par.acc == null) par.acc = new Vec3d();
+					par.acc.x += x;
+					par.acc.y += y;
+					par.acc.z += z;
 				}
 			}
 		}
