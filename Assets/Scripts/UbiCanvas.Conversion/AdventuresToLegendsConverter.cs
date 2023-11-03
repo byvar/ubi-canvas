@@ -984,6 +984,10 @@ namespace UbiCanvas.Conversion {
 						//rp.ClearColor.ClearFrontLightColor *= new UbiArt.Color(0.3f, 0.3f, 0.3f, 1f);
 						break;
 					}
+				case "world/rlc_olympus/cranezone/olympus_cranezone_exp_base.isc": {
+						ZiplineToRope_All(oldContext, newSettings, scene);
+						break;
+					}
 				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {
 						// Remove rotating platform to access secret place
 						var actToRemove = scene.FindActor(a => a.USERFRIENDLY == "dojo_platform_single@1");
@@ -2982,6 +2986,39 @@ namespace UbiCanvas.Conversion {
 					ZiplineToRope(oldContext, newSettings, z.Result);
 				}
 			}
+			ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("zipline_freelength"));
+			foreach (var z in ziplines) {
+				var link = z.Result.GetComponent<LinkComponent>();
+				if (link == null) continue;
+				var ziplineTarget = link.Children[0].Path;
+
+				var targetNode = pickableTree.FollowObjectPath(z.Path, ziplineTarget);
+				if (targetNode.Pickable.POS2D.x < z.Result.POS2D.x) { // Zipline goes left
+					ZiplineToRope_Freelength(oldContext, newSettings, z.Result);
+				}
+			}
+		}
+		public void ZiplineToRope_All(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var pickableTree = new PickableTree(scene);
+			var ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("chainrope_attach_zipline"));
+			foreach (var z in ziplines) {
+				ZiplineToRope(oldContext, newSettings, z.Result);
+				/*var link = z.Result.GetComponent<LinkComponent>();
+				if (link == null) continue;
+				var ziplineTarget = link.Children[0].Path;
+
+				var targetNode = pickableTree.FollowObjectPath(z.Path, ziplineTarget);
+				if (targetNode.Pickable.POS2D.x < z.Result.POS2D.x) { // Zipline goes left
+					ZiplineToRope(oldContext, newSettings, z.Result);
+				}*/
+			}
+			ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("zipline_freelength"));
+			foreach (var z in ziplines) {
+				ZiplineToRope_Freelength(oldContext, newSettings, z.Result);
+			}
 		}
 		public void TriggerAllLumChains(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
@@ -3068,28 +3105,6 @@ namespace UbiCanvas.Conversion {
 			chain.trajectory = RO2_LumsChainComponent.Trajectory.FollowChain;
 		}
 
-		public void AllZiplinesToRopes(Context oldContext, Settings newSettings, ConversionSettings conversionSettings) {
-			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
-			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
-
-			Loader l = oldContext.Loader;
-			var structs = l.Context.Cache.Structs;
-			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
-			if (actorTemplates == null) return;
-
-			conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("chainrope_attach_zipline.tpl", "chainrope_attach_zipline_adv.tpl"));
-
-			foreach (var tplPair in actorTemplates) {
-				var tpl = tplPair.Value as GenericFile<Actor_Template>;
-				if (tpl?.obj == null) continue;
-				var rope = tpl.obj.GetComponent<RopeComponent_Template>();
-				if (rope == null) continue;
-				rope.gameMaterial = new Path("gamematerial/basicliana_h.gmt");
-				rope.cutSectionGameMaterial = rope.gameMaterial;
-			}
-
-		}
 		public void ZiplineToRope(Context oldContext, Settings newSettings, Actor act) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
@@ -3100,22 +3115,41 @@ namespace UbiCanvas.Conversion {
 				structs[typeof(GenericFile<Actor_Template>)] = new Dictionary<StringID, ICSerializable>();
 			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
 
-			var ogTPLPath = act.LUA;
-			var newTPLPath = new Path(act.LUA.FullPath.Replace("chainrope_attach_zipline.tpl", "chainrope_attach_ziprope.tpl"));
-			act.LUA = newTPLPath;
-			if (!actorTemplates.ContainsKey(newTPLPath.stringID)) {
-				var newTPL = new GenericFile<Actor_Template>(act.template.obj.Clone("tpl") as Actor_Template);
-				newTPL.sizeOf = act.template.sizeOf;
-				actorTemplates[newTPLPath.stringID] = newTPL;
-				l.Paths[newTPLPath.stringID] = newTPLPath;
-				l.CookedPaths[newTPLPath.stringID] = newTPLPath.CookedPath(oldContext);
-
-
+			if (CloneTemplateIfNecessary(act.LUA, "rope", "ROPE", act.template, out var newTPL, act: act)) {
 				var rope = newTPL.obj.GetComponent<RopeComponent_Template>();
 				if (rope != null) {
 					// TODO: Change game material sound
 					rope.gameMaterial = new Path("gamematerial/basicliana_h.gmt");
 					rope.cutSectionGameMaterial = rope.gameMaterial;
+
+					// Change texture so you can distinguish ropes from ziplines
+					rope.bezierRenderer.material.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope.tga");
+					rope.bezierRenderer.material.textureSet.back_light = new Path("world/common/platform/rope/texture/rope_back.tga");
+					rope.bezierRenderer.beginLength = 0.05f;
+					rope.bezierRenderer.endLength = 0.1f;
+					rope.bezierRenderer.beginWidth = 0.7f;
+					rope.bezierRenderer.midWidth = 0.7f;
+					rope.bezierRenderer.endWidth = 0.7f;
+					rope.bezierRenderer.tileLength = 5.6f;
+					rope.bezierRenderer.tessellationLength = 0.3f;
+					rope.bezierRenderer.divMode = BezierCurveRenderer_Template.BezierDivMode.Fix82;
+					rope.beginMaterial.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope_extremity_01.tga");
+					rope.beginMaterial.textureSet.back_light = new Path("world/common/platform/rope/texture/rope_extremity_01_back.tga");
+					rope.endMaterial.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope_extremity_02.tga");
+					rope.endMaterial.textureSet.back_light = new Path("world/common/platform/rope/texture/rope_extremity_02_back.tga");
+				}
+			}
+		}
+
+		public void ZiplineToRope_Freelength(Context oldContext, Settings newSettings, Actor act) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			if (CloneTemplateIfNecessary(act.LUA, "rope", "ROPE", act.template, out var newTPL, act: act)) {
+				var rope = newTPL.obj.GetComponent<ProceduralSoftPlatformComponent_Template>();
+				if (rope != null) {
+					// TODO: Change game material sound
+					rope.gameMaterial = new Path("gamematerial/basicliana_h.gmt");
 
 					// Change texture so you can distinguish ropes from ziplines
 					rope.bezierRenderer.material.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope.tga");

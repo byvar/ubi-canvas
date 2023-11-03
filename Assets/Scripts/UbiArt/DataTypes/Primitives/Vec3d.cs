@@ -35,5 +35,10 @@ namespace UbiArt {
 		public static Vec3d operator *(Vec3d a, float b) => new Vec3d(a.x * b, a.y * b, a.z + b);
 		public static Vec3d operator /(Vec3d a, float b) => new Vec3d(a.x / b, a.y / b, a.z / b);
 		public Vec3d Normalize() => (x != 0 || y != 0 || z != 0) ? this / (float)Magnitude : this;
+
+		public static Vec3d Left => new Vec3d(-1, 0, 0);
+		public static Vec3d Right => new Vec3d(1, 0, 0);
+		public static Vec3d Up => new Vec3d(0, 1, 0);
+		public static Vec3d Down => new Vec3d(0, -1, 0);
 	}
 }

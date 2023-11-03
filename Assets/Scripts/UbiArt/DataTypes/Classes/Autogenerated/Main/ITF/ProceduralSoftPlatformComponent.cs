@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class ProceduralSoftPlatformComponent : GraphicComponent {
-		public Vec3d endPos;
-		public bool useBeginTexture;
-		public bool useEndTexture;
+		public Vec3d endPos = Vec3d.Invalid;
+		public bool useBeginTexture = true;
+		public bool useEndTexture = true;
 		public bool initIteration;
 		public bool lianaOnTrigger;
 		public bool flipTexture;
