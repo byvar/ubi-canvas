@@ -5,7 +5,7 @@ namespace UbiArt.ITF {
 		public Generic<Event> popEventPainted;
 		public Path popSpawn;
 		public bool rewardNumberChangeEnable;
-		public ContentPopType contentPopType;
+		public ContentPopType contentPopType = ContentPopType.All;
 		public BubblePrizeBankState bankState;
 		
 		protected override void SerializeImpl(CSerializerObject s) {

@@ -3,13 +3,13 @@ namespace UbiArt.ITF {
 	public partial class RO2_AIBubblePrizeBehavior_Template : TemplateAIBehavior {
 		public bool isCustomCurve;
 		public RO2_BubblePrize_Template bubblePrize;
-		public float bezierStretchStart;
-		public float bezierStretchEnd;
+		public float bezierStretchStart = 1f;
+		public float bezierStretchEnd = 1f;
 		public Generic<AIBezierAction_Template> bezierAction;
 		public Generic<RO2_AIBlowOffAction_Template> blowOffAction;
 		public Generic<RO2_AIFollowBezierCurveAction_Template> followCurveAction;
 		public Generic<RO2_AIFlyIdleAction_Template> flyIdleAction;
-		public float playerDetectorMultiplierInWater;
+		public float playerDetectorMultiplierInWater = 1.5f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			isCustomCurve = s.Serialize<bool>(isCustomCurve, name: "isCustomCurve");

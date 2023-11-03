@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AIPlayActionsBehavior_Template : TemplateAIBehavior {
 		public CArrayO<Generic<AIAction_Template>> actions;
-		public bool resetAnimTime;
+		public bool resetAnimTime = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {

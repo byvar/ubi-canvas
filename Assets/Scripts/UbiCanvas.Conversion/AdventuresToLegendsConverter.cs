@@ -992,8 +992,31 @@ namespace UbiCanvas.Conversion {
 						//rp.ClearColor.ClearFrontLightColor *= new UbiArt.Color(0.3f, 0.3f, 0.3f, 1f);
 						break;
 					}
+				case "world/rlc_dojo/festivalofspeed/dojo_festivalofspeed_spd_base.isc": {
+						var act = scene.FindActor(a => a?.USERFRIENDLY == "renderparam@1");
+						var rp = act.Result.GetComponent<RenderParamComponent>();
+						rp.Lighting.GlobalColor *= new UbiArt.Color(0.8f, 0.8f, 0.8f, 0.8f);
+						break;
+					}
 				case "world/rlc_olympus/cranezone/olympus_cranezone_exp_base.isc": {
 						ZiplineToRope_All(oldContext, newSettings, scene);
+						break;
+					}
+				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
+						// Set brightness of lum bubbles to 0
+						var acts = scene.FindActors(a => a?.LUA?.filename?.Contains("bubbleprize") ?? false);
+						foreach (var act in acts) {
+							var anm = act.Result.GetComponent<AnimatedComponent>();
+							if(anm?.PrimitiveParameters == null) continue;
+							anm.PrimitiveParameters.FrontLightBrightness = 0f;
+						}
+						break;
+					}
+				case "world/rlc_beanstalk/aspiidnetwork/beanstalk_aspiidnetwork_spd_base.isc": {
+						// To help with the passage that normally requires invincibility
+						var act = await AddNewActor(scene, new Path("world/common/friendly/phial/components/phial.tpl"), "testmap63_aSpiidNetwork_ld", contextToLoadFrom: LegendsContext);
+						act.POS2D = new Vec2d(16.95f, 13.95f);
+						act.RELATIVEZ = -0.01f;
 						break;
 					}
 				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {

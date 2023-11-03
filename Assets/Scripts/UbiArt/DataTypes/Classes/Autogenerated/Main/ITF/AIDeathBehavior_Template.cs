@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class AIDeathBehavior_Template : AIPlayActionsBehavior_Template {
 		public bool pauseComponentWhenDone;
-		public bool pauseActorWhenDone;
+		public bool pauseActorWhenDone = true;
 		public bool destroyActorWhenDone;
 		public bool deactivatePhysics;
 		public bool nullWeight;

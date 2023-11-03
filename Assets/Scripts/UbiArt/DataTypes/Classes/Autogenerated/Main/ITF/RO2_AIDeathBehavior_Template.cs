@@ -3,8 +3,8 @@ namespace UbiArt.ITF {
 	public partial class RO2_AIDeathBehavior_Template : AIDeathBehavior_Template {
 		public Generic<RO2_EventSpawnReward> reward;
 		public Path soul;
-		public CListP<uint> numRewards;
-		public bool spawnOnMarker;
+		public CListP<uint> numRewards = new CListP<uint>() { 0, 1, 2, 4 };
+		public bool spawnOnMarker = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			reward = s.SerializeObject<Generic<RO2_EventSpawnReward>>(reward, name: "reward");
