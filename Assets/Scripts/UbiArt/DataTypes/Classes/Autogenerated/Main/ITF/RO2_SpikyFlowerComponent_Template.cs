@@ -3,11 +3,11 @@ namespace UbiArt.ITF {
 	public partial class RO2_SpikyFlowerComponent_Template : ActorComponent_Template {
 		public Path hurtTriggerBounce;
 		public Path noHurtTriggerBounce;
-		public float closedTime;
+		public float closedTime = 1f;
 		public uint hurtLevel;
-		public BOUNCETYPE bounceType;
+		public BOUNCETYPE bounceType = BOUNCETYPE.ENEMY;
 		public bool bounceIsRadial;
-		public bool useActorPosForBounce;
+		public bool useActorPosForBounce = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			hurtTriggerBounce = s.SerializeObject<Path>(hurtTriggerBounce, name: "hurtTriggerBounce");

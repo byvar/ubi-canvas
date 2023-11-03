@@ -1,19 +1,19 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_GyroSpikyComponent_Template : RO2_RailComponent_Template {
-		public float acceleration;
-		public float drcAcceleration;
-		public bool gyroMode;
+		public float acceleration = 1f;
+		public float drcAcceleration = 1f;
+		public bool gyroMode = true;
 		public bool drcMode;
-		public float frictionMin;
-		public float frictionMax;
+		public float frictionMin = 1f;
+		public float frictionMax = 1f;
 		public Angle angleFrictionMax;
-		public Angle angleFrictionMin;
-		public float drcSwipeValidationSpeed;
-		public Angle drcSwipeValidationAngle;
-		public float drcStiffness;
-		public float drcDamping;
-		public float oneShotValidationTime;
+		public Angle angleFrictionMin = 0.7853982f;
+		public float drcSwipeValidationSpeed = 30f;
+		public Angle drcSwipeValidationAngle = 0.7853982f;
+		public float drcStiffness = 20f;
+		public float drcDamping = 12f;
+		public float oneShotValidationTime = 0.3f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			acceleration = s.Serialize<float>(acceleration, name: "acceleration");

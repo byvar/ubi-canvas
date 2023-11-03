@@ -1,13 +1,13 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_RailComponent_Template : ActorComponent_Template {
-		public float speedMax;
-		public float reboundFriction;
+		public float speedMax = 1f;
+		public float reboundFriction = 1f;
 		public bool circleMode;
-		public float radius;
+		public float radius = 1f;
 		public Angle initAngle;
 		public bool useSnap;
-		public float snapTolerance;
+		public float snapTolerance = 0.1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			speedMax = s.Serialize<float>(speedMax, name: "speedMax");
