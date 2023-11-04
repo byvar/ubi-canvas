@@ -910,6 +910,29 @@ namespace UbiCanvas.Conversion {
 						var trig = trigger.GetComponent<TriggerComponent>();
 						trig.mode = TriggerComponent.Mode.Multiple;
 						trig.activatedOnGo = false;
+
+						// Remove bonesbridge to remove need for crush attack
+						var bonesbridge = pickableTree.FollowObjectPath(new ObjectPath("grp@1|bonesbridge_02"));
+						bonesbridge.Parent.Scene.DeletePickable(bonesbridge.Pickable);
+
+						// Make jump easier at end by moving rings closer together
+						var ring = scene.FindActor(a => a.USERFRIENDLY == "ring@7");
+						ring.Result.POS2D += new Vec2d(1.5f, 0f);
+						ring = scene.FindActor(a => a.USERFRIENDLY == "ring@8");
+						ring.Result.POS2D -= new Vec2d(1.5f, 0f);
+						var ringFog = pickableTree.FollowObjectPath(new ObjectPath("jewelthief_graph|simplefog@20"));
+						ringFog.Pickable.POS2D += new Vec2d(1.5f, 0f);
+						ringFog = pickableTree.FollowObjectPath(new ObjectPath("jewelthief_graph|simplefog@21"));
+						ringFog.Pickable.POS2D -= new Vec2d(1.5f, 0f);
+						var ringfrise = scene.FindPickable(a => a.USERFRIENDLY == "nemo_playground_structure_atlas");
+						ringfrise.Result.POS2D += new Vec2d(1.5f, 0f);
+						ringfrise = scene.FindPickable(a => a.USERFRIENDLY == "nemo_playground_structure_atlas@1");
+						ringfrise.Result.POS2D -= new Vec2d(1.5f, 0f);
+
+						// Add bonestack to stop player from entering that last room without looking
+						var bonestack = await AddNewActor(scene, new Path("world/landofthedead/common/breakable/bonestack/components/bonestack3.tpl"), parentPath: "grp@5");
+						bonestack.POS2D = new Vec2d(5.25f, 0f);
+						bonestack.RELATIVEZ = -0.02f;
 						break;
 					}
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":

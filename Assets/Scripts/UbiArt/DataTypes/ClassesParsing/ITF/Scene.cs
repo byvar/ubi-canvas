@@ -17,7 +17,7 @@ namespace UbiArt.ITF {
 						name = a.USERFRIENDLY;
 
 					if (name != null) {
-						int i = 0;
+						int i = 1; // New actor names start from name@1 in UbiArt, w do the same
 						var newName = name;
 						while (FindByName(newName) != null) {
 							newName = $"{name}@{i}";
@@ -41,7 +41,7 @@ namespace UbiArt.ITF {
 						name = a.USERFRIENDLY;
 
 					if (name != null) {
-						int i = 0;
+						int i = 1; // New actor names start from name@1 in UbiArt, w do the same
 						var newName = name;
 						while (FindByName(newName) != null) {
 							newName = $"{name}@{i}";
