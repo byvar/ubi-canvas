@@ -7,30 +7,36 @@ namespace UbiArt.ITF {
 			if ((oldSettings.Game == Game.RA || oldSettings.Game == Game.RM) && newSettings.Game == Game.RL) {
 				var root = behaviorTree.root?.node?.obj;
 				if (behaviorTree != null) {
-					if (this is RO2_EnemyBTAIComponent_Template enemy && enemy.canSwim) {
-						// Remove drown nodes if the enemy can swim
-						var drown = new StringID("Drown");
+					void RemoveNode(StringID nodeToRemove) {
 						if (root != null) {
 							if (root is BTDecider_Template dec) {
-								dec.nodes = new CListO<BTNodeTemplate_Ref>(dec.nodes.Where(n => n.nameId != drown && n.node?.obj?.name != drown).ToList());
+								dec.nodes = new CListO<BTNodeTemplate_Ref>(dec.nodes.Where(n => n.nameId != nodeToRemove && n.node?.obj?.name != nodeToRemove).ToList());
 							}
 						}
 						if (behaviorTree.nodes != null) {
-							behaviorTree.nodes = new CArrayO<Generic<BTNode_Template>>(behaviorTree.nodes.Where(n => n?.obj?.name != drown).ToArray());
+							behaviorTree.nodes = new CArrayO<Generic<BTNode_Template>>(behaviorTree.nodes.Where(n => n?.obj?.name != nodeToRemove).ToArray());
 							foreach (var node in behaviorTree.nodes) {
-								if(node == null) continue;
+								if (node == null) continue;
 
 								if (node?.obj is BTDecider_Template dec) {
 									if (dec?.nodes == null) continue;
-									dec.nodes = new CListO<BTNodeTemplate_Ref>(dec.nodes.Where(n => n.nameId != drown && n.node?.obj?.name != drown).ToList());
+									dec.nodes = new CListO<BTNodeTemplate_Ref>(dec.nodes.Where(n => n.nameId != nodeToRemove && n.node?.obj?.name != nodeToRemove).ToList());
 
 								}
 							}
 						}
 					}
+					if (this is RO2_EnemyBTAIComponent_Template enemy && enemy.canSwim) {
+						// Remove drown nodes if the enemy can swim
+						var drown = new StringID("Drown");
+						RemoveNode(drown);
+					}
+					//var roaming = new StringID("Roaming");
+					//RemoveNode(roaming);
 				}
 				CListO<BTNodeTemplate_Ref> nodesToCopy = null;
 				if (root is BTDecider_Template rootDec) {
+					BTNodeTemplate_Ref nodeToRemove = null;
 					for(int i = 0; i < rootDec.nodes.Count; i++) {
 						var rootNode = rootDec.nodes[i];
 						var name = rootNode.nameId;
@@ -52,6 +58,7 @@ namespace UbiArt.ITF {
 									if (factDecider.factsHave.Count == 1) {
 										// Now merge all nodes in this with all following deciders
 										nodesToCopy = factDecider.nodes;
+										nodeToRemove = rootNode;
 									}
 								}
 							}
@@ -63,6 +70,9 @@ namespace UbiArt.ITF {
 								foreach (var n in oldNodes) decider.nodes.Add(n);
 							}
 						}
+					}
+					if (nodeToRemove != null) {
+						rootDec.nodes.Remove(nodeToRemove);
 					}
 				}
 			}

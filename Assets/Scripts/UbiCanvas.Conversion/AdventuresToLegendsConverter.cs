@@ -312,7 +312,8 @@ namespace UbiCanvas.Conversion {
 			AddCaptainAI(mainContext, settings);
 			DowngradeFxUV(mainContext, settings);
 
-			FixEnemiesWithShieldUp(mainContext, settings);
+			await FixEnemiesWithShieldUp(mainContext, settings);
+			RemoveShapeExcluders(mainContext, settings);
 			//FixSwimmingToads(mainContext, settings);
 
 			DuplicateActorTemplatesForStartPaused(mainContext);
@@ -1283,7 +1284,7 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 		}
-		public async void FixEnemiesWithShieldUp(Context oldContext, Settings newSettings) {
+		public async Task FixEnemiesWithShieldUp(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
@@ -1388,7 +1389,19 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public async void FixSwimmingToads(Context oldContext, Settings newSettings) {
+		public void RemoveShapeExcluders(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+			var shapeExcluderTag = new StringID(0x3ee39863);
+			var l = oldContext.Loader;
+			foreach (var act in l.LoadedActors) {
+				var links = act?.GetComponent<LinkComponent>()?.Children;
+				if(links == null) continue;
+				links.RemoveAll(l => l.HasTag(shapeExcluderTag));
+			}
+		}
+
+		public async Task FixSwimmingToads(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
