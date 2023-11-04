@@ -145,6 +145,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/fx/lifeelements/musical/", "world/common/fx/lifeelements_rlc/musical/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/common/friendly/skullcoin/components/skullcoin.tpl", "world/common/friendly/skullcoin/components/skullcoin_rlc.tpl"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/ocean/common/platform/geyserplatform/", "world/ocean/common/platform/geyserplatform_rlc/"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -1017,6 +1019,36 @@ namespace UbiCanvas.Conversion {
 						var act = await AddNewActor(scene, new Path("world/common/friendly/phial/components/phial.tpl"), "testmap63_aSpiidNetwork_ld", contextToLoadFrom: LegendsContext);
 						act.POS2D = new Vec2d(16.95f, 13.95f);
 						act.RELATIVEZ = -0.01f;
+						var captain = scene.FindActor(a => a.USERFRIENDLY == "exitflag");
+						captain.ContainingScene.DeletePickable(captain.Result); // Remove one of the captains
+						captain = scene.FindActor(a => a.USERFRIENDLY == "exitflag@1");
+						captain.Result.POS2D += Vec2d.Down * 0.3f; // Move him down a bit
+						break;
+					}
+				case "world/rlc_hangar/conveyorchaos/hangar_conveyorchaos_spd_base.isc": {
+						async Task CreateTween(string[] children, Vec2d pos, float cycleTime = 1f) {
+							var tweenPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
+							var act = await AddNewActor(scene, tweenPath, parentPath: "hangar_conveyorchaos_spd_base_ld", contextToLoadFrom: LegendsContext);
+							ConfigureOnOffTween(oldContext, act.GetComponent<TweenComponent>(), cycleTime: cycleTime, timeOn: cycleTime / 4f);
+							var links = act.GetComponent<LinkComponent>();
+							links.Children = new CListO<ChildEntry>(children.Select(str => new ChildEntry() { Path = new ObjectPath(str) }).ToList());
+							for (int i = 1; i < 4; i++) {
+								links.Children[i].AddTag(new StringID("Delay"), (cycleTime / 4f * i).ToString());
+							}
+							act.POS2D = pos;
+							act.SCALE = new Vec2d(10, 10);
+							act.RELATIVEZ = -0.02f;
+						};
+						await CreateTween(new string[] {
+							"electricarc@10", "electricarc", "electricarc@2", "electricarc@1"
+						}, new Vec2d(392.2f, -75.14f));
+						await CreateTween(new string[] {
+							"electricarc@3", "electricarc@4", "electricarc@6", "electricarc@5"
+						}, new Vec2d(559.99f, -83.08f), cycleTime: 0.75f);
+						break;
+					}
+				case "world/rlc_castle/rotatingplatformpanic/castleinterior_rotatingplatformpanic_spd.isc": {
+						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
 						break;
 					}
 				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {
@@ -1370,6 +1402,8 @@ namespace UbiCanvas.Conversion {
 			actor.RemoveComponent<RLC_RotatingPlatformComponent>();
 			var tween = actor.AddComponent<TweenComponent>();
 			tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template() {
+				sync = true,
+				syncOffset = 0,
 				instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
 					new TweenComponent_Template.InstructionSet() {
 						name = new StringID("Set"),
@@ -1397,8 +1431,53 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 			});
+			tween.syncOffset = 0f;
 			tween.InstantiateFromInstanceTemplate(oldContext);
 		}
+
+		public void ConfigureOnOffTween(Context oldContext, TweenComponent tween, float cycleTime = 1f, float timeOn = 1f / 4f, float syncOffset = 0f) {
+			var tpl = new TweenComponent_Template();
+			tpl.startSet = new StringID("Set");
+			tpl.autoStart = true;
+			tpl.sync = true;
+			tpl.syncOffset = syncOffset;
+			tpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+				new TweenComponent_Template.InstructionSet() {
+					name = new StringID("Set"),
+					instructions = new CListO<Generic<TweenInstruction_Template>>() {
+						new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+							duration = 0,
+							triggerSelf = false,
+							triggerChildren = true,
+							_event = new Generic<UbiArt.ITF.Event>(new EventPause() {
+								pause = true
+							}),
+						}),
+						new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+							duration = cycleTime - timeOn
+						}),
+						new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+							duration = 0,
+							triggerSelf = false,
+							triggerChildren = true,
+							_event = new Generic<UbiArt.ITF.Event>(new EventPause() {
+								pause = false
+							}),
+						}),
+						new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+							duration = timeOn
+						}),
+					}
+				}
+			};
+
+			tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(tpl);
+			tween.autoStart = true;
+			tween.startSet = new StringID("Set");
+			tween.syncOffset = syncOffset;
+			tween.InstantiateFromInstanceTemplate(oldContext);
+		}
+
 
 		public void AllSMVToFrise(Context oldContext, Scene scene, Predicate<Actor> criteria = null) {
 			var smvs = scene.FindActors(a => a.GetComponent<StaticMeshVertexComponent>() != null && (criteria?.Invoke(a) ?? true));
