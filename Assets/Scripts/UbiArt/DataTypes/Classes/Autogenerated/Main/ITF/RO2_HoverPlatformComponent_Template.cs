@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_HoverPlatformComponent_Template : ActorComponent_Template {
-		public float movePhase;
-		public float waitPhase;
+		public float movePhase = 1.5f;
+		public float waitPhase = 0.5f;
 		public bool fxReactor01Enabled;
 		public bool fxReactor02Enabled;
 		public bool fxReactor03Enabled;

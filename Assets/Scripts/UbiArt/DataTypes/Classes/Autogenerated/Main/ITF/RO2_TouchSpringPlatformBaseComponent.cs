@@ -1,19 +1,19 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_TouchSpringPlatformBaseComponent : ActorComponent {
-		public bool saveOnCheckpoint;
-		public uint touchDetectCooldown;
-		public float speed;
-		public float bounce;
-		public float smoothTarget;
-		public float holdSpeed;
-		public float holdBounce;
-		public float holdSmoothTarget;
+		public bool saveOnCheckpoint = true;
+		public uint touchDetectCooldown = 10;
+		public float speed = 0.1f;
+		public float bounce = 0.8f;
+		public float smoothTarget = 0.1f;
+		public float holdSpeed = 0.5f;
+		public float holdBounce = 0.01f;
+		public float holdSmoothTarget = 0.5f;
 		public Generic<TouchSpringMoveBase> move;
 		public bool oneShotSwipe;
 		public Angle oneShotSwipeAxisMin;
-		public Angle oneShotSwipeAxisMax;
-		public Angle oneShotSwipeAngleToler;
+		public Angle oneShotSwipeAxisMax = 3.141593f;
+		public Angle oneShotSwipeAngleToler = 0.5235988f;
 		public bool oneShotTap;
 		public float proceduralAnimMaxCursor;
 		public EditableShape shape;

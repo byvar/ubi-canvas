@@ -1,16 +1,16 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class TouchSpringMoveLinear : TouchSpringMoveBase {
-		public float totalLength;
-		public float initPos;
+		public float totalLength = 5f;
+		public float initPos = 2.5f;
 		public float minPosLimit;
-		public float maxPosLimit;
+		public float maxPosLimit = 5f;
 		public bool useStartingLength;
-		public float startingLength;
+		public float startingLength = 2.5f;
 		public Angle axisAngle;
 		public bool useSnap;
-		public float snapDistance;
-		public float snapMinCursorSpeed;
+		public float snapDistance = 0.5f;
+		public float snapMinCursorSpeed = 0.1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			totalLength = s.Serialize<float>(totalLength, name: "totalLength");

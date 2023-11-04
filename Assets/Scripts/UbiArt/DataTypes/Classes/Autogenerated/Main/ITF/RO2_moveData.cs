@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_moveData : CSerializable {
-		public Vec2d dir;
-		public float period;
-		public bool cycle;
+		public Vec2d dir = Vec2d.Up;
+		public float period = 1f;
+		public bool cycle = true;
 		public bool autoStart;
 		public float delayCycleCount;
 		public bool playFxAttach;

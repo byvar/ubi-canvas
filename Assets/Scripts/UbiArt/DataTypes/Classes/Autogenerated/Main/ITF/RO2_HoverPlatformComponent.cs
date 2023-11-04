@@ -5,16 +5,16 @@ namespace UbiArt.ITF {
 		public uint cycleStartIndex;
 		public CListO<RO2_moveData> moveList;
 		public Vec2d wakeUpDir;
-		public float wakeUpPeriod;
-		public float wakeUpCycleCount;
-		public float waitPeriod;
-		public Vec2d waitDir;
-		public float slowDuration;
+		public float wakeUpPeriod = 1f;
+		public float wakeUpCycleCount = 5f;
+		public float waitPeriod = 1f;
+		public Vec2d waitDir = Vec2d.Up;
+		public float slowDuration = 0.5f;
 		public float stationaryDuration;
-		public float fallDuration;
-		public float fallLength;
-		public float fallAcceleration;
-		public float fallAccelarationMax;
+		public float fallDuration = 1f;
+		public float fallLength = 10f;
+		public float fallAcceleration = 1f;
+		public float fallAccelarationMax = 10f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.HasFlags(SerializeFlags.Default)) {

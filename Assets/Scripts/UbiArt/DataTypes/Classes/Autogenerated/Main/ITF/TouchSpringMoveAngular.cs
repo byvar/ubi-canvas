@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class TouchSpringMoveAngular : TouchSpringMoveBase {
-		public Angle totalAngle;
+		public Angle totalAngle = 6.283185f;
 		public Angle minAngleLimit;
 		public Angle maxAngleLimit;
 		public Angle initAngle;

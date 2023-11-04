@@ -1048,6 +1048,7 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_castle/rotatingplatformpanic/castleinterior_rotatingplatformpanic_spd.isc": {
+						AllSMVToFrise(oldContext, scene);
 						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
 						break;
 					}

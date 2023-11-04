@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public partial class MovingPolylineData : CSerializable {
 			public StringID polyline;
 			public float resistance;
-			public float forceMultiplier;
+			public float forceMultiplier = 100f;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
 				polyline = s.SerializeObject<StringID>(polyline, name: "polyline");
@@ -30,18 +30,18 @@ namespace UbiArt.ITF {
 			public Angle maxAngle;
 			public float weight;
 			public float resistance;
-			public float hitForce;
-			public float windMultiplier;
-			public float weightMultiplier;
-			public float branchStiff;
-			public float branchDamping;
-			public float branchDelayMultiplier;
+			public float hitForce = 5f;
+			public float windMultiplier = 1f;
+			public float weightMultiplier = 1f;
+			public float branchStiff = 5f;
+			public float branchDamping = 0.2f;
+			public float branchDelayMultiplier = 20f;
 			public bool disableScale;
 			public bool disableCollision;
 			public bool useDynamicBranchStiff;
 			public Angle dynamicBranchStiffMinAngle;
 			public Angle dynamicBranchStiffMaxAngle;
-			public float dynamicBranchStiffMultiplier;
+			public float dynamicBranchStiffMultiplier = 1f;
 			public bool dynamicBranchStiffOnlyWayBack;
 			public bool alwaysApplyAngleLimitation;
 			protected override void SerializeImpl(CSerializerObject s) {
@@ -74,16 +74,16 @@ namespace UbiArt.ITF {
 			public StringID scale;
 			public StringID link;
 			public Angle maxPitch;
-			public float minWeight;
-			public float minWeightScale;
-			public float maxWeight;
-			public float maxWeightScale;
-			public float MinScale;
-			public float scaleStiff;
-			public float scaleDamping;
+			public float minWeight = 1f;
+			public float minWeightScale = 0.5f;
+			public float maxWeight = 10f;
+			public float maxWeightScale = 0.5f;
+			public float MinScale = 0.1f;
+			public float scaleStiff = 5f;
+			public float scaleDamping = 0.2f;
 			public float minWeightHinge;
-			public bool disableCollision;
-			public float hitForceMultiplier;
+			public bool disableCollision = true;
+			public float hitForceMultiplier = 1f;
 			public bool onlyCrushAttack;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);

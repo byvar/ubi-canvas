@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class TouchSpringMoveBase : CSerializable {
-		public bool elastic;
+		public bool elastic = true;
 		public bool reverse;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
