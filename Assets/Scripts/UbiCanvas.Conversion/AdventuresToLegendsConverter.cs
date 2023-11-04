@@ -899,6 +899,14 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world/rlc_nemo/sunkensecrets/nemo_sunkensecrets_exp_base.isc": {
+						var path = new Path("world/common/breakable/lumsjar/components/lumjar_nocol_nophys.tpl");
+						var breakables = scene.FindActors(a => a.LUA == path);
+						foreach (var b in breakables) {
+							FixLumJarNoPhys(oldContext, b.Result);
+						}
+						break;
+					}
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
 						// Move trigger a bit. This one doesn't trigger on retries, I think because Rayman spawns inside it rather than "entering" it.
 						// ActivatedOnGo also doesn't exxist in Legends.

@@ -15,8 +15,8 @@ namespace UbiArt.ITF {
 					if ((previousSettings.Game == Game.RA || previousSettings.Game == Game.RM) 
 						&& settings.Game == Game.RL) {
 						type = (EValueType)(int)typeRA;
-						inferiorEnum = inferior ? type : 0;
-						superiorEnum = superior ? type : 0;
+						inferiorEnum = inferior ? (EValueType)1 : (EValueType)0;
+						superiorEnum = superior ? (EValueType)1 : (EValueType)0;
 					}
 				}
 			}
