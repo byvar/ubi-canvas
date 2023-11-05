@@ -1212,11 +1212,11 @@ namespace UbiCanvas.Conversion {
 							var anim = act.GetComponent<AnimatedComponent>();
 							if(anim.PrimitiveParameters == null) anim.PrimitiveParameters = new GFXPrimitiveParam();
 							if (!anim.PrimitiveParameters.UseGlobalLighting) {
-								//anim.PrimitiveParameters.FrontLightBrightness = 0.6f;
-								//anim.PrimitiveParameters.FrontLightContrast = 0.5f;
-								anim.PrimitiveParameters.colorFactor *= new UbiArt.Color(1f,1f,1f, 0.7f);
-								anim.PrimitiveParameters.FrontLightBrightness = 1f;
-								anim.PrimitiveParameters.FrontLightContrast = 0f;
+								anim.PrimitiveParameters.FrontLightBrightness = 0.6f;
+								anim.PrimitiveParameters.FrontLightContrast = 0.5f;
+								//anim.PrimitiveParameters.colorFactor *= new UbiArt.Color(1f,1f,1f, 0.7f);
+								//anim.PrimitiveParameters.FrontLightBrightness = 1f;
+								//anim.PrimitiveParameters.FrontLightContrast = 0f;
 							}
 						}
 					}
