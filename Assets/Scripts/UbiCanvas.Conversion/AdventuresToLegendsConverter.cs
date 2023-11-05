@@ -1212,15 +1212,73 @@ namespace UbiCanvas.Conversion {
 							var anim = act.GetComponent<AnimatedComponent>();
 							if(anim.PrimitiveParameters == null) anim.PrimitiveParameters = new GFXPrimitiveParam();
 							if (!anim.PrimitiveParameters.UseGlobalLighting) {
-								anim.PrimitiveParameters.FrontLightBrightness = 0.6f;
-								anim.PrimitiveParameters.FrontLightContrast = 0.5f;
+								//anim.PrimitiveParameters.FrontLightBrightness = 0.6f;
+								//anim.PrimitiveParameters.FrontLightContrast = 0.5f;
 								//anim.PrimitiveParameters.colorFactor *= new UbiArt.Color(1f,1f,1f, 0.7f);
-								//anim.PrimitiveParameters.FrontLightBrightness = 1f;
-								//anim.PrimitiveParameters.FrontLightContrast = 0f;
+								anim.PrimitiveParameters.FrontLightBrightness = 1f;
+								anim.PrimitiveParameters.FrontLightContrast = 0f;
 							}
 						}
 					}
 				}
+			}
+		}
+
+		public void SimpleRelaysToTweens(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+			var l = oldContext.Loader;
+
+			foreach (var a in l.LoadedActors) {
+				if (a.GetComponent<RelayEventComponent>() == null) continue;
+				var tpl = a.template;
+				if(tpl?.obj == null) continue;
+
+				var relayTPL = tpl.obj.GetComponent<RelayEventComponent_Template>();
+				if(relayTPL?.relays == null || relayTPL.relays.Count != 1 || relayTPL.relays[0] == null) continue;
+				var relay = relayTPL.relays[0];
+				var relayEvent = relay.eventToRelay;
+				if(relayEvent?.obj == null|| relayEvent.obj.IsAdventuresExclusive()) continue;
+				var listenEvent = relay.eventToListen;
+				if (listenEvent?.obj == null) continue;
+				if (!(listenEvent?.obj is EventTrigger et && et.activated)) continue;
+
+				// All conditions have been met - this relays a trigger event into another, valid event for Legends
+				// We'll make this Relay component into a Tween so delays work!
+				if (CloneTemplateIfNecessary(a.LUA, "r2t", "RELAY->TWEEN", tpl, out var newTPL, act: a)) {
+					newTPL.sizeOf += 0x10000;
+					newTPL.obj.RemoveComponent<RelayEventComponent_Template>();
+					newTPL.obj.AddComponent<BoxInterpolatorComponent_Template>();
+					var tctpl = newTPL.obj.AddComponent<TweenComponent_Template>();
+					tctpl.autoStart = false;
+					tctpl.startSet = new StringID("Set");
+					tctpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+						new TweenComponent_Template.InstructionSet() {
+							name = new StringID("Set"),
+							iterationCount = 1,
+							triggable = true,
+							instructions = new CListO<Generic<TweenInstruction_Template>>() {
+								new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+									duration = 0,
+									triggerSelf = false,
+									triggerChildren = true,
+									_event = new Generic<UbiArt.ITF.Event>(relayEvent.obj)
+								})
+							},
+						}
+					};
+				}
+				a.RemoveComponent<RelayEventComponent>();
+				var box = a.AddComponent<BoxInterpolatorComponent>();
+				box.innerBox = new AABB() {
+					MIN = new Vec2d(-10000, -10000),
+					MAX = new Vec2d(10000, 10000)
+				};
+				box.outerBox = box.innerBox;
+				var tc = a.AddComponent<TweenComponent>();
+				tc.InstantiateFromTemplate(oldContext, a.template.obj.GetComponent<TweenComponent_Template>());
+				tc.autoStart = false;
+				tc.startSet = new StringID("Set");
 			}
 		}
 
