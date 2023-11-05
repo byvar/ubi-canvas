@@ -147,6 +147,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/common/friendly/skullcoin/components/skullcoin.tpl", "world/common/friendly/skullcoin/components/skullcoin_rlc.tpl"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/ocean/common/platform/geyserplatform/", "world/ocean/common/platform/geyserplatform_rlc/"));
+				//conversionSettings.PathConversionRules.Add(
+				//	new PathConversionRule("world/common/logicactor/shape/components/editableshape.tpl", "world/common/logicactor/shape/components/editableshape_rlc.tpl"));
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -313,7 +315,7 @@ namespace UbiCanvas.Conversion {
 			DowngradeFxUV(mainContext, settings);
 
 			await FixEnemiesWithShieldUp(mainContext, settings);
-			RemoveShapeExcluders(mainContext, settings);
+			FixShapeExcluders(mainContext, settings);
 			//FixSwimmingToads(mainContext, settings);
 
 			DuplicateActorTemplatesForStartPaused(mainContext);
@@ -1389,15 +1391,60 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void RemoveShapeExcluders(Context oldContext, Settings newSettings) {
+		public void FixShapeExcluders(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
-			var shapeExcluderTag = new StringID(0x3ee39863);
+			/*var shapeExcluderTag = new StringID(0x3ee39863);
 			var l = oldContext.Loader;
 			foreach (var act in l.LoadedActors) {
 				var links = act?.GetComponent<LinkComponent>()?.Children;
 				if(links == null) continue;
 				links.RemoveAll(l => l.HasTag(shapeExcluderTag));
+			}*/
+			var l = oldContext.Loader;
+			var path = new Path("world/common/logicactor/shape/components/editableshape.tpl");
+			var tpl = l.Cache.Get<GenericFile<Actor_Template>>(path);
+			if (tpl != null) {
+				foreach (var act in l.LoadedActors.Where(a => a.LUA == path)) {
+					act.SCALE = Vec2d.One; // Simplest solution to a difficult issue ever
+					// The actors with this path have their AABB multiplied by scale in Legends, but not in Adventures/Mini.
+					// This AABB is then used to block off parts from the enemies' detection range.
+					// Just setting the scale to (1,1) fixes every issue!
+				}
+				return;
+				/*tpl.obj.RemoveComponent<RO2_EditableShapeComponent_Template>();
+				tpl.obj.AddComponent<BoxInterpolatorComponent_Template>();
+				foreach (var act in l.LoadedActors.Where(a => a.LUA == path)) {
+					var shape = act.GetComponent<RO2_EditableShapeComponent>();
+					act.RemoveComponent<RO2_EditableShapeComponent>();
+					var box = act.AddComponent<BoxInterpolatorComponent>();
+
+					var minPoint = new Vec2d(0f, 0f);
+					var maxPoint = new Vec2d(0f, 0f);
+					if (shape?.ZONE?.shape?.obj != null) {
+						switch (shape.ZONE.shape.obj) {
+							case PhysShapeCircle circle:
+								minPoint = Vec2d.One * -circle.Radius;
+								maxPoint = Vec2d.One * circle.Radius;
+								break;
+							case PhysShapePolygon poly:
+								minPoint = new Vec2d(poly?.Points?.Min(pt => pt.x) ?? 0f, poly?.Points?.Min(pt => pt.y) ?? 0f);
+								maxPoint = new Vec2d(poly?.Points?.Max(pt => pt.x) ?? 0f, poly?.Points?.Max(pt => pt.y) ?? 0f);
+								break;
+						}
+					}
+					var scaleMultiplier = new Vec2d(
+						act.SCALE.x != 0 ? (1f / act.SCALE.x) : 0f,
+						act.SCALE.y != 0 ? (1f / act.SCALE.y) : 0f);
+					minPoint *= scaleMultiplier;
+					maxPoint *= scaleMultiplier;
+
+					box.innerBox = new AABB() {
+						MIN = minPoint,
+						MAX = maxPoint
+					};
+					box.outerBox = box.innerBox;
+				}*/
 			}
 		}
 
