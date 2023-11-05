@@ -317,6 +317,7 @@ namespace UbiCanvas.Conversion {
 			await FixEnemiesWithShieldUp(mainContext, settings);
 			FixShapeExcluders(mainContext, settings);
 			//FixSwimmingToads(mainContext, settings);
+			AdjustGhostBrightness(mainContext, settings);
 
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
@@ -994,6 +995,14 @@ namespace UbiCanvas.Conversion {
 						AllSMVToFrise(oldContext, scene);
 						break;
 					}
+				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc": {
+						AllSMVToFrise(oldContext, scene);
+						break;
+					}
+				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc": {
+						AllSMVToFrise(oldContext, scene);
+						break;
+					}
 				/*case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc": {
 						AllSMVToFrise(oldContext, scene);
 						break;
@@ -1178,6 +1187,38 @@ namespace UbiCanvas.Conversion {
 			}
 
 			return newActor;
+		}
+
+		public void AdjustGhostBrightness(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var ghostSkeletonPath = new Path("world/common/enemy/ghost/animation/ghost_squeleton.skl");
+
+			var l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+			var actorTemplates = structs[typeof(GenericFile<Actor_Template>)];
+			if (actorTemplates != null) {
+				foreach (var tplPair in actorTemplates) {
+					var tpl = tplPair.Value as GenericFile<Actor_Template>;
+					var animTPL = tpl?.obj?.GetComponent<AnimatedComponent_Template>();
+					if (animTPL == null) continue;
+					if (animTPL.animSet?.animPackage?.skeleton == ghostSkeletonPath) {
+						/*var addColor = 1f;
+						if(anim.selfIllumColor == null) anim.selfIllumColor = UbiArt.Color.Zero;
+						anim.selfIllumColor = new UbiArt.Color(0.5f, 1f, 0.5f, addColor);*/
+						//anim.selfIllumColor = new UbiArt.Color
+						foreach (var act in l.LoadedActors.Where(a => a?.LUA?.stringID == tplPair.Key)) {
+							var anim = act.GetComponent<AnimatedComponent>();
+							if(anim.PrimitiveParameters == null) anim.PrimitiveParameters = new GFXPrimitiveParam();
+							if (!anim.PrimitiveParameters.UseGlobalLighting) {
+								anim.PrimitiveParameters.FrontLightBrightness = 0.6f;
+								anim.PrimitiveParameters.FrontLightContrast = 0.5f;
+							}
+						}
+					}
+				}
+			}
 		}
 
 		public void ApplySpecialRenderParamsToScene(Scene scene, RenderParamComponent rp = null) {
