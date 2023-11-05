@@ -963,6 +963,16 @@ namespace UbiCanvas.Conversion {
 						disappearingToad.Result.POS2D = disappearingToad.Result.POS2D + new Vec2d(0f, 1f);
 						break;
 					}
+				case "world/rlc_nemo/harborhell/nemo_harborhell_nmi_base.isc": {
+						var sceneTree = new PickableTree(scene);
+						var act = sceneTree.FollowObjectPath(new ObjectPath("oceancannontest_ld|grp@13|chainrope_attach_zipline@1"));
+						ZiplineToRope(oldContext, newSettings, (Actor)act.Pickable);
+
+						// There's a toad that usually gets stuck in the floor and dies offscreen. Move it up a unit to fix it
+						var disappearingToad = scene.FindActor(a => a.USERFRIENDLY == "shootingtoad@5");
+						disappearingToad.Result.POS2D = disappearingToad.Result.POS2D + new Vec2d(0f, 1f);
+						break;
+					}
 				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
 						AllSMVToFrise(oldContext, scene);
 						/* ring_hangtriggermulti */
@@ -3331,6 +3341,12 @@ namespace UbiCanvas.Conversion {
 					rope.bezierRenderer.tileLength = 5.6f;
 					rope.bezierRenderer.tessellationLength = 0.3f;
 					rope.bezierRenderer.divMode = BezierCurveRenderer_Template.BezierDivMode.Fix82;
+
+					/*var colorFactor = 0.75f;
+					rope.bezierRenderer.beginColor *= new UbiArt.Color(colorFactor, colorFactor, colorFactor, 1f);
+					rope.bezierRenderer.endColor   *= new UbiArt.Color(colorFactor, colorFactor, colorFactor, 1f);
+					rope.bezierRenderer.midColor   *= new UbiArt.Color(colorFactor, colorFactor, colorFactor, 1f);*/
+
 					rope.beginMaterial.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope_extremity_01.tga");
 					rope.beginMaterial.textureSet.back_light = new Path("world/common/platform/rope/texture/rope_extremity_01_back.tga");
 					rope.endMaterial.textureSet.diffuse = new Path("world/common/platform/rope/texture/rope_extremity_02.tga");
