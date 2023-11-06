@@ -283,6 +283,8 @@ namespace UbiCanvas.Conversion {
 
 			AddTriggerMoreEventTweens(mainContext, settings, scene);
 			CreateTemplatesForInstanceRelays(mainContext, settings, scene);
+			AddRelaysForMultipleEventTriggers(mainContext, settings, scene);
+			//await SimpleRelaysToTweens(mainContext, settings, scene);
 
 			CreateFriseParents(mainContext, settings, scene);
 			await MakeFrisesStartPaused(mainContext, settings, scene);
@@ -1224,61 +1226,98 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void SimpleRelaysToTweens(Context oldContext, Settings newSettings) {
+
+		public void AddRelaysForMultipleEventTriggers(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
 			var l = oldContext.Loader;
 
-			foreach (var a in l.LoadedActors) {
-				if (a.GetComponent<RelayEventComponent>() == null) continue;
+			var delayTag = new StringID("Delay");
+
+			var badRelays = scene.FindActors(a =>
+				a.GetComponent<RO2_MultipleEventTriggerComponent>() != null
+				&& (a.GetComponent<LinkComponent>()?.Children?.Any(c => c?.HasTag(delayTag) ?? false) ?? false));
+
+			foreach (var res in badRelays) {
+				var a = res.Result;
+
+				var links = a.GetComponent<LinkComponent>();
+
 				var tpl = a.template;
-				if(tpl?.obj == null) continue;
+				if (tpl?.obj == null) continue;
 
-				var relayTPL = tpl.obj.GetComponent<RelayEventComponent_Template>();
-				if(relayTPL?.relays == null || relayTPL.relays.Count != 1 || relayTPL.relays[0] == null) continue;
-				var relay = relayTPL.relays[0];
-				var relayEvent = relay.eventToRelay;
-				if(relayEvent?.obj == null|| relayEvent.obj.IsAdventuresExclusive()) continue;
-				var listenEvent = relay.eventToListen;
-				if (listenEvent?.obj == null) continue;
-				if (!(listenEvent?.obj is EventTrigger et && et.activated)) continue;
+				var multiEvent = a.GetComponent<RO2_MultipleEventTriggerComponent>();
+				var validationEvent = multiEvent.validationEvent;
+				var children = links.Children;
 
-				// All conditions have been met - this relays a trigger event into another, valid event for Legends
-				// We'll make this Relay component into a Tween so delays work!
-				if (CloneTemplateIfNecessary(a.LUA, "r2t", "RELAY->TWEEN", tpl, out var newTPL, act: a)) {
+				var ogLUA = a.LUA;
+				var ogTPL = tpl;
+
+				// Create tween actor template
+				if (CloneTemplateIfNecessary(ogLUA, "tween", "MULTIPLE EVENT TWEEN", ogTPL, out var newTPL)) {
 					newTPL.sizeOf += 0x10000;
-					newTPL.obj.RemoveComponent<RelayEventComponent_Template>();
-					newTPL.obj.AddComponent<BoxInterpolatorComponent_Template>();
+
+					newTPL.obj.RemoveComponent<RO2_MultipleEventTriggerComponent_Template>();
 					var tctpl = newTPL.obj.AddComponent<TweenComponent_Template>();
 					tctpl.autoStart = false;
-					tctpl.startSet = new StringID("Set");
-					tctpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
-						new TweenComponent_Template.InstructionSet() {
-							name = new StringID("Set"),
-							iterationCount = 1,
-							triggable = true,
-							instructions = new CListO<Generic<TweenInstruction_Template>>() {
-								new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
-									duration = 0,
-									triggerSelf = false,
-									triggerChildren = true,
-									_event = new Generic<UbiArt.ITF.Event>(relayEvent.obj)
-								})
-							},
-						}
-					};
+					newTPL.obj.AddComponent<BoxInterpolatorComponent_Template>();
 				}
-				a.RemoveComponent<RelayEventComponent>();
-				var box = a.AddComponent<BoxInterpolatorComponent>();
+
+				// Create new tween actor
+				var newTPL_path = GetClonedTemplatePath(ogLUA, "tween");
+				var newTPL2 = oldContext.Cache.Get<GenericFile<Actor_Template>>(newTPL_path);
+				var linkTweenAct = newTPL2.obj.Instantiate(newTPL_path);
+				linkTweenAct.POS2D = a.POS2D;
+				linkTweenAct.SCALE = a.SCALE;
+				linkTweenAct.ANGLE = a.ANGLE;
+				linkTweenAct.xFLIPPED = a.xFLIPPED;
+				linkTweenAct.USERFRIENDLY = $"{a.USERFRIENDLY}_tween";
+				res.ContainingScene.AddActor(linkTweenAct, linkTweenAct.USERFRIENDLY);
+				l.AddLoadedActor(linkTweenAct);
+
+				// Link MultiEventTrigger to the new tween actor instead
+				multiEvent.validationEvent = new Generic<UbiArt.ITF.Event>(new EventTrigger() {
+					activated = true
+				});
+				links.Children = new CListO<ChildEntry>() {
+					new ChildEntry() {
+						Path = new ObjectPath(linkTweenAct.USERFRIENDLY)
+					}
+				};
+
+				// Configure the new tween actor
+				var box = linkTweenAct.GetComponent<BoxInterpolatorComponent>();
 				box.innerBox = new AABB() {
 					MIN = new Vec2d(-10000, -10000),
 					MAX = new Vec2d(10000, 10000)
 				};
 				box.outerBox = box.innerBox;
-				var tc = a.AddComponent<TweenComponent>();
-				tc.InstantiateFromTemplate(oldContext, a.template.obj.GetComponent<TweenComponent_Template>());
+				var tc = linkTweenAct.GetComponent<TweenComponent>();
 				tc.autoStart = false;
 				tc.startSet = new StringID("Set");
+				tc.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template() {
+					autoStart = false,
+					startSet = new StringID("Set"),
+					instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+							new TweenComponent_Template.InstructionSet() {
+								name = new StringID("Set"),
+								iterationCount = 1,
+								triggable = true,
+								instructions = new CListO<Generic<TweenInstruction_Template>>() {
+									new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+										duration = 0,
+										triggerSelf = false,
+										triggerChildren = true,
+										_event = validationEvent
+									}),
+								},
+							}
+						}
+				});
+				tc.InstantiateFromInstanceTemplate(oldContext);
+				var newLinks = linkTweenAct.GetComponent<LinkComponent>();
+				newLinks.Children = children;
 			}
 		}
 
@@ -4651,12 +4690,13 @@ namespace UbiCanvas.Conversion {
 		}
 
 		// Returns true if the new template was created with this call
+		public Path GetClonedTemplatePath(Path ogPath, string suffix) => new Path(ogPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"));
 		public bool CloneTemplateIfNecessary(Path ogPath, string suffix, string reason, GenericFile<Actor_Template> ogTPL, out GenericFile<Actor_Template> newTPL, Actor act = null) {
 			var oldContext = MainContext;
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
 
-			var newPath = new Path(ogPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"));
+			var newPath = GetClonedTemplatePath(ogPath, suffix);
 
 			bool clonedTemplate = false;
 			if (!structs[typeof(GenericFile<Actor_Template>)].ContainsKey(newPath.stringID)) {
