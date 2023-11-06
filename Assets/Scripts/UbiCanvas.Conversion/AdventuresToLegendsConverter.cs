@@ -2009,17 +2009,24 @@ namespace UbiCanvas.Conversion {
 						links.Children = new CListO<ChildEntry>(hangspotLinks.Children.ToList());
 
 						if (once) {
-							// If it can only occur once, we have to abuse a TweenComponent and set the template to STARTPAUSED.
-							// We make sure the tweening autostarts and is limited to 1 iteration.
-							// Then, we set the template to STARTPAUSED, this way we can control when it starts.
+							// If it can only occur once, we have to abuse a TweenComponent.
+							// We make sure the tweening is limited to 1 iteration and automatically goes to a next set that is a dead end.
+							// Using a trigger event, we can start the TweenComponent and have it never restart again.
 							var tween = relay.AddComponent<TweenComponent>();
 							tween.startSet = new StringID("Set");
+							tween.autoStart = false;
 							tween.instructionSets = new CListO<TweenComponent.InstructionSet>() {
 								new TweenComponent.InstructionSet() {
 									name = new StringID("Set"),
 									instructions = new CArrayO<Generic<TweenInstruction>>() {
 										new Generic<TweenInstruction>(new TweenEvent())
-									}
+									},
+								},
+								new TweenComponent.InstructionSet() {
+									name = new StringID("Set2"),
+									instructions = new CArrayO<Generic<TweenInstruction>>() {
+										new Generic<TweenInstruction>(new TweenWait())
+									},
 								}
 							};
 						} else {
@@ -2032,19 +2039,35 @@ namespace UbiCanvas.Conversion {
 
 							newTPL.AddComponent<LinkComponent_Template>();
 							if (once) {
-								newTPL.STARTPAUSED = true;
+								newTPL.STARTPAUSED = false;
 								var tweenTPL = newTPL.AddComponent<TweenComponent_Template>();
+								tweenTPL.autoStart = false;
+								tweenTPL.startSet = new StringID("Set");
 								tweenTPL.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
 									new TweenComponent_Template.InstructionSet() {
 										name = new StringID("Set"),
 										iterationCount = 1,
+										triggable = true,
 										instructions = new CListO<Generic<TweenInstruction_Template>>() {
 											new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
 												triggerSelf = false,
 												triggerChildren = true,
 												_event = relayEvent,
 											})
-										}
+										},
+										nextSet = new StringID("Set2")
+									},
+									new TweenComponent_Template.InstructionSet() {
+										name = new StringID("Set2"),
+										// With iterationCount = 0, this set gets stuck in the loop
+										instructions = new CListO<Generic<TweenInstruction_Template>>() {
+											new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+												duration = 1f
+											})
+										},
+										triggable = false,
+										interruptible = false,
+										nextSet = new StringID("Set2")
 									}
 								};
 							} else {
@@ -2057,18 +2080,6 @@ namespace UbiCanvas.Conversion {
 										eventToRelay = relayEvent
 									},
 								});
-								if (once) {
-									relayTPL.relays.Add(new RelayData() {
-										triggerSelf = true,
-										triggerChildren = false,
-										eventToListen = new Generic<UbiArt.ITF.Event>(new EventPause() {
-											pause = true
-										}),
-										eventToRelay = new Generic<UbiArt.ITF.Event>(new EventPause() {
-											pause = true
-										})
-									});
-								}
 							}
 						}
 						res.ContainingScene.AddActor(relay, relay.USERFRIENDLY);
@@ -2083,12 +2094,12 @@ namespace UbiCanvas.Conversion {
 						// We can't just use the original events here because Relay doesn't recognize the parameters (e.g. trigger event on/off)
 						var newHangEvent = new Generic<UbiArt.ITF.Event>(new RO2_EventCommandAttackStart());
 						var newUnhangEvent = new Generic<UbiArt.ITF.Event>(new RO2_EventCommandAttackStop());
-						// If the event should only be sent once, we use a different approach with a TweenComponent that autostarts when unpaused.
-						// So the hang events should become unpause events in that case.
-						if(hangspotTPL.hangEventTriggerOnce)
-							newHangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventPause() { pause = false });
+						// If the event should only be sent once, we use a different approach with a TweenComponent we trigger.
+						// So the hang events should become trigger events in that case.
+						if (hangspotTPL.hangEventTriggerOnce)
+							newHangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventTrigger() { activated = true });
 						if (hangspotTPL.unHangEventTriggerOnce)
-							newUnhangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventPause() { pause = false });
+							newUnhangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventTrigger() { activated = true });
 
 						var relay = CreateHangRelay("relay_hang", newHangEvent, hangspotTPL.onHangEvent, hangspotTPL.hangEventTriggerOnce);
 						createdRelays.Add(relay);
@@ -2371,12 +2382,12 @@ namespace UbiCanvas.Conversion {
 					// We can't just use the original events here because Relay doesn't recognize the parameters (e.g. trigger event on/off)
 					var newHangEvent = new Generic<UbiArt.ITF.Event>(new RO2_EventCommandAttackStart());
 					var newUnhangEvent = new Generic<UbiArt.ITF.Event>(new RO2_EventCommandAttackStop());
-					// If the event should only be sent once, we use a different approach with a TweenComponent that autostarts when unpaused.
-					// So the hang events should become unpause events in that case.
+					// If the event should only be sent once, we use a different approach with a TweenComponent we trigger.
+					// So the hang events should become trigger events in that case.
 					if (hangspotTPL.hangEventTriggerOnce)
-						newHangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventPause() { pause = false });
+						newHangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventTrigger() { activated = true });
 					if (hangspotTPL.unHangEventTriggerOnce)
-						newUnhangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventPause() { pause = false });
+						newUnhangEvent = new Generic<UbiArt.ITF.Event>(new UbiArt.ITF.EventTrigger() { activated = true });
 					
 					hangspotTPL.onHangEvent = newHangEvent;
 					hangspotTPL.onUnhangEvent = newUnhangEvent;
