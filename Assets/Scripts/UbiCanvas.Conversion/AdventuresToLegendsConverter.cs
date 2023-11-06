@@ -1080,6 +1080,13 @@ namespace UbiCanvas.Conversion {
 						captain.Result.POS2D += Vec2d.Down * 0.3f; // Move him down a bit
 						break;
 					}
+				case "world/rlc_hades/volcanicheist/hades_volcanicheist_nmi_base.isc": {
+						// Difficult level, add a phial halfway
+						var act = await AddNewActor(scene, new Path("world/common/friendly/phial/components/phial.tpl"), "testmap65_VolcanicHeist_localld|transfert", contextToLoadFrom: LegendsContext);
+						act.POS2D = new Vec2d(-81.9f, -19.15839f);
+						act.RELATIVEZ = 0.1378f;
+						break;
+					}
 				case "world/rlc_hangar/conveyorchaos/hangar_conveyorchaos_spd_base.isc": {
 						async Task CreateTween(string[] children, Vec2d pos, float cycleTime = 1f) {
 							var tweenPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
