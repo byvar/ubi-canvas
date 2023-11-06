@@ -295,15 +295,17 @@ namespace UbiArt {
 							}
 						}
 					} else if (o.virtualFile != null) {
-						using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
-							UbiArtFile f = new BinaryStreamFile(Context, o.virtualFile.Item1, str);
-							Tuple<string, UbiArtFile> t = new Tuple<string, UbiArtFile>(o.virtualFile.Item1, f);
-							virtualFiles.Add(t);
-							CSerializerObject s = f.Deserializer;
-							s.ResetPosition();
-							o.action(s);
-							f.Dispose();
-							virtualFiles.Remove(t);
+						if (o.virtualFile.Item2?.AMData != null) {
+							using (MemoryStream str = new MemoryStream(o.virtualFile.Item2.AMData)) {
+								UbiArtFile f = new BinaryStreamFile(Context, o.virtualFile.Item1, str);
+								Tuple<string, UbiArtFile> t = new Tuple<string, UbiArtFile>(o.virtualFile.Item1, f);
+								virtualFiles.Add(t);
+								CSerializerObject s = f.Deserializer;
+								s.ResetPosition();
+								o.action(s);
+								f.Dispose();
+								virtualFiles.Remove(t);
+							}
 						}
 					}
 					await Context.AsyncController.WaitIfNecessary();

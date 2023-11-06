@@ -204,6 +204,9 @@ namespace UbiArt {
 						// Uncompiled files! Not included in the game though.
 						// These are referenced in "iluFile" in PlaySpawn_evtTemplate
 						break;
+					case "isg":
+						c.Loader.LoadGenericFile(this, o => Object = o);
+						break;
 					case "":
 						break;
 					default:
