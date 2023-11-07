@@ -326,6 +326,7 @@ namespace UbiArt {
 				case "tsc":
 				case "act":
 				case "ipk":
+				case "sgs":
 				case "gf":
 
                             // Custom extensions:

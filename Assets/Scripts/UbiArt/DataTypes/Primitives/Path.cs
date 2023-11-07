@@ -196,6 +196,13 @@ namespace UbiArt {
 					case "m3d":
 						c.Loader.LoadFile<Mesh3D>(this, o => Object = o);
 						break;
+					case "isg":
+						c.Loader.LoadGenericFile(this, o => Object = o);
+						break;
+					case "sgs":
+						c.Loader.LoadFile<ContainerFile<Generic<ITF.SceneConfig>>>(this, o => Object = o);
+						// Note: NOT genericFile! Could just be a list with 1 element too
+						break;
 					case "wav":
 					case "tfn":
 						// TODO
@@ -203,9 +210,6 @@ namespace UbiArt {
 					case "ilu":
 						// Uncompiled files! Not included in the game though.
 						// These are referenced in "iluFile" in PlaySpawn_evtTemplate
-						break;
-					case "isg":
-						c.Loader.LoadGenericFile(this, o => Object = o);
 						break;
 					case "":
 						break;
