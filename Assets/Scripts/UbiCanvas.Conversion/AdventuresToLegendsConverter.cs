@@ -936,7 +936,7 @@ namespace UbiCanvas.Conversion {
 
 			if(mainContext.Cache.Get<ContainerFile<Generic<SceneConfig>>>(sgsPath) == null) {
 				var sgs = new ContainerFile<Generic<SceneConfig>>() {
-					obj = new Generic<SceneConfig>((SceneConfig)chosenConfig.Clone("sgs", context: LegendsContextNoLockedPaths))
+					obj = new Generic<SceneConfig>(chosenConfig)
 				};
 
 				mainContext.Loader.CookedPaths[sgsPath.stringID] = sgsPath.CookedPath(mainContext);

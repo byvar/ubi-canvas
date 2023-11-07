@@ -8,6 +8,7 @@ namespace UbiCanvas.Conversion.Json {
 		public List<Subscene> Subscenes { get; set; }
 		public Vec2d Spacing { get; set; }
 		public int TeensiesCount { get; set; } // 0, 3 or 10
+		public bool Invasion { get; set; }
 
 		public class Subscene {
 			public string Path { get; set; }

@@ -126,11 +126,29 @@ namespace UbiCanvas.Conversion {
 											}
 
 											var exitScene = exit.ContainingScene;
-											var exitRitualActor = CreateExitRitualManager(simpleISC.TeensiesCount);
-											exitScene.AddActor(exitRitualActor, exitRitualActor.USERFRIENDLY);
-											exitRitualActor.POS2D = exit.Result.POS2D;
-											exitRitualActor.RELATIVEZ = exit.Result.RELATIVEZ;
-											exitRitualActor.xFLIPPED = exit.Result.xFLIPPED;
+											var exitRitualActor = CreateExitRitualManager(simpleISC.TeensiesCount, simpleISC.Invasion);
+											string invasionParent = null;
+											if (simpleISC.Invasion) {
+												var teensyRocketActor = scene.FindActor(a => a?.LUA?.FullPath == "world/common/friendly/teensyrocket/components/teensyrocket.tpl");
+												if (teensyRocketActor != null) {
+													var teensyRocketScene = teensyRocketActor.ContainingScene;
+													invasionParent = teensyRocketActor.Path.levels.LastOrDefault().name;
+													teensyRocketScene.AddActor(exitRitualActor, exitRitualActor.USERFRIENDLY);
+													exitRitualActor.POS2D = new Vec2d(0, 0.562496f);
+													exitRitualActor.RELATIVEZ = 0f;
+													exitRitualActor.xFLIPPED = false;
+												} else {
+													exitScene.AddActor(exitRitualActor, exitRitualActor.USERFRIENDLY);
+													exitRitualActor.POS2D = exit.Result.POS2D;
+													exitRitualActor.RELATIVEZ = exit.Result.RELATIVEZ;
+													exitRitualActor.xFLIPPED = exit.Result.xFLIPPED;
+												}
+											} else {
+												exitScene.AddActor(exitRitualActor, exitRitualActor.USERFRIENDLY);
+												exitRitualActor.POS2D = exit.Result.POS2D;
+												exitRitualActor.RELATIVEZ = exit.Result.RELATIVEZ;
+												exitRitualActor.xFLIPPED = exit.Result.xFLIPPED;
+											}
 
 											var triggerActor = CreateTriggerBoxExitRitual();
 											exitScene.AddActor(triggerActor, triggerActor.USERFRIENDLY);
@@ -140,9 +158,15 @@ namespace UbiCanvas.Conversion {
 											triggerActor.SCALE = new Vec2d(2,2);
 
 											var triggerLink = triggerActor.GetComponent<LinkComponent>();
-											triggerLink.Children.Add(new ChildEntry() {
-												Path = new ObjectPath(exitRitualActor.USERFRIENDLY)
-											});
+											if (simpleISC.Invasion && invasionParent != null) {
+												triggerLink.Children.Add(new ChildEntry() {
+													Path = new ObjectPath(invasionParent)
+												});
+											} else {
+												triggerLink.Children.Add(new ChildEntry() {
+													Path = new ObjectPath(exitRitualActor.USERFRIENDLY)
+												});
+											}
 
 										}
 									}
@@ -160,6 +184,13 @@ namespace UbiCanvas.Conversion {
 								}
 							}
 
+							isc.sceneConfigs = new SceneConfigs();
+							isc.sceneConfigs.sceneConfigs = new CArrayO<Generic<SceneConfig>>();
+							if (simpleISC.Invasion) {
+								isc.sceneConfigs.sceneConfigs.Add(new Generic<SceneConfig>(new RO2_SceneConfig_Invasion()));
+							}
+							GenerateSGSFile(isc, new Path(uncookedPath));
+
 							var iscFile = new ContainerFile<Scene>() {
 								read = true,
 								obj = isc
@@ -169,6 +200,27 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 			}
+		}
+
+		protected void GenerateSGSFile(Scene scene, Path scenePath) {
+			var sceneConfigs = scene?.sceneConfigs;
+			var configs = scene?.sceneConfigs?.sceneConfigs;
+			if (configs == null || !configs.Any()) return;
+			// Now that we've checked that, clone the configs. This way any incompatible configs will be removed too.
+			sceneConfigs = ((SceneConfigs)scene.sceneConfigs.Clone("isc", context: TargetContext));
+			configs = sceneConfigs.sceneConfigs;
+
+			var defaultConfigIndex = sceneConfigs.activeSceneConfig;
+			if (defaultConfigIndex >= configs.Count) defaultConfigIndex = 0;
+			var chosenConfig = configs[(int)defaultConfigIndex]?.obj;
+			if (chosenConfig == null) return;
+
+			var sgsPath = new Path(scenePath.FullPath.Replace(".isc", ".sgs"));
+
+			var sgsFile = new ContainerFile<Generic<SceneConfig>>() {
+				obj = new Generic<SceneConfig>(chosenConfig)
+			};
+			Bundle.AddFile(sgsPath.CookedPath(TargetContext), sgsFile);
 		}
 
 		protected void FillPickable(Pickable pickable, JSON_SimplePickable simple) {
@@ -203,11 +255,13 @@ namespace UbiCanvas.Conversion {
 			return pagePortal;
 		}
 
-		protected Actor CreateExitRitualManager(int teensyCount) {
+		protected Actor CreateExitRitualManager(int teensyCount, bool invasion) {
 			if(teensyCount < 3) teensyCount = 3;
 			var exitRitual = new Actor() {
-				LUA = new Path($"world/common/logicactor/exitritual/exitritualmanager/components/exitritualmanager_retro_{teensyCount}.tpl"),
-				USERFRIENDLY = "exitritualmanager"
+				LUA = invasion
+				? new Path("world/common/logicactor/exitritual/exitritualmanager/components/exitritualmanager_invasion.tpl")
+				: new Path($"world /common/logicactor/exitritual/exitritualmanager/components/exitritualmanager_retro_{teensyCount}.tpl"),
+				USERFRIENDLY = invasion ? "exitritualmanager_invasion" : "exitritualmanager"
 			};
 			var lc = exitRitual.AddComponent<LinkComponent>();
 			lc.Children = new CListO<ChildEntry>();
@@ -217,11 +271,29 @@ namespace UbiCanvas.Conversion {
 			ac.disableLight = 0;
 			if (teensyCount == 3) {
 				var ptc = exitRitual.AddComponent<PrefetchTargetComponent>();
-				ptc.ZONE = new EditableShape() {
-					shape = new Generic<PhysShape>(new PhysShapeBox() {
-						Extent = new Vec2d(10, 10)
-					}),
-				};
+				if (invasion) {
+					ptc.ZONE = new EditableShape() {
+						shape = new Generic<PhysShape>(new PhysShapeBox() {
+							Points = new CListO<Vec2d>() {
+								new Vec2d(-13.7f, -7.700012f),
+								new Vec2d(-13.7f, 7.700012f),
+								new Vec2d(13.7f, 7.700012f),
+								new Vec2d(13.7f, -7.700012f),
+							},
+							normals = new CListO<Vec2d>() { Vec2d.Left, Vec2d.Up, Vec2d.Right, Vec2d.Down },
+							edge = new CListO<Vec2d>() { Vec2d.Up, Vec2d.Right, Vec2d.Down, Vec2d.Left },
+							distances = new CArrayP<float>() { 15.40002f, 27.39999f, 15.40002f, 27.39999f },
+							Extent = new Vec2d(13.7f, 7.7f)
+						}),
+						localOffset = new Vec2d(0, 3.5f)
+					};
+				} else {
+					ptc.ZONE = new EditableShape() {
+						shape = new Generic<PhysShape>(new PhysShapeBox() {
+							Extent = new Vec2d(10, 10)
+						}),
+					};
+				}
 			}
 			var fccc = exitRitual.AddComponent<FXControllerComponent>();
 			var fbc = exitRitual.AddComponent<FxBankComponent>();
