@@ -179,10 +179,14 @@ namespace UbiCanvas.Conversion {
 						new PathConversionRule("world/common/enemy/devilbob/", "world/egypt/common/enemy/devilbob/"));
 				} else if (Version == SpecialVersion.ChallengeDojo) {
 					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/challenge/run/", "world/challenge/run_dojo/"));
+						new PathConversionRule("world/challenge/run/", "world/goldenkingdom/challenge/run/"));
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/landofthedead/", "world/goldenkingdom/landofthedead/"));
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/rlc_landofthedead/", "world/goldenkingdom/rlc_landofthedead/"));
 				} else {
 					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/challenge/run/", "world/challenge/run_rlc/"));
+						new PathConversionRule("world/challenge/run/", "world/rlc/challenge/run/"));
 				}
 			}
 			if (oldSettings.Game == Game.RM) {
@@ -303,8 +307,15 @@ namespace UbiCanvas.Conversion {
 				GenerateSGSFile(mainContext, scene);
 			}
 		}
+
+		public HashSet<Scene> ProcessedScenes = new HashSet<Scene>();
+
 		public async Task ProcessScene(Scene scene = null, bool generateSGS = false) {
 			scene ??= Controller.Obj.MainScene.obj;
+
+			if(ProcessedScenes.Contains(scene)) return;
+			ProcessedScenes.Add(scene);
+
 			var settings = NewSettings;
 			var mainContext= MainContext;
 			var conversionSettings = ConversionSettings;
@@ -346,6 +357,10 @@ namespace UbiCanvas.Conversion {
 			var mainContext = MainContext;
 			var conversionSettings = ConversionSettings;
 
+			// Do this first
+			await ProcessChallengeTemplates(mainContext, settings);
+
+			// Then start fixing non-scene stuff
 			FixNinjas(mainContext, settings);
 			FixAllUTurnAnimations(mainContext, settings);
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings);
@@ -1236,6 +1251,10 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 			}
+
+			if (scenePath.FullPath.StartsWith("world/challenge/run/challengerun/")) {
+				ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
+			}
 		}
 
 		public async Task<Actor> AddNewActor(Scene scene, Path path,
@@ -1303,6 +1322,114 @@ namespace UbiCanvas.Conversion {
 						}
 					}
 				}
+			}
+		}
+
+		public async Task ProcessChallengeTemplates(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var structs = oldContext.Cache.Structs;
+
+			var isgs = structs.TryGetItem(typeof(GenericFile<CSerializable>));
+			if(isgs == null) return;
+			foreach (var isgPair in isgs) {
+				if(isgPair.Value == null) continue;
+				var pathID = isgPair.Key;
+				var genValue = (GenericFile<CSerializable>)isgPair.Value;
+				if(genValue.obj == null || genValue.obj is not RO2_ChallengeCommon_Template chal) continue;
+				var path = oldContext.Loader.Paths[pathID];
+
+				if (chal.gameplayBricks != null) {
+					foreach (var brick in chal.gameplayBricks) {
+						var brickPath = brick?.obj?.path;
+						if(brickPath == null || brickPath.IsNull) continue;
+						var brickScene = brickPath.GetObject<ContainerFile<Scene>>();
+						if (brickScene?.obj != null) {
+							await ProcessScene(brickScene.obj, false);
+						}
+					}
+				}
+
+				if (chal.continueStartBrick != null) {
+					foreach (var badBrickID in chal.continueStartBrick) {
+						var badBrick = chal.gameplayBricks.FirstOrDefault(b => b?.obj?.name == badBrickID);
+						if (badBrick != null) {
+							chal.gameplayBricks.Remove(badBrick);
+						}
+					}
+					chal.continueStartBrick = null;
+				}
+
+				if (path.FullPath.StartsWith("world/challenge/run")) {
+					if (chal is RO2_EnduranceMode_Template end) {
+						if (Version == SpecialVersion.ChallengeDojo) {
+							chal.inGameMusic = new UbiArt.Nullable<EventPlayMusic>();
+							chal.gameOverMusic = new UbiArt.Nullable<EventPlayMusic>(new EventPlayMusic() {
+								nodeName = new StringID(0xE4416864),
+								metronomeType = 2,
+								volume = new Volume(-16),
+							});
+							chal.inGameMusic = new UbiArt.Nullable<EventPlayMusic>(new EventPlayMusic() {
+								nodeName = new StringID(0x734ACFE7),
+								metronomeType = 2,
+								volume = new Volume(-11),
+							});
+							// TODO: Change music tree
+							/*chal.difficultyChangeMusicEvents = new CListO<EventPlayMusic>() {
+								new EventPlayMusic() {
+									nodeName = new StringID(0x3579E6E3),
+									metronomeType = 2,
+									volume = new Volume(-10),
+								},
+								new EventPlayMusic() {
+									nodeName = new StringID(0x29EFB20D),
+									metronomeType = 2,
+									volume = new Volume(-15),
+								},
+								new EventPlayMusic() {
+									nodeName = new StringID(0xD4FC74B5),
+									metronomeType = 2,
+									volume = new Volume(-13),
+								},
+								new EventPlayMusic() {
+									nodeName = new StringID(0x012B300D),
+									metronomeType = 2,
+									volume = new Volume(-13),
+								},
+							};*/
+						} else {
+							chal.inGameMusic = new UbiArt.Nullable<EventPlayMusic>(new EventPlayMusic() {
+								nodeName = new StringID(0x734ACFE7),
+								metronomeType = 2,
+								volume = new Volume(-11),
+							});
+							chal.gameOverMusic = new UbiArt.Nullable<EventPlayMusic>(new EventPlayMusic() {
+								nodeName = new StringID(0xE4416864),
+								metronomeType = 2,
+								volume = new Volume(-16),
+							});
+						}
+						if (end.decoRanges != null) {
+							foreach (var deco in end.decoRanges) {
+								if (deco == null) continue;
+								for (int i = 0; i < 10; i++) {
+									if (deco.fog == new StringID($"fog_{i}")) {
+										if (deco.clearColor?.IsNull ?? true) {
+											deco.clearColor = new StringID($"fog_{i}");
+										}
+										if (deco.frise?.IsNull ?? true) {
+											// This is what we named the lighting frise created from the renderparam
+											new StringID($"fog_{i}_frontlightfill");
+										}
+										deco.fog = null;
+									}
+								}
+							}
+						}
+					}
+				}
+				
 			}
 		}
 
@@ -3455,7 +3582,7 @@ namespace UbiCanvas.Conversion {
 					ZiplineToRope(oldContext, newSettings, z.Result);
 				}*/
 			}
-			ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("zipline_freelength"));
+			ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("zipline_freelength") || a.USERFRIENDLY.StartsWith("liana_zipline_freelength"));
 			foreach (var z in ziplines) {
 				ZiplineToRope_Freelength(oldContext, newSettings, z.Result);
 			}
@@ -4114,18 +4241,20 @@ namespace UbiCanvas.Conversion {
 				if (spawnPoint?.Result == null) {
 					spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>() != null);
 				}
-				var pos = spawnPoint.Result.POS2D;
-				if (spawnPoint.Path.levels?.Count > 0) {
-					var node = sceneTree.Root.GetNodeWithObjectPath(spawnPoint.Path);
-					while (node.Parent != null) {
-						node = node.Parent;
-						if (node.Pickable != null) {
-							pos = node.Pickable.POS2D + node.Pickable.SCALE * pos;
+				if (spawnPoint != null) {
+					var pos = spawnPoint.Result.POS2D;
+					if (spawnPoint.Path.levels?.Count > 0) {
+						var node = sceneTree.Root.GetNodeWithObjectPath(spawnPoint.Path);
+						while (node.Parent != null) {
+							node = node.Parent;
+							if (node.Pickable != null) {
+								pos = node.Pickable.POS2D + node.Pickable.SCALE * pos;
+							}
 						}
 					}
+					// Calculate global position
+					pauseswitch.POS2D = pos;
 				}
-				// Calculate global position
-				pauseswitch.POS2D = pos;
 
 				var link = pauseswitch.AddComponent<LinkComponent>();
 				link.Children = new CListO<ChildEntry>();
@@ -4193,7 +4322,7 @@ namespace UbiCanvas.Conversion {
 					MathF.Max(aabb.MAX.x, outerAABB?.MAX?.x ?? aabb.MAX.x),
 					MathF.Max(aabb.MAX.y, outerAABB?.MAX?.y ?? aabb.MAX.y));
 
-				void CreateMaskResolver(string name, string template, float z) {
+				Actor CreateMaskResolver(string name, string template, float z) {
 					var newAct = new Actor() {
 						POS2D = act.POS2D,
 						ANGLE = act.ANGLE,
@@ -4208,12 +4337,12 @@ namespace UbiCanvas.Conversion {
 						clearBackLightBuffer = false,
 						clearFrontLightBuffer = false
 					});
-					if (rp.ClearColor != null && rp.ClearColor.Enable) {
+					/*if (rp.ClearColor != null && rp.ClearColor.Enable) {
 						mr.clearBackLightBuffer = true;
 						mr.clearFrontLightBuffer = true;
 						mr.clearBackLightColor = rp.ClearColor.ClearBackLightColor;
 						mr.clearFrontLightColor = rp.ClearColor.ClearFrontLightColor;
-					}
+					}*/
 					if (box != null) {
 						var outerAABB = box.outerBox;
 						var scale = outerAABB.MAX - outerAABB.MIN;
@@ -4222,6 +4351,7 @@ namespace UbiCanvas.Conversion {
 						newAct.SCALE = act.SCALE * scale;
 					}
 					rpScene.AddActor(newAct, newAct.USERFRIENDLY);
+					return newAct;
 				}
 				CreateMaskResolver("resolvebothmask", "world/common/levelart/light/lightresolver/components/resolvebothmask.tpl", z: -3f);
 
@@ -4244,7 +4374,7 @@ namespace UbiCanvas.Conversion {
 					return points;
 				}
 
-				void CreateFrise(string name, string template, float z = 0) {
+				Frise CreateFrise(string name, string template, float z = 0) {
 					var fr = new Frise() {
 						POS2D = act.POS2D,
 						ANGLE = act.ANGLE,
@@ -4359,6 +4489,8 @@ namespace UbiCanvas.Conversion {
 					fr.PrimitiveParameters.colorFog = UbiArt.Color.White;
 
 					rpScene.FRISE.Add(fr);
+
+					return fr;
 				}
 
 				CreateFrise("frontlightfill", "world/common/levelart/light/lightfrieze/frontlightfill.fcg", z: -2f);

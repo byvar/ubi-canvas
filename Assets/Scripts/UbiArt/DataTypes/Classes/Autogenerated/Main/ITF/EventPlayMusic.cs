@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.ROVersion | GameFlags.RLVersion | GameFlags.RA | GameFlags.RM)]
 	public partial class EventPlayMusic : Event {
-		public uint metronomeType;
+		public uint metronomeType = uint.MaxValue;
 		public StringID nodeName;
 		public float fadeTime;
 		public Volume volume;
-		public uint playOnNext;
-		public int stopAndPlay;
+		public uint playOnNext = uint.MaxValue;
+		public int stopAndPlay = 1;
 		public StringID name;
 		public float fadeInTime;
 		public float fadeOutTime;
@@ -15,7 +15,7 @@ namespace UbiArt.ITF {
 		public float eventDelay;
 		public uint priority;
 		public uint setPriority;
-		public StringID bus;
+		public StringID bus = new StringID(0x337E2A2C);
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
