@@ -43,9 +43,9 @@ namespace UbiArt
 				if (!Cooked)
 					return String.Empty;
 				else if (EngineVersion > EngineVersion.RO)
-					return "cache/itf_cooked/" + PlatformString.ToLower() + "/";
+					return $"cache/itf_cooked/{PlatformString.ToLowerInvariant()}/";
 				else
-					return "itf_cooked/" + PlatformString.ToLower() + "/";
+					return $"itf_cooked/{PlatformString.ToLowerInvariant()}/";
 			}
 		}
 
@@ -56,9 +56,9 @@ namespace UbiArt
 				if (!Cooked)
 					return String.Empty;
 				else if (EngineVersion > EngineVersion.RO)
-					return "cache/itf_cache/" + PlatformString.ToLower() + "/";
+					return $"cache/itf_cache/{PlatformString.ToLowerInvariant()}/";
 				else
-					return "itf_cache/" + PlatformString.ToLower() + "/";
+					return $"itf_cache/{PlatformString.ToLowerInvariant()}/";
 			}
 		}
 

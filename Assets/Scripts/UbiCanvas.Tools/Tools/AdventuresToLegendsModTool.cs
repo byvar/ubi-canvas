@@ -43,6 +43,7 @@ namespace UbiCanvas.Tools
 					if(sceneName.Contains('.')) sceneName = sceneName.Substring(0, sceneName.IndexOf('.'));
 					var subfolderName = sceneName;
 					var outputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "data", subfolderName);
+					UnityEngine.Debug.Log(outputPath);
 					
 					// Delete subdirectory if it exists. Any manual mods need to be added into a different subdirectory.
 					if(Directory.Exists(outputPath))
@@ -54,11 +55,11 @@ namespace UbiCanvas.Tools
 						UnitySettings.Tools_AdventuresToLegends_ProjectPath)) {
 						await converter.Init();
 						if (converter.MainContext.Settings.Game == Game.RM || converter.MainContext.Settings.Game == Game.RA) {
-							await converter.ProcessScene();
+							await converter.ProcessScene(generateSGS: true);
 							//await converter.ProcessAllLoadedScenes();
 							await converter.ProcessNonScene();
 						} else if (converter.MainContext.Settings.Platform == GamePlatform.Vita) {
-							await converter.ProcessSceneVita();
+							await converter.ProcessSceneVita(generateSGS: true);
 						}
 						await converter.Write(outputPath);
 					}
@@ -85,6 +86,7 @@ namespace UbiCanvas.Tools
 			await new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new SimpleObjectBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new CombinedSceneBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new SceneConfigsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			UnityEngine.Debug.Log("Finished building data from JSON files.");
 		}
 
@@ -99,6 +101,7 @@ namespace UbiCanvas.Tools
 			}
 			new SimpleObjectBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new CombinedSceneBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			new SceneConfigsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 		}
 
 		#region Build (mostly a copy of BuildModIPKTool)

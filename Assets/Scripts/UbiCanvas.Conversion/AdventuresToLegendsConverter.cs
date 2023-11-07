@@ -17,6 +17,7 @@ using UnityEngine;
 namespace UbiCanvas.Conversion {
 	public class AdventuresToLegendsConverter : IDisposable {
 		public Context LegendsContext { get; set; }
+		public Context LegendsContextNoLockedPaths { get; set; }
 		public Context MainContext { get; set; }
 		public ConversionSettings ConversionSettings { get; set; }
 		public Settings OldSettings { get; set; }
@@ -62,6 +63,7 @@ namespace UbiCanvas.Conversion {
 			LegendsContext.AddSettings<ConversionSettings>(new ConversionSettings() {
 				LockPaths = true
 			});
+			LegendsContextNoLockedPaths = CreateContext(Mode.RaymanLegendsPC, enableSerializerLog: false);
 		}
 
 		public enum SpecialVersion {
@@ -168,7 +170,13 @@ namespace UbiCanvas.Conversion {
 				// Challenges
 				if (Version == SpecialVersion.ChallengeEgypt) {
 					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/challenge/run/", "world/challenge/run_egypt/"));
+						new PathConversionRule("world/challenge/run/", "world/egypt/challenge/run/"));
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/landofthedead/", "world/egypt/landofthedead/"));
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/rlc_landofthedead/", "world/egypt/rlc_landofthedead/"));
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/common/enemy/devilbob/", "world/egypt/common/enemy/devilbob/"));
 				} else if (Version == SpecialVersion.ChallengeDojo) {
 					conversionSettings.PathConversionRules.Add(
 						new PathConversionRule("world/challenge/run/", "world/challenge/run_dojo/"));
@@ -194,6 +202,8 @@ namespace UbiCanvas.Conversion {
 			}
 			await LegendsContext.Loader.LoadInitial();
 			await LegendsContext.Loader.LoadLoop();
+			await LegendsContextNoLockedPaths.Loader.LoadInitial();
+			await LegendsContextNoLockedPaths.Loader.LoadLoop();
 		}
 
 		protected void StartLoadingScreen() {
@@ -245,9 +255,10 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public async Task ProcessSceneVita(Scene scene = null) {
+		public async Task ProcessSceneVita(Scene scene = null, bool generateSGS = false) {
 			await Task.CompletedTask;
 			scene ??= Controller.Obj.MainScene.obj;
+			var mainContext = MainContext;
 			if (scene.sceneConfigs == null) scene.sceneConfigs = new SceneConfigs();
 			var scfg = scene.sceneConfigs;
 			if (scfg.sceneConfigs == null) scfg.sceneConfigs = new CArrayO<Generic<SceneConfig>>();
@@ -287,8 +298,12 @@ namespace UbiCanvas.Conversion {
 				drc.autoMurphyMultiAllowed = 0;
 				drc.autoMurphy = 0;
 			}*/
+
+			if (generateSGS) {
+				GenerateSGSFile(mainContext, scene);
+			}
 		}
-		public async Task ProcessScene(Scene scene = null) {
+		public async Task ProcessScene(Scene scene = null, bool generateSGS = false) {
 			scene ??= Controller.Obj.MainScene.obj;
 			var settings = NewSettings;
 			var mainContext= MainContext;
@@ -318,6 +333,10 @@ namespace UbiCanvas.Conversion {
 			CreateLightingFrisesForRenderParams(mainContext, settings, scene);
 
 			AddSceneConfigForRotatingPlatform(mainContext, settings, scene);
+
+			if (generateSGS) {
+				GenerateSGSFile(mainContext, scene);
+			}
 
 			await Task.CompletedTask;
 		}
@@ -878,6 +897,32 @@ namespace UbiCanvas.Conversion {
 			}
 
 			return conversionSettings;
+		}
+
+		public void GenerateSGSFile(Context mainContext, Scene scene) {
+			var configs = scene?.sceneConfigs?.sceneConfigs;
+			if (configs == null || !configs.Any()) return;
+			var defaultConfigIndex = scene.sceneConfigs.activeSceneConfig;
+			if(defaultConfigIndex >= configs.Count) defaultConfigIndex = 0;
+			var chosenConfig = configs[(int)defaultConfigIndex]?.obj;
+			if(chosenConfig == null) return;
+
+			var structs = mainContext.Cache.Structs;
+			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
+			var loadedScene = loadedScenes.FirstOrDefault(s => ((ContainerFile<Scene>)s.Value).obj == scene);
+			var scenePath = mainContext.Loader.Paths[loadedScene.Key];
+
+			var sgsPath = new Path(scenePath.FullPath.Replace(".isc", ".sgs"));
+
+			if(mainContext.Cache.Get<ContainerFile<Generic<SceneConfig>>>(sgsPath) == null) {
+				var sgs = new ContainerFile<Generic<SceneConfig>>() {
+					obj = new Generic<SceneConfig>((SceneConfig)chosenConfig.Clone("sgs", context: LegendsContextNoLockedPaths))
+				};
+
+				mainContext.Loader.CookedPaths[sgsPath.stringID] = sgsPath.CookedPath(mainContext);
+				mainContext.Loader.Paths[sgsPath.stringID] = sgsPath;
+				mainContext.Cache.Add<ContainerFile<Generic<SceneConfig>>>(sgsPath.stringID, sgs);
+			}
 		}
 
 		#region Specific adjustments
@@ -4801,6 +4846,7 @@ namespace UbiCanvas.Conversion {
 		public void Close() {
 			StopLoadingScreen();
 			LegendsContext?.Dispose();
+			LegendsContextNoLockedPaths?.Dispose();
 		}
 		public void Dispose() {
 			Close();

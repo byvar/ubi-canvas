@@ -31,8 +31,9 @@ namespace UbiCanvas.Conversion {
 				
 				ContainerFile<Scene> homeISC = null;
 				GenericFile<CSerializable> gameConfigISG = null;
-				UbiArt.SceneConfig.SceneConfigManager sceneConfigManager = null;
-				Path pSgsContainer = new Path("sgscontainer");
+				ContainerFile<Generic<SceneConfig>> homeSGS = null;
+				//UbiArt.SceneConfig.SceneConfigManager sceneConfigManager = null;
+				//Path pSgsContainer = new Path("sgscontainer");
 				Path pGameConfig = new Path("enginedata/gameconfig/gameconfig.isg");
 				Path pHomeISC = new Path("world/home/level/home.isc");
 				Path pHomeSGS = new Path("world/home/level/home.sgs");
@@ -44,12 +45,18 @@ namespace UbiCanvas.Conversion {
 				TargetContext.Loader.LoadFile<ContainerFile<Scene>>(pHomeISC, isc => {
 					homeISC = isc;
 				});
-				TargetContext.Loader.LoadFile<UbiArt.SceneConfig.SceneConfigManager>(pSgsContainer, result =>
-					sceneConfigManager = result);
+				TargetContext.Loader.LoadFile<ContainerFile<Generic<SceneConfig>>>(pHomeSGS, result =>
+					homeSGS = result);
 				await TargetContext.Loader.LoadLoop();
 				var gc = TargetContext.Loader.gameConfig;
 				var homeConfig = homeISC.obj.sceneConfigs.sceneConfigs[0].obj as RO2_SceneConfig_Home;
-				var sgsHomeConfig = sceneConfigManager.sgsMap[pHomeISC.stringID].obj as RO2_SceneConfig_Home;
+				var sgsHomeConfig = homeSGS.obj.obj as RO2_SceneConfig_Home;
+			
+				/*var challengePath = new Path("world/challenge/run_egypt/challengerun/challenge_run_main.isc");
+				var challengeScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, challengePath.FullPath);
+				var cfgs = challengeScene.obj.sceneConfigs;
+				var cfg = cfgs.sceneConfigs[(int)cfgs.activeSceneConfig];
+				sceneConfigManager.sgsMap[challengePath.FullPath] = cfg;*/
 
 				await ExtendCostumeRoom();
 
@@ -285,7 +292,7 @@ namespace UbiCanvas.Conversion {
 				
 
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pGameConfig.stringID], gameConfigISG);
-				Bundle.AddFile(TargetContext.Loader.CookedPaths[pSgsContainer.stringID], sceneConfigManager);
+				Bundle.AddFile(TargetContext.Loader.CookedPaths[pHomeSGS.stringID], homeSGS);
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pHomeISC.stringID], homeISC);
 			}
 		}

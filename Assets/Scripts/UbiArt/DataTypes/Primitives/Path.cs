@@ -103,6 +103,16 @@ namespace UbiArt {
 			}
 			return this;
 		}
+		public Path UncookedPath(Context context) {
+			if (!IsNull && IsCooked(context)) {
+				var folder = this.folder;
+				var filename = this.filename;
+				if(folder != null && folder.StartsWith(context.Settings.ITFDirectory)) folder = folder.Substring(context.Settings.ITFDirectory.Length);
+				if(filename != null && filename.EndsWith(".ckd")) filename = filename.Substring(0, filename.Length - ".ckd".Length);
+				return new Path(folder, filename, cooked: false);
+			}
+			return this;
+		}
 
 		public string GetExtension(bool removeCooked = false) {
 			if (filename != null && filename.Contains('.')) {
