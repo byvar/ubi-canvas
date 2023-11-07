@@ -915,9 +915,14 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public void GenerateSGSFile(Context mainContext, Scene scene) {
+			var sceneConfigs = scene?.sceneConfigs;
 			var configs = scene?.sceneConfigs?.sceneConfigs;
 			if (configs == null || !configs.Any()) return;
-			var defaultConfigIndex = scene.sceneConfigs.activeSceneConfig;
+			// Now that we've checked that, clone the configs. This way any incompatible configs will be removed too.
+			sceneConfigs = ((SceneConfigs)scene.sceneConfigs.Clone("isc", context: LegendsContextNoLockedPaths));
+			configs = sceneConfigs.sceneConfigs;
+			
+			var defaultConfigIndex = sceneConfigs.activeSceneConfig;
 			if(defaultConfigIndex >= configs.Count) defaultConfigIndex = 0;
 			var chosenConfig = configs[(int)defaultConfigIndex]?.obj;
 			if(chosenConfig == null) return;
