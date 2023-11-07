@@ -18,6 +18,16 @@ namespace UbiArt.ITF {
 		protected override void OnPreSerialize(CSerializerObject s) {
 			base.OnPreSerialize(s);
 			if (s is CSerializerObjectBinaryWriter sw && s.HasFlags(SerializeFlags.Flags10)) {
+				if (sceneFile == null && path != null) {
+					sceneFile = path.GetObject<ContainerFile<Scene>>();
+					if (sceneFile?.obj != null) {
+						sceneFile = new ContainerFile<Scene>() {
+							obj = (Scene)sceneFile.obj.Clone("isc")
+						};
+					}
+				}
+
+
 				if (sceneFile != null) {
 					byte[] serializedData = null;
 					using (MemoryStream stream = new MemoryStream()) {

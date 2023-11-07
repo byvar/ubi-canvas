@@ -45,6 +45,12 @@ namespace UbiCanvas.Conversion {
 			var settings = Settings.FromMode(Mode.RaymanLegendsPC);
 			NewSettings = settings;
 
+			if (MainContext.FileManager.DirectoryExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc_egypt/")) {
+				Version = SpecialVersion.ChallengeEgypt;
+			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/challenge/run/challengerun/tscs/dojobar_double.tsc.ckd")) {
+				Version = SpecialVersion.ChallengeDojo;
+			}
+
 			// Create conversion settings
 			var conversionSettings = new ConversionSettings() {
 				OldSettings = oldSettings
@@ -57,6 +63,14 @@ namespace UbiCanvas.Conversion {
 				LockPaths = true
 			});
 		}
+
+		public enum SpecialVersion {
+			None = 0,
+			ChallengeEgypt,
+			ChallengeDojo,
+		}
+
+		public SpecialVersion Version { get; set; }
 
 		protected void InitPathConversionRules() {
 			var conversionSettings = ConversionSettings;
@@ -149,6 +163,19 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("world/ocean/common/platform/geyserplatform/", "world/ocean/common/platform/geyserplatform_rlc/"));
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/common/logicactor/shape/components/editableshape.tpl", "world/common/logicactor/shape/components/editableshape_rlc.tpl"));
+
+
+				// Challenges
+				if (Version == SpecialVersion.ChallengeEgypt) {
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/challenge/run/", "world/challenge/run_egypt/"));
+				} else if (Version == SpecialVersion.ChallengeDojo) {
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/challenge/run/", "world/challenge/run_dojo/"));
+				} else {
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/challenge/run/", "world/challenge/run_rlc/"));
+				}
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -838,6 +865,7 @@ namespace UbiCanvas.Conversion {
 			foreach (var entry in wwiseEventsLookup) {
 				var wwiseID = entry.Key;
 				var wwiseItem = soundConfig.WwiseLookUpTable.FirstOrDefault(w => w.ID == wwiseID);
+				if(wwiseItem == null) continue;
 
 				var ev = new WwiseConversionSettings.Event() {
 					Item = wwiseItem,

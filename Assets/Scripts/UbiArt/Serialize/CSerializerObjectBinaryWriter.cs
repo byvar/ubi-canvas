@@ -49,8 +49,12 @@ namespace UbiArt {
 			} else if (type == typeof(CString)) {
 				Writer.Write16(obj != null ? ((CString)obj).str : null);
 			} else if (type == typeof(byte[])) {
-				Writer.Write(((byte[])obj).Length);
-				Writer.Write((byte[])obj);
+				if (obj == null) {
+					Writer.Write((int)0);
+				} else {
+					Writer.Write(((byte[])obj).Length);
+					Writer.Write((byte[])obj);
+				}
 			} else {
 				if (obj == null) {
 					var ctor = type.GetConstructor(Type.EmptyTypes);
@@ -75,18 +79,21 @@ namespace UbiArt {
 
 			TypeCode typeCode = Type.GetTypeCode(type);
 
-			if (typeCode == TypeCode.Object) {
-				if (type == typeof(CString)) {
-					Writer.Write16(obj != null ? ((CString)obj).str : null);
-				} else if (type == typeof(byte[])) {
-					Writer.Write(((byte[])obj).Length);
-					Writer.Write((byte[])obj);
-				} else {
-					throw new Exception(CurrentPointer + ": Field with name " + name + " is not a valid primitive type");
-				}
-			}
-
 			switch (typeCode) {
+				case TypeCode.Object:
+					if (type == typeof(CString)) {
+						Writer.Write16(obj != null ? ((CString)obj).str : null);
+					} else if (type == typeof(byte[])) {
+						if (obj == null) {
+							Writer.Write((int)0);
+						} else {
+							Writer.Write(((byte[])obj).Length);
+							Writer.Write((byte[])obj);
+						}
+					} else {
+						throw new Exception(CurrentPointer + ": Field with name " + name + " is not a valid primitive type");
+					}
+					break;
 
 				case TypeCode.Boolean:
 					bool asByte = false;

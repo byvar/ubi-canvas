@@ -2,14 +2,14 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_EnduranceMode_Template : RO2_ChallengeCommon_Template {
 		public CListO<StringID> flippableTags;
-		public uint decoBrickCooldown;
-		public uint decoBrickMaxActiveCount;
+		public uint decoBrickCooldown = 2;
+		public uint decoBrickMaxActiveCount = 5;
 		public CListO<Generic<RO2_DecoBrick_Template>> decoBricks;
 		public CListO<Generic<RO2_DecoBrick_Template>> specialDecoBricks;
 		public CListO<RO2_EnduranceMode_Template.DecoRange> decoRanges;
-		public uint treasureRopeCount;
-		public float treasureRopeInterval;
-		public uint treasureRopeHitLevel;
+		public uint treasureRopeCount = 3;
+		public float treasureRopeInterval = 1f;
+		public uint treasureRopeHitLevel = 1;
 		public Path treasureRopePath;
 		public Path treasureReachedFxPath;
 		protected override void SerializeImpl(CSerializerObject s) {
