@@ -91,7 +91,7 @@ namespace UbiArt.ITF {
 			r.GetPropertyBlock(mpb, index);
 			if (UbiArtContext.Settings.EngineVersion > EngineVersion.RO) {
 				GFXPrimitiveParam param = PrimitiveParameters;
-				mpb.SetColor("_ColorFactor", param.colorFactor.GetUnityColor());
+				mpb.SetColor("_ColorFactor", param.TotalColorFactor.GetUnityColor());
 				mpb.SetColor("_LightConfig", new Vector4(
 					param.FrontLightBrightness,
 					param.FrontLightContrast,

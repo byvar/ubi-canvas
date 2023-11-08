@@ -68,22 +68,22 @@ namespace UbiArt.ITF {
 
 		public uint Vita_00 { get; set; }
 		public byte Vita_01 { get; set; }
-		public Color Vita_02 { get; set; }
-		public byte Vita_03 { get; set; }
+		public Color Vita_Color { get; set; } = Color.White;
+		public bool Vita_ColorAdd { get; set; }
 		public byte Vita_04 { get; set; }
 		public byte Vita_05 { get; set; }
 		public float Vita_06 { get; set; }
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RL) {
-				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				if (s.Settings.Platform == GamePlatform.Vita) {
-					Vita_03 = s.Serialize<byte>(Vita_03, name: nameof(Vita_03));
+					Vita_Color = s.SerializeObject<Color>(Vita_Color, name: nameof(Vita_Color));
+					Vita_ColorAdd = s.Serialize<bool>(Vita_ColorAdd, name: nameof(Vita_ColorAdd), options: CSerializerObject.Options.ForceAsByte);
 					Vita_04 = s.Serialize<byte>(Vita_04, name: nameof(Vita_04));
 					Vita_05 = s.Serialize<byte>(Vita_05, name: nameof(Vita_05));
 					Vita_06 = s.Serialize<float>(Vita_06, name: nameof(Vita_06));
-					Vita_02 = s.SerializeObject<Color>(Vita_02, name: nameof(Vita_02));
 				}
+				colorFactor = s.SerializeObject<Color>(colorFactor, name: "colorFactor");
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");
 				FrontLightContrast = s.Serialize<float>(FrontLightContrast, name: "FrontLightContrast");
 				BackLightBrightness = s.Serialize<float>(BackLightBrightness, name: "BackLightBrightness");

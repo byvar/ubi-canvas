@@ -274,7 +274,7 @@ namespace UbiArt.ITF {
 			MaterialPropertyBlock mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
 			GFXPrimitiveParam param = PrimitiveParameters;
-			mpb.SetColor("_ColorFactor", param.colorFactor.GetUnityColor());
+			mpb.SetColor("_ColorFactor", param.TotalColorFactor.GetUnityColor());
 			mpb.SetColor("_LightConfig", new Vector4(
 				param.FrontLightBrightness,
 				param.FrontLightContrast,

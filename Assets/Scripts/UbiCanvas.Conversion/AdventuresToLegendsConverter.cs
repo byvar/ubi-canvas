@@ -194,6 +194,8 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 			}
 			if (oldSettings.Platform == GamePlatform.Vita) {
+				//conversionSettings.PathConversionRules.Add(
+				//	new PathConversionRule("world/mountain/mecha/playground/enemy/buzzsaw/", "world/mountain/mecha/playground/enemy/buzzsaw_vita/"));
 				conversionSettings.TextureConversion = ConvertTextureVita;
 			}
 		}
