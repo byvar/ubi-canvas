@@ -28,7 +28,7 @@ namespace UbiArt.ITF {
 					anchor = s.Serialize<TEXTURE_ANCHOR>(anchor, name: "anchor");
 					material = s.SerializeObject<GFXMaterialSerializable>(material, name: "material");
 					spriteIndex = s.Serialize<uint>(spriteIndex, name: "spriteIndex");
-					if (!s.Settings.IsCatchThemAll) {
+					if (s.Settings.Platform != GamePlatform.Vita) {
 						uvRatio = s.SerializeObject<Vec2d>(uvRatio, name: "uvRatio");
 						uvTranslationSpeed = s.SerializeObject<Vec2d>(uvTranslationSpeed, name: "uvTranslationSpeed");
 					}

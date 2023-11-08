@@ -68,6 +68,7 @@ namespace UbiArt.ITF {
 		public bool useStaticFog { get => PrimitiveParameters.useStaticFog; set { PrimitiveParameters.useStaticFog = value; } }
 		public bool renderInRelection { get => PrimitiveParameters.RenderInReflections; set { PrimitiveParameters.RenderInReflections = value; } }
 
+		public bool Vita_Bool;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
@@ -174,8 +175,8 @@ namespace UbiArt.ITF {
 						Thickness = s.Serialize<float>(Thickness, name: "Thickness");
 						UseMovingCollision = s.Serialize<bool>(UseMovingCollision, name: "UseMovingCollision");
 						UseTemplatePrimitiveParams = s.Serialize<bool>(UseTemplatePrimitiveParams, name: "UseTemplatePrimitiveParams");
-						if (s.Settings.IsCatchThemAll) {
-							UvY_Flip = s.Serialize<bool>(UvY_Flip, name: "UvY_Flip", options: CSerializerObject.Options.ForceAsByte);
+						if (s.Settings.Platform == GamePlatform.Vita) {
+							Vita_Bool = s.Serialize<bool>(Vita_Bool, name: "Vita_Bool", options: CSerializerObject.Options.ForceAsByte);
 						}
 						lockTexture = s.Serialize<LockTexture>(lockTexture, name: "LockTexture");
 						MatShader = s.SerializeObject<Path>(MatShader, name: "MatShader");

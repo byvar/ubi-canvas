@@ -15,8 +15,7 @@ namespace UbiArt
 		public SerializerType SerializerType { get; set; } = SerializerType.Binary;
 		public Endian Endian { get; set; } = Endian.Little;
 		public VersionFlags VersionFlags { get; set; } = VersionFlags.None;
-		public bool SsesSerializeFlags { get; set; } = true;
-		public bool IsCatchThemAll { get; set; }
+		public bool UsesSerializeFlags { get; set; } = true;
 		public bool Cooked { get; set; } = true;
 		public bool LoadFromIpk { get; set; }
 		public string[]? Bundles { get; set; }
@@ -73,7 +72,7 @@ namespace UbiArt
 			Platform = GamePlatform.PC,
 			Endian = Endian.Big,
 			VersionFlags = VersionFlags.Origins,
-			SsesSerializeFlags = false,
+			UsesSerializeFlags = false,
 			IpkVersion = 3,
 			EngineSignature = 0x345429C7,
 			Bundles = new[] { "bundle" }
@@ -195,7 +194,6 @@ namespace UbiArt
 			Platform = GamePlatform.Vita,
 			Endian = Endian.Big,
 			VersionFlags = VersionFlags.Legends,
-			IsCatchThemAll = true,
 			Bundles = new[] { "Bundle" }
 		};
 

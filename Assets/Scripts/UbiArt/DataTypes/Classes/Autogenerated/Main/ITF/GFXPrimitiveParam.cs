@@ -72,7 +72,7 @@ namespace UbiArt.ITF {
 		public byte Vita_03 { get; set; }
 		public byte Vita_04 { get; set; }
 		public byte Vita_05 { get; set; }
-		public uint Vita_06 { get; set; }
+		public float Vita_06 { get; set; }
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RL) {
@@ -81,7 +81,7 @@ namespace UbiArt.ITF {
 					Vita_03 = s.Serialize<byte>(Vita_03, name: nameof(Vita_03));
 					Vita_04 = s.Serialize<byte>(Vita_04, name: nameof(Vita_04));
 					Vita_05 = s.Serialize<byte>(Vita_05, name: nameof(Vita_05));
-					Vita_06 = s.Serialize<uint>(Vita_06, name: nameof(Vita_06));
+					Vita_06 = s.Serialize<float>(Vita_06, name: nameof(Vita_06));
 					Vita_02 = s.SerializeObject<Color>(Vita_02, name: nameof(Vita_02));
 				}
 				FrontLightBrightness = s.Serialize<float>(FrontLightBrightness, name: "FrontLightBrightness");

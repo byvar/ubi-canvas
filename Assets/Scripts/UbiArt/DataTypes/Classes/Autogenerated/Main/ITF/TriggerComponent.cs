@@ -51,7 +51,7 @@ namespace UbiArt.ITF {
 				if (s.HasFlags(SerializeFlags.Default)) {
 					mode = s.Serialize<Mode>(mode, name: "mode");
 				}
-				if (s.Settings.IsCatchThemAll) {
+				if (s.Settings.Platform == GamePlatform.Vita) {
 					triggerOnceDone = s.Serialize<bool>(triggerOnceDone, name: "triggerOnceDone", options: CSerializerObject.Options.ForceAsByte);
 				}
 				if (s.HasFlags(SerializeFlags.Persistent)) {

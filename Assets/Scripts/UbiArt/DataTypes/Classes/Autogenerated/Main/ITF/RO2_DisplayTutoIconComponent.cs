@@ -36,7 +36,7 @@ namespace UbiArt.ITF {
 					cyclePauseDuration = s.Serialize<float>(cyclePauseDuration, name: "cyclePauseDuration");
 					cycleDisplayDuration = s.Serialize<float>(cycleDisplayDuration, name: "cycleDisplayDuration");
 					testSceneDepthRef = s.Serialize<bool>(testSceneDepthRef, name: "testSceneDepthRef", options: CSerializerObject.Options.BoolAsByte);
-					if (!s.Settings.IsCatchThemAll) {
+					if (s.Settings.Platform != GamePlatform.Vita) {
 						AMActionCountMax = s.Serialize<int>(AMActionCountMax, name: "AMActionCountMax");
 					}
 				}

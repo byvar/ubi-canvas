@@ -39,7 +39,7 @@ namespace UbiArt.ITF {
 				shaderPath = s.SerializeObject<Path>(shaderPath, name: "shaderPath");
 				materialParams = s.SerializeObject<GFXMaterialSerializableParam>(materialParams, name: "materialParams");
 				stencilTest = s.Serialize<bool>(stencilTest, name: "stencilTest");
-				if (!s.Settings.IsCatchThemAll) {
+				if (s.Settings.Platform != GamePlatform.Vita) {
 					skipDepthTest = s.Serialize<bool>(skipDepthTest, name: "skipDepthTest");
 				}
 				alphaTest = s.Serialize<uint>(alphaTest, name: "alphaTest");

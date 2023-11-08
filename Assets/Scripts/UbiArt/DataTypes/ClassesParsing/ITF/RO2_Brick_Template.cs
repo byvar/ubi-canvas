@@ -22,7 +22,7 @@ namespace UbiArt.ITF {
 					sceneFile = path.GetObject<ContainerFile<Scene>>();
 					if (sceneFile?.obj != null) {
 						sceneFile = new ContainerFile<Scene>() {
-							obj = (Scene)sceneFile.obj.Clone("isc")
+							obj = (Scene)sceneFile.obj.Clone("isc", context: s.Context)
 						};
 					}
 				}
