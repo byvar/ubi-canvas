@@ -127,6 +127,7 @@ namespace UbiCanvas.Conversion {
 		protected async Task<Frise> CreateFrise(JSON_SimpleFrise simple) {
 			await Task.CompletedTask;
 			Frise fr = new Frise();
+			fr.UseTemplatePrimitiveParams = false; // ?
 			FillPickable(fr, simple);
 
 			Vec2d LocalToGlobal(Vec2d point) => (point * fr.SCALE).Rotate(fr.ANGLE) + fr.POS2D;

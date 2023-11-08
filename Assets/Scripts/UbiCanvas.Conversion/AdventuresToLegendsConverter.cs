@@ -312,6 +312,15 @@ namespace UbiCanvas.Conversion {
 
 		public HashSet<Scene> ProcessedScenes = new HashSet<Scene>();
 
+		public Path GetScenePath(Scene scene) {
+			var structs = MainContext.Cache.Structs;
+			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
+			var loadedScene = loadedScenes.FirstOrDefault(s => ((ContainerFile<Scene>)s.Value).obj == scene);
+			var scenePath = MainContext.Loader.Paths[loadedScene.Key];
+
+			return scenePath;
+		}
+
 		public async Task ProcessScene(Scene scene = null, bool generateSGS = false) {
 			scene ??= Controller.Obj.MainScene.obj;
 
@@ -323,10 +332,7 @@ namespace UbiCanvas.Conversion {
 			var conversionSettings = ConversionSettings;
 
 			// Print scene path
-			var structs = mainContext.Cache.Structs;
-			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
-			var loadedScene = loadedScenes.FirstOrDefault(s => ((ContainerFile<Scene>)s.Value).obj == scene);
-			var scenePath = mainContext.Loader.Paths[loadedScene.Key];
+			var scenePath = GetScenePath(scene);
 			UnityEngine.Debug.Log($"Processing scene: {scenePath}");
 
 			await LevelSpecificChanges(mainContext, settings, scene);
@@ -952,11 +958,7 @@ namespace UbiCanvas.Conversion {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
-			Loader l = oldContext.Loader;
-			var structs = l.Context.Cache.Structs;
-			var loadedScenes = structs[typeof(ContainerFile<Scene>)];
-			var loadedScene = loadedScenes.FirstOrDefault(s => ((ContainerFile<Scene>)s.Value).obj == scene);
-			var scenePath = l.Paths[loadedScene.Key];
+			var scenePath = GetScenePath(scene);
 
 			switch (scenePath.FullPath) {
 				case "world/rlc_dojo/festivalofspeed/dojo_festivalofspeed_nmi.isc": {
@@ -1204,6 +1206,17 @@ namespace UbiCanvas.Conversion {
 						}, new Vec2d(559.99f, -83.08f), cycleTime: 0.75f);
 						break;
 					}
+				case "world/challenge/run/challengerun/challenge_run_main.isc": {
+						// Let's have the area become progressively darker...
+						for (int i = 0; i < 5; i++) {
+							var act = scene.FindActor(a => a.USERFRIENDLY == $"fog_{(i+1)}");
+							var rp = act.Result.GetComponent<RenderParamComponent>();
+							var factor = 1f - (i * 0.15f);
+							rp.ClearColor.ClearFrontLightColor *= new UbiArt.Color(factor, factor, factor, 1f);
+							rp.ClearColor.ClearColor *= new UbiArt.Color(factor, factor, factor, 1f);
+						}
+						break;
+					}
 				case "world/rlc_castle/rotatingplatformpanic/castleinterior_rotatingplatformpanic_spd.isc": {
 						AllSMVToFrise(oldContext, scene);
 						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
@@ -1427,7 +1440,7 @@ namespace UbiCanvas.Conversion {
 										}
 										if (deco.frise?.IsNull ?? true) {
 											// This is what we named the lighting frise created from the renderparam
-											new StringID($"fog_{i}_frontlightfill");
+											deco.frise = new StringID($"fog_{i}_frontlightfill");
 										}
 										deco.fog = null;
 									}
@@ -2021,6 +2034,7 @@ namespace UbiCanvas.Conversion {
 					POS2D = new Vec2d(mesh.pos?.x ?? 0, mesh.pos?.y ?? 0),
 					RELATIVEZ = mesh.pos?.z ?? 0,
 					PrimitiveParameters = (GFXPrimitiveParam)smv.PrimitiveParameters.Clone("isc"),
+					UseTemplatePrimitiveParams = false,
 
 					PreComputedForCook = true,
 					ConfigName = new Path(newPath.FullPath),
@@ -4392,6 +4406,7 @@ namespace UbiCanvas.Conversion {
 
 						PreComputedForCook = true,
 						ConfigName = new Path(template),
+						UseTemplatePrimitiveParams = false,
 
 					};
 					Vec2d LocalToGlobal(Vec2d point) => (point * fr.SCALE).Rotate(fr.ANGLE) + fr.POS2D;
