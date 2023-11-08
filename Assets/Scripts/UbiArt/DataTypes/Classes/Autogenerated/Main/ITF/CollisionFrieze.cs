@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public bool flip;
 		public uint methode;
 		public float distMaxToSkipParallelEdge = 0.075f;
-		public float smoothFactor = 3.402823e+38F;
+		public float smoothFactor = float.MaxValue;
 		public bool isSmooth;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
