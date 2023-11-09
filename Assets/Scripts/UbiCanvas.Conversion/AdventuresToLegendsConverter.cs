@@ -1220,6 +1220,12 @@ namespace UbiCanvas.Conversion {
 				case "world/challenge/run/challengerun/brick/medium/runbrick_medium_74.isc": {
 						// This brick has a forced crush attack -> ring grab combination which can't work in Legends
 						// Delete "grp" and spawn a rabbid on a shield there :)
+						var grp = scene.FindPickable(p => p.USERFRIENDLY == "grp");
+						grp.ContainingScene.DeletePickable(grp.Result);
+
+						var rabbidSSA = await AddNewActor(grp.ContainingScene, new Path("world/rlc/common/enemy/rabbid/rabbid_shield.tsc"));
+						rabbidSSA.xFLIPPED = true;
+						rabbidSSA.POS2D = grp.Result.POS2D;
 						break;
 					}
 				case "world/rlc_castle/rotatingplatformpanic/castleinterior_rotatingplatformpanic_spd.isc": {

@@ -84,7 +84,14 @@ public class UnityWindowTools : UnityWindow
 					string outputDir = EditorUtility.OpenFolderPanel("Select output directory", null, "");
 
 					if (!String.IsNullOrWhiteSpace(outputDir))
-						ExecuteTask(exportTimelineTool.InvokeAsync(inputDir, outputDir));
+						ExecuteTask(exportTimelineTool.ExportSingleTimelineAsync(inputDir, outputDir));
+				}
+			}
+			if (EditorButton("Iterate over versions")) {
+
+				string inputDir = EditorUtility.OpenFolderPanel("Select input directory containing subdirectories containing IPKs", null, "");
+				if (!String.IsNullOrWhiteSpace(inputDir)) {
+					ExecuteTask(exportTimelineTool.ExportMultipleTimelineAsync(inputDir));
 				}
 			}
 		}

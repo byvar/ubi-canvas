@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -19,13 +20,7 @@ namespace UbiCanvas.Tools
 		public override string Name => "Export File Timeline";
 		public override string Description => "This tool exports a timeline text file based on the packed file dates.";
 
-
-		public class JSON_LocalisationData {
-			public uint ID { get; set; }
-			public Dictionary<string, string> Text { get; set; }
-		}
-
-		public async Task InvokeAsync(string inputDir, string outputDir)
+		public async Task ExportSingleTimelineAsync(string inputDir, string outputDir)
 		{
 			using Context context = CreateContext(basePath: inputDir);
 
@@ -41,12 +36,24 @@ namespace UbiCanvas.Tools
 					}
 				}
 			}
-			StringBuilder b = new StringBuilder();
 			timelineList.Sort((x, y) => x.Key.CompareTo(y.Key));
-			foreach (var kv in timelineList) {
-				b.AppendLine($"{kv.Key:ddd, dd/MM/yyyy - HH:mm:ss}\t{kv.Value}");
+
+			if (timelineList.Any()) {
+				StringBuilder b = new StringBuilder();
+				foreach (var kv in timelineList) {
+					b.AppendLine($"{kv.Key:ddd, dd/MM/yyyy - HH:mm:ss}\t{kv.Value}");
+				}
+				var lastDate = timelineList.Last().Key;
+
+				File.WriteAllText(System.IO.Path.Combine(outputDir, $"timeline_{context.Settings.Mode}_{lastDate:yyyyMMdd}.txt"), b.ToString());
 			}
-			File.WriteAllText(System.IO.Path.Combine(outputDir, $"timeline_{context.Settings.Mode}.txt"), b.ToString());
+		}
+
+		public async Task ExportMultipleTimelineAsync(string inputDir) {
+			var subDirs = System.IO.Directory.GetDirectories(inputDir, "*", SearchOption.TopDirectoryOnly);
+			foreach (var dir in subDirs) {
+				await ExportSingleTimelineAsync(dir, dir);
+			}
 		}
 	}
 }
