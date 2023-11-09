@@ -6,9 +6,9 @@ namespace UbiArt.ITF {
 		protected override async UniTask InitGameObject() {
 			await base.InitGameObject();
 			if (this is Frise) return;
-			bool hasTemplate = (template != null && template.obj != null);
-			bool hasTemplateComponents = hasTemplate && template.obj.COMPONENTS != null && template.obj.COMPONENTS.Count == COMPONENTS.Count;
-			for (int i = 0; i < COMPONENTS.Count; i++) {
+			bool hasTemplate = template?.obj != null;
+			bool hasTemplateComponents = hasTemplate && (template.obj.COMPONENTS?.Count ?? 0) == (COMPONENTS?.Count ?? 0);
+			for (int i = 0; i < (COMPONENTS?.Count ?? 0); i++) {
 				Generic<ActorComponent> ac = COMPONENTS[i];
 				if (ac != null && !ac.IsNull && ac.obj != null) {
 					await TimeController.WaitIfNecessary();
@@ -16,7 +16,7 @@ namespace UbiArt.ITF {
 				}
 			}
 			if (hasTemplate) {
-				for (int i = 0; i < template.obj.COMPONENTS.Count; i++) {
+				for (int i = 0; i < (template.obj.COMPONENTS?.Count ?? 0); i++) {
 					Generic<ActorComponent_Template> ac = template.obj.COMPONENTS[i];
 					if (ac != null && !ac.IsNull && ac.obj != null) {
 						await TimeController.WaitIfNecessary();

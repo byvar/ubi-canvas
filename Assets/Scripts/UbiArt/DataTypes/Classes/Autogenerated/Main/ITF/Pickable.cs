@@ -7,7 +7,7 @@ namespace UbiArt.ITF {
 		public CArrayO<ObjectPath> UPDATEDEPENDENCYLIST;
 		public bool STARTPAUSE;
 		public bool isEnabled = true;
-		public Vec2d POS2D;
+		public Vec2d POS2D = Vec2d.Zero;
 		public DeviceInfo__Device_Speed ObjectDeviceSpeed = (DeviceInfo__Device_Speed)0x7FFFFFFF;
 		public DeviceInfo__Device_Speed ObjectDeviceSpeed_L2 = (DeviceInfo__Device_Speed)0x7FFFFFFF;
 		public Path INSTANCEDATAFILE;
@@ -21,7 +21,7 @@ namespace UbiArt.ITF {
 		public float CURANGLE;
 		public Vec2d CURSCALE;
 		public int ISALLOWEDFORCELL;
-		public Angle ANGLE;
+		public Angle ANGLE = new Angle(0);
 		public bool xFLIPPED;
 
 		public Enum_VH_0 Enum_VH_0__22;

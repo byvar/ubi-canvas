@@ -19,9 +19,9 @@ namespace UbiArt.ITF {
 			gao = new GameObject(USERFRIENDLY);
 			UbiArtContext.Loader.LoadingState = $"Creating objects\n{USERFRIENDLY}";
 			await TimeController.WaitIfNecessary();
-			gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
+			gao.transform.localPosition = new Vector3(POS2D?.x ?? 0, POS2D?.y ?? 0, -RELATIVEZ);
 			gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
-			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
+			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE?.EulerAngle ?? 0);
 			UnityPickable p = gao.AddComponent<UnityPickable>();
 			p.pickable = this;
 			await UniTask.CompletedTask;
@@ -33,9 +33,9 @@ namespace UbiArt.ITF {
 				await GetGameObject();
 			}
 			gao.transform.SetParent(gp.transform, false);
-			gao.transform.localPosition = new Vector3(POS2D.x, POS2D.y, -RELATIVEZ);
+			gao.transform.localPosition = new Vector3(POS2D?.x ?? 0, POS2D?.y ?? 0, -RELATIVEZ);
 			gao.transform.localScale = new Vector3((xFLIPPED ? -1f : 1f) * SCALE.x, SCALE.y, 1f);
-			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE.EulerAngle);
+			gao.transform.localEulerAngles = new Vector3(0, 0, ANGLE?.EulerAngle ?? 0);
 		}
 		public async UniTask SetContainingScene(Scene sc) {
 			if (gao == null) {

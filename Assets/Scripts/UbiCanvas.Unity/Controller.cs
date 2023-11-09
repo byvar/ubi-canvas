@@ -98,7 +98,7 @@ public class Controller : MonoBehaviour {
 		loadingScreen.Active = false;
 	}
 
-	public async UniTask LoadActorContainer<T>(Scene scene, UbiArt.Path path) where T : Actor, new() {
+	public async UniTask LoadActorContainer<T>(Scene scene, UbiArt.Path path) where T : CSerializable, new() {
 		var ext = path.GetExtension(removeCooked: true);
 		var name = path.GetFilenameWithoutExtension(removeCooked: true);
 		ContainerFile<T> act = await MainContext.Loader.LoadExtra<ContainerFile<T>>(path);
@@ -106,12 +106,28 @@ public class Controller : MonoBehaviour {
 			await TimeController.WaitFrame();
 			CSerializable c = await MainContext.Loader.Clone(act.obj, ext);
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
-			Actor a = c as Actor;
-			bool isAdded = scene.AddActor(a, name);
-			if (isAdded) {
-				var sceneGao = await scene.GetGameObject();
-				await a.SetGameObjectParent(sceneGao);
-				await a.SetContainingScene(scene);
+
+			Actor actorToAdd = null;
+			if (c is Actor a) {
+				actorToAdd = a;
+			} else if (c is Scene s) {
+				actorToAdd = new SubSceneActor() {
+					USERFRIENDLY = path.GetFilenameWithoutExtension(removeCooked: true),
+					LUA = new UbiArt.Path("enginedata/actortemplates/subscene.tpl"),
+
+					EMBED_SCENE = true,
+					ZFORCED = true,
+					SCENE = new UbiArt.Nullable<Scene>(s)
+				};
+				actorToAdd.InitContext(MainContext);
+			}
+			if (actorToAdd != null) {
+				bool isAdded = scene.AddActor(actorToAdd, name);
+				if (isAdded) {
+					var sceneGao = await scene.GetGameObject();
+					await actorToAdd.SetGameObjectParent(sceneGao);
+					await actorToAdd.SetContainingScene(scene);
+				}
 			}
 			Controller.Obj.zListManager.Sort();
 			await TimeController.WaitFrame();

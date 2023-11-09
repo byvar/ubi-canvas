@@ -24,13 +24,15 @@ public class UnityWindowActor : UnityWindow {
 				var c = Controller.MainContext;
 				string ExtensionActor = c.Settings.EngineVersion == EngineVersion.RO ? "uca" : "act";
 				string ExtensionActorTemplate = c.Settings.EngineVersion == EngineVersion.RO ? "act" : "tpl";
-				string ExtensionFrise = $"ucf";
+				string ExtensionTemplateScene = "tsc";
+				string ExtensionFrise = $"ucf"; // Should probably be .frz
 				//string ExtensionFriseConfig = $"*.fcg{(c.Settings.Cooked ? ".ckd" : "")}";
 				string ExtensionSubSceneActor = $"ucs";
 
 				string[] extensions = new string[] {
 					$"*.{ExtensionActor}{(c.Settings.Cooked ? ".ckd" : "")}",
 					$"*.{ExtensionActorTemplate}{(c.Settings.Cooked ? ".ckd" : "")}",
+					$"*.{ExtensionTemplateScene}{(c.Settings.Cooked ? ".ckd" : "")}",
 					$"*.{ExtensionFrise}{(c.Settings.Cooked ? ".ckd" : "")}",
 					$"*.{ExtensionSubSceneActor}{(c.Settings.Cooked ? ".ckd" : "")}"
 				};
@@ -94,6 +96,8 @@ public class UnityWindowActor : UnityWindow {
 							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<Frise>(sc, path).AsTask()));
 						} else if (extension == ExtensionSubSceneActor) {
 							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<SubSceneActor>(sc, path).AsTask()));
+						} else if (extension == ExtensionTemplateScene) {
+							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<Scene>(sc, path).AsTask()));
 						}
 					}
 				}

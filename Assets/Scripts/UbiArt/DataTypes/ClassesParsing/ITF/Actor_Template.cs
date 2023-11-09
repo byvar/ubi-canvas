@@ -71,14 +71,30 @@ namespace UbiArt.ITF {
 		}
 
 		public Actor Instantiate(Path templatePath) {
-			var basename = System.IO.Path.GetFileNameWithoutExtension(templatePath?.filename);
-			var act = new Actor() {
-				POS2D = Vec2d.Zero,
-				USERFRIENDLY = basename,
-				LUA = templatePath,
-				template = new GenericFile<Actor_Template>(this),
-				templatePickable = this,
-			};
+			var basename = templatePath?.GetFilenameWithoutExtension(removeCooked: true);
+			Actor act;
+			if (templatePath == new Path("enginedata/actortemplates/subscene.tpl")) {
+				act = new SubSceneActor() {
+					POS2D = Vec2d.Zero,
+					USERFRIENDLY = basename,
+					LUA = templatePath,
+					template = new GenericFile<Actor_Template>(this),
+					templatePickable = this,
+
+					EMBED_SCENE = true,
+					ZFORCED = true,
+					SCENE = new Nullable<Scene>(new Scene())
+				};
+				((SubSceneActor)act).SCENE.value.InitContext(UbiArtContext);
+			} else {
+				act = new Actor() {
+					POS2D = Vec2d.Zero,
+					USERFRIENDLY = basename,
+					LUA = templatePath,
+					template = new GenericFile<Actor_Template>(this),
+					templatePickable = this,
+				};
+			}
 			act.InitContext(UbiArtContext);
 			ActorComponent InstantiateComponent(ActorComponent_Template ctpl) => ctpl?.Instantiate(UbiArtContext);
 
