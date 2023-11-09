@@ -1309,7 +1309,12 @@ namespace UbiCanvas.Conversion {
 					var act = path.GetObject<ContainerFile<Actor>>();
 					newActor = (Actor)(await contextToLoadFrom.Loader.Clone(act?.obj, "act"));
 					break;
+				case "frz":
+					var frz = path.GetObject<ContainerFile<Frise>>();
+					newActor = (Actor)(await contextToLoadFrom.Loader.Clone(frz?.obj, "frz"));
+					break;
 				case "tsc":
+				case "isc":
 					var tsc = path.GetObject<ContainerFile<Scene>>();
 					newActor = new SubSceneActor() {
 						USERFRIENDLY = path.GetFilenameWithoutExtension(removeCooked: true),

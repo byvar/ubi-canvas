@@ -21,9 +21,9 @@ namespace UbiArt.ITF {
 			public string spawnActorBoneName;
 			public StringID polyline;
 			public StringID polylinePoint;
-			public bool useParentScale;
-			public bool useParentFlip;
-			public bool useParentAngle;
+			public bool useParentScale = true;
+			public bool useParentFlip = true;
+			public bool useParentAngle = true;
 			public Vec3d offset;
 			public bool keepSpawneeInitialDepth;
 			public BasicString spawnActorBoneNameB;

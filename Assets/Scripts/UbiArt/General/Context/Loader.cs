@@ -79,7 +79,9 @@ namespace UbiArt {
 
 		public List<Actor> LoadedActors = new List<Actor>();
 		public void AddLoadedActor(Actor a) {
-			LoadedActors.Add(a);
+			if (a is not Frise) {
+				LoadedActors.Add(a);
+			}
 		}
 
 		protected bool GameFileExists(Path p, bool ckd) {
@@ -325,6 +327,7 @@ namespace UbiArt {
 				case "isc":
 				case "tsc":
 				case "act":
+				case "frz":
 				case "ipk":
 				case "sgs":
 				case "gf":
@@ -332,7 +335,6 @@ namespace UbiArt {
                             // Custom extensions:
 				case "uca": // UbiCanvasActor
 				case "ucs": // UbiCanvas(Sub)Scene(Actor)
-				case "ucf": // UbiCanvasFrieze
 					flags |= SerializeFlags.Flags7;
 					break;
 				case "fcg":

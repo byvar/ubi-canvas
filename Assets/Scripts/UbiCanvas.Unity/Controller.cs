@@ -136,7 +136,7 @@ public class Controller : MonoBehaviour {
 	public async UniTask ExportActorContainer(Actor actor, string path) {
 		string extension = MainContext?.Settings?.EngineVersion == EngineVersion.RO ? "uca" : "act";
 		if (actor is Frise f) {
-			extension = "ucf";
+			extension = "frz";
 		} else if (actor is SubSceneActor ssa) {
 			extension = "ucs";
 		}

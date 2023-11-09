@@ -25,7 +25,7 @@ public class UnityWindowActor : UnityWindow {
 				string ExtensionActor = c.Settings.EngineVersion == EngineVersion.RO ? "uca" : "act";
 				string ExtensionActorTemplate = c.Settings.EngineVersion == EngineVersion.RO ? "act" : "tpl";
 				string ExtensionTemplateScene = "tsc";
-				string ExtensionFrise = $"ucf"; // Should probably be .frz
+				string ExtensionFrise = "frz";
 				//string ExtensionFriseConfig = $"*.fcg{(c.Settings.Cooked ? ".ckd" : "")}";
 				string ExtensionSubSceneActor = $"ucs";
 

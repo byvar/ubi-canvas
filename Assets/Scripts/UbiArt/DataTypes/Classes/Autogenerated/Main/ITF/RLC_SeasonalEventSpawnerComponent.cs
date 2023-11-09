@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_SeasonalEventSpawnerComponent : ActorComponent {
 		public uint selectedPathIndex;
-		public uint weight;
+		public uint weight = 1;
 		public GFXPrimitiveParam GFXParam;
 		public bool triggerSpawn;
 		public bool spawneeCanDrown;
