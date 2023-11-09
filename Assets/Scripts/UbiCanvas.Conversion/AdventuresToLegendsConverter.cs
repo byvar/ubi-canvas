@@ -1217,6 +1217,11 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world/challenge/run/challengerun/brick/medium/runbrick_medium_74.isc": {
+						// This brick has a forced crush attack -> ring grab combination which can't work in Legends
+						// Delete "grp" and spawn a rabbid on a shield there :)
+						break;
+					}
 				case "world/rlc_castle/rotatingplatformpanic/castleinterior_rotatingplatformpanic_spd.isc": {
 						AllSMVToFrise(oldContext, scene);
 						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
@@ -1273,7 +1278,17 @@ namespace UbiCanvas.Conversion {
 			}
 
 			if (scenePath.FullPath.StartsWith("world/challenge/run/challengerun/")) {
-				ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
+				InvertLianas_OnlyLeft(oldContext, newSettings, scene);
+
+				// Brighten rock falling FX
+				var fxPath = new Path("world/common/fx/earthquake/fx_earthquake_mo_rl.tpl");
+				var fxActors = scene.FindActors(a => a.LUA == fxPath);
+				foreach (var res in fxActors) {
+					var act = res.Result;
+					var pp = act?.GetComponent<FxBankComponent>()?.PrimitiveParameters;
+					if(pp == null) continue;
+					pp.FrontLightBrightness += 0.5f;
+				}
 			}
 		}
 
@@ -1293,6 +1308,17 @@ namespace UbiCanvas.Conversion {
 				case "act":
 					var act = path.GetObject<ContainerFile<Actor>>();
 					newActor = (Actor)(await contextToLoadFrom.Loader.Clone(act?.obj, "act"));
+					break;
+				case "tsc":
+					var tsc = path.GetObject<ContainerFile<Scene>>();
+					newActor = new SubSceneActor() {
+						USERFRIENDLY = path.GetFilenameWithoutExtension(removeCooked: true),
+						LUA = new Path("enginedata/actortemplates/subscene.tpl"),
+
+						EMBED_SCENE = true,
+						ZFORCED = true,
+						SCENE = new UbiArt.Nullable<Scene>((Scene)(await contextToLoadFrom.Loader.Clone(tsc?.obj, "isc")))
+					};
 					break;
 			}
 			MainContext.Loader.AddLoadedActor(newActor);
@@ -3558,6 +3584,31 @@ namespace UbiCanvas.Conversion {
 			}
 
 		}
+		public void InvertLianas_OnlyLeft(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var lianaPath = new Path("world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength.tpl");
+			var ziplines = scene.FindActors(a => a.LUA == lianaPath);
+			foreach (var z in ziplines) {
+				var act = z.Result;
+				var softPlat = act?.GetComponent<ProceduralSoftPlatformComponent>();
+				var endPos = softPlat.endPos;
+				if (endPos == Vec3d.Invalid) continue;
+
+				var actualEndPos = new Vec3d(act.SCALE.x * (act.xFLIPPED ? -1f : 1f), act.SCALE.y, 1f) * endPos;
+				if (actualEndPos.x < 0) {
+					// Invert this one
+					var newEndPos = Vec3d.Zero - endPos;
+					var newZ = act.RELATIVEZ + endPos.z;
+					var newPos = act.POS2D + new Vec2d(actualEndPos.x, actualEndPos.y).Rotate(act.ANGLE);
+					act.POS2D = newPos;
+					act.RELATIVEZ = newZ;
+					softPlat.endPos = newEndPos;
+				}
+			}
+		}
+
 		public void ZiplineToRope_OnlyLeft(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
