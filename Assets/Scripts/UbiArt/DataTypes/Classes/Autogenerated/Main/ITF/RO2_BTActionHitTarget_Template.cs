@@ -32,7 +32,7 @@ namespace UbiArt.ITF {
 		}
 		[Games(GameFlags.RA)]
 		public partial class AttackData : CSerializable {
-			public PUNCHTYPE punchType;
+			public PUNCHTYPE punchType = PUNCHTYPE.REPEATING;
 			public uint level;
 			public float pushBackRadius;
 			public float duration;

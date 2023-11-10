@@ -117,8 +117,13 @@ public class Controller : MonoBehaviour {
 
 					EMBED_SCENE = true,
 					ZFORCED = true,
-					SCENE = new UbiArt.Nullable<Scene>(s)
+					SCENE = new UbiArt.Nullable<Scene>(s),
+					parentBind = new Nullable<Bind>()
 				};
+				var tpl = await MainContext.Loader.LoadExtra<GenericFile<Actor_Template>>(actorToAdd.LUA);
+				actorToAdd.template = tpl;
+				actorToAdd.templatePickable = tpl.obj;
+				MainContext.Loader.AddLoadedActor(actorToAdd);
 				actorToAdd.InitContext(MainContext);
 			}
 			if (actorToAdd != null) {

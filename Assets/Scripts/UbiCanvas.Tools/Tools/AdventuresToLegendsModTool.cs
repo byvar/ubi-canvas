@@ -24,7 +24,7 @@ namespace UbiCanvas.Tools
 			{
 				new InvokableAction("Export current map in Legends format", async () => await ExportCurrentMap()),
 				//new InvokableAction("Export costumes (requires manual edits)", async () => await ExportCostumes()),
-				//new InvokableAction("Export rabbids (add into Legends directory!)", async () => await ExportRabbids()),
+				new InvokableAction("Export rabbids (add into Legends directory!)", async () => await ExportRabbids()),
 				//new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
 				new InvokableAction("Fast clean, build & install project", async () => await BuildProject(install: true, clean: true, fullClean: false)),
@@ -106,6 +106,10 @@ namespace UbiCanvas.Tools
 					UnitySettings.Tools_AdventuresToLegends_GamePath,
 					UnitySettings.Tools_AdventuresToLegends_ProjectPath, exportID: "rabbids")) {
 					await converter.Init();
+					var shieldScene = context.Cache.Get<ContainerFile<Scene>>(new Path("world/rlc/common/enemy/rabbid/rabbid_shield.tsc"));
+					if (shieldScene?.obj != null) {
+						await converter.ProcessScene(shieldScene.obj, generateSGS: false);
+					}
 					await converter.ProcessNonScene();
 					await converter.Write(outputPath);
 				}

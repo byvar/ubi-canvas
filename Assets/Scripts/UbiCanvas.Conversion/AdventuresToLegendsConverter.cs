@@ -416,6 +416,7 @@ namespace UbiCanvas.Conversion {
 
 			// Then start fixing non-scene stuff
 			FixNinjas(mainContext, settings);
+			FixRabbids(mainContext, settings);
 			FixAllUTurnAnimations(mainContext, settings);
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings);
 			FixLumKingMusic(mainContext, settings);
@@ -1146,6 +1147,7 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc": {
 						AllSMVToFrise(oldContext, scene);
+						ApplySpecialRenderParamsToScene(scene);
 						break;
 					}
 				/*case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc": {
@@ -1209,6 +1211,15 @@ namespace UbiCanvas.Conversion {
 							var anm = act.Result.GetComponent<AnimatedComponent>();
 							if(anm?.PrimitiveParameters == null) continue;
 							anm.PrimitiveParameters.FrontLightBrightness = 0f;
+						}
+						break;
+					}
+				case "world/rlc_enchantedforest/somethingsmellsfunny/enchantedforest_somethingsmellsfunny_spd_base.isc": {
+						// A rabbid falls off here...
+						var tree = new PickableTree(scene);
+						var plat = tree.FollowObjectPath(new ObjectPath("seasonaleventenemyspawner|minotaur_flyingplatform"), throwIfNotFound: false);
+						if (plat?.Pickable != null) {
+							GenericAABBHack((Actor)plat.Pickable, aabbScale: 100f);
 						}
 						break;
 					}
@@ -1329,6 +1340,13 @@ namespace UbiCanvas.Conversion {
 							duration = 1f
 						}));
 						t.instructionSets[1].instructions.Add(new Generic<TweenInstruction>(new TweenWait()));*/
+						break;
+					}
+				case "world/rlc/common/enemy/rabbid/rabbid_shield.tsc": {
+						// Move rabbid way higher up so it doesn't fall off.
+						// Weird workaround, but this is what the Legends devs did for the minotaurs...
+						//var rabbid = scene.FindActor(a => a.USERFRIENDLY == "rabbid@1");
+						//rabbid.Result.POS2D += Vec2d.Up;
 						break;
 					}
 			}
@@ -1482,6 +1500,7 @@ namespace UbiCanvas.Conversion {
 					a.ANGLE = act.ANGLE;
 					a.SCALE = act.SCALE;
 					a.xFLIPPED = act.xFLIPPED;
+					a.RELATIVEZ = act.RELATIVEZ;
 				}
 				var rabbid = await AddNewActor(res.ContainingScene, rabbidPath, name: rabbidName, contextToLoadFrom: LegendsContext);
 				SetToActorTransform(rabbid);
@@ -1490,6 +1509,12 @@ namespace UbiCanvas.Conversion {
 					// Use same name as original
 					var relay = await AddNewActor(res.ContainingScene, new Path("world/common/logicactor/trigger/relay/components/relay_unpause.tpl"), name: act.USERFRIENDLY, contextToLoadFrom: LegendsContext);
 					SetToActorTransform(relay);
+					var links = relay.GetComponent<LinkComponent>();
+					links.Children = new CListO<ChildEntry>() {
+						new ChildEntry() {
+							Path = new ObjectPath(rabbid.USERFRIENDLY)
+						}
+					};
 				}
 
 				// Set pimitive parameters
@@ -1613,6 +1638,28 @@ namespace UbiCanvas.Conversion {
 				}
 				
 			}
+		}
+
+		public void GenericAABBHack(Actor act, float aabbScale = 1000f) {
+			if(act.template == null) return;
+
+			var ogLUA = act.LUA;
+			var ogTPL = act.template;
+
+			if(ogTPL.obj.GetComponent<BoxInterpolatorComponent_Template>() != null) return;
+
+			// Create tween actor template
+			if (CloneTemplateIfNecessary(ogLUA, "modaabb", "MOD AABB", ogTPL, out var newTPL, act: act)) {
+				newTPL.sizeOf += 0x10000;
+				newTPL.obj.AddComponent<BoxInterpolatorComponent_Template>();
+			}
+
+			var box = act.AddComponent<BoxInterpolatorComponent>();
+			box.innerBox = new AABB() {
+				MIN = new Vec2d(-aabbScale, -aabbScale),
+				MAX = new Vec2d(aabbScale, aabbScale)
+			};
+			box.outerBox = box.innerBox;
 		}
 
 
@@ -1747,6 +1794,34 @@ namespace UbiCanvas.Conversion {
 				var fr = (Frise)f.Result;
 				if (fr.PrimitiveParameters == null) fr.PrimitiveParameters = new GFXPrimitiveParam();
 				ApplyToPrimitiveParameters(fr.PrimitiveParameters);
+			}
+		}
+		public void FixRabbids(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			// Fix annoying noise in idle fight animation
+			var standFightAnim = oldContext.Cache.Get<AnimTrack>(new Path("world/rlc/common/enemy/rabbid/animation/fight_stand.anm"));
+			if (standFightAnim != null) {
+				foreach (var fr in standFightAnim.frameEvents) {
+					fr.events = new CListO<AnimTrackFrameEvents.AnimMarkerEvent>(fr.events.Where(f => f.marker != new StringID(0x7027CC42) && f.marker != new StringID(0x58B5B2C1)).ToList());
+				}
+				standFightAnim.frameEvents = new CListO<AnimTrackFrameEvents>(standFightAnim.frameEvents.Where(fr => fr.events != null && fr.events.Any()).ToList());
+			}
+
+			//var rabbidTPL = oldContext.Cache.Get<GenericFile<Actor_Template>>(new Path("world/rlc/common/enemy/rabbid/components/rabbid.tpl"));
+
+			var attackFrontAnim = oldContext.Cache.Get<AnimTrack>(new Path("world/rlc/common/enemy/rabbid/animation/attack_front.anm"));
+			if (attackFrontAnim != null) {
+				if (attackFrontAnim.frameEvents[0].events.Count == 2) {
+					attackFrontAnim.frameEvents[0].events.Add(new AnimTrackFrameEvents.AnimMarkerEvent() {
+						type = AnimTrackFrameEvents.AnimMarkerEvent.AnimMarkerEventType.AnimPolylineEvent,
+						marker = new StringID(0xF412692B),
+						posLocal = new Vec2d(3.238925f, -1.62862f),
+						polyline = new StringID(0xCD8DBD3C),
+						name = new StringID(),
+					});
+				}
 			}
 		}
 
@@ -4275,7 +4350,7 @@ namespace UbiCanvas.Conversion {
 						l.Context.SystemLogger?.LogInfo($"Duplicating template (Frise with Components): {ogPath.FullPath}");
 						var newTpl = new GenericFile<Actor_Template>(Merger.Merge<Actor_Template>(config));
 						newTpl.sizeOf = f.config.sizeOf;
-						var oldCookedPath = l.CookedPaths[ogPath.stringID];
+						var oldCookedPath = l.CookedPaths.ContainsKey(ogPath.stringID) ? l.CookedPaths[ogPath.stringID] : ogPath.CookedPath(oldContext);
 						var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".fcg", "__friseparent.tpl"), true);
 						l.CookedPaths[newPath.stringID] = newCookedPath;
 						l.Paths[newPath.stringID] = newPath;
@@ -5137,7 +5212,7 @@ namespace UbiCanvas.Conversion {
 				newTPL = new GenericFile<Actor_Template>(ogTPL.obj?.Clone("tpl"/*, context: LegendsContext*/) as Actor_Template);
 				newTPL.sizeOf = ogTPL.sizeOf;
 
-				var oldCookedPath = l.CookedPaths[ogPath.stringID];
+				var oldCookedPath = l.CookedPaths.ContainsKey(ogPath.stringID) ? l.CookedPaths[ogPath.stringID] : ogPath.CookedPath(oldContext);
 				var newCookedPath = new Path(oldCookedPath.FullPath.Replace(".tpl", $"__{suffix}.tpl"), true);
 				l.CookedPaths[newPath.stringID] = newCookedPath;
 				l.Paths[newPath.stringID] = newPath;
