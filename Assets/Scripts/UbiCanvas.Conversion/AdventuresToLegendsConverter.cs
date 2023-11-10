@@ -457,7 +457,9 @@ namespace UbiCanvas.Conversion {
 			var conversionSettings = ConversionSettings;
 			// Add locked paths from Legends context
 			conversionSettings.LockPaths = true;
-			conversionSettings.LockedPaths = LegendsContext.GetSettings<ConversionSettings>().LockedPaths;
+			foreach (var p in LegendsContext.GetSettings<ConversionSettings>().LockedPaths) {
+				conversionSettings.LockedPaths.Add(p);
+			}
 
 			// Step 1: create new paths dictionary
 			var ogDir = l.Settings.ITFDirectory;
@@ -1274,6 +1276,12 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world/challenge/run/challengerun/brick/medium/runbrick_medium_75.isc": {
+						// This brick has a rope (that's also inverted) that goes down too fast
+						var res = scene.FindActor(a => a.USERFRIENDLY == "liana_zipline_freelength");
+						res.Result.POS2D += new Vec2d(0.71345f, 1.6302362f);
+						break;
+					}
 				case "world/challenge/run/challengerun/brick/medium/runbrick_medium_74.isc": {
 						// This brick has a forced crush attack -> ring grab combination which can't work in Legends
 						// Delete "grp" and spawn a rabbid on a shield there :)
@@ -1285,7 +1293,7 @@ namespace UbiCanvas.Conversion {
 							rabbidPath = new Path("world/rlc/common/enemy/rabbid_winter/rabbid_shield.tsc");
 						}
 						var rabbidSSA = await AddNewActor(grp.ContainingScene, rabbidPath, contextToLoadFrom: LegendsContext);
-						rabbidSSA.xFLIPPED = true;
+						rabbidSSA.xFLIPPED = false;
 						rabbidSSA.POS2D = grp.Result.POS2D;
 						break;
 					}
@@ -1353,15 +1361,19 @@ namespace UbiCanvas.Conversion {
 
 			if (scenePath.FullPath.StartsWith("world/challenge/run/challengerun/")) {
 				InvertLianas_OnlyLeft(oldContext, newSettings, scene);
+				FixBrokenSoundReferencesInChallenges(oldContext, newSettings, scene);
 
-				// Brighten rock falling FX
-				var fxPath = new Path("world/common/fx/earthquake/fx_earthquake_mo_rl.tpl");
-				var fxActors = scene.FindActors(a => a.LUA == fxPath);
-				foreach (var res in fxActors) {
-					var act = res.Result;
-					var pp = act?.GetComponent<FxBankComponent>()?.PrimitiveParameters;
-					if(pp == null) continue;
-					pp.FrontLightBrightness += 0.5f;
+				if (Version == SpecialVersion.EventDesertMarathon) {
+					// Color falling rock FX
+					var fxPath = new Path("world/common/fx/earthquake/fx_earthquake_mo_rl.tpl");
+					var fxActors = scene.FindActors(a => a.LUA == fxPath);
+					foreach (var res in fxActors) {
+						var act = res.Result;
+						var pp = act?.GetComponent<FxBankComponent>()?.PrimitiveParameters;
+						if (pp == null) continue;
+						pp.useStaticFog = true;
+						pp.colorFog = new UbiArt.Color(178f / 255f, 135f / 255f, 135f / 255f, 0.63f);
+					}
 				}
 			}
 		}
@@ -3818,6 +3830,47 @@ namespace UbiCanvas.Conversion {
 					softPlat.endPos = newEndPos;
 				}
 			}
+		}
+
+		public void FixBrokenSoundReferencesInChallenges(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var scenePath = GetScenePath(scene);
+			var fullPath = scenePath.FullPath;
+
+			string[] pathsWithBadRockTweens = new string[] {
+				"world/challenge/run/challengerun/brick/easy/runbrick_easy_32.isc",
+				"world/challenge/run/challengerun/brick/easy/runbrick_easy_33.isc",
+				"world/challenge/run/challengerun/brick/easy/subscene/ld/runbrick_easy_32_ld.isc",
+				"world/challenge/run/challengerun/brick/easy/subscene/ld/runbrick_easy_33_ld.isc",
+				"world/challenge/run/challengerun/brick/hard/runbrick_hard_33.isc",
+				"world/challenge/run/challengerun/brick/hard/runbrick_hard_34.isc",
+				"world/challenge/run/challengerun/brick/hard/runbrick_hard_65.isc",
+				"world/challenge/run/challengerun/brick/hard/subscene/ld/runbrick_hard_33_ld.isc",
+				"world/challenge/run/challengerun/brick/hard/subscene/ld/runbrick_hard_34_ld.isc",
+				"world/challenge/run/challengerun/brick/hard/subscene/ld/runbrick_hard_65_ld.isc",
+				"world/challenge/run/challengerun/brick/medium/runbrick_medium_44.isc",
+				"world/challenge/run/challengerun/brick/medium/runbrick_medium_45.isc",
+				"world/challenge/run/challengerun/brick/medium/subscene/ld/runbrick_medium_44_ld.isc",
+				"world/challenge/run/challengerun/brick/medium/subscene/ld/runbrick_medium_45_ld.isc",
+				"world/challenge/run/challengerun/brick/veryhard/runbrick_veryhard_13.isc",
+				"world/challenge/run/challengerun/brick/veryhard/runbrick_veryhard_25.isc",
+				"world/challenge/run/challengerun/brick/veryhard/subscene/ld/runbrick_veryhard_13_ld.isc",
+				"world/challenge/run/challengerun/brick/veryhard/subscene/ld/runbrick_veryhard_25_ld.isc",
+			};
+
+			if(!pathsWithBadRockTweens.Contains(fullPath)) return;
+
+			var rockTween = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_rocktype.tpl");
+			var rockTweens = scene.FindActors(a => a.LUA == rockTween);
+
+			foreach (var tween in rockTweens) {
+				tween.Result.LUA = new Path(rockTween.FullPath);
+				ConversionSettings.LockedPaths.Add(tween.Result.LUA);
+			}
+
+
 		}
 
 		public void ZiplineToRope_OnlyLeft(Context oldContext, Settings newSettings, Scene scene) {

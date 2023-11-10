@@ -2,19 +2,19 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class WaterPerturbationComponent_Template : ActorComponent_Template {
 		public Path fxFile;
-		public float noiseAmplitudeX;
-		public float noiseFrequencyX;
-		public float noisePersistenceX;
-		public uint noiseNbOctaveX;
-		public float noiseAmplitudeY;
-		public float noiseFrequencyY;
-		public float noisePersistenceY;
-		public uint noiseNbOctaveY;
-		public float noiseTimeMultiplier;
-		public float radius;
-		public float waterMultiplier;
-		public float weight;
-		public bool queryPosition;
+		public float noiseAmplitudeX = 2f;
+		public float noiseFrequencyX = 1f;
+		public float noisePersistenceX = 0.4f;
+		public uint noiseNbOctaveX = 4;
+		public float noiseAmplitudeY = 1f;
+		public float noiseFrequencyY = 1f;
+		public float noisePersistenceY = 0.4f;
+		public uint noiseNbOctaveY = 4;
+		public float noiseTimeMultiplier = 6f;
+		public float radius = 1f;
+		public float waterMultiplier = 1f;
+		public float weight = 1f;
+		public bool queryPosition = false;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			fxFile = s.SerializeObject<Path>(fxFile, name: "fxFile");

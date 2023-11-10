@@ -24,7 +24,7 @@ namespace UbiCanvas.Tools
 			{
 				new InvokableAction("Export current map in Legends format", async () => await ExportCurrentMap()),
 				//new InvokableAction("Export costumes (requires manual edits)", async () => await ExportCostumes()),
-				new InvokableAction("Export rabbids (add into Legends directory!)", async () => await ExportRabbids()),
+				//new InvokableAction("Export rabbids (add into Legends directory!)", async () => await ExportRabbids()),
 				//new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
 				new InvokableAction("Fast clean, build & install project", async () => await BuildProject(install: true, clean: true, fullClean: false)),
