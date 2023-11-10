@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UbiArt;
 
 namespace UbiCanvas.Tools
@@ -28,5 +29,10 @@ namespace UbiCanvas.Tools
 		public virtual string Description => null;
 
 		public List<GameToolRequirement> Requirements { get; } = new();
+
+		/// <summary>
+		/// Arguments: title, folder, defaultName | Output: folder
+		/// </summary>
+		public Func<string, string, string, string> OpenFolderPanel { get; set; }
 	}
 }

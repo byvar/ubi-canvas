@@ -120,6 +120,7 @@ public class UnityWindowTools : UnityWindow
 		}
 		else if(tool is AdventuresToLegendsModTool adventuresToLegendsModTool)
 		{
+			tool.OpenFolderPanel = UnityEditor.EditorUtility.OpenFolderPanel;
 
 			EditorGUI.BeginChangeCheck();
 			UnitySettings.Tools_AdventuresToLegends_ProjectPath = DirectoryField(GetNextRect(ref YPos), "Project path", UnitySettings.Tools_AdventuresToLegends_ProjectPath, true);

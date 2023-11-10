@@ -47,9 +47,17 @@ namespace UbiCanvas.Conversion {
 			NewSettings = settings;
 
 			if (MainContext.FileManager.DirectoryExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc_egypt/")) {
-				Version = SpecialVersion.ChallengeEgypt;
+				Version = SpecialVersion.EventDesertMarathon;
 			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/challenge/run/challengerun/tscs/dojobar_double.tsc.ckd")) {
-				Version = SpecialVersion.ChallengeDojo;
+				Version = SpecialVersion.EventGoldenMarathon;
+			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/winter/winter_intropopup.tga.ckd")) {
+				Version = SpecialVersion.EventWinter;
+			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/halloween/halloween_intropopup.tga.ckd")) {
+				Version = SpecialVersion.EventHalloween;
+			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/summer/summer_intropopup.tga.ckd")) {
+				Version = SpecialVersion.EventSummer;
+			} else if(MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/easter/easter_intropopup.tga.ckd")) {
+				Version = SpecialVersion.EventEaster;
 			}
 
 			// Create conversion settings
@@ -68,8 +76,12 @@ namespace UbiCanvas.Conversion {
 
 		public enum SpecialVersion {
 			None = 0,
-			ChallengeEgypt,
-			ChallengeDojo,
+			EventDesertMarathon,
+			EventGoldenMarathon,
+			EventWinter,
+			EventSummer,
+			EventHalloween,
+			EventEaster,
 		}
 
 		public SpecialVersion Version { get; set; }
@@ -168,26 +180,33 @@ namespace UbiCanvas.Conversion {
 
 
 				// Challenges
-				if (Version == SpecialVersion.ChallengeEgypt) {
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/challenge/run/", "world/egypt/challenge/run/"));
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/landofthedead/", "world/egypt/landofthedead/"));
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/rlc_landofthedead/", "world/egypt/rlc_landofthedead/"));
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/common/enemy/devilbob/", "world/egypt/common/enemy/devilbob/"));
-				} else if (Version == SpecialVersion.ChallengeDojo) {
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/challenge/run/", "world/goldenkingdom/challenge/run/"));
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/landofthedead/", "world/goldenkingdom/landofthedead/"));
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/rlc_landofthedead/", "world/goldenkingdom/rlc_landofthedead/"));
-				} else {
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/challenge/run/", "world/rlc/challenge/run/"));
+				switch (Version) {
+					case SpecialVersion.EventDesertMarathon:
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("world/challenge/run/", "world/egypt/challenge/run/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("world/landofthedead/", "world/egypt/landofthedead/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("world/rlc_landofthedead/", "world/egypt/rlc_landofthedead/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("world/common/enemy/devilbob/", "world/egypt/common/enemy/devilbob/"));
+						break;
+					case SpecialVersion.EventGoldenMarathon:
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("world/challenge/run/", "world/goldenkingdom/challenge/run/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("world/landofthedead/", "world/goldenkingdom/landofthedead/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("world/rlc_landofthedead/", "world/goldenkingdom/rlc_landofthedead/"));
+						break;
+					default:
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("world/challenge/run/", "world/rlc/challenge/run/"));
+						break;
 				}
+
+				// Rabbids
+				InitRabbidPathConversion(Version, conversionSettings);
 			}
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
@@ -197,6 +216,31 @@ namespace UbiCanvas.Conversion {
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/mountain/mecha/playground/enemy/buzzsaw/", "world/mountain/mecha/playground/enemy/buzzsaw_vita/"));
 				conversionSettings.TextureConversion = ConvertTextureVita;
+			}
+		}
+
+		void InitRabbidPathConversion(SpecialVersion version, ConversionSettings conversionSettings) {
+			switch (version) {
+				case SpecialVersion.EventHalloween:
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_halloween/"));
+					break;
+				case SpecialVersion.EventWinter:
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_winter/"));
+					break;
+				case SpecialVersion.EventEaster:
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_normal/"));
+					break;
+				case SpecialVersion.EventSummer:
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_summer/"));
+					break;
+				default:
+					conversionSettings.PathConversionRules.Add(
+						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_renaissance/"));
+					break;
 			}
 		}
 
@@ -213,7 +257,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 		protected void StartLoadingScreen() {
-			Controller.Obj.loadingScreen.Active = true;
+			if(Controller.Obj?.loadingScreen != null) Controller.Obj.loadingScreen.Active = true;
 			GlobalLoadState.DetailedState = "Exporting map";
 			GlobalLoadState.LoadState = GlobalLoadState.State.Initializing;
 		}
@@ -221,7 +265,7 @@ namespace UbiCanvas.Conversion {
 			Debug.Log($"Finished exporting {ExportID}.");
 			GlobalLoadState.DetailedState = "Finished";
 			GlobalLoadState.LoadState = GlobalLoadState.State.Finished;
-			Controller.Obj.loadingScreen.Active = false;
+			if (Controller.Obj?.loadingScreen != null) Controller.Obj.loadingScreen.Active = false;
 		}
 
 		public async Task ProcessAllLoadedScenes() {
@@ -334,6 +378,8 @@ namespace UbiCanvas.Conversion {
 			// Print scene path
 			var scenePath = GetScenePath(scene);
 			UnityEngine.Debug.Log($"Processing scene: {scenePath}");
+
+			await SpawnRabbids(mainContext, settings, scene); // Before LevelSpecificChanges!
 
 			await LevelSpecificChanges(mainContext, settings, scene);
 
@@ -1223,7 +1269,11 @@ namespace UbiCanvas.Conversion {
 						var grp = scene.FindPickable(p => p.USERFRIENDLY == "grp");
 						grp.ContainingScene.DeletePickable(grp.Result);
 
-						var rabbidSSA = await AddNewActor(grp.ContainingScene, new Path("world/rlc/common/enemy/rabbid/rabbid_shield.tsc"));
+						var rabbidPath = new Path("world/rlc/common/enemy/rabbid_normal/rabbid_shield.tsc");
+						if (Version == SpecialVersion.EventGoldenMarathon) {
+							rabbidPath = new Path("world/rlc/common/enemy/rabbid_winter/rabbid_shield.tsc");
+						}
+						var rabbidSSA = await AddNewActor(grp.ContainingScene, rabbidPath, contextToLoadFrom: LegendsContext);
 						rabbidSSA.xFLIPPED = true;
 						rabbidSSA.POS2D = grp.Result.POS2D;
 						break;
@@ -1382,6 +1432,81 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public async Task SpawnRabbids(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var scenePath = GetScenePath(scene);
+			var fullPath = scenePath.FullPath;
+			var renameVersion = SpecialVersion.EventEaster; // Regular rabbids
+			if (fullPath.StartsWith("world/rlc_hangar/") || fullPath.StartsWith("world/rlc_nemo/")) {
+				renameVersion = SpecialVersion.EventSummer;
+			} else if (fullPath.Contains("hauntedcastle_") || fullPath.Contains("castleinterior_rotatingplatformpanic")) {
+				renameVersion = SpecialVersion.EventHalloween;
+			} else if (fullPath.Contains("castleexterior_") || fullPath.Contains("castleinterior_") || fullPath.Contains("avatar_imonamoat")) {
+				renameVersion = SpecialVersion.None; // Renaissance
+			} else if (fullPath.StartsWith("world/rlc_dojo/")) {
+				var snowLevels = new string[] { "spikyspinners", "dragonsspire", "ringtraining", "underconstruction", "greatwallwaterfall" };
+				foreach (var snowLevel in snowLevels) {
+					if (fullPath.Contains(snowLevel)) {
+						renameVersion = SpecialVersion.EventWinter;
+						break;
+					}
+				}
+			} else if (fullPath.StartsWith("world/challenge/run/challengerun/") && Version == SpecialVersion.EventGoldenMarathon) {
+				renameVersion = SpecialVersion.EventWinter;
+			}
+
+			var renameConversionSettings = new ConversionSettings();
+			InitRabbidPathConversion(renameVersion, renameConversionSettings);
+
+			// world/rlc/common/enemy/rabbid/
+			// Go over the scene, then rename all paths starting with this (either actor.LUA or spawn component)
+			var enemySpawnerPath = new Path("world/rlc/common/gpe/seasonaleventspawner/templates/seasonaleventenemyspawner.tpl");
+			var spawnActors = scene.FindActors(a => a.LUA == enemySpawnerPath);
+			foreach (var res in spawnActors) {
+				var act = res.Result;
+				var sc = act.GetComponent<RLC_SeasonalEventSpawnerComponent>();
+				var scTPL = act.template.obj.GetComponent<RLC_SeasonalEventSpawnerComponent_Template>();
+				res.ContainingScene.DeletePickable(act);
+
+				var rabbidPath = new Path(scTPL.actorPaths[(int)sc.selectedPathIndex].FullPath);
+				rabbidPath.ConvertPath(renameConversionSettings);
+				var rabbidName = act.USERFRIENDLY;
+				if (sc.triggerSpawn) {
+					rabbidName += "_rabbid";
+				}
+				void SetToActorTransform(Actor a) {
+					a.POS2D = act.POS2D;
+					a.parentBind = act.parentBind;
+					a.ANGLE = act.ANGLE;
+					a.SCALE = act.SCALE;
+					a.xFLIPPED = act.xFLIPPED;
+				}
+				var rabbid = await AddNewActor(res.ContainingScene, rabbidPath, name: rabbidName, contextToLoadFrom: LegendsContext);
+				SetToActorTransform(rabbid);
+				if (sc.triggerSpawn) {
+					rabbid.STARTPAUSE = true;
+					// Use same name as original
+					var relay = await AddNewActor(res.ContainingScene, new Path("world/common/logicactor/trigger/relay/components/relay_unpause.tpl"), name: act.USERFRIENDLY, contextToLoadFrom: LegendsContext);
+					SetToActorTransform(relay);
+				}
+
+				// Set pimitive parameters
+				var gc = rabbid.GetComponent<GraphicComponent>();
+				if (gc != null) {
+					gc.PrimitiveParameters = (GFXPrimitiveParam)sc.GFXParam.Clone("isc");
+				}
+				if (rabbid is SubSceneActor ssa && ssa.SCENE?.value != null) {
+					var gca = ssa.SCENE.value.FindActors(a => a.GetComponent<GraphicComponent>() != null);
+					foreach (var gcRes in gca) {
+						gc = gcRes.Result.GetComponent<GraphicComponent>();
+						gc.PrimitiveParameters = (GFXPrimitiveParam)sc.GFXParam.Clone("isc");
+					}
+				}
+			}
+		}
+
 		public async Task ProcessChallengeTemplates(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
@@ -1420,7 +1545,7 @@ namespace UbiCanvas.Conversion {
 
 				if (path.FullPath.StartsWith("world/challenge/run")) {
 					if (chal is RO2_EnduranceMode_Template end) {
-						if (Version == SpecialVersion.ChallengeDojo) {
+						if (Version == SpecialVersion.EventGoldenMarathon) {
 							chal.inGameMusic = new UbiArt.Nullable<EventPlayMusic>();
 							chal.gameOverMusic = new UbiArt.Nullable<EventPlayMusic>(new EventPlayMusic() {
 								nodeName = new StringID(0xE4416864),

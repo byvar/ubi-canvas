@@ -24,6 +24,7 @@ namespace UbiCanvas.Tools
 			{
 				new InvokableAction("Export current map in Legends format", async () => await ExportCurrentMap()),
 				//new InvokableAction("Export costumes (requires manual edits)", async () => await ExportCostumes()),
+				//new InvokableAction("Export rabbids (add into Legends directory!)", async () => await ExportRabbids()),
 				//new InvokableAction("Build data files from JSON", async () => await BuildJSON()),
 				new InvokableAction("Build & install project", async () => await BuildProject(install: true)),
 				new InvokableAction("Fast clean, build & install project", async () => await BuildProject(install: true, clean: true, fullClean: false)),
@@ -68,6 +69,47 @@ namespace UbiCanvas.Tools
 				}
 			} else {
 				UnityEngine.Debug.LogWarning("Please load a map before selecting this option.");
+			}
+		}
+
+		private async Task ExportRabbids() {
+			if (OpenFolderPanel == null)
+				throw new Exception($"{nameof(OpenFolderPanel)} needs to be set!");
+
+			var outputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "data", "rabbids");
+
+			// Delete subdirectory if it exists. Any manual mods need to be added into a different subdirectory.
+			if (Directory.Exists(outputPath))
+				Directory.Delete(outputPath, true);
+
+			// Convert
+			string inputDir = OpenFolderPanel("Select an Adventures version or cancel to stop", null, "");
+			while(!String.IsNullOrWhiteSpace(inputDir)) {
+				using Context context = CreateContext(basePath: inputDir, mode: Mode.RaymanAdventuresAndroid, enableSerializerLog: false, loadAllPaths: true, loadAnimations: false);
+				await context.Loader.LoadInitial();
+				Path[] paths = new string[] {
+					"world/rlc/common/enemy/rabbid/rabbid_shield.tsc",
+					"world/rlc/common/enemy/rabbid/rabbid.act",
+					"world/rlc/common/enemy/rabbid/rabbid_charge.act",
+					"world/rlc/common/enemy/rabbid/rabbid_charge_direct.act",
+					"world/rlc/common/enemy/rabbid/rabbid_chargeroaming.act",
+					"world/rlc/common/enemy/rabbid/rabbid_roaming.act",
+					"world/rlc/common/enemy/rabbid/components/rabbid.tpl",
+				}.Select(p => new Path(p)).ToArray();
+				foreach (var p in paths) {
+					p.LoadObject(context);
+				}
+				await context.Loader.LoadLoop();
+
+
+				using (var converter = new AdventuresToLegendsConverter(context,
+					UnitySettings.Tools_AdventuresToLegends_GamePath,
+					UnitySettings.Tools_AdventuresToLegends_ProjectPath, exportID: "rabbids")) {
+					await converter.Init();
+					await converter.ProcessNonScene();
+					await converter.Write(outputPath);
+				}
+				inputDir = OpenFolderPanel("Select an Adventures version or cancel to stop", null, "");
 			}
 		}
 
