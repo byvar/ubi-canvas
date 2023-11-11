@@ -43,6 +43,20 @@ namespace UbiCanvas.Tools
 					string sceneName = System.IO.Path.GetFileName(lvlPath);
 					if(sceneName.Contains('.')) sceneName = sceneName.Substring(0, sceneName.IndexOf('.'));
 					var subfolderName = sceneName;
+
+					if (lvlPath.Contains("challenge/run/challengerun/")) {
+						var version = AdventuresToLegendsConverter.GetVersion(Controller.MainContext);
+						switch (version) {
+							case AdventuresToLegendsConverter.SpecialVersion.EventDesertMarathon:
+								subfolderName += "_egypt";
+								break;
+							case AdventuresToLegendsConverter.SpecialVersion.EventGoldenMarathon:
+								subfolderName += "_dojo";
+								break;
+						}
+					}
+
+
 					var outputPath = System.IO.Path.Combine(UnitySettings.Tools_AdventuresToLegends_ProjectPath, "data", subfolderName);
 					UnityEngine.Debug.Log(outputPath);
 					
@@ -53,7 +67,8 @@ namespace UbiCanvas.Tools
 					// Convert
 					using (var converter = new AdventuresToLegendsConverter(Controller.MainContext,
 						UnitySettings.Tools_AdventuresToLegends_GamePath,
-						UnitySettings.Tools_AdventuresToLegends_ProjectPath)) {
+						UnitySettings.Tools_AdventuresToLegends_ProjectPath,
+						exportID: subfolderName)) {
 						await converter.Init();
 						if (converter.MainContext.Settings.Game == Game.RM || converter.MainContext.Settings.Game == Game.RA) {
 							await converter.ProcessScene(generateSGS: true);

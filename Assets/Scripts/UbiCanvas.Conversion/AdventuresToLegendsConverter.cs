@@ -46,19 +46,7 @@ namespace UbiCanvas.Conversion {
 			var settings = Settings.FromMode(Mode.RaymanLegendsPC);
 			NewSettings = settings;
 
-			if (MainContext.FileManager.DirectoryExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc_egypt/")) {
-				Version = SpecialVersion.EventDesertMarathon;
-			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/challenge/run/challengerun/tscs/dojobar_double.tsc.ckd")) {
-				Version = SpecialVersion.EventGoldenMarathon;
-			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/winter/winter_intropopup.tga.ckd")) {
-				Version = SpecialVersion.EventWinter;
-			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/halloween/halloween_intropopup.tga.ckd")) {
-				Version = SpecialVersion.EventHalloween;
-			} else if (MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/summer/summer_intropopup.tga.ckd")) {
-				Version = SpecialVersion.EventSummer;
-			} else if(MainContext.FileManager.FileExists($"{MainContext.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/easter/easter_intropopup.tga.ckd")) {
-				Version = SpecialVersion.EventEaster;
-			}
+			Version = GetVersion(MainContext);
 
 			// Create conversion settings
 			var conversionSettings = new ConversionSettings() {
@@ -85,6 +73,24 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public SpecialVersion Version { get; set; }
+
+		public static SpecialVersion GetVersion(Context context) {
+			SpecialVersion version = SpecialVersion.None;
+			if (context.FileManager.DirectoryExists($"{context.BasePath}cache/itf_cooked/android/world/rlc_egypt/")) {
+				version = SpecialVersion.EventDesertMarathon;
+			} else if (context.FileManager.FileExists($"{context.BasePath}cache/itf_cooked/android/world/challenge/run/challengerun/tscs/dojobar_double.tsc.ckd")) {
+				version = SpecialVersion.EventGoldenMarathon;
+			} else if (context.FileManager.FileExists($"{context.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/winter/winter_intropopup.tga.ckd")) {
+				version = SpecialVersion.EventWinter;
+			} else if (context.FileManager.FileExists($"{context.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/halloween/halloween_intropopup.tga.ckd")) {
+				version = SpecialVersion.EventHalloween;
+			} else if (context.FileManager.FileExists($"{context.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/summer/summer_intropopup.tga.ckd")) {
+				version = SpecialVersion.EventSummer;
+			} else if (context.FileManager.FileExists($"{context.BasePath}cache/itf_cooked/android/world/rlc/common/ui/specialevent/easter/easter_intropopup.tga.ckd")) {
+				version = SpecialVersion.EventEaster;
+			}
+			return version;
+		}
 
 		protected void InitPathConversionRules() {
 			var conversionSettings = ConversionSettings;
@@ -211,6 +217,8 @@ namespace UbiCanvas.Conversion {
 			if (oldSettings.Game == Game.RM) {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/landofthedead/common/breakable/bonestack/", "world/landofthedead/common/breakable/bonestack_mini/"));
 			}
 			if (oldSettings.Platform == GamePlatform.Vita) {
 				//conversionSettings.PathConversionRules.Add(
@@ -1297,6 +1305,25 @@ namespace UbiCanvas.Conversion {
 						rabbidSSA.POS2D = grp.Result.POS2D;
 						break;
 					}
+				case "world/challenge/run/challengerun/decobrick/background/brick_back_a_01.isc":
+				case "world/challenge/run/challengerun/decobrick/background/brick_back_a_02.isc":
+				case "world/challenge/run/challengerun/decobrick/background/brick_back_a_03.isc":
+				case "world/challenge/run/challengerun/decobrick/background/brick_back_a_04.isc": {
+						if (Version == SpecialVersion.EventGoldenMarathon) {
+							// Add more snow trees to compensate for smaller AABB
+							var snowTree = scene.FindActor(a => a.USERFRIENDLY == "fx_snowtree_01");
+							var newSnowTreeActor = (Actor)snowTree.Result.Clone("isc");
+							newSnowTreeActor.POS2D += new Vec2d(40.39538f, 0f);
+							snowTree.ContainingScene.AddActor(newSnowTreeActor, newSnowTreeActor.USERFRIENDLY);
+							newSnowTreeActor = (Actor)snowTree.Result.Clone("isc");
+							newSnowTreeActor.POS2D -= new Vec2d(40.39538f, 0f);
+							snowTree.ContainingScene.AddActor(newSnowTreeActor, newSnowTreeActor.USERFRIENDLY);
+							newSnowTreeActor = (Actor)snowTree.Result.Clone("isc");
+							newSnowTreeActor.POS2D -= new Vec2d((40.39538f * 3/2f), 0f);
+							snowTree.ContainingScene.AddActor(newSnowTreeActor, newSnowTreeActor.USERFRIENDLY);
+						}
+						break;
+					}
 				case "world/rlc_castle/rotatingplatformpanic/castleinterior_rotatingplatformpanic_spd.isc": {
 						AllSMVToFrise(oldContext, scene);
 						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
@@ -1363,7 +1390,7 @@ namespace UbiCanvas.Conversion {
 				InvertLianas_OnlyLeft(oldContext, newSettings, scene);
 				FixBrokenSoundReferencesInChallenges(oldContext, newSettings, scene);
 
-				if (Version == SpecialVersion.EventDesertMarathon) {
+				if (Version == SpecialVersion.EventDesertMarathon || Version == SpecialVersion.EventGoldenMarathon) {
 					// Color falling rock FX
 					var fxPath = new Path("world/common/fx/earthquake/fx_earthquake_mo_rl.tpl");
 					var fxActors = scene.FindActors(a => a.LUA == fxPath);
@@ -1372,7 +1399,11 @@ namespace UbiCanvas.Conversion {
 						var pp = act?.GetComponent<FxBankComponent>()?.PrimitiveParameters;
 						if (pp == null) continue;
 						pp.useStaticFog = true;
-						pp.colorFog = new UbiArt.Color(178f / 255f, 135f / 255f, 135f / 255f, 0.63f);
+						if (Version == SpecialVersion.EventDesertMarathon) {
+							pp.colorFog = new UbiArt.Color(178f / 255f, 135f / 255f, 135f / 255f, 0.63f);
+						} else if(Version == SpecialVersion.EventGoldenMarathon) {
+							pp.colorFog = new UbiArt.Color(110f / 255f, 87f / 255f, 50f / 255f, 0.63f);
+						}
 					}
 				}
 			}
@@ -1580,8 +1611,29 @@ namespace UbiCanvas.Conversion {
 					chal.continueStartBrick = null;
 				}
 
-				if (path.FullPath.StartsWith("world/challenge/run")) {
-					if (chal is RO2_EnduranceMode_Template end) {
+				if (chal is RO2_EnduranceMode_Template end) {
+					if (end.decoBricks != null) {
+						foreach (var brick in end.decoBricks) {
+							var brickPath = brick?.obj?.path;
+							if (brickPath == null || brickPath.IsNull) continue;
+							var brickScene = brickPath.GetObject<ContainerFile<Scene>>();
+							if (brickScene?.obj != null) {
+								await ProcessScene(brickScene.obj, false);
+							}
+						}
+					}
+					if (end.specialDecoBricks != null) {
+						foreach (var brick in end.specialDecoBricks) {
+							var brickPath = brick?.obj?.path;
+							if (brickPath == null || brickPath.IsNull) continue;
+							var brickScene = brickPath.GetObject<ContainerFile<Scene>>();
+							if (brickScene?.obj != null) {
+								await ProcessScene(brickScene.obj, false);
+							}
+						}
+					}
+
+					if (path.FullPath.StartsWith("world/challenge/run")) {
 						if (Version == SpecialVersion.EventGoldenMarathon) {
 							chal.inGameMusic = new UbiArt.Nullable<EventPlayMusic>();
 							chal.gameOverMusic = new UbiArt.Nullable<EventPlayMusic>(new EventPlayMusic() {
@@ -3812,7 +3864,8 @@ namespace UbiCanvas.Conversion {
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
 			var lianaPath = new Path("world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength.tpl");
-			var ziplines = scene.FindActors(a => a.LUA == lianaPath);
+			var lianaRopePath = new Path("world/jungle/common/platform/liana/liana_zipline/components/rope_zipline_freelength.tpl");
+			var ziplines = scene.FindActors(a => a.LUA == lianaPath || a.LUA == lianaRopePath);
 			foreach (var z in ziplines) {
 				var act = z.Result;
 				var softPlat = act?.GetComponent<ProceduralSoftPlatformComponent>();
