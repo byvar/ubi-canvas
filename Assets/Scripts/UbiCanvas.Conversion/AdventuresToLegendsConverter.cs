@@ -1051,6 +1051,14 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world/rlc_maze/lumlabyrinth/maze_lumlabyrinth_lum_base.isc": {
+						UseFastCameras(scene);
+						break;
+					}
+				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc": {
+						UseFastCameras(scene);
+						break;
+					}
 				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
 						var path = new Path("world/common/breakable/lumsjar/components/lumjar_nocol_nophys.tpl");
 						var breakables = scene.FindActors(a => a.LUA == path);
@@ -1175,6 +1183,7 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
+						UseFastCameras(scene);
 						var act = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
 						var rp = act.Result.GetComponent<RenderParamComponent>();
 						rp.Lighting.GlobalColor *= new UbiArt.Color(0.6f, 0.6f, 0.6f, 1f);
@@ -1925,6 +1934,29 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public void UseFastCameras(Scene scene) {
+			var cms = scene.FindActors(a => a?.GetComponent<CameraModifierComponent>() != null);
+			foreach (var cm in cms) {
+				ConvertToFastCamera(cm.Result);
+			}
+		}
+
+		public void ConvertToFastCamera(Actor act) {
+			if(act?.template?.obj?.GetComponent<CameraModifierComponent_Template>() == null) return;
+
+			if (CloneTemplateIfNecessary(act.LUA, "fastcam", "FAST CAMERA", act.template, out var newTPL, act: act)) {
+				var CM = newTPL?.obj?.GetComponent<CameraModifierComponent_Template>();
+				if (CM != null) {
+					if (CM.CM.modifierBlend == float.MaxValue) {
+						CM.CM.modifierBlend = 0.006f;
+						CM.CM.modifierInertie = 0.82f;
+						CM.CM.constraintDelayToActivate = Vec3d.One * 0.5f;
+						CM.CM.constraintDelayToDisable = Vec3d.One * 0.5f;
+					}
+				}
+			}
+		}
+
 		public void FixCameraModifierBlend(Context oldContext, Settings newSettings) {
 			Loader l = oldContext.Loader;
 			var structs = l.Context.Cache.Structs;
@@ -1934,10 +1966,12 @@ namespace UbiCanvas.Conversion {
 				var tpl = tplPair.Value as GenericFile<Actor_Template>;
 				var CM = tpl?.obj?.GetComponent<CameraModifierComponent_Template>();
 				if (CM != null) {
-					CM.CM.modifierBlend = 0.006f;
-					CM.CM.modifierInertie = 0.82f;
-					CM.CM.constraintDelayToActivate = Vec3d.One * 2f;
-					CM.CM.constraintDelayToDisable = Vec3d.One * 2f;
+					if (CM.CM.modifierBlend == float.MaxValue) {
+						CM.CM.modifierBlend = 0.006f;
+						CM.CM.modifierInertie = 0.82f;
+						CM.CM.constraintDelayToActivate = Vec3d.One * 2f; // Sometimes this factor should be 0.5f
+						CM.CM.constraintDelayToDisable = Vec3d.One * 2f;
+					}
 				}
 			}
 
