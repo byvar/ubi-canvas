@@ -251,6 +251,10 @@ namespace UbiArt
 
 			// Bones
 			"Root",
+
+			// Inputs
+			"Axis", "Press", "Hold", "Trigger_Left", "Trigger_Right",
+			"Button_A", "Button_X", "Button_Y", "Button_B", "Button_Back", "Button_Start",
 		};
 
 
