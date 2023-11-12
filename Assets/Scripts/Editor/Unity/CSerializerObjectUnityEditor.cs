@@ -61,6 +61,10 @@ namespace UbiArt {
 					case TypeCode.Int64: obj = EditorGUILayout.LongField(name, (long)obj); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
+			} else if (type == typeof(PathRef)) {
+				PathRef p = (PathRef)obj;
+				DrawPathRef(name, ref p);
+				obj = p;
 			} else if (type == typeof(Path)) {
 				Path p = (Path)obj;
 				DrawPath(name, ref p);
@@ -154,6 +158,20 @@ namespace UbiArt {
 			//EditorGUI.indentLevel = indent;
 			if (newPath != fullPath) {
 				p = new Path(newPath);
+			}
+		}
+		public void DrawPathRef(string name, ref PathRef p) {
+			if (p == null) p = new PathRef();
+			//EditorGUILayout.PrefixLabel(name);
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			//texPreviewRect = EditorGUI.PrefixLabel(texPreviewRect, new GUIContent(name));
+			string fullPath = p.FullPath;
+			//var indent = EditorGUI.indentLevel;
+			//EditorGUI.indentLevel = 0;
+			string newPath = EditorGUI.TextField(rect, new GUIContent(name), fullPath);
+			//EditorGUI.indentLevel = indent;
+			if (newPath != fullPath) {
+				p = new PathRef(newPath);
 			}
 		}
 		public void DrawObjectPath(string name, ref ITF.ObjectPath p) {
@@ -374,7 +392,11 @@ namespace UbiArt {
 			// Get the type
 			var type = typeof(T);
 			if(name == null) name = $"({type.GetFormattedName()})";
-			if (type == typeof(Path)) {
+			if (type == typeof(PathRef)) {
+				PathRef p = (PathRef)(object)obj;
+				DrawPathRef(name, ref p);
+				obj = (T)(object)p;
+			} else if (type == typeof(Path)) {
 				Path p = (Path)(object)obj;
 				DrawPath(name, ref p);
 				obj = (T)(object)p;

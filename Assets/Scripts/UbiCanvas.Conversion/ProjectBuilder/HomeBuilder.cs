@@ -76,7 +76,7 @@ namespace UbiCanvas.Conversion {
 						sizeOf = 28,
 						lockCount = l.LockCount,
 						lockType = l.LockType,
-						behaviorType = behavior,
+						behaviorType = l.BehaviorType ?? behavior,
 						tag = new StringID(tag),
 						parent = parent == null ? new StringID(0x85A77AC7) : new StringID(parent) // TODO: what is the string that has ID 0x85A77AC7? it's used for the main gallery items
 					};
@@ -223,7 +223,7 @@ namespace UbiCanvas.Conversion {
 								sizeOf = 984,
 								tag = new StringID(entry.MapID),
 								worldTag = new StringID(entry.WorldID),
-								mapPath = new Path(entry.MapPath),
+								mapPath = new PathRef(entry.MapPath),
 								mapNameId = new LocalisationId(4721),
 								texturePath = new Path(entry.TexturePath),
 								maxLumsCount = (uint)entry.LumsCount,
@@ -251,7 +251,7 @@ namespace UbiCanvas.Conversion {
 					if (levelsConfig?.MainPaintings != null) {
 						foreach (var entry in levelsConfig.MainPaintings) {
 							bool isWorld = entry.HubPath != null;
-							var lockType = isWorld ? RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.World
+							var behaviorType = isWorld ? RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.World
 								: RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.Level;
 
 							RO2_PackageDescriptor_Template painting = new RO2_PackageDescriptor_Template() {
@@ -259,13 +259,13 @@ namespace UbiCanvas.Conversion {
 								decorationBrickPath = new Path(entry.DecorationBrickPath),
 								hideDecoration = false,
 								hubPath = isWorld ? new Path(entry.HubPath) : null,
-								mapPath = !isWorld ? new Path(entry.MapPath) : null,
+								mapPath = !isWorld ? new PathRef(entry.MapPath) : null,
 								priority = entry.Priority,
 								alternatePriority = entry.Priority,
 							};
 							homeConfig.packageDescriptors.Add(painting);
 							sgsHomeConfig.packageDescriptors.Add(painting);
-							AddLock(entry.Lock, entry.ID, lockType, null);
+							AddLock(entry.Lock, entry.ID, behaviorType, null);
 						}
 					}
 				}

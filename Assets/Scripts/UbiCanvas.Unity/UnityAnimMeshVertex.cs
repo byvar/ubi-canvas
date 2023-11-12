@@ -96,6 +96,12 @@ public class UnityAnimMeshVertex : MonoBehaviour {
 			if(Animation.Data.scale != null) scale = new Vector3(Animation.Data.scale.x, Animation.Data.scale.y, 1f);
 			if(Animation.Data.flip) scale = new Vector3(-scale.x, scale.y, scale.z);
 		}
+		if (!(AnimMeshVertexComponentTemplate?.useActorScale ?? true)) {
+			var actorScale = transform.parent?.localScale ?? Vector2.one;
+			if (actorScale.x != 0) scale.x /= MathF.Abs(actorScale.x);
+			if (actorScale.y != 0) scale.y /= MathF.Abs(actorScale.y);
+		}
+		transform.localScale = scale;
 	}
 
 	void UpdateAnimation() {

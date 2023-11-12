@@ -1,53 +1,17 @@
 ﻿using System;
 
 namespace UbiArt {
-	public class PathRef : ICSerializable, IEquatable<PathRef> {
-		public string folder;
-		public string filename;
-		public StringID stringID;
-		public uint flags;
+	public class PathRef : Path, IEquatable<PathRef> {
 
-		public PathRef() {}
+		public PathRef() : base() { }
+		public PathRef(PathRef p) : base(p) { }
+		public PathRef(string folder, string filename, bool cooked = false) : base(folder, filename, cooked: cooked) { }
+		public PathRef(string fullPath, bool cooked = false) : base(fullPath, cooked: cooked) { }
 
-		public PathRef(string folder, string filename) {
-			folder = folder.Replace('\\', '/');
-			if (folder != null && folder != "" && !folder.EndsWith("/")) folder += "/";
-			if (folder != null && folder.StartsWith("/")) folder = folder.Substring(1);
-			if (filename != null && filename.EndsWith(".ckd")) filename = filename.Substring(0, filename.Length - 4);
-			this.folder = folder;
-			this.filename = filename;
-			if ((folder != null && folder != "") || (filename != null && filename != "")) {
-				stringID = new StringID(FullPath);
-			} else {
-				stringID = new StringID();
-			}
-		}
 
-		public string FullPath {
-			get {
-				return (folder ?? "") + (filename ?? "");
-			}
-		}
-
-		public bool IsNull {
-			get {
-				return ((folder == null || folder == "") && (filename == null || filename == "") && stringID.IsNull);
-			}
-		}
-
-		public void Serialize(CSerializerObject s, string name) {
-			// null path: 0, 0, -1, 0
-			folder = s.Serialize<string>(folder);
-			filename = s.Serialize<string>(filename);
-			stringID = s.SerializeObject<StringID>(stringID);
-			if (s.Settings.EngineVersion > EngineVersion.RO) {
-				flags = s.Serialize<uint>(flags);
-				if (flags != 0) s.Context.SystemLogger?.LogInfo("PathRef with nonzero flags: " + this + " - " + flags);
-			}
-		}
 		public override string ToString() {
 			if (stringID.IsNull) return "PathRef(null)";
-			return "PathRef(\"" + folder + "\", \"" + filename + "\")";
+			return $"PathRef(\"{folder}\", \"{filename}\", {stringID.stringID:X8})";
 		}
 		public override bool Equals(object obj) {
 			return obj is PathRef && this == (PathRef)obj;
@@ -68,18 +32,6 @@ namespace UbiArt {
 		}
 		public static bool operator !=(PathRef x, PathRef y) {
 			return !(x == y);
-		}
-		public static implicit operator PathRef(Path p)
-		{
-			if (p == null)
-				return null;
-
-			return new PathRef {
-				filename = p.filename,
-				folder = p.folder,
-				flags = p.flags,
-				stringID = p.stringID
-			};
 		}
 	}
 }
