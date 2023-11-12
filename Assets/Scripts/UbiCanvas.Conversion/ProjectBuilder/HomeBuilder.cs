@@ -32,15 +32,20 @@ namespace UbiCanvas.Conversion {
 				ContainerFile<Scene> homeISC = null;
 				GenericFile<CSerializable> gameConfigISG = null;
 				ContainerFile<Generic<SceneConfig>> homeSGS = null;
+				GenericFile<RO2_HomeManager_Template> homeConfigISG = null;
 				//UbiArt.SceneConfig.SceneConfigManager sceneConfigManager = null;
 				//Path pSgsContainer = new Path("sgscontainer");
 				Path pGameConfig = new Path("enginedata/gameconfig/gameconfig.isg");
 				Path pHomeISC = new Path("world/home/level/home.isc");
 				Path pHomeSGS = new Path("world/home/level/home.sgs");
+				Path pHomeConfig = new Path("enginedata/gameconfig/homeconfig.isg");
 
 				TargetContext.Loader.LoadGenericFile(pGameConfig, isg => {
 					gameConfigISG = isg;
 					TargetContext.Loader.gameConfig = isg.obj as RO2_GameManagerConfig_Template;
+				});
+				TargetContext.Loader.LoadFile<GenericFile<RO2_HomeManager_Template>>(pHomeConfig, isg => {
+					homeConfigISG = isg;
 				});
 				TargetContext.Loader.LoadFile<ContainerFile<Scene>>(pHomeISC, isc => {
 					homeISC = isc;
@@ -49,8 +54,9 @@ namespace UbiCanvas.Conversion {
 					homeSGS = result);
 				await TargetContext.Loader.LoadLoop();
 				var gc = TargetContext.Loader.gameConfig;
-				var homeConfig = homeISC.obj.sceneConfigs.sceneConfigs[0].obj as RO2_SceneConfig_Home;
-				var sgsHomeConfig = homeSGS.obj.obj as RO2_SceneConfig_Home;
+				var hc = homeConfigISG.obj;
+				var homeSceneConfig = homeISC.obj.sceneConfigs.sceneConfigs[0].obj as RO2_SceneConfig_Home;
+				var sgsHomeSceneConfig = homeSGS.obj.obj as RO2_SceneConfig_Home;
 			
 				/*var challengePath = new Path("world/challenge/run_egypt/challengerun/challenge_run_main.isc");
 				var challengeScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, challengePath.FullPath);
@@ -59,13 +65,14 @@ namespace UbiCanvas.Conversion {
 				sceneConfigManager.sgsMap[challengePath.FullPath] = cfg;*/
 
 				await ExtendCostumeRoom();
+				await ExtendTrainingRoom();
 
 				void EnableUbiRay() {
 					var ubiRayStringID = new StringID("Rayman_ubi");
-					var ubiRay = homeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == ubiRayStringID);
+					var ubiRay = homeSceneConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == ubiRayStringID);
 					ubiRay.costumetype2 = RO2_CostumeDescriptor_Template.CostumeType2.Regular;
 					ubiRay.costumetype = RO2_CostumeDescriptor_Template.CostumeType.Regular;
-					ubiRay = sgsHomeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == ubiRayStringID);
+					ubiRay = sgsHomeSceneConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == ubiRayStringID);
 					ubiRay.costumetype2 = RO2_CostumeDescriptor_Template.CostumeType2.Regular;
 					ubiRay.costumetype = RO2_CostumeDescriptor_Template.CostumeType.Regular;
 				}
@@ -190,8 +197,8 @@ namespace UbiCanvas.Conversion {
 								costumetype2 = entry.CostumeType,
 								unlockable = entry.Painting.Unlockable,
 							};
-							homeConfig.costumeDescriptors.Add(costumeDesc);
-							sgsHomeConfig.costumeDescriptors.Add(costumeDesc);
+							homeSceneConfig.costumeDescriptors.Add(costumeDesc);
+							sgsHomeSceneConfig.costumeDescriptors.Add(costumeDesc);
 
 							AddLock(entry.Lock, entry.CostumeID, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.CostumeFrame, "Costumes");
 							AddTagText(entry.CostumeID, entry.NameID);
@@ -263,9 +270,24 @@ namespace UbiCanvas.Conversion {
 								priority = entry.Priority,
 								alternatePriority = entry.Priority,
 							};
-							homeConfig.packageDescriptors.Add(painting);
-							sgsHomeConfig.packageDescriptors.Add(painting);
+							homeSceneConfig.packageDescriptors.Add(painting);
+							sgsHomeSceneConfig.packageDescriptors.Add(painting);
 							AddLock(entry.Lock, entry.ID, behaviorType, null);
+						}
+					}
+					if (levelsConfig?.Challenges != null) {
+						foreach (var entry in levelsConfig.Challenges) {
+							var competition = new CompetitionLevelInfo() {
+								sizeOf = 172,
+								mode = entry.Mode,
+								isg = new PathRef(entry.Path),
+								frequency = entry.Frequency,
+								objective = entry.Objective,
+								score_validation = entry.ScoreValidation,
+								level = new StringID(entry.MapID)
+							};
+							hc.competitionsLevels.Add(competition);
+							homeConfigISG.sizeOf += 0x100;
 						}
 					}
 				}
@@ -278,20 +300,21 @@ namespace UbiCanvas.Conversion {
 						string costumeID = entry.Value;
 						StringID costumeSID = new StringID(costumeID);
 
-						var desc = homeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == costumeSID);
+						var desc = homeSceneConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == costumeSID);
 						if (desc == null) {
 							TargetContext?.SystemLogger?.LogInfo($"Costume descriptor not found: {costumeID}");
 						} else {
 							desc.priority = priority;
-							desc = sgsHomeConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == costumeSID);
+							desc = sgsHomeSceneConfig.costumeDescriptors.FirstOrDefault(c => c.costumeTag == costumeSID);
 							desc.priority = priority;
 						}
 					}
 				}
 				//UnityEngine.Debug.Log(PrintCostumeOrder(gc, homeConfig));
-				
+
 
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pGameConfig.stringID], gameConfigISG);
+				Bundle.AddFile(TargetContext.Loader.CookedPaths[pHomeConfig.stringID], homeConfigISG);
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pHomeSGS.stringID], homeSGS);
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pHomeISC.stringID], homeISC);
 			}
@@ -309,6 +332,72 @@ namespace UbiCanvas.Conversion {
 				b.AppendLine($"\"{desc.priority}\": {players[desc.costumeTag]},");
 
 			return b.ToString();
+		}
+
+		private async Task ExtendTrainingRoom() {
+
+			ContainerFile <Scene> challengeISC = null;
+			Path pChallengeISC = new Path("world/home/level/challenge/challenge.isc");
+
+			/*var minX = -30;
+			var maxX = +30;
+			var extendMinX = -500;
+			var extendMaxX = +500;
+			var scaleFactorX = 7f;*/
+
+			TargetContext.Loader.LoadFile<ContainerFile<Scene>>(pChallengeISC, isc => {
+				challengeISC = isc;
+			});
+			await TargetContext.Loader.LoadLoop();
+
+			// Process training scene
+			var trainingSSA = challengeISC.obj.FindActor(a => a is SubSceneActor && a.USERFRIENDLY == "training").Result as SubSceneActor;
+			var scene = trainingSSA.SCENE.value;
+
+			// For now, just replace the last two...
+			var webPickable = scene.FindPickable(p => p.USERFRIENDLY == "challenge_goingdown_web");
+			webPickable.ContainingScene.DeletePickable(webPickable.Result);
+			var spacing = new Vec2d(7f, 0f);
+
+			var lastPos = scene.FindPickable(p => p.USERFRIENDLY == "challenge_drc").Result.POS2D;
+			lastPos += spacing;
+			var ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_classicrun_egypt.isc");
+			scene.AddActor(ssa, ssa.USERFRIENDLY);
+			ssa.POS2D = lastPos;
+			lastPos += spacing;
+			ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_classicrun_dojo.isc");
+			scene.AddActor(ssa, ssa.USERFRIENDLY);
+			ssa.POS2D = lastPos;
+
+			await ReplaceSceneByName("challenge_classicrun", "world/home/brick/challenge/challenge_classicrun.isc");
+			await ReplaceSceneByName("challenge_shaolin", "world/home/brick/challenge/challenge_shaolin.isc");
+			await ReplaceSceneByName("challenge_goingup", "world/home/brick/challenge/challenge_goingup.isc");
+			await ReplaceSceneByName("challenge_goingdown", "world/home/brick/challenge/challenge_goingdown.isc");
+			await ReplaceSceneByName("challenge_drc", "world/home/brick/challenge/challenge_drc.isc");
+
+			Bundle.AddFile(pChallengeISC.CookedPath(TargetContext), challengeISC);
+
+			async Task<SubSceneActor> CreateSubSceneActorFromScene(string path) {
+				var newScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, path);
+				if(newScene == null) return null;
+				var newActor = new SubSceneActor() {
+					USERFRIENDLY = new Path(path).GetFilenameWithoutExtension(removeCooked: true),
+					LUA = new Path("enginedata/actortemplates/subscene.tpl"),
+
+					EMBED_SCENE = true,
+					ZFORCED = true,
+					SCENE = new UbiArt.Nullable<Scene>((Scene)(await TargetContext.Loader.Clone(newScene?.obj, "isc")))
+				};
+				return newActor;
+			}
+			async Task ReplaceScene(SubSceneActor act, string path) {
+				var newScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, path);
+				if (newScene == null) return;
+				act.SCENE = new UbiArt.Nullable<Scene>(newScene.obj);
+			}
+			async Task ReplaceSceneByName(string name, string path) {
+				await ReplaceScene(scene.FindActor(a => a.USERFRIENDLY == name && a is SubSceneActor).Result as SubSceneActor, path);
+			}
 		}
 
 		private async Task ExtendCostumeRoom() {

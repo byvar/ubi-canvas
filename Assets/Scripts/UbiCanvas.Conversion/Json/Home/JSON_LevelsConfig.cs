@@ -11,6 +11,7 @@ namespace UbiCanvas.Conversion.Json {
 		public List<JSON_WorldInfo> Worlds { get; set; }
 		public List<JSON_LevelInfo> Levels { get; set; }
 		public List<JSON_CostumeInfo> Costumes { get; set; }
+		public List<JSON_ChallengeCompetitionLevel> Challenges { get; set; }
 
 		public List<JSON_HomePainting> MainPaintings { get; set; } // Add to home.isc sceneconfig[0].packageDescriptors
 
