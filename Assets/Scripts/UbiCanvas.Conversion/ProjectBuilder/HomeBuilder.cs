@@ -221,6 +221,7 @@ namespace UbiCanvas.Conversion {
 								presence = new StringID(entry.Presence),
 							};
 							gc.worldsInfo.Add(world);
+							gameConfigISG.sizeOf += 1024;
 							AddTagText(entry.WorldID, entry.NameID);
 						}
 					}
@@ -231,7 +232,7 @@ namespace UbiCanvas.Conversion {
 								tag = new StringID(entry.MapID),
 								worldTag = new StringID(entry.WorldID),
 								mapPath = new PathRef(entry.MapPath),
-								mapNameId = new LocalisationId(4721),
+								mapNameId = new LocalisationId(entry.NameID),
 								texturePath = new Path(entry.TexturePath),
 								maxLumsCount = (uint)entry.LumsCount,
 								scoreRecapPath = new Path(entry.ScoreRecapPath),
@@ -251,6 +252,7 @@ namespace UbiCanvas.Conversion {
 								difficulty = (uint)entry.Difficulty,
 							};
 							gc.levelsInfo.Add(map);
+							gameConfigISG.sizeOf += 0x800;
 							AddLock(entry.Lock, entry.MapID, RO2_GameManagerConfig_Template.LockDataClass.NodeBehaviorType.Level, entry.WorldID);
 							AddTagText(entry.MapID, entry.NameID);
 						}
