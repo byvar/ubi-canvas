@@ -44,14 +44,14 @@ namespace UbiCanvas.Tools
 					if(sceneName.Contains('.')) sceneName = sceneName.Substring(0, sceneName.IndexOf('.'));
 					var subfolderName = sceneName;
 
-					if (lvlPath.Contains("challenge/run/challengerun/")) {
+					if (lvlPath.Contains("challenge/run/challengerun/") && subfolderName == "challenge_run_main") {
 						var version = AdventuresToLegendsConverter.GetVersion(Controller.MainContext);
 						switch (version) {
 							case AdventuresToLegendsConverter.SpecialVersion.EventDesertMarathon:
-								subfolderName += "_egypt";
+								subfolderName = "challenge_run_egypt";
 								break;
 							case AdventuresToLegendsConverter.SpecialVersion.EventGoldenMarathon:
-								subfolderName += "_dojo";
+								subfolderName = "challenge_run_dojo";
 								break;
 						}
 					}

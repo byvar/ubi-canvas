@@ -110,6 +110,8 @@ namespace UbiCanvas.Conversion {
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("lightingmushroom.tpl", "lightingmushroom_adv.tpl"));
 				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength.tpl", "world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength_rlc.tpl"));
+				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("umbrella/classic/", "umbrella/adv/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/"));
@@ -196,6 +198,8 @@ namespace UbiCanvas.Conversion {
 							new PathConversionRule("world/rlc_landofthedead/", "world/egypt/rlc_landofthedead/"));
 						conversionSettings.PathConversionRules.Add(
 							new PathConversionRule("world/common/enemy/devilbob/", "world/egypt/common/enemy/devilbob/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_egypt"));
 						break;
 					case SpecialVersion.EventGoldenMarathon:
 						conversionSettings.PathConversionRules.Add(
@@ -204,10 +208,14 @@ namespace UbiCanvas.Conversion {
 							new PathConversionRule("world/landofthedead/", "world/goldenkingdom/landofthedead/"));
 						conversionSettings.PathConversionRules.Add(
 							new PathConversionRule("world/rlc_landofthedead/", "world/goldenkingdom/rlc_landofthedead/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_dojo"));
 						break;
 					default:
 						conversionSettings.PathConversionRules.Add(
 							new PathConversionRule("world/challenge/run/", "world/rlc/challenge/run/"));
+						conversionSettings.PathConversionRules.Add(
+							new PathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_rlc"));
 						break;
 				}
 
@@ -1295,8 +1303,26 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/challenge/run/challengerun/brick/medium/runbrick_medium_75.isc": {
 						// This brick has a rope (that's also inverted) that goes down too fast
-						var res = scene.FindActor(a => a.USERFRIENDLY == "liana_zipline_freelength");
-						res.Result.POS2D += new Vec2d(0.71345f, 1.6302362f);
+						// Commented for now because I think this was only bugged because the template in Adventures is different from Legends
+						//var res = scene.FindActor(a => a.USERFRIENDLY == "liana_zipline_freelength");
+						//res.Result.POS2D += new Vec2d(0.71345f, 1.6302362f);
+						break;
+					}
+				case "world/challenge/run/challengerun/brick/hard/runbrick_hard_48.isc": {
+						// This brick has a forced crush attack -> ring grab combination which can't work in Legends
+						// Delete "grp" and spawn a rabbid on a shield there :)
+						var mast = scene.FindPickable(p => p.USERFRIENDLY == "mast_nocol@1");
+						mast.ContainingScene.DeletePickable(mast.Result);
+						var ring = scene.FindPickable(p => p.USERFRIENDLY == "ring@1");
+						ring.ContainingScene.DeletePickable(ring.Result);
+
+						var rabbidPath = new Path("world/rlc/common/enemy/rabbid_normal/rabbid_shield.tsc");
+						if (Version == SpecialVersion.EventGoldenMarathon) {
+							rabbidPath = new Path("world/rlc/common/enemy/rabbid_winter/rabbid_shield.tsc");
+						}
+						var rabbidSSA = await AddNewActor(ring.ContainingScene, rabbidPath, contextToLoadFrom: LegendsContext);
+						rabbidSSA.xFLIPPED = false;
+						rabbidSSA.POS2D = ring.Result.POS2D - new Vec2d(0f, 2.5f);
 						break;
 					}
 				case "world/challenge/run/challengerun/brick/medium/runbrick_medium_74.isc": {
@@ -1643,6 +1669,10 @@ namespace UbiCanvas.Conversion {
 					}
 
 					if (path.FullPath.StartsWith("world/challenge/run")) {
+						chal.filterOrder = new CListO<CListP<string>>() {
+							new CListP<string>() { "lums_lumsattackexpert", "lums_lumsattack", "lums_default" },
+							new CListP<string>() { "tuto", "notuto" }
+						};
 						if (Version == SpecialVersion.EventGoldenMarathon) {
 							chal.inGameMusic = new UbiArt.Nullable<EventPlayMusic>();
 							chal.gameOverMusic = new UbiArt.Nullable<EventPlayMusic>(new EventPlayMusic() {
