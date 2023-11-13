@@ -894,23 +894,37 @@ namespace UbiCanvas.Conversion {
 			var inPath = System.IO.Path.Combine(projectPath, "wwise");
 
 			JSON_WwiseInfo wwiseInfo = null;
-
-			var wwiseName = context.Settings.Game == Game.RA ? "adventures" : "mini";
-			var json = System.IO.File.ReadAllText(System.IO.Path.Combine(inPath, $"sounds_{wwiseName}.json"));
-			wwiseInfo = JsonConvert.DeserializeObject<JSON_WwiseInfo>(json);
+			var conversionSettings = new WwiseConversionSettings();
 
 			// Create dictionaries for better performance
 			Dictionary<long, JSON_WwiseEvent> wwiseEventsLookup = new Dictionary<long, JSON_WwiseEvent>();
 			Dictionary<long, JSON_WwiseAction> wwiseActionsLookup = new Dictionary<long, JSON_WwiseAction>();
 			Dictionary<long, WwiseConversionSettings.Action> wwiseActionsClassesLookup = new Dictionary<long, WwiseConversionSettings.Action>();
-			foreach (var ev in wwiseInfo.Events) {
-				wwiseEventsLookup[ev.ID] = ev;
-			}
-			foreach (var act in wwiseInfo.Actions) {
-				wwiseActionsLookup[act.ID] = act;
+
+
+			// Mini sound files are higher quality - we pick those if they exist. Otherwise we load the Adventures file
+			// Might cause issues though... revert to old code if it does!
+			var jsonFiles = new string[] { "mini", "adventures" };
+			foreach (var wwiseName in jsonFiles) {
+				var json = System.IO.File.ReadAllText(System.IO.Path.Combine(inPath, $"sounds_{wwiseName}.json"));
+				wwiseInfo = JsonConvert.DeserializeObject<JSON_WwiseInfo>(json);
+				foreach (var ev in wwiseInfo.Events) {
+					if(wwiseEventsLookup.ContainsKey(ev.ID)) continue;
+					wwiseEventsLookup[ev.ID] = ev;
+				}
+				foreach (var act in wwiseInfo.Actions) {
+					if (wwiseActionsLookup.ContainsKey(act.ID)) continue;
+					wwiseActionsLookup[act.ID] = act;
+				}
+				foreach (var att in wwiseInfo.Attenuations) {
+					if(conversionSettings.Attenuations.ContainsKey(att.ID)) continue;
+					conversionSettings.Attenuations.Add(att.ID, new WwiseConversionSettings.Attenuation() {
+						Volume = CreateCurve(att.Volume),
+						Spread = CreateCurve(att.Spread),
+					});
+				}
 			}
 
-			var conversionSettings = new WwiseConversionSettings();
 			WwiseConversionSettings.Curve CreateCurve(JSON_WwiseCurve curve) {
 				if(curve == null) return null;
 				return new WwiseConversionSettings.Curve() {
@@ -919,12 +933,6 @@ namespace UbiCanvas.Conversion {
 						Y = p.Y
 					}).ToArray()
 				};
-			}
-			foreach (var att in wwiseInfo.Attenuations) {
-				conversionSettings.Attenuations.Add(att.ID, new WwiseConversionSettings.Attenuation() {
-					Volume = CreateCurve(att.Volume),
-					Spread = CreateCurve(att.Spread),
-				});
 			}
 
 			GenericFile<CSerializable> soundConfigISG = null;
