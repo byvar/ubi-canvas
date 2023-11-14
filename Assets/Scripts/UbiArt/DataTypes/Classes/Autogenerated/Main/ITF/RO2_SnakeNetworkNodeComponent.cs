@@ -11,7 +11,7 @@ namespace UbiArt.ITF {
 			public float speedMultiplier = 1f;
 			public bool forceApplySpeed;
 			public float acceleration;
-			public float accelerationMultiplier;
+			public float accelerationMultiplier = 2.5f;
 			public bool disableSpeedMultiplier;
 			public bool stopOnNode;
 			public float detectionDistMultiplier = 1f;

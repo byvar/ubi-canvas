@@ -2,16 +2,16 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_FairyComponent_Template : ActorComponent_Template {
 		public float flyDist;
-		public float flySpeed;
-		public float flyAccelerationMultiplier;
+		public float flySpeed = 5f;
+		public float flyAccelerationMultiplier = 10f;
 		public float rushDist;
-		public float rushSpeed;
-		public float rushAccelerationMultiplier;
+		public float rushSpeed = 10f;
+		public float rushAccelerationMultiplier = 10f;
 		public float keepRushTime;
 		public bool displayDialogStill;
 		public Path lumPath;
 		public bool drcSlowEnabled;
-		public float drcSlowFactor;
+		public float drcSlowFactor = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			flyDist = s.Serialize<float>(flyDist, name: "flyDist");

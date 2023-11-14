@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL | GameFlags.RA)]
+	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_SnakeBodyPartAmvRenderer_Template : RO2_SnakeBodyPartRenderer_Template {
 		public StringID anim;
 		public uint startFrame;
@@ -11,19 +11,12 @@ namespace UbiArt.ITF {
 		public CListO<Vec2d> otherPolyline = new CListO<Vec2d>(new List<Vec2d>() { new Vec2d(0, 0.1f) });
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.Game == Game.RL) {
-				anim = s.SerializeObject<StringID>(anim, name: "anim");
-				startFrame = s.Serialize<uint>(startFrame, name: "startFrame");
-				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
-				color = s.SerializeObject<Color>(color, name: "color");
-				polyline = s.SerializeObject<CListO<Vec2d>>(polyline, name: "polyline");
-				otherPolyline = s.SerializeObject<CListO<Vec2d>>(otherPolyline, name: "otherPolyline");
-			} else {
-				anim = s.SerializeObject<StringID>(anim, name: "anim");
-				startFrame = s.Serialize<uint>(startFrame, name: "startFrame");
-				scale = s.SerializeObject<Vec2d>(scale, name: "scale");
-				color = s.SerializeObject<Color>(color, name: "color");
-			}
+			anim = s.SerializeObject<StringID>(anim, name: "anim");
+			startFrame = s.Serialize<uint>(startFrame, name: "startFrame");
+			scale = s.SerializeObject<Vec2d>(scale, name: "scale");
+			color = s.SerializeObject<Color>(color, name: "color");
+			polyline = s.SerializeObject<CListO<Vec2d>>(polyline, name: "polyline");
+			otherPolyline = s.SerializeObject<CListO<Vec2d>>(otherPolyline, name: "otherPolyline");
 		}
 		public override uint? ClassCRC => 0x257E9550;
 	}

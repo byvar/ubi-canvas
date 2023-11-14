@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_FairyNodeComponent : RO2_SnakeNetworkNodeComponent {
 		public uint lumsCount;
-		public float lumsDropMinDist;
-		public float lumsDropStepDist;
+		public float lumsDropMinDist = 1f;
+		public float lumsDropStepDist = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			lumsCount = s.Serialize<uint>(lumsCount, name: "lumsCount");

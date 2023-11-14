@@ -227,6 +227,14 @@ namespace UbiCanvas.Conversion {
 					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
 				conversionSettings.PathConversionRules.Add(
 					new PathConversionRule("world/landofthedead/common/breakable/bonestack/", "world/landofthedead/common/breakable/bonestack_mini/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/jungle/common/platform/mushroomplatform/", "world/jungle/common/platform/mushroomplatform_mini/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/common/platform/fluidfall/", "world/common/platform/fluidfall_mini/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/jungle/common/platform/geyser/", "world/jungle/common/platform/geyser_mini/"));
+				conversionSettings.PathConversionRules.Add(
+					new PathConversionRule("world/music/common/platform/snakeride/", "world/music/common/platform/snakeride_mini/"));
 			}
 			if (oldSettings.Platform == GamePlatform.Vita) {
 				//conversionSettings.PathConversionRules.Add(
@@ -398,6 +406,8 @@ namespace UbiCanvas.Conversion {
 			await SpawnRabbids(mainContext, settings, scene); // Before LevelSpecificChanges!
 
 			await LevelSpecificChanges(mainContext, settings, scene);
+
+			MiniHandleMRDARKScene(mainContext, settings, scene);
 
 			FixBasketNinjas(mainContext, settings, scene);
 
@@ -3822,6 +3832,16 @@ namespace UbiCanvas.Conversion {
 			};
 		}
 
+		public void MiniHandleMRDARKScene(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RM) return;
+
+			var mrDark = scene.FindPickable(p => p.USERFRIENDLY.ToUpperInvariant() == "MRDARK" && p is SubSceneActor);
+			if (mrDark?.Result != null) {
+				mrDark.ContainingScene.DeletePickable(mrDark.Result);
+			}
+		}
+
 		public void FixBasketNinjas(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
@@ -4215,6 +4235,25 @@ namespace UbiCanvas.Conversion {
 					var tpl = tplPair.Value as GenericFile<Actor_Template>;
 					if (tpl?.obj == null) continue;
 					var soundComponent = tpl.obj.GetComponent<SoundComponent_Template>();
+					if (soundComponent != null) {
+						// Merge soundComponents
+						/*var components = tpl.obj.GetComponents<SoundComponent_Template>()?.ToArray();
+						if (components != null && components.Length > 1) {
+							for (int i = 1; i < components.Length; i++) {
+								var secondaryComponent = components[i];
+								if(secondaryComponent == null) continue;
+
+								if (secondaryComponent.soundList != null) {
+									if (soundComponent.soundList == null) soundComponent.soundList = new CListO<SoundDescriptor_Template>();
+									soundComponent.soundList = new CListO<SoundDescriptor_Template>(soundComponent.soundList
+										.Where(s => !secondaryComponent.soundList.Any(s2 => s2.name == s.name))
+										.Concat(secondaryComponent.soundList).ToList());
+								}
+								if(secondaryComponent.defaultSoundIsAlwaysActive) soundComponent.defaultSoundIsAlwaysActive = true;
+								if(!(secondaryComponent.defaultSound?.IsNull ?? true)) soundComponent.defaultSound = secondaryComponent.defaultSound;
+							}
+						}*/
+					}
 					var fxComponent = tpl.obj.GetComponent<FXControllerComponent_Template>();
 					if(soundComponent?.soundList == null || fxComponent?.fxControlList == null) continue; // Needs a sound component
 

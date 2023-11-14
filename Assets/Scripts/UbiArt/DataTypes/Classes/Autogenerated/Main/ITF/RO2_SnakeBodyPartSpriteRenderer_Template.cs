@@ -4,21 +4,15 @@ namespace UbiArt.ITF {
 		public AnimationAtlas anim;
 		public AABB drawAABB = new AABB() { MIN = new Vec2d(-1, -1), MAX = new Vec2d(0.5f, 0) };
 		public Color color = Color.White;
-		public Placeholder polyline;
-		public Placeholder otherPolyline;
+		public CListO<Vec2d> polyline;
+		public CListO<Vec2d> otherPolyline;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.Game == Game.RL) {
-				anim = s.SerializeObject<AnimationAtlas>(anim, name: "anim");
-				drawAABB = s.SerializeObject<AABB>(drawAABB, name: "drawAABB");
-				color = s.SerializeObject<Color>(color, name: "color");
-				polyline = s.SerializeObject<Placeholder>(polyline, name: "polyline");
-				otherPolyline = s.SerializeObject<Placeholder>(otherPolyline, name: "otherPolyline");
-			} else {
-				anim = s.SerializeObject<AnimationAtlas>(anim, name: "anim");
-				drawAABB = s.SerializeObject<AABB>(drawAABB, name: "drawAABB");
-				color = s.SerializeObject<Color>(color, name: "color");
-			}
+			anim = s.SerializeObject<AnimationAtlas>(anim, name: "anim");
+			drawAABB = s.SerializeObject<AABB>(drawAABB, name: "drawAABB");
+			color = s.SerializeObject<Color>(color, name: "color");
+			polyline = s.SerializeObject<CListO<Vec2d>>(polyline, name: "polyline");
+			otherPolyline = s.SerializeObject<CListO<Vec2d>>(otherPolyline, name: "otherPolyline");
 		}
 		public override uint? ClassCRC => 0x56D9502D;
 	}
