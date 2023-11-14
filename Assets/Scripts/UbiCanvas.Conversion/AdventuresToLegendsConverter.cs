@@ -96,126 +96,76 @@ namespace UbiCanvas.Conversion {
 			var conversionSettings = ConversionSettings;
 			var oldSettings = OldSettings;
 
-			if (oldSettings.Game == Game.RA || oldSettings.Game == Game.RM) {
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("common/matshader/", "common/matshader_adv/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("common/fx/lifeelements/water/", "common/fx/lifeelements/water_adv/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("common/platform/aspinetwork/", "common/platform/aspinetwork_adv/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/music/castlesiege/playground/", "world/music/castlesiege/playground_rlc/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("rotation_biggear.tpl", "rotation_biggear_adv.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("lightingmushroom.tpl", "lightingmushroom_adv.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength.tpl", "world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength_rlc.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("umbrella/classic/", "umbrella/adv/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/"));
-				//conversionSettings.PathConversionRules.Add(
-				//	new PathConversionRule("world/common/friendly/lumschain/components/lumschain.tpl", "world/common/friendly/lumschain/components/lumschain_adv.tpl"));
-				/*conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/fireworks/", "world/common/fx/textures/fireworks_adv/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/star/", "world/common/fx/textures/star_adv/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/light/", "world/common/fx/textures/light_adv/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/smoke/", "world/common/fx/textures/smoke_adv/")); // TODO: fix smoke textures coming from egghunt
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/smoke_adv/fx_steam_anim_01.tga", "world/common/fx/textures/smoke/fx_steam_anim_01.tga"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/smoke_adv/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/pollen/", "world/common/fx/textures/pollen_adv/"));*/
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures/", "world/common/fx/textures_adv/"));
-				/*conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/textures_adv/smoke/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga"));*/
+			void AddPathConversionRule(string path, string replace) => conversionSettings.PathConversionRules.Add(new PathConversionRule(path, replace));
 
-				/*conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/", "world/common/fx_/"));*/
-				/*conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/lifeelements2/dust/", "world/common/fx/lifeelements2/dust_adv/"));*/
-				//conversionSettings.PathConversionRules.Add(
-				//	new PathConversionRule("world/common/ldfrieze/polystyrene/frieze/", "world/common/ldfrieze/polystyrene/frieze_adv/"));
+			if (oldSettings.Game == Game.RA || oldSettings.Game == Game.RM) {
+				AddPathConversionRule("common/matshader/", "common/matshader_adv/");
+				AddPathConversionRule("common/fx/lifeelements/water/", "common/fx/lifeelements/water_adv/");
+				AddPathConversionRule("common/platform/aspinetwork/", "common/platform/aspinetwork_adv/");
+				AddPathConversionRule("world/music/castlesiege/playground/", "world/music/castlesiege/playground_rlc/");
+				AddPathConversionRule("rotation_biggear.tpl", "rotation_biggear_adv.tpl");
+				AddPathConversionRule("lightingmushroom.tpl", "lightingmushroom_adv.tpl");
+				AddPathConversionRule("world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength.tpl", "world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength_rlc.tpl");
+				AddPathConversionRule("umbrella/classic/", "umbrella/adv/");
+				AddPathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/");
+				//AddPathConversionRule("world/common/friendly/lumschain/components/lumschain.tpl", "world/common/friendly/lumschain/components/lumschain_adv.tpl");
+				/*AddPathConversionRule("world/common/fx/textures/fireworks/", "world/common/fx/textures/fireworks_adv/");
+				AddPathConversionRule("world/common/fx/textures/star/", "world/common/fx/textures/star_adv/");
+				AddPathConversionRule("world/common/fx/textures/light/", "world/common/fx/textures/light_adv/");
+				AddPathConversionRule("world/common/fx/textures/smoke/", "world/common/fx/textures/smoke_adv/"); // TODO: fix smoke textures coming from egghunt
+				AddPathConversionRule("world/common/fx/textures/smoke_adv/fx_steam_anim_01.tga", "world/common/fx/textures/smoke/fx_steam_anim_01.tga");
+				AddPathConversionRule("world/common/fx/textures/smoke_adv/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga");
+				AddPathConversionRule("world/common/fx/textures/pollen/", "world/common/fx/textures/pollen_adv/");*/
+				AddPathConversionRule("world/common/fx/textures/", "world/common/fx/textures_adv/");
+				/*AddPathConversionRule("world/common/fx/textures_adv/smoke/fx_smokeship_01.tga", "world/common/fx/textures/smoke/fx_smokeship_01.tga");*/
+				/*AddPathConversionRule("world/common/fx/", "world/common/fx_/");*/
+				/*AddPathConversionRule("world/common/fx/lifeelements2/dust/", "world/common/fx/lifeelements2/dust_adv/");*/
+				//AddPathConversionRule("world/common/ldfrieze/polystyrene/frieze/", "world/common/ldfrieze/polystyrene/frieze_adv/");
 
 				// Teensies
-				//conversionSettings.PathConversionRules.Add(
-				//	new PathConversionRule("world/common/friendly/bt_friendly/teensy/components/teensy.tpl", "world/common/friendly/bt_friendly/teensy/components/teensy_rlc.tpl"));
-				//conversionSettings.PathConversionRules.Add(
-				//	new PathConversionRule("world/common/breakable/post/components/post.tpl", "world/common/breakable/post/components/post_rlc.tpl"));
+				//AddPathConversionRule("world/common/friendly/bt_friendly/teensy/components/teensy.tpl", "world/common/friendly/bt_friendly/teensy/components/teensy_rlc.tpl");
+				//AddPathConversionRule("world/common/breakable/post/components/post.tpl", "world/common/breakable/post/components/post_rlc.tpl");
 
 				// Enemy animations
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/enemy/jacquouille/animation/", "world/common/enemy/jacquouille/animation_rlc/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/mountain/common/enemy/minotaur/animation/", "world/mountain/common/enemy/minotaur/animation_rlc/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/enemy/toad/animation/", "world/common/enemy/toad/animation_rlc/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/mountain/common/friendly/light_bulbalums/animation/", "world/mountain/common/friendly/light_bulbalums/animation_rlc/"));
-				/*conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/enemy/toad/", "world/common/enemy/toad_rlc/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/enemy/jacquouille/", "world/common/enemy/jacquouille_rlc/"));*/
-
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/blocker/drc/mechadoor/actor/tweening/door1.tpl", "world/common/blocker/drc/mechadoor/actor/tweening/door1_rlc.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/mountain/mecha/playground/enemy/buzzsaw/", "world/mountain/mecha/playground/enemy/buzzsaw_rlc/"));
-				//conversionSettings.PathConversionRules.Add(
-				//	new PathConversionRule("world/landofthedead/common/enemy/balancingaxe/", "world/landofthedead/common/enemy/balancingaxe_rlc/"));
+				AddPathConversionRule("world/common/enemy/jacquouille/animation/", "world/common/enemy/jacquouille/animation_rlc/");
+				AddPathConversionRule("world/mountain/common/enemy/minotaur/animation/", "world/mountain/common/enemy/minotaur/animation_rlc/");
+				AddPathConversionRule("world/common/enemy/toad/animation/", "world/common/enemy/toad/animation_rlc/");
+				AddPathConversionRule("world/mountain/common/friendly/light_bulbalums/animation/", "world/mountain/common/friendly/light_bulbalums/animation_rlc/");
+				/*AddPathConversionRule("world/common/enemy/toad/", "world/common/enemy/toad_rlc/");
+				AddPathConversionRule("world/common/enemy/jacquouille/", "world/common/enemy/jacquouille_rlc/");*/
+				
+				AddPathConversionRule("enginedata/actortemplates/tpl_staticmeshvertexcomponent.tpl", "enginedata/actortemplates/tpl_staticmeshvertexcomponent_rlc.tpl");
+				AddPathConversionRule("world/common/blocker/drc/mechadoor/actor/tweening/door1.tpl", "world/common/blocker/drc/mechadoor/actor/tweening/door1_rlc.tpl");
+				AddPathConversionRule("world/mountain/mecha/playground/enemy/buzzsaw/", "world/mountain/mecha/playground/enemy/buzzsaw_rlc/");
+				//AddPathConversionRule("world/landofthedead/common/enemy/balancingaxe/", "world/landofthedead/common/enemy/balancingaxe_rlc/");
 
 				// Tweening (rename for sounds)
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/logicactor/tweening/tweeneditortype/components/", "world/common/logicactor/tweening/tweeneditortype/components_rlc/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/logicactor/tweening/tweeneditortype/components_rlc/tween_notype.tpl", "world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/fx/lifeelements/musical/", "world/common/fx/lifeelements_rlc/musical/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/friendly/skullcoin/components/skullcoin.tpl", "world/common/friendly/skullcoin/components/skullcoin_rlc.tpl"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/ocean/common/platform/geyserplatform/", "world/ocean/common/platform/geyserplatform_rlc/"));
-				//conversionSettings.PathConversionRules.Add(
-				//	new PathConversionRule("world/common/logicactor/shape/components/editableshape.tpl", "world/common/logicactor/shape/components/editableshape_rlc.tpl"));
+				AddPathConversionRule("world/common/logicactor/tweening/tweeneditortype/components/", "world/common/logicactor/tweening/tweeneditortype/components_rlc/");
+				AddPathConversionRule("world/common/logicactor/tweening/tweeneditortype/components_rlc/tween_notype.tpl", "world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
+				AddPathConversionRule("world/common/fx/lifeelements/musical/", "world/common/fx/lifeelements_rlc/musical/");
+				AddPathConversionRule("world/common/friendly/skullcoin/components/skullcoin.tpl", "world/common/friendly/skullcoin/components/skullcoin_rlc.tpl");
+				AddPathConversionRule("world/ocean/common/platform/geyserplatform/", "world/ocean/common/platform/geyserplatform_rlc/");
+				//AddPathConversionRule("world/common/logicactor/shape/components/editableshape.tpl", "world/common/logicactor/shape/components/editableshape_rlc.tpl");
 
 
 				// Challenges
 				switch (Version) {
 					case SpecialVersion.EventDesertMarathon:
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("world/challenge/run/", "world/egypt/challenge/run/"));
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("world/landofthedead/", "world/egypt/landofthedead/"));
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("world/rlc_landofthedead/", "world/egypt/rlc_landofthedead/"));
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("world/common/enemy/devilbob/", "world/egypt/common/enemy/devilbob/"));
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_egypt"));
+						AddPathConversionRule("world/challenge/run/", "world/egypt/challenge/run/");
+						AddPathConversionRule("world/landofthedead/", "world/egypt/landofthedead/");
+						AddPathConversionRule("world/rlc_landofthedead/", "world/egypt/rlc_landofthedead/");
+						AddPathConversionRule("world/common/enemy/devilbob/", "world/egypt/common/enemy/devilbob/");
+						AddPathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_egypt");
 						break;
 					case SpecialVersion.EventGoldenMarathon:
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("world/challenge/run/", "world/goldenkingdom/challenge/run/"));
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("world/landofthedead/", "world/goldenkingdom/landofthedead/"));
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("world/rlc_landofthedead/", "world/goldenkingdom/rlc_landofthedead/"));
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_dojo"));
+						AddPathConversionRule("world/challenge/run/", "world/goldenkingdom/challenge/run/");
+						AddPathConversionRule("world/landofthedead/", "world/goldenkingdom/landofthedead/");
+						AddPathConversionRule("world/rlc_landofthedead/", "world/goldenkingdom/rlc_landofthedead/");
+						AddPathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_dojo");
 						break;
 					default:
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("world/challenge/run/", "world/rlc/challenge/run/"));
-						conversionSettings.PathConversionRules.Add(
-							new PathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_rlc"));
+						AddPathConversionRule("world/challenge/run/", "world/rlc/challenge/run/");
+						AddPathConversionRule("challengerun/challenge_run_main", "challengerun/challenge_run_rlc");
 						break;
 				}
 
@@ -223,18 +173,15 @@ namespace UbiCanvas.Conversion {
 				InitRabbidPathConversion(Version, conversionSettings);
 			}
 			if (oldSettings.Game == Game.RM) {
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/landofthedead/common/breakable/bonestack/", "world/landofthedead/common/breakable/bonestack_mini/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/jungle/common/platform/mushroomplatform/", "world/jungle/common/platform/mushroomplatform_mini/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/common/platform/fluidfall/", "world/common/platform/fluidfall_mini/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/jungle/common/platform/geyser/", "world/jungle/common/platform/geyser_mini/"));
-				conversionSettings.PathConversionRules.Add(
-					new PathConversionRule("world/music/common/platform/snakeride/", "world/music/common/platform/snakeride_mini/"));
+				AddPathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/");
+				AddPathConversionRule("world/landofthedead/common/breakable/bonestack/", "world/landofthedead/common/breakable/bonestack_mini/");
+				AddPathConversionRule("world/jungle/common/platform/mushroomplatform/", "world/jungle/common/platform/mushroomplatform_mini/");
+				AddPathConversionRule("world/common/platform/fluidfall/", "world/common/platform/fluidfall_mini/");
+				AddPathConversionRule("world/jungle/common/platform/geyser/", "world/jungle/common/platform/geyser_mini/");
+				AddPathConversionRule("world/music/common/platform/snakeride/", "world/music/common/platform/snakeride_mini/");
+				AddPathConversionRule("world/music/common/platform/friendlyroot/", "world/music/common/platform/friendlyroot_mini/");
+				AddPathConversionRule("world/food/common/enemy/foodspikysnake/", "world/food/common/enemy/foodspikysnake_mini/");
+				AddPathConversionRule("world/common/friendly/bulb_explosif/", "world/common/friendly/bulb_explosif_mini/");
 			}
 			if (oldSettings.Platform == GamePlatform.Vita) {
 				//conversionSettings.PathConversionRules.Add(
@@ -244,26 +191,23 @@ namespace UbiCanvas.Conversion {
 		}
 
 		void InitRabbidPathConversion(SpecialVersion version, ConversionSettings conversionSettings) {
+			void AddPathConversionRule(string path, string replace) => conversionSettings.PathConversionRules.Add(new PathConversionRule(path, replace));
+
 			switch (version) {
 				case SpecialVersion.EventHalloween:
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_halloween/"));
+					AddPathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_halloween/");
 					break;
 				case SpecialVersion.EventWinter:
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_winter/"));
+					AddPathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_winter/");
 					break;
 				case SpecialVersion.EventEaster:
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_normal/"));
+					AddPathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_normal/");
 					break;
 				case SpecialVersion.EventSummer:
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_summer/"));
+					AddPathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_summer/");
 					break;
 				default:
-					conversionSettings.PathConversionRules.Add(
-						new PathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_renaissance/"));
+					AddPathConversionRule("world/rlc/common/enemy/rabbid/", "world/rlc/common/enemy/rabbid_renaissance/");
 					break;
 			}
 		}
