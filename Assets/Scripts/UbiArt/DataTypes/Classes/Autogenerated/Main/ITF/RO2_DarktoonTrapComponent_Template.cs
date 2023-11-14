@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public StringID animHit;
 		public StringID animFall;
 		public StringID animStun;
-		public float stunDuration;
+		public float stunDuration = 2f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animIdle = s.SerializeObject<StringID>(animIdle, name: "animIdle");

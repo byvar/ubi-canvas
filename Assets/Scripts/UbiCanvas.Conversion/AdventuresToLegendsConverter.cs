@@ -174,7 +174,9 @@ namespace UbiCanvas.Conversion {
 			}
 			if (oldSettings.Game == Game.RM) {
 				AddPathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/");
-				AddPathConversionRule("world/landofthedead/common/breakable/bonestack/", "world/landofthedead/common/breakable/bonestack_mini/");
+				AddPathConversionRule("world/landofthedead/", "world/landofthedead_mini/");
+				//AddPathConversionRule("world/landofthedead/common/breakable/bonestack/", "world/landofthedead/common/breakable/bonestack_mini/");
+				//AddPathConversionRule("world/landofthedead/common/breakable/bonesbridge/", "world/landofthedead/common/breakable/bonesbridge_mini/");
 				AddPathConversionRule("world/jungle/common/platform/mushroomplatform/", "world/jungle/common/platform/mushroomplatform_mini/");
 				AddPathConversionRule("world/common/platform/fluidfall/", "world/common/platform/fluidfall_mini/");
 				AddPathConversionRule("world/jungle/common/platform/geyser/", "world/jungle/common/platform/geyser_mini/");
@@ -182,6 +184,10 @@ namespace UbiCanvas.Conversion {
 				AddPathConversionRule("world/music/common/platform/friendlyroot/", "world/music/common/platform/friendlyroot_mini/");
 				AddPathConversionRule("world/food/common/enemy/foodspikysnake/", "world/food/common/enemy/foodspikysnake_mini/");
 				AddPathConversionRule("world/common/friendly/bulb_explosif/", "world/common/friendly/bulb_explosif_mini/");
+				AddPathConversionRule("world/rlc_dojo/gpe/plateform/bouncycanvas/", "world/rlc_dojo/gpe/plateform/bouncycanvas_mini/");
+				AddPathConversionRule("world/common/enemy/janod/", "world/common/enemy/janod_mini/");
+				AddPathConversionRule("world/jungle/common/enemy/spikyflower/", "world/jungle/common/enemy/spikyflower_mini/");
+				AddPathConversionRule("world/challenge/common_challenge/actor/", "world/challenge/common_challenge/actor_mini/");
 			}
 			if (oldSettings.Platform == GamePlatform.Vita) {
 				//conversionSettings.PathConversionRules.Add(
@@ -988,6 +994,15 @@ namespace UbiCanvas.Conversion {
 			var scenePath = GetScenePath(scene);
 
 			switch (scenePath.FullPath) {
+				case "world_arcade/ra_trunk/levels/trk_ra_09_storminggiants/trk_ra_09_storminggiants.isc": {
+						var toads = scene.FindActors(a => a.USERFRIENDLY.StartsWith("shootingtoad_big"));
+						foreach (var res in toads) {
+							var toad = res.Result.GetComponent<RO2_EnemyBTAIComponent>();
+							toad.useRangedAttack = true;
+							toad.useRangedAttack_RL = 1;
+						}
+						break;
+					}
 				case "world/rlc_dojo/festivalofspeed/dojo_festivalofspeed_nmi.isc": {
 						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 						break;
@@ -1383,6 +1398,9 @@ namespace UbiCanvas.Conversion {
 					}
 			}
 
+			if (scenePath.FullPath.StartsWith("world_arcade/ra_musical/")) {
+				//UseFastCameras(scene);
+			}
 			if (scenePath.FullPath.StartsWith("world/challenge/run/challengerun/")) {
 				InvertLianas_OnlyLeft(oldContext, newSettings, scene);
 				FixBrokenSoundReferencesInChallenges(oldContext, newSettings, scene);
@@ -3783,6 +3801,17 @@ namespace UbiCanvas.Conversion {
 			var mrDark = scene.FindPickable(p => p.USERFRIENDLY.ToUpperInvariant() == "MRDARK" && p is SubSceneActor);
 			if (mrDark?.Result != null) {
 				mrDark.ContainingScene.DeletePickable(mrDark.Result);
+			}
+
+			var scenePath = GetScenePath(scene);
+			if (scenePath.FullPath.StartsWith("world_arcade/ra_musical/")) {
+				var fxScenes = scene.FindPickables(p
+					=> p.USERFRIENDLY.ToUpperInvariant() == "FX_1"
+					|| p.USERFRIENDLY.ToUpperInvariant() == "FX_2"
+					|| p.USERFRIENDLY.ToUpperInvariant() == "FX_3");
+				foreach (var fx in fxScenes) {
+					fx.ContainingScene.DeletePickable(fx.Result);
+				}
 			}
 		}
 

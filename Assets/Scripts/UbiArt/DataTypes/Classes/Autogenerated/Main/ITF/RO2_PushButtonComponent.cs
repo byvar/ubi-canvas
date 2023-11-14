@@ -1,9 +1,9 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PushButtonComponent : ActorComponent {
-		public bool triggerOnStick;
+		public bool triggerOnStick = true;
 		public bool triggerOnHit;
-		public bool triggerOnDRC;
+		public bool triggerOnDRC = true;
 		public uint triggerCount;
 		public uint activator;
 		protected override void SerializeImpl(CSerializerObject s) {

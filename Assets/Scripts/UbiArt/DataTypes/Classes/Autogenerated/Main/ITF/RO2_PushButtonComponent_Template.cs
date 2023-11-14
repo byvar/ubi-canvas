@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PushButtonComponent_Template : ActorComponent_Template {
-		public float onOffDuration;
+		public float onOffDuration = 1f;
 		public float delay;
 		public bool activateChildren;
 		public bool isProgressive;
-		public float progressiveSpeed;
-		public CArrayP<uint> progressiveHitLevels;
+		public float progressiveSpeed = 3f;
+		public CArrayP<uint> progressiveHitLevels = new CArrayP<uint> { 5, 25, 50, 100 };
 		public bool stayOn;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
