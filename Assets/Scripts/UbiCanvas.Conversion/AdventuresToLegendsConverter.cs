@@ -188,6 +188,12 @@ namespace UbiCanvas.Conversion {
 				AddPathConversionRule("world/common/enemy/janod/", "world/common/enemy/janod_mini/");
 				AddPathConversionRule("world/jungle/common/enemy/spikyflower/", "world/jungle/common/enemy/spikyflower_mini/");
 				AddPathConversionRule("world/challenge/common_challenge/actor/", "world/challenge/common_challenge/actor_mini/");
+				AddPathConversionRule("world/challenge/common_challenge/actor_mini/countdown.act", "world/challenge/common_challenge/actor/countdown.act");
+				AddPathConversionRule("world/challenge/common_challenge/actor_mini/components/countdown.tpl", "world/challenge/common_challenge/actor/components/countdown.tpl");
+				AddPathConversionRule("world/common/friendly/swingman/", "world/common/friendly/swingman_mini/");
+				AddPathConversionRule("world/jungle/common/friendly/kuyalum/", "world/jungle/common/friendly/kuyalum_mini/");
+				AddPathConversionRule("world/jungle/common/platform/liana/", "world/jungle/common/platform/liana_mini/");
+				AddPathConversionRule("world/common/platform/rope/", "world/common/platform/rope_mini/");
 			}
 			if (oldSettings.Platform == GamePlatform.Vita) {
 				//conversionSettings.PathConversionRules.Add(
@@ -1660,7 +1666,6 @@ namespace UbiCanvas.Conversion {
 				var genValue = (GenericFile<CSerializable>)isgPair.Value;
 				if(genValue.obj == null || genValue.obj is not RO2_ChallengeCommon_Template chal) continue;
 				var path = oldContext.Loader.Paths[pathID];
-
 				if (chal.gameplayBricks != null) {
 					foreach (var brick in chal.gameplayBricks) {
 						var brickPath = brick?.obj?.path;
@@ -1683,6 +1688,9 @@ namespace UbiCanvas.Conversion {
 				}
 
 				if (chal is RO2_EnduranceMode_Template end) {
+					if (path.FullPath.StartsWith("world_arcade/ra_challenge/")) {
+						end.decoBrickMaxActiveCount = uint.MaxValue; // Why was this set to 1???? I spent over 10 hours debugging this only to find it was 1!
+					}
 					if (end.decoBricks != null) {
 						foreach (var brick in end.decoBricks) {
 							var brickPath = brick?.obj?.path;

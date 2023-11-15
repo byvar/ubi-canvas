@@ -2,10 +2,10 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_CountdownComponent : ActorComponent {
 		public StringID animName;
-		public float countdownCount;
-		public float countdownDuration;
-		public float goDisplayDuration;
-		public bool finishAfterGo;
+		public float countdownCount = 3f;
+		public float countdownDuration = 3f;
+		public float goDisplayDuration = 1f;
+		public bool finishAfterGo = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			animName = s.SerializeObject<StringID>(animName, name: "animName");
