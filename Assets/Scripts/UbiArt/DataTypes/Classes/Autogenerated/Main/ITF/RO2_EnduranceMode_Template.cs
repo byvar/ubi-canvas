@@ -12,6 +12,11 @@ namespace UbiArt.ITF {
 		public uint treasureRopeHitLevel = 1;
 		public Path treasureRopePath;
 		public Path treasureReachedFxPath;
+		public BrickDirection decoBricksDirection;
+		public bool limitBrickHeight;
+		public int minBrickHeight;
+		public int maxBrickHeight;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			flippableTags = s.SerializeObject<CListO<StringID>>(flippableTags, name: "flippableTags");
@@ -20,11 +25,19 @@ namespace UbiArt.ITF {
 			decoBricks = s.SerializeObject<CListO<Generic<RO2_DecoBrick_Template>>>(decoBricks, name: "decoBricks");
 			specialDecoBricks = s.SerializeObject<CListO<Generic<RO2_DecoBrick_Template>>>(specialDecoBricks, name: "specialDecoBricks");
 			decoRanges = s.SerializeObject<CListO<RO2_EnduranceMode_Template.DecoRange>>(decoRanges, name: "decoRanges");
+			if (s.Settings.Game == Game.RM) {
+				decoBricksDirection = s.Serialize<BrickDirection>(decoBricksDirection, name: "decoBricksDirection");
+			}
 			treasureRopeCount = s.Serialize<uint>(treasureRopeCount, name: "treasureRopeCount");
 			treasureRopeInterval = s.Serialize<float>(treasureRopeInterval, name: "treasureRopeInterval");
 			treasureRopeHitLevel = s.Serialize<uint>(treasureRopeHitLevel, name: "treasureRopeHitLevel");
 			treasureRopePath = s.SerializeObject<Path>(treasureRopePath, name: "treasureRopePath");
 			treasureReachedFxPath = s.SerializeObject<Path>(treasureReachedFxPath, name: "treasureReachedFxPath");
+			if (s.Settings.Game == Game.RM) {
+				limitBrickHeight = s.Serialize<bool>(limitBrickHeight, name: "limitBrickHeight");
+				minBrickHeight = s.Serialize<int>(minBrickHeight, name: "minBrickHeight");
+				maxBrickHeight = s.Serialize<int>(maxBrickHeight, name: "maxBrickHeight");
+			}
 		}
 		[Games(GameFlags.RA)]
 		public partial class DecoRange : CSerializable {
@@ -42,6 +55,13 @@ namespace UbiArt.ITF {
 				frise = s.SerializeObject<StringID>(frise, name: "frise");
 			}
 		}
+
+		public enum BrickDirection {
+			[Serialize("BrickDirection_HorizontalAndVertical")] HorizontalAndVertical,
+			[Serialize("BrickDirection_Horizontal"           )] Horizontal,
+			[Serialize("BrickDirection_Vertical"             )] Vertical,
+		}
+
 		public override uint? ClassCRC => 0x92DC8145;
 	}
 }

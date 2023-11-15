@@ -1267,6 +1267,62 @@ namespace UbiCanvas.Conversion {
 						}, new Vec2d(559.99f, -83.08f), cycleTime: 0.75f);
 						break;
 					}
+				case "world_arcade/ra_challenge/ra_cha_riverstream/ra_cha_riverstream_main.isc": {
+						// Delete some additional Mr Dark stuff
+						var pickables = scene.FindPickables(p => p.USERFRIENDLY.StartsWith("relay_unpause_fx") || p.USERFRIENDLY.StartsWith("afxpostprocess"));
+						foreach (var p in pickables) {
+							p.ContainingScene.DeletePickable(p.Result);
+						}
+
+						// There's no frise or fog blending in this. Delete all backfrise and set clearcolor back to that
+						var backlightColor = new UbiArt.Color(231f / 255f, 210f / 255f, 102f / 255f, 1f);
+						pickables = scene.FindPickables(p => p.USERFRIENDLY.StartsWith("backfrise"));
+						foreach (var p in pickables) {
+							p.ContainingScene.DeletePickable(p.Result);
+						}
+						var moods = scene.FindActors(a => a.GetComponent<RenderParamComponent>() != null);
+						foreach (var res in moods) {
+							var mood = res.Result.GetComponent<RenderParamComponent>();
+							mood.ClearColor.ClearBackLightColor = backlightColor;
+
+							// and lower lighting intensity
+							var factor = 0.7f;
+							mood.Lighting.GlobalColor *= new UbiArt.Color(factor, factor, factor, 1f);
+						}
+						
+						// Delete resolvemask - not necessary in this case
+						var resolveMask = scene.FindActor(a => a.USERFRIENDLY == "resolvebothmask_noclear");
+						resolveMask.ContainingScene.DeletePickable(resolveMask.Result);
+						break;
+					}
+				case "world_arcade/ra_challenge/ra_cha_foliage/ra_cha_foliage_main.isc": {
+						// Delete some additional Mr Dark stuff
+						var pickables = scene.FindPickables(p => p.USERFRIENDLY.StartsWith("relay_unpause@") || p.USERFRIENDLY.StartsWith("afxpostprocess"));
+						foreach (var p in pickables) {
+							p.ContainingScene.DeletePickable(p.Result);
+						}
+
+						// There's no frise blending in this. Delete all backfrise and set clearcolor back to that
+						var backlightColor = new UbiArt.Color(220f / 255f, 163f / 255f, 76f / 255f, 1f);
+						pickables = scene.FindPickables(p => p.USERFRIENDLY.StartsWith("backfrise"));
+						foreach (var p in pickables) {
+							p.ContainingScene.DeletePickable(p.Result);
+						}
+						var moods = scene.FindActors(a => a.GetComponent<RenderParamComponent>() != null);
+						foreach (var res in moods) {
+							var mood = res.Result.GetComponent<RenderParamComponent>();
+							mood.ClearColor.ClearBackLightColor = backlightColor;
+
+							// and lower lighting intensity
+							var factor = 0.8f;
+							mood.Lighting.GlobalColor *= new UbiArt.Color(factor, factor, factor, 1f);
+						}
+
+						// Delete resolvemask - not necessary in this case
+						var resolveMask = scene.FindActor(a => a.USERFRIENDLY == "resolvebothmask_noclear");
+						resolveMask.ContainingScene.DeletePickable(resolveMask.Result);
+						break;
+					}
 				case "world/challenge/run/challengerun/challenge_run_main.isc": {
 						// Let's have the area become progressively darker...
 						for (int i = 0; i < 5; i++) {
@@ -1647,8 +1703,27 @@ namespace UbiCanvas.Conversion {
 							}
 						}
 					}
-
-					if (path.FullPath.StartsWith("world/challenge/run")) {
+					if (path.FullPath.StartsWith("world_arcade/ra_challenge/")) {
+						chal.filterOrder = new CListO<CListP<string>>() {
+							new CListP<string>() { "lums_lumsattackexpert", "lums_lumsattack", "lums_default" },
+							new CListP<string>() { "tuto", "notuto" }
+						};
+						if (end.decoRanges != null) {
+							foreach (var deco in end.decoRanges) {
+								if (deco == null) continue;
+								for (int i = 0; i < 10; i++) {
+									if (deco.fog == new StringID($"fog_{i}")) {
+										if (deco.clearColor?.IsNull ?? true) {
+											deco.clearColor = new StringID($"fog_{i}");
+										}
+										// This is what we named the lighting frise created from the renderparam
+										deco.frise = new StringID($"fog_{i}_frontlightfill");
+										deco.fog = null;
+									}
+								}
+							}
+						}
+					} else if (path.FullPath.StartsWith("world/challenge/run")) {
 						chal.filterOrder = new CListO<CListP<string>>() {
 							new CListP<string>() { "lums_lumsattackexpert", "lums_lumsattack", "lums_default" },
 							new CListP<string>() { "tuto", "notuto" }
