@@ -40,6 +40,17 @@ namespace UbiArt.ITF {
 										}
 									}
 								}
+
+								// Convert "defaultSound"
+								if (defaultSound != null && !defaultSound.IsNull) {
+									var defaultSoundDesc = soundList.FirstOrDefault(snd => snd.name == defaultSound);
+									if (defaultSoundDesc?.WwiseEventGUID != null && !defaultSoundDesc.WwiseEventGUID.IsNull) {
+										var convDescs = conv.WwiseConversionSettings.CreateSoundDescriptorsFromWwiseDescriptor(defaultSoundDesc);
+										if (convDescs != null && convDescs.Any()) {
+											defaultSound = new StringID(convDescs.First().name.stringID);
+										}
+									}
+								}
 							}
 						}
 					}
