@@ -256,6 +256,9 @@ namespace UbiArt
 			"Axis", "Press", "Hold", "Trigger_Left", "Trigger_Right",
 			"Button_A", "Button_X", "Button_Y", "Button_B", "Button_Back", "Button_Start",
 			"DPad_Up", "DPad_Down", "DPad_Left", "DPad_Right",
+
+			// Generic events
+			"Open", "Close"
 		};
 
 

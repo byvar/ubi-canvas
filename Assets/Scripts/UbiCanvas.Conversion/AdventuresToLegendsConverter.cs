@@ -173,6 +173,7 @@ namespace UbiCanvas.Conversion {
 				InitRabbidPathConversion(Version, conversionSettings);
 			}
 			if (oldSettings.Game == Game.RM) {
+				AddPathConversionRule("world/jungle/common/friendly/lightingmushroom/", "world/jungle/common/friendly/lightingmushroom_mini/");
 				AddPathConversionRule("common/lifeelements/dragonfly/", "common/lifeelements/dragonfly_mini/");
 				AddPathConversionRule("world/landofthedead/", "world/landofthedead_mini/");
 				//AddPathConversionRule("world/landofthedead/common/breakable/bonestack/", "world/landofthedead/common/breakable/bonestack_mini/");
@@ -2809,6 +2810,15 @@ namespace UbiCanvas.Conversion {
 					if (CloneTemplateIfNecessary(ogPath, suffix, "TRIGGER MUSHROOM", ogTpl, out var newTpl, act)) {
 						triggerTPL = newTpl.obj.GetComponent<TriggerComponent_Template>();
 						mushroomTPL = newTpl.obj.GetComponent<RO2_LightingMushroomComponent_Template>();
+						if (mushroomTPL.TornadoHitMultiplier != 1f) {
+							if (oldContext.Settings.Game == Game.RM) {
+								// Adventures is a slower game, for Mini we prefer the faster mushrooms
+								//mushroomTPL.Speed = mushroomTPL.TornadoHitMultiplier * mushroomTPL.Speed;
+							}
+							mushroomTPL.TornadoHitMultiplier = 1f;
+							//mushroomTPL.NoHitZoneLength = 0f;
+							//mushroomTPL.ExplosionExpansionCoeff = 999f;
+						}
 						if (once) {
 							mushroomTPL.RestartTimer = float.MaxValue;
 						}
@@ -2827,7 +2837,6 @@ namespace UbiCanvas.Conversion {
 						triggerComponent.mode = TriggerComponent.Mode.Once;
 					}*/
 					act.AddComponent<RelayEventComponent>();
-
 
 					Actor CreateTween(string suffix, IEnumerable<ChildEntry> links, CListO<Generic<UbiArt.ITF.Event>> events, double distance) {
 						var luaPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
