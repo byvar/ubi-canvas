@@ -195,6 +195,8 @@ namespace UbiCanvas.Conversion {
 				AddPathConversionRule("world/jungle/common/friendly/kuyalum/", "world/jungle/common/friendly/kuyalum_mini/");
 				AddPathConversionRule("world/jungle/common/platform/liana/", "world/jungle/common/platform/liana_mini/");
 				AddPathConversionRule("world/common/platform/rope/", "world/common/platform/rope_mini/");
+				AddPathConversionRule("world/common/platform/switchplatformwood/", "world/common/platform/switchplatformwood_mini/");
+				AddPathConversionRule("world/ocean/common/platform/switchplatform/", "world/ocean/common/platform/switchplatform_mini/");
 			}
 			if (oldSettings.Platform == GamePlatform.Vita) {
 				//conversionSettings.PathConversionRules.Add(
