@@ -314,7 +314,6 @@ namespace UbiCanvas.Conversion {
 				}
 				//UnityEngine.Debug.Log(PrintCostumeOrder(gc, homeConfig));
 
-
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pGameConfig.stringID], gameConfigISG);
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pHomeConfig.stringID], homeConfigISG);
 				Bundle.AddFile(TargetContext.Loader.CookedPaths[pHomeSGS.stringID], homeSGS);
@@ -334,6 +333,44 @@ namespace UbiCanvas.Conversion {
 				b.AppendLine($"\"{desc.priority}\": {players[desc.costumeTag]},");
 
 			return b.ToString();
+		}
+
+		private async Task AddChallengeBonus(RO2_GameManagerConfig_Template gc, GenericFile<CSerializable> gameConfigISG) {
+			Path pMenuConfig = new Path("enginedata/gameconfig/menuconfig.isg");
+			GenericFile<UIMenuManager_Template> menuConfigISG = null;
+			TargetContext.Loader.LoadFile<GenericFile<UIMenuManager_Template>>(pMenuConfig, isg => {
+				menuConfigISG = isg;
+			});
+			await TargetContext.Loader.LoadLoop();
+
+			gc.catchTheAllMaps = new CListO<Path>() {
+					new Path("personal/gherimittant/catch_them_all_01.isc"),
+					new Path("personal/gherimittant/catch_them_all_02.isc"),
+					new Path("personal/gherimittant/catch_them_all_03.isc"),
+					new Path("personal/gherimittant/catch_them_all_04.isc"),
+					new Path("personal/gherimittant/catch_them_all_05.isc"),
+					new Path("personal/gherimittant/catch_them_all_06.isc"),
+					new Path("personal/gherimittant/catch_them_all_07.isc"),
+					new Path("personal/gherimittant/catch_them_all_08.isc"),
+					new Path("personal/gherimittant/catch_them_all_09.isc"),
+					new Path("personal/gherimittant/catch_them_all_10.isc"),
+				};
+			gameConfigISG.sizeOf += 0x100;
+
+			menuConfigISG.obj.menuInfos.Add(new UIMenuManager_Template.MenuInfo() {
+				sizeOf = 156,
+				path = new Path("world/common/ui/common/challengebonus/catchthemall_menustart.isc")
+			});
+			menuConfigISG.obj.menuInfos.Add(new UIMenuManager_Template.MenuInfo() {
+				sizeOf = 156,
+				path = new Path("world/common/ui/common/challengebonus/catchthemall_menurun.isc")
+			});
+			menuConfigISG.obj.menuInfos.Add(new UIMenuManager_Template.MenuInfo() {
+				sizeOf = 156,
+				path = new Path("world/common/ui/common/challengebonus/catchthemall_menuend.isc")
+			});
+			menuConfigISG.sizeOf += 0x400;
+			Bundle.AddFile(TargetContext.Loader.CookedPaths[pMenuConfig.stringID], menuConfigISG);
 		}
 
 		private async Task ExtendTrainingRoom() {

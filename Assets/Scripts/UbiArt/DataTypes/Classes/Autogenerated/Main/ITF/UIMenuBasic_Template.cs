@@ -9,7 +9,7 @@ namespace UbiArt.ITF {
 		public int useDiagonalNavigation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.Game == Game.RL) {
+			if (s.Settings.Game == Game.RL && s.Settings.Platform != GamePlatform.Vita) {
 				validateItemSounds = s.SerializeObject<CListO<ValidateItemSound>>(validateItemSounds, name: "validateItemSounds");
 			} else if (s.Settings.Game == Game.COL || s.Settings.Game == Game.VH) {
 				validateItemSounds = s.SerializeObject<CListO<ValidateItemSound>>(validateItemSounds, name: "validateItemSounds");

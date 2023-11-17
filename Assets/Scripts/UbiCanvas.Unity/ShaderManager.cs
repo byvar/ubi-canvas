@@ -6,8 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ShaderManager : MonoBehaviour {
-	public RenderTexture frontLight;
-	public RenderTexture backLight;
+	private RenderTexture frontLight;
+	private RenderTexture backLight;
 	public Camera frontLightCamera;
 	public Camera backLightCamera;
 	private float lastAspectRatio = 0f;

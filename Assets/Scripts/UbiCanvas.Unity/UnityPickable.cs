@@ -31,6 +31,9 @@ public class UnityPickable : MonoBehaviour {
 			}
 		}
 		if (pickable != null) {
+			if (pickable.USERFRIENDLY != gameObject.name) {
+				pickable.USERFRIENDLY = gameObject.name;
+			}
 			if (transform.localPosition != new Vector3(pickable.POS2D.x, pickable.POS2D.y, -pickable.RELATIVEZ)) {
 				pickable.POS2D = new Vec2d(transform.localPosition.x, transform.localPosition.y);
 
