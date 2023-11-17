@@ -19,21 +19,37 @@ public class ShaderManager : MonoBehaviour {
 		Shader.SetGlobalFloat("_EnableLighting", enableLighting ? 1f : 0f);
 	}
 
+	private void OnDestroy() {
+		enableLighting = false;
+		if (frontLight != null) frontLight.Release();
+		if(backLight != null) backLight.Release();
+	}
+
 	void UpdateRenderTextures() {
 		if(!enableLighting) return;
 		int newW = Screen.width;
 		int newH = Screen.height;
 		float aspect = newW / (float)newH;
 		if (aspect != lastAspectRatio) {
-			if (frontLight != null) frontLight.Release();
-			if (backLight != null) backLight.Release();
-			frontLight = new RenderTexture(Mathf.CeilToInt(aspect * 64), 64, 24);
-			backLight = new RenderTexture(Mathf.CeilToInt(aspect * 64), 64, 24);
-			frontLightCamera.targetTexture = frontLight;
-			backLightCamera.targetTexture = backLight;
-
-			Shader.SetGlobalTexture("_LightsFrontLight", frontLight);
-			Shader.SetGlobalTexture("_LightsBackLight", backLight);
+			int rth = 64;
+			int rtw = Mathf.CeilToInt(aspect * rth);
+			if (frontLight != null) {
+				frontLight.Release();
+				frontLight.width = rtw;
+			} else {
+				frontLight = new RenderTexture(rtw, rth, 24);
+				frontLightCamera.targetTexture = frontLight;
+				Shader.SetGlobalTexture("_LightsFrontLight", frontLight);
+			}
+			if (backLight != null) {
+				backLight.Release();
+				backLight.width = rtw;
+			} else {
+				backLight = new RenderTexture(rtw, rth, 24);
+				backLightCamera.targetTexture = backLight;
+				Shader.SetGlobalTexture("_LightsBackLight", backLight);
+			}
+			lastAspectRatio = aspect;
 		}
 	}
 

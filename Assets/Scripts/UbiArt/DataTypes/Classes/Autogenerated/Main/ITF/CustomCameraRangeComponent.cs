@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class CustomCameraRangeComponent : ActorComponent {
-		public float updateFrustumEnlargeRange;
-		public float loadingFrustumEnlargeRange;
+		public float updateFrustumEnlargeRange = 18f;
+		public float loadingFrustumEnlargeRange = 40f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			updateFrustumEnlargeRange = s.Serialize<float>(updateFrustumEnlargeRange, name: "updateFrustumEnlargeRange");
