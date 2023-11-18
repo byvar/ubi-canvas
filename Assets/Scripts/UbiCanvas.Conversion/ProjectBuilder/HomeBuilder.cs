@@ -422,6 +422,16 @@ namespace UbiCanvas.Conversion {
 			await ReplaceSceneByName("challenge_goingdown", "world/home/brick/challenge/challenge_goingdown.isc");
 			await ReplaceSceneByName("challenge_drc", "world/home/brick/challenge/challenge_drc.isc");
 
+			// Mod painting scenes
+			TreatPainting("challenge_classicrun");
+			TreatPainting("challenge_shaolin");
+			TreatPainting("challenge_goingup");
+			TreatPainting("challenge_goingdown");
+			TreatPainting("challenge_drc");
+			TreatPainting("challenge_classicrun_egypt");
+			TreatPainting("challenge_classicrun_dojo");
+			TreatPainting("challenge_mini_riverstream");
+			TreatPainting("challenge_mini_foliage");
 
 			// We added 2 paintings in total, so move the end of the room *2:
 			var addedPos = spacing * 2f;
@@ -480,6 +490,19 @@ namespace UbiCanvas.Conversion {
 					newP.POS2D += offset;
 					res.ContainingScene.AddActor(newP);
 				}
+			}
+			void TreatPainting(string name) {
+				var ssa = scene.FindActor(a => a.USERFRIENDLY == name && a is SubSceneActor).Result as SubSceneActor;
+				var painting = ssa.SCENE.value;
+				
+				// Get rid of the text box - the name appears when going past the painting anyway
+				var tb = painting.FindActor(a => a.USERFRIENDLY == "textbox");
+				if (tb != null) tb.ContainingScene.DeletePickable(tb.Result);
+				painting.DeletePickable(painting.FindByName("textbox"));
+
+				// Enlarge the door
+				var nm = painting.FindActor(a => a.USERFRIENDLY == "nodemap");
+				if (nm != null) nm.Result.SCALE *= new Vec2d(1f, 3f);
 			}
 			async Task ReplaceSceneByName(string name, string path) {
 				await ReplaceScene(scene.FindActor(a => a.USERFRIENDLY == name && a is SubSceneActor).Result as SubSceneActor, path);

@@ -1302,6 +1302,25 @@ namespace UbiCanvas.Conversion {
 						// Delete resolvemask - not necessary in this case
 						var resolveMask = scene.FindActor(a => a.USERFRIENDLY == "resolvebothmask_noclear");
 						resolveMask.ContainingScene.DeletePickable(resolveMask.Result);
+
+						// Add sceneconfigs
+						Path[] extraConfigs = new string[] {
+							"world_arcade/ra_challenge/ra_cha_riverstream/bricks/challengemode_riverstream_easy.isg",
+							"world_arcade/ra_challenge/ra_cha_riverstream/bricks/challengemode_riverstream_easy_mrdark.isg",
+							"world_arcade/ra_challenge/ra_cha_riverstream/bricks/challengemode_riverstream_medium.isg",
+							"world_arcade/ra_challenge/ra_cha_riverstream/bricks/challengemode_riverstream_medium_mrdark.isg",
+							"world_arcade/ra_challenge/ra_cha_riverstream/bricks/challengemode_riverstream_hard.isg",
+							"world_arcade/ra_challenge/ra_cha_riverstream/bricks/challengemode_riverstream_hard_mrdark.isg",
+							"world_arcade/ra_challenge/ra_cha_riverstream/bricks/challengemode_riverstream_insane.isg",
+							"world_arcade/ra_challenge/ra_cha_riverstream/bricks/challengemode_riverstream_insane_mrdark.isg",
+						}.Select(s => new Path(s)).ToArray();
+						foreach (var p in extraConfigs) {
+							p.LoadObject(MainContext, removeCooked: true);
+						}
+						await MainContext.Loader.LoadLoop();
+						scene.sceneConfigs.sceneConfigs = new CArrayO<Generic<SceneConfig>>(scene.sceneConfigs.sceneConfigs.Concat(extraConfigs.Select(p => new Generic<SceneConfig>(new RO2_SceneConfig_ChallengeEndurance() {
+							modePath = p
+						}))).ToArray());
 						break;
 					}
 				case "world_arcade/ra_challenge/ra_cha_foliage/ra_cha_foliage_main.isc": {
@@ -1330,6 +1349,25 @@ namespace UbiCanvas.Conversion {
 						// Delete resolvemask - not necessary in this case
 						var resolveMask = scene.FindActor(a => a.USERFRIENDLY == "resolvebothmask_noclear");
 						resolveMask.ContainingScene.DeletePickable(resolveMask.Result);
+
+						// Add sceneconfigs
+						Path[] extraConfigs = new string[] {
+							"world_arcade/ra_challenge/ra_cha_foliage/bricks/challengemode_foliage_easy.isg",
+							"world_arcade/ra_challenge/ra_cha_foliage/bricks/challengemode_foliage_easy_mrdark.isg",
+							"world_arcade/ra_challenge/ra_cha_foliage/bricks/challengemode_foliage_medium.isg",
+							"world_arcade/ra_challenge/ra_cha_foliage/bricks/challengemode_foliage_medium_mrdark.isg",
+							"world_arcade/ra_challenge/ra_cha_foliage/bricks/challengemode_foliage_hard.isg",
+							"world_arcade/ra_challenge/ra_cha_foliage/bricks/challengemode_foliage_hard_mrdark.isg",
+							"world_arcade/ra_challenge/ra_cha_foliage/bricks/challengemode_foliage_insane.isg",
+							"world_arcade/ra_challenge/ra_cha_foliage/bricks/challengemode_foliage_insane_mrdark.isg",
+						}.Select(s => new Path(s)).ToArray();
+						foreach (var p in extraConfigs) {
+							p.LoadObject(MainContext, removeCooked: true);
+						}
+						await MainContext.Loader.LoadLoop();
+						scene.sceneConfigs.sceneConfigs = new CArrayO<Generic<SceneConfig>>(scene.sceneConfigs.sceneConfigs.Concat(extraConfigs.Select(p => new Generic<SceneConfig>(new RO2_SceneConfig_ChallengeEndurance() {
+							modePath = p
+						}))).ToArray());
 						break;
 					}
 				case "world/challenge/run/challengerun/challenge_run_main.isc": {
