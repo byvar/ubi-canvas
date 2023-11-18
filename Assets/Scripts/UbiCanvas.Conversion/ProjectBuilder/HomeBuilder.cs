@@ -407,12 +407,43 @@ namespace UbiCanvas.Conversion {
 			ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_classicrun_dojo.isc");
 			scene.AddActor(ssa, ssa.USERFRIENDLY);
 			ssa.POS2D = lastPos;
+			lastPos += spacing;
+			ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_mini_riverstream.isc");
+			scene.AddActor(ssa, ssa.USERFRIENDLY);
+			ssa.POS2D = lastPos;
+			lastPos += spacing;
+			ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_mini_foliage.isc");
+			scene.AddActor(ssa, ssa.USERFRIENDLY);
+			ssa.POS2D = lastPos;
 
 			await ReplaceSceneByName("challenge_classicrun", "world/home/brick/challenge/challenge_classicrun.isc");
 			await ReplaceSceneByName("challenge_shaolin", "world/home/brick/challenge/challenge_shaolin.isc");
 			await ReplaceSceneByName("challenge_goingup", "world/home/brick/challenge/challenge_goingup.isc");
 			await ReplaceSceneByName("challenge_goingdown", "world/home/brick/challenge/challenge_goingdown.isc");
 			await ReplaceSceneByName("challenge_drc", "world/home/brick/challenge/challenge_drc.isc");
+
+
+			// We added 2 paintings in total, so move the end of the room *2:
+			var addedPos = spacing * 2f;
+			var challengeEnd = scene.FindPickable(p => p.USERFRIENDLY == "challenge_end");
+			challengeEnd.Result.POS2D += addedPos;
+			var challengeEndSSA = challengeEnd.Result as SubSceneActor;
+			var challengeEndScene = challengeEndSSA.SCENE.value;
+			var epChallengeEnd = new ExtendParameters() {
+				MinX = -10,
+				MaxX = +300,
+				ExtendMinX = -addedPos.x,
+				ExtendMaxX = 0
+			};
+			ExtendFrise((Frise)challengeEndScene.FindPickable(p => p.USERFRIENDLY == "ground_base@2").Result, epChallengeEnd);
+			ExtendFrise((Frise)challengeEndScene.FindPickable(p => p.USERFRIENDLY == "groundwood").Result, epChallengeEnd);
+			ExtendFrise((Frise)challengeEndScene.FindPickable(p => p.USERFRIENDLY == "treeshadow").Result, epChallengeEnd);
+			ExtendFrise((Frise)challengeEndScene.FindPickable(p => p.USERFRIENDLY == "groundsandy@1").Result, epChallengeEnd);
+			ExtendFrise((Frise)challengeEndScene.FindPickable(p => p.USERFRIENDLY == "tent_background@1").Result, epChallengeEnd);
+
+			var cm = scene.FindActor(a => a.USERFRIENDLY == "cameramodifier@1");
+			cm.Result.POS2D += addedPos / 2f;
+			cm.Result.SCALE += addedPos / 2f / 3.110752f; // 3.11... is this CM's localAABB
 
 			Bundle.AddFile(pChallengeISC.CookedPath(TargetContext), challengeISC);
 
@@ -444,11 +475,13 @@ namespace UbiCanvas.Conversion {
 			ContainerFile<Scene> costumesISC = null;
 			Path pCostumesISC = new Path("world/home/level/costumes/costume_main.isc");
 
-			var minX = -30;
-			var maxX = +30;
-			var extendMinX = -500;
-			var extendMaxX = +500;
-			var scaleFactorX = 7f;
+			var extendParams = new ExtendParameters() {
+				MinX = -30,
+				MaxX = +30,
+				ExtendMinX = -500,
+				ExtendMaxX = +500
+			};
+			float scaleFactorX = 7f;
 
 			TargetContext.Loader.LoadFile<ContainerFile<Scene>>(pCostumesISC, isc => {
 				costumesISC = isc;
@@ -456,107 +489,136 @@ namespace UbiCanvas.Conversion {
 			await TargetContext.Loader.LoadLoop();
 
 			// Frises
-			//ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@2").Result);
-			//ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@4").Result);
-			RescalePickable((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@2").Result);
-			RescalePickable((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@4").Result);
-			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "fx_particlesuspension_fill").Result);
-			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundwood").Result, uvScale: 3.5f);
-			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundwood@1").Result, uvScale: 3.5f);
-			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundsandy").Result, uvScale: 3.5f);
-			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "invisibleground_woodhome").Result);
-			ProcessFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "tent_background@1").Result, uvScale: 8f);
+			//ExtendFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@2").Result);
+			//ExtendFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@4").Result);
+			RescalePickable((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@2").Result, scaleFactorX);
+			RescalePickable((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "frontlightfill@4").Result, scaleFactorX);
+			ExtendFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "fx_particlesuspension_fill").Result, extendParams);
+			ExtendFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundwood").Result, extendParams);
+			ExtendFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundwood@1").Result, extendParams);
+			ExtendFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "groundsandy").Result, extendParams);
+			ExtendFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "invisibleground_woodhome").Result, extendParams);
+			ExtendFrise((Frise)costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "tent_background@1").Result, extendParams);
 
 			// Lighting actors
-			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "resolvebothmask@1").Result);
-			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "clearcolor").Result);
+			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "resolvebothmask@1").Result, scaleFactorX);
+			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "clearcolor").Result, scaleFactorX);
 
 			// Sound triggers
-			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "triggersound_amb_home_house_int").Result);
-			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "music_stop_5s@1").Result);
+			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "triggersound_amb_home_house_int").Result, scaleFactorX);
+			RescalePickable(costumesISC.obj.FindPickable(p => p.USERFRIENDLY == "music_stop_5s@1").Result, scaleFactorX);
 
 
 			Bundle.AddFile(pCostumesISC.CookedPath(TargetContext), costumesISC);
+		}
 
+		#region Home Frise editing
+		class ExtendParameters {
+			public float MinX { get; set; }
+			public float MaxX { get; set; }
+			public float ExtendMinX { get; set; }
+			public float ExtendMaxX { get; set; }
+			public float ScaleFactorX { get; set; }
+		}
 
-			void ProcessFrise(Frise f, float uvScale = 1f) {
-				float ExtendGlobalToLocal(float extend) => extend / f.SCALE.x;
-				Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
+		void ExtendFrise(Frise f, ExtendParameters ep) {
+			float ExtendGlobalToLocal(float extend) => extend / f.SCALE.x;
+			Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
 
-				ProcessPolyPointList(f.PointsList, false);
-				if (f.collisionData?.value?.LocalCollisionList != null) {
-					foreach (var lst in f.collisionData?.value?.LocalCollisionList) {
-						ProcessPolyPointList(lst, false);
+			ProcessPolyPointList(f.PointsList, false);
+			if (f.collisionData?.value?.LocalCollisionList != null) {
+				foreach (var lst in f.collisionData?.value?.LocalCollisionList) {
+					ProcessPolyPointList(lst, false);
+				}
+			}
+			if (f.collisionData?.value?.WorldCollisionList != null) {
+				foreach (var lst in f.collisionData?.value?.WorldCollisionList) {
+					ProcessPolyPointList(lst?.PolyPointList, true);
+					if (lst?.PolyPointList != null) {
+						lst.AABB.MIN.x = lst.PolyPointList.LocalPoints.Min(p => p.POS.x);
+						lst.AABB.MIN.y = lst.PolyPointList.LocalPoints.Min(p => p.POS.y);
+						lst.AABB.MAX.x = lst.PolyPointList.LocalPoints.Max(p => p.POS.x);
+						lst.AABB.MAX.y = lst.PolyPointList.LocalPoints.Max(p => p.POS.y);
 					}
 				}
-				if (f.collisionData?.value?.WorldCollisionList != null) {
-					foreach (var lst in f.collisionData?.value?.WorldCollisionList) {
-						ProcessPolyPointList(lst?.PolyPointList, true);
-						if (lst?.PolyPointList != null) {
-							lst.AABB.MIN.x = lst.PolyPointList.LocalPoints.Min(p => p.POS.x);
-							lst.AABB.MIN.y = lst.PolyPointList.LocalPoints.Min(p => p.POS.y);
-							lst.AABB.MAX.x = lst.PolyPointList.LocalPoints.Max(p => p.POS.x);
-							lst.AABB.MAX.y = lst.PolyPointList.LocalPoints.Max(p => p.POS.y);
-						}
-					}
-				}
-
-				if (f.meshBuildData?.value?.StaticVertexList != null) {
-					foreach (var vert in f.meshBuildData.value.StaticVertexList) {
-						var gpos = LocalToGlobal(new Vec2d(vert.pos.x, vert.pos.y));
-						if (gpos.x < minX) {
-							vert.pos.x += ExtendGlobalToLocal(extendMinX);
-							vert.uv.x += ExtendGlobalToLocal(extendMinX) / (f.config.obj.fill.scale.x * uvScale); // Haven't figured out how this works yet sadly, so I need to specify uv scale manually. Seems to be related to both scale in "fill" and "width" value in config.
-						} else if (gpos.x > maxX) {
-							vert.pos.x += ExtendGlobalToLocal(extendMaxX);
-							vert.uv.x += ExtendGlobalToLocal(extendMaxX) / (f.config.obj.fill.scale.x * uvScale);
-						}
-					}
-				}
-				void ProcessPolyPointList(PolyPointList pts, bool isGlobal) {
-					if(pts == null) return;
-					foreach (var pt in pts.LocalPoints) {
-						ExtendVec2d(pt.POS, isGlobal);
-					}
-					pts.RecomputeData();
-				}
-				void ExtendVec2d(Vec2d vec, bool isGlobal) {
-					if(vec == null) return;
-					if (isGlobal) {
-						if (vec.x < minX) {
-							vec.x += extendMinX;
-						} else if (vec.x > maxX) {
-							vec.x += extendMaxX;
-						}
-					} else {
-						var global = LocalToGlobal(vec);
-						if (global.x < minX) {
-							vec.x += ExtendGlobalToLocal(extendMinX);
-						} else if (global.x > maxX) {
-							vec.x += ExtendGlobalToLocal(extendMaxX);
-						}
-					}
-				}
-				ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MIN, false);
-				ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MAX, false);
-
-				ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MIN, true);
-				ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MAX, true);
 			}
 
-			void RescalePickable(Pickable p) {
-				p.SCALE.x *= scaleFactorX;
-				if (p is Frise f) {
-					Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
+			// Calculate UV scale. Probably not exactly right, but accurate for the home frises
+			var uvScale = 1f;
+			if (f.config?.obj?.fill?.tex != null && !f.config.obj.fill.tex.IsNull) {
+				uvScale = f.config.obj.fill.scale.x;
+			} else {
+				uvScale = f.config.obj.width;
+			}
 
-					var aabb = f.meshStaticData?.value;
-					if (aabb?.LocalAABB != null) {
-						aabb.WorldAABB.MIN = LocalToGlobal(aabb.LocalAABB.MIN);
-						aabb.WorldAABB.MAX = LocalToGlobal(aabb.LocalAABB.MAX);
+			if (f.meshBuildData?.value?.StaticVertexList != null) {
+				foreach (var vert in f.meshBuildData.value.StaticVertexList) {
+					var gpos = LocalToGlobal(new Vec2d(vert.pos.x, vert.pos.y));
+					if (gpos.x < ep.MinX) {
+						vert.pos.x += ExtendGlobalToLocal(ep.ExtendMinX);
+						vert.uv.x += ExtendGlobalToLocal(ep.ExtendMinX) / uvScale;
+					} else if (gpos.x > ep.MaxX) {
+						vert.pos.x += ExtendGlobalToLocal(ep.ExtendMaxX);
+						vert.uv.x += ExtendGlobalToLocal(ep.ExtendMaxX) / uvScale;
 					}
+				}
+			}
+			if (f.meshBuildData?.value?.AnimVertexList != null) {
+				foreach (var vert in f.meshBuildData.value.AnimVertexList) {
+					var gpos = LocalToGlobal(new Vec2d(vert.pos.x, vert.pos.y));
+					if (gpos.x < ep.MinX) {
+						vert.pos.x += ExtendGlobalToLocal(ep.ExtendMinX);
+						vert.uv1.x += ExtendGlobalToLocal(ep.ExtendMinX) / uvScale;
+					} else if (gpos.x > ep.MaxX) {
+						vert.pos.x += ExtendGlobalToLocal(ep.ExtendMaxX);
+						vert.uv1.x += ExtendGlobalToLocal(ep.ExtendMaxX) / uvScale;
+					}
+				}
+			}
+			void ProcessPolyPointList(PolyPointList pts, bool isGlobal) {
+				if (pts == null) return;
+				foreach (var pt in pts.LocalPoints) {
+					ExtendVec2d(pt.POS, isGlobal);
+				}
+				pts.RecomputeData();
+			}
+			void ExtendVec2d(Vec2d vec, bool isGlobal) {
+				if (vec == null) return;
+				if (isGlobal) {
+					if (vec.x < ep.MinX) {
+						vec.x += ep.ExtendMinX;
+					} else if (vec.x > ep.MaxX) {
+						vec.x += ep.ExtendMaxX;
+					}
+				} else {
+					var global = LocalToGlobal(vec);
+					if (global.x < ep.MinX) {
+						vec.x += ExtendGlobalToLocal(ep.ExtendMinX);
+					} else if (global.x > ep.MaxX) {
+						vec.x += ExtendGlobalToLocal(ep.ExtendMaxX);
+					}
+				}
+			}
+			ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MIN, false);
+			ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MAX, false);
+
+			ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MIN, true);
+			ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MAX, true);
+		}
+
+		void RescalePickable(Pickable p, float scaleFactorX) {
+			p.SCALE.x *= scaleFactorX;
+			if (p is Frise f) {
+				Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
+
+				var aabb = f.meshStaticData?.value;
+				if (aabb?.LocalAABB != null) {
+					aabb.WorldAABB.MIN = LocalToGlobal(aabb.LocalAABB.MIN);
+					aabb.WorldAABB.MAX = LocalToGlobal(aabb.LocalAABB.MAX);
 				}
 			}
 		}
+		#endregion
 
 		public override async Task Build() {
 			await base.Build();

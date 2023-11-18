@@ -31,9 +31,6 @@ public class UnityPickable : MonoBehaviour {
 			}
 		}
 		if (pickable != null) {
-			if (pickable.USERFRIENDLY != gameObject.name) {
-				pickable.USERFRIENDLY = gameObject.name;
-			}
 			if (transform.localPosition != new Vector3(pickable.POS2D.x, pickable.POS2D.y, -pickable.RELATIVEZ)) {
 				pickable.POS2D = new Vec2d(transform.localPosition.x, transform.localPosition.y);
 
@@ -58,6 +55,19 @@ public class UnityPickable : MonoBehaviour {
 					RemoveFromContainingScene();
 					ContainingScene = parentScene.scene;
 					AddToContainingScene();
+				}
+			}
+			if (pickable.USERFRIENDLY != gameObject.name) {
+				var newName = gameObject.name;
+				if (ContainingScene != null) {
+					var objectWithName = ContainingScene.FindByName(newName);
+					if (objectWithName == null || objectWithName == pickable) {
+						pickable.USERFRIENDLY = newName;
+					} else {
+						gameObject.name = pickable.USERFRIENDLY;
+					}
+				} else {
+					pickable.USERFRIENDLY = newName;
 				}
 			}
 		}
