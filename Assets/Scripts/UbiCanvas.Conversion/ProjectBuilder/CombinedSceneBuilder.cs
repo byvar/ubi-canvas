@@ -71,7 +71,7 @@ namespace UbiCanvas.Conversion {
 										ZFORCED = false,
 										IS_SINGLE_PIECE = false,
 										SCENE = new UbiArt.Nullable<Scene>(scene.obj)
-									}, subscene.ActorName);
+									});
 
 									if (simpleISC.Spacing != null) pos = pos + simpleISC.Spacing;
 								}
@@ -100,7 +100,7 @@ namespace UbiCanvas.Conversion {
 										foreach (var exit in exits) {
 											var exitScene = exit.ContainingScene;
 											var exitChangePageActor = CreatePagePortal();
-											exitScene.AddActor(exitChangePageActor, exitChangePageActor.USERFRIENDLY);
+											exitScene.AddActor(exitChangePageActor);
 											exitChangePageActor.POS2D = exit.Result.POS2D;
 											exitChangePageActor.RELATIVEZ = exit.Result.RELATIVEZ;
 											exitChangePageActor.xFLIPPED = exit.Result.xFLIPPED;
@@ -133,25 +133,25 @@ namespace UbiCanvas.Conversion {
 												if (teensyRocketActor != null) {
 													var teensyRocketScene = teensyRocketActor.ContainingScene;
 													invasionParent = teensyRocketActor.Path.levels.LastOrDefault().name;
-													teensyRocketScene.AddActor(exitRitualActor, exitRitualActor.USERFRIENDLY);
+													teensyRocketScene.AddActor(exitRitualActor);
 													exitRitualActor.POS2D = new Vec2d(0, 0.562496f);
 													exitRitualActor.RELATIVEZ = 0f;
 													exitRitualActor.xFLIPPED = false;
 												} else {
-													exitScene.AddActor(exitRitualActor, exitRitualActor.USERFRIENDLY);
+													exitScene.AddActor(exitRitualActor);
 													exitRitualActor.POS2D = exit.Result.POS2D;
 													exitRitualActor.RELATIVEZ = exit.Result.RELATIVEZ;
 													exitRitualActor.xFLIPPED = exit.Result.xFLIPPED;
 												}
 											} else {
-												exitScene.AddActor(exitRitualActor, exitRitualActor.USERFRIENDLY);
+												exitScene.AddActor(exitRitualActor);
 												exitRitualActor.POS2D = exit.Result.POS2D;
 												exitRitualActor.RELATIVEZ = exit.Result.RELATIVEZ;
 												exitRitualActor.xFLIPPED = exit.Result.xFLIPPED;
 											}
 
 											var triggerActor = CreateTriggerBoxExitRitual();
-											exitScene.AddActor(triggerActor, triggerActor.USERFRIENDLY);
+											exitScene.AddActor(triggerActor);
 											triggerActor.POS2D = exit.Result.POS2D;
 											triggerActor.RELATIVEZ = exit.Result.RELATIVEZ;
 											triggerActor.xFLIPPED = exit.Result.xFLIPPED;

@@ -6,6 +6,7 @@ using UnityEditor.Search;
 namespace UbiArt.ITF {
 	public partial class Scene {
 		// Returns whether actor was added to scene successfully
+		public bool AddActor(Actor a) => AddActor(a, a?.USERFRIENDLY);
 		public bool AddActor(Actor a, string name) {
 			if(a == null) return false;
 

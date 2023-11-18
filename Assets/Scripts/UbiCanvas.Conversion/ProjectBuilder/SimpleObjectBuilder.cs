@@ -43,7 +43,7 @@ namespace UbiCanvas.Conversion {
 							if (simpleISC.Actor != null) {
 								foreach (var simpleACT in simpleISC.Actor) {
 									var act = await CreateActor(simpleACT);
-									isc.AddActor(act, simpleACT.Name);
+									isc.AddActor(act);
 								}
 							}
 							if (simpleISC.Frise != null) {

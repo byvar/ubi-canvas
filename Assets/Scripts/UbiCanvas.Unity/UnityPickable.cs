@@ -64,6 +64,7 @@ public class UnityPickable : MonoBehaviour {
 					if (objectWithName == null || objectWithName == pickable) {
 						pickable.USERFRIENDLY = newName;
 					} else {
+						UnityEngine.Debug.Log($"An object with the name {newName} already exists in this scene. Reverting name to {pickable.USERFRIENDLY}.");
 						gameObject.name = pickable.USERFRIENDLY;
 					}
 				} else {

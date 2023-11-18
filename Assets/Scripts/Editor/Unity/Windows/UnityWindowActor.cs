@@ -25,6 +25,7 @@ public class UnityWindowActor : UnityWindow {
 				string ExtensionActor = c.Settings.EngineVersion == EngineVersion.RO ? "uca" : "act";
 				string ExtensionActorTemplate = c.Settings.EngineVersion == EngineVersion.RO ? "act" : "tpl";
 				string ExtensionTemplateScene = "tsc";
+				string ExtensionScene = "isc";
 				string ExtensionFrise = "frz";
 				//string ExtensionFriseConfig = $"*.fcg{(c.Settings.Cooked ? ".ckd" : "")}";
 				string ExtensionSubSceneActor = $"ucs";
@@ -33,6 +34,7 @@ public class UnityWindowActor : UnityWindow {
 					$"*.{ExtensionActor}{(c.Settings.Cooked ? ".ckd" : "")}",
 					$"*.{ExtensionActorTemplate}{(c.Settings.Cooked ? ".ckd" : "")}",
 					$"*.{ExtensionTemplateScene}{(c.Settings.Cooked ? ".ckd" : "")}",
+					//$"*.{ExtensionScene}{(c.Settings.Cooked ? ".ckd" : "")}",
 					$"*.{ExtensionFrise}{(c.Settings.Cooked ? ".ckd" : "")}",
 					$"*.{ExtensionSubSceneActor}{(c.Settings.Cooked ? ".ckd" : "")}"
 				};
@@ -96,7 +98,7 @@ public class UnityWindowActor : UnityWindow {
 							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<Frise>(sc, path).AsTask()));
 						} else if (extension == ExtensionSubSceneActor) {
 							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<SubSceneActor>(sc, path).AsTask()));
-						} else if (extension == ExtensionTemplateScene) {
+						} else if (extension == ExtensionTemplateScene || extension == ExtensionScene) {
 							ExecuteTask(controller.AdditionalLoad(controller.LoadActorContainer<Scene>(sc, path).AsTask()));
 						}
 					}

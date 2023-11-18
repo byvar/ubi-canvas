@@ -112,7 +112,7 @@ public class Controller : MonoBehaviour {
 				actorToAdd = a;
 			} else if (c is Scene s) {
 				actorToAdd = new SubSceneActor() {
-					USERFRIENDLY = path.GetFilenameWithoutExtension(removeCooked: true),
+					USERFRIENDLY = name,
 					LUA = new UbiArt.Path("enginedata/actortemplates/subscene.tpl"),
 
 					EMBED_SCENE = true,

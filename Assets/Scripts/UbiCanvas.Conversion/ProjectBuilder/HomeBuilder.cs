@@ -401,19 +401,19 @@ namespace UbiCanvas.Conversion {
 			var lastPos = scene.FindPickable(p => p.USERFRIENDLY == "challenge_drc").Result.POS2D;
 			lastPos += spacing;
 			var ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_classicrun_egypt.isc");
-			scene.AddActor(ssa, ssa.USERFRIENDLY);
+			scene.AddActor(ssa);
 			ssa.POS2D = lastPos;
 			lastPos += spacing;
 			ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_classicrun_dojo.isc");
-			scene.AddActor(ssa, ssa.USERFRIENDLY);
+			scene.AddActor(ssa);
 			ssa.POS2D = lastPos;
 			lastPos += spacing;
 			ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_mini_riverstream.isc");
-			scene.AddActor(ssa, ssa.USERFRIENDLY);
+			scene.AddActor(ssa);
 			ssa.POS2D = lastPos;
 			lastPos += spacing;
 			ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_mini_foliage.isc");
-			scene.AddActor(ssa, ssa.USERFRIENDLY);
+			scene.AddActor(ssa);
 			ssa.POS2D = lastPos;
 
 			await ReplaceSceneByName("challenge_classicrun", "world/home/brick/challenge/challenge_classicrun.isc");
@@ -441,29 +441,45 @@ namespace UbiCanvas.Conversion {
 			ExtendFrise((Frise)challengeEndScene.FindPickable(p => p.USERFRIENDLY == "groundsandy@1").Result, epChallengeEnd);
 			ExtendFrise((Frise)challengeEndScene.FindPickable(p => p.USERFRIENDLY == "tent_background@1").Result, epChallengeEnd);
 
+			// Copy the last tile two times, for two paintings
+			CopyLastTileAssets(spacing);
+			CopyLastTileAssets(spacing * 2);
+
+			// Change the Camera Modifier settings
 			var cm = scene.FindActor(a => a.USERFRIENDLY == "cameramodifier@1");
 			cm.Result.POS2D += addedPos / 2f;
 			cm.Result.SCALE += addedPos / 2f / 3.110752f; // 3.11... is this CM's localAABB
+			cm.Result.POS2D -= new Vec2d(1f, 0f); // CM is a bit too much to the right which messes up the collision (this is how it is in the original)
+
+			// Lighting frise
+			var lightingFrise = (Frise)scene.FindPickable(p => p.USERFRIENDLY == "frontlightfill@3").Result;
+			lightingFrise.POS2D = new Vec2d(30.3f, 0.572063f);
+			lightingFrise.SCALE = new Vec2d(0.75f, 0.942057f);
+			ExtendFrise(lightingFrise, new ExtendParameters() {
+				MinX = -10000,
+				ExtendMinX = 0,
+				MaxX = lightingFrise.POS2D.x,
+				ExtendMaxX = addedPos.x
+			});
+			scene.FindPickable(p => p.USERFRIENDLY == "resolvebothmask@1").Result.POS2D += addedPos;
+
+			// Fill decorations by spawning home tiles
+			/*var graphScene = (scene.FindActor(a => a.USERFRIENDLY == "challenge_graph").Result as SubSceneActor).SCENE.value;
+			var graphOffset = new Vec2d(0, 4);
+			await SpawnHomeTile(2, graphScene, lastPos - graphOffset);
+			await SpawnHomeTile(0, graphScene, lastPos - spacing - graphOffset);*/
+
 
 			Bundle.AddFile(pChallengeISC.CookedPath(TargetContext), challengeISC);
 
-			async Task<SubSceneActor> CreateSubSceneActorFromScene(string path) {
-				var newScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, path);
-				if(newScene == null) return null;
-				var newActor = new SubSceneActor() {
-					USERFRIENDLY = new Path(path).GetFilenameWithoutExtension(removeCooked: true),
-					LUA = new Path("enginedata/actortemplates/subscene.tpl"),
-
-					EMBED_SCENE = true,
-					ZFORCED = true,
-					SCENE = new UbiArt.Nullable<Scene>((Scene)(await TargetContext.Loader.Clone(newScene?.obj, "isc")))
-				};
-				return newActor;
-			}
-			async Task ReplaceScene(SubSceneActor act, string path) {
-				var newScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, path);
-				if (newScene == null) return;
-				act.SCENE = new UbiArt.Nullable<Scene>(newScene.obj);
+			void CopyLastTileAssets(Vec2d offset) {
+				var graphScene = (scene.FindActor(a => a.USERFRIENDLY == "challenge_graph").Result as SubSceneActor).SCENE.value;
+				var lastAssets = graphScene.FindPickables(p => p.POS2D.x >= 50f && p.POS2D.x < 56f, Scene.SearchFlags.All);
+				foreach (var res in lastAssets) {
+					var newP = (Actor)(res.Result.Clone("isc"));
+					newP.POS2D += offset;
+					res.ContainingScene.AddActor(newP);
+				}
 			}
 			async Task ReplaceSceneByName(string name, string path) {
 				await ReplaceScene(scene.FindActor(a => a.USERFRIENDLY == name && a is SubSceneActor).Result as SubSceneActor, path);
@@ -511,6 +527,46 @@ namespace UbiCanvas.Conversion {
 
 			Bundle.AddFile(pCostumesISC.CookedPath(TargetContext), costumesISC);
 		}
+
+		#region Helpers
+		async Task ReplaceScene(SubSceneActor act, string path) {
+			var newScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, path);
+			if (newScene == null) return;
+			act.SCENE = new UbiArt.Nullable<Scene>(newScene.obj);
+		}
+		async Task<SubSceneActor> SpawnHomeTile(int index, Scene parent, Vec2d pos, bool flip = false, bool removeGround = true) {
+			var ssa = await CreateSubSceneActorFromScene($"world/home/brick/home_tile_0{(index + 1)}.isc");
+			parent.AddActor(ssa);
+			ssa.POS2D = pos;
+			if (flip) ssa.xFLIPPED = true;
+			if (removeGround) {
+				var scene = ssa.SCENE.value;
+				var toDelete = scene.FindPickables(p
+					=> p.USERFRIENDLY.StartsWith("treeshadow")
+					|| p.USERFRIENDLY.StartsWith("ground")
+					|| p.USERFRIENDLY.StartsWith("invisibleground")
+					|| p.USERFRIENDLY.StartsWith("tent_background")
+					|| p.USERFRIENDLY.StartsWith("highlight"));
+				foreach (var res in toDelete) {
+					res.ContainingScene.DeletePickable(res.Result);
+				}
+			}
+			return ssa;
+		}
+		async Task<SubSceneActor> CreateSubSceneActorFromScene(string path) {
+			var newScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, path);
+			if (newScene == null) return null;
+			var newActor = new SubSceneActor() {
+				USERFRIENDLY = new Path(path).GetFilenameWithoutExtension(removeCooked: true),
+				LUA = new Path("enginedata/actortemplates/subscene.tpl"),
+
+				EMBED_SCENE = true,
+				ZFORCED = true,
+				SCENE = new UbiArt.Nullable<Scene>((Scene)(await TargetContext.Loader.Clone(newScene?.obj, "isc")))
+			};
+			return newActor;
+		}
+		#endregion
 
 		#region Home Frise editing
 		class ExtendParameters {

@@ -1391,13 +1391,13 @@ namespace UbiCanvas.Conversion {
 							var snowTree = scene.FindActor(a => a.USERFRIENDLY == "fx_snowtree_01");
 							var newSnowTreeActor = (Actor)snowTree.Result.Clone("isc");
 							newSnowTreeActor.POS2D += new Vec2d(40.39538f, 0f);
-							snowTree.ContainingScene.AddActor(newSnowTreeActor, newSnowTreeActor.USERFRIENDLY);
+							snowTree.ContainingScene.AddActor(newSnowTreeActor);
 							newSnowTreeActor = (Actor)snowTree.Result.Clone("isc");
 							newSnowTreeActor.POS2D -= new Vec2d(40.39538f, 0f);
-							snowTree.ContainingScene.AddActor(newSnowTreeActor, newSnowTreeActor.USERFRIENDLY);
+							snowTree.ContainingScene.AddActor(newSnowTreeActor);
 							newSnowTreeActor = (Actor)snowTree.Result.Clone("isc");
 							newSnowTreeActor.POS2D -= new Vec2d((40.39538f * 3/2f), 0f);
-							snowTree.ContainingScene.AddActor(newSnowTreeActor, newSnowTreeActor.USERFRIENDLY);
+							snowTree.ContainingScene.AddActor(newSnowTreeActor);
 						}
 						break;
 					}
@@ -1878,7 +1878,7 @@ namespace UbiCanvas.Conversion {
 				linkTweenAct.ANGLE = a.ANGLE;
 				linkTweenAct.xFLIPPED = a.xFLIPPED;
 				linkTweenAct.USERFRIENDLY = $"{a.USERFRIENDLY}_tween";
-				res.ContainingScene.AddActor(linkTweenAct, linkTweenAct.USERFRIENDLY);
+				res.ContainingScene.AddActor(linkTweenAct);
 				l.AddLoadedActor(linkTweenAct);
 
 				// Link MultiEventTrigger to the new tween actor instead
@@ -2593,7 +2593,7 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 
-				scene.AddActor(fr, fr.USERFRIENDLY);
+				scene.AddActor(fr);
 			}
 
 
@@ -2601,7 +2601,7 @@ namespace UbiCanvas.Conversion {
 
 			if (containingScene != null) {
 				containingScene.DeletePickable(smvActor);
-				containingScene.AddActor(friseScene, friseScene.USERFRIENDLY);
+				containingScene.AddActor(friseScene);
 			}
 
 			return friseScene;
@@ -2741,7 +2741,7 @@ namespace UbiCanvas.Conversion {
 								});
 							}
 						}
-						res.ContainingScene.AddActor(relay, relay.USERFRIENDLY);
+						res.ContainingScene.AddActor(relay);
 
 						return relay;
 					}
@@ -2912,7 +2912,7 @@ namespace UbiCanvas.Conversion {
 						};
 						tween.autoStart = false;
 
-						res.ContainingScene.AddActor(tweenAct, tweenAct.USERFRIENDLY);
+						res.ContainingScene.AddActor(tweenAct);
 
 						return tweenAct;
 					}
@@ -2971,7 +2971,7 @@ namespace UbiCanvas.Conversion {
 								}
 							}
 						};
-						res.ContainingScene.AddActor(pauseswitch, pauseswitch.USERFRIENDLY);
+						res.ContainingScene.AddActor(pauseswitch);
 
 						return pauseswitch;
 					}
@@ -3248,7 +3248,7 @@ namespace UbiCanvas.Conversion {
 					};
 					tween.autoStart = false;
 
-					res.ContainingScene.AddActor(tweenAct, tweenAct.USERFRIENDLY);
+					res.ContainingScene.AddActor(tweenAct);
 					triggerLinks.Children.Add(new ChildEntry() {
 						Path = new ObjectPath(tweenAct.USERFRIENDLY)
 					});
@@ -3820,7 +3820,7 @@ namespace UbiCanvas.Conversion {
 
 			murfyTrigger.AddComponent<RO2_DRCMandatoryZoneComponent>();
 
-			if (scene.AddActor(murfyTrigger, "trigger_box_automurphyactivation")) {
+			if (scene.AddActor(murfyTrigger)) {
 				oldContext?.SystemLogger?.LogInfo($"Added Murfy activation actor for {act.USERFRIENDLY}");
 			}
 
@@ -3859,7 +3859,7 @@ namespace UbiCanvas.Conversion {
 				saveBackward = true,
 				saveBackwardOnActionExit = true
 			};
-			if (scene.AddActor(murfyAction, "trigger_box_murphyforcedaction")) {
+			if (scene.AddActor(murfyAction)) {
 				oldContext?.SystemLogger?.LogInfo($"Added Murfy forced action actor for {act.USERFRIENDLY}");
 			}
 
@@ -3875,7 +3875,7 @@ namespace UbiCanvas.Conversion {
 			var trajectoryComponent = trajectoryNode.AddComponent<RO2_FATrajectoryComponent>();
 			var linkComponent = trajectoryNode.AddComponent<LinkComponent>();
 
-			if (scene.AddActor(trajectoryNode, "am_trajectorynode")) {
+			if (scene.AddActor(trajectoryNode)) {
 				oldContext?.SystemLogger?.LogInfo($"Added trajectorynode actor for {act.USERFRIENDLY}");
 			}
 			// Create links
@@ -3937,7 +3937,7 @@ namespace UbiCanvas.Conversion {
 					SCALE = act.SCALE,
 					RELATIVEZ = act.RELATIVEZ + 3f, // Position difference is required!
 				};
-				containingScene.AddActor(bouncetarget, bouncetarget.USERFRIENDLY);
+				containingScene.AddActor(bouncetarget);
 				var newChild = new ChildEntry() {
 					Path = new ObjectPath(bouncetarget.USERFRIENDLY)
 				};
@@ -4181,7 +4181,7 @@ namespace UbiCanvas.Conversion {
 				pdc.useShapeTransform = false;
 				var t = trigger.AddComponent<TriggerComponent>();
 				t.mode = TriggerComponent.Mode.Multiple;
-				containingScene.AddActor(trigger, trigger.USERFRIENDLY);
+				containingScene.AddActor(trigger);
 				oldContext?.SystemLogger?.LogInfo($"Added trigger: {trigger.USERFRIENDLY}");
 			}
 		}
@@ -4849,7 +4849,7 @@ namespace UbiCanvas.Conversion {
 					MAX = new Vec2d( 10000,  10000)
 				};
 				box.outerBox = box.innerBox;
-				scene.AddActor(pauseswitch, "pauseswitch_modaabb");
+				scene.AddActor(pauseswitch);
 
 				// Link all frises that were STARTPAUSE in the pauseswitch
 				foreach (var f in startpauseFrises) {
@@ -4917,7 +4917,7 @@ namespace UbiCanvas.Conversion {
 						newAct.POS2D = act.POS2D + center;
 						newAct.SCALE = act.SCALE * scale;
 					}
-					rpScene.AddActor(newAct, newAct.USERFRIENDLY);
+					rpScene.AddActor(newAct);
 					return newAct;
 				}
 				CreateMaskResolver("resolvebothmask", "world/common/levelart/light/lightresolver/components/resolvebothmask.tpl", z: -3f);
@@ -5340,7 +5340,7 @@ namespace UbiCanvas.Conversion {
 
 			murfyTrigger.AddComponent<RO2_DRCMandatoryZoneComponent>();
 
-			if (scene.AddActor(murfyTrigger, "trigger_box_automurphyactivation")) {
+			if (scene.AddActor(murfyTrigger)) {
 				oldContext?.SystemLogger?.LogInfo($"Added Murfy activation actor for {act.USERFRIENDLY}");
 			}
 
@@ -5379,7 +5379,7 @@ namespace UbiCanvas.Conversion {
 				saveBackward = true,
 				saveBackwardOnActionExit = true
 			};
-			if (scene.AddActor(murfyAction, "trigger_box_murphyforcedaction_rotatingplatform")) {
+			if (scene.AddActor(murfyAction)) {
 				oldContext?.SystemLogger?.LogInfo($"Added Murfy forced action actor for {act.USERFRIENDLY}");
 			}
 
@@ -5445,7 +5445,7 @@ namespace UbiCanvas.Conversion {
 			gyroController.AddComponent<FXControllerComponent>();
 			gyroController.AddComponent<SoundComponent>();
 
-			if (scene.AddActor(gyroController, "gyrocontroller_rotatingplatform")) {
+			if (scene.AddActor(gyroController)) {
 				oldContext?.SystemLogger?.LogInfo($"Added gyrocontroller actor for {act.USERFRIENDLY}");
 			}
 			// Create links
