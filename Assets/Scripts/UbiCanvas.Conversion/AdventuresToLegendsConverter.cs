@@ -1439,6 +1439,20 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world/challenge/run/challengerun/brick/last_brick/last_brick_01.isc":
+				case "world/challenge/run/challengerun/brick/last_brick/last_brick_02.isc": {
+						if (Version == SpecialVersion.EventDesertMarathon) {
+							// These haven't been egypt-ified
+							var frises = scene.FindPickables(p => p is Frise f && f.ConfigName.FullPath.StartsWith("world/rlc_landofthedead/"));
+							foreach (var res in frises) {
+								var fr = res.Result as Frise;
+								fr.ConfigName = new Path(fr.ConfigName.FullPath.Replace("world/rlc_landofthedead/", "world/rlc_egypt/"));
+								fr.LUA = fr.ConfigName;
+								fr.PreComputedForCook = false; // Recompute them
+							}
+						}
+						break;
+					}
 				case "world/rlc_castle/rotatingplatformpanic/castleinterior_rotatingplatformpanic_spd.isc": {
 						AllSMVToFrise(oldContext, scene);
 						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
