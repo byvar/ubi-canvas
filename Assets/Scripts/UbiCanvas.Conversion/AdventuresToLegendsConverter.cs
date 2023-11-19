@@ -191,6 +191,7 @@ namespace UbiCanvas.Conversion {
 				AddPathConversionRule("world/challenge/common_challenge/actor/", "world/challenge/common_challenge/actor_mini/");
 				AddPathConversionRule("world/challenge/common_challenge/actor_mini/countdown.act", "world/challenge/common_challenge/actor/countdown.act");
 				AddPathConversionRule("world/challenge/common_challenge/actor_mini/components/countdown.tpl", "world/challenge/common_challenge/actor/components/countdown.tpl");
+				AddPathConversionRule("world/challenge/common_challenge/actor_mini/treasurereachedfx.act", "world/challenge/common_challenge/actor/treasurereachedfx.act");
 				AddPathConversionRule("world/common/friendly/swingman/", "world/common/friendly/swingman_mini/");
 				AddPathConversionRule("world/jungle/common/friendly/kuyalum/", "world/jungle/common/friendly/kuyalum_mini/");
 				AddPathConversionRule("world/jungle/common/platform/liana/", "world/jungle/common/platform/liana_mini/");
