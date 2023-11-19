@@ -5,14 +5,14 @@ namespace UbiArt.Bundle {
 		public uint numOffsets;
 		public uint size;
 		public uint zSize;
-		public ulong timeStamp; // LastTimeWriteAccess
+		public long timeStamp; // LastTimeWriteAccess
 		public ulong[] offsets;
 
 		public void Serialize(CSerializerObject s, string name) {
 			numOffsets = s.Serialize<uint>(numOffsets);
 			size = s.Serialize<uint>(size);
 			zSize = s.Serialize<uint>(zSize);
-			timeStamp = s.Serialize<ulong>(timeStamp);
+			timeStamp = s.Serialize<long>(timeStamp);
 			if (offsets != null && offsets.Length != numOffsets) {
 				Array.Resize(ref offsets, (int)numOffsets);
 			} else if (offsets == null) {

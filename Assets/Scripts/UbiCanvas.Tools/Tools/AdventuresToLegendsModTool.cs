@@ -189,14 +189,14 @@ namespace UbiCanvas.Tools
 			await inputLoader.LoadBundles();
 			var patchBun = new UbiArt.Bundle.BundleFile();
 
-			void AddData(string stringPath, byte[] data) {
+			void AddData(string stringPath, byte[] data, DateTime lastWriteTime) {
 				Path path = new Path(stringPath, cooked: true);
 				if (inputLoader != null && inputLoader.AnyBundleContainsFile(path)) {
 					if(!patchBun.HasPreprocessedFile(path))
-						patchBun.AddFile(path, data);
+						patchBun.AddFile(path, data, lastWriteTime: lastWriteTime);
 				} else {
 					if(!bun.HasPreprocessedFile(path))
-						bun.AddFile(path, data);
+						bun.AddFile(path, data, lastWriteTime: lastWriteTime);
 				}
 			}
 
@@ -207,8 +207,8 @@ namespace UbiCanvas.Tools
 				foreach (string file in Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)) {
 					string relativePath = file.Substring(dirPath.Length).Replace('\\', '/').TrimStart('/');
 					byte[] data = File.ReadAllBytes(file);
-
-					AddData(relativePath, data);
+					var lastWriteTime = new FileInfo(file).LastWriteTime;
+					AddData(relativePath, data, lastWriteTime);
 				}
 			}
 

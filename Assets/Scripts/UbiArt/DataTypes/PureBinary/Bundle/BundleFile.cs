@@ -4,6 +4,7 @@ using System.IO;
 using Ionic.Zlib;
 using System.Threading.Tasks;
 using UbiCanvas.Helpers;
+using System;
 
 namespace UbiArt.Bundle {
 	public class BundleFile : ICSerializable {
@@ -11,6 +12,7 @@ namespace UbiArt.Bundle {
 		public FilePackMaster packMaster;
 		private Dictionary<Path, ICSerializable> files = new Dictionary<Path, ICSerializable>();
 		private Dictionary<Path, byte[]> preProcessedFiles = new Dictionary<Path, byte[]>();
+		private Dictionary<Path, DateTime> times = new Dictionary<Path, DateTime>();
 
 		public bool IsEmpty => !readFileData.Any() && !files.Any() && !preProcessedFiles.Any();
 
@@ -73,11 +75,19 @@ namespace UbiArt.Bundle {
 		public bool ContainsFile(Path path) => packMaster.files.Any(f => f.Item2 == path);
 		public Path GetPathByStringID(StringID id) => packMaster.files.FirstOrDefault(f => f.Item2.stringID == id)?.Item2 ?? null;
 
-		public void AddFile(Path path, ICSerializable data) {
+		public void AddFile(Path path, ICSerializable data, DateTime? lastWriteTime = null) {
 			files[path] = data;
+			SetTime(path, lastWriteTime);
 		}
-		public void AddFile(Path path, byte[] data) {
+		public void AddFile(Path path, byte[] data, DateTime? lastWriteTime = null) {
 			preProcessedFiles[path] = data;
+			SetTime(path, lastWriteTime);
+		}
+		public void SetTime(Path path, DateTime? lastWriteTime = null) {
+			if (lastWriteTime.HasValue)
+				times[path] = lastWriteTime.Value;
+			else
+				times[path] = DateTime.Now;
 		}
 
 		public async Task WriteBundle(Context context, string path) {
@@ -102,6 +112,7 @@ namespace UbiArt.Bundle {
 					zSize = 0,
 					timeStamp = 0
 				};
+				if(times.ContainsKey(kv.Key)) fhr.timeStamp = times[kv.Key].ToFileTime();
 				packMaster.files.Add(new pair<FileHeaderRuntime, Path>(fhr, kv.Key));
 				data.Add(serializedData);
 				curOffset += (uint)serializedData.Length;
@@ -116,6 +127,7 @@ namespace UbiArt.Bundle {
 					zSize = 0,
 					timeStamp = 0
 				};
+				if (times.ContainsKey(kv.Key)) fhr.timeStamp = times[kv.Key].ToFileTime();
 				packMaster.files.Add(new pair<FileHeaderRuntime, Path>(fhr, kv.Key));
 				data.Add(serializedData);
 				curOffset += (uint)serializedData.Length;
