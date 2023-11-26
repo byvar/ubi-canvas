@@ -55,10 +55,19 @@ public class UnityWindow : EditorWindow {
 
 		return miniRect;
 	}
-	public Rect[] DivideRectHorizontally(Rect rect, int count) {
+	public static Rect[] DivideRectHorizontally(Rect rect, int count, float spacing = 0f) {
 		Rect[] rects = new Rect[count];
 		for (int i = 0; i < rects.Length; i++) {
-			rects[i] = new Rect(rect.x + (rect.width / count) * i, rect.y, rect.width / count, rect.height);
+			rects[i] = new Rect(rect.x + (rect.width / count) * i, rect.y, (rect.width / count), rect.height);
+		}
+		if (spacing != 0f) {
+			for (int i = 0; i < rects.Length - 1; i++) {
+				rects[i].width -= spacing / 2f;
+			}
+			for (int i = 1; i < rects.Length; i++) {
+				rects[i].width -= spacing / 2f;
+				rects[i].x += spacing / 2f;
+			}
 		}
 		return rects;
 	}

@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RLVersion | GameFlags.VH | GameFlags.RA)]
 	public partial class AnimMeshVertexComponent : GraphicComponent {
 		public float mergeRange = 10f;
-		public AABB aabb = new AABB() { MIN = Vec2d.Infinity, MAX = new Vec2d(float.MinValue, float.MinValue) };
+		public AABB aabb = new AABB() { MIN = Vec2d.Infinity, MAX = Vec2d.MinusInfinity };
 		public CListO<SingleAnimData> anims;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

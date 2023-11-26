@@ -51,16 +51,24 @@ namespace UbiArt {
 					case TypeCode.Byte: obj = (byte)EditorGUILayout.IntField(name, (byte)obj); break;
 					case TypeCode.Char: obj = (char)EditorGUILayout.IntField(name, (char)obj); break;
 					case TypeCode.String: obj = EditorGUILayout.TextField(name, (string)obj); break;
-					case TypeCode.Single: obj = EditorGUILayout.FloatField(name, (float)obj); break;
+					case TypeCode.Single: obj = MinMaxField<float>(name, (float)obj); break;
 					case TypeCode.Double: obj = EditorGUILayout.DoubleField(name, (double)obj); break;
 					case TypeCode.UInt16: obj = (ushort)EditorGUILayout.IntField(name, (ushort)obj); break;
-					case TypeCode.UInt32: obj = (uint)EditorGUILayout.LongField(name, (uint)obj); break;
+					case TypeCode.UInt32: obj = MinMaxField<uint>(name, (uint)obj); break;
 					case TypeCode.UInt64: obj = (ulong)EditorGUILayout.LongField(name, (uint)obj); break;
 					case TypeCode.Int16: obj = (short)EditorGUILayout.IntField(name, (short)obj); break;
-					case TypeCode.Int32: obj = EditorGUILayout.IntField(name, (int)obj); break;
+					case TypeCode.Int32: obj = MinMaxField<int>(name, (int)obj); break;
 					case TypeCode.Int64: obj = EditorGUILayout.LongField(name, (long)obj); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
+			} else if(type == typeof(Angle)) {
+				Angle a = (Angle)obj;
+				a = AngleField(name, a);
+				obj = a;
+			} else if (type == typeof(AngleAmount)) {
+				AngleAmount a = (AngleAmount)obj;
+				a = (AngleAmount)AngleField(name, a);
+				obj = a;
 			} else if (type == typeof(PathRef)) {
 				PathRef p = (PathRef)obj;
 				DrawPathRef(name, ref p);
@@ -82,9 +90,9 @@ namespace UbiArt {
 				DrawLocId(name, ref locId);
 				obj = locId;
 			} else if (type == typeof(Vec2d)) {
-				obj = (Vec2d)(EditorGUILayout.Vector2Field(name, ((Vec2d)obj ?? new Vec2d()).GetUnityVector()).GetUbiArtVector());
+				obj = Vec2dField(name, (Vec2d)obj);
 			} else if (type == typeof(Vec3d)) {
-				obj = (Vec3d)(EditorGUILayout.Vector3Field(name, ((Vec3d)obj ?? new Vec3d()).GetUnityVector()).GetUbiArtVector());
+				obj = Vec3dField(name, (Vec3d)obj);
 			} else if (type == typeof(Vec4d)) {
 				obj = (Vec4d)(EditorGUILayout.Vector4Field(name, ((Vec4d)obj ?? new Vec4d()).GetUnityVector()).GetUbiArtVector());
 			} else if (type == typeof(Color)) {
@@ -157,8 +165,137 @@ namespace UbiArt {
 			string newPath = EditorGUI.TextField(rect, new GUIContent(name), fullPath);
 			//EditorGUI.indentLevel = indent;
 			if (newPath != fullPath) {
+				if(string.IsNullOrEmpty(newPath)) newPath = null;
 				p = new Path(newPath);
 			}
+		}
+		public Angle AngleField(string name, Angle value) {
+			if (value == null) value = new Angle();
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			var controlID = GUIUtility.GetControlID(FocusType.Passive, rect);
+			rect = EditorGUI.PrefixLabel(rect, controlID, new GUIContent(name));
+
+			var indentLevel = EditorGUI.indentLevel;
+			EditorGUI.indentLevel = 0;
+
+			var rects = UnityWindow.DivideRectHorizontally(rect, 2, spacing: 16f);
+			float val = value.angle;
+			val = MinMaxField<float>("rad", value.angle, rectToUse: rects[0], labelWidth: 32);
+			if (val != value.angle) {
+				value.angle = val;
+			}
+			val = MinMaxField<float>("deg", value.EulerAngle, rectToUse: rects[1], labelWidth: 32);
+			if (val != value.EulerAngle) {
+				value.EulerAngle = val;
+			}
+
+			EditorGUI.indentLevel = indentLevel;
+
+			return value;
+		}
+		public Vec2d Vec2dField(string name, Vec2d value) {
+			if(value == null) value = new Vec2d();
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			var controlID = GUIUtility.GetControlID(FocusType.Passive, rect);
+			rect = EditorGUI.PrefixLabel(rect, controlID, new GUIContent(name));
+
+			var indentLevel = EditorGUI.indentLevel;
+			EditorGUI.indentLevel = 0;
+
+			var rects = UnityWindow.DivideRectHorizontally(rect, 2, spacing: 16f);
+			value.x = MinMaxField<float>("X", value.x, rectToUse: rects[0], labelWidth: 16);
+			value.y = MinMaxField<float>("Y", value.y, rectToUse: rects[1], labelWidth: 16);
+
+			EditorGUI.indentLevel = indentLevel;
+
+			return value;
+		}
+		public Vec3d Vec3dField(string name, Vec3d value) {
+			if (value == null) value = new Vec3d();
+			Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			var controlID = GUIUtility.GetControlID(FocusType.Passive, rect);
+			rect = EditorGUI.PrefixLabel(rect, controlID, new GUIContent(name));
+
+			var indentLevel = EditorGUI.indentLevel;
+			EditorGUI.indentLevel = 0;
+
+			var rects = UnityWindow.DivideRectHorizontally(rect, 3, spacing: 16f);
+			value.x = MinMaxField<float>("X", value.x, rectToUse: rects[0], labelWidth: 16);
+			value.y = MinMaxField<float>("Y", value.y, rectToUse: rects[1], labelWidth: 16);
+			value.z = MinMaxField<float>("Z", value.z, rectToUse: rects[2], labelWidth: 16);
+
+			EditorGUI.indentLevel = indentLevel;
+
+			return value;
+		}
+		public static UnityEngine.Color MinMaxHighlightColor = UnityEngine.Color.cyan;
+		public T MinMaxField<T>(string name, T value, Rect? rectToUse = null, bool prefixLabel = true, float? labelWidth = null) {
+			Rect rect = rectToUse ?? EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+			if (prefixLabel) {
+				if (labelWidth.HasValue) {
+					Rect labelRect = new Rect(rect.x, rect.y, labelWidth.Value, rect.height);
+					rect = new Rect(rect.x + labelWidth.Value, rect.y, rect.width - labelWidth.Value, rect.height);
+					EditorGUI.LabelField(labelRect, name, EditorStyles.miniLabel);
+				} else {
+					rect = EditorGUI.PrefixLabel(rect, new GUIContent(name));
+				}
+			}
+			var indentLevel = EditorGUI.indentLevel;
+			EditorGUI.indentLevel = 0;
+			object maxValue = null;
+			object minValue = null;
+
+			switch (Type.GetTypeCode(typeof(T))) {
+				case TypeCode.Int32:
+					maxValue = int.MaxValue;
+					minValue = int.MinValue;
+					break;
+				case TypeCode.UInt32:
+					maxValue = uint.MaxValue;
+					break;
+				case TypeCode.Single:
+					maxValue = float.MaxValue;
+					minValue = float.MinValue;
+					break;
+				default:
+					break;
+			}
+			bool isMin = minValue != null && value.Equals(minValue);
+			bool isMax = maxValue != null && value.Equals(maxValue);
+
+			if (minValue != null || maxValue != null) {
+				var backgroundColor = GUI.backgroundColor;
+				// Add a dropdown button
+				if (isMin || isMax) {
+					GUI.backgroundColor = MinMaxHighlightColor;
+				}
+				string valueText = value.ToString();
+				if(isMax) valueText = "MAX";
+				if(isMin) valueText = "MIN";
+				valueText = EditorGUI.DelayedTextField(rect, valueText);
+				GUI.backgroundColor = backgroundColor;
+				if (valueText == "MIN" && minValue != null) {
+					value = (T)minValue;
+				} else if (valueText == "MAX" && maxValue != null) {
+					value = (T)maxValue;
+				} else {
+					switch (Type.GetTypeCode(typeof(T))) {
+						case TypeCode.Int32:
+							if(int.TryParse(valueText, out int i)) value = (T)(object)i;
+							break;
+						case TypeCode.UInt32:
+							if (uint.TryParse(valueText, out uint ui)) value = (T)(object)ui;
+							break;
+						case TypeCode.Single:
+							if (float.TryParse(valueText, out float f)) value = (T)(object)f;
+							break;
+						default:
+							break;
+					}
+				}
+			}
+			EditorGUI.indentLevel = indentLevel;
+			return value;
 		}
 		public void DrawPathRef(string name, ref PathRef p) {
 			if (p == null) p = new PathRef();
@@ -171,6 +308,7 @@ namespace UbiArt {
 			string newPath = EditorGUI.TextField(rect, new GUIContent(name), fullPath);
 			//EditorGUI.indentLevel = indent;
 			if (newPath != fullPath) {
+				if (string.IsNullOrEmpty(newPath)) newPath = null;
 				p = new PathRef(newPath);
 			}
 		}
@@ -368,13 +506,13 @@ namespace UbiArt {
 					case TypeCode.Byte: obj = (byte)EditorGUILayout.IntField(name, (byte)obj); break;
 					case TypeCode.Char: obj = (char)EditorGUILayout.IntField(name, (char)obj); break;
 					case TypeCode.String: obj = EditorGUILayout.TextField(name, (string)obj); break;
-					case TypeCode.Single: obj = EditorGUILayout.FloatField(name, (float)obj); break;
+					case TypeCode.Single: obj = MinMaxField<float>(name, (float)obj); break;
 					case TypeCode.Double: obj = EditorGUILayout.DoubleField(name, (double)obj); break;
 					case TypeCode.UInt16: obj = (ushort)EditorGUILayout.IntField(name, (ushort)obj); break;
-					case TypeCode.UInt32: obj = (uint)EditorGUILayout.LongField(name, (uint)obj); break;
+					case TypeCode.UInt32: obj = MinMaxField<uint>(name, (uint)obj); break;
 					case TypeCode.UInt64: obj = (ulong)EditorGUILayout.LongField(name, (uint)obj); break;
 					case TypeCode.Int16: obj = (short)EditorGUILayout.IntField(name, (short)obj); break;
-					case TypeCode.Int32: obj = EditorGUILayout.IntField(name, (int)obj); break;
+					case TypeCode.Int32: obj = MinMaxField<int>(name, (int)obj); break;
 					case TypeCode.Int64: obj = EditorGUILayout.LongField(name, (long)obj); break;
 					default: throw new Exception("Unsupported TypeCode " + Type.GetTypeCode(type));
 				}
@@ -392,7 +530,15 @@ namespace UbiArt {
 			// Get the type
 			var type = typeof(T);
 			if(name == null) name = $"({type.GetFormattedName()})";
-			if (type == typeof(PathRef)) {
+			if (type == typeof(Angle)) {
+				Angle a = (Angle)(object)obj;
+				a = AngleField(name, a);
+				obj = (T)(object)a;
+			} else if (type == typeof(AngleAmount)) {
+				AngleAmount a = (AngleAmount)(object)obj;
+				a = (AngleAmount)AngleField(name, a);
+				obj = (T)(object)a;
+			} else if (type == typeof(PathRef)) {
 				PathRef p = (PathRef)(object)obj;
 				DrawPathRef(name, ref p);
 				obj = (T)(object)p;
@@ -413,9 +559,9 @@ namespace UbiArt {
 				DrawLocId(name, ref locId);
 				obj = (T)(object)locId;
 			} else if (type == typeof(Vec2d)) {
-				obj = (T)(object)(Vec2d)(EditorGUILayout.Vector2Field(name, ((Vec2d)(object)obj ?? new Vec2d()).GetUnityVector()).GetUbiArtVector());
+				obj = (T)(object)Vec2dField(name, (Vec2d)(object)obj);
 			} else if (type == typeof(Vec3d)) {
-				obj = (T)(object)(Vec3d)(EditorGUILayout.Vector3Field(name, ((Vec3d)(object)obj ?? new Vec3d()).GetUnityVector()).GetUbiArtVector());
+				obj = (T)(object)Vec3dField(name, (Vec3d)(object)obj);
 			} else if (type == typeof(Vec4d)) {
 				obj = (T)(object)(Vec4d)(EditorGUILayout.Vector4Field(name, ((Vec4d)(object)obj ?? new Vec4d()).GetUnityVector()).GetUbiArtVector());
 			} else if (type == typeof(Color)) {

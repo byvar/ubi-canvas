@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public CListO<ObjectPath> relRepositionObjects;
 		public CListO<AnimScaleRepositionedObject> borderRepositionedObjects;
 		public Vec2d minimumSize;
-		public AABB aabb = new AABB() { MIN = Vec2d.Infinity, MAX = new Vec2d(float.MinValue, float.MinValue) };
+		public AABB aabb = new AABB() { MIN = Vec2d.Infinity, MAX = Vec2d.MinusInfinity };
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.VH) {
