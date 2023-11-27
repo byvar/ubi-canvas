@@ -197,6 +197,7 @@ public class UnityWindowTools : UnityWindow
 		{
 			logFileTool.FilePath = EditorField("File path", logFileTool.FilePath);
 			logFileTool.Type = EditorField("File type", logFileTool.Type);
+			logFileTool.Namespace = EditorField("Namespace", logFileTool.Namespace);
 			logFileTool.UseContainer = EditorField("Use file container", logFileTool.UseContainer);
 
 			if (EditorButton("Deserialize"))
