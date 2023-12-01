@@ -108,6 +108,11 @@ namespace UbiCanvas.Conversion {
 				AddPathConversionRule("world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength.tpl", "world/jungle/common/platform/liana/liana_zipline/components/liana_zipline_freelength_rlc.tpl");
 				AddPathConversionRule("umbrella/classic/", "umbrella/adv/");
 				AddPathConversionRule("world/adversarial/soccerpunch/actor/soccerball/", "world/adversarial/soccerpunch/actor/soccerball_adv/");
+				AddPathConversionRule("world/adversarial/soccerpunch/actor/soccerball_adv/animation/stand.anm", "world/adversarial/soccerpunch/actor/soccerball/animation/stand.anm");
+				AddPathConversionRule("world/adversarial/soccerpunch/actor/soccerball_adv/animation/roll_left.anm", "world/adversarial/soccerpunch/actor/soccerball/animation/roll_left.anm");
+				AddPathConversionRule("world/adversarial/soccerpunch/actor/soccerball_adv/animation/roll_right.anm", "world/adversarial/soccerpunch/actor/soccerball/animation/roll_right.anm");
+				AddPathConversionRule("world/adversarial/soccerpunch/actor/soccerball_adv/animation/add_halo.anm", "world/adversarial/soccerpunch/actor/soccerball/animation/add_halo.anm");
+
 				//AddPathConversionRule("world/common/friendly/lumschain/components/lumschain.tpl", "world/common/friendly/lumschain/components/lumschain_adv.tpl");
 				/*AddPathConversionRule("world/common/fx/textures/fireworks/", "world/common/fx/textures/fireworks_adv/");
 				AddPathConversionRule("world/common/fx/textures/star/", "world/common/fx/textures/star_adv/");
@@ -146,7 +151,6 @@ namespace UbiCanvas.Conversion {
 				AddPathConversionRule("world/common/friendly/skullcoin/components/skullcoin.tpl", "world/common/friendly/skullcoin/components/skullcoin_rlc.tpl");
 				AddPathConversionRule("world/ocean/common/platform/geyserplatform/", "world/ocean/common/platform/geyserplatform_rlc/");
 				//AddPathConversionRule("world/common/logicactor/shape/components/editableshape.tpl", "world/common/logicactor/shape/components/editableshape_rlc.tpl");
-
 
 				// Challenges
 				switch (Version) {
@@ -403,6 +407,7 @@ namespace UbiCanvas.Conversion {
 			// Then start fixing non-scene stuff
 			FixNinjas(mainContext, settings);
 			FixRabbids(mainContext, settings);
+			FixCaptainHelloAnimationBug(mainContext, settings);
 			FixAllUTurnAnimations(mainContext, settings);
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings);
 			FixLumKingMusic(mainContext, settings);
@@ -422,6 +427,8 @@ namespace UbiCanvas.Conversion {
 			FixShapeExcluders(mainContext, settings);
 			//FixSwimmingToads(mainContext, settings);
 			AdjustGhostBrightness(mainContext, settings);
+
+			await UseBetterEggForSoccerBall(mainContext, settings);
 
 			DuplicateActorTemplatesForStartPaused(mainContext);
 			DuplicateLightingMushroomForGPEColor(mainContext, settings);
@@ -1004,6 +1011,33 @@ namespace UbiCanvas.Conversion {
 			var scenePath = GetScenePath(scene);
 
 			switch (scenePath.FullPath) {
+				case "world/rlc_intro/intro_firstlevel.isc": {
+						// Add soccer ball
+						var egg1 = scene.FindActor(a => a.USERFRIENDLY == "Egg1");
+						var eggBall = await AddNewActor(egg1.ContainingScene, new Path("world/adversarial/soccerpunch/actor/soccerball/components/ball.tpl"));
+						eggBall.POS2D = egg1.Result.POS2D + Vec2d.Up * 3;
+						eggBall.RELATIVEZ = egg1.Result.RELATIVEZ;
+						eggBall.GetComponent<AnimLightComponent>().defaultAnim = "stand";
+						eggBall.GetComponent<RO2_BallComponent>().bounceMultiplier = 0.5f;
+
+
+						// Remove intro cutscene & eggs
+						var act = scene.FindActor(a => a.USERFRIENDLY == "intro_firstlevel_cine");
+						act.ContainingScene.DeletePickable(act.Result);
+						var eggs = scene.FindActors(a => a.USERFRIENDLY.ToLowerInvariant().StartsWith("egg"));
+						foreach (var egg in eggs) {
+							egg.ContainingScene.DeletePickable(egg.Result);
+						}
+						var armada = scene.FindActor(a => a.USERFRIENDLY == "ARMADA_BG@2");
+						armada.Result.STARTPAUSE = false;
+
+						var flower = scene.FindActor(a => a.USERFRIENDLY == "floweranimonly");
+						flower.Result.GetComponent<AnimatedComponent>().defaultAnim = "dance";
+
+						var nocrush = scene.FindPickable(p => p.USERFRIENDLY == "nocrushattack");
+						nocrush.ContainingScene.DeletePickable(nocrush.Result);
+						break;
+					}
 				case "world_arcade/ra_trunk/levels/trk_ra_09_storminggiants/trk_ra_09_storminggiants.isc": {
 						var toads = scene.FindActors(a => a.USERFRIENDLY.StartsWith("shootingtoad_big"));
 						foreach (var res in toads) {
@@ -1884,6 +1918,36 @@ namespace UbiCanvas.Conversion {
 			box.outerBox = box.innerBox;
 		}
 
+		public async Task UseBetterEggForSoccerBall(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var l = oldContext.Loader;
+			var ballTPL = oldContext.Cache.Get<GenericFile<Actor_Template>>(new Path("world/adversarial/soccerpunch/actor/soccerball/components/ball.tpl"));
+			if(ballTPL == null) return;
+
+			var fxb = ballTPL.obj.GetComponent<FxBankComponent_Template>();
+
+			var eggIntro = await LoadFile<GenericFile<Actor_Template>>(MainContext, new Path("world/rlc/incubator/incubator/components/eggintro.tpl"));
+			var eggFXB = eggIntro.obj.GetComponent<FxBankComponent_Template>();
+			ReplaceFx(6, eggFXB.Fx[0]);
+			ReplaceFx(7, eggFXB.Fx[1]);
+
+			void ReplaceFx(int index, FxDescriptor_Template fx) {
+				var oldName = fxb.Fx[index].name;
+				fxb.Fx[index] = (FxDescriptor_Template)fx.Clone("tpl");
+				fxb.Fx[index].name = oldName;
+			}
+			//var fxc = ballTPL.obj.GetComponent<FXControllerComponent_Template>();
+			//fxc.fxControlList[1].fxUseActorSpeed = true;
+			//fxc.fxControlList[2].fxUseActorSpeed = true;
+
+			foreach (var act in l.LoadedActors.Where(a => a.template == ballTPL)) {
+				var ball = act.GetComponent<RO2_BallComponent>();
+				if(ball == null) continue;
+				ball.startWithHalo = true;
+			}
+		}
 
 		public void AddRelaysForMultipleEventTriggers(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
@@ -2043,6 +2107,27 @@ namespace UbiCanvas.Conversion {
 						polyline = new StringID(0xCD8DBD3C),
 						name = new StringID(),
 					});
+				}
+			}
+		}
+
+
+		public void FixCaptainHelloAnimationBug(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var animPath = new Path("world/rlc/common/friendly/captain/animation/onboat_hello.anm");
+			var anim = oldContext.Cache.Get<AnimTrack>(animPath);
+			if (anim != null) {
+				ProcessAngle(anim.bonePAS[1185]); // Bone 20
+				ProcessAngle(anim.bonePAS[1186]);
+				ProcessAngle(anim.bonePAS[1347]); // Bone 21
+				ProcessAngle(anim.bonePAS[1348]);
+
+				void ProcessAngle(AnimTrackBonePAS bp) {
+					var floatAngle = (((bp.Rotation.EulerAngle * anim.multiplierA) % 360) + 360) % 360; // Get positive modulo
+					var newA = (short)((new Angle(floatAngle, degrees: true).angle / anim.multiplierA) / 0.000030518f);
+					bp.angle = newA;
 				}
 			}
 		}

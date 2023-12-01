@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_AdversarialModeComponent_Template : CSerializable {
+	public partial class RO2_AdversarialModeComponent_Template : ActorComponent_Template {
 		public float modeDuration;
 		public float respawnDuration;
 		public float retryDelay;
