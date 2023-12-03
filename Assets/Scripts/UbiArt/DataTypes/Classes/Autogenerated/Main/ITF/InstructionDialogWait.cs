@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class InstructionDialogWait : InstructionDialog {
-		public float time;
+		public float time = 1f;
 		public float timeMin;
 		public float timeMax;
 		protected override void SerializeImpl(CSerializerObject s) {

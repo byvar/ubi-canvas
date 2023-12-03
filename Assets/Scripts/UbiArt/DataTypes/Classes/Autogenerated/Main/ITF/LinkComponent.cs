@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.All)]
 	public partial class LinkComponent : ActorComponent {
-		public CListO<ChildEntry> Children;
+		public CListO<ChildEntry> Children = new CListO<ChildEntry>();
 		public CListO<ObjectId> ChildrenObjId;
 		public CListO<ObjectPath> LinkedChildren;
 		protected override void SerializeImpl(CSerializerObject s) {

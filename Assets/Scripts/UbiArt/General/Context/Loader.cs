@@ -342,6 +342,7 @@ namespace UbiArt {
 				case "tpl":
 				case "isg":
 				case "gmt":
+				case "frt":
 				case "cache":
 					flags |= SerializeFlags.Flags7;
 					ownFlags |= CSerializerObject.SerializerProperty.StoreObjectSizes;

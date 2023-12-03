@@ -1036,6 +1036,8 @@ namespace UbiCanvas.Conversion {
 
 						var nocrush = scene.FindPickable(p => p.USERFRIENDLY == "nocrushattack");
 						nocrush.ContainingScene.DeletePickable(nocrush.Result);
+
+						await CreateIntroActors(oldContext, newSettings, scene);
 						break;
 					}
 				case "world_arcade/ra_trunk/levels/trk_ra_09_storminggiants/trk_ra_09_storminggiants.isc": {
@@ -1933,12 +1935,24 @@ namespace UbiCanvas.Conversion {
 			ReplaceFx(6, eggFXB.Fx[0]);
 			ReplaceFx(7, eggFXB.Fx[1]);
 
+			//var legendsBall = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/jungle/level/pal/actor/components/ball.tpl"));
+			//var legendsSound = legendsBall.obj.GetComponent<SoundComponent_Template>();
+
+			//var 
+
 			void ReplaceFx(int index, FxDescriptor_Template fx) {
 				var oldName = fxb.Fx[index].name;
 				fxb.Fx[index] = (FxDescriptor_Template)fx.Clone("tpl");
 				fxb.Fx[index].name = oldName;
 			}
-			//var fxc = ballTPL.obj.GetComponent<FXControllerComponent_Template>();
+			var fxc = ballTPL.obj.GetComponent<FXControllerComponent_Template>();
+			fxc.feedbackTags = new CListO<StringID>() {
+				new StringID("ball"),
+				new StringID(0x112D8806)
+			};
+			foreach (var fx in fxc.fxControlList) {
+				fx.sounds = new CListO<StringID>();
+			}
 			//fxc.fxControlList[1].fxUseActorSpeed = true;
 			//fxc.fxControlList[2].fxUseActorSpeed = true;
 
@@ -1947,6 +1961,264 @@ namespace UbiCanvas.Conversion {
 				if(ball == null) continue;
 				ball.startWithHalo = true;
 			}
+		}
+
+		public async Task CreateIntroActors(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var fairyTPLPath = new Path("world/custom/fairy.tpl");
+			var fairyNodeTPLPath = new Path("world/custom/fairy_node.tpl");
+			var lumspoolTPLPath = new Path("world/common/friendly/lumspool/components/lumspool.tpl");
+			if (CreateTemplateIfNecessary(fairyTPLPath, "INTRO ACTOR", out var fairyTPL)) {
+				var murfy = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/playablecharacter/drcplayer/drcplayer.tpl"));
+				var starsTrail = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/fx/cinematic/fx_mrdark_starstrail_01.tpl"));
+
+				fairyTPL.obj = (Actor_Template)murfy.obj.Clone("tpl");
+				fairyTPL.sizeOf = murfy.sizeOf + 0x10000;
+				fairyTPL.obj.STARTPAUSED = false;
+
+				// Remove DRC player
+				fairyTPL.obj.RemoveComponent<RO2_DRCPlayerComponent_Template>();
+
+				// Replace animation
+				var animTPL = fairyTPL.obj.GetComponent<AnimatedComponent_Template>();
+				var animSet = animTPL.animSet;
+				animSet.animPackage.textureBank = new CListO<TextureBankPath>() {
+					new TextureBankPath() {
+						id = new StringID("faery_a1"),
+						patchBank = new Path("cinematic/faery/animation/faery_a1.pbk"),
+						materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+						textureSet = new GFXMaterialTexturePathSet() {
+							diffuse = new Path("cinematic/faery/animation/faery_a1.tga")
+						}
+					}
+				};
+				animSet.animPackage.skeleton = new Path("cinematic/faery/animation/faery_squeleton.skl");
+				animSet.animPackage.animPathAABB = new CListO<AnimPathAABB>() {
+					new AnimPathAABB() {
+						name = "sg_stand",
+						path = new Path("cinematic/faery/animation/cine_sg_stand_jungle.anm"),
+						aabb = new AABB() {
+							MIN = new Vec2d(-10, -10),
+							MAX = new Vec2d(10, 10),
+						}
+					}
+				};
+				animSet.animations = new CListO<SubAnim_Template>() {
+					new SubAnim_Template() {
+						friendlyName = "sg_stand",
+						name = new Path("cinematic/faery/animation/cine_sg_stand_jungle.anm"),
+						loop = true,
+					},
+				};
+				animTPL.tree = new AnimTree_Template() {
+					nodes = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>() {
+						new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+							nodeName = "sg_stand",
+							animationName = "sg_stand",
+						})
+					}
+				};
+				animTPL.defaultAnimation = "sg_stand";
+				animTPL.patchHLevel = 2;
+				animTPL.patchVLevel = 2;
+				animTPL.scale = Vec2d.One * 10f;
+
+				// Replace FX
+				fairyTPL.obj.RemoveComponent<FXControllerComponent_Template>();
+				fairyTPL.obj.RemoveComponent<FxBankComponent_Template>();
+				fairyTPL.obj.AddComponent<FXControllerComponent_Template>((FXControllerComponent_Template)starsTrail.obj.GetComponent<FXControllerComponent_Template>().Clone("tpl"));
+				fairyTPL.obj.AddComponent<FxBankComponent_Template>((FxBankComponent_Template)starsTrail.obj.GetComponent<FxBankComponent_Template>().Clone("tpl"));
+				var fxb = fairyTPL.obj.GetComponent<FxBankComponent_Template>();
+				var fxg = fxb.Fx[0].gen._params;
+				fxg.maxParticles = 200;
+				fxg.innerCircleRadius *= 3f;
+				fxg.circleRadius *= 5f;
+				fxg.freq /= 2f;
+
+				var trailTPL = fairyTPL.obj.GetComponent<Trail3DComponent_Template>();
+				trailTPL.trailList[0].nbFrames = 120;
+				trailTPL.trailList[0].thicknessBegin = 5f;
+				trailTPL.trailList[0].trailFaidingTime = 2f;
+
+				//var fxcTPL = fairyTPL.obj.GetComponent<FXControllerComponent_Template>();
+				//fxcTPL.defaultFx = new StringID(0x74AE7DEA);
+
+				var fcTPL = fairyTPL.obj.AddComponent<RO2_FairyComponent_Template>();
+				fcTPL.lumPath = new Path("world/common/friendly/lums/basiclum.act"); // change to lums pool or egg?
+				fcTPL.flyDist = 2f;
+				fcTPL.rushDist = 1f;
+				fcTPL.flySpeed = 0.5f;
+				fcTPL.rushSpeed = 1.5f;
+				fcTPL.keepRushTime = 0.25f;
+				fcTPL.displayDialogStill = true; // Stop to display dialog
+
+				fairyTPL.obj.AddComponent<LinkComponent_Template>();
+				var snTPL = fairyTPL.obj.AddComponent<RO2_SnakeNetworkFollowerComponent_Template>();
+				//snTPL.prevNodeCount = 1;
+				snTPL.speedMultiplierMaxValue = 0f;
+			}
+			if (CreateTemplateIfNecessary(fairyNodeTPLPath, "INTRO ACTOR", out var fairyNodeTPL)) {
+				fairyNodeTPL.obj.AddComponent<LinkComponent_Template>();
+				fairyNodeTPL.obj.AddComponent<RO2_FairyNodeComponent_Template>();
+			}
+			var fairy = fairyTPL.obj.Instantiate(fairyTPLPath);
+			var fairyDialog = fairy.GetComponent<DialogActorComponent>();
+			var fairyFXC = fairy.GetComponent<FXControllerComponent>();
+			fairyFXC.defaultFx = new StringID("fx_mrdark_starstrail_01");
+			//var fairyTrail = fairy.GetComponent<Trail3DComponent>();
+			fairyDialog.enableDialog = true;
+			fairyDialog.widthTextAreaMax = 10f;
+			var pathZ = 0.02f;
+
+			MainContext.Loader.AddLoadedActor(fairy);
+			scene.AddActor(fairy);
+
+			Actor[] CreateFairyNodes(Vec2d[] Positions, IEnumerable<SmartLocId>[] locs) {
+				var actors = new Actor[Positions.Length];
+				for (int i = actors.Length - 1; i >= 0; i--) {
+					var node = fairyNodeTPL.obj.Instantiate(fairyNodeTPLPath);
+					node.POS2D = Positions[i];
+					node.RELATIVEZ = pathZ; 
+					scene.AddActor(node);
+					actors[i] = node;
+					var lc = node.GetComponent<LinkComponent>();
+					if (i < actors.Length - 1) {
+						lc.Children.Add(new ChildEntry() {
+							Path = new ObjectPath(actors[i+1].USERFRIENDLY),
+						});
+					}
+					var fn = node.GetComponent<RO2_FairyNodeComponent>();
+					fn.lumsCount = 50;
+					fn.lumsDropStepDist = 2.5f;
+					fn.data = new RO2_SnakeNetworkNodeComponent.NodeData() {
+						//stopOnNode = true
+					};
+
+					if (locs != null & i < locs.Length && locs[i] != null) {
+						//fn.data.stopOnNode = true;
+						var dialogueTPLPath = new Path($"world/custom/fairy_node_dialogue_{i}.tpl");
+						if (CreateTemplateIfNecessary(dialogueTPLPath, "INTRO ACTOR", out var dialogueTPL)) {
+							dialogueTPL.obj.AddComponent<LinkComponent_Template>();
+							var d = dialogueTPL.obj.AddComponent<DialogComponent_Template>();
+							d.activeOnTrigger = true;
+							//d.useOasis = true;
+							d.replaceSpeakersByActivator = true;
+							d.instructionList = new CArrayO<Generic<InstructionDialog>>();
+							foreach (var l in locs[i]) {
+								d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogText() {
+									actorName = "fairy",
+									mood = 4,
+									sizeText = 0.6f,
+									text = l.defaultText,
+									idLoc = l.locId,
+								}));
+								d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogWait()));
+							}
+						}
+						var dialogueActor = dialogueTPL.obj.Instantiate(dialogueTPLPath);
+						dialogueActor.POS2D = Positions[i];
+						scene.AddActor(dialogueActor);
+						lc.Children.Add(new ChildEntry() { Path = new ObjectPath(dialogueActor.USERFRIENDLY) });
+					}
+				}
+				fairy.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath(actors[0].USERFRIENDLY),
+				});
+				fairy.POS2D = actors[0].POS2D;
+				fairy.RELATIVEZ = actors[0].RELATIVEZ;
+				return actors;
+			}
+
+			CreateFairyNodes(
+				new Vec2d[] {
+					new Vec2d(51.09f, 17.18f),
+					new Vec2d(59.25f, 16.7f),
+					new Vec2d(69.82f, 15.22f),
+					new Vec2d(80.86f, 15.76f),
+					new Vec2d(93.86f, 12.68f),
+
+					new Vec2d(109.79f, 12.38f),
+					new Vec2d(114.34f, 11.06f),
+					new Vec2d(129.5232f, 9.190702f),
+					new Vec2d(131.32f, 8.19f),
+					new Vec2d(132.12f, 5.8f),
+					new Vec2d(125.09f, 3.4f),
+					new Vec2d(127.53f, 0.39f),
+					new Vec2d(135.08f, -1.86f),
+					new Vec2d(147.89f, -1.08f),
+					new Vec2d(155.3f, -1.95f),
+					new Vec2d(165.12f, -3.85f),
+					new Vec2d(176.43f, -3.85f)
+				},
+				/*new Vec2d[] {
+				new Vec2d(57.71f, 18.85f),
+				new Vec2d(76.97f, 17.63f),
+				new Vec2d(98.98f, 15.29f),
+				new Vec2d(109.79f, 12.38f),
+				new Vec2d(129.5232f, 9.190702f),
+				new Vec2d(127.53f, 0.39f),
+			},*/ new IEnumerable<SmartLocId>[] {
+				new SmartLocId[] {
+					new SmartLocId() { defaultText = "There you are! Had a nice nap?\nIt's been... 10 years!", locId = new LocalisationId(4587) },
+					new SmartLocId() { defaultText = "There have been strange tidings from the most distant reaches of the Glade.\nIt seems some evildoers are still... doing evil!", locId = new LocalisationId(4587) },
+					new SmartLocId() { defaultText = "I asked the Captain to pilot you there. He's waiting at the dock. Follow me!", locId = new LocalisationId(4587) },
+				},
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				new SmartLocId[] {
+					new SmartLocId() { defaultText = "This is as far as I go. Good luck!", locId = new LocalisationId(4587) },
+				},
+			});
+			var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
+			trig.POS2D = fairy.POS2D;
+			trig.SCALE = new Vec2d(5,20);
+			trig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Once;
+			trig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+				Path = new ObjectPath(fairy.USERFRIENDLY)
+			});
+			/*var pool = await AddNewActor(scene, lumspoolTPLPath, contextToLoadFrom: LegendsContext);
+			pool.POS2D = fairy.POS2D + (Vec2d.Down * 15f);
+			pool.SCALE = Vec2d.One * 5f;
+			var pc = pool.GetComponent<RO2_LumsPoolComponent>();
+			pc.LumsMaxNb = 200;
+			var plc = pool.GetComponent<LinkComponent>();
+			plc.Children.Add(new ChildEntry() {
+				Path = new ObjectPath(fairy.USERFRIENDLY),
+				TagValues = new CListO<TagValue>() {
+					new TagValue() {
+						Tag = new StringID(0x9E742677),
+					}
+				}
+			});
+
+			// Copied from mountain lumspool
+			var ls = pc.LumsSimulation;
+			ls.SpawnLimit = 260;
+			ls.SpawnBySec = 3;//50;
+			ls.MoveCoeff = 12;
+			ls.DetectionDistance = 2;
+			ls.SwarmNoiseMoveCoeff = 0;
+			ls.SwarmRadiusPercent = 1;
+			ls.GroundFriction = 0.5f;
+			ls.RotationCoeff = 0.5f;
+			ls.GroundReboudCoeff = 0.8f;
+			ls.Density = 5;
+			ls.GridWidth = 400;//46;
+			ls.GridHeight = 300;//30;
+
+			ls.StaticCollision = false;*/
 		}
 
 		public void AddRelaysForMultipleEventTriggers(Context oldContext, Settings newSettings, Scene scene) {
@@ -4476,6 +4748,7 @@ namespace UbiCanvas.Conversion {
 							var sndDesc = soundComponent.soundList.FirstOrDefault(s => s?.name == snd);
 							if(sndDesc == null) continue;
 							var wwEventID = sndDesc.WwiseEventGUID;
+							if(wwEventID == null || wwEventID.IsNull) continue;
 							var wwEvent = conversionSettings.WwiseConversionSettings.Events.TryGetItem(wwEventID);
 							if (wwEvent == null) continue;
 
@@ -5661,6 +5934,7 @@ namespace UbiCanvas.Conversion {
 				createdTemplate = true;
 				l.Context.SystemLogger?.LogInfo($"Creating template ({reason}): {newPath.FullPath}");
 				newTPL = new GenericFile<Actor_Template>(new Actor_Template());
+				newTPL.obj.InitContext(oldContext);
 
 				var newCookedPath = newPath.CookedPath(oldContext);
 				l.CookedPaths[newPath.stringID] = newCookedPath;

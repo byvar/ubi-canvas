@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class DialogSoundDescriptorElement : CSerializable {
 		public uint Mood;
 		public StringID SoundDescriptor;
-		public float Repeat;
+		public float Repeat = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			Mood = s.Serialize<uint>(Mood, name: "Mood");

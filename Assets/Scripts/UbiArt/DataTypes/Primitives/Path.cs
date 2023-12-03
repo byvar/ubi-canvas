@@ -213,6 +213,9 @@ namespace UbiArt {
 						c.Loader.LoadFile<ContainerFile<Generic<ITF.SceneConfig>>>(this, o => Object = o);
 						// Note: NOT genericFile! Could just be a list with 1 element too
 						break;
+					case "frt":
+						c.Loader.LoadFile<GenericFile<FeedbackFXManager_Template>>(this, o => Object = o);
+						break;
 					case "wav":
 					case "tfn":
 						// TODO

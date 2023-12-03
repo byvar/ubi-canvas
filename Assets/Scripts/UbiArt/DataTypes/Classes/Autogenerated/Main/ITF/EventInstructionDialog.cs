@@ -6,7 +6,7 @@ namespace UbiArt.ITF {
 		public float sizeText;
 		public Vec2d offset;
 		public float durationMin;
-		public float actorScaleFactor;
+		public float actorScaleFactor = 1f;
 		public string textStr;
 		public int snapToScreen;
 		protected override void SerializeImpl(CSerializerObject s) {

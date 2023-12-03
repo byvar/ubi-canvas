@@ -16,8 +16,8 @@ namespace UbiArt.Animation {
 				unityBones[i].bindPosition = Vector3.zero;
 				unityBones[i].bindRotation = 0;
 				if (context.Settings.EngineVersion <= EngineVersion.RO) {
-					unityBones[i].xOffset = atl.bonesDyn[i].xScale;
-					unityBones[i].xScaleMultiplier = skeleton.bonesDyn[boneIndex].xScale / atl.bonesDyn[i].xScale;
+					unityBones[i].xOffset = atl.bonesDyn[i].boneLength;
+					unityBones[i].xScaleMultiplier = skeleton.bonesDyn[boneIndex].boneLength / atl.bonesDyn[i].boneLength;
 				}
 				//unityBones[i].bindRotation = bonesDyn[i].angle - unityBones[i].globalAngle;
 				unityBones[i].bindScale = atl.bonesDyn[i].scale.GetUnityVector() / unityBones[i].computedScale;

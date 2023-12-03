@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class DialogBaseComponent : ActorComponent {
-		public bool playOnce;
+		public bool playOnce = true;
 		public bool loop;
-		public float wordTime_Default;
-		public float wordTime_Accel;
-		public float endTime_Default;
-		public float endTime_Accel;
+		public float wordTime_Default = 0.05f;
+		public float wordTime_Accel = 0.001f;
+		public float endTime_Default = 1f;
+		public float endTime_Accel = 0.5f;
 		public bool waitInit;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

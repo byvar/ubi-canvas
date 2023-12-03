@@ -53,20 +53,15 @@ namespace UbiArt.Animation {
 			bonesDyn = s.SerializeObject<CListO<AnimBoneDyn>>(bonesDyn, name: "bonesDyn");
 			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				subskeletonConfigs = s.SerializeObject<CArrayO<CArrayP<byte>>>(subskeletonConfigs, name: "subskeletonConfigs"); // subskeletonConfigs[numsubskeletons][numbones]
-			} else {
-				byteArrayOrigins = s.SerializeBytes(byteArrayOrigins, 8);
 			}
-			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
+			if (s.Settings.EngineVersion <= EngineVersion.RO || s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 			}
 			bankId = s.Serialize<uint>(bankId, name: "bankId");
 			if (bankId != 0) {
-				if (s.Settings.EngineVersion > EngineVersion.RO) {
-					bank = s.SerializeObject<Nullable<AnimPolylineBank>>(bank, name: "bank");
-				} else {
-					bankOrigins = s.SerializeObject<AnimPolylineBank>(bankOrigins, name: "bank");
-				}
+				bank = s.SerializeObject<Nullable<AnimPolylineBank>>(bank, name: "bank");
 			}
+
 			/*
 			Example of what comes after bonesDyn:
 			00000000
@@ -84,6 +79,30 @@ namespace UbiArt.Animation {
 
 		protected override void OnPreSerialize(CSerializerObject s) {
 			base.OnPreSerialize(s);
+			if (s.Context.HasSettings<ConversionSettings>()) {
+				var conv = s.Context.GetSettings<ConversionSettings>();
+				if (conv.OldSettings.EngineVersion <= EngineVersion.RO && s.Settings.EngineVersion > EngineVersion.RO && version < VersionLegends) {
+					version = VersionLegends;
+
+					// Convert to Legends
+					for (int i = 0; i < bones.Count; i++) {
+						int parentIndex = -1;
+						if (bones[i].parentKey.stringID != 0) {
+							AnimBone parent = GetBoneFromLink(bones[i].parentKey);
+							parentIndex = bones.IndexOf(parent);
+						}
+						if (parentIndex != -1) {
+							bonesDyn[i].position.x += bonesDyn[parentIndex].boneLength;
+						}
+					}
+					if (bonesDyn != null) {
+						foreach (var boneDyn in bonesDyn) {
+							boneDyn.scale.x *= boneDyn.boneLength;
+							//boneDyn.boneLength = 1f;
+						}
+					}
+				}
+			}
 			Reinit(s.Settings);
 		}
 
@@ -148,15 +167,21 @@ namespace UbiArt.Animation {
 				version = VersionLegends;
 				if (boneTags == null) {
 					boneTags = new CListO<StringID>();
-					foreach (var bta in boneTagsAdv) boneTags.Add(new StringID((uint)bta));
+					if (boneTagsAdv != null) {
+						foreach (var bta in boneTagsAdv) boneTags.Add(new StringID((uint)bta));
+					}
 				}
 				if (boneTags2 == null) {
 					boneTags2 = new CListO<StringID>();
-					foreach(var bta in boneTags2Adv) boneTags2.Add(new StringID((uint)bta));
+					if (boneTags2Adv != null) {
+						foreach (var bta in boneTags2Adv) boneTags2.Add(new StringID((uint)bta));
+					}
 				}
 				if (subskeletonTags == null) {
 					subskeletonTags = new CListO<StringID>();
-					foreach(var bta in subskeletonTagsAdv) subskeletonTags.Add(new StringID((uint)bta));
+					if (subskeletonTagsAdv != null) {
+						foreach (var bta in subskeletonTagsAdv) subskeletonTags.Add(new StringID((uint)bta));
+					}
 				}
 			}
 		}

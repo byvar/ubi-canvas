@@ -41,8 +41,8 @@ namespace UbiArt.Animation {
 				unityBones[i].bindZ = skl.bonesDyn[i].z;
 				unityBones[i].localZ = 0;
 				if (context.Settings.EngineVersion <= EngineVersion.RO) {
-					unityBones[i].xOffset = skl.bonesDyn[i].xScale;
-					unityBones[i].xScaleMultiplier = skl.bonesDyn[i].xScale;
+					unityBones[i].xOffset = skl.bonesDyn[i].boneLength;
+					unityBones[i].xScaleMultiplier = skl.bonesDyn[i].boneLength;
 				}
 				//unityBones[i].UpdateBone();
 			}

@@ -70,6 +70,7 @@ namespace UbiArt.ITF {
 		public void RemoveComponent<T>(T t = null) where T : ActorComponent_Template, new() {
 			if (COMPONENTS == null) COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>();
 			if (t == null) t = GetComponent<T>();
+			if (t == null) return;
 			var cmpObj = COMPONENTS.FirstOrDefault(c => c?.obj == t);
 			COMPONENTS.Remove(cmpObj);
 		}

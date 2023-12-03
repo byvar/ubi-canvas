@@ -1,9 +1,9 @@
 namespace UbiArt.Animation {
 	// See: ITF::AnimBoneDyn::serialize
 	public class AnimBoneDyn : CSerializable {
-		public Vec2d vec0;
-		public float float1;
-		public float xScale = 1f;
+		public Vec2d globalPosition;
+		public float globalAngle;
+		public float boneLength = 1f;
 		public Vec2d position;
 		public Angle angle;
 		public float z;
@@ -11,10 +11,10 @@ namespace UbiArt.Animation {
 		public float float6;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			vec0 = s.SerializeObject<Vec2d>(vec0, name: "vec0");
-			float1 = s.Serialize<float>(float1, name: "float1");
+			globalPosition = s.SerializeObject<Vec2d>(globalPosition, name: "globalPosition");
+			globalAngle = s.Serialize<float>(globalAngle, name: "globalAngle");
 			if (s.Settings.EngineVersion <= EngineVersion.RO) {
-				xScale = s.Serialize<float>(xScale, name: "xScale");
+				boneLength = s.Serialize<float>(boneLength, name: "boneLength");
 			}
 			position = s.SerializeObject<Vec2d>(position, name: "position");
 			angle = s.SerializeObject<Angle>(angle, name: "angle");

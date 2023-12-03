@@ -3,7 +3,7 @@ namespace UbiArt.ITF {
 	public partial class DialogBaseComponent_Template : ActorComponent_Template {
 		public bool useOasis;
 		public bool replaceSpeakersByActivator;
-		public bool activeOnTrigger;
+		public bool activeOnTrigger = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			useOasis = s.Serialize<bool>(useOasis, name: "useOasis");

@@ -31,16 +31,32 @@ namespace UbiArt.Animation {
 			base.OnPreSerialize(s);
 			if (s.Context.HasSettings<ConversionSettings>()) {
 				var conv = s.Context.GetSettings<ConversionSettings>();
-				if (conv.OldSettings.EngineVersion <= EngineVersion.RO && conv.OldSettings.EngineVersion > EngineVersion.RO) {
+				if (conv.OldSettings.EngineVersion <= EngineVersion.RO && s.Settings.EngineVersion > EngineVersion.RO) {
 					version = VersionLegends;
 
 					// Convert PBK
 					if (templates != null) {
 						foreach (var template in templates) {
+							if (template?.bones != null) {
+								var bones = template.bones;
+								var bonesDyn = template?.bonesDyn;
+								for (int i = 0; i < bones.Count; i++) {
+									int parentIndex = -1;
+									if (bones[i].parentKey.stringID != 0) {
+										AnimBone parent = template.GetBoneFromLink(bones[i].parentKey);
+										if (parent != null) {
+											parentIndex = bones.IndexOf(parent);
+										}
+									}
+									if (parentIndex != -1) {
+										bonesDyn[i].position.x += bonesDyn[parentIndex].boneLength;
+									}
+								}
+							}
 							if (template?.bonesDyn != null) {
 								foreach (var boneDyn in template.bonesDyn) {
-									boneDyn.scale.x *= boneDyn.xScale;
-									boneDyn.xScale = 1f;
+									boneDyn.scale.x *= boneDyn.boneLength;
+									//boneDyn.boneLength = 1f;
 								}
 							}
 						}

@@ -29,7 +29,6 @@ namespace UbiArt.Animation {
 		public uint bankId0;
 		public uint bankId;
 		public uint unk2;
-		public ulong unk0Origins;
 		public CListP<ulong> unk1Origins;
 
 		protected override void SerializeImpl(CSerializerObject s) {
@@ -61,7 +60,8 @@ namespace UbiArt.Animation {
 				skeletonOrigins = s.SerializeObject<pair<StringID, CString>>(skeletonOrigins, name: "skeleton");
 				texturePathKeysOrigins = s.SerializeObject<KeyArray<int>>(texturePathKeysOrigins, name: "texturePathKeys");
 				texturePathsOrigins = s.SerializeObject<CListO<pair<StringID, CString>>>(texturePathsOrigins, name: "textures");
-				unk0Origins = s.Serialize<ulong>(unk0Origins, name: "unk0");
+				bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
+				bankId = s.Serialize<uint>(bankId, name: "bankId");
 				unk1Origins = s.SerializeObject<CListP<ulong>>(unk1Origins, name: "unk1");
 				unk2 = s.Serialize<uint>(unk2, name: "unk2");
 			}
@@ -102,6 +102,23 @@ namespace UbiArt.Animation {
 		}
 		protected override void OnPreSerialize(CSerializerObject s) {
 			base.OnPreSerialize(s);
+			if (s.Context.HasSettings<ConversionSettings>()) {
+				var conv = s.Context.GetSettings<ConversionSettings>();
+				if (conv.OldSettings.EngineVersion <= EngineVersion.RO && s.Settings.EngineVersion > EngineVersion.RO) {
+					version = VersionLegends;
+
+					// Convert to Legends
+					if (skeletonOrigins != null) {
+						skeleton = new pair<StringID, Path>(skeletonOrigins.Item1, new Path(skeletonOrigins.Item2));
+					}
+					if (texturePathsOrigins != null) {
+						texturePaths = new CListO<pair<StringID, Path>>();
+						foreach (var p in texturePathsOrigins) {
+							texturePaths.Add(new pair<StringID, Path>(p.Item1, new Path(p.Item2)));
+						}
+					}
+				}
+			}
 			Reinit(s.Settings);
 		}
 		public void Reinit(Settings settings) {
