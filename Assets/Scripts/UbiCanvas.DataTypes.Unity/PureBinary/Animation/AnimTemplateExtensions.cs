@@ -27,6 +27,11 @@ namespace UbiArt.Animation {
 				}
 				//unityBones[i].bindRotation = bonesDyn[i].angle - unityBones[i].globalAngle;
 				unityBones[i].bindScale = atl.bonesDyn[i].scale.GetUnityVector() / skeleton.bonesDyn[boneIndex].scale.GetUnityVector();
+				unityBones[i].bindScale = new Vector3(
+					unityBones[i].bindScale.y, // Why (y,x)?
+					unityBones[i].bindScale.x,
+					unityBones[i].bindScale.z);
+				
 				if (atl.bones[i].parentKey.stringID != 0) {
 					AnimBone parent = atl.GetBoneFromLink(atl.bones[i].parentKey);
 					int parentIndex = skeleton.GetBoneIndexFromTag(parent.tag);
