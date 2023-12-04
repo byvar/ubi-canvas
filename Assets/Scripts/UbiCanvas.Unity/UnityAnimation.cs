@@ -15,13 +15,14 @@ public class UnityAnimation : MonoBehaviour {
 		public StringID TextureID { get; set; }
 
 		public AnimPatchBank PBK { get; set; }
-		public GameObject[] Patches { get; set; }
+		public UnityPatch[] Patches { get; set; }
 		public TextureBankPath TextureBankPath { get; set; }
 		public Path TexturePathOrigins { get; set; }
-		public SkinnedMeshRenderer[] PatchRenderers { get; set; }
-		
-		// Current animation data
-		public bool[] CurrentActive { get; set; }
+	}
+	public class UnityPatch {
+		public GameObject Object { get; set; }
+		public SkinnedMeshRenderer Renderer { get; set; }
+		public bool Active { get; set; }
 	}
 	public class UnityAnimationTrack {
 		public StringID ID { get; set; }
@@ -162,14 +163,20 @@ public class UnityAnimation : MonoBehaviour {
 	}
 
 	public void Update() {
-		if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished && loaded && animTrack != null) {
-			if(playAnimation) currentFrame += Time.deltaTime * animationSpeed * (Animation?.SubAnim?.playRate ?? 1f);
+		if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished && loaded) {
+			if (animTrack != null) {
+				if (playAnimation) currentFrame += Time.deltaTime * animationSpeed * (Animation?.SubAnim?.playRate ?? 1f);
+			} else {
+				currentFrame = 0f;
+			}
 			UpdateAnimation();
 		}
 	}
 
 	void UpdateAnimation() {
-		if (loaded && animTrack != null && skeleton != null && bones != null) {
+		if(!loaded || skeleton == null || bones == null) return;
+
+		if (animTrack != null) {
 			if (animTrack.length == 0) {
 				currentFrame = 0;
 			} else if (currentFrame >= animTrack.length) {
@@ -211,9 +218,9 @@ public class UnityAnimation : MonoBehaviour {
 								if (!useRoot) {
 									pos = Vector2.zero;
 									scl = Vector2.one;
-									if(!useRootRotation) rot = 0f;
+									if (!useRootRotation) rot = 0f;
 								}
-								if(defaultFlip) scl = new Vector2(-scl.x, scl.y);
+								if (defaultFlip) scl = new Vector2(-scl.x, scl.y);
 							}
 
 							bones[i].localPosition = pos;
@@ -253,7 +260,7 @@ public class UnityAnimation : MonoBehaviour {
 				}
 				// Find last index that matches current BML
 				int currentBMLIndex = currentBMLFrame == -1 ? 0 : (animTrack.bml.ToList().FindLastIndex(b => b.frame == currentBMLFrame) % animTrack.bml.Count);
-				
+
 				for (int i = currentBMLIndex; i < animTrack.bml.Count; i++) {
 					AnimTrackBML currentBML = animTrack.bml[i];
 					if (currentBML.frame > currentFrame) break;
@@ -261,122 +268,107 @@ public class UnityAnimation : MonoBehaviour {
 					bml = currentBML;
 				}
 			}
-			if(bml != null && bml.frame != currentBMLFrame) {
+			if (bml != null && bml.frame != currentBMLFrame) {
 				currentBMLFrame = bml.frame;
 				Context l = Controller.MainContext;
 				foreach (var pbk in AllPatchBanks) {
-					if (pbk.CurrentActive == null) {
-						pbk.CurrentActive = new bool[pbk.Patches.Length];
-					}
-					for(int p = 0; p < pbk.CurrentActive.Length; p++) pbk.CurrentActive[p] = false;
+					foreach(var p in pbk.Patches) p.Active = false;
 				}
 				foreach (AnimTrackBML.Entry entry in bml.entries) {
 					StringID templateId = entry.templateId;
 					var bank = LookupTextureBankId(entry.textureBankId);
-					if(bank == null) continue;
+					if (bank == null) continue;
 					int ind = bank.PBK.templateKeys.GetKeyIndex(templateId);
 					if (ind != -1) {
-						bank.CurrentActive[ind] = true;
+						bank.Patches[ind].Active = true;
 						if (l.Settings.EngineVersion == EngineVersion.RO) {
 							var texPath = GetTexturePathOrigins(entry.textureBankId);
 							if (texPath != null) {
 								if (l.Loader.tex.ContainsKey(texPath.stringID)) {
-									alc.SetMaterialTextureOrigins((TextureCooked)l.Loader.tex[texPath.stringID], bank.PatchRenderers[ind]);
+									alc.SetMaterialTextureOrigins((TextureCooked)l.Loader.tex[texPath.stringID], bank.Patches[ind].Renderer);
 								}
 							}
 						}
 					}
 				}
 				foreach (var pbk in AllPatchBanks) {
-					for (int p = 0; p < pbk.CurrentActive.Length; p++) {
-						if (pbk.Patches[p] != null) {
-							pbk.Patches[p].SetActive(pbk.CurrentActive[p]);
-							//pbk.Value.CurrentActive[p] = false;
-						}
+					foreach (var p in pbk.Patches) {
+						if(p?.Object == null) continue;
+						p.Object.SetActive(p.Active);
 					}
 				}
 			}
 
-			// Update lines
+
 			UpdateLines();
 
-
 			// Configure Z for all patches
-			ZListManager zman = Controller.Obj.zListManager;
 			if (bml == null) {
 				bml = animTrack.bml.ToList().FindLast(b => b.frame == currentBMLFrame);
 			}
 			if (bml != null) {
-				foreach (var patchData in AllPatchBanks) {
-					for (int i = 0; i < patchData.Patches.Length; i++) {
-						if (patchData.Patches[i] == null || patchData.PBK.templates[i].bones.Count == 0) continue;
-						bool patchActive = patchData.CurrentActive[i];
-						if (patchActive) {
-							//int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
-							int[] boneIndices = patchData.PBK.templates[i].bones.Select(b => skeleton.GetBoneIndexFromTag(b.tag)).ToArray();
-							List<float> alphas = new List<float>();
-							List<float> zs = new List<float>();
-							for (int b = 0; b < boneIndices.Length; b++) {
-								if (boneIndices[b] != -1) {
-									int boneIndex = boneIndices[b];
-									alphas.Add(bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha);
-									zs.Add(bones[boneIndex].bindZ + bones[boneIndex].localZ);
-								}
-							}
-							if (alphas.Count > 0) {
-								alc.SetColor(new UnityEngine.Color(1f, 1f, 1f, alphas.Average()), patchData.PatchRenderers[i]);
-							}
-							if (zs.Count > 0) {
-								zman.zDict[patchData.PatchRenderers[i]] = transform.position.z - zs.Average() / 10000f;
-								//patchRenderers[i].transform.localPosition = new Vector3(0,0,zs.Average() / 10000f);
-							} else {
-								zman.zDict[patchData.PatchRenderers[i]] = transform.position.z - (i / 10000f);
-							}
-							/*if (boneIndex != -1) {
-								patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
-								//zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
-								zman.zDict[patchRenderers[i]] = transform.position.z - (bones[boneIndex].bindZ + bones[boneIndex].localZ) / 100f;
+				ZSortBones();
+			}
+		} else {
+			// Bind pose
+			foreach (var b in bones) {
+				b.localPosition = Vector3.zero;
+				b.localScale = Vector3.one;
+				b.localRotation = 0;
+			}
 
-								if (anims.Count > 0 && anims[animIndex].Item1.filename.Contains("stand_back")) {
-									print(i + " - " + pbk.templates[i].bones[0].tag);
-								}
-							} else {
-								zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
-							}*/
-						} else {
-							if (zman.zDict.ContainsKey(patchData.PatchRenderers[i])) {
-								zman.zDict.Remove(patchData.PatchRenderers[i]);
-							}
+			UpdateLines();
+			ZSortBones();
+		}
+	}
+
+	private void ZSortBones() {
+		ZListManager zman = Controller.Obj.zListManager;
+		foreach (var patchData in AllPatchBanks) {
+			for (int i = 0; i < patchData.Patches.Length; i++) {
+				if (patchData.Patches[i] == null || patchData.PBK.templates[i].bones.Count == 0) continue;
+				var patchRenderer = patchData.Patches[i].Renderer;
+				bool patchActive = patchData.Patches[i].Active;
+				if (patchActive) {
+					//int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
+					int[] boneIndices = patchData.PBK.templates[i].bones.Select(b => skeleton.GetBoneIndexFromTag(b.tag)).ToArray();
+					List<float> alphas = new List<float>();
+					List<float> zs = new List<float>();
+					for (int b = 0; b < boneIndices.Length; b++) {
+						if (boneIndices[b] != -1) {
+							int boneIndex = boneIndices[b];
+							alphas.Add(bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha);
+							zs.Add(bones[boneIndex].bindZ + bones[boneIndex].localZ);
 						}
+					}
+					if (alphas.Count > 0) {
+						alc.SetColor(new UnityEngine.Color(1f, 1f, 1f, alphas.Average()), patchRenderer);
+					}
+					if (zs.Count > 0) {
+						zman.zDict[patchRenderer] = transform.position.z - zs.Average() / 10000f;
+						//patchRenderers[i].transform.localPosition = new Vector3(0,0,zs.Average() / 10000f);
+					} else {
+						zman.zDict[patchRenderer] = transform.position.z - (i / 10000f);
+					}
+					/*if (boneIndex != -1) {
+						patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
+						//zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+						zman.zDict[patchRenderers[i]] = transform.position.z - (bones[boneIndex].bindZ + bones[boneIndex].localZ) / 100f;
+
+						if (anims.Count > 0 && anims[animIndex].Item1.filename.Contains("stand_back")) {
+							print(i + " - " + pbk.templates[i].bones[0].tag);
+						}
+					} else {
+						zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
+					}*/
+				} else {
+					if (zman.zDict.ContainsKey(patchRenderer)) {
+						zman.zDict.Remove(patchRenderer);
 					}
 				}
 			}
 		}
 	}
-
-	/*private void SortPatchZ(List<int> indexes) {
-		Dictionary<int, float> patchZ = new Dictionary<int, float>();
-		for (int i = 0; i < patches.Length; i++) {
-			if (patches[i] == null || pbk.templates[i].bones.Count == 0) continue;
-			bool patchActive = indexes.Contains(i);
-			if (patchActive) {
-				int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
-				if (boneIndex != -1) {
-					patchMaterials[i].SetColor("_ColorFactor", new UnityEngine.Color(1f, 1f, 1f, bones[boneIndex].bindAlpha + bones[boneIndex].localAlpha));
-					//zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
-					zman.zDict[patchRenderers[i]] = transform.position.z - (bones[boneIndex].bindZ + bones[boneIndex].localZ) / 100f;
-				} else {
-					zman.zDict[patchRenderers[i]] = transform.position.z - (i / 10000f);
-				}
-			} else {
-				if (zman.zDict.ContainsKey(patchRenderers[i])) {
-					zman.zDict.Remove(patchRenderers[i]);
-				}
-			}
-		}
-		List<KeyValuePair<int, float>> list = patchZ.ToList();
-		list.Sort((k1, k2) => k2.Value.CompareTo(k1.Value));
-	}*/
 
 	UnityPatchBank LookupTextureBankId(StringID id) {
 		if(patchBanks.ContainsKey(id)) return patchBanks[id];

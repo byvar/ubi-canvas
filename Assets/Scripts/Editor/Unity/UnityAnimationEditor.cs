@@ -11,9 +11,9 @@ public class UnityAnimationEditor : Editor {
 
 		UnityAnimation ua = target as UnityAnimation;
 		if (ua != null && ua.anims != null) {
-			int newInd = EditorGUILayout.Popup("Animations", ua.animIndex, ua.anims.Select(a => a.Path.filename).ToArray());
+			int newInd = EditorGUILayout.Popup("Animations", ua.animIndex + 1, ua.anims.Select(a => a.Path.filename).Prepend("Bind pose").ToArray()) - 1;
 			GUILayout.BeginHorizontal();
-			GUI.enabled = newInd > 0;
+			GUI.enabled = newInd > -1;
 			if (GUILayout.Button("Previous")) newInd--;
 			GUI.enabled = (newInd < ua.anims.Length - 1);
 			if (GUILayout.Button("Next")) newInd++;

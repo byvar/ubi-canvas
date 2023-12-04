@@ -7,6 +7,11 @@ namespace UbiArt.Animation {
 
 		public static UnityBone[] GetBones(this AnimTemplate atl, Context context, Mesh mesh, GameObject skeleton_gao, AnimSkeleton skeleton, UnityBone[] skeletonBones) {
 			UnityBone[] unityBones = new UnityBone[atl.bones.Count];
+			/*foreach (var b in skeletonBones) {
+				b.boneLength = 0f;//atl.bonesDyn[i].boneLength;
+				b.xScaleMultiplier = 1f;
+				//b.xScaleMultiplier = 1f;
+			}*/
 			for (int i = 0; i < atl.bones.Count; i++) {
 				int boneIndex = skeleton.GetBoneIndexFromTag(atl.bones[i].tag);
 				if (boneIndex == -1) continue;
@@ -16,7 +21,9 @@ namespace UbiArt.Animation {
 				unityBones[i].bindPosition = Vector3.zero;
 				unityBones[i].bindRotation = 0;
 				if (context.Settings.EngineVersion <= EngineVersion.RO) {
-					unityBones[i].xOffset = atl.bonesDyn[i].boneLength;
+					//unityBones[i].boneLength = atl.bonesDyn[i].boneLength;
+					//unityBones[i].xScaleMultiplier = atl.bonesDyn[i].boneLength;
+					unityBones[i].boneLength = skeleton.bonesDyn[boneIndex].boneLength - atl.bonesDyn[i].boneLength;
 					unityBones[i].xScaleMultiplier = skeleton.bonesDyn[boneIndex].boneLength / atl.bonesDyn[i].boneLength;
 				}
 				//unityBones[i].bindRotation = bonesDyn[i].angle - unityBones[i].globalAngle;
