@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UbiArt;
-using UbiArt.ITF;
 
 public class UnityBone : MonoBehaviour {
 	public UnityBone parent;
@@ -20,23 +19,15 @@ public class UnityBone : MonoBehaviour {
 	public float bindZ = 0;
 	public float bindAlpha = 1f;
 	public float localAlpha = 0f;
+	
+	public bool visualize = false;
+	public GameObject Visual { get; set; }
 
-	private void Start() {
-		// Uncomment to visualize
-		
-		var subobj = new GameObject("SR");
-		subobj.transform.SetParent(transform, false);
-		subobj.transform.localPosition = Vector3.zero;
-		subobj.transform.localRotation = Quaternion.Euler(0,0,0);
-		subobj.transform.localScale = new Vector3(1f, 0.1f, 0.1f);
-
-		SpriteRenderer sr = subobj.AddComponent<SpriteRenderer>();
-		sr.sprite = Controller.Obj.GetIcon("bone");
-		sr.sortingLayerName = "Gizmo";
-		
+	private void Start() {		
 	}
 	void Update() {
 		UpdateBone();
+		UpdateVisual();
 	}
 
 	public void UpdateBone() {
@@ -71,6 +62,25 @@ public class UnityBone : MonoBehaviour {
 				transform.localRotation = new Angle(localRotation).GetUnityQuaternion();
 				transform.localScale = localScale;
 			}
+		}
+	}
+
+	public void UpdateVisual() {
+		if (visualize && Visual == null) {
+			var subobj = new GameObject("SR");
+			subobj.transform.SetParent(transform, false);
+			subobj.transform.localPosition = Vector3.zero;
+			subobj.transform.localRotation = Quaternion.Euler(0, 0, 0);
+			subobj.transform.localScale = new Vector3(1f, 0.1f, 0.1f);
+
+			SpriteRenderer sr = subobj.AddComponent<SpriteRenderer>();
+			sr.sprite = Controller.Obj.GetIcon("bone");
+			sr.sortingLayerName = "Gizmo";
+
+			Visual = subobj;
+		}
+		if (Visual != null && Visual.activeSelf != visualize) {
+			Visual.SetActive(visualize);
 		}
 	}
 }

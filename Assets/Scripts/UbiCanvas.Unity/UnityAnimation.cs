@@ -20,6 +20,7 @@ public class UnityAnimation : MonoBehaviour {
 		public Path TexturePathOrigins { get; set; }
 	}
 	public class UnityPatch {
+		public AnimTemplate Template { get; set; }
 		public GameObject Object { get; set; }
 		public SkinnedMeshRenderer Renderer { get; set; }
 		public bool Active { get; set; }
@@ -53,6 +54,7 @@ public class UnityAnimation : MonoBehaviour {
 	public bool playAnimation = true;
 	public bool DisplayPolylines;
 	public bool DisplayInactivePolylines;
+	public bool DisplayBones;
 	public float animationSpeed = 30f;
 	public int zValue = 0;
 	bool loaded = false;
@@ -175,7 +177,11 @@ public class UnityAnimation : MonoBehaviour {
 
 	void UpdateAnimation() {
 		if(!loaded || skeleton == null || bones == null) return;
+		Context context = Controller.MainContext;
 
+		foreach (var b in bones) {
+			b.visualize = DisplayBones;
+		}
 		if (animTrack != null) {
 			if (animTrack.length == 0) {
 				currentFrame = 0;
@@ -270,7 +276,6 @@ public class UnityAnimation : MonoBehaviour {
 			}
 			if (bml != null && bml.frame != currentBMLFrame) {
 				currentBMLFrame = bml.frame;
-				Context l = Controller.MainContext;
 				foreach (var pbk in AllPatchBanks) {
 					foreach(var p in pbk.Patches) p.Active = false;
 				}
@@ -281,11 +286,11 @@ public class UnityAnimation : MonoBehaviour {
 					int ind = bank.PBK.templateKeys.GetKeyIndex(templateId);
 					if (ind != -1) {
 						bank.Patches[ind].Active = true;
-						if (l.Settings.EngineVersion == EngineVersion.RO) {
+						if (context.Settings.EngineVersion == EngineVersion.RO) {
 							var texPath = GetTexturePathOrigins(entry.textureBankId);
 							if (texPath != null) {
-								if (l.Loader.tex.ContainsKey(texPath.stringID)) {
-									alc.SetMaterialTextureOrigins((TextureCooked)l.Loader.tex[texPath.stringID], bank.Patches[ind].Renderer);
+								if (context.Loader.tex.ContainsKey(texPath.stringID)) {
+									alc.SetMaterialTextureOrigins((TextureCooked)context.Loader.tex[texPath.stringID], bank.Patches[ind].Renderer);
 								}
 							}
 						}
@@ -299,7 +304,7 @@ public class UnityAnimation : MonoBehaviour {
 				}
 			}
 
-
+			UpdateBoneLength();
 			UpdateLines();
 
 			// Configure Z for all patches
@@ -317,8 +322,38 @@ public class UnityAnimation : MonoBehaviour {
 				b.localRotation = 0;
 			}
 
+			UpdateBoneLength();
 			UpdateLines();
 			ZSortBones();
+		}
+	}
+
+	private void UpdateBoneLength() {
+		var context = Controller.MainContext;
+		if (context.Settings.EngineVersion <= EngineVersion.RO) {
+			for (int i = 0; i < bones.Length; i++) {
+				AnimBoneDyn selectedDyn = null;
+				var b = bones[i];
+				foreach (var pbk in AllPatchBanks) {
+					foreach (var p in pbk.Patches) {
+						if (p.Active) {
+							var atl = p.Template;
+							for (int j = 0; j < atl.bones.Count; j++) {
+								var boneIndex = skeleton.GetBoneIndexFromTag(atl.bones[j].tag);
+								if (boneIndex == i) {
+									selectedDyn = atl.bonesDyn[j];
+								}
+								if (selectedDyn != null) break;
+							}
+						}
+						if (selectedDyn != null) break;
+					}
+					if (selectedDyn != null) break;
+				}
+				if (selectedDyn == null) selectedDyn = skeleton.bonesDyn[i];
+				//b.xScaleMultiplier = selectedDyn.boneLength;
+				b.boneLength = selectedDyn.boneLength;
+			}
 		}
 	}
 

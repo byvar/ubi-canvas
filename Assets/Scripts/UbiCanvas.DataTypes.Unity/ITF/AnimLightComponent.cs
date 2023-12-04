@@ -94,6 +94,11 @@ namespace UbiArt.ITF {
 
 				for (int i = 0; i < bank.PBK.templates.Count; i++) {
 					AnimTemplate at = bank.PBK.templates[i];
+
+					bank.Patches[i] = new UnityAnimation.UnityPatch() {
+						Template = at
+					};
+
 					Mesh mesh = at.CreateMesh();
 					if (mesh == null) continue;
 
@@ -117,11 +122,8 @@ namespace UbiArt.ITF {
 					List<int> roots = at.GetRootIndices();
 					if (roots.Count > 0) mr.rootBone = mr.bones[roots[0]];
 
-					bank.Patches[i] = new UnityAnimation.UnityPatch() {
-						Active = false,
-						Object = patch_gao,
-						Renderer = mr
-					};
+					bank.Patches[i].Object = patch_gao;
+					bank.Patches[i].Renderer = mr;
 				}
 			}
 			skeleton.ResetBones(c, bones);
@@ -204,6 +206,10 @@ namespace UbiArt.ITF {
 
 				for (int i = 0; i < bank.PBK.templates.Count; i++) {
 					AnimTemplate at = bank.PBK.templates[i];
+					bank.Patches[i] = new UnityAnimation.UnityPatch() {
+						Template = at
+					};
+
 					Mesh mesh = at.CreateMesh();
 					if (mesh == null) continue;
 					
@@ -223,11 +229,9 @@ namespace UbiArt.ITF {
 					mr.sharedMesh = mesh;
 					FillMaterialParams(mr);
 					SetMaterialTextures(bank.TextureBankPath.textureSet, mr);
-					bank.Patches[i] = new UnityAnimation.UnityPatch() {
-						Active = false,
-						Object = patch_gao,
-						Renderer = mr
-					};
+
+					bank.Patches[i].Object = patch_gao;
+					bank.Patches[i].Renderer = mr;
 				}
 			}
 

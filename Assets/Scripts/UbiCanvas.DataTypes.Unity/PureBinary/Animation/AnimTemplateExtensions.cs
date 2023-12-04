@@ -21,17 +21,12 @@ namespace UbiArt.Animation {
 				unityBones[i].bindPosition = Vector3.zero;
 				unityBones[i].bindRotation = 0;
 				if (context.Settings.EngineVersion <= EngineVersion.RO) {
-					//unityBones[i].boneLength = atl.bonesDyn[i].boneLength;
+					unityBones[i].boneLength = atl.bonesDyn[i].boneLength;
 					//unityBones[i].xScaleMultiplier = atl.bonesDyn[i].boneLength;
-					unityBones[i].boneLength = skeleton.bonesDyn[boneIndex].boneLength - atl.bonesDyn[i].boneLength;
 					unityBones[i].xScaleMultiplier = skeleton.bonesDyn[boneIndex].boneLength / atl.bonesDyn[i].boneLength;
 				}
 				//unityBones[i].bindRotation = bonesDyn[i].angle - unityBones[i].globalAngle;
-				unityBones[i].bindScale = atl.bonesDyn[i].scale.GetUnityVector() / unityBones[i].computedScale;
-				unityBones[i].bindScale = new Vector3(
-					unityBones[i].bindScale.y,
-					unityBones[i].bindScale.x,
-					unityBones[i].bindScale.z);
+				unityBones[i].bindScale = atl.bonesDyn[i].scale.GetUnityVector() / skeleton.bonesDyn[boneIndex].scale.GetUnityVector();
 				if (atl.bones[i].parentKey.stringID != 0) {
 					AnimBone parent = atl.GetBoneFromLink(atl.bones[i].parentKey);
 					int parentIndex = skeleton.GetBoneIndexFromTag(parent.tag);
