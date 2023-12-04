@@ -36,6 +36,7 @@ namespace UbiCanvas.Tools
 
 			// Create conversion settings
 			var conversionSettings = new ConversionSettings() {
+				OldContext = inputContext,
 				OldSettings = inputContext.Settings,
 			};
 			outputContext.AddSettings<ConversionSettings>(conversionSettings);
@@ -45,20 +46,27 @@ namespace UbiCanvas.Tools
 
 			var inputPath = UnitySettings.Tools_ModeConversion_InputPath;
 			var outputPath = UnitySettings.Tools_ModeConversion_OutputPath;
-			List<Path> paths = new List<Path>();
+			List<pair<Path, Path>> paths = new List<pair<Path, Path>>(); // Cooked, uncooked
+			var inputITF = inputContext.Settings.ITFDirectory;
 			foreach (string file in Directory.GetFiles(inputPath, "*.*", SearchOption.AllDirectories)) {
 				string relativePath = file.Substring(inputPath.Length).Replace('\\', '/').TrimStart('/');
-
-				Path p = new Path(relativePath, cooked: true) { specialUncooked = true };
+				Path p;
+				if (relativePath.StartsWith(inputITF)) {
+					relativePath = relativePath.Substring(inputITF.Length);
+					p = new Path(relativePath, cooked: false);
+					paths.Add(new pair<Path, Path>(p.CookedPath(outputContext), p));
+				} else {
+					p = new Path(relativePath, cooked: true) { specialUncooked = true };
+					paths.Add(new pair<Path, Path>(p, p));
+				}
 				p.LoadObject(inputContext, removeCooked: true);
-				paths.Add(p);
 			}
 			await inputContext.Loader.LoadLoop();
 
 			UnityEngine.Debug.Log("Loaded all files.");
 
 			foreach (var p in paths) {
-				outBundle.AddFile(p, p.Object);
+				outBundle.AddFile(p.Item1, p.Item2.Object);
 			}
 			await outputContext.Loader.WriteFilesRaw(outputPath, outBundle);
 

@@ -22,7 +22,9 @@ namespace UbiArt.Animation {
 				unityBones[i].bindRotation = 0;
 				if (context.Settings.EngineVersion <= EngineVersion.RO) {
 					unityBones[i].boneLength = atl.bonesDyn[i].boneLength;
+					//unityBones[i].boneLength = atl.bonesDyn[i].boneLength;
 					//unityBones[i].xScaleMultiplier = atl.bonesDyn[i].boneLength;
+					//unityBones[i].xScaleMultiplier = 1f;
 					unityBones[i].xScaleMultiplier = skeleton.bonesDyn[boneIndex].boneLength / atl.bonesDyn[i].boneLength;
 				}
 				//unityBones[i].bindRotation = bonesDyn[i].angle - unityBones[i].globalAngle;

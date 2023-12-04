@@ -92,7 +92,10 @@ namespace UbiArt.Animation {
 							parentIndex = bones.IndexOf(parent);
 						}
 						if (parentIndex != -1) {
-							bonesDyn[i].position.x += bonesDyn[parentIndex].boneLength;
+							//bonesDyn[i].position.x += bonesDyn[parentIndex].boneLength;
+							bonesDyn[i].PositionPreConversion = new Vec2d(bonesDyn[i].position.x, bonesDyn[i].position.y);
+							bonesDyn[i].position.x /= bonesDyn[parentIndex].boneLength;
+							bonesDyn[i].position.x += 1;
 						}
 					}
 					if (bonesDyn != null) {

@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 
 namespace UbiArt {
 	public class ConversionSettings {
+		public Context OldContext { get; set; }
+
 		public Settings OldSettings { get; set; }
 
 		public WwiseConversionSettings WwiseConversionSettings { get; set; } = new WwiseConversionSettings();

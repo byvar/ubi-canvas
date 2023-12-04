@@ -50,6 +50,7 @@ namespace UbiCanvas.Conversion {
 
 			// Create conversion settings
 			var conversionSettings = new ConversionSettings() {
+				OldContext = MainContext,
 				OldSettings = oldSettings
 			};
 			ConversionSettings = conversionSettings;

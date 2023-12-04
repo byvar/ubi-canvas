@@ -47,5 +47,11 @@ namespace UbiArt.Animation {
 		00000000 00000000 BF3D2DDE BEA5EA2E 3F0F24C5 3F800000 00000000 3FC46C36 3F800000 00000000
 		vec2d             vec2d             vec2d             x        x        x        x 
 		*/
+
+		protected override void OnPreSerialize(CSerializerObject s) {
+			base.OnPreSerialize(s);
+		}
+
+		public Vec2d PositionPreConversion { get; set; }
 	}
 }

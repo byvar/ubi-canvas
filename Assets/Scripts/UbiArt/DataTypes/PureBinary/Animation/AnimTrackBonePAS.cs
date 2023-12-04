@@ -18,8 +18,20 @@ namespace UbiArt.Animation {
 			scaleY = s.Serialize<short>(scaleY, name: "scaleY");
 		}
 
-		public Vec2d Position => new Vec2d(posX * 0.000030518f, posY * 0.000030518f);
-		public Vec2d Scale => new Vec2d(scaleX * 0.000030518f, scaleY * 0.000030518f);
+		public Vec2d Position {
+			get => new Vec2d(posX * 0.000030518f, posY * 0.000030518f);
+			set {
+				posX = (short)(value.x / 0.000030518f);
+				posY = (short)(value.y / 0.000030518f);
+			}
+		}
+		public Vec2d Scale {
+			get => new Vec2d(scaleX * 0.000030518f, scaleY * 0.000030518f);
+			set {
+				scaleX = (short)(value.x / 0.000030518f);
+				scaleY = (short)(value.y / 0.000030518f);
+			}
+		}
 		public Angle Rotation => angle * 0.000030518f;
 
 		/*
