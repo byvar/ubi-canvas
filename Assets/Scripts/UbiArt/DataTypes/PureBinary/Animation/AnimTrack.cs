@@ -193,21 +193,30 @@ namespace UbiArt.Animation {
 
 							//positions[i].x *= (parentBoneDyn.boneLength + 1);
 							//positions[i].x /= parentBoneDyn.boneLength;
-							positions[i].x /= parentBoneDyn.boneLength;
+							//positions[i].x /= parentBoneDyn.boneLength;
+							positions[i].x /= skelParentBoneDyn.boneLength;
 
-							// TODO: Correct positions here using difference between
-
+							// Correct positions here using difference between boneLength in template & skeleton
 							if (parentBoneDyn != skelParentBoneDyn) {
 								var oldPosSkel = skelParentBoneDyn.PositionPreConversion ?? skelParentBoneDyn.position;
-								var bindPosSkel = oldPosSkel.x / skelParentBoneDyn.boneLength;
-								var tplPosSkel = oldPosSkel.x / parentBoneDyn.boneLength;
-								UnityEngine.Debug.Log($"Correcting: {tplPosSkel - bindPosSkel}");
-								//var oldPosPBK = parentBoneDyn.PositionPreConversion ?? parentBoneDyn.position;
-								positions[i].x += tplPosSkel - bindPosSkel;
+								var blSkel = skelParentBoneDyn.boneLength;
+								var blTpl = parentBoneDyn.boneLength;
+								if(blTpl != blSkel) {
+									var bindPosSkel = oldPosSkel.x / blSkel;
+									var tplPosSkel = oldPosSkel.x / blTpl;
+
+									var animSID = contextToUse.Cache.Structs[typeof(AnimTrack)].FirstOrDefault(a => a.Value == this);
+									var animPath = contextToUse.Loader.Paths[animSID.Key].filename;
+									s.Context.SystemLogger.LogInfo($"{animPath}: BoneLength Difference: {b}: {blTpl - blSkel}");
+									//var oldPosPBK = parentBoneDyn.PositionPreConversion ?? parentBoneDyn.position;
+									//positions[i].x += tplPosSkel - bindPosSkel; // bindPos
+									//positions[i].x += blTpl - blSkel; // + boneLength
+									positions[i].x += (blTpl - blSkel) / blSkel;
+								}
 							}
 						}
 					} else {
-						// If it doesn't have PAS, we have to make them and make 
+						// TODO: If it doesn't have PAS, we have to make them for bones that need position correction
 					}
 				}
 				// Positions are modified, put them back in

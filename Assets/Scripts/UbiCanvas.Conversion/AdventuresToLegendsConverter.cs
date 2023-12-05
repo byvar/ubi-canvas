@@ -1968,8 +1968,8 @@ namespace UbiCanvas.Conversion {
 			if (oldContext.Settings.Game != Game.RA) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
 
-			var fairyTPLPath = new Path("world/custom/fairy.tpl");
-			var fairyNodeTPLPath = new Path("world/custom/fairy_node.tpl");
+			var fairyTPLPath = new Path("cinematic/faery/faery.tpl");
+			var fairyNodeTPLPath = new Path("cinematic/faery/faery_node.tpl");
 			var lumspoolTPLPath = new Path("world/common/friendly/lumspool/components/lumspool.tpl");
 			if (CreateTemplateIfNecessary(fairyTPLPath, "INTRO ACTOR", out var fairyTPL)) {
 				var murfy = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/playablecharacter/drcplayer/drcplayer.tpl"));
@@ -1989,7 +1989,7 @@ namespace UbiCanvas.Conversion {
 					new TextureBankPath() {
 						id = new StringID("faery_a1"),
 						patchBank = new Path("cinematic/faery/animation/faery_a1.pbk"),
-						materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+						materialShader = animSet.animPackage.textureBank[0].materialShader,
 						textureSet = new GFXMaterialTexturePathSet() {
 							diffuse = new Path("cinematic/faery/animation/faery_a1.tga")
 						}
@@ -2011,6 +2011,8 @@ namespace UbiCanvas.Conversion {
 						friendlyName = "sg_stand",
 						name = new Path("cinematic/faery/animation/cine_sg_stand_jungle.anm"),
 						loop = true,
+						forceZOffset = true,
+						forceZOffset2 = SubAnim_Template.BOOL._true
 					},
 				};
 				animTPL.tree = new AnimTree_Template() {
@@ -2024,7 +2026,8 @@ namespace UbiCanvas.Conversion {
 				animTPL.defaultAnimation = "sg_stand";
 				animTPL.patchHLevel = 2;
 				animTPL.patchVLevel = 2;
-				animTPL.scale = Vec2d.One * 10f;
+				animTPL.scale = Vec2d.One * 7.5f;
+				animTPL.posOffset = Vec2d.Down * 2f;
 
 				// Replace FX
 				fairyTPL.obj.RemoveComponent<FXControllerComponent_Template>();
@@ -2071,7 +2074,7 @@ namespace UbiCanvas.Conversion {
 			//var fairyTrail = fairy.GetComponent<Trail3DComponent>();
 			fairyDialog.enableDialog = true;
 			fairyDialog.widthTextAreaMax = 10f;
-			var pathZ = 0.02f;
+			var pathZ = 0.005f;
 
 			MainContext.Loader.AddLoadedActor(fairy);
 			scene.AddActor(fairy);
@@ -2080,7 +2083,7 @@ namespace UbiCanvas.Conversion {
 				var actors = new Actor[Positions.Length];
 				for (int i = actors.Length - 1; i >= 0; i--) {
 					var node = fairyNodeTPL.obj.Instantiate(fairyNodeTPLPath);
-					node.POS2D = Positions[i];
+					node.POS2D = Positions[i] + Vec2d.Up * 2;
 					node.RELATIVEZ = pathZ; 
 					scene.AddActor(node);
 					actors[i] = node;
@@ -2099,7 +2102,7 @@ namespace UbiCanvas.Conversion {
 
 					if (locs != null & i < locs.Length && locs[i] != null) {
 						//fn.data.stopOnNode = true;
-						var dialogueTPLPath = new Path($"world/custom/fairy_node_dialogue_{i}.tpl");
+						var dialogueTPLPath = new Path($"cinematic/faery/intro/faery_node_dialogue_{i}.tpl");
 						if (CreateTemplateIfNecessary(dialogueTPLPath, "INTRO ACTOR", out var dialogueTPL)) {
 							dialogueTPL.obj.AddComponent<LinkComponent_Template>();
 							var d = dialogueTPL.obj.AddComponent<DialogComponent_Template>();
@@ -2109,7 +2112,7 @@ namespace UbiCanvas.Conversion {
 							d.instructionList = new CArrayO<Generic<InstructionDialog>>();
 							foreach (var l in locs[i]) {
 								d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogText() {
-									actorName = "fairy",
+									actorName = fairy.USERFRIENDLY,
 									mood = 4,
 									sizeText = 0.6f,
 									text = l.defaultText,
@@ -2119,7 +2122,7 @@ namespace UbiCanvas.Conversion {
 							}
 						}
 						var dialogueActor = dialogueTPL.obj.Instantiate(dialogueTPLPath);
-						dialogueActor.POS2D = Positions[i];
+						dialogueActor.POS2D = node.POS2D;
 						scene.AddActor(dialogueActor);
 						lc.Children.Add(new ChildEntry() { Path = new ObjectPath(dialogueActor.USERFRIENDLY) });
 					}
