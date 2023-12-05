@@ -155,14 +155,14 @@ namespace UbiArt.Animation {
 						parentIndex = skel.bones.IndexOf(parent);
 					}
 					if (parentIndex == -1) continue;
+					var skelParentBoneDyn = skel.bonesDyn[parentIndex];
 
 					var bone = bonesLists[b];
 					bool hasPAS = bone.amountPAS > 0;
 
 					if (hasPAS) {
 						// We assume nothing else is using the same PAS... correct if there are any bugs
-						for (int i = bone.startPAS; i < bone.amountPAS; i++) {
-							var skelParentBoneDyn = skel.bonesDyn[parentIndex];
+						for (int i = bone.startPAS; i < bone.startPAS + bone.amountPAS; i++) {
 							var parentBoneDyn = skelParentBoneDyn;
 							if (checkPBK) {
 								// We check which BML is used for this PAS
@@ -180,7 +180,7 @@ namespace UbiArt.Animation {
 											int templateIndex = pbk.templateKeys.GetKeyIndex(entry.templateId);
 											templateIndex = pbk.templateKeys.values[templateIndex];
 											var template = pbk.templates[templateIndex];
-											var newB = template.bones.FirstOrDefault(b => b.tag == skel.bones[parentIndex].tag);
+											var newB = template.bones.FirstOrDefault(b => skel.GetBoneIndexFromTag(b.tag) == parentIndex);
 											if (newB != null) {
 												parentBoneDyn = template.bonesDyn[template.bones.IndexOf(newB)];
 												//UnityEngine.Debug.Log("using diff bone");

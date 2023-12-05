@@ -48,10 +48,6 @@ namespace UbiArt.Animation {
 		vec2d             vec2d             vec2d             x        x        x        x 
 		*/
 
-		protected override void OnPreSerialize(CSerializerObject s) {
-			base.OnPreSerialize(s);
-		}
-
 		public Vec2d PositionPreConversion { get; set; }
 	}
 }

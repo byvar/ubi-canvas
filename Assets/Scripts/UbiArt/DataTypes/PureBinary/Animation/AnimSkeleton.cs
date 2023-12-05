@@ -94,8 +94,8 @@ namespace UbiArt.Animation {
 						if (parentIndex != -1) {
 							//bonesDyn[i].position.x += bonesDyn[parentIndex].boneLength;
 							bonesDyn[i].PositionPreConversion = new Vec2d(bonesDyn[i].position.x, bonesDyn[i].position.y);
-							bonesDyn[i].position.x /= bonesDyn[parentIndex].boneLength;
-							bonesDyn[i].position.x += 1;
+							bonesDyn[i].position.x /= bonesDyn[parentIndex].boneLength; // Divide by bonelength (xscale multiplier)
+							bonesDyn[i].position.x += 1; // Add bonelength, divided by bonelength (xscale multiplier) = 1
 						}
 					}
 					if (bonesDyn != null) {

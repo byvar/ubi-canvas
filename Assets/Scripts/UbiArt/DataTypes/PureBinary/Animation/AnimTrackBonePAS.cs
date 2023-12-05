@@ -19,20 +19,22 @@ namespace UbiArt.Animation {
 		}
 
 		public Vec2d Position {
-			get => new Vec2d(posX * 0.000030518f, posY * 0.000030518f);
+			get => new Vec2d(posX * OneOverShortMax, posY * OneOverShortMax);
 			set {
-				posX = (short)(value.x / 0.000030518f);
-				posY = (short)(value.y / 0.000030518f);
+				posX = (short)(value.x / OneOverShortMax);
+				posY = (short)(value.y / OneOverShortMax);
 			}
 		}
 		public Vec2d Scale {
-			get => new Vec2d(scaleX * 0.000030518f, scaleY * 0.000030518f);
+			get => new Vec2d(scaleX * OneOverShortMax, scaleY * OneOverShortMax);
 			set {
-				scaleX = (short)(value.x / 0.000030518f);
-				scaleY = (short)(value.y / 0.000030518f);
+				scaleX = (short)(value.x / OneOverShortMax);
+				scaleY = (short)(value.y / OneOverShortMax);
 			}
 		}
-		public Angle Rotation => angle * 0.000030518f;
+		public Angle Rotation => angle * OneOverShortMax;
+
+		public const float OneOverShortMax = 0.000030518f;
 
 		/*
 		Example (from yellow_afraid_to_red_afraid.anm.ckd):
