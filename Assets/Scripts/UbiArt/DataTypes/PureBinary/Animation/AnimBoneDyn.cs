@@ -48,6 +48,6 @@ namespace UbiArt.Animation {
 		vec2d             vec2d             vec2d             x        x        x        x 
 		*/
 
-		public Vec2d PositionPreConversion { get; set; }
+		//public Vec2d PositionPreConversion { get; set; }
 	}
 }

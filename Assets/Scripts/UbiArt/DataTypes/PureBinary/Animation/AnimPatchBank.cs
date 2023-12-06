@@ -33,47 +33,9 @@ namespace UbiArt.Animation {
 				var conv = s.Context.GetSettings<ConversionSettings>();
 				if (conv.OldSettings.EngineVersion <= EngineVersion.RO && s.Settings.EngineVersion > EngineVersion.RO) {
 					version = VersionLegends;
-
-					// Convert PBK
-					ConvertOriginsPositionsToLegends(s);
 				}
 			}
 			Reinit(s.Settings);
-		}
-
-		public void ConvertOriginsPositionsToLegends(CSerializerObject s) {
-			var conv = s.Context.GetSettings<ConversionSettings>();
-			var contextToUse = conv.OldContext ?? s.Context;
-
-			if (templates != null) {
-				foreach (var template in templates) {
-					if (template?.bones != null) {
-						var bones = template.bones;
-						var bonesDyn = template?.bonesDyn;
-						for (int i = 0; i < bones.Count; i++) {
-							int parentIndex = -1;
-							if (bones[i].parentKey.stringID != 0) {
-								AnimBone parent = template.GetBoneFromLink(bones[i].parentKey);
-								if (parent != null) {
-									parentIndex = bones.IndexOf(parent);
-								}
-							}
-							if (parentIndex != -1) {
-								bonesDyn[i].PositionPreConversion = new Vec2d(bonesDyn[i].position.x, bonesDyn[i].position.y);
-								//bonesDyn[i].position.x /= bonesDyn[parentIndex].boneLength;
-								//bonesDyn[i].position.x += 1;
-								//bonesDyn[i].position.x += bonesDyn[parentIndex].boneLength;
-							}
-						}
-					}
-					if (template?.bonesDyn != null) {
-						foreach (var boneDyn in template.bonesDyn) {
-							boneDyn.scale.x *= boneDyn.boneLength;
-							//boneDyn.boneLength = 1f;
-						}
-					}
-				}
-			}
 		}
 	}
 }

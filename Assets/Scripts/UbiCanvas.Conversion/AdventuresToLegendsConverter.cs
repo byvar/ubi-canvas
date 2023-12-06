@@ -2026,8 +2026,8 @@ namespace UbiCanvas.Conversion {
 				animTPL.defaultAnimation = "sg_stand";
 				animTPL.patchHLevel = 2;
 				animTPL.patchVLevel = 2;
-				animTPL.scale = Vec2d.One * 7.5f;
-				animTPL.posOffset = Vec2d.Down * 2f;
+				animTPL.scale = Vec2d.One * 6.25f;
+				animTPL.posOffset = Vec2d.Down * 1.3f;
 
 				// Replace FX
 				fairyTPL.obj.RemoveComponent<FXControllerComponent_Template>();
@@ -2083,7 +2083,7 @@ namespace UbiCanvas.Conversion {
 				var actors = new Actor[Positions.Length];
 				for (int i = actors.Length - 1; i >= 0; i--) {
 					var node = fairyNodeTPL.obj.Instantiate(fairyNodeTPLPath);
-					node.POS2D = Positions[i] + Vec2d.Up * 2;
+					node.POS2D = Positions[i] + Vec2d.Up * 1.3f;
 					node.RELATIVEZ = pathZ; 
 					scene.AddActor(node);
 					actors[i] = node;

@@ -83,27 +83,6 @@ namespace UbiArt.Animation {
 				var conv = s.Context.GetSettings<ConversionSettings>();
 				if (conv.OldSettings.EngineVersion <= EngineVersion.RO && s.Settings.EngineVersion > EngineVersion.RO && version < VersionLegends) {
 					version = VersionLegends;
-
-					// Convert to Legends
-					for (int i = 0; i < bones.Count; i++) {
-						int parentIndex = -1;
-						if (bones[i].parentKey.stringID != 0) {
-							AnimBone parent = GetBoneFromLink(bones[i].parentKey);
-							parentIndex = bones.IndexOf(parent);
-						}
-						if (parentIndex != -1) {
-							//bonesDyn[i].position.x += bonesDyn[parentIndex].boneLength;
-							bonesDyn[i].PositionPreConversion = new Vec2d(bonesDyn[i].position.x, bonesDyn[i].position.y);
-							bonesDyn[i].position.x /= bonesDyn[parentIndex].boneLength; // Divide by bonelength (xscale multiplier)
-							bonesDyn[i].position.x += 1; // Add bonelength, divided by bonelength (xscale multiplier) = 1
-						}
-					}
-					if (bonesDyn != null) {
-						foreach (var boneDyn in bonesDyn) {
-							boneDyn.scale.x *= boneDyn.boneLength;
-							//boneDyn.boneLength = 1f;
-						}
-					}
 				}
 			}
 			Reinit(s.Settings);

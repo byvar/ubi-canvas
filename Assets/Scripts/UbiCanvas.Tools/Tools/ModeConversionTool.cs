@@ -65,6 +65,14 @@ namespace UbiCanvas.Tools
 
 			UnityEngine.Debug.Log("Loaded all files.");
 
+			// Extra step: animation conversion
+			if (conversionSettings.OldSettings.EngineVersion <= EngineVersion.RO &&
+				outputContext.Settings.EngineVersion >= EngineVersion.RL) {
+				var animConverter = new OriginsAnimationConverter();
+				animConverter.CreateAnimationGroups(inputContext);
+				animConverter.ProcessAll(inputContext);
+			}
+
 			foreach (var p in paths) {
 				outBundle.AddFile(p.Item1, p.Item2.Object);
 			}
