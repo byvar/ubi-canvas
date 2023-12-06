@@ -112,7 +112,6 @@ namespace UbiArt.Animation {
 					// Convert to Legends
 					if (skeletonOrigins != null) {
 						skeleton = new pair<StringID, Path>(skeletonOrigins.Item1, new Path(skeletonOrigins.Item2));
-						var skeletonPath = skeleton.Item2;
 					}
 					if (texturePathsOrigins != null) {
 						texturePaths = new CListO<pair<StringID, Path>>();
@@ -145,17 +144,41 @@ namespace UbiArt.Animation {
 
 			var skel = contextToUse.Cache.Get<AnimSkeleton>(skeletonPath);
 			if (skel != null) {
+				var addBones = skel.bones.Count - bonesLists.Count;
+				if (addBones > 0) {
+					for (int i = 0; i < addBones; i++) {
+						bonesLists.Add(new AnimTrackBonesList() {
+							startPAS = (ushort)bonePAS.Count,
+							startZAL = (ushort)boneZAL.Count,
+							amountZAL = 0,
+							amountPAS = 0
+						});
+					}
+				}
+				foreach (var b in bonesLists) {
+					if (b.amountPAS == 0) {
+						// Make one PAS entry
+						b.startPAS = (ushort)bonePAS.Count;
+						b.amountPAS = 1;
+						bonePAS.Add(new AnimTrackBonePAS() {
+							Scale = Vec2d.One / multiplierS,
+						});
+					}
+				}
+				
 				// We're converting the animation positions to accommodate for the lack of "boneLength" in Legends and up
 				var positions = bonePAS.Select(pas => pas.Position * multiplierP).ToArray();
-				//var scales = bonePAS.Select(pas => pas.Scale * multiplierS).ToArray();
+				var scales = bonePAS.Select(pas => pas.Scale * multiplierS).ToArray();
 				for (int b = 0; b < bonesLists.Count; b++) {
+					var skelBoneDyn = skel.bonesDyn[b];
+					AnimBoneDyn skelParentBoneDyn = null;
+
 					int parentIndex = -1;
 					if (skel.bones[b].parentKey.stringID != 0) {
 						AnimBone parent = skel.GetBoneFromLink(skel.bones[b].parentKey);
 						parentIndex = skel.bones.IndexOf(parent);
 					}
-					if (parentIndex == -1) continue;
-					var skelParentBoneDyn = skel.bonesDyn[parentIndex];
+					if (parentIndex != -1) skelParentBoneDyn = skel.bonesDyn[parentIndex];
 
 					var bone = bonesLists[b];
 					bool hasPAS = bone.amountPAS > 0;
@@ -163,7 +186,8 @@ namespace UbiArt.Animation {
 					if (hasPAS) {
 						// We assume nothing else is using the same PAS... correct if there are any bugs
 						for (int i = bone.startPAS; i < bone.startPAS + bone.amountPAS; i++) {
-							var parentBoneDyn = skelParentBoneDyn;
+							AnimBoneDyn parentBoneDyn = null;
+							AnimBoneDyn boneDyn = null; 
 							if (checkPBK) {
 								// We check which BML is used for this PAS
 								var frame = bonePAS[i].frame;
@@ -180,53 +204,70 @@ namespace UbiArt.Animation {
 											int templateIndex = pbk.templateKeys.GetKeyIndex(entry.templateId);
 											templateIndex = pbk.templateKeys.values[templateIndex];
 											var template = pbk.templates[templateIndex];
-											var newB = template.bones.FirstOrDefault(b => skel.GetBoneIndexFromTag(b.tag) == parentIndex);
-											if (newB != null) {
-												parentBoneDyn = template.bonesDyn[template.bones.IndexOf(newB)];
-												//UnityEngine.Debug.Log("using diff bone");
-												break;
+											var bonePBK = template.bones.FirstOrDefault(bone => skel.GetBoneIndexFromTag(bone.tag) == b);
+											if (skelParentBoneDyn != null) {
+												var parentBonePBK = template.bones.FirstOrDefault(bone => skel.GetBoneIndexFromTag(bone.tag) == parentIndex);
+												if (parentBonePBK != null) {
+													parentBoneDyn = template.bonesDyn[template.bones.IndexOf(parentBonePBK)];
+												}
+											}
+											if (bonePBK != null) {
+												boneDyn = template.bonesDyn[template.bones.IndexOf(bonePBK)];
 											}
 										}
 									}
 								}
 							}
+							if (parentBoneDyn == null) parentBoneDyn = skelParentBoneDyn;
+							if (boneDyn == null) boneDyn = skelBoneDyn;
 
-							//positions[i].x *= (parentBoneDyn.boneLength + 1);
-							//positions[i].x /= parentBoneDyn.boneLength;
-							//positions[i].x /= parentBoneDyn.boneLength;
-							positions[i].x /= skelParentBoneDyn.boneLength;
+							if (parentBoneDyn != null) {
+								//positions[i].x *= (parentBoneDyn.boneLength + 1);
+								//positions[i].x /= parentBoneDyn.boneLength;
+								//positions[i].x /= parentBoneDyn.boneLength;
+								positions[i].x /= skelParentBoneDyn.boneLength;
 
-							// Correct positions here using difference between boneLength in template & skeleton
-							if (parentBoneDyn != skelParentBoneDyn) {
-								var oldPosSkel = skelParentBoneDyn.PositionPreConversion ?? skelParentBoneDyn.position;
-								var blSkel = skelParentBoneDyn.boneLength;
-								var blTpl = parentBoneDyn.boneLength;
-								if(blTpl != blSkel) {
-									var bindPosSkel = oldPosSkel.x / blSkel;
-									var tplPosSkel = oldPosSkel.x / blTpl;
+								// Correct positions here using difference between boneLength in template & skeleton
+								if (parentBoneDyn != skelParentBoneDyn) {
+									var blSkel = skelParentBoneDyn.boneLength;
+									var blTpl = parentBoneDyn.boneLength;
+									if (blTpl != blSkel) {
+										var posSkel = skelBoneDyn.PositionPreConversion ?? skelBoneDyn.position;
+										var bindPosSkel = posSkel.x / blSkel;
+										var tplPosSkel = posSkel.x / blTpl;
 
-									var animSID = contextToUse.Cache.Structs[typeof(AnimTrack)].FirstOrDefault(a => a.Value == this);
-									var animPath = contextToUse.Loader.Paths[animSID.Key].filename;
-									s.Context.SystemLogger.LogInfo($"{animPath}: BoneLength Difference: {b}: {blTpl - blSkel}");
-									//var oldPosPBK = parentBoneDyn.PositionPreConversion ?? parentBoneDyn.position;
-									//positions[i].x += tplPosSkel - bindPosSkel; // bindPos
-									//positions[i].x += blTpl - blSkel; // + boneLength
-									positions[i].x += (blTpl - blSkel) / blSkel;
+										var animSID = contextToUse.Cache.Structs[typeof(AnimTrack)].FirstOrDefault(a => a.Value == this);
+										var animPath = contextToUse.Loader.Paths[animSID.Key].filename;
+										s.Context.SystemLogger.LogInfo($"{animPath}: BoneLength Difference: {b}: {blTpl - blSkel}");
+										
+										//positions[i].x += (blTpl - blSkel) / blSkel; // Correct before scale conversion
+
+										// To add: ((bindPosition + localPosition) * (1/TPL_BL - 1/SKEL_BL))
+										positions[i].x += (posSkel.x + positions[i].x) * (1/blTpl - 1/blSkel);
+									}
 								}
 							}
+							if (boneDyn != skelBoneDyn) {
+								var blSkel = skelBoneDyn.boneLength;
+								var blTpl = boneDyn.boneLength;
+								scales[i].x *= blTpl / blSkel;
+							}
 						}
-					} else {
-						// TODO: If it doesn't have PAS, we have to make them for bones that need position correction
 					}
 				}
 				// Positions are modified, put them back in
 				var positionMultiplier = positions.Max(p => MathF.Max(MathF.Abs(p.x), MathF.Abs(p.y)));
+				var scaleMultiplier = scales.Max(p => MathF.Max(MathF.Abs(p.x), MathF.Abs(p.y)));
 				var oldMultiplierP = multiplierP;
+				var oldMultiplierS = multiplierS;
 				multiplierP = positionMultiplier;
+				multiplierS = scaleMultiplier;
 				positions = positions.Select(p => p / positionMultiplier).ToArray();
+				scales = scales.Select(p => p / scaleMultiplier).ToArray();
 				for (int i = 0; i < bonePAS.Count; i++) {
 					//UnityEngine.Debug.Log($"New: {positions[i] * multiplierP} - Old: {bonePAS[i].Position * oldMultiplierP}");
 					bonePAS[i].Position = positions[i];
+					bonePAS[i].Scale = scales[i];
 				}
 			}
 		}
