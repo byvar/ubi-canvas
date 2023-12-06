@@ -107,11 +107,13 @@ namespace UbiCanvas.Conversion {
 								using (var img = new MagickImage(file)) {
 									using (var img_a = new MagickImage(alphaPath)) {
 										img.Format = MagickFormat.Dds;
+										img.Settings.SetDefine(MagickFormat.Dds, "compression", "none");
 										img.AutoOrient(); // Orient TGA based on origin point
 										w = (ushort)img.Width;
 										h = (ushort)img.Height;
 
 										img_a.Format = MagickFormat.Dds;
+										img_a.Settings.SetDefine(MagickFormat.Dds, "compression", "none");
 										img_a.AutoOrient(); // Orient TGA based on origin point
 										if (w != (ushort)img_a.Width || h != (ushort)img_a.Height) {
 											throw new Exception("Wrong alpha image dimensions");
@@ -131,6 +133,7 @@ namespace UbiCanvas.Conversion {
 							} else {
 								using (var img = new MagickImage(file)) {
 									img.Format = MagickFormat.Dds;
+									img.Settings.SetDefine(MagickFormat.Dds, "compression", "none");
 									img.AutoOrient(); // Orient TGA based on origin point
 									w = (ushort)img.Width;
 									h = (ushort)img.Height;
