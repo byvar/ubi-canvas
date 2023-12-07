@@ -1036,8 +1036,15 @@ namespace UbiCanvas.Conversion {
 						var flower = scene.FindActor(a => a.USERFRIENDLY == "floweranimonly");
 						flower.Result.GetComponent<AnimatedComponent>().defaultAnim = "dance";
 
-						var nocrush = scene.FindPickable(p => p.USERFRIENDLY == "nocrushattack");
-						nocrush.ContainingScene.DeletePickable(nocrush.Result);
+						var forbiddenregions = scene.FindPickables(p => p.USERFRIENDLY == "nocrushattack" || p.USERFRIENDLY == "nohelico");
+						foreach (var p in forbiddenregions) {
+							p.ContainingScene.DeletePickable(p.Result);
+						}
+
+						var boat1 = scene.FindActors(a => (a.USERFRIENDLY == "grp" || a.USERFRIENDLY == "captain") && a.POS2D.x < 0);
+						foreach (var p in boat1) {
+							p.ContainingScene.DeletePickable(p.Result);
+						}
 
 						await CreateIntroActors(oldContext, newSettings, scene);
 						break;
@@ -1965,6 +1972,34 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public class FairyNode {
+			public Vec2d Position { get; set; }
+			public FairyText[] Text { get; set; }
+
+			public FairyNode(Vec2d pos, params FairyText[] text) {
+				Position = pos;
+				Text = text;
+			}
+			public FairyNode(float x, float y, params FairyText[] text) {
+				Position = new Vec2d(x,y);
+				Text = text;
+			}
+
+			public uint LumsCount { get; set; } = 50;
+			public float SpeedMultiplier { get; set; } = 1f;
+
+			public class FairyText {
+				public string Text { get; set; }
+				public LocalisationId Id { get; set; }
+				public float TextSize { get; set; } = 0.6f;
+				public float WaitTime { get; set; } = 0f;
+				public FairyText(uint id, string text) {
+					Text = text;
+					Id = new LocalisationId(id);
+				}
+			}
+		}
+
 		public async Task CreateIntroActors(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
@@ -2055,7 +2090,7 @@ namespace UbiCanvas.Conversion {
 				fcTPL.flyDist = 2f;
 				fcTPL.rushDist = 1f;
 				fcTPL.flySpeed = 0.5f;
-				fcTPL.rushSpeed = 1.5f;
+				fcTPL.rushSpeed = 1f;
 				fcTPL.keepRushTime = 0.25f;
 				fcTPL.displayDialogStill = true; // Stop to display dialog
 
@@ -2063,6 +2098,7 @@ namespace UbiCanvas.Conversion {
 				var snTPL = fairyTPL.obj.AddComponent<RO2_SnakeNetworkFollowerComponent_Template>();
 				//snTPL.prevNodeCount = 1;
 				snTPL.speedMultiplierMaxValue = 0f;
+				snTPL.speedMultiplierMaxDistance = 15f;
 			}
 			if (CreateTemplateIfNecessary(fairyNodeTPLPath, "INTRO ACTOR", out var fairyNodeTPL)) {
 				fairyNodeTPL.obj.AddComponent<LinkComponent_Template>();
@@ -2080,11 +2116,11 @@ namespace UbiCanvas.Conversion {
 			MainContext.Loader.AddLoadedActor(fairy);
 			scene.AddActor(fairy);
 
-			Actor[] CreateFairyNodes(Vec2d[] Positions, IEnumerable<SmartLocId>[] locs) {
-				var actors = new Actor[Positions.Length];
+			Actor[] CreateFairyNodes(params FairyNode[] nodes) {
+				var actors = new Actor[nodes.Length];
 				for (int i = actors.Length - 1; i >= 0; i--) {
 					var node = fairyNodeTPL.obj.Instantiate(fairyNodeTPLPath);
-					node.POS2D = Positions[i] + Vec2d.Up * 1.3f;
+					node.POS2D = nodes[i].Position + Vec2d.Up * 1.3f;
 					node.RELATIVEZ = pathZ; 
 					scene.AddActor(node);
 					actors[i] = node;
@@ -2095,29 +2131,35 @@ namespace UbiCanvas.Conversion {
 						});
 					}
 					var fn = node.GetComponent<RO2_FairyNodeComponent>();
-					fn.lumsCount = 50;
+					fn.lumsCount = nodes[i].LumsCount;
 					fn.lumsDropStepDist = 2.5f;
 					fn.data = new RO2_SnakeNetworkNodeComponent.NodeData() {
+						speedMultiplier = nodes[i].SpeedMultiplier,
 						//stopOnNode = true
 					};
 
-					if (locs != null & i < locs.Length && locs[i] != null) {
+					if (nodes[i].Text != null && nodes[i].Text.Length > 0) {
 						//fn.data.stopOnNode = true;
 						var dialogueTPLPath = new Path($"cinematic/faery/intro/faery_node_dialogue_{i}.tpl");
 						if (CreateTemplateIfNecessary(dialogueTPLPath, "INTRO ACTOR", out var dialogueTPL)) {
 							dialogueTPL.obj.AddComponent<LinkComponent_Template>();
 							var d = dialogueTPL.obj.AddComponent<DialogComponent_Template>();
 							d.activeOnTrigger = true;
-							//d.useOasis = true;
+							d.useOasis = true; // Localized
 							d.replaceSpeakersByActivator = true;
 							d.instructionList = new CArrayO<Generic<InstructionDialog>>();
-							foreach (var l in locs[i]) {
+							foreach (var l in nodes[i].Text) {
+								if (l.WaitTime > 0) {
+									d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogWait() {
+										time = l.WaitTime
+									}));
+								}
 								d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogText() {
 									actorName = fairy.USERFRIENDLY,
 									mood = 4,
-									sizeText = 0.6f,
-									text = l.defaultText,
-									idLoc = l.locId,
+									sizeText = l.TextSize,
+									text = l.Text,
+									idLoc = l.Id,
 								}));
 								d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogWait()));
 							}
@@ -2137,93 +2179,113 @@ namespace UbiCanvas.Conversion {
 			}
 
 			CreateFairyNodes(
-				new Vec2d[] {
-					new Vec2d(51.09f, 17.18f),
-					new Vec2d(59.25f, 16.7f),
-					new Vec2d(69.82f, 15.22f),
-					new Vec2d(80.86f, 15.76f),
-					new Vec2d(93.86f, 12.68f),
+				new FairyNode(53.46f, 20f) {
+					LumsCount = 0,
+					SpeedMultiplier = 0.8f,
+				},
+				new FairyNode(51.09f, 17.18f,
+					new FairyNode.FairyText(80000, "<INTRO_0>"),
+					new FairyNode.FairyText(80001, "<INTRO_1>"),
+					new FairyNode.FairyText(80002, "<INTRO_2>")) {
+					SpeedMultiplier = 0.3f,
+				},
+				new FairyNode(59.25f, 16.7f) { SpeedMultiplier = 0.5f },
+				new FairyNode(69.82f, 15.22f) { SpeedMultiplier = 0.7f },
+				new FairyNode(80.86f, 15.76f) { SpeedMultiplier = 0.9f },
+				new FairyNode(93.86f, 12.68f),
 
-					new Vec2d(109.79f, 12.38f),
-					new Vec2d(114.34f, 11.06f),
-					new Vec2d(129.5232f, 9.190702f),
-					new Vec2d(131.32f, 8.19f),
-					new Vec2d(132.12f, 5.8f),
-					new Vec2d(125.09f, 3.4f),
-					new Vec2d(127.53f, 0.39f),
-					new Vec2d(135.08f, -1.86f),
-					new Vec2d(147.89f, -1.08f),
-					new Vec2d(155.3f, -1.95f),
-					new Vec2d(165.12f, -3.85f),
-					new Vec2d(176.43f, -3.85f)
-				},
-				/*new Vec2d[] {
-				new Vec2d(57.71f, 18.85f),
-				new Vec2d(76.97f, 17.63f),
-				new Vec2d(98.98f, 15.29f),
-				new Vec2d(109.79f, 12.38f),
-				new Vec2d(129.5232f, 9.190702f),
-				new Vec2d(127.53f, 0.39f),
-			},*/ new IEnumerable<SmartLocId>[] {
-				new SmartLocId[] {
-					new SmartLocId() { defaultText = "There you are! Had a nice nap?\nIt's been... 10 years!", locId = new LocalisationId(4587) },
-					new SmartLocId() { defaultText = "There have been strange tidings from the most distant reaches of the Glade.\nIt seems some evildoers are still... doing evil!", locId = new LocalisationId(4587) },
-					new SmartLocId() { defaultText = "I asked the Captain to pilot you there. He's waiting at the dock. Follow me!", locId = new LocalisationId(4587) },
-				},
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				new SmartLocId[] {
-					new SmartLocId() { defaultText = "This is as far as I go. Good luck!", locId = new LocalisationId(4587) },
-				},
-			});
+				new FairyNode(109.79f, 12.38f),
+				new FairyNode(114.34f, 11.06f),
+				new FairyNode(129.5232f, 9.190702f),
+				new FairyNode(131.32f, 8.19f, new FairyNode.FairyText(80003, "<INTRO_3>")),
+				new FairyNode(132.12f, 5.8f),
+				new FairyNode(125.09f, 3.4f),
+				new FairyNode(127.53f, 0.39f),
+				new FairyNode(135.08f, -1.86f),
+				new FairyNode(147.89f, -1.08f),
+				new FairyNode(155.3f, -1.95f),
+				new FairyNode(165.12f, -3.85f),
+				new FairyNode(176.43f, -3.85f,
+					new FairyNode.FairyText(80004, "<INTRO_4>"),
+					new FairyNode.FairyText(80005, "<INTRO_5>") { TextSize = 0.3f, WaitTime = 5f })
+				);
 			var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
 			trig.POS2D = fairy.POS2D;
-			trig.SCALE = new Vec2d(5,20);
+			trig.SCALE = new Vec2d(10,20);
 			trig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Once;
 			trig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
 				Path = new ObjectPath(fairy.USERFRIENDLY)
 			});
-			/*var pool = await AddNewActor(scene, lumspoolTPLPath, contextToLoadFrom: LegendsContext);
-			pool.POS2D = fairy.POS2D + (Vec2d.Down * 15f);
-			pool.SCALE = Vec2d.One * 5f;
-			var pc = pool.GetComponent<RO2_LumsPoolComponent>();
-			pc.LumsMaxNb = 200;
-			var plc = pool.GetComponent<LinkComponent>();
-			plc.Children.Add(new ChildEntry() {
-				Path = new ObjectPath(fairy.USERFRIENDLY),
-				TagValues = new CListO<TagValue>() {
-					new TagValue() {
-						Tag = new StringID(0x9E742677),
+
+			// TODO: this doesn't work...
+			await CreateTweenForCaptainHello();
+
+			async Task CreateTweenForCaptainHello() {
+				var tweenPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
+				var act = await AddNewActor(scene, tweenPath, contextToLoadFrom: LegendsContext);
+				var tween = act.GetComponent<TweenComponent>();
+
+				var tpl = new TweenComponent_Template();
+				tpl.startSet = new StringID("Set");
+				tpl.autoStart = false;
+				tpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+					new TweenComponent_Template.InstructionSet() {
+						triggable = true,
+						name = new StringID("Set"),
+						nextSet = new StringID("Set2"),
+						instructions = new CListO<Generic<TweenInstruction_Template>>() {
+							new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+								duration = 0,
+								triggerSelf = false,
+								triggerChildren = true,
+								_event = new Generic<UbiArt.ITF.Event>(new RO2_EventPlayAnimState() {
+									anim = "onboat_hello"
+								}),
+							}),
+							new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+								duration = 7f
+							}),
+							new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+								duration = 0,
+								triggerSelf = false,
+								triggerChildren = true,
+								_event = new Generic<UbiArt.ITF.Event>(new RO2_EventPlayAnimState() {
+									anim = "onboat"
+								}),
+							}),
+						}
+					},
+					new TweenComponent_Template.InstructionSet() {
+						name = new StringID("Set2"),
+						// With iterationCount = 0, this set gets stuck in the loop
+						instructions = new CListO<Generic<TweenInstruction_Template>>() {
+							new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+								duration = 1f
+							})
+						},
+						triggable = false,
+						interruptible = false,
+						nextSet = new StringID("Set2")
 					}
-				}
-			});
+				};
 
-			// Copied from mountain lumspool
-			var ls = pc.LumsSimulation;
-			ls.SpawnLimit = 260;
-			ls.SpawnBySec = 3;//50;
-			ls.MoveCoeff = 12;
-			ls.DetectionDistance = 2;
-			ls.SwarmNoiseMoveCoeff = 0;
-			ls.SwarmRadiusPercent = 1;
-			ls.GroundFriction = 0.5f;
-			ls.RotationCoeff = 0.5f;
-			ls.GroundReboudCoeff = 0.8f;
-			ls.Density = 5;
-			ls.GridWidth = 400;//46;
-			ls.GridHeight = 300;//30;
+				tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(tpl);
+				tween.autoStart = false;
+				tween.startSet = new StringID("Set");
+				tween.InstantiateFromInstanceTemplate(oldContext);
 
-			ls.StaticCollision = false;*/
+				act.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath("intro_firstlevel_ld|grp@2|captain@1")
+				});
+				act.POS2D = new Vec2d(205.4511f, -2.026236f);
+				var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
+				trig.POS2D = act.POS2D;
+				trig.SCALE = new Vec2d(5, 20);
+				trig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Once;
+				trig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath(act.USERFRIENDLY)
+				});
+			};
 		}
 
 		public void AddRelaysForMultipleEventTriggers(Context oldContext, Settings newSettings, Scene scene) {
