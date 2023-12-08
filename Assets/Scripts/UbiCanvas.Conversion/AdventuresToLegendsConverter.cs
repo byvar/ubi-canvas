@@ -2217,73 +2217,41 @@ namespace UbiCanvas.Conversion {
 				Path = new ObjectPath(fairy.USERFRIENDLY)
 			});
 
-			// TODO: this doesn't work...
 			await CreateTweenForCaptainHello();
 
 			async Task CreateTweenForCaptainHello() {
-				var tweenPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
-				var act = await AddNewActor(scene, tweenPath, contextToLoadFrom: LegendsContext);
-				var tween = act.GetComponent<TweenComponent>();
+				var captainQuery = scene.FindActor(a => a.USERFRIENDLY == "captain@1");
+				var captain = captainQuery.Result;
 
-				var tpl = new TweenComponent_Template();
-				tpl.startSet = new StringID("Set");
-				tpl.autoStart = false;
-				tpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
-					new TweenComponent_Template.InstructionSet() {
-						triggable = true,
-						name = new StringID("Set"),
-						nextSet = new StringID("Set2"),
-						instructions = new CListO<Generic<TweenInstruction_Template>>() {
-							new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
-								duration = 0,
-								triggerSelf = false,
-								triggerChildren = true,
-								_event = new Generic<UbiArt.ITF.Event>(new RO2_EventPlayAnimState() {
-									anim = "onboat_hello"
-								}),
+				if (CloneTemplateIfNecessary(captain.LUA, "onboathello", "CAPTAIN HELLO", captain.template, out var captainTPL, act: captain)) {
+					captainTPL.sizeOf += 0x10000;
+
+					var anm = captainTPL.obj.GetComponent<AnimatedComponent_Template>();
+					anm.tree.nodes[12] = new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodeSequence_Template() {
+						nodeName = "onboat_hello",
+						loopCount = 1,
+						leafs = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>() {
+							new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+								animationName = "onboat_hello",
+								nodeName = "onboat_hello_1",
 							}),
-							new Generic<TweenInstruction_Template>(new TweenWait_Template() {
-								duration = 7f
-							}),
-							new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
-								duration = 0,
-								triggerSelf = false,
-								triggerChildren = true,
-								_event = new Generic<UbiArt.ITF.Event>(new RO2_EventPlayAnimState() {
-									anim = "onboat"
-								}),
+							new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+								animationName = "onboat",
+								nodeName = "onboat_hello_2",
 							}),
 						}
-					},
-					new TweenComponent_Template.InstructionSet() {
-						name = new StringID("Set2"),
-						// With iterationCount = 0, this set gets stuck in the loop
-						instructions = new CListO<Generic<TweenInstruction_Template>>() {
-							new Generic<TweenInstruction_Template>(new TweenWait_Template() {
-								duration = 1f
-							})
-						},
-						triggable = false,
-						interruptible = false,
-						nextSet = new StringID("Set2")
-					}
-				};
-
-				tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(tpl);
-				tween.autoStart = false;
-				tween.startSet = new StringID("Set");
-				tween.InstantiateFromInstanceTemplate(oldContext);
-
-				act.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
-					Path = new ObjectPath("intro_firstlevel_ld|grp@2|captain@1")
-				});
-				act.POS2D = new Vec2d(205.4511f, -2.026236f);
+					});
+					var playAnimOnTrig = captainTPL.obj.AddComponent<PlayAnimOnTriggerComponent_Template>();
+					playAnimOnTrig.triggerOnAnim = "onboat_hello";
+					playAnimOnTrig.triggerOffAnim = "onboat";
+				}
+				captain.AddComponent<PlayAnimOnTriggerComponent>();
 				var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
-				trig.POS2D = act.POS2D;
-				trig.SCALE = new Vec2d(5, 20);
+				trig.POS2D = new Vec2d(205.4511f, -2.026236f);
+				trig.SCALE = new Vec2d(10, 20);
 				trig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Once;
 				trig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
-					Path = new ObjectPath(act.USERFRIENDLY)
+					Path = new ObjectPath(captainQuery.Path.FullPath)
 				});
 			};
 		}
