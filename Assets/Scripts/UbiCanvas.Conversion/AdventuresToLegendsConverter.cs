@@ -1019,7 +1019,7 @@ namespace UbiCanvas.Conversion {
 						var eggBall = await AddNewActor(egg1.ContainingScene, new Path("world/adversarial/soccerpunch/actor/soccerball/components/ball.tpl"));
 						//eggBall.POS2D = egg1.Result.POS2D + Vec2d.Up * 3;
 						eggBall.RELATIVEZ = egg1.Result.RELATIVEZ;
-						eggBall.POS2D = new Vec2d(-7.18f, 6.17f);
+						eggBall.POS2D = new Vec2d(-8.74f, 6.48f);
 						eggBall.GetComponent<AnimLightComponent>().defaultAnim = "stand";
 						eggBall.GetComponent<RO2_BallComponent>().bounceMultiplier = 0.5f;
 
