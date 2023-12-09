@@ -1017,8 +1017,9 @@ namespace UbiCanvas.Conversion {
 						// Add soccer ball
 						var egg1 = scene.FindActor(a => a.USERFRIENDLY == "Egg1");
 						var eggBall = await AddNewActor(egg1.ContainingScene, new Path("world/adversarial/soccerpunch/actor/soccerball/components/ball.tpl"));
-						eggBall.POS2D = egg1.Result.POS2D + Vec2d.Up * 3;
+						//eggBall.POS2D = egg1.Result.POS2D + Vec2d.Up * 3;
 						eggBall.RELATIVEZ = egg1.Result.RELATIVEZ;
+						eggBall.POS2D = new Vec2d(-7.18f, 6.17f);
 						eggBall.GetComponent<AnimLightComponent>().defaultAnim = "stand";
 						eggBall.GetComponent<RO2_BallComponent>().bounceMultiplier = 0.5f;
 
@@ -1993,6 +1994,7 @@ namespace UbiCanvas.Conversion {
 				public LocalisationId Id { get; set; }
 				public float TextSize { get; set; } = 0.6f;
 				public float WaitTime { get; set; } = 0f;
+				public bool FocusCam { get; set; }
 				public FairyText(uint id, string text) {
 					Text = text;
 					Id = new LocalisationId(id);
@@ -2007,6 +2009,63 @@ namespace UbiCanvas.Conversion {
 			var fairyTPLPath = new Path("cinematic/faery/faery.tpl");
 			var fairyNodeTPLPath = new Path("cinematic/faery/faery_node.tpl");
 			var lumspoolTPLPath = new Path("world/common/friendly/lumspool/components/lumspool.tpl");
+			var ogLumPath = new Path("world/common/friendly/lums/basiclum.act");
+			var customLumPath = new Path("cinematic/faery/faery_lum.act");
+			var customLumTPLPath = new Path("cinematic/faery/faery_lum.tpl");
+
+			await CreateIntroLum();
+
+			async Task CreateIntroLum() {
+				var ogLum = await LoadFileLegends<ContainerFile<Actor>>(ogLumPath);
+				var ogLumTPL = ogLum.obj.template;
+				var customLum = (Actor)ogLum.obj.Clone("act");
+
+				if (CreateTemplateIfNecessary(customLumTPLPath, "INTRO LUM", out var customLumTPL, act: customLum)) {
+					customLumTPL.sizeOf = ogLumTPL.sizeOf + 0x10000;
+					customLumTPL.obj = (Actor_Template)ogLumTPL.obj.Clone("tpl");
+					var twnTPL = customLumTPL.obj.AddComponent<TweenComponent_Template>();
+					twnTPL.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+						new TweenComponent_Template.InstructionSet() {
+							name = new StringID("Set"),
+							iterationCount = 1,
+							triggable = true,
+							instructions = new CListO<Generic<TweenInstruction_Template>>() {
+								new Generic<TweenInstruction_Template>(new TweenCircle_Template() {
+									duration = 0.75f,
+									startSpeed = 1f,
+									endSpeed = 0f,
+									pivot = new Vec3d(-0.5f, -0.75f, 0f),
+									cycleCount = 0.4f
+								})
+							},
+							nextSet = new StringID("Set2")
+						},
+						new TweenComponent_Template.InstructionSet() {
+							name = new StringID("Set2"),
+							// With iterationCount = 0, this set gets stuck in the loop
+							instructions = new CListO<Generic<TweenInstruction_Template>>() {
+								new Generic<TweenInstruction_Template>(new TweenSine_Template() {
+									duration = 1.5f,
+									cycleOffset = 0.5f,
+									amplitude = 0.5f
+								})
+							},
+							triggable = false,
+							interruptible = false,
+							nextSet = new StringID("Set2")
+						}
+					};
+				}
+				var twn = customLum.AddComponent<TweenComponent>();
+				twn.InstantiateFromTemplate(LegendsContext, customLumTPL.obj.GetComponent<TweenComponent_Template>());
+
+				if (CreateStructNecessary<ContainerFile<Actor>>(customLumPath, "INTRO LUM", out var customLumContainer)) {
+					customLumContainer.obj = customLum;
+					customLumContainer.read = true;
+				}
+			}
+
+
 			if (CreateTemplateIfNecessary(fairyTPLPath, "INTRO ACTOR", out var fairyTPL)) {
 				var murfy = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/playablecharacter/drcplayer/drcplayer.tpl"));
 				var starsTrail = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/fx/cinematic/fx_mrdark_starstrail_01.tpl"));
@@ -2086,10 +2145,10 @@ namespace UbiCanvas.Conversion {
 				//fxcTPL.defaultFx = new StringID(0x74AE7DEA);
 
 				var fcTPL = fairyTPL.obj.AddComponent<RO2_FairyComponent_Template>();
-				fcTPL.lumPath = new Path("world/common/friendly/lums/basiclum.act"); // change to lums pool or egg?
+				fcTPL.lumPath = customLumPath; // change to lums pool or egg?
 				fcTPL.flyDist = 2f;
 				fcTPL.rushDist = 1f;
-				fcTPL.flySpeed = 0.5f;
+				fcTPL.flySpeed = 0.65f;
 				fcTPL.rushSpeed = 1f;
 				fcTPL.keepRushTime = 0.25f;
 				fcTPL.displayDialogStill = true; // Stop to display dialog
@@ -2157,6 +2216,11 @@ namespace UbiCanvas.Conversion {
 										time = l.WaitTime
 									}));
 								}
+								if (l.FocusCam) {
+									d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogCam() {
+										typeCamera = InstructionDialogCam.Enum_typeCamera.dialog
+									}));
+								}
 								d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogText() {
 									actorName = fairy.USERFRIENDLY,
 									mood = 4,
@@ -2164,6 +2228,11 @@ namespace UbiCanvas.Conversion {
 									text = l.Text,
 									idLoc = l.Id,
 								}));
+								if (l.FocusCam) {
+									d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogCam() {
+										typeCamera = InstructionDialogCam.Enum_typeCamera.engine
+									}));
+								}
 								d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogWait()));
 							}
 						}
@@ -2171,7 +2240,7 @@ namespace UbiCanvas.Conversion {
 						dialogueActor.POS2D = node.POS2D;
 						var dialogueActorD = dialogueActor.GetComponent<DialogComponent>();
 						dialogueActorD.endTime_Default = 2f;
-						dialogueActorD.endTime_Accel = 2f;
+						dialogueActorD.endTime_Accel = 1.75f;
 						scene.AddActor(dialogueActor);
 						lc.Children.Add(new ChildEntry() { Path = new ObjectPath(dialogueActor.USERFRIENDLY) });
 						dialogueActor.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
@@ -2204,9 +2273,9 @@ namespace UbiCanvas.Conversion {
 				new FairyNode(93.86f, 12.68f),
 
 				new FairyNode(109.79f, 12.38f),
-				new FairyNode(114.34f, 11.06f),
+				new FairyNode(114.34f, 11.06f, new FairyNode.FairyText(80003, "<INTRO_FAIRY_3>")),
 				new FairyNode(129.5232f, 9.190702f),
-				new FairyNode(131.32f, 8.19f, new FairyNode.FairyText(80003, "<INTRO_FAIRY_3>")),
+				new FairyNode(131.32f, 8.19f),
 				new FairyNode(132.12f, 5.8f),
 				new FairyNode(125.09f, 3.4f),
 				new FairyNode(127.53f, 0.39f),
@@ -2216,7 +2285,8 @@ namespace UbiCanvas.Conversion {
 				new FairyNode(165.12f, -3.85f),
 				new FairyNode(176.43f, -3.85f,
 					new FairyNode.FairyText(80004, "<INTRO_FAIRY_4>"),
-					new FairyNode.FairyText(80005, "<INTRO_FAIRY_5>") { TextSize = 0.3f, WaitTime = 5f })
+					new FairyNode.FairyText(80005, "<INTRO_FAIRY_5>"),
+					new FairyNode.FairyText(80006, "<INTRO_FAIRY_6>") { TextSize = 0.3f, WaitTime = 5f })
 				);
 			var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
 			trig.POS2D = fairy.POS2D;
@@ -2288,7 +2358,7 @@ namespace UbiCanvas.Conversion {
 							mood = 4,
 							sizeText = 0.5f,
 							text = "<INTRO_CAPTAIN_1>",
-							idLoc = 80006
+							idLoc = 80007
 						}),
 						new Generic<InstructionDialog>(new InstructionDialogWait()),
 					};
@@ -2297,7 +2367,7 @@ namespace UbiCanvas.Conversion {
 				dialogueActor.POS2D = captain.POS2D;
 				var dialogueActorD = dialogueActor.GetComponent<DialogComponent>();
 				dialogueActorD.endTime_Default = 2f;
-				dialogueActorD.endTime_Accel = 2f;
+				dialogueActorD.endTime_Accel = 1.75f;
 				captainQuery.ContainingScene.AddActor(dialogueActor);
 				dialogueActor.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
 					parentPath = new ObjectPath(captain.USERFRIENDLY),
@@ -6041,6 +6111,30 @@ namespace UbiCanvas.Conversion {
 
 			return createdTemplate;
 		}
+
+		public bool CreateStructNecessary<T>(Path newPath, string reason, out T newStruct) where T : ICSerializable, new() {
+			var oldContext = MainContext;
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			bool createdTemplate = false;
+			if (!structs[typeof(T)].ContainsKey(newPath.stringID)) {
+				createdTemplate = true;
+				l.Context.SystemLogger?.LogInfo($"Creating struct ({reason}): {newPath.FullPath}");
+				newStruct = new T();
+				//newTPL.obj.InitContext(oldContext);
+
+				var newCookedPath = newPath.CookedPath(oldContext);
+				l.CookedPaths[newPath.stringID] = newCookedPath;
+				l.Paths[newPath.stringID] = newPath;
+				structs[typeof(T)][newPath.stringID] = newStruct;
+			} else {
+				newStruct = (T)structs[typeof(T)][newPath.stringID];
+			}
+
+			return createdTemplate;
+		}
+
 		#endregion
 
 
