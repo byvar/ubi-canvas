@@ -2099,6 +2099,8 @@ namespace UbiCanvas.Conversion {
 				//snTPL.prevNodeCount = 1;
 				snTPL.speedMultiplierMaxValue = 0f;
 				snTPL.speedMultiplierMaxDistance = 15f;
+
+				fairyTPL.obj.GetComponent<DialogActorComponent_Template>().balloon3DPath = new Path("world/common/logicactor/dialog/balloon/dialogballoon3d_character.act");
 			}
 			if (CreateTemplateIfNecessary(fairyNodeTPLPath, "INTRO ACTOR", out var fairyNodeTPL)) {
 				fairyNodeTPL.obj.AddComponent<LinkComponent_Template>();
@@ -2111,6 +2113,7 @@ namespace UbiCanvas.Conversion {
 			//var fairyTrail = fairy.GetComponent<Trail3DComponent>();
 			fairyDialog.enableDialog = true;
 			fairyDialog.widthTextAreaMax = 10f;
+			fairyDialog.is3D = true;
 			var pathZ = 0.005f;
 
 			MainContext.Loader.AddLoadedActor(fairy);
@@ -2166,8 +2169,14 @@ namespace UbiCanvas.Conversion {
 						}
 						var dialogueActor = dialogueTPL.obj.Instantiate(dialogueTPLPath);
 						dialogueActor.POS2D = node.POS2D;
+						var dialogueActorD = dialogueActor.GetComponent<DialogComponent>();
+						dialogueActorD.endTime_Default = 2f;
+						dialogueActorD.endTime_Accel = 2f;
 						scene.AddActor(dialogueActor);
 						lc.Children.Add(new ChildEntry() { Path = new ObjectPath(dialogueActor.USERFRIENDLY) });
+						dialogueActor.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+							parentPath = new ObjectPath(fairy.USERFRIENDLY),
+						});
 					}
 				}
 				fairy.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
@@ -2247,10 +2256,14 @@ namespace UbiCanvas.Conversion {
 
 					var diactTPL = captainTPL.obj.AddComponent<DialogActorComponent_Template>();
 					diactTPL.balloonPath = new Path("world/common/logicactor/dialog/balloon/dialogballoon_character.act");
+					diactTPL.balloon3DPath = new Path("world/common/logicactor/dialog/balloon/dialogballoon3d_character.act");
 				}
 				captain.AddComponent<PlayAnimOnTriggerComponent>();
 				var diact = captain.AddComponent<DialogActorComponent>();
 				diact.enableDialog = true;
+				diact.is3D = true;
+				diact.widthTextAreaMax = 5f;
+				diact.offset = new Vec2d(0f, 3f);
 
 				var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
 				trig.POS2D = new Vec2d(205.4511f, -2.026236f);
@@ -2269,26 +2282,29 @@ namespace UbiCanvas.Conversion {
 					d.useOasis = true; // Localized
 					d.replaceSpeakersByActivator = false;
 					d.instructionList = new CArrayO<Generic<InstructionDialog>>() {
+						new Generic<InstructionDialog>(new InstructionDialogWait() { time = 2f }),
 						new Generic<InstructionDialog>(new InstructionDialogText() {
 							actorName = captain.USERFRIENDLY,
 							mood = 4,
-							sizeText = 0.6f,
+							sizeText = 0.5f,
 							text = "<INTRO_CAPTAIN_1>",
 							idLoc = 80006
-						})
+						}),
+						new Generic<InstructionDialog>(new InstructionDialogWait()),
 					};
 				}
 				var dialogueActor = dialogueTPL.obj.Instantiate(dialogueTPLPath);
 				dialogueActor.POS2D = captain.POS2D;
+				var dialogueActorD = dialogueActor.GetComponent<DialogComponent>();
+				dialogueActorD.endTime_Default = 2f;
+				dialogueActorD.endTime_Accel = 2f;
 				captainQuery.ContainingScene.AddActor(dialogueActor);
+				dialogueActor.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+					parentPath = new ObjectPath(captain.USERFRIENDLY),
+				});
 				var dialogueLinks = dialogueActor.GetComponent<LinkComponent>();
 				dialogueLinks.Children.Add(new ChildEntry() {
 					Path = new ObjectPath(captain.USERFRIENDLY),
-					TagValues = new CListO<TagValue>() {
-						new TagValue() {
-							Tag = "speaker"
-						}
-					}
 				});
 				trig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
 					Path = new ObjectPath(captainQuery.Path.FullPath.Replace(captain.USERFRIENDLY, dialogueActor.USERFRIENDLY))
