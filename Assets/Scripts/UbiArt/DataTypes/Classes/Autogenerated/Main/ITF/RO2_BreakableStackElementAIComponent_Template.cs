@@ -6,19 +6,19 @@ namespace UbiArt.ITF {
 		public uint height;
 		public RO2_FxData fxData;
 		public Path gmatPath;
-		public uint hitPoint;
+		public uint hitPoint = 2;
 		public Path atlasPath;
 		public Path atlasParticlesPath;
 		public GFXMaterialSerializable atlasMaterial;
 		public GFXMaterialSerializable atlasParticlesMaterial;
-		public float countDownHit;
-		public float gravityBallistics;
-		public float timeExpulse;
-		public float edgeSize;
+		public float countDownHit = 0.5f;
+		public float gravityBallistics = -15f;
+		public float timeExpulse = 3f;
+		public float edgeSize = 1f;
 		public bool blockStatic;
 		public bool instantSpawn;
 		public bool explosive;
-		public float radiusExplosive;
+		public float radiusExplosive = 1f;
 		public float timeBeforeExplode;
 		public Path eye;
 		protected override void SerializeImpl(CSerializerObject s) {

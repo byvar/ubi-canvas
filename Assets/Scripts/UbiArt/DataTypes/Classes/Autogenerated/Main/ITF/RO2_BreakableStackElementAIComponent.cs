@@ -4,8 +4,8 @@ namespace UbiArt.ITF {
 		public ObjectPath managerPath;
 		public uint countSpawnMax;
 		public bool blockIsDestroy;
-		public uint checkPointRow;
-		public uint checkPointCol;
+		public uint checkPointRow = uint.MaxValue;
+		public uint checkPointCol = uint.MaxValue;
 		public uint blockState;
 		public bool hasTuto;
 		public GFXPrimitiveParam atlasPrimitiveParam;

@@ -1,15 +1,15 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_BreakableStackManagerAIComponent_Template : RO2_AIComponent_Template {
-		public float timeShakeBeforeFall;
-		public float countDownHit;
-		public float gravityBallistics;
-		public float timeExpulse;
+		public float timeShakeBeforeFall = 0.3f;
+		public float countDownHit = 0.5f;
+		public float gravityBallistics = -15f;
+		public float timeExpulse = 3f;
 		public Path atlasPath;
 		public Path atlasParticlesPath;
 		public GFXMaterialSerializable atlasMaterial;
 		public GFXMaterialSerializable atlasParticlesMaterial;
-		public float edgeSize;
+		public float edgeSize = 1f;
 		public uint faction2;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

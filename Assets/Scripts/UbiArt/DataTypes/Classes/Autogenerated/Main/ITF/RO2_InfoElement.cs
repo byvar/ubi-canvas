@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_InfoElement : CSerializable {
-		public bool isOccupied;
+		public bool isOccupied = true;
 		public uint reward;
 		public AnimationAtlas anim;
 		public AnimationAtlas animBreak;
