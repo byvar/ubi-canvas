@@ -1019,7 +1019,8 @@ namespace UbiCanvas.Conversion {
 						var eggBall = await AddNewActor(egg1.ContainingScene, new Path("world/adversarial/soccerpunch/actor/soccerball/components/ball.tpl"));
 						//eggBall.POS2D = egg1.Result.POS2D + Vec2d.Up * 3;
 						eggBall.RELATIVEZ = egg1.Result.RELATIVEZ;
-						eggBall.POS2D = new Vec2d(-8.74f, 6.48f);
+						//eggBall.POS2D = new Vec2d(-8.74f, 6.48f);
+						eggBall.POS2D = new Vec2d(20.13f, -7.97f);
 						eggBall.GetComponent<AnimLightComponent>().defaultAnim = "stand";
 						eggBall.GetComponent<RO2_BallComponent>().bounceMultiplier = 0.5f;
 
@@ -2026,7 +2027,7 @@ namespace UbiCanvas.Conversion {
 					customLumTPL.obj = (Actor_Template)ogLumTPL.obj.Clone("tpl");
 					var pdTPL = customLumTPL.obj.GetComponent<PlayerDetectorComponent_Template>();
 					var pdShape = pdTPL.shape.obj as PhysShapeCircle;
-					pdShape.Radius *= 5f; // It moves, so it should be easier to grab
+					pdShape.Radius *= 15f; // It moves, so it should be easier to grab
 					var twnTPL = customLumTPL.obj.AddComponent<TweenComponent_Template>();
 					twnTPL.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
 						new TweenComponent_Template.InstructionSet() {
@@ -2139,6 +2140,13 @@ namespace UbiCanvas.Conversion {
 								nodeName = "sg_medi",
 								animationName = "sg_medi",
 							}),
+						},
+						nodeTransitions = new CListO<BlendTreeTransition_Template<AnimTreeResult>>() {
+							new BlendTreeTransition_Template<AnimTreeResult>() {
+								blend = 20,
+								from = new CArrayO<StringID>() { "sg_stand" },
+								to = new CArrayO<StringID>() { "sg_medi" }
+							}
 						}
 					};
 
@@ -2339,7 +2347,7 @@ namespace UbiCanvas.Conversion {
 					new FairyNode.FairyText(80000, "<INTRO_FAIRY_0>"),
 					new FairyNode.FairyText(80001, "<INTRO_FAIRY_1>"),
 					new FairyNode.FairyText(80002, "<INTRO_FAIRY_2>")) {
-					SpeedMultiplier = 0.3f,
+					SpeedMultiplier = 0.4f,
 				},
 				new FairyNode(59.25f, 16.7f) { SpeedMultiplier = 0.5f },
 				new FairyNode(69.82f, 15.22f) { SpeedMultiplier = 0.7f },
@@ -2347,13 +2355,13 @@ namespace UbiCanvas.Conversion {
 				new FairyNode(93.86f, 12.68f),
 
 				new FairyNode(109.79f, 12.38f),
-				new FairyNode(114.34f, 11.06f, new FairyNode.FairyText(80003, "<INTRO_FAIRY_3>")),
+				new FairyNode(114.34f, 11.06f),
 				new FairyNode(129.5232f, 9.190702f),
 				new FairyNode(131.32f, 8.19f),
 				new FairyNode(132.12f, 5.8f),
 				new FairyNode(125.09f, 3.4f),
 				new FairyNode(127.53f, 0.39f),
-				new FairyNode(135.08f, -1.86f),
+				new FairyNode(135.08f, -1.86f, new FairyNode.FairyText(80003, "<INTRO_FAIRY_3>")),
 				new FairyNode(147.89f, -1.08f),
 				new FairyNode(155.3f, -1.95f),
 				new FairyNode(165.12f, -3.85f) { SpeedMultiplier = 0.8f },
@@ -2361,8 +2369,9 @@ namespace UbiCanvas.Conversion {
 					new FairyNode.FairyText(80004, "<INTRO_FAIRY_4>"),
 					new FairyNode.FairyText(80005, "<INTRO_FAIRY_5>"),
 					new FairyNode.FairyText(80006, "<INTRO_FAIRY_6>") { TextSize = 0.3f, WaitTime = 5f }) { LumsCount = 0, SpeedMultiplier = 0.4f },
-				new FairyNode(185f, -3.85f) { LumsCount = 0, SpeedMultiplier = 0.05f },
-				new FairyNode(185f, -3.5f) { LumsCount = 0, SpeedMultiplier = 0.05f }
+				new FairyNode(181f, -3.85f) { LumsCount = 0, SpeedMultiplier = 0.25f },
+				new FairyNode(184f, -3.85f) { LumsCount = 0, SpeedMultiplier = 0.1f },
+				new FairyNode(186f, -3f) { LumsCount = 0, SpeedMultiplier = 0.05f }
 				);
 			var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
 			trig.POS2D = fairy.POS2D;
@@ -2372,7 +2381,7 @@ namespace UbiCanvas.Conversion {
 				Path = new ObjectPath(fairy.USERFRIENDLY)
 			});
 			var tweenFairyAnimChangeActor = await AddNewActor(scene, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"), contextToLoadFrom: LegendsContext);
-			tweenFairyAnimChangeActor.POS2D = fairyNodes[fairyNodes.Length - 2].POS2D;
+			tweenFairyAnimChangeActor.POS2D = fairyNodes[fairyNodes.Length - 1].POS2D;
 			
 			fairyNodes[fairyNodes.Length - 2].GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
 				Path = new ObjectPath(tweenFairyAnimChangeActor.USERFRIENDLY) // Node triggers the tween

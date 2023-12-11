@@ -363,6 +363,7 @@ public class UnityAnimation : MonoBehaviour {
 			for (int i = 0; i < patchData.Patches.Length; i++) {
 				if (patchData.Patches[i] == null || patchData.PBK.templates[i].bones.Count == 0) continue;
 				var patchRenderer = patchData.Patches[i].Renderer;
+				if(patchRenderer == null) continue;
 				bool patchActive = patchData.Patches[i].Active;
 				if (patchActive) {
 					//int boneIndex = skeleton.GetBoneIndexFromTag(pbk.templates[i].bones[0].tag);
