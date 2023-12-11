@@ -2014,6 +2014,7 @@ namespace UbiCanvas.Conversion {
 			var customLumTPLPath = new Path("cinematic/faery/faery_lum.tpl");
 
 			await CreateIntroLum();
+			var fairyTPL = await CreateIntroFairyTPL();
 
 			async Task CreateIntroLum() {
 				var ogLum = await LoadFileLegends<ContainerFile<Actor>>(ogLumPath);
@@ -2023,6 +2024,9 @@ namespace UbiCanvas.Conversion {
 				if (CreateTemplateIfNecessary(customLumTPLPath, "INTRO LUM", out var customLumTPL, act: customLum)) {
 					customLumTPL.sizeOf = ogLumTPL.sizeOf + 0x10000;
 					customLumTPL.obj = (Actor_Template)ogLumTPL.obj.Clone("tpl");
+					var pdTPL = customLumTPL.obj.GetComponent<PlayerDetectorComponent_Template>();
+					var pdShape = pdTPL.shape.obj as PhysShapeCircle;
+					pdShape.Radius *= 5f; // It moves, so it should be easier to grab
 					var twnTPL = customLumTPL.obj.AddComponent<TweenComponent_Template>();
 					twnTPL.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
 						new TweenComponent_Template.InstructionSet() {
@@ -2065,102 +2069,170 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 
+			async Task<GenericFile<Actor_Template>> CreateIntroFairyTPL() {
+				if (CreateTemplateIfNecessary(fairyTPLPath, "INTRO ACTOR", out var fairyTPL)) {
+					var murfy = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/playablecharacter/drcplayer/drcplayer.tpl"));
+					var starsTrail = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/fx/cinematic/fx_mrdark_starstrail_01.tpl"));
 
-			if (CreateTemplateIfNecessary(fairyTPLPath, "INTRO ACTOR", out var fairyTPL)) {
-				var murfy = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/playablecharacter/drcplayer/drcplayer.tpl"));
-				var starsTrail = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/fx/cinematic/fx_mrdark_starstrail_01.tpl"));
+					fairyTPL.obj = (Actor_Template)murfy.obj.Clone("tpl");
+					fairyTPL.sizeOf = murfy.sizeOf + 0x10000;
+					fairyTPL.obj.STARTPAUSED = false;
 
-				fairyTPL.obj = (Actor_Template)murfy.obj.Clone("tpl");
-				fairyTPL.sizeOf = murfy.sizeOf + 0x10000;
-				fairyTPL.obj.STARTPAUSED = false;
+					// Remove DRC player
+					fairyTPL.obj.RemoveComponent<RO2_DRCPlayerComponent_Template>();
 
-				// Remove DRC player
-				fairyTPL.obj.RemoveComponent<RO2_DRCPlayerComponent_Template>();
-
-				// Replace animation
-				var animTPL = fairyTPL.obj.GetComponent<AnimatedComponent_Template>();
-				var animSet = animTPL.animSet;
-				animSet.animPackage.textureBank = new CListO<TextureBankPath>() {
-					new TextureBankPath() {
-						id = new StringID("faery_a1"),
-						patchBank = new Path("cinematic/faery/animation/faery_a1.pbk"),
-						materialShader = animSet.animPackage.textureBank[0].materialShader,
-						textureSet = new GFXMaterialTexturePathSet() {
-							diffuse = new Path("cinematic/faery/animation/faery_a1.tga")
+					// Replace animation
+					var animTPL = fairyTPL.obj.GetComponent<AnimatedComponent_Template>();
+					var animSet = animTPL.animSet;
+					animSet.animPackage.textureBank = new CListO<TextureBankPath>() {
+						new TextureBankPath() {
+							id = new StringID("faery_a1"),
+							patchBank = new Path("cinematic/faery/animation/faery_a1.pbk"),
+							materialShader = animSet.animPackage.textureBank[0].materialShader,
+							textureSet = new GFXMaterialTexturePathSet() {
+								diffuse = new Path("cinematic/faery/animation/faery_a1.tga")
+							}
 						}
-					}
-				};
-				animSet.animPackage.skeleton = new Path("cinematic/faery/animation/faery_squeleton.skl");
-				animSet.animPackage.animPathAABB = new CListO<AnimPathAABB>() {
-					new AnimPathAABB() {
-						name = "sg_stand",
-						path = new Path("cinematic/faery/animation/cine_sg_stand_jungle.anm"),
-						aabb = new AABB() {
-							MIN = new Vec2d(-10, -10),
-							MAX = new Vec2d(10, 10),
+					};
+					animSet.animPackage.skeleton = new Path("cinematic/faery/animation/faery_squeleton.skl");
+					animSet.animPackage.animPathAABB = new CListO<AnimPathAABB>() {
+						new AnimPathAABB() {
+							name = "sg_stand",
+							path = new Path("cinematic/faery/animation/cine_sg_stand_jungle.anm"),
+							aabb = new AABB() {
+								MIN = new Vec2d(-10, -10),
+								MAX = new Vec2d(10, 10),
+							}
+						},
+						new AnimPathAABB() {
+							name = "sg_medi",
+							path = new Path("cinematic/faery/animation/cine_sg_medi_jungle.anm"),
+							aabb = new AABB() {
+								MIN = new Vec2d(-10, -10),
+								MAX = new Vec2d(10, 10),
+							}
 						}
-					}
-				};
-				animSet.animations = new CListO<SubAnim_Template>() {
-					new SubAnim_Template() {
-						friendlyName = "sg_stand",
-						name = new Path("cinematic/faery/animation/cine_sg_stand_jungle.anm"),
-						loop = true,
-						forceZOffset = true,
-						forceZOffset2 = SubAnim_Template.BOOL._true
-					},
-				};
-				animTPL.tree = new AnimTree_Template() {
-					nodes = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>() {
-						new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
-							nodeName = "sg_stand",
-							animationName = "sg_stand",
-						})
-					}
-				};
-				animTPL.defaultAnimation = "sg_stand";
-				animTPL.patchHLevel = 2;
-				animTPL.patchVLevel = 2;
-				animTPL.scale = Vec2d.One * 6.25f;
-				animTPL.posOffset = Vec2d.Down * 1.3f;
+					};
+					animSet.animations = new CListO<SubAnim_Template>() {
+						new SubAnim_Template() {
+							friendlyName = "sg_stand",
+							name = new Path("cinematic/faery/animation/cine_sg_stand_jungle.anm"),
+							loop = true,
+							forceZOffset = true,
+							forceZOffset2 = SubAnim_Template.BOOL._true
+						},
+						new SubAnim_Template() {
+							friendlyName = "sg_medi",
+							name = new Path("cinematic/faery/animation/cine_sg_medi_jungle.anm"),
+							loop = true,
+							forceZOffset = true,
+							forceZOffset2 = SubAnim_Template.BOOL._true
+						},
+					};
+					animTPL.tree = new AnimTree_Template() {
+						nodes = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>() {
+							new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+								nodeName = "sg_stand",
+								animationName = "sg_stand",
+							}),
+							new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+								nodeName = "sg_medi",
+								animationName = "sg_medi",
+							}),
+						}
+					};
 
-				// Replace FX
-				fairyTPL.obj.RemoveComponent<FXControllerComponent_Template>();
-				fairyTPL.obj.RemoveComponent<FxBankComponent_Template>();
-				fairyTPL.obj.AddComponent<FXControllerComponent_Template>((FXControllerComponent_Template)starsTrail.obj.GetComponent<FXControllerComponent_Template>().Clone("tpl"));
-				fairyTPL.obj.AddComponent<FxBankComponent_Template>((FxBankComponent_Template)starsTrail.obj.GetComponent<FxBankComponent_Template>().Clone("tpl"));
-				var fxb = fairyTPL.obj.GetComponent<FxBankComponent_Template>();
-				var fxg = fxb.Fx[0].gen._params;
-				fxg.maxParticles = 200;
-				fxg.innerCircleRadius *= 3f;
-				fxg.circleRadius *= 5f;
-				fxg.freq /= 2f;
+					/* 
+					 * Actual Fairy animations used by FairyComponent:
+					 * 0x44262f38 - FairyStand
+					 * 0x5a867e38 - FairyFly
+					 * 0xa4bac6e6 - FairySpeedFly
+					 * 0xf811ab9c - FairyDialog_Neutral
+					 * 0x41d76f6a - FairyUturn
+					 * */
+					animTPL.defaultAnimation = "sg_stand";
+					animTPL.patchHLevel = 2;
+					animTPL.patchVLevel = 2;
+					animTPL.scale = Vec2d.One * 6.25f;
+					animTPL.posOffset = Vec2d.Down * 1.3f;
 
-				var trailTPL = fairyTPL.obj.GetComponent<Trail3DComponent_Template>();
-				trailTPL.trailList[0].nbFrames = 120;
-				trailTPL.trailList[0].thicknessBegin = 5f;
-				trailTPL.trailList[0].trailFaidingTime = 2f;
+					// Replace FX
+					fairyTPL.obj.RemoveComponent<FXControllerComponent_Template>();
+					fairyTPL.obj.RemoveComponent<FxBankComponent_Template>();
+					fairyTPL.obj.AddComponent<FXControllerComponent_Template>((FXControllerComponent_Template)starsTrail.obj.GetComponent<FXControllerComponent_Template>().Clone("tpl"));
+					fairyTPL.obj.AddComponent<FxBankComponent_Template>((FxBankComponent_Template)starsTrail.obj.GetComponent<FxBankComponent_Template>().Clone("tpl"));
+					var fxb = fairyTPL.obj.GetComponent<FxBankComponent_Template>();
+					var fxg = fxb.Fx[0].gen._params;
+					fxg.maxParticles = 200;
+					fxg.innerCircleRadius *= 3f;
+					fxg.circleRadius *= 5f;
+					fxg.freq /= 2f;
 
-				//var fxcTPL = fairyTPL.obj.GetComponent<FXControllerComponent_Template>();
-				//fxcTPL.defaultFx = new StringID(0x74AE7DEA);
+					var trailTPL = fairyTPL.obj.GetComponent<Trail3DComponent_Template>();
+					trailTPL.trailList[0].nbFrames = 120;
+					trailTPL.trailList[0].thicknessBegin = 5f;
+					trailTPL.trailList[0].trailFaidingTime = 2f;
 
-				var fcTPL = fairyTPL.obj.AddComponent<RO2_FairyComponent_Template>();
-				fcTPL.lumPath = customLumPath; // change to lums pool or egg?
-				fcTPL.flyDist = 2f;
-				fcTPL.rushDist = 1f;
-				fcTPL.flySpeed = 0.65f;
-				fcTPL.rushSpeed = 1f;
-				fcTPL.keepRushTime = 0.25f;
-				fcTPL.displayDialogStill = true; // Stop to display dialog
+					//var fxcTPL = fairyTPL.obj.GetComponent<FXControllerComponent_Template>();
+					//fxcTPL.defaultFx = new StringID(0x74AE7DEA);
 
-				fairyTPL.obj.AddComponent<LinkComponent_Template>();
-				var snTPL = fairyTPL.obj.AddComponent<RO2_SnakeNetworkFollowerComponent_Template>();
-				//snTPL.prevNodeCount = 1;
-				snTPL.speedMultiplierMaxValue = 0f;
-				snTPL.speedMultiplierMaxDistance = 15f;
+					var fcTPL = fairyTPL.obj.AddComponent<RO2_FairyComponent_Template>();
+					fcTPL.lumPath = customLumPath; // change to lums pool or egg?
+					fcTPL.flyDist = 2f;
+					fcTPL.rushDist = 1f;
+					fcTPL.flySpeed = 0.65f;
+					fcTPL.rushSpeed = 1f;
+					fcTPL.keepRushTime = 0.25f;
+					fcTPL.displayDialogStill = true; // Stop to display dialog
 
-				fairyTPL.obj.GetComponent<DialogActorComponent_Template>().balloon3DPath = new Path("world/common/logicactor/dialog/balloon/dialogballoon3d_character.act");
+					fairyTPL.obj.AddComponent<LinkComponent_Template>();
+					var snTPL = fairyTPL.obj.AddComponent<RO2_SnakeNetworkFollowerComponent_Template>();
+					//snTPL.prevNodeCount = 1;
+					snTPL.speedMultiplierMaxValue = 0f;
+					snTPL.speedMultiplierMaxDistance = 15f;
+
+					fairyTPL.obj.GetComponent<DialogActorComponent_Template>().balloon3DPath = new Path("world/common/logicactor/dialog/balloon/dialogballoon3d_character.act");
+
+					var twnTPL = fairyTPL.obj.AddComponent<TweenComponent_Template>();
+					twnTPL.autoStart = false;
+					//twnTPL.applyFeedback = false;
+					twnTPL.applyPosition = false;
+					twnTPL.applyRotation = false;
+					twnTPL.applyScale = false;
+					twnTPL.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+						new TweenComponent_Template.InstructionSet() {
+							name = "PlayMeditate",
+							iterationCount = 1,
+							triggable = false,
+							instructions = new CListO<Generic<TweenInstruction_Template>>() {
+								new Generic<TweenInstruction_Template>(new TweenAnim_Template() {
+									duration = 0f,
+									anim = "sg_medi"
+								})
+							},
+							startEvent = new Generic<UbiArt.ITF.Event>(new EventGeneric() {
+								id = "PlayMeditate"
+							})
+						},
+						new TweenComponent_Template.InstructionSet() {
+							name = "PlayStand",
+							iterationCount = 1,
+							triggable = false,
+							instructions = new CListO<Generic<TweenInstruction_Template>>() {
+								new Generic<TweenInstruction_Template>(new TweenAnim_Template() {
+									duration = 0f,
+									anim = "sg_stand"
+								})
+							},
+							startEvent = new Generic<UbiArt.ITF.Event>(new EventGeneric() {
+								id = "PlayStand"
+							})
+						},
+					};
+				}
+				return fairyTPL;
 			}
+
 			if (CreateTemplateIfNecessary(fairyNodeTPLPath, "INTRO ACTOR", out var fairyNodeTPL)) {
 				fairyNodeTPL.obj.AddComponent<LinkComponent_Template>();
 				fairyNodeTPL.obj.AddComponent<RO2_FairyNodeComponent_Template>();
@@ -2168,6 +2240,8 @@ namespace UbiCanvas.Conversion {
 			var fairy = fairyTPL.obj.Instantiate(fairyTPLPath);
 			var fairyDialog = fairy.GetComponent<DialogActorComponent>();
 			var fairyFXC = fairy.GetComponent<FXControllerComponent>();
+			var fairyTween = fairy.GetComponent<TweenComponent>();
+			fairyTween.autoStart = false;
 			fairyFXC.defaultFx = new StringID("fx_mrdark_starstrail_01");
 			//var fairyTrail = fairy.GetComponent<Trail3DComponent>();
 			fairyDialog.enableDialog = true;
@@ -2256,12 +2330,12 @@ namespace UbiCanvas.Conversion {
 				return actors;
 			}
 
-			CreateFairyNodes(
-				new FairyNode(53.46f, 20f) {
+			var fairyNodes = CreateFairyNodes(
+				new FairyNode(51.46f, 20f) {
 					LumsCount = 0,
 					SpeedMultiplier = 0.8f,
 				},
-				new FairyNode(51.09f, 17.18f,
+				new FairyNode(49.09f, 17.18f,
 					new FairyNode.FairyText(80000, "<INTRO_FAIRY_0>"),
 					new FairyNode.FairyText(80001, "<INTRO_FAIRY_1>"),
 					new FairyNode.FairyText(80002, "<INTRO_FAIRY_2>")) {
@@ -2282,11 +2356,13 @@ namespace UbiCanvas.Conversion {
 				new FairyNode(135.08f, -1.86f),
 				new FairyNode(147.89f, -1.08f),
 				new FairyNode(155.3f, -1.95f),
-				new FairyNode(165.12f, -3.85f),
+				new FairyNode(165.12f, -3.85f) { SpeedMultiplier = 0.8f },
 				new FairyNode(176.43f, -3.85f,
 					new FairyNode.FairyText(80004, "<INTRO_FAIRY_4>"),
 					new FairyNode.FairyText(80005, "<INTRO_FAIRY_5>"),
-					new FairyNode.FairyText(80006, "<INTRO_FAIRY_6>") { TextSize = 0.3f, WaitTime = 5f })
+					new FairyNode.FairyText(80006, "<INTRO_FAIRY_6>") { TextSize = 0.3f, WaitTime = 5f }) { LumsCount = 0, SpeedMultiplier = 0.4f },
+				new FairyNode(185f, -3.85f) { LumsCount = 0, SpeedMultiplier = 0.05f },
+				new FairyNode(185f, -3.5f) { LumsCount = 0, SpeedMultiplier = 0.05f }
 				);
 			var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
 			trig.POS2D = fairy.POS2D;
@@ -2295,6 +2371,38 @@ namespace UbiCanvas.Conversion {
 			trig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
 				Path = new ObjectPath(fairy.USERFRIENDLY)
 			});
+			var tweenFairyAnimChangeActor = await AddNewActor(scene, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"), contextToLoadFrom: LegendsContext);
+			tweenFairyAnimChangeActor.POS2D = fairyNodes[fairyNodes.Length - 2].POS2D;
+			
+			fairyNodes[fairyNodes.Length - 2].GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+				Path = new ObjectPath(tweenFairyAnimChangeActor.USERFRIENDLY) // Node triggers the tween
+			});
+			tweenFairyAnimChangeActor.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+				Path = new ObjectPath(fairy.USERFRIENDLY) // Tween affects the fairy
+			});
+			var tweenFairyAnimChange = tweenFairyAnimChangeActor.GetComponent<TweenComponent>();
+			tweenFairyAnimChange.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template() {
+				autoStart = false,
+				instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+					new TweenComponent_Template.InstructionSet() {
+						triggable = true,
+						name = "Set",
+						iterationCount = 1,
+						instructions = new CListO<Generic<TweenInstruction_Template>>() {
+							new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+								duration = 1f,
+								triggerSelf = false,
+								triggerChildren = true,
+								_event = new Generic<UbiArt.ITF.Event>(new EventGeneric() {
+									id = "PlayMeditate"
+								}),
+							})
+						}
+					}
+				}
+			});
+			tweenFairyAnimChange.InstantiateFromInstanceTemplate(LegendsContext);
+			tweenFairyAnimChange.autoStart = false;
 
 			await CreateTweenForCaptainHello();
 
