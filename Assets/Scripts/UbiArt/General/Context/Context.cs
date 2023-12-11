@@ -258,7 +258,10 @@ namespace UbiArt
 			"DPad_Up", "DPad_Down", "DPad_Left", "DPad_Right",
 
 			// Generic events
-			"Open", "Close"
+			"Open", "Close",
+
+			// BoxInterpolator input
+			"Color",
 		};
 
 

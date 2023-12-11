@@ -37,6 +37,10 @@ public class UnityPickableEditor : Editor {
 					p.pickable.templatePickable.TAGS.Serialize(s, "TAGS");
 				}
 			}
+
+			if (GUILayout.Button("Select in game view")) {
+				Controller.Obj.selector.Select(p, view: true);
+			}
 		}
 
 	}

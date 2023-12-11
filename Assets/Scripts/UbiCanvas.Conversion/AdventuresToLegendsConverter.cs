@@ -1506,6 +1506,17 @@ namespace UbiCanvas.Conversion {
 						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
 						break;
 					}
+				case "personal/filip/gameplaymixdemo.isc": {
+						AllSMVToFrise(oldContext, scene);
+						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
+						/*var moods = scene.FindActors(a => a.USERFRIENDLY.StartsWith("mood_")); // mood_fire, mood_exterior, ambiance_blue@2
+						foreach (var mood in moods) {
+							mood.Result.RELATIVEZ -= 5f;
+						}*/
+						var ambiance_blue = scene.FindActor(a => a.USERFRIENDLY == "ambiance_blue@2");
+						ambiance_blue.Result.RELATIVEZ += 5f;
+						break;
+					}
 				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {
 						// Remove rotating platform to access secret place
 						var actToRemove = scene.FindActor(a => a.USERFRIENDLY == "dojo_platform_single@1");
@@ -1993,7 +2004,7 @@ namespace UbiCanvas.Conversion {
 			public class FairyText {
 				public string Text { get; set; }
 				public LocalisationId Id { get; set; }
-				public float TextSize { get; set; } = 0.6f;
+				public float TextSize { get; set; } = 0.5f;
 				public float WaitTime { get; set; } = 0f;
 				public bool FocusCam { get; set; }
 				public FairyText(uint id, string text) {
@@ -5603,7 +5614,7 @@ namespace UbiCanvas.Conversion {
 						var outerAABB = box.outerBox;
 						var scale = outerAABB.MAX - outerAABB.MIN;
 						var center = outerAABB.MIN + (scale / 2f);
-						newAct.POS2D = act.POS2D + center;
+						newAct.POS2D = act.POS2D + center.Rotate(act.ANGLE ?? 0f);
 						newAct.SCALE = act.SCALE * scale;
 					}
 					rpScene.AddActor(newAct);
