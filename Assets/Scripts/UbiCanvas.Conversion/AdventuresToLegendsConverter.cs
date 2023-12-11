@@ -884,16 +884,28 @@ namespace UbiCanvas.Conversion {
 			// Mini sound files are higher quality - we pick those if they exist. Otherwise we load the Adventures file
 			// Might cause issues though... revert to old code if it does!
 			var jsonFiles = new string[] { "mini", "adventures" };
+			var useAdventuresPaths = new string[] { // For sounds with this in the filename, we use the Adventures sound events
+				"nmi_basictoad/", "sfx_lums_jungleworld_picked_lvl01_0"
+			};
+			HashSet<long> useAdventuresActions = new HashSet<long>();
 			foreach (var wwiseName in jsonFiles) {
+				bool preferAdventures = wwiseName == "adventures" && context.Settings.Game == Game.RA;
 				var json = System.IO.File.ReadAllText(System.IO.Path.Combine(inPath, $"sounds_{wwiseName}.json"));
 				wwiseInfo = JsonConvert.DeserializeObject<JSON_WwiseInfo>(json);
-				foreach (var ev in wwiseInfo.Events) {
-					if(wwiseEventsLookup.ContainsKey(ev.ID)) continue;
-					wwiseEventsLookup[ev.ID] = ev;
-				}
 				foreach (var act in wwiseInfo.Actions) {
-					if (wwiseActionsLookup.ContainsKey(act.ID)) continue;
+					if (preferAdventures) {
+						if (act.Sounds != null && act.Sounds.Any(s => useAdventuresPaths.Any(p => s.Filename?.Contains(p) ?? false))) {
+							useAdventuresActions.Add(act.ID);
+						}
+					}
+					if (wwiseActionsLookup.ContainsKey(act.ID) && !useAdventuresActions.Contains(act.ID)) continue;
 					wwiseActionsLookup[act.ID] = act;
+				}
+				foreach (var ev in wwiseInfo.Events) {
+					if (wwiseEventsLookup.ContainsKey(ev.ID)) {
+						if(!preferAdventures || ev.Actions == null || !ev.Actions.Any(a => useAdventuresActions.Contains(a))) continue;
+					}
+					wwiseEventsLookup[ev.ID] = ev;
 				}
 				foreach (var att in wwiseInfo.Attenuations) {
 					if(conversionSettings.Attenuations.ContainsKey(att.ID)) continue;
