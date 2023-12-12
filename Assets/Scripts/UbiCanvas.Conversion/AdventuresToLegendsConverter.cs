@@ -1520,7 +1520,38 @@ namespace UbiCanvas.Conversion {
 					}
 				case "personal/filip/gameplaymixdemo.isc": {
 						AllSMVToFrise(oldContext, scene);
-						AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
+						//AllRotatingPlatformsToTweens(oldContext, scene, rotateTime: 1f / 3f, waitTime: 2f / 3f);
+
+						var rotPlat1 = scene.FindActor(a => a.USERFRIENDLY == "rotatingplatform_single");
+						RotatingPlatformToTween(oldContext, rotPlat1.Result, rotateTime: 0.5f, waitTime: 1f, clockwise: true, backAndForth: true);
+
+						var rotPlat2 = scene.FindActor(a => a.USERFRIENDLY == "rotatingplatform_tshape");
+						RotatingPlatformToTween(oldContext, rotPlat2.Result, rotateTime: 0.5f, waitTime: 1f, clockwise: false, backAndForth: true);
+
+						var rotPlat3 = scene.FindActor(a => a.USERFRIENDLY == "rotatingplatform_cross");
+						RotatingPlatformToTween(oldContext, rotPlat3.Result, rotateTime: 0.5f, waitTime: 1f, clockwise: true, backAndForth: false);
+
+						// Hack to fix disappearing torturejacqouille
+						var unpauser = scene.FindActor(a => a.USERFRIENDLY == "relay_unpause@2" && a.POS2D.x < 0);
+						var unpauseLinks = unpauser.Result.GetComponent<LinkComponent>();
+						unpauseLinks.Children.Add(new ChildEntry() { Path = new ObjectPath("..|..|torturejacquouille@1") });
+						unpauseLinks.Children.Add(new ChildEntry() { Path = new ObjectPath("..|..|teensy@1") });
+						var badJacquouille = scene.FindActor(a => a.USERFRIENDLY == "torturejacquouille@1");
+						badJacquouille.Result.STARTPAUSE = true;
+						var badTeensy = scene.FindActor(a => a.USERFRIENDLY == "teensy@1");
+						badTeensy.Result.STARTPAUSE = true;
+
+						// But these ones, we'll just get rid of entirely.
+						var badJacqouille2 = scene.FindActors(a => a.USERFRIENDLY == "shieldjacquouilleshielddown@2" || a.USERFRIENDLY == "shieldjacquouilleshieldup@1");
+						foreach (var j in badJacqouille2) {
+							j.ContainingScene.DeletePickable(j.Result);
+						}
+
+						// Fix cave background brightness
+						var backgroundCave = (Frise)scene.FindPickable(p => p.USERFRIENDLY == "intro_background_cave").Result;
+						backgroundCave.PrimitiveParameters.FrontLightBrightness = 1f;
+						backgroundCave.PrimitiveParameters.FrontLightFactor = 0f;
+
 						/*var moods = scene.FindActors(a => a.USERFRIENDLY.StartsWith("mood_")); // mood_fire, mood_exterior, ambiance_blue@2
 						foreach (var mood in moods) {
 							mood.Result.RELATIVEZ -= 5f;
@@ -3001,7 +3032,7 @@ namespace UbiCanvas.Conversion {
 				RotatingPlatformToTween(oldContext, act.Result, rotateTime: rotateTime, waitTime: waitTime, clockwise: clockwise);
 			}
 		}
-		public void RotatingPlatformToTween(Context oldContext, Actor actor, float totalAngle = 360/4f, float rotateTime = 0.5f, float waitTime = 1f, bool clockwise = true) {
+		public void RotatingPlatformToTween(Context oldContext, Actor actor, float totalAngle = 360/4f, float rotateTime = 0.5f, float waitTime = 1f, bool clockwise = true, bool backAndForth = false) {
 			if(actor.GetComponent<RLC_RotatingPlatformComponent>()== null) return;
 			var plat = actor.GetComponent<RLC_RotatingPlatformComponent>();
 			var tplplat = actor.template.obj.GetComponent<RLC_RotatingPlatformComponent_Template>();
@@ -3043,6 +3074,30 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 			});
+			if (backAndForth) {
+				var set = tween.instanceTemplate.value.instructionSets[0];
+				set.instructions = new CListO<Generic<TweenInstruction_Template>>(set.instructions.Concat(new List<Generic<TweenInstruction_Template>>() {
+					new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+						fx = new StringID(0xe1bb334e),
+						duration = 0f,
+					}),
+					new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+						fx = new StringID(0x34ab572e),
+						duration = 0f,
+					}),
+					new Generic<TweenInstruction_Template>(new TweenCircle_Template() {
+						duration = rotateTime,
+						angle = new AngleAmount(-(clockwise ? -totalAngle : totalAngle), degrees: true),
+					}),
+					new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+						fx = new StringID(0x80fe8585),
+						duration = 0f,
+					}),
+					new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+						duration = waitTime,
+					}),
+				}).ToList());
+			}
 			tween.syncOffset = 0f;
 			tween.InstantiateFromInstanceTemplate(oldContext);
 		}

@@ -10,9 +10,9 @@ namespace UbiArt.ITF {
 		public float RotationSpeed;
 		public int Size;
 		public bool UseSoftCol;
-		public float SoftColDist;
-		public float SoftColDistStop;
-		public float SoftColStrengthReturn;
+		public float SoftColDist = 2f;
+		public float SoftColDistStop = 1f;
+		public float SoftColStrengthReturn = 0.99f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			UseTween = s.Serialize<int>(UseTween, name: "UseTween");
