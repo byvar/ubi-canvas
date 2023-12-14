@@ -1249,13 +1249,22 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc": {
+						var badjacquouille = scene.FindActor(a => a.USERFRIENDLY == "Torture");
+						badjacquouille.Result.POS2D += new Vec2d(-6.5f, 3f);
 						var act = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
+						FixCastleCorridorPrimitiveParams(oldContext, newSettings, scene);
 						/*var checkp = scene.FindActor(a => a.USERFRIENDLY == "checkpoint_innovisual@1").Result.GetComponent<PrefetchTargetComponent>();
 						var poly = (PhysShapePolygon)checkp.ZONE.shape.obj;
 						for (int i = 0; i < poly.distances.Count; i++) poly.distances[i] *= 20f;
 						for (int i = 0; i < poly.Points.Count; i++) poly.Points[i] *= 20f;*/
 						//act.Result.RELATIVEZ = 3;
 						//ApplySpecialRenderParamsToScene(scene);
+						break;
+					}
+				case "world/rlc_castle/roastedpigrodeo/castleexterior_roastedpigrodeo_lum_base.isc": {
+						// A rabbid auto-dies here, AABB hack doesn't work... we'll delete it
+						var rabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner");
+						rabbid.ContainingScene.DeletePickable(rabbid.Result);
 						break;
 					}
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
@@ -1267,11 +1276,16 @@ namespace UbiCanvas.Conversion {
 						act.ContainingScene.DeletePickable(act.Result);
 						break;
 					}
+				case "world/rlc_castle/scaffoldingchase/castleexterior_scaffoldingchase_nmi_base.isc": {
+						FixCastleCorridorPrimitiveParams(oldContext, newSettings, scene);
+						break;
+					}
 				case "world/rlc_castle/siegeattack/castleexterior_siegeattack_nmi_base.isc": {
 						var act = scene.FindActor(a => a.USERFRIENDLY == "mood1");
 						var rp = act.Result.GetComponent<RenderParamComponent>();
 						rp.ClearColor.ClearFrontLightColor = rp.ClearColor.ClearColor;
 						//act.Result.GetComponent<RenderParamComponent>().Lighting.GlobalColor.a = 0.8f;
+						FixCastleCorridorPrimitiveParams(oldContext, newSettings, scene);
 						break;
 					}
 				case "world/rlc_castle/siegeslide/castleexterior_siegeslide_nmi.isc": {
@@ -1279,6 +1293,8 @@ namespace UbiCanvas.Conversion {
 						var rp = act.Result.GetComponent<RenderParamComponent>();
 						rp.Lighting.GlobalColor.a = 0.8f;
 						rp.ClearColor.ClearFrontLightColor *= new UbiArt.Color(0.5f, 0.5f, 0.5f, 1f);
+
+						FixCastleCorridorPrimitiveParams(oldContext, newSettings, scene);
 						break;
 					}
 				case "world/rlc_castle/tumblingtowers/castleexterior_tumblingtowers_spd_base.isc": {
@@ -2574,6 +2590,20 @@ namespace UbiCanvas.Conversion {
 					Path = new ObjectPath(captainQuery.Path.FullPath.Replace(captain.USERFRIENDLY, dialogueActor.USERFRIENDLY))
 				});
 			};
+		}
+
+		public void FixCastleCorridorPrimitiveParams(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var corridors = scene.FindPickables(p => p is Frise f &&
+			(f.ConfigName.FullPath == "world/music/castlesiege/playground/ldground/corridorstructure.fcg"
+			|| f.ConfigName.FullPath == "world/music/castlesiege/playground/ldground/corridorbehind.fcg"
+			|| f.ConfigName.FullPath == "world/music/castlesiege/playground/ldground/corridorbottom.fcg"));
+			foreach (var c in corridors) {
+				var f = (Frise)c.Result;
+				f.UseTemplatePrimitiveParams = false;
+			}
 		}
 
 		public void AddRelaysForMultipleEventTriggers(Context oldContext, Settings newSettings, Scene scene) {
