@@ -204,6 +204,12 @@ namespace UbiCanvas.Conversion {
 				AddPathConversionRule("world/common/platform/switchplatformwood/", "world/common/platform/switchplatformwood_mini/");
 				AddPathConversionRule("world/ocean/common/platform/switchplatform/", "world/ocean/common/platform/switchplatform_mini/");
 			}
+			// TODO: Use boxinterpolator for this one
+			if (oldSettings.Game == Game.RM) {
+				AddPathConversionRule("junglelummusicmanager.tpl", "junglelummusicmanager_mini.tpl");
+			} else {
+				AddPathConversionRule("junglelummusicmanager.tpl", "junglelummusicmanager_rlc.tpl");
+			}
 			if (oldSettings.Platform == GamePlatform.Vita) {
 				//conversionSettings.PathConversionRules.Add(
 				//	new PathConversionRule("world/mountain/mecha/playground/enemy/buzzsaw/", "world/mountain/mecha/playground/enemy/buzzsaw_vita/"));
@@ -372,6 +378,11 @@ namespace UbiCanvas.Conversion {
 			await SpawnRabbids(mainContext, settings, scene); // Before LevelSpecificChanges!
 
 			await LevelSpecificChanges(mainContext, settings, scene);
+
+			if (generateSGS) {
+				// We aren't in a brick, but in a main scene
+				await SpawnLumMusicManagerIfNecessary(mainContext, settings, scene);
+			}
 
 			MiniHandleMRDARKScene(mainContext, settings, scene);
 
@@ -1076,6 +1087,13 @@ namespace UbiCanvas.Conversion {
 						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 						break;
 					}
+				case "world/rlc_dojo/greatwallwaterfall/dojo_greatwallwaterfall_lum_firelums.isc": {
+						var mood = scene.FindActor(a => a.USERFRIENDLY == "mood1");
+						var rp = mood.Result.GetComponent<RenderParamComponent>();
+						rp.Lighting.GlobalColor.a += 0.2f;
+						InvertZiplines_OnlyLeft(oldContext, newSettings, scene);
+						break;
+					}
 				case "world/rlc_dojo/iseethelight/dojo_iseethelight_lum_base.isc": {
 						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 
@@ -1232,6 +1250,10 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc": {
 						var act = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
+						/*var checkp = scene.FindActor(a => a.USERFRIENDLY == "checkpoint_innovisual@1").Result.GetComponent<PrefetchTargetComponent>();
+						var poly = (PhysShapePolygon)checkp.ZONE.shape.obj;
+						for (int i = 0; i < poly.distances.Count; i++) poly.distances[i] *= 20f;
+						for (int i = 0; i < poly.Points.Count; i++) poly.Points[i] *= 20f;*/
 						//act.Result.RELATIVEZ = 3;
 						//ApplySpecialRenderParamsToScene(scene);
 						break;
@@ -1271,6 +1293,7 @@ namespace UbiCanvas.Conversion {
 						var act = scene.FindActor(a => a?.USERFRIENDLY == "renderparam@1");
 						var rp = act.Result.GetComponent<RenderParamComponent>();
 						rp.Lighting.GlobalColor *= new UbiArt.Color(0.8f, 0.8f, 0.8f, 0.8f);
+						//ApplySpecialRenderParamsToScene(scene);
 						break;
 					}
 				case "world/rlc_olympus/cranezone/olympus_cranezone_exp_base.isc": {
@@ -4285,274 +4308,173 @@ namespace UbiCanvas.Conversion {
 		public void FixLumKingMusic(Context oldContext, Settings newSettings) {
 			// Note: music manager works and starts the song, but lum king doesn't turn any lums purple :(
 			var musicManagerPath = new Path("sound/common/modifiers/lums/junglelummusicmanager.tpl");
+			var musicManagerPath2 = new Path("world/common/friendly/lums/musicmanagers/junglelummusicmanager.tpl");
 			var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(musicManagerPath);
+			var tpl2 = oldContext.Cache.Get<GenericFile<Actor_Template>>(musicManagerPath2);
 
-			if (tpl?.obj == null) return;
-			var sndComponent = tpl.obj.GetComponent<SoundComponent_Template>();
+			TreatTPL(tpl);
+			TreatTPL(tpl2);
 
-			sndComponent.soundList.Remove(sndComponent.soundList.FirstOrDefault(s => s?.name?.stringID == 0xAC205A3F));
+			void TreatTPL(GenericFile<Actor_Template> tpl,
+				bool changeSounds = true, bool addLumKingMusic = true, bool addAABBMod = true, float aabbScale = 1000f) {
+				if(tpl?.obj == null) return;
+				tpl.sizeOf += 0x10000;
 
-			sndComponent.soundList.Add(new SoundDescriptor_Template() {
-				name = new StringID(0x6FB3BF00),
-				volume = new Volume(-3 - 8),
-				category = new StringID(0xF03C38A1),
-				maxInstances = 4,
-				limitMode = 1,
-				limitModeEnum = LimiterDef.LimiterMode.StopOldest,
-				files = new CListO<Path>(new List<Path>() {
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"), // 0
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_g7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_a7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_d8.wav"), // 5
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_g8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_f8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_d8.wav"), // 10
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_b7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_g7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_g7.wav"), // 15
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_a7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_d8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"), // 20
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_d8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-				}),
-				_params = new SoundParams() {
-					numChannels = 1,
-					randomVolMin = new Volume(-1),
-					fadeInTime = 0.01f,
-					fadeOutTime = 0.01f,
-					filterQ = 1f,
-					playMode = SoundParams.PlayMode.Sequence,
-					playMode2 = SoundParams.PlayMode2.Sequence,
-					modifiers = new CArrayO<Generic<SoundModifier>>() {
-						new Generic<SoundModifier>(new SpatializedPanning() {
-							widthMin = 100,
-							widthMax = 1000,
-						}),
-						new Generic<SoundModifier>(new ScreenRollOff() {
-							distanceMin = 100,
-							distanceMax = 1000,
-						}),
-					},
-				},
-			});
+				var sndComponent = tpl.obj.GetComponent<SoundComponent_Template>();
 
-			sndComponent.soundList.Add(new SoundDescriptor_Template() {
-				name = new StringID(0xAC205A3F),
-				volume = new Volume(-9 - 8),
-				category = new StringID(0xF03C38A1),
-				limitCategory = new StringID(0x39283153),
-				maxInstances = 4,
-				limitMode = 1,
-				limitModeEnum = LimiterDef.LimiterMode.StopOldest,
-				files = new CListO<Path>(new List<Path>() {
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_01.wav"), // 0
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_07.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_05.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_01.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_01.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_01.wav"), // 5
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_02.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_03.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_07.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_06.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_07.wav"), // 10
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_05.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_jungleworld_picked_lvl01_04.wav"),
-				}),
-				_params = new SoundParams() {
-					numChannels = 1,
-					fadeInTime = 0.01f,
-					fadeOutTime = 0.01f,
-					filterQ = 1f,
-					playMode = SoundParams.PlayMode.Sequence,
-					playMode2 = SoundParams.PlayMode2.Sequence,
-					modifiers = new CArrayO<Generic<SoundModifier>>() {
-						new Generic<SoundModifier>(new SpatializedPanning() {
-							widthMin = 100,
-							widthMax = 1000,
-						}),
-						new Generic<SoundModifier>(new ScreenRollOff() {
-							distanceMin = 100,
-							distanceMax = 1000,
-						}),
-					},
-				},
-			});
+				if (oldContext.Settings.Game == Game.RA && changeSounds) {
 
-			sndComponent.soundList.Add(new SoundDescriptor_Template() {
-				name = new StringID(0xB131152D),
-				volume = new Volume(-3 - 8),
-				category = new StringID(0xF03C38A1),
-				maxInstances = 4,
-				limitMode = 1,
-				limitModeEnum = LimiterDef.LimiterMode.StopOldest,
-				files = new CListO<Path>(new List<Path>() {
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"), // 0
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_g7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_a7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_d8.wav"), // 5
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav")
-				}),
-				_params = new SoundParams() {
-					numChannels = 1,
-					randomVolMin = new Volume(-1),
-					fadeInTime = 0.01f,
-					fadeOutTime = 0.01f,
-					filterQ = 1f,
-					playMode = SoundParams.PlayMode.Sequence,
-					playMode2 = SoundParams.PlayMode2.Sequence,
-					modifiers = new CArrayO<Generic<SoundModifier>>() {
-						new Generic<SoundModifier>(new SpatializedPanning() {
-							widthMin = 100,
-							widthMax = 1000,
-						}),
-						new Generic<SoundModifier>(new ScreenRollOff() {
-							distanceMin = 100,
-							distanceMax = 1000,
-						}),
-					},
-				},
-			});
+					sndComponent.soundList.RemoveAll(s => s?.name?.stringID == 0xAC205A3F);
+					sndComponent.soundList.RemoveAll(s => s?.name?.stringID == 0x24204AB3);
 
-			sndComponent.soundList.Add(new SoundDescriptor_Template() {
-				name = new StringID(0x506D5E97),
-				volume = new Volume(-3 - 8),
-				category = new StringID(0xF03C38A1),
-				maxInstances = 4,
-				limitMode = 1,
-				limitModeEnum = LimiterDef.LimiterMode.StopOldest,
-				files = new CListO<Path>(new List<Path>() {
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"), // 0
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_g7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_a7.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_d8.wav"), // 5
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_e8.wav"),
-					new Path("sound/200_characters/210_common/lums/sfx_lums_picked_lvl01_c8.wav")
-				}),
-				_params = new SoundParams() {
-					numChannels = 1,
-					randomVolMin = new Volume(-1),
-					fadeInTime = 0.01f,
-					fadeOutTime = 0.01f,
-					filterQ = 1f,
-					playMode = SoundParams.PlayMode.Sequence,
-					playMode2 = SoundParams.PlayMode2.Sequence,
-					modifiers = new CArrayO<Generic<SoundModifier>>() {
-						new Generic<SoundModifier>(new SpatializedPanning() {
-							widthMin = 100,
-							widthMax = 1000,
-						}),
-						new Generic<SoundModifier>(new ScreenRollOff() {
-							distanceMin = 100,
-							distanceMax = 1000,
-						}),
-					},
-				},
-			});
+					// Lum "ting" sound
+					sndComponent.soundList.Add(new SoundDescriptor_Template() {
+						sizeOf = 468,
+						name = new StringID(0xAC205A3F),
+						volume = new Volume(-17),
+						category = new StringID(0xF03C38A1),
+						limitCategory = new StringID(0x39283153),
+						maxInstances = 4,
 
-			sndComponent.soundList.Add(new SoundDescriptor_Template() {
-				name = new StringID(0xEB7569D6),
-				volume = new Volume(-6 - 8),
-				category = new StringID(0xF03C38A1),
-				limitMode = 0,
-				limitModeEnum = LimiterDef.LimiterMode.RejectNew,
-				maxInstances = 1,
-				files = new CListO<Path>(new List<Path>() {
-					new Path("sound/200_characters/210_common/lums/sfx_lumking_picked.wav")
-				}),
-				_params = new SoundParams() {
-					numChannels = 1,
-					randomVolMin = new Volume(-1),
-					filterQ = 1f,
-					playMode = SoundParams.PlayMode.Sequence,
-					playMode2 = SoundParams.PlayMode2.Sequence,
-					modifiers = new CArrayO<Generic<SoundModifier>>() {
-						new Generic<SoundModifier>(new SpatializedPanning() {
-							widthMin = 0.5f,
-							widthMax = 2f,
+						limitMode = 1,
+						limitModeEnum = LimiterDef.LimiterMode.StopOldest,
+						files = new CListO<Path>(new List<Path>() {
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_01.wav"), // 0
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_02.wav"),
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_03.wav"),
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_01.wav"),
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_04.wav"),
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_05.wav"), // 5
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_06.wav"),
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_03.wav"),
+							new Path("sound/200_characters/210_common/lums/sfx_lums_middleageworld_picked_lvl01_05.wav"),
 						}),
-						new Generic<SoundModifier>(new ScreenRollOff() {
-							distanceMin = 0.2f,
-							distanceMax = 2f,
+						_params = new SoundParams() {
+							sizeOf = 96,
+							numChannels = 1,
+							fadeInTime = 0.01f,
+							fadeOutTime = 0.01f,
+							filterQ = 1f,
+							playMode = SoundParams.PlayMode.Sequence,
+							playMode2 = SoundParams.PlayMode2.Sequence,
+							modifiers = new CArrayO<Generic<SoundModifier>>() {
+								new Generic<SoundModifier>(new SpatializedPanning() {
+									sizeOf = 12,
+									widthMin = 100,
+									widthMax = 1000,
+								}),
+								new Generic<SoundModifier>(new ScreenRollOff() {
+									sizeOf = 16,
+									distanceMin = 100,
+									distanceMax = 1000,
+								}),
+							},
+						},
+					});
+					
+					// Lum voice
+					sndComponent.soundList.Add(new SoundDescriptor_Template() {
+						sizeOf = 468,
+						name = new StringID(0x24204AB3),
+						volume = new Volume(-9),
+						category = new StringID(0xF03C38A1),
+						limitMode = 0,
+						limitModeEnum = LimiterDef.LimiterMode.RejectNew,
+						files = new CListO<Path>(new List<Path>() {
+							new Path("sound/200_characters/210_common/lums/vox_lums_picked_01.wav"), // 0
+							new Path("sound/200_characters/210_common/lums/vox_lums_picked_02.wav"),
+							new Path("sound/200_characters/210_common/lums/vox_lums_picked_04.wav"),
+							new Path("sound/200_characters/210_common/lums/vox_lums_picked_05.wav"),
+							new Path("sound/200_characters/210_common/lums/vox_lums_picked_06.wav"),
 						}),
-						new Generic<SoundModifier>(new ZRollOff() {
-							distanceMin = 10f,
-							distanceMax = 20f,
+						_params = new SoundParams() {
+							sizeOf = 96,
+							numChannels = 1,
+							fadeInTime = 0.01f,
+							fadeOutTime = 0.01f,
+							playMode = SoundParams.PlayMode.RandomSequence,
+							playMode2 = SoundParams.PlayMode2.RandomSequence,
+							randomPitchMin = 1.2f,
+							randomPitchMax = 1.2f,
+							modifiers = new CArrayO<Generic<SoundModifier>>(), // No modifiers
+						},
+					});
+				}
+
+				if (addLumKingMusic) {
+					// Lum king music
+					sndComponent.soundList.Add(new SoundDescriptor_Template() {
+						name = new StringID(0xE2C196EA),
+						volume = new Volume(-7 - 8),
+						category = new StringID(0xF03C38A1),
+						limitCategory = new StringID(0x0DF47974),
+						limitMode = 1,
+						limitModeEnum = LimiterDef.LimiterMode.StopOldest,
+						maxInstances = 1,
+						files = new CListO<Path>(new List<Path>() {
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_03_4m.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_02_4m.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_06_4m.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_08_4m.wav"),
 						}),
-					},
-				},
-			});
+						_params = new SoundParams() {
+							numChannels = 2,
+							randomVolMin = new Volume(-1),
+							filterQ = 1f,
+							playMode = SoundParams.PlayMode.Random,
+							playMode2 = SoundParams.PlayMode2.Random,
+							modifiers = new CArrayO<Generic<SoundModifier>>(),
+						},
+					});
 
-			sndComponent.soundList.Add(new SoundDescriptor_Template() {
-				name = new StringID(0xE2C196EA),
-				volume = new Volume(-7 - 8),
-				category = new StringID(0xF03C38A1),
-				limitCategory = new StringID(0x0DF47974),
-				limitMode = 1,
-				limitModeEnum = LimiterDef.LimiterMode.StopOldest,
-				maxInstances = 1,
-				files = new CListO<Path>(new List<Path>() {
-					new Path("sound/300_music/310_common/buffer/mus_lumsking_03_4m.wav"),
-					new Path("sound/300_music/310_common/buffer/mus_lumsking_02_4m.wav"),
-					new Path("sound/300_music/310_common/buffer/mus_lumsking_06_4m.wav"),
-					new Path("sound/300_music/310_common/buffer/mus_lumsking_08_4m.wav"),
-				}),
-				_params = new SoundParams() {
-					numChannels = 2,
-					randomVolMin = new Volume(-1),
-					filterQ = 1f,
-					playMode = SoundParams.PlayMode.Random,
-					playMode2 = SoundParams.PlayMode2.Random,
-					modifiers = new CArrayO<Generic<SoundModifier>>(),
-				},
-			});
+					// Lum king music (50fps)
+					sndComponent.soundList.Add(new SoundDescriptor_Template() {
+						name = new StringID(0x83E80B90),
+						volume = new Volume(-7 - 8),
+						category = new StringID(0xF03C38A1),
+						limitCategory = new StringID(0x0DF47974),
+						limitMode = 1,
+						limitModeEnum = LimiterDef.LimiterMode.StopOldest,
+						maxInstances = 1,
+						files = new CListO<Path>(new List<Path>() {
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_03_4m_50fps.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_02_4m_50fps.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_06_4m_50fps.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_08_4m_50fps.wav"),
+						}),
+						_params = new SoundParams() {
+							numChannels = 2,
+							randomVolMin = new Volume(-1),
+							filterQ = 1f,
+							playMode = SoundParams.PlayMode.Random,
+							playMode2 = SoundParams.PlayMode2.Random,
+							modifiers = new CArrayO<Generic<SoundModifier>>(),
+						},
+					});
 
-			sndComponent.soundList.Add(new SoundDescriptor_Template() {
-				name = new StringID(0x83E80B90),
-				volume = new Volume(-7 - 8),
-				category = new StringID(0xF03C38A1),
-				limitCategory = new StringID(0x0DF47974),
-				limitMode = 1,
-				limitModeEnum = LimiterDef.LimiterMode.StopOldest,
-				maxInstances = 1,
-				files = new CListO<Path>(new List<Path>() {
-					new Path("sound/300_music/310_common/buffer/mus_lumsking_03_4m_50fps.wav"),
-					new Path("sound/300_music/310_common/buffer/mus_lumsking_02_4m_50fps.wav"),
-					new Path("sound/300_music/310_common/buffer/mus_lumsking_06_4m_50fps.wav"),
-					new Path("sound/300_music/310_common/buffer/mus_lumsking_08_4m_50fps.wav"),
-				}),
-				_params = new SoundParams() {
-					numChannels = 2,
-					randomVolMin = new Volume(-1),
-					filterQ = 1f,
-					playMode = SoundParams.PlayMode.Random,
-					playMode2 = SoundParams.PlayMode2.Random,
-					modifiers = new CArrayO<Generic<SoundModifier>>(),
-				},
-			});
-
-			var lummusic = tpl.obj.AddComponent<RO2_LumMusicManagerAIComponent_Template>();
-
-			// Now that this is done, find all objects that use it in the scene and add the lummusic component
-			var lumMusicActors = oldContext.Loader.LoadedActors.Where(a => a.LUA == musicManagerPath);
-			foreach (var act in lumMusicActors) {
-				if (act.GetComponent<RO2_LumMusicManagerAIComponent>() == null) {
-					act.AddComponent<RO2_LumMusicManagerAIComponent>();
+					var lummusic = tpl.obj.AddComponent<RO2_LumMusicManagerAIComponent_Template>();
+				}
+				if (addAABBMod) {
+					tpl.obj.AddComponent<BoxInterpolatorComponent_Template>();
+				}
+				// Now that this is done, find all objects that use it in the scene and add the lummusic component
+				var lumMusicActors = oldContext.Loader.LoadedActors.Where(a => a.LUA == musicManagerPath);
+				foreach (var act in lumMusicActors) {
+					if (addLumKingMusic) {
+						if (act.GetComponent<RO2_LumMusicManagerAIComponent>() == null) {
+							act.AddComponent<RO2_LumMusicManagerAIComponent>();
+						}
+					}
+					if (addAABBMod) {
+						if (act.GetComponent<BoxInterpolatorComponent>() == null) {
+							var box = act.AddComponent<BoxInterpolatorComponent>();
+							box.innerBox = new AABB() {
+								MIN = new Vec2d(-aabbScale, -aabbScale),
+								MAX = new Vec2d(aabbScale, aabbScale)
+							};
+							box.outerBox = box.innerBox;
+						}
+					}
 				}
 			}
 
@@ -4672,6 +4594,26 @@ namespace UbiCanvas.Conversion {
 				foreach (var fx in fxScenes) {
 					fx.ContainingScene.DeletePickable(fx.Result);
 				}
+			}
+		}
+
+		public async Task SpawnLumMusicManagerIfNecessary(Context oldContext, Settings newSettings, Scene scene) {
+			var lumMusic = scene.FindActor(a => a.GetComponent<RO2_RewardEffectsPlayerComponent>() != null);
+			if(lumMusic?.Result != null) return;
+
+
+			var musicManagerPath = new Path("sound/common/modifiers/lums/junglelummusicmanager.tpl");
+			var musicManagerPath2 = new Path("world/common/friendly/lums/musicmanagers/junglelummusicmanager.tpl");
+
+			var spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>()?.INDEX == 0);
+			if (spawnPoint?.Result == null) {
+				spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>() != null);
+			}
+			if (spawnPoint?.Result != null) {
+				var manager = await AddNewActor(spawnPoint.ContainingScene, musicManagerPath2);
+				manager.POS2D = spawnPoint.Result.POS2D;
+			} else {
+				var manager = await AddNewActor(scene, musicManagerPath2);
 			}
 		}
 
@@ -4809,6 +4751,30 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 		}
+		public void InvertZiplines_OnlyLeft(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var ziplines = scene.FindActors(a => a.USERFRIENDLY.StartsWith("chainrope_attach_zipline") || a.USERFRIENDLY.StartsWith("zipline_freelength"));
+			foreach (var z in ziplines) {
+				var act = z.Result;
+				var lc = act?.GetComponent<LinkComponent>();
+				if(lc == null) continue;
+				var end = lc.Children.FirstOrDefault(c => c.HasTag("RopeEnd"));
+				if(end == null) continue;
+
+				if (end.Path.levels != null && end.Path.levels.Count > 0) continue; // Not supported yet
+				var endObject = z.ContainingScene.FindByName(end.Path.id);
+
+				// Swap positions
+				var endObjectPos = endObject.POS2D;
+				var ziplinePos = z.Result.POS2D;
+				if (ziplinePos.x > endObjectPos.x) {
+					endObject.POS2D = ziplinePos;
+					z.Result.POS2D = endObjectPos;
+				}
+			}
+		}
 
 		public void FixBrokenSoundReferencesInChallenges(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
@@ -4901,6 +4867,8 @@ namespace UbiCanvas.Conversion {
 				ZiplineToRope_Freelength(oldContext, newSettings, z.Result);
 			}
 		}
+
+
 		public void TriggerAllLumChains(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;

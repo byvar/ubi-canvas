@@ -151,7 +151,7 @@ namespace UbiArt {
 			stringID = s.SerializeObject<StringID>(stringID);
 			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				flags = s.Serialize<uint>(flags);
-				//if (flags != 0) MapLoader.Loader.print("Path with nonzero flags: " + this + " - " + flags);
+				//if (flags != 0) s?.Context?.SystemLogger?.LogInfo("Path with nonzero flags: " + this + " - " + flags);
 			}
 			if (s.Context.Loader.LoadAllPaths) LoadObject(s.Context);
 		}
@@ -240,7 +240,7 @@ namespace UbiArt {
 
 		public override string ToString() {
 			if (stringID.IsNull) return "Path(null)";
-			return $"Path(\"{folder}\", \"{filename}\", {stringID.stringID:X8})";
+			return $"Path(\"{folder}\", \"{filename}\", {stringID.stringID:X8}, {flags:X})";
 		}
 
 		/* Flags:
@@ -268,6 +268,20 @@ namespace UbiArt {
 		}
 		public static bool operator !=(Path x, Path y) {
 			return !(x == y);
+		}
+
+		[Flags]
+		public enum PathFlags : uint {
+			None              = 0,
+			Unknown1          = 0x00000001,
+			Unknown2          = 0x00000002,
+			Truncated         = 0x00000004, // Max length: 0xFF
+			FilenameTruncated = 0x00000008, // Max length: 0x80
+			IsNotAscii        = 0x00000010, // Contains 00 byte
+			ContainsSpaces    = 0x00000020,
+			Unknown40         = 0x00000040,
+			AbsolutePath      = 0x00000080, // Starts with \\ or contains ://
+			CaseSensitive     = 0x00000100,
 		}
 	}
 }

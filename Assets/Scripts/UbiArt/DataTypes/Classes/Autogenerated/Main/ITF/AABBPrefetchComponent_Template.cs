@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class AABBPrefetchComponent_Template : ActorComponent_Template {
-		public bool isAlwaysActive;
+		public bool isAlwaysActive = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.EngineVersion > EngineVersion.RO) {

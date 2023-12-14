@@ -35,7 +35,11 @@ namespace UbiArt.ITF {
 									foreach (var fx in fxComponent.fxControlList) {
 										if (fx.sounds != null && fx.sounds.Any()) {
 											var soundDescs = fx.sounds.Select(sid => soundList.FirstOrDefault(s => s.name == sid));
-											var newNames = soundDescs.SelectMany(s => s == null ? new List<SoundDescriptor_Template>() : conv.WwiseConversionSettings.CreateSoundDescriptorsFromWwiseDescriptor(s)).Select(s => s.name);
+											var newNames = soundDescs.SelectMany(s =>
+												s == null ? new List<SoundDescriptor_Template>() :
+												((s.WwiseEventGUID?.IsNull ?? true) && s.HasFiles) ? new List<SoundDescriptor_Template>() { s } : // Keep fx references to sounds that already have files
+												conv.WwiseConversionSettings.CreateSoundDescriptorsFromWwiseDescriptor(s)
+											).Select(s => s.name);
 											fx.sounds = new CListO<StringID>(newNames.ToList());
 										}
 									}
