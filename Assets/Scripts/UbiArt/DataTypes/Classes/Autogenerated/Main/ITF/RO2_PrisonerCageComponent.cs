@@ -2,8 +2,8 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA | GameFlags.RM)]
 	public partial class RO2_PrisonerCageComponent : RO2_AIComponent {
 		public EditableShape shape;
-		public bool savePosOnCheckpoint;
-		public bool canTriggerMagnet;
+		public bool savePosOnCheckpoint = true;
+		public bool canTriggerMagnet = true;
 		public bool isBroken;
 		public float checkpointAngle;
 		public Vec2d checkpointPos;

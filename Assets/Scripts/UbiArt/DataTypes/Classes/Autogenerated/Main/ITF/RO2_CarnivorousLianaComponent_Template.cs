@@ -3,16 +3,16 @@ namespace UbiArt.ITF {
 	public partial class RO2_CarnivorousLianaComponent_Template : ActorComponent_Template {
 		public StringID defaultFxName;
 		public float minLength;
-		public float maxLength;
-		public float extendSpeed;
-		public float colapseSpeed;
-		public float angularSpeedMax;
-		public float angularRotationForSpeedMax;
-		public float shakeDelayMin;
-		public float shakeDelayMax;
-		public float attackFinalDistanceCursor;
-		public float noUserExtendDelay;
-		public float timeToReachColapseSpeed;
+		public float maxLength = float.MaxValue;
+		public float extendSpeed = 1f;
+		public float colapseSpeed = 1f;
+		public float angularSpeedMax = 6.283185f;
+		public float angularRotationForSpeedMax = 0.7853982f;
+		public float shakeDelayMin = 3f;
+		public float shakeDelayMax = 8f;
+		public float attackFinalDistanceCursor = 0.5f;
+		public float noUserExtendDelay = 0.5f;
+		public float timeToReachColapseSpeed = 1f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			defaultFxName = s.SerializeObject<StringID>(defaultFxName, name: "defaultFxName");

@@ -16,6 +16,8 @@ namespace UbiArt.ITF {
 				if (a != null && !ACTORS_ORIGINS.Any(ac => ac?.obj == a) && !FRISE_ORIGINS.Any(f => f?.obj == a)) {
 					if (string.IsNullOrEmpty(name))
 						name = a.USERFRIENDLY;
+					if (string.IsNullOrEmpty(name))
+						name = a.LUA?.GetFilenameWithoutExtension(removeCooked: true);
 
 					if (name != null) {
 						int i = 1; // New actor names start from name@1 in UbiArt, w do the same

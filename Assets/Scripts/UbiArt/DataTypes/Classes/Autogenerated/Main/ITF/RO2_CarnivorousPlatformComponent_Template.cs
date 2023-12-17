@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_CarnivorousPlatformComponent_Template : RO2_PlatformAIComponent_Template {
-		public float closedDuration;
+		public float closedDuration = 1f;
 		public uint hitLevel;
 		public StringID mouthOpened;
 		public StringID mouthClosed;
@@ -11,8 +11,8 @@ namespace UbiArt.ITF {
 		public StringID mouthOpeningEnd;
 		public StringID mouthBump;
 		public StringID mouthHit;
-		public uint platformPolylineParameterIndex;
-		public uint spikesPolylineParameterIndex;
+		public uint platformPolylineParameterIndex = uint.MaxValue;
+		public uint spikesPolylineParameterIndex = uint.MaxValue;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			closedDuration = s.Serialize<float>(closedDuration, name: "closedDuration");

@@ -72,7 +72,7 @@ namespace UbiArt.ITF {
 			[Serialize("Index_Map8")] Map8 = 7,
 
 			// For some reason these didn't exist, but the value can go up to 9 (10 teensies in total)
-			[Serialize("Index_Map8")] Map9 = 8,
+			[Serialize("Index_Map9")] Map9 = 8,
 			[Serialize("Index_Map10")] Map10 = 9,
 		}
 		public override uint? ClassCRC => 0x2FBA13A8;

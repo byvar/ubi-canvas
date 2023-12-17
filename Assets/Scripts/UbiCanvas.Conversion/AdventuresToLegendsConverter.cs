@@ -1131,6 +1131,26 @@ namespace UbiCanvas.Conversion {
 						UseFastCameras(scene);
 						break;
 					}
+				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc": {
+						var lk = scene.FindActor(a => a.USERFRIENDLY == "lumking@1");
+						lk.ContainingScene.DeletePickable(lk.Result);
+						var lkReplacement = await SpawnTeensyCage(lk.ContainingScene,
+							RO2_FriendlyBTAIComponent.Prisoner.Soldier, 0, TeensyWorldType.Jungle, CageType.Flying, false, mirror: true, name: lk.Result.USERFRIENDLY);
+						lkReplacement.parentBind = lk.Result.parentBind;
+						lkReplacement.STARTPAUSE = lk.Result.STARTPAUSE;
+						lkReplacement.RELATIVEZ = lk.Result.RELATIVEZ;
+						lkReplacement.POS2D = lk.Result.POS2D;
+
+						lk = scene.FindActor(a => a.USERFRIENDLY == "lumking");
+						lk.ContainingScene.DeletePickable(lk.Result);
+						lkReplacement = await SpawnTeensyCage(lk.ContainingScene,
+							RO2_FriendlyBTAIComponent.Prisoner.Soldier, 1, TeensyWorldType.Jungle, CageType.Flying, true, mirror: true, name: lk.Result.USERFRIENDLY);
+						lkReplacement.parentBind = lk.Result.parentBind;
+						lkReplacement.STARTPAUSE = lk.Result.STARTPAUSE;
+						lkReplacement.RELATIVEZ = lk.Result.RELATIVEZ;
+						lkReplacement.POS2D = lk.Result.POS2D;
+						break;
+					}
 				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
 						var path = new Path("world/common/breakable/lumsjar/components/lumjar_nocol_nophys.tpl");
 						var breakables = scene.FindActors(a => a.LUA == path);
@@ -1351,6 +1371,10 @@ namespace UbiCanvas.Conversion {
 						var act = await AddNewActor(scene, new Path("world/common/friendly/phial/components/phial.tpl"), "testmap65_VolcanicHeist_localld|transfert", contextToLoadFrom: LegendsContext);
 						act.POS2D = new Vec2d(-81.9f, -19.15839f);
 						act.RELATIVEZ = 0.1378f;
+						break;
+					}
+				case "world/rlc_hades/scaldingswim/hades_scaldingswim_spd_base.isc": {
+						//ApplySpecialRenderParamsToScene(scene);
 						break;
 					}
 				case "world/rlc_hangar/conveyorchaos/hangar_conveyorchaos_spd_base.isc": {
@@ -1698,10 +1722,12 @@ namespace UbiCanvas.Conversion {
 				case "act":
 					var act = path.GetObject<ContainerFile<Actor>>();
 					newActor = (Actor)(await contextToLoadFrom.Loader.Clone(act?.obj, "act"));
+					newActor.USERFRIENDLY = path.GetFilenameWithoutExtension(removeCooked: true);
 					break;
 				case "frz":
 					var frz = path.GetObject<ContainerFile<Frise>>();
 					newActor = (Actor)(await contextToLoadFrom.Loader.Clone(frz?.obj, "frz"));
+					newActor.USERFRIENDLY = path.GetFilenameWithoutExtension(removeCooked: true);
 					break;
 				case "tsc":
 				case "isc":
@@ -3881,6 +3907,87 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public enum CageType {
+			Normal,
+			Hanging,
+			Flying
+		}
+		public enum TeensyWorldType {
+			Jungle,
+			Music,
+			Food,
+			Ocean,
+			Mountain
+		}
+		public async Task<SubSceneActor> SpawnTeensyCage(Scene scene,
+			RO2_FriendlyBTAIComponent.Prisoner teensyType,
+			int index,
+			TeensyWorldType worldType,
+			CageType cageType, bool animationType, bool mirror = false, string name = null) {
+			var cageSSA = (SubSceneActor)await AddNewActor(scene, new Path("enginedata/actortemplates/subscene.tpl"), name: name, contextToLoadFrom: LegendsContext);
+			var cageScene = cageSSA.SCENE.value;
+
+			string worldString = worldType switch {
+				TeensyWorldType.Jungle => "",
+				TeensyWorldType.Music => "music_",
+				TeensyWorldType.Food => "food_",
+				TeensyWorldType.Ocean => "ocean_",
+				TeensyWorldType.Mountain => "mountain_",
+				_ => "",
+			};
+
+			string teensyPathString = teensyType switch {
+				RO2_FriendlyBTAIComponent.Prisoner.Soldier => $"world/common/friendly/bt_friendly/teensy/{worldString}teensy.act",
+				RO2_FriendlyBTAIComponent.Prisoner.Baby => $"world/common/friendly/bt_friendly/teensy/{worldString}teensy_baby.act",
+				RO2_FriendlyBTAIComponent.Prisoner.Fool => $"world/common/friendly/bt_friendly/teensy/{worldString}teensy_fool.act",
+				RO2_FriendlyBTAIComponent.Prisoner.Princess => $"world/common/friendly/bt_friendly/teensy/{worldString}teensy_princess.act",
+				RO2_FriendlyBTAIComponent.Prisoner.Prince => $"world/common/friendly/bt_friendly/teensy/{worldString}teensy_prince.act",
+				RO2_FriendlyBTAIComponent.Prisoner.King => $"world/common/friendly/bt_friendly/teensy/{worldString}teensy_king.act",
+				RO2_FriendlyBTAIComponent.Prisoner.Queen => $"world/common/friendly/bt_friendly/teensy/{worldString}teensy_queen.act",
+				_ => throw new Exception("Invalid teensy visual type")
+			};
+			var teensyPath = new Path(teensyPathString);
+
+			var teensy = await AddNewActor(cageScene, teensyPath, contextToLoadFrom: LegendsContext);
+			var btai = teensy.GetComponent<RO2_FriendlyBTAIComponent>();
+			btai.prisonerVisualType = teensyType;
+			switch (btai.prisonerVisualType) {
+				case RO2_FriendlyBTAIComponent.Prisoner.King:
+					btai.prisonerIndexType = RO2_FriendlyBTAIComponent.Index.Map10;
+					break;
+				case RO2_FriendlyBTAIComponent.Prisoner.Queen:
+					btai.prisonerIndexType = RO2_FriendlyBTAIComponent.Index.Map9;
+					break;
+				default:
+					// TODO: verify if Baby doesn't have to be 8
+					btai.prisonerIndexType = (RO2_FriendlyBTAIComponent.Index)index;
+					break;
+			}
+			btai.prisonerType = animationType ? RO2_FriendlyBTAIComponent.Enum_prisonerType.Cage2 : RO2_FriendlyBTAIComponent.Enum_prisonerType.Cage1;
+			btai.path = teensyPath;
+
+			teensy.xFLIPPED = mirror;
+
+			string cagePathString = cageType switch {
+				CageType.Normal => "world/common/breakable/prisonercage/components/prisonercage.tpl",
+				CageType.Hanging => "world/common/breakable/prisonercage/components/prisonercage_up.tpl",
+				CageType.Flying => "world/common/breakable/flyingprisonercage/components/flyingprisonercage.tpl",
+				_ => throw new Exception("Invalid cage type")
+			};
+
+			var cage = await AddNewActor(cageScene, new Path(cagePathString), contextToLoadFrom: LegendsContext);
+			if (cageType == CageType.Flying) {
+				cage.SCALE = Vec2d.One * 0.9f;
+			}
+			var cageLinks = cage.GetComponent<LinkComponent>();
+			cageLinks.Children.Add(new ChildEntry() {
+				Path = new ObjectPath(teensy.USERFRIENDLY)
+			});
+
+			return cageSSA;
+
+		}
+
 
 		public void FixBubblesFX(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
@@ -3891,15 +3998,24 @@ namespace UbiCanvas.Conversion {
 				"world/common/fx/lifeelements2/water/fx_bubbles_02.tpl",
 				"world/common/fx/lifeelements2/water/fx_bubbles_03.tpl",
 				"world/common/fx/lifeelements2/water/fx_bubbles_02white.tpl",
-				"world/common/fx/lifeelements2/water/fx_bubbles_03white.tpl",
+				"world/common/fx/lifeelements2/water/fx_bubbles_03white.tpl"
 			}.Select(s => new Path(s));
 
-			foreach (var p in tplPaths) {
+			CListO<FxDescriptor_Template> GetFx(Path p) {
 				var tpl = oldContext.Cache.Get<GenericFile<Actor_Template>>(p);
-				if (tpl?.obj == null) continue;
-				var fxc = tpl?.obj.GetComponent<FxBankComponent_Template>();
-				if(fxc?.Fx == null) continue;
-				foreach (var fx in fxc?.Fx) {
+				var fxc = tpl?.obj?.GetComponent<FxBankComponent_Template>();
+				return fxc?.Fx;
+			}
+			float GetStaticValue(ParLifeTimeCurve curve, Func<Spline.SplinePoint, float> func) {
+				if (curve?.curve?.Points?.Any() ?? false) {
+					return func(curve.curve.Points.LastOrDefault());
+				}
+				return 0f;
+			}
+			foreach (var p in tplPaths) {
+				var fxList = GetFx(p);
+				if(fxList == null) continue;
+				foreach (var fx in fxList) {
 					var par = fx?.gen?._params;
 					//par.velNorm *= 0.5f;
 					if (par?.parEmitVelocity?.curve?.Points?.Any() ?? false) {
@@ -3911,12 +4027,6 @@ namespace UbiCanvas.Conversion {
 
 					float x = 0f, y = 0f, z = 0f;
 
-					float GetStaticValue(ParLifeTimeCurve curve, Func<Spline.SplinePoint, float> func) {
-						if (curve?.curve?.Points?.Any() ?? false) {
-							return func(curve.curve.Points.LastOrDefault());
-						}
-						return 0f;
-					}
 					x = GetStaticValue(par.curveAccelX, pt => pt.Point?.x ?? 0f);
 					y = GetStaticValue(par.curveAccelY, pt => pt.Point?.y ?? 0f);
 					z = GetStaticValue(par.curveAccelZ, pt => pt.Point?.z ?? 0f);
@@ -3927,6 +4037,16 @@ namespace UbiCanvas.Conversion {
 					par.acc.z += z;
 				}
 			}
+			/*var fireTPL = new Path("world/common/fx/lifeelements2/fire/fx_ashes_02.tpl");
+			{
+				var fxList = GetFx(fireTPL);
+				if (fxList != null) {
+					foreach (var fx in fxList) {
+						var par = fx?.gen?._params;
+						par.acc = new Vec3d(3,-3,0);
+					}
+				}
+			}*/
 		}
 
 		public void AddPreInstructionSets(Context oldContext, Settings newSettings) {
