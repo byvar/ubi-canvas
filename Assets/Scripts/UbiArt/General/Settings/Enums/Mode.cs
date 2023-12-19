@@ -4,7 +4,19 @@
 	{
 		[System.ComponentModel.Description("Rayman Origins (PC)")] 
 		RaymanOriginsPC,
-		
+
+		[System.ComponentModel.Description("Rayman Jungle Run (Android)")]
+		RaymanJungleRunAndroid,
+
+		[System.ComponentModel.Description("Rayman Jungle Run (iOS)")]
+		RaymanJungleRuniOS,
+
+		[System.ComponentModel.Description("Rayman Fiesta Run (Android)")]
+		RaymanFiestaRunAndroid,
+
+		[System.ComponentModel.Description("Rayman Fiesta Run (iOS)")]
+		RaymanFiestaRuniOS,
+
 		[System.ComponentModel.Description("Rayman Legends (PC)")] 
 		RaymanLegendsPC,
 		

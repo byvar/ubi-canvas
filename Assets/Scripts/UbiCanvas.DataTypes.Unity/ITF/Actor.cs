@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Linq;
 using UbiCanvas.Helpers;
 
 namespace UbiArt.ITF {
@@ -12,7 +13,12 @@ namespace UbiArt.ITF {
 				Generic<ActorComponent> ac = COMPONENTS[i];
 				if (ac != null && !ac.IsNull && ac.obj != null) {
 					await TimeController.WaitIfNecessary();
-					ac.obj.InitUnityComponent(this, gao, hasTemplateComponents ? template.obj.COMPONENTS[i].obj : null, i);
+					if (hasTemplate && !hasTemplateComponents) {
+						var matchingTPLComponent = template.obj.COMPONENTS.FirstOrDefault(c => c?.obj?.GetInstanceTypeName() == ac.obj.GetType().FullName);
+						ac.obj.InitUnityComponent(this, gao, matchingTPLComponent?.obj, i);
+					} else {
+						ac.obj.InitUnityComponent(this, gao, hasTemplateComponents ? template.obj.COMPONENTS[i].obj : null, i);
+					}
 				}
 			}
 			if (hasTemplate) {

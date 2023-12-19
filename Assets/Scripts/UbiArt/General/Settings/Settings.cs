@@ -17,6 +17,7 @@ namespace UbiArt
 		public VersionFlags VersionFlags { get; set; } = VersionFlags.None;
 		public bool UsesSerializeFlags { get; set; } = true;
 		public bool Cooked { get; set; } = true;
+		public bool PastaStructure { get; set; } = false;
 		public bool LoadFromIpk { get; set; }
 		public string[]? Bundles { get; set; }
 		public uint IpkVersion { get; set; }
@@ -39,7 +40,7 @@ namespace UbiArt
 		{
 			get
 			{
-				if (!Cooked)
+				if (!Cooked || PastaStructure)
 					return String.Empty;
 				else if (EngineVersion > EngineVersion.RO)
 					return $"cache/itf_cooked/{PlatformString.ToLowerInvariant()}/";
@@ -52,7 +53,7 @@ namespace UbiArt
 		{
 			get
 			{
-				if (!Cooked)
+				if (!Cooked || PastaStructure)
 					return String.Empty;
 				else if (EngineVersion > EngineVersion.RO)
 					return $"cache/itf_cache/{PlatformString.ToLowerInvariant()}/";
@@ -76,6 +77,57 @@ namespace UbiArt
 			IpkVersion = 3,
 			EngineSignature = 0x345429C7,
 			Bundles = new[] { "bundle" }
+		};
+
+		public static Settings RJR_Android = new() {
+			EngineVersion = EngineVersion.RO,
+			Game = Game.RJR,
+			Platform = GamePlatform.Android,
+			Endian = Endian.Big,
+			VersionFlags = VersionFlags.Origins,
+			PastaStructure = true,
+			UsesSerializeFlags = false,
+			IpkVersion = 3,
+			EngineSignature = 0x345429C7,
+			Bundles = new string[0]
+		};
+		public static Settings RJR_iOS = new() {
+			EngineVersion = EngineVersion.RO,
+			Game = Game.RJR,
+			Platform = GamePlatform.iOS,
+			Endian = Endian.Big,
+			VersionFlags = VersionFlags.Origins,
+			PastaStructure = true,
+			UsesSerializeFlags = false,
+			IpkVersion = 3,
+			EngineSignature = 0x345429C7,
+			Bundles = new string[0]
+		};
+
+		public static Settings RFR_Android = new() {
+			EngineVersion = EngineVersion.RO,
+			Game = Game.RFR,
+			Platform = GamePlatform.Android,
+			Endian = Endian.Big,
+			VersionFlags = VersionFlags.Origins,
+			PastaStructure = true,
+			UsesSerializeFlags = false,
+			IpkVersion = 3,
+			EngineSignature = 0x345429C7,
+			Bundles = new string[0]
+		};
+
+		public static Settings RFR_iOS = new() {
+			EngineVersion = EngineVersion.RO,
+			Game = Game.RFR,
+			Platform = GamePlatform.iOS,
+			Endian = Endian.Big,
+			VersionFlags = VersionFlags.Origins,
+			PastaStructure = true,
+			UsesSerializeFlags = false,
+			IpkVersion = 3,
+			EngineSignature = 0x345429C7,
+			Bundles = new string[0]
 		};
 
 		public static Settings RL_PC = new()
@@ -217,6 +269,10 @@ namespace UbiArt
 			Settings? settings = mode switch
 			{
 				Mode.RaymanOriginsPC => RO_PC,
+				Mode.RaymanJungleRunAndroid => RJR_Android,
+				Mode.RaymanJungleRuniOS => RJR_iOS,
+				Mode.RaymanFiestaRunAndroid => RFR_Android,
+				Mode.RaymanFiestaRuniOS => RFR_iOS,
 				Mode.RaymanLegendsPC => RL_PC,
 				Mode.RaymanLegendsVitaCatchThemAll => RL_Vita,
 				Mode.RaymanAdventuresAndroid => RA_Android,

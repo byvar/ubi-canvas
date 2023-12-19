@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR)]
-	public partial class Ray_RFR_ButtonComponent_Template : CSerializable {
+	public partial class Ray_RFR_ButtonComponent_Template : ActorComponent_Template {
 		public Generic<PhysShape> Generic_PhysShape__0;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -270,6 +270,13 @@ namespace UbiArt {
 						Paths[id] = o.path;
 						if (!files.ContainsKey(id)) {
 							bool ckd = Settings.Cooked && !o.path.specialUncooked;
+							if (Settings.PastaStructure) {
+								switch (o.path.GetExtension()) {
+									case "png":
+										ckd = false;
+										break;
+								}
+							}
 							string cookedFolder = ckd ? Settings.ITFDirectory : "";
 							await PrepareGameFile(o.path, ckd);
 							if (GameFileExists(o.path, ckd)) {
@@ -474,7 +481,7 @@ namespace UbiArt {
 
 			LoadFile<TextureCooked>(path, (result) => {
 				if (result != null && result.atlas == null)
-					result.atlas = uvAtlasManager.GetAtlasIfExists(path);
+					result.atlas = uvAtlasManager?.GetAtlasIfExists(path);
 				onResult?.Invoke(result);
 			});
 		}

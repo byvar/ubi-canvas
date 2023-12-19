@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RFR)]
-	public partial class Ray_RFR_ButtonComponent : CSerializable {
+	public partial class Ray_RFR_ButtonComponent : ActorComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

@@ -388,6 +388,7 @@ namespace UbiArt.ITF {
 			r.SetPropertyBlock(mpb, index);
 		}
 		public void SetMaterialTextureOrigins(TextureCooked tex, Renderer r, int index = 0) {
+			if (r == null) return;
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
 			if (r != null && tex != null) {
@@ -399,6 +400,7 @@ namespace UbiArt.ITF {
 			r.SetPropertyBlock(mpb, index);
 		}
 		public void SetColor(UnityEngine.Color col, Renderer r, int index = 0) {
+			if (r == null) return;
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			r.GetPropertyBlock(mpb, index);
 			mpb.SetColor("_ColorFactor", col);

@@ -487,8 +487,8 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	void DrawTextureSelection() {
 		var c = Controller.MainContext;
 		string[] extensions = new string[] {
-			$"*.tga{(c.Settings.Cooked ? ".ckd" : "")}",
-			$"*.png{(c.Settings.Cooked ? ".ckd" : "")}"
+			$"*.tga{((c.Settings.Cooked && !c.Settings.PastaStructure) ? ".ckd" : "")}",
+			$"*.png{((c.Settings.Cooked && !c.Settings.PastaStructure) ? ".ckd" : "")}"
 		};
 		Rect rect = GetNextRect(vPaddingBottom: 4f);
 		string buttonString = "No texture selected";

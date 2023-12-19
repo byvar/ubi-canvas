@@ -20,5 +20,13 @@ namespace UbiArt.ITF {
 			c.InitContext(context);
 			return c;
 		}
+
+		public virtual string GetInstanceTypeName() {
+			var tplType = GetType();
+			var typeName = tplType.FullName;
+			if (typeName.Contains("_Template"))
+				typeName = typeName.Replace("_Template", "");
+			return typeName;
+		}
 	}
 }

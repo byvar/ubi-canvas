@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RJR | GameFlags.RFR)]
-	public partial class PastaDownStartDirEventTrigger : CSerializable {
+	public partial class PastaDownStartDirEventTrigger : EventTrigger {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

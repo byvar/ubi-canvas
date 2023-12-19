@@ -128,7 +128,7 @@ namespace UbiArt.FriseOrigins {
 			int5 = s.Serialize<int>(int5, name: "int5");
 			int6 = s.Serialize<int>(int6, name: "int6");
 			int7 = s.Serialize<int>(int7, name: "int7");
-			if (s.Settings.Game == Game.RFR || s.Settings.Game == Game.RJR) {
+			if (s.Settings.Game == Game.RFR) {
 				int8 = s.Serialize<int>(int8, name: "int8");
 			}
 			sid1 = s.SerializeObject<StringID>(sid1, name: "sid1");

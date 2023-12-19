@@ -24,12 +24,22 @@ namespace UbiCanvas {
 						//texture = TextureHelpers.CreateDummyTexture();
 						return texture;
 					} else if (Context.Settings.Platform == GamePlatform.iOS) {
-						if (LinkedObject.Header.CompressionType == 2 || LinkedObject.Header.CompressionType == 3) {
-							// This is a PVR!
-							var pvr = new PVRImage(data);
-							texture = pvr.LoadIntoTexture();
-							texture.wrapMode = TextureWrapMode.Repeat;
-							texture.Apply();
+						if (Context.Settings.EngineVersion <= EngineVersion.RO) {
+							texture = CreateTextureFromPNG(data);
+							return texture;
+						} else {
+							if (LinkedObject.Header.CompressionType == 2 || LinkedObject.Header.CompressionType == 3) {
+								// This is a PVR!
+								var pvr = new PVRImage(data);
+								texture = pvr.LoadIntoTexture();
+								texture.wrapMode = TextureWrapMode.Repeat;
+								texture.Apply();
+								return texture;
+							}
+						}
+					} else if (Context.Settings.Platform == GamePlatform.Android) {
+						if (Context.Settings.EngineVersion <= EngineVersion.RO) {
+							texture = CreateTextureFromPNG(data);
 							return texture;
 						}
 					}
@@ -109,6 +119,21 @@ namespace UbiCanvas {
 					return (float)LinkedObject.Header.Width / (float)LinkedObject.Header.Height;
 				}
 			}
+		}
+
+		private static Texture2D CreateTextureFromPNG(byte[] data) {
+			var pngtex = new Texture2D(2, 2);
+			pngtex.LoadImage(data);
+			var texture = TextureHelpers.CreateTexture2D(pngtex.width, pngtex.height);
+			var w = texture.width;
+			var h = texture.height;
+			for (int y = 0; y < h; y++) {
+				var row = pngtex.GetPixels(0, h - 1 - y, w, 1);
+				texture.SetPixels(0, y, w, 1, row);
+			}
+			texture.wrapMode = TextureWrapMode.Repeat;
+			texture.Apply();
+			return texture;
 		}
 
 		private static Texture2D LoadTextureDXT(byte[] ddsBytes, bool makeNoLongerReadable = true) {
