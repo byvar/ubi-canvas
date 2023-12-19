@@ -23,6 +23,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
+				if(this is SwarmComponent) return;
 				if (s.HasFlags(SerializeFlags.Default)) {
 					if (!s.HasProperty(CSerializerObject.SerializerProperty.Binary)) {
 						ColorFog_Red = s.Serialize<float>(ColorFog_Red, name: "ColorFog_Red");

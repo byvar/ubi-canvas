@@ -44,7 +44,7 @@ namespace UbiArt.ITF {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RJR || s.Settings.Game == Game.RFR || s.Settings.Game == Game.RO) {
-				if (this is FxBankComponent_Template || this is ParticleGeneratorComponent_Template || this is ProceduralSoftPlatformComponent_Template) return;
+				if (this is FxBankComponent_Template || this is ParticleGeneratorComponent_Template || this is ProceduralSoftPlatformComponent_Template || this is SwarmComponent_Template) return;
 				patchLevel = s.Serialize<uint>(patchLevel, name: "patchLevel");
 				patchHLevel = s.Serialize<uint>(patchHLevel, name: "patchHLevel");
 				patchVLevel = s.Serialize<uint>(patchVLevel, name: "patchVLevel");

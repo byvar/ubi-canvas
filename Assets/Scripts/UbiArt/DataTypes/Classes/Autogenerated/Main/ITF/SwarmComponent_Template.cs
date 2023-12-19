@@ -17,36 +17,9 @@ namespace UbiArt.ITF {
 		public float stiff;
 		public ITF_ParticleGenerator_Template particleGenerator;
 		public Path swarmTexture;
-		public Path Path__0;
-		public uint uint__1;
-		public float float__2;
-		public float float__3;
-		public float float__4;
-		public float float__5;
-		public float float__6;
-		public float float__7;
-		public float float__8;
-		public float float__9;
-		public float float__10;
-		public float float__11;
-		public float float__12;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.Game == Game.RFR) {
-				Path__0 = s.SerializeObject<Path>(Path__0, name: "Path__0");
-				uint__1 = s.Serialize<uint>(uint__1, name: "uint__1");
-				float__2 = s.Serialize<float>(float__2, name: "float__2");
-				float__3 = s.Serialize<float>(float__3, name: "float__3");
-				float__4 = s.Serialize<float>(float__4, name: "float__4");
-				float__5 = s.Serialize<float>(float__5, name: "float__5");
-				float__6 = s.Serialize<float>(float__6, name: "float__6");
-				float__7 = s.Serialize<float>(float__7, name: "float__7");
-				float__8 = s.Serialize<float>(float__8, name: "float__8");
-				float__9 = s.Serialize<float>(float__9, name: "float__9");
-				float__10 = s.Serialize<float>(float__10, name: "float__10");
-				float__11 = s.Serialize<float>(float__11, name: "float__11");
-				float__12 = s.Serialize<float>(float__12, name: "float__12");
-			} else if (s.Settings.Game == Game.RO) {
+			if (s.Settings.Game == Game.RO || s.Settings.Game == Game.RFR) {
 				swarmTexture = s.SerializeObject<Path>(swarmTexture, name: "swarmTexture");
 				numParticles = s.Serialize<uint>(numParticles, name: "numParticles");
 				startRadius = s.Serialize<float>(startRadius, name: "startRadius");

@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
-	public partial class Ray_BlackSwarmRepellerAIComponent_Template : CSerializable {
+	public partial class Ray_BlackSwarmRepellerAIComponent_Template : ActorComponent_Template {
 		public int interactive;
 		public float safeZoneToleranceDistance;
 		public float safeZoneRadiusMin;
@@ -20,11 +20,11 @@ namespace UbiArt.ITF {
 		public float maxAlphaValue;
 		public Vec2d safeZoneCenterOffset;
 		public Path pulseTexturePath;
-		public StringID particleFxName;
+		public StringID particleFxName = new StringID("FXGong");
 		public float particleFXSizeRatio;
 		public uint textureBlendMode;
-		public StringID interactiveSoundName;
-		public StringID periodicSoundName;
+		public StringID interactiveSoundName = new StringID("Swarm_Interactive");
+		public StringID periodicSoundName = new StringID("Swarm_Periodic");
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			interactive = s.Serialize<int>(interactive, name: "interactive");

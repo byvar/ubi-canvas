@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO | GameFlags.RFR)]
-	public partial class Ray_BubbleSpawnerComponent_Template : CSerializable {
+	public partial class Ray_BubbleSpawnerComponent_Template : ActorComponent_Template {
 		public Path bubblePath;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
