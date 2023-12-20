@@ -13,6 +13,7 @@ public class UnityHandleManager : MonoBehaviour {
 	private UnityPickable currentSelectedObject;
 	private UnityHandle[] Points { get; set; }
 
+
 	private UnityHandle _selectedPoint;
 	public UnityHandle SelectedPoint {
 		get => _selectedPoint;
@@ -33,8 +34,20 @@ public class UnityHandleManager : MonoBehaviour {
 			if (currentSelectedObject != controller.SelectedObject || GetPointsCount() != (Points?.Length ?? 0)) {
 				DestroyPoints();
 				currentSelectedObject = controller.SelectedObject;
+				UpdateTransform();
 				CreatePoints();
 			}
+			UpdateTransform();
+			if (Points != null) {
+				foreach(var p in Points) p.ManualUpdate();
+			}
+		}
+	}
+
+	public void UpdateTransform() {
+		if (currentSelectedObject != null) {
+			transform.localPosition = currentSelectedObject.transform.position;
+			transform.localRotation = currentSelectedObject.transform.rotation;
 		}
 	}
 
@@ -60,7 +73,7 @@ public class UnityHandleManager : MonoBehaviour {
 				var edge = pointsList[i];
 				var gao = new GameObject($"Point {i}");
 				gao.transform.SetParent(transform, false);
-				gao.transform.localPosition = frTransform.TransformPoint(new Vector3(edge.POS?.x ?? 0, edge.POS?.y ?? 0, 0));
+				gao.transform.localPosition = transform.InverseTransformPoint(frTransform.TransformPoint(new Vector3(edge.POS?.x ?? 0, edge.POS?.y ?? 0, 0)));
 				gao.transform.localScale = Vector3.one;
 				gao.transform.localRotation = Quaternion.identity;
 
@@ -90,7 +103,7 @@ public class UnityHandleManager : MonoBehaviour {
 					// Position
 					var gao = new GameObject($"Point {i}");
 					gao.transform.SetParent(transform, false);
-					gao.transform.localPosition = tf.TransformPoint(positions[i*2].GetUnityVector(invertZ: true));
+					gao.transform.localPosition = transform.InverseTransformPoint(tf.TransformPoint(positions[i*2].GetUnityVector(invertZ: true)));
 					gao.transform.localScale = Vector3.one;
 					gao.transform.localRotation = Quaternion.identity;
 

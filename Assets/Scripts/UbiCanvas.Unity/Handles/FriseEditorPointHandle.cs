@@ -15,7 +15,7 @@ public class FriseEditorPointHandle : UnityHandle {
 	}
 
 	// Update is called once per frame
-	void Update() {
+	public override void ManualUpdate() {
 		if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
 			UpdateLine();
 		}

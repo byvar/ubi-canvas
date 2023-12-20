@@ -17,8 +17,8 @@ public abstract class UnityHandle : MonoBehaviour {
 		CreateMesh();
 		Deselect();
 	}
-	// Update is called once per frame
-	void Update() {
+
+	public virtual void ManualUpdate() {
 		if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
 			//UpdateLine();
 		}
