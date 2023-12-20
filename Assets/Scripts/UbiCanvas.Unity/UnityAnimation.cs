@@ -96,7 +96,7 @@ public class UnityAnimation : MonoBehaviour {
 		if ((skeleton?.bank?.value?.polylines?.Count ?? 0) > 0) {
 			foreach (var l in skeleton?.bank?.value?.polylines) {
 				var lr = new GameObject($"Polyline {l.name}").AddComponent<LineRenderer>();
-				lr.material = new Material(FindObjectOfType<FriseEditorBehaviour>().lineMaterial);
+				lr.material = new Material(FindObjectOfType<UnityHandleManager>().lineMaterial);
 				lr.positionCount = l.points.Count;
 				lr.loop = l.loop;
 

@@ -9,11 +9,12 @@ using System.Collections.Generic;
 public class UnityBezierRenderer : MonoBehaviour {
 	public LineRenderer Renderer;
 	public RO2_BezierBranch Branch;
+	public Pickable PickableForSelection;
 	float prevZ = -99999;
 
 	void InitRenderer() {
 		Renderer = gameObject.AddComponent<LineRenderer>();
-		Renderer.material = new Material(FindObjectOfType<FriseEditorBehaviour>().lineMaterial);
+		Renderer.material = new Material(FindObjectOfType<UnityHandleManager>().lineMaterial);
 		Renderer.useWorldSpace = false;
 		Renderer.widthMultiplier = 0.10f;
 		Renderer.sortingLayerName = "Gizmo-Line";
@@ -23,7 +24,7 @@ public class UnityBezierRenderer : MonoBehaviour {
 		Renderer.endColor = color;
 	}
 
-	void UpdatePositions() {
+	void UpdateRenderer() {
 		if(Renderer == null) InitRenderer();
 
 		Vec3d currentPos = new Vec3d();
@@ -67,11 +68,26 @@ public class UnityBezierRenderer : MonoBehaviour {
 		return new Vec3d(p.x, p.y, Mathf.Lerp(z0, z1, t));
 	}
 
+	void UpdateSelectionDisplay() {
+
+	}
+
+	public IEnumerable<Vec3d> GetPositions() {
+		Vec3d currentPos = new Vec3d();
+		for (int i = 0; i < Branch.nodes.Count; i++) {
+			var n = Branch.nodes[i];
+			currentPos += n.pos;
+			yield return currentPos;
+			yield return currentPos + new Vec3d(n.tangent?.x ?? 0f, n.tangent?.y ?? 0f, 0f);
+		}
+	}
+
 
 	private void Update() {
 		if (GlobalLoadState.LoadState != GlobalLoadState.State.Finished) return;
-		if (Controller.Obj.displayBezier) {
-			UpdatePositions();
+		bool isSelected = PickableForSelection != null && Controller.Obj.SelectedObject?.pickable == PickableForSelection;
+		if (Controller.Obj.displayBezier || isSelected) {
+			UpdateRenderer();
 			if (Renderer != null) {
 				float z = transform.position.z;
 				if (z != prevZ) {
@@ -80,9 +96,12 @@ public class UnityBezierRenderer : MonoBehaviour {
 					zman.zDict[Renderer] = z;
 				}
 			}
+			if (isSelected) {
+				UpdateSelectionDisplay();
+			}
 		}
 		if (Renderer != null) {
-			Renderer.enabled = Controller.Obj.displayBezier;
+			Renderer.enabled = Controller.Obj.displayBezier || isSelected;
 		}
 	}
 }

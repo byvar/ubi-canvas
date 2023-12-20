@@ -1,25 +1,19 @@
 ﻿using UbiArt.ITF;
 using UbiCanvas.Helpers;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class FriseEditorPointBehaviour : MonoBehaviour {
-	public Controller controller;
-	public FriseEditorBehaviour editor;
-	private SpriteRenderer sr;
-	private SphereCollider sc;
+public class FriseEditorPointHandle : UnityHandle {
 	private LineRenderer lr;
 	public PolyLineEdge Data { get; set; }
-	public FriseEditorPointBehaviour target;
+
+	public override float HandleScale => 0.3f + Data.Scale;
+
+	public FriseEditorPointHandle target;
 
 	// Use this for initialization
 	void Start() {
 	}
 
-	public void Init() {
-		CreateMesh();
-		Deselect();
-	}
 	// Update is called once per frame
 	void Update() {
 		if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
@@ -41,17 +35,11 @@ public class FriseEditorPointBehaviour : MonoBehaviour {
 			});
 		}
 	}
-	void CreateMesh() {
-		var scale = 0.3f + Data.Scale;
-		sr = gameObject.AddComponent<SpriteRenderer>();
-		sr.sortingLayerName = "Gizmo";
-		sr.size = Vector2.one * scale;
-		sr.drawMode = SpriteDrawMode.Sliced;
-		sc = gameObject.AddComponent<SphereCollider>();
-		sc.radius = 0.2f * scale;
+	public override void CreateMesh() {
+		base.CreateMesh();
 		if (target != null) {
 			lr = gameObject.AddComponent<LineRenderer>();
-			lr.material = new Material(editor.lineMaterial);
+			lr.material = new Material(manager.lineMaterial);
 			lr.useWorldSpace = true;
 			lr.widthMultiplier = 0.15f;
 			lr.sortingLayerName = "Gizmo-Line";
@@ -66,19 +54,6 @@ public class FriseEditorPointBehaviour : MonoBehaviour {
 			lr.material.color = color;
 			lr.startColor = color;
 			lr.endColor = color;
-		}
-	}
-
-	public void Deselect() {
-		var spr = controller.GetIcon("frieze_point", false);
-		if (spr != null) {
-			sr.sprite = spr;
-		}
-	}
-	public void Select() {
-		var spr = controller.GetIcon("frieze_point", true);
-		if (spr != null) {
-			sr.sprite = spr;
 		}
 	}
 }

@@ -34,7 +34,7 @@ public class PickableOutlineDisplay : MonoBehaviour {
 					var gao = new GameObject($"Link {i}");
 					gao.transform.SetParent(transform, false);
 					links[i] = gao.AddComponent<LineRenderer>();
-					links[i].material = new Material(FindObjectOfType<FriseEditorBehaviour>().lineMaterial);
+					links[i].material = new Material(FindObjectOfType<UnityHandleManager>().lineMaterial);
 					links[i].useWorldSpace = true;
 					links[i].widthMultiplier = 0.03f;
 					links[i].sortingLayerName = "Gizmo-Line";
@@ -85,7 +85,7 @@ public class PickableOutlineDisplay : MonoBehaviour {
     private void UpdateHighlight() {
 		if (lr == null) {
 			lr = gameObject.AddComponent<LineRenderer>();
-			lr.material = new Material(FindObjectOfType<FriseEditorBehaviour>().lineMaterial);
+			lr.material = new Material(FindObjectOfType<UnityHandleManager>().lineMaterial);
 			lr.useWorldSpace = true;
 			lr.widthMultiplier = 0.03f;
 			lr.sortingLayerName = "Gizmo-Line";

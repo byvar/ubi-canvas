@@ -14,12 +14,12 @@ namespace UbiArt.ITF {
 			base.InitUnityComponent(act, gao, template, index);
 			if (template != null && template is RO2_BezierTreeComponent_Template) {
 				tpl = template as RO2_BezierTreeComponent_Template;
-				CreateGameObjects(gao);
+				CreateGameObjects(gao, act);
 
 			}
 		}
 
-		private void CreateGameObjects(GameObject gao) {
+		private void CreateGameObjects(GameObject gao, Actor act) {
 			var context = UbiArtContext;
 
 			var parentGao = new GameObject($"BezierTree");
@@ -30,6 +30,7 @@ namespace UbiArt.ITF {
 
 			var bezier = parentGao.AddComponent<UnityBezierRenderer>();
 			bezier.Branch = branch;
+			bezier.PickableForSelection = act;
 		}
 	}
 }

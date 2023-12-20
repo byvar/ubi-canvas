@@ -592,28 +592,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 639727536}
-  - component: {fileID: 639727535}
+  - component: {fileID: 639727537}
   m_Layer: 0
-  m_Name: Frise Editor
+  m_Name: Handle Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &639727535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 639727534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60118cd1b21d5d941866eb1a665176b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 929858119}
-  lineMaterial: {fileID: 2100000, guid: 97db6bf3588f9a5459ce14109c9afb4d, type: 2}
 --- !u!4 &639727536
 Transform:
   m_ObjectHideFlags: 0
@@ -629,6 +615,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 929858120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639727537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639727534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500f28640f95ffb4b9f24d1ec724e3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 929858119}
+  lineMaterial: {fileID: 2100000, guid: 97db6bf3588f9a5459ce14109c9afb4d, type: 2}
 --- !u!1 &844852597
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,6 +753,7 @@ MonoBehaviour:
   loadingScreen: {fileID: 63262021}
   zListManager: {fileID: 929858122}
   displayGizmos: 0
+  displayBezier: 0
   selector: {fileID: 929858123}
 --- !u!4 &929858120
 Transform:

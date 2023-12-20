@@ -23,12 +23,12 @@ public class PickableSelector : MonoBehaviour {
         RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity, layerMask, QueryTriggerInteraction.Ignore);
         if (hits != null && hits.Length > 0) {
             System.Array.Sort(hits, (x, y) => (x.distance.CompareTo(y.distance)));
-            var friseEditor = FindObjectOfType<FriseEditorBehaviour>();
+            var friseEditor = FindObjectOfType<UnityHandleManager>();
             if (controller.displayGizmos) {
                 for (int i = 0; i < hits.Length; i++) {
-                    // the object identified by hit.transform was clicked
-                    FriseEditorPointBehaviour frisePoint = hits[i].transform.GetComponentInParent<FriseEditorPointBehaviour>();
-                    if (frisePoint != null) {
+					// the object identified by hit.transform was clicked
+					UnityHandle handle = hits[i].transform.GetComponentInParent<UnityHandle>();
+                    if (handle != null) {
                         if (UnityEngine.Input.GetMouseButtonDown(0)) {
                             IsSelecting = true;
                         }
@@ -36,7 +36,7 @@ public class PickableSelector : MonoBehaviour {
                             if (cam.IsPanningWithThreshold()) {
                                 IsSelecting = false;
                             } else {
-                                friseEditor.SelectedPoint = frisePoint;
+                                friseEditor.SelectedPoint = handle;
                             }
                         }
                         break;
