@@ -21,6 +21,7 @@ public class Controller : MonoBehaviour {
 	public ZListManager zListManager;
 	private Sprite[] icons;
 	bool displayGizmos_ = false; public bool displayGizmos = false;
+	bool displayBezier_ = false; public bool displayBezier = false;
 	public PickableSelector selector;
 	public UnityPickable SelectedObject => selector.selected;
 
@@ -210,9 +211,15 @@ public class Controller : MonoBehaviour {
 		if (UnityEngine.Input.GetKeyDown(KeyCode.G)) {
 			displayGizmos = !displayGizmos;
 		}
+		if (UnityEngine.Input.GetKeyDown(KeyCode.B)) {
+			displayBezier = !displayBezier;
+		}
 		bool updatedSettings = false;
 		if (MainContext != null) {
 			if (displayGizmos != displayGizmos_) {
+				updatedSettings = true;
+			}
+			if (displayBezier != displayBezier_) {
 				updatedSettings = true;
 			}
 		}

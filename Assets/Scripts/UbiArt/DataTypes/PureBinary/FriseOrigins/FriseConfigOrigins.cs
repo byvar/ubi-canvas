@@ -16,7 +16,7 @@ namespace UbiArt.FriseOrigins {
 		public bool useFriezeFlipToFlipUV;
 		public float cornerFactor;
 		public uint unkUint;
-		public StringID sid0;
+		public StringID regionId2;
 		public string configName;
 		public StringID configId;
 		public int int1;
@@ -82,7 +82,7 @@ namespace UbiArt.FriseOrigins {
 			useFriezeFlipToFlipUV = s.Serialize<bool>(useFriezeFlipToFlipUV, name: "useFriezeFlipToFlipUV");
 			cornerFactor = s.Serialize<float>(cornerFactor, name: "cornerFactor");
 			unkUint = s.Serialize<uint>(unkUint, name: "unkUint");
-			sid0 = s.SerializeObject<StringID>(sid0, name: "sid0");
+			regionId2 = s.SerializeObject<StringID>(regionId2, name: "regionId");
 			configName = s.Serialize<string>(configName, name: "configName");
 			configId = s.SerializeObject<StringID>(configId, name: "configId");
 
