@@ -30,7 +30,7 @@ public class UnityHandleManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		if (GlobalLoadState.LoadState == GlobalLoadState.State.Finished) {
-			if (currentSelectedObject != controller.SelectedObject) {
+			if (currentSelectedObject != controller.SelectedObject || GetPointsCount() != (Points?.Length ?? 0)) {
 				DestroyPoints();
 				currentSelectedObject = controller.SelectedObject;
 				CreatePoints();
@@ -109,8 +109,8 @@ public class UnityHandleManager : MonoBehaviour {
 
 					// Tangent
 					gao = new GameObject($"Point {i} - Tangent");
-					gao.transform.SetParent(transform, false);
-					gao.transform.localPosition = tf.TransformPoint(positions[i*2 + 1].GetUnityVector(invertZ: true));
+					gao.transform.SetParent(Points[i*2].transform, false);
+					gao.transform.localPosition = Points[i * 2].transform.InverseTransformPoint(tf.TransformPoint(positions[i*2 + 1].GetUnityVector(invertZ: true)));
 					gao.transform.localScale = Vector3.one;
 					gao.transform.localRotation = Quaternion.identity;
 
@@ -126,5 +126,24 @@ public class UnityHandleManager : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public int GetPointsCount() {
+		if (currentSelectedObject == null) return 0;
+
+		// Search for Frise
+		var fr = currentSelectedObject.GetComponent<UnityFrise>();
+		if (fr != null) {
+			var pointsList = fr.frise.PointsList?.LocalPoints ?? fr.frise.LOCAL_POINTS;
+			return pointsList.Count;
+		}
+
+		// Search for Bezier renderer
+		foreach (Transform tf in currentSelectedObject.transform) {
+			var bez = tf.GetComponent<UnityBezierRenderer>();
+			return bez?.Branch?.nodes?.Count * 2 ?? 0;
+		}
+
+		return 0;
 	}
 }

@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class RO2_BezierNode : CSerializable {
-		public Vec3d pos;
+		public Vec3d pos = Vec3d.Zero;
 		public Vec2d tangent = Vec2d.Right;
 		public float scale = 1f;
 		public Nullable<RO2_BezierTween> tween;
