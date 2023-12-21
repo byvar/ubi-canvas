@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.RA)]
 	public partial class SpawnActorPathTuto : CSerializable {
 		public uint tutoType;
-		public uint tutoCycle;
+		public uint tutoCycle = uint.MaxValue;
 		public bool isDrc;
 		public Path defaultActor;
 		public Path DRC;

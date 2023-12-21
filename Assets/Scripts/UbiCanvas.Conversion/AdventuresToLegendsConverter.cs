@@ -1230,6 +1230,11 @@ namespace UbiCanvas.Conversion {
 						foreach (var b in breakables) {
 							FixLumJarNoPhys(oldContext, b.Result);
 						}
+						await CreateTutoActors(oldContext, newSettings, scene);
+						break;
+					}
+				case "world/rlc_enchantedforest/forestegghunt/enchantedforest_forestegghunt_exp_base.isc": {
+						await CreateTutoActors(oldContext, newSettings, scene);
 						break;
 					}
 				case "world/rlc_nemo/sunkensecrets/nemo_sunkensecrets_exp_base.isc": {
@@ -2729,6 +2734,83 @@ namespace UbiCanvas.Conversion {
 					Path = new ObjectPath(captainQuery.Path.FullPath.Replace(captain.USERFRIENDLY, dialogueActor.USERFRIENDLY))
 				});
 			};
+		}
+
+		public async Task CreateTutoActors(Context oldContext, Settings newSettings, Scene scene) {
+			var legendsTutoPath = new Path("world/common/ui/drcmoves_feedbacks/templates/triggertuto.tpl");
+			var legendsTutoTPL = await LoadFileLegends<GenericFile<Actor_Template>>(legendsTutoPath);
+			var customTutoPath = new Path("world/common/ui/drcmoves_feedbacks/templates/rlc_triggertuto.tpl");
+			if (CreateTemplateIfNecessary(customTutoPath, "CUSTOM TUTO", out var newTPL)) {
+				newTPL.sizeOf = legendsTutoTPL.sizeOf;
+				newTPL.obj = (Actor_Template)legendsTutoTPL.obj.Clone("tpl");
+				var tutoIcon = newTPL.obj.GetComponent<RO2_DisplayTutoIconComponent_Template>();
+				tutoIcon.tutos3d.tutoList.Clear();
+				tutoIcon.tutos2d.tutoList.Clear();
+				await CreateTuto(2, "findcaptain", 80020, "Find the captain in each level\nto continue the adventure");
+				await CreateTuto(3, "egghunt", 80021, "It's an egg hunt!\nPut the 3 eggs in the basket\nto continue the adventure");
+
+				async Task CreateTuto(uint type, string newTutoPath, uint locId, string rawText) {
+					var tuto2DPath = new Path($"world/common/ui/maintuto/customtuto/{newTutoPath}2d.act");
+					var tuto3DPath = new Path($"world/common/ui/maintuto/customtuto/{newTutoPath}.act");
+					tutoIcon.tutos2d.tutoList.Add(new SpawnActorPathTuto() {
+						tutoType = type,
+						defaultActor = tuto2DPath
+					});
+					tutoIcon.tutos3d.tutoList.Add(new SpawnActorPathTuto() {
+						tutoType = type,
+						defaultActor = tuto3DPath
+					});
+					await CopyTuto("world/common/ui/maintuto/commontuto/bubbledreamertuto_simple", $"world/common/ui/maintuto/customtuto/{newTutoPath}");
+
+					var tb = oldContext.Cache.Get<ContainerFile<Actor>>(tuto2DPath).obj.GetComponent<UITextBox>();
+					tb.rawText = rawText;
+					tb.locId = new LocalisationId(locId);
+					var tb3d = oldContext.Cache.Get<ContainerFile<Actor>>(tuto3DPath).obj.GetComponent<TextBoxComponent>();
+					tb3d.rawText = rawText;
+					tb3d.locId = new LocalisationId(locId);
+				}
+
+				async Task CopyTuto(string ogTuto, string newTutoPath) {
+					await CopyOneTuto(new Path($"{ogTuto}2d.act"), new Path($"{newTutoPath}2d.act"));
+					await CopyOneTuto(new Path($"{ogTuto}.act"), new Path($"{newTutoPath}.act"));
+				}
+				async Task CopyOneTuto(Path ogTutoPath, Path newTutoPath) {
+					var ogTuto = await LoadFileLegends<ContainerFile<Actor>>(ogTutoPath);
+					if (CreateStructNecessary<ContainerFile<Actor>>(newTutoPath, "CUSTOM TUTO", out var customActContainer)) {
+						customActContainer.obj = (Actor)ogTuto.obj.Clone("act");
+						customActContainer.read = true;
+					}
+				}
+			}
+
+			async Task<Actor> CreateTutoActor(uint tutoType) {
+				var tuto = await AddNewActor(scene, customTutoPath);
+				tuto.SCALE = new Vec2d(10f, 10f);
+				var ti = tuto.GetComponent<RO2_DisplayTutoIconComponent>();
+				ti.tutoType = (RO2_DisplayTutoIconComponent.TutoType)tutoType;
+				ti.tutoType2 = (RO2_DisplayTutoIconComponent.TutoType2)tutoType;
+				ti.activateByTrigger = true;
+				ti.scale = 0.65f;
+				tuto.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Multiple;
+
+				return tuto;
+			}
+
+
+			var scenePath = GetScenePath(scene);
+			switch (scenePath.FullPath) {
+				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
+						var tuto = await CreateTutoActor(2);
+						tuto.POS2D = new Vec2d(31.5f, -15.7f);
+						break;
+					}
+
+				case "world/rlc_enchantedforest/forestegghunt/enchantedforest_forestegghunt_exp_base.isc": {
+						var tuto = await CreateTutoActor(3);
+						tuto.POS2D = new Vec2d(115.47f, -95.65f);
+						break;
+					}
+			}
 		}
 
 		public void FixCastleCorridorPrimitiveParams(Context oldContext, Settings newSettings, Scene scene) {
@@ -6551,6 +6633,7 @@ namespace UbiCanvas.Conversion {
 				//newTPL.obj.InitContext(oldContext);
 
 				var newCookedPath = newPath.CookedPath(oldContext);
+
 				l.CookedPaths[newPath.stringID] = newCookedPath;
 				l.Paths[newPath.stringID] = newPath;
 				structs[typeof(T)][newPath.stringID] = newStruct;
