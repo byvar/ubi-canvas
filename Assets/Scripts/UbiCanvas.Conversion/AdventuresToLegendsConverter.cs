@@ -418,6 +418,7 @@ namespace UbiCanvas.Conversion {
 			await ProcessChallengeTemplates(mainContext, settings);
 
 			// Then start fixing non-scene stuff
+			await FixLumChainsBrightness(mainContext, settings);
 			FixNinjas(mainContext, settings);
 			FixRabbids(mainContext, settings);
 			FixCaptainHelloAnimationBug(mainContext, settings);
@@ -1357,6 +1358,34 @@ namespace UbiCanvas.Conversion {
 						// A rabbid auto-dies here, AABB hack doesn't work... we'll delete it
 						var rabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner");
 						rabbid.ContainingScene.DeletePickable(rabbid.Result);
+
+
+						var lk = scene.FindActor(a => a.USERFRIENDLY == "lumking@1");
+						lk.ContainingScene.DeletePickable(lk.Result);
+						var lkReplacement = await SpawnTeensyCage(lk.ContainingScene,
+							RO2_FriendlyBTAIComponent.Prisoner.Soldier, 0, TeensyWorldType.Jungle, CageType.Flying, false, mirror: true, name: lk.Result.USERFRIENDLY);
+						lkReplacement.parentBind = lk.Result.parentBind;
+						lkReplacement.STARTPAUSE = lk.Result.STARTPAUSE;
+						lkReplacement.RELATIVEZ = lk.Result.RELATIVEZ;
+						lkReplacement.POS2D = lk.Result.POS2D;
+
+						lk = scene.FindActor(a => a.USERFRIENDLY == "lumking" && a.POS2D.x == 0f);
+						lk.ContainingScene.DeletePickable(lk.Result);
+						lkReplacement = await SpawnTeensyCage(lk.ContainingScene,
+							RO2_FriendlyBTAIComponent.Prisoner.Soldier, 1, TeensyWorldType.Jungle, CageType.Flying, true, mirror: true, name: lk.Result.USERFRIENDLY);
+						lkReplacement.parentBind = lk.Result.parentBind;
+						lkReplacement.STARTPAUSE = lk.Result.STARTPAUSE;
+						lkReplacement.RELATIVEZ = lk.Result.RELATIVEZ;
+						lkReplacement.POS2D = new Vec2d(-7.41f, -1.88f);//lk.Result.POS2D;
+
+						lk = scene.FindActor(a => a.USERFRIENDLY == "lumking" && a.POS2D.x > -6f);
+						lk.ContainingScene.DeletePickable(lk.Result);
+						lkReplacement = await SpawnTeensyCage(lk.ContainingScene,
+							RO2_FriendlyBTAIComponent.Prisoner.Soldier, 2, TeensyWorldType.Jungle, CageType.Flying, true, mirror: true, name: lk.Result.USERFRIENDLY);
+						lkReplacement.parentBind = lk.Result.parentBind;
+						lkReplacement.STARTPAUSE = lk.Result.STARTPAUSE;
+						lkReplacement.RELATIVEZ = lk.Result.RELATIVEZ;
+						lkReplacement.POS2D = lk.Result.POS2D + Vec2d.Down;
 						break;
 					}
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
@@ -2120,6 +2149,18 @@ namespace UbiCanvas.Conversion {
 				MAX = new Vec2d(aabbScale, aabbScale)
 			};
 			box.outerBox = box.innerBox;
+		}
+
+		public async Task FixLumChainsBrightness(Context oldContext, Settings newSettings) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var lumChainTPL = oldContext.Cache.Get<GenericFile<Actor_Template>>(new Path("world/common/friendly/lumschain/components/lumschain.tpl"));
+			if(lumChainTPL == null) return;
+
+			var lcLegends = await LoadFileLegends<GenericFile<Actor_Template>>(new Path("world/common/friendly/lumschain/components/lumschain.tpl"));
+			lumChainTPL.sizeOf = lcLegends.sizeOf;
+			lumChainTPL.obj = (Actor_Template)lcLegends.obj.Clone("tpl");
 		}
 
 		public async Task UseBetterEggForSoccerBall(Context oldContext, Settings newSettings) {
