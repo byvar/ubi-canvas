@@ -1131,6 +1131,78 @@ namespace UbiCanvas.Conversion {
 						UseFastCameras(scene);
 						break;
 					}
+				case "world/rlc_avatar/thornrush/avatar_thornrush_spd_base.isc": {
+						// Invincibility Road 1
+						var badtoad = scene.FindActor(a => a.USERFRIENDLY == "stiltstoad_level1@3");
+						badtoad.ContainingScene.DeletePickable(badtoad.Result);
+						//badtoad.Result.POS2D = new Vec2d(305.72f, -62.93f);
+
+						var bumper = await AddNewActor(scene, new Path("world/jungle/common/platform/flower_bumper/components/flower_bumper_2m.tpl"),contextToLoadFrom: LegendsContext);
+						bumper.POS2D = new Vec2d(298.36f, -65.23f);
+						bumper.SCALE = new Vec2d(4f, 4f);
+						bumper.ANGLE = new Angle(-50.8f, degrees: true);
+						bumper = await AddNewActor(scene, new Path("world/jungle/common/platform/flower_bumper/components/flower_bumper_2m.tpl"), contextToLoadFrom: LegendsContext);
+						bumper.POS2D = new Vec2d(302.69f, -62.46f);
+						bumper.SCALE = new Vec2d(4f, 4f);
+						bumper.ANGLE = new Angle(-120f, degrees: true);
+						bumper = await AddNewActor(scene, new Path("world/jungle/common/platform/flower_bumper/components/flower_bumper_2m.tpl"), contextToLoadFrom: LegendsContext);
+						bumper.POS2D = new Vec2d(305.59f, -65.38f);
+						bumper.SCALE = new Vec2d(5f, 5f);
+						bumper.ANGLE = new Angle(-40f, degrees: true);
+						/*bumper = await AddNewActor(scene, new Path("world/jungle/common/platform/flower_bumper/components/flower_bumper_2m.tpl"), contextToLoadFrom: LegendsContext);
+						bumper.POS2D = new Vec2d(308.37f, -60.84f);
+						bumper.SCALE = new Vec2d(6f, 6f);
+						bumper.ANGLE = new Angle(-101f, degrees: true);*/
+
+						/*thorn = scene.FindActor(a => a.USERFRIENDLY == "spikyroot_challengegoingdown@15");
+						bez = thorn.Result.GetComponent<RO2_BezierTreeComponent>();
+						var nodes = bez.branch.nodes;
+						nodes[1].pos = new Vec3d(3.815491f, 6.468521f, 0f);
+						nodes[2].pos = new Vec3d(2.832153f, 6.742771f, 0f);
+						nodes[3].pos = new Vec3d(11.40936f, -8.100277f, 0f);
+						nodes[4].pos = new Vec3d(7.100133f, -4.234735f, 0f);
+						nodes[5].pos = new Vec3d(-4.946198f, 2.453018f, 0f);
+						nodes[6].pos = new Vec3d(4.322418f, 0.2609711f, 0f);
+						nodes[1].tangent = new Vec2d(-1.203461f, 1.685204f);
+						nodes[2].tangent = new Vec2d(4.750458f, 0.4666748f);
+						nodes[3].tangent = new Vec2d(10.50998f, 5.059999f);
+						nodes[4].tangent = new Vec2d(-2.163971f, -1.079552f);
+						nodes[5].tangent = new Vec2d(0.789978f, 2.139305f);
+						nodes[6].tangent = new Vec2d(-0.3680115f, -1.506638f);*/
+
+						// Invincibility Route 2
+						var thorn = scene.FindActor(a => a.USERFRIENDLY == "spikyroot_challengegoingdown@18");
+						var bez = thorn.Result.GetComponent<RO2_BezierTreeComponent>();
+						bez.branch.nodes.Remove(bez.branch.nodes.Last());
+
+						thorn = scene.FindActor(a => a.USERFRIENDLY == "spikyroot_challengegoingdown@19");
+						//thorn.ContainingScene.DeletePickable(thorn.Result);
+						bez = thorn.Result.GetComponent<RO2_BezierTreeComponent>();
+						var nodes = bez.branch.nodes;
+						nodes[0].pos = new Vec3d(-1.730011f, 15.56f, 0f);
+						nodes[1].pos = new Vec3d(4.879994f, -11.72f, 0f);
+						nodes[2].pos = new Vec3d(11.97845f, -0.9524038f, 0f);
+						nodes[3].pos = new Vec3d(-0.6474915f, -3.677177f, 0f);
+						nodes[0].tangent = new Vec2d(-1.77f, -4.050353f);
+						nodes[1].tangent = new Vec2d(5.11001f, 0.4399989f);
+						nodes[2].tangent = new Vec2d(1.249786f, -1.229557f);
+						nodes[3].tangent = new Vec2d(-2.282532f, -0.5797653f);
+
+						/*bumper = await AddNewActor(scene, new Path("world/jungle/common/platform/flower_bumper/components/flower_bumper_2m.tpl"), contextToLoadFrom: LegendsContext);
+						bumper.POS2D = new Vec2d(357.03f, -55.82f) + new Vec2d(1, -1);
+						bumper.SCALE = new Vec2d(6f, 6f);
+						bumper.ANGLE = new Angle(-120f, degrees: true);*/
+
+						var stiltstoad1 = scene.FindActor(a => a.USERFRIENDLY == "stiltstoad_level1");
+						stiltstoad1.ContainingScene.DeletePickable(stiltstoad1.Result);
+						stiltstoad1 = scene.FindActor(a => a.USERFRIENDLY == "stiltstoad_level1@2");
+						stiltstoad1.ContainingScene.DeletePickable(stiltstoad1.Result);
+
+						var badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@2");
+						//badrabbid.ContainingScene.DeletePickable(badrabbid.Result);
+						badrabbid.Result.POS2D = new Vec2d(356.35f, -66.39f);
+						break;
+					}
 				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc": {
 						var lk = scene.FindActor(a => a.USERFRIENDLY == "lumking@1");
 						lk.ContainingScene.DeletePickable(lk.Result);
