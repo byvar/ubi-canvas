@@ -1081,6 +1081,11 @@ namespace UbiCanvas.Conversion {
 							var toad = res.Result.GetComponent<RO2_EnemyBTAIComponent>();
 							toad.useRangedAttack = true;
 							toad.useRangedAttack_RL = 1;
+							//toad.RA_timeBetweenBullet *= 2;
+							//toad.RA_timeBetweenSequence *= 2;
+							toad.useTrigger = true;
+							toad.appearType = RO2_EnemyBTAIComponent.Enum_appearType.FromGround;
+							toad.appearType2 = RO2_EnemyBTAIComponent.Enum_appearType2.FromGround;
 						}
 						break;
 					}

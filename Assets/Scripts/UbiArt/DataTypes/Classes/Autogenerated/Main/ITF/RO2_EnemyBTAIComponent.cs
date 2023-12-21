@@ -37,6 +37,9 @@ namespace UbiArt.ITF {
 		public bool quickLaunchUsed;
 		public uint lifePoints = uint.MaxValue;
 		public uint nbTickleRewarded;
+
+		public bool triggerEnablesRangedAttack;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.Game == Game.RL) {
@@ -90,6 +93,9 @@ namespace UbiArt.ITF {
 					dashCheckHole = s.Serialize<bool>(dashCheckHole, name: "dashCheckHole");
 					tortureTypeType = s.Serialize<Enum_tortureTypeType>(tortureTypeType, name: "tortureTypeType");
 					useRangedAttack = s.Serialize<bool>(useRangedAttack, name: "useRangedAttack");
+					if (s.Settings.Game == Game.RM) {
+						triggerEnablesRangedAttack = s.Serialize<bool>(triggerEnablesRangedAttack, name: "triggerEnablesRangedAttack");
+					}
 					RA_countBulletBySequence = s.Serialize<uint>(RA_countBulletBySequence, name: "RA_countBulletBySequence");
 					RA_timeBetweenBullet = s.Serialize<float>(RA_timeBetweenBullet, name: "RA_timeBetweenBullet");
 					RA_timeBetweenSequence = s.Serialize<float>(RA_timeBetweenSequence, name: "RA_timeBetweenSequence");
