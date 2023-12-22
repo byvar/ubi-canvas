@@ -1098,7 +1098,16 @@ namespace UbiCanvas.Conversion {
 
 						UseFastCameras(scene);
 
-						scene.FindActor(a => a.USERFRIENDLY == "chest").Result.GetComponent<AnimatedComponent>().PrimitiveParameters.colorFactor.a = 1f;
+						// Fix switch platform colors
+						var switchplatforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("switchplatformin_5m"));
+						foreach (var p in switchplatforms) {
+							var pp = p.Result.GetComponent<AnimatedComponent>().PrimitiveParameters;
+							pp.colorFactor = UbiArt.Color.White;
+							pp.FrontLightContrast = 1f;
+							pp.FrontLightBrightness = 0f;
+						}
+
+						//scene.FindActor(a => a.USERFRIENDLY == "chest").Result.GetComponent<AnimatedComponent>().PrimitiveParameters.colorFactor.a = 1f;
 						var n = scene.FindActor(a => a.USERFRIENDLY == "chesttrajectorynode@2").Result.GetComponent<LinkComponent>();
 						//n.Children[0].TagValues[0].Value = "8.2";
 						n.Children[0].AddTag("MaxSpeed", "11");
