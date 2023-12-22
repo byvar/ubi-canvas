@@ -1090,13 +1090,19 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world_arcade/ra_musical/ra_mus_trunk/ra_mus_trunk.isc": {
-						// TODO: Re-enable
+						// Fix first camera modifier
 						var cm = scene.FindActor(a => a.USERFRIENDLY == "cameramodifier_musical@6");
-						cm.Result.STARTPAUSE = true;
+						//cm.Result.STARTPAUSE = true;
+						var cmc = cm.Result.GetComponent<CameraModifierComponent>();
+						cmc.CM.lookAtOffsetMaxX = 10f;
+						cmc.CM.lookAtOffsetX = 10f;
+						cmc.CM.constraintRightIsActive = false;
+						cm.Result.POS2D = new Vec2d(3.2f, -5f);
+						cm.Result.SCALE = new Vec2d(16f, 18.225f);
 
 						scene.FindActor(a => a.USERFRIENDLY == "challengefirewall").Result.GetComponent<RO2_ChallengeFireWallComponent>().screenPosition = new Vec2d(0.5f, 0.5f);
 
-						UseFastCameras(scene);
+						//UseFastCameras(scene);
 
 						// Fix switch platform colors
 						var switchplatforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("switchplatformin_5m"));
@@ -1106,6 +1112,17 @@ namespace UbiCanvas.Conversion {
 							pp.FrontLightContrast = 1f;
 							pp.FrontLightBrightness = 0f;
 						}
+
+						// Decouple "trigger_fade_out_slower" from "trigger_box_once@2" (the one with X = 210.125), then trigger it earlier
+						var trig1 = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@1").Result.GetComponent<LinkComponent>();
+						trig1.Children.Add(new ChildEntry() {
+							Path = new ObjectPath("trigger_fade_out_slower"),
+							TagValues = new CListO<TagValue>() {
+								new TagValue() { Tag = "Delay", Value = "0.75" }
+							}
+						});
+						trig1 = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@2" && a.POS2D.x > 200).Result.GetComponent<LinkComponent>();
+						trig1.Children.Remove(trig1.Children.Last());
 
 						//scene.FindActor(a => a.USERFRIENDLY == "chest").Result.GetComponent<AnimatedComponent>().PrimitiveParameters.colorFactor.a = 1f;
 						var n = scene.FindActor(a => a.USERFRIENDLY == "chesttrajectorynode@2").Result.GetComponent<LinkComponent>();
