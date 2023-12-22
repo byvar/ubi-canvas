@@ -1089,6 +1089,64 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world_arcade/ra_musical/ra_mus_trunk/ra_mus_trunk.isc": {
+						// TODO: Re-enable
+						var cm = scene.FindActor(a => a.USERFRIENDLY == "cameramodifier_musical@6");
+						cm.Result.STARTPAUSE = true;
+
+						scene.FindActor(a => a.USERFRIENDLY == "challengefirewall").Result.GetComponent<RO2_ChallengeFireWallComponent>().screenPosition = new Vec2d(0.5f, 0.5f);
+
+						UseFastCameras(scene);
+
+						scene.FindActor(a => a.USERFRIENDLY == "chest").Result.GetComponent<AnimatedComponent>().PrimitiveParameters.colorFactor.a = 1f;
+						var n = scene.FindActor(a => a.USERFRIENDLY == "chesttrajectorynode@2").Result.GetComponent<LinkComponent>();
+						//n.Children[0].TagValues[0].Value = "8.2";
+						n.Children[0].AddTag("MaxSpeed", "11");
+						n.Children[0].AddTag("SafeDistance", "2");
+						n = scene.FindActor(a => a.USERFRIENDLY == "chesttrajectorynode@3").Result.GetComponent<LinkComponent>();
+						n.Children[0].TagValues[0].Value = "8.2";
+						n.Children[0].TagValues[1].Value = "11";
+
+						// Ungrabbable lum chain
+						var lc = scene.FindActor(a => a.USERFRIENDLY == "lumschain@6");
+						FixOneLumsChainSpawnMode(oldContext, newSettings, lc.Result);
+
+						// Second wallrun
+						scene.FindActor(a => a.USERFRIENDLY == "chesttrajectorynode@16").Result.POS2D = new Vec2d(460f, -56.00015f);
+
+						// Shooting toad
+						n = scene.FindActor(a => a.USERFRIENDLY == "chesttrajectorynode@24").Result.GetComponent<LinkComponent>();
+						n.Children[0].AddTag("MinSpeed", "8.2");
+						n.Children[0].AddTag("MaxSpeed", "11");
+						n.Children[0].AddTag("SafeDistance", "2");
+
+						// Chest moves too fast for grab thing that moves up
+						n = scene.FindActor(a => a.USERFRIENDLY == "chesttrajectorynode@28").Result.GetComponent<LinkComponent>();
+						n.Children[0].TagValues[0].Value = "8"; // MinSpeed = slower
+						//n.Children[0].TagValues[1].Value = "11";
+						n.Children[0].AddTag("SafeDistance", "2");
+
+						// Toad immediately after this fires too soon
+						var fasttoad = scene.FindActor(a => a.USERFRIENDLY == "shootingtoad_big@5");//.Result.GetComponent<RO2_EnemyBTAIComponent>();
+						fasttoad.Result.POS2D += Vec2d.Left * 3f;
+						//fasttoad.RA_timeBetweenBullet *= 2f;
+						//fasttoad.RA_timeBetweenSequence *= 2f;
+
+
+						// Add flower bumper to autograb zipline
+						var containingScene = scene.FindActor(a => a.USERFRIENDLY == "chesttrajectorynode@32").ContainingScene;
+						var bump = await AddNewActor(containingScene, new Path("world/jungle/common/platform/flower_bumper/components/flower_bumper_2m.tpl"), contextToLoadFrom: LegendsContext);
+						bump.POS2D = new Vec2d(628.3f, 40.32f);
+						bump.RELATIVEZ = -0.02f;
+						bump.SCALE = Vec2d.One * 5f;
+						bump.ANGLE = new Angle(180f, degrees: true);
+
+
+						// Ungrabbable lum chain at very end
+						lc = scene.FindActor(a => a.USERFRIENDLY == "lumschain@20");
+						FixOneLumsChainSpawnMode(oldContext, newSettings, lc.Result);
+						break;
+					}
 				case "world/rlc_dojo/festivalofspeed/dojo_festivalofspeed_nmi.isc": {
 						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 						break;
