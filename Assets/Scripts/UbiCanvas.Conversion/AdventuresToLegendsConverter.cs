@@ -1089,6 +1089,16 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world_arcade/ra_foliage/levels/fol_ra_09_flyoverabirdyfest/fol_ra_09_flyoverabirdyfest.isc": {
+						var pt = new PickableTree(scene);
+						var trigAct = pt.FollowObjectPath(new ObjectPath("FOL_RA_09_FlyOverABirdyFest_ld|grp@8|trigger_box_once")).Pickable as Actor;
+						trigAct.GetComponent<LinkComponent>().Children[0].AddTag("Delay", "0.7"); // Add delay to this bird
+						trigAct = pt.FollowObjectPath(new ObjectPath("FOL_RA_09_FlyOverABirdyFest_ld|grp@12|trigger_box_once")).Pickable as Actor;
+						trigAct.GetComponent<LinkComponent>().Children[0].AddTag("Delay", "0.7"); // Add delay to this bird
+						trigAct = pt.FollowObjectPath(new ObjectPath("FOL_RA_09_FlyOverABirdyFest_ld|grp@18|trigger_box_once@2")).Pickable as Actor;
+						trigAct.GetComponent<LinkComponent>().Children[0].AddTag("Delay", "1"); // Add delay to this bird
+						break;
+					}
 				case "world_arcade/ra_bonus/levels/bon_ra_id_riverswamp/bon_ra_id_riverswamp.isc": {
 						// Move dandelion trigger so it's possible to grab
 						var trig1 = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@10");
