@@ -1089,6 +1089,24 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world_arcade/ra_bonus/levels/bon_ra_id_riverswamp/bon_ra_id_riverswamp.isc": {
+						// Move dandelion trigger so it's possible to grab
+						var trig1 = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@10");
+						trig1.Result.POS2D += Vec2d.Right;
+
+						// Delay 2 fish near dandelion
+						trig1 = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@2");
+						var links = trig1.Result.GetComponent<LinkComponent>();
+						links.Children[0].AddTag("Delay", "0.3");
+						trig1 = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@11");
+						links = trig1.Result.GetComponent<LinkComponent>();
+						links.Children[0].AddTag("Delay", "0.3");
+
+						// Slow down lums chain near dandelions
+						var lc = scene.FindActor(a => a.USERFRIENDLY == "lumschain@9");
+						lc.Result.GetComponent<RO2_LumsChainComponent>().moveSpeed = 5.5f; // from 6.5
+						break;
+					}
 				case "world_arcade/ra_musical/ra_mus_trunk/ra_mus_trunk.isc": {
 						// Fix first camera modifier
 						var cm = scene.FindActor(a => a.USERFRIENDLY == "cameramodifier_musical@6");
