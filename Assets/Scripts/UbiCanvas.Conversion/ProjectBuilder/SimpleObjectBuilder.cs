@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UbiArt;
 using UbiArt.ITF;
@@ -93,10 +94,10 @@ namespace UbiCanvas.Conversion {
 			FillPickable(act, simple);
 			if (simple.ExtraOptions != null) {
 				foreach (var opt in simple.ExtraOptions) {
+					var values = opt.Value.Split(';');
 					switch (opt.Key) {
 						case "CameraModifierComponent.localAABB": {
 								var cm = act?.GetComponent<CameraModifierComponent>();
-								var values = opt.Value.Split(';');
 								//cm.ignoreAABB = true;
 								if (cm != null) {
 									cm.localAABB = new AABB() {
@@ -116,6 +117,33 @@ namespace UbiCanvas.Conversion {
 								TreatConstraint(cm.CM.constraintExtendedBottom);
 								TreatConstraint(cm.CM.constraintExtendedLeft);
 								TreatConstraint(cm.CM.constraintExtendedRight);*/
+							}
+							break;
+						case "LinkComponent.links":
+							var lc = act?.GetComponent<LinkComponent>();
+							if (lc != null) {
+								foreach (var val in values) {
+									var tagPattern = @"Tag\((.*),(.*)\)";
+									var matches = Regex.Matches(val, tagPattern);
+									if (matches.Count > 0) {
+										// It's a tag for the previous child
+										var child = lc.Children.Last();
+										child.AddTag(matches.First().Groups[1].Value, matches.First().Groups[2].Value);
+									} else {
+										lc.Children.Add(new ChildEntry() {
+											Path = new ObjectPath(val)
+										});
+									}
+								}
+							}
+							break;
+						case "RO2_RopeComponent.length":
+							var rc = act?.GetComponent<RO2_RopeComponent>();
+							if (rc != null) {
+								rc.initLenth = float.Parse(opt.Value);
+								//rc.rigidConstraintFactor = 0f; 
+								//rc.force = 0f;
+								rc.PrimitiveParameters.colorFactor = new Color(1,1,1,0);
 							}
 							break;
 					}
