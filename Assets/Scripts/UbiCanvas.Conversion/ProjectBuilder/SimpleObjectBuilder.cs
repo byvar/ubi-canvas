@@ -165,6 +165,12 @@ namespace UbiCanvas.Conversion {
 								rc.PrimitiveParameters.colorFactor = new Color(1,1,1,0);
 							}
 							break;
+						case "RO2_MinotaurShieldAIComponent.standOnce":
+							var mcai = act?.GetComponent<RO2_MinotaurShieldAIComponent>();
+							if (mcai != null) {
+								mcai.standOnce = bool.Parse(opt.Value);
+							}
+							break;
 					}
 				}
 			}
