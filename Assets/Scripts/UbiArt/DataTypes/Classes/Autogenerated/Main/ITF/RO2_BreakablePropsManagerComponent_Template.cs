@@ -11,11 +11,11 @@ namespace UbiArt.ITF {
 		public StringID hitDrcAnim;
 		public StringID shakeAnim;
 		public StringID shakeDrcAnim;
-		public bool noAnimForEmpty;
-		public float shakeShapeRadius;
+		public bool noAnimForEmpty = true;
+		public float shakeShapeRadius = 1.5f;
 		public float shakeTime;
-		public float hitShapeRadius;
-		public Vec2d hitShapeOffset;
+		public float hitShapeRadius = 0.5f;
+		public Vec2d hitShapeOffset = new Vec2d(0, 0.3f);
 		public StringID squashAnim;
 		public StringID squashDrcAnim;
 		public StringID standBrokenAnim;

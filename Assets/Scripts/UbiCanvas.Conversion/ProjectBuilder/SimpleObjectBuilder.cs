@@ -92,6 +92,24 @@ namespace UbiCanvas.Conversion {
 			}
 
 			FillPickable(act, simple);
+			var trig = act.GetComponent<TriggerComponent>();
+			if (trig != null) {
+				if (trig.mode == 0) {
+					trig.mode = TriggerComponent.Mode.Multiple;
+				}
+			}
+			switch (simple.TemplatePath) {
+				case "world/common/enemy/lividstone/lividstone_drag.act":
+				case "world/common/enemy/darktoon/darktoon_basic/components/darktoon_basic.tpl":
+					act.GetComponent<RO2_EnemyBTAIComponent>().useRoaming = true;
+					break;
+				case "world/common/enemy/hunter/components/hunter.tpl":
+					act.GetComponent<RO2_EnemyBTAIComponent>().useRangedAttack_RL = 1;
+					break;
+				case "world/common/enemy/blowingbird/components/blowingbird_horizontal_auto.tpl":
+					act.GetComponent<RO2_EnemyBTAIComponent>().useNightVision = true;
+					break;
+			}
 			if (simple.ExtraOptions != null) {
 				foreach (var opt in simple.ExtraOptions) {
 					var values = opt.Value.Split(';');
@@ -106,6 +124,7 @@ namespace UbiCanvas.Conversion {
 									};
 								}
 								if(cm.CM == null) cm.CM = new CamModifier();
+
 								//cm.CM.lookAtOffset = new Vec3d(0,0,13);
 								//cm.CM.lookAtOffsetMax = new Vec3d(0,0,13);
 								/*void TreatConstraint(ConstraintExtended constraint) {

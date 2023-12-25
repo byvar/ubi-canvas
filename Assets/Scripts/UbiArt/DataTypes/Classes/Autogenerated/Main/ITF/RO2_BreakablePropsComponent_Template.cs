@@ -8,7 +8,7 @@ namespace UbiArt.ITF {
 		public StringID squashAnim;
 		public StringID shakeAnim;
 		public StringID breathlessAnim;
-		public float shakeShapeRadius;
+		public float shakeShapeRadius = 1f;
 		public float shakeTime;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

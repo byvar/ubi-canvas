@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_BreakablePropsComponent : ActorComponent {
-		public uint lumsGiven;
+		public uint lumsGiven = 1;
 		public bool needActivation;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

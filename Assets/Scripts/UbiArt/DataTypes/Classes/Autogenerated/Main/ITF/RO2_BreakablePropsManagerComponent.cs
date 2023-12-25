@@ -1,8 +1,8 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_BreakablePropsManagerComponent : ActorComponent {
-		public uint lumsGiven;
-		public uint lumsDrcGiven;
+		public uint lumsGiven = 1;
+		public uint lumsDrcGiven = 3;
 		public CListP<uint> breakablePropsState;
 		public CArrayP<bool> breakablePropsPaint;
 		protected override void SerializeImpl(CSerializerObject s) {
