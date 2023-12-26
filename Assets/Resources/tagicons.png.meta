@@ -486,7 +486,7 @@ TextureImporter:
       213: 21300320
     second: tagicons_160
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -503,11 +503,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -546,6 +547,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -557,8 +560,9 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
@@ -569,8 +573,9 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 2048
@@ -581,6 +586,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
@@ -593,6 +599,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
@@ -605,8 +612,22 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3173,7 +3194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: actor_selected
+      name: actor_s
       rect:
         serializedVersion: 2
         x: 66
@@ -3257,7 +3278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_126
+      name: relay_s
       rect:
         serializedVersion: 2
         x: 322
@@ -3278,7 +3299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_127
+      name: relay
       rect:
         serializedVersion: 2
         x: 386
@@ -3341,11 +3362,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: light_selected
+      name: light_s
       rect:
         serializedVersion: 2
         x: 68
-        y: 261
+        y: 262
         width: 57
         height: 56
       alignment: 0
@@ -3362,7 +3383,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_131
+      name: cameramodifier
       rect:
         serializedVersion: 2
         x: 133
@@ -3383,7 +3404,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tagicons_132
+      name: cameramodifier_s
       rect:
         serializedVersion: 2
         x: 197
@@ -4002,170 +4023,169 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      trigger: 21300122
-      tagicons_96: 21300192
-      tagicons_138: 21300276
-      tagicons_141: 21300282
-      ld_frieze_s: 21300144
-      tagicons_112: 21300224
-      tagicons_109: 21300218
-      tagicons_58: 21300116
-      tween_mob_s: 21300140
-      back_lgt_frieze: 21300032
-      tagicons_15: 21300030
-      isc_cine_2_s: 21300108
-      fog_s: 21300054
-      trigger_autorayman_s: 21300076
-      friendly: 21300094
-      logic: 21300146
-      isc_fx_2_s: 21300132
-      tagicons_119: 21300238
-      isc_graph_s: 21300152
-      particle_s: 21300006
-      tagicons_124: 21300248
-      tagicons_85: 21300170
-      tagicons_133: 21300266
-      tagicons_106: 21300212
-      ld_frieze: 21300142
-      tagicons_86: 21300172
-      tagicons_154: 21300308
-      tween_mob: 21300138
-      tagicons_102: 21300204
-      tagicons_155: 21300310
-      fluid_s: 21300164
-      actor_selected: 21300244
-      isc_cine_2: 21300106
-      tagicons_103: 21300206
-      checkpoint: 21300086
-      dig_s: 21300072
-      isc_fx: 21300182
-      tagicons_111: 21300222
-      tagicons_95: 21300190
-      tsc: 21300234
-      mus_s: 21300050
-      trajectory_s: 21300286
-      tagicons_34: 21300068
-      afx_s: 21300010
-      tagicons_113: 21300226
-      light_normal: 21300044
-      tagicons_126: 21300252
-      enemy_s: 21300092
-      frieze: 21300000
-      tagicons_13: 21300026
-      checkpoint_s: 21300088
-      unknown______: 21300066
-      tagicons_83: 21300166
-      platform: 21300110
-      isc_ld: 21300154
-      tagicons_93: 21300186
-      tagicons_32: 21300064
-      mus: 21300048
-      isc_graph_2_s: 21300100
-      tagicons_110: 21300220
-      alpha: 21300012
-      trigger_automurphy_s: 21300080
-      dig: 21300070
-      trigger_automurphy: 21300078
-      frieze_point_s: 21300306
-      tagicons_131: 21300262
-      isc_ld_2_s: 21300104
-      logic_s: 21300148
-      isc_2: 21300288
-      tagicons_148: 21300296
-      isc_2_s: 21300302
-      back_lgt_frieze_s: 21300034
-      particle: 21300004
-      tween_editor_s: 21300176
-      tagicons_147: 21300294
-      trigger_autorayman: 21300074
-      isc_cine_s: 21300160
-      tagicons_137: 21300274
-      tagicons_125: 21300250
-      isc_sound: 21300178
-      tagicons_120: 21300240
-      tagicons_97: 21300194
-      light: 21300258
-      tagicons_156: 21300312
-      tagicons_115: 21300230
-      front_lgt_frieze: 21300316
-      fluid: 21300162
-      tween_editor: 21300174
-      alpha_s: 21300014
-      isc_fx_2: 21300130
-      breakable_s: 21300084
-      front_lgt_frieze_s: 21300318
-      tween: 21300134
-      isc_sound_2: 21300126
-      tagicons_157: 21300314
-      friendly_s: 21300096
-      trajectory: 21300284
-      light_front: 21300040
-      light_back: 21300036
-      tween_s: 21300136
-      tagicons_160: 21300320
-      light_selected: 21300260
-      tagicons_10: 21300020
-      fog: 21300052
-      isc_ld_2: 21300102
-      tagicons_135: 21300270
-      tagicons_11: 21300022
-      trigger_s: 21300124
-      tagicons_104: 21300208
-      tagicons_101: 21300202
-      tagicons_108: 21300216
-      tagicons_98: 21300196
-      afx: 21300008
-      isc_sound_s: 21300180
-      breakable: 21300082
-      amb_s: 21300018
-      tagicons_30: 21300060
-      tagicons_84: 21300168
-      frieze_point_small: 21300198
-      tagicons_132: 21300264
-      light_normal_s: 21300046
-      isc_sound_2_s: 21300128
-      3d_s: 21300058
-      tagicons_12: 21300024
-      light_back_s: 21300038
-      tagicons_149: 21300298
-      tagicons_128: 21300256
-      tsc_s: 21300236
-      actor: 21300242
-      isc: 21300290
-      tagicons_134: 21300268
-      enemy: 21300090
-      tagicons_107: 21300214
-      frieze_point_small_s: 21300200
-      isc_graph: 21300150
-      frieze_point: 21300304
-      isc_fx_s: 21300184
-      tagicons_57: 21300114
-      tagicons_127: 21300254
-      platform_s: 21300112
-      tagicons_123: 21300246
-      amb: 21300016
-      tagicons_14: 21300028
-      collectible: 21300118
-      light_front_s: 21300042
-      isc_s: 21300292
       3d: 21300056
-      tagicons_136: 21300272
-      tagicons_114: 21300228
-      tagicons_150: 21300300
-      unknown__: 21300278
-      isc_graph_2: 21300098
+      3d_s: 21300058
+      actor: 21300242
+      actor_s: 21300244
+      afx: 21300008
+      afx_s: 21300010
+      alpha: 21300012
+      alpha_s: 21300014
+      amb: 21300016
+      amb_s: 21300018
+      back_lgt_frieze: 21300032
+      back_lgt_frieze_s: 21300034
       bone: 21300232
-      tagicons_105: 21300210
-      isc_ld_s: 21300156
-      tagicons_31: 21300062
-      isc_cine: 21300158
-      frieze_s: 21300002
-      tagicons_140: 21300280
+      breakable: 21300082
+      breakable_s: 21300084
+      cameramodifier: 21300262
+      cameramodifier_s: 21300264
+      checkpoint: 21300086
+      checkpoint_s: 21300088
+      collectible: 21300118
       collectible_disabled: 21300120
+      dig: 21300070
+      dig_s: 21300072
+      enemy: 21300090
+      enemy_s: 21300092
+      fluid: 21300162
+      fluid_s: 21300164
+      fog: 21300052
+      fog_s: 21300054
+      friendly: 21300094
+      friendly_s: 21300096
+      frieze: 21300000
+      frieze_point: 21300304
+      frieze_point_s: 21300306
+      frieze_point_small: 21300198
+      frieze_point_small_s: 21300200
+      frieze_s: 21300002
+      front_lgt_frieze: 21300316
+      front_lgt_frieze_s: 21300318
+      isc: 21300290
+      isc_2: 21300288
+      isc_2_s: 21300302
+      isc_cine: 21300158
+      isc_cine_2: 21300106
+      isc_cine_2_s: 21300108
+      isc_cine_s: 21300160
+      isc_fx: 21300182
+      isc_fx_2: 21300130
+      isc_fx_2_s: 21300132
+      isc_fx_s: 21300184
+      isc_graph: 21300150
+      isc_graph_2: 21300098
+      isc_graph_2_s: 21300100
+      isc_graph_s: 21300152
+      isc_ld: 21300154
+      isc_ld_2: 21300102
+      isc_ld_2_s: 21300104
+      isc_ld_s: 21300156
+      isc_s: 21300292
+      isc_sound: 21300178
+      isc_sound_2: 21300126
+      isc_sound_2_s: 21300128
+      isc_sound_s: 21300180
+      ld_frieze: 21300142
+      ld_frieze_s: 21300144
+      light: 21300258
+      light_back: 21300036
+      light_back_s: 21300038
+      light_front: 21300040
+      light_front_s: 21300042
+      light_normal: 21300044
+      light_normal_s: 21300046
+      light_s: 21300260
+      logic: 21300146
+      logic_s: 21300148
+      mus: 21300048
+      mus_s: 21300050
+      particle: 21300004
+      particle_s: 21300006
+      platform: 21300110
+      platform_s: 21300112
+      relay: 21300254
+      relay_s: 21300252
+      tagicons_10: 21300020
+      tagicons_101: 21300202
+      tagicons_102: 21300204
+      tagicons_103: 21300206
+      tagicons_104: 21300208
+      tagicons_105: 21300210
+      tagicons_106: 21300212
+      tagicons_107: 21300214
+      tagicons_108: 21300216
+      tagicons_109: 21300218
+      tagicons_11: 21300022
+      tagicons_110: 21300220
+      tagicons_111: 21300222
+      tagicons_112: 21300224
+      tagicons_113: 21300226
+      tagicons_114: 21300228
+      tagicons_115: 21300230
+      tagicons_119: 21300238
+      tagicons_12: 21300024
+      tagicons_120: 21300240
+      tagicons_123: 21300246
+      tagicons_124: 21300248
+      tagicons_125: 21300250
+      tagicons_128: 21300256
+      tagicons_13: 21300026
+      tagicons_133: 21300266
+      tagicons_134: 21300268
+      tagicons_135: 21300270
+      tagicons_136: 21300272
+      tagicons_137: 21300274
+      tagicons_138: 21300276
+      tagicons_14: 21300028
+      tagicons_140: 21300280
+      tagicons_141: 21300282
+      tagicons_147: 21300294
+      tagicons_148: 21300296
+      tagicons_149: 21300298
+      tagicons_15: 21300030
+      tagicons_150: 21300300
+      tagicons_154: 21300308
+      tagicons_155: 21300310
+      tagicons_156: 21300312
+      tagicons_157: 21300314
+      tagicons_160: 21300320
+      tagicons_30: 21300060
+      tagicons_31: 21300062
+      tagicons_32: 21300064
+      tagicons_34: 21300068
+      tagicons_57: 21300114
+      tagicons_58: 21300116
+      tagicons_83: 21300166
+      tagicons_84: 21300168
+      tagicons_85: 21300170
+      tagicons_86: 21300172
+      tagicons_93: 21300186
       tagicons_94: 21300188
-  spritePackingTag: 
+      tagicons_95: 21300190
+      tagicons_96: 21300192
+      tagicons_97: 21300194
+      tagicons_98: 21300196
+      trajectory: 21300284
+      trajectory_s: 21300286
+      trigger: 21300122
+      trigger_automurphy: 21300078
+      trigger_automurphy_s: 21300080
+      trigger_autorayman: 21300074
+      trigger_autorayman_s: 21300076
+      trigger_s: 21300124
+      tsc: 21300234
+      tsc_s: 21300236
+      tween: 21300134
+      tween_editor: 21300174
+      tween_editor_s: 21300176
+      tween_mob: 21300138
+      tween_mob_s: 21300140
+      tween_s: 21300136
+      unknown__: 21300278
+      unknown______: 21300066
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

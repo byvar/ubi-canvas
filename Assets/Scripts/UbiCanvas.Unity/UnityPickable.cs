@@ -82,7 +82,7 @@ public class UnityPickable : MonoBehaviour {
 			if (pickable is Frise) {
 				if (t != null && t.TAGS != null) {
 					foreach (string tag in t.TAGS) {
-						Sprite sprLoc = c.GetIcon(tag);
+						Sprite sprLoc = c.GetIcon(tag, selected);
 						if (sprLoc == null) {
 							print("Frieze: Untreated tag " + tag);
 						}
@@ -92,12 +92,11 @@ public class UnityPickable : MonoBehaviour {
 				if (spr == null) {
 					spr = c.GetIcon("frieze", selected);
 				}
-			} else if (pickable is Actor) {
-				if (pickable is SubSceneActor) {
-					SubSceneActor ssa = pickable as SubSceneActor;
+			} else if (pickable is Actor a) {
+				if (pickable is SubSceneActor ssa) {
 					if (t != null && t.TAGS != null && t.TAGS.Count > 0) {
 						foreach (string tag in t.TAGS) {
-							Sprite sprLoc = c.GetIcon(tag);
+							Sprite sprLoc = c.GetIcon(tag, selected);
 							if (sprLoc == null) {
 								print("SubSceneActor: Untreated tag " + tag);
 							}
@@ -129,6 +128,13 @@ public class UnityPickable : MonoBehaviour {
 								print("Actor: Untreated tag " + tag);
 							}
 							spr = sprLoc;
+						}
+					}
+					if (spr == null) {
+						if (a.GetComponent<CameraModifierComponent>() != null) {
+							spr = c.GetIcon("cameramodifier", selected);
+						} else if (a.GetComponent<RelayEventComponent>() != null) {
+							spr = c.GetIcon("relay", selected);
 						}
 					}
 					if (spr == null) {

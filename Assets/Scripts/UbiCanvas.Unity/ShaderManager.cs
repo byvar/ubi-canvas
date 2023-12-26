@@ -35,20 +35,18 @@ public class ShaderManager : MonoBehaviour {
 			int rtw = Mathf.CeilToInt(aspect * rth);
 			if (frontLight != null) {
 				frontLight.Release();
-				frontLight.width = rtw;
-			} else {
-				frontLight = new RenderTexture(rtw, rth, 24);
-				frontLightCamera.targetTexture = frontLight;
-				Shader.SetGlobalTexture("_LightsFrontLight", frontLight);
+				//frontLight.width = rtw;
 			}
+			frontLight = new RenderTexture(rtw, rth, 24);
+			frontLightCamera.targetTexture = frontLight;
+			Shader.SetGlobalTexture("_LightsFrontLight", frontLight);
 			if (backLight != null) {
 				backLight.Release();
-				backLight.width = rtw;
-			} else {
-				backLight = new RenderTexture(rtw, rth, 24);
-				backLightCamera.targetTexture = backLight;
-				Shader.SetGlobalTexture("_LightsBackLight", backLight);
+				//backLight.width = rtw;
 			}
+			backLight = new RenderTexture(rtw, rth, 24);
+			backLightCamera.targetTexture = backLight;
+			Shader.SetGlobalTexture("_LightsBackLight", backLight);
 			lastAspectRatio = aspect;
 		}
 	}
