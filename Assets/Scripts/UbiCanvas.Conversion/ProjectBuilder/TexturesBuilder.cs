@@ -105,7 +105,8 @@ namespace UbiCanvas.Conversion {
 							if (isRGB && alphaPath != null) {
 								// Separate RGB and A texture to be combined!
 								using (var img = new MagickImage(file)) {
-									using (var img_a = new MagickImage(alphaPath)) {
+									using (var img_a = (System.IO.File.Exists(alphaPath) ? new MagickImage(alphaPath)
+										: new MagickImage(Enumerable.Repeat((byte)0, img.Width * img.Height * 4).ToArray(), new PixelReadSettings(img.Width, img.Height, StorageType.Char, PixelMapping.ABGR)))) {
 										img.Format = MagickFormat.Dds;
 										img.Settings.SetDefine(MagickFormat.Dds, "compression", "none");
 										img.AutoOrient(); // Orient TGA based on origin point
@@ -124,7 +125,7 @@ namespace UbiCanvas.Conversion {
 
 										// Step 2: Composite with the CopyAlpha operator
 										img.Composite(img_a, CompositeOperator.CopyAlpha);
-										
+
 
 										CountPixels(img);
 										data = img.ToByteArray();
