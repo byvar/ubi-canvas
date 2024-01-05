@@ -9,6 +9,7 @@ public class UnityBezierPointHandle : UnityHandle {
 	public override float HandleScale => 0.3f + Node.scale;
 
 	public Transform RelativeTransform;
+	public Transform ScaleTransform;
 	public UnityBezierPointHandle MainPoint;
 
 	// Use this for initialization
@@ -34,6 +35,9 @@ public class UnityBezierPointHandle : UnityHandle {
 	}
 	void UpdateData() {
 		var relativePoint = RelativeTransform.InverseTransformPoint(transform.position);
+		if (ScaleTransform.localScale.x != 0 && ScaleTransform.localScale.y != 0 && ScaleTransform.localScale.z != 0) {
+			relativePoint = Vector3.Scale(relativePoint, new Vector3(1f / ScaleTransform.localScale.x, 1f / ScaleTransform.localScale.y, 1f / ScaleTransform.localScale.z));
+		}
 		if (MainPoint != null) {
 			// This is a tangent line
 			var localTangent = relativePoint;

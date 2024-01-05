@@ -104,6 +104,7 @@ public class UnityHandleManager : MonoBehaviour {
 					var gao = new GameObject($"Point {i}");
 					gao.transform.SetParent(transform, false);
 					gao.transform.localPosition = transform.InverseTransformPoint(tf.TransformPoint(positions[i*2].GetUnityVector(invertZ: true)));
+					//gao.transform.position = tf.TransformPoint(positions[i * 2].GetUnityVector(invertZ: true));
 					gao.transform.localScale = Vector3.one;
 					gao.transform.localRotation = Quaternion.identity;
 
@@ -113,8 +114,9 @@ public class UnityHandleManager : MonoBehaviour {
 					if (i > 0) {
 						frp.RelativeTransform = Points[(i-1)*2].transform;
 					} else {
-						frp.RelativeTransform = bez.transform;
+						frp.RelativeTransform = transform;
 					}
+					frp.ScaleTransform = currentSelectedObject.transform;
 
 					frp.manager = this;
 					Points[i*2] = frp;
@@ -131,6 +133,7 @@ public class UnityHandleManager : MonoBehaviour {
 					frp.Node = bez.Branch.nodes[i];
 
 					frp.RelativeTransform = Points[i * 2].transform;
+					frp.ScaleTransform = currentSelectedObject.transform;
 					frp.MainPoint = (UnityBezierPointHandle)Points[i * 2];
 
 					frp.manager = this;

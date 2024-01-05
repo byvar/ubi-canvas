@@ -25,7 +25,7 @@ namespace UbiArt {
 			return new AngleAmount { angle = a };
 		}
 		public static implicit operator AngleAmount(Angle a) {
-			return new AngleAmount { angle = a.angle };
+			return new AngleAmount { angle = a?.angle ?? 0f };
 		}
 
 		public float EulerAngle {
