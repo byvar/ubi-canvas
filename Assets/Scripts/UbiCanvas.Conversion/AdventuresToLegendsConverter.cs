@@ -1721,7 +1721,7 @@ namespace UbiCanvas.Conversion {
 						for (int i = 0; i < 5; i++) {
 							var act = scene.FindActor(a => a.USERFRIENDLY == $"fog_{(i+1)}");
 							var rp = act.Result.GetComponent<RenderParamComponent>();
-							var factor = 1f - (i * 0.15f);
+							var factor = 1f - (i * 0.075f);
 							rp.ClearColor.ClearFrontLightColor *= new UbiArt.Color(factor, factor, factor, 1f);
 							rp.ClearColor.ClearColor *= new UbiArt.Color(factor, factor, factor, 1f);
 						}
@@ -1764,6 +1764,64 @@ namespace UbiCanvas.Conversion {
 						var rabbidSSA = await AddNewActor(grp.ContainingScene, rabbidPath, contextToLoadFrom: LegendsContext);
 						rabbidSSA.xFLIPPED = false;
 						rabbidSSA.POS2D = grp.Result.POS2D;
+						break;
+					}
+
+				case "world/challenge/run/challengerun/brick/veryhard/runbrick_veryhard_14.isc": {
+						// Ungrabbable lum chain
+						var lc = scene.FindActor(a => a.USERFRIENDLY == "lumschain@2");
+						FixOneLumsChainSpawnMode(oldContext, newSettings, lc.Result);
+						break;
+					}
+				case "world/challenge/run/challengerun/brick/insane/runbrick_insane_13.isc": {
+						if (Version == SpecialVersion.EventGoldenMarathon) {
+							// Get rid of bad swordmen on flying platforms
+							List<string> badActorNames = new List<string>() {
+								"basicswordman",
+								"flyingplatform",
+								"basicswordman@1",
+								"flyingplatform@1",
+							};
+							var badActors = scene.FindActors(a => badActorNames.Contains(a.USERFRIENDLY));
+							foreach (var a in badActors) {
+								a.ContainingScene.DeletePickable(a.Result);
+							}
+							// Add devilbobs
+							var db1 = await AddNewActor(scene, new Path("world/common/enemy/devilbob/components/devilbob.tpl"), parentPath: "runbrick_insane_13_ld");
+							var db2 = await AddNewActor(scene, new Path("world/common/enemy/devilbob/components/devilbob.tpl"), parentPath: "runbrick_insane_13_ld");
+							db1.xFLIPPED = true;
+							db2.xFLIPPED = true;
+							db1.POS2D = new Vec2d(9.473633f, -3.553708f);
+							db2.POS2D = new Vec2d(9.584106f, -6.033246f);
+							db1.RELATIVEZ = 3.814697e-06f;
+							db2.RELATIVEZ = 3.814697e-06f;
+							db1.GetComponent<AnimatedComponent>().disableLight = 0;
+							db2.GetComponent<AnimatedComponent>().disableLight = 0;
+							db1.GetComponent<RO2_EnemyBTAIComponent>().shape = new EditableShape() {
+								shape = new Generic<PhysShape>(new PhysShapeBox() {
+									Points = new CListO<Vec2d>() { new Vec2d(-1, -1), new Vec2d(-1, 1), new Vec2d(1, 1), new Vec2d(1, -1) },
+									normals = new CListO<Vec2d>() { new Vec2d(-1, 0), new Vec2d(0, 1), new Vec2d(1, 0), new Vec2d(0, -1) },
+									edge = new CListO<Vec2d>() { new Vec2d(0, 1), new Vec2d(1, 0), new Vec2d(0, -1), new Vec2d(-1, 0) },
+									distances = new CArrayP<float>(Enumerable.Repeat(2f, 4).ToArray()),
+									Extent = Vec2d.One,
+								})
+							};
+							db2.GetComponent<RO2_EnemyBTAIComponent>().shape = new EditableShape() {
+								shape = new Generic<PhysShape>(new PhysShapeBox() {
+									Points = new CListO<Vec2d>() { new Vec2d(-1, -1), new Vec2d(-1, 1), new Vec2d(1, 1), new Vec2d(1, -1) },
+									normals = new CListO<Vec2d>() { new Vec2d(-1, 0), new Vec2d(0, 1), new Vec2d(1, 0), new Vec2d(0, -1) },
+									edge = new CListO<Vec2d>() { new Vec2d(0, 1), new Vec2d(1, 0), new Vec2d(0, -1), new Vec2d(-1, 0) },
+									distances = new CArrayP<float>(Enumerable.Repeat(2f, 4).ToArray()),
+									Extent = Vec2d.One,
+								})
+							};
+						}
+						break;
+					}
+				case "world/challenge/run/challengerun/brick/insane/runbrick_insane_10.isc": {
+						// Fix wall glitch
+						var deadlandbar = scene.FindActor(a => a.USERFRIENDLY == "deadlandbar" && a.POS2D.x > 25f);
+						deadlandbar.Result.POS2D.y = -10.25f;
 						break;
 					}
 				case "world/challenge/run/challengerun/decobrick/background/brick_back_a_01.isc":

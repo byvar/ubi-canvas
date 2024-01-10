@@ -3170,7 +3170,7 @@ namespace UbiArt {
 			{ 0xA0E2BBBE, typeof(ITF.Ray_PlayerOffScreenIconComponent_Template) },
 			{ 0xA10B8681, typeof(ITF.RO2_CostumePaintingSpawnerComponent) },
 			{ 0xA10F7D85, typeof(ITF.EventStickOnPolylineUpdate) },
-			{ 0xA11F5C99, typeof(ITF.Unknown_RL_43_sub_91E2E0) },
+			{ 0xA11F5C99, typeof(ITF.RO2_GameSequence_Unlocking) },
 			{ 0xA12820F1, typeof(ITF.RO2_EventPlayerSelectStart) },
 			{ 0xA133CDA6, typeof(ITF.RO2_GameManager) },
 			{ 0xA137BADD, typeof(ITF.TeleporterBounceToLayerTrail) },

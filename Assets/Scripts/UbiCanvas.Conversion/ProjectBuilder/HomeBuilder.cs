@@ -57,6 +57,11 @@ namespace UbiCanvas.Conversion {
 				var hc = homeConfigISG.obj;
 				var homeSceneConfig = homeISC.obj.sceneConfigs.sceneConfigs[0].obj as RO2_SceneConfig_Home;
 				var sgsHomeSceneConfig = homeSGS.obj.obj as RO2_SceneConfig_Home;
+
+				/*homeSceneConfig.DRCGameplayMode = RO2_SceneConfig_Base.Enum_DRCGameplayMode.Disabled;
+				sgsHomeSceneConfig.DRCGameplayMode = RO2_SceneConfig_Base.Enum_DRCGameplayMode.Disabled;
+				homeSceneConfig.istouchScreenMap = false;
+				sgsHomeSceneConfig.istouchScreenMap = false;*/
 			
 				/*var challengePath = new Path("world/challenge/run_egypt/challengerun/challenge_run_main.isc");
 				var challengeScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, challengePath.FullPath);
