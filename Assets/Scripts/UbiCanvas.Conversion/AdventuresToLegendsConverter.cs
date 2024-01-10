@@ -1719,12 +1719,29 @@ namespace UbiCanvas.Conversion {
 				case "world/challenge/run/challengerun/challenge_run_main.isc": {
 						// Let's have the area become progressively darker...
 						for (int i = 0; i < 5; i++) {
-							var act = scene.FindActor(a => a.USERFRIENDLY == $"fog_{(i+1)}");
+							var act = scene.FindActor(a => a.USERFRIENDLY == $"fog_{(i + 1)}");
 							var rp = act.Result.GetComponent<RenderParamComponent>();
 							var factor = 1f - (i * 0.075f);
 							rp.ClearColor.ClearFrontLightColor *= new UbiArt.Color(factor, factor, factor, 1f);
 							rp.ClearColor.ClearColor *= new UbiArt.Color(factor, factor, factor, 1f);
 						}
+
+						if (Version == SpecialVersion.EventGoldenMarathon) {
+							// Remove door collision in golden marathon as door graphic is gone (there is still other collision)
+							var doorcol = scene.FindPickable(p => p.USERFRIENDLY == "col_novisual");
+							doorcol.ContainingScene.DeletePickable(doorcol.Result);
+
+							// Extend start block vertically (todo: check if working)
+							var deadground = (Frise)scene.FindPickable(p => p.USERFRIENDLY == "dead_ldground_ground2m").Result;
+							deadground.PreComputedForCook = false;
+							deadground.PointsList.LocalPoints[0].POS.y += 15f;
+							deadground.PointsList.LocalPoints[1].POS.y += 15f;
+							deadground.PointsList.LocalPoints.Last().POS.y += 15f;
+							deadground.PointsList.RecomputeData();
+						}
+						// Extend trigger size
+						var trig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@1");
+						trig.Result.SCALE.y *= 4f;
 						break;
 					}
 				case "world/challenge/run/challengerun/brick/medium/runbrick_medium_75.isc": {
