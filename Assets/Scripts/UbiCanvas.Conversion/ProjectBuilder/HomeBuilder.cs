@@ -57,11 +57,6 @@ namespace UbiCanvas.Conversion {
 				var hc = homeConfigISG.obj;
 				var homeSceneConfig = homeISC.obj.sceneConfigs.sceneConfigs[0].obj as RO2_SceneConfig_Home;
 				var sgsHomeSceneConfig = homeSGS.obj.obj as RO2_SceneConfig_Home;
-
-				/*homeSceneConfig.DRCGameplayMode = RO2_SceneConfig_Base.Enum_DRCGameplayMode.Disabled;
-				sgsHomeSceneConfig.DRCGameplayMode = RO2_SceneConfig_Base.Enum_DRCGameplayMode.Disabled;
-				homeSceneConfig.istouchScreenMap = false;
-				sgsHomeSceneConfig.istouchScreenMap = false;*/
 			
 				/*var challengePath = new Path("world/challenge/run_egypt/challengerun/challenge_run_main.isc");
 				var challengeScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, challengePath.FullPath);
@@ -405,7 +400,7 @@ namespace UbiCanvas.Conversion {
 
 			var lastPos = scene.FindPickable(p => p.USERFRIENDLY == "challenge_drc").Result.POS2D;
 			lastPos += spacing;
-			var ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_classicrun_egypt.isc");
+			/*var ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_classicrun_egypt.isc");
 			scene.AddActor(ssa);
 			ssa.POS2D = lastPos;
 			lastPos += spacing;
@@ -419,6 +414,41 @@ namespace UbiCanvas.Conversion {
 			lastPos += spacing;
 			ssa = await CreateSubSceneActorFromScene("world/home/brick/challenge/challenge_mini_foliage.isc");
 			scene.AddActor(ssa);
+			ssa.POS2D = lastPos;*/
+			var ssa = await CreatePaintingSceneAndSSA("world/home/brick/challenge/challenge_classicrun_egypt.isc",
+				"world/home/brick/challenge/challenge_classicrun.isc",
+				"Classic Run Egypt",
+				"world/egypt/challenge/run/challengerun/challenge_run_egypt.isc",
+				"world/home/paintings_and_notifications/painting_levels/textures/challenge/challenge_run_egypt.tga",
+				"Desert Marathon");
+			scene.AddActor(ssa);
+			ssa.POS2D = lastPos;
+			lastPos += spacing;
+			ssa = await CreatePaintingSceneAndSSA("world/home/brick/challenge/challenge_classicrun_dojo.isc",
+				"world/home/brick/challenge/challenge_drc.isc",
+				"Classic Run Dojo",
+				"world/goldenkingdom/challenge/run/challengerun/challenge_run_dojo.isc",
+				"world/home/paintings_and_notifications/painting_levels/textures/challenge/challenge_run_dojo.tga",
+				"Golden Marathon");
+			scene.AddActor(ssa);
+			ssa.POS2D = lastPos;
+			lastPos += spacing;
+			ssa = await CreatePaintingSceneAndSSA("world/home/brick/challenge/challenge_mini_riverstream.isc",
+				"world/home/brick/challenge/challenge_goingup.isc",
+				"ChallengeRiverstream",
+				"world_arcade/ra_challenge/ra_cha_riverstream/ra_cha_riverstream_main.isc",
+				"world/home/paintings_and_notifications/painting_levels/textures/challenge/challenge_mini_riverstream.tga",
+				"Riverstream");
+			scene.AddActor(ssa);
+			ssa.POS2D = lastPos;
+			lastPos += spacing;
+			ssa = await CreatePaintingSceneAndSSA("world/home/brick/challenge/challenge_mini_foliage.isc",
+				"world/home/brick/challenge/challenge_goingdown.isc",
+				"ChallengeFoliage",
+				"world_arcade/ra_challenge/ra_cha_foliage/ra_cha_foliage_main.isc",
+				"world/home/paintings_and_notifications/painting_levels/textures/challenge/challenge_mini_foliage.tga",
+				"Foliage");
+			scene.AddActor(ssa);
 			ssa.POS2D = lastPos;
 
 			await ReplaceSceneByName("challenge_classicrun", "world/home/brick/challenge/challenge_classicrun.isc");
@@ -428,15 +458,15 @@ namespace UbiCanvas.Conversion {
 			await ReplaceSceneByName("challenge_drc", "world/home/brick/challenge/challenge_drc.isc");
 
 			// Mod painting scenes
-			TreatPainting("challenge_classicrun");
-			TreatPainting("challenge_shaolin");
-			TreatPainting("challenge_goingup");
-			TreatPainting("challenge_goingdown");
-			TreatPainting("challenge_drc");
-			TreatPainting("challenge_classicrun_egypt");
-			TreatPainting("challenge_classicrun_dojo");
-			TreatPainting("challenge_mini_riverstream");
-			TreatPainting("challenge_mini_foliage");
+			TreatPainting("challenge_classicrun", 3.974551f, new Vec2d(-0.154388f, -0.43f));
+			TreatPainting("challenge_shaolin", 4.114801f, new Vec2d(-0.17f, -0.36f));
+			TreatPainting("challenge_goingup", 3.889024f, new Vec2d(-0.19449f, -0.383575f));
+			TreatPainting("challenge_goingdown", 3.663299f, new Vec2d(0.16f, -0.357147f));
+			TreatPainting("challenge_drc", 3.854742f, new Vec2d(-0.25f, -0.383606f));
+			TreatPainting("challenge_classicrun_egypt", 3.974551f, new Vec2d(-0.154388f, -0.43f));
+			TreatPainting("challenge_classicrun_dojo", 3.854742f, new Vec2d(-0.25f, -0.383606f));
+			TreatPainting("challenge_mini_riverstream", 3.889024f, new Vec2d(-0.19449f, -0.383575f));
+			TreatPainting("challenge_mini_foliage", 3.663299f, new Vec2d(0.16f, -0.357147f));
 
 			// We added 2 paintings in total, so move the end of the room *2:
 			var addedPos = spacing * 2f;
@@ -496,18 +526,45 @@ namespace UbiCanvas.Conversion {
 					res.ContainingScene.AddActor(newP);
 				}
 			}
-			void TreatPainting(string name) {
+			async Task<SubSceneActor> CreatePaintingSceneAndSSA(string path, string originalPath,
+				string nodeName, string nodePath, string texturePath, string textBoxText) {
+				var originalSceneSSA = await CreateSubSceneActorFromScene(originalPath);
+				var scene = originalSceneSSA.SCENE.value;
+				
+				scene.FindActor(a => a.USERFRIENDLY == "textbox").Result.GetComponent<TextBoxComponent>().rawText = textBoxText;
+				
+				var node = scene.FindActor(a => a.USERFRIENDLY == "nodemap").Result.GetComponent<RO2_HomeNodeComponent>();
+				node.name = nodeName;
+				node.mapPath = new PathRef(nodePath);
+
+				var texture = scene.FindActor(a => a.USERFRIENDLY == "painting").Result.GetComponent<TextureGraphicComponent>();
+				texture.material.textureSet.diffuse = new Path(texturePath);
+
+				var newScene = new ContainerFile<Scene>() {
+					read = true,
+					obj = (Scene)(await TargetContext.Loader.Clone(scene, "isc"))
+				};
+				Bundle.AddFile(new Path(path).CookedPath(TargetContext), newScene);
+
+				return await CreateSubSceneActorFromScene(newScene, path);
+			}
+			void TreatPainting(string name, float paintingScale, Vec2d paintingPos) {
 				var ssa = scene.FindActor(a => a.USERFRIENDLY == name && a is SubSceneActor).Result as SubSceneActor;
 				var painting = ssa.SCENE.value;
 				
 				// Get rid of the text box - the name appears when going past the painting anyway
 				var tb = painting.FindActor(a => a.USERFRIENDLY == "textbox");
 				if (tb != null) tb.ContainingScene.DeletePickable(tb.Result);
-				painting.DeletePickable(painting.FindByName("textbox"));
+				//painting.DeletePickable(painting.FindByName("textbox"));
 
 				// Enlarge the door
 				var nm = painting.FindActor(a => a.USERFRIENDLY == "nodemap");
 				if (nm != null) nm.Result.SCALE *= new Vec2d(1f, 3f);
+
+				// Scale painting
+				var pt = painting.FindActor(a => a.USERFRIENDLY == "painting");
+				pt.Result.SCALE = new Vec2d(paintingScale, paintingScale);
+				pt.Result.POS2D = paintingPos;
 			}
 			async Task ReplaceSceneByName(string name, string path) {
 				await ReplaceScene(scene.FindActor(a => a.USERFRIENDLY == name && a is SubSceneActor).Result as SubSceneActor, path);
@@ -583,6 +640,9 @@ namespace UbiCanvas.Conversion {
 		}
 		async Task<SubSceneActor> CreateSubSceneActorFromScene(string path) {
 			var newScene = await LoadFileFromPatchData<ContainerFile<Scene>>(TargetContext, path);
+			return await CreateSubSceneActorFromScene(newScene, path);
+		}
+		async Task<SubSceneActor> CreateSubSceneActorFromScene(ContainerFile<Scene> newScene, string path) {
 			if (newScene == null) return null;
 			var newActor = new SubSceneActor() {
 				USERFRIENDLY = new Path(path).GetFilenameWithoutExtension(removeCooked: true),
