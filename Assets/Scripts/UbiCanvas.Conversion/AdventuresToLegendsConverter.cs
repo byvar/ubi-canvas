@@ -2348,6 +2348,152 @@ namespace UbiCanvas.Conversion {
 			box.outerBox = box.innerBox;
 		}
 
+
+		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
+			uint priority = 10, Volume volume = null, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null) {
+			if (path == null) {
+				var scenePath = GetScenePath(scene);
+				var sceneName = scenePath.GetFilenameWithoutExtension();
+				var newPath = $"{scenePath.folder}music_triggers/triggermusic_{sceneName}_{musicID}";
+				if(stop) newPath += "_stop";
+				newPath += ".tpl";
+				path = new Path(newPath);
+			}
+			var ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/triggermusic_ju_rl_2_explo.tpl";
+			if(stop) ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/triggermusic_ju_rl_2_music_stop_3s.tpl";
+			var act = await AddNewActor(scene, new Path(ogPath), contextToLoadFrom: LegendsContext);
+			if (CreateTemplateIfNecessary(path, "MUSIC TRIGGER", out var newTPL, act: act)) {
+				newTPL.sizeOf = act.template.sizeOf + 0x4000;
+				newTPL.obj = (Actor_Template)act.template.obj.Clone("tpl", context: LegendsContext);
+				if (stop) {
+					var evt = (EventStopMusic)newTPL.obj.GetComponent<TriggerComponent_Template>().onEnterEvent.obj;
+					evt.priority = priority;
+					evt.setPriority = priority;
+					evt.fadeOutTime = fadeOutTime;
+				} else {
+					var evt = (EventPlayMusic)newTPL.obj.GetComponent<TriggerComponent_Template>().onEnterEvent.obj;
+					evt.nodeName = musicID;
+					evt.priority = priority;
+					evt.setPriority = priority;
+					evt.fadeOutTime = fadeOutTime;
+					if (volume != null) evt.volume = volume;
+				}
+				// Music triggers are weirdly deformed, reset them to a box with 1 extent
+				var poly = newTPL.obj.GetComponent<PlayerDetectorComponent_Template>().shape.GetObject<PhysShapePolygon>();
+				poly.Reset();
+			}
+			act.GetComponent<TriggerComponent>().mode = triggerMode;
+			return act;
+		}
+
+
+		public async Task<Actor> AddMusicTree(Scene scene, Path path) {
+			var ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/musictree_ju_rl_2_movingroots.tpl";
+			var act = await AddNewActor(scene, new Path(ogPath), contextToLoadFrom: LegendsContext);
+			if (CreateTemplateIfNecessary(path, "MUSIC TREE", out var newTPL, act: act)) {
+				newTPL.sizeOf = act.template.sizeOf + 0x10000;
+				newTPL.obj = (Actor_Template)act.template.obj.Clone("tpl", context: LegendsContext);
+				newTPL.obj.AddComponent<BoxInterpolatorComponent_Template>();
+
+				var mc = newTPL.obj.GetComponent<MusicComponent_Template>();
+				mc.musicTree.nodes.Clear();
+				mc.musicPartSet.parts.Clear();
+				void AddPart(string name, Path path) {
+					// Music part template:
+					// sound/300_music/330_rlc/common/mus_mambomambo.wav
+					// sound/300_music/330_rlc/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav
+					// nbMeasures: 2
+					// beatsPerBar: 4
+					// prefetch: 1
+
+					mc.musicPartSet.parts.Add(new MusicPart_Template() {
+						beatsPerBar = 4,
+						nbMeasures = 2,
+						prefetch = 1,
+						name = name,
+						path = path
+					});
+				}
+				void AddSimpleNode(string name, bool loop, params string[] parts) {
+					// Only top-level nodes have names.
+					// pauseinsensitiveFlags = 0
+					// If 1 part:    MusicTreeNodeSequence_Template (set looping in this to 1)
+					//               Leafs: MusicTreeNodePlayMusic_Template
+					// If Multipart: MusicTreeNodeComposite_Template (set looping in this to 1)
+					//               Leafs: MusicTreeBlockSequence_Template
+					//                      nbPartPlayed = parts count
+					//                      startingPart either set to 0x80000002 for some reason, OR uint.max
+					//                      
+					mc.musicTree.nodes.Add(new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeNodeComposite_Template() {
+						nodeName = name,
+						looping = loop ? 1 : 0,
+						leafs = new CListO<Generic<BlendTreeNodeTemplate<MusicTreeResult>>>() {
+							new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeBlockSequence_Template() {
+								//startingPart = uint.MaxValue,
+								startingPart = 0x80000002, // Keep current part when you die
+								nbPartPlayed = (uint)parts.Length,
+								partList = new CListO<StringID>(parts.Select(p => new StringID(p)).ToList())
+							})
+						}
+					}));
+				}
+
+				// TODO
+
+				switch (path.FullPath) {
+					case "sound/common/music_trees/09_rlc/musictree_rlc_01_jungle.tpl": {
+							// Music part template:
+							// sound/300_music/330_rlc/common/mus_mambomambo.wav
+							// sound/300_music/330_rlc/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav
+
+							// Parts
+							AddPart("part_mambomambo", new Path("sound/300_music/330_rlc/common/mus_mambomambo.wav"));
+
+							// Tree
+							AddSimpleNode("mus_mambomambo", true, "part_mambomambo");
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl": {
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl": {
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl": {
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl": {
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_06_nemo.tpl": {
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl": {
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_08_olympus.tpl": {
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_09_dojo.tpl": {
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_10_world.tpl": {
+							break;
+						}
+				}
+
+				// TODO: Mini: Edit lum pickup sounds
+			}
+			var aabbScale = 10000f;
+			var box = act.AddComponent<BoxInterpolatorComponent>();
+			box.innerBox = new AABB() {
+				MIN = new Vec2d(-aabbScale, -aabbScale),
+				MAX = new Vec2d(aabbScale, aabbScale)
+			};
+			box.outerBox = box.innerBox;
+			return act;
+		}
+
 		public async Task FixLumChainsBrightness(Context oldContext, Settings newSettings) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;

@@ -43,6 +43,9 @@ namespace UbiArt {
 		public object GenericObject { get => obj; set => obj = (T)value; }
 		public StringID GenericClassName { get => className; set => className = value; }
 
+		public T2 GetObject<T2>() where T2 : T => (T2)obj;
+		public void SetObject(T obj) => this.obj = obj;
+
 		public void SerializeClassName(CSerializerObject s) {
 			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 				className = s.SerializeObject<StringID>(className, name: "NAME");
