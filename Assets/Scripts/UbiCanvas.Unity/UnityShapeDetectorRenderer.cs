@@ -51,10 +51,13 @@ public class UnityShapeDetectorRenderer : MonoBehaviour {
 		if (shape == null) {
 			Renderer.positionCount = 0;
 		} else {
+			Vector3 baseOffset = new Vector3(ShapeDetectorTPL?.offset?.x ?? 0f, ShapeDetectorTPL?.offset?.y ?? 0f);
+			baseOffset += new Vector3(ShapeDetector?.localOffset?.x ?? 0f, ShapeDetector?.localOffset?.y ?? 0f);
+			Vector3 scale = new Vector3(ShapeDetector.localScale.x, ShapeDetector.localScale.y, 1f);
 			switch (shape) {
 				case PhysShapePolygon poly:
 					Renderer.positionCount = poly.Points.Count;
-					Renderer.SetPositions(poly.Points.Select(p => new Vector3(p.x, p.y, 0)).ToArray());
+					Renderer.SetPositions(poly.Points.Select(p => Vector3.Scale(new Vector3(p.x, p.y, 0) + baseOffset, scale)).ToArray());
 					break;
 				case PhysShapeCircle circle:
 					var pointsCount = 16;
@@ -65,6 +68,7 @@ public class UnityShapeDetectorRenderer : MonoBehaviour {
 					for (int i = 0; i < pointsCount; i++) {
 						var rad = Mathf.Deg2Rad * (i * 360f / pointsCount);
 						points[i] = new Vector3(Mathf.Sin(rad) * radius, 0, Mathf.Cos(rad) * radius);
+						points[i] = Vector3.Scale(points[i] + baseOffset, scale);
 					}
 					Renderer.SetPositions(points);
 					break;
