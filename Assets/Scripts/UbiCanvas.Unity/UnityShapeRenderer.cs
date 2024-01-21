@@ -5,10 +5,10 @@ using UbiCanvas.Helpers;
 using Color = UnityEngine.Color;
 using System.Linq;
 
-public class UnityShapeDetectorRenderer : MonoBehaviour {
+public class UnityShapeRenderer : MonoBehaviour {
 	public LineRenderer Renderer;
-	public ShapeDetectorComponent ShapeDetector;
-	public ShapeDetectorComponent_Template ShapeDetectorTPL;
+	public ShapeComponent ShapeComponent;
+	public ShapeComponent_Template ShapeComponentTPL;
 	public Pickable PickableForSelection;
 	float prevZ = -99999;
 
@@ -23,7 +23,7 @@ public class UnityShapeDetectorRenderer : MonoBehaviour {
 		Renderer.useWorldSpace = false;
 		Renderer.widthMultiplier = 0.075f;
 		Renderer.sortingLayerName = "Gizmo-Line";
-		Color color = new Color(255f / 255f, 165f / 255f, 0f, 1f); // Orange
+		Color color = Color.red;
 		Renderer.material.color = color;
 		Renderer.startColor = color;
 		Renderer.endColor = color;
@@ -40,37 +40,52 @@ public class UnityShapeDetectorRenderer : MonoBehaviour {
 	void UpdateRenderer() {
 		if(Renderer == null) InitRenderer();
 
-		if (ShapeDetector.useEditableShape) {
-			SetPositions(Renderer, ShapeDetector?.editableShape?.shape?.obj);
-		} else {
-			SetPositions(Renderer, ShapeDetectorTPL?.shape?.obj);
-		}
+		SetPositions(Renderer, ShapeComponentTPL?.shape?.obj);
 	}
 
 	void SetPositions(LineRenderer line, PhysShape shape) {
 		if (shape == null) {
 			Renderer.positionCount = 0;
 		} else {
-			Vector3 baseOffset = new Vector3(ShapeDetectorTPL?.offset?.x ?? 0f, ShapeDetectorTPL?.offset?.y ?? 0f);
-			baseOffset += new Vector3(ShapeDetector?.localOffset?.x ?? 0f, ShapeDetector?.localOffset?.y ?? 0f);
-			Vector3 scale = new Vector3(ShapeDetector.localScale.x, ShapeDetector.localScale.y, 1f);
+			Vector3 baseOffset = new Vector3(ShapeComponentTPL?.offset?.x ?? 0f, ShapeComponentTPL?.offset?.y ?? 0f);
+			baseOffset += new Vector3(ShapeComponent?.localOffset?.x ?? 0f, ShapeComponent?.localOffset?.y ?? 0f);
+			Vector3 scale = new Vector3(ShapeComponent.localScale.x, ShapeComponent.localScale.y, 1f);
+
+			Vector3[] points;
+			void ChangeForUseShapeTransform() {
+				// Inverse transform points
+				/*if (!ShapeComponent.useShapeTransform) {
+					var rot = Quaternion.Inverse(transform.rotation);
+					points = points.Select(p => rot * p).ToArray();
+					var scl = transform.lossyScale;
+					if (scl.x != 0 && scl.y != 0) {
+						scl = new Vector3(1f / scl.x, 1f / scl.y, 1f);
+						points = points.Select(p => Vector3.Scale(p, scl)).ToArray();
+					}
+				}*/
+			}
+			
 			switch (shape) {
 				case PhysShapePolygon poly:
 					Renderer.positionCount = poly.Points.Count;
-					Renderer.SetPositions(poly.Points.Select(p => Vector3.Scale(new Vector3(p.x, p.y, 0) + baseOffset, scale)).ToArray());
+					points = poly.Points.Select(p => Vector3.Scale(new Vector3(p.x, p.y, 0) + baseOffset, scale)).ToArray();
+					ChangeForUseShapeTransform();
+					Renderer.SetPositions(points);
 					break;
 				case PhysShapeCircle circle:
 					var pointsCount = 16;
 					var radius = circle.Radius;
 					Renderer.positionCount = pointsCount;
-					var points = new Vector3[pointsCount];
+					points = new Vector3[pointsCount];
 
 					for (int i = 0; i < pointsCount; i++) {
 						var rad = Mathf.Deg2Rad * (i * 360f / pointsCount);
 						points[i] = new Vector3(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius, 0);
 						points[i] = Vector3.Scale(points[i] + baseOffset, scale);
 					}
+					ChangeForUseShapeTransform();
 					Renderer.SetPositions(points);
+
 					break;
 				default:
 					Renderer.positionCount = 0;
