@@ -22,8 +22,14 @@ public class PickableSelector : MonoBehaviour {
         Ray ray = cam.cam.ScreenPointToRay(UnityEngine.Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity, layerMask, QueryTriggerInteraction.Ignore);
         if (hits != null && hits.Length > 0) {
-            System.Array.Sort(hits, (x, y) => (x.distance.CompareTo(y.distance)));
-            var friseEditor = FindObjectOfType<UnityHandleManager>();
+			float Get2DDistanceToOrigin(RaycastHit hit) {
+				var tp = hit.transform.position;
+				var hp = hit.point;
+				return new Vector2(hp.x - tp.x, hp.y - tp.y).magnitude;
+			}
+            System.Array.Sort(hits, (x, y) => (x.distance.CompareTo(y.distance))); // Sort on distance to the camera
+			System.Array.Sort(hits, (x, y) => (Get2DDistanceToOrigin(x).CompareTo(Get2DDistanceToOrigin(y)))); // After this, sort on distance of impact point to transform
+			var friseEditor = FindObjectOfType<UnityHandleManager>();
             if (controller.displayGizmos) {
                 for (int i = 0; i < hits.Length; i++) {
 					// the object identified by hit.transform was clicked
