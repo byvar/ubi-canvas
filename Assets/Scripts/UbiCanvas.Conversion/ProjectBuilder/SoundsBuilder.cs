@@ -102,7 +102,7 @@ namespace UbiCanvas.Conversion {
 								w.WriteString("RAKI", 4, Encoding.UTF8);
 								w.Write((uint)0);
 								w.WriteString("Win ", 4, Encoding.UTF8);
-								if (readChunks[0].Data[0] == 2) {
+								if (usedChunks[0].Data[0] == 2) {
 									w.WriteString("adpc", 4, Encoding.UTF8);
 								} else {
 									w.WriteString("pcm ", 4, Encoding.UTF8);

@@ -2350,7 +2350,7 @@ namespace UbiCanvas.Conversion {
 
 
 		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
-			uint priority = 10, Volume volume = null, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null) {
+			uint priority = 10, uint playOnNext = uint.MaxValue, Volume volume = null, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
@@ -2376,6 +2376,7 @@ namespace UbiCanvas.Conversion {
 					evt.priority = priority;
 					evt.setPriority = priority;
 					evt.fadeOutTime = fadeOutTime;
+					evt.playOnNext = playOnNext;
 					if (volume != null) evt.volume = volume;
 				}
 				// Music triggers are weirdly deformed, reset them to a box with 1 extent
@@ -2430,54 +2431,126 @@ namespace UbiCanvas.Conversion {
 						leafs = new CListO<Generic<BlendTreeNodeTemplate<MusicTreeResult>>>() {
 							new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeBlockSequence_Template() {
 								//startingPart = uint.MaxValue,
-								startingPart = 0x80000002, // Keep current part when you die
+								startingPart = uint.MaxValue, //0x80000002, // Keep current part when you die
 								nbPartPlayed = (uint)parts.Length,
+								playBlockOnce = loop ? 0 : 1,
 								partList = new CListO<StringID>(parts.Select(p => new StringID(p)).ToList())
 							})
 						}
 					}));
 				}
+				void AddSimpleSequenceNode(string name, bool loop, params string[][] parts) {
+					// Only top-level nodes have names.
+					// pauseinsensitiveFlags = 0
+					// If 1 part:    MusicTreeNodeSequence_Template (set looping in this to 1)
+					//               Leafs: MusicTreeNodePlayMusic_Template
+					// If Multipart: MusicTreeNodeComposite_Template (set looping in this to 1)
+					//               Leafs: MusicTreeBlockSequence_Template
+					//                      nbPartPlayed = parts count
+					//                      startingPart either set to 0x80000002 for some reason, OR uint.max
+					//                      
+					var leafs = new List<Generic<BlendTreeNodeTemplate<MusicTreeResult>>>();
+					for(int i = 0; i < parts.Length; i++) {
+						var part = parts[i];
+						leafs.Add(new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeBlockSequence_Template() {
+							//startingPart = uint.MaxValue,
+							startingPart = uint.MaxValue, //0x80000002, // Keep current part when you die
+							nbPartPlayed = (uint)parts.Length,
+							playBlockOnce = (loop && i == parts.Length - 1) ? 0 : 1,
+							partList = new CListO<StringID>(parts[i].Select(p => new StringID(p)).ToList())
+						}));
+					}
 
-				// TODO
+					mc.musicTree.nodes.Add(new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeNodeComposite_Template() {
+						nodeName = name,
+						looping = loop ? 1 : 0,
+						leafs = new CListO<Generic<BlendTreeNodeTemplate<MusicTreeResult>>>()
+					}));
+
+				}
+
+				void AddMamboMambo() {
+					AddPart("part_mambomambo_01", new Path("sound/300_music/330_rlc/common/mus_mambomambo_01.wav"));
+					AddPart("part_mambomambo_02", new Path("sound/300_music/330_rlc/common/mus_mambomambo_02.wav"));
+					AddPart("part_mambomambo_03", new Path("sound/300_music/330_rlc/common/mus_mambomambo_03.wav"));
+					AddPart("part_mambomambo_04", new Path("sound/300_music/330_rlc/common/mus_mambomambo_04.wav"));
+					AddPart("part_mambomambo_05", new Path("sound/300_music/330_rlc/common/mus_mambomambo_05.wav"));
+					AddPart("part_mambomambo_05_to_01", new Path("sound/300_music/330_rlc/common/mus_mambomambo_05_to_01.wav"));
+
+					AddSimpleSequenceNode("mus_mambomambo", true,
+						new string[] { "part_mambomambo_01" }, // Used as intro
+						new string[] {
+									"part_mambomambo_02",
+									"part_mambomambo_03",
+									"part_mambomambo_04",
+									"part_mambomambo_05_to_01"
+						}
+					);
+					AddSimpleNode("mus_mambomambo_stop", false, "part_mambomambo_05"); // trigger this with playOnNext = 96!
+				}
 
 				switch (path.FullPath) {
 					case "sound/common/music_trees/09_rlc/musictree_rlc_01_jungle.tpl": {
+							// TODO
 							// Music part template:
 							// sound/300_music/330_rlc/common/mus_mambomambo.wav
 							// sound/300_music/330_rlc/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav
 
 							// Parts
-							AddPart("part_mambomambo", new Path("sound/300_music/330_rlc/common/mus_mambomambo.wav"));
+							AddPart("part_sacredtree_lp", new Path("sound/300_music/330_rlc/common/mus_sacredtree_lp.wav"));
+							AddPart("part_stonecircle_lp", new Path("sound/300_music/330_rlc/01_jungle/mus_stonecircle_lp.wav"));
 
 							// Tree
-							AddSimpleNode("mus_mambomambo", true, "part_mambomambo");
+							AddSimpleNode("mus_sacredtree", true, "part_sacredtree_lp");
+							AddSimpleNode("mus_stonecircle", true, "part_stonecircle_lp");
+
+							// Mambo mambo
+							AddMamboMambo();
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl": {
+							// COMPLETE
+							// Parts
+							AddPart("part_mysteriousswamps_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_mysteriousswamps_lp.wav"));
+							AddPart("part_babeltower_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_lp.wav"));
+							AddPart("part_babeltower_outro", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_outro.wav"));
+
+							// Tree
+							AddSimpleNode("mus_mysteriousswamps", true, "part_mysteriousswamps_lp");
+							AddSimpleNode("mus_babeltower", true, "part_babeltower_lp");
+							AddSimpleNode("mus_babeltower_outro", false, "part_babeltower_outro");
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl": {
+							// TODO
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl": {
+							// TODO
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl": {
+							// TODO
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_06_nemo.tpl": {
+							// TODO
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl": {
+							// TODO
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_08_olympus.tpl": {
+							// TODO
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_09_dojo.tpl": {
+							// TODO
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_10_world.tpl": {
+							// TODO
 							break;
 						}
 				}
