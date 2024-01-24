@@ -5573,29 +5573,73 @@ namespace UbiCanvas.Conversion {
 			switch (scenePath.FullPath) {
 				case "world/rlc_intro/intro_firstlevel.isc": {
 						Transform(await AddMusicTrigger(scene, "mus_sacredtree"), new Vec2d(123.5f, 0), new Vec2d(200, 50));
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav
 						break;
 					}
 				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
 						var vol = -14f;
 						var main = await AddMusicTrigger(scene, "mus_enchantedforest", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol);
 						var outro = await AddMusicTrigger(scene, "mus_enchantedforest_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60);
-						//var main = await AddMusicTrigger(scene, "mus_enchantedforest", triggerMode: TriggerComponent.Mode.Multiple, volume: vol);
-						//var outro = await AddMusicTrigger(scene, "mus_enchantedforest", stop: true, fadeOutTime: 4f, priority: 11, triggerMode: TriggerComponent.Mode.Multiple, volume: vol);
-						//Transform(main, new Vec2d(200,0), new Vec2d(200, 100));
 						Transform(main, new Vec2d(180, -40), new Vec2d(180, 50));
-						//Transform(outro, new Vec2d(380, -40), new Vec2d(4, 10));
 						Transform(outro, new Vec2d(377, -47), new Vec2d(7, 10));
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/101_jungle/amb_forest_light_lp.wav
+						// sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav
+
 						break;
 					}
-				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc":
-				case "world/rlc_enchantedforest/rowdyrootarena/enchantedforest_rowdyrootarena_nmi.isc":
-				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc":
-				case "world/rlc_enchantedforest/ringsandswings/enchantedforest_ringsandswings_lum_base.isc":
-					break;
-				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc":
-				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc":
-				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc":
-					break;
+				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc": {
+						// TODO: Music
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/101_jungle/amb_forest_lp.wav
+						break;
+					}
+				case "world/rlc_enchantedforest/rowdyrootarena/enchantedforest_rowdyrootarena_nmi.isc": {
+						// TODO: Music
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/101_jungle/amb_forest_night_lp.wav
+						break;
+					}
+				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc": {
+						// TODO: Music
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/101_jungle/amb_forest_lp.wav
+						break;
+					}
+				case "world/rlc_enchantedforest/ringsandswings/enchantedforest_ringsandswings_lum_base.isc": {
+						// TODO: Music
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/101_jungle/amb_forest_02_lp.wav
+						break;
+					}
+				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc": {
+						// TODO: Music
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav
+						break;
+					}
+				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc": {
+						// TODO: Music
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/101_jungle/amb_jun_caverne_mystere_lp.wav
+						break;
+					}
+				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc": {
+						// TODO: Music
+
+						// TODO: Interpolators for ambience
+						// sound/100_ambiances/101_jungle/amb_rain_heavy_lp.wav
+						break;
+					}
 				default:
 					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
 					break;
