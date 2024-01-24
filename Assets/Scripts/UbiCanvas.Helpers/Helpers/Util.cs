@@ -16,6 +16,10 @@ namespace UbiCanvas.Helpers {
             if (FileSystem.mode == FileSystem.Mode.Web)
                 return false;
 
+			if (fileName.Length >= MAX_PATH) {
+				Console.WriteLine($"Path length exceeds MAX_PATH: {fileName}");
+			}
+
             try {
                 Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
@@ -27,6 +31,8 @@ namespace UbiCanvas.Helpers {
                 return false;
             }
         }
+
+		private const int MAX_PATH = 260;
 
         private static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 

@@ -381,7 +381,7 @@ namespace UbiCanvas.Conversion {
 
 			if (generateSGS) {
 				// We aren't in a brick, but in a main scene
-				await SpawnLumMusicManagerIfNecessary(mainContext, settings, scene);
+				await ManageAudio(mainContext, settings, scene);
 			}
 
 			MiniHandleMRDARKScene(mainContext, settings, scene);
@@ -424,7 +424,7 @@ namespace UbiCanvas.Conversion {
 			FixCaptainHelloAnimationBug(mainContext, settings);
 			FixAllUTurnAnimations(mainContext, settings);
 			UpdateSoundFXReferences(mainContext, settings, conversionSettings);
-			FixLumKingMusic(mainContext, settings);
+			//FixLumKingMusic(mainContext, settings);
 			FixCameraModifierBlend(mainContext, settings);
 			FixAspiNetworks(mainContext, settings);
 			FixTeensies(mainContext, settings);
@@ -2350,21 +2350,23 @@ namespace UbiCanvas.Conversion {
 
 
 		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
-			uint priority = 10, uint playOnNext = uint.MaxValue, Volume volume = null, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null) {
+			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
-				var newPath = $"{scenePath.folder}music_triggers/triggermusic_{sceneName}_{musicID}";
+				var newPath = $"{scenePath.folder}{sceneName}_mt/trigger{musicID}";
 				if(stop) newPath += "_stop";
 				newPath += ".tpl";
 				path = new Path(newPath);
 			}
+			var actName = path.GetFilenameWithoutExtension(removeCooked: true);
 			var ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/triggermusic_ju_rl_2_explo.tpl";
 			if(stop) ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/triggermusic_ju_rl_2_music_stop_3s.tpl";
-			var act = await AddNewActor(scene, new Path(ogPath), contextToLoadFrom: LegendsContext);
+			var act = await AddNewActor(scene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
+			var ogTPL = act.template;
 			if (CreateTemplateIfNecessary(path, "MUSIC TRIGGER", out var newTPL, act: act)) {
-				newTPL.sizeOf = act.template.sizeOf + 0x4000;
-				newTPL.obj = (Actor_Template)act.template.obj.Clone("tpl", context: LegendsContext);
+				newTPL.sizeOf = ogTPL.sizeOf + 0x4000;
+				newTPL.obj = (Actor_Template)ogTPL.obj.Clone("tpl", context: LegendsContext);
 				if (stop) {
 					var evt = (EventStopMusic)newTPL.obj.GetComponent<TriggerComponent_Template>().onEnterEvent.obj;
 					evt.priority = priority;
@@ -2377,7 +2379,7 @@ namespace UbiCanvas.Conversion {
 					evt.setPriority = priority;
 					evt.fadeOutTime = fadeOutTime;
 					evt.playOnNext = playOnNext;
-					if (volume != null) evt.volume = volume;
+					evt.volume = new Volume(volume);
 				}
 				// Music triggers are weirdly deformed, reset them to a box with 1 extent
 				var poly = newTPL.obj.GetComponent<PlayerDetectorComponent_Template>().shape.GetObject<PhysShapePolygon>();
@@ -2388,13 +2390,150 @@ namespace UbiCanvas.Conversion {
 		}
 
 
-		public async Task<Actor> AddMusicTree(Scene scene, Path path) {
+		public async Task<Actor> AddMusicTree(Context oldContext, Scene scene, Path path, bool useSpawnPoint = true,
+			bool addAABBmod = true, float aabbScale = 10000f, bool? useMiniSounds = null, bool addLumKingMusic = true) {
+			var sceneToUse = scene;
+			Vec2d posToUse = Vec2d.Zero;
+			if (useSpawnPoint) {
+				var spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>()?.INDEX == 0);
+				if (spawnPoint?.Result == null) {
+					spawnPoint = scene.FindActor(a => a.GetComponent<CheckpointComponent>() != null);
+				}
+				if (spawnPoint?.Result != null) {
+					sceneToUse = spawnPoint.ContainingScene;
+					posToUse = spawnPoint.Result.POS2D;
+				}
+			}
+
 			var ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/musictree_ju_rl_2_movingroots.tpl";
-			var act = await AddNewActor(scene, new Path(ogPath), contextToLoadFrom: LegendsContext);
+			var act = await AddNewActor(sceneToUse, new Path(ogPath), contextToLoadFrom: LegendsContext);
+			act.POS2D = posToUse;
+			var ogTPL = act.template;
 			if (CreateTemplateIfNecessary(path, "MUSIC TREE", out var newTPL, act: act)) {
-				newTPL.sizeOf = act.template.sizeOf + 0x10000;
-				newTPL.obj = (Actor_Template)act.template.obj.Clone("tpl", context: LegendsContext);
-				newTPL.obj.AddComponent<BoxInterpolatorComponent_Template>();
+				newTPL.sizeOf = ogTPL.sizeOf + 0x20000;
+				newTPL.obj = (Actor_Template)ogTPL.obj.Clone("tpl", context: LegendsContext);
+				if (addAABBmod) {
+					newTPL.obj.AddComponent<BoxInterpolatorComponent_Template>();
+				}
+				var sndComponent = newTPL.obj.GetComponent<SoundComponent_Template>();
+
+				if ((!useMiniSounds.HasValue && oldContext.Settings.Game == Game.RM) || useMiniSounds == true) {
+					// Change "ting" sound to match Rayman Mini's
+					var snd = sndComponent.soundList.FirstOrDefault(s => s.name == new StringID(0xAC205A3F));
+					snd.files = new CListO<Path>(new List<Path>() {
+						new Path("sound/200_characters/210_common/lums/sfx_lums_arcade_picked_lvl01_01.wav"), // 0
+						new Path("sound/200_characters/210_common/lums/sfx_lums_arcade_picked_lvl01_02.wav"),
+						new Path("sound/200_characters/210_common/lums/sfx_lums_arcade_picked_lvl01_03.wav"),
+						new Path("sound/200_characters/210_common/lums/sfx_lums_arcade_picked_lvl01_04.wav"),
+						new Path("sound/200_characters/210_common/lums/sfx_lums_arcade_picked_lvl01_05.wav"),
+						new Path("sound/200_characters/210_common/lums/sfx_lums_arcade_picked_lvl01_06.wav"), // 5
+						new Path("sound/200_characters/210_common/lums/sfx_lums_arcade_picked_lvl01_07.wav"),
+					});
+					snd._params.playMode2 = SoundParams.PlayMode2.RandomRememberLast;
+					snd._params.playMode = SoundParams.PlayMode.RandomRememberLast;
+					snd.volume = new Volume(2f);
+					snd.soundPlayAfterdestroy = true;
+
+					// Secondary picked sound
+					// TODO: ALSO played in vox? Should this be duplicated then?
+					var secondaryID = new StringID(0x28ACC95A);
+					sndComponent.soundList.Add(new SoundDescriptor_Template() {
+						sizeOf = 468,
+						name = secondaryID,
+						volume = new Volume(-36),
+						category = new StringID(0xC7389490),
+						limitCategory = new StringID(),
+						limitMode = 1,
+						limitModeEnum = LimiterDef.LimiterMode.StopOldest,
+						files = new CListO<Path>(new List<Path>() {
+							new Path("sound/200_characters/210_common/lums/sfx_lums_arcade_picked_lvl01_secondary.wav"), // 0
+						}),
+						soundPlayAfterdestroy = true,
+						_params = new SoundParams() {
+							sizeOf = 96,
+							numChannels = 1,
+							randomPitchMin = 0.97153193f,
+							randomPitchMax = 1.0293022f,
+							fadeInTime = 0f,
+							fadeOutTime = 9.9999998e-003f,
+							filterQ = 1f,
+							playMode = SoundParams.PlayMode.Random,
+							playMode2 = SoundParams.PlayMode2.Random,
+							modifiers = new CArrayO<Generic<SoundModifier>>() {
+								new Generic<SoundModifier>(new SpatializedPanning() {
+									sizeOf = 12,
+									widthMin = 100,
+									widthMax = 1000,
+								}),
+								new Generic<SoundModifier>(new ScreenRollOff() {
+									sizeOf = 16,
+									distanceMin = 100,
+									distanceMax = 1000,
+								}),
+							},
+						},
+					});
+
+					var fxc = newTPL.obj.GetComponent<FXControllerComponent_Template>();
+					fxc.fxControlList.FirstOrDefault(f => f.name == new StringID(0xE4A9E7B4)).sounds.Add(secondaryID);
+					fxc.fxControlList.FirstOrDefault(f => f.name == new StringID(0x0BEDF422)).sounds.Add(secondaryID);
+				}
+
+				if (addLumKingMusic) {
+					// Lum king music
+					if (sndComponent == null) throw new Exception("Sound component is null");
+					if (sndComponent.soundList == null) throw new Exception("Sound LIST is null");
+					sndComponent.soundList.Add(new SoundDescriptor_Template() {
+						name = new StringID(0xE2C196EA),
+						volume = new Volume(-7 - 8),
+						category = new StringID(0xF03C38A1),
+						limitCategory = new StringID(0x0DF47974),
+						limitMode = 1,
+						limitModeEnum = LimiterDef.LimiterMode.StopOldest,
+						maxInstances = 1,
+						files = new CListO<Path>(new List<Path>() {
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_03_4m.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_02_4m.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_06_4m.wav"),
+							new Path("sound/300_music/310_common/buffer/mus_lumsking_08_4m.wav"),
+						}),
+						_params = new SoundParams() {
+							numChannels = 2,
+							randomVolMin = new Volume(-1),
+							filterQ = 1f,
+							playMode = SoundParams.PlayMode.Random,
+							playMode2 = SoundParams.PlayMode2.Random,
+							modifiers = new CArrayO<Generic<SoundModifier>>(),
+						},
+					});
+
+					// Lum king music (50fps)
+					sndComponent.soundList.Add(new SoundDescriptor_Template() {
+						name = new StringID(0x83E80B90),
+						volume = new Volume(-7 - 8),
+						category = new StringID(0xF03C38A1),
+						limitCategory = new StringID(0x0DF47974),
+						limitMode = 1,
+						limitModeEnum = LimiterDef.LimiterMode.StopOldest,
+						maxInstances = 1,
+						files = new CListO<Path>(new List<Path>() {
+						new Path("sound/300_music/310_common/buffer/mus_lumsking_03_4m_50fps.wav"),
+						new Path("sound/300_music/310_common/buffer/mus_lumsking_02_4m_50fps.wav"),
+						new Path("sound/300_music/310_common/buffer/mus_lumsking_06_4m_50fps.wav"),
+						new Path("sound/300_music/310_common/buffer/mus_lumsking_08_4m_50fps.wav"),
+					}),
+						_params = new SoundParams() {
+							numChannels = 2,
+							randomVolMin = new Volume(-1),
+							filterQ = 1f,
+							playMode = SoundParams.PlayMode.Random,
+							playMode2 = SoundParams.PlayMode2.Random,
+							modifiers = new CArrayO<Generic<SoundModifier>>(),
+						},
+					});
+
+					var lummusic = newTPL.obj.AddComponent<RO2_LumMusicManagerAIComponent_Template>();
+				}
 
 				var mc = newTPL.obj.GetComponent<MusicComponent_Template>();
 				mc.musicTree.nodes.Clear();
@@ -2451,20 +2590,20 @@ namespace UbiCanvas.Conversion {
 					//                      
 					var leafs = new List<Generic<BlendTreeNodeTemplate<MusicTreeResult>>>();
 					for(int i = 0; i < parts.Length; i++) {
-						var part = parts[i];
+						var currentBlock = parts[i];
 						leafs.Add(new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeBlockSequence_Template() {
 							//startingPart = uint.MaxValue,
 							startingPart = uint.MaxValue, //0x80000002, // Keep current part when you die
-							nbPartPlayed = (uint)parts.Length,
+							nbPartPlayed = (uint)currentBlock.Length,
 							playBlockOnce = (loop && i == parts.Length - 1) ? 0 : 1,
-							partList = new CListO<StringID>(parts[i].Select(p => new StringID(p)).ToList())
+							partList = new CListO<StringID>(currentBlock.Select(p => new StringID(p)).ToList())
 						}));
 					}
 
 					mc.musicTree.nodes.Add(new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeNodeComposite_Template() {
 						nodeName = name,
 						looping = loop ? 1 : 0,
-						leafs = new CListO<Generic<BlendTreeNodeTemplate<MusicTreeResult>>>()
+						leafs = new CListO<Generic<BlendTreeNodeTemplate<MusicTreeResult>>>(leafs)
 					}));
 
 				}
@@ -2474,7 +2613,7 @@ namespace UbiCanvas.Conversion {
 					AddPart("part_mambomambo_02", new Path("sound/300_music/330_rlc/common/mus_mambomambo_02.wav"));
 					AddPart("part_mambomambo_03", new Path("sound/300_music/330_rlc/common/mus_mambomambo_03.wav"));
 					AddPart("part_mambomambo_04", new Path("sound/300_music/330_rlc/common/mus_mambomambo_04.wav"));
-					AddPart("part_mambomambo_05", new Path("sound/300_music/330_rlc/common/mus_mambomambo_05.wav"));
+					AddPart("part_mambomambo_05", new Path("sound/300_music/330_rlc/common/mus_mambomambo_05_short.wav"));
 					AddPart("part_mambomambo_05_to_01", new Path("sound/300_music/330_rlc/common/mus_mambomambo_05_to_01.wav"));
 
 					AddSimpleSequenceNode("mus_mambomambo", true,
@@ -2486,12 +2625,33 @@ namespace UbiCanvas.Conversion {
 									"part_mambomambo_05_to_01"
 						}
 					);
-					AddSimpleNode("mus_mambomambo_stop", false, "part_mambomambo_05"); // trigger this with playOnNext = 96!
+					AddSimpleNode("mus_mambomambo_outro", false, "part_mambomambo_05"); // trigger this with playOnNext = 96!
+				}
+				void AddEnchantedForest() {
+					AddPart("part_enchantedforest_01", new Path("sound/300_music/330_rlc/01_jungle/mus_enchantedforest_01.wav"));
+					AddPart("part_enchantedforest_02", new Path("sound/300_music/330_rlc/01_jungle/mus_enchantedforest_02.wav"));
+					AddPart("part_enchantedforest_03", new Path("sound/300_music/330_rlc/01_jungle/mus_enchantedforest_03.wav"));
+					AddPart("part_enchantedforest_04", new Path("sound/300_music/330_rlc/01_jungle/mus_enchantedforest_04.wav"));
+					AddPart("part_enchantedforest_05", new Path("sound/300_music/330_rlc/01_jungle/mus_enchantedforest_05.wav"));
+					AddPart("part_enchantedforest_06", new Path("sound/300_music/330_rlc/01_jungle/mus_enchantedforest_06.wav"));
+					AddPart("part_enchantedforest_07", new Path("sound/300_music/330_rlc/01_jungle/mus_enchantedforest_07_short.wav"));
+
+					AddSimpleSequenceNode("mus_enchantedforest", true,
+						new string[] { "part_enchantedforest_01" }, // Used as intro
+						new string[] {
+									"part_enchantedforest_02",
+									"part_enchantedforest_03",
+									"part_enchantedforest_04",
+									"part_enchantedforest_05",
+									"part_enchantedforest_06",
+						}
+					);
+					AddSimpleNode("mus_enchantedforest_outro", false, "part_enchantedforest_07"); // trigger this with playOnNext = 96!
 				}
 
 				switch (path.FullPath) {
 					case "sound/common/music_trees/09_rlc/musictree_rlc_01_jungle.tpl": {
-							// TODO
+							// COMPLETE
 							// Music part template:
 							// sound/300_music/330_rlc/common/mus_mambomambo.wav
 							// sound/300_music/330_rlc/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav
@@ -2500,11 +2660,26 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_sacredtree_lp", new Path("sound/300_music/330_rlc/common/mus_sacredtree_lp.wav"));
 							AddPart("part_stonecircle_lp", new Path("sound/300_music/330_rlc/01_jungle/mus_stonecircle_lp.wav"));
 
+							AddPart("part_fightcastle_01", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_01.wav"));
+							AddPart("part_fightcastle_02", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_02.wav"));
+							AddPart("part_fightcastle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_outro.wav"));
+
+							AddPart("part_part1castle_intro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav"));
+							AddPart("part_part1castle_lp", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_loop.wav"));
+							AddPart("part_part1castle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_outro.wav"));
+
 							// Tree
 							AddSimpleNode("mus_sacredtree", true, "part_sacredtree_lp");
 							AddSimpleNode("mus_stonecircle", true, "part_stonecircle_lp");
-
-							// Mambo mambo
+							AddSimpleNode("mus_fightcastle", true, "part_fightcastle_01", "part_fightcastle_02");
+							AddSimpleNode("mus_fightcastle_outro", false, "part_fightcastle_outro");
+							AddSimpleSequenceNode("mus_part1castle", true, 
+								new string[] { "part_part1castle_intro" },
+								new string[] { "part_part1castle_lp" });
+							AddSimpleNode("mus_part1castle_outro", false, "part_part1castle_outro");
+							
+							// Common
+							AddEnchantedForest();
 							AddMamboMambo();
 							break;
 						}
@@ -2527,6 +2702,8 @@ namespace UbiCanvas.Conversion {
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl": {
 							// TODO
+							// Common
+							AddEnchantedForest();
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl": {
@@ -2554,16 +2731,22 @@ namespace UbiCanvas.Conversion {
 							break;
 						}
 				}
-
-				// TODO: Mini: Edit lum pickup sounds
 			}
-			var aabbScale = 10000f;
-			var box = act.AddComponent<BoxInterpolatorComponent>();
-			box.innerBox = new AABB() {
-				MIN = new Vec2d(-aabbScale, -aabbScale),
-				MAX = new Vec2d(aabbScale, aabbScale)
-			};
-			box.outerBox = box.innerBox;
+			if (addAABBmod) {
+				if (act.GetComponent<BoxInterpolatorComponent>() == null) {
+					var box = act.AddComponent<BoxInterpolatorComponent>();
+					box.innerBox = new AABB() {
+						MIN = new Vec2d(-aabbScale, -aabbScale),
+						MAX = new Vec2d(aabbScale, aabbScale)
+					};
+					box.outerBox = box.innerBox;
+				}
+			}
+			if (addLumKingMusic) {
+				if (act.GetComponent<RO2_LumMusicManagerAIComponent>() == null) {
+					act.AddComponent<RO2_LumMusicManagerAIComponent>();
+				}
+			}
 			return act;
 		}
 
@@ -4816,7 +4999,7 @@ namespace UbiCanvas.Conversion {
 			var scenePath = l.Paths[loadedScene.Key];
 
 			int index = 1;
-			var pathBase = $"{scenePath.GetFilenameWithoutExtension(fullPath: true, removeCooked: true)}_instancerelays/";
+			var pathBase = $"{scenePath.GetFilenameWithoutExtension(fullPath: true, removeCooked: true)}_ir/"; // InstanceRelay (shortened to avoid reaching max path length)
 
 			var relays = scene.FindActors(a => a.GetComponent<RelayEventComponent>()?.relays?.Any() ?? false);
 			foreach (var res in relays) {
@@ -5350,6 +5533,72 @@ namespace UbiCanvas.Conversion {
 				foreach (var fx in fxScenes) {
 					fx.ContainingScene.DeletePickable(fx.Result);
 				}
+			}
+		}
+
+		public async Task ManageAudio(Context oldContext, Settings newSettings, Scene scene) {
+			// Remove existing lum music manager
+			var lumMusic = scene.FindActors(a => a.GetComponent<RO2_RewardEffectsPlayerComponent>() != null);
+			foreach (var a in lumMusic) {
+				a.ContainingScene.DeletePickable(a.Result);
+			}
+
+			var scenePath = GetScenePath(scene);
+
+			// Create music trees
+			switch (scenePath.FullPath) {
+				case "world/rlc_intro/intro_firstlevel.isc":
+				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc":
+				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc":
+				case "world/rlc_enchantedforest/rowdyrootarena/enchantedforest_rowdyrootarena_nmi.isc":
+				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc":
+				case "world/rlc_enchantedforest/ringsandswings/enchantedforest_ringsandswings_lum_base.isc":
+					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_01_jungle.tpl"));
+					break;
+				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc":
+				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc":
+				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc":
+					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl"));
+					break;
+				default:
+					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
+					break;
+			}
+
+			// Create music triggers
+			void Transform(Pickable p, Vec2d pos, Vec2d scale) {
+				p.POS2D = pos;
+				p.SCALE = scale;
+			}
+			switch (scenePath.FullPath) {
+				case "world/rlc_intro/intro_firstlevel.isc": {
+						Transform(await AddMusicTrigger(scene, "mus_sacredtree"), new Vec2d(123.5f, 0), new Vec2d(200, 50));
+						break;
+					}
+				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
+						var vol = -14f;
+						var main = await AddMusicTrigger(scene, "mus_enchantedforest", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol);
+						var outro = await AddMusicTrigger(scene, "mus_enchantedforest_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60);
+						//var main = await AddMusicTrigger(scene, "mus_enchantedforest", triggerMode: TriggerComponent.Mode.Multiple, volume: vol);
+						//var outro = await AddMusicTrigger(scene, "mus_enchantedforest", stop: true, fadeOutTime: 4f, priority: 11, triggerMode: TriggerComponent.Mode.Multiple, volume: vol);
+						//Transform(main, new Vec2d(200,0), new Vec2d(200, 100));
+						Transform(main, new Vec2d(180, -40), new Vec2d(180, 50));
+						//Transform(outro, new Vec2d(380, -40), new Vec2d(4, 10));
+						Transform(outro, new Vec2d(377, -47), new Vec2d(7, 10));
+						break;
+					}
+				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc":
+				case "world/rlc_enchantedforest/rowdyrootarena/enchantedforest_rowdyrootarena_nmi.isc":
+				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc":
+				case "world/rlc_enchantedforest/ringsandswings/enchantedforest_ringsandswings_lum_base.isc":
+					break;
+				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc":
+				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc":
+				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc":
+					break;
+				default:
+					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
+					break;
 			}
 		}
 
