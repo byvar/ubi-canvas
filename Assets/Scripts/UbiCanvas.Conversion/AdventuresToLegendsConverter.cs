@@ -2348,13 +2348,60 @@ namespace UbiCanvas.Conversion {
 			box.outerBox = box.innerBox;
 		}
 
+		public async Task<Actor> AddAmbienceInterpolator(Scene scene, string ambID, Path soundPath, AABB innerBox,
+			AABB outerBox = null, float padding = 1f, float volume = -8f, Path path = null) {
+			if (path == null) {
+				var scenePath = GetScenePath(scene);
+				var sceneName = scenePath.GetFilenameWithoutExtension();
+				var newPath = $"{scenePath.folder}{sceneName}_snd/trig_{ambID}";
+				newPath += ".tpl";
+				path = new Path(newPath);
+			}
+			var actName = path.GetFilenameWithoutExtension(removeCooked: true);
+			var ogPath = "sound/common/ambiances/01_jungle/triggerinterpolator_jun_forest.tpl";
+			var act = await AddNewActor(scene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
+			var ogTPL = act.template;
+			if (CreateTemplateIfNecessary(path, "AMBIENCE INTERPOLATOR", out var newTPL, act: act)) {
+				newTPL.sizeOf = ogTPL.sizeOf + 0x4000;
+				newTPL.obj = (Actor_Template)ogTPL.obj.Clone("tpl", context: LegendsContext);
+				newTPL.obj.GetComponent<SoundBoxInterpolatorComponent_Template>().sound = new StringID(ambID);
+				var sc = newTPL.obj.GetComponent<SoundComponent_Template>();
+				var sd = sc.soundList[0];
+				sd.name = new StringID(ambID);
+				sd.volume = new Volume(volume);
+				sd.files[0] = soundPath;
+			}
+			var bi = act.GetComponent<SoundBoxInterpolatorComponent>();
+
+			// Normalize boxes, position actor in center of box
+			var newPos = innerBox.MIN + (innerBox.MAX - innerBox.MIN) / 2f;
+			act.POS2D = newPos;
+			innerBox.MIN -= newPos;
+			innerBox.MAX -= newPos;
+			if (outerBox != null) {
+				outerBox.MIN -= newPos;
+				outerBox.MAX -= newPos;
+			}
+
+			bi.innerBox = innerBox;
+			if (outerBox == null) {
+				outerBox = new AABB() {
+					MIN = innerBox.MIN - Vec2d.One * padding,
+					MAX = innerBox.MAX + Vec2d.One * padding
+				};
+			}
+			bi.outerBox = outerBox;
+
+			return act;
+		}
+
 
 		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
-				var newPath = $"{scenePath.folder}{sceneName}_mt/trigger{musicID}";
+				var newPath = $"{scenePath.folder}{sceneName}_snd/trig_{musicID}";
 				if(stop) newPath += "_stop";
 				newPath += ".tpl";
 				path = new Path(newPath);
@@ -5575,7 +5622,12 @@ namespace UbiCanvas.Conversion {
 						Transform(await AddMusicTrigger(scene, "mus_sacredtree"), new Vec2d(123.5f, 0), new Vec2d(200, 50));
 
 						// TODO: Interpolators for ambience
-						// sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav
+						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
+							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"), 
+							new AABB() {
+								MIN = new Vec2d(-25, -34),
+								MAX = new Vec2d(310, 38)
+							}, volume: -25);
 						break;
 					}
 				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
@@ -5585,9 +5637,18 @@ namespace UbiCanvas.Conversion {
 						Transform(main, new Vec2d(180, -40), new Vec2d(180, 50));
 						Transform(outro, new Vec2d(377, -47), new Vec2d(7, 10));
 
-						// TODO: Interpolators for ambience
-						// sound/100_ambiances/101_jungle/amb_forest_light_lp.wav
-						// sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav
+						await AddAmbienceInterpolator(scene, "amb_forest_light",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_light_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(-10, -54.5f),
+								MAX = new Vec2d(400, 10)
+							}, volume: -11);
+						await AddAmbienceInterpolator(scene, "amb_ma_cave_wiiu",
+							new Path("sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(288.4f, -78.2f),
+								MAX = new Vec2d(344.7f, -59.7f)
+							}, volume: -11);
 
 						break;
 					}
