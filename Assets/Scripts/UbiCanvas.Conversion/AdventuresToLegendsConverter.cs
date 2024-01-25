@@ -4215,16 +4215,15 @@ namespace UbiCanvas.Conversion {
 
 					// Fill in meshStaticAABB based on visual data
 					if (fr.meshBuildData.value?.StaticVertexList?.Any() ?? false) {
+						var globalV = fr.meshBuildData.value.StaticVertexList.Select(v => LocalToGlobal3D(v.pos));
 						fr.meshStaticData = new UbiArt.Nullable<Frise.MeshStaticData>(new Frise.MeshStaticData() {
-							LocalAABB = new AABB() {
+							WorldAABB = new AABB() {
 								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.y)),
 								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.y))
 							},
-							WorldAABB = new AABB() {
-								//MIN = new Vec2d(float.NegativeInfinity, float.NegativeInfinity),
-								//MAX = new Vec2d(float.PositiveInfinity, float.PositiveInfinity),
-								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
-								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).y))
+							LocalAABB = new AABB() {
+								MIN = new Vec2d(globalV.Min(v => v.x), globalV.Min(v => v.y)),
+								MAX = new Vec2d(globalV.Max(v => v.x), globalV.Max(v => v.y))
 							},
 						});
 						fr.AABB_MinZ = fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.z);
@@ -4257,16 +4256,15 @@ namespace UbiCanvas.Conversion {
 
 					// Fill in meshAnimAABB based on visual data
 					if (fr.meshBuildData.value?.AnimVertexList?.Any() ?? false) {
+						var globalV = fr.meshBuildData.value.AnimVertexList.Select(v => LocalToGlobal3D(v.pos));
 						fr.meshAnimData = new UbiArt.Nullable<Frise.MeshAnimData>(new Frise.MeshAnimData() {
-							LocalAABB = new AABB() {
+							WorldAABB = new AABB() {
 								MIN = new Vec2d(fr.meshBuildData.value.AnimVertexList.Min(v => v.pos.x), fr.meshBuildData.value.AnimVertexList.Min(v => v.pos.y)),
 								MAX = new Vec2d(fr.meshBuildData.value.AnimVertexList.Max(v => v.pos.x), fr.meshBuildData.value.AnimVertexList.Max(v => v.pos.y))
 							},
-							WorldAABB = new AABB() {
-								//MIN = new Vec2d(float.NegativeInfinity, float.NegativeInfinity),
-								//MAX = new Vec2d(float.PositiveInfinity, float.PositiveInfinity),
-								MIN = new Vec2d(fr.meshBuildData.value.AnimVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.AnimVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
-								MAX = new Vec2d(fr.meshBuildData.value.AnimVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.AnimVertexList.Max(v => LocalToGlobal3D(v.pos).y))
+							LocalAABB = new AABB() {
+								MIN = new Vec2d(globalV.Min(v => v.x), globalV.Min(v => v.y)),
+								MAX = new Vec2d(globalV.Max(v => v.x), globalV.Max(v => v.y))
 							},
 						});
 						fr.AABB_MinZ = fr.meshBuildData.value.AnimVertexList.Min(v => v.pos.z);
@@ -6884,14 +6882,15 @@ namespace UbiCanvas.Conversion {
 
 					// Fill in meshStaticAABB based on visual data
 					if (fr.meshBuildData.value?.StaticVertexList?.Any() ?? false) {
+						var globalV = fr.meshBuildData.value.StaticVertexList.Select(v => LocalToGlobal3D(v.pos));
 						fr.meshStaticData = new UbiArt.Nullable<Frise.MeshStaticData>(new Frise.MeshStaticData() {
-							LocalAABB = new AABB() {
+							WorldAABB = new AABB() {
 								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.y)),
 								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.y))
 							},
-							WorldAABB = new AABB() {
-								MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Min(v => LocalToGlobal3D(v.pos).y)),
-								MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).x), fr.meshBuildData.value.StaticVertexList.Max(v => LocalToGlobal3D(v.pos).y))
+							LocalAABB = new AABB() {
+								MIN = new Vec2d(globalV.Min(v => v.x), globalV.Min(v => v.y)),
+								MAX = new Vec2d(globalV.Max(v => v.x), globalV.Max(v => v.y))
 							},
 						});
 						fr.AABB_MinZ = fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.z);

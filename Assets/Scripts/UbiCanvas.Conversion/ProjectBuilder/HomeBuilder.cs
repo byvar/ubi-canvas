@@ -743,11 +743,11 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 			}
-			ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MIN, false);
-			ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MAX, false);
+			ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MIN, true);
+			ExtendVec2d(f.meshStaticData?.value?.LocalAABB?.MAX, true);
 
-			ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MIN, true);
-			ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MAX, true);
+			ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MIN, false);
+			ExtendVec2d(f.meshStaticData?.value?.WorldAABB?.MAX, false);
 		}
 
 		void RescalePickable(Pickable p, float scaleFactorX) {
@@ -756,9 +756,9 @@ namespace UbiCanvas.Conversion {
 				Vec2d LocalToGlobal(Vec2d point) => (point * f.SCALE) + f.POS2D;
 
 				var aabb = f.meshStaticData?.value;
-				if (aabb?.LocalAABB != null) {
-					aabb.WorldAABB.MIN = LocalToGlobal(aabb.LocalAABB.MIN);
-					aabb.WorldAABB.MAX = LocalToGlobal(aabb.LocalAABB.MAX);
+				if (aabb?.WorldAABB != null) {
+					aabb.LocalAABB.MIN = LocalToGlobal(aabb.WorldAABB.MIN);
+					aabb.LocalAABB.MAX = LocalToGlobal(aabb.WorldAABB.MAX);
 				}
 			}
 		}
