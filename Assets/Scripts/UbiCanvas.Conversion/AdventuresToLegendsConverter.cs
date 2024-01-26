@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Codice.Client.Common;
+using Cysharp.Threading.Tasks;
 using ImageMagick;
 using Newtonsoft.Json;
 using System;
@@ -1350,6 +1351,32 @@ namespace UbiCanvas.Conversion {
 						await CreateTutoActors(oldContext, newSettings, scene);
 						break;
 					}
+
+				case "world/rlc_enchantedforest/ringsandswings/enchantedforest_ringsandswings_lum_base.isc": {
+						// A rabbid falls off here...
+						var tree = new PickableTree(scene);
+						var plat = tree.FollowObjectPath(new ObjectPath("seasonaleventenemyspawner@2|minotaur_flyingplatform"), throwIfNotFound: false);
+						if (plat?.Pickable != null) {
+							GenericAABBHack((Actor)plat.Pickable, aabbScale: 100f);
+						}
+						break;
+					}
+
+				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc": {
+						UseFastCameras(scene, speed: 1.2f);
+						//ConvertToFastCamera(scene.FindActor(a => a.USERFRIENDLY == "Arena1_Open").Result);
+						break;
+					}
+
+				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc": {
+						// Delete weird particle effect not suited for exploration version of this map
+						var trunkExplosion = scene.FindActor(a => a.USERFRIENDLY == "fx_trunkexplosion_01");
+						trunkExplosion.ContainingScene.DeletePickable(trunkExplosion.Result);
+						/*var trig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@9");
+						var lnks = trig.Result.GetComponent<LinkComponent>();
+						lnks.LinkedChildren = new CListO<ObjectPath>(lnks.LinkedChildren.Where(l => l.id != "fx_trunkexplosion_01").ToList());*/
+						break;
+					}
 				case "world/rlc_enchantedforest/forestegghunt/enchantedforest_forestegghunt_exp_base.isc": {
 						await CreateTutoActors(oldContext, newSettings, scene);
 						break;
@@ -2397,7 +2424,7 @@ namespace UbiCanvas.Conversion {
 
 
 		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
-			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null) {
+			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
@@ -2406,10 +2433,12 @@ namespace UbiCanvas.Conversion {
 				newPath += ".tpl";
 				path = new Path(newPath);
 			}
+			if(containingScene == null) containingScene = scene;
+
 			var actName = path.GetFilenameWithoutExtension(removeCooked: true);
 			var ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/triggermusic_ju_rl_2_explo.tpl";
 			if(stop) ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/triggermusic_ju_rl_2_music_stop_3s.tpl";
-			var act = await AddNewActor(scene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
+			var act = await AddNewActor(containingScene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
 			var ogTPL = act.template;
 			if (CreateTemplateIfNecessary(path, "MUSIC TRIGGER", out var newTPL, act: act)) {
 				newTPL.sizeOf = ogTPL.sizeOf + 0x4000;
@@ -2433,6 +2462,52 @@ namespace UbiCanvas.Conversion {
 				poly.Reset();
 			}
 			act.GetComponent<TriggerComponent>().mode = triggerMode;
+			return act;
+		}
+
+		public async Task<Actor> AddMusicEventRelay(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
+			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, Path path = null, Scene containingScene = null) {
+			if (path == null) {
+				var scenePath = GetScenePath(scene);
+				var sceneName = scenePath.GetFilenameWithoutExtension();
+				var newPath = $"{scenePath.folder}{sceneName}_snd/rel_{musicID}";
+				if (stop) newPath += "_stop";
+				newPath += ".tpl";
+				path = new Path(newPath);
+			}
+			if (containingScene == null) containingScene = scene;
+
+			var actName = path.GetFilenameWithoutExtension(removeCooked: true);
+			var ogPath = "world/jungle/level/ju_rl_1_castle/actor/relay_pause.tpl";
+			var act = await AddNewActor(containingScene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
+			var ogTPL = act.template;
+			if (CreateTemplateIfNecessary(path, "MUSIC EVENT RELAY", out var newTPL, act: act)) {
+				newTPL.sizeOf = ogTPL.sizeOf + 0x4000;
+				newTPL.obj = (Actor_Template)ogTPL.obj.Clone("tpl", context: LegendsContext);
+				var relay = newTPL.obj.GetComponent<RelayEventComponent_Template>().relays[0];
+				relay.triggerBroadcast = true;
+				// Note: relay.delay does not work it seems!
+				if (stop) {
+					relay.eventToRelay = new Generic<UbiArt.ITF.Event>(new EventStopMusic() {
+						metronomeType = 2,
+						priority = priority,
+						setPriority = priority,
+						fadeOutTime = fadeOutTime,
+					});
+				} else {
+					relay.eventToRelay = new Generic<UbiArt.ITF.Event>(new EventPlayMusic() {
+						nodeName = musicID,
+						metronomeType = 2,
+						priority = priority,
+						setPriority = priority,
+						fadeOutTime = fadeOutTime,
+						playOnNext = playOnNext,
+						stopAndPlay = 1,
+						bus = new StringID(0x337E2A2C),
+						volume = new Volume(volume)
+					});
+				}
+			}
 			return act;
 		}
 
@@ -3687,15 +3762,20 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void UseFastCameras(Scene scene) {
+		public void UseFastCameras(Scene scene, float speed = 0.5f) {
 			var cms = scene.FindActors(a => a?.GetComponent<CameraModifierComponent>() != null);
 			foreach (var cm in cms) {
-				ConvertToFastCamera(cm.Result);
+				ConvertToFastCamera(cm.Result, speed: speed);
 			}
 		}
 
-		public void ConvertToFastCamera(Actor act) {
+		public void ConvertToFastCamera(Actor act, float speed = 0.5f) {
 			if(act?.template?.obj?.GetComponent<CameraModifierComponent_Template>() == null) return;
+
+			var suffix = "fastcam";
+			if (speed != 0.5f) {
+				suffix += $"_{speed:0_00}";
+			}
 
 			if (CloneTemplateIfNecessary(act.LUA, "fastcam", "FAST CAMERA", act.template, out var newTPL, act: act)) {
 				var CM = newTPL?.obj?.GetComponent<CameraModifierComponent_Template>();
@@ -3703,8 +3783,8 @@ namespace UbiCanvas.Conversion {
 					if (CM.CM.modifierBlend == float.MaxValue) {
 						CM.CM.modifierBlend = 0.006f;
 						CM.CM.modifierInertie = 0.82f;
-						CM.CM.constraintDelayToActivate = Vec3d.One * 0.5f;
-						CM.CM.constraintDelayToDisable = Vec3d.One * 0.5f;
+						CM.CM.constraintDelayToActivate = Vec3d.One * speed;
+						CM.CM.constraintDelayToDisable = Vec3d.One * speed;
 					}
 				}
 			}
@@ -5615,6 +5695,36 @@ namespace UbiCanvas.Conversion {
 				p.POS2D = pos;
 				p.SCALE = scale;
 			}
+			void TransformAABB(Pickable p, AABB aabb) {
+				var newScl = (aabb.MAX - aabb.MIN) / 2f;
+				var newPos = aabb.MIN + newScl;
+				p.POS2D = newPos;
+				p.SCALE = newScl;
+			}
+			void TransformCopyPickable(Pickable p, Pickable copyFrom) {
+				p.POS2D = copyFrom.POS2D;
+				p.SCALE = copyFrom.SCALE;
+			}
+			AABB GetSceneAABBFromFrises(Scene scene) {
+				AABB totalAABB = null;
+				foreach (var pick in scene.FindPickables(p => p is Frise f)) {
+					var f = pick.Result as Frise;
+					var aabb = f?.meshStaticData?.value?.LocalAABB;
+					if (aabb != null) {
+						if (totalAABB == null) {
+							totalAABB = new AABB();
+							totalAABB.SetPoint(aabb.MIN);
+						}
+						totalAABB.Grow(aabb);
+					}
+				}
+				return totalAABB;
+			}
+			void Link(Actor a, string path) {
+				a.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath(path)
+				});
+			}
 			switch (scenePath.FullPath) {
 				case "world/rlc_intro/intro_firstlevel.isc": {
 						Transform(await AddMusicTrigger(scene, "mus_sacredtree"), new Vec2d(123.5f, 0), new Vec2d(200, 50));
@@ -5651,31 +5761,75 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc": {
-						// TODO: Music
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_fightcastle", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+						/*var outro = await AddMusicTrigger(scene, "mus_fightcastle_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60);
+						TransformAABB(outro, new AABB() {
+							MIN = new Vec2d(25.87f, 79.12f),
+							MAX = new Vec2d(43.71f, 91.26f)
+						});*/
+						var butterfly = scene.FindActor(a => a.USERFRIENDLY == "butterflyanimtrigger_blue@8");
+						var outro = await AddMusicEventRelay(scene, "mus_fightcastle_outro", volume: vol, playOnNext: 0x60, containingScene: butterfly.ContainingScene);
+						TransformCopyPickable(outro, butterfly.Result);
+						Link(butterfly.Result, outro.USERFRIENDLY);
 
-						// TODO: Interpolators for ambience
-						// sound/100_ambiances/101_jungle/amb_forest_lp.wav
+						await AddAmbienceInterpolator(scene, "amb_forest",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_lp.wav"),
+							aabb, volume: -17);
 						break;
 					}
 				case "world/rlc_enchantedforest/rowdyrootarena/enchantedforest_rowdyrootarena_nmi.isc": {
-						// TODO: Music
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_part1castle", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+						/*var outro = await AddMusicTrigger(scene, "mus_part1castle_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60);
+						TransformAABB(outro, new AABB() {
+							MIN = new Vec2d(25.87f, 79.12f),
+							MAX = new Vec2d(43.71f, 91.26f)
+						});*/
+						var multiEventTrigger = scene.FindActor(a => a.USERFRIENDLY == "multipleevent_trigger@11");
+						var debugTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@17");
+						var outro = await AddMusicEventRelay(scene, "mus_part1castle_outro", volume: vol, playOnNext: 0x60, containingScene: multiEventTrigger.ContainingScene);
+						TransformCopyPickable(outro, multiEventTrigger.Result);
+						Link(multiEventTrigger.Result, outro.USERFRIENDLY);
+						Link(debugTrigger.Result, outro.USERFRIENDLY);
 
-						// TODO: Interpolators for ambience
-						// sound/100_ambiances/101_jungle/amb_forest_night_lp.wav
+						await AddAmbienceInterpolator(scene, "amb_forest_night",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_night_lp.wav"),
+							aabb, volume: -18);
 						break;
 					}
 				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc": {
-						// TODO: Music
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_stonecircle", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
 
-						// TODO: Interpolators for ambience
-						// sound/100_ambiances/101_jungle/amb_forest_lp.wav
+						await AddAmbienceInterpolator(scene, "amb_forest",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_lp.wav"),
+							aabb, volume: -14);
 						break;
 					}
 				case "world/rlc_enchantedforest/ringsandswings/enchantedforest_ringsandswings_lum_base.isc": {
-						// TODO: Music
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
 
-						// TODO: Interpolators for ambience
-						// sound/100_ambiances/101_jungle/amb_forest_02_lp.wav
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, triggerMode: TriggerComponent.Mode.OnceAndReset, fadeOutTime: 1f), aabb);
+
+						var startTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@7");
+						var mambomambo = await AddMusicEventRelay(scene, "mus_mambomambo", volume: vol, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(mambomambo, startTrigger.Result);
+						Link(startTrigger.Result, mambomambo.USERFRIENDLY);
+						TransformAABB(await AddMusicTrigger(scene, "mus_mambomambo_outro", volume: vol, playOnNext: 0x60, triggerMode: TriggerComponent.Mode.OnceAndReset),
+							new AABB() {
+								MIN = new Vec2d(524.81f, -92.12f),
+								MAX = new Vec2d(551.51f, -83.3f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_forest_02",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_02_lp.wav"),
+							aabb, volume: -14);
 						break;
 					}
 				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc": {
