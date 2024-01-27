@@ -2806,20 +2806,34 @@ namespace UbiCanvas.Conversion {
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl": {
-							// COMPLETE
+							// TODO
 							// Parts
-							AddPart("part_mysteriousswamps_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_mysteriousswamps_lp.wav"));
+							AddPart("part_mrdark_mini_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_mrdark_mini_lp.wav"));
 							AddPart("part_babeltower_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_lp.wav"));
 							AddPart("part_babeltower_outro", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_outro.wav"));
+							AddPart("part_stormingthecastle_01_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_stormingthecastle_01_lp.wav"));
 
 							// Tree
-							AddSimpleNode("mus_mysteriousswamps", true, "part_mysteriousswamps_lp");
+							AddSimpleNode("mus_mrdark_mini", true, "part_mrdark_mini_lp");
 							AddSimpleNode("mus_babeltower", true, "part_babeltower_lp");
 							AddSimpleNode("mus_babeltower_outro", false, "part_babeltower_outro");
+							AddSimpleNode("mus_stormingthecastle_01", true, "part_stormingthecastle_01_lp");
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl": {
 							// TODO
+							// Parts
+							AddPart("part_mysteriousswamps_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_lp.wav"));
+							AddPart("part_stormingthecastle_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_lp.wav"));
+							AddPart("part_stormingthecastle_02_outro", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_outro.wav"));
+
+							// Tree
+							AddSimpleNode("mus_mysteriousswamps", true, "part_mysteriousswamps_lp");
+							AddSimpleNode("mus_stormingthecastle_02", true, "part_stormingthecastle_02_lp");
+							AddSimpleNode("mus_stormingthecastle_02_outro", false, "part_stormingthecastle_02_outro");
+
+							// Common
+							AddMamboMambo();
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl": {
@@ -5833,24 +5847,47 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc": {
-						// TODO: Music
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
 
-						// TODO: Interpolators for ambience
-						// sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav
+						TransformAABB(await AddMusicTrigger(scene, "mus_mrdark_mini", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_mrdark_mini_stop", stop: true, fadeOutTime: 5, triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol),
+							new AABB() {
+								MIN = new Vec2d(327.3f, -47.1f),
+								MAX = new Vec2d(359.5f, -27.8f)
+						});
+
+						await AddAmbienceInterpolator(scene, "amb_caverne_mystere",
+							new Path("sound/100_ambiances/101_jungle/amb_jun_caverne_mystere_lp.wav"),
+							aabb, volume: -8);
 						break;
 					}
 				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc": {
-						// TODO: Music
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -12f;
 
-						// TODO: Interpolators for ambience
-						// sound/100_ambiances/101_jungle/amb_jun_caverne_mystere_lp.wav
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(446.5f, -31f),
+								MAX = new Vec2d(506.7f, 22f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_landofdead",
+							new Path("sound/100_ambiances/109_landofdead/amb_landofdead_lp.wav"),
+							aabb, volume: -8);
 						break;
 					}
 				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc": {
-						// TODO: Music
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
 
-						// TODO: Interpolators for ambience
-						// sound/100_ambiances/101_jungle/amb_rain_heavy_lp.wav
+						TransformAABB(await AddMusicTrigger(scene, "mus_stormingthecastle_01", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_rain_heavy",
+							new Path("sound/100_ambiances/101_jungle/amb_rain_heavy_lp.wav"),
+							aabb, volume: -20);
 						break;
 					}
 				default:
