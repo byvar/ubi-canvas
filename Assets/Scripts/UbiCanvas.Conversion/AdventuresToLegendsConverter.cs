@@ -4535,8 +4535,13 @@ namespace UbiCanvas.Conversion {
 
 						var relay = CreateHangRelay("relay_hang", newHangEvent, hangspotTPL.onHangEvent, hangspotTPL.hangEventTriggerOnce);
 						createdRelays.Add(relay);
-						relay = CreateHangRelay("relay_unhang", newUnhangEvent, hangspotTPL.onUnhangEvent, hangspotTPL.unHangEventTriggerOnce);
-						createdRelays.Add(relay);
+						if (!hangspotTPL.unHangEventTriggerOnce && hangspotTPL.onUnhangEvent?.obj is EventTrigger et && et?.activated == false) {
+							// Workaround for enemies reappearing in hauntedcastle_hiddendoorgalore.
+							// We'll see this as a null value. No unhang event necessary
+						} else {
+							relay = CreateHangRelay("relay_unhang", newUnhangEvent, hangspotTPL.onUnhangEvent, hangspotTPL.unHangEventTriggerOnce);
+							createdRelays.Add(relay);
+						}
 
 						// Moved to TPLFix function called way later in the process
 						//hangspotTPL.onHangEvent = newHangEvent;
