@@ -2823,12 +2823,14 @@ namespace UbiCanvas.Conversion {
 					case "sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl": {
 							// TODO
 							// Parts
-							AddPart("part_mysteriousswamps_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_lp.wav"));
+							AddPart("part_mysteriousswamps_01_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_01_lp.wav"));
+							AddPart("part_mysteriousswamps_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_02_lp.wav"));
 							AddPart("part_stormingthecastle_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_lp.wav"));
 							AddPart("part_stormingthecastle_02_outro", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_outro.wav"));
 
 							// Tree
-							AddSimpleNode("mus_mysteriousswamps", true, "part_mysteriousswamps_lp");
+							AddSimpleNode("mus_mysteriousswamps_01", true, "part_mysteriousswamps_01_lp");
+							AddSimpleNode("mus_mysteriousswamps_02", true, "part_mysteriousswamps_02_lp");
 							AddSimpleNode("mus_stormingthecastle_02", true, "part_stormingthecastle_02_lp");
 							AddSimpleNode("mus_stormingthecastle_02_outro", false, "part_stormingthecastle_02_outro");
 
@@ -5721,8 +5723,16 @@ namespace UbiCanvas.Conversion {
 				p.SCALE = newScl;
 			}
 			void TransformCopyPickable(Pickable p, Pickable copyFrom) {
-				p.POS2D = copyFrom.POS2D;
-				p.SCALE = copyFrom.SCALE;
+				p.POS2D = new Vec2d(copyFrom.POS2D.x, copyFrom.POS2D.y);
+				p.SCALE = new Vec2d(copyFrom.SCALE.x, copyFrom.SCALE.y);
+			}
+			async Task<Actor> AddActorSound(Scene scene, Path p, Pickable associateWith = null) {
+				var act = await AddNewActor(scene, p, contextToLoadFrom: LegendsContext);
+				if (associateWith != null) {
+					TransformCopyPickable(act, copyFrom: associateWith);
+					//act.RELATIVEZ = associateWith.RELATIVEZ;
+				}
+				return act;
 			}
 			AABB GetSceneAABBFromFrises(Scene scene) {
 				AABB totalAABB = null;
@@ -5849,6 +5859,13 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_forest_02",
 							new Path("sound/100_ambiances/101_jungle/amb_forest_02_lp.wav"),
 							aabb, volume: -14);
+
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("watersplash"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), act.Result);
+						}
 						break;
 					}
 				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc": {
@@ -5866,6 +5883,11 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_caverne_mystere",
 							new Path("sound/100_ambiances/101_jungle/amb_jun_caverne_mystere_lp.wav"),
 							aabb, volume: -8);
+
+
+						foreach (var act in scene.FindPickables(p => p.USERFRIENDLY.StartsWith("firescroll_01"))) {
+							var f = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_middleageworld/actorsound_firezone_02.tpl"), act.Result);
+						}
 						break;
 					}
 				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc": {
@@ -5882,6 +5904,10 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_landofdead",
 							new Path("sound/100_ambiances/109_landofdead/amb_landofdead_lp.wav"),
 							aabb, volume: -8);
+
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("firescroll_01"))) {
+							var f = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_middleageworld/actorsound_firezone_02.tpl"), act.Result);
+						}
 						break;
 					}
 				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc": {
