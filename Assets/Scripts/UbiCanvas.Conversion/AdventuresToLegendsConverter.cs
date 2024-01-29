@@ -5980,13 +5980,13 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
-						var vol = -14f;
+						var vol = -12f;
 
 						TransformAABB(await AddMusicTrigger(scene, "mus_betamedievaltheme", volume: vol), aabb);
 
 						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
 							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
-							aabb, volume: -25);
+							aabb, volume: -18);
 						break;
 					}
 				case "world/rlc_castle/siegeslide/castleexterior_siegeslide_nmi.isc": {
@@ -5996,8 +5996,8 @@ namespace UbiCanvas.Conversion {
 						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower3", volume: vol), aabb);
 						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower3_outro", volume: vol, playOnNext: 0x60),
 							new AABB() {
-								MIN = new Vec2d(177.2f, -92.8f),
-								MAX = new Vec2d(192.8f, -76.9f)
+								MIN = new Vec2d(177.2f, -88.24f),
+								MAX = new Vec2d(185.66f, -76.9f)
 							});
 
 						await AddAmbienceInterpolator(scene, "amb_rain_heavy",
@@ -6028,10 +6028,11 @@ namespace UbiCanvas.Conversion {
 							}),
 							outroTweenSet.instructions[0]
 						};
+						outroTween.InstantiateFromInstanceTemplate(outroTween.UbiArtContext);
 
 						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
 							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
-							aabb, volume: -25);
+							aabb, volume: -18);
 
 						break;
 					}
