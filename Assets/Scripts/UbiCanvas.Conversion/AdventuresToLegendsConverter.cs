@@ -2424,7 +2424,7 @@ namespace UbiCanvas.Conversion {
 
 
 		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
-			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.Multiple, Path path = null, Scene containingScene = null) {
+			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.OnceAndReset, Path path = null, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
@@ -2465,6 +2465,30 @@ namespace UbiCanvas.Conversion {
 			return act;
 		}
 
+		public Generic<UbiArt.ITF.Event> GetMusicEvent(string musicID, bool stop = false, float fadeOutTime = 0f,
+			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f) {
+			if (stop) {
+				return new Generic<UbiArt.ITF.Event>(new EventStopMusic() {
+					metronomeType = 2,
+					priority = priority,
+					setPriority = priority,
+					fadeOutTime = fadeOutTime,
+				});
+			} else {
+				return new Generic<UbiArt.ITF.Event>(new EventPlayMusic() {
+					nodeName = musicID,
+					metronomeType = 2,
+					priority = priority,
+					setPriority = priority,
+					fadeOutTime = fadeOutTime,
+					playOnNext = playOnNext,
+					stopAndPlay = 1,
+					bus = new StringID(0x337E2A2C),
+					volume = new Volume(volume)
+				});
+			}
+		}
+
 		public async Task<Actor> AddMusicEventRelay(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, Path path = null, Scene containingScene = null) {
 			if (path == null) {
@@ -2487,26 +2511,7 @@ namespace UbiCanvas.Conversion {
 				var relay = newTPL.obj.GetComponent<RelayEventComponent_Template>().relays[0];
 				relay.triggerBroadcast = true;
 				// Note: relay.delay does not work it seems!
-				if (stop) {
-					relay.eventToRelay = new Generic<UbiArt.ITF.Event>(new EventStopMusic() {
-						metronomeType = 2,
-						priority = priority,
-						setPriority = priority,
-						fadeOutTime = fadeOutTime,
-					});
-				} else {
-					relay.eventToRelay = new Generic<UbiArt.ITF.Event>(new EventPlayMusic() {
-						nodeName = musicID,
-						metronomeType = 2,
-						priority = priority,
-						setPriority = priority,
-						fadeOutTime = fadeOutTime,
-						playOnNext = playOnNext,
-						stopAndPlay = 1,
-						bus = new StringID(0x337E2A2C),
-						volume = new Volume(volume)
-					});
-				}
+				relay.eventToRelay = GetMusicEvent(musicID, stop: stop, fadeOutTime: fadeOutTime, priority: priority, playOnNext: playOnNext, volume: volume);
 			}
 			return act;
 		}
@@ -2806,7 +2811,7 @@ namespace UbiCanvas.Conversion {
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl": {
-							// TODO
+							// COMPLETE
 							// Parts
 							AddPart("part_mrdark_mini_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_mrdark_mini_lp.wav"));
 							AddPart("part_babeltower_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_lp.wav"));
@@ -2821,18 +2826,48 @@ namespace UbiCanvas.Conversion {
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl": {
-							// TODO
+							// COMPLETE
 							// Parts
 							AddPart("part_mysteriousswamps_01_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_01_lp.wav"));
 							AddPart("part_mysteriousswamps_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_02_lp.wav"));
 							AddPart("part_stormingthecastle_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_lp.wav"));
 							AddPart("part_stormingthecastle_02_outro", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_outro.wav"));
+							AddPart("part_fortifiedcastle_01", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_01.wav"));
+							AddPart("part_fortifiedcastle_02", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_02.wav"));
+							AddPart("part_fortifiedcastle_03", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_03.wav"));
+							AddPart("part_babeltower3_01", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_01_8m.wav"));
+							AddPart("part_babeltower3_02", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_02_16m.wav"));
+							AddPart("part_babeltower3_03", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_03_4m.wav"));
+							AddPart("part_babeltower3_outro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_ending.wav"));
+							AddPart("part_betamedievaltheme_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_betamedievaltheme_lp.wav"));
+							
+							AddPart("part_medievaldragon2_01", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part01_160_6m.wav"));
+							AddPart("part_medievaldragon2_02", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part02_160_3m.wav"));
+							AddPart("part_medievaldragon2_03", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part03_160_3m.wav"));
+							AddPart("part_medievaldragon2_04", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part04_160_4m.wav"));
+							AddPart("part_medievaldragon2_intro", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_percs_01_80_8m.wav"));
+							AddPart("part_medievaldragon3_01", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part01_180_3m.wav"));
+							AddPart("part_medievaldragon3_02", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part02_180_3m.wav"));
+							AddPart("part_medievaldragon3_03", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part03_180_4m.wav"));
+							AddPart("part_medievaldragon3_04", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part04_180_6m.wav"));
+							AddPart("part_medievaldragon3_outro", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_percs_01_80_8m.wav"));
 
 							// Tree
 							AddSimpleNode("mus_mysteriousswamps_01", true, "part_mysteriousswamps_01_lp");
 							AddSimpleNode("mus_mysteriousswamps_02", true, "part_mysteriousswamps_02_lp");
 							AddSimpleNode("mus_stormingthecastle_02", true, "part_stormingthecastle_02_lp");
 							AddSimpleNode("mus_stormingthecastle_02_outro", false, "part_stormingthecastle_02_outro");
+							AddSimpleSequenceNode("mus_fortifiedcastle", true,
+								new string[] { "part_fortifiedcastle_01" },
+								new string[] { "part_fortifiedcastle_02", "part_fortifiedcastle_03" });
+							AddSimpleNode("mus_babeltower3", true, "part_babeltower3_01", "part_babeltower3_02", "part_babeltower3_03");
+							AddSimpleNode("mus_babeltower3_outro", false, "part_babeltower3_outro");
+							AddSimpleNode("mus_betamedievaltheme", true, "part_betamedievaltheme_lp");
+							AddSimpleSequenceNode("mus_medievaldragon2", true,
+								new string[] { "part_medievaldragon2_intro" },
+								new string[] { "part_medievaldragon2_01", "part_medievaldragon2_02", "part_medievaldragon2_03", "part_medievaldragon2_04" });
+							AddSimpleNode("mus_medievaldragon3", true, "part_medievaldragon2_03", "part_medievaldragon3_02", "part_medievaldragon3_03", "part_medievaldragon3_04");
+							AddSimpleNode("mus_medievaldragon3_outro", false, "part_medievaldragon3_outro");
 
 							// Common
 							AddMamboMambo();
@@ -5706,6 +5741,16 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc":
 					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl"));
 					break;
+				case "world/rlc_castle/dunktank/castleinterior_dunktank_nmi_base.isc":
+				case "world/rlc_castle/swingsandslides/castleinterior_swingsandslides_nmi.isc":
+				case "world/rlc_castle/dungeonarena/castleinterior_dungeonarena_nmi_var.isc":
+				case "world/rlc_castle/scaffoldingchase/castleexterior_scaffoldingchase_nmi_base.isc":
+				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc":
+				case "world/rlc_castle/siegeslide/castleexterior_siegeslide_nmi.isc":
+				case "world/rlc_castle/roastedpigrodeo/castleexterior_roastedpigrodeo_lum_base.isc":
+				case "world/rlc_avatar/imonamoat/avatar_imonamoat_nmi_base.isc":
+					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl"));
+					break;
 				default:
 					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
 					break;
@@ -5758,7 +5803,6 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_intro/intro_firstlevel.isc": {
 						Transform(await AddMusicTrigger(scene, "mus_sacredtree"), new Vec2d(123.5f, 0), new Vec2d(200, 50));
 
-						// TODO: Interpolators for ambience
 						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
 							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"), 
 							new AABB() {
@@ -5769,8 +5813,8 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc": {
 						var vol = -14f;
-						var main = await AddMusicTrigger(scene, "mus_enchantedforest", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol);
-						var outro = await AddMusicTrigger(scene, "mus_enchantedforest_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60);
+						var main = await AddMusicTrigger(scene, "mus_enchantedforest", volume: vol);
+						var outro = await AddMusicTrigger(scene, "mus_enchantedforest_outro", volume: vol, playOnNext: 0x60);
 						Transform(main, new Vec2d(180, -40), new Vec2d(180, 50));
 						Transform(outro, new Vec2d(377, -47), new Vec2d(7, 10));
 
@@ -5792,7 +5836,7 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -11f;
-						TransformAABB(await AddMusicTrigger(scene, "mus_fightcastle", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_fightcastle", volume: vol), aabb);
 						/*var outro = await AddMusicTrigger(scene, "mus_fightcastle_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60);
 						TransformAABB(outro, new AABB() {
 							MIN = new Vec2d(25.87f, 79.12f),
@@ -5811,8 +5855,8 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_enchantedforest/rowdyrootarena/enchantedforest_rowdyrootarena_nmi.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -11f;
-						TransformAABB(await AddMusicTrigger(scene, "mus_part1castle", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
-						/*var outro = await AddMusicTrigger(scene, "mus_part1castle_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60);
+						TransformAABB(await AddMusicTrigger(scene, "mus_part1castle", volume: vol), aabb);
+						/*var outro = await AddMusicTrigger(scene, "mus_part1castle_outro", volume: vol, playOnNext: 0x60);
 						TransformAABB(outro, new AABB() {
 							MIN = new Vec2d(25.87f, 79.12f),
 							MAX = new Vec2d(43.71f, 91.26f)
@@ -5832,7 +5876,7 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -14f;
-						TransformAABB(await AddMusicTrigger(scene, "mus_stonecircle", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_stonecircle", volume: vol), aabb);
 
 						await AddAmbienceInterpolator(scene, "amb_forest",
 							new Path("sound/100_ambiances/101_jungle/amb_forest_lp.wav"),
@@ -5844,13 +5888,13 @@ namespace UbiCanvas.Conversion {
 						var vol = -11f;
 
 						// No music at start
-						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, triggerMode: TriggerComponent.Mode.OnceAndReset, fadeOutTime: 1f), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 1f), aabb);
 
 						var startTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@7");
 						var mambomambo = await AddMusicEventRelay(scene, "mus_mambomambo", volume: vol, containingScene: startTrigger.ContainingScene);
 						TransformCopyPickable(mambomambo, startTrigger.Result);
 						Link(startTrigger.Result, mambomambo.USERFRIENDLY);
-						TransformAABB(await AddMusicTrigger(scene, "mus_mambomambo_outro", volume: vol, playOnNext: 0x60, triggerMode: TriggerComponent.Mode.OnceAndReset),
+						TransformAABB(await AddMusicTrigger(scene, "mus_mambomambo_outro", volume: vol, playOnNext: 0x60),
 							new AABB() {
 								MIN = new Vec2d(524.81f, -92.12f),
 								MAX = new Vec2d(551.51f, -83.3f)
@@ -5872,9 +5916,9 @@ namespace UbiCanvas.Conversion {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -11f;
 
-						TransformAABB(await AddMusicTrigger(scene, "mus_mrdark_mini", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_mrdark_mini", volume: vol), aabb);
 
-						TransformAABB(await AddMusicTrigger(scene, "mus_mrdark_mini_stop", stop: true, fadeOutTime: 5, triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol),
+						TransformAABB(await AddMusicTrigger(scene, "mus_mrdark_mini_stop", stop: true, fadeOutTime: 5, volume: vol),
 							new AABB() {
 								MIN = new Vec2d(327.3f, -47.1f),
 								MAX = new Vec2d(359.5f, -27.8f)
@@ -5894,8 +5938,8 @@ namespace UbiCanvas.Conversion {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -12f;
 
-						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
-						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60),
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower", volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower_outro", volume: vol, playOnNext: 0x60),
 							new AABB() {
 								MIN = new Vec2d(446.5f, -31f),
 								MAX = new Vec2d(506.7f, 22f)
@@ -5914,11 +5958,84 @@ namespace UbiCanvas.Conversion {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -14f;
 
-						TransformAABB(await AddMusicTrigger(scene, "mus_stormingthecastle_01", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_stormingthecastle_01", volume: vol), aabb);
 
 						await AddAmbienceInterpolator(scene, "amb_rain_heavy",
 							new Path("sound/100_ambiances/101_jungle/amb_rain_heavy_lp.wav"),
 							aabb, volume: -20);
+						break;
+					}
+
+				case "world/rlc_castle/dunktank/castleinterior_dunktank_nmi_base.isc": {
+						break;
+					}
+				case "world/rlc_castle/swingsandslides/castleinterior_swingsandslides_nmi.isc": {
+						break;
+					}
+				case "world/rlc_castle/dungeonarena/castleinterior_dungeonarena_nmi_var.isc": {
+						break;
+					}
+				case "world/rlc_castle/scaffoldingchase/castleexterior_scaffoldingchase_nmi_base.isc": {
+						break;
+					}
+				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_betamedievaltheme", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
+							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
+							aabb, volume: -25);
+						break;
+					}
+				case "world/rlc_castle/siegeslide/castleexterior_siegeslide_nmi.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower3", volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower3_outro", volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(177.2f, -92.8f),
+								MAX = new Vec2d(192.8f, -76.9f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_rain_heavy",
+							new Path("sound/100_ambiances/101_jungle/amb_rain_heavy_lp.wav"),
+							aabb, volume: -16);
+						break;
+					}
+				case "world/rlc_castle/roastedpigrodeo/castleexterior_roastedpigrodeo_lum_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 1f), aabb);
+
+						var startTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@3" && a.POS2D.x < 15f);
+						var mambomambo = await AddMusicEventRelay(scene, "mus_mambomambo", volume: vol, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(mambomambo, startTrigger.Result);
+						Link(startTrigger.Result, mambomambo.USERFRIENDLY);
+
+						var outroTween = scene.FindActor(a => a.USERFRIENDLY == "tween_notype@FinalGround").Result.GetComponent<TweenComponent>();
+						var outroTweenSet = outroTween.instanceTemplate.value.instructionSets[0];
+						outroTweenSet.instructions = new CListO<Generic<TweenInstruction_Template>>() {
+							new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+								_event = GetMusicEvent("mus_mambomambo_outro", volume: vol, playOnNext: 0x60),
+								duration = 0f,
+								triggerSelf = false,
+								triggerBroadcast = true
+							}),
+							outroTweenSet.instructions[0]
+						};
+
+						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
+							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
+							aabb, volume: -25);
+
+						break;
+					}
+				case "world/rlc_avatar/imonamoat/avatar_imonamoat_nmi_base.isc": {
 						break;
 					}
 				default:
