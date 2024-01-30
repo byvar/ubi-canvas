@@ -1370,8 +1370,8 @@ namespace UbiCanvas.Conversion {
 
 				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc": {
 						// Delete weird particle effect not suited for exploration version of this map
-						var trunkExplosion = scene.FindActor(a => a.USERFRIENDLY == "fx_trunkexplosion_01");
-						trunkExplosion.ContainingScene.DeletePickable(trunkExplosion.Result);
+						//var trunkExplosion = scene.FindActor(a => a.USERFRIENDLY == "fx_trunkexplosion_01");
+						//trunkExplosion.ContainingScene.DeletePickable(trunkExplosion.Result);
 						/*var trig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@9");
 						var lnks = trig.Result.GetComponent<LinkComponent>();
 						lnks.LinkedChildren = new CListO<ObjectPath>(lnks.LinkedChildren.Where(l => l.id != "fx_trunkexplosion_01").ToList());*/
@@ -1491,8 +1491,9 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_castle/dunktank/castleinterior_dunktank_nmi_base.isc": {
-						var explosion = scene.FindActor(a => a.USERFRIENDLY == "fx_trunkexplosion_01@4");
-						explosion.ContainingScene.DeletePickable(explosion.Result);
+						// TODO: Why is this FX so big?
+						//var explosion = scene.FindActor(a => a.USERFRIENDLY == "fx_trunkexplosion_01@4");
+						//explosion.ContainingScene.DeletePickable(explosion.Result);
 						break;
 					}
 				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc": {
@@ -5022,6 +5023,23 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 			}*/
+
+			// Fix trunk explosion FX
+			var trunkExplosion = new Path("world/common/fx/lifeelements/1_middleageworld/enchantedforest/fx_trunkexplosion_01.tpl");
+			{
+				var fxList = GetFx(trunkExplosion);
+				if (fxList != null) {
+					var avgScale = 6.5f;
+					foreach (var p in fxList[0].gen._params.phases) {
+						p.sizeMin.x /= avgScale;
+						p.sizeMax.x /= avgScale;
+					}
+					foreach (var p in fxList[1].gen._params.phases) {
+						p.sizeMin.x /= avgScale;
+						p.sizeMax.x /= avgScale;
+					}
+				}
+			}
 		}
 
 		public void AddPreInstructionSets(Context oldContext, Settings newSettings) {
