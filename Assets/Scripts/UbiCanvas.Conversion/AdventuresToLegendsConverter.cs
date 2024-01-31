@@ -2881,6 +2881,23 @@ namespace UbiCanvas.Conversion {
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl": {
 							// TODO
+							// Parts
+							AddPart("part_darktoonchase_suspense_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_suspense_lp.wav"));
+							AddPart("part_darktoonchase_action_01", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part1_16.wav"));
+							AddPart("part_darktoonchase_action_02", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part1_17.wav"));
+							AddPart("part_darktoonchase_action_03", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part1_18.wav"));
+							AddPart("part_darktoonchase_action_04", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part1_19.wav"));
+							AddPart("part_darktoonchase_action_05", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part2_01.wav"));
+							AddPart("part_darktoonchase_action_06", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part2_02.wav"));
+							AddPart("part_darktoonchase_action_07", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part2_03.wav"));
+							AddPart("part_darktoonchase_action_08", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part2_04.wav"));
+							
+							// Tree
+							AddSimpleNode("mus_darktoonchase_suspense", true, "part_darktoonchase_suspense_lp");
+							AddSimpleNode("mus_darktoonchase_action", true,
+								"part_darktoonchase_action_01", "part_darktoonchase_action_02", "part_darktoonchase_action_03", "part_darktoonchase_action_04",
+								"part_darktoonchase_action_05", "part_darktoonchase_action_06", "part_darktoonchase_action_07", "part_darktoonchase_action_08");
+
 							// Common
 							AddEnchantedForest();
 							break;
