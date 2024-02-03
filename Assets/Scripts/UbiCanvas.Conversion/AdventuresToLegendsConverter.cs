@@ -2880,23 +2880,55 @@ namespace UbiCanvas.Conversion {
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl": {
-							// TODO
+							// COMPLETE
 							// Parts
 							AddPart("part_darktoonchase_suspense_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_suspense_lp.wav"));
-							AddPart("part_darktoonchase_action_01", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part1_16.wav"));
-							AddPart("part_darktoonchase_action_02", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part1_17.wav"));
-							AddPart("part_darktoonchase_action_03", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part1_18.wav"));
-							AddPart("part_darktoonchase_action_04", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part1_19.wav"));
-							AddPart("part_darktoonchase_action_05", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part2_01.wav"));
-							AddPart("part_darktoonchase_action_06", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part2_02.wav"));
-							AddPart("part_darktoonchase_action_07", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part2_03.wav"));
-							AddPart("part_darktoonchase_action_08", new Path("sound/300_music/330_rlc/04_avatar/rm_mus_suspensfunky_stem3_part2_04.wav"));
+							AddPart("part_darktoonchase_action_drums", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_drums.wav"));
+							AddPart("part_darktoonchase_action_01", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_01.wav"));
+							AddPart("part_darktoonchase_action_02", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_02.wav"));
+							AddPart("part_darktoonchase_action_03", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_03.wav"));
+							AddPart("part_babeltower_intro_01", new Path("sound/300_music/330_rlc/04_avatar/mus_babeltower_intro_01.wav"));
+							AddPart("part_babeltower_intro_02", new Path("sound/300_music/330_rlc/04_avatar/mus_babeltower_intro_02.wav"));
 							
+							AddPart("part_fight_pc_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_01_06m.wav"));
+							AddPart("part_fight_pc_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_02_4m.wav"));
+							AddPart("part_fight_pc_03", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_03_04m.wav"));
+							AddPart("part_fight_pc_04", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_04_04m.wav"));
+							AddPart("part_fight_pcwdst_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pcwdst_part_01_06m.wav"));
+							AddPart("part_fight_pcwdst_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pcwdst_part_02_04m.wav"));
+							AddPart("part_fight_wdst_04", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_wdst_part_04_04m.wav"));
+							AddPart("part_fight_outro", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_outro.wav"));
+
+							AddPart("part_enchantedforestpursuit_intro", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_intro.wav"));
+							AddPart("part_enchantedforestpursuit_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_lp.wav"));
+							AddPart("part_enchantedforestpursuit_outro", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_outro.wav"));
+							AddPart("part_babeltower2_01", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_01_10m.wav"));
+							AddPart("part_babeltower2_02", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_02_12m.wav"));
+							AddPart("part_babeltower2_03", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_03_10m.wav"));
+							AddPart("part_babeltower2_04", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_04_12m.wav"));
+							AddPart("part_babeltower2_outro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_ending.wav"));
+							AddPart("part_babeltower2_intro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part1_perc_01_4m.wav"));
+
+
 							// Tree
 							AddSimpleNode("mus_darktoonchase_suspense", true, "part_darktoonchase_suspense_lp");
-							AddSimpleNode("mus_darktoonchase_action", true,
-								"part_darktoonchase_action_01", "part_darktoonchase_action_02", "part_darktoonchase_action_03", "part_darktoonchase_action_04",
-								"part_darktoonchase_action_05", "part_darktoonchase_action_06", "part_darktoonchase_action_07", "part_darktoonchase_action_08");
+							AddSimpleNode("mus_darktoonchase_action", false,
+								"part_darktoonchase_action_drums", "part_darktoonchase_action_02", "part_darktoonchase_action_03");
+							AddSimpleNode("mus_babeltower_intro_01", false, "part_babeltower_intro_01");
+							AddSimpleNode("mus_babeltower_intro_02", false, "part_babeltower_intro_02");
+							AddSimpleNode("mus_fight", true, 
+								"part_fight_pcwdst_01", "part_fight_pcwdst_02",
+								"part_fight_pc_02", "part_fight_pc_01", "part_fight_pc_03", "part_fight_pc_04", "part_fight_wdst_04");
+							AddSimpleNode("mus_fight_outro", false, "part_fight_outro");
+							AddSimpleSequenceNode("mus_enchantedforestpursuit", true,
+								new string[] { "part_enchantedforestpursuit_intro" },
+								new string[] { "part_enchantedforestpursuit_lp" });
+							AddSimpleNode("mus_enchantedforestpursuit_outro", false, "part_enchantedforestpursuit_outro");
+
+							AddSimpleSequenceNode("mus_babeltower2", true, 
+								new string[] { "part_babeltower2_intro" },
+								new string[] { "part_babeltower2_01", "part_babeltower2_02", "part_babeltower2_03", "part_babeltower2_04" });
+							AddSimpleNode("mus_babeltower2_outro", false, "part_babeltower2_outro");
 
 							// Common
 							AddEnchantedForest();
