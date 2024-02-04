@@ -1322,6 +1322,11 @@ namespace UbiCanvas.Conversion {
 						badrabbid.Result.POS2D = new Vec2d(356.35f, -66.39f);
 						break;
 					}
+				case "world/rlc_avatar/templeofgloom/avatar_templeofgloom_nmi_base.isc": {
+						var trig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@6");
+						trig.Result.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.OnceAndReset;
+						break;
+					}
 				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc": {
 						var lk = scene.FindActor(a => a.USERFRIENDLY == "lumking@1");
 						lk.ContainingScene.DeletePickable(lk.Result);
@@ -2382,7 +2387,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public async Task<Actor> AddAmbienceInterpolator(Scene scene, string ambID, Path soundPath, AABB innerBox,
-			AABB outerBox = null, float padding = 1f, float volume = -8f, Path path = null) {
+			AABB outerBox = null, float padding = 5f, float volume = -8f, Path path = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
@@ -2419,8 +2424,8 @@ namespace UbiCanvas.Conversion {
 			bi.innerBox = innerBox;
 			if (outerBox == null) {
 				outerBox = new AABB() {
-					MIN = innerBox.MIN - Vec2d.One * padding,
-					MAX = innerBox.MAX + Vec2d.One * padding
+					MIN = innerBox.MIN - (Vec2d.One * padding),
+					MAX = innerBox.MAX + (Vec2d.One * padding)
 				};
 			}
 			bi.outerBox = outerBox;
@@ -2429,7 +2434,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 
-		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
+		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeInTime = 0f, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.OnceAndReset, Path path = null, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
@@ -2459,6 +2464,7 @@ namespace UbiCanvas.Conversion {
 					evt.nodeName = musicID;
 					evt.priority = priority;
 					evt.setPriority = priority;
+					evt.fadeInTime = fadeInTime;
 					evt.fadeOutTime = fadeOutTime;
 					evt.playOnNext = playOnNext;
 					evt.volume = new Volume(volume);
@@ -2471,7 +2477,7 @@ namespace UbiCanvas.Conversion {
 			return act;
 		}
 
-		public Generic<UbiArt.ITF.Event> GetMusicEvent(string musicID, bool stop = false, float fadeOutTime = 0f,
+		public Generic<UbiArt.ITF.Event> GetMusicEvent(string musicID, bool stop = false, float fadeInTime = 0f, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f) {
 			if (stop) {
 				return new Generic<UbiArt.ITF.Event>(new EventStopMusic() {
@@ -2486,6 +2492,7 @@ namespace UbiCanvas.Conversion {
 					metronomeType = 2,
 					priority = priority,
 					setPriority = priority,
+					fadeInTime = fadeInTime,
 					fadeOutTime = fadeOutTime,
 					playOnNext = playOnNext,
 					stopAndPlay = 1,
@@ -2495,7 +2502,7 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public async Task<Actor> AddMusicEventRelay(Scene scene, string musicID, bool stop = false, float fadeOutTime = 0f,
+		public async Task<Actor> AddMusicEventRelay(Scene scene, string musicID, bool stop = false, float fadeInTime = 0f, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, Path path = null, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
@@ -2517,7 +2524,7 @@ namespace UbiCanvas.Conversion {
 				var relay = newTPL.obj.GetComponent<RelayEventComponent_Template>().relays[0];
 				relay.triggerBroadcast = true;
 				// Note: relay.delay does not work it seems!
-				relay.eventToRelay = GetMusicEvent(musicID, stop: stop, fadeOutTime: fadeOutTime, priority: priority, playOnNext: playOnNext, volume: volume);
+				relay.eventToRelay = GetMusicEvent(musicID, stop: stop, fadeInTime: fadeInTime, fadeOutTime: fadeOutTime, priority: priority, playOnNext: playOnNext, volume: volume);
 			}
 			return act;
 		}
@@ -2671,7 +2678,7 @@ namespace UbiCanvas.Conversion {
 				var mc = newTPL.obj.GetComponent<MusicComponent_Template>();
 				mc.musicTree.nodes.Clear();
 				mc.musicPartSet.parts.Clear();
-				void AddPart(string name, Path path) {
+				void AddPart(string name, Path path, uint nbMeasures = 2, uint beatsPerBar = 4) {
 					// Music part template:
 					// sound/300_music/330_rlc/common/mus_mambomambo.wav
 					// sound/300_music/330_rlc/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav
@@ -2680,8 +2687,8 @@ namespace UbiCanvas.Conversion {
 					// prefetch: 1
 
 					mc.musicPartSet.parts.Add(new MusicPart_Template() {
-						beatsPerBar = 4,
-						nbMeasures = 2,
+						beatsPerBar = beatsPerBar,
+						nbMeasures = nbMeasures,
 						prefetch = 1,
 						name = name,
 						path = path
@@ -2697,6 +2704,8 @@ namespace UbiCanvas.Conversion {
 					//                      nbPartPlayed = parts count
 					//                      startingPart either set to 0x80000002 for some reason, OR uint.max
 					//                      
+
+					uint extraPart = (!loop && parts.Length > 1) ? (uint)1 : 0;
 					mc.musicTree.nodes.Add(new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeNodeComposite_Template() {
 						nodeName = name,
 						looping = loop ? 1 : 0,
@@ -2704,7 +2713,7 @@ namespace UbiCanvas.Conversion {
 							new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeBlockSequence_Template() {
 								//startingPart = uint.MaxValue,
 								startingPart = uint.MaxValue, //0x80000002, // Keep current part when you die
-								nbPartPlayed = (uint)parts.Length,
+								nbPartPlayed = (uint)parts.Length + extraPart,
 								playBlockOnce = loop ? 0 : 1,
 								partList = new CListO<StringID>(parts.Select(p => new StringID(p)).ToList())
 							})
@@ -2724,11 +2733,15 @@ namespace UbiCanvas.Conversion {
 					var leafs = new List<Generic<BlendTreeNodeTemplate<MusicTreeResult>>>();
 					for(int i = 0; i < parts.Length; i++) {
 						var currentBlock = parts[i];
+						bool isFinalBlock = i == parts.Length - 1;
+						bool loopCurrent = (loop && isFinalBlock);
+						uint extraPart = (isFinalBlock && !loop) ? (uint)1 : 0;
+
 						leafs.Add(new Generic<BlendTreeNodeTemplate<MusicTreeResult>>(new MusicTreeBlockSequence_Template() {
 							//startingPart = uint.MaxValue,
 							startingPart = uint.MaxValue, //0x80000002, // Keep current part when you die
-							nbPartPlayed = (uint)currentBlock.Length,
-							playBlockOnce = (loop && i == parts.Length - 1) ? 0 : 1,
+							nbPartPlayed = (uint)currentBlock.Length + extraPart,
+							playBlockOnce = loopCurrent ? 0 : 1,
 							partList = new CListO<StringID>(currentBlock.Select(p => new StringID(p)).ToList())
 						}));
 					}
@@ -2883,10 +2896,10 @@ namespace UbiCanvas.Conversion {
 							// COMPLETE
 							// Parts
 							AddPart("part_darktoonchase_suspense_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_suspense_lp.wav"));
-							AddPart("part_darktoonchase_action_drums", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_drums.wav"));
-							AddPart("part_darktoonchase_action_01", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_01.wav"));
-							AddPart("part_darktoonchase_action_02", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_02.wav"));
-							AddPart("part_darktoonchase_action_03", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_03.wav"));
+							AddPart("part_darktoonchase_action_drums", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_drums.wav"), nbMeasures: 4);
+							AddPart("part_darktoonchase_action_01", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_01.wav"), nbMeasures: 8);
+							AddPart("part_darktoonchase_action_02", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_02.wav"), nbMeasures: 12);
+							AddPart("part_darktoonchase_action_03", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_03.wav"), nbMeasures: 6);
 							AddPart("part_babeltower_intro_01", new Path("sound/300_music/330_rlc/04_avatar/mus_babeltower_intro_01.wav"));
 							AddPart("part_babeltower_intro_02", new Path("sound/300_music/330_rlc/04_avatar/mus_babeltower_intro_02.wav"));
 							
@@ -2902,10 +2915,10 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_enchantedforestpursuit_intro", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_intro.wav"));
 							AddPart("part_enchantedforestpursuit_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_lp.wav"));
 							AddPart("part_enchantedforestpursuit_outro", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_outro.wav"));
-							AddPart("part_babeltower2_01", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_01_10m.wav"));
-							AddPart("part_babeltower2_02", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_02_12m.wav"));
-							AddPart("part_babeltower2_03", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_03_10m.wav"));
-							AddPart("part_babeltower2_04", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_04_12m.wav"));
+							AddPart("part_babeltower2_01", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_01_10m.wav"), nbMeasures: 10);
+							AddPart("part_babeltower2_02", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_02_12m.wav"), nbMeasures: 12);
+							AddPart("part_babeltower2_03", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_03_10m.wav"), nbMeasures: 10);
+							AddPart("part_babeltower2_04", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_04_12m.wav"), nbMeasures: 10);
 							AddPart("part_babeltower2_outro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_ending.wav"));
 							AddPart("part_babeltower2_intro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part1_perc_01_4m.wav"));
 
@@ -2936,14 +2949,23 @@ namespace UbiCanvas.Conversion {
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl": {
 							// TODO
+
+							// Common
+							AddMamboMambo();
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_06_nemo.tpl": {
 							// TODO
+
+							// Common
+							AddMamboMambo();
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl": {
 							// TODO
+
+							// Common
+							AddMamboMambo();
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_08_olympus.tpl": {
@@ -2956,6 +2978,9 @@ namespace UbiCanvas.Conversion {
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_10_world.tpl": {
 							// TODO
+
+							// Common
+							AddMamboMambo();
 							break;
 						}
 				}
@@ -5823,6 +5848,21 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_avatar/imonamoat/avatar_imonamoat_nmi_base.isc":
 					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl"));
 					break;
+				case "world/rlc_avatar/templeofgloom/avatar_templeofgloom_nmi_base.isc":
+				case "world/rlc_avatar/lostruins/avatar_lostruins_exp_base.isc":
+				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc":
+				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc":
+				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc":
+					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl"));
+					break;
+				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc":
+				case "world/rlc_beanstalk/glidinglums/beanstalk_glidinglums_nmi.isc":
+				case "world/rlc_beanstalk/aspimaze/beanstalk_aspimaze_exp_base.isc":
+				case "world/rlc_beanstalk/aspiexplorer/beanstalk_aspiexplorer_exp_base.isc":
+				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
+				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc":
+					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl"));
+					break;
 				default:
 					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
 					break;
@@ -5876,7 +5916,7 @@ namespace UbiCanvas.Conversion {
 						Transform(await AddMusicTrigger(scene, "mus_sacredtree"), new Vec2d(123.5f, 0), new Vec2d(200, 50));
 
 						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
-							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"), 
+							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
 							new AABB() {
 								MIN = new Vec2d(-25, -34),
 								MAX = new Vec2d(310, 38)
@@ -5994,7 +6034,7 @@ namespace UbiCanvas.Conversion {
 							new AABB() {
 								MIN = new Vec2d(327.3f, -47.1f),
 								MAX = new Vec2d(359.5f, -27.8f)
-						});
+							});
 
 						await AddAmbienceInterpolator(scene, "amb_caverne_mystere",
 							new Path("sound/100_ambiances/101_jungle/amb_jun_caverne_mystere_lp.wav"),
@@ -6164,6 +6204,85 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_arena_castlefire",
 							new Path("sound/100_ambiances/101_jungle/amb_ju_rl_arena_castlefire_lp.wav"),
 							aabb, volume: -16);
+						break;
+					}
+
+				case "world/rlc_avatar/templeofgloom/avatar_templeofgloom_nmi_base.isc": {
+						// Enchanted Forest Fakeout
+						var vol = -14f;
+						var forestAABB = new AABB() {
+							MIN = new Vec2d(-10.6f, -23.5f),
+							MAX = new Vec2d(30.9f, 14.1f)
+						};
+						TransformAABB(await AddMusicTrigger(scene, "mus_enchantedforest", volume: vol), forestAABB);
+						//var outro = await AddMusicTrigger(scene, "mus_enchantedforest_outro", volume: vol, playOnNext: 0x60);
+						var fakeoutFadeTrigger = scene.FindActor(a => a.USERFRIENDLY == "ring_hangtriggeronce" && a.POS2D.x > 4f);
+						var fakeoutFadeRelay = await AddMusicEventRelay(scene, "mus_enchantedforest", stop: true, fadeOutTime: 5f, volume: vol, containingScene: fakeoutFadeTrigger.ContainingScene);
+						TransformCopyPickable(fakeoutFadeRelay, fakeoutFadeTrigger.Result);
+						Link(fakeoutFadeTrigger.Result, fakeoutFadeRelay.USERFRIENDLY);
+
+						// Darktoon Chase
+						vol = -20f;
+						var caveAABB = new AABB() {
+							MIN = new Vec2d(37.8f, -23.6f),
+							MAX = new Vec2d(251.9f, 27.8f)
+						};
+						TransformAABB(await AddMusicTrigger(scene, "mus_darktoonchase_suspense", volume: vol), caveAABB);
+						var fadeTrigger = scene.FindActor(a => a.USERFRIENDLY == "ring_hangtriggeronce" && a.POS2D.x < 4f);
+						var fadeRelay = await AddMusicEventRelay(scene, "mus_darktoonchase_suspense", stop: true, fadeOutTime: 7.5f, volume: vol, containingScene: fadeTrigger.ContainingScene);
+						TransformCopyPickable(fadeRelay, fadeTrigger.Result);
+						Link(fadeTrigger.Result, fadeRelay.USERFRIENDLY);
+
+						// Darktoon Chase Action
+						vol = -19f;
+						var actionTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@6");
+						var actionRelay = await AddMusicEventRelay(scene, "mus_darktoonchase_action", fadeInTime: 2.5f, fadeOutTime: 0f, volume: vol, containingScene: actionTrigger.ContainingScene);
+						TransformCopyPickable(actionRelay, actionTrigger.Result);
+						Link(actionTrigger.Result, actionRelay.USERFRIENDLY);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_forest_light",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_light_lp.wav"),
+							forestAABB, volume: -11, padding: 10f);
+						await AddAmbienceInterpolator(scene, "amb_ma_cave_wiiu",
+							new Path("sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav"),
+							caveAABB, volume: -11, padding: 10f);
+
+						// Actor sound
+						var waterfall = scene.FindActor(a => a.USERFRIENDLY == "waterfall_bezierspline@2");
+						var snd = await AddActorSound(waterfall.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), waterfall.Result);
+						snd.POS2D += Vec2d.Up * 5f;
+						snd.POS2D += Vec2d.Left * 0.716f; // Spline is slightly to the left
+						break;
+					}
+				case "world/rlc_avatar/lostruins/avatar_lostruins_exp_base.isc":
+				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc":
+				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc":
+				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc": {
+						/*AddSimpleNode("mus_babeltower_intro_01", false, "part_babeltower_intro_01");
+						AddSimpleNode("mus_babeltower_intro_02", false, "part_babeltower_intro_02");
+						AddSimpleNode("mus_fight", true,
+							"part_fight_pcwdst_01", "part_fight_pcwdst_02",
+							"part_fight_pc_02", "part_fight_pc_01", "part_fight_pc_03", "part_fight_pc_04", "part_fight_wdst_04");
+						AddSimpleNode("mus_fight_outro", false, "part_fight_outro");
+						AddSimpleSequenceNode("mus_enchantedforestpursuit", true,
+							new string[] { "part_enchantedforestpursuit_intro" },
+							new string[] { "part_enchantedforestpursuit_lp" });
+						AddSimpleNode("mus_enchantedforestpursuit_outro", false, "part_enchantedforestpursuit_outro");
+
+						AddSimpleSequenceNode("mus_babeltower2", true,
+							new string[] { "part_babeltower2_intro" },
+							new string[] { "part_babeltower2_01", "part_babeltower2_02", "part_babeltower2_03", "part_babeltower2_04" });
+						AddSimpleNode("mus_babeltower2_outro", false, "part_babeltower2_outro");
+						*/
+						break;
+					}
+				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc":
+				case "world/rlc_beanstalk/glidinglums/beanstalk_glidinglums_nmi.isc":
+				case "world/rlc_beanstalk/aspimaze/beanstalk_aspimaze_exp_base.isc":
+				case "world/rlc_beanstalk/aspiexplorer/beanstalk_aspiexplorer_exp_base.isc":
+				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
+				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc": {
 						break;
 					}
 				default:
