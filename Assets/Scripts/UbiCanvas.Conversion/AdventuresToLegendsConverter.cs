@@ -1327,6 +1327,10 @@ namespace UbiCanvas.Conversion {
 						trig.Result.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.OnceAndReset;
 						break;
 					}
+				case "world/rlc_avatar/lostruins/avatar_lostruins_exp_base.isc": {
+						UseFastCameras(scene, speed: 1.2f);
+						break;
+					}
 				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc": {
 						var lk = scene.FindActor(a => a.USERFRIENDLY == "lumking@1");
 						lk.ContainingScene.DeletePickable(lk.Result);
@@ -5887,6 +5891,8 @@ namespace UbiCanvas.Conversion {
 				var act = await AddNewActor(scene, p, contextToLoadFrom: LegendsContext);
 				if (associateWith != null) {
 					TransformCopyPickable(act, copyFrom: associateWith);
+					if(associateWith is Actor aAct)
+						act.parentBind = aAct.parentBind;
 					//act.RELATIVEZ = associateWith.RELATIVEZ;
 				}
 				return act;
@@ -6255,16 +6261,84 @@ namespace UbiCanvas.Conversion {
 						snd.POS2D += Vec2d.Left * 0.716f; // Spline is slightly to the left
 						break;
 					}
-				case "world/rlc_avatar/lostruins/avatar_lostruins_exp_base.isc":
+				case "world/rlc_avatar/lostruins/avatar_lostruins_exp_base.isc": {
+						// Intro
+						var vol = -14f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower_intro_01", volume: vol), GetSceneAABBFromFrises(scene));
+
+						// Mus Fight (Behind Enemy Lines/Babel Tower Part 1)
+						vol = -14f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_fight", volume: vol), new AABB() {
+							MIN = new Vec2d(129.1f, -16f),
+							MAX = new Vec2d(145.4f, -12.3f)
+						});
+						TransformAABB(await AddMusicTrigger(scene, "mus_fight_outro", volume: vol, playOnNext: 0x60), new AABB() {
+							MIN = new Vec2d(365.9f, -32.9f),
+							MAX = new Vec2d(384.2f, -18f)
+						});
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_forest_light",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_light_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(85.8f, -9.6f),
+								MAX = new Vec2d(172.9f, 27.7f)
+							}, volume: -11, padding: 10f);
+						await AddAmbienceInterpolator(scene, "amb_forest_light",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_light_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(354.2f, -42.1f),
+								MAX = new Vec2d(394.6f, 14.8f)
+							}, volume: -11, padding: 10f);
+						await AddAmbienceInterpolator(scene, "amb_ma_cave_wiiu",
+							new Path("sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(105.3f, -63f),
+								MAX = new Vec2d(167.9f, -12.6f)
+							}, volume: -11, padding: 10f);
+						await AddAmbienceInterpolator(scene, "amb_ma_cave_wiiu",
+							new Path("sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(170f, -63f),
+								MAX = new Vec2d(349.3f, 14.8f)
+							}, volume: -11, padding: 10f);
+
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(113.4f, -57.9f),
+								MAX = new Vec2d(154.9f, -38.51f)
+							}, volume: -12);
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(294.6f, -27.69f),
+								MAX = new Vec2d(321f, -21.2f)
+							}, volume: -12);
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(348.8f, -39.7f),
+								MAX = new Vec2d(371.9f, -32f)
+							}, volume: -12);
+
+						// Actor sounds
+						/*foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}*/
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("watersplash"))) {
+							var snd = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), act.Result);
+							if (act.Result.USERFRIENDLY == "watersplash@1") {
+								snd.STARTPAUSE = true;
+								Link(scene.FindActor(a => a.USERFRIENDLY == "relay_unpause").Result, snd.USERFRIENDLY);
+							}
+						}
+						break;
+					}
 				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc":
 				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc":
 				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc": {
-						/*AddSimpleNode("mus_babeltower_intro_01", false, "part_babeltower_intro_01");
-						AddSimpleNode("mus_babeltower_intro_02", false, "part_babeltower_intro_02");
-						AddSimpleNode("mus_fight", true,
-							"part_fight_pcwdst_01", "part_fight_pcwdst_02",
-							"part_fight_pc_02", "part_fight_pc_01", "part_fight_pc_03", "part_fight_pc_04", "part_fight_wdst_04");
-						AddSimpleNode("mus_fight_outro", false, "part_fight_outro");
+						/*AddSimpleNode("mus_babeltower_intro_02", false, "part_babeltower_intro_02");
 						AddSimpleSequenceNode("mus_enchantedforestpursuit", true,
 							new string[] { "part_enchantedforestpursuit_intro" },
 							new string[] { "part_enchantedforestpursuit_lp" });
