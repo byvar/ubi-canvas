@@ -6335,11 +6335,35 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
-				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc":
+				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc": {
+						// Intro
+						var vol = -14f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower_intro_02", volume: vol), GetSceneAABBFromFrises(scene));
+
+						// Pursuit
+						var ruinrideAABB = new AABB() {
+							MIN = new Vec2d(42.5f, -76.3f),
+							MAX = new Vec2d(240.7f, 7.3f)
+						};
+
+						vol = -11f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_enchantedforestpursuit", volume: vol), ruinrideAABB);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_forest_02",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_02_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(73.1f, 9.6f),
+								MAX = new Vec2d(117f, 42.3f)
+							}, volume: -18, padding: 10f);
+						await AddAmbienceInterpolator(scene, "amb_ma_cave_wiiu",
+							new Path("sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav"),
+							ruinrideAABB, volume: -11, padding: 10f);
+						break;
+					}
 				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc":
 				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc": {
-						/*AddSimpleNode("mus_babeltower_intro_02", false, "part_babeltower_intro_02");
-						AddSimpleSequenceNode("mus_enchantedforestpursuit", true,
+						/*AddSimpleSequenceNode("mus_enchantedforestpursuit", true,
 							new string[] { "part_enchantedforestpursuit_intro" },
 							new string[] { "part_enchantedforestpursuit_lp" });
 						AddSimpleNode("mus_enchantedforestpursuit_outro", false, "part_enchantedforestpursuit_outro");
