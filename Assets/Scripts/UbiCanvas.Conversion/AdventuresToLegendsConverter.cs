@@ -6445,12 +6445,21 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc": {
-						/*
-						AddSimpleSequenceNode("mus_babeltower2", true,
-							new string[] { "part_babeltower2_intro" },
-							new string[] { "part_babeltower2_01", "part_babeltower2_02", "part_babeltower2_03", "part_babeltower2_04" });
-						AddSimpleNode("mus_babeltower2_outro", false, "part_babeltower2_outro");
-						*/
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -12f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_babeltower2", volume: vol), aabb);
+
+						var multiEventTrigger = scene.FindActor(a => a.USERFRIENDLY == "multipleevent_trigger@16");
+						//var debugTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@17");
+						var outro = await AddMusicEventRelay(scene, "mus_babeltower2_outro", volume: vol, playOnNext: 0x60, containingScene: multiEventTrigger.ContainingScene);
+						TransformCopyPickable(outro, multiEventTrigger.Result);
+						Link(multiEventTrigger.Result, outro.USERFRIENDLY);
+						//Link(debugTrigger.Result, outro.USERFRIENDLY);
+						
+						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
+							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
+							aabb, volume: -18);
 						break;
 					}
 				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc":
