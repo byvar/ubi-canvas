@@ -1247,7 +1247,10 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc": {
-						UseFastCameras(scene);
+						UseFastCameras(scene, speed: 1.2f);
+						var badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@2");
+						//badrabbid.ContainingScene.DeletePickable(badrabbid.Result);
+						badrabbid.Result.POS2D += Vec2d.Up * 10f;
 						break;
 					}
 				case "world/rlc_avatar/thornrush/avatar_thornrush_spd_base.isc": {
@@ -2483,7 +2486,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 
-		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeInTime = 0f, float fadeOutTime = 0f,
+		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, bool stopAndPlay = true, float fadeInTime = 0f, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.OnceAndReset, Path path = null, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
@@ -2516,6 +2519,7 @@ namespace UbiCanvas.Conversion {
 					evt.fadeInTime = fadeInTime;
 					evt.fadeOutTime = fadeOutTime;
 					evt.playOnNext = playOnNext;
+					evt.stopAndPlay = stopAndPlay ? 1 : 0;
 					evt.volume = new Volume(volume);
 				}
 				// Music triggers are weirdly deformed, reset them to a box with 1 extent
@@ -2526,7 +2530,7 @@ namespace UbiCanvas.Conversion {
 			return act;
 		}
 
-		public Generic<UbiArt.ITF.Event> GetMusicEvent(string musicID, bool stop = false, float fadeInTime = 0f, float fadeOutTime = 0f,
+		public Generic<UbiArt.ITF.Event> GetMusicEvent(string musicID, bool stop = false, bool stopAndPlay = true, float fadeInTime = 0f, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f) {
 			if (stop) {
 				return new Generic<UbiArt.ITF.Event>(new EventStopMusic() {
@@ -2544,14 +2548,14 @@ namespace UbiCanvas.Conversion {
 					fadeInTime = fadeInTime,
 					fadeOutTime = fadeOutTime,
 					playOnNext = playOnNext,
-					stopAndPlay = 1,
+					stopAndPlay = stopAndPlay ? 1 : 0,
 					bus = new StringID(0x337E2A2C),
 					volume = new Volume(volume)
 				});
 			}
 		}
 
-		public async Task<Actor> AddMusicEventRelay(Scene scene, string musicID, bool stop = false, float fadeInTime = 0f, float fadeOutTime = 0f,
+		public async Task<Actor> AddMusicEventRelay(Scene scene, string musicID, bool stop = false, bool stopAndPlay = true, float fadeInTime = 0f, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, Path path = null, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
@@ -2573,7 +2577,7 @@ namespace UbiCanvas.Conversion {
 				var relay = newTPL.obj.GetComponent<RelayEventComponent_Template>().relays[0];
 				relay.triggerBroadcast = true;
 				// Note: relay.delay does not work it seems!
-				relay.eventToRelay = GetMusicEvent(musicID, stop: stop, fadeInTime: fadeInTime, fadeOutTime: fadeOutTime, priority: priority, playOnNext: playOnNext, volume: volume);
+				relay.eventToRelay = GetMusicEvent(musicID, stop: stop, stopAndPlay: stopAndPlay, fadeInTime: fadeInTime, fadeOutTime: fadeOutTime, priority: priority, playOnNext: playOnNext, volume: volume);
 			}
 			return act;
 		}
@@ -6413,13 +6417,35 @@ namespace UbiCanvas.Conversion {
 						
 						break;
 					}
-				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc":
-				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc": {
-						/*AddSimpleSequenceNode("mus_enchantedforestpursuit", true,
-							new string[] { "part_enchantedforestpursuit_intro" },
-							new string[] { "part_enchantedforestpursuit_lp" });
-						AddSimpleNode("mus_enchantedforestpursuit_outro", false, "part_enchantedforestpursuit_outro");
+				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
 
+						TransformAABB(await AddMusicTrigger(scene, "mus_enchantedforestpursuit", volume: vol, stopAndPlay: false, priority: 9), aabb);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_enchantedforestpursuit_outro", volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(65.12f, -11.13f),
+								MAX = new Vec2d(69.53f, -6.84f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_caverne_mystere",
+							new Path("sound/100_ambiances/101_jungle/amb_jun_caverne_mystere_lp.wav"),
+							aabb, volume: -14);
+
+						var fireAct = scene.FindPickable(p => p.USERFRIENDLY == "invisibleground_hit");
+						var fire = await AddActorSound(fireAct.ContainingScene, new Path("sound/common/3d_sound_actors/01_middleageworld/actorsound_firezone_02.tpl"), fireAct.Result);
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@4").Result, fire.USERFRIENDLY);
+						var lavaAct = scene.FindPickable(p => p.USERFRIENDLY == "fx_lavaintersection");
+						var lava = await AddActorSound(lavaAct.ContainingScene, new Path("sound/common/3d_sound_actors/06_mountain/actorsound_mou_lavaboil.tpl"), lavaAct.Result);
+						//Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@4").Result, lava.USERFRIENDLY);
+						/*foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("firescroll_01"))) {
+							var f = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_middleageworld/actorsound_firezone_02.tpl"), act.Result);
+						}*/
+						break;
+					}
+				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc": {
+						/*
 						AddSimpleSequenceNode("mus_babeltower2", true,
 							new string[] { "part_babeltower2_intro" },
 							new string[] { "part_babeltower2_01", "part_babeltower2_02", "part_babeltower2_03", "part_babeltower2_04" });
