@@ -2438,6 +2438,51 @@ namespace UbiCanvas.Conversion {
 		}
 
 
+		public async Task<Actor> AddActor3DSound(Scene scene, string soundID, Path soundPath, float volume = -8f,
+			Path path = null, uint numChannels = 1, float fadeInTime = 0f, float fadeOutTime = 0f,
+			float min = 1, float max = 2, Scene containingScene = null) {
+			if (path == null) {
+				var scenePath = GetScenePath(scene);
+				var sceneName = scenePath.GetFilenameWithoutExtension();
+				var newPath = $"{scenePath.folder}{sceneName}_snd/snd_{soundID}";
+				newPath += ".tpl";
+				path = new Path(newPath);
+			}
+			if(containingScene == null) containingScene = scene;
+			var actName = path.GetFilenameWithoutExtension(removeCooked: true);
+			var ogPath = "sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl";
+			var act = await AddNewActor(containingScene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
+			var ogTPL = act.template;
+			if (CreateTemplateIfNecessary(path, "SOUND ACTOR", out var newTPL, act: act)) {
+				newTPL.sizeOf = ogTPL.sizeOf + 0x1000;
+				newTPL.obj = (Actor_Template)ogTPL.obj.Clone("tpl", context: LegendsContext);
+				var soundSID = new StringID(soundID);
+
+				var sc = newTPL.obj.GetComponent<SoundComponent_Template>();
+				sc.defaultSound = soundSID;
+				var sd = sc.soundList[0];
+				sd.name = soundSID;
+				sd.files[0] = soundPath;
+				sd.volume = new Volume(volume);
+				sd._params.fadeInTime = fadeInTime;
+				sd._params.fadeOutTime = fadeOutTime;
+				sd._params.numChannels = numChannels;
+				sd._params.modifiers = new CArrayO<Generic<SoundModifier>>() {
+					new Generic<SoundModifier>(new SpatializedPanning() {
+						widthMin = min,
+						widthMax = max,
+					}),
+					new Generic<SoundModifier>(new ScreenRollOff() {
+						distanceMin = min,
+						distanceMax = max
+					})
+				};
+			}
+
+			return act;
+		}
+
+
 		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, float fadeInTime = 0f, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.OnceAndReset, Path path = null, Scene containingScene = null) {
 			if (path == null) {
@@ -6359,6 +6404,13 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_ma_cave_wiiu",
 							new Path("sound/100_ambiances/101_middleageworld/amb_ma_cave_wiiu_exclusive_lp.wav"),
 							ruinrideAABB, volume: -11, padding: 10f);
+
+						// Actor sound
+						var cartScene = scene.FindPickable(a => a.USERFRIENDLY == "conveyorbelt_static@1").ContainingScene;
+						var cartwheels = await AddActor3DSound(scene, "cartwheels", new Path("sound/500_gpe/506_mountain/gpe_twn_passage_wallrun_move_lp.wav"), min: 0f, max: 1.5f, containingScene: cartScene);
+						cartwheels.POS2D = Vec2d.Down * 1f;
+						var cartrumble = await AddActor3DSound(scene, "cartrumble", new Path("sound/600_sfx/601_middleageworld/sfx_twn_stone_move_lp.wav"), min: 0f, max: 2f, containingScene: cartScene);
+						
 						break;
 					}
 				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc":
