@@ -3001,7 +3001,36 @@ namespace UbiCanvas.Conversion {
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl": {
-							// TODO
+							// COMPLETE
+							// Parts
+							AddPart("part_home_music_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_music.wav"));
+
+							AddPart("part_hellgate_intro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_intro.wav"));
+							AddPart("part_hellgate_01", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_01_full_26m.wav"), nbMeasures: 26);
+							AddPart("part_hellgate_02", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_02_full_13m.wav"), nbMeasures: 13);
+							AddPart("part_hellgate_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_outro.wav"));
+
+							AddPart("part_flightwhirl_01", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_03_8m.wav"), nbMeasures: 8);
+							AddPart("part_flightwhirl_02", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mu_rl_3_explo_01_48m.wav"), nbMeasures: 48); 
+							AddPart("part_flightwhirl_03", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_02_7m.wav"), nbMeasures: 7);
+							AddPart("part_flightwhirl_04", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_01_4m.wav"), nbMeasures: 4);
+							AddPart("part_flightwhirl_05", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_04_4m.wav"), nbMeasures: 4);
+
+							AddPart("part_lostinclouds_01", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_01.wav"));
+							AddPart("part_lostinclouds_02", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_02.wav"));
+							AddPart("part_lostinclouds_03", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_03.wav"));
+
+
+							// Tree
+							AddSimpleNode("mus_home_music_retro", true, "part_home_music_retro_lp");
+							AddSimpleSequenceNode("mus_hellgate", true,
+								new string[] { "part_hellgate_intro" },
+								new string[] { "part_hellgate_01", "part_hellgate_02" }
+							);
+							AddSimpleNode("mus_flightwhirl", true,
+								"part_flightwhirl_01", "part_flightwhirl_02", "part_flightwhirl_03", "part_flightwhirl_04", "part_flightwhirl_05");
+							AddSimpleNode("mus_hellgate_outro", false, "part_hellgate_outro");
+							AddSimpleNode("mus_lostinclouds", true, "part_lostinclouds_01", "part_lostinclouds_02", "part_lostinclouds_03");
 
 							// Common
 							AddMamboMambo();
@@ -3009,6 +3038,13 @@ namespace UbiCanvas.Conversion {
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_06_nemo.tpl": {
 							// TODO
+							// Parts
+							AddPart("part_home_ocean_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_ocean.wav"));
+							AddPart("part_home_ocean_lp", new Path("sound/300_music/310_common/home/mus_home_ocean.wav"));
+
+							// Tree
+							AddSimpleNode("mus_home_ocean_retro", true, "part_home_ocean_retro_lp");
+							AddSimpleNode("mus_home_ocean", true, "part_home_ocean_lp");
 
 							// Common
 							AddMamboMambo();
@@ -3016,6 +3052,18 @@ namespace UbiCanvas.Conversion {
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl": {
 							// TODO
+							// Parts
+							AddPart("part_diveanotherday_01", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part02_24m.wav"), nbMeasures: 24);
+							AddPart("part_diveanotherday_02", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part03_32m.wav"), nbMeasures: 32);
+							AddPart("part_diveanotherday_03", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part04_48m.wav"), nbMeasures: 48);
+							AddPart("part_diveanotherday_04", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part05_64m.wav"), nbMeasures: 64);
+							AddPart("part_suspense_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 64);
+
+							// Tree
+							AddSimpleSequenceNode("mus_diveanotherday", true,
+								new string[] { "part_diveanotherday_01" },
+								new string[] { "part_diveanotherday_02", "part_diveanotherday_03", "part_diveanotherday_04" });
+							AddSimpleNode("mus_suspense", true, "part_suspense_lp");
 
 							// Common
 							AddMamboMambo();
