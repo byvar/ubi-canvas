@@ -14,6 +14,7 @@ namespace UbiArt.ITF {
 					shaderManager.backLightCamera.backgroundColor = (ClearColor.ClearBackLightColor ?? Color.Black).GetUnityColor();
 				}
 				if (Lighting != null && Lighting.Enable) {
+					Shader.SetGlobalFloat("_EnableGlobalLighting", 1f);
 					Shader.SetGlobalColor("_GlobalColor", (Lighting.GlobalColor ?? Color.White).GetUnityColor());
 					Shader.SetGlobalColor("_GlobalStaticFog", (Lighting.GlobalStaticFog ?? Color.Zero).GetUnityColor());
 					// TODO: Brightness, fog opacity

@@ -47,6 +47,7 @@ float _DisableLightingLocal = 0;
 float _DisableFog = 0;
 float4 _GlobalStaticFog = float4(0,0,0,0);
 float4 _GlobalColor = float4(1,1,1,1);
+float _EnableGlobalLighting = 0;
 
 struct appdata
 {
@@ -104,7 +105,7 @@ float4 process_frag(v2f i) : SV_TARGET{
 	float4 ColorFog = float4(0.0, 0.0, 0.0, 0.0);
 	if(PrimitiveParams1.x == 1) { // UseStaticFog
 		ColorFog = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorFog);
-		if(PrimitiveParams1.y == 1 && _EnableLighting == 1) { // UseGlobalLighting
+		if(_EnableGlobalLighting == 1 && PrimitiveParams1.y == 1 && _EnableLighting == 1) { // UseGlobalLighting
 			ColorFog = _GlobalStaticFog;
 			//ColorFog = float4(lerp(ColorFog.xyz, _GlobalStaticFog.w, _GlobalStaticFog.w);
 		}
@@ -114,7 +115,7 @@ float4 process_frag(v2f i) : SV_TARGET{
 		float4 ColorFactor = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorFactor);
 		float4 ShaderParams = UNITY_ACCESS_INSTANCED_PROP(Props, _ShaderParams);
 		
-		if(PrimitiveParams1.y == 1 && _EnableLighting == 1) { // UseGlobalLighting
+		if(_EnableGlobalLighting == 1 && PrimitiveParams1.y == 1 && _EnableLighting == 1) { // UseGlobalLighting
 			ColorFactor = float4(lerp(ColorFactor.xyz, _GlobalColor.xyz, _GlobalColor.w), ColorFactor.w);
 		}
 

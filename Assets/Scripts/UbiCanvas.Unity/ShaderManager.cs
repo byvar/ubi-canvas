@@ -15,6 +15,7 @@ public class ShaderManager : MonoBehaviour {
 
 	// Use this for initialization
 	private void Awake() {
+		Shader.SetGlobalFloat("_EnableGlobalLighting", 0f);
 		Shader.SetGlobalColor("_GlobalColor", Color.white);
 		Shader.SetGlobalColor("_GlobalStaticFog", Color.clear);
 	}
