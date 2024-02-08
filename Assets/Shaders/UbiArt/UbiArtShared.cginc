@@ -7,12 +7,15 @@
 
 // User-specified properties
 UNITY_INSTANCING_BUFFER_START(Props)
-UNITY_DEFINE_INSTANCED_PROP(uniform float4, _ColorFactor);
+UNITY_DEFINE_INSTANCED_PROP(uniform float4, _ColorFactor); // Primitive Params
 UNITY_DEFINE_INSTANCED_PROP(uniform float4, _LightConfig);
 UNITY_DEFINE_INSTANCED_PROP(uniform float4, _ColorFog);
-UNITY_DEFINE_INSTANCED_PROP(uniform float4, _UseTextures);
+UNITY_DEFINE_INSTANCED_PROP(uniform float4, _PrimitiveParams1);
+
+UNITY_DEFINE_INSTANCED_PROP(uniform float4, _UseTextures); // Textures
 UNITY_DEFINE_INSTANCED_PROP(uniform float4, _UseTextures2);
-UNITY_DEFINE_INSTANCED_PROP(uniform float4, _ShaderParams);
+
+UNITY_DEFINE_INSTANCED_PROP(uniform float4, _ShaderParams); // Shader
 UNITY_DEFINE_INSTANCED_PROP(uniform float4, _ShaderParams2);
 UNITY_INSTANCING_BUFFER_END(Props)
 
@@ -42,6 +45,8 @@ float _Saturate = 1.0;
 float _EnableLighting = 1;
 float _DisableLightingLocal = 0;
 float _DisableFog = 0;
+float4 _GlobalStaticFog = float4(0,0,0,0);
+float4 _GlobalColor = float4(1,1,1,1);
 
 struct appdata
 {
@@ -93,31 +98,58 @@ float4 process_frag(v2f i) : SV_TARGET{
 	UNITY_SETUP_INSTANCE_ID(i);
 	float4 UseTextures = UNITY_ACCESS_INSTANCED_PROP(Props, _UseTextures);
 	float4 UseTextures2 = UNITY_ACCESS_INSTANCED_PROP(Props, _UseTextures2);
+	float4 PrimitiveParams1 = UNITY_ACCESS_INSTANCED_PROP(Props, _PrimitiveParams1);
 
 	float4 c = float4(0.0, 0.0, 0.0, 0.0);
+	float4 ColorFog = float4(0.0, 0.0, 0.0, 0.0);
+	if(PrimitiveParams1.x == 1) { // UseStaticFog
+		ColorFog = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorFog);
+		if(PrimitiveParams1.y == 1 && _EnableLighting == 1) { // UseGlobalLighting
+			ColorFog = _GlobalStaticFog;
+			//ColorFog = float4(lerp(ColorFog.xyz, _GlobalStaticFog.w, _GlobalStaticFog.w);
+		}
+	}
+
 	if (UseTextures.x == 1) {
 		float4 ColorFactor = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorFactor);
 		float4 ShaderParams = UNITY_ACCESS_INSTANCED_PROP(Props, _ShaderParams);
+		
+		if(PrimitiveParams1.y == 1 && _EnableLighting == 1) { // UseGlobalLighting
+			ColorFactor = float4(lerp(ColorFactor.xyz, _GlobalColor.xyz, _GlobalColor.w), ColorFactor.w);
+		}
 
 		float4 texColor = tex2D(_Diffuse, i.uv1);
 		c = c + i.color * ColorFactor * texColor;
 
-		if (_EnableLighting == 1 && ShaderParams.y == 0 && ShaderParams.z == 0) {
-			float4 LightConfig = UNITY_ACCESS_INSTANCED_PROP(Props, _LightConfig);
+		if(ShaderParams.x == 1) {
+			if (_EnableLighting == 1 /*&& ShaderParams.y == 0 && ShaderParams.z == 0*/) {
+				float4 backLightTex = float4(0,0,0,0);
+				if (UseTextures.y == 1) {
+					backLightTex = tex2D(_BackLight, i.uv1);
+					backLightTex.w = 0; // TODO: Fix issue where backlight alpha is set to 1 by default if it's missing
+				}
+				float2 screenPos = i.screenPos.xy / i.screenPos.w;
+				float4 LightConfig = UNITY_ACCESS_INSTANCED_PROP(Props, _LightConfig); // Front brightness, front contrast, Back brightness, back contrast
+				float3 frontLight = tex2D(_LightsFrontLight, screenPos).xyz * 2;//+ float3(0.5f, 0.5f, 0.5f); //* 2;
+				float3 lightColor = float3(LightConfig.x, LightConfig.x, LightConfig.x) // Front brightness
+					+ float3(frontLight * LightConfig.y); // Front contrast
+				lightColor = lerp(lightColor, float3(1,1,1), float3(backLightTex.w, backLightTex.w, backLightTex.w));
+				c = clamp(float4(c.xyz * lightColor, c.w), 0, 1);
 
-			float2 screenPos = i.screenPos.xy / i.screenPos.w;
-			float4 lightColor = float4(LightConfig.x, LightConfig.x, LightConfig.x, 0) + (tex2D(_LightsFrontLight, screenPos) * LightConfig.y);
-			//c = float4(screenPos.x, screenPos.y, 0, 1);
-			c = float4(c.xyz * lightColor.xyz, c.w);
-			if (UseTextures.y == 1) {
-				float4 backLightColor = clamp(float4(LightConfig.z, LightConfig.z, LightConfig.z, 0) + tex2D(_LightsBackLight, screenPos) * LightConfig.w, 0, 1) * tex2D(_BackLight, i.uv1);
-				c = c + float4(backLightColor.xyz, 0);
+				if (UseTextures.y == 1) {
+					float3 backLight = tex2D(_LightsBackLight, screenPos).xyz;
+					float3 backLightColor = float3(LightConfig.z, LightConfig.z, LightConfig.z) // Back brightness
+						+ float3(backLight * LightConfig.w); // Back contrast
+					c = clamp(float4(c.xyz + backLightColor.xyz * backLightTex.xyz, c.w), 0, 1);
+				}
+			}
+			if (UseTextures.w == 1) {
+				c = float4(c.xyz, c.a * tex2D(_SeparateAlpha, i.uv1_untransformed).a);
 			}
 		}
-		if (UseTextures.w == 1) {
-			c = float4(c.xyz, c.a * tex2D(_SeparateAlpha, i.uv1_untransformed).a);
-		}
 	}
+	c = lerp(c, float4(ColorFog.xyz, c.w), float4(ColorFog.w, ColorFog.w, ColorFog.w, ColorFog.w));
+
 	return c;
 }
 #endif // SHARED_GOURAUD

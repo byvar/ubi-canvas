@@ -95,9 +95,21 @@ namespace UbiArt.ITF {
 					mats[0] = GFXMaterialShader_Template.GetShaderMaterial(shader: null, transparent: false);
 					mr.sharedMaterials = mats;
 				}
+				FillMaterialParams(mr, index: 0);
 				mf.sharedMesh = mesh;
 				mr.gameObject.layer = LayerMask.NameToLayer("Default");
 			}
+		}
+		private void FillMaterialParams(Renderer r, int index = 0) {
+			if (mpb == null) mpb = new MaterialPropertyBlock();
+			r.GetPropertyBlock(mpb, index);
+			if (UbiArtContext.Settings.EngineVersion > EngineVersion.RO) {
+				GFXPrimitiveParam param = PrimitiveParameters;
+				param?.FillMaterialParams(UbiArtContext, mpb);
+			} else {
+				GFXPrimitiveParam.FillMaterialParamsDefault(UbiArtContext, mpb);
+			}
+			r.SetPropertyBlock(mpb, index);
 		}
 	}
 }

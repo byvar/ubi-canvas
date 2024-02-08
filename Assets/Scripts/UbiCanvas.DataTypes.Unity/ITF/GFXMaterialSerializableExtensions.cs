@@ -14,6 +14,8 @@ namespace UbiArt.ITF {
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			if (shader == null) {
 				r.GetPropertyBlock(mpb, index);
+				mpb.SetVector("_ShaderParams", new Vector4(1, 0, 0, 0));
+				mpb.SetVector("_ShaderParams2", new Vector4(0, 2, 0, 0));
 			} else {
 				r.GetPropertyBlock(mpb, index);
 				mpb.SetVector("_ShaderParams", new Vector4(

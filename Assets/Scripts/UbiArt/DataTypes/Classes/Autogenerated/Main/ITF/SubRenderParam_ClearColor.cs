@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.VH | GameFlags.RA)]
 	public partial class SubRenderParam_ClearColor : SubRenderParam {
 		public Color ClearColor = Color.Black;
-		public Color ClearFrontLightColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+		public Color ClearFrontLightColor = Color.Grey;
 		public Color ClearBackLightColor = Color.Black;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

@@ -229,6 +229,7 @@ namespace UbiArt.ITF {
 					mr.sharedMesh = mesh;
 					FillMaterialParams(mr);
 					SetMaterialTextures(bank.TextureBankPath.textureSet, mr);
+					FillUnityMaterialPropertyBlock(mr, shader: bank?.TextureBankPath?.shader?.obj);
 
 					bank.Patches[i].Object = patch_gao;
 					bank.Patches[i].Renderer = mr;
@@ -318,17 +319,9 @@ namespace UbiArt.ITF {
 			r.GetPropertyBlock(mpb, index);
 			if (UbiArtContext.Settings.EngineVersion > EngineVersion.RO) {
 				GFXPrimitiveParam param = PrimitiveParameters;
-				mpb.SetColor("_ColorFactor", param.TotalColorFactor.GetUnityColor());
-				mpb.SetColor("_LightConfig", new Vector4(
-					param.FrontLightBrightness,
-					param.FrontLightContrast,
-					param.BackLightBrightness,
-					param.BackLightContrast));
-				mpb.SetColor("_ColorFog", param.colorFog.GetUnityColor());
+				param?.FillMaterialParams(UbiArtContext, mpb);
 			} else {
-				mpb.SetColor("_ColorFactor", UnityEngine.Color.white);
-				mpb.SetColor("_LightConfig", new Vector4(1, 0, 1, 0));
-				mpb.SetColor("_ColorFog", Vector4.zero);
+				GFXPrimitiveParam.FillMaterialParamsDefault(UbiArtContext, mpb);
 			}
 			r.SetPropertyBlock(mpb, index);
 		}
@@ -340,6 +333,8 @@ namespace UbiArt.ITF {
 			if (mpb == null) mpb = new MaterialPropertyBlock();
 			if (shader == null) {
 				r.GetPropertyBlock(mpb, index);
+				mpb.SetVector("_ShaderParams", new Vector4(1,0,0,0));
+				mpb.SetVector("_ShaderParams2", new Vector4(0,2,0,0));
 			} else {
 				r.GetPropertyBlock(mpb, index);
 				mpb.SetVector("_ShaderParams", new Vector4(

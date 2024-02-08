@@ -290,6 +290,7 @@ public class UnityAnimation : MonoBehaviour {
 							var texPath = GetTexturePathOrigins(entry.textureBankId);
 							if (texPath != null) {
 								if (context.Loader.tex.ContainsKey(texPath.stringID)) {
+									alc.FillUnityMaterialPropertyBlock(bank.Patches[ind].Renderer);
 									alc.SetMaterialTextureOrigins((TextureCooked)context.Loader.tex[texPath.stringID], bank.Patches[ind].Renderer);
 								}
 							}

@@ -91,17 +91,9 @@ namespace UbiArt.ITF {
 			r.GetPropertyBlock(mpb, index);
 			if (UbiArtContext.Settings.EngineVersion > EngineVersion.RO) {
 				GFXPrimitiveParam param = PrimitiveParameters;
-				mpb.SetColor("_ColorFactor", param.TotalColorFactor.GetUnityColor());
-				mpb.SetColor("_LightConfig", new Vector4(
-					param.FrontLightBrightness,
-					param.FrontLightContrast,
-					param.BackLightBrightness,
-					param.BackLightContrast));
-				mpb.SetColor("_ColorFog", param.colorFog.GetUnityColor());
+				param?.FillMaterialParams(UbiArtContext, mpb);
 			} else {
-				mpb.SetColor("_ColorFactor", UnityEngine.Color.white);
-				mpb.SetColor("_LightConfig", new Vector4(1, 0, 1, 0));
-				mpb.SetColor("_ColorFog", Vector4.zero);
+				GFXPrimitiveParam.FillMaterialParamsDefault(UbiArtContext, mpb);
 			}
 			r.SetPropertyBlock(mpb, index);
 		}

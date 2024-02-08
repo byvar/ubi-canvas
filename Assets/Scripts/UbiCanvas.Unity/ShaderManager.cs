@@ -14,6 +14,10 @@ public class ShaderManager : MonoBehaviour {
 	public bool enableLighting = true; //private bool _enableLighting = true;
 
 	// Use this for initialization
+	private void Awake() {
+		Shader.SetGlobalColor("_GlobalColor", Color.white);
+		Shader.SetGlobalColor("_GlobalStaticFog", Color.clear);
+	}
 	void Start() {
 		UpdateRenderTextures();
 		Shader.SetGlobalFloat("_EnableLighting", enableLighting ? 1f : 0f);

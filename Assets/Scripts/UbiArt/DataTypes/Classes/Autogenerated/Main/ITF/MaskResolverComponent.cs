@@ -2,7 +2,7 @@ namespace UbiArt.ITF {
 	[Games(GameFlags.LegendsAndUp)]
 	public partial class MaskResolverComponent : ActorComponent {
 		public bool clearFrontLightBuffer = true;
-		public Color clearFrontLightColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+		public Color clearFrontLightColor = Color.Grey;
 		public bool clearBackLightBuffer = true;
 		public Color clearBackLightColor = Color.Black;
 		public float blurSize = 6f;
