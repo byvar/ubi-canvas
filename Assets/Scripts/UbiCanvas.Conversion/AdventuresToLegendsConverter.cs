@@ -1667,6 +1667,14 @@ namespace UbiCanvas.Conversion {
 						}, new Vec2d(559.99f, -83.08f), cycleTime: 0.75f);
 						break;
 					}
+				case "world/rlc_nemo/hiddentunnels/nemo_hiddentunnels_exp_base.isc": {
+						var rpa = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
+						var rp = rpa.Result.GetComponent<RenderParamComponent>();
+						rp.Lighting.Enable = true;
+						rp.Lighting.GlobalColor = new UbiArt.Color(0.1911356f, 0.5403678f, 0.5566038f, 0.6f);
+						//rp.Lighting.GlobalColor = new UbiArt.Color(0.1921568f, 0.3944952f, 0.5568628f, 0.6f);
+						break;
+					}
 				case "world_arcade/ra_challenge/ra_cha_riverstream/ra_cha_riverstream_main.isc": {
 						// Delete some additional Mr Dark stuff
 						var pickables = scene.FindPickables(p => p.USERFRIENDLY.StartsWith("relay_unpause_fx") || p.USERFRIENDLY.StartsWith("afxpostprocess"));
@@ -3037,14 +3045,28 @@ namespace UbiCanvas.Conversion {
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_06_nemo.tpl": {
-							// TODO
+							// COMPLETE
 							// Parts
 							AddPart("part_home_ocean_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_ocean.wav"));
 							AddPart("part_home_ocean_lp", new Path("sound/300_music/310_common/home/mus_home_ocean.wav"));
+							AddPart("part_labo_lp", new Path("sound/300_music/330_rlc/06_nemo/mus_labo_lp.wav"));
+							AddPart("part_labo_outro", new Path("sound/300_music/330_rlc/06_nemo/mus_labo_outro.wav"));
+
+							AddPart("part_mansionofdeep_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part1.wav"));
+							AddPart("part_mansionofdeep_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2.wav"));
+							AddPart("part_mansionofdeep_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2_02.wav"));
+							AddPart("part_mansionofdeep_04", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2_percbrass.wav"));
+
 
 							// Tree
 							AddSimpleNode("mus_home_ocean_retro", true, "part_home_ocean_retro_lp");
 							AddSimpleNode("mus_home_ocean", true, "part_home_ocean_lp");
+							AddSimpleNode("mus_labo", true, "part_labo_lp");
+							AddSimpleNode("mus_labo_outro", false, "part_labo_outro");
+							AddSimpleSequenceNode("mus_mansionofdeep", true,
+								new string[] { "part_mansionofdeep_01" },
+								new string[] { "part_mansionofdeep_02", "part_mansionofdeep_03", "part_mansionofdeep_04" }
+							);
 
 							// Common
 							AddMamboMambo();
