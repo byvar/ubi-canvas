@@ -67,6 +67,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 			} else if (s.Settings.Game == Game.RL) {
+				if(this is UISliderComponent_Template) return;
 				blinkScaleMin = s.Serialize<float>(blinkScaleMin, name: "blinkScaleMin");
 				blinkScale = s.Serialize<float>(blinkScale, name: "blinkScale");
 				blinkPeriod = s.Serialize<float>(blinkPeriod, name: "blinkPeriod");

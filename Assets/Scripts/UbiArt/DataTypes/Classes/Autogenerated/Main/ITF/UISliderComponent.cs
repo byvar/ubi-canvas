@@ -13,8 +13,6 @@ namespace UbiArt.ITF {
 		public bool verticalNotHorizontal;
 		public bool needPressValidateToSlide;
 		public bool enableValueText;
-		public StringID StringID__0;
-		public StringID StringID__1;
 		public float float__2;
 		public float float__3;
 		public float float__4;
@@ -30,8 +28,8 @@ namespace UbiArt.ITF {
 				fixPosX = s.Serialize<float>(fixPosX, name: "fixPosX");
 				fixPosY = s.Serialize<float>(fixPosY, name: "fixPosY");
 			} else if (s.Settings.Game == Game.VH) {
-				StringID__0 = s.SerializeObject<StringID>(StringID__0, name: "StringID__0");
-				StringID__1 = s.SerializeObject<StringID>(StringID__1, name: "StringID__1");
+				itemCursorID = s.SerializeObject<StringID>(itemCursorID, name: "itemCursorID");
+				itemBarID = s.SerializeObject<StringID>(itemBarID, name: "itemBarID");
 				float__2 = s.Serialize<float>(float__2, name: "float__2");
 				float__3 = s.Serialize<float>(float__3, name: "float__3");
 				float__4 = s.Serialize<float>(float__4, name: "float__4");

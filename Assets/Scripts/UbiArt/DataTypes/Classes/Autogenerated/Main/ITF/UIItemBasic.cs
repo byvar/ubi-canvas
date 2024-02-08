@@ -24,6 +24,7 @@ namespace UbiArt.ITF {
 			base.SerializeImpl(s);
 			if (s.Settings.EngineVersion <= EngineVersion.RO) {
 			} else if (s.Settings.Game == Game.RL) {
+				if (this is UISliderComponent) return;
 				selectTextStyle = s.Serialize<uint>(selectTextStyle, name: "selectTextStyle");
 				selectAnimMeshVertex = s.SerializeObject<CListO<StringID>>(selectAnimMeshVertex, name: "selectAnimMeshVertex");
 			} else if (s.Settings.Game == Game.VH) {
