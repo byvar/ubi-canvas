@@ -1437,6 +1437,19 @@ namespace UbiCanvas.Conversion {
 						bonestack.RELATIVEZ = -0.02f;
 						break;
 					}
+				case "world/rlc_hangar/fedexyourfriends/hangar_fedexyourfriends_exp_base.isc": {
+						UseFastCameras(scene, speed: 1.2f);
+						var badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@1");
+						badrabbid.Result.POS2D += Vec2d.Up * 4f;
+						break;
+					}
+				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc": {
+						var badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner");
+						badrabbid.Result.POS2D += Vec2d.Up * 8f;
+						badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@2");
+						badrabbid.Result.POS2D += Vec2d.Up * 8f;
+						break;
+					}
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc":
 				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc": {
@@ -1673,6 +1686,13 @@ namespace UbiCanvas.Conversion {
 						rp.Lighting.Enable = true;
 						rp.Lighting.GlobalColor = new UbiArt.Color(0.1911356f, 0.5403678f, 0.5566038f, 0.6f);
 						//rp.Lighting.GlobalColor = new UbiArt.Color(0.1921568f, 0.3944952f, 0.5568628f, 0.6f);
+						break;
+					}
+				case "world/rlc_nemo/dryandwet/nemo_dryandwet_nmi_base.isc": {
+						var rpa = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
+						var rp = rpa.Result.GetComponent<RenderParamComponent>();
+						rp.Lighting.Enable = true;
+						rp.Lighting.GlobalColor = new UbiArt.Color(0.145098f, 0.5803922f, 0.4784314f, 0.4f);
 						break;
 					}
 				case "world_arcade/ra_challenge/ra_cha_riverstream/ra_cha_riverstream_main.isc": {
@@ -3051,6 +3071,71 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_home_ocean_lp", new Path("sound/300_music/310_common/home/mus_home_ocean.wav"));
 							AddPart("part_labo_lp", new Path("sound/300_music/330_rlc/06_nemo/mus_labo_lp.wav"));
 							AddPart("part_labo_outro", new Path("sound/300_music/330_rlc/06_nemo/mus_labo_outro.wav"));
+							AddPart("part_glouglou_dream_01", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_01_intro_2m.wav"));
+							AddPart("part_glouglou_dream_02", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_02_4m.wav"));
+							AddPart("part_glouglou_dream_03", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_03_4m.wav"));
+							AddPart("part_glouglou_dream_04", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_04_4m.wav"));
+							AddPart("part_glouglou_dream_05", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_05_4m.wav"));
+							AddPart("part_glouglou_dream_06", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_06_4m.wav"));
+							AddPart("part_glouglou_dream_07", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_07_4m.wav"));
+							AddPart("part_glouglou_dream_08", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_08_outro_4m.wav"));
+
+							// Tree
+							AddSimpleNode("mus_home_ocean_retro", true, "part_home_ocean_retro_lp");
+							AddSimpleNode("mus_home_ocean", true, "part_home_ocean_lp");
+							AddSimpleNode("mus_labo", true, "part_labo_lp");
+							AddSimpleNode("mus_labo_outro", false, "part_labo_outro");
+							AddSimpleNode("mus_glouglou_dream", true,
+								"part_glouglou_dream_01", "part_glouglou_dream_02", "part_glouglou_dream_03", "part_glouglou_dream_04",
+								"part_glouglou_dream_05", "part_glouglou_dream_06", "part_glouglou_dream_07", "part_glouglou_dream_08");
+
+
+							// Common
+							AddMamboMambo();
+							break;
+						}
+					case "sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl": {
+							// COMPLETE
+							// Parts
+							AddPart("part_abyss_01", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_01_intro_4m.wav"), nbMeasures: 4);
+							AddPart("part_abyss_02", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_02_5m.wav"), nbMeasures: 5);
+							AddPart("part_abyss_03", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_03_4m.wav"), nbMeasures: 4);
+							AddPart("part_abyss_04", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_04_12m.wav"), nbMeasures: 12);
+							AddPart("part_abyss_05", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_05_08m.wav"), nbMeasures: 8);
+							AddPart("part_abyss_06", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_06_08m.wav"), nbMeasures: 8);
+							AddPart("part_abyss_07", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_07_08m.wav"), nbMeasures: 8);
+							AddPart("part_abyss_08", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_08_08m.wav"), nbMeasures: 8);
+							AddPart("part_abyss_09", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_09_outro_4m.wav"), nbMeasures: 4);
+
+							AddPart("part_diveanotherday_01", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part02_24m.wav"), nbMeasures: 24);
+							AddPart("part_diveanotherday_02", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part03_32m.wav"), nbMeasures: 32);
+							AddPart("part_diveanotherday_03", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part04_48m.wav"), nbMeasures: 48);
+							AddPart("part_diveanotherday_04", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part05_64m.wav"), nbMeasures: 64);
+							//AddPart("part_suspense_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 64);
+
+							AddPart("part_toadfight_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_toadfight_01.wav"));
+							AddPart("part_toadfight_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_toadfight_02.wav"));
+							AddPart("part_toadfight_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_toadfight_4.wav"));
+
+							AddPart("part_laserdance_intro_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_pat_4m_a_1.wav"));
+							AddPart("part_laserdance_intro_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patbass_4m_a_2.wav"));
+							AddPart("part_laserdance_intro_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbass_4m_b_3.wav"));
+							AddPart("part_laserdance_lp_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_8m_c_1.wav"));
+							AddPart("part_laserdance_lp_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_4m_d_1.wav"));
+							AddPart("part_laserdance_lp_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukbassdr_4m_e_3.wav"));
+							AddPart("part_laserdance_lp_04", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukbassdr_4m_f_1.wav"));
+							AddPart("part_laserdance_lp_05", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatdr_4m_g_2.wav"));
+							AddPart("part_laserdance_lp_06", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_8m_c_2.wav"));
+							AddPart("part_laserdance_lp_07", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accuktabpatbassdr_4m_n_2.wav"));
+							AddPart("part_laserdance_lp_08", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patdr_4m_i_1.wav"));
+							AddPart("part_laserdance_lp_09", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patbassdr_4m_a_3.wav"));
+							AddPart("part_laserdance_lp_10", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbassdr_4m_b_2.wav"));
+							AddPart("part_laserdance_outro", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_outro_4.wav"));
+
+							AddPart("part_ocrl4_01", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_1.wav"));
+							AddPart("part_ocrl4_02", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_2.wav"));
+							AddPart("part_ocrl4_03", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_3.wav"));
+							AddPart("part_ocrl4_04", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_4.wav"));
 
 							AddPart("part_mansionofdeep_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part1.wav"));
 							AddPart("part_mansionofdeep_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2.wav"));
@@ -3059,33 +3144,27 @@ namespace UbiCanvas.Conversion {
 
 
 							// Tree
-							AddSimpleNode("mus_home_ocean_retro", true, "part_home_ocean_retro_lp");
-							AddSimpleNode("mus_home_ocean", true, "part_home_ocean_lp");
-							AddSimpleNode("mus_labo", true, "part_labo_lp");
-							AddSimpleNode("mus_labo_outro", false, "part_labo_outro");
+							AddSimpleNode("mus_abyss", true,
+								"part_abyss_01", "part_abyss_02", "part_abyss_03", "part_abyss_04",
+								"part_abyss_05", "part_abyss_06", "part_abyss_07", "part_abyss_08",
+								"part_abyss_09");
+							AddSimpleSequenceNode("mus_diveanotherday", true,
+								new string[] { "part_diveanotherday_01" },
+								new string[] { "part_diveanotherday_02", "part_diveanotherday_03", "part_diveanotherday_04" });
+							//AddSimpleNode("mus_suspense", true, "part_suspense_lp");
+							AddSimpleNode("mus_toadfight", true, "part_toadfight_01", "part_toadfight_02", "part_toadfight_03");
+							AddSimpleSequenceNode("mus_laserdance", true,
+								new string[] { "part_laserdance_intro_01", "part_laserdance_intro_02", "part_laserdance_intro_03" },
+								new string[] {
+									"part_laserdance_lp_01", "part_laserdance_lp_02", "part_laserdance_lp_03", "part_laserdance_lp_04", "part_laserdance_lp_05",
+									"part_laserdance_lp_06", "part_laserdance_lp_07", "part_laserdance_lp_08", "part_laserdance_lp_09", "part_laserdance_lp_10"
+								});
+							AddSimpleNode("mus_laserdance_outro", false, "part_laserdance_outro");
+							AddSimpleNode("mus_ocrl4", true, "part_ocrl4_01", "part_ocrl4_02", "part_ocrl4_03", "part_ocrl4_04");
 							AddSimpleSequenceNode("mus_mansionofdeep", true,
 								new string[] { "part_mansionofdeep_01" },
 								new string[] { "part_mansionofdeep_02", "part_mansionofdeep_03", "part_mansionofdeep_04" }
 							);
-
-							// Common
-							AddMamboMambo();
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl": {
-							// TODO
-							// Parts
-							AddPart("part_diveanotherday_01", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part02_24m.wav"), nbMeasures: 24);
-							AddPart("part_diveanotherday_02", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part03_32m.wav"), nbMeasures: 32);
-							AddPart("part_diveanotherday_03", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part04_48m.wav"), nbMeasures: 48);
-							AddPart("part_diveanotherday_04", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part05_64m.wav"), nbMeasures: 64);
-							AddPart("part_suspense_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 64);
-
-							// Tree
-							AddSimpleSequenceNode("mus_diveanotherday", true,
-								new string[] { "part_diveanotherday_01" },
-								new string[] { "part_diveanotherday_02", "part_diveanotherday_03", "part_diveanotherday_04" });
-							AddSimpleNode("mus_suspense", true, "part_suspense_lp");
 
 							// Common
 							AddMamboMambo();
@@ -3977,6 +4056,18 @@ namespace UbiCanvas.Conversion {
 					var newA = (short)((new Angle(floatAngle, degrees: true).angle / anim.multiplierA) / 0.000030518f);
 					bp.angle = newA;
 				}
+			}
+
+			// Also fix gear anims here. These turning is a leftover from before they changed the animation system to NOT interpolate...
+			animPath = new Path("world/ocean/nemo/playground/decoprop/gear_big/gear_biganim1.anm");
+			anim = oldContext.Cache.Get<AnimTrack>(animPath);
+			if (anim != null) {
+				anim.bonePAS[1].angle = 0;
+			}
+			animPath = new Path("world/ocean/nemo/playground/decoprop/gear_little/gear_littleanim1.anm");
+			anim = oldContext.Cache.Get<AnimTrack>(animPath);
+			if (anim != null) {
+				anim.bonePAS[1].angle = 0;
 			}
 		}
 
