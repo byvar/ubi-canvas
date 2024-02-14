@@ -1450,8 +1450,6 @@ namespace UbiCanvas.Conversion {
 						badrabbid.Result.POS2D += Vec2d.Up * 8f;
 						break;
 					}
-				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
-				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc":
 				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc": {
 						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("clearcolo"));
 						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
@@ -1459,6 +1457,34 @@ namespace UbiCanvas.Conversion {
 						var mul = 0.7f;
 						var alphaMul = 1f;
 						rp.Lighting.GlobalColor = new UbiArt.Color(ogColor.r * mul, ogColor.g * mul, ogColor.b * mul, ogColor.a * alphaMul);
+						break;
+					}
+				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
+				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc": {
+						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("clearcolo"));
+						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
+						var ogColor = rp.Lighting.GlobalColor;
+						var mul = 0.65f;
+						var alphaMul = 1f;
+						rp.Lighting.GlobalColor = new UbiArt.Color(ogColor.r * mul, ogColor.g * mul, ogColor.b * mul, ogColor.a * alphaMul);
+						break;
+					}
+				case "world/rlc_beanstalk/aspiexplorer/beanstalk_aspiexplorer_exp_base.isc": {
+						/*var clearColor = scene.FindActor(a => a.USERFRIENDLY == "ambiance_space" && a.GetComponent<RenderParamComponent>() != null);
+						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
+						var ogColor = rp.Lighting.GlobalColor;
+						var mul = 0.9f;
+						var alphaMul = 1f;
+						rp.Lighting.GlobalColor = new UbiArt.Color(ogColor.r * mul, ogColor.g * mul, ogColor.b * mul, ogColor.a * alphaMul);*/
+						break;
+					}
+				case "world/rlc_beanstalk/glidinglums/beanstalk_glidinglums_nmi.isc": {
+						// Add wall at end
+						var beanstalk = scene.FindActor(a => a.USERFRIENDLY == "beanstalk@3");
+						var poly = beanstalk.Result.GetComponent<RO2_BezierTreeComponent>().branch.components[1].obj as RO2_BezierBranchPolylineComponent;
+						//poly.polylineTessellation = 3.15f;
+						poly.polylineMode = RO2_BezierBranchPolylineComponent.RO2_PolylineMode.Left;
+						poly.polylineMode2 = RO2_BezierBranchPolylineComponent.RO2_PolylineMode2.Left;
 						break;
 					}
 				case "world/rlc_nemo/pollutedbay/nemo_pollutedbay_nmi_base.isc": {
@@ -2894,6 +2920,7 @@ namespace UbiCanvas.Conversion {
 						new string[] { "part_hellgate_intro" },
 						new string[] { "part_hellgate_01", "part_hellgate_02" }
 					);
+					AddSimpleNode("mus_hellgate_outro", false, "part_hellgate_outro");
 				}
 
 				switch (path.FullPath) {
@@ -3068,7 +3095,6 @@ namespace UbiCanvas.Conversion {
 							AddSimpleNode("mus_home_music_retro", true, "part_home_music_retro_lp");
 							AddSimpleNode("mus_flightwhirl", true,
 								"part_flightwhirl_01", "part_flightwhirl_02", "part_flightwhirl_03", "part_flightwhirl_04", "part_flightwhirl_05");
-							AddSimpleNode("mus_hellgate_outro", false, "part_hellgate_outro");
 							AddSimpleNode("mus_lostinclouds", true, "part_lostinclouds_01", "part_lostinclouds_02", "part_lostinclouds_03");
 
 							// Common
@@ -6168,6 +6194,31 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc":
 					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl"));
 					break;
+				case "world/rlc_nemo/sunkensecrets/nemo_sunkensecrets_exp_base.isc":
+				case "world/rlc_nemo/harborhell/nemo_harborhell_nmi_base.isc":
+				case "world/rlc_nemo/pollutedbay/nemo_pollutedbay_nmi_base.isc":
+				case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc":
+				case "world/rlc_nemo/hiddentunnels/nemo_hiddentunnels_exp_base.isc":
+					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_06_nemo.tpl"));
+					break;
+				case "world/rlc_hangar/fedexyourfriends/hangar_fedexyourfriends_exp_base.isc":
+				case "world/rlc_hangar/monorailmadness/hangar_monorailmadness_nmi_base.isc":
+				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc":
+				case "world/rlc_nemo/dryandwet/nemo_dryandwet_nmi_base.isc":
+				case "world/rlc_hangar/grindinggears/hangar_grindinggears_exp_base.isc":
+				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc":
+				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc":
+					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl"));
+					break;
+				case "world/rlc_olympus/cranezone/olympus_cranezone_exp_base.isc":
+				case "world/rlc_olympus/heavenandhell/olympus_heavenandhell_nmi_base.isc":
+				case "world/rlc_olympus/pigrodeo/olympus_pigrodeo_nmi_valkyries.isc":
+				case "world/rlc_olympus/towerofworship/olympus_towerofworship_nmi_base.isc":
+				case "world/rlc_olympus/cloudcolosseum/olympus_cloudcolosseum_nmi_base.isc":
+				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc":
+				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc":
+					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_08_olympus.tpl"));
+					break;
 				default:
 					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
 					break;
@@ -6714,12 +6765,98 @@ namespace UbiCanvas.Conversion {
 							aabb, volume: -18);
 						break;
 					}
-				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc":
-				case "world/rlc_beanstalk/glidinglums/beanstalk_glidinglums_nmi.isc":
-				case "world/rlc_beanstalk/aspimaze/beanstalk_aspimaze_exp_base.isc":
-				case "world/rlc_beanstalk/aspiexplorer/beanstalk_aspiexplorer_exp_base.isc":
+				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -12f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_home_music_retro", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_breathing",
+							new Path("sound/100_ambiances/102_music_legends/amb_mu_rl_1_breathing_lp.wav"),
+							aabb, volume: -14);
+						break;
+					}
+				case "world/rlc_beanstalk/glidinglums/beanstalk_glidinglums_nmi.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -13f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_hellgate", volume: vol), aabb);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_hellgate_outro", volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(327.8f, -245f),
+								MAX = new Vec2d(367.4f, -216f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_wind_storm",
+							new Path("sound/100_ambiances/101_jungle/amb_wind_storm_lp.wav"),
+							aabb, volume: -18);
+
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterslide"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_river.tpl"), act.Result);
+						}
+						break;
+					}
+				case "world/rlc_beanstalk/aspimaze/beanstalk_aspimaze_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -12f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_flightwhirl", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
+							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
+							aabb, volume: -18);
+						break;
+					}
+				case "world/rlc_beanstalk/aspiexplorer/beanstalk_aspiexplorer_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -8f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_lostinclouds", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_music_wind_sky",
+							new Path("sound/100_ambiances/102_music_legends/amb_mu_wind_sky_lp.wav"),
+							aabb, volume: -14);
+						break;
+					}
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 4f), aabb);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_mambomambo", volume: vol),
+							new AABB() {
+								MIN = new Vec2d(64.1f, -76f),
+								MAX = new Vec2d(70.6f, -55.7f)
+							});
+						TransformAABB(await AddMusicTrigger(scene, "mus_mambomambo_outro", volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(561.9f, -300.2f),
+								MAX = new Vec2d(582.2f, -287.4f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_forest_river",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_river_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(-18.2f, -273.3f),
+								MAX = new Vec2d(503.4f, 8f)
+							}, volume: -14, padding: 16f);
+						await AddAmbienceInterpolator(scene, "amb_marais_water",
+							new Path("sound/100_ambiances/101_jungle/amb_marais_water_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(506f, -313.2f),
+								MAX = new Vec2d(601.1f, -273.3f)
+							}, volume: -14, padding: 16f);
+
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterslide"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_river.tpl"), act.Result);
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("watersplash"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), act.Result);
+						}
 						break;
 					}
 				default:
