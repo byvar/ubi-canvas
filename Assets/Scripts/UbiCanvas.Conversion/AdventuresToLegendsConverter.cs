@@ -1617,6 +1617,15 @@ namespace UbiCanvas.Conversion {
 						ZiplineToRope_All(oldContext, newSettings, scene);
 						break;
 					}
+				case "world/rlc_olympus/towerofworship/olympus_towerofworship_nmi_base.isc": {
+						var platforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("minotaur_flyingplatform"));
+						foreach (var plat in platforms) {
+							GenericAABBHack(plat.Result, aabbScale: 300f);
+						}
+						var badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@2");
+						badrabbid.Result.POS2D += Vec2d.Up * 5f;
+						break;
+					}
 				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
 						// Set brightness of lum bubbles to 0
 						var acts = scene.FindActors(a => a?.LUA?.filename?.Contains("bubbleprize") ?? false);
@@ -2875,6 +2884,17 @@ namespace UbiCanvas.Conversion {
 					);
 					AddSimpleNode("mus_enchantedforest_outro", false, "part_enchantedforest_07"); // trigger this with playOnNext = 96!
 				}
+				void AddHellGate() {
+					AddPart("part_hellgate_intro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_intro.wav"));
+					AddPart("part_hellgate_01", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_01_full_26m.wav"), nbMeasures: 26);
+					AddPart("part_hellgate_02", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_02_full_13m.wav"), nbMeasures: 13);
+					AddPart("part_hellgate_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_outro.wav"));
+
+					AddSimpleSequenceNode("mus_hellgate", true,
+						new string[] { "part_hellgate_intro" },
+						new string[] { "part_hellgate_01", "part_hellgate_02" }
+					);
+				}
 
 				switch (path.FullPath) {
 					case "sound/common/music_trees/09_rlc/musictree_rlc_01_jungle.tpl": {
@@ -3033,11 +3053,6 @@ namespace UbiCanvas.Conversion {
 							// Parts
 							AddPart("part_home_music_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_music.wav"));
 
-							AddPart("part_hellgate_intro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_intro.wav"));
-							AddPart("part_hellgate_01", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_01_full_26m.wav"), nbMeasures: 26);
-							AddPart("part_hellgate_02", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_02_full_13m.wav"), nbMeasures: 13);
-							AddPart("part_hellgate_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_outro.wav"));
-
 							AddPart("part_flightwhirl_01", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_03_8m.wav"), nbMeasures: 8);
 							AddPart("part_flightwhirl_02", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mu_rl_3_explo_01_48m.wav"), nbMeasures: 48); 
 							AddPart("part_flightwhirl_03", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_02_7m.wav"), nbMeasures: 7);
@@ -3051,16 +3066,13 @@ namespace UbiCanvas.Conversion {
 
 							// Tree
 							AddSimpleNode("mus_home_music_retro", true, "part_home_music_retro_lp");
-							AddSimpleSequenceNode("mus_hellgate", true,
-								new string[] { "part_hellgate_intro" },
-								new string[] { "part_hellgate_01", "part_hellgate_02" }
-							);
 							AddSimpleNode("mus_flightwhirl", true,
 								"part_flightwhirl_01", "part_flightwhirl_02", "part_flightwhirl_03", "part_flightwhirl_04", "part_flightwhirl_05");
 							AddSimpleNode("mus_hellgate_outro", false, "part_hellgate_outro");
 							AddSimpleNode("mus_lostinclouds", true, "part_lostinclouds_01", "part_lostinclouds_02", "part_lostinclouds_03");
 
 							// Common
+							AddHellGate();
 							AddMamboMambo();
 							break;
 						}
@@ -3171,7 +3183,60 @@ namespace UbiCanvas.Conversion {
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_08_olympus.tpl": {
-							// TODO
+							// COMPLETE
+							// Parts
+							AddPart("part_ss_strings_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part1_4m.wav"), nbMeasures: 4);
+							AddPart("part_ss_strings_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part2_9m.wav"), nbMeasures: 9);
+							AddPart("part_ss_strings_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part3_8m.wav"), nbMeasures: 8);
+							AddPart("part_ss_strings_04", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part4_14m.wav"), nbMeasures: 14);
+
+							AddPart("part_ss_explo", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_explo_08m.wav"), nbMeasures: 8);
+							AddPart("part_ss_full_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part1_4m.wav"), nbMeasures: 4);
+							AddPart("part_ss_full_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part2_9m.wav"), nbMeasures: 9);
+							AddPart("part_ss_full_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part3_8m.wav"), nbMeasures: 8);
+							AddPart("part_ss_full_04", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part4_14m.wav"), nbMeasures: 14);
+							AddPart("part_ss_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_outro_4m.wav"), nbMeasures: 4);
+							AddPart("part_ss_storm_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_1.wav"));
+							AddPart("part_ss_storm_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_2.wav"));
+							AddPart("part_ss_storm_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_3.wav"));
+							AddPart("part_ss_storm_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_outro.wav"));
+
+							AddPart("part_harp_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_harp_lp.wav"));
+
+							AddPart("part_arena_01", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01.wav"));
+							AddPart("part_arena_02", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02.wav"));
+							AddPart("part_arena_03", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_03.wav"));
+							AddPart("part_arena_04", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_end.wav"));
+							AddPart("part_arena_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_win.wav"));
+							
+							AddPart("part_hadesabode_intro", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_intro.wav"));
+							AddPart("part_hadesabode_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_lp.wav"));
+							AddPart("part_hadesabode_outro", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_outro.wav"));
+
+							AddPart("part_betamaze_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_betamaze_lp.wav"));
+							AddPart("part_betamaze_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_transition_01_4m.wav"), nbMeasures: 4);
+
+
+							// Nodes
+							AddSimpleNode("mus_ss_strings", true, "part_ss_strings_01", "part_ss_strings_02", "part_ss_strings_03", "part_ss_strings_04");
+							AddSimpleNode("mus_ss_explo", true, "part_ss_explo");
+							AddSimpleNode("mus_ss_full", true, "part_ss_full_01", "part_ss_full_02", "part_ss_full_03", "part_ss_full_04");
+							AddSimpleNode("mus_ss_outro", false, "part_ss_outro");
+							AddSimpleNode("mus_ss_storm", true, "part_ss_storm_01", "part_ss_storm_02", "part_ss_storm_03");
+							AddSimpleNode("mus_ss_storm_outro", false, "part_ss_storm_outro");
+							AddSimpleNode("mus_harp", true, "part_harp_lp");
+							AddSimpleNode("mus_arena", true, "part_arena_01", "part_arena_02", "part_arena_03", "part_arena_04");
+							AddSimpleNode("mus_arena_outro", false, "part_arena_outro");
+							AddSimpleSequenceNode("mus_hadesabode", true,
+								new string[] { "part_hadesabode_intro" },
+								new string[] { "part_hadesabode_lp" });
+							AddSimpleNode("mus_hadesabode_outro", false, "part_hadesabode_outro");
+							AddSimpleNode("mus_betamaze", true, "part_betamaze_lp");
+							AddSimpleNode("mus_betamaze_outro", false, "part_betamaze_outro");
+
+
+							// Common
+							AddMamboMambo();
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_09_dojo.tpl": {
@@ -3180,8 +3245,27 @@ namespace UbiCanvas.Conversion {
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_10_world.tpl": {
 							// TODO
+							// Parts
+							AddPart("part_oc_suspense_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 64);
+
+							AddPart("part_arena_01", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01.wav"));
+							AddPart("part_arena_01_percus", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01_percus.wav"));
+							AddPart("part_arena_02", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02.wav"));
+							AddPart("part_arena_02_percus", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02_percus.wav"));
+							AddPart("part_darkcpursuit_intro", new Path("sound/300_music/330_rlc/10_world/mus_darkcpursuit_intro.wav"));
+							AddPart("part_darkcpursuit_lp", new Path("sound/300_music/330_rlc/10_world/mus_darkcpursuit_lp.wav"));
+							AddPart("part_darkcpursuit_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_4_darkcpursuit/mo_rl_4_outro.wav"));
+
+							// Nodes
+							AddSimpleNode("mus_oc_suspense", true, "part_oc_suspense_lp");
+							AddSimpleNode("mus_arena_percus", true, "part_arena_01", "part_arena_01_percus", "part_arena_02", "part_arena_02_percus");
+							AddSimpleNode("mus_darkcpursuit_intro", false, "part_darkcpursuit_intro");
+							AddSimpleNode("mus_darkcpursuit", true, "part_darkcpursuit_lp");
+							AddSimpleNode("mus_darkcpursuit_outro", false, "part_darkcpursuit_outro");
+
 
 							// Common
+							AddHellGate();
 							AddMamboMambo();
 							break;
 						}
@@ -4058,7 +4142,7 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 
-			// Also fix gear anims here. These turning is a leftover from before they changed the animation system to NOT interpolate...
+			// Also fix gear anims here. These turning is a leftover from before they changed the animation system to use circular/no interpolation...
 			animPath = new Path("world/ocean/nemo/playground/decoprop/gear_big/gear_biganim1.anm");
 			anim = oldContext.Cache.Get<AnimTrack>(animPath);
 			if (anim != null) {
@@ -4068,6 +4152,13 @@ namespace UbiCanvas.Conversion {
 			anim = oldContext.Cache.Get<AnimTrack>(animPath);
 			if (anim != null) {
 				anim.bonePAS[1].angle = 0;
+			}
+			animPath = new Path("world/mountain/mecha/playground/enemy/buzzsaw/animation/buzzsawanim1.anm");
+			anim = oldContext.Cache.Get<AnimTrack>(animPath);
+			if (anim != null) {
+				foreach (var pas in anim.bonePAS) {
+					pas.angle = 0;
+				}
 			}
 		}
 
