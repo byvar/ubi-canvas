@@ -985,6 +985,7 @@ namespace UbiCanvas.Conversion {
 				var wwiseID = entry.Key;
 				var wwiseItem = soundConfig.WwiseLookUpTable.FirstOrDefault(w => w.ID == wwiseID);
 				if(wwiseItem == null) continue;
+				if(entry.Value.Name == "play_death_enemy_itself") continue; // This sound was in death_fx in Legends, we don't want it in every enemy in Adventures
 
 				var ev = new WwiseConversionSettings.Event() {
 					Item = wwiseItem,
