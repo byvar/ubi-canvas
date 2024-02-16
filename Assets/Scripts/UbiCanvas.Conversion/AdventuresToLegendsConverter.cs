@@ -2239,7 +2239,8 @@ namespace UbiCanvas.Conversion {
 				var rabbidPath = new Path(scTPL.actorPaths[(int)sc.selectedPathIndex].FullPath);
 				rabbidPath.ConvertPath(renameConversionSettings);
 				var rabbidName = act.USERFRIENDLY;
-				if (sc.triggerSpawn) {
+				//var isSubscene = rabbidPath.GetExtension(removeCooked: true) != "act";
+				if (sc.triggerSpawn /*&& isSubscene*/) {
 					rabbidName += "_rabbid";
 				}
 				void SetToActorTransform(Actor a) {
@@ -2263,6 +2264,11 @@ namespace UbiCanvas.Conversion {
 							Path = new ObjectPath(rabbid.USERFRIENDLY)
 						}
 					};
+					var btai = rabbid.GetComponent<RO2_EnemyBTAIComponent>();
+					if (btai != null) {
+						btai.appearType = RO2_EnemyBTAIComponent.Enum_appearType.FromGround;
+						btai.appearType2 = RO2_EnemyBTAIComponent.Enum_appearType2.FromGround;
+					}
 				}
 
 				// Set pimitive parameters
@@ -6857,6 +6863,76 @@ namespace UbiCanvas.Conversion {
 						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("watersplash"))) {
 							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), act.Result);
 						}
+						break;
+					}
+				case "world/rlc_nemo/sunkensecrets/nemo_sunkensecrets_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_home_ocean_retro", volume: vol), aabb);
+
+						var waterY = -5.737316f;
+						await AddAmbienceInterpolator(scene, "amb_beach",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_beach_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, waterY),
+								MAX = new Vec2d(aabb.MAX.x, aabb.MAX.y)
+							}, volume: -13, padding: 15);
+						await AddAmbienceInterpolator(scene, "amb_oce_underwater",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, aabb.MIN.y),
+								MAX = new Vec2d(aabb.MAX.x, waterY - 2f)
+							}, volume: -10);
+						await AddAmbienceInterpolator(scene, "amb_cavern",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_cavern_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(12.8f, -3f),
+								MAX = new Vec2d(31.7f, 14.5f)
+							}, volume: -12);
+						await AddAmbienceInterpolator(scene, "amb_cavern",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_cavern_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(229.98f, -7.72f),
+								MAX = new Vec2d(239f, 0.27f)
+							}, volume: -12, padding: 10f);
+						break;
+					}
+				case "world/rlc_nemo/harborhell/nemo_harborhell_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_home_ocean", volume: vol), aabb);
+
+						var waterY = -17.86f;
+						await AddAmbienceInterpolator(scene, "amb_glouglou_outside",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_glouglou_outside_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, waterY),
+								MAX = new Vec2d(aabb.MAX.x, aabb.MAX.y)
+							}, volume: -18);
+						await AddAmbienceInterpolator(scene, "amb_oce_underwater",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, aabb.MIN.y),
+								MAX = new Vec2d(aabb.MAX.x, waterY - 2f)
+							}, volume: -10);
+						break;
+					}
+				case "world/rlc_nemo/pollutedbay/nemo_pollutedbay_nmi_base.isc":
+				case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc":
+				case "world/rlc_nemo/hiddentunnels/nemo_hiddentunnels_exp_base.isc": {
+						/*
+							AddSimpleNode("mus_labo", true, "part_labo_lp");
+							AddSimpleNode("mus_labo_outro", false, "part_labo_outro");
+							AddSimpleNode("mus_glouglou_dream", true,
+								"part_glouglou_dream_01", "part_glouglou_dream_02", "part_glouglou_dream_03", "part_glouglou_dream_04",
+								"part_glouglou_dream_05", "part_glouglou_dream_06", "part_glouglou_dream_07", "part_glouglou_dream_08");
+
+
+							// Common
+							AddMamboMambo();
+						 * */
 						break;
 					}
 				default:

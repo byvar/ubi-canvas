@@ -34,6 +34,7 @@ namespace UbiArt {
 
 		public bool LoadAnimations { get; set; } = false;
 		public bool LoadAllPaths { get; set; } = false;
+		public bool LoadFromIpk { get; set; } = false;
 
 		public ITF.RO2_GameManagerConfig_Template gameConfig;
 		public ITF.Ray_GameManagerConfig_Template gameConfigRO;
@@ -86,7 +87,7 @@ namespace UbiArt {
 
 		protected bool GameFileExists(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
-			if (Settings.LoadFromIpk && Settings.Bundles != null) {
+			if (LoadFromIpk && Settings.Bundles != null) {
 				Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
 				string[] bnames = Settings.Bundles;
 				foreach (var bname in bnames) {
@@ -99,7 +100,7 @@ namespace UbiArt {
 		}
 		public Stream GetGameFileStream(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
-			if (Settings.LoadFromIpk && Settings.Bundles != null) {
+			if (LoadFromIpk && Settings.Bundles != null) {
 				Path path = ckd ? new Path($"{cookedFolder}{p.folder}", $"{p.filename}{(ckd ? ".ckd" : "")}", cooked: true) : p;
 				string[] bnames = Settings.Bundles;
 				foreach (var bname in bnames) {
@@ -172,7 +173,7 @@ namespace UbiArt {
 		}
 		protected async Task PrepareGameFile(Path p, bool ckd) {
 			string cookedFolder = ckd ? Settings.ITFDirectory : "";
-			if (Settings.LoadFromIpk && Settings.Bundles != null) {
+			if (LoadFromIpk && Settings.Bundles != null) {
 				string s = LoadingState;
 				LoadingState = $"Downloading\n{p.FullPath}";
 				await PrepareGameFile_Internal();

@@ -18,7 +18,6 @@ namespace UbiArt
 		public bool UsesSerializeFlags { get; set; } = true;
 		public bool Cooked { get; set; } = true;
 		public bool PastaStructure { get; set; } = false;
-		public bool LoadFromIpk { get; set; }
 		public string[]? Bundles { get; set; }
 		public uint IpkVersion { get; set; }
 		public uint EngineSignature { get; set; }
