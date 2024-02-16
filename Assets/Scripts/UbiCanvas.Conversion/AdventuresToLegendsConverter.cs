@@ -1722,6 +1722,9 @@ namespace UbiCanvas.Conversion {
 						rp.Lighting.Enable = true;
 						rp.Lighting.GlobalColor = new UbiArt.Color(0.1911356f, 0.5403678f, 0.5566038f, 0.6f);
 						//rp.Lighting.GlobalColor = new UbiArt.Color(0.1921568f, 0.3944952f, 0.5568628f, 0.6f);
+
+						var badpause = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once_pause");
+						badpause.ContainingScene.DeletePickable(badpause.Result);
 						break;
 					}
 				case "world/rlc_nemo/dryandwet/nemo_dryandwet_nmi_base.isc": {
@@ -2463,7 +2466,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public async Task<Actor> AddAmbienceInterpolator(Scene scene, string ambID, Path soundPath, AABB innerBox,
-			AABB outerBox = null, float padding = 5f, float volume = -8f, Path path = null) {
+			AABB outerBox = null, float padding = 5f, float volume = -8f, Path path = null, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
@@ -2471,9 +2474,10 @@ namespace UbiCanvas.Conversion {
 				newPath += ".tpl";
 				path = new Path(newPath);
 			}
+			if(containingScene == null) containingScene = scene;
 			var actName = path.GetFilenameWithoutExtension(removeCooked: true);
 			var ogPath = "sound/common/ambiances/01_jungle/triggerinterpolator_jun_forest.tpl";
-			var act = await AddNewActor(scene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
+			var act = await AddNewActor(containingScene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
 			var ogTPL = act.template;
 			if (CreateTemplateIfNecessary(path, "AMBIENCE INTERPOLATOR", out var newTPL, act: act)) {
 				newTPL.sizeOf = ogTPL.sizeOf + 0x4000;
@@ -6270,10 +6274,12 @@ namespace UbiCanvas.Conversion {
 				}
 				return totalAABB;
 			}
-			void Link(Actor a, string path) {
-				a.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+			ChildEntry Link(Actor a, string path) {
+				var ce = new ChildEntry() {
 					Path = new ObjectPath(path)
-				});
+				};
+				a.GetComponent<LinkComponent>().Children.Add(ce);
+				return ce;
 			}
 			switch (scenePath.FullPath) {
 				case "world/rlc_intro/intro_firstlevel.isc": {
@@ -6950,17 +6956,98 @@ namespace UbiCanvas.Conversion {
 							}, volume: -12, padding: 10f);
 						break;
 					}
-				case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc":
+				case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 1f), aabb);
+
+						var startTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@2");
+						var mambomambo = await AddMusicEventRelay(scene, "mus_mambomambo", volume: vol, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(mambomambo, startTrigger.Result);
+						var link = Link(startTrigger.Result, mambomambo.USERFRIENDLY);
+						link.AddTag("Delay", "2.0");
+						var mambomamboOutro = await AddMusicEventRelay(scene, "mus_mambomambo_outro", volume: vol, playOnNext: 0x60, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(mambomamboOutro, startTrigger.Result);
+						link = Link(startTrigger.Result, mambomamboOutro.USERFRIENDLY);
+						link.AddTag("Delay", "37.4815");
+
+						/*var outroTween = scene.FindActor(a => a.USERFRIENDLY == "tween_metalunderwaterbigdoortype" && a.POS2D.y < 0).Result.GetComponent<TweenComponent>();
+						var outroTweenSet = outroTween.instanceTemplate.value.instructionSets[0];
+						var instructions = new List<Generic<TweenInstruction_Template>>();*/
+						/*instructions.Add(new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+							_event = GetMusicEvent("mus_mambomambo", volume: vol),
+							duration = 0f,
+							triggerSelf = false,
+							triggerBroadcast = true
+						}));*/
+						/*instructions.AddRange(outroTweenSet.instructions);
+						instructions.Add(new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+							_event = GetMusicEvent("mus_mambomambo_outro", volume: vol, playOnNext: 0x60),
+							duration = 0f,
+							triggerSelf = false,
+							triggerBroadcast = true
+						}));
+						outroTweenSet.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
+						outroTween.InstantiateFromInstanceTemplate(outroTween.UbiArtContext);*/
+
+						var moveScene = scene.FindPickable(a => a.USERFRIENDLY == "castle_background_sky").ContainingScene;
+
+						var waterY = 109.5024f;
+						await AddAmbienceInterpolator(scene, "amb_beach",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_beach_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(-52.6f, waterY),
+								MAX = new Vec2d(67.9f, 152.4f)
+							}, volume: -11, padding: 15, containingScene: moveScene);
+
+						await AddAmbienceInterpolator(scene, "amb_stream",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_underwater_stream_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(-52.6f, -250f),
+								MAX = new Vec2d(67.9f, waterY - 35f)
+							}, volume: -11, padding: 40, containingScene: moveScene);
+
+						await AddAmbienceInterpolator(scene, "amb_metalhinge",
+							new Path("sound/100_ambiances/104_ocean/amb_oc_rl_arena_metalhinge.wav"),
+							new AABB() {
+								MIN = new Vec2d(-52.6f, -500),
+								MAX = new Vec2d(67.9f, -250f)
+							}, volume: -11, padding: 60, containingScene: moveScene);
+
+						await AddAmbienceInterpolator(scene, "amb_base_cave",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_base_cave_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(-52.6f, -635),
+								MAX = new Vec2d(67.9f, -560f)
+							}, volume: -11, padding: 100, containingScene: moveScene);
+
+						var splash = scene.FindPickable(p => p.USERFRIENDLY == "watersplash");
+						await AddActorSound(splash.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), splash.Result);
+
+						break;
+					}
 				case "world/rlc_nemo/hiddentunnels/nemo_hiddentunnels_exp_base.isc": {
-						/*
-							AddSimpleNode("mus_glouglou_dream", true,
-								"part_glouglou_dream_01", "part_glouglou_dream_02", "part_glouglou_dream_03", "part_glouglou_dream_04",
-								"part_glouglou_dream_05", "part_glouglou_dream_06", "part_glouglou_dream_07", "part_glouglou_dream_08");
+
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_glouglou_dream", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_oce_sbase",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_sbase_lp.wav"),
+							aabb, volume: -18);
 
 
-							// Common
-							AddMamboMambo();
-						 * */
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterslide"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_river.tpl"), act.Result);
+						}
+
+
 						break;
 					}
 				default:
