@@ -2239,8 +2239,7 @@ namespace UbiCanvas.Conversion {
 				var rabbidPath = new Path(scTPL.actorPaths[(int)sc.selectedPathIndex].FullPath);
 				rabbidPath.ConvertPath(renameConversionSettings);
 				var rabbidName = act.USERFRIENDLY;
-				//var isSubscene = rabbidPath.GetExtension(removeCooked: true) != "act";
-				if (sc.triggerSpawn /*&& isSubscene*/) {
+				if (sc.triggerSpawn) {
 					rabbidName += "_rabbid";
 				}
 				void SetToActorTransform(Actor a) {
@@ -6919,12 +6918,40 @@ namespace UbiCanvas.Conversion {
 							}, volume: -10);
 						break;
 					}
-				case "world/rlc_nemo/pollutedbay/nemo_pollutedbay_nmi_base.isc":
+				case "world/rlc_nemo/pollutedbay/nemo_pollutedbay_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -13f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_labo", volume: vol), aabb);
+						var outroTrigger = scene.FindActor(a => a.USERFRIENDLY == "ring_hangtriggeronce");
+						var outro = await AddMusicEventRelay(scene, "mus_labo_outro", volume: vol, playOnNext: 0x60, containingScene: outroTrigger.ContainingScene);
+						TransformCopyPickable(outro, outroTrigger.Result);
+						Link(outroTrigger.Result, outro.USERFRIENDLY);
+
+						var waterY = -2.45043f;
+						await AddAmbienceInterpolator(scene, "amb_glouglou_outside",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_glouglou_outside_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, waterY),
+								MAX = new Vec2d(aabb.MAX.x, aabb.MAX.y)
+							}, volume: -18);
+						await AddAmbienceInterpolator(scene, "amb_oce_underwater",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, aabb.MIN.y),
+								MAX = new Vec2d(aabb.MAX.x, waterY - 2f)
+							}, volume: -10);
+						await AddAmbienceInterpolator(scene, "amb_cavern",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_cavern_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(362.79f, -2.45043f),
+								MAX = new Vec2d(405.5f, 19.2f)
+							}, volume: -12, padding: 10f);
+						break;
+					}
 				case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc":
 				case "world/rlc_nemo/hiddentunnels/nemo_hiddentunnels_exp_base.isc": {
 						/*
-							AddSimpleNode("mus_labo", true, "part_labo_lp");
-							AddSimpleNode("mus_labo_outro", false, "part_labo_outro");
 							AddSimpleNode("mus_glouglou_dream", true,
 								"part_glouglou_dream_01", "part_glouglou_dream_02", "part_glouglou_dream_03", "part_glouglou_dream_04",
 								"part_glouglou_dream_05", "part_glouglou_dream_06", "part_glouglou_dream_07", "part_glouglou_dream_08");
