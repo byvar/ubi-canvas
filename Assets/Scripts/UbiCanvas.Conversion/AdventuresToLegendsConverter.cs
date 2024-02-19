@@ -1674,6 +1674,19 @@ namespace UbiCanvas.Conversion {
 							if(anm?.PrimitiveParameters == null) continue;
 							anm.PrimitiveParameters.FrontLightBrightness = 0f;
 						}
+						// Add flower bumper to autograb hangspot
+						var bump = await AddNewActor(scene, new Path("world/jungle/common/platform/flower_bumper/components/flower_bumper_2m.tpl"), contextToLoadFrom: LegendsContext);
+						bump.POS2D = new Vec2d(196.61f, -22.02f);
+						bump.RELATIVEZ = 0.02f;
+						bump.SCALE = Vec2d.One * 5f;
+						bump.ANGLE = new Angle(192f, degrees: true);
+
+						var bumpAnim = bump.GetComponent<AnimatedComponent>();
+						var exampleBumpAnim = scene.FindActor(a => a.USERFRIENDLY == "flower_bumper_2m_ocean@14").Result.GetComponent<AnimatedComponent>();
+						bumpAnim.subAnimInfo.animPackage = exampleBumpAnim.subAnimInfo.animPackage.Clone("isc") as AnimResourcePackage;
+						bumpAnim.PrimitiveParameters = exampleBumpAnim.PrimitiveParameters.Clone("isc") as GFXPrimitiveParam;
+
+						UseFastCameras(scene, speed: 1.2f);
 						break;
 					}
 				case "world/rlc_enchantedforest/somethingsmellsfunny/enchantedforest_somethingsmellsfunny_spd_base.isc": {
@@ -7169,8 +7182,7 @@ namespace UbiCanvas.Conversion {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -9f;
 						var sceneTree = new PickableTree(scene);
-
-						// No music at start
+						
 						TransformAABB(await AddMusicTrigger(scene, "mus_laserdance_intro", volume: vol), aabb);
 
 						var startTrigger = sceneTree.FollowObjectPath(new ObjectPath("hangar_monorailmadness_nmi_base_ld|grp@7|ring_hangtriggeronce"));
@@ -7341,18 +7353,109 @@ namespace UbiCanvas.Conversion {
 
 						break;
 					}
-				case "world/rlc_hangar/grindinggears/hangar_grindinggears_exp_base.isc":
-				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc":
-				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
-						/*
-							// Tree
-							AddSimpleNode("mus_toadfight", true, "part_toadfight_01", "part_toadfight_02", "part_toadfight_03");
+				case "world/rlc_hangar/grindinggears/hangar_grindinggears_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -9f;
 
-							AddSimpleSequenceNode("mus_mansionofdeep", true,
-								new string[] { "part_mansionofdeep_01" },
-								new string[] { "part_mansionofdeep_02", "part_mansionofdeep_03", "part_mansionofdeep_04" }
-							);
-							* */
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 1f), aabb);
+
+						var startTrigger = scene.FindActor(a => a.USERFRIENDLY == "relay_activate_releaseprisoner");
+						var music = await AddMusicEventRelay(scene, "mus_toadfight", volume: vol, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(music, startTrigger.Result);
+						var link = Link(startTrigger.Result, music.USERFRIENDLY);
+
+						await AddAmbienceInterpolator(scene, "amb_metalhinge",
+							new Path("sound/100_ambiances/104_ocean/amb_oc_rl_arena_metalhinge.wav"),
+							aabb, volume: -14);
+						break;
+					}
+				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -15f;
+						var sceneTree = new PickableTree(scene);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_mansionofdeep", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_oce_rl4_labo",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_rl4_labo_lp.wav"),
+							aabb, volume: -13);
+
+						Path gearSound = new Path("sound/common/3d_sound_actors/04_ocean/actorsound_gear_arena.tpl");
+						var gears = scene.FindActors(a => {
+							if (!a.USERFRIENDLY.StartsWith("tween_notype")) return false;
+							var tween = a.GetComponent<TweenComponent>()?.instanceTemplate?.value;
+							if (tween == null) return false;
+							if (tween.instructionSets.Count != 1) return false;
+							if (tween.instructionSets[0].instructions.Count != 1) return false;
+							if (!(tween.instructionSets[0].instructions[0].obj is TweenCircle_Template)) return false;
+							return true;
+						});
+						var allLinks = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children != null);
+						// Give gears a sound actor
+						foreach (var gear in gears) {
+							var snd = await AddActorSound(gear.ContainingScene, gearSound, gear.Result);
+							/*if (CloneTemplateIfNecessary(new Path(snd.LUA.FullPath), "louder", "LOUDER", snd.template, out var newTPL, act: snd)) {
+								newTPL.obj.GetComponent<SoundComponent_Template>().soundList[0].volume = new Volume(-10f);
+							}*/
+							snd.USERFRIENDLY = $"{gear.Result.USERFRIENDLY}_snd";
+							snd.STARTPAUSE = gear.Result.STARTPAUSE;
+
+							foreach (var linkactor in allLinks) {
+								var actorPath = linkactor.Path;
+								var links = linkactor.Result.GetComponent<LinkComponent>();
+								var checklinks = links.Children.Where(l => l.Path.id.StartsWith("tween_notype")).ToArray();
+								if (checklinks.Length == 0) continue;
+								var curnode = sceneTree.FollowObjectPath(actorPath);
+								foreach (var l in checklinks) {
+									var otherobj = curnode.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
+									if (otherobj == null || otherobj.Pickable != linkactor.Result) continue;
+									var newChildEntry = l.Clone("isc") as ChildEntry;
+									newChildEntry.Path.id += "_snd";
+									links.Children.Add(newChildEntry);
+								}
+							}
+						}
+						// Make gears use the proper tween type
+						/*foreach (var gear in gears) {
+							var newGear = await ReplaceTweenType(gear.ContainingScene, gear.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_geartype.tpl"), contextToLoadFrom: MainContext);
+							// FX controls = 0866D9DE, 600B4E36
+							var twn = newGear.GetComponent<TweenComponent>();
+							var instructionSet = twn.instanceTemplate.value.instructionSets[0];
+							var instructions = new List<Generic<TweenInstruction_Template>>();
+							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0x0866D9DE)
+							}));
+							instructions.AddRange(instructionSet.instructions);
+							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0x600B4E36)
+							}));
+							instructionSet.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
+							twn.InstantiateFromInstanceTemplate(instructionSet.UbiArtContext);
+						}*/
+						break;
+					}
+				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 4f), aabb);
+
+						var startTrigger = scene.FindActor(a => a.USERFRIENDLY == "ring_hangtriggeronce@2");
+						var mambomambo = await AddMusicEventRelay(scene, "mus_mambomambo", volume: vol, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(mambomambo, startTrigger.Result);
+						Link(startTrigger.Result, mambomambo.USERFRIENDLY);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_mambomambo_outro", volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(194.61f, -73.58f),
+								MAX = new Vec2d(208.98f, -66.35f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_oce_base_cave",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_base_cave_lp.wav"),
+							aabb, volume: -11);
 						break;
 					}
 				default:
