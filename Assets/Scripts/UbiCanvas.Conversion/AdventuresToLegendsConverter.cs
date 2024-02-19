@@ -1437,11 +1437,18 @@ namespace UbiCanvas.Conversion {
 						bonestack.POS2D = new Vec2d(5.25f, 0f);
 						bonestack.RELATIVEZ = -0.02f;
 
-						// Edge on very left of level is too bright, move edge to the left
-						var moodLessDark = scene.FindActor(a => a.USERFRIENDLY == "mood_less_dark");
-						var box = moodLessDark.Result.GetComponent<BoxInterpolatorComponent>();
+						// Move some lighting box edges that are too close to the level, resulting in them being visible
+						var box = scene.FindActor(a => a.USERFRIENDLY == "mood_less_dark").Result.GetComponent<BoxInterpolatorComponent>();
 						box.innerBox.MIN.x -= 10f;
 						box.outerBox.MIN.x -= 10f;
+						box = scene.FindActor(a => a.USERFRIENDLY == "mood_dark@3").Result.GetComponent<BoxInterpolatorComponent>();
+						box.innerBox.MIN.y -= 10f;
+						box.outerBox.MIN.y -= 10f;
+						box.innerBox.MAX.y -= 2.5f;
+						box.outerBox.MAX.y -= 2.0f;
+
+						// Cameras
+						UseFastCameras(scene, speed: 1.2f);
 						break;
 					}
 				case "world/rlc_hangar/fedexyourfriends/hangar_fedexyourfriends_exp_base.isc": {
@@ -6215,18 +6222,10 @@ namespace UbiCanvas.Conversion {
 				}
 			}
 		}
-
-		public async Task<Actor> ReplaceTweenType(Scene scene, Actor act, Path newTPL, Context contextToLoadFrom = null) {
-			if(contextToLoadFrom == null) contextToLoadFrom = LegendsContext;
+		public async Task<Actor> ReplaceActor(Scene scene, Actor act, Path newTPL, Context contextToLoadFrom = null) {
+			if (contextToLoadFrom == null) contextToLoadFrom = LegendsContext;
 			scene.DeletePickable(act);
 			var newAct = await AddNewActor(scene, newTPL, name: act.USERFRIENDLY, contextToLoadFrom: contextToLoadFrom);
-			for (int i = 0; i < newAct.COMPONENTS.Count; i++) {
-				if (newAct.COMPONENTS[i].obj is TweenComponent newTween) {
-					newAct.COMPONENTS[i].obj = act.GetComponent<TweenComponent>();
-				} else if (newAct.COMPONENTS[i].obj is LinkComponent newLink) {
-					newAct.COMPONENTS[i].obj = act.GetComponent<LinkComponent>();
-				}
-			}
 			newAct.POS2D = act.POS2D;
 			newAct.SCALE = act.SCALE;
 			newAct.ANGLE = act.ANGLE;
@@ -6235,6 +6234,18 @@ namespace UbiCanvas.Conversion {
 			newAct.STARTPAUSE = act.STARTPAUSE;
 			newAct.UPDATEDEPENDENCYLIST = act.UPDATEDEPENDENCYLIST;
 			newAct.parentBind = act.parentBind;
+			return newAct;
+		}
+
+		public async Task<Actor> ReplaceTweenType(Scene scene, Actor act, Path newTPL, Context contextToLoadFrom = null) {
+			var newAct = await ReplaceActor(scene, act, newTPL, contextToLoadFrom: contextToLoadFrom);
+			for (int i = 0; i < newAct.COMPONENTS.Count; i++) {
+				if (newAct.COMPONENTS[i].obj is TweenComponent newTween) {
+					newAct.COMPONENTS[i].obj = act.GetComponent<TweenComponent>();
+				} else if (newAct.COMPONENTS[i].obj is LinkComponent newLink) {
+					newAct.COMPONENTS[i].obj = act.GetComponent<LinkComponent>();
+				}
+			}
 			return newAct;
 		}
 
@@ -7243,13 +7254,37 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
-						var vol = -9f;
+						var vol = -10f;
+						var sceneTree = new PickableTree(scene);
 
 						TransformAABB(await AddMusicTrigger(scene, "mus_diveanotherday", volume: vol), aabb);
 
 						await AddAmbienceInterpolator(scene, "amb_oce_rl4_labo",
 							new Path("sound/100_ambiances/104_ocean/amb_oce_rl4_labo_lp.wav"),
-							aabb, volume: -14);
+							aabb, volume: -16);
+
+						// Add alarm sounds
+						foreach (var alarm in scene.FindActors(a => a.USERFRIENDLY.StartsWith("mus_nemo_laser_alarm_startpaused"))) {
+							var newAlarm = await ReplaceActor(alarm.ContainingScene, alarm.Result, new Path("sound/common/ambiances/04_ocean_legends/triggersound_oc_rl_alarm.tpl"), contextToLoadFrom: LegendsContext);
+							newAlarm.STARTPAUSE = true;
+						}
+						// Make sure the alarrm sound can be turned off
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@11" && a.GetComponent<LinkComponent>().Children.Count > 2).Result, "..|mus_nemo_laser_alarm_startpaused@3").AddTag("Delay", "0.5");
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@1" && a.GetComponent<LinkComponent>().Children.Count > 2).Result, "..|mus_nemo_laser_alarm_startpaused");
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@8" && a.GetComponent<LinkComponent>().Children.Count > 2).Result, "..|mus_nemo_laser_alarm_startpaused@2");
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@7" && a.POS2D.x < 200).Result, "mus_nemo_laser_alarm_startpaused@1");
+
+						// Add power down switch sounds
+						var switches = scene.FindActors(a => a.USERFRIENDLY.StartsWith("switch_anim") && a.USERFRIENDLY != "switch_anim@5" && a.USERFRIENDLY != "switch_anim@6");
+						foreach (var act in switches) {
+							var powerdown = await AddNewActor(act.ContainingScene, new Path("sound/common/music_trees/04_ocean_legends/oc_rl_arena/triggersound_powerdown_paused.tpl"), contextToLoadFrom: LegendsContext);
+							powerdown.POS2D = new Vec2d(act.Result.POS2D.x, act.Result.POS2D.y);
+							powerdown.SCALE = Vec2d.One * 50f;
+							var unpause = await AddNewActor(act.ContainingScene, new Path("world/common/logicactor/trigger/relay/components/relay_unpause.tpl"), contextToLoadFrom: LegendsContext);
+							Link(unpause, powerdown.USERFRIENDLY);
+							Link(act.Result, unpause.USERFRIENDLY);
+						}
+
 						break;
 					}
 				case "world/rlc_nemo/dryandwet/nemo_dryandwet_nmi_base.isc":
@@ -7259,10 +7294,6 @@ namespace UbiCanvas.Conversion {
 						/*
 							* 
 							// Tree
-							AddSimpleSequenceNode("mus_diveanotherday", true,
-								new string[] { "part_diveanotherday_01" },
-								new string[] { "part_diveanotherday_02", "part_diveanotherday_03", "part_diveanotherday_04" });
-							//AddSimpleNode("mus_suspense", true, "part_suspense_lp");
 							AddSimpleNode("mus_toadfight", true, "part_toadfight_01", "part_toadfight_02", "part_toadfight_03");
 
 							AddSimpleNode("mus_ocrl4", true, "part_ocrl4_01", "part_ocrl4_02", "part_ocrl4_03", "part_ocrl4_04");
