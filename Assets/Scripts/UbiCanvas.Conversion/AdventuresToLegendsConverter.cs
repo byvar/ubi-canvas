@@ -1436,6 +1436,12 @@ namespace UbiCanvas.Conversion {
 						var bonestack = await AddNewActor(scene, new Path("world/landofthedead/common/breakable/bonestack/components/bonestack3.tpl"), parentPath: "grp@5");
 						bonestack.POS2D = new Vec2d(5.25f, 0f);
 						bonestack.RELATIVEZ = -0.02f;
+
+						// Edge on very left of level is too bright, move edge to the left
+						var moodLessDark = scene.FindActor(a => a.USERFRIENDLY == "mood_less_dark");
+						var box = moodLessDark.Result.GetComponent<BoxInterpolatorComponent>();
+						box.innerBox.MIN.x -= 10f;
+						box.outerBox.MIN.x -= 10f;
 						break;
 					}
 				case "world/rlc_hangar/fedexyourfriends/hangar_fedexyourfriends_exp_base.isc": {
@@ -2558,6 +2564,62 @@ namespace UbiCanvas.Conversion {
 			return act;
 		}
 
+		public async Task<Actor> AddSimpleTriggableSound(Scene scene, string soundID, Path soundPath, float volume = -8f,
+			Path path = null, uint numChannels = 1, float fadeInTime = 0f, float fadeOutTime = 0f, bool playerDetector = true,
+			float min = 1, float max = 2, Scene containingScene = null) {
+			if (path == null) {
+				var scenePath = GetScenePath(scene);
+				var sceneName = scenePath.GetFilenameWithoutExtension();
+				var newPath = $"{scenePath.folder}{sceneName}_snd/snd_{soundID}";
+				newPath += ".tpl";
+				path = new Path(newPath);
+			}
+			if (containingScene == null) containingScene = scene;
+			var actName = path.GetFilenameWithoutExtension(removeCooked: true);
+			var ogPath = "sound/common/3d_sound_actors/common/triggersound_discover_triggerself.tpl";
+			var act = await AddNewActor(containingScene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
+			var ogTPL = act.template;
+			if (CreateTemplateIfNecessary(path, "SOUND ACTOR", out var newTPL, act: act)) {
+				newTPL.sizeOf = ogTPL.sizeOf + 0x1000;
+				newTPL.obj = (Actor_Template)ogTPL.obj.Clone("tpl", context: LegendsContext);
+				var soundSID = new StringID(soundID);
+
+				var sc = newTPL.obj.GetComponent<SoundComponent_Template>();
+				sc.defaultSound = new StringID();
+
+				var sd = sc.soundList[0];
+				sd.name = soundSID;
+				sd.files[0] = soundPath;
+				sd.volume = new Volume(volume);
+				sd._params.fadeInTime = fadeInTime;
+				sd._params.fadeOutTime = fadeOutTime;
+				sd._params.numChannels = numChannels;
+				sd._params.modifiers = new CArrayO<Generic<SoundModifier>>() {
+					new Generic<SoundModifier>(new SpatializedPanning() {
+						widthMin = min,
+						widthMax = max,
+					}),
+					new Generic<SoundModifier>(new ScreenRollOff() {
+						distanceMin = min,
+						distanceMax = max
+					})
+				};
+
+				var fxc = newTPL.obj.GetComponent<FXControllerComponent_Template>();
+				fxc.triggerFx = soundSID;
+				var control = fxc.fxControlList[0];
+				control.name = soundSID;
+				control.sounds[0] = soundSID;
+
+				if (!playerDetector) {
+					newTPL.obj.RemoveComponent<TriggerComponent_Template>();
+					newTPL.obj.RemoveComponent<PlayerDetectorComponent_Template>();
+				}
+			}
+
+			return act;
+		}
+
 
 		public async Task<Actor> AddMusicTrigger(Scene scene, string musicID, bool stop = false, bool stopAndPlay = true, float fadeInTime = 0f, float fadeOutTime = 0f,
 			uint priority = 10, uint playOnNext = uint.MaxValue, float volume = -11f, TriggerComponent.Mode triggerMode = TriggerComponent.Mode.OnceAndReset, Path path = null, Scene containingScene = null) {
@@ -3159,12 +3221,11 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_diveanotherday_02", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part03_32m.wav"), nbMeasures: 32);
 							AddPart("part_diveanotherday_03", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part04_48m.wav"), nbMeasures: 48);
 							AddPart("part_diveanotherday_04", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part05_64m.wav"), nbMeasures: 64);
-							//AddPart("part_suspense_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 64);
-
-							AddPart("part_toadfight_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_toadfight_01.wav"));
-							AddPart("part_toadfight_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_toadfight_02.wav"));
-							AddPart("part_toadfight_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_toadfight_4.wav"));
-
+							
+							AddPart("part_toadfight_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_01.wav"));
+							AddPart("part_toadfight_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_02.wav"));
+							AddPart("part_toadfight_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_4.wav"));
+							
 							AddPart("part_laserdance_intro_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_pat_4m_a_1.wav"));
 							AddPart("part_laserdance_intro_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patbass_4m_a_2.wav"));
 							AddPart("part_laserdance_intro_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbass_4m_b_3.wav"));
@@ -3179,7 +3240,7 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_laserdance_lp_09", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patbassdr_4m_a_3.wav"));
 							AddPart("part_laserdance_lp_10", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbassdr_4m_b_2.wav"));
 							AddPart("part_laserdance_outro", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_outro_4.wav"));
-
+							
 							AddPart("part_ocrl4_01", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_1.wav"));
 							AddPart("part_ocrl4_02", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_2.wav"));
 							AddPart("part_ocrl4_03", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_3.wav"));
@@ -3189,7 +3250,7 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_mansionofdeep_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2.wav"));
 							AddPart("part_mansionofdeep_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2_02.wav"));
 							AddPart("part_mansionofdeep_04", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2_percbrass.wav"));
-
+							
 
 							// Tree
 							AddSimpleNode("mus_abyss", true,
@@ -3199,10 +3260,10 @@ namespace UbiCanvas.Conversion {
 							AddSimpleSequenceNode("mus_diveanotherday", true,
 								new string[] { "part_diveanotherday_01" },
 								new string[] { "part_diveanotherday_02", "part_diveanotherday_03", "part_diveanotherday_04" });
-							//AddSimpleNode("mus_suspense", true, "part_suspense_lp");
 							AddSimpleNode("mus_toadfight", true, "part_toadfight_01", "part_toadfight_02", "part_toadfight_03");
+							AddSimpleNode("mus_laserdance_intro", true, "part_laserdance_intro_01", "part_laserdance_intro_02");
 							AddSimpleSequenceNode("mus_laserdance", true,
-								new string[] { "part_laserdance_intro_01", "part_laserdance_intro_02", "part_laserdance_intro_03" },
+								new string[] { "part_laserdance_intro_03" },
 								new string[] {
 									"part_laserdance_lp_01", "part_laserdance_lp_02", "part_laserdance_lp_03", "part_laserdance_lp_04", "part_laserdance_lp_05",
 									"part_laserdance_lp_06", "part_laserdance_lp_07", "part_laserdance_lp_08", "part_laserdance_lp_09", "part_laserdance_lp_10"
@@ -6155,6 +6216,28 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
+		public async Task<Actor> ReplaceTweenType(Scene scene, Actor act, Path newTPL, Context contextToLoadFrom = null) {
+			if(contextToLoadFrom == null) contextToLoadFrom = LegendsContext;
+			scene.DeletePickable(act);
+			var newAct = await AddNewActor(scene, newTPL, name: act.USERFRIENDLY, contextToLoadFrom: contextToLoadFrom);
+			for (int i = 0; i < newAct.COMPONENTS.Count; i++) {
+				if (newAct.COMPONENTS[i].obj is TweenComponent newTween) {
+					newAct.COMPONENTS[i].obj = act.GetComponent<TweenComponent>();
+				} else if (newAct.COMPONENTS[i].obj is LinkComponent newLink) {
+					newAct.COMPONENTS[i].obj = act.GetComponent<LinkComponent>();
+				}
+			}
+			newAct.POS2D = act.POS2D;
+			newAct.SCALE = act.SCALE;
+			newAct.ANGLE = act.ANGLE;
+			newAct.xFLIPPED = act.xFLIPPED;
+			newAct.RELATIVEZ = act.RELATIVEZ;
+			newAct.STARTPAUSE = act.STARTPAUSE;
+			newAct.UPDATEDEPENDENCYLIST = act.UPDATEDEPENDENCYLIST;
+			newAct.parentBind = act.parentBind;
+			return newAct;
+		}
+
 		public async Task ManageAudio(Context oldContext, Settings newSettings, Scene scene) {
 			// Remove existing lum music manager
 			var lumMusic = scene.FindActors(a => a.GetComponent<RO2_RewardEffectsPlayerComponent>() != null);
@@ -7048,6 +7131,146 @@ namespace UbiCanvas.Conversion {
 						}
 
 
+						break;
+					}
+				case "world/rlc_hangar/fedexyourfriends/hangar_fedexyourfriends_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_abyss", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_oce_base_middle",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_base_middle_lp.wav"),
+							aabb, volume: -12);
+
+
+						/*foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterslide"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_river.tpl"), act.Result);
+						}*/
+
+
+						break;
+					}
+				case "world/rlc_hangar/monorailmadness/hangar_monorailmadness_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -9f;
+						var sceneTree = new PickableTree(scene);
+
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_laserdance_intro", volume: vol), aabb);
+
+						var startTrigger = sceneTree.FollowObjectPath(new ObjectPath("hangar_monorailmadness_nmi_base_ld|grp@7|ring_hangtriggeronce"));
+						var startTriggerActor = startTrigger.Pickable as Actor;
+						var laserdance = await AddMusicEventRelay(scene, "mus_laserdance", volume: vol, playOnNext: 0x60, containingScene: startTrigger.Parent.Scene);
+						TransformCopyPickable(laserdance, startTriggerActor);
+						var link = Link(startTriggerActor, laserdance.USERFRIENDLY);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_laserdance_outro", volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(362.8f, -64.9f),
+								MAX = new Vec2d(386.8f, -55.8f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_oce_rl4_labo",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_rl4_labo_lp.wav"),
+							aabb, volume: -13);
+
+						// Actor sound
+						// Add 1 electricity sound per group of electricity traps
+						var act = scene.FindActor(a => a.USERFRIENDLY == "electricarc@12");
+						var elec = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/04_ocean/actorsound_electric_trap.tpl"), act.Result);
+						act = scene.FindActor(a => a.USERFRIENDLY == "relay_pause");
+						Link(act.Result, elec.USERFRIENDLY).AddTag("Delay", "0.45");
+
+						act = scene.FindActor(a => a.USERFRIENDLY == "electricarc@1");
+						elec = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/04_ocean/actorsound_electric_trap.tpl"), act.Result);
+						act = scene.FindActor(a => a.USERFRIENDLY == "relay_pause@7");
+						Link(act.Result, elec.USERFRIENDLY).AddTag("Delay", "0.45");
+
+						act = scene.FindActor(a => a.USERFRIENDLY == "electricarc@7");
+						elec = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/04_ocean/actorsound_electric_trap.tpl"), act.Result);
+
+						// Switch on sounds
+						var sw = scene.FindActor(a => a.USERFRIENDLY == "switch_anim");
+						var swsnd = await AddSimpleTriggableSound(scene, "lighton", new Path("sound/600_sfx/630_rlc/sfx_light_on.wav"), playerDetector: false, containingScene: sw.ContainingScene);
+						TransformCopyPickable(swsnd, sw.Result);
+						Link(sw.Result, swsnd.USERFRIENDLY).AddTag("Delay", "0.45");
+						var ringTrig = sceneTree.FollowObjectPath(new ObjectPath("hangar_monorailmadness_nmi_base_ld|grp@12|ring_hangtriggeronce"));
+						swsnd = await AddSimpleTriggableSound(scene, "lighton", new Path("sound/600_sfx/630_rlc/sfx_light_on.wav"), playerDetector: false, containingScene: ringTrig.Parent.Scene);
+						TransformCopyPickable(swsnd, ringTrig.Pickable);
+						Link(ringTrig.Pickable as Actor, swsnd.USERFRIENDLY).AddTag("Delay", "0.45");
+						ringTrig = sceneTree.FollowObjectPath(new ObjectPath("hangar_monorailmadness_nmi_base_ld|grp@14|ring_hangtriggeronce"));
+						swsnd = await AddSimpleTriggableSound(scene, "lighton", new Path("sound/600_sfx/630_rlc/sfx_light_on.wav"), playerDetector: false, containingScene: ringTrig.Parent.Scene);
+						TransformCopyPickable(swsnd, ringTrig.Pickable);
+						Link(ringTrig.Pickable as Actor, swsnd.USERFRIENDLY).AddTag("Delay", "0.45");
+						sw = scene.FindActor(a => a.USERFRIENDLY == "switch_anim@13");
+						swsnd = await AddSimpleTriggableSound(scene, "lighton", new Path("sound/600_sfx/630_rlc/sfx_light_on.wav"), playerDetector: false, containingScene: sw.ContainingScene);
+						TransformCopyPickable(swsnd, sw.Result);
+						swsnd.POS2D += new Vec2d(15f, 0f); // Likely position where sound will play
+						Link(sw.Result, swsnd.USERFRIENDLY).AddTag("Delay", "0.45");
+
+						// Switch off sounds (warning)
+						sw = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once_phantomfaction@1");
+						swsnd = await AddSimpleTriggableSound(scene, "lightoff", new Path("sound/600_sfx/630_rlc/sfx_light_off.wav"), playerDetector: false, containingScene: sw.ContainingScene);
+						TransformCopyPickable(swsnd, sw.Result);
+						Link(sw.Result, swsnd.USERFRIENDLY);
+						sw = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once_phantomfaction");
+						swsnd = await AddSimpleTriggableSound(scene, "lightoff", new Path("sound/600_sfx/630_rlc/sfx_light_off.wav"), playerDetector: false, containingScene: sw.ContainingScene);
+						TransformCopyPickable(swsnd, sw.Result);
+						Link(sw.Result, swsnd.USERFRIENDLY);
+
+						var elevators = scene.FindActors(a => a.USERFRIENDLY is ("tween_notype@7" or "tween_notype@8" or "tween_notype@12" or "tween_notype@13" or "tween_notype@21" or "tween_notype@22"));
+						foreach (var elevator in elevators) {
+							var newElevator = await ReplaceTweenType(elevator.ContainingScene, elevator.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_geartype.tpl"), contextToLoadFrom: MainContext);
+							// FX controls = 0866D9DE, 600B4E36
+							var twn = newElevator.GetComponent<TweenComponent>();
+							var instructionSet = twn.instanceTemplate.value.instructionSets[0];
+							var instructions = new List<Generic<TweenInstruction_Template>>();
+							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0x0866D9DE)
+							}));
+							instructions.AddRange(instructionSet.instructions);
+							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0x600B4E36)
+							}));
+							instructionSet.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
+							twn.InstantiateFromInstanceTemplate(instructionSet.UbiArtContext);
+						}
+						break;
+					}
+				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -9f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_diveanotherday", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_oce_rl4_labo",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_rl4_labo_lp.wav"),
+							aabb, volume: -14);
+						break;
+					}
+				case "world/rlc_nemo/dryandwet/nemo_dryandwet_nmi_base.isc":
+				case "world/rlc_hangar/grindinggears/hangar_grindinggears_exp_base.isc":
+				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc":
+				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
+						/*
+							* 
+							// Tree
+							AddSimpleSequenceNode("mus_diveanotherday", true,
+								new string[] { "part_diveanotherday_01" },
+								new string[] { "part_diveanotherday_02", "part_diveanotherday_03", "part_diveanotherday_04" });
+							//AddSimpleNode("mus_suspense", true, "part_suspense_lp");
+							AddSimpleNode("mus_toadfight", true, "part_toadfight_01", "part_toadfight_02", "part_toadfight_03");
+
+							AddSimpleNode("mus_ocrl4", true, "part_ocrl4_01", "part_ocrl4_02", "part_ocrl4_03", "part_ocrl4_04");
+							AddSimpleSequenceNode("mus_mansionofdeep", true,
+								new string[] { "part_mansionofdeep_01" },
+								new string[] { "part_mansionofdeep_02", "part_mansionofdeep_03", "part_mansionofdeep_04" }
+							);
+							* */
 						break;
 					}
 				default:
