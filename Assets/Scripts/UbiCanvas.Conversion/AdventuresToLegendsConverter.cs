@@ -7287,16 +7287,67 @@ namespace UbiCanvas.Conversion {
 
 						break;
 					}
-				case "world/rlc_nemo/dryandwet/nemo_dryandwet_nmi_base.isc":
+				case "world/rlc_nemo/dryandwet/nemo_dryandwet_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_ocrl4", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_oce_base_cave",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_base_cave_lp.wav"),
+							aabb, volume: -12);
+
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							var snd = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+
+							switch(act.Result.USERFRIENDLY) {
+								case "waterfall_bezierspline@1":
+									Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause").Result, snd.USERFRIENDLY);
+									break;
+								case "waterfall_bezierspline":
+									snd.STARTPAUSE = true;
+									Link(scene.FindActor(a => a.USERFRIENDLY == "relay_unpause").Result, snd.USERFRIENDLY);
+									break;
+								case "waterfall_bezierspline@2":
+									snd.STARTPAUSE = true;
+									Link(scene.FindActor(a => a.USERFRIENDLY == "relay_unpause@3").Result, snd.USERFRIENDLY);
+									break;
+							}
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("watersplash"))) {
+							var snd = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), act.Result);
+
+							switch (act.Result.USERFRIENDLY) {
+								case "watersplash":
+									if (act.Result.POS2D.x > 50f) {
+										Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause").Result, snd.USERFRIENDLY);
+									} else {
+										snd.STARTPAUSE = true;
+										Link(scene.FindActor(a => a.USERFRIENDLY == "relay_unpause").Result, $"grp@3|{snd.USERFRIENDLY}");
+									}
+									break;
+								case "watersplash@1":
+									snd.STARTPAUSE = true;
+									Link(scene.FindActor(a => a.USERFRIENDLY == "relay_unpause@3").Result, $"grp@19|{snd.USERFRIENDLY}");
+									break;
+							}
+						}
+						// Add flush sound
+						var flushSwitch = scene.FindActor(a => a.USERFRIENDLY == "electricswitch_flush");
+						var flushSound = await AddSimpleTriggableSound(scene, "flush", new Path("sound/600_sfx/604_ocean/sfx_oc_rl_6_ending.wav"),
+							numChannels: 2, fadeInTime: 0.01f, fadeOutTime: 0.01f, playerDetector: false, min: 1, max: 3, containingScene: flushSwitch.ContainingScene);
+						TransformCopyPickable(flushSound, flushSwitch.Result);
+						Link(flushSwitch.Result, flushSound.USERFRIENDLY);
+
+						break;
+					}
 				case "world/rlc_hangar/grindinggears/hangar_grindinggears_exp_base.isc":
 				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc":
 				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
 						/*
-							* 
 							// Tree
 							AddSimpleNode("mus_toadfight", true, "part_toadfight_01", "part_toadfight_02", "part_toadfight_03");
 
-							AddSimpleNode("mus_ocrl4", true, "part_ocrl4_01", "part_ocrl4_02", "part_ocrl4_03", "part_ocrl4_04");
 							AddSimpleSequenceNode("mus_mansionofdeep", true,
 								new string[] { "part_mansionofdeep_01" },
 								new string[] { "part_mansionofdeep_02", "part_mansionofdeep_03", "part_mansionofdeep_04" }
