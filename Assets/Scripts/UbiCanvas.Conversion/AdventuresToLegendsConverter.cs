@@ -1680,6 +1680,18 @@ namespace UbiCanvas.Conversion {
 						badrabbid.Result.POS2D += Vec2d.Up * 5f;
 						break;
 					}
+				case "world/rlc_olympus/heavenandhell/olympus_heavenandhell_nmi_base.isc": {
+						/*var platforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("minotaur_flyingplatform"));
+						foreach (var plat in platforms) {
+							GenericAABBHack(plat.Result, aabbScale: 300f);
+						}*/
+						var tree = new PickableTree(scene);
+						var plat = tree.FollowObjectPath(new ObjectPath("seasonaleventenemyspawner@1|minotaur_flyingplatform"), throwIfNotFound: false);
+						if (plat?.Pickable != null) {
+							GenericAABBHack((Actor)plat.Pickable, aabbScale: 100f);
+						}
+						break;
+					}
 				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
 						// Set brightness of lum bubbles to 0
 						var acts = scene.FindActors(a => a?.LUA?.filename?.Contains("bubbleprize") ?? false);
@@ -3324,6 +3336,10 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_ss_strings_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part2_9m.wav"), nbMeasures: 9);
 							AddPart("part_ss_strings_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part3_8m.wav"), nbMeasures: 8);
 							AddPart("part_ss_strings_04", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part4_14m.wav"), nbMeasures: 14);
+							AddPart("part_ss_strings_05", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part1_4m.wav"), nbMeasures: 4);
+							AddPart("part_ss_strings_06", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part2_9m.wav"), nbMeasures: 9);
+							AddPart("part_ss_strings_07", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part3_8m.wav"), nbMeasures: 8);
+							AddPart("part_ss_strings_08", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part4_14m.wav"), nbMeasures: 14);
 
 							AddPart("part_ss_explo", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_explo_08m.wav"), nbMeasures: 8);
 							AddPart("part_ss_full_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part1_4m.wav"), nbMeasures: 4);
@@ -3353,7 +3369,9 @@ namespace UbiCanvas.Conversion {
 
 
 							// Nodes
-							AddSimpleNode("mus_ss_strings", true, "part_ss_strings_01", "part_ss_strings_02", "part_ss_strings_03", "part_ss_strings_04");
+							AddSimpleNode("mus_ss_strings", true, 
+								"part_ss_strings_01", "part_ss_strings_02", "part_ss_strings_03", "part_ss_strings_04",
+								"part_ss_strings_05", "part_ss_strings_06", "part_ss_strings_07", "part_ss_strings_08");
 							AddSimpleNode("mus_ss_explo", true, "part_ss_explo");
 							AddSimpleNode("mus_ss_full", true, "part_ss_full_01", "part_ss_full_02", "part_ss_full_03", "part_ss_full_04");
 							AddSimpleNode("mus_ss_outro", false, "part_ss_outro");
@@ -4253,6 +4271,14 @@ namespace UbiCanvas.Conversion {
 						polyline = new StringID(0xCD8DBD3C),
 						name = new StringID(),
 					});
+				}
+			}
+			// Weird frame at end of run attack
+			var fightRunAnim = oldContext.Cache.Get<AnimTrack>(new Path("world/rlc/common/enemy/rabbid/animation/fight_run.anm"));
+			if (fightRunAnim != null) {
+				var fr = fightRunAnim.frameEvents.FirstOrDefault(e => e.events.Any(ev => ev.marker == new StringID(0x06F10A30)));
+				if (fr != null) {
+					fr.frame -= 1f;
 				}
 			}
 		}
@@ -7420,7 +7446,6 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -10f;
-						var sceneTree = new PickableTree(scene);
 
 						TransformAABB(await AddMusicTrigger(scene, "mus_diveanotherday", volume: vol), aabb);
 
@@ -7532,7 +7557,6 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -15f;
-						var sceneTree = new PickableTree(scene);
 
 						TransformAABB(await AddMusicTrigger(scene, "mus_mansionofdeep", volume: vol), aabb);
 
@@ -7564,6 +7588,131 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_oce_base_cave",
 							new Path("sound/100_ambiances/104_ocean/amb_oce_base_cave_lp.wav"),
 							aabb, volume: -11);
+						break;
+					}
+
+				case "world/rlc_olympus/cranezone/olympus_cranezone_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_ss_strings", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_middle",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_middle_mo_rl_1_flyingshield_lp.wav"),
+							aabb, volume: -12);
+						break;
+					}
+				case "world/rlc_olympus/heavenandhell/olympus_heavenandhell_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+						var sceneTree = new PickableTree(scene);
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_ss_explo", volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 3f),
+							new AABB() {
+								MIN = new Vec2d(129.2f, -16.1f),
+								MAX = new Vec2d(202.6f, 45.6f)
+							});
+						TransformAABB(await AddMusicTrigger(scene, "mus_ss_storm", volume: vol - 4f, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(115.8f, -90.8f),
+								MAX = new Vec2d(286.6f, -55.5f)
+							});
+
+						var ascendTrigger = sceneTree.FollowObjectPath(new ObjectPath("heavenandhell_ld|flyingplatform@1|grp@53|trigger_box_once@1"));
+						var ascendTriggerActor = ascendTrigger.Pickable as Actor;
+						var stormOutro = await AddMusicEventRelay(scene, "mus_ss_storm_outro", volume: vol + 3f, playOnNext: 0x60, containingScene: ascendTrigger.Parent.Scene);
+						TransformCopyPickable(stormOutro, ascendTriggerActor);
+						Link(ascendTriggerActor, stormOutro.USERFRIENDLY);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_ss_full", volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(207f, 45.6f),
+								MAX = new Vec2d(377.8f, 98.8f)
+							});
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 3f),
+							new AABB() {
+								MIN = new Vec2d(315.8f, -16.1f),
+								MAX = new Vec2d(402.7f, 45.6f)
+							});
+						TransformAABB(await AddMusicTrigger(scene, "mus_ss_storm", volume: vol - 4f, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(311f, -90.8f),
+								MAX = new Vec2d(545.3f, -55.5f)
+							});
+
+						ascendTrigger = sceneTree.FollowObjectPath(new ObjectPath("heavenandhell_ld|flyingplatform@2|grp@53|trigger_box_once@1"));
+						ascendTriggerActor = ascendTrigger.Pickable as Actor;
+						stormOutro = await AddMusicEventRelay(scene, "mus_ss_storm_outro", volume: vol + 3f, playOnNext: 0x60, containingScene: ascendTrigger.Parent.Scene);
+						TransformCopyPickable(stormOutro, ascendTriggerActor);
+						Link(ascendTriggerActor, stormOutro.USERFRIENDLY);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_ss_outro", volume: vol, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(452.2f, 45.6f),
+								MAX = new Vec2d(565.4f, 98.8f)
+							});
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_intro",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_intro_mo_rl_1_flyingshield_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(12.2f, -16.3f),
+								MAX = new Vec2d(94.9f, 31.2f)
+							}, volume: -9);
+						await AddAmbienceInterpolator(scene, "amb_middle",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_middle_mo_rl_1_flyingshield_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(54.5f, 48.3f),
+								MAX = new Vec2d(592f, 97.9f)
+							}, volume: -12, padding: 50f);
+						await AddAmbienceInterpolator(scene, "amb_hellgate",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_hellgate_apoca_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(112.1f, -88.3f),
+								MAX = new Vec2d(592f, -21.8f)
+							}, volume: -12, padding: 50f);
+						await AddAmbienceInterpolator(scene, "amb_wind",
+							new Path("sound/100_ambiances/101_jungle/amb_wind_storm_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(132.5f, -20f),
+								MAX = new Vec2d(592f, 15f)
+							}, volume: -6, padding: 60f);
+						// Doesn't work for whatever reason
+						/*await AddAmbienceInterpolator(scene, "amb_wind",
+							new Path("sound/100_ambiances/101_jungle/amb_wind_storm_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(63.9f, 14.6f),
+								MAX = new Vec2d(96.3f, 41.5f)
+							}, volume: -6, padding: 15f);*/
+						break;
+					}
+				case "world/rlc_olympus/pigrodeo/olympus_pigrodeo_nmi_valkyries.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+
+						await AddAmbienceInterpolator(scene, "amb_wind",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_wind_mo_rl_1_flyingshield_lp.wav"),
+							aabb, volume: -14);
+						break;
+					}
+				case "world/rlc_olympus/towerofworship/olympus_towerofworship_nmi_base.isc":
+				case "world/rlc_olympus/cloudcolosseum/olympus_cloudcolosseum_nmi_base.isc":
+				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc":
+				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
+						/*
+							AddSimpleNode("mus_ss_storm_outro", false, "part_ss_storm_outro");
+							AddMamboMambo();
+							AddSimpleNode("mus_harp", true, "part_harp_lp");
+							AddSimpleNode("mus_arena", true, "part_arena_01", "part_arena_02", "part_arena_03", "part_arena_04");
+							AddSimpleNode("mus_arena_outro", false, "part_arena_outro");
+							AddSimpleSequenceNode("mus_hadesabode", true,
+								new string[] { "part_hadesabode_intro" },
+								new string[] { "part_hadesabode_lp" });
+							AddSimpleNode("mus_hadesabode_outro", false, "part_hadesabode_outro");
+							AddSimpleNode("mus_betamaze", true, "part_betamaze_lp");
+							AddSimpleNode("mus_betamaze_outro", false, "part_betamaze_outro");
+						 * */
 						break;
 					}
 				default:
