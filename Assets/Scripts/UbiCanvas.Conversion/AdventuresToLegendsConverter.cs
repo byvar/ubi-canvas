@@ -979,6 +979,7 @@ namespace UbiCanvas.Conversion {
 						});
 					}
 				}
+
 				wwiseActionsClassesLookup.Add(act.ID, act);
 			}
 			foreach (var entry in wwiseEventsLookup) {
@@ -995,6 +996,19 @@ namespace UbiCanvas.Conversion {
 					if(wwiseActionsClassesLookup.ContainsKey(a)) ev.Actions.Add(wwiseActionsClassesLookup[a]);
 				}
 				conversionSettings.Events.Add(ev.Item.GUID, ev);
+			}
+
+			// Changes to some events
+			// tween_metalunderwaterslidetype
+			var eventKeys = new StringID[] { new StringID(0x9320AF4E), new StringID(0xEE872073) };
+			foreach (var ek in eventKeys) {
+				if (conversionSettings.Events.ContainsKey(ek)) {
+					foreach (var act in conversionSettings.Events[ek].Actions) {
+						if(act.Attenuation != null) act.Attenuation = 951734644;
+						if (act.Properties != null && act.Properties.Any(p => p.Name == "Volume"))
+							act.Properties.FirstOrDefault(p => p.Name == "Volume").Value -= 4f;
+					}
+				}
 			}
 
 			return conversionSettings;
@@ -2586,7 +2600,7 @@ namespace UbiCanvas.Conversion {
 
 		public async Task<Actor> AddSimpleTriggableSound(Scene scene, string soundID, Path soundPath, float volume = -8f,
 			Path path = null, uint numChannels = 1, float fadeInTime = 0f, float fadeOutTime = 0f, bool playerDetector = true,
-			float min = 1, float max = 2, Scene containingScene = null) {
+			float min = 1, float max = 2, bool loop = false, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
@@ -2599,10 +2613,10 @@ namespace UbiCanvas.Conversion {
 			var ogPath = "sound/common/3d_sound_actors/common/triggersound_discover_triggerself.tpl";
 			var act = await AddNewActor(containingScene, new Path(ogPath), name: actName, contextToLoadFrom: LegendsContext);
 			var ogTPL = act.template;
+			var soundSID = new StringID(soundID);
 			if (CreateTemplateIfNecessary(path, "SOUND ACTOR", out var newTPL, act: act)) {
 				newTPL.sizeOf = ogTPL.sizeOf + 0x1000;
 				newTPL.obj = (Actor_Template)ogTPL.obj.Clone("tpl", context: LegendsContext);
-				var soundSID = new StringID(soundID);
 
 				var sc = newTPL.obj.GetComponent<SoundComponent_Template>();
 				sc.defaultSound = new StringID();
@@ -2611,6 +2625,7 @@ namespace UbiCanvas.Conversion {
 				sd.name = soundSID;
 				sd.files[0] = soundPath;
 				sd.volume = new Volume(volume);
+				sd._params.loop = loop ? 1 : 0;
 				sd._params.fadeInTime = fadeInTime;
 				sd._params.fadeOutTime = fadeOutTime;
 				sd._params.numChannels = numChannels;
@@ -2636,6 +2651,9 @@ namespace UbiCanvas.Conversion {
 					newTPL.obj.RemoveComponent<PlayerDetectorComponent_Template>();
 				}
 			}
+			var fx = act.GetComponent<FXControllerComponent>();
+			fx.triggerFx = soundSID;
+			fx.defaultFx = new StringID();
 
 			return act;
 		}
@@ -6388,6 +6406,116 @@ namespace UbiCanvas.Conversion {
 				a.GetComponent<LinkComponent>().Children.Add(ce);
 				return ce;
 			}
+			async Task ProcessGears(float relativeVolume = 0f) {
+				var sceneTree = new PickableTree(scene);
+				Path gearSoundWav = new Path("sound/600_sfx/604_ocean/sfx_labogear_arena_lp.wav");
+				var gears = scene.FindActors(a => {
+					if (!a.USERFRIENDLY.StartsWith("tween_notype")) return false;
+					if(a.USERFRIENDLY.ToLowerInvariant().Contains("stuck")) return false; // We don't want these to make sounds
+					var tween = a.GetComponent<TweenComponent>()?.instanceTemplate?.value;
+					if (tween == null) return false;
+					if (tween.instructionSets.Count != 1) return false;
+					if (tween.instructionSets[0].instructions.Count != 1) return false;
+					if (!(tween.instructionSets[0].instructions[0].obj is TweenCircle_Template)) return false;
+					if(tween.instructionSets[0].iterationCount > 0) return false; //The ones that will stop after tweening should use gear tweentype
+					return true;
+				});
+				var allLinks = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children != null);
+				// Give gears a sound actor
+				foreach (var gear in gears) {
+					var twn = gear.Result.GetComponent<TweenComponent>();
+					Actor snd;
+					if (twn.autoStart) {
+						snd = await AddActor3DSound(scene, "gear_auto", gearSoundWav, volume: -22f + relativeVolume, fadeInTime: 0.2f, fadeOutTime: 0.2f,
+							min: 1, max: 4, containingScene: gear.ContainingScene);
+					} else {
+						snd = await AddSimpleTriggableSound(scene, "gear", gearSoundWav, volume: -22f + relativeVolume, fadeInTime: 0.2f, fadeOutTime: 0.2f,
+							playerDetector: false, min: 1, max: 4, loop: true, containingScene: gear.ContainingScene);
+					}
+					TransformCopyPickable(snd, gear.Result);
+					snd.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+						parentPath = new ObjectPath(gear.Result.USERFRIENDLY)
+					});
+					snd.USERFRIENDLY = $"{gear.Result.USERFRIENDLY}_snd";
+					snd.STARTPAUSE = gear.Result.STARTPAUSE;
+
+					foreach (var linkactor in allLinks) {
+						var actorPath = linkactor.Path;
+						var links = linkactor.Result.GetComponent<LinkComponent>();
+						var checklinks = links.Children.Where(l => l.Path.id == gear.Result.USERFRIENDLY).ToArray();
+						if (checklinks.Length == 0) continue;
+						var curnode = sceneTree.FollowObjectPath(actorPath);
+						foreach (var l in checklinks) {
+							var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
+							if (otherobj == null || otherobj.Pickable != gear.Result) continue;
+							var newChildEntry = (ChildEntry)l.Clone("isc");
+							newChildEntry.Path.id = snd.USERFRIENDLY;
+							links.Children.Add(newChildEntry);
+						}
+					}
+				}
+				// Make multi-instruction gears use the proper tween type
+				gears = scene.FindActors(a => {
+					if (!a.USERFRIENDLY.StartsWith("tween_notype")) return false;
+					if (a.USERFRIENDLY.ToLowerInvariant().Contains("stuck")) return false; // We don't want these to make sounds
+					var tween = a.GetComponent<TweenComponent>()?.instanceTemplate?.value;
+					if (tween == null) return false;
+					if (tween.instructionSets.Count != 1) return false;
+					var instructions = tween.instructionSets[0].instructions;
+					if (tween.instructionSets[0].iterationCount == 0) {
+						// Loop forever
+						if (instructions.Count <= 1) return false;
+						if (!instructions.Any(i => i.obj is TweenCircle_Template) || !instructions.Any(i => i.obj is TweenWait_Template)) return false;
+
+						for (int i = 0; i < instructions.Count; i++) {
+							var inst = instructions[i];
+							var nextInst = instructions[(i + 1) % instructions.Count];
+							if (inst.obj is TweenCircle_Template && nextInst.obj is TweenCircle_Template) {
+								// This is highly likely a "stuck" tween. Bad bad bad
+								return false;
+							}
+						}
+					} else {
+						// Loop a set amount of times
+						if (instructions.Count <= 0) return false;
+						if (!instructions.Any(i => i.obj is TweenCircle_Template)) return false;
+					}
+					return true;
+				});
+				foreach (var gear in gears) {
+					var newGear = await ReplaceTweenType(gear.ContainingScene, gear.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_geartype.tpl"), contextToLoadFrom: MainContext);
+					// FX controls = 0866D9DE, 600B4E36
+					var twn = newGear.GetComponent<TweenComponent>();
+					var instructionSet = twn.instanceTemplate.value.instructionSets[0];
+					var instructions = new List<Generic<TweenInstruction_Template>>();
+					bool started = false;
+					for (int i = 0; i < instructionSet.instructions.Count; i++) {
+						var inst = instructionSet.instructions[i];
+						var nextInst = instructionSet.instructions[(i + 1) % instructionSet.instructions.Count];
+						if(instructionSet.iterationCount > 0 && i == instructionSet.instructions.Count - 1)
+							nextInst = null; // assume iteration count 1
+
+						if (inst.obj is TweenCircle_Template && !started) {
+							// Start
+							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0x0866D9DE)
+							}));
+							started = true;
+						}
+						instructions.Add(inst);
+						if ((nextInst == null || nextInst.obj is TweenWait_Template) && started) {
+							// Stop
+							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+								fx = new StringID(0x600B4E36)
+							}));
+							started = false;
+						}
+					}
+					instructionSet.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
+					twn.InstantiateFromInstanceTemplate(instructionSet.UbiArtContext);
+				}
+			}
+
 			switch (scenePath.FullPath) {
 				case "world/rlc_intro/intro_firstlevel.isc": {
 						Transform(await AddMusicTrigger(scene, "mus_sacredtree"), new Vec2d(123.5f, 0), new Vec2d(200, 50));
@@ -7247,21 +7375,46 @@ namespace UbiCanvas.Conversion {
 
 						var elevators = scene.FindActors(a => a.USERFRIENDLY is ("tween_notype@7" or "tween_notype@8" or "tween_notype@12" or "tween_notype@13" or "tween_notype@21" or "tween_notype@22"));
 						foreach (var elevator in elevators) {
-							var newElevator = await ReplaceTweenType(elevator.ContainingScene, elevator.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_geartype.tpl"), contextToLoadFrom: MainContext);
+							// var newElevator = await ReplaceTweenType(elevator.ContainingScene, elevator.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_geartype.tpl"), contextToLoadFrom: MainContext);
 							// FX controls = 0866D9DE, 600B4E36
+							var newElevator = await ReplaceTweenType(elevator.ContainingScene, elevator.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_metalunderwaterslidetype.tpl"), contextToLoadFrom: MainContext);
+							// FX controls = 0866D9DE, 600B4E36
+
 							var twn = newElevator.GetComponent<TweenComponent>();
 							var instructionSet = twn.instanceTemplate.value.instructionSets[0];
 							var instructions = new List<Generic<TweenInstruction_Template>>();
-							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
-								fx = new StringID(0x0866D9DE)
-							}));
-							instructions.AddRange(instructionSet.instructions);
-							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
-								fx = new StringID(0x600B4E36)
-							}));
+							if (elevator.Result.USERFRIENDLY == "tween_notype@7") {
+								// Special case, this one takes a while to start
+								instructions.Add(instructionSet.instructions.First());
+								instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+									fx = new StringID(0x0866D9DE)
+								}));
+								instructions.AddRange(instructionSet.instructions.Skip(1));
+								instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+									fx = new StringID(0x600B4E36)
+								}));
+							} else {
+								instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+									fx = new StringID(0x0866D9DE)
+								}));
+								if (instructionSet.instructions.Last().obj is TweenSine_Template) {
+									// It's a sine bounce thing at the end, playing end sound before this is snappier
+									instructions.AddRange(instructionSet.instructions.SkipLast(1));
+									instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+										fx = new StringID(0x600B4E36)
+									}));
+									instructions.Add(instructionSet.instructions.Last());
+								} else {
+									instructions.AddRange(instructionSet.instructions);
+									instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+										fx = new StringID(0x600B4E36)
+									}));
+								}
+							}
 							instructionSet.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
 							twn.InstantiateFromInstanceTemplate(instructionSet.UbiArtContext);
 						}
+
 						break;
 					}
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
@@ -7296,6 +7449,10 @@ namespace UbiCanvas.Conversion {
 							Link(unpause, powerdown.USERFRIENDLY);
 							Link(act.Result, unpause.USERFRIENDLY);
 						}
+
+						// Change type for one of the tweens, to avoid annoying sound
+						var twn = scene.FindActor(a => a.USERFRIENDLY == "tween_metalunderwaterslidetype@2");
+						await ReplaceTweenType(twn.ContainingScene, twn.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"), contextToLoadFrom: MainContext);
 
 						break;
 					}
@@ -7368,6 +7525,8 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_metalhinge",
 							new Path("sound/100_ambiances/104_ocean/amb_oc_rl_arena_metalhinge.wav"),
 							aabb, volume: -14);
+
+						await ProcessGears(relativeVolume: -3f);
 						break;
 					}
 				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc": {
@@ -7381,58 +7540,7 @@ namespace UbiCanvas.Conversion {
 							new Path("sound/100_ambiances/104_ocean/amb_oce_rl4_labo_lp.wav"),
 							aabb, volume: -13);
 
-						Path gearSound = new Path("sound/common/3d_sound_actors/04_ocean/actorsound_gear_arena.tpl");
-						var gears = scene.FindActors(a => {
-							if (!a.USERFRIENDLY.StartsWith("tween_notype")) return false;
-							var tween = a.GetComponent<TweenComponent>()?.instanceTemplate?.value;
-							if (tween == null) return false;
-							if (tween.instructionSets.Count != 1) return false;
-							if (tween.instructionSets[0].instructions.Count != 1) return false;
-							if (!(tween.instructionSets[0].instructions[0].obj is TweenCircle_Template)) return false;
-							return true;
-						});
-						var allLinks = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children != null);
-						// Give gears a sound actor
-						foreach (var gear in gears) {
-							var snd = await AddActorSound(gear.ContainingScene, gearSound, gear.Result);
-							/*if (CloneTemplateIfNecessary(new Path(snd.LUA.FullPath), "louder", "LOUDER", snd.template, out var newTPL, act: snd)) {
-								newTPL.obj.GetComponent<SoundComponent_Template>().soundList[0].volume = new Volume(-10f);
-							}*/
-							snd.USERFRIENDLY = $"{gear.Result.USERFRIENDLY}_snd";
-							snd.STARTPAUSE = gear.Result.STARTPAUSE;
-
-							foreach (var linkactor in allLinks) {
-								var actorPath = linkactor.Path;
-								var links = linkactor.Result.GetComponent<LinkComponent>();
-								var checklinks = links.Children.Where(l => l.Path.id.StartsWith("tween_notype")).ToArray();
-								if (checklinks.Length == 0) continue;
-								var curnode = sceneTree.FollowObjectPath(actorPath);
-								foreach (var l in checklinks) {
-									var otherobj = curnode.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
-									if (otherobj == null || otherobj.Pickable != linkactor.Result) continue;
-									var newChildEntry = l.Clone("isc") as ChildEntry;
-									newChildEntry.Path.id += "_snd";
-									links.Children.Add(newChildEntry);
-								}
-							}
-						}
-						// Make gears use the proper tween type
-						/*foreach (var gear in gears) {
-							var newGear = await ReplaceTweenType(gear.ContainingScene, gear.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_geartype.tpl"), contextToLoadFrom: MainContext);
-							// FX controls = 0866D9DE, 600B4E36
-							var twn = newGear.GetComponent<TweenComponent>();
-							var instructionSet = twn.instanceTemplate.value.instructionSets[0];
-							var instructions = new List<Generic<TweenInstruction_Template>>();
-							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
-								fx = new StringID(0x0866D9DE)
-							}));
-							instructions.AddRange(instructionSet.instructions);
-							instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
-								fx = new StringID(0x600B4E36)
-							}));
-							instructionSet.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
-							twn.InstantiateFromInstanceTemplate(instructionSet.UbiArtContext);
-						}*/
+						await ProcessGears();
 						break;
 					}
 				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
