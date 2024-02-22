@@ -1690,6 +1690,38 @@ namespace UbiCanvas.Conversion {
 						if (plat?.Pickable != null) {
 							GenericAABBHack((Actor)plat.Pickable, aabbScale: 100f);
 						}
+
+						// Add forcedaction to stop players from jumping
+						/*var nojump = scene.FindPickables(a => a.USERFRIENDLY == "nojump");
+						var allLinks = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children != null);
+						foreach (var p in nojump) {
+							var pf = (Frise)p.Result;
+							var aabb = new AABB() {
+								MIN = pf.POS2D + new Vec2d(pf.PointsList.LocalPoints.Min(m => m.POS.x), pf.PointsList.LocalPoints.Min(m => m.POS.y)),
+								MAX = pf.POS2D + new Vec2d(pf.PointsList.LocalPoints.Max(m => m.POS.x), pf.PointsList.LocalPoints.Max(m => m.POS.y))
+							};
+							var forcedAction = await AddNewActor(p.ContainingScene, new Path("world/common/logicactor/trigger/components/trigger_box_forceplayeraction.tpl"), contextToLoadFrom: LegendsContext);
+							TransformAABB(forcedAction, aabb);
+							var fa = forcedAction.GetComponent<RO2_PlayerForceActionComponent>();
+							fa.WaitDuration = 3f;
+							forcedAction.STARTPAUSE = true;
+
+							foreach (var linkactor in allLinks) {
+								var actorPath = linkactor.Path;
+								var links = linkactor.Result.GetComponent<LinkComponent>();
+								var checklinks = links.Children.Where(l => l.Path.id == p.Result.USERFRIENDLY).ToArray();
+								if (checklinks.Length == 0) continue;
+								var curnode = tree.FollowObjectPath(actorPath);
+								foreach (var l in checklinks) {
+									var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
+									if (otherobj == null || otherobj.Pickable != p.Result) continue;
+									var newChildEntry = (ChildEntry)l.Clone("isc");
+									newChildEntry.Path.id = forcedAction.USERFRIENDLY;
+									links.Children.Add(newChildEntry);
+								}
+							}
+						}*/
+
 						break;
 					}
 				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
@@ -6305,6 +6337,20 @@ namespace UbiCanvas.Conversion {
 			}
 			return newAct;
 		}
+		void Transform(Pickable p, Vec2d pos, Vec2d scale) {
+			p.POS2D = pos;
+			p.SCALE = scale;
+		}
+		void TransformAABB(Pickable p, AABB aabb) {
+			var newScl = (aabb.MAX - aabb.MIN) / 2f;
+			var newPos = aabb.MIN + newScl;
+			p.POS2D = newPos;
+			p.SCALE = newScl;
+		}
+		void TransformCopyPickable(Pickable p, Pickable copyFrom) {
+			p.POS2D = new Vec2d(copyFrom.POS2D.x, copyFrom.POS2D.y);
+			p.SCALE = new Vec2d(copyFrom.SCALE.x, copyFrom.SCALE.y);
+		}
 
 		public async Task ManageAudio(Context oldContext, Settings newSettings, Scene scene) {
 			// Remove existing lum music manager
@@ -6386,20 +6432,6 @@ namespace UbiCanvas.Conversion {
 			}
 
 			// Create music triggers
-			void Transform(Pickable p, Vec2d pos, Vec2d scale) {
-				p.POS2D = pos;
-				p.SCALE = scale;
-			}
-			void TransformAABB(Pickable p, AABB aabb) {
-				var newScl = (aabb.MAX - aabb.MIN) / 2f;
-				var newPos = aabb.MIN + newScl;
-				p.POS2D = newPos;
-				p.SCALE = newScl;
-			}
-			void TransformCopyPickable(Pickable p, Pickable copyFrom) {
-				p.POS2D = new Vec2d(copyFrom.POS2D.x, copyFrom.POS2D.y);
-				p.SCALE = new Vec2d(copyFrom.SCALE.x, copyFrom.SCALE.y);
-			}
 			async Task<Actor> AddActorSound(Scene scene, Path p, Pickable associateWith = null) {
 				var act = await AddNewActor(scene, p, contextToLoadFrom: LegendsContext);
 				if (associateWith != null) {
@@ -7660,7 +7692,7 @@ namespace UbiCanvas.Conversion {
 							new AABB() {
 								MIN = new Vec2d(12.2f, -16.3f),
 								MAX = new Vec2d(94.9f, 31.2f)
-							}, volume: -9);
+							}, volume: -7);
 						await AddAmbienceInterpolator(scene, "amb_middle",
 							new Path("sound/100_ambiances/106_mountain_legends/amb_middle_mo_rl_1_flyingshield_lp.wav"),
 							new AABB() {
@@ -7686,24 +7718,76 @@ namespace UbiCanvas.Conversion {
 								MIN = new Vec2d(63.9f, 14.6f),
 								MAX = new Vec2d(96.3f, 41.5f)
 							}, volume: -6, padding: 15f);*/
+
+						// Add woosh sound
+						/*ascendTrigger = sceneTree.FollowObjectPath(new ObjectPath("heavenandhell_ld|flyingplatform|grp@53|trigger_box_once@1"));
+						ascendTriggerActor = ascendTrigger.Pickable as Actor;
+						var windSound = await AddSimpleTriggableSound(scene, "fly_wind", new Path("sound/600_sfx/610_common/sfx_cine_fly_wind_score.wav"),
+							numChannels: 2, fadeInTime: 0.01f, fadeOutTime: 0.01f, playerDetector: false, min: 1, max: 3, containingScene: ascendTrigger.Parent.Scene);
+						TransformCopyPickable(windSound, ascendTriggerActor);
+						Link(ascendTriggerActor, windSound.USERFRIENDLY).AddTag("Delay", "1.0");*/
+						var windSound = await AddSimpleTriggableSound(scene, "fly_wind", new Path("sound/600_sfx/610_common/sfx_cine_fly_wind_score.wav"),
+							numChannels: 2, fadeInTime: 0.01f, fadeOutTime: 0.01f, playerDetector: true, min: 1, max: 20);
+						TransformAABB(windSound, new AABB() {
+							MIN = new Vec2d(63.9f, 14.6f),
+							MAX = new Vec2d(96.3f, 41.5f)
+						});
+
 						break;
 					}
 				case "world/rlc_olympus/pigrodeo/olympus_pigrodeo_nmi_valkyries.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 1f), aabb);
+
+						var startTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@Part1");
+						var mambomambo = await AddMusicEventRelay(scene, "mus_mambomambo", volume: vol, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(mambomambo, startTrigger.Result);
+						Link(startTrigger.Result, mambomambo.USERFRIENDLY);
+						startTrigger = scene.FindActor(a => a.USERFRIENDLY == "Final");
+						mambomambo = await AddMusicEventRelay(scene, "mus_mambomambo_outro", volume: vol, playOnNext: 0x60, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(mambomambo, startTrigger.Result);
+						Link(startTrigger.Result, mambomambo.USERFRIENDLY).AddTag("Delay", "8.0");
+
+						/*var outroTween = scene.FindActor(a => a.USERFRIENDLY == "tween_notype@FinalGround").Result.GetComponent<TweenComponent>();
+						var outroTweenSet = outroTween.instanceTemplate.value.instructionSets[0];
+						outroTweenSet.instructions = new CListO<Generic<TweenInstruction_Template>>() {
+							outroTweenSet.instructions[0],
+							new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+								_event = GetMusicEvent("mus_mambomambo_outro", volume: vol, playOnNext: 0x60),
+								duration = 0f,
+								triggerSelf = false,
+								triggerBroadcast = true
+							})
+						};
+						outroTween.InstantiateFromInstanceTemplate(outroTween.UbiArtContext);*/
 
 						await AddAmbienceInterpolator(scene, "amb_wind",
 							new Path("sound/100_ambiances/106_mountain_legends/amb_wind_mo_rl_1_flyingshield_lp.wav"),
-							aabb, volume: -14);
+							aabb, volume: -10);
 						break;
 					}
-				case "world/rlc_olympus/towerofworship/olympus_towerofworship_nmi_base.isc":
+				case "world/rlc_olympus/towerofworship/olympus_towerofworship_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_harp", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_intro",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_intro_mo_rl_1_flyingshield_lp.wav"),
+							aabb, volume: -7);
+						await AddAmbienceInterpolator(scene, "amb_river",
+							new Path("sound/100_ambiances/101_jungle/amb_river_light_lp.wav"),
+							aabb, volume: -28);
+						break;
+					}
 				case "world/rlc_olympus/cloudcolosseum/olympus_cloudcolosseum_nmi_base.isc":
 				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc":
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
 						/*
-							AddSimpleNode("mus_ss_storm_outro", false, "part_ss_storm_outro");
 							AddMamboMambo();
-							AddSimpleNode("mus_harp", true, "part_harp_lp");
 							AddSimpleNode("mus_arena", true, "part_arena_01", "part_arena_02", "part_arena_03", "part_arena_04");
 							AddSimpleNode("mus_arena_outro", false, "part_arena_outro");
 							AddSimpleSequenceNode("mus_hadesabode", true,
