@@ -1640,6 +1640,19 @@ namespace UbiCanvas.Conversion {
 						rp.Lighting.GlobalColor *= new UbiArt.Color(0.6f, 0.6f, 0.6f, 1f);
 						act = scene.FindActor(a => a.USERFRIENDLY == "mobilespikes@13");
 						act.ContainingScene.DeletePickable(act.Result);
+
+						// Add bumpers so you'll auto grab ring during crush attack
+						var oldBumper = scene.FindActor(a => a.USERFRIENDLY == "mazebumper_small@20");
+						var newBumper = (Actor)oldBumper.Result.Clone("isc");
+						oldBumper.ContainingScene.AddActor(newBumper);
+						newBumper.POS2D = new Vec2d(40.17f, -30.75f);
+						newBumper.ANGLE = new Angle(-165.636f, degrees: true);
+						//newBumper.RELATIVEZ = -0.1f;
+						newBumper = (Actor)oldBumper.Result.Clone("isc");
+						oldBumper.ContainingScene.AddActor(newBumper);
+						newBumper.POS2D = new Vec2d(42.43f, -30.75f);
+						newBumper.ANGLE = new Angle(165.636f, degrees: true);
+						//newBumper.RELATIVEZ = -0.1f;
 						break;
 					}
 				case "world/rlc_castle/scaffoldingchase/castleexterior_scaffoldingchase_nmi_base.isc": {
@@ -1740,6 +1753,31 @@ namespace UbiCanvas.Conversion {
 							}
 						}*/
 
+						break;
+					}
+				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc": {
+						scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@14").Result.SCALE *= new Vec2d(1f, 10f);
+
+						// AABB & disappearing enemy fixes
+						ExpandAllFriseCollisionAABB(scene, padding: 30);
+						var platforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("minotaur_flyingplatform"));
+						foreach (var plat in platforms) {
+							GenericAABBHack(plat.Result, aabbScale: 300f);
+						}
+						var enemynames = new string[] { "minotaurstack@9", "minotaurstack@10", "minotaurstack@11", "minotaurstack@12", "minotaur@5", "minotaur@10" };
+						var minotaurs = scene.FindActors(a => enemynames.Contains(a.USERFRIENDLY));
+						foreach (var minotaur in minotaurs) {
+							minotaur.Result.POS2D += Vec2d.Up * 5f;
+						}
+
+						// Lighting fix
+						var arrows = scene.FindPickables(a => a.USERFRIENDLY.StartsWith("arrowdirection_atlas"));
+						foreach (var arrow in arrows) {
+							var pp = ((Frise)arrow.Result).PrimitiveParameters;
+							pp.UseGlobalLighting = false;
+							pp.FrontLightBrightness /= 2f;
+						}
+						ApplySpecialRenderParamsToScene(scene);
 						break;
 					}
 				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc": {
@@ -2661,7 +2699,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public async Task<Actor> AddSimpleTriggableSound(Scene scene, string soundID, Path soundPath, float volume = -8f,
-			Path path = null, uint numChannels = 1, float fadeInTime = 0f, float fadeOutTime = 0f, bool playerDetector = true,
+			Path path = null, uint numChannels = 1, float fadeInTime = 0f, float fadeOutTime = 0f, float randomPitchMin = 1f, float randomPitchMax = 1f, bool playerDetector = true,
 			float min = 1, float max = 2, bool loop = false, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
@@ -2691,6 +2729,8 @@ namespace UbiCanvas.Conversion {
 				sd._params.fadeInTime = fadeInTime;
 				sd._params.fadeOutTime = fadeOutTime;
 				sd._params.numChannels = numChannels;
+				sd._params.randomPitchMin = randomPitchMin;
+				sd._params.randomPitchMax = randomPitchMax;
 				sd._params.modifiers = new CArrayO<Generic<SoundModifier>>() {
 					new Generic<SoundModifier>(new SpatializedPanning() {
 						widthMin = min,
@@ -7843,16 +7883,67 @@ namespace UbiCanvas.Conversion {
 							aabb, volume: -12);
 						break;
 					}
-				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc":
+				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -12f;
+						var sceneTree = new PickableTree(scene);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_hadesabode", volume: vol), aabb);
+						var outroTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@14");
+						var outro = await AddMusicEventRelay(scene, "mus_hadesabode_outro", volume: vol, playOnNext: 0x60, containingScene: outroTrigger.ContainingScene);
+						TransformCopyPickable(outro, outroTrigger.Result);
+						Link(outroTrigger.Result, outro.USERFRIENDLY);
+
+						await AddAmbienceInterpolator(scene, "amb_rain_heavy",
+							new Path("sound/100_ambiances/101_jungle/amb_rain_heavy_lp.wav"),
+							aabb, volume: -17);
+
+						// lightning_triggerable
+						var lightning = scene.FindActors(a => a.USERFRIENDLY.StartsWith("lightning_triggerable"));
+						var allLinks = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children != null);
+						// Give gears a sound actor
+						foreach (var light in lightning) {
+							var snd = await AddSimpleTriggableSound(scene, "lightning", new Path("sound/600_sfx/610_common/sfx_lightning_and_thunder.wav"),
+									volume: -15, fadeInTime: 0f, fadeOutTime: 10f, randomPitchMin: 0.8f, randomPitchMax: 1.2f,
+									playerDetector: false, min: 2, max: 50, containingScene: light.ContainingScene);
+							TransformCopyPickable(snd, light.Result);
+							snd.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+								parentPath = new ObjectPath(light.Result.USERFRIENDLY)
+							});
+							snd.USERFRIENDLY = $"{light.Result.USERFRIENDLY}_snd";
+							snd.STARTPAUSE = light.Result.STARTPAUSE;
+
+							foreach (var linkactor in allLinks) {
+								var actorPath = linkactor.Path;
+								var links = linkactor.Result.GetComponent<LinkComponent>();
+								var checklinks = links.Children.Where(l => l.Path.id == light.Result.USERFRIENDLY).ToArray();
+								if (checklinks.Length == 0) continue;
+								var curnode = sceneTree.FollowObjectPath(actorPath);
+								foreach (var l in checklinks) {
+									var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
+									if (otherobj == null || otherobj.Pickable != light.Result) continue;
+									var newChildEntry = (ChildEntry)l.Clone("isc");
+									newChildEntry.Path.id = snd.USERFRIENDLY;
+									links.Children.Add(newChildEntry);
+								}
+							}
+						}
+						break;
+					}
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
-						/*
-							AddSimpleSequenceNode("mus_hadesabode", true,
-								new string[] { "part_hadesabode_intro" },
-								new string[] { "part_hadesabode_lp" });
-							AddSimpleNode("mus_hadesabode_outro", false, "part_hadesabode_outro");
-							AddSimpleNode("mus_betamaze", true, "part_betamaze_lp");
-							AddSimpleNode("mus_betamaze_outro", false, "part_betamaze_outro");
-						 * */
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -22f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_betamaze", volume: vol), aabb);
+						var outroTrigger = scene.FindActor(a => a.USERFRIENDLY == "switch_anim@3");
+						var outro = await AddMusicEventRelay(scene, "mus_betamaze_outro", volume: vol+14, playOnNext: 0x60, containingScene: outroTrigger.ContainingScene);
+						TransformCopyPickable(outro, outroTrigger.Result);
+						Link(outroTrigger.Result, outro.USERFRIENDLY);
+
+						await AddAmbienceInterpolator(scene, "amb_maze_cube",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_maze_cube_lp.wav"),
+							aabb, volume: -14);
+
 						break;
 					}
 				default:
