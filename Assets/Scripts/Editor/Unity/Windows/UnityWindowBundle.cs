@@ -85,11 +85,14 @@ public class UnityWindowBundle : UnityWindow {
 		//foldouts[title] = EditorGUILayout.Foldout(foldouts[title], title, true);
 		if (foldouts[title]) {
 			Loader l = Controller.MainContext.Loader;
+
+			bool selectAll = EditorButton("Select all");
+
 			foreach (StringID sid in dict.Keys) {
 				if (!selectedPaths.ContainsKey(sid)) {
 					selectedPaths[sid] = false;
 				}
-				selectedPaths[sid] = EditorGUI.ToggleLeft(GetNextRect(), l.Paths[sid].FullPath, selectedPaths[sid]);
+				selectedPaths[sid] = EditorGUI.ToggleLeft(GetNextRect(), l.Paths[sid].FullPath, selectedPaths[sid] || selectAll);
 			}
 		}
 	}
