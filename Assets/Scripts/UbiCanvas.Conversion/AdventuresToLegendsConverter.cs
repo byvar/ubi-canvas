@@ -1703,6 +1703,11 @@ namespace UbiCanvas.Conversion {
 						if (plat?.Pickable != null) {
 							GenericAABBHack((Actor)plat.Pickable, aabbScale: 100f);
 						}
+						/*var flyingplats = scene.FindActors(a => a.USERFRIENDLY == "grp@53");
+						foreach (var flyingplat in flyingplats) {
+							var platScene = (SubSceneActor)flyingplat.Result;
+							ExpandAllFriseCollisionAABB(platScene.SCENE.value, padding: 50f);
+						}*/
 
 						// Add forcedaction to stop players from jumping
 						/*var nojump = scene.FindPickables(a => a.USERFRIENDLY == "nojump");
@@ -7815,13 +7820,32 @@ namespace UbiCanvas.Conversion {
 							aabb, volume: -28);
 						break;
 					}
-				case "world/rlc_olympus/cloudcolosseum/olympus_cloudcolosseum_nmi_base.isc":
+				case "world/rlc_olympus/cloudcolosseum/olympus_cloudcolosseum_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -13f;
+
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 4f), aabb);
+
+						//TransformAABB(await AddMusicTrigger(scene, "mus_arena", volume: vol), aabb);
+						var multiEventTrigger = scene.FindActor(a => a.USERFRIENDLY == "multipleevent_trigger");
+						var mus = await AddMusicEventRelay(scene, "mus_arena", volume: vol, containingScene: multiEventTrigger.ContainingScene);
+						TransformCopyPickable(mus, multiEventTrigger.Result);
+						Link(multiEventTrigger.Result, mus.USERFRIENDLY);
+
+						multiEventTrigger = scene.FindActor(a => a.USERFRIENDLY == "multipleevent_trigger@8");
+						var outro = await AddMusicEventRelay(scene, "mus_arena_outro", volume: vol, playOnNext: 0x60, containingScene: multiEventTrigger.ContainingScene);
+						TransformCopyPickable(outro, multiEventTrigger.Result);
+						Link(multiEventTrigger.Result, outro.USERFRIENDLY);
+
+						await AddAmbienceInterpolator(scene, "amb_middle",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_middle_mo_rl_1_flyingshield_lp.wav"),
+							aabb, volume: -12);
+						break;
+					}
 				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc":
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
 						/*
-							AddMamboMambo();
-							AddSimpleNode("mus_arena", true, "part_arena_01", "part_arena_02", "part_arena_03", "part_arena_04");
-							AddSimpleNode("mus_arena_outro", false, "part_arena_outro");
 							AddSimpleSequenceNode("mus_hadesabode", true,
 								new string[] { "part_hadesabode_intro" },
 								new string[] { "part_hadesabode_lp" });
