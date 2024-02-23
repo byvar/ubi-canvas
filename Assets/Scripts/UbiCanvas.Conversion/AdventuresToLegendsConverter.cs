@@ -1463,6 +1463,8 @@ namespace UbiCanvas.Conversion {
 
 						// Cameras
 						UseFastCameras(scene, speed: 1.2f);
+
+						ExpandAllFriseCollisionAABB(scene);
 						break;
 					}
 				case "world/rlc_hangar/fedexyourfriends/hangar_fedexyourfriends_exp_base.isc": {
@@ -1476,6 +1478,8 @@ namespace UbiCanvas.Conversion {
 						badrabbid.Result.POS2D += Vec2d.Up * 8f;
 						badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@2");
 						badrabbid.Result.POS2D += Vec2d.Up * 8f;
+
+						ExpandAllFriseCollisionAABB(scene);
 						break;
 					}
 				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc": {
@@ -1519,6 +1523,8 @@ namespace UbiCanvas.Conversion {
 						// There's a toad that usually gets stuck in the floor and dies offscreen. Move it up a unit to fix it
 						var disappearingToad = scene.FindActor(a => a.USERFRIENDLY == "basictoad_nemo@1");
 						disappearingToad.Result.POS2D = disappearingToad.Result.POS2D + new Vec2d(0f, 1f);
+
+						ExpandAllFriseCollisionAABB(scene);
 						break;
 					}
 				case "world/rlc_nemo/harborhell/nemo_harborhell_nmi_base.isc": {
@@ -1529,6 +1535,8 @@ namespace UbiCanvas.Conversion {
 						// There's a toad that usually gets stuck in the floor and dies offscreen. Move it up a unit to fix it
 						var disappearingToad = scene.FindActor(a => a.USERFRIENDLY == "shootingtoad@5");
 						disappearingToad.Result.POS2D = disappearingToad.Result.POS2D + new Vec2d(0f, 1f);
+
+						ExpandAllFriseCollisionAABB(scene);
 						break;
 					}
 				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
@@ -1576,8 +1584,11 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc": {
-						var badjacquouille = scene.FindActor(a => a.USERFRIENDLY == "Torture");
-						badjacquouille.Result.POS2D += new Vec2d(-6.5f, 3f);
+
+						ExpandAllFriseCollisionAABB(scene);
+
+						/*var badjacquouille = scene.FindActor(a => a.USERFRIENDLY == "Torture");
+						badjacquouille.Result.POS2D += new Vec2d(-6.5f, 3f);*/
 						var act = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
 						FixCastleCorridorPrimitiveParams(oldContext, newSettings, scene);
 						/*var checkp = scene.FindActor(a => a.USERFRIENDLY == "checkpoint_innovisual@1").Result.GetComponent<PrefetchTargetComponent>();
@@ -1678,6 +1689,8 @@ namespace UbiCanvas.Conversion {
 						}
 						var badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@2");
 						badrabbid.Result.POS2D += Vec2d.Up * 5f;
+
+						ExpandAllFriseCollisionAABB(scene, padding: 30f);
 						break;
 					}
 				case "world/rlc_olympus/heavenandhell/olympus_heavenandhell_nmi_base.isc": {
@@ -4387,6 +4400,25 @@ namespace UbiCanvas.Conversion {
 					}
 					// Remove stop frame
 					anim.frameEvents = new CListO<AnimTrackFrameEvents>(anim.frameEvents.Where(f => f != frameStop).ToList());
+				}
+			}
+		}
+
+		public void ExpandAllFriseCollisionAABB(Scene scene, float padding = 15f) {
+			var cms = scene.FindPickables(p => p is Frise);
+			foreach (var cm in cms) {
+				ExpandFriseCollisionAABB((Frise)cm.Result, padding: padding);
+			}
+		}
+		public void ExpandFriseCollisionAABB(Frise f, float padding = 15f) {
+			var colData = f?.collisionData?.value;
+			if(colData == null) return;
+			if (colData.WorldCollisionList != null) {
+				foreach (var lc in colData.WorldCollisionList) {
+					if(lc == null) continue;
+					if(lc.AABB == null) continue;
+					lc.AABB.MIN -= new Vec2d(padding, padding);
+					lc.AABB.MAX += new Vec2d(padding, padding);
 				}
 			}
 		}
