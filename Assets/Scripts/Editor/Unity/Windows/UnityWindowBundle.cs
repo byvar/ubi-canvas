@@ -25,12 +25,16 @@ public class UnityWindowBundle : UnityWindow {
 				EditorGUI.BeginChangeCheck();
 
 				DrawHeader("Export Game Data");
+
 				UnitySettings.Export_UseRaw = EditorField($"Export raw files", UnitySettings.Export_UseRaw);
 				if (UnitySettings.Export_UseRaw) {
 					UnitySettings.Export_OutputPathFolder = DirectoryField(GetNextRect(), "Mod folder", UnitySettings.Export_OutputPathFolder, true);
 				} else {
 					UnitySettings.Export_OutputPathFile = FileField(GetNextRect(), "Bundle file", UnitySettings.Export_OutputPathFile, true, "ipk");
 				}
+
+				EditorHelpBox("Please make sure to only export files you've modified. Usually this should only be the scene file.\n" +
+					"Be aware that changes to most other files such as actor templates will affect the entire game - not just this level.", MessageType.Info, padding: 10);
 
 				Loader l = Controller.MainContext.Loader;
 				DrawFoldout("Scenes", l.isc);
