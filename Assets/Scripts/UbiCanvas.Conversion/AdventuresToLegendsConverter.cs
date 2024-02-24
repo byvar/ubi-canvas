@@ -3484,6 +3484,39 @@ namespace UbiCanvas.Conversion {
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_09_dojo.tpl": {
 							// TODO
+							// Parts
+							AddPart("part_bge_mingtzu_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_mingtzu_lp.wav"));
+							AddPart("part_bge_funkybar100_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_funkybar100_lp.wav"));
+
+							AddPart("part_mou_suspens_01", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_01_intro_4m.wav"), nbMeasures: 4);
+							AddPart("part_mou_suspens_02", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_02_4m.wav"), nbMeasures: 4);
+							AddPart("part_mou_suspens_03", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_03_4m.wav"), nbMeasures: 4);
+							AddPart("part_mou_suspens_04", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_04_4m.wav"), nbMeasures: 4);
+							AddPart("part_mou_suspens_05", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_05_4m.wav"), nbMeasures: 4);
+							AddPart("part_mou_suspens_06", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_06_4m.wav"), nbMeasures: 4);
+							AddPart("part_mou_suspens_07", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_07_outro_3m.wav"), nbMeasures: 3);
+
+							AddPart("part_shaolin_supereasy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_supereasy_mastermix.wav"));
+							//AddPart("part_shaolin_easy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_easy_mastermix.wav"));
+							AddPart("part_shaolin_medium", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_medium_mastermix.wav"));
+							//AddPart("part_shaolin_hard", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_hard_mastermix.wav"));
+
+							AddPart("part_whenwindblows_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_01.wav"));
+							AddPart("part_whenwindblows_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_02.wav"));
+
+							// Nodes
+							AddSimpleNode("mus_bge_mingtzu", true, "part_bge_mingtzu_lp");
+							AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
+							AddSimpleNode("mus_mou_suspens", true, 
+								"part_mou_suspens_01", "part_mou_suspens_02", "part_mou_suspens_03", "part_mou_suspens_04",
+								"part_mou_suspens_05", "part_mou_suspens_06", "part_mou_suspens_07");
+							AddSimpleNode("mus_shaolin_supereasy", true, "part_shaolin_supereasy");
+							//AddSimpleNode("mus_shaolin_easy", true, "part_shaolin_easy");
+							AddSimpleNode("mus_shaolin_medium", true, "part_shaolin_medium");
+							//AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
+							AddSimpleNode("mus_whenwindblows", true, "part_whenwindblows_01", "part_whenwindblows_02");
+
+
 							break;
 						}
 					case "sound/common/music_trees/09_rlc/musictree_rlc_10_world.tpl": {
@@ -3498,6 +3531,8 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_darkcpursuit_intro", new Path("sound/300_music/330_rlc/10_world/mus_darkcpursuit_intro.wav"));
 							AddPart("part_darkcpursuit_lp", new Path("sound/300_music/330_rlc/10_world/mus_darkcpursuit_lp.wav"));
 							AddPart("part_darkcpursuit_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_4_darkcpursuit/mo_rl_4_outro.wav"));
+							AddPart("part_ritual_lp", new Path("sound/300_music/330_rlc/10_world/mus_ritual_lp.wav"));
+							AddPart("part_shaolin_hard", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_hard_mastermix.wav"));
 
 							// Nodes
 							AddSimpleNode("mus_oc_suspense", true, "part_oc_suspense_lp");
@@ -3505,7 +3540,8 @@ namespace UbiCanvas.Conversion {
 							AddSimpleNode("mus_darkcpursuit_intro", false, "part_darkcpursuit_intro");
 							AddSimpleNode("mus_darkcpursuit", true, "part_darkcpursuit_lp");
 							AddSimpleNode("mus_darkcpursuit_outro", false, "part_darkcpursuit_outro");
-
+							AddSimpleNode("mus_ritual", true, "part_ritual_lp");
+							AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
 
 							// Common
 							AddHellGate();
