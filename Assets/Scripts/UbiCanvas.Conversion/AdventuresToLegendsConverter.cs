@@ -1608,6 +1608,15 @@ namespace UbiCanvas.Conversion {
 						//ApplySpecialRenderParamsToScene(scene);
 						break;
 					}
+
+				case "world/rlc_castle/dungeonoutflow/castleinterior_dungeonoutflow_exp_base.isc": {
+						var act = scene.FindActor(a => a.USERFRIENDLY == "clearcolor@1");
+						var rp = act.Result.GetComponent<RenderParamComponent>();
+						var c = rp.ClearColor.ClearColor;
+						rp.Lighting.GlobalColor = new UbiArt.Color(c.r, c.g, c.b, 0.6f);
+						rp.Lighting.Enable = true;
+						break;
+					}
 				case "world/rlc_castle/roastedpigrodeo/castleexterior_roastedpigrodeo_lum_base.isc": {
 						// A rabbid auto-dies here, AABB hack doesn't work... we'll delete it
 						var rabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner");
@@ -1673,6 +1682,14 @@ namespace UbiCanvas.Conversion {
 						var rp = act.Result.GetComponent<RenderParamComponent>();
 						rp.ClearColor.ClearFrontLightColor = rp.ClearColor.ClearColor;
 						//act.Result.GetComponent<RenderParamComponent>().Lighting.GlobalColor.a = 0.8f;
+						FixCastleCorridorPrimitiveParams(oldContext, newSettings, scene);
+						break;
+					}
+				case "world/rlc_castle/siegeattack/castleexterior_siegeattack_spd_base.isc": {
+						var act = scene.FindActor(a => a.USERFRIENDLY == "mood1");
+						var rp = act.Result.GetComponent<RenderParamComponent>();
+						//rp.ClearColor.ClearFrontLightColor = rp.ClearColor.ClearColor;
+						//rp.Lighting.Enable = false;
 						FixCastleCorridorPrimitiveParams(oldContext, newSettings, scene);
 						break;
 					}
@@ -3220,6 +3237,17 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_medievaldragon3_04", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part04_180_6m.wav"));
 							AddPart("part_medievaldragon3_outro", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_win.wav"));
 
+							AddPart("part_ju_rl_5_explo_1", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part1_01_8m.wav"), nbMeasures: 8);
+							AddPart("part_ju_rl_5_explo_2", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part1_02_8m.wav"), nbMeasures: 8);
+							AddPart("part_ju_rl_5_explo_3", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part2_16m.wav"), nbMeasures: 16);
+							AddPart("part_ju_rl_5_explo_4", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part3_01_16m.wav"), nbMeasures: 16);
+							AddPart("part_ju_rl_5_explo_5", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part3_02_16m.wav"), nbMeasures: 16);
+							AddPart("part_ju_rl_5_explo_6", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part4_01_8m.wav"), nbMeasures: 8);
+							AddPart("part_ju_rl_5_explo_7", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_01_4m.wav"), nbMeasures: 4);
+							AddPart("part_ju_rl_5_explo_8", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_02_4m.wav"), nbMeasures: 4);
+							AddPart("part_ju_rl_5_explo_9", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_03_4m.wav"), nbMeasures: 4);
+							AddPart("part_ju_rl_5_explo_10", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_04_4m.wav"), nbMeasures: 4);
+
 							// Tree
 							AddSimpleNode("mus_mysteriousswamps_01", true, "part_mysteriousswamps_01_lp");
 							AddSimpleNode("mus_mysteriousswamps_02", true, "part_mysteriousswamps_02_lp");
@@ -3236,6 +3264,10 @@ namespace UbiCanvas.Conversion {
 								new string[] { "part_medievaldragon2_01", "part_medievaldragon2_02", "part_medievaldragon2_03", "part_medievaldragon2_04" });
 							AddSimpleNode("mus_medievaldragon3", true, "part_medievaldragon3_01", "part_medievaldragon3_02", "part_medievaldragon3_03", "part_medievaldragon3_04");
 							AddSimpleNode("mus_medievaldragon3_outro", false, "part_medievaldragon3_outro");
+							AddSimpleNode("mus_ju_rl_5_explo", true,
+								"part_ju_rl_5_explo_1", "part_ju_rl_5_explo_2", "part_ju_rl_5_explo_3", "part_ju_rl_5_explo_4",
+								"part_ju_rl_5_explo_5", "part_ju_rl_5_explo_6", "part_ju_rl_5_explo_7", "part_ju_rl_5_explo_8",
+								"part_ju_rl_5_explo_9", "part_ju_rl_5_explo_10");
 
 							// Common
 							AddMamboMambo();
@@ -6506,6 +6538,7 @@ namespace UbiCanvas.Conversion {
 					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl"));
 					break;
 				case "world/rlc_castle/dunktank/castleinterior_dunktank_nmi_base.isc":
+				case "world/rlc_castle/dungeonoutflow/castleinterior_dungeonoutflow_exp_base.isc":
 				case "world/rlc_castle/swingsandslides/castleinterior_swingsandslides_nmi.isc":
 				case "world/rlc_castle/dungeonarena/castleinterior_dungeonarena_nmi_var.isc":
 				case "world/rlc_castle/scaffoldingchase/castleexterior_scaffoldingchase_nmi_base.isc":
@@ -6879,6 +6912,27 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_castle_ext",
 							new Path("sound/100_ambiances/challenge/musical_blackbetty/amb_bridge_lp.wav"),
 							aabb, volume: -19);
+						break;
+					}
+				case "world/rlc_castle/dungeonoutflow/castleinterior_dungeonoutflow_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_ju_rl_5_explo", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_castle_ext",
+							new Path("sound/100_ambiances/101_middleageworld/amb_ma_castle_ext_lp.wav"),
+							aabb, volume: -19);
+
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("fluidfall_water"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("watersplash"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), act.Result);
+						}
 						break;
 					}
 				case "world/rlc_castle/swingsandslides/castleinterior_swingsandslides_nmi.isc": {
