@@ -1221,6 +1221,15 @@ namespace UbiCanvas.Conversion {
 						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 						break;
 					}
+				case "world/rlc_dojo/testyourmight/dojo_testyourmight_nmi_base.isc": {
+						var platforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("flyingplatform"));
+						foreach (var plat in platforms) {
+							GenericAABBHack(plat.Result, aabbScale: 300f);
+						}
+						ExpandAllFriseCollisionAABB(scene, padding: 30f);
+						UseFastCameras(scene, speed: 1.2f);
+						break;
+					}
 				case "world/rlc_dojo/greatwallwaterfall/dojo_greatwallwaterfall_lum_firelums.isc": {
 						var mood = scene.FindActor(a => a.USERFRIENDLY == "mood1");
 						var rp = mood.Result.GetComponent<RenderParamComponent>();
@@ -3487,6 +3496,10 @@ namespace UbiCanvas.Conversion {
 							// Parts
 							AddPart("part_bge_mingtzu_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_mingtzu_lp.wav"));
 							AddPart("part_bge_funkybar100_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_funkybar100_lp.wav"));
+							
+							AddPart("part_eleanor_giftmatchseller_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_lp.wav"));
+							AddPart("part_eleanor_giftmatchseller_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_outro.wav"));
+							AddPart("part_eleanor_letsgo_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_letsgo_lp.wav"));
 
 							AddPart("part_mou_suspens_01", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_01_intro_4m.wav"), nbMeasures: 4);
 							AddPart("part_mou_suspens_02", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_02_4m.wav"), nbMeasures: 4);
@@ -3507,6 +3520,9 @@ namespace UbiCanvas.Conversion {
 							// Nodes
 							AddSimpleNode("mus_bge_mingtzu", true, "part_bge_mingtzu_lp");
 							AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
+							AddSimpleNode("mus_eleanor_giftmatchseller", true, "part_eleanor_giftmatchseller_lp");
+							AddSimpleNode("mus_eleanor_giftmatchseller_outro", false, "part_eleanor_giftmatchseller_outro");
+							AddSimpleNode("mus_eleanor_letsgo", true, "part_eleanor_letsgo_lp");
 							AddSimpleNode("mus_mou_suspens", true, 
 								"part_mou_suspens_01", "part_mou_suspens_02", "part_mou_suspens_03", "part_mou_suspens_04",
 								"part_mou_suspens_05", "part_mou_suspens_06", "part_mou_suspens_07");
