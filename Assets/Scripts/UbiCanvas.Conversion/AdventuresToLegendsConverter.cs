@@ -1500,6 +1500,19 @@ namespace UbiCanvas.Conversion {
 						rp.Lighting.GlobalColor = new UbiArt.Color(ogColor.r * mul, ogColor.g * mul, ogColor.b * mul, ogColor.a * alphaMul);
 						break;
 					}
+				case "world/rlc_beanstalk/thebigbeanstalk/beanstalk_thebigbeanstalk_exp_base.isc": {
+						//ApplySpecialRenderParamsToScene(scene);
+						ApplySpecialRenderParamsToScene(scene,
+							filter: p => p.USERFRIENDLY.StartsWith("beanstalk_middleground") && p.RELATIVEZ < 9f,
+							useExistingFogAlpha: true);
+
+						// Now add a bit of lighting
+						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("clearcolo"));
+						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
+						var mul = 0.65f;
+						rp.Lighting.GlobalColor = new UbiArt.Color(0.9450981f * mul, 0.8980393f * mul, 0.7098039f * mul, 0.7f);
+						break;
+					}
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc": {
 						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("clearcolo"));
@@ -4381,7 +4394,11 @@ namespace UbiCanvas.Conversion {
 			}
 		}
 
-		public void ApplySpecialRenderParamsToScene(Scene scene, RenderParamComponent rp = null) {
+		public void ApplySpecialRenderParamsToScene(Scene scene, 
+			RenderParamComponent rp = null,
+			Predicate<Pickable> filter = null,
+			bool applyFog = true, bool applyLighting = true,
+			bool useExistingFogAlpha = false) {
 			if (rp == null) {
 				// Find first RenderParam in scene
 				rp = scene.FindActor(a => a.GetComponent<RenderParamComponent>() != null).Result.GetComponent<RenderParamComponent>();
@@ -4392,10 +4409,18 @@ namespace UbiCanvas.Conversion {
 
 			void ApplyToPrimitiveParameters(GFXPrimitiveParam pp) {
 				if (pp.UseGlobalLighting) {
-					if (pp.useStaticFog) {
-						pp.colorFog = /*pp.colorFactor * globalStaticFog*/ globalStaticFog * new UbiArt.Color(1, 1, 1, ((globalFogOpacity + 1f) / 2f));
+					if (applyFog) {
+						if (pp.useStaticFog) {
+							if (useExistingFogAlpha) {
+								pp.colorFog = globalStaticFog * new UbiArt.Color(1, 1, 1, Mathf.Clamp01(globalFogOpacity + pp.colorFog?.a ?? 0f));
+							} else {
+								pp.colorFog = globalStaticFog * new UbiArt.Color(1, 1, 1, ((globalFogOpacity + 1f) / 2f));
+							}
+						}
 					}
-					pp.FrontLightBrightness = globalBrightness;
+					if (applyLighting) {
+						pp.FrontLightBrightness = globalBrightness;
+					}
 				}
 			}
 
@@ -4405,7 +4430,7 @@ namespace UbiCanvas.Conversion {
 				if(anim.PrimitiveParameters == null) anim.PrimitiveParameters = new GFXPrimitiveParam();
 				ApplyToPrimitiveParameters(anim.PrimitiveParameters);
 			}*/
-			var graphicActors = scene.FindActors(a => a.GetComponent<GraphicComponent>() != null);
+			var graphicActors = scene.FindActors(a => a.GetComponent<GraphicComponent>() != null && (filter == null || filter(a)));
 			foreach (var act in graphicActors) {
 				var graphicsComponents = act.Result.GetComponents<GraphicComponent>();
 				foreach (var gc in graphicsComponents) {
@@ -4413,7 +4438,7 @@ namespace UbiCanvas.Conversion {
 					ApplyToPrimitiveParameters(gc.PrimitiveParameters);
 				}
 			}
-			var frises = scene.FindPickables(p => p is Frise f && f.PrimitiveParameters.UseGlobalLighting);
+			var frises = scene.FindPickables(p => p is Frise f && f.PrimitiveParameters.UseGlobalLighting && (filter == null || filter(p)));
 			foreach (var f in frises) {
 				var fr = (Frise)f.Result;
 				if (fr.PrimitiveParameters == null) fr.PrimitiveParameters = new GFXPrimitiveParam();
