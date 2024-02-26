@@ -3344,6 +3344,9 @@ namespace UbiCanvas.Conversion {
 					case "sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl": {
 							// COMPLETE
 							// Parts
+							AddPart("part_whenwindblows_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_01.wav"));
+							AddPart("part_whenwindblows_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_02.wav"));
+
 							AddPart("part_home_music_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_music.wav"));
 
 							AddPart("part_flightwhirl_01", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_03_8m.wav"), nbMeasures: 8);
@@ -3358,6 +3361,7 @@ namespace UbiCanvas.Conversion {
 
 
 							// Tree
+							AddSimpleNode("mus_whenwindblows", true, "part_whenwindblows_01", "part_whenwindblows_02");
 							AddSimpleNode("mus_home_music_retro", true, "part_home_music_retro_lp");
 							AddSimpleNode("mus_flightwhirl", true,
 								"part_flightwhirl_01", "part_flightwhirl_02", "part_flightwhirl_03", "part_flightwhirl_04", "part_flightwhirl_05");
@@ -6580,6 +6584,7 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc":
 					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl"));
 					break;
+				case "world/rlc_beanstalk/thebigbeanstalk/beanstalk_thebigbeanstalk_exp_base.isc":
 				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc":
 				case "world/rlc_beanstalk/glidinglums/beanstalk_glidinglums_nmi.isc":
 				case "world/rlc_beanstalk/aspimaze/beanstalk_aspimaze_exp_base.isc":
@@ -7230,7 +7235,7 @@ namespace UbiCanvas.Conversion {
 						var cartwheels = await AddActor3DSound(scene, "cartwheels", new Path("sound/500_gpe/506_mountain/gpe_twn_passage_wallrun_move_lp.wav"), min: 0f, max: 1.5f, containingScene: cartScene);
 						cartwheels.POS2D = Vec2d.Down * 1f;
 						var cartrumble = await AddActor3DSound(scene, "cartrumble", new Path("sound/600_sfx/601_middleageworld/sfx_twn_stone_move_lp.wav"), min: 0f, max: 2f, containingScene: cartScene);
-						
+
 						break;
 					}
 				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc": {
@@ -7272,10 +7277,30 @@ namespace UbiCanvas.Conversion {
 						TransformCopyPickable(outro, multiEventTrigger.Result);
 						Link(multiEventTrigger.Result, outro.USERFRIENDLY);
 						//Link(debugTrigger.Result, outro.USERFRIENDLY);
-						
+
 						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
 							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
 							aabb, volume: -18);
+						break;
+					}
+				case "world/rlc_beanstalk/thebigbeanstalk/beanstalk_thebigbeanstalk_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_whenwindblows", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_breathing",
+							new Path("sound/100_ambiances/102_music_legends/amb_mu_rl_1_breathing_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(117.9f, 3.9f),
+								MAX = new Vec2d(203.5f, 80.3f)
+							}, volume: -12, padding: 50f);
+						await AddAmbienceInterpolator(scene, "amb_music_highalt_day",
+							new Path("sound/100_ambiances/102_music_legends/amb_music_highalt_day_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(117.9f, 120.5f),
+								MAX = new Vec2d(203.5f, 189.9f)
+							}, volume: -18, padding: 50f);
 						break;
 					}
 				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc": {
