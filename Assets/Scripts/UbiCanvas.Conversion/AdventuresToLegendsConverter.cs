@@ -1270,6 +1270,16 @@ namespace UbiCanvas.Conversion {
 						UseFastCameras(scene);
 						break;
 					}
+				case "world/rlc_avatar/soggyswamp/avatar_soggyswamp_nmi_stilts.isc": {
+						var fr = scene.FindPickable(p => p.USERFRIENDLY == "avatar_ldground_wallsquare@1").Result as Frise;
+
+						// Add collision to this frise & recook
+						foreach (var pt in fr.PointsList.LocalPoints) {
+							pt.HoleMode = PolyLineEdge.Hole.None;
+						}
+						fr.PreComputedForCook = false;
+						break;
+					}
 				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc": {
 						UseFastCameras(scene, speed: 1.2f);
 						var badrabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@2");
@@ -6575,6 +6585,7 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_castle/siegeslide/castleexterior_siegeslide_nmi.isc":
 				case "world/rlc_castle/roastedpigrodeo/castleexterior_roastedpigrodeo_lum_base.isc":
 				case "world/rlc_avatar/imonamoat/avatar_imonamoat_nmi_base.isc":
+				case "world/rlc_avatar/soggyswamp/avatar_soggyswamp_nmi_stilts.isc":
 					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl"));
 					break;
 				case "world/rlc_avatar/templeofgloom/avatar_templeofgloom_nmi_base.isc":
@@ -7080,6 +7091,17 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_arena_castlefire",
 							new Path("sound/100_ambiances/101_jungle/amb_ju_rl_arena_castlefire_lp.wav"),
 							aabb, volume: -16);
+						break;
+					}
+				case "world/rlc_avatar/soggyswamp/avatar_soggyswamp_nmi_stilts.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -9f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_mysteriousswamps_01", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_marais",
+							new Path("sound/100_ambiances/101_jungle/amb_marais_lp.wav"),
+							aabb, volume: -14);
 						break;
 					}
 
