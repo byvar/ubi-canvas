@@ -1501,6 +1501,43 @@ namespace UbiCanvas.Conversion {
 						ExpandAllFriseCollisionAABB(scene);
 						break;
 					}
+				case "world/rlc_hangar/monorailmadness/hangar_monorailmadness_nmi_base.isc": {
+						var bottomMonorailTrig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@2");
+						bottomMonorailTrig.Result.POS2D += new Vec2d(3f, -1.5f);
+						break;
+					}
+				case "world/rlc_hangar/hanginthere/hangar_hanginthere_spd_base.isc": {
+						var hangTrig = scene.FindActor(a => a.USERFRIENDLY == "ring_hangtriggeronce@2" && a.POS2D.x > 100f);
+						var link = hangTrig.Result.GetComponent<LinkComponent>().Children.FirstOrDefault(c => c.Path.id == "tween_notype@4");
+						link.TagValues[0].Value = "0.6"; // Change delay so bottom monorail is triggered later
+
+
+						async Task CreateTween(string[] children, Vec2d pos, float cycleTime = 1f) {
+							var tweenPath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
+							var act = await AddNewActor(scene, tweenPath, parentPath: "hanginthere_ld", contextToLoadFrom: LegendsContext);
+							ConfigureOnOffTween(oldContext, act.GetComponent<TweenComponent>(), cycleTime: cycleTime, timeOn: cycleTime / children.Length);
+							var links = act.GetComponent<LinkComponent>();
+							links.Children = new CListO<ChildEntry>(children.Select(str => new ChildEntry() { Path = new ObjectPath(str) }).ToList());
+							for (int i = 1; i < children.Length; i++) {
+								links.Children[i].AddTag(new StringID("Delay"), (cycleTime / children.Length * i).ToString());
+							}
+							act.POS2D = pos;
+							act.SCALE = new Vec2d(10, 10);
+							act.RELATIVEZ = -0.02f;
+						};
+						/*await CreateTween(new string[] {
+							"electricarc@6", "electricarc@7", "electricarc@8"
+						}, new Vec2d(254.5618f, -7.50145f), cycleTime: 1.5f);
+						await CreateTween(new string[] {
+							"electricarc@11", "electricarc@10", "electricarc@9"
+						}, new Vec2d(263.5927f, -11.35456f), cycleTime: 1.5f);*/
+
+						await CreateTween(new string[] {
+							"electricarc@6", "electricarc@7", "electricarc@8",
+							"electricarc@11", "electricarc@10", "electricarc@9"
+						}, new Vec2d(259.5618f, -9.50145f), cycleTime: 2f);
+						break;
+					}
 				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc": {
 						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("clearcolo"));
 						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
@@ -1557,6 +1594,9 @@ namespace UbiCanvas.Conversion {
 						disappearingToad.Result.POS2D = disappearingToad.Result.POS2D + new Vec2d(0f, 1f);
 
 						ExpandAllFriseCollisionAABB(scene);
+
+						var audioTrig = scene.FindActor(a => a.USERFRIENDLY == "trigger_audio_discover_secret@10");
+						audioTrig.ContainingScene.DeletePickable(audioTrig.Result);
 						break;
 					}
 				case "world/rlc_nemo/harborhell/nemo_harborhell_nmi_base.isc": {
@@ -1753,6 +1793,28 @@ namespace UbiCanvas.Conversion {
 						badrabbid.Result.POS2D += Vec2d.Up * 5f;
 
 						ExpandAllFriseCollisionAABB(scene, padding: 30f);
+						break;
+					}
+				case "world/rlc_olympus/ringsrailsandruins/olympus_ringsrailsandruins_exp_base.isc": {
+						// Fix rabbid reappearing after death due to retriggering
+						var trig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box@4");
+						trig.Result.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.OnceAndReset;
+
+						var platforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("minotaur_flyingplatform"));
+						foreach (var plat in platforms) {
+							GenericAABBHack(plat.Result, aabbScale: 300f);
+						}
+						break;
+					}
+				case "world/rlc_olympus/stormyrings/olympus_stormyrings_exp_base.isc": {
+						var stormMood = scene.FindActor(a => a.USERFRIENDLY == "mood_storm");
+						var defaultMood = scene.FindActor(a => a.USERFRIENDLY == "mood_bright");
+
+						CreateClearColorFrise(stormMood.ContainingScene, stormMood.Result, -70f, 1f, alpha: 0.10f);
+						CreateClearColorFrise(stormMood.ContainingScene, stormMood.Result, -55f, 1f, alpha: 0.15f);
+						CreateClearColorFrise(stormMood.ContainingScene, stormMood.Result, -40f, 1f, alpha: 0.30f);
+						CreateClearColorFrise(stormMood.ContainingScene, stormMood.Result, -25f, 1f, alpha: 0.35f);
+						CreateClearColorFrise(stormMood.ContainingScene, stormMood.Result, -10f, 1f, alpha: 0.40f, /*1010.3f,*/ defaultClearColorAct: defaultMood.Result);
 						break;
 					}
 				case "world/rlc_olympus/heavenandhell/olympus_heavenandhell_nmi_base.isc": {
@@ -3525,6 +3587,9 @@ namespace UbiCanvas.Conversion {
 							AddPart("part_betamaze_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_betamaze_lp.wav"));
 							AddPart("part_betamaze_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_transition_01_4m.wav"), nbMeasures: 4);
 
+							AddPart("part_whenwindblows_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_01.wav"));
+							AddPart("part_whenwindblows_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_02.wav"));
+
 
 							// Nodes
 							AddSimpleNode("mus_ss_strings", true, 
@@ -3544,6 +3609,7 @@ namespace UbiCanvas.Conversion {
 							AddSimpleNode("mus_hadesabode_outro", false, "part_hadesabode_outro");
 							AddSimpleNode("mus_betamaze", true, "part_betamaze_lp");
 							AddSimpleNode("mus_betamaze_outro", false, "part_betamaze_outro");
+							AddSimpleNode("mus_whenwindblows", true, "part_whenwindblows_01", "part_whenwindblows_02");
 
 
 							// Common
@@ -6621,10 +6687,12 @@ namespace UbiCanvas.Conversion {
 					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl"));
 					break;
 				case "world/rlc_olympus/cranezone/olympus_cranezone_exp_base.isc":
+				case "world/rlc_olympus/ringsrailsandruins/olympus_ringsrailsandruins_exp_base.isc":
 				case "world/rlc_olympus/heavenandhell/olympus_heavenandhell_nmi_base.isc":
 				case "world/rlc_olympus/pigrodeo/olympus_pigrodeo_nmi_valkyries.isc":
 				case "world/rlc_olympus/towerofworship/olympus_towerofworship_nmi_base.isc":
 				case "world/rlc_olympus/cloudcolosseum/olympus_cloudcolosseum_nmi_base.isc":
+				case "world/rlc_olympus/stormyrings/olympus_stormyrings_exp_base.isc":
 				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc":
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc":
 					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_08_olympus.tpl"));
@@ -7730,6 +7798,57 @@ namespace UbiCanvas.Conversion {
 
 						break;
 					}
+				case "world/rlc_hangar/hanginthere/hangar_hanginthere_spd_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+
+						await AddAmbienceInterpolator(scene, "amb_oce_rl4_labo",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_rl4_labo_lp.wav"),
+							aabb, volume: -13);
+
+						var elevators = scene.FindActors(a => a.USERFRIENDLY is ("tween_notype" or "tween_notype@3" or "tween_notype@4" or "tween_notype@5" or "tween_notype@7"));
+						foreach (var elevator in elevators) {
+							// var newElevator = await ReplaceTweenType(elevator.ContainingScene, elevator.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_geartype.tpl"), contextToLoadFrom: MainContext);
+							// FX controls = 0866D9DE, 600B4E36
+							var newElevator = await ReplaceTweenType(elevator.ContainingScene, elevator.Result, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_metalunderwaterslidetype.tpl"), contextToLoadFrom: MainContext);
+							// FX controls = 0866D9DE, 600B4E36
+
+							var twn = newElevator.GetComponent<TweenComponent>();
+							var instructionSet = twn.instanceTemplate.value.instructionSets[0];
+							var instructions = new List<Generic<TweenInstruction_Template>>();
+							if (elevator.Result.USERFRIENDLY is ("tween_notype" or "tween_notype@5" or "tween_notype@7")) {
+								// Special case, this one takes a while to start
+								instructions.Add(instructionSet.instructions.First());
+								instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+									fx = new StringID(0x0866D9DE)
+								}));
+								instructions.AddRange(instructionSet.instructions.Skip(1));
+								instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+									fx = new StringID(0x600B4E36)
+								}));
+							} else {
+								instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+									fx = new StringID(0x0866D9DE)
+								}));
+								if (instructionSet.instructions.Last().obj is TweenSine_Template) {
+									// It's a sine bounce thing at the end, playing end sound before this is snappier
+									instructions.AddRange(instructionSet.instructions.SkipLast(1));
+									instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+										fx = new StringID(0x600B4E36)
+									}));
+									instructions.Add(instructionSet.instructions.Last());
+								} else {
+									instructions.AddRange(instructionSet.instructions);
+									instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+										fx = new StringID(0x600B4E36)
+									}));
+								}
+							}
+							instructionSet.instructions = new CListO<Generic<TweenInstruction_Template>>(instructions);
+							twn.InstantiateFromInstanceTemplate(instructionSet.UbiArtContext);
+						}
+
+						break;
+					}
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -10f;
@@ -7887,6 +8006,16 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_middle",
 							new Path("sound/100_ambiances/106_mountain_legends/amb_middle_mo_rl_1_flyingshield_lp.wav"),
 							aabb, volume: -12);
+						break;
+					}
+				case "world/rlc_olympus/ringsrailsandruins/olympus_ringsrailsandruins_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_ss_explo", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_intro",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_intro_mo_rl_1_flyingshield_lp.wav"),
+							aabb, volume: -7);
 						break;
 					}
 				case "world/rlc_olympus/heavenandhell/olympus_heavenandhell_nmi_base.isc": {
@@ -8059,6 +8188,33 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_middle",
 							new Path("sound/100_ambiances/106_mountain_legends/amb_middle_mo_rl_1_flyingshield_lp.wav"),
 							aabb, volume: -12);
+						break;
+					}
+				case "world/rlc_olympus/stormyrings/olympus_stormyrings_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_whenwindblows", volume: vol), aabb);
+						
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 15f),
+							new AABB() {
+								MIN = new Vec2d(141.7f, -27.7f),
+								MAX = new Vec2d(208.2f, 44.3f)
+							});
+
+						await AddAmbienceInterpolator(scene, "amb_middle",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_middle_mo_rl_1_flyingshield_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(-60f, -68f),
+								MAX = new Vec2d(135f, 40f)
+							}, volume: -12);
+
+						await AddAmbienceInterpolator(scene, "amb_rain_heavy",
+							new Path("sound/100_ambiances/101_jungle/amb_rain_heavy_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(161.4f, -27.7f),
+								MAX = new Vec2d(208.2f, 44.3f)
+							}, volume: -17, padding: 50f);
 						break;
 					}
 				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc": {
@@ -9335,6 +9491,173 @@ namespace UbiCanvas.Conversion {
 				// Remove lighting from RenderParamComponent
 				rp.Lighting.Enable = false;
 				rp.Lighting = null;
+			}
+		}
+
+		public void CreateClearColorFrise(Scene scene, Actor act, float zOffset, 
+			float scale, 
+			float alpha = 1f,
+			Actor defaultClearColorAct = null) {
+			var rpScene = scene;
+			var rp = act.GetComponent<RenderParamComponent>();
+			var box = act.GetComponent<BoxInterpolatorComponent>();
+			var aabb = box?.innerBox;
+			if (aabb == null) aabb = new AABB() {
+				MIN = Vec2d.One * -1f / 0.5f,
+				MAX = Vec2d.One * 1f / 0.5f,
+			};
+			var outerAABB = box?.outerBox;
+			Vec2d totalMin = new Vec2d(
+				MathF.Min(aabb.MIN.x, outerAABB?.MIN?.x ?? aabb.MIN.x),
+				MathF.Min(aabb.MIN.y, outerAABB?.MIN?.y ?? aabb.MIN.y));
+			Vec2d totalMax = new Vec2d(
+				MathF.Max(aabb.MAX.x, outerAABB?.MAX?.x ?? aabb.MAX.x),
+				MathF.Max(aabb.MAX.y, outerAABB?.MAX?.y ?? aabb.MAX.y));
+
+			// Create clearcolor frise
+			PolyPointList CreatePolyPointList(Vec2d[] vectors, bool loop = true) {
+				var points = new PolyPointList() {
+					LocalPoints = new CListO<PolyLineEdge>(vectors.Select(p => new PolyLineEdge() {
+						POS = p,
+						Scale = 1f,
+					}).ToList()),
+					Loop = loop,
+				};
+				if (loop) {
+					points.LocalPoints.Add(new PolyLineEdge() {
+						POS = vectors[0],
+						Scale = 1f,
+					});
+				}
+				points.RecomputeData();
+				return points;
+			}
+
+			Frise CreateFrise(string name, string template, float z = 0) {
+				var fr = new Frise() {
+					POS2D = act.POS2D,
+					ANGLE = act.ANGLE,
+					SCALE = act.SCALE * scale,
+					RELATIVEZ = act.RELATIVEZ + z,
+					USERFRIENDLY = $"{act.USERFRIENDLY}_{name}",
+					xFLIPPED = act.xFLIPPED,
+
+					PreComputedForCook = true,
+					ConfigName = new Path(template),
+					UseTemplatePrimitiveParams = false,
+
+				};
+				Vec2d LocalToGlobal(Vec2d point) => (point * fr.SCALE).Rotate(fr.ANGLE) + fr.POS2D;
+				Vec3d LocalToGlobal3D(Vec3d point) {
+					var v2d = LocalToGlobal(new Vec2d(point.x, point.y));
+					return new Vec3d(v2d.x, v2d.y, point.z + fr.RELATIVEZ);
+				}
+
+				fr.PointsList = CreatePolyPointList(new Vec2d[] {
+					totalMin, new Vec2d(totalMin.x, totalMax.y), totalMax, new Vec2d(totalMax.x, totalMin.y)
+				});
+
+
+				// Fill in visual data
+				fr.meshBuildData = new UbiArt.Nullable<Frise.MeshBuildData>(new Frise.MeshBuildData() {
+					StaticIndexList = new CListO<Frise.IndexList>(),
+					StaticVertexList = new CListO<VertexPCT>()
+				});
+				var indices = new CListP<ushort>();
+				var vertices = new CListO<VertexPCT>();
+
+				void AddSquare(Vec2d min, Vec2d max,
+					float alphaBottomLeft = 1f, float alphaBottomRight = 1f,
+					float alphaTopLeft = 1f, float alphaTopRight = 1f) {
+					int vertsCount = vertices.Count;
+					indices.Add((ushort)(vertsCount + 0));
+					indices.Add((ushort)(vertsCount + 1));
+					indices.Add((ushort)(vertsCount + 2));
+					indices.Add((ushort)(vertsCount + 1));
+					indices.Add((ushort)(vertsCount + 3));
+					indices.Add((ushort)(vertsCount + 2));
+					vertices.Add(new VertexPCT() {
+						pos = new Vec3d(min.x, max.y, 0f),
+						uv = new Vec2d(0, 0),
+						color = new ColorInteger(1, 1, 1, alphaTopLeft)
+					});
+					vertices.Add(new VertexPCT() {
+						pos = new Vec3d(max.x, max.y, 0f),
+						uv = new Vec2d(1, 0),
+						color = new ColorInteger(1, 1, 1, alphaTopRight)
+					});
+					vertices.Add(new VertexPCT() {
+						pos = new Vec3d(min.x, min.y, 0f),
+						uv = new Vec2d(0, 1),
+						color = new ColorInteger(1, 1, 1, alphaBottomLeft)
+					});
+					vertices.Add(new VertexPCT() {
+						pos = new Vec3d(max.x, min.y, 0f),
+						uv = new Vec2d(1, 1),
+						color = new ColorInteger(1, 1, 1, alphaBottomRight)
+					});
+				}
+				fr.meshBuildData.value.StaticIndexList = new CListO<Frise.IndexList>(
+					new List<Frise.IndexList>() {
+						new Frise.IndexList() {
+							IdTexConfig = 0,
+							List = indices
+						}
+					}
+				);
+				fr.meshBuildData.value.StaticVertexList = vertices;
+				AddSquare(aabb.MIN, aabb.MAX);
+				if (outerAABB != null) {
+					// Sides
+					if (outerAABB.MIN.x < aabb.MIN.x)
+						AddSquare(new Vec2d(outerAABB.MIN.x, aabb.MIN.y), new Vec2d(aabb.MIN.x, aabb.MAX.y), alphaBottomLeft: 0f, alphaTopLeft: 0f); // Left side
+					if (outerAABB.MAX.x > aabb.MAX.x)
+						AddSquare(new Vec2d(aabb.MAX.x, aabb.MIN.y), new Vec2d(outerAABB.MAX.x, aabb.MAX.y), alphaBottomRight: 0f, alphaTopRight: 0f); // Right side
+					if (outerAABB.MIN.y < aabb.MIN.y)
+						AddSquare(new Vec2d(aabb.MIN.x, outerAABB.MIN.y), new Vec2d(aabb.MAX.x, aabb.MIN.y), alphaBottomLeft: 0f, alphaBottomRight: 0f); // Bottom side
+					if (outerAABB.MAX.y > aabb.MAX.y)
+						AddSquare(new Vec2d(aabb.MIN.x, aabb.MAX.y), new Vec2d(aabb.MAX.x, outerAABB.MAX.y), alphaTopLeft: 0f, alphaTopRight: 0f); // Top side
+
+					// Corners
+					if (outerAABB.MIN.x < aabb.MIN.x && outerAABB.MIN.y < aabb.MIN.y)
+						AddSquare(new Vec2d(outerAABB.MIN.x, outerAABB.MIN.y), new Vec2d(aabb.MIN.x, aabb.MIN.y), alphaBottomLeft: 0f, alphaBottomRight: 0f, alphaTopLeft: 0f); // Bottom left corner
+					if (outerAABB.MAX.x > aabb.MAX.x && outerAABB.MIN.y < aabb.MIN.y)
+						AddSquare(new Vec2d(aabb.MAX.x, outerAABB.MIN.y), new Vec2d(outerAABB.MAX.x, aabb.MIN.y), alphaBottomLeft: 0f, alphaBottomRight: 0f, alphaTopRight: 0f); // Bottom right corner
+					if (outerAABB.MIN.x < aabb.MIN.x && outerAABB.MAX.y > aabb.MAX.y)
+						AddSquare(new Vec2d(outerAABB.MIN.x, aabb.MAX.y), new Vec2d(aabb.MIN.x, outerAABB.MAX.y), alphaTopLeft: 0f, alphaTopRight: 0f, alphaBottomLeft: 0f); // Top left corner
+					if (outerAABB.MAX.x > aabb.MAX.x && outerAABB.MAX.y > aabb.MAX.y)
+						AddSquare(new Vec2d(aabb.MAX.x, aabb.MAX.y), new Vec2d(outerAABB.MAX.x, outerAABB.MAX.y), alphaTopLeft: 0f, alphaTopRight: 0f, alphaBottomRight: 0f); // Top right corner
+				}
+
+				// Fill in meshStaticAABB based on visual data
+				if (fr.meshBuildData.value?.StaticVertexList?.Any() ?? false) {
+					var globalV = fr.meshBuildData.value.StaticVertexList.Select(v => LocalToGlobal3D(v.pos));
+					fr.meshStaticData = new UbiArt.Nullable<Frise.MeshStaticData>(new Frise.MeshStaticData() {
+						WorldAABB = new AABB() {
+							MIN = new Vec2d(fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.y)),
+							MAX = new Vec2d(fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.x), fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.y))
+						},
+						LocalAABB = new AABB() {
+							MIN = new Vec2d(globalV.Min(v => v.x), globalV.Min(v => v.y)),
+							MAX = new Vec2d(globalV.Max(v => v.x), globalV.Max(v => v.y))
+						},
+					});
+					fr.AABB_MinZ = fr.meshBuildData.value.StaticVertexList.Min(v => v.pos.z);
+					fr.AABB_MaxZ = fr.meshBuildData.value.StaticVertexList.Max(v => v.pos.z);
+				}
+				var c = rp.ClearColor.ClearColor;
+				fr.PrimitiveParameters.colorFactor = new UbiArt.Color(c.r, c.g, c.b, c.a * alpha);
+				fr.PrimitiveParameters.colorFog = UbiArt.Color.White;
+
+				rpScene.AddActor(fr);
+
+				return fr;
+			}
+
+			CreateFrise("simplecolor_fill", "world/common/levelart/atmosphericeffect/lightsurface/simplecolor_fill.fcg", z: zOffset);
+
+			if (defaultClearColorAct != null) {
+				rp.ClearColor = defaultClearColorAct.GetComponent<RenderParamComponent>().ClearColor;
 			}
 		}
 		public void DuplicateActorTemplatesForStartPaused(Context oldContext) {
