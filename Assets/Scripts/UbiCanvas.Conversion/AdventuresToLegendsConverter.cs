@@ -2969,7 +2969,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 
-		public async Task<Actor> AddMusicTree(Context oldContext, Scene scene, Path path, bool useSpawnPoint = true,
+		public async Task<Actor> AddMusicTree(Context oldContext, Scene scene, MusicTreeID id, bool useSpawnPoint = true,
 			bool addAABBmod = true, float aabbScale = 10000f, bool? useMiniSounds = null, bool addLumKingMusic = true) {
 			var sceneToUse = scene;
 			Vec2d posToUse = Vec2d.Zero;
@@ -2983,6 +2983,29 @@ namespace UbiCanvas.Conversion {
 					posToUse = spawnPoint.Result.POS2D;
 				}
 			}
+
+			var pathStr = id switch {
+				MusicTreeID.RLC_01_Intro => "sound/common/music_trees/09_rlc/musictree_rlc_01_intro.tpl",
+				MusicTreeID.RLC_02_Forest => "sound/common/music_trees/09_rlc/musictree_rlc_02_forest.tpl",
+				MusicTreeID.RLC_03_HauntedCastle => "sound/common/music_trees/09_rlc/musictree_rlc_03_hauntedcastle.tpl",
+				MusicTreeID.RLC_04_Castle1 => "sound/common/music_trees/09_rlc/musictree_rlc_04_castle1.tpl",
+				MusicTreeID.RLC_05_Castle2 => "sound/common/music_trees/09_rlc/musictree_rlc_05_castle2.tpl",
+				MusicTreeID.RLC_06_Avatar => "sound/common/music_trees/09_rlc/musictree_rlc_06_avatar.tpl",
+				MusicTreeID.RLC_07_Beanstalk1 => "sound/common/music_trees/09_rlc/musictree_rlc_07_beanstalk1.tpl",
+				MusicTreeID.RLC_08_Beanstalk2 => "sound/common/music_trees/09_rlc/musictree_rlc_08_beanstalk2.tpl",
+				MusicTreeID.RLC_09_Nemo => "sound/common/music_trees/09_rlc/musictree_rlc_09_nemo.tpl",
+				MusicTreeID.RLC_10_Hangar1 => "sound/common/music_trees/09_rlc/musictree_rlc_10_hangar1.tpl",
+				MusicTreeID.RLC_11_Hangar2 => "sound/common/music_trees/09_rlc/musictree_rlc_11_hangar2.tpl",
+				MusicTreeID.RLC_12_Olympus1 => "sound/common/music_trees/09_rlc/musictree_rlc_12_olympus1.tpl",
+				MusicTreeID.RLC_13_Olympus2 => "sound/common/music_trees/09_rlc/musictree_rlc_13_olympus2.tpl",
+				MusicTreeID.RLC_14_Hades => "sound/common/music_trees/09_rlc/musictree_rlc_14_hades.tpl",
+				MusicTreeID.RLC_15_Dojo1 => "sound/common/music_trees/09_rlc/musictree_rlc_15_dojo1.tpl",
+				MusicTreeID.RLC_16_Dojo2 => "sound/common/music_trees/09_rlc/musictree_rlc_16_dojo2.tpl",
+				MusicTreeID.RLC_17_Dojo3 => "sound/common/music_trees/09_rlc/musictree_rlc_17_dojo3.tpl",
+				MusicTreeID.RLC_18_Bonus => "sound/common/music_trees/09_rlc/musictree_rlc_18_bonus.tpl",
+				_ => throw new NotImplementedException($"Custom MusicTree ID {id} isn't implemented")
+			};
+			var path = new Path(pathStr);
 
 			var ogPath = "sound/common/music_trees/01_jungle_legends/ju_rl_2_movingroots/musictree_ju_rl_2_movingroots.tpl";
 			var act = await AddNewActor(sceneToUse, new Path(ogPath), contextToLoadFrom: LegendsContext);
@@ -3233,463 +3256,545 @@ namespace UbiCanvas.Conversion {
 					);
 					AddSimpleNode("mus_enchantedforest_outro", false, "part_enchantedforest_07"); // trigger this with playOnNext = 96!
 				}
-				void AddHellGate() {
-					AddPart("part_hellgate_intro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_intro.wav"));
-					AddPart("part_hellgate_01", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_01_full_26m.wav"), nbMeasures: 26);
-					AddPart("part_hellgate_02", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_02_full_13m.wav"), nbMeasures: 13);
-					AddPart("part_hellgate_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_outro.wav"));
 
-					AddSimpleSequenceNode("mus_hellgate", true,
-						new string[] { "part_hellgate_intro" },
-						new string[] { "part_hellgate_01", "part_hellgate_02" }
-					);
-					AddSimpleNode("mus_hellgate_outro", false, "part_hellgate_outro");
-				}
+				switch (id) {
+					case MusicTreeID.RLC_01_Intro:
+						// TODO
+						// Parts
+						AddPart("part_sacredtree_lp", new Path("sound/300_music/330_rlc/common/mus_sacredtree_lp.wav"));
 
-				switch (path.FullPath) {
-					case "sound/common/music_trees/09_rlc/musictree_rlc_01_jungle.tpl": {
-							// COMPLETE
-							// Music part template:
-							// sound/300_music/330_rlc/common/mus_mambomambo.wav
-							// sound/300_music/330_rlc/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav
+						// Tree
+						AddSimpleNode("mus_sacredtree", true, "part_sacredtree_lp");
 
-							// Parts
-							AddPart("part_sacredtree_lp", new Path("sound/300_music/330_rlc/common/mus_sacredtree_lp.wav"));
-							AddPart("part_stonecircle_lp", new Path("sound/300_music/330_rlc/01_jungle/mus_stonecircle_lp.wav"));
+						// Common
+						AddEnchantedForest();
+						break;
+					case MusicTreeID.RLC_02_Forest:
+						// COMPLETE
+						// Parts
+						AddPart("part_fightcastle_01", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_01.wav"));
+						AddPart("part_fightcastle_02", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_02.wav"));
+						AddPart("part_fightcastle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_outro.wav"));
 
-							AddPart("part_fightcastle_01", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_01.wav"));
-							AddPart("part_fightcastle_02", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_02.wav"));
-							AddPart("part_fightcastle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_outro.wav"));
+						AddPart("part_part1castle_intro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav"));
+						AddPart("part_part1castle_lp", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_loop.wav"));
+						AddPart("part_part1castle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_outro.wav"));
 
-							AddPart("part_part1castle_intro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav"));
-							AddPart("part_part1castle_lp", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_loop.wav"));
-							AddPart("part_part1castle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_outro.wav"));
+						AddPart("part_stonecircle_lp", new Path("sound/300_music/330_rlc/01_jungle/mus_stonecircle_lp.wav"));
 
-							// Tree
-							AddSimpleNode("mus_sacredtree", true, "part_sacredtree_lp");
-							AddSimpleNode("mus_stonecircle", true, "part_stonecircle_lp");
-							AddSimpleNode("mus_fightcastle", true, "part_fightcastle_01", "part_fightcastle_02");
-							AddSimpleNode("mus_fightcastle_outro", false, "part_fightcastle_outro");
-							AddSimpleSequenceNode("mus_part1castle", true, 
-								new string[] { "part_part1castle_intro" },
-								new string[] { "part_part1castle_lp" });
-							AddSimpleNode("mus_part1castle_outro", false, "part_part1castle_outro");
-							
-							// Common
-							AddEnchantedForest();
-							AddMamboMambo();
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl": {
-							// COMPLETE
-							// Parts
-							AddPart("part_mrdark_mini_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_mrdark_mini_lp.wav"));
-							AddPart("part_babeltower_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_lp.wav"));
-							AddPart("part_babeltower_outro", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_outro.wav"));
-							AddPart("part_stormingthecastle_01_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_stormingthecastle_01_lp.wav"));
+						// Tree
+						AddSimpleNode("mus_stonecircle", true, "part_stonecircle_lp");
+						AddSimpleNode("mus_fightcastle", true, "part_fightcastle_01", "part_fightcastle_02");
+						AddSimpleNode("mus_fightcastle_outro", false, "part_fightcastle_outro");
+						AddSimpleSequenceNode("mus_part1castle", true,
+							new string[] { "part_part1castle_intro" },
+							new string[] { "part_part1castle_lp" });
+						AddSimpleNode("mus_part1castle_outro", false, "part_part1castle_outro");
 
-							// Tree
-							AddSimpleNode("mus_mrdark_mini", true, "part_mrdark_mini_lp");
-							AddSimpleNode("mus_babeltower", true, "part_babeltower_lp");
-							AddSimpleNode("mus_babeltower_outro", false, "part_babeltower_outro");
-							AddSimpleNode("mus_stormingthecastle_01", true, "part_stormingthecastle_01_lp");
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl": {
-							// COMPLETE
-							// Parts
-							AddPart("part_mysteriousswamps_01_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_01_lp.wav"));
-							AddPart("part_mysteriousswamps_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_02_lp.wav"));
-							AddPart("part_stormingthecastle_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_lp.wav"));
-							AddPart("part_stormingthecastle_02_outro", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_outro.wav"));
-							AddPart("part_fortifiedcastle_01", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_01.wav"));
-							AddPart("part_fortifiedcastle_02", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_02.wav"));
-							AddPart("part_fortifiedcastle_03", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_03.wav"));
-							AddPart("part_babeltower3_01", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_01_8m.wav"));
-							AddPart("part_babeltower3_02", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_02_16m.wav"));
-							AddPart("part_babeltower3_03", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_03_4m.wav"));
-							AddPart("part_babeltower3_outro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_ending.wav"));
-							AddPart("part_betamedievaltheme_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_betamedievaltheme_lp.wav"));
+						// Common
+						AddMamboMambo();
+						break;
+					case MusicTreeID.RLC_03_HauntedCastle:
+						// COMPLETE
+						// Parts
+						AddPart("part_mrdark_mini_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_mrdark_mini_lp.wav"));
+						AddPart("part_babeltower_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_lp.wav"));
+						AddPart("part_babeltower_outro", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_babeltower_outro.wav"));
+						AddPart("part_stormingthecastle_01_lp", new Path("sound/300_music/330_rlc/02_hauntedcastle/mus_stormingthecastle_01_lp.wav"));
 
-							AddPart("part_medievaldragon2_intro", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_percs_01_80_8m.wav"));
-							AddPart("part_medievaldragon2_01", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part01_160_6m.wav"));
-							AddPart("part_medievaldragon2_02", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part02_160_3m.wav"));
-							AddPart("part_medievaldragon2_03", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part03_160_3m.wav"));
-							AddPart("part_medievaldragon2_04", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part04_160_4m.wav"));
-							AddPart("part_medievaldragon3_01", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part01_180_3m.wav"));
-							AddPart("part_medievaldragon3_02", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part02_180_3m.wav"));
-							AddPart("part_medievaldragon3_03", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part03_180_4m.wav"));
-							AddPart("part_medievaldragon3_04", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part04_180_6m.wav"));
-							AddPart("part_medievaldragon3_outro", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_win.wav"));
+						// Tree
+						AddSimpleNode("mus_mrdark_mini", true, "part_mrdark_mini_lp");
+						AddSimpleNode("mus_babeltower", true, "part_babeltower_lp");
+						AddSimpleNode("mus_babeltower_outro", false, "part_babeltower_outro");
+						AddSimpleNode("mus_stormingthecastle_01", true, "part_stormingthecastle_01_lp");
+						break;
+					case MusicTreeID.RLC_04_Castle1:
+						// COMPLETE
+						// Parts
+						AddPart("part_fortifiedcastle_01", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_01.wav"));
+						AddPart("part_fortifiedcastle_02", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_02.wav"));
+						AddPart("part_fortifiedcastle_03", new Path("sound/300_music/330_rlc/03_castleexterior/mus_fortifiedcastle_03.wav"));
 
-							AddPart("part_ju_rl_5_explo_1", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part1_01_8m.wav"), nbMeasures: 8);
-							AddPart("part_ju_rl_5_explo_2", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part1_02_8m.wav"), nbMeasures: 8);
-							AddPart("part_ju_rl_5_explo_3", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part2_16m.wav"), nbMeasures: 16);
-							AddPart("part_ju_rl_5_explo_4", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part3_01_16m.wav"), nbMeasures: 16);
-							AddPart("part_ju_rl_5_explo_5", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part3_02_16m.wav"), nbMeasures: 16);
-							AddPart("part_ju_rl_5_explo_6", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part4_01_8m.wav"), nbMeasures: 8);
-							AddPart("part_ju_rl_5_explo_7", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_01_4m.wav"), nbMeasures: 4);
-							AddPart("part_ju_rl_5_explo_8", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_02_4m.wav"), nbMeasures: 4);
-							AddPart("part_ju_rl_5_explo_9", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_03_4m.wav"), nbMeasures: 4);
-							AddPart("part_ju_rl_5_explo_10", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_04_4m.wav"), nbMeasures: 4);
+						AddPart("part_ju_rl_5_explo_1", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part1_01_8m.wav"), nbMeasures: 8);
+						AddPart("part_ju_rl_5_explo_2", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part1_02_8m.wav"), nbMeasures: 8);
+						AddPart("part_ju_rl_5_explo_3", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part2_16m.wav"), nbMeasures: 16);
+						AddPart("part_ju_rl_5_explo_4", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part3_01_16m.wav"), nbMeasures: 16);
+						AddPart("part_ju_rl_5_explo_5", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part3_02_16m.wav"), nbMeasures: 16);
+						AddPart("part_ju_rl_5_explo_6", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part4_01_8m.wav"), nbMeasures: 8);
+						AddPart("part_ju_rl_5_explo_7", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_01_4m.wav"), nbMeasures: 4);
+						AddPart("part_ju_rl_5_explo_8", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_02_4m.wav"), nbMeasures: 4);
+						AddPart("part_ju_rl_5_explo_9", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_03_4m.wav"), nbMeasures: 4);
+						AddPart("part_ju_rl_5_explo_10", new Path("sound/300_music/301_junglelegends/ju_rl_5_goingdown/mus_ju_rl_5_explo_part5_percus_04_4m.wav"), nbMeasures: 4);
 
-							// Tree
-							AddSimpleNode("mus_mysteriousswamps_01", true, "part_mysteriousswamps_01_lp");
-							AddSimpleNode("mus_mysteriousswamps_02", true, "part_mysteriousswamps_02_lp");
-							AddSimpleNode("mus_stormingthecastle_02", true, "part_stormingthecastle_02_lp");
-							AddSimpleNode("mus_stormingthecastle_02_outro", false, "part_stormingthecastle_02_outro");
-							AddSimpleSequenceNode("mus_fortifiedcastle", true,
-								new string[] { "part_fortifiedcastle_01" },
-								new string[] { "part_fortifiedcastle_02", "part_fortifiedcastle_03" });
-							AddSimpleNode("mus_babeltower3", true, "part_babeltower3_01", "part_babeltower3_02", "part_babeltower3_03");
-							AddSimpleNode("mus_babeltower3_outro", false, "part_babeltower3_outro");
-							AddSimpleNode("mus_betamedievaltheme", true, "part_betamedievaltheme_lp");
-							AddSimpleSequenceNode("mus_medievaldragon2", true,
-								new string[] { "part_medievaldragon2_intro" },
-								new string[] { "part_medievaldragon2_01", "part_medievaldragon2_02", "part_medievaldragon2_03", "part_medievaldragon2_04" });
-							AddSimpleNode("mus_medievaldragon3", true, "part_medievaldragon3_01", "part_medievaldragon3_02", "part_medievaldragon3_03", "part_medievaldragon3_04");
-							AddSimpleNode("mus_medievaldragon3_outro", false, "part_medievaldragon3_outro");
-							AddSimpleNode("mus_ju_rl_5_explo", true,
-								"part_ju_rl_5_explo_1", "part_ju_rl_5_explo_2", "part_ju_rl_5_explo_3", "part_ju_rl_5_explo_4",
-								"part_ju_rl_5_explo_5", "part_ju_rl_5_explo_6", "part_ju_rl_5_explo_7", "part_ju_rl_5_explo_8",
-								"part_ju_rl_5_explo_9", "part_ju_rl_5_explo_10");
-
-							// Common
-							AddMamboMambo();
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl": {
-							// COMPLETE
-							// Parts
-							AddPart("part_darktoonchase_suspense_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_suspense_lp.wav"));
-							AddPart("part_darktoonchase_action_drums", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_drums.wav"), nbMeasures: 4);
-							AddPart("part_darktoonchase_action_01", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_01.wav"), nbMeasures: 8);
-							AddPart("part_darktoonchase_action_02", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_02.wav"), nbMeasures: 12);
-							AddPart("part_darktoonchase_action_03", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_03.wav"), nbMeasures: 6);
-							AddPart("part_babeltower_intro_01", new Path("sound/300_music/330_rlc/04_avatar/mus_babeltower_intro_01.wav"));
-							AddPart("part_babeltower_intro_02", new Path("sound/300_music/330_rlc/04_avatar/mus_babeltower_intro_02.wav"));
-							
-							AddPart("part_fight_pc_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_01_06m.wav"));
-							AddPart("part_fight_pc_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_02_4m.wav"));
-							AddPart("part_fight_pc_03", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_03_04m.wav"));
-							AddPart("part_fight_pc_04", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_04_04m.wav"));
-							AddPart("part_fight_pcwdst_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pcwdst_part_01_06m.wav"));
-							AddPart("part_fight_pcwdst_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pcwdst_part_02_04m.wav"));
-							AddPart("part_fight_wdst_04", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_wdst_part_04_04m.wav"));
-							AddPart("part_fight_outro", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_outro.wav"));
-
-							AddPart("part_enchantedforestpursuit_intro", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_intro.wav"));
-							AddPart("part_enchantedforestpursuit_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_lp.wav"));
-							AddPart("part_enchantedforestpursuit_outro", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_outro.wav"));
-							AddPart("part_babeltower2_01", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_01_10m.wav"), nbMeasures: 10);
-							AddPart("part_babeltower2_02", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_02_12m.wav"), nbMeasures: 12);
-							AddPart("part_babeltower2_03", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_03_10m.wav"), nbMeasures: 10);
-							AddPart("part_babeltower2_04", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_04_12m.wav"), nbMeasures: 10);
-							AddPart("part_babeltower2_outro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_ending.wav"));
-							AddPart("part_babeltower2_intro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part1_perc_01_4m.wav"));
+						AddPart("part_mysteriousswamps_01_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_01_lp.wav"));
+						AddPart("part_mysteriousswamps_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_02_lp.wav"));
+						
+						AddPart("part_medievaldragon2_intro", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_percs_01_80_8m.wav"));
+						AddPart("part_medievaldragon2_01", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part01_160_6m.wav"));
+						AddPart("part_medievaldragon2_02", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part02_160_3m.wav"));
+						AddPart("part_medievaldragon2_03", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part03_160_3m.wav"));
+						AddPart("part_medievaldragon2_04", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase2_part04_160_4m.wav"));
+						AddPart("part_medievaldragon3_01", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part01_180_3m.wav"));
+						AddPart("part_medievaldragon3_02", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part02_180_3m.wav"));
+						AddPart("part_medievaldragon3_03", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part03_180_4m.wav"));
+						AddPart("part_medievaldragon3_04", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_phase3_part04_180_6m.wav"));
+						AddPart("part_medievaldragon3_outro", new Path("sound/300_music/301_junglelegends/ju_rl_arena/mu_rl_arena_win.wav"));
 
 
-							// Tree
-							AddSimpleNode("mus_darktoonchase_suspense", true, "part_darktoonchase_suspense_lp");
-							AddSimpleNode("mus_darktoonchase_action", false,
-								"part_darktoonchase_action_drums", "part_darktoonchase_action_02", "part_darktoonchase_action_03");
-							AddSimpleNode("mus_babeltower_intro_01", false, "part_babeltower_intro_01");
-							AddSimpleNode("mus_babeltower_intro_02", false, "part_babeltower_intro_02");
-							AddSimpleNode("mus_fight", true, 
-								"part_fight_pcwdst_01", "part_fight_pcwdst_02",
-								"part_fight_pc_02", "part_fight_pc_01", "part_fight_pc_03", "part_fight_pc_04", "part_fight_wdst_04");
-							AddSimpleNode("mus_fight_outro", false, "part_fight_outro");
-							AddSimpleSequenceNode("mus_enchantedforestpursuit", true,
-								new string[] { "part_enchantedforestpursuit_intro" },
-								new string[] { "part_enchantedforestpursuit_lp" });
-							AddSimpleNode("mus_enchantedforestpursuit_outro", false, "part_enchantedforestpursuit_outro");
+						// Tree
+						AddSimpleSequenceNode("mus_fortifiedcastle", true,
+							new string[] { "part_fortifiedcastle_01" },
+							new string[] { "part_fortifiedcastle_02", "part_fortifiedcastle_03" });
+						
+						AddSimpleNode("mus_ju_rl_5_explo", true,
+							"part_ju_rl_5_explo_1", "part_ju_rl_5_explo_2", "part_ju_rl_5_explo_3", "part_ju_rl_5_explo_4",
+							"part_ju_rl_5_explo_5", "part_ju_rl_5_explo_6", "part_ju_rl_5_explo_7", "part_ju_rl_5_explo_8",
+							"part_ju_rl_5_explo_9", "part_ju_rl_5_explo_10");
 
-							AddSimpleSequenceNode("mus_babeltower2", true, 
-								new string[] { "part_babeltower2_intro" },
-								new string[] { "part_babeltower2_01", "part_babeltower2_02", "part_babeltower2_03", "part_babeltower2_04" });
-							AddSimpleNode("mus_babeltower2_outro", false, "part_babeltower2_outro");
+						AddSimpleNode("mus_mysteriousswamps_01", true, "part_mysteriousswamps_01_lp");
+						AddSimpleNode("mus_mysteriousswamps_02", true, "part_mysteriousswamps_02_lp");
 
-							// Common
-							AddEnchantedForest();
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl": {
-							// COMPLETE
-							// Parts
-							AddPart("part_whenwindblows_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_01.wav"));
-							AddPart("part_whenwindblows_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_02.wav"));
+						AddSimpleSequenceNode("mus_medievaldragon2", true,
+							new string[] { "part_medievaldragon2_intro" },
+							new string[] { "part_medievaldragon2_01", "part_medievaldragon2_02", "part_medievaldragon2_03", "part_medievaldragon2_04" });
+						AddSimpleNode("mus_medievaldragon3", true, "part_medievaldragon3_01", "part_medievaldragon3_02", "part_medievaldragon3_03", "part_medievaldragon3_04");
+						AddSimpleNode("mus_medievaldragon3_outro", false, "part_medievaldragon3_outro");
 
-							AddPart("part_home_music_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_music.wav"));
+						break;
+					case MusicTreeID.RLC_05_Castle2:
+						// COMPLETE
+						// Parts
+						AddPart("part_betamedievaltheme_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_betamedievaltheme_lp.wav"));
 
-							AddPart("part_flightwhirl_01", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_03_8m.wav"), nbMeasures: 8);
-							AddPart("part_flightwhirl_02", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mu_rl_3_explo_01_48m.wav"), nbMeasures: 48); 
-							AddPart("part_flightwhirl_03", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_02_7m.wav"), nbMeasures: 7);
-							AddPart("part_flightwhirl_04", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_01_4m.wav"), nbMeasures: 4);
-							AddPart("part_flightwhirl_05", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_04_4m.wav"), nbMeasures: 4);
+						AddPart("part_babeltower3_01", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_01_8m.wav"));
+						AddPart("part_babeltower3_02", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_02_16m.wav"));
+						AddPart("part_babeltower3_03", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part3_03_4m.wav"));
+						AddPart("part_babeltower3_outro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_ending.wav"));
 
-							AddPart("part_lostinclouds_01", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_01.wav"));
-							AddPart("part_lostinclouds_02", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_02.wav"));
-							AddPart("part_lostinclouds_03", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_03.wav"));
+						AddPart("part_stormingthecastle_02_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_lp.wav"));
+						AddPart("part_stormingthecastle_02_outro", new Path("sound/300_music/330_rlc/03_castleexterior/mus_stormingthecastle_02_outro.wav"));
+
+						AddPart("part_mysteriousswamps_01_lp", new Path("sound/300_music/330_rlc/03_castleexterior/mus_mysteriousswamps_01_lp.wav"));
+
+						// Tree
+						AddSimpleNode("mus_betamedievaltheme", true, "part_betamedievaltheme_lp");
+
+						AddSimpleNode("mus_babeltower3", true, "part_babeltower3_01", "part_babeltower3_02", "part_babeltower3_03");
+						AddSimpleNode("mus_babeltower3_outro", false, "part_babeltower3_outro");
+
+						AddSimpleNode("mus_stormingthecastle_02", true, "part_stormingthecastle_02_lp");
+						AddSimpleNode("mus_stormingthecastle_02_outro", false, "part_stormingthecastle_02_outro");
+
+						AddSimpleNode("mus_mysteriousswamps_01", true, "part_mysteriousswamps_01_lp");
+
+						// Common
+						AddMamboMambo();
+						break;
+					case MusicTreeID.RLC_06_Avatar:
+						// COMPLETE
+						// Parts
+						AddPart("part_darktoonchase_suspense_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_suspense_lp.wav"));
+						AddPart("part_darktoonchase_action_drums", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_drums.wav"), nbMeasures: 4);
+						AddPart("part_darktoonchase_action_01", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_01.wav"), nbMeasures: 8);
+						AddPart("part_darktoonchase_action_02", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_02.wav"), nbMeasures: 12);
+						AddPart("part_darktoonchase_action_03", new Path("sound/300_music/330_rlc/04_avatar/mus_darktoonchase_action_03.wav"), nbMeasures: 6);
+						AddPart("part_babeltower_intro_01", new Path("sound/300_music/330_rlc/04_avatar/mus_babeltower_intro_01.wav"));
+						AddPart("part_babeltower_intro_02", new Path("sound/300_music/330_rlc/04_avatar/mus_babeltower_intro_02.wav"));
+
+						AddPart("part_fight_pc_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_01_06m.wav"));
+						AddPart("part_fight_pc_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_02_4m.wav"));
+						AddPart("part_fight_pc_03", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_03_04m.wav"));
+						AddPart("part_fight_pc_04", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pc_part_04_04m.wav"));
+						AddPart("part_fight_pcwdst_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pcwdst_part_01_06m.wav"));
+						AddPart("part_fight_pcwdst_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_pcwdst_part_02_04m.wav"));
+						AddPart("part_fight_wdst_04", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_fight_wdst_part_04_04m.wav"));
+						AddPart("part_fight_outro", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_outro.wav"));
+
+						AddPart("part_enchantedforestpursuit_intro", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_intro.wav"));
+						AddPart("part_enchantedforestpursuit_lp", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_lp.wav"));
+						AddPart("part_enchantedforestpursuit_outro", new Path("sound/300_music/330_rlc/04_avatar/mus_enchantedforestpursuit_outro.wav"));
+						AddPart("part_babeltower2_01", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_01_10m.wav"), nbMeasures: 10);
+						AddPart("part_babeltower2_02", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_02_12m.wav"), nbMeasures: 12);
+						AddPart("part_babeltower2_03", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_03_10m.wav"), nbMeasures: 10);
+						AddPart("part_babeltower2_04", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_04_12m.wav"), nbMeasures: 10);
+						AddPart("part_babeltower2_outro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part2_ending.wav"));
+						AddPart("part_babeltower2_intro", new Path("sound/300_music/301_junglelegends/ju_rl_4_babeltower/mus_babeltower_part1_perc_01_4m.wav"));
 
 
-							// Tree
-							AddSimpleNode("mus_whenwindblows", true, "part_whenwindblows_01", "part_whenwindblows_02");
-							AddSimpleNode("mus_home_music_retro", true, "part_home_music_retro_lp");
-							AddSimpleNode("mus_flightwhirl", true,
-								"part_flightwhirl_01", "part_flightwhirl_02", "part_flightwhirl_03", "part_flightwhirl_04", "part_flightwhirl_05");
-							AddSimpleNode("mus_lostinclouds", true, "part_lostinclouds_01", "part_lostinclouds_02", "part_lostinclouds_03");
+						// Tree
+						AddSimpleNode("mus_darktoonchase_suspense", true, "part_darktoonchase_suspense_lp");
+						AddSimpleNode("mus_darktoonchase_action", false,
+							"part_darktoonchase_action_drums", "part_darktoonchase_action_02", "part_darktoonchase_action_03");
+						AddSimpleNode("mus_babeltower_intro_01", false, "part_babeltower_intro_01");
+						AddSimpleNode("mus_babeltower_intro_02", false, "part_babeltower_intro_02");
+						AddSimpleNode("mus_fight", true,
+							"part_fight_pcwdst_01", "part_fight_pcwdst_02",
+							"part_fight_pc_02", "part_fight_pc_01", "part_fight_pc_03", "part_fight_pc_04", "part_fight_wdst_04");
+						AddSimpleNode("mus_fight_outro", false, "part_fight_outro");
+						AddSimpleSequenceNode("mus_enchantedforestpursuit", true,
+							new string[] { "part_enchantedforestpursuit_intro" },
+							new string[] { "part_enchantedforestpursuit_lp" });
+						AddSimpleNode("mus_enchantedforestpursuit_outro", false, "part_enchantedforestpursuit_outro");
 
-							// Common
-							AddHellGate();
-							AddMamboMambo();
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_06_nemo.tpl": {
-							// COMPLETE
-							// Parts
-							AddPart("part_home_ocean_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_ocean.wav"));
-							AddPart("part_home_ocean_lp", new Path("sound/300_music/310_common/home/mus_home_ocean.wav"));
-							AddPart("part_labo_lp", new Path("sound/300_music/330_rlc/06_nemo/mus_labo_lp.wav"));
-							AddPart("part_labo_outro", new Path("sound/300_music/330_rlc/06_nemo/mus_labo_outro.wav"));
-							AddPart("part_glouglou_dream_01", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_01_intro_2m.wav"));
-							AddPart("part_glouglou_dream_02", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_02_4m.wav"));
-							AddPart("part_glouglou_dream_03", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_03_4m.wav"));
-							AddPart("part_glouglou_dream_04", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_04_4m.wav"));
-							AddPart("part_glouglou_dream_05", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_05_4m.wav"));
-							AddPart("part_glouglou_dream_06", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_06_4m.wav"));
-							AddPart("part_glouglou_dream_07", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_07_4m.wav"));
-							AddPart("part_glouglou_dream_08", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_08_outro_4m.wav"));
+						AddSimpleSequenceNode("mus_babeltower2", true,
+							new string[] { "part_babeltower2_intro" },
+							new string[] { "part_babeltower2_01", "part_babeltower2_02", "part_babeltower2_03", "part_babeltower2_04" });
+						AddSimpleNode("mus_babeltower2_outro", false, "part_babeltower2_outro");
 
-							// Tree
-							AddSimpleNode("mus_home_ocean_retro", true, "part_home_ocean_retro_lp");
-							AddSimpleNode("mus_home_ocean", true, "part_home_ocean_lp");
-							AddSimpleNode("mus_labo", true, "part_labo_lp");
-							AddSimpleNode("mus_labo_outro", false, "part_labo_outro");
-							AddSimpleNode("mus_glouglou_dream", true,
-								"part_glouglou_dream_01", "part_glouglou_dream_02", "part_glouglou_dream_03", "part_glouglou_dream_04",
-								"part_glouglou_dream_05", "part_glouglou_dream_06", "part_glouglou_dream_07", "part_glouglou_dream_08");
+						// Common
+						AddEnchantedForest();
+						break;
+					case MusicTreeID.RLC_07_Beanstalk1:
+						// COMPLETE
+						// Parts
+						AddPart("part_whenwindblows_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_01.wav"));
+						AddPart("part_whenwindblows_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_02.wav"));
+
+						AddPart("part_home_music_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_music.wav"));
+
+						AddPart("part_hellgate_intro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_intro.wav"));
+						AddPart("part_hellgate_01", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_01_full_26m.wav"), nbMeasures: 26);
+						AddPart("part_hellgate_02", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mo_rl_3_hellgate_02_full_13m.wav"), nbMeasures: 13);
+						AddPart("part_hellgate_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_3_hellgate/mus_hellgate_outro.wav"));
+						
+						AddPart("part_missileairlines_01", new Path("sound/300_music/306_mountain_legends/mo_rl_5_missileairlines/mo_rl_5_missileairlines_part1_full_8m.wav"), nbMeasures: 8);
+						AddPart("part_missileairlines_02", new Path("sound/300_music/306_mountain_legends/mo_rl_5_missileairlines/mo_rl_5_missileairlines_part2_full_39m.wav"), nbMeasures: 39);
+						AddPart("part_missileairlines_03", new Path("sound/300_music/306_mountain_legends/mo_rl_5_missileairlines/mo_rl_5_missileairlines_part3_full_11m.wav"), nbMeasures: 11);
+						AddPart("part_missileairlines_04", new Path("sound/300_music/306_mountain_legends/mo_rl_5_missileairlines/mo_rl_5_missileairlines_part4_full_8m.wav"), nbMeasures: 8);
+						AddPart("part_missileairlines_05", new Path("sound/300_music/306_mountain_legends/mo_rl_5_missileairlines/mo_rl_5_missileairlines_part5_full_9m.wav"), nbMeasures: 9);
+						AddPart("part_missileairlines_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_5_missileairlines/mo_rl_5_missileairlines_stem_part_04.wav"));
+
+						// Tree
+						AddSimpleNode("mus_whenwindblows", true, "part_whenwindblows_01", "part_whenwindblows_02");
+						AddSimpleNode("mus_home_music_retro", true, "part_home_music_retro_lp");
+						AddSimpleSequenceNode("mus_hellgate", true,
+							new string[] { "part_hellgate_intro" },
+							new string[] { "part_hellgate_01", "part_hellgate_02" }
+						);
+						AddSimpleNode("mus_hellgate_outro", false, "part_hellgate_outro");
+						AddSimpleNode("mus_missileairlines", true,
+							"part_missileairlines_01", "part_missileairlines_02", "part_missileairlines_03",
+							"part_missileairlines_04", "part_missileairlines_05");
+						AddSimpleNode("mus_missileairlines_outro", false, "part_missileairlines_outro");
+						break;
+					case MusicTreeID.RLC_08_Beanstalk2:
+						// COMPLETE
+						// Parts
+						AddPart("part_flightwhirl_01", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_03_8m.wav"), nbMeasures: 8);
+						AddPart("part_flightwhirl_02", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mu_rl_3_explo_01_48m.wav"), nbMeasures: 48);
+						AddPart("part_flightwhirl_03", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_02_7m.wav"), nbMeasures: 7);
+						AddPart("part_flightwhirl_04", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_01_4m.wav"), nbMeasures: 4);
+						AddPart("part_flightwhirl_05", new Path("sound/300_music/302_music_legends/mu_rl_3_flyingright/mus_mu_rl_3_intro_full_04_4m.wav"), nbMeasures: 4);
+
+						AddPart("part_lostinclouds_01", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_01.wav"));
+						AddPart("part_lostinclouds_02", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_02.wav"));
+						AddPart("part_lostinclouds_03", new Path("sound/300_music/330_rlc/05_beanstalk/mus_lostinclouds_03.wav"));
+
+						// Tree
+						AddSimpleNode("mus_flightwhirl", true,
+							"part_flightwhirl_01", "part_flightwhirl_02", "part_flightwhirl_03", "part_flightwhirl_04", "part_flightwhirl_05");
+						AddSimpleNode("mus_lostinclouds", true, "part_lostinclouds_01", "part_lostinclouds_02", "part_lostinclouds_03");
+
+						// Common
+						AddMamboMambo();
+						break;
+					case MusicTreeID.RLC_09_Nemo:
+						// COMPLETE
+						// Parts
+						AddPart("part_home_ocean_retro_lp", new Path("sound/300_music/310_common/home/mus_home_retro_ocean.wav"));
+						AddPart("part_home_ocean_lp", new Path("sound/300_music/310_common/home/mus_home_ocean.wav"));
+						AddPart("part_labo_lp", new Path("sound/300_music/330_rlc/06_nemo/mus_labo_lp.wav"));
+						AddPart("part_labo_outro", new Path("sound/300_music/330_rlc/06_nemo/mus_labo_outro.wav"));
+						AddPart("part_glouglou_dream_01", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_01_intro_2m.wav"));
+						AddPart("part_glouglou_dream_02", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_02_4m.wav"));
+						AddPart("part_glouglou_dream_03", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_03_4m.wav"));
+						AddPart("part_glouglou_dream_04", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_04_4m.wav"));
+						AddPart("part_glouglou_dream_05", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_05_4m.wav"));
+						AddPart("part_glouglou_dream_06", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_06_4m.wav"));
+						AddPart("part_glouglou_dream_07", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_07_4m.wav"));
+						AddPart("part_glouglou_dream_08", new Path("sound/300_music/304_ocean_retro/mus_glouglou_dream_08_outro_4m.wav"));
+
+						// Tree
+						AddSimpleNode("mus_home_ocean_retro", true, "part_home_ocean_retro_lp");
+						AddSimpleNode("mus_home_ocean", true, "part_home_ocean_lp");
+						AddSimpleNode("mus_labo", true, "part_labo_lp");
+						AddSimpleNode("mus_labo_outro", false, "part_labo_outro");
+						AddSimpleNode("mus_glouglou_dream", true,
+							"part_glouglou_dream_01", "part_glouglou_dream_02", "part_glouglou_dream_03", "part_glouglou_dream_04",
+							"part_glouglou_dream_05", "part_glouglou_dream_06", "part_glouglou_dream_07", "part_glouglou_dream_08");
 
 
-							// Common
-							AddMamboMambo();
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl": {
-							// COMPLETE
-							// Parts
-							AddPart("part_abyss_01", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_01_intro_4m.wav"), nbMeasures: 4);
-							AddPart("part_abyss_02", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_02_5m.wav"), nbMeasures: 5);
-							AddPart("part_abyss_03", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_03_4m.wav"), nbMeasures: 4);
-							AddPart("part_abyss_04", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_04_12m.wav"), nbMeasures: 12);
-							AddPart("part_abyss_05", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_05_08m.wav"), nbMeasures: 8);
-							AddPart("part_abyss_06", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_06_08m.wav"), nbMeasures: 8);
-							AddPart("part_abyss_07", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_07_08m.wav"), nbMeasures: 8);
-							AddPart("part_abyss_08", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_08_08m.wav"), nbMeasures: 8);
-							AddPart("part_abyss_09", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_09_outro_4m.wav"), nbMeasures: 4);
+						// Common
+						AddMamboMambo();
+						break;
+					case MusicTreeID.RLC_10_Hangar1:
+						// COMPLETE
+						// Parts
+						AddPart("part_abyss_01", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_01_intro_4m.wav"), nbMeasures: 4);
+						AddPart("part_abyss_02", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_02_5m.wav"), nbMeasures: 5);
+						AddPart("part_abyss_03", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_03_4m.wav"), nbMeasures: 4);
+						AddPart("part_abyss_04", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_04_12m.wav"), nbMeasures: 12);
+						AddPart("part_abyss_05", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_05_08m.wav"), nbMeasures: 8);
+						AddPart("part_abyss_06", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_06_08m.wav"), nbMeasures: 8);
+						AddPart("part_abyss_07", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_07_08m.wav"), nbMeasures: 8);
+						AddPart("part_abyss_08", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_08_08m.wav"), nbMeasures: 8);
+						AddPart("part_abyss_09", new Path("sound/300_music/304_ocean_retro/mus_oce_abyss_suspens_09_outro_4m.wav"), nbMeasures: 4);
 
-							AddPart("part_diveanotherday_01", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part02_24m.wav"), nbMeasures: 24);
-							AddPart("part_diveanotherday_02", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part03_32m.wav"), nbMeasures: 32);
-							AddPart("part_diveanotherday_03", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part04_48m.wav"), nbMeasures: 48);
-							AddPart("part_diveanotherday_04", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part05_64m.wav"), nbMeasures: 64);
-							
-							AddPart("part_toadfight_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_01.wav"));
-							AddPart("part_toadfight_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_02.wav"));
-							AddPart("part_toadfight_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_4.wav"));
-							
-							AddPart("part_laserdance_intro_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_pat_4m_a_1.wav"));
-							AddPart("part_laserdance_intro_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patbass_4m_a_2.wav"));
-							AddPart("part_laserdance_intro_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbass_4m_b_3.wav"));
-							AddPart("part_laserdance_lp_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_8m_c_1.wav"));
-							AddPart("part_laserdance_lp_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_4m_d_1.wav"));
-							AddPart("part_laserdance_lp_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukbassdr_4m_e_3.wav"));
-							AddPart("part_laserdance_lp_04", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukbassdr_4m_f_1.wav"));
-							AddPart("part_laserdance_lp_05", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatdr_4m_g_2.wav"));
-							AddPart("part_laserdance_lp_06", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_8m_c_2.wav"));
-							AddPart("part_laserdance_lp_07", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accuktabpatbassdr_4m_n_2.wav"));
-							AddPart("part_laserdance_lp_08", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patdr_4m_i_1.wav"));
-							AddPart("part_laserdance_lp_09", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patbassdr_4m_a_3.wav"));
-							AddPart("part_laserdance_lp_10", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbassdr_4m_b_2.wav"));
-							AddPart("part_laserdance_outro", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_outro_4.wav"));
-							
-							AddPart("part_ocrl4_01", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_1.wav"));
-							AddPart("part_ocrl4_02", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_2.wav"));
-							AddPart("part_ocrl4_03", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_3.wav"));
-							AddPart("part_ocrl4_04", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_4.wav"));
+						AddPart("part_laserdance_intro_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_pat_4m_a_1.wav"));
+						AddPart("part_laserdance_intro_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patbass_4m_a_2.wav"));
+						AddPart("part_laserdance_intro_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbass_4m_b_3.wav"));
+						AddPart("part_laserdance_lp_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_8m_c_1.wav"));
+						AddPart("part_laserdance_lp_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_4m_d_1.wav"));
+						AddPart("part_laserdance_lp_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukbassdr_4m_e_3.wav"));
+						AddPart("part_laserdance_lp_04", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukbassdr_4m_f_1.wav"));
+						AddPart("part_laserdance_lp_05", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatdr_4m_g_2.wav"));
+						AddPart("part_laserdance_lp_06", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accukpatbassdr_8m_c_2.wav"));
+						AddPart("part_laserdance_lp_07", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accuktabpatbassdr_4m_n_2.wav"));
+						AddPart("part_laserdance_lp_08", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patdr_4m_i_1.wav"));
+						AddPart("part_laserdance_lp_09", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_patbassdr_4m_a_3.wav"));
+						AddPart("part_laserdance_lp_10", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbassdr_4m_b_2.wav"));
+						AddPart("part_laserdance_outro", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_outro_4.wav"));
 
-							AddPart("part_mansionofdeep_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part1.wav"));
-							AddPart("part_mansionofdeep_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2.wav"));
-							AddPart("part_mansionofdeep_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2_02.wav"));
-							AddPart("part_mansionofdeep_04", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2_percbrass.wav"));
-							
+						AddPart("part_oc_suspense_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 64);
 
-							// Tree
-							AddSimpleNode("mus_abyss", true,
-								"part_abyss_01", "part_abyss_02", "part_abyss_03", "part_abyss_04",
-								"part_abyss_05", "part_abyss_06", "part_abyss_07", "part_abyss_08",
-								"part_abyss_09");
-							AddSimpleSequenceNode("mus_diveanotherday", true,
-								new string[] { "part_diveanotherday_01" },
-								new string[] { "part_diveanotherday_02", "part_diveanotherday_03", "part_diveanotherday_04" });
-							AddSimpleNode("mus_toadfight", true, "part_toadfight_01", "part_toadfight_02", "part_toadfight_03");
-							AddSimpleNode("mus_laserdance_intro", true, "part_laserdance_intro_01", "part_laserdance_intro_02");
-							AddSimpleSequenceNode("mus_laserdance", true,
-								new string[] { "part_laserdance_intro_03" },
-								new string[] {
+						AddPart("part_diveanotherday_01", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part02_24m.wav"), nbMeasures: 24);
+						AddPart("part_diveanotherday_02", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part03_32m.wav"), nbMeasures: 32);
+						AddPart("part_diveanotherday_03", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part04_48m.wav"), nbMeasures: 48);
+						AddPart("part_diveanotherday_04", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part05_64m.wav"), nbMeasures: 64);
+
+						// Tree
+						AddSimpleNode("mus_abyss", true,
+							"part_abyss_01", "part_abyss_02", "part_abyss_03", "part_abyss_04",
+							"part_abyss_05", "part_abyss_06", "part_abyss_07", "part_abyss_08",
+							"part_abyss_09");
+
+						AddSimpleNode("mus_laserdance_intro", true, "part_laserdance_intro_01", "part_laserdance_intro_02");
+						AddSimpleSequenceNode("mus_laserdance", true,
+							new string[] { "part_laserdance_intro_03" },
+							new string[] {
 									"part_laserdance_lp_01", "part_laserdance_lp_02", "part_laserdance_lp_03", "part_laserdance_lp_04", "part_laserdance_lp_05",
 									"part_laserdance_lp_06", "part_laserdance_lp_07", "part_laserdance_lp_08", "part_laserdance_lp_09", "part_laserdance_lp_10"
-								});
-							AddSimpleNode("mus_laserdance_outro", false, "part_laserdance_outro");
-							AddSimpleNode("mus_ocrl4", true, "part_ocrl4_01", "part_ocrl4_02", "part_ocrl4_03", "part_ocrl4_04");
-							AddSimpleSequenceNode("mus_mansionofdeep", true,
-								new string[] { "part_mansionofdeep_01" },
-								new string[] { "part_mansionofdeep_02", "part_mansionofdeep_03", "part_mansionofdeep_04" }
-							);
+							});
+						AddSimpleNode("mus_laserdance_outro", false, "part_laserdance_outro");
 
-							// Common
-							AddMamboMambo();
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_08_olympus.tpl": {
-							// COMPLETE
-							// Parts
-							AddPart("part_ss_strings_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part1_4m.wav"), nbMeasures: 4);
-							AddPart("part_ss_strings_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part2_9m.wav"), nbMeasures: 9);
-							AddPart("part_ss_strings_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part3_8m.wav"), nbMeasures: 8);
-							AddPart("part_ss_strings_04", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part4_14m.wav"), nbMeasures: 14);
-							AddPart("part_ss_strings_05", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part1_4m.wav"), nbMeasures: 4);
-							AddPart("part_ss_strings_06", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part2_9m.wav"), nbMeasures: 9);
-							AddPart("part_ss_strings_07", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part3_8m.wav"), nbMeasures: 8);
-							AddPart("part_ss_strings_08", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part4_14m.wav"), nbMeasures: 14);
+						AddSimpleNode("mus_oc_suspense", true, "part_oc_suspense_lp");
 
-							AddPart("part_ss_explo", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_explo_08m.wav"), nbMeasures: 8);
-							AddPart("part_ss_full_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part1_4m.wav"), nbMeasures: 4);
-							AddPart("part_ss_full_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part2_9m.wav"), nbMeasures: 9);
-							AddPart("part_ss_full_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part3_8m.wav"), nbMeasures: 8);
-							AddPart("part_ss_full_04", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part4_14m.wav"), nbMeasures: 14);
-							AddPart("part_ss_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_outro_4m.wav"), nbMeasures: 4);
-							AddPart("part_ss_storm_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_1.wav"));
-							AddPart("part_ss_storm_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_2.wav"));
-							AddPart("part_ss_storm_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_3.wav"));
-							AddPart("part_ss_storm_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_outro.wav"));
+						AddSimpleSequenceNode("mus_diveanotherday", true,
+							new string[] { "part_diveanotherday_01" },
+							new string[] { "part_diveanotherday_02", "part_diveanotherday_03", "part_diveanotherday_04" });
+						break;
+					case MusicTreeID.RLC_11_Hangar2:
+						// COMPLETE
+						// Parts
+						AddPart("part_ocrl4_01", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_1.wav"));
+						AddPart("part_ocrl4_02", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_2.wav"));
+						AddPart("part_ocrl4_03", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_3.wav"));
+						AddPart("part_ocrl4_04", new Path("sound/300_music/304_ocean_legends/oc_rl_4/nemo_rl_4_part4_4.wav"));
 
-							AddPart("part_harp_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_harp_lp.wav"));
+						AddPart("part_toadfight_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_01.wav"));
+						AddPart("part_toadfight_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_02.wav"));
+						AddPart("part_toadfight_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl3_toadfight_4.wav"));
 
-							AddPart("part_arena_01", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01.wav"));
-							AddPart("part_arena_02", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02.wav"));
-							AddPart("part_arena_03", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_03.wav"));
-							AddPart("part_arena_04", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_end.wav"));
-							AddPart("part_arena_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_win.wav"));
-							
-							AddPart("part_hadesabode_intro", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_intro.wav"));
-							AddPart("part_hadesabode_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_lp.wav"));
-							AddPart("part_hadesabode_outro", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_outro.wav"));
+						AddPart("part_mansionofdeep_01", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part1.wav"));
+						AddPart("part_mansionofdeep_02", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2.wav"));
+						AddPart("part_mansionofdeep_03", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2_02.wav"));
+						AddPart("part_mansionofdeep_04", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3_fight_part2_percbrass.wav"));
 
-							AddPart("part_betamaze_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_betamaze_lp.wav"));
-							AddPart("part_betamaze_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_transition_01_4m.wav"), nbMeasures: 4);
+						// Tree
+						AddSimpleNode("mus_ocrl4", true, "part_ocrl4_01", "part_ocrl4_02", "part_ocrl4_03", "part_ocrl4_04");
+						AddSimpleNode("mus_toadfight", true, "part_toadfight_01", "part_toadfight_02", "part_toadfight_03");
+						AddSimpleSequenceNode("mus_mansionofdeep", true,
+							new string[] { "part_mansionofdeep_01" },
+							new string[] { "part_mansionofdeep_02", "part_mansionofdeep_03", "part_mansionofdeep_04" }
+						);
 
-							AddPart("part_whenwindblows_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_01.wav"));
-							AddPart("part_whenwindblows_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_02.wav"));
+						// Common
+						AddMamboMambo();
+						break;
+					case MusicTreeID.RLC_12_Olympus1:
+						// COMPLETE
+						// Parts
+						AddPart("part_ss_explo", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_explo_08m.wav"), nbMeasures: 8);
+						
+						AddPart("part_ss_full_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part1_4m.wav"), nbMeasures: 4);
+						AddPart("part_ss_full_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part2_9m.wav"), nbMeasures: 9);
+						AddPart("part_ss_full_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part3_8m.wav"), nbMeasures: 8);
+						AddPart("part_ss_full_04", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_full_part4_14m.wav"), nbMeasures: 14);
+						AddPart("part_ss_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_outro_4m.wav"), nbMeasures: 4);
+						
+						AddPart("part_ss_storm_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_1.wav"));
+						AddPart("part_ss_storm_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_2.wav"));
+						AddPart("part_ss_storm_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_3.wav"));
+						AddPart("part_ss_storm_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_outro.wav"));
 
+						AddPart("part_ss_strings_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part1_4m.wav"), nbMeasures: 4);
+						AddPart("part_ss_strings_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part2_9m.wav"), nbMeasures: 9);
+						AddPart("part_ss_strings_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part3_8m.wav"), nbMeasures: 8);
+						AddPart("part_ss_strings_04", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_strings_part4_14m.wav"), nbMeasures: 14);
+						AddPart("part_ss_strings_05", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part1_4m.wav"), nbMeasures: 4);
+						AddPart("part_ss_strings_06", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part2_9m.wav"), nbMeasures: 9);
+						AddPart("part_ss_strings_07", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part3_8m.wav"), nbMeasures: 8);
+						AddPart("part_ss_strings_08", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_action_nobouzouk_part4_14m.wav"), nbMeasures: 14);
 
-							// Nodes
-							AddSimpleNode("mus_ss_strings", true, 
+						// Tree
+						AddSimpleNode("mus_ss_explo", true, "part_ss_explo");
+
+						AddSimpleNode("mus_ss_full", true, "part_ss_full_01", "part_ss_full_02", "part_ss_full_03", "part_ss_full_04");
+						AddSimpleNode("mus_ss_outro", false, "part_ss_outro");
+						AddSimpleNode("mus_ss_storm", true, "part_ss_storm_01", "part_ss_storm_02", "part_ss_storm_03");
+						AddSimpleNode("mus_ss_storm_outro", false, "part_ss_storm_outro");
+
+						AddSimpleNode("mus_ss_strings", true,
 								"part_ss_strings_01", "part_ss_strings_02", "part_ss_strings_03", "part_ss_strings_04",
 								"part_ss_strings_05", "part_ss_strings_06", "part_ss_strings_07", "part_ss_strings_08");
-							AddSimpleNode("mus_ss_explo", true, "part_ss_explo");
-							AddSimpleNode("mus_ss_full", true, "part_ss_full_01", "part_ss_full_02", "part_ss_full_03", "part_ss_full_04");
-							AddSimpleNode("mus_ss_outro", false, "part_ss_outro");
-							AddSimpleNode("mus_ss_storm", true, "part_ss_storm_01", "part_ss_storm_02", "part_ss_storm_03");
-							AddSimpleNode("mus_ss_storm_outro", false, "part_ss_storm_outro");
-							AddSimpleNode("mus_harp", true, "part_harp_lp");
-							AddSimpleNode("mus_arena", true, "part_arena_01", "part_arena_02", "part_arena_03", "part_arena_04");
-							AddSimpleNode("mus_arena_outro", false, "part_arena_outro");
-							AddSimpleSequenceNode("mus_hadesabode", true,
-								new string[] { "part_hadesabode_intro" },
-								new string[] { "part_hadesabode_lp" });
-							AddSimpleNode("mus_hadesabode_outro", false, "part_hadesabode_outro");
-							AddSimpleNode("mus_betamaze", true, "part_betamaze_lp");
-							AddSimpleNode("mus_betamaze_outro", false, "part_betamaze_outro");
-							AddSimpleNode("mus_whenwindblows", true, "part_whenwindblows_01", "part_whenwindblows_02");
+
+						// Common
+						AddMamboMambo();
+						break;
+					case MusicTreeID.RLC_13_Olympus2:
+						// COMPLETE
+						// Parts
+						AddPart("part_harp_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_harp_lp.wav"));
+
+						AddPart("part_arena_01", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01.wav"));
+						AddPart("part_arena_02", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02.wav"));
+						AddPart("part_arena_03", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_03.wav"));
+						AddPart("part_arena_04", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_end.wav"));
+						AddPart("part_arena_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_win.wav"));
+
+						AddPart("part_whenwindblows_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_01.wav"));
+						AddPart("part_whenwindblows_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_02.wav"));
+
+						AddPart("part_hadesabode_intro", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_intro.wav"));
+						AddPart("part_hadesabode_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_lp.wav"));
+						AddPart("part_hadesabode_outro", new Path("sound/300_music/330_rlc/08_olympus/mus_hadesabode_outro.wav"));
 
 
-							// Common
-							AddMamboMambo();
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_09_dojo.tpl": {
-							// TODO
-							// Parts
-							AddPart("part_bge_mingtzu_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_mingtzu_lp.wav"));
-							AddPart("part_bge_funkybar100_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_funkybar100_lp.wav"));
-							
-							AddPart("part_eleanor_giftmatchseller_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_lp.wav"));
-							AddPart("part_eleanor_giftmatchseller_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_outro.wav"));
-							AddPart("part_eleanor_letsgo_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_letsgo_lp.wav"));
+						// Tree
+						AddSimpleNode("mus_harp", true, "part_harp_lp");
 
-							AddPart("part_mou_suspens_01", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_01_intro_4m.wav"), nbMeasures: 4);
-							AddPart("part_mou_suspens_02", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_02_4m.wav"), nbMeasures: 4);
-							AddPart("part_mou_suspens_03", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_03_4m.wav"), nbMeasures: 4);
-							AddPart("part_mou_suspens_04", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_04_4m.wav"), nbMeasures: 4);
-							AddPart("part_mou_suspens_05", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_05_4m.wav"), nbMeasures: 4);
-							AddPart("part_mou_suspens_06", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_06_4m.wav"), nbMeasures: 4);
-							AddPart("part_mou_suspens_07", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_07_outro_3m.wav"), nbMeasures: 3);
+						AddSimpleNode("mus_arena", true, "part_arena_01", "part_arena_02", "part_arena_03", "part_arena_04");
+						AddSimpleNode("mus_arena_outro", false, "part_arena_outro");
 
-							AddPart("part_shaolin_supereasy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_supereasy_mastermix.wav"));
-							//AddPart("part_shaolin_easy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_easy_mastermix.wav"));
-							AddPart("part_shaolin_medium", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_medium_mastermix.wav"));
-							//AddPart("part_shaolin_hard", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_hard_mastermix.wav"));
+						AddSimpleNode("mus_whenwindblows", true, "part_whenwindblows_01", "part_whenwindblows_02");
 
-							AddPart("part_whenwindblows_01", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_01.wav"));
-							AddPart("part_whenwindblows_02", new Path("sound/300_music/302_music_legends/mu_rl_1_upright/mus_rl_1_upright_explo_02.wav"));
+						AddSimpleSequenceNode("mus_hadesabode", true,
+							new string[] { "part_hadesabode_intro" },
+							new string[] { "part_hadesabode_lp" });
+						AddSimpleNode("mus_hadesabode_outro", false, "part_hadesabode_outro");
+						break;
+					case MusicTreeID.RLC_14_Hades:
+						// COMPLETE
+						// Parts
+						AddPart("part_ss_storm_01", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_1.wav"));
+						AddPart("part_ss_storm_02", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_2.wav"));
+						AddPart("part_ss_storm_03", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_part_3.wav"));
+						AddPart("part_ss_storm_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_1_flyingshield/mus_mo_rl_1_storm_outro.wav"));
 
-							// Nodes
-							AddSimpleNode("mus_bge_mingtzu", true, "part_bge_mingtzu_lp");
-							AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
-							AddSimpleNode("mus_eleanor_giftmatchseller", true, "part_eleanor_giftmatchseller_lp");
-							AddSimpleNode("mus_eleanor_giftmatchseller_outro", false, "part_eleanor_giftmatchseller_outro");
-							AddSimpleNode("mus_eleanor_letsgo", true, "part_eleanor_letsgo_lp");
-							AddSimpleNode("mus_mou_suspens", true, 
-								"part_mou_suspens_01", "part_mou_suspens_02", "part_mou_suspens_03", "part_mou_suspens_04",
-								"part_mou_suspens_05", "part_mou_suspens_06", "part_mou_suspens_07");
-							AddSimpleNode("mus_shaolin_supereasy", true, "part_shaolin_supereasy");
-							//AddSimpleNode("mus_shaolin_easy", true, "part_shaolin_easy");
-							AddSimpleNode("mus_shaolin_medium", true, "part_shaolin_medium");
-							//AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
-							AddSimpleNode("mus_whenwindblows", true, "part_whenwindblows_01", "part_whenwindblows_02");
+						AddPart("part_arena_01", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01.wav"));
+						AddPart("part_arena_01_percus", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01_percus.wav"));
+						AddPart("part_arena_02", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02.wav"));
+						AddPart("part_arena_02_percus", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02_percus.wav"));
+						AddPart("part_darkcpursuit_intro", new Path("sound/300_music/330_rlc/08_olympus/mus_darkcpursuit_intro.wav"));
+						AddPart("part_darkcpursuit_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_darkcpursuit_lp.wav"));
+						AddPart("part_darkcpursuit_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_4_darkcpursuit/mo_rl_4_outro.wav"));
+
+						AddPart("part_betamaze_lp", new Path("sound/300_music/330_rlc/08_olympus/mus_betamaze_lp.wav"));
+						AddPart("part_betamaze_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_transition_01_4m.wav"), nbMeasures: 4);
+
+						AddPart("part_maze_pursuit_01", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_pursuitv2_01_18m.wav"), nbMeasures: 18);
+						AddPart("part_maze_pursuit_02", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_pursuitv2_02_34m.wav"), nbMeasures: 34);
+						AddPart("part_maze_pursuit_03", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_pursuitv2_03_18m.wav"), nbMeasures: 18);
 
 
-							break;
-						}
-					case "sound/common/music_trees/09_rlc/musictree_rlc_10_world.tpl": {
-							// TODO
-							// Parts
-							AddPart("part_oc_suspense_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 64);
+						// Tree
+						AddSimpleNode("mus_ss_storm", true, "part_ss_storm_01", "part_ss_storm_02", "part_ss_storm_03");
+						AddSimpleNode("mus_ss_storm_outro", false, "part_ss_storm_outro");
 
-							AddPart("part_arena_01", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01.wav"));
-							AddPart("part_arena_01_percus", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_01_percus.wav"));
-							AddPart("part_arena_02", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02.wav"));
-							AddPart("part_arena_02_percus", new Path("sound/300_music/306_mountain_legends/mo_rl_arena/mo_rl_arena_fight_02_percus.wav"));
-							AddPart("part_darkcpursuit_intro", new Path("sound/300_music/330_rlc/10_world/mus_darkcpursuit_intro.wav"));
-							AddPart("part_darkcpursuit_lp", new Path("sound/300_music/330_rlc/10_world/mus_darkcpursuit_lp.wav"));
-							AddPart("part_darkcpursuit_outro", new Path("sound/300_music/306_mountain_legends/mo_rl_4_darkcpursuit/mo_rl_4_outro.wav"));
-							AddPart("part_ritual_lp", new Path("sound/300_music/330_rlc/10_world/mus_ritual_lp.wav"));
-							AddPart("part_shaolin_hard", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_hard_mastermix.wav"));
+						AddSimpleNode("mus_arena_percus", true, "part_arena_01", "part_arena_01_percus", "part_arena_02", "part_arena_02_percus");
+						AddSimpleNode("mus_darkcpursuit_intro", false, "part_darkcpursuit_intro");
+						AddSimpleNode("mus_darkcpursuit", true, "part_darkcpursuit_lp");
+						AddSimpleNode("mus_darkcpursuit_outro", false, "part_darkcpursuit_outro");
 
-							// Nodes
-							AddSimpleNode("mus_oc_suspense", true, "part_oc_suspense_lp");
-							AddSimpleNode("mus_arena_percus", true, "part_arena_01", "part_arena_01_percus", "part_arena_02", "part_arena_02_percus");
-							AddSimpleNode("mus_darkcpursuit_intro", false, "part_darkcpursuit_intro");
-							AddSimpleNode("mus_darkcpursuit", true, "part_darkcpursuit_lp");
-							AddSimpleNode("mus_darkcpursuit_outro", false, "part_darkcpursuit_outro");
-							AddSimpleNode("mus_ritual", true, "part_ritual_lp");
-							AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
+						AddSimpleNode("mus_betamaze", true, "part_betamaze_lp");
+						AddSimpleNode("mus_betamaze_outro", false, "part_betamaze_outro");
 
-							// Common
-							AddHellGate();
-							AddMamboMambo();
-							break;
-						}
+						AddSimpleSequenceNode("mus_maze_pursuit", true,
+							new string[] { "part_maze_pursuit_01" },
+							new string[] { "part_maze_pursuit_02", "part_maze_pursuit_03" });
+						break;
+					case MusicTreeID.RLC_15_Dojo1:
+						// COMPLETE
+						// Parts
+						AddPart("part_eleanor_letsgo_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_letsgo_lp.wav"));
+						AddPart("part_bge_mingtzu_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_mingtzu_lp.wav"));
+						
+						AddPart("part_shaolin_supereasy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_supereasy_mastermix.wav"));
+						AddPart("part_shaolin_medium", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_medium_mastermix.wav"));
+
+						AddPart("part_mou_suspens_01", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_01_intro_4m.wav"), nbMeasures: 4);
+						AddPart("part_mou_suspens_02", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_02_4m.wav"), nbMeasures: 4);
+						AddPart("part_mou_suspens_03", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_03_4m.wav"), nbMeasures: 4);
+						AddPart("part_mou_suspens_04", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_04_4m.wav"), nbMeasures: 4);
+						AddPart("part_mou_suspens_05", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_05_4m.wav"), nbMeasures: 4);
+						AddPart("part_mou_suspens_06", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_06_4m.wav"), nbMeasures: 4);
+						AddPart("part_mou_suspens_07", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_07_outro_3m.wav"), nbMeasures: 3);
+
+						// Tree
+						AddSimpleNode("mus_eleanor_letsgo", true, "part_eleanor_letsgo_lp");
+						AddSimpleNode("mus_bge_mingtzu", true, "part_bge_mingtzu_lp");
+
+						AddSimpleNode("mus_shaolin_supereasy", true, "part_shaolin_supereasy");
+						AddSimpleNode("mus_shaolin_medium", true, "part_shaolin_medium");
+
+						AddSimpleNode("mus_mou_suspens", true,
+							"part_mou_suspens_01", "part_mou_suspens_02", "part_mou_suspens_03", "part_mou_suspens_04",
+							"part_mou_suspens_05", "part_mou_suspens_06", "part_mou_suspens_07");
+						break;
+					case MusicTreeID.RLC_16_Dojo2:
+						// COMPLETE
+						// Parts
+						AddPart("part_bge_picturesofwildlife_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_picturesofwildlife_lp.wav"));
+
+						AddPart("part_shaolin_easy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_easy_mastermix.wav"));
+						
+						AddPart("part_eleanor_giftmatchseller_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_lp.wav"));
+						AddPart("part_eleanor_giftmatchseller_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_outro.wav"));
+
+						AddPart("part_shaolin_hard", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_hard_mastermix.wav"));
+
+						// Tree
+						AddSimpleNode("mus_bge_picturesofwildlife", true, "part_bge_picturesofwildlife_lp");
+
+						AddSimpleNode("mus_shaolin_easy", true, "part_shaolin_easy");
+
+						AddSimpleNode("mus_eleanor_giftmatchseller", true, "part_eleanor_giftmatchseller_lp");
+						AddSimpleNode("mus_eleanor_giftmatchseller_outro", false, "part_eleanor_giftmatchseller_outro");
+
+						AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
+						break;
+					case MusicTreeID.RLC_17_Dojo3:
+						// COMPLETE
+						// Parts
+						AddPart("part_lostinclouds_credits_lp", new Path("sound/300_music/310_common/credits/mus_avatar_full.wav"));
+						AddPart("part_ritual_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_lp.wav"));
+						AddPart("part_bge_funkybar100_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_funkybar100_lp.wav"));
+						
+						// Tree
+						AddSimpleNode("mus_lostinclouds_credits", true, "part_lostinclouds_credits_lp");
+						AddSimpleNode("mus_ritual", true, "part_ritual_lp");
+						AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
+
+						// Common
+						AddMamboMambo();
+						break;
+					case MusicTreeID.RLC_18_Bonus:
+						// TODO
+						// Parts
+						// Tree
+						break;
 				}
+
 			}
 			if (addAABBmod) {
 				if (act.GetComponent<BoxInterpolatorComponent>() == null) {
@@ -6618,6 +6723,27 @@ namespace UbiCanvas.Conversion {
 			p.SCALE = new Vec2d(copyFrom.SCALE.x, copyFrom.SCALE.y);
 		}
 
+		public enum MusicTreeID {
+			RLC_01_Intro,
+			RLC_02_Forest,
+			RLC_03_HauntedCastle,
+			RLC_04_Castle1,
+			RLC_05_Castle2,
+			RLC_06_Avatar,
+			RLC_07_Beanstalk1,
+			RLC_08_Beanstalk2,
+			RLC_09_Nemo,
+			RLC_10_Hangar1,
+			RLC_11_Hangar2,
+			RLC_12_Olympus1,
+			RLC_13_Olympus2,
+			RLC_14_Hades,
+			RLC_15_Dojo1,
+			RLC_16_Dojo2,
+			RLC_17_Dojo3,
+			RLC_18_Bonus
+		}
+
 		public async Task ManageAudio(Context oldContext, Settings newSettings, Scene scene) {
 			// Remove existing lum music manager
 			var lumMusic = scene.FindActors(a => a.GetComponent<RO2_RewardEffectsPlayerComponent>() != null);
@@ -6631,71 +6757,113 @@ namespace UbiCanvas.Conversion {
 			switch (scenePath.FullPath) {
 				case "world/rlc_intro/intro_firstlevel.isc":
 				case "world/rlc_enchantedforest/overgrowncastle/enchantedforest_overgrowncastle_exp_base.isc":
-				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc":
+				case "personal/filip/gameplaymixdemo.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_01_Intro);
+					break;
 				case "world/rlc_enchantedforest/rowdyrootarena/enchantedforest_rowdyrootarena_nmi.isc":
+				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc":
 				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc":
 				case "world/rlc_enchantedforest/ringsandswings/enchantedforest_ringsandswings_lum_base.isc":
-					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_01_jungle.tpl"));
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_02_Forest);
 					break;
 				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc":
 				case "world/rlc_castle/ghostclusters/hauntedcastle_ghostclusters_nmi_base.isc":
 				case "world/rlc_castle/hiddendoorgalore/hauntedcastle_hiddendoorgalore_exp_base.isc":
-					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_02_hauntedcastle.tpl"));
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_03_HauntedCastle);
 					break;
 				case "world/rlc_castle/dunktank/castleinterior_dunktank_nmi_base.isc":
 				case "world/rlc_castle/dungeonoutflow/castleinterior_dungeonoutflow_exp_base.isc":
 				case "world/rlc_castle/swingsandslides/castleinterior_swingsandslides_nmi.isc":
 				case "world/rlc_castle/dungeonarena/castleinterior_dungeonarena_nmi_var.isc":
 				case "world/rlc_castle/scaffoldingchase/castleexterior_scaffoldingchase_nmi_base.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_04_Castle1);
+					break;
 				case "world/rlc_castle/towertrouble/castleexterior_towertrouble_exp_base.isc":
 				case "world/rlc_castle/siegeslide/castleexterior_siegeslide_nmi.isc":
 				case "world/rlc_castle/roastedpigrodeo/castleexterior_roastedpigrodeo_lum_base.isc":
 				case "world/rlc_avatar/imonamoat/avatar_imonamoat_nmi_base.isc":
 				case "world/rlc_avatar/soggyswamp/avatar_soggyswamp_nmi_stilts.isc":
-					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_03_castleexterior.tpl"));
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_05_Castle2);
 					break;
 				case "world/rlc_avatar/templeofgloom/avatar_templeofgloom_nmi_base.isc":
 				case "world/rlc_avatar/lostruins/avatar_lostruins_exp_base.isc":
 				case "world/rlc_avatar/ruinride/avatar_ruinride_lum_base.isc":
 				case "world/rlc_avatar/teensietorment/avatar_teensietorment_exp_base.isc":
 				case "world/rlc_avatar/skyarena/avatar_skyarena_nmi_base.isc":
-					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_04_avatar.tpl"));
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_06_Avatar);
 					break;
 				case "world/rlc_beanstalk/thebigbeanstalk/beanstalk_thebigbeanstalk_exp_base.isc":
+				case "world/rlc_beanstalk/battlethemtoads/beanstalk_battlethemtoads_nmi_hard.isc":
 				case "world/rlc_beanstalk/beanvillage/beanstalk_beanvillage_exp_base.isc":
 				case "world/rlc_beanstalk/glidinglums/beanstalk_glidinglums_nmi.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_07_Beanstalk1);
+					break;
 				case "world/rlc_beanstalk/aspimaze/beanstalk_aspimaze_exp_base.isc":
 				case "world/rlc_beanstalk/aspiexplorer/beanstalk_aspiexplorer_exp_base.isc":
 				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_base.isc":
-				case "world/rlc_beanstalk/lumwaterslide/beanstalk_lumwaterslide_lum_clusters.isc":
-					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_05_beanstalk.tpl"));
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_08_Beanstalk2);
 					break;
 				case "world/rlc_nemo/sunkensecrets/nemo_sunkensecrets_exp_base.isc":
 				case "world/rlc_nemo/harborhell/nemo_harborhell_nmi_base.isc":
 				case "world/rlc_nemo/pollutedbay/nemo_pollutedbay_nmi_base.isc":
 				case "world/rlc_nemo/lumelevator/nemo_lumelevator_lum_base.isc":
 				case "world/rlc_nemo/hiddentunnels/nemo_hiddentunnels_exp_base.isc":
-					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_06_nemo.tpl"));
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_09_Nemo);
 					break;
 				case "world/rlc_hangar/fedexyourfriends/hangar_fedexyourfriends_exp_base.isc":
 				case "world/rlc_hangar/monorailmadness/hangar_monorailmadness_nmi_base.isc":
+				case "world/rlc_hangar/timingmaze/hangar_timingmaze_exp_base.isc":
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_10_Hangar1);
+					break;
 				case "world/rlc_nemo/dryandwet/nemo_dryandwet_nmi_base.isc":
 				case "world/rlc_hangar/grindinggears/hangar_grindinggears_exp_base.isc":
 				case "world/rlc_hangar/gearsofwoe/hangar_gearsofwoe_exp_base.isc":
 				case "world/rlc_nemo/bumperbarrelroom/nemo_bumperbarrelroom_lum_base.isc":
-					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_07_hangar.tpl"));
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_11_Hangar2);
 					break;
-				case "world/rlc_olympus/cranezone/olympus_cranezone_exp_base.isc":
 				case "world/rlc_olympus/ringsrailsandruins/olympus_ringsrailsandruins_exp_base.isc":
 				case "world/rlc_olympus/heavenandhell/olympus_heavenandhell_nmi_base.isc":
 				case "world/rlc_olympus/pigrodeo/olympus_pigrodeo_nmi_valkyries.isc":
+				case "world/rlc_olympus/cranezone/olympus_cranezone_exp_base.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_12_Olympus1);
+					break;
 				case "world/rlc_olympus/towerofworship/olympus_towerofworship_nmi_base.isc":
 				case "world/rlc_olympus/cloudcolosseum/olympus_cloudcolosseum_nmi_base.isc":
 				case "world/rlc_olympus/stormyrings/olympus_stormyrings_exp_base.isc":
 				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_13_Olympus2);
+					break;
+				case "world/rlc_hades/craterchaos/hades_craterchaos_exp_base.isc":
+				case "world/rlc_hades/volcanicheist/hades_volcanicheist_nmi_base.isc":
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc":
-					await AddMusicTree(oldContext, scene, new Path("sound/common/music_trees/09_rlc/musictree_rlc_08_olympus.tpl"));
+				case "world/rlc_hades/bumpout/hades_bumpout_nmi_base.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_14_Hades);
+					break;
+				case "world/rlc_dojo/goldenharvest/dojo_goldenharvest_exp_base.isc":
+				case "world/rlc_dojo/tothemarket/dojo_tothemarket_exp_base.isc":
+				case "world/rlc_dojo/dragonsspire/dojo_dragonsspire_nmi_base.isc":
+				case "world/rlc_dojo/spikyspinners/dojo_spikyspinners_nmi_base.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_15_Dojo1);
+					break;
+				case "world/rlc_dojo/playitcoy/dojo_playitcoy_lum_base.isc":
+				case "world/rlc_dojo/lightthemup/dojo_lightthemup_exp_base.isc":
+				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc":
+				case "world/rlc_dojo/underconstruction/dojo_underconstruction_nmi_base.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_16_Dojo2);
+					break;
+				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc":
+				case "personal/filip/dojourbantest.isc":
+				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc":
+				case "world/rlc_dojo/greatwallwaterfall/dojo_greatwallwaterfall_lum_firelums.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_17_Dojo3);
+					break;
+				case "world/rlc_enchantedforest/forestegghunt/enchantedforest_forestegghunt_exp_base.isc":
+				case "world/flo_macro/map01.isc":
+				case "world/champi_roots/testlevelraymanios/testlevelraymanarcade.isc":
+				case "world/rlc_landofthedead/dragonsouls/landofthedead_dragonsouls_nmi_base.isc":
+				case "world_arcade/ra_common/ra_gym/ra_gym.isc":
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_18_Bonus);
 					break;
 				default:
 					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
@@ -6958,6 +7126,7 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+
 				case "world/rlc_castle/pressureplatepalace/hauntedcastle_pressureplatepalace_nmi.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -11f;
@@ -8262,6 +8431,9 @@ namespace UbiCanvas.Conversion {
 								}
 							}
 						}
+						break;
+					}
+				case "world/rlc_hades/craterchaos/hades_craterchaos_exp_base.isc": {
 						break;
 					}
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
