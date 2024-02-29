@@ -3555,7 +3555,13 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_laserdance_lp_10", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_accpatbassdr_4m_b_2.wav"));
 						AddPart("part_laserdance_outro", new Path("sound/300_music/304_ocean_legends/oc_rl_3/oc_rl_3laser_outro_4.wav"));
 
-						AddPart("part_oc_suspense_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 64);
+						AddPart("part_mechanicaldragon_01", new Path("sound/300_music/330_rlc/07_hangar/mus_mechanicaldragon_01.wav"));
+						AddPart("part_mechanicaldragon_02", new Path("sound/300_music/330_rlc/07_hangar/mus_mechanicaldragon_02.wav"));
+						AddPart("part_mechanicaldragon_03", new Path("sound/300_music/330_rlc/07_hangar/mus_mechanicaldragon_03.wav"));
+						AddPart("part_mechanicaldragon_04", new Path("sound/300_music/330_rlc/07_hangar/mus_mechanicaldragon_04.wav"));
+						AddPart("part_mechanicaldragon_05", new Path("sound/300_music/330_rlc/07_hangar/mus_mechanicaldragon_05.wav"));
+						AddPart("part_mechanicaldragon_06", new Path("sound/300_music/330_rlc/07_hangar/mus_mechanicaldragon_06.wav"));
+						AddPart("part_mechanicaldragon_outro", new Path("sound/300_music/304_ocean_legends/oc_rl_arena/oc_rl_arena_boss_win.wav"));
 
 						AddPart("part_diveanotherday_01", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part02_24m.wav"), nbMeasures: 24);
 						AddPart("part_diveanotherday_02", new Path("sound/300_music/304_ocean_legends/oc_rl_5/mus_oc_rl5_part03_32m.wav"), nbMeasures: 32);
@@ -3577,7 +3583,12 @@ namespace UbiCanvas.Conversion {
 							});
 						AddSimpleNode("mus_laserdance_outro", false, "part_laserdance_outro");
 
-						AddSimpleNode("mus_oc_suspense", true, "part_oc_suspense_lp");
+						AddSimpleSequenceNode("mus_mechanicaldragon", true,
+							new string[] { "part_mechanicaldragon_01" },
+							new string[] { 
+								"part_mechanicaldragon_02", "part_mechanicaldragon_03", "part_mechanicaldragon_04",
+								"part_mechanicaldragon_04", "part_mechanicaldragon_06"});
+						AddSimpleNode("mus_mechanicaldragon_outro", false, "part_mechanicaldragon_outro");
 
 						AddSimpleSequenceNode("mus_diveanotherday", true,
 							new string[] { "part_diveanotherday_01" },
@@ -8018,6 +8029,67 @@ namespace UbiCanvas.Conversion {
 
 						break;
 					}
+				case "world/rlc_hangar/timingmaze/hangar_timingmaze_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+						var sceneTree = new PickableTree(scene);
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_mechanicaldragon", volume: vol), aabb);
+
+						var outroTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once_phantomfaction");
+						var outro = await AddMusicEventRelay(scene, "mus_mechanicaldragon_outro", volume: vol, playOnNext: 0x60, containingScene: outroTrigger.ContainingScene);
+						TransformCopyPickable(outro, outroTrigger.Result);
+						Link(outroTrigger.Result, outro.USERFRIENDLY);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_oce_base_middle",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_base_middle_lp.wav"),
+							aabb, volume: -10);
+
+						// Sounds
+						var tweenPathsToReplace = new string[] {
+							// Claws
+							//"timingmaze_ld|grp@2|tween_metalunderwaterslidetype",
+							"timingmaze_ld|grp@2|tween_metalunderwaterslidetype@1",
+
+							//"timingmaze_ld|grp@3|tween_metalunderwaterslidetype@4",
+							"timingmaze_ld|grp@3|tween_metalunderwaterslidetype@5",
+
+							// Crushers
+							"tween_metalunderwaterslidetype@6",
+							"tween_metalunderwaterslidetype@8",
+							"tween_metalunderwaterslidetype@2"
+						};
+						foreach (var tweenPath in tweenPathsToReplace) {
+							var tweenNode = sceneTree.FollowObjectPath(new ObjectPath(tweenPath));
+							await ReplaceTweenType(tweenNode.Parent.Scene, (Actor)tweenNode.Pickable, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"));
+						}
+
+						// One elec sound for each group of traps
+						var act = scene.FindActor(a => a.USERFRIENDLY == "electricarc@6");
+						var elec = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/04_ocean/actorsound_electric_trap.tpl"), act.Result);
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@2").Result, $"timingmaze_ld|{elec.USERFRIENDLY}").AddTag("Delay", "0.5");
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_unpause@2").Result, $"timingmaze_ld|{elec.USERFRIENDLY}").AddTag("Delay", "0.5");
+
+						act = scene.FindActor(a => a.USERFRIENDLY == "electricarc@7");
+						elec = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/04_ocean/actorsound_electric_trap.tpl"), act.Result);
+						
+						act = scene.FindActor(a => a.USERFRIENDLY == "electricarc@10");
+						elec = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/04_ocean/actorsound_electric_trap.tpl"), act.Result);
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@3").Result, $"timingmaze_ld|{elec.USERFRIENDLY}").AddTag("Delay", "0.5");
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_unpause@3").Result, $"timingmaze_ld|{elec.USERFRIENDLY}").AddTag("Delay", "0.5");
+						
+						act = scene.FindActor(a => a.USERFRIENDLY == "electricarc@14");
+						elec = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/04_ocean/actorsound_electric_trap.tpl"), act.Result);
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_pause@4").Result, $"timingmaze_ld|{elec.USERFRIENDLY}").AddTag("Delay", "0.5");
+						Link(scene.FindActor(a => a.USERFRIENDLY == "relay_unpause@4").Result, $"timingmaze_ld|{elec.USERFRIENDLY}").AddTag("Delay", "0.5");
+
+						act = scene.FindActor(a => a.USERFRIENDLY == "electricarc@16");
+						elec = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/04_ocean/actorsound_electric_trap.tpl"), act.Result);
+
+						break;
+					}
 				case "world/rlc_nemo/missionimprobable/nemo_missionimprobable_nmi_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -10f;
@@ -8376,14 +8448,14 @@ namespace UbiCanvas.Conversion {
 							new AABB() {
 								MIN = new Vec2d(-60f, -68f),
 								MAX = new Vec2d(135f, 40f)
-							}, volume: -12);
+							}, volume: -12, padding: 30f);
 
 						await AddAmbienceInterpolator(scene, "amb_rain_heavy",
 							new Path("sound/100_ambiances/101_jungle/amb_rain_heavy_lp.wav"),
 							new AABB() {
 								MIN = new Vec2d(161.4f, -27.7f),
 								MAX = new Vec2d(208.2f, 44.3f)
-							}, volume: -17, padding: 50f);
+							}, volume: -17, padding: 100f);
 						break;
 					}
 				case "world/rlc_olympus/aqueductofdoom/olympus_aqueductofdoom_nmi_base.isc": {
