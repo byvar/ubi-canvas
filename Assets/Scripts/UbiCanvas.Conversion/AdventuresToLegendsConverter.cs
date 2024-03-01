@@ -1266,6 +1266,24 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "world/rlc_dojo/torchingteensietrouble/dojo_torchingteensietrouble_exp_base.isc": {
+						FixRockets(oldContext, newSettings, scene);
+						var pickableTree = new PickableTree(scene);
+						var pauseTriggers = scene.FindActors(a => a.USERFRIENDLY.StartsWith("trigger_box_pauseunpause"));
+						foreach (var pt in pauseTriggers) {
+							var node = pickableTree.FollowObjectPath(pt.Path).Parent;
+							var link = pt.Result.GetComponent<LinkComponent>().Children[0].Path;
+							var linkedNode = node.GetNodeWithObjectPath(link);
+							var act = linkedNode?.Pickable as Actor;
+							if (act != null && act.STARTPAUSE) {
+								act.STARTPAUSE = false;
+							}
+							pt.ContainingScene.DeletePickable(pt.Result);
+						}
+
+						ApplySpecialRenderParamsToScene(scene);
+						break;
+					}
 				case "world/rlc_maze/lumlabyrinth/maze_lumlabyrinth_lum_base.isc": {
 						UseFastCameras(scene);
 						break;
@@ -5594,6 +5612,69 @@ namespace UbiCanvas.Conversion {
 
 		}
 
+		public void FixRockets(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			var teensyRocketPath = new Path("world/common/friendly/teensyrocket/components/teensyrocket_king.tpl");
+
+			var rockets = scene.FindActors(a => a.LUA == teensyRocketPath);
+			foreach (var rocket in rockets) {
+				var link = rocket.Result.GetComponent<LinkComponent>();
+				if (link.Children != null && link.Children.Any()) {
+					if (link.Children[0].Path.id.StartsWith("teensyFAKE")) {
+						rocket.ContainingScene.DeletePickable(rocket.Result);
+						continue;
+					}
+				}
+				//if (CloneTemplateIfNecessary(teensyRocketPath, "trigrocket", "TRIGGER ROCKET", rocket.Result.template, out var newTPL, rocket.Result)) {
+					// TODO
+					//newTPL.obj.RemoveComponent<RO2_TeensyRocketComponent_Template>();
+				//}
+				rocket.Result.parentBind = new UbiArt.Nullable<Bind>();
+				var rocketTeensies = rocket.ContainingScene.FindActors(a => 
+					a.GetComponent<RO2_FriendlyBTAIComponent>() != null && 
+					!a.USERFRIENDLY.StartsWith("teensyFAKE"), flags: Scene.SearchFlags.Actors);
+				//oldContext.SystemLogger?.LogWarning($"Teensies for rocket {rocket.Path}: {rocketTeensies.Count}");
+				if (rocketTeensies.Count == 1) {
+					var ts = rocketTeensies[0].Result;
+					link.Children.Add(new ChildEntry() {
+						Path = new ObjectPath(ts.USERFRIENDLY)
+					});
+					ts.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+						parentPath = new ObjectPath(rocket.Result.USERFRIENDLY),
+						type = Bind.Type.BoneName,
+						typeData = rocket.Result.template.obj.GetComponent<RO2_TeensyRocketComponent_Template>().snapBone.stringID
+					});
+				} else {
+					//oldContext.SystemLogger?.LogWarning($"Teensies for rocket {rocket.Path}: {rocketTeensies.Count}");
+				}
+				//rocket.Result.RemoveComponent<RO2_TeensyRocketComponent>();
+			}
+
+			var fakes = scene.FindActors(a => a.USERFRIENDLY.StartsWith("teensyFAKE"));
+			foreach (var act in fakes) {
+				act.ContainingScene.DeletePickable(act.Result);
+			}
+			var tweens = scene.FindActors(a => {
+				var tween = a.GetComponent<TweenComponent>()?.instanceTemplate?.value?.instructionSets;
+				if(tween == null) return false;
+				if(tween.Count > 1) return false;
+				if(tween[0].instructions.Count > 1) return false;
+				if (tween[0].instructions[0].obj is TweenTeleport_Template) {
+					return true;
+				}
+				return false;
+			});
+			foreach (var act in tweens) {
+				act.ContainingScene.DeletePickable(act.Result);
+			}
+			/*var teensies = scene.FindActors(a => a.GetComponent<RO2_FriendlyBTAIComponent>() != null);
+			foreach (var act in teensies) {
+				act.Result.parentBind = new UbiArt.Nullable<Bind>();
+			}*/
+		}
+
 		public void AddRelayToMushrooms(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
@@ -8652,6 +8733,105 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_hades/craterchaos/hades_craterchaos_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -14f;
+						var sceneTree = new PickableTree(scene);
+
+						// Music
+						
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 4f), aabb);
+
+						/*TransformAABB(await AddMusicTrigger(scene, "mus_ss_storm", volume: vol - 4f, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(30, -35),
+								MAX = new Vec2d(375, 5)
+							});*/
+
+						var stormTrigger = sceneTree.FollowObjectPath(new ObjectPath("SinkingTempleTest_ld|trigger_box_once@1"));
+						var stormTriggerActor = stormTrigger.Pickable as Actor;
+						var storm = await AddMusicEventRelay(scene, "mus_ss_storm", volume: vol - 4f, containingScene: stormTrigger.Parent.Scene);
+						TransformCopyPickable(storm, stormTriggerActor);
+						Link(stormTriggerActor, storm.USERFRIENDLY).AddTag("Delay", "2.8");
+
+						/*var outroTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@11");
+						var stormOutro = await AddMusicEventRelay(scene, "mus_ss_storm_outro", volume: vol + 3f, playOnNext: 0x60, containingScene: outroTrigger.ContainingScene);
+						TransformCopyPickable(stormOutro, outroTrigger.Result);
+						Link(outroTrigger.Result, stormOutro.USERFRIENDLY);*/
+						TransformAABB(await AddMusicTrigger(scene, "mus_ss_storm_outro", volume: vol + 3f, playOnNext: 0x60),
+							new AABB() {
+								MIN = new Vec2d(305, -18),
+								MAX = new Vec2d(318, 0)
+							});
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_intro",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_intro_mo_rl_1_flyingshield_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(30, 85),
+								MAX = new Vec2d(150, 110)
+							}, volume: -7, padding: 15f);
+						await AddAmbienceInterpolator(scene, "amb_hellgate",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_hellgate_apoca_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(30, -35),
+								MAX = new Vec2d(375, 5)
+							}, volume: -12, padding: 50f);
+						await AddAmbienceInterpolator(scene, "amb_wind",
+							new Path("sound/100_ambiances/101_jungle/amb_wind_storm_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(30, 20),
+								MAX = new Vec2d(165, 55)
+							}, volume: -6, padding: 60f);
+
+						// Add lava splash sfx
+						var allLinks = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children != null);
+						var splashes = scene.FindActors(a => a.USERFRIENDLY.StartsWith("dragon_lavasplash"));
+						foreach (var splash in splashes) {
+							Actor snd = null;
+							switch (splash.Result.USERFRIENDLY) {
+								case "dragon_lavasplash@1":
+									snd = await AddSimpleTriggableSound(scene, "lavadive1", new Path("sound/600_sfx/606_mountain/sfx_rocks_lava_dive_01.wav"),
+										volume: -6f, randomPitchMin: 0.75f, randomPitchMax: 1.25f, playerDetector: false, min: 1, max: 4, containingScene: splash.ContainingScene);
+									break;
+								case "dragon_lavasplash":
+									snd = await AddSimpleTriggableSound(scene, "lavadive3", new Path("sound/600_sfx/606_mountain/sfx_rocks_lava_dive_03.wav"),
+										volume: -8f, randomPitchMin: 0.75f, randomPitchMax: 1.25f, playerDetector: false, min: 1, max: 4, containingScene: splash.ContainingScene);
+									break;
+								case "dragon_lavasplash@2":
+									snd = await AddSimpleTriggableSound(scene, "lavadive2", new Path("sound/600_sfx/606_mountain/sfx_rocks_lava_dive_02.wav"),
+										volume: -9f, randomPitchMin: 0.75f, randomPitchMax: 1.25f, playerDetector: false, min: 1, max: 4, containingScene: splash.ContainingScene);
+									break;
+								case "dragon_lavasplash@3":
+									snd = await AddSimpleTriggableSound(scene, "lavadive4", new Path("sound/600_sfx/606_mountain/sfx_rocks_lava_dive_01.wav"),
+										volume: -8f, randomPitchMin: 0.75f, randomPitchMax: 1.25f, playerDetector: false, min: 1, max: 4, containingScene: splash.ContainingScene);
+									break;
+							}
+							if(snd == null) continue;
+
+							TransformCopyPickable(snd, splash.Result);
+							snd.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+								parentPath = new ObjectPath(splash.Result.USERFRIENDLY)
+							});
+							snd.USERFRIENDLY = $"{splash.Result.USERFRIENDLY}_snd";
+							snd.STARTPAUSE = splash.Result.STARTPAUSE;
+
+							foreach (var linkactor in allLinks) {
+								var actorPath = linkactor.Path;
+								var links = linkactor.Result.GetComponent<LinkComponent>();
+								var checklinks = links.Children.Where(l => l.Path.id == splash.Result.USERFRIENDLY).ToArray();
+								if (checklinks.Length == 0) continue;
+								var curnode = sceneTree.FollowObjectPath(actorPath);
+								foreach (var l in checklinks) {
+									var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
+									if (otherobj == null || otherobj.Pickable != splash.Result) continue;
+									var newChildEntry = (ChildEntry)l.Clone("isc");
+									newChildEntry.Path.id = snd.USERFRIENDLY;
+									links.Children.Add(newChildEntry);
+								}
+							}
+						}
+
 						break;
 					}
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
