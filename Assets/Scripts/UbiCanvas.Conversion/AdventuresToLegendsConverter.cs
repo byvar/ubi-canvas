@@ -1395,6 +1395,10 @@ namespace UbiCanvas.Conversion {
 							FixLumJarNoPhys(oldContext, b.Result);
 						}
 						await CreateTutoActors(oldContext, newSettings, scene);
+
+						var normalCC = scene.FindActor(a => a.USERFRIENDLY == "ambiance_forest_hot").Result.GetComponent<RenderParamComponent>();
+						var badCC = scene.FindActor(a => a.USERFRIENDLY == "ambiance_blue@2").Result.GetComponent<RenderParamComponent>();
+						badCC.ClearColor.ClearColor = normalCC.ClearColor.ClearColor;
 						break;
 					}
 
@@ -3304,26 +3308,25 @@ namespace UbiCanvas.Conversion {
 						AddEnchantedForest();
 						break;
 					case MusicTreeID.RLC_02_Forest:
-						// TODO
+						// COMPLETE
 						// Parts
-						AddPart("part_fightcastle_01", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_01.wav"));
-						AddPart("part_fightcastle_02", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_02.wav"));
-						AddPart("part_fightcastle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_fightcastle_outro.wav"));
-
-						AddPart("part_part1castle_intro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav"));
-						AddPart("part_part1castle_lp", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_loop.wav"));
-						AddPart("part_part1castle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_outro.wav"));
+						AddPart("part_slappingtree_part1_lp", new Path("sound/300_music/330_rlc/01_jungle/mus_slappingtree_part1_short_lp.wav"));
+						AddPart("part_slappingtree_part1_outro", new Path("sound/300_music/330_rlc/01_jungle/mus_slappingtree_part1_outro.wav"));
+						AddPart("part_slappingtree_part2_intro", new Path("sound/300_music/330_rlc/01_jungle/mus_slappingtree_part2_intro.wav"));
+						AddPart("part_slappingtree_part2_lp", new Path("sound/300_music/330_rlc/01_jungle/mus_slappingtree_part2_lp.wav"));
+						AddPart("part_slappingtree_part2_outro", new Path("sound/300_music/330_rlc/01_jungle/mus_slappingtree_part2_outro.wav"));
 
 						AddPart("part_stonecircle_lp", new Path("sound/300_music/330_rlc/01_jungle/mus_stonecircle_lp.wav"));
 
 						// Tree
+						AddSimpleNode("mus_slappingtree_part1", true, "part_slappingtree_part1_lp");
+						AddSimpleNode("mus_slappingtree_part1_outro", false, "part_slappingtree_part1_outro");
+						AddSimpleSequenceNode("mus_slappingtree_part2", true,
+							new string[] { "part_slappingtree_part2_intro" },
+							new string[] { "part_slappingtree_part2_lp" });
+						AddSimpleNode("mus_slappingtree_part2_outro", false, "part_slappingtree_part2_outro");
+
 						AddSimpleNode("mus_stonecircle", true, "part_stonecircle_lp");
-						AddSimpleNode("mus_fightcastle", true, "part_fightcastle_01", "part_fightcastle_02");
-						AddSimpleNode("mus_fightcastle_outro", false, "part_fightcastle_outro");
-						AddSimpleSequenceNode("mus_part1castle", true,
-							new string[] { "part_part1castle_intro" },
-							new string[] { "part_part1castle_lp" });
-						AddSimpleNode("mus_part1castle_outro", false, "part_part1castle_outro");
 
 						// Common
 						AddMamboMambo();
@@ -7178,42 +7181,51 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_enchantedforest/goingup/enchantedforest_goingup_nmi.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
-						var vol = -11f;
-						TransformAABB(await AddMusicTrigger(scene, "mus_fightcastle", volume: vol), aabb);
+						var vol = -15f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_slappingtree_part2", volume: vol), aabb);
 						/*var outro = await AddMusicTrigger(scene, "mus_fightcastle_outro", triggerMode: TriggerComponent.Mode.OnceAndReset, volume: vol, playOnNext: 0x60);
 						TransformAABB(outro, new AABB() {
 							MIN = new Vec2d(25.87f, 79.12f),
 							MAX = new Vec2d(43.71f, 91.26f)
 						});*/
 						var butterfly = scene.FindActor(a => a.USERFRIENDLY == "butterflyanimtrigger_blue@8");
-						var outro = await AddMusicEventRelay(scene, "mus_fightcastle_outro", volume: vol, playOnNext: 0x60, containingScene: butterfly.ContainingScene);
+						var outro = await AddMusicEventRelay(scene, "mus_slappingtree_part2_outro", volume: vol, playOnNext: 0x60, containingScene: butterfly.ContainingScene);
 						TransformCopyPickable(outro, butterfly.Result);
 						Link(butterfly.Result, outro.USERFRIENDLY);
 
 						await AddAmbienceInterpolator(scene, "amb_forest",
 							new Path("sound/100_ambiances/101_jungle/amb_forest_lp.wav"),
-							aabb, volume: -17);
+							aabb, volume: -16);
+
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("fx_waterfog"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
 						break;
 					}
 				case "world/rlc_enchantedforest/rowdyrootarena/enchantedforest_rowdyrootarena_nmi.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
-						var vol = -11f;
-						TransformAABB(await AddMusicTrigger(scene, "mus_part1castle", volume: vol), aabb);
-						/*var outro = await AddMusicTrigger(scene, "mus_part1castle_outro", volume: vol, playOnNext: 0x60);
-						TransformAABB(outro, new AABB() {
-							MIN = new Vec2d(25.87f, 79.12f),
-							MAX = new Vec2d(43.71f, 91.26f)
-						});*/
+						var vol = -16f;
+						// No music at start
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 1f), aabb);
+
+						var startTrigger = scene.FindActor(a => a.USERFRIENDLY == "NMI1 Trigger");
+						var start = await AddMusicEventRelay(scene, "mus_slappingtree_part1", volume: vol, containingScene: startTrigger.ContainingScene);
+						TransformCopyPickable(start, startTrigger.Result);
+						Link(startTrigger.Result, start.USERFRIENDLY);
+
 						var multiEventTrigger = scene.FindActor(a => a.USERFRIENDLY == "multipleevent_trigger@11");
 						var debugTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@17");
-						var outro = await AddMusicEventRelay(scene, "mus_part1castle_outro", volume: vol, playOnNext: 0x60, containingScene: multiEventTrigger.ContainingScene);
+						var outro = await AddMusicEventRelay(scene, "mus_slappingtree_part1_outro", volume: vol, playOnNext: 0x60, containingScene: multiEventTrigger.ContainingScene);
 						TransformCopyPickable(outro, multiEventTrigger.Result);
 						Link(multiEventTrigger.Result, outro.USERFRIENDLY);
 						Link(debugTrigger.Result, outro.USERFRIENDLY);
 
 						await AddAmbienceInterpolator(scene, "amb_forest_night",
 							new Path("sound/100_ambiances/101_jungle/amb_forest_night_lp.wav"),
-							aabb, volume: -18);
+							aabb, volume: -16);
 						break;
 					}
 				case "world/rlc_enchantedforest/accrobranche/enchantedforest_accrobranche_exp.isc": {
