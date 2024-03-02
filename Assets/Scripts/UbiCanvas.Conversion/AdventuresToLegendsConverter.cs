@@ -8959,6 +8959,59 @@ namespace UbiCanvas.Conversion {
 							aabb, volume: -13);
 						break;
 					}
+				case "world/rlc_dojo/goldenharvest/dojo_goldenharvest_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -5f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_eleanor_letsgo", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_forest_river",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_river_lp.wav"),
+							aabb, volume: -22);
+						break;
+					}
+				case "world/rlc_dojo/tothemarket/dojo_tothemarket_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -15f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_bge_mingtzu", volume: vol), aabb);
+
+						var waterY = 16.18f;
+						await AddAmbienceInterpolator(scene, "amb_glouglou_outside",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_glouglou_outside_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, waterY),
+								MAX = new Vec2d(310, aabb.MAX.y)
+							}, volume: -18, padding: 50);
+						/*await AddAmbienceInterpolator(scene, "amb_glouglou_outside",
+							new Path("sound/100_ambiances/104_ocean/amb_oce_glouglou_outside_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(200, waterY),
+								MAX = new Vec2d(335, aabb.MAX.y)
+							}, volume: -18, padding: 10);*/
+
+						await AddAmbienceInterpolator(scene, "amb_forest_river",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_river_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(340, waterY),
+								MAX = new Vec2d(aabb.MAX.x, aabb.MAX.y)
+							}, volume: -22, padding: 50);
+
+						await AddAmbienceInterpolator(scene, "amb_oce_underwater",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, aabb.MIN.y),
+								MAX = new Vec2d(aabb.MAX.x, waterY - 2f)
+							}, volume: -10);
+						break;
+					}
+				case "world/rlc_dojo/dragonsspire/dojo_dragonsspire_nmi_base.isc": {
+						/* AddSimpleNode("mus_shaolin_supereasy", true, "part_shaolin_supereasy");
+						AddSimpleNode("mus_shaolin_medium", true, "part_shaolin_medium"); */
+						break;
+					}
+				case "world/rlc_dojo/spikyspinners/dojo_spikyspinners_nmi_base.isc": {
+						// AddSimpleNode("mus_mou_suspens");
+						break;
+					}
 				default:
 					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
 					break;
@@ -9090,7 +9143,7 @@ namespace UbiCanvas.Conversion {
 							fireFX.fxStopOnEndAnim = true;
 						}
 					}*/
-				}
+					}
 			}
 
 		}
