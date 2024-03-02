@@ -1834,6 +1834,14 @@ namespace UbiCanvas.Conversion {
 						ExpandAllFriseCollisionAABB(scene, padding: 30f);
 						break;
 					}
+				case "world/rlc_hades/bumpout/hades_bumpout_nmi_base.isc": {
+						var platforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("minotaur_flyingplatform"));
+						foreach (var plat in platforms) {
+							GenericAABBHack(plat.Result, aabbScale: 300f);
+						}
+						ExpandAllFriseCollisionAABB(scene, padding: 30f);
+						break;
+					}
 				case "world/rlc_olympus/ringsrailsandruins/olympus_ringsrailsandruins_exp_base.isc": {
 						// Fix rabbid reappearing after death due to retriggering
 						var trig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box@4");
@@ -3772,6 +3780,7 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_maze_pursuit_02", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_pursuitv2_02_34m.wav"), nbMeasures: 34);
 						AddPart("part_maze_pursuit_03", new Path("sound/300_music/306_mountain_legends/mo_rl_2_mazecube/mus_mo_rl_2_pursuitv2_03_18m.wav"), nbMeasures: 18);
 
+						AddPart("part_maze_pursuit_outro", new Path("sound/300_music/330_rlc/08_olympus/mus_maze_pursuit_outro.wav"));
 
 						// Tree
 						AddSimpleNode("mus_ss_storm", true, "part_ss_storm_01", "part_ss_storm_02", "part_ss_storm_03");
@@ -3788,6 +3797,7 @@ namespace UbiCanvas.Conversion {
 						AddSimpleSequenceNode("mus_maze_pursuit", true,
 							new string[] { "part_maze_pursuit_01" },
 							new string[] { "part_maze_pursuit_02", "part_maze_pursuit_03" });
+						AddSimpleNode("mus_maze_pursuit_outro", false, "part_maze_pursuit_outro");
 						break;
 					case MusicTreeID.RLC_15_Dojo1:
 						// COMPLETE
@@ -8834,6 +8844,91 @@ namespace UbiCanvas.Conversion {
 
 						break;
 					}
+				case "world/rlc_hades/volcanicheist/hades_volcanicheist_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -13f;
+						var sceneTree = new PickableTree(scene);
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_arena_percus", volume: vol), aabb);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 4f), new AABB() {
+							MIN = new Vec2d(-115.6f, -27.3f),
+							MAX = new Vec2d(-105.9f, -1.2f)
+						});
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_darkcpursuit_intro", volume: vol + 5, playOnNext: 0x60), new AABB() {
+							MIN = new Vec2d(-141.7f, -29f),
+							MAX = new Vec2d(-120.6f, -7.2f)
+						});
+
+						var trig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@1");
+						var relay = await AddMusicEventRelay(scene, "mus_darkcpursuit", volume: vol + 7, playOnNext: 0x60, containingScene: trig.ContainingScene);
+						TransformCopyPickable(relay, trig.Result);
+						Link(trig.Result, relay.USERFRIENDLY);
+
+						var waybackLD = scene.FindActor(a => a.USERFRIENDLY == "GROUND_ART@1").ContainingScene;
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_darkcpursuit_outro", volume: vol + 5, playOnNext: 0x60, containingScene: waybackLD), new AABB() {
+							MIN = new Vec2d(100.67f, -35f),
+							MAX = new Vec2d(116.1f, -18f)
+						});
+						/*trig = scene.FindActor(a => a.USERFRIENDLY == "trigger_box@18" && a.POS2D.x < 90f);
+						relay = await AddMusicEventRelay(scene, "mus_darkcpursuit_outro", volume: vol + 4, playOnNext: 0x60, containingScene: trig.ContainingScene);
+						TransformCopyPickable(relay, trig.Result);
+						Link(trig.Result, relay.USERFRIENDLY);
+						trig.Result.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.OnceAndReset;*/
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_lava",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_lava_mo_rl_4_darkcpursuit_lp.wav"),
+							aabb, volume: -2);
+
+						/*await AddAmbienceInterpolator(scene, "amb_hellgate",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_hellgate_apoca_lp.wav"),
+							aabb, volume: -12);*/
+
+						// Add lava splash sfx
+						var allLinks = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children != null);
+						var splashes = scene.FindActors(a => a.USERFRIENDLY.StartsWith("dragon_lavasplash"));
+						foreach (var splash in splashes) {
+							Actor snd = null;
+							switch (splash.Result.USERFRIENDLY) {
+								case "dragon_lavasplash":
+									snd = await AddSimpleTriggableSound(scene, "lavadive3", new Path("sound/600_sfx/606_mountain/sfx_rocks_lava_dive_03.wav"),
+										volume: -8f, randomPitchMin: 0.75f, randomPitchMax: 1.25f, playerDetector: false, min: 1, max: 4, containingScene: splash.ContainingScene);
+									break;
+								case "dragon_lavasplash@6":
+									snd = await AddSimpleTriggableSound(scene, "lavadive2", new Path("sound/600_sfx/606_mountain/sfx_rocks_lava_dive_02.wav"),
+										volume: -9f, randomPitchMin: 0.75f, randomPitchMax: 1.25f, playerDetector: false, min: 1, max: 4, containingScene: splash.ContainingScene);
+									break;
+							}
+							if (snd == null) continue;
+
+							TransformCopyPickable(snd, splash.Result);
+							snd.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+								parentPath = new ObjectPath(splash.Result.USERFRIENDLY)
+							});
+							snd.USERFRIENDLY = $"{splash.Result.USERFRIENDLY}_snd";
+							snd.STARTPAUSE = splash.Result.STARTPAUSE;
+
+							foreach (var linkactor in allLinks) {
+								var actorPath = linkactor.Path;
+								var links = linkactor.Result.GetComponent<LinkComponent>();
+								var checklinks = links.Children.Where(l => l.Path.id == splash.Result.USERFRIENDLY).ToArray();
+								if (checklinks.Length == 0) continue;
+								var curnode = sceneTree.FollowObjectPath(actorPath);
+								foreach (var l in checklinks) {
+									var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
+									if (otherobj == null || otherobj.Pickable != splash.Result) continue;
+									var newChildEntry = (ChildEntry)l.Clone("isc");
+									newChildEntry.Path.id = snd.USERFRIENDLY;
+									links.Children.Add(newChildEntry);
+								}
+							}
+						}
+						break;
+					}
 				case "world/rlc_maze/bumpermaze/maze_bumpermaze_exp_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -22f;
@@ -8848,6 +8943,20 @@ namespace UbiCanvas.Conversion {
 							new Path("sound/100_ambiances/106_mountain_legends/amb_maze_cube_lp.wav"),
 							aabb, volume: -14);
 
+						break;
+					}
+				case "world/rlc_hades/bumpout/hades_bumpout_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -16f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_maze_pursuit", volume: vol), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_maze_pursuit_outro", volume: vol + 10f, playOnNext: 0x60), new AABB() {
+							MIN = new Vec2d(79.4f, 134.9f),
+							MAX = new Vec2d(87.2f, 141.6f)
+						});
+
+						await AddAmbienceInterpolator(scene, "amb_hellgate",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_hellgate_apoca_lp.wav"),
+							aabb, volume: -13);
 						break;
 					}
 				default:
