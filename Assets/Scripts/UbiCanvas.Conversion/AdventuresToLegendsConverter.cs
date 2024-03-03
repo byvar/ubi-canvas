@@ -1237,6 +1237,22 @@ namespace UbiCanvas.Conversion {
 						InvertZiplines_OnlyLeft(oldContext, newSettings, scene);
 						break;
 					}
+				case "world/rlc_dojo/dragonsspire/dojo_dragonsspire_nmi_base.isc": {
+						ExpandAllFriseCollisionAABB(scene, padding: 30f);
+						var stuckSwordmen = scene.FindActors(a => a.USERFRIENDLY is 
+							("appearfromzswordman@2" or "appearfromzswordman@3" or "appearfromzswordman@4" or
+							"appearfromzswordman@6" or "appearfromzswordman@7"));
+						foreach (var act in stuckSwordmen) {
+							act.Result.POS2D += Vec2d.Up;
+						}
+						break;
+					}
+				case "world/rlc_dojo/spikyspinners/dojo_spikyspinners_nmi_base.isc": {
+						// Fix lighting on captain
+						ApplySpecialRenderParamsToScene(scene, filter: p => p.USERFRIENDLY == "exitflag", 
+							rp: scene.FindActor(a => a.USERFRIENDLY == "mood_interior").Result.GetComponent<RenderParamComponent>());
+						break;
+					}
 				case "world/rlc_dojo/iseethelight/dojo_iseethelight_lum_base.isc": {
 						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 
@@ -2764,7 +2780,9 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public async Task<Actor> AddAmbienceInterpolator(Scene scene, string ambID, Path soundPath, AABB innerBox,
-			AABB outerBox = null, float padding = 5f, float volume = -8f, Path path = null, Scene containingScene = null) {
+			AABB outerBox = null, float padding = 5f, 
+			float? paddingL = null, float? paddingR = null, float? paddingU = null, float? paddingD = null,
+			float volume = -8f, Path path = null, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
 				var sceneName = scenePath.GetFilenameWithoutExtension();
@@ -2802,8 +2820,8 @@ namespace UbiCanvas.Conversion {
 			bi.innerBox = innerBox;
 			if (outerBox == null) {
 				outerBox = new AABB() {
-					MIN = innerBox.MIN - (Vec2d.One * padding),
-					MAX = innerBox.MAX + (Vec2d.One * padding)
+					MIN = innerBox.MIN - new Vec2d(paddingL ?? padding, paddingD ?? padding),
+					MAX = innerBox.MAX + new Vec2d(paddingR ?? padding, paddingU ?? padding)
 				};
 			}
 			bi.outerBox = outerBox;
@@ -3807,8 +3825,9 @@ namespace UbiCanvas.Conversion {
 						
 						AddPart("part_shaolin_supereasy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_supereasy_mastermix.wav"));
 						AddPart("part_shaolin_medium", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_medium_mastermix.wav"));
+						AddPart("part_shaolin_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_shaolinchallenge_outro.wav"));
 
-						AddPart("part_mou_suspens_01", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_01_intro_4m.wav"), nbMeasures: 4);
+						AddPart("part_mou_suspens_01", new Path("sound/300_music/330_rlc/09_dojo/mus_mou_suspens_01_intro_4m_fix.wav"), nbMeasures: 4);
 						AddPart("part_mou_suspens_02", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_02_4m.wav"), nbMeasures: 4);
 						AddPart("part_mou_suspens_03", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_03_4m.wav"), nbMeasures: 4);
 						AddPart("part_mou_suspens_04", new Path("sound/300_music/306_mountain_retro/mus_mou_suspens_04_4m.wav"), nbMeasures: 4);
@@ -3822,6 +3841,7 @@ namespace UbiCanvas.Conversion {
 
 						AddSimpleNode("mus_shaolin_supereasy", true, "part_shaolin_supereasy");
 						AddSimpleNode("mus_shaolin_medium", true, "part_shaolin_medium");
+						AddSimpleNode("mus_shaolin_outro", false, "part_shaolin_outro");
 
 						AddSimpleNode("mus_mou_suspens", true,
 							"part_mou_suspens_01", "part_mou_suspens_02", "part_mou_suspens_03", "part_mou_suspens_04",
@@ -3838,6 +3858,7 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_eleanor_giftmatchseller_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_outro.wav"));
 
 						AddPart("part_shaolin_hard", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_hard_mastermix.wav"));
+						AddPart("part_shaolin_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_shaolinchallenge_outro.wav"));
 
 						// Tree
 						AddSimpleNode("mus_bge_picturesofwildlife", true, "part_bge_picturesofwildlife_lp");
@@ -3848,6 +3869,7 @@ namespace UbiCanvas.Conversion {
 						AddSimpleNode("mus_eleanor_giftmatchseller_outro", false, "part_eleanor_giftmatchseller_outro");
 
 						AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
+						AddSimpleNode("mus_shaolin_outro", false, "part_shaolin_outro");
 						break;
 					case MusicTreeID.RLC_17_Dojo3:
 						// COMPLETE
@@ -8980,7 +9002,7 @@ namespace UbiCanvas.Conversion {
 							new AABB() {
 								MIN = new Vec2d(aabb.MIN.x, waterY),
 								MAX = new Vec2d(310, aabb.MAX.y)
-							}, volume: -18, padding: 50);
+							}, volume: -18, padding: 10, paddingR: 50);
 						/*await AddAmbienceInterpolator(scene, "amb_glouglou_outside",
 							new Path("sound/100_ambiances/104_ocean/amb_oce_glouglou_outside_lp.wav"),
 							new AABB() {
@@ -8993,7 +9015,7 @@ namespace UbiCanvas.Conversion {
 							new AABB() {
 								MIN = new Vec2d(340, waterY),
 								MAX = new Vec2d(aabb.MAX.x, aabb.MAX.y)
-							}, volume: -22, padding: 50);
+							}, volume: -22, padding: 10, paddingL: 50);
 
 						await AddAmbienceInterpolator(scene, "amb_oce_underwater",
 							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_underwater_lp.wav"),
@@ -9004,12 +9026,58 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_dojo/dragonsspire/dojo_dragonsspire_nmi_base.isc": {
-						/* AddSimpleNode("mus_shaolin_supereasy", true, "part_shaolin_supereasy");
-						AddSimpleNode("mus_shaolin_medium", true, "part_shaolin_medium"); */
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -12f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_supereasy", volume: vol), aabb);
+						var trigger = scene.FindActor(a => a.USERFRIENDLY == "StartTrigger");
+						var relay = await AddMusicEventRelay(scene, "mus_shaolin_medium", volume: vol, playOnNext: 0x60, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY).AddTag("Delay", "1.0");
+						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_outro", volume: vol + 1), new AABB() {
+							MIN = new Vec2d(63.4f, -115.3f),
+							MAX = new Vec2d(72.4f, -106.7f)
+						});
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_intro",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_intro_mo_rl_1_flyingshield_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(5, -205),
+								MAX = new Vec2d(32, -180)
+							}, volume: -7, padding: 15f);
+						await AddAmbienceInterpolator(scene, "amb_mou_sky",
+							new Path("sound/100_ambiances/106_mountain_retro/amb_mou_sky_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(0, -134),
+								MAX = new Vec2d(175, -90)
+							}, volume: -2, padding: 150f);
+						await AddAmbienceInterpolator(scene, "amb_interior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(61, -224),
+								MAX = new Vec2d(75, -162)
+							}, volume: -24, padding: 15f, paddingU: 50f);
 						break;
 					}
 				case "world/rlc_dojo/spikyspinners/dojo_spikyspinners_nmi_base.isc": {
-						// AddSimpleNode("mus_mou_suspens");
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_mou_suspens", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_mountain",
+							new Path("sound/100_ambiances/106_mountain_retro/amb_mountain_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(aabb.MIN.x, aabb.MIN.y),
+								MAX = new Vec2d(320, aabb.MAX.y)
+							}, volume: -12, padding: 20f);
+						await AddAmbienceInterpolator(scene, "amb_interior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(325, -38.7f),
+								MAX = new Vec2d(355, -13.6f)
+							}, volume: -15, padding: 10f);
 						break;
 					}
 				default:
