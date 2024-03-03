@@ -9311,6 +9311,19 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_forest_river",
 							new Path("sound/100_ambiances/101_jungle/amb_forest_river_lp.wav"),
 							aabb, volume: -22);
+
+						await AddAmbienceInterpolator(scene, "amb_oce_underwater",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(-25.4f, -36.9f),
+								MAX = new Vec2d(12.6f, -26.24f)
+							}, volume: -10);
+						await AddAmbienceInterpolator(scene, "amb_oce_underwater",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_oce_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(195.4f, -23.3f),
+								MAX = new Vec2d(290.2f, -14.32f)
+							}, volume: -10);
 						break;
 					}
 				case "world/rlc_dojo/lightthemup/dojo_lightthemup_exp_base.isc": {
