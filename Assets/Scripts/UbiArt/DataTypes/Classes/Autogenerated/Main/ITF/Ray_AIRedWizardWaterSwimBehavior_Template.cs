@@ -6,8 +6,8 @@ namespace UbiArt.ITF {
 		public float minForce;
 		public float maxForce;
 		public float moveForce;
-		public Placeholder swim;
-		public Placeholder jump;
+		public Generic<AIAction_Template> swim;
+		public Generic<AIAction_Template> jump;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			minSpeed = s.Serialize<float>(minSpeed, name: "minSpeed");
@@ -15,8 +15,8 @@ namespace UbiArt.ITF {
 			minForce = s.Serialize<float>(minForce, name: "minForce");
 			maxForce = s.Serialize<float>(maxForce, name: "maxForce");
 			moveForce = s.Serialize<float>(moveForce, name: "moveForce");
-			swim = s.SerializeObject<Placeholder>(swim, name: "swim");
-			jump = s.SerializeObject<Placeholder>(jump, name: "jump");
+			swim = s.SerializeObject<Generic<AIAction_Template>>(swim, name: "swim");
+			jump = s.SerializeObject<Generic<AIAction_Template>>(jump, name: "jump");
 		}
 		public override uint? ClassCRC => 0xC105379D;
 	}

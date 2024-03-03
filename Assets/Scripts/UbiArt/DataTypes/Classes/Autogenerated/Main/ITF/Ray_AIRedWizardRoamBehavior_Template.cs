@@ -1,12 +1,12 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RO)]
 	public partial class Ray_AIRedWizardRoamBehavior_Template : Ray_AIGroundRoamBehavior_Template {
-		public Placeholder greet;
+		public Generic<AIAction_Template> greet;
 		public float greetRange;
 		public float greetCooldown;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			greet = s.SerializeObject<Placeholder>(greet, name: "greet");
+			greet = s.SerializeObject<Generic<AIAction_Template>>(greet, name: "greet");
 			greetRange = s.Serialize<float>(greetRange, name: "greetRange");
 			greetCooldown = s.Serialize<float>(greetCooldown, name: "greetCooldown");
 		}

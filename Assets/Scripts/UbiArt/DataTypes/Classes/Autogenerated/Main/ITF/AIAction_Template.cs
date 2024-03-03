@@ -1,5 +1,5 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.RJR | GameFlags.RFR | GameFlags.RL | GameFlags.RAVersion)]
+	[Games(GameFlags.ROVersion | GameFlags.RL | GameFlags.RAVersion)]
 	public partial class AIAction_Template : CSerializable {
 		public StringID action;
 		public StringID endMarker;
@@ -7,6 +7,7 @@ namespace UbiArt.ITF {
 		public bool finishOnContact;
 		public Vec2d rootPosScale;
 		public float ignoreContactDuration;
+		public string debugName;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			if (s.Settings.EngineVersion <= EngineVersion.RO || s.Settings.Platform == GamePlatform.Vita) {
@@ -18,6 +19,11 @@ namespace UbiArt.ITF {
 			finishOnContact = s.Serialize<bool>(finishOnContact, name: "finishOnContact");
 			rootPosScale = s.SerializeObject<Vec2d>(rootPosScale, name: "rootPosScale");
 			ignoreContactDuration = s.Serialize<float>(ignoreContactDuration, name: "ignoreContactDuration");
+			if (s.Settings.EngineVersion == EngineVersion.RO) {
+				if (!s.HasProperty(CSerializerObject.SerializerProperty.Binary) && s.HasFlags(SerializeFlags.Flags_xC0)) {
+					debugName = s.Serialize<string>(debugName, name: "debugName");
+				}
+			}
 		}
 		public override uint? ClassCRC => 0xA6F57F72;
 	}

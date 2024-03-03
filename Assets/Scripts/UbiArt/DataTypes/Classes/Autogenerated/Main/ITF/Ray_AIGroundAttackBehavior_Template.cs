@@ -48,16 +48,16 @@ namespace UbiArt.ITF {
 				float__1 = s.Serialize<float>(float__1, name: "float__1");
 			}
 		}
-		[Games(GameFlags.RJR | GameFlags.RFR)]
+		[Games(GameFlags.ROVersion)]
 		public partial class AttackData : CSerializable {
-			public AABB AABB__0;
-			public float float__1;
-			public Generic<AIPerformHitAction_Template> Generic_AIPerformHitAction_Template__2;
+			public AABB Range;
+			public float cooldown;
+			public Generic<AIAction_Template> action;
 			protected override void SerializeImpl(CSerializerObject s) {
 				base.SerializeImpl(s);
-				AABB__0 = s.SerializeObject<AABB>(AABB__0, name: "AABB__0");
-				float__1 = s.Serialize<float>(float__1, name: "float__1");
-				Generic_AIPerformHitAction_Template__2 = s.SerializeObject<Generic<AIPerformHitAction_Template>>(Generic_AIPerformHitAction_Template__2, name: "Generic<AIPerformHitAction_Template>__2");
+				Range = s.SerializeObject<AABB>(Range, name: "Range");
+				cooldown = s.Serialize<float>(cooldown, name: "cooldown");
+				action = s.SerializeObject<Generic<AIAction_Template>>(action, name: "action");
 			}
 		}
 		public override uint? ClassCRC => 0x2451FFFE;
