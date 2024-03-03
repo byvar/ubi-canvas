@@ -122,10 +122,10 @@ namespace UbiArt.ITF {
 			}
 		}
 		public enum Mode {
-			[Serialize("Mode_Once"            )] Once = 1,
-			[Serialize("Mode_OnceAndRetrigger")] OnceAndRetrigger = 2,
-			[Serialize("Mode_OnceAndReset"    )] OnceAndReset = 3,
-			[Serialize("Mode_Multiple"        )] Multiple = 4,
+			[Serialize("Mode_Once"            )] Once = 1, // If trigger was already triggered and you reload checkpoint, trigger remains triggered
+			[Serialize("Mode_OnceAndRetrigger")] OnceAndRetrigger = 2, // If trigger was already triggered and you reload checkpoint, retrigger
+			[Serialize("Mode_OnceAndReset"    )] OnceAndReset = 3, // If trigger was already triggered and you reload checkpoint, trigger resets so you can trigger again
+			[Serialize("Mode_Multiple"        )] Multiple = 4, // Can trigger more than once
 		}
 		public override uint? ClassCRC => 0x5E302A40;
 	}

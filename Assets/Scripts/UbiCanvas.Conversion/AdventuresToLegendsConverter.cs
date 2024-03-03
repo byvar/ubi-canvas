@@ -1253,6 +1253,42 @@ namespace UbiCanvas.Conversion {
 							rp: scene.FindActor(a => a.USERFRIENDLY == "mood_interior").Result.GetComponent<RenderParamComponent>());
 						break;
 					}
+
+				case "world/rlc_dojo/goldenharvest/dojo_goldenharvest_exp_base.isc": {
+						break;
+					}
+				case "world/rlc_dojo/playitcoy/dojo_playitcoy_lum_base.isc": {
+						// Modify lighting
+						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("mood"));
+						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
+						var ogColor = rp.Lighting.GlobalColor;
+						rp.Lighting.GlobalColor.a = 0.1f;
+						//rp.Lighting.GlobalColor = new UbiArt.Color(0.4f, 0.854902f, 1f, 0.2f);
+						/*var mul = 0.7f;
+						var alphaMul = 1f;
+						rp.Lighting.GlobalColor = new UbiArt.Color(ogColor.r * mul, ogColor.g * mul, ogColor.b * mul, ogColor.a * alphaMul);*/
+
+						// Remove lum king
+						var lk = scene.FindActor(a => a.USERFRIENDLY == "lumking");
+						lk.ContainingScene.DeletePickable(lk.Result);
+
+						// Fix lum chains
+						List<string> userFriendly = new List<string>() {
+							"lumschain@2", "lumschain","lumschain@5", // 3 combined lum chains
+						};
+						foreach (var lc in userFriendly) {
+							FixOneLumsChainSpawnMode(oldContext, newSettings, scene.FindActor(a => a.USERFRIENDLY == lc && a.POS2D.x > 158f && a.POS2D.x < 160f).Result);
+						}
+						var badLumsGroup = scene.FindActor(a => a.USERFRIENDLY == "tween_woodtype@1").ContainingScene
+							.FindActors(a => a.USERFRIENDLY.StartsWith("lumschain"));
+						foreach (var lc in badLumsGroup) {
+							FixOneLumsChainSpawnMode(oldContext, newSettings, lc.Result);
+						}
+
+						// Fix lanterns
+						FixFlyingLanterns(oldContext, newSettings, scene);
+						break;
+					}
 				case "world/rlc_dojo/iseethelight/dojo_iseethelight_lum_base.isc": {
 						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 
@@ -5707,6 +5743,191 @@ namespace UbiCanvas.Conversion {
 			}*/
 		}
 
+
+		public async Task FixFlyingLanterns(Context oldContext, Settings newSettings, Scene scene) {
+			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
+			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
+
+			Loader l = oldContext.Loader;
+			var structs = l.Context.Cache.Structs;
+
+			var lanternPath = new Path("world/rlc_dojo/gpe/plateform/flyinglantern/components/flyinglantern.tpl");
+
+			var lanterns = scene.FindActors(a => a.LUA == lanternPath);
+			foreach (var lantern in lanterns) {
+				var act = lantern.Result;
+				var ogComponent = act.GetComponent<RLC_FlyingLanternComponent>();
+				var ogTPL = act.template;
+
+				// Add hangspot actor
+				var hangspot = (Actor)act.Clone("isc");
+				hangspot.USERFRIENDLY += "_hangspot";
+				hangspot.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+					parentPath = new ObjectPath(act.USERFRIENDLY),
+					type = Bind.Type.BoneName,
+					typeData = 453384700
+				});
+				l.AddLoadedActor(hangspot);
+				lantern.ContainingScene.AddActor(hangspot);
+
+				// Add bounce tween
+				var bounce = await AddNewActor(lantern.ContainingScene, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"), name: $"{act.USERFRIENDLY}_bounce");
+				bounce.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+					parentPath = new ObjectPath(act.USERFRIENDLY),
+					type = Bind.Type.BoneName,
+					typeData = 3403407477,
+					offsetPos = new Vec3d(1.329219f * 3.298565f, 0, 0)
+				});
+				bounce.POS2D = act.POS2D;
+				var btrig = await AddNewActor(lantern.ContainingScene, new Path("world/common/logicactor/trigger/components/trigger_box.tpl"), name: $"{act.USERFRIENDLY}_btrig");
+				btrig.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+					parentPath = new ObjectPath(act.USERFRIENDLY),
+					type = Bind.Type.BoneName,
+					typeData = 3403407477,
+					offsetPos = new Vec3d(1.329219f * 3.298565f, 0, 0),
+					offsetAngle = 0f
+				});
+				btrig.POS2D = act.POS2D;
+				btrig.ANGLE = 0f;
+				btrig.SCALE = new Vec2d(0.2f, 1f);
+				btrig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Multiple;
+				btrig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath(bounce.USERFRIENDLY)
+				});
+
+				// Create hangspot TPL
+				if (CloneTemplateIfNecessary(lanternPath, "hangspot", "LANTERN HANGSPOT", ogTPL, out var hangspotTPL, act: hangspot)) {
+					hangspotTPL.obj.COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>() {
+						new Generic<ActorComponent_Template>(Merger.Merge<RO2_HangSpotComponent_Template>(hangspotTPL.obj.COMPONENTS[0].obj)),
+						new Generic<ActorComponent_Template>(new LinkComponent_Template())
+					};
+				}
+				hangspot.COMPONENTS = new CArrayO<Generic<ActorComponent>>() {
+					new Generic<ActorComponent>(Merger.Merge<RO2_HangSpotComponent>(
+						hangspot.COMPONENTS.FirstOrDefault(c => c.obj is RLC_FlyingLanternComponent).obj)),
+					new Generic<ActorComponent>(new LinkComponent())
+				};
+				hangspot.GetComponent<RO2_HangSpotComponent>().keepOrientation = true;
+				hangspot.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath(act.USERFRIENDLY)
+				});
+
+				// Create bounce TPL
+				bounce.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath(act.USERFRIENDLY)
+				});
+				var bt = bounce.GetComponent<TweenComponent>();
+				bt.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template() {
+					instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+						new TweenComponent_Template.InstructionSet() {
+							name = "Set",
+							triggable = true,
+							iterationCount = 1,
+							instructions = new CListO<Generic<TweenInstruction_Template>>() {
+								new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+									duration = 0,
+									triggerSelf = false,
+									triggerChildren = true,
+									_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
+										inputName = "bump",
+										inputValue = 1
+									})
+								}),
+								new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+									duration = 24 / 45f,
+								}),
+								new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+									duration = 0,
+									triggerSelf = false,
+									triggerChildren = true,
+									_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
+										inputName = "bump",
+										inputValue = 0
+									})
+								}),
+							}
+						}
+					}
+				});
+				bt.InstantiateFromInstanceTemplate(bt.UbiArtContext);
+
+				// Create main lantern TPL
+				if (CloneTemplateIfNecessary(lanternPath, "main", "LANTERN PARENT", ogTPL, out var newTPL, act: lantern.Result)) {
+					newTPL.obj.COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>(newTPL.obj.COMPONENTS.Where(c => c.obj is not RLC_FlyingLanternComponent_Template).ToArray());
+					newTPL.obj.AddComponent<LinkComponent_Template>();
+				}
+				act.COMPONENTS = new CArrayO<Generic<ActorComponent>>(act.COMPONENTS.Where(c => c.obj is not RLC_FlyingLanternComponent).ToArray());
+				act.AddComponent<LinkComponent>();
+				var tween = act.GetComponent<TweenComponent>();
+
+				if (tween?.instanceTemplate?.value != null) {
+					var tpl = tween.instanceTemplate.value;
+					var set = tpl.instructionSets[0];
+					set.triggable = true;
+					set.interruptible = false;
+
+					var instructions = new CListO<Generic<TweenInstruction_Template>>();
+					void AddInstruction(TweenInstruction_Template ins) {
+						instructions.Add(new Generic<TweenInstruction_Template>(ins));
+					}
+					AddInstruction(new TweenInput_Template() {
+						duration = 0f,
+						inputName = "hang",
+						uintValue = 1
+					});
+					AddInstruction(new TweenAnim_Template() {
+						duration = 0f,
+						anim = "grab"
+					});
+					AddInstruction(new TweenWait_Template() {
+						duration = 44/60f, // grab is 44 frames
+					});
+					AddInstruction(new TweenAnim_Template() {
+						duration = 0f,
+						anim = new StringID(0x14260DB8) // moving up
+					});
+					foreach (var ins in set.instructions) {
+						instructions.Add(ins);
+					}
+					AddInstruction(new TweenInput_Template() {
+						duration = 0f,
+						inputName = "hang",
+						uintValue = 0
+					});
+					AddInstruction(new TweenWait_Template() {
+						duration = 2f - (44/60f), // relax is 44 frames
+					});
+					AddInstruction(new TweenAnim_Template() {
+						duration = 0f,
+						anim = "relax"
+					});
+					AddInstruction(new TweenWait_Template() {
+						duration = 44 / 60f, // grab is 44 frames
+					});
+					AddInstruction(new TweenAnim_Template() {
+						duration = 0f,
+						anim = new StringID(0x2105e05f) // moving back down
+					});
+					foreach (var ins in set.instructions) {
+						if (ins.obj is TweenLine_Template) {
+							var cloneIns = (TweenLine_Template)ins.obj.Clone("isc");
+							cloneIns.duration = (float)(cloneIns.movement.Magnitude) / ogComponent.returnSpeed;
+							cloneIns.movement = new Vec3d(-cloneIns.movement.x, -cloneIns.movement.y, -cloneIns.movement.z);
+							//cloneIns.startDuration = cloneIns.duration;
+							AddInstruction(cloneIns);
+						}
+					}
+					AddInstruction(new TweenAnim_Template() {
+						duration = 0f,
+						anim = "stand"
+					});
+					set.instructions = instructions;
+
+					tween.InstantiateFromInstanceTemplate(tween.UbiArtContext);
+				}
+			}
+		}
+
 		public void AddRelayToMushrooms(Context oldContext, Settings newSettings, Scene scene) {
 			if (oldContext.Settings.Game != Game.RA && oldContext.Settings.Game != Game.RM) return;
 			if (newSettings.Game == Game.RA || newSettings.Game == Game.RM) return;
@@ -9035,7 +9256,7 @@ namespace UbiCanvas.Conversion {
 						var relay = await AddMusicEventRelay(scene, "mus_shaolin_medium", volume: vol, playOnNext: 0x60, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY).AddTag("Delay", "1.0");
-						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_outro", volume: vol + 1), new AABB() {
+						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_outro", volume: vol + 1, playOnNext: 0x60), new AABB() {
 							MIN = new Vec2d(63.4f, -115.3f),
 							MAX = new Vec2d(72.4f, -106.7f)
 						});
@@ -9078,6 +9299,48 @@ namespace UbiCanvas.Conversion {
 								MIN = new Vec2d(325, -38.7f),
 								MAX = new Vec2d(355, -13.6f)
 							}, volume: -15, padding: 10f);
+						break;
+					}
+				case "world/rlc_dojo/playitcoy/dojo_playitcoy_lum_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_bge_picturesofwildlife"), new AABB() {
+							MIN = new Vec2d(-7.11f, -21.56f),
+							MAX = new Vec2d(-3.4f, -12.36f)
+						});
+						await AddAmbienceInterpolator(scene, "amb_forest_river",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_river_lp.wav"),
+							aabb, volume: -22);
+						break;
+					}
+				case "world/rlc_dojo/lightthemup/dojo_lightthemup_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -12f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_easy", volume: vol), aabb);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_outro", volume: vol + 1, playOnNext: 0x60), new AABB() {
+							MIN = new Vec2d(63.4f, -115.3f),
+							MAX = new Vec2d(72.4f, -106.7f)
+						});
+						break;
+					}
+				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+						/*
+						AddSimpleNode("mus_eleanor_giftmatchseller", true, "part_eleanor_giftmatchseller_lp");
+						AddSimpleNode("mus_eleanor_giftmatchseller_outro", false, "part_eleanor_giftmatchseller_outro");
+						 * */
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							aabb, volume: -24, padding: 15f, paddingU: 50f);
+						break;
+					}
+				case "world/rlc_dojo/underconstruction/dojo_underconstruction_nmi_base.isc": {
+						/*
+						AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
+						AddSimpleNode("mus_shaolin_outro", false, "part_shaolin_outro");
+						 * */
 						break;
 					}
 				default:

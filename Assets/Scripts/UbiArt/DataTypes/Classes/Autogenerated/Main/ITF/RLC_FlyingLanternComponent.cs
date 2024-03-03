@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RA | GameFlags.RM)]
 	public partial class RLC_FlyingLanternComponent : RO2_HangSpotComponent {
-		public float returnSpeed;
+		public float returnSpeed = 5f;
 		public bool triggerOnce;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
