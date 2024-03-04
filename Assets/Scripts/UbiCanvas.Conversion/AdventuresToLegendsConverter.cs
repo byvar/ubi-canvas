@@ -9453,9 +9453,24 @@ namespace UbiCanvas.Conversion {
 						});
 
 						// Ambience
-						await AddAmbienceInterpolator(scene, "amb_fakir_cavern",
-							new Path("sound/100_ambiances/106_mountain_retro/amb_mountain_fakir_cavern_lp.wav"),
-							aabb, volume: -8);
+						await AddAmbienceInterpolator(scene, "amb_middle",
+							new Path("sound/100_ambiances/106_mountain_legends/amb_middle_mo_rl_1_flyingshield_lp.wav"),
+							aabb, volume: -12);
+
+						// Sounds
+						var act = scene.FindActor(a => a.USERFRIENDLY == "multipleevent_trigger@4");
+						var posAct = scene.FindActor(a => a.USERFRIENDLY == "fx_echafaudageexplosion_02@7");
+						var snd = await AddSimpleTriggableSound(scene, "bridgeexplosion", new Path("sound/600_sfx/608_challenge/sfx_challengemusical_wood_bridge_explosion.wav"), min: 1, max: 3, playerDetector: false, containingScene: posAct.ContainingScene);
+						snd.POS2D = new Vec2d(posAct.Result.POS2D.x, posAct.Result.POS2D.y);
+						snd.SCALE = Vec2d.One * 50f;
+						Link(act.Result, snd.USERFRIENDLY).AddTag("Delay", "1.2");
+
+						act = scene.FindActor(a => a.USERFRIENDLY == "multipleevent_trigger@5");
+						posAct = scene.FindActor(a => a.USERFRIENDLY == "fx_echafaudageexplosion_02@8");
+						snd = await AddSimpleTriggableSound(scene, "bridgeexplosion", new Path("sound/600_sfx/608_challenge/sfx_challengemusical_wood_bridge_explosion.wav"), min: 1, max: 3, playerDetector: false, containingScene: posAct.ContainingScene);
+						snd.POS2D = new Vec2d(posAct.Result.POS2D.x, posAct.Result.POS2D.y);
+						snd.SCALE = Vec2d.One * 50f;
+						Link(act.Result, snd.USERFRIENDLY).AddTag("Delay", "1.2");
 						break;
 					}
 				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
