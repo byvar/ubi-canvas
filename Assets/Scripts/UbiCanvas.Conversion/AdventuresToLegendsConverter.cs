@@ -1253,8 +1253,24 @@ namespace UbiCanvas.Conversion {
 							rp: scene.FindActor(a => a.USERFRIENDLY == "mood_interior").Result.GetComponent<RenderParamComponent>());
 						break;
 					}
+				case "world/rlc_dojo/underconstruction/dojo_underconstruction_nmi_base.isc": {
+						// Modify lighting
+						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("mood"));
+						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
+						var ogColor = rp.Lighting.GlobalColor;
+						rp.Lighting.GlobalColor.a = 0.15f;
+						break;
+					}
+				case "world/rlc_dojo/newyeardragonride/dojo_newyeardragonride_lum_base.isc": {
+						break;
+					}
 
 				case "world/rlc_dojo/goldenharvest/dojo_goldenharvest_exp_base.isc": {
+						// Modify lighting
+						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("mood"));
+						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
+						var ogColor = rp.Lighting.GlobalColor;
+						rp.Lighting.GlobalColor.a = 0.1f;
 						break;
 					}
 				case "world/rlc_dojo/playitcoy/dojo_playitcoy_lum_base.isc": {
@@ -2919,7 +2935,7 @@ namespace UbiCanvas.Conversion {
 		}
 
 		public async Task<Actor> AddSimpleTriggableSound(Scene scene, string soundID, Path soundPath, float volume = -8f,
-			Path path = null, uint numChannels = 1, float fadeInTime = 0f, float fadeOutTime = 0f, float randomPitchMin = 1f, float randomPitchMax = 1f, bool playerDetector = true,
+			Path path = null, uint numChannels = 1, float fadeInTime = 0f, float fadeOutTime = 0f, float randomPitchMin = 1f, float randomPitchMax = 1f, bool playerDetector = false,
 			float min = 1, float max = 2, bool loop = false, Scene containingScene = null) {
 			if (path == null) {
 				var scenePath = GetScenePath(scene);
@@ -9475,21 +9491,83 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
-						var vol = -10f;
-						/*
-						AddSimpleNode("mus_eleanor_giftmatchseller", true, "part_eleanor_giftmatchseller_lp");
-						AddSimpleNode("mus_eleanor_giftmatchseller_outro", false, "part_eleanor_giftmatchseller_outro");
-						 * */
+						var vol = -5f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_eleanor_giftmatchseller", volume: vol), aabb);
+
+						/*var outroTrigger = scene.FindActor(a => a.USERFRIENDLY == "redfirework@11");
+						var outro = await AddMusicEventRelay(scene, "mus_eleanor_giftmatchseller_outro", volume: vol, playOnNext: 0x60, containingScene: outroTrigger.ContainingScene);
+						TransformCopyPickable(outro, outroTrigger.Result);
+						Link(outroTrigger.Result, outro.USERFRIENDLY);*/
+						TransformAABB(await AddMusicTrigger(scene, "mus_eleanor_giftmatchseller_outro", volume: vol, playOnNext: 0x60), new AABB() {
+							MIN = new Vec2d(285.2f, -44f),
+							MAX = new Vec2d(302.3f, -19.8f)
+						});
+
+						// Ambience
 						await AddAmbienceInterpolator(scene, "amb_exterior",
 							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
-							aabb, volume: -24, padding: 15f);
+							aabb, volume: -10, padding: 15f);
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(237.3f, -61.3f),
+								MAX = new Vec2d(270.6f, -47.23f)
+							}, volume: -10);
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(26.7f, -83.1f),
+								MAX = new Vec2d(68.6f, -64.58f)
+							}, volume: -10);
+
+						// Sounds
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							var snd = await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+							snd.POS2D += Vec2d.Down * 7f;
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("watersplash"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), act.Result);
+						}
 						break;
 					}
 				case "world/rlc_dojo/underconstruction/dojo_underconstruction_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+
+						var trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@18" && a.POS2D.x < -2f);
+						var relay = await AddMusicEventRelay(scene, "mus_shaolin_hard", volume: vol, playOnNext: 0x60, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "ring@3");
+						relay = await AddMusicEventRelay(scene, "mus_shaolin_outro", volume: vol + 1, playOnNext: 0x60, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY).AddTag("Delay", "1.0");
+						relay.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+							parentPath = new ObjectPath(trigger.Result.USERFRIENDLY)
+						});
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_mountain",
+							new Path("sound/100_ambiances/106_mountain_retro/amb_mountain_lp.wav"),
+							aabb, volume: -10);
+						break;
+					}
+				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {
 						/*
-						AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
-						AddSimpleNode("mus_shaolin_outro", false, "part_shaolin_outro");
+						AddSimpleNode("mus_lostinclouds_credits", true, "part_lostinclouds_credits_lp");
+						AddSimpleNode("mus_ritual", true, "part_ritual_lp");
+						AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
+						AddMamboMambo();
 						 * */
+						break;
+					}
+				case "personal/filip/dojourbantest.isc": {
+						break;
+					}
+				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc": {
+						break;
+					}
+				case "world/rlc_dojo/greatwallwaterfall/dojo_greatwallwaterfall_lum_firelums.isc": {
 						break;
 					}
 				default:
