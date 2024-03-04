@@ -1286,7 +1286,15 @@ namespace UbiCanvas.Conversion {
 						}
 
 						// Fix lanterns
-						FixFlyingLanterns(oldContext, newSettings, scene);
+						await FixFlyingLanterns(oldContext, newSettings, scene);
+						break;
+					}
+				case "world/rlc_dojo/lightthemup/dojo_lightthemup_exp_base.isc": {
+						// Modify lighting
+						var clearColor = scene.FindActor(a => a.USERFRIENDLY.StartsWith("mood"));
+						var rp = clearColor.Result.GetComponent<RenderParamComponent>();
+						var ogColor = rp.Lighting.GlobalColor;
+						rp.Lighting.GlobalColor.a = 0.1f;
 						break;
 					}
 				case "world/rlc_dojo/iseethelight/dojo_iseethelight_lum_base.isc": {
@@ -5954,8 +5962,15 @@ namespace UbiCanvas.Conversion {
 					var ogTpl = act.template;
 					var suffix = "triggermushroom";
 					bool once = mushroomComponent.fireOnce;
+					bool trigspawn = mushroomComponent.triggerSpawn;
 					if (once) suffix += "_once";
+					if (trigspawn) suffix += "_trigspawn";
+					var originalMushroomName = act.USERFRIENDLY;
+					if (trigspawn) {
+						act.USERFRIENDLY += "_paused";
+					}
 					if (CloneTemplateIfNecessary(ogPath, suffix, "TRIGGER MUSHROOM", ogTpl, out var newTpl, act)) {
+						if(trigspawn) newTpl.obj.STARTPAUSED = true;
 						triggerTPL = newTpl.obj.GetComponent<TriggerComponent_Template>();
 						mushroomTPL = newTpl.obj.GetComponent<RO2_LightingMushroomComponent_Template>();
 						if (mushroomTPL.TornadoHitMultiplier != 1f) {
@@ -6121,6 +6136,97 @@ namespace UbiCanvas.Conversion {
 
 						return pauseswitch;
 					}
+					Actor CreateUnpauseSwitch(string suffix, Actor parent) {
+						var pausePath = new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl");
+
+						var unpauseSwitch = new Actor() {
+							USERFRIENDLY = originalMushroomName,
+							LUA = pausePath
+						};
+						if (parent != null) {
+							unpauseSwitch.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+								parentPath = new ObjectPath(parent.USERFRIENDLY),
+							});
+						}
+						l.AddLoadedActor(unpauseSwitch);
+
+
+						var tween = unpauseSwitch.AddComponent<TweenComponent>();
+						var linkComponent = unpauseSwitch.AddComponent<LinkComponent>();
+						linkComponent.Children = new CListO<ChildEntry>() {
+							new ChildEntry() {
+								Path = new ObjectPath(act.USERFRIENDLY) // Link to mushroom actor
+							}
+						};
+
+						tween.startSet = new StringID("Unpause");
+						tween.autoStart = false;
+						tween.instructionSets = new CListO<TweenComponent.InstructionSet>(new List<TweenComponent.InstructionSet>() {
+							new TweenComponent.InstructionSet() {
+								name = "Unpause",
+								instructions = new CArrayO<Generic<TweenInstruction>>(new Generic<TweenInstruction>[] {
+									new Generic<TweenInstruction>(new TweenEvent() {
+									}),
+									new Generic<TweenInstruction>(new TweenEvent() {
+									}),
+									new Generic<TweenInstruction>(new TweenEvent() {
+									}),
+									new Generic<TweenInstruction>(new TweenEvent() {
+									})
+								})
+							},
+						});
+						tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template());
+						var tpl = tween.instanceTemplate.value;
+						tpl.instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+							new TweenComponent_Template.InstructionSet() {
+								name = new StringID("Unpause"),
+								iterationCount = 1,
+								triggable = true,
+								instructions = new CListO<Generic<TweenInstruction_Template>>() {
+									new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+										triggerSelf = false,
+										triggerChildren = true,
+										_event = new Generic<UbiArt.ITF.Event>(new EventPause() {
+											pause = false
+										}),
+										duration = 0
+									}),
+									new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+										triggerSelf = false,
+										triggerChildren = true,
+										_event = new Generic<UbiArt.ITF.Event>(new EventShow() {
+											alpha = 0f,
+											transitionTime = 0f,
+											pauseOnEnd = false
+										}),
+										duration = 0
+									}),
+									new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+										triggerSelf = false,
+										triggerChildren = true,
+										_event = new Generic<UbiArt.ITF.Event>(new EventShow() {
+											alpha = 1f,
+											transitionTime = 0.35f,
+											pauseOnEnd = false
+										}),
+										duration = 0.35f
+									}),
+									new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+										triggerSelf = false,
+										triggerChildren = true,
+										_event = new Generic<UbiArt.ITF.Event>(new EventTrigger() {
+											activated = true
+										}),
+										duration = 0
+									})
+								}
+							}
+						};
+						res.ContainingScene.AddActor(unpauseSwitch);
+
+						return unpauseSwitch;
+					}
 					// Move links to new tween actor
 					var explosionIndexTag = new StringID(0xB8E2264A);
 					var triggerOnFireTag = new StringID(0xE060828E);
@@ -6153,6 +6259,8 @@ namespace UbiCanvas.Conversion {
 					var maxDistance = tweenDistances.Max();
 					int maxDistanceIndex = Array.IndexOf(tweenDistances, maxDistance);
 
+					Actor pause = null;
+					Actor unpause = null;
 					for (int i = 0; i < mushroomComponent.MushroomTargets.Count; i++) {
 						var linksOnExplosion_i = linksOnExplosion.Where(l => 
 						(i == 0 && (!l.TryGetTagValue<uint>(explosionIndexTag, out _))) // if target index isn't specified, default to 0
@@ -6166,8 +6274,14 @@ namespace UbiCanvas.Conversion {
 						if (once && i == maxDistanceIndex) {
 							// We're not done yet. Need to create a pauseswitch with the mushroom actor as target
 							// And the tween as parentBind
-							CreatePauseSwitch("pauseswitch", tween);
+							pause = CreatePauseSwitch("pauseswitch", tween);
 						}
+						if (trigspawn && i == 0) {
+							unpause = CreateUnpauseSwitch("unpauseswitch", tween);
+						}
+					}
+					if (unpause != null && pause != null) {
+						Link(pause, unpause.USERFRIENDLY);
 					}
 				}
 			}
@@ -7078,6 +7192,13 @@ namespace UbiCanvas.Conversion {
 			newAct.parentBind = act.parentBind;
 			return newAct;
 		}
+		ChildEntry Link(Actor a, string path) {
+			var ce = new ChildEntry() {
+				Path = new ObjectPath(path)
+			};
+			a.GetComponent<LinkComponent>().Children.Add(ce);
+			return ce;
+		}
 
 		public async Task<Actor> ReplaceTweenType(Scene scene, Actor act, Path newTPL, Context contextToLoadFrom = null) {
 			var newAct = await ReplaceActor(scene, act, newTPL, contextToLoadFrom: contextToLoadFrom);
@@ -7277,13 +7398,6 @@ namespace UbiCanvas.Conversion {
 					}
 				}
 				return totalAABB;
-			}
-			ChildEntry Link(Actor a, string path) {
-				var ce = new ChildEntry() {
-					Path = new ObjectPath(path)
-				};
-				a.GetComponent<LinkComponent>().Children.Add(ce);
-				return ce;
 			}
 			async Task ProcessGears(float relativeVolume = 0f) {
 				var sceneTree = new PickableTree(scene);
@@ -9304,6 +9418,7 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_dojo/playitcoy/dojo_playitcoy_lum_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -10f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 4f), aabb);
 						TransformAABB(await AddMusicTrigger(scene, "mus_bge_picturesofwildlife"), new AABB() {
 							MIN = new Vec2d(-7.11f, -21.56f),
 							MAX = new Vec2d(-3.4f, -12.36f)
@@ -9328,13 +9443,19 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_dojo/lightthemup/dojo_lightthemup_exp_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
-						var vol = -12f;
+						var vol = -16f;
 						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_easy", volume: vol), aabb);
 
-						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_outro", volume: vol + 1, playOnNext: 0x60), new AABB() {
-							MIN = new Vec2d(63.4f, -115.3f),
-							MAX = new Vec2d(72.4f, -106.7f)
+						var containingScene = scene.FindActor(a => a.USERFRIENDLY == "exitflag").ContainingScene;
+						TransformAABB(await AddMusicTrigger(scene, "mus_shaolin_outro", volume: vol + 1, playOnNext: 0x60, containingScene: containingScene), new AABB() {
+							MIN = new Vec2d(-4, 1.25f),
+							MAX = new Vec2d(4, 8)
 						});
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_fakir_cavern",
+							new Path("sound/100_ambiances/106_mountain_retro/amb_mountain_fakir_cavern_lp.wav"),
+							aabb, volume: -8);
 						break;
 					}
 				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc": {
@@ -9346,7 +9467,7 @@ namespace UbiCanvas.Conversion {
 						 * */
 						await AddAmbienceInterpolator(scene, "amb_exterior",
 							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
-							aabb, volume: -24, padding: 15f, paddingU: 50f);
+							aabb, volume: -24, padding: 15f);
 						break;
 					}
 				case "world/rlc_dojo/underconstruction/dojo_underconstruction_nmi_base.isc": {
