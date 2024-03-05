@@ -5794,30 +5794,96 @@ namespace UbiCanvas.Conversion {
 				l.AddLoadedActor(hangspot);
 				lantern.ContainingScene.AddActor(hangspot);
 
-				// Add bounce tween
-				var bounce = await AddNewActor(lantern.ContainingScene, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"), name: $"{act.USERFRIENDLY}_bounce");
-				bounce.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+				async Task<Actor> CreatePolylineTrigger(string tweenSuffix, Bind parentBind, Vec2d scale, StringID input, float duration, bool selfTrigger = true) {
+					// Add bounce tween
+					var bounce = await AddNewActor(lantern.ContainingScene, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"), name: $"{act.USERFRIENDLY}_{tweenSuffix}");
+					bounce.parentBind = new UbiArt.Nullable<Bind>(parentBind);
+					bounce.POS2D = act.POS2D;
+
+					if (selfTrigger) {
+						var btrig = await AddNewActor(lantern.ContainingScene, new Path("world/common/logicactor/trigger/components/trigger_box.tpl"), name: $"{act.USERFRIENDLY}_{tweenSuffix}_trig");
+						btrig.parentBind = new UbiArt.Nullable<Bind>(parentBind);
+						btrig.POS2D = act.POS2D;
+						btrig.ANGLE = 0f;
+						btrig.SCALE = scale;
+						btrig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Multiple;
+						btrig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+							Path = new ObjectPath(bounce.USERFRIENDLY)
+						});
+					}
+
+					bounce.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+						Path = new ObjectPath(act.USERFRIENDLY)
+					});
+					var bt = bounce.GetComponent<TweenComponent>();
+					bt.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template() {
+						instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+						new TweenComponent_Template.InstructionSet() {
+							name = "Set",
+							triggable = true,
+							iterationCount = 1,
+							instructions = new CListO<Generic<TweenInstruction_Template>>() {
+								new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+									duration = 0,
+									triggerSelf = false,
+									triggerChildren = true,
+									_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
+										inputName = input,
+										inputValue = 1
+									})
+								}),
+								new Generic<TweenInstruction_Template>(new TweenWait_Template() {
+									duration = duration,
+								}),
+								new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+									duration = 0,
+									triggerSelf = false,
+									triggerChildren = true,
+									_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
+										inputName = input,
+										inputValue = 0
+									})
+								}),
+							}
+						}
+					}
+					});
+					bt.InstantiateFromInstanceTemplate(bt.UbiArtContext);
+
+					return bounce;
+				}
+
+				await CreatePolylineTrigger("bounce", new Bind() {
 					parentPath = new ObjectPath(act.USERFRIENDLY),
 					type = Bind.Type.BoneName,
 					typeData = 3403407477,
 					offsetPos = new Vec3d(1.329219f * 3.298565f, 0, 0)
-				});
-				bounce.POS2D = act.POS2D;
-				var btrig = await AddNewActor(lantern.ContainingScene, new Path("world/common/logicactor/trigger/components/trigger_box.tpl"), name: $"{act.USERFRIENDLY}_btrig");
-				btrig.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+				}, new Vec2d(0.2f, 1f), "bump", 24 / 45f);
+
+				await CreatePolylineTrigger("hang", new Bind() {
+					parentPath = new ObjectPath(act.USERFRIENDLY)
+				}, Vec2d.One, "hang", 14 / 45f, selfTrigger: false);
+
+				await CreatePolylineTrigger("walljump", new Bind() {
 					parentPath = new ObjectPath(act.USERFRIENDLY),
 					type = Bind.Type.BoneName,
 					typeData = 3403407477,
-					offsetPos = new Vec3d(1.329219f * 3.298565f, 0, 0),
-					offsetAngle = 0f
+					offsetPos = new Vec3d(1.329219f * 3.298565f / 2f, -1.23f - 0.15f, 0)
+				}, new Vec2d(1.329219f / 2f, 0.1f), "walljump", 19 / 45f);
+
+				await CreatePolylineTrigger("walljump2", new Bind() {
+					parentPath = new ObjectPath(act.USERFRIENDLY),
+					type = Bind.Type.BoneName,
+					typeData = 3403407477,
+					offsetPos = new Vec3d(1.329219f * 3.298565f / 2f, 1.23f + 0.2f, 0)
+				}, new Vec2d(1.329219f / 2f, 0.1f), "walljump", 19 / 45f);
+
+				// Add hang tween
+				var hang = await AddNewActor(lantern.ContainingScene, new Path("world/common/logicactor/tweening/tweeneditortype/components/tween_notype.tpl"), name: $"{act.USERFRIENDLY}_hang");
+				hang.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+					parentPath = new ObjectPath(act.USERFRIENDLY),
 				});
-				btrig.POS2D = act.POS2D;
-				btrig.ANGLE = 0f;
-				btrig.SCALE = new Vec2d(0.2f, 1f);
-				btrig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Multiple;
-				btrig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
-					Path = new ObjectPath(bounce.USERFRIENDLY)
-				});
+				hang.POS2D = act.POS2D;
 
 				// Create hangspot TPL
 				if (CloneTemplateIfNecessary(lanternPath, "hangspot", "LANTERN HANGSPOT", ogTPL, out var hangspotTPL, act: hangspot)) {
@@ -5836,52 +5902,16 @@ namespace UbiCanvas.Conversion {
 					Path = new ObjectPath(act.USERFRIENDLY)
 				});
 
-				// Create bounce TPL
-				bounce.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
-					Path = new ObjectPath(act.USERFRIENDLY)
-				});
-				var bt = bounce.GetComponent<TweenComponent>();
-				bt.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template() {
-					instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
-						new TweenComponent_Template.InstructionSet() {
-							name = "Set",
-							triggable = true,
-							iterationCount = 1,
-							instructions = new CListO<Generic<TweenInstruction_Template>>() {
-								new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
-									duration = 0,
-									triggerSelf = false,
-									triggerChildren = true,
-									_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
-										inputName = "bump",
-										inputValue = 1
-									})
-								}),
-								new Generic<TweenInstruction_Template>(new TweenWait_Template() {
-									duration = 24 / 45f,
-								}),
-								new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
-									duration = 0,
-									triggerSelf = false,
-									triggerChildren = true,
-									_event = new Generic<UbiArt.ITF.Event>(new EventSetUintInput() {
-										inputName = "bump",
-										inputValue = 0
-									})
-								}),
-							}
-						}
-					}
-				});
-				bt.InstantiateFromInstanceTemplate(bt.UbiArtContext);
-
 				// Create main lantern TPL
 				if (CloneTemplateIfNecessary(lanternPath, "main", "LANTERN PARENT", ogTPL, out var newTPL, act: lantern.Result)) {
 					newTPL.obj.COMPONENTS = new CArrayO<Generic<ActorComponent_Template>>(newTPL.obj.COMPONENTS.Where(c => c.obj is not RLC_FlyingLanternComponent_Template).ToArray());
 					newTPL.obj.AddComponent<LinkComponent_Template>();
 				}
 				act.COMPONENTS = new CArrayO<Generic<ActorComponent>>(act.COMPONENTS.Where(c => c.obj is not RLC_FlyingLanternComponent).ToArray());
-				act.AddComponent<LinkComponent>();
+				var link = act.AddComponent<LinkComponent>();
+				link.Children.Add(new ChildEntry() {
+					 Path = new ObjectPath(hang.USERFRIENDLY)
+				});
 				var tween = act.GetComponent<TweenComponent>();
 
 				if (tween?.instanceTemplate?.value != null) {
@@ -5894,11 +5924,11 @@ namespace UbiCanvas.Conversion {
 					void AddInstruction(TweenInstruction_Template ins) {
 						instructions.Add(new Generic<TweenInstruction_Template>(ins));
 					}
-					AddInstruction(new TweenInput_Template() {
+					/*AddInstruction(new TweenInput_Template() {
 						duration = 0f,
 						inputName = "hang",
 						uintValue = 1
-					});
+					});*/
 					AddInstruction(new TweenAnim_Template() {
 						duration = 0f,
 						anim = "grab"
@@ -5913,11 +5943,11 @@ namespace UbiCanvas.Conversion {
 					foreach (var ins in set.instructions) {
 						instructions.Add(ins);
 					}
-					AddInstruction(new TweenInput_Template() {
+					/*AddInstruction(new TweenInput_Template() {
 						duration = 0f,
 						inputName = "hang",
 						uintValue = 0
-					});
+					});*/
 					AddInstruction(new TweenWait_Template() {
 						duration = 2f - (44/60f), // relax is 44 frames
 					});
@@ -9340,6 +9370,19 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_forest_river",
 							new Path("sound/100_ambiances/101_jungle/amb_forest_river_lp.wav"),
 							aabb, volume: -22);
+
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(278.2f, -55.4f),
+								MAX = new Vec2d(310.05f, -43.69f)
+							}, volume: -10);
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(384.2f, -60.2f),
+								MAX = new Vec2d(435.58f, -34.14f)
+							}, volume: -10);
 						break;
 					}
 				case "world/rlc_dojo/tothemarket/dojo_tothemarket_exp_base.isc": {
