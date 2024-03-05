@@ -14,11 +14,20 @@ namespace UbiCanvas.Tools
 		public string Type { get; set; }
 		public string Namespace { get; set; } = "UbiArt.ITF";
 		public bool UseContainer { get; set; }
+		public bool LogInitialFiles { get; set; }
 
 		public async Task DeserializeAsync()
 		{
 			using Context context = CreateContext();
+
+			bool originalLogValue = UnitySettings.Log;
+			if (!LogInitialFiles)
+				UnitySettings.Log = false;
+
 			await context.Loader.LoadInitial();
+
+			if (!LogInitialFiles)
+				UnitySettings.Log = originalLogValue;
 
 			if (String.IsNullOrWhiteSpace(Type))
 			{
