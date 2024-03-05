@@ -3920,6 +3920,11 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_shaolin_hard", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_hard_mastermix.wav"));
 						AddPart("part_shaolin_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_shaolinchallenge_outro.wav"));
 
+						/*AddPart("part_part1castle_intro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_intro.wav"));
+						AddPart("part_part1castle_lp", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_loop.wav"));
+						AddPart("part_part1castle_outro", new Path("sound/300_music/301_junglelegends/ju_rl_2_movingroots_02/mus_ju_rl_part1castle_outro.wav"));
+						*/
+
 						// Tree
 						AddSimpleNode("mus_bge_picturesofwildlife", true, "part_bge_picturesofwildlife_lp");
 
@@ -3930,21 +3935,28 @@ namespace UbiCanvas.Conversion {
 
 						AddSimpleNode("mus_shaolin_hard", true, "part_shaolin_hard");
 						AddSimpleNode("mus_shaolin_outro", false, "part_shaolin_outro");
+
+						/*AddSimpleSequenceNode("mus_part1castle", true, 
+							new string[] { "part_part1castle_intro" },
+							new string[] { "part_part1castle_lp" });
+						AddSimpleNode("mus_part1castle_outro", false, "part_part1castle_outro");*/
+
+						// Common
+						AddMamboMambo();
 						break;
 					case MusicTreeID.RLC_17_Dojo3:
 						// COMPLETE
 						// Parts
-						AddPart("part_lostinclouds_credits_lp", new Path("sound/300_music/310_common/credits/mus_avatar_full.wav"));
+						AddPart("part_bge_mingtzu_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_mingtzu_lp.wav"));
 						AddPart("part_ritual_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_lp.wav"));
 						AddPart("part_bge_funkybar100_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_funkybar100_lp.wav"));
-						
+						AddPart("part_lostinclouds_credits_lp", new Path("sound/300_music/310_common/credits/mus_avatar_full.wav"));
+
 						// Tree
-						AddSimpleNode("mus_lostinclouds_credits", true, "part_lostinclouds_credits_lp");
+						AddSimpleNode("mus_bge_mingtzu", true, "part_bge_mingtzu_lp");
 						AddSimpleNode("mus_ritual", true, "part_ritual_lp");
 						AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
-
-						// Common
-						AddMamboMambo();
+						AddSimpleNode("mus_lostinclouds_credits", true, "part_lostinclouds_credits_lp");
 						break;
 					case MusicTreeID.RLC_18_Bonus:
 						// TODO
@@ -7399,12 +7411,14 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_dojo/lightthemup/dojo_lightthemup_exp_base.isc":
 				case "world/rlc_dojo/forbiddencity/dojo_forbiddencity_exp_base.isc":
 				case "world/rlc_dojo/underconstruction/dojo_underconstruction_nmi_base.isc":
+				case "world/rlc_dojo/greatwallwaterfall/dojo_greatwallwaterfall_lum_firelums.isc":
 					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_16_Dojo2);
 					break;
 				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc":
 				case "personal/filip/dojourbantest.isc":
+				case "world/rlc_dojo/torchingteensietrouble/dojo_torchingteensietrouble_exp_base.isc":
 				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc":
-				case "world/rlc_dojo/greatwallwaterfall/dojo_greatwallwaterfall_lum_firelums.isc":
+				case "world/rlc_dojo/newyeardragonride/dojo_newyeardragonride_lum_base.isc":
 					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_17_Dojo3);
 					break;
 				case "world/rlc_enchantedforest/forestegghunt/enchantedforest_forestegghunt_exp_base.isc":
@@ -9476,9 +9490,9 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_dojo/playitcoy/dojo_playitcoy_lum_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
-						var vol = -10f;
+						var vol = -11f;
 						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 4f), aabb);
-						TransformAABB(await AddMusicTrigger(scene, "mus_bge_picturesofwildlife"), new AABB() {
+						TransformAABB(await AddMusicTrigger(scene, "mus_bge_picturesofwildlife", volume: vol), new AABB() {
 							MIN = new Vec2d(-7.11f, -21.56f),
 							MAX = new Vec2d(-3.4f, -12.36f)
 						});
@@ -9595,22 +9609,133 @@ namespace UbiCanvas.Conversion {
 							aabb, volume: -10);
 						break;
 					}
+				case "world/rlc_dojo/greatwallwaterfall/dojo_greatwallwaterfall_lum_firelums.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 2f), aabb);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_mambomambo", volume: vol),
+							new AABB() {
+								MIN = new Vec2d(69.3f, 22.7f),
+								MAX = new Vec2d(76.7f, 39.1f)
+							});
+						TransformAABB(await AddMusicTrigger(scene, "mus_mambomambo_outro", playOnNext: 0x60, volume: vol),
+							new AABB() {
+								MIN = new Vec2d(541.5f, -87f),
+								MAX = new Vec2d(594.88f, -30f)
+							});
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_mountain",
+							new Path("sound/100_ambiances/106_mountain_retro/amb_mountain_lp.wav"),
+							aabb, volume: -10);
+						break;
+					}
 				case "world/rlc_dojo/ringtraining/dojo_ringtraining_exp_base.isc": {
-						/*
-						AddSimpleNode("mus_lostinclouds_credits", true, "part_lostinclouds_credits_lp");
-						AddSimpleNode("mus_ritual", true, "part_ritual_lp");
-						AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
-						AddMamboMambo();
-						 * */
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -17f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_bge_mingtzu", volume: vol), aabb);
+
+						// Ambience: Exterior
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(25.9f, -34.04f),
+								MAX = new Vec2d(82.49f, 10f)
+							}, volume: -10, padding: 15f);
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(112.1f, -32.3f),
+								MAX = new Vec2d(155.4f, 10f)
+							}, volume: -10, padding: 15f);
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(183.5f, -31.5f),
+								MAX = new Vec2d(222f, 10f)
+							}, volume: -10, padding: 15f);
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(266.7f, -27.8f),
+								MAX = new Vec2d(337.1f, 10f)
+							}, volume: -10, padding: 15f);
+
+						// Amb: Interior
+						await AddAmbienceInterpolator(scene, "amb_interior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(2.9f, -31.9f),
+								MAX = new Vec2d(25.4f, -16.6f)
+							}, volume: -24, padding: 10f);
+						await AddAmbienceInterpolator(scene, "amb_interior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(80.8f, -31.3f),
+								MAX = new Vec2d(112.2f, -10.6f)
+							}, volume: -24, padding: 10f);
+						await AddAmbienceInterpolator(scene, "amb_interior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(152.8f, -30f),
+								MAX = new Vec2d(182f, -10f)
+							}, volume: -24, padding: 10f);
+						await AddAmbienceInterpolator(scene, "amb_interior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(220.8f, -25.8f),
+								MAX = new Vec2d(262.6f, 6.9f)
+							}, volume: -24, padding: 10f);
+
+						// Ambience: Underwater
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(-0.8f, -49.7f),
+								MAX = new Vec2d(91.3f, -37.4f)
+							}, volume: -10);
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(101.2f, -45.8f),
+								MAX = new Vec2d(162.2f, -36.11f)
+							}, volume: -10);
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(202.8f, -45.8f),
+								MAX = new Vec2d(239.3f, -32.9f)
+							}, volume: -10);
+						await AddAmbienceInterpolator(scene, "amb_jun_underwater",
+							new Path("sound/100_ambiances/101_jungle/amb_underwater_lp.wav"),
+							new AABB() {
+								MIN = new Vec2d(249.2f, -45.8f),
+								MAX = new Vec2d(327.28f, -29.8f)
+							}, volume: -10);
+
+						// Sounds
+						/*foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("rainfillet"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}*/
 						break;
 					}
 				case "personal/filip/dojourbantest.isc": {
+						// mus_ritual
+						break;
+					}
+				case "world/rlc_dojo/torchingteensietrouble/dojo_torchingteensietrouble_exp_base.isc": {
+						// mus_ritual
 						break;
 					}
 				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc": {
+						// mus_bge_funkybar100
 						break;
 					}
-				case "world/rlc_dojo/greatwallwaterfall/dojo_greatwallwaterfall_lum_firelums.isc": {
+				case "world/rlc_dojo/newyeardragonride/dojo_newyeardragonride_lum_base.isc": {
+						// mus_lostinclouds_credits
 						break;
 					}
 				default:
