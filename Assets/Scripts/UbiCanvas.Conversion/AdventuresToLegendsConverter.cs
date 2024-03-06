@@ -2427,32 +2427,23 @@ namespace UbiCanvas.Conversion {
 						// Convert all SMV to frise
 						AllSMVToFrise(oldContext, scene);
 
-						// Fix with trigger_fadeout? ---> Doesn't work
-						//var tweenToCorrect = scene.FindActor(a => a.USERFRIENDLY == "tween_notype@2");
-						/*var tween = tweenToCorrect.Result;
-						tweenToCorrect.ContainingScene.DeletePickable(tween);
-
-						var newActor = await AddNewActor(tweenToCorrect.ContainingScene, new Path("world/common/logicactor/trigger/components/trigger_fade_out.tpl"), name: tween.USERFRIENDLY);
-						newActor.GetComponent<LinkComponent>().Children = tweenToCorrect.Result.GetComponent<LinkComponent>().Children;
-						newActor.POS2D = tween.POS2D;
-						newActor.ANGLE = tween.ANGLE;
-						newActor.SCALE = tween.SCALE;
-						newActor.RELATIVEZ = tween.RELATIVEZ;
-						newActor.xFLIPPED = tween.xFLIPPED;
-						newActor.parentBind = tween.parentBind;
-						newActor.USERFRIENDLY = tween.USERFRIENDLY;*/
-
-						// Fix with extra tween instructions? ---> Doesn't work
-						/*var t = tweenToCorrect.Result.GetComponent<TweenComponent>();
+						// Fix a tween
+						var tweenToCorrect = scene.FindActor(a => a.USERFRIENDLY == "tween_notype@2");
+						var t = tweenToCorrect.Result.GetComponent<TweenComponent>();
 						var tpl = t.instanceTemplate.value;
-						tpl.instructionSets[1].instructions[0].obj.duration = 1f;
-						var ev = ((TweenEvent_Template)tpl.instructionSets[1].instructions[0].obj)._event?.obj as EventShow;
-						ev.alpha = 0f;
-						ev.transitionTime = 1f;
-						tpl.instructionSets[1].instructions.Add(new Generic<TweenInstruction_Template>(new TweenWait_Template() {
-							duration = 1f
-						}));
-						t.instructionSets[1].instructions.Add(new Generic<TweenInstruction>(new TweenWait()));*/
+						var te = ((TweenEvent_Template)tpl.instructionSets[0].instructions[0].obj);
+						te._event = new Generic<UbiArt.ITF.Event>(new EventShow() {
+							alpha = 0,
+							transitionTime = 0.2f,
+						});
+
+						// Move a collision frise up because you die before colliding with it
+						var f = scene.FindPickable(p => p.USERFRIENDLY == "invisiblegroundnoshadow@1");
+						f.Result.POS2D += Vec2d.Up;
+
+						// Move a rabbid
+						var rabbid = scene.FindActor(a => a.USERFRIENDLY == "seasonaleventenemyspawner@1");
+						rabbid.Result.POS2D = new Vec2d(98.1f, -31.35f);
 						break;
 					}
 				case "world/rlc/common/enemy/rabbid/rabbid_shield.tsc": {
