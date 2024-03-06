@@ -1373,7 +1373,9 @@ namespace UbiCanvas.Conversion {
 							pt.ContainingScene.DeletePickable(pt.Result);
 						}
 						AllSMVToFrise(oldContext, scene);
-						ApplySpecialRenderParamsToScene(scene, applyGlobalColor: true, applyFog: false, turnOffUseTemplatePrimitiveParams: true);
+						ApplySpecialRenderParamsToScene(scene,
+							applyGlobalColor: true, applyFog: false, turnOffUseTemplatePrimitiveParams: true,
+							filter: p => !p.USERFRIENDLY.StartsWith("fx_fireworks_01_trigger"));
 						break;
 					}
 				case "world/rlc_maze/lumlabyrinth/maze_lumlabyrinth_lum_base.isc": {
@@ -5782,10 +5784,10 @@ namespace UbiCanvas.Conversion {
 						continue;
 					}
 				}
-				//if (CloneTemplateIfNecessary(teensyRocketPath, "trigrocket", "TRIGGER ROCKET", rocket.Result.template, out var newTPL, rocket.Result)) {
+				if (CloneTemplateIfNecessary(teensyRocketPath, "trigrocket", "TRIGGER ROCKET", rocket.Result.template, out var newTPL, rocket.Result)) {
 					// TODO
 					//newTPL.obj.RemoveComponent<RO2_TeensyRocketComponent_Template>();
-				//}
+				}
 				rocket.Result.parentBind = new UbiArt.Nullable<Bind>();
 				var rocketTeensies = rocket.ContainingScene.FindActors(a => 
 					a.GetComponent<RO2_FriendlyBTAIComponent>() != null && 
@@ -5827,6 +5829,11 @@ namespace UbiCanvas.Conversion {
 			/*var teensies = scene.FindActors(a => a.GetComponent<RO2_FriendlyBTAIComponent>() != null);
 			foreach (var act in teensies) {
 				act.Result.parentBind = new UbiArt.Nullable<Bind>();
+			}*/
+			/*var fuseFX = scene.FindActors(a => (a.parentBind?.value?.parentPath?.id ?? "").StartsWith("fuse_mask"));
+			foreach (var act in fuseFX) {
+				act.Result.parentBind.value.offsetPos.x = 0f;
+				act.Result.parentBind.value.offsetPos.y = 0f;
 			}*/
 		}
 

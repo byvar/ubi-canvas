@@ -5,11 +5,11 @@ namespace UbiArt.ITF {
 		public GFXMaterialSerializable amvMaterial;
 		public Path amvGameMaterial;
 		public Path amvGameMaterialFlipped;
-		public float spawnIntervalMin;
-		public float spawnIntervalMax;
-		public float zOffset;
-		public float scaleMultiplierMin;
-		public float scaleMultiplierMax;
+		public float spawnIntervalMin = 0.8f;
+		public float spawnIntervalMax = 1.2f;
+		public float zOffset = 0.002f;
+		public float scaleMultiplierMin = 0.8f;
+		public float scaleMultiplierMax = 1.2f;
 		public uint animIndexMin;
 		public uint animIndexMax;
 		public float beginLength;

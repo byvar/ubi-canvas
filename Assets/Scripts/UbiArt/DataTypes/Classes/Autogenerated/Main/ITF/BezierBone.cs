@@ -4,7 +4,7 @@ namespace UbiArt.ITF {
 		public StringID id;
 		public float distance;
 		public float offset;
-		public bool followTangent;
+		public bool followTangent = true;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			id = s.SerializeObject<StringID>(id, name: "id");
