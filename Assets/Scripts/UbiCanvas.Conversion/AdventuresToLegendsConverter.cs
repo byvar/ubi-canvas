@@ -1342,6 +1342,22 @@ namespace UbiCanvas.Conversion {
 						}
 						break;
 					}
+				case "personal/filip/dojourbantest.isc": {
+						// Add lighting
+						var rp = await AddNewActor(scene, new Path("world/common/levelart/renderparam/renderparam.tpl"));
+						var rpc = rp.GetComponent<RenderParamComponent>();
+						rpc.Lighting = new SubRenderParam_Lighting() {
+							Enable = true,
+							GlobalColor = new UbiArt.Color(0.203922f, 0.247059f, 0.419608f, 0.25f), //0.9882353f)
+							GlobalStaticFog = new UbiArt.Color(0.203922f, 0.247059f, 0.419608f, 0.25f)
+						};
+						var box = rp.GetComponent<BoxInterpolatorComponent>();
+						var aabb = GetSceneAABBFromFrises(scene);
+						box.innerBox = aabb;
+						box.outerBox = PadAABB(aabb, 20f);
+						//ApplySpecialRenderParamsToScene(scene, useExistingFogAlpha: true);
+						break;
+					}
 				case "world/rlc_dojo/torchingteensietrouble/dojo_torchingteensietrouble_exp_base.isc": {
 						FixRockets(oldContext, newSettings, scene);
 						var pickableTree = new PickableTree(scene);
@@ -1356,8 +1372,8 @@ namespace UbiCanvas.Conversion {
 							}
 							pt.ContainingScene.DeletePickable(pt.Result);
 						}
-
-						ApplySpecialRenderParamsToScene(scene);
+						AllSMVToFrise(oldContext, scene);
+						ApplySpecialRenderParamsToScene(scene, applyGlobalColor: true, applyFog: false, turnOffUseTemplatePrimitiveParams: true);
 						break;
 					}
 				case "world/rlc_maze/lumlabyrinth/maze_lumlabyrinth_lum_base.isc": {
@@ -3942,12 +3958,25 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_ritual_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_lp.wav"));
 						AddPart("part_bge_funkybar100_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_funkybar100_lp.wav"));
 						AddPart("part_lostinclouds_credits_lp", new Path("sound/300_music/310_common/credits/mus_avatar_full.wav"));
+						AddPart("part_foodinvaded_09", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_09.wav"));
+						AddPart("part_foodinvaded_11", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_11.wav"));
+						AddPart("part_foodinvaded_1260", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_1260.wav"));
+						AddPart("part_foodinvaded_16", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_16.wav"));
+						AddPart("part_foodinvaded_0530", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_0530.wav"));
+						AddPart("part_foodinvaded_0640", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_0640.wav"));
 
 						// Tree
 						AddSimpleNode("mus_bge_mingtzu", true, "part_bge_mingtzu_lp");
 						AddSimpleNode("mus_ritual", true, "part_ritual_lp");
 						AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
 						AddSimpleNode("mus_lostinclouds_credits", true, "part_lostinclouds_credits_lp");
+
+						AddSimpleNode("mus_foodinvaded_09", false, "part_foodinvaded_09");
+						AddSimpleNode("mus_foodinvaded_11", false, "part_foodinvaded_11");
+						AddSimpleNode("mus_foodinvaded_1260", false, "part_foodinvaded_1260");
+						AddSimpleNode("mus_foodinvaded_16", false, "part_foodinvaded_16");
+						AddSimpleNode("mus_foodinvaded_0530", false, "part_foodinvaded_0530");
+						AddSimpleNode("mus_foodinvaded_0640", false, "part_foodinvaded_0640");
 						break;
 					case MusicTreeID.RLC_18_Bonus:
 						// TODO
@@ -4743,8 +4772,8 @@ namespace UbiCanvas.Conversion {
 		public void ApplySpecialRenderParamsToScene(Scene scene, 
 			RenderParamComponent rp = null,
 			Predicate<Pickable> filter = null,
-			bool applyFog = true, bool applyLighting = true,
-			bool useExistingFogAlpha = false) {
+			bool applyFog = true, bool applyLighting = true, bool applyGlobalColor = false,
+			bool useExistingFogAlpha = false, bool turnOffUseTemplatePrimitiveParams = false) {
 			if (rp == null) {
 				// Find first RenderParam in scene
 				rp = scene.FindActor(a => a.GetComponent<RenderParamComponent>() != null).Result.GetComponent<RenderParamComponent>();
@@ -4752,6 +4781,7 @@ namespace UbiCanvas.Conversion {
 			var globalStaticFog = rp.Lighting.GlobalStaticFog;
 			var globalBrightness = rp.Lighting.GlobalBrightness;
 			var globalFogOpacity = rp.Lighting.GlobalFogOpacity;
+			var globalColor = rp.Lighting.GlobalColor ?? UbiArt.Color.Zero;
 
 			void ApplyToPrimitiveParameters(GFXPrimitiveParam pp) {
 				if (pp.UseGlobalLighting) {
@@ -4767,6 +4797,20 @@ namespace UbiCanvas.Conversion {
 					if (applyLighting) {
 						pp.FrontLightBrightness = globalBrightness;
 					}
+					if (applyGlobalColor) {
+						var currentColor = pp.colorFactor ?? UbiArt.Color.White;
+						pp.colorFactor = new UbiArt.Color(
+							Mathf.Lerp(currentColor.r, globalColor.r, globalColor.a),
+							Mathf.Lerp(currentColor.g, globalColor.g, globalColor.a),
+							Mathf.Lerp(currentColor.b, globalColor.b, globalColor.a),
+							currentColor.a);
+					}
+					/*if (normalizeLightFactors) {
+						pp.FrontLightBrightness = 0;
+						pp.FrontLightContrast = 1;
+						pp.BackLightBrightness = 0;
+						pp.BackLightContrast = 1;
+					}*/
 				}
 			}
 
@@ -4784,10 +4828,26 @@ namespace UbiCanvas.Conversion {
 					ApplyToPrimitiveParameters(gc.PrimitiveParameters);
 				}
 			}
-			var frises = scene.FindPickables(p => p is Frise f && f.PrimitiveParameters.UseGlobalLighting && (filter == null || filter(p)));
+			var frises = scene.FindPickables(p => p is Frise f && (filter == null || filter(p)));
 			foreach (var f in frises) {
 				var fr = (Frise)f.Result;
+				if (turnOffUseTemplatePrimitiveParams)
+					fr.UseTemplatePrimitiveParams = false;
+				/*if (fr.UseTemplatePrimitiveParams) {
+					var pp = fr?.config?.obj?.PrimitiveParameters;
+					if (pp != null) {
+						if (!pp.UseGlobalLighting) continue;
+						if (turnOffUseTemplatePrimitiveParams) {
+							fr.PrimitiveParameters = (GFXPrimitiveParam)pp.Clone("isc");
+							fr.UseTemplatePrimitiveParams = false;
+						}
+					} else {
+						if (turnOffUseTemplatePrimitiveParams)
+							fr.UseTemplatePrimitiveParams = false;
+					}
+				}*/
 				if (fr.PrimitiveParameters == null) fr.PrimitiveParameters = new GFXPrimitiveParam();
+				if(!fr.PrimitiveParameters.UseGlobalLighting) continue;
 				ApplyToPrimitiveParameters(fr.PrimitiveParameters);
 			}
 		}
@@ -7274,6 +7334,27 @@ namespace UbiCanvas.Conversion {
 			p.POS2D = new Vec2d(copyFrom.POS2D.x, copyFrom.POS2D.y);
 			p.SCALE = new Vec2d(copyFrom.SCALE.x, copyFrom.SCALE.y);
 		}
+		AABB GetSceneAABBFromFrises(Scene scene) {
+			AABB totalAABB = null;
+			foreach (var pick in scene.FindPickables(p => p is Frise f)) {
+				var f = pick.Result as Frise;
+				var aabb = f?.meshStaticData?.value?.LocalAABB;
+				if (aabb != null) {
+					if (totalAABB == null) {
+						totalAABB = new AABB();
+						totalAABB.SetPoint(aabb.MIN);
+					}
+					totalAABB.Grow(aabb);
+				}
+			}
+			return totalAABB;
+		}
+		AABB PadAABB(AABB aabb, float padding) {
+			return new AABB() {
+				MIN = aabb.MIN - Vec2d.One * padding,
+				MAX = aabb.MAX + Vec2d.One * padding
+			};
+		}
 
 		public enum MusicTreeID {
 			RLC_01_Intro,
@@ -7434,21 +7515,6 @@ namespace UbiCanvas.Conversion {
 					//act.RELATIVEZ = associateWith.RELATIVEZ;
 				}
 				return act;
-			}
-			AABB GetSceneAABBFromFrises(Scene scene) {
-				AABB totalAABB = null;
-				foreach (var pick in scene.FindPickables(p => p is Frise f)) {
-					var f = pick.Result as Frise;
-					var aabb = f?.meshStaticData?.value?.LocalAABB;
-					if (aabb != null) {
-						if (totalAABB == null) {
-							totalAABB = new AABB();
-							totalAABB.SetPoint(aabb.MIN);
-						}
-						totalAABB.Grow(aabb);
-					}
-				}
-				return totalAABB;
 			}
 			async Task ProcessGears(float relativeVolume = 0f) {
 				var sceneTree = new PickableTree(scene);
@@ -9582,6 +9648,9 @@ namespace UbiCanvas.Conversion {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -10f;
 
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 2f), aabb);
+
 						var trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@18" && a.POS2D.x < -2f);
 						var relay = await AddMusicEventRelay(scene, "mus_shaolin_hard", volume: vol, playOnNext: 0x60, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
@@ -9714,11 +9783,51 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "personal/filip/dojourbantest.isc": {
-						// mus_ritual
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -12f;
+						TransformAABB(await AddMusicTrigger(scene, "mus_ritual", volume: vol), aabb);
+
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							aabb, volume: -10, padding: 15f);
 						break;
 					}
 				case "world/rlc_dojo/torchingteensietrouble/dojo_torchingteensietrouble_exp_base.isc": {
-						// mus_ritual
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -9f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 2f), aabb);
+
+						var trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@1" && a.POS2D.x > 40f);
+						var relay = await AddMusicEventRelay(scene, "mus_foodinvaded_09", volume: vol, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@2");
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_11", volume: vol, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@4");
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_1260", volume: vol, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once" && a.POS2D.x < 30f);
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_16", volume: vol, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@8");
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_0530", volume: vol, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@6");
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_0640", volume: vol, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_interior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
+							aabb, volume: -14f);
 						break;
 					}
 				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc": {
