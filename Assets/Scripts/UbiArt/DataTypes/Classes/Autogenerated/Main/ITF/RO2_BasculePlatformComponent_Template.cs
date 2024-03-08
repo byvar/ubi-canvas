@@ -3,14 +3,14 @@ namespace UbiArt.ITF {
 	public partial class RO2_BasculePlatformComponent_Template : ActorComponent_Template {
 		public StringID animPivotBone;
 		public StringID animAddInput;
-		public Angle animMaxAngle;
-		public float stiff;
-		public float damp;
-		public float weightToAngle;
-		public Angle maxAngle;
-		public float weightMultiplier;
-		public float forceMultiplier;
-		public float crushMultiplier;
+		public Angle animMaxAngle = 1.047198f;
+		public float stiff = 5f;
+		public float damp = 2.5f;
+		public float weightToAngle = 0.05f;
+		public Angle maxAngle = 0.1f;
+		public float weightMultiplier = 1f;
+		public float forceMultiplier = 0.005f;
+		public float crushMultiplier = 100f;
 		public StringID onStartRotatingFX;
 		public StringID rotatingClockwiseFX;
 		public StringID rotatingAntiClockwiseFX;

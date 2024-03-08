@@ -1378,21 +1378,42 @@ namespace UbiCanvas.Conversion {
 							filter: p => !p.USERFRIENDLY.StartsWith("fx_fireworks_01_trigger"));
 						var hitTriggers = scene.FindActors(a => a.USERFRIENDLY == "trigger_box_hit");
 						foreach (var ht in hitTriggers) {
-							ht.Result.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.OnceAndReset;
+							//ht.Result.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.OnceAndReset;
+							ht.ContainingScene.DeletePickable(ht.Result);
 						}
 						
 						var rotPlat1 = ((SubSceneActor)scene.FindActor(a => a.USERFRIENDLY == "dojo_platform_single@1").Result).SCENE.value.FindActor(a => a.USERFRIENDLY == "rotatingplatform_straight");
-						await RotatingPlatformToHitOnceTween(oldContext, rotPlat1.ContainingScene, rotPlat1.Result);
-						//RotatingPlatformToTween(oldContext, rotPlat1.Result, rotateTime: 0.5f, waitTime: 1f, clockwise: true, backAndForth: true, syncOffset: 2f / 3f, waitTimeBack: 4f);
+						//await RotatingPlatformToHitOnceTween(oldContext, rotPlat1.ContainingScene, rotPlat1.Result);
+						RotatingPlatformToTriggableTween(oldContext, rotPlat1.Result, true);
+
 						var rotPlat2 = ((SubSceneActor)scene.FindActor(a => a.USERFRIENDLY == "dojo_platform_single@2").Result).SCENE.value.FindActor(a => a.USERFRIENDLY == "rotatingplatform_straight");
-						await RotatingPlatformToHitOnceTween(oldContext, rotPlat2.ContainingScene, rotPlat2.Result);
-						//RotatingPlatformToTween(oldContext, rotPlat2.Result, rotateTime: 0.5f, waitTime: 1f, clockwise: true, backAndForth: true, syncOffset: 0f, waitTimeBack: 4f);
+						//await RotatingPlatformToHitOnceTween(oldContext, rotPlat2.ContainingScene, rotPlat2.Result);
+						RotatingPlatformToTriggableTween(oldContext, rotPlat2.Result, true);
+
 						var rotPlat3 = ((SubSceneActor)scene.FindActor(a => a.USERFRIENDLY == "dojo_platform_single@3").Result).SCENE.value.FindActor(a => a.USERFRIENDLY == "rotatingplatform_straight");
-						await RotatingPlatformToHitOnceTween(oldContext, rotPlat3.ContainingScene, rotPlat3.Result);
-						//RotatingPlatformToTween(oldContext, rotPlat3.Result, rotateTime: 0.5f, waitTime: 1f, clockwise: true, backAndForth: true, syncOffset: 1f / 3f, waitTimeBack: 4f);
-						
+						//await RotatingPlatformToHitOnceTween(oldContext, rotPlat3.ContainingScene, rotPlat3.Result);
+						RotatingPlatformToTriggableTween(oldContext, rotPlat3.Result, true);
+
+						var rotPlatTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@6");
+						Link(rotPlatTrigger.Result, "dojo_platform_single@2|rotatingplatform_straight").AddTag("Delay", "7.0");
+						Link(rotPlatTrigger.Result, "dojo_platform_single@3|rotatingplatform_straight").AddTag("Delay", "7.5");
+						Link(rotPlatTrigger.Result, "dojo_platform_single@1|rotatingplatform_straight").AddTag("Delay", "8.0");
+
+						var existingPlatTrigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once" && a.POS2D.x < 40f);
+						Link(existingPlatTrigger.Result, "grp@20|tween_woodtype@10").AddTag("Delay", "18.0");
+
+						var tween = scene.FindActor(a => a.USERFRIENDLY == "tween_woodtype@9");
+						var newTrig = await AddNewActor(tween.ContainingScene, new Path("world/common/logicactor/trigger/components/trigger_box_once.tpl"));
+						newTrig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.OnceAndReset;
+						Transform(newTrig, new Vec2d(38.72f, -2f), new Vec2d(3,5));
+						Link(newTrig, "tween_woodtype@9");
+
 						// Remove rotating platforms
 						/*var rotPlats = scene.FindActors(a => a.USERFRIENDLY.StartsWith("dojo_platform_single"));
+						foreach (var act in rotPlats) {
+							act.ContainingScene.DeletePickable(act.Result);
+						}*/
+						/*var rotPlats = scene.FindActors(a => (a.USERFRIENDLY == "Gear" && a.POS2D.x > 50f) || a.USERFRIENDLY == "grp@20");
 						foreach (var act in rotPlats) {
 							act.ContainingScene.DeletePickable(act.Result);
 						}*/
@@ -5439,28 +5460,28 @@ namespace UbiCanvas.Conversion {
 						}),
 					}
 				};
+				set.instructions.Add(
+						new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+							fx = new StringID(0x80fe8585),
+							duration = 0f,
+						}));
 				if (reboundTime > 0f) {
 					var reboundAngle = 5f;
 					var startTime = reboundTime / 3f * 2f;
 					var endTime = reboundTime / 3f;
 					set.instructions.Add(
 						new Generic<TweenInstruction_Template>(new TweenLine_Template() {
-							duration = reboundTime,
-							endDuration = reboundTime,
+							duration = startTime,
+							endDuration = startTime,
 							angle = new AngleAmount((clockwise ? reboundAngle : -reboundAngle), degrees: true),
 						}));
 					set.instructions.Add(
 						new Generic<TweenInstruction_Template>(new TweenLine_Template() {
-							duration = reboundTime,
-							startDuration = reboundTime,
+							duration = endTime,
+							startDuration = endTime,
 							angle = new AngleAmount((clockwise ? -reboundAngle : reboundAngle), degrees: true),
 						}));
 				}
-				set.instructions.Add(
-						new Generic<TweenInstruction_Template>(new TweenFX_Template() {
-							fx = new StringID(0x80fe8585),
-							duration = 0f,
-						}));
 				set.instructions.Add(
 						new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
 							duration = 0f,
@@ -5482,6 +5503,88 @@ namespace UbiCanvas.Conversion {
 					GetInstructionSet(false)
 				}
 			});
+			tween.InstantiateFromInstanceTemplate(oldContext);
+		}
+
+		public void RotatingPlatformToTriggableTween(Context oldContext, Actor actor, bool clockwise, bool sound = true, bool once = false, float rotateTime = 0.5f, float totalAngle = 90, float reboundTime = 0.3f) {
+			if (actor.GetComponent<RLC_RotatingPlatformComponent>() == null) return;
+			var plat = actor.GetComponent<RLC_RotatingPlatformComponent>();
+			var tplplat = actor.template.obj.GetComponent<RLC_RotatingPlatformComponent_Template>();
+
+			if (CloneTemplateIfNecessary(actor.LUA, "rptween", "ROTPLAT -> TWEEN", actor.template, out var newTPL, actor)) {
+				newTPL.sizeOf += 0x10000;
+				newTPL.obj.RemoveComponent<RLC_RotatingPlatformComponent_Template>();
+				newTPL.obj.AddComponent<TweenComponent_Template>();
+			}
+
+			TweenComponent_Template.InstructionSet GetInstructionSet(bool clockwise) {
+				var set = new TweenComponent_Template.InstructionSet() {
+					iterationCount = 1,
+					interruptible = false,
+					triggable = true,
+					name = new StringID(clockwise ? "Clockwise" : "Counterclockwise"),
+					instructions = new CListO<Generic<TweenInstruction_Template>>()
+				};
+				if (sound) {
+					set.instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+						fx = new StringID(0xe1bb334e),
+						duration = 0f,
+					}));
+					set.instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+						fx = new StringID(0x34ab572e),
+					}));
+				}
+				set.instructions.Add(new Generic<TweenInstruction_Template>(new TweenLine_Template() {
+					duration = rotateTime,
+					startDuration = rotateTime,
+					angle = new AngleAmount((clockwise ? -totalAngle : totalAngle), degrees: true),
+				}));
+				if (sound) {
+					set.instructions.Add(new Generic<TweenInstruction_Template>(new TweenFX_Template() {
+						fx = new StringID(0x80fe8585),
+						duration = 0f,
+					}));
+				}
+				if (reboundTime > 0f) {
+					var reboundAngle = 5f;
+					var startTime = reboundTime / 3f * 2f;
+					var endTime = reboundTime / 3f;
+					set.instructions.Add(
+						new Generic<TweenInstruction_Template>(new TweenLine_Template() {
+							duration = startTime,
+							endDuration = startTime,
+							angle = new AngleAmount((clockwise ? reboundAngle : -reboundAngle), degrees: true),
+						}));
+					set.instructions.Add(
+						new Generic<TweenInstruction_Template>(new TweenLine_Template() {
+							duration = endTime,
+							startDuration = endTime,
+							angle = new AngleAmount((clockwise ? -reboundAngle : reboundAngle), degrees: true),
+						}));
+				}
+				if (once) {
+					set.instructions.Add(new Generic<TweenInstruction_Template>(new TweenEvent_Template() {
+						duration = 0f,
+						triggerSelf = true,
+						triggerBoundChildren = false,
+						triggerChildren = false,
+						_event = new Generic<UbiArt.ITF.Event>(new EventPause() {
+							pause = true
+						}),
+					}));
+				}
+				return set;
+			}
+
+			actor.RemoveComponent<RLC_RotatingPlatformComponent>();
+			var tween = actor.AddComponent<TweenComponent>();
+			tween.instanceTemplate = new UbiArt.Nullable<TweenComponent_Template>(new TweenComponent_Template() {
+				autoStart = false,
+				instructionSets = new CListO<TweenComponent_Template.InstructionSet>() {
+					GetInstructionSet(clockwise)
+				}
+			});
+			tween.autoStart = false;
 			tween.InstantiateFromInstanceTemplate(oldContext);
 		}
 

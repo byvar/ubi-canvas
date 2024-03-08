@@ -1,13 +1,13 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL | GameFlags.RA)]
 	public partial class RO2_OldBasculePlatformComponent_Template : ActorComponent_Template {
-		public float stiff;
-		public float damp;
-		public float weightToAngle;
-		public Angle maxAngle;
-		public float weightMultiplier;
-		public float forceMultiplier;
-		public float crushMultiplier;
+		public float stiff = 5f;
+		public float damp = 2.5f;
+		public float weightToAngle = 0.05f;
+		public Angle maxAngle = 0.785f;
+		public float weightMultiplier = 1f;
+		public float forceMultiplier = 0.005f;
+		public float crushMultiplier= 100f;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			stiff = s.Serialize<float>(stiff, name: "stiff");
