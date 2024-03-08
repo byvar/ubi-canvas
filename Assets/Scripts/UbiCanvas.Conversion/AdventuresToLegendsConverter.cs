@@ -1376,6 +1376,9 @@ namespace UbiCanvas.Conversion {
 						ApplySpecialRenderParamsToScene(scene,
 							applyGlobalColor: true, applyFog: false, turnOffUseTemplatePrimitiveParams: true,
 							filter: p => !p.USERFRIENDLY.StartsWith("fx_fireworks_01_trigger"));
+
+
+						// Rotating platforms
 						var hitTriggers = scene.FindActors(a => a.USERFRIENDLY == "trigger_box_hit");
 						foreach (var ht in hitTriggers) {
 							//ht.Result.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.OnceAndReset;
@@ -1408,32 +1411,31 @@ namespace UbiCanvas.Conversion {
 						Transform(newTrig, new Vec2d(38.72f, -2f), new Vec2d(3,5));
 						Link(newTrig, "tween_woodtype@9");
 
-						// Remove rotating platforms
-						/*var rotPlats = scene.FindActors(a => a.USERFRIENDLY.StartsWith("dojo_platform_single"));
-						foreach (var act in rotPlats) {
-							act.ContainingScene.DeletePickable(act.Result);
-						}*/
-						/*var rotPlats = scene.FindActors(a => (a.USERFRIENDLY == "Gear" && a.POS2D.x > 50f) || a.USERFRIENDLY == "grp@20");
-						foreach (var act in rotPlats) {
-							act.ContainingScene.DeletePickable(act.Result);
-						}*/
-						// Now that rotating platforms are deleted, add some frises in its place
-						/*var fr = scene.FindPickable(p => p.USERFRIENDLY == "dojo_int_ldground_woodpipe@14");
-						var newfr = (Frise)fr.Result.Clone("isc");
-						newfr.RELATIVEZ = -0.001189251f;
-						newfr.SCALE = new Vec2d(0.7f, 0.9f);
-						newfr.ANGLE = 0f;
-						newfr.POS2D = new Vec2d(-49.23f, 55.79f);
-						fr.ContainingScene.AddActor(newfr);*/
 
-						/*var rail = scene.FindPickable(p => p.USERFRIENDLY == "dojo_int_playground_rail@8");
-						var newRail = (Frise)rail.Result.Clone("isc");
-						newRail.RELATIVEZ = -0.05220509f;
-						newRail.SCALE = new Vec2d(1f, 0.7f);
-						newRail.xFLIPPED = true;
-						newRail.ANGLE = 0f;
-						newRail.POS2D = new Vec2d(-49.15f, 49.36f);
-						rail.ContainingScene.AddActor(newRail);*/
+						// Pause relays to disable teensy rockets a while after launch
+						async Task AddPauseRelay(Scene.SearchResult<Actor> trigger, string delay, params string[] links) {
+							var ogPath = "world/common/logicactor/trigger/relay/components/relay_pause.tpl";
+							var act = await AddNewActor(trigger.ContainingScene, new Path(ogPath));
+							TransformCopyPickable(act, trigger.Result);
+							Link(trigger.Result, act.USERFRIENDLY).AddTag("Delay", delay);
+
+							foreach (var l in links) {
+								Link(act, l);
+							}
+						}
+
+						var trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@1" && a.POS2D.x > 40f);
+						await AddPauseRelay(trigger, "15.0", "grp@8"); // 9
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@2");
+						await AddPauseRelay(trigger, "18.5", "grp@1"); // 11
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@4");
+						await AddPauseRelay(trigger, "20.0", "grp@18"); // 12.6
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once" && a.POS2D.x < 30f);
+						await AddPauseRelay(trigger, "20.0", "grp@17"); // 16
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@8");
+						await AddPauseRelay(trigger, "12.0", "grp@6"); // 5.3
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@6");
+						await AddPauseRelay(trigger, "14.0", "grp@4", "teensyrocketking", "teensyrocketking@2"); // 6.4
 
 						break;
 					}
