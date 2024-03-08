@@ -1262,6 +1262,17 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/rlc_dojo/newyeardragonride/dojo_newyeardragonride_lum_base.isc": {
+						var platforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("minotaur_flyingplatform"));
+						foreach (var plat in platforms) {
+							GenericAABBHack(plat.Result, aabbScale: 300f);
+						}
+
+						var pauseswitch = scene.FindActor(a =>a.USERFRIENDLY == "DEV_PauseDragons");
+						pauseswitch.ContainingScene.DeletePickable(pauseswitch.Result);
+
+						ApplySpecialRenderParamsToScene(scene,
+							applyGlobalColor: true, applyFog: false, turnOffUseTemplatePrimitiveParams: true);
+						//, filter: p => !p.USERFRIENDLY.StartsWith("fx_fireworks_01_trigger"));
 						break;
 					}
 
@@ -1376,6 +1387,12 @@ namespace UbiCanvas.Conversion {
 						ApplySpecialRenderParamsToScene(scene,
 							applyGlobalColor: true, applyFog: false, turnOffUseTemplatePrimitiveParams: true,
 							filter: p => !p.USERFRIENDLY.StartsWith("fx_fireworks_01_trigger"));
+
+						// Fireworks AABB hack
+						var fireworks = scene.FindActors(a => a.USERFRIENDLY.StartsWith("fx_fireworks_01_trigger"));
+						foreach (var act in fireworks) {
+							GenericAABBHack(act.Result);
+						}
 
 
 						// Rotating platforms
@@ -1841,6 +1858,21 @@ namespace UbiCanvas.Conversion {
 					}*/
 				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc": {
 						ApplySpecialRenderParamsToScene(scene);
+
+						var platforms = scene.FindActors(a => a.USERFRIENDLY.StartsWith("flyingplatform"));
+						foreach (var plat in platforms) {
+							GenericAABBHack(plat.Result, aabbScale: 300f);
+						}
+
+						var badHatman = scene.FindActor(a => a.USERFRIENDLY == "basichatman");
+						badHatman.ContainingScene.DeletePickable(badHatman.Result);
+
+						var stuckSwordman = scene.FindActor(a => a.USERFRIENDLY == "appearfromzswordman@5");
+						stuckSwordman.Result.POS2D += Vec2d.Up;
+
+						var pickableTree = new PickableTree(scene);
+						pickableTree.FollowObjectPath(new ObjectPath("RooftopRumble_nmi_base_ld|grp@26|appearfromzswordman@1")).Pickable.POS2D += Vec2d.Up * 2f;
+
 						break;
 					}
 				case "world/rlc_castle/dunktank/castleinterior_dunktank_nmi_base.isc": {
@@ -7829,6 +7861,22 @@ namespace UbiCanvas.Conversion {
 				}
 				return act;
 			}
+			void LinkAll(PickableTree sceneTree, List<Scene.SearchResult<Actor>> allLinks, Pickable act, Actor snd) {
+				foreach (var linkactor in allLinks) {
+					var actorPath = linkactor.Path;
+					var links = linkactor.Result.GetComponent<LinkComponent>();
+					var checklinks = links.Children.Where(l => l.Path.id == act.USERFRIENDLY).ToArray();
+					if (checklinks.Length == 0) continue;
+					var curnode = sceneTree.FollowObjectPath(actorPath);
+					foreach (var l in checklinks) {
+						var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
+						if (otherobj == null || otherobj.Pickable != act) continue;
+						var newChildEntry = (ChildEntry)l.Clone("isc", context: LegendsContext);
+						newChildEntry.Path.id = snd.USERFRIENDLY;
+						links.Children.Add(newChildEntry);
+					}
+				}
+			}
 			async Task ProcessGears(float relativeVolume = 0f) {
 				var sceneTree = new PickableTree(scene);
 				Path gearSoundWav = new Path("sound/600_sfx/604_ocean/sfx_labogear_arena_lp.wav");
@@ -7862,20 +7910,7 @@ namespace UbiCanvas.Conversion {
 					snd.USERFRIENDLY = $"{gear.Result.USERFRIENDLY}_snd";
 					snd.STARTPAUSE = gear.Result.STARTPAUSE;
 
-					foreach (var linkactor in allLinks) {
-						var actorPath = linkactor.Path;
-						var links = linkactor.Result.GetComponent<LinkComponent>();
-						var checklinks = links.Children.Where(l => l.Path.id == gear.Result.USERFRIENDLY).ToArray();
-						if (checklinks.Length == 0) continue;
-						var curnode = sceneTree.FollowObjectPath(actorPath);
-						foreach (var l in checklinks) {
-							var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
-							if (otherobj == null || otherobj.Pickable != gear.Result) continue;
-							var newChildEntry = (ChildEntry)l.Clone("isc");
-							newChildEntry.Path.id = snd.USERFRIENDLY;
-							links.Children.Add(newChildEntry);
-						}
-					}
+					LinkAll(sceneTree, allLinks, gear.Result, snd);
 				}
 				// Make multi-instruction gears use the proper tween type
 				gears = scene.FindActors(a => {
@@ -9512,20 +9547,7 @@ namespace UbiCanvas.Conversion {
 							snd.USERFRIENDLY = $"{light.Result.USERFRIENDLY}_snd";
 							snd.STARTPAUSE = light.Result.STARTPAUSE;
 
-							foreach (var linkactor in allLinks) {
-								var actorPath = linkactor.Path;
-								var links = linkactor.Result.GetComponent<LinkComponent>();
-								var checklinks = links.Children.Where(l => l.Path.id == light.Result.USERFRIENDLY).ToArray();
-								if (checklinks.Length == 0) continue;
-								var curnode = sceneTree.FollowObjectPath(actorPath);
-								foreach (var l in checklinks) {
-									var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
-									if (otherobj == null || otherobj.Pickable != light.Result) continue;
-									var newChildEntry = (ChildEntry)l.Clone("isc");
-									newChildEntry.Path.id = snd.USERFRIENDLY;
-									links.Children.Add(newChildEntry);
-								}
-							}
+							LinkAll(sceneTree, allLinks, light.Result, snd);
 						}
 						break;
 					}
@@ -9613,20 +9635,7 @@ namespace UbiCanvas.Conversion {
 							snd.USERFRIENDLY = $"{splash.Result.USERFRIENDLY}_snd";
 							snd.STARTPAUSE = splash.Result.STARTPAUSE;
 
-							foreach (var linkactor in allLinks) {
-								var actorPath = linkactor.Path;
-								var links = linkactor.Result.GetComponent<LinkComponent>();
-								var checklinks = links.Children.Where(l => l.Path.id == splash.Result.USERFRIENDLY).ToArray();
-								if (checklinks.Length == 0) continue;
-								var curnode = sceneTree.FollowObjectPath(actorPath);
-								foreach (var l in checklinks) {
-									var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
-									if (otherobj == null || otherobj.Pickable != splash.Result) continue;
-									var newChildEntry = (ChildEntry)l.Clone("isc");
-									newChildEntry.Path.id = snd.USERFRIENDLY;
-									links.Children.Add(newChildEntry);
-								}
-							}
+							LinkAll(sceneTree, allLinks, splash.Result, snd);
 						}
 
 						break;
@@ -9699,20 +9708,7 @@ namespace UbiCanvas.Conversion {
 							snd.USERFRIENDLY = $"{splash.Result.USERFRIENDLY}_snd";
 							snd.STARTPAUSE = splash.Result.STARTPAUSE;
 
-							foreach (var linkactor in allLinks) {
-								var actorPath = linkactor.Path;
-								var links = linkactor.Result.GetComponent<LinkComponent>();
-								var checklinks = links.Children.Where(l => l.Path.id == splash.Result.USERFRIENDLY).ToArray();
-								if (checklinks.Length == 0) continue;
-								var curnode = sceneTree.FollowObjectPath(actorPath);
-								foreach (var l in checklinks) {
-									var otherobj = curnode.Parent.GetNodeWithObjectPath(l.Path, throwIfNotFound: false);
-									if (otherobj == null || otherobj.Pickable != splash.Result) continue;
-									var newChildEntry = (ChildEntry)l.Clone("isc");
-									newChildEntry.Path.id = snd.USERFRIENDLY;
-									links.Children.Add(newChildEntry);
-								}
-							}
+							LinkAll(sceneTree, allLinks, splash.Result, snd);
 						}
 						break;
 					}
@@ -10108,6 +10104,7 @@ namespace UbiCanvas.Conversion {
 				case "world/rlc_dojo/torchingteensietrouble/dojo_torchingteensietrouble_exp_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
 						var vol = -8f;
+						var sceneTree = new PickableTree(scene);
 
 						// Music
 						TransformAABB(await AddMusicTrigger(scene, "mus_ritual", volume: vol), aabb);
@@ -10117,42 +10114,111 @@ namespace UbiCanvas.Conversion {
 						var relay = await AddMusicEventRelay(scene, "mus_foodinvaded_09", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
+
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@2");
 						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_11", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
+
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@4");
 						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_1260", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
+
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once" && a.POS2D.x < 30f);
 						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_16", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
+
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@8");
 						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_0530", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
+
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@6");
 						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_0640", volume: vol, fadeOutTime: 2f, fadeInTime: 0.1f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
 
 						// Ambience
-						/*await AddAmbienceInterpolator(scene, "amb_interior",
-							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
-							aabb, volume: -24f);*/
 						await AddAmbienceInterpolator(scene, "amb_exterior",
 							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
 							aabb, volume: -12);
+
+						// Sound
+						var allLinks = scene.FindActors(a => a.GetComponent<LinkComponent>()?.Children != null);
+						var fireworks = scene.FindActors(a => a.USERFRIENDLY.StartsWith("fx_fireworks_01_trigger"));
+
+						int fireworksIndex = 0; 
+						foreach (var act in fireworks) {
+							var curIndex = 1 + (fireworksIndex % 3);
+							var snd = await AddSimpleTriggableSound(scene, $"mushboom_0{curIndex}", new Path($"sound/600_sfx/601_middleageworld/sfx_swamp_fireworks_mushboom_0{curIndex}.wav"),
+								randomPitchMin: 0.8f, randomPitchMax: 1.2f, min: 1f, max: 50f, volume: -11, containingScene: act.ContainingScene);
+
+							fireworksIndex++;
+
+							TransformCopyPickable(snd, act.Result);
+							snd.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+								parentPath = new ObjectPath(act.Result.USERFRIENDLY)
+							});
+							snd.USERFRIENDLY = $"{act.Result.USERFRIENDLY}_snd";
+							snd.STARTPAUSE = act.Result.STARTPAUSE;
+							GenericAABBHack(snd);
+
+							LinkAll(sceneTree, allLinks, act.Result, snd);
+						}
+						var rockets = scene.FindActors(a => a.USERFRIENDLY.StartsWith("teensyrocketking"));
+						fireworksIndex = 0;
+						foreach (var act in rockets) {
+							var curIndex = 1 + (fireworksIndex % 3);
+							var snd = await AddSimpleTriggableSound(scene, $"mushflare_0{curIndex}", new Path($"sound/600_sfx/601_middleageworld/sfx_swamp_fireworks_mushflare_0{curIndex}.wav"),
+								randomPitchMin: 1.2f, randomPitchMax: 1.4f, min: 1f, max: 10f, volume: -12, containingScene: act.ContainingScene);
+
+							fireworksIndex++;
+
+							TransformCopyPickable(snd, act.Result);
+							snd.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+								parentPath = new ObjectPath(act.Result.USERFRIENDLY),
+								type = Bind.Type.BoneName,
+								typeData = act.Result.template.obj.GetComponent<RO2_TeensyRocketComponent_Template>().snapBone.stringID,
+							});
+							snd.USERFRIENDLY = $"{act.Result.USERFRIENDLY}_snd";
+							snd.STARTPAUSE = act.Result.STARTPAUSE;
+							GenericAABBHack(snd);
+
+							LinkAll(sceneTree, allLinks, act.Result, snd);
+						}
 						break;
 					}
 				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc": {
-						// mus_bge_funkybar100
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -10f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_bge_funkybar100", volume: vol), aabb);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							aabb, volume: -12);
+
+						// Sound
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
 						break;
 					}
 				case "world/rlc_dojo/newyeardragonride/dojo_newyeardragonride_lum_base.isc": {
-						// mus_lostinclouds_credits
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -8f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_lostinclouds_credits", volume: vol), aabb);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							aabb, volume: -12);
 						break;
 					}
 				default:
