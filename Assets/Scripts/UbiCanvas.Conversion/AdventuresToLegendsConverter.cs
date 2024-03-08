@@ -4018,9 +4018,10 @@ namespace UbiCanvas.Conversion {
 						// COMPLETE
 						// Parts
 						AddPart("part_bge_mingtzu_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_mingtzu_lp.wav"));
-						AddPart("part_ritual_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_lp.wav"));
+						//AddPart("part_ritual_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_lp.wav"));
 						AddPart("part_bge_funkybar100_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_funkybar100_lp.wav"));
 						AddPart("part_lostinclouds_credits_lp", new Path("sound/300_music/310_common/credits/mus_avatar_full.wav"));
+						
 						AddPart("part_foodinvaded_09", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_09.wav"));
 						AddPart("part_foodinvaded_11", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_11.wav"));
 						AddPart("part_foodinvaded_1260", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_1260.wav"));
@@ -4028,18 +4029,50 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_foodinvaded_0530", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_0530.wav"));
 						AddPart("part_foodinvaded_0640", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_0640.wav"));
 
+						AddPart("part_ritual_01", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_01.wav"));
+						AddPart("part_ritual_02", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_02.wav"));
+						AddPart("part_ritual_03", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_03.wav"));
+						AddPart("part_ritual_04", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_04.wav"));
+						AddPart("part_ritual_05", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_05.wav"));
+						AddPart("part_ritual_01_fade", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_01_fade.wav"));
+						AddPart("part_ritual_02_fade", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_02_fade.wav"));
+						AddPart("part_ritual_03_fade", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_03_fade.wav"));
+						AddPart("part_ritual_04_fade", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_04_fade.wav"));
+						AddPart("part_ritual_05_fade", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_05_fade.wav"));
+
 						// Tree
 						AddSimpleNode("mus_bge_mingtzu", true, "part_bge_mingtzu_lp");
-						AddSimpleNode("mus_ritual", true, "part_ritual_lp");
 						AddSimpleNode("mus_bge_funkybar100", true, "part_bge_funkybar100_lp");
 						AddSimpleNode("mus_lostinclouds_credits", true, "part_lostinclouds_credits_lp");
 
-						AddSimpleNode("mus_foodinvaded_09", false, "part_foodinvaded_09");
-						AddSimpleNode("mus_foodinvaded_11", false, "part_foodinvaded_11");
-						AddSimpleNode("mus_foodinvaded_1260", false, "part_foodinvaded_1260");
-						AddSimpleNode("mus_foodinvaded_16", false, "part_foodinvaded_16");
-						AddSimpleNode("mus_foodinvaded_0530", false, "part_foodinvaded_0530");
-						AddSimpleNode("mus_foodinvaded_0640", false, "part_foodinvaded_0640");
+						//AddSimpleNode("mus_ritual", true, "part_ritual_lp");
+						AddSimpleNode("mus_ritual", true, 
+							"part_ritual_01", "part_ritual_02", "part_ritual_03", "part_ritual_04", "part_ritual_05");
+
+						// AddSimpleNode("mus_foodinvaded_09", false, "part_foodinvaded_09");
+						// AddSimpleNode("mus_foodinvaded_11", false, "part_foodinvaded_11");
+						// AddSimpleNode("mus_foodinvaded_1260", false, "part_foodinvaded_1260");
+						// AddSimpleNode("mus_foodinvaded_16", false, "part_foodinvaded_16");
+						// AddSimpleNode("mus_foodinvaded_0530", false, "part_foodinvaded_0530");
+						// AddSimpleNode("mus_foodinvaded_0640", false, "part_foodinvaded_0640");
+						AddSimpleSequenceNode("mus_foodinvaded_09", true,
+							new string[] { "part_foodinvaded_09", "part_ritual_02_fade" },
+							new string[] { "part_ritual_03", "part_ritual_04", "part_ritual_05", "part_ritual_01", "part_ritual_02" });
+						AddSimpleSequenceNode("mus_foodinvaded_11", true,
+							new string[] { "part_foodinvaded_11", "part_ritual_03_fade" },
+							new string[] { "part_ritual_04", "part_ritual_05", "part_ritual_01", "part_ritual_02", "part_ritual_03" });
+						AddSimpleSequenceNode("mus_foodinvaded_1260", true,
+							new string[] { "part_foodinvaded_1260", "part_ritual_04_fade" },
+							new string[] { "part_ritual_05", "part_ritual_01", "part_ritual_02", "part_ritual_03", "part_ritual_04" });
+						AddSimpleSequenceNode("mus_foodinvaded_16", true,
+							new string[] { "part_foodinvaded_16", "part_ritual_05_fade" },
+							new string[] { "part_ritual_01", "part_ritual_02", "part_ritual_03", "part_ritual_04", "part_ritual_05" });
+						AddSimpleSequenceNode("mus_foodinvaded_0530", true,
+							new string[] { "part_foodinvaded_0530", "part_ritual_01_fade" },
+							new string[] { "part_ritual_02", "part_ritual_03", "part_ritual_04", "part_ritual_05", "part_ritual_01" });
+						AddSimpleSequenceNode("mus_foodinvaded_0640", true,
+							new string[] { "part_foodinvaded_0640", "part_ritual_02_fade" },
+							new string[] { "part_ritual_03", "part_ritual_04", "part_ritual_05", "part_ritual_01", "part_ritual_02" });
 						break;
 					case MusicTreeID.RLC_18_Bonus:
 						// TODO
@@ -10074,40 +10107,44 @@ namespace UbiCanvas.Conversion {
 					}
 				case "world/rlc_dojo/torchingteensietrouble/dojo_torchingteensietrouble_exp_base.isc": {
 						var aabb = GetSceneAABBFromFrises(scene);
-						var vol = -9f;
+						var vol = -8f;
 
 						// Music
-						TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 2f), aabb);
+						TransformAABB(await AddMusicTrigger(scene, "mus_ritual", volume: vol), aabb);
+						//TransformAABB(await AddMusicTrigger(scene, "mus_prev", stop: true, fadeOutTime: 2f), aabb);
 
 						var trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@1" && a.POS2D.x > 40f);
-						var relay = await AddMusicEventRelay(scene, "mus_foodinvaded_09", volume: vol, containingScene: trigger.ContainingScene);
+						var relay = await AddMusicEventRelay(scene, "mus_foodinvaded_09", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@2");
-						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_11", volume: vol, containingScene: trigger.ContainingScene);
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_11", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@4");
-						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_1260", volume: vol, containingScene: trigger.ContainingScene);
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_1260", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once" && a.POS2D.x < 30f);
-						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_16", volume: vol, containingScene: trigger.ContainingScene);
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_16", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@8");
-						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_0530", volume: vol, containingScene: trigger.ContainingScene);
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_0530", volume: vol, fadeOutTime: 2f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
 						trigger = scene.FindActor(a => a.USERFRIENDLY == "trigger_box_once@6");
-						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_0640", volume: vol, containingScene: trigger.ContainingScene);
+						relay = await AddMusicEventRelay(scene, "mus_foodinvaded_0640", volume: vol, fadeOutTime: 2f, fadeInTime: 0.1f, containingScene: trigger.ContainingScene);
 						TransformCopyPickable(relay, trigger.Result);
 						Link(trigger.Result, relay.USERFRIENDLY);
 
 						// Ambience
-						await AddAmbienceInterpolator(scene, "amb_interior",
+						/*await AddAmbienceInterpolator(scene, "amb_interior",
 							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_int_lp.wav"),
-							aabb, volume: -24f);
+							aabb, volume: -24f);*/
+						await AddAmbienceInterpolator(scene, "amb_exterior",
+							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
+							aabb, volume: -12);
 						break;
 					}
 				case "world/rlc_dojo/rooftoprumble/dojo_rooftoprumble_nmi_base.isc": {
