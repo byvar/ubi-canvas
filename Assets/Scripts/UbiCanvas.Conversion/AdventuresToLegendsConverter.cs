@@ -3985,8 +3985,8 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_eleanor_letsgo_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_letsgo_lp.wav"));
 						AddPart("part_bge_mingtzu_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_mingtzu_lp.wav"));
 						
-						AddPart("part_shaolin_supereasy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_supereasy_mastermix.wav"));
-						AddPart("part_shaolin_medium", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_medium_mastermix.wav"));
+						AddPart("part_shaolin_supereasy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_supereasy_mastermix.wav"), nbMeasures: 60);
+						AddPart("part_shaolin_medium", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_medium_mastermix.wav"), nbMeasures: 72);
 						AddPart("part_shaolin_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_shaolinchallenge_outro.wav"));
 
 						AddPart("part_mou_suspens_01", new Path("sound/300_music/330_rlc/09_dojo/mus_mou_suspens_01_intro_4m_fix.wav"), nbMeasures: 4);
@@ -4014,7 +4014,7 @@ namespace UbiCanvas.Conversion {
 						// Parts
 						AddPart("part_bge_picturesofwildlife_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_picturesofwildlife_lp.wav"));
 
-						AddPart("part_shaolin_easy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_easy_mastermix.wav"));
+						AddPart("part_shaolin_easy", new Path("sound/300_music/310_common/challenge_shaolin/shaolin_easy_mastermix.wav"), nbMeasures: 65);
 						
 						AddPart("part_eleanor_giftmatchseller_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_lp.wav"));
 						AddPart("part_eleanor_giftmatchseller_outro", new Path("sound/300_music/330_rlc/09_dojo/mus_eleanor_giftmatchseller_outro.wav"));
@@ -4052,7 +4052,7 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_bge_mingtzu_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_mingtzu_lp.wav"));
 						//AddPart("part_ritual_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_ritual_lp.wav"));
 						AddPart("part_bge_funkybar100_lp", new Path("sound/300_music/330_rlc/09_dojo/mus_bge_funkybar100_lp.wav"));
-						AddPart("part_lostinclouds_credits_lp", new Path("sound/300_music/310_common/credits/mus_avatar_full.wav"));
+						AddPart("part_lostinclouds_credits_lp", new Path("sound/300_music/310_common/credits/mus_avatar_full.wav"), nbMeasures: 42); // Has to be configured for snakeride's maracas collision!
 						
 						AddPart("part_foodinvaded_09", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_09.wav"));
 						AddPart("part_foodinvaded_11", new Path("sound/300_music/330_rlc/09_dojo/mus_foodinvaded_11.wav"));
