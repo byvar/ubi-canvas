@@ -1270,9 +1270,28 @@ namespace UbiCanvas.Conversion {
 						var pauseswitch = scene.FindActor(a =>a.USERFRIENDLY == "DEV_PauseDragons");
 						pauseswitch.ContainingScene.DeletePickable(pauseswitch.Result);
 
+						// Make certain lums unaffected by lighting
+						var acts = scene.FindActors(a => a?.LUA?.filename?.Contains("lum_arc_circle2") ?? false);
+						foreach (var act in acts) {
+							var anm = act.Result.GetComponent<AnimatedComponent>();
+							if (anm?.PrimitiveParameters == null) continue;
+							anm.PrimitiveParameters.FrontLightBrightness = 1f;
+							anm.PrimitiveParameters.FrontLightContrast = 0f;
+						}
+
 						ApplySpecialRenderParamsToScene(scene,
 							applyGlobalColor: true, applyFog: false, turnOffUseTemplatePrimitiveParams: true);
 						//, filter: p => !p.USERFRIENDLY.StartsWith("fx_fireworks_01_trigger"));
+
+
+						// Remove lum king
+						var lk = scene.FindActor(a => a.USERFRIENDLY == "lumking");
+						var fw = scene.FindActor(a => a.USERFRIENDLY == "purplefirework");
+						lk.ContainingScene.DeletePickable(lk.Result);
+						fw.ContainingScene.DeletePickable(fw.Result);
+
+						//Link(lk.Result, "lumschain@1");
+						//Link(lk.Result, "lumschain@M");
 						break;
 					}
 
@@ -4901,7 +4920,7 @@ namespace UbiCanvas.Conversion {
 			RenderParamComponent rp = null,
 			Predicate<Pickable> filter = null,
 			bool applyFog = true, bool applyLighting = true, bool applyGlobalColor = false,
-			bool useExistingFogAlpha = false, bool turnOffUseTemplatePrimitiveParams = false) {
+			bool useExistingFogAlpha = false, bool turnOffUseTemplatePrimitiveParams = false, bool applyToFX = true) {
 			if (rp == null) {
 				// Find first RenderParam in scene
 				rp = scene.FindActor(a => a.GetComponent<RenderParamComponent>() != null).Result.GetComponent<RenderParamComponent>();
@@ -4952,6 +4971,7 @@ namespace UbiCanvas.Conversion {
 			foreach (var act in graphicActors) {
 				var graphicsComponents = act.Result.GetComponents<GraphicComponent>();
 				foreach (var gc in graphicsComponents) {
+					if(!applyToFX && gc is FxBankComponent) continue;
 					if (gc.PrimitiveParameters == null) gc.PrimitiveParameters = new GFXPrimitiveParam();
 					ApplyToPrimitiveParameters(gc.PrimitiveParameters);
 				}
