@@ -131,6 +131,79 @@ namespace UbiCanvas.Conversion {
 					await TargetContext.Loader.LoadLoop();
 					var originalActorTPL = originalActor.obj.LUA.GetObject<GenericFile<Actor_Template>>();
 
+					if (costume.CostumeID == "Rayman_Bald") {
+						var starsTrail = new Path("world/common/fx/cinematic/fx_mrdark_starstrail_01.tpl");
+						starsTrail.LoadObject(TargetContext);
+						await TargetContext.Loader.LoadLoop();
+						var starsTrailTPL = starsTrail.GetObject<GenericFile<Actor_Template>>();
+
+
+						var newTPL = new GenericFile<Actor_Template>((Actor_Template)originalActorTPL.obj.Clone("tpl")) {
+							sizeOf = originalActorTPL.sizeOf + 0x10000
+						};
+						var pc = newTPL.obj.GetComponent<RO2_PlayerControllerComponent_Template>();
+						//pc.abilities = 0;
+						pc.helicopterAirFrictionMultiplier = 1f;
+						pc.helicopterCooldown = 9999999f;
+						pc.helicopterGravityMultiplier = 1f;
+						pc.helicopterMaxSpeedDown = 40f;
+						pc.helicopterSuspensionTime = 0f;
+						pc.helicopterReleaseDelay = 0f;
+						pc.helicopterSuspensionMultiplier = 1f;
+						pc.helicopterWindSpeedMultiplier = Vec2d.One;
+						pc.helicopterWindForcesMultiplier = 0f;
+						pc.helicopterUnstickMinFrictionMultiplier = 1f;
+
+						var ac = newTPL.obj.GetComponent<AnimatedComponent_Template>();
+						var helicoNode = ac.tree.nodes.First(n => n.obj.nodeName == new StringID("helico"));
+						var jumpNode = ac.tree.nodes.First(n => n.obj.nodeName == new StringID("jump"));
+						helicoNode.obj = (BlendTreeNodeTemplate<AnimTreeResult>)jumpNode.obj.Clone("tpl");
+
+
+						var fxc = newTPL.obj.GetComponent<FXControllerComponent_Template>();
+						var heliFX = fxc.fxControlList.FirstOrDefault(f => f.name == new StringID(0xBD4DAAF8));
+						heliFX.sounds = new CListO<StringID>();
+
+						var defaultFX = new FXControl() {
+							name = "fx_headshine",
+							fxPlayOnce = false,
+							fxBoneName = new StringID(0xBF484198),
+							fxUseActorOrientation = true,
+							//fxBoneName = new StringID(0xEC45C2AA),
+							fxAttach = true,
+							
+							fxUseActorSpeed = true,
+							//fxUseBoneOrientation = FXControl.BOOL._true,
+							//fxUseBoneOrientationBool = true,
+							particles = new CListO<StringID>() { "fx_part_headshine" }
+						};
+						fxc.fxControlList.Add(defaultFX);
+						fxc.defaultFx = "fx_headshine";
+						newActor.GetComponent<FXControllerComponent>().defaultFx = "fx_headshine";
+
+						var fbc = newTPL.obj.GetComponent<FxBankComponent_Template>();
+						var starsTrailFX = starsTrailTPL.obj.GetComponent<FxBankComponent_Template>().Fx[0];
+						var newFX = (FxDescriptor_Template)starsTrailFX.Clone("tpl");
+						newFX.gen._params.freq = 4.3f;
+						newFX.gen._params.circleRadius = 0.15f;
+						//newFX.gen._params.pos = new Vec3d(0.19f, -0.1f, 0f);
+						newFX.gen._params.pos = new Vec3d(0f, 0.19f, 0f);
+						//newFX.gen._params.pos = new Vec3d(-0.2f, 0.075f, 0f);
+						newFX.gen._params.useImpulseSpeed = true;
+						newFX.gen._params.canFlipPos = true;
+						newFX.gen._params.genMode = ParticleGeneratorParameters.PARGEN_MODE.FOLLOW;
+						foreach (var p in newFX.gen._params.phases) {
+							p.colorMin.b = 1f;
+							p.colorMax.b = 1f;
+						}
+						newFX.name = "fx_part_headshine";
+						fbc.Fx.Add(newFX);
+						
+
+						newActor.LUA = new Path("world/common/playablecharacter/rayman/rayman_bald.tpl");
+						Bundle.AddFile(newActor.LUA.CookedPath(TargetContext), newTPL);
+					}
+
 					var mainPlayerControllerComponent = newActor.GetComponent<RO2_PlayerControllerComponent>();
 					var mainAnimatedComponent = newActor.GetComponent<AnimatedComponent>();
 					var tplAnimatedComponent = originalActorTPL.obj.GetComponent<AnimatedComponent_Template>();

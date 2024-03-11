@@ -4128,7 +4128,30 @@ namespace UbiCanvas.Conversion {
 					case MusicTreeID.RLC_18_Bonus:
 						// TODO
 						// Parts
+						AddPart("part_trickytreasure_intro", new Path("sound/300_music/330_rlc/10_bonus/mus_trickytreasure_intro.wav"), nbMeasures: 1);
+						AddPart("part_trickytreasure_01_lp", new Path("sound/300_music/330_rlc/10_bonus/mus_trickytreasure_01_lp.wav"), nbMeasures: 32);
+						AddPart("part_trickytreasure_02_lp", new Path("sound/300_music/330_rlc/10_bonus/mus_trickytreasure_02_lp.wav"), nbMeasures: 32);
+						AddPart("part_trickytreasure_03_01_intro", new Path("sound/300_music/310_common/mus_coffre_01_intro_2m.wav"), nbMeasures: 2);
+						AddPart("part_trickytreasure_03_02", new Path("sound/300_music/310_common/mus_coffre_02_4m.wav"), nbMeasures: 4);
+						AddPart("part_trickytreasure_03_03", new Path("sound/300_music/310_common/mus_coffre_03_4m.wav"), nbMeasures: 4);
+						AddPart("part_trickytreasure_03_04", new Path("sound/300_music/310_common/mus_coffre_04_4m.wav"), nbMeasures: 4);
+						AddPart("part_trickytreasure_03_05", new Path("sound/300_music/310_common/mus_coffre_05_4m.wav"), nbMeasures: 4);
+						AddPart("part_trickytreasure_03_06", new Path("sound/300_music/310_common/mus_coffre_06_4m.wav"), nbMeasures: 4);
+						AddPart("part_trickytreasure_03_07", new Path("sound/300_music/310_common/mus_coffre_07_4m.wav"), nbMeasures: 4);
+						AddPart("part_trickytreasure_03_08_outro", new Path("sound/300_music/310_common/mus_coffre_08_outro_2m.wav"), nbMeasures: 4);
+
 						// Tree
+						AddSimpleSequenceNode("mus_trickytreasure_01", true,
+							new string[] { "part_trickytreasure_intro" },
+							new string[] { "part_trickytreasure_01_lp" });
+						AddSimpleNode("mus_trickytreasure_02", true, "part_trickytreasure_02_lp");
+						AddSimpleSequenceNode("mus_trickytreasure_03", true,
+							new string[] { "part_trickytreasure_03_01_intro" },
+							new string[] {
+								"part_trickytreasure_03_02", "part_trickytreasure_03_03", "part_trickytreasure_03_04",
+								"part_trickytreasure_03_05", "part_trickytreasure_03_06", "part_trickytreasure_03_07"
+							});
+						AddSimpleNode("mus_trickytreasure_outro", false, "part_trickytreasure_03_08_outro");
 						break;
 				}
 
@@ -7863,7 +7886,7 @@ namespace UbiCanvas.Conversion {
 				case "world/champi_roots/testlevelraymanios/testlevelraymanarcade.isc":
 				case "world/rlc_landofthedead/dragonsouls/landofthedead_dragonsouls_nmi_base.isc":
 				case "world_arcade/ra_common/ra_gym/ra_gym.isc":
-					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_18_Bonus);
+					await AddMusicTree(oldContext, scene, MusicTreeID.RLC_18_Bonus, useMiniSounds: false);
 					break;
 				default:
 					//await SpawnLumMusicManagerIfNecessary(oldContext, newSettings, scene);
@@ -10239,6 +10262,44 @@ namespace UbiCanvas.Conversion {
 						await AddAmbienceInterpolator(scene, "amb_exterior",
 							new Path("sound/100_ambiances/challenge/shaolin/amb_shaolin_ext_lp.wav"),
 							aabb, volume: -12);
+						break;
+					}
+				case "world/rlc_enchantedforest/forestegghunt/enchantedforest_forestegghunt_exp_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -15f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_trickytreasure_01", volume: vol), aabb);
+
+						var trigger = scene.FindActor(a => a.USERFRIENDLY == "Trigger1");
+						var relay = await AddMusicEventRelay(scene, "mus_trickytreasure_02", volume: vol, fadeOutTime: 0.05f, playOnNext: 1, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "Trigger2");
+						relay = await AddMusicEventRelay(scene, "mus_trickytreasure_03", volume: vol + 10, fadeOutTime: 0.1f, playOnNext: 1, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+						trigger = scene.FindActor(a => a.USERFRIENDLY == "Trigger3");
+						relay = await AddMusicEventRelay(scene, "mus_trickytreasure_outro", volume: vol + 10, fadeOutTime: 0.05f, playOnNext: 1, containingScene: trigger.ContainingScene);
+						TransformCopyPickable(relay, trigger.Result);
+						Link(trigger.Result, relay.USERFRIENDLY);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_forest_light",
+							new Path("sound/100_ambiances/101_jungle/amb_forest_light_lp.wav"),
+							aabb, volume: -10);
+						break;
+					}
+				case "world/flo_macro/map01.isc": {
+						break;
+					}
+				case "world/champi_roots/testlevelraymanios/testlevelraymanarcade.isc": {
+						break;
+					}
+				case "world/rlc_landofthedead/dragonsouls/landofthedead_dragonsouls_nmi_base.isc": {
+						break;
+					}
+				case "world_arcade/ra_common/ra_gym/ra_gym.isc": {
 						break;
 					}
 				default:

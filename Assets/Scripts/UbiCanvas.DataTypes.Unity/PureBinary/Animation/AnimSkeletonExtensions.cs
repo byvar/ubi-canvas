@@ -6,7 +6,13 @@ namespace UbiArt.Animation {
 		public static UnityBone[] CreateBones(this AnimSkeleton skl, Context context, GameObject gao) {
 			UnityBone[] unityBones = new UnityBone[skl.bones.Count];
 			for (int i = 0; i < skl.bones.Count; i++) {
-				GameObject boneGao = new GameObject("Bone " + i);
+				StringID tag = null;
+				if (skl.boneTags?.Count > i) {
+					tag = skl.boneTags[i];
+				} else if (skl.boneTagsAdv?.Count > i) {
+					tag = new StringID((uint)skl.boneTagsAdv[i]);
+				}
+				GameObject boneGao = new GameObject($"Bone {i} - {tag}");
 				unityBones[i] = boneGao.AddComponent<UnityBone>();
 				unityBones[i].bind = true;
 				unityBones[i].transform.parent = gao.transform;
