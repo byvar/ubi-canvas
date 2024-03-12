@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.RL)]
-	public partial class RO2_UIPrisonerMedalComponent_Template : CSerializable {
+	public partial class RO2_UIPrisonerMedalComponent_Template : ActorComponent_Template {
 		public float upMargin;
 		public float rightMargin;
 		public StringID appear;
