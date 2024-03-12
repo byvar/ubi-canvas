@@ -134,8 +134,14 @@ namespace UbiCanvas.Tools
 
 		private async Task ExportCostumes() {
 			await Task.CompletedTask;
-			//await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Settings.Mode.RaymanMiniMacOS);
-			//await new AdventuresToLegendsConverter().ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Settings.Mode.RaymanAdventuresAndroid);
+			/*using Context context = CreateContext();
+			await context.Loader.LoadInitial();
+			using (var converter = new AdventuresToLegendsConverter(context,
+					UnitySettings.Tools_AdventuresToLegends_GamePath,
+					UnitySettings.Tools_AdventuresToLegends_ProjectPath, exportID: "test")) {
+				await converter.ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Mode.RaymanMiniMacOS);
+				await converter.ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Mode.RaymanAdventuresAndroid);
+			}*/
 		}
 
 		private async Task BuildJSON() {
