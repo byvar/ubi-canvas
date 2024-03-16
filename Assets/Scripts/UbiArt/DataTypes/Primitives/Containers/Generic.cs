@@ -142,7 +142,7 @@ namespace UbiArt {
 									newBT.animHitWall = btDash.animHitWall;
 									newBT.animHoleStop = btDash.animHoleStop;
 									newBT.distMaxCharge = btDash.distMaxCharge;
-									newBT.timePatinage = 0.5f;
+									newBT.timePatinage = 0.5f; // Time before start of charge
 									newBT.name = btDash.name;
 									obj = (T)(object)newBT;
 									className = new StringID(obj.ClassCRC.Value);

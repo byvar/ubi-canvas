@@ -59,24 +59,21 @@ public class UnityWindowAtlasEditor : UnityWindow {
 								var rects = DivideRectHorizontally(GetNextRect(), 4);
 								AlphaBlending = EditorField("Alpha Blending", AlphaBlending, rect: rects[0]);
 								if (EditorButton("Export as PNG", rect: rects[1])) {
-									var defaultName = texPath.filename;
-									defaultName = System.IO.Path.GetFileNameWithoutExtension(defaultName);
+									var defaultName = $"{texPath.GetFilenameWithoutExtension()}.png";
 									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
 
 									if (!string.IsNullOrWhiteSpace(filePath))
 										SaveAsPNG(tex, filePath, hasTransparency: true);
 								}
 								if (EditorButton("Export (No Transparency)", rect: rects[2])) {
-									var defaultName = texPath.filename;
-									defaultName = System.IO.Path.GetFileNameWithoutExtension(defaultName);
+									var defaultName = $"{texPath.GetFilenameWithoutExtension()}.rgb.png";
 									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
 
 									if (!string.IsNullOrWhiteSpace(filePath))
 										SaveAsPNG(tex, filePath, hasTransparency: false);
 								}
 								if (EditorButton("Export (Alpha Channel)", rect: rects[3])) {
-									var defaultName = texPath.filename;
-									defaultName = System.IO.Path.GetFileNameWithoutExtension(defaultName);
+									var defaultName = $"{texPath.GetFilenameWithoutExtension()}.a.png";
 									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
 
 									if (!string.IsNullOrWhiteSpace(filePath))

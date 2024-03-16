@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UbiArt;
+using UbiCanvas.Helpers;
 
 namespace UbiCanvas.Conversion {
 	public class TexturesBuilder : ProjectBuilder {
@@ -128,7 +129,7 @@ namespace UbiCanvas.Conversion {
 
 
 										CountPixels(img);
-										data = img.ToByteArray();
+										data = img.ExportDDSWithMipmaps();
 									}
 								}
 							} else {
@@ -139,7 +140,7 @@ namespace UbiCanvas.Conversion {
 									w = (ushort)img.Width;
 									h = (ushort)img.Height;
 									CountPixels(img);
-									data = img.ToByteArray();
+									data = img.ExportDDSWithMipmaps();
 								}
 							}
 						}

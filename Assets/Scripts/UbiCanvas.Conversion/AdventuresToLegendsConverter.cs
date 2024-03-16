@@ -1,5 +1,4 @@
-﻿using Codice.Client.Common;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using ImageMagick;
 using Newtonsoft.Json;
 using System;
@@ -292,7 +291,7 @@ namespace UbiCanvas.Conversion {
 					img.AutoOrient(); // Orient TGA based on origin point
 					var w = (ushort)img.Width;
 					var h = (ushort)img.Height;
-					tex.Data = img.ToByteArray();
+					tex.Data = img.ExportDDSWithMipmaps();
 					tex.Header.DataSize = (uint)tex.Data.Length;
 					tex.Header.Width = w;
 					tex.Header.Height = h;
@@ -1386,6 +1385,19 @@ namespace UbiCanvas.Conversion {
 						box.innerBox = aabb;
 						box.outerBox = PadAABB(aabb, 20f);
 						//ApplySpecialRenderParamsToScene(scene, useExistingFogAlpha: true);
+						break;
+					}
+				case "world/flo_macro/map01.isc": {
+						var rp = scene.FindActor(a => a.USERFRIENDLY == "renderparam");
+						var rpc = rp.Result.GetComponent<RenderParamComponent>();
+						var cc = rpc.ClearColor.ClearColor;
+						rpc.Lighting = new SubRenderParam_Lighting() {
+							Enable = true,
+							GlobalColor = new UbiArt.Color(cc.r, cc.g, cc.b, 0.25f), //0.9882353f)
+						};
+
+						var ungrabbable = scene.FindActor(a => a.USERFRIENDLY == "lumschain");
+						FixOneLumsChainSpawnMode(oldContext, newSettings, ungrabbable.Result);
 						break;
 					}
 				case "world/rlc_dojo/torchingteensietrouble/dojo_torchingteensietrouble_exp_base.isc": {
@@ -4126,7 +4138,7 @@ namespace UbiCanvas.Conversion {
 							new string[] { "part_ritual_03", "part_ritual_04", "part_ritual_05", "part_ritual_01", "part_ritual_02" });
 						break;
 					case MusicTreeID.RLC_18_Bonus:
-						// TODO
+						// COMPLETE
 						// Parts
 						AddPart("part_trickytreasure_intro", new Path("sound/300_music/330_rlc/10_bonus/mus_trickytreasure_intro.wav"), nbMeasures: 1);
 						AddPart("part_trickytreasure_01_lp", new Path("sound/300_music/330_rlc/10_bonus/mus_trickytreasure_01_lp.wav"), nbMeasures: 32);
@@ -4140,6 +4152,23 @@ namespace UbiCanvas.Conversion {
 						AddPart("part_trickytreasure_03_07", new Path("sound/300_music/310_common/mus_coffre_07_4m.wav"), nbMeasures: 4);
 						AddPart("part_trickytreasure_03_08_outro", new Path("sound/300_music/310_common/mus_coffre_08_outro_2m.wav"), nbMeasures: 4);
 
+						//AddPart("part_oc_rl_suspens_lp", new Path("sound/300_music/304_ocean_legends/oc_rl_2/oc_rl_2_suspens_37m.wav"), nbMeasures: 37);
+						AddPart("part_bge_minecontraptions_lp", new Path("sound/300_music/330_rlc/10_bonus/mus_bge_minecontraptions.wav"), nbMeasures: 73);
+						AddPart("part_bge_hiddenwonders_lp", new Path("sound/300_music/330_rlc/10_bonus/mus_bge_hiddenwonders.wav"), nbMeasures: 110);
+
+						AddPart("part_lod_poursuite_break_01", new Path("sound/300_music/307_landofthedead_retro/mus_lod_poursuite_break_01_16m.wav"), nbMeasures: 16);
+						AddPart("part_lod_poursuite_break_02", new Path("sound/300_music/307_landofthedead_retro/mus_lod_poursuite_break_02_11m.wav"), nbMeasures: 11);
+						AddPart("part_lod_poursuite_break_03", new Path("sound/300_music/307_landofthedead_retro/mus_lod_poursuite_break_03_15m.wav"), nbMeasures: 15);
+						AddPart("part_lod_poursuite_01", new Path("sound/300_music/310_common/challenge_run/mus_lod_poursuite_01_18m.wav"), nbMeasures: 18);
+						AddPart("part_lod_poursuite_02", new Path("sound/300_music/310_common/challenge_run/mus_lod_poursuite_02_11m.wav"), nbMeasures: 11);
+						AddPart("part_lod_poursuite_03", new Path("sound/300_music/310_common/challenge_run/mus_lod_poursuite_03_18m.wav"), nbMeasures: 18);
+						AddPart("part_lod_poursuite_04", new Path("sound/300_music/310_common/challenge_run/mus_lod_poursuite_04_11m.wav"), nbMeasures: 11);
+						AddPart("part_lod_poursuite_05", new Path("sound/300_music/310_common/challenge_run/mus_lod_poursuite_05_18m.wav"), nbMeasures: 18);
+						AddPart("part_lod_poursuite_06", new Path("sound/300_music/310_common/challenge_run/mus_lod_poursuite_06_18m.wav"), nbMeasures: 18);
+						AddPart("part_lod_poursuite_outro_short", new Path("sound/300_music/330_rlc/10_bonus/mus_lod_poursuite_outro_short.wav"), nbMeasures: 8);
+
+						AddPart("part_home_8bit_lp", new Path("sound/300_music/310_common/home/mus_home_8bit.wav"), nbMeasures: 128);
+
 						// Tree
 						AddSimpleSequenceNode("mus_trickytreasure_01", true,
 							new string[] { "part_trickytreasure_intro" },
@@ -4152,6 +4181,18 @@ namespace UbiCanvas.Conversion {
 								"part_trickytreasure_03_05", "part_trickytreasure_03_06", "part_trickytreasure_03_07"
 							});
 						AddSimpleNode("mus_trickytreasure_outro", false, "part_trickytreasure_03_08_outro");
+
+						//AddSimpleNode("mus_oc_rl_suspens", true, "part_oc_rl_suspens_lp");
+						AddSimpleNode("mus_bge_minecontraptions", true, "part_bge_minecontraptions_lp");
+						AddSimpleNode("mus_bge_hiddenwonders", true, "part_bge_hiddenwonders_lp");
+
+						AddSimpleNode("mus_lod_poursuite", true,
+							"part_lod_poursuite_break_01", "part_lod_poursuite_break_02", "part_lod_poursuite_break_03",
+							"part_lod_poursuite_01", "part_lod_poursuite_02", "part_lod_poursuite_03",
+							"part_lod_poursuite_04", "part_lod_poursuite_05", "part_lod_poursuite_06");
+						AddSimpleNode("mus_lod_poursuite_outro", false, "part_lod_poursuite_outro_short");
+
+						AddSimpleNode("mus_home_8bit", true, "part_home_8bit_lp");
 						break;
 				}
 
@@ -10291,15 +10332,69 @@ namespace UbiCanvas.Conversion {
 						break;
 					}
 				case "world/flo_macro/map01.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -15f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_bge_minecontraptions", volume: vol), aabb);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_cavern",
+							new Path("sound/100_ambiances/104_ocean_retro/amb_cavern_lp.wav"),
+							aabb, volume: -12);
+
+						// Sounds
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("waterfall_bezierspline"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall.tpl"), act.Result);
+						}
+						foreach (var act in scene.FindPickables(a => a.USERFRIENDLY.StartsWith("watersplash"))) {
+							await AddActorSound(act.ContainingScene, new Path("sound/common/3d_sound_actors/01_jungle/actorsound_jun_waterfall_02.tpl"), act.Result);
+						}
 						break;
 					}
 				case "world/champi_roots/testlevelraymanios/testlevelraymanarcade.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -15f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_bge_hiddenwonders", volume: vol), aabb);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_de_ghost_town",
+							new Path("sound/100_ambiances/109_landofdead_retro/amb_de_ghost_town_lp.wav"),
+							aabb, volume: -10);
 						break;
 					}
 				case "world/rlc_landofthedead/dragonsouls/landofthedead_dragonsouls_nmi_base.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_lod_poursuite", volume: vol), aabb);
+
+						TransformAABB(await AddMusicTrigger(scene, "mus_lod_poursuite_outro", playOnNext: 1, volume: vol),
+							new AABB() {
+								MIN = new Vec2d(307f, -79.7f),
+								MAX = new Vec2d(359.2f, -27.1f)
+							});
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_de_ghost_town",
+							new Path("sound/100_ambiances/109_landofdead_retro/amb_de_ghost_town_lp.wav"),
+							aabb, volume: -10);
 						break;
 					}
 				case "world_arcade/ra_common/ra_gym/ra_gym.isc": {
+						var aabb = GetSceneAABBFromFrises(scene);
+						var vol = -11f;
+
+						// Music
+						TransformAABB(await AddMusicTrigger(scene, "mus_home_8bit", volume: vol), aabb);
+
+						// Ambience
+						await AddAmbienceInterpolator(scene, "amb_matrix",
+							new Path("sound/100_ambiances/130_rlc/amb_matrix_lp.wav"),
+							aabb, volume: -28);
 						break;
 					}
 				default:

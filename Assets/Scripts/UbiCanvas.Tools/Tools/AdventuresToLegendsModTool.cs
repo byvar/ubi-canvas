@@ -139,7 +139,7 @@ namespace UbiCanvas.Tools
 			using (var converter = new AdventuresToLegendsConverter(context,
 					UnitySettings.Tools_AdventuresToLegends_GamePath,
 					UnitySettings.Tools_AdventuresToLegends_ProjectPath, exportID: "test")) {
-				await converter.ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Mode.RaymanMiniMacOS);
+				//await converter.ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Mode.RaymanMiniMacOS);
 				await converter.ConvertCostumes(UnitySettings.Tools_AdventuresToLegends_ProjectPath, Mode.RaymanAdventuresAndroid);
 			}*/
 		}
