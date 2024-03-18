@@ -3,13 +3,13 @@ namespace UbiArt.Animation {
 	public class AnimPatchPointLocal : CSerializable {
 		public Link boneId;
 		public Vec2d pos;
-		public Vec2d vec1;
+		public Vec2d normal;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			boneId = s.SerializeObject<Link>(boneId, name: "boneId");
 			pos = s.SerializeObject<Vec2d>(pos, name: "pos");
-			vec1 = s.SerializeObject<Vec2d>(vec1, name: "vec1");
+			normal = s.SerializeObject<Vec2d>(normal, name: "normal");
 		}
 
 		/*

@@ -161,11 +161,9 @@ namespace UbiCanvas.Tools
 			new AtlasBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new HomeBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
-			new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
-			new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
-			if (fullClean) {
-				new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
-			}
+			if (fullClean) new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			if (fullClean) new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			if (fullClean) new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new SimpleObjectBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new CombinedSceneBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new SceneConfigsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();

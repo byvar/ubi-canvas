@@ -34,65 +34,77 @@ public class UnityWindowAtlasEditor : UnityWindow {
 
 				if (!string.IsNullOrWhiteSpace(SelectedTextureFile)) {
 					Path texPath = new Path(SelectedTextureFile);
+					var tex = SelectedTexture;
+					
+					if (tex != null) {
+						var t = tex.GetUnityTexture(Controller.MainContext);
+						var heightFactor = t.HeightFactor;
+						var unityTex = t.Texture;
+						if (unityTex != null) {
+							ZoomFactor = EditorGUI.Slider(GetNextRect(height: 25f), ZoomFactor, ZoomMin, ZoomMax);
+							var canvas = GetNextRect(height: 512, vPadding: 4);
+							Event e = Event.current;
+							Rect subcanvas = AdjustAspectRatio(canvas, unityTex.width, unityTex.height, centerVertically: false);
+							YPos -= canvas.height - subcanvas.height;
 
-					var cache = Controller.MainContext?.Cache?.Structs;
-					if (cache != null && cache.ContainsKey(typeof(TextureCooked)) && cache[typeof(TextureCooked)].ContainsKey(texPath.stringID)) {
-						var tex = cache[typeof(TextureCooked)][texPath.stringID] as TextureCooked;
-						if (tex != null) {
-							var t = tex.GetUnityTexture(Controller.MainContext);
-							var heightFactor = t.HeightFactor;
-							var unityTex = t.Texture;
-							if (unityTex != null) {
-								var canvas = GetNextRect(height: 512, vPadding: 4);
-								Event e = Event.current;
-								Rect subcanvas = AdjustAspectRatio(canvas, unityTex.width, unityTex.height, centerVertically: false);
-								YPos -= canvas.height - subcanvas.height;
+							EditorGUI.DrawRect(subcanvas, BackgroundColor);
+							/*GUI.DrawTextureWithTexCoords(subcanvas,
+								tex.GetUnityTexture(Controller.MainContext).Texture,
+								new Rect(0, 0, 1, -1));*/
 
-								EditorGUI.DrawRect(subcanvas, BackgroundColor);
-								/*GUI.DrawTextureWithTexCoords(subcanvas,
-									tex.GetUnityTexture(Controller.MainContext).Texture,
-									new Rect(0, 0, 1, -1));*/
-								GUI.DrawTextureWithTexCoords(subcanvas,
-									t.Texture,
-									new Rect(0, 0, 1, -1), AlphaBlending);
+							// Calculate texture coordinates and limit zoom center
+							var coord1 = ZoomCenter - new Vector2(0.5f / ZoomFactor, 0.5f / ZoomFactor);
+							var coord2 = ZoomCenter + new Vector2(0.5f / ZoomFactor, 0.5f / ZoomFactor);
+							if (coord1.x < 0f) ZoomCenter = ZoomCenter - new Vector2(coord1.x, 0f);
+							if (coord1.y < 0f) ZoomCenter = ZoomCenter - new Vector2(0f, coord1.y);
+							if (coord2.x > 1f) ZoomCenter = ZoomCenter - new Vector2(coord2.x - 1f, 0f);
+							if (coord2.y > 1f) ZoomCenter = ZoomCenter - new Vector2(0f, coord2.y - 1f);
+							coord1 = ZoomCenter - new Vector2(0.5f / ZoomFactor, 0.5f / ZoomFactor);
+							coord2 = ZoomCenter + new Vector2(0.5f / ZoomFactor, 0.5f / ZoomFactor);
 
-								var rects = DivideRectHorizontally(GetNextRect(), 4);
-								AlphaBlending = EditorField("Alpha Blending", AlphaBlending, rect: rects[0]);
-								if (EditorButton("Export as PNG", rect: rects[1])) {
-									var defaultName = $"{texPath.GetFilenameWithoutExtension()}.png";
-									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
+							var texCoords = new Rect(coord1.x, -coord1.y, coord2.x - coord1.x, -(coord2.y - coord1.y));
+							GUI.DrawTextureWithTexCoords(subcanvas,
+								t.Texture,
+								texCoords, AlphaBlending);
 
-									if (!string.IsNullOrWhiteSpace(filePath))
-										SaveAsPNG(tex, filePath, hasTransparency: true);
-								}
-								if (EditorButton("Export (No Transparency)", rect: rects[2])) {
-									var defaultName = $"{texPath.GetFilenameWithoutExtension()}.rgb.png";
-									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
+							var rects = DivideRectHorizontally(GetNextRect(), 4);
+							AlphaBlending = EditorField("Alpha Blending", AlphaBlending, rect: rects[0]);
+							if (EditorButton("Export as PNG", rect: rects[1])) {
+								var defaultName = $"{texPath.GetFilenameWithoutExtension()}.png";
+								string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
 
-									if (!string.IsNullOrWhiteSpace(filePath))
-										SaveAsPNG(tex, filePath, hasTransparency: false);
-								}
-								if (EditorButton("Export (Alpha Channel)", rect: rects[3])) {
-									var defaultName = $"{texPath.GetFilenameWithoutExtension()}.a.png";
-									string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
-
-									if (!string.IsNullOrWhiteSpace(filePath))
-										SaveAsPNG(tex, filePath, alphaChannelOnly: true);
-								}
-
-
-								var rect = GetNextRect();
-								rect = EditorGUI.PrefixLabel(rect, new GUIContent("UV Source"));
-								CurrentTab = (Tab)GUI.Toolbar(rect, (int)CurrentTab, new string[] { "Atlas Container", "Patch Bank" });
-								switch (CurrentTab) {
-									case Tab.AtlasContainer:
-										DrawAtlasUI(tex, subcanvas);
-										break;
-									case Tab.PatchBank:
-										DrawPatchBankUI(tex, subcanvas);
-										break;
-								}
+								if (!string.IsNullOrWhiteSpace(filePath))
+									SaveAsPNG(tex, filePath, hasTransparency: true);
 							}
+							if (EditorButton("Export (No Transparency)", rect: rects[2])) {
+								var defaultName = $"{texPath.GetFilenameWithoutExtension()}.rgb.png";
+								string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
+
+								if (!string.IsNullOrWhiteSpace(filePath))
+									SaveAsPNG(tex, filePath, hasTransparency: false);
+							}
+							if (EditorButton("Export (Alpha Channel)", rect: rects[3])) {
+								var defaultName = $"{texPath.GetFilenameWithoutExtension()}.a.png";
+								string filePath = EditorUtility.SaveFilePanel("Output PNG file", "", defaultName, "png");
+
+								if (!string.IsNullOrWhiteSpace(filePath))
+									SaveAsPNG(tex, filePath, alphaChannelOnly: true);
+							}
+
+
+							var rect = GetNextRect();
+							rect = EditorGUI.PrefixLabel(rect, new GUIContent("UV Source"));
+							CurrentTab = (Tab)GUI.Toolbar(rect, (int)CurrentTab, new string[] { "Atlas Container", "Patch Bank" });
+							switch (CurrentTab) {
+								case Tab.AtlasContainer:
+									DrawAtlasUI(tex, subcanvas);
+									break;
+								case Tab.PatchBank:
+									DrawPatchBankUI(tex, subcanvas);
+									break;
+							}
+
+							HandleEvents();
 						}
 					} else {
 						if (EditorButton("Load")) {
@@ -148,9 +160,12 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	}
 
 	void DrawAtlas(TextureCooked tex, Rect rect) {
-
+		GUI.BeginGroup(rect);
 		Vector2 GetTexturePositionOnRect(Vector2 pos) {
-			return rect.position + pos * rect.size;
+			var zoomCenter = new Vector2(ZoomCenter.x, 1f - ZoomCenter.y);
+			var relativePos = (pos - zoomCenter);
+			var rectHalf = new Vector2(rect.width / 2f, rect.height / 2f);
+			return rectHalf + new Vector2(relativePos.x, relativePos.y) * rect.size * ZoomFactor;
 		}
 		if (tex.atlas != null) {
 			var pointSize = 6;
@@ -267,6 +282,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 			}
 			Handles.EndGUI();
 		}
+		GUI.EndGroup();
 	}
 
 	void DrawPatchBankUI(TextureCooked tex, Rect rect) {
@@ -278,34 +294,41 @@ public class UnityWindowAtlasEditor : UnityWindow {
 			if (cache != null && cache.ContainsKey(typeof(AnimPatchBank)) && cache[typeof(AnimPatchBank)].ContainsKey(pbkPath.stringID)) {
 				var pbk = cache[typeof(AnimPatchBank)][pbkPath.stringID] as AnimPatchBank;
 				if (pbk != null) {
+					DrawPatchBankTemplateSelection(pbk);
+
 					DrawPatchBank(tex, rect, pbk);
-					var buttonsRect = GetNextRect();
-					buttonsRect = EditorGUI.PrefixLabel(buttonsRect, new GUIContent("Show template"));
-					var initialX = buttonsRect.xMin;
-					bool MiniButton(string label, bool pressed) {
-						var buttonRect = RowEntryRect(ref buttonsRect, buttonsRect.height * 5, getNextRect: () => {
-							var r = GetNextRect();
-							r.xMin = initialX;
-							return r;
-						});
-						var oldColor = GUI.backgroundColor;
-						if(pressed) GUI.backgroundColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-						if (GUI.Button(buttonRect, new GUIContent(label), EditorStyles.miniButton)) {
-							if(pressed) GUI.backgroundColor = oldColor;
-							return true;
+
+					if (CurrentPBKTemplate == -1) {
+						var buttonsRect = GetNextRect();
+						buttonsRect = EditorGUI.PrefixLabel(buttonsRect, new GUIContent("Show template"));
+						var initialX = buttonsRect.xMin;
+						bool MiniButton(string label, bool pressed) {
+							var buttonRect = RowEntryRect(ref buttonsRect, buttonsRect.height * 7, getNextRect: () => {
+								var r = GetNextRect();
+								r.xMin = initialX;
+								return r;
+							});
+							var oldColor = GUI.backgroundColor;
+							if (pressed) GUI.backgroundColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+							if (GUI.Button(buttonRect, new GUIContent(label), EditorStyles.miniButton)) {
+								if (pressed) GUI.backgroundColor = oldColor;
+								return true;
+							}
+							if (pressed) GUI.backgroundColor = oldColor;
+							return false;
 						}
-						if (pressed) GUI.backgroundColor = oldColor;
-						return false;
-					}
-					bool allShown = ShowTemplate.All(st => st.Value == true);
-					var showTemplateCopy = ShowTemplate.ToArray();
-					if (MiniButton("Show all", allShown)) {
-						foreach(var entry in showTemplateCopy) ShowTemplate[entry.Key] = !allShown;
-						showTemplateCopy = ShowTemplate.ToArray();
-					}
-					foreach (var entry in showTemplateCopy) {
-						if (MiniButton($"{entry.Key:X8}", entry.Value)) {
-							ShowTemplate[entry.Key] = !entry.Value;
+						bool allShown = ShowTemplate.All(st => st.Value == true);
+						var showTemplateCopy = ShowTemplate.ToArray();
+						if (MiniButton("Show all", allShown)) {
+							foreach (var entry in showTemplateCopy) ShowTemplate[entry.Key] = !allShown;
+							showTemplateCopy = ShowTemplate.ToArray();
+						}
+						int index = 0;
+						foreach (var entry in showTemplateCopy) {
+							if (MiniButton($"{index} - {entry.Key:X8}", entry.Value)) {
+								ShowTemplate[entry.Key] = !entry.Value;
+							}
+							index++;
 						}
 					}
 				}
@@ -344,10 +367,13 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	void DrawPatchBank(TextureCooked tex, Rect rect, AnimPatchBank pbk) {
 		var t = tex?.GetUnityTexture(Controller.MainContext);
 		var heightFactor = t?.HeightFactor;
-
+		GUI.BeginGroup(rect);
 		Vector2 GetTexturePositionOnRect(Vector2 pos) {
 			var size = rect.width; //Mathf.Max(rect.width, rect.height);
-			return rect.position + pos * size;
+			var zoomCenter = new Vector2(ZoomCenter.x, (1f - ZoomCenter.y) * rect.height / rect.width);
+			var relativePos = (pos - zoomCenter);
+			var rectHalf = new Vector2(rect.width / 2f, rect.height / 2f);
+			return rectHalf + new Vector2(relativePos.x, relativePos.y) * size * ZoomFactor;
 		}
 		if (pbk != null) {
 			var pointSize = 6;
@@ -357,10 +383,12 @@ public class UnityWindowAtlasEditor : UnityWindow {
 			for(int tpl_i = 0; tpl_i < pbk.templates.Count; tpl_i++) {
 				var tpl = pbk.templates[tpl_i];
 				var tplKey = pbk.templateKeys.GetKeyFromValue(tpl_i);
-				if (!ShowTemplate.ContainsKey(tplKey)) {
-					ShowTemplate[tplKey] = true;
-				}
-				if(!ShowTemplate[tplKey]) continue;
+				if (CurrentPBKTemplate == -1) {
+					if (!ShowTemplate.ContainsKey(tplKey)) {
+						ShowTemplate[tplKey] = true;
+					}
+					if (!ShowTemplate[tplKey]) continue;
+				} else if(tpl_i != CurrentPBKTemplate) continue;
 
 				Dictionary<Link, AnimPatchPoint> points = tpl.patchPoints.ToDictionary(p => p.key, p => p);
 				var pointColor = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 0.8f, 0.8f, 1f, 1f, 1f);
@@ -452,9 +480,48 @@ public class UnityWindowAtlasEditor : UnityWindow {
 					}
 				}
 
+				/*if (tpl_i == CurrentPBKTemplate) {
+					Vec2d[] bonePositions = new Vec2d[tpl.bones.Count];
+					Angle[] boneAngles = new Angle[tpl.bones.Count];
+					for (int i = 0; i < tpl.bones.Count; i++) {
+						var boneDyn = tpl.bonesDyn[i];
+						var bonePos = boneDyn.position;
+						var boneAngle = boneDyn.angle;
+						var currentParent = tpl.bones[i].parentKey;
+						var parentBone = tpl.GetBoneFromLink(currentParent);
+						while (parentBone != null) {
+							var parentBoneIndex = tpl.bones.IndexOf(parentBone);
+							boneDyn = tpl.bonesDyn[parentBoneIndex];
+
+							bonePos = boneDyn.position + bonePos.Rotate(boneDyn.angle) * boneDyn.scale.x;
+							boneAngle = new Angle(boneAngle + boneDyn.angle);
+
+							currentParent = parentBone.parentKey;
+							parentBone = tpl.GetBoneFromLink(currentParent);
+						}
+						bonePositions[i] = bonePos;
+						boneAngles[i] = boneAngle;
+					}
+					// Draw bones
+					for(int i = 0; i < tpl.bonesDyn.Count; i++) {
+						var boneDyn = tpl.bonesDyn[i];
+						//var boneLocalPos = boneDyn.position;
+						var boneGlobalPos = bonePositions[i] * new Vec2d(1f / patchHLevel, 1f / patchVLevel);
+
+						pointColor = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 0.8f, 0.8f, 1f, 1f, 1f);
+						pointSize = 10;
+
+						var uvPos = GetTexturePositionOnRect(boneGlobalPos.GetUnityVector());
+						Handles.DrawSolidRectangleWithOutline(
+							new Rect(
+								uvPos.x - pointSize / 2, uvPos.y - pointSize / 2, pointSize, pointSize), pointColor, Color.white);
+					}
+				}*/
+
 			}
 			Handles.EndGUI();
 		}
+		GUI.EndGroup();
 	}
 
 	Vec2d CalculateCubicBezierPoint(float t, Vec2d p0, Vec2d p1, Vec2d p2, Vec2d p3) {
@@ -509,6 +576,7 @@ public class UnityWindowAtlasEditor : UnityWindow {
 		}
 		if (Dropdown != null && Dropdown.selection != null) {
 			SelectedTextureFile = Dropdown.selection;
+			ZoomFactor = 1f;
 			ResetPBK = true;
 			Dropdown.selection = null;
 			Dirty = true;
@@ -524,7 +592,8 @@ public class UnityWindowAtlasEditor : UnityWindow {
 		Rect rect = GetNextRect(vPaddingBottom: 4f);
 		if (ResetPBK) {
 			SelectedPBKFile = null;
-			if(PBKDropdown != null) 
+			CurrentPBKTemplate = -1;
+			if (PBKDropdown != null) 
 				PBKDropdown.selection = null;
 			ResetPBK = false;
 			ShowTemplate.Clear();
@@ -552,8 +621,91 @@ public class UnityWindowAtlasEditor : UnityWindow {
 			SelectedPBKFile = PBKDropdown.selection;
 			PBKDropdown.selection = null;
 			Dirty = true;
+			CurrentPBKTemplate = -1;
 		}
 		EditorGUI.TextArea(GetNextRect(), SelectedPBKFile);
+	}
+
+
+	void DrawPatchBankTemplateSelection(AnimPatchBank pbk) {
+		var c = Controller.MainContext;
+
+		Rect rect = GetNextRect(vPaddingBottom: 4f);
+		if (ResetPBK) {
+			SelectedPBKFile = null;
+			if (PBKDropdown != null)
+				PBKDropdown.selection = null;
+			ResetPBK = false;
+			ShowTemplate.Clear();
+		}
+		string buttonString = "All";
+		if (CurrentPBKTemplate != -1) {
+			var tpl = pbk.templates[CurrentPBKTemplate];
+			var tplKey = pbk.templateKeys.GetKeyFromValue(CurrentPBKTemplate);
+			var sid = new StringID((uint)tplKey);
+			var name = $"{CurrentPBKTemplate} - {sid.ToString(Controller.MainContext)}";
+			buttonString = name;
+		}
+		rect = EditorGUI.PrefixLabel(rect, new GUIContent("Template"));
+		if (EditorGUI.DropdownButton(rect, new GUIContent(buttonString), FocusType.Passive)) {
+			if (recheckFiles || TemplateDropdown == null || TemplateDropdown.pbk != pbk) {
+				TemplateDropdown = new PatchBankTemplateDropdown(new UnityEditor.IMGUI.Controls.AdvancedDropdownState(), pbk) {
+					name = "Patch bank templates"
+				};
+			}
+			TemplateDropdown.Show(rect);
+		}
+		if (TemplateDropdown != null && TemplateDropdown.selection != null) {
+			CurrentPBKTemplate = TemplateDropdown.selection.Value;
+			TemplateDropdown.selection = null;
+			Dirty = true;
+		}
+
+		/*if (CurrentPBKTemplate != -1) {
+			patchHLevel = EditorField("Patch H Level", patchHLevel);
+			patchVLevel = EditorField("Patch V Level", patchVLevel);
+		}*/
+	}
+
+	private void HandleEvents() {
+		// Allow adjusting the zoom with the mouse wheel as well. In this case, use the mouse coordinates
+		// as the zoom center instead of the top left corner of the zoom area. This is achieved by
+		// maintaining an origin that is used as offset when drawing any GUI elements in the zoom area.
+		if (Event.current.type == EventType.ScrollWheel && Event.current.modifiers == EventModifiers.Alt) {
+			Vector2 delta = Event.current.delta;
+			float zoomDelta = -delta.y / 25.0f;
+			ZoomFactor += zoomDelta;
+			ZoomFactor = Mathf.Clamp(ZoomFactor, ZoomMin, ZoomMax);
+			Event.current.Use();
+		}
+		// Allow moving the zoom area's origin by dragging with the middle mouse button or dragging
+		// with the left mouse button with Alt pressed.
+		if (Event.current.type == EventType.MouseDrag &&
+			(Event.current.button == 0 && Event.current.modifiers == EventModifiers.Alt) ||
+			Event.current.button == 2) {
+			Vector2 delta = Event.current.delta;
+			delta /= ZoomFactor * 512f;
+			ZoomCenter -= new Vector2(delta.x, -delta.y);
+
+			Event.current.Use();
+		}
+	}
+
+	private TextureCooked SelectedTexture {
+		get {
+			if (!string.IsNullOrWhiteSpace(SelectedTextureFile)) {
+				Path texPath = new Path(SelectedTextureFile);
+
+				var cache = Controller.MainContext?.Cache?.Structs;
+				if (cache != null && cache.ContainsKey(typeof(TextureCooked)) && cache[typeof(TextureCooked)].ContainsKey(texPath.stringID)) {
+					var tex = cache[typeof(TextureCooked)][texPath.stringID] as TextureCooked;
+					if (tex != null) {
+						return tex;
+					}
+				}
+			}
+			return null;
+		}
 	}
 
 	/// <summary>
@@ -578,10 +730,14 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	/// </summary>
 	private FileSelectionDropdown PBKDropdown { get; set; }
 
+	private PatchBankTemplateDropdown TemplateDropdown { get; set; }
+
 	/// <summary>
 	/// The selected texture file
 	/// </summary>
 	private string SelectedPBKFile { get; set; }
+
+	public int CurrentPBKTemplate { get; set; }
 
 	private Dictionary<ulong, bool> ShowTemplate { get; set; } = new Dictionary<ulong, bool>();
 
@@ -591,4 +747,12 @@ public class UnityWindowAtlasEditor : UnityWindow {
 	public Color BackgroundColor { get; set; } = new Color(0,0,0,0.2f);
 
 	public bool AlphaBlending { get; set; } = true;
+
+	public float ZoomFactor { get; set; } = 1f;
+	public float ZoomMin { get; set; } = 1f;
+	public float ZoomMax { get; set; } = 4f;
+	public Vector2 ZoomCenter { get; set; } = new Vector2(0.5f, 0.5f);
+
+	public float patchHLevel { get; set; } = 2f;
+	public float patchVLevel { get; set; } = 2f;
 }

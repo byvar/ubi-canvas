@@ -6,6 +6,7 @@ namespace UbiCanvas.Helpers
 	{
 		public static byte[] ExportDDSWithMipmaps(this MagickImage img, FilterType filterType = FilterType.Triangle) {
 			byte[] bytes = null;
+
 			using (MagickImageCollection collection = new MagickImageCollection()) {
 				img.Format = MagickFormat.Dds;
 				img.Settings.SetDefine(MagickFormat.Dds, "compression", "none");

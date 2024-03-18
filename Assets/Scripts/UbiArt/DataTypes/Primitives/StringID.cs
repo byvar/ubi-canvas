@@ -118,7 +118,7 @@ namespace UbiArt {
 
 		public string ToString(Context c) {
 			string str = ToString();
-			if (!IsNull && c.StringCache.ContainsKey(this)) {
+			if (!IsNull && c != null && c.StringCache.ContainsKey(this)) {
 				str += " - " + c.StringCache[this].Replace("\n", "\\n");
 			}
 			return str;
