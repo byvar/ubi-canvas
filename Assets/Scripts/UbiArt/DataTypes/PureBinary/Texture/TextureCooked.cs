@@ -10,7 +10,7 @@ namespace UbiArt {
 			Reinit(s.Context);
 			Header = s.SerializeObject<TextureCookedHeader>(Header, name: nameof(Header));
 			var dataSize = (int)(Header?.DataSize ?? (s.Length - s.CurrentPosition));
-			if(s.Settings.Platform == GamePlatform.iOS && (Header?.CompressionType ?? 0) != 0 && dataSize == 0) {
+			if(s.Settings.Platform == GamePlatform.iOS && (Header?.CompressionMode ?? 0) != 0 && dataSize == 0) {
 				dataSize = (int)(s.Length - s.CurrentPosition);
 			}
 

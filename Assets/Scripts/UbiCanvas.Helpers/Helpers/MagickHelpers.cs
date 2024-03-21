@@ -4,7 +4,7 @@ namespace UbiCanvas.Helpers
 {
 	public static class MagickHelpers 
 	{
-		public static byte[] ExportDDSWithMipmaps(this MagickImage img, FilterType filterType = FilterType.Triangle) {
+		public static byte[] ExportDDSWithMipmaps(this MagickImage img, FilterType filterType = FilterType.Box) {
 			byte[] bytes = null;
 
 			using (MagickImageCollection collection = new MagickImageCollection()) {
@@ -12,12 +12,12 @@ namespace UbiCanvas.Helpers
 				img.Settings.SetDefine(MagickFormat.Dds, "compression", "none");
 				img.Settings.SetDefine(MagickFormat.Dds, "mipmaps", "fromlist");
 				//img.Settings.SetDefine(MagickFormat.Dds, "weight-by-alpha", false);
-				var w = (ushort)img.Width;
-				var h = (ushort)img.Height;
+				var w = img.Width;
+				var h = img.Height;
 				collection.Add(img);
 
-				var color = new MagickImage(img);
-				var alpha = new MagickImage(img);
+				using var color = new MagickImage(img);
+				using var alpha = new MagickImage(img);
 				color.Alpha(AlphaOption.Off);
 				alpha.Alpha(AlphaOption.Extract);
 				void Divide() {

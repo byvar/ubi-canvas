@@ -11,7 +11,7 @@ namespace UbiArt {
 		public ushort Height { get; set; }
 		public ushort ImagesCount { get; set; } = 1; // Always 1 in Legends? Maybe for animated textures?
 		public byte BPP { get; set; } = 32;
-		public byte CompressionType { get; set; } = 0; // Unused on PC? On Android: 3 - PVRTC, 4 - ATC
+		public byte CompressionMode { get; set; } = 0; // Unused on PC, but usually set to 0. Sometimes 1 for backlight, 2 for teensy_c10_back (?). On Android: 3 = PVRTC, 4 = ATC
 		public byte V16_Byte0 { get; set; } // Only first byte seems used?
 		public byte V16_Byte1 { get; set; }
 		public byte V16_Byte2 { get; set; }
@@ -45,7 +45,7 @@ namespace UbiArt {
 				Height = s.Serialize<ushort>(Height, name: nameof(Height));
 				ImagesCount = s.Serialize<ushort>(ImagesCount, name: nameof(ImagesCount));
 				BPP = s.Serialize<byte>(BPP, name: nameof(BPP));
-				CompressionType = s.Serialize<byte>(CompressionType, name: nameof(CompressionType));
+				CompressionMode = s.Serialize<byte>(CompressionMode, name: nameof(CompressionMode));
 				if (Version >= 16) {
 					V16_Byte0 = s.Serialize<byte>(V16_Byte0, name: nameof(V16_Byte0));
 					V16_Byte1 = s.Serialize<byte>(V16_Byte1, name: nameof(V16_Byte1));
@@ -61,6 +61,7 @@ namespace UbiArt {
 				}
 				WrapModeU = (WrapMode)s.Serialize<byte>((byte)WrapModeU, name: nameof(WrapModeU));
 				WrapModeV = (WrapMode)s.Serialize<byte>((byte)WrapModeV, name: nameof(WrapModeV));
+				//s?.Context?.SystemLogger?.LogWarning($"{s.CurrentPointer} - {CompressionMode} - {unk0} - {ImagesCount} - {UnknownCRC:X8}");
 				Padding1 = s.Serialize<byte>(Padding1, name: nameof(Padding1));
 				Padding2 = s.Serialize<byte>(Padding2, name: nameof(Padding2));
 				if (Version > 10) {

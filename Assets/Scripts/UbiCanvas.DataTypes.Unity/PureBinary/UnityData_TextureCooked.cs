@@ -28,7 +28,7 @@ namespace UbiCanvas {
 							texture = CreateTextureFromPNG(data);
 							return texture;
 						} else {
-							if (LinkedObject.Header.CompressionType == 2 || LinkedObject.Header.CompressionType == 3) {
+							if (LinkedObject.Header.CompressionMode == 2 || LinkedObject.Header.CompressionMode == 3) {
 								// This is a PVR!
 								var pvr = new PVRImage(data);
 								texture = pvr.LoadIntoTexture();

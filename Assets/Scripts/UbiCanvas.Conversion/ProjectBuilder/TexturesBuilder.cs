@@ -28,12 +28,56 @@ namespace UbiCanvas.Conversion {
 
 					string uncookedPath = relativePath;
 					bool isDDS = uncookedPath.ToLowerInvariant().EndsWith(".dds");
+					bool isRGB = false;
 					uncookedPath = uncookedPath.Substring(0, uncookedPath.LastIndexOf('.'));
+					TextureCookedHeader.WrapMode wrapU = TextureCookedHeader.WrapMode.Repeat;
+					TextureCookedHeader.WrapMode wrapV = TextureCookedHeader.WrapMode.Repeat;
+					ImageMagick.FilterType mipmapMode = FilterType.Box;
 
-					// Check if this is a RGB texture that should be combined with an alpha texture
-					if(uncookedPath.ToLowerInvariant().EndsWith(".a"))
+					// Get various options from the extensions
+					while (uncookedPath.ToLowerInvariant().Contains(".")) {
+						var lower = uncookedPath.ToLowerInvariant();
+						var extIndex = lower.LastIndexOf(".") + 1;
+						var ext = lower.Substring(extIndex);
+						bool exitLoop = false;
+						switch (ext) {
+							case "mirror_u":
+								wrapU = TextureCookedHeader.WrapMode.Mirror;
+								break;
+							case "mirror_v":
+								wrapV = TextureCookedHeader.WrapMode.Mirror;
+								break;
+							case "clamp_u":
+								wrapU = TextureCookedHeader.WrapMode.Clamp;
+								break;
+							case "clamp_v":
+								wrapV = TextureCookedHeader.WrapMode.Clamp;
+								break;
+							case "mipmap_kaiser":
+								mipmapMode = FilterType.Kaiser;
+								break;
+							case "mipmap_point":
+								mipmapMode = FilterType.Point;
+								break;
+							case "mipmap_triangle":
+								mipmapMode = FilterType.Triangle;
+								break;
+							case "rgb":
+								isRGB = true;
+								break;
+							case "a":
+								exitLoop = true;
+								break;
+							default:
+								exitLoop = true;
+								break;
+						}
+						if (exitLoop)
+							break;
+						uncookedPath = uncookedPath.Substring(0, extIndex - 1);
+					}
+					if (uncookedPath.ToLowerInvariant().EndsWith(".a"))
 						continue;
-					bool isRGB = uncookedPath.ToLowerInvariant().EndsWith(".rgb");
 					string alphaPath = null;
 					if (isRGB) {
 						alphaPath = file.Replace(".rgb", ".a");
@@ -44,12 +88,10 @@ namespace UbiCanvas.Conversion {
 							var matchingFile = System.IO.Directory
 								.EnumerateFiles(dir, "*.*", System.IO.SearchOption.AllDirectories)
 								.FirstOrDefault(f => f.Substring(0, f.LastIndexOf('.')).ToLowerInvariant() == newAlphaPath);
-							if(matchingFile != null)
+							if (matchingFile != null)
 								alphaPath = matchingFile;
 						}
-						uncookedPath = uncookedPath.Substring(0, uncookedPath.LastIndexOf('.'));
 					}
-
 					if (!uncookedPath.ToLowerInvariant().EndsWith(".png") && !uncookedPath.ToLowerInvariant().EndsWith(".tga"))
 						uncookedPath = $"{uncookedPath}.tga";
 					var cookedPath = new Path(uncookedPath).CookedPath(TargetContext);
@@ -129,7 +171,7 @@ namespace UbiCanvas.Conversion {
 
 
 										CountPixels(img);
-										data = img.ExportDDSWithMipmaps();
+										data = img.ExportDDSWithMipmaps(filterType: mipmapMode);
 									}
 								}
 							} else {
@@ -140,7 +182,7 @@ namespace UbiCanvas.Conversion {
 									w = (ushort)img.Width;
 									h = (ushort)img.Height;
 									CountPixels(img);
-									data = img.ExportDDSWithMipmaps();
+									data = img.ExportDDSWithMipmaps(filterType: mipmapMode);
 								}
 							}
 						}
@@ -148,12 +190,12 @@ namespace UbiCanvas.Conversion {
 							Data = data,
 							Header = new TextureCookedHeader(TargetContext) {
 								BPP = 32,
-								CompressionType = 0,
+								CompressionMode = 0,
 								DataSize = (uint)data.Length,
 								DataSize2 = (uint)data.Length,
 								ImagesCount = 1,
-								WrapModeU = TextureCookedHeader.WrapMode.Repeat,
-								WrapModeV = TextureCookedHeader.WrapMode.Repeat,
+								WrapModeU = wrapU,
+								WrapModeV = wrapV,
 								UnknownCRC = 0xFFFFFFFF,
 								Width = w,
 								Height = h,

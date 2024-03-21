@@ -295,7 +295,7 @@ namespace UbiCanvas.Conversion {
 					tex.Header.DataSize = (uint)tex.Data.Length;
 					tex.Header.Width = w;
 					tex.Header.Height = h;
-					tex.Header.CompressionType = 0;
+					tex.Header.CompressionMode = 0;
 					tex.Header.DataSize2 = tex.Header.DataSize;
 				}
 			}
