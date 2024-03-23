@@ -1,10 +1,10 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class Unknown_COL_27_sub_8300F0 : ActorComponent {
+	public partial class COL_InventoryItemDrop_Data : CSerializable {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}
-		public override uint? ClassCRC => 0xE7493C74;
+		public override uint? ClassCRC => 0x0FF65B0E;
 	}
 }
 

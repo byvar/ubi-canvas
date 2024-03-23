@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_BezierBranchLightOrbChainLinkRendererComponent_Template : CSerializable {
+	public partial class COL_BezierBranchLightOrbChainLinkRendererComponent_Template : BezierBranchBaseRendererComponent_Template {
 		public float branchSpeed;
 		public float boundsOffset;
 		protected override void SerializeImpl(CSerializerObject s) {

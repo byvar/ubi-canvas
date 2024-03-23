@@ -28,9 +28,9 @@ namespace UbiArt.ITF {
 			public bool saveStatePersistentForNewGamePlus;
 
 			[Description("Event sent when we enter the state")]
-			public Generic<Event> onStartEvent;
+			public EventSender onStartEvent;
 			[Description("Event sent when we exit the state")]
-			public Generic<Event> onStopEvent;
+			public EventSender onStopEvent;
 			[Description("Animation played when we enter the state")]
 			public StringID onEnterAnim;
 			public Enum_clientAnimInputValue clientAnimInputValue;
@@ -42,8 +42,8 @@ namespace UbiArt.ITF {
 					saveState = s.Serialize<bool>(saveState, name: "saveState", options: CSerializerObject.Options.BoolAsByte);
 					saveStatePersistentForNewGamePlus = s.Serialize<bool>(saveStatePersistentForNewGamePlus, name: "saveStatePersistentForNewGamePlus", options: CSerializerObject.Options.BoolAsByte);
 
-					onStartEvent = s.SerializeObject<Generic<Event>>(onStartEvent, name: "onStartEvent");
-					onStopEvent = s.SerializeObject<Generic<Event>>(onStopEvent, name: "onStopEvent");
+					onStartEvent = s.SerializeObject<EventSender>(onStartEvent, name: "onStartEvent");
+					onStopEvent = s.SerializeObject<EventSender>(onStopEvent, name: "onStopEvent");
 					onEnterAnim = s.SerializeObject<StringID>(onEnterAnim, name: "onEnterAnim");
 					clientAnimInputValue = s.Serialize<Enum_clientAnimInputValue>(clientAnimInputValue, name: "clientAnimInputValue");
 

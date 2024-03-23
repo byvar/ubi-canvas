@@ -53,7 +53,7 @@ namespace UbiArt.Animation {
 			if (s.Settings.EngineVersion > EngineVersion.RO) {
 				skeleton = s.SerializeObject<pair<StringID, Path>>(skeleton, name: "skeleton");
 				texturePaths = s.SerializeObject<CListO<pair<StringID, Path>>>(texturePaths, name: "textures");
-				if (s.Settings.Game == Game.RL) {
+				if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 					bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 				}
 				bankId = s.Serialize<uint>(bankId, name: "bankId");

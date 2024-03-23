@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_SimplePatchComponent : CSerializable {
+	public partial class COL_SimplePatchComponent : PatchCurveComponent {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 		}

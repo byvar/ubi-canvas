@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_LightOrbChainComponent : CSerializable {
+	public partial class COL_LightOrbChainComponent : ActorComponent {
 		public float moveSpeed;
 		public bool useGlobalSpeedFactor;
 		public Trajectory trajectory;

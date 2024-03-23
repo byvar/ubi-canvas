@@ -29,6 +29,7 @@ namespace UbiArt.ITF {
 					cameraView = s.Serialize<uint>(cameraView, name: "cameraView");
 					ignoreAABB = s.Serialize<bool>(ignoreAABB, name: "ignoreAABB", options: CSerializerObject.Options.BoolAsByte);
 					zTolerance = s.Serialize<float>(zTolerance, name: "zTolerance");
+					CM = s.SerializeObject<CamModifier>(CM, name: "CM");
 				}
 				if (s.HasFlags(SerializeFlags.Flags_xC0)) {
 					localAABB = s.SerializeObject<AABB>(localAABB, name: "localAABB");

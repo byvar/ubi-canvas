@@ -1,5 +1,5 @@
 namespace UbiArt.ITF {
-	[Games(GameFlags.RL | GameFlags.RAVersion)]
+	[Games(GameFlags.LegendsAndUp)]
 	public partial class PhysForceModifier_Template : CSerializable {
 		public bool isRadial;
 		public Vec2d force;
@@ -14,7 +14,7 @@ namespace UbiArt.ITF {
 		public Angle angleOffset;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			if (s.Settings.Game == Game.RL) {
+			if (s.Settings.Game == Game.RL || s.Settings.Game == Game.COL) {
 				isRadial = s.Serialize<bool>(isRadial, name: "isRadial");
 				force = s.SerializeObject<Vec2d>(force, name: "force");
 				gradientPercentage = s.Serialize<float>(gradientPercentage, name: "gradientPercentage");

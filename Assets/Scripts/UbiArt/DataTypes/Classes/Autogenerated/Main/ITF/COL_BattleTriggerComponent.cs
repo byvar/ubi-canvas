@@ -1,7 +1,7 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
 	public partial class COL_BattleTriggerComponent : COL_BaseInteractiveComponent {
-		public Placeholder battleSetupsConfigOverride;
+		public COL_BattleSetupsConfig battleSetupsConfigOverride;
 		[Description("Ally CharacterId to force on the first spawn setup")]
 		public StringID forcedCharacterId_1;
 		[Description("Ally CharacterId to force on the second spawn setup")]
@@ -13,7 +13,7 @@ namespace UbiArt.ITF {
 		public bool useFleeBattlePosOffsetOverride;
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			battleSetupsConfigOverride = s.SerializeObject<Placeholder>(battleSetupsConfigOverride, name: "battleSetupsConfigOverride");
+			battleSetupsConfigOverride = s.SerializeObject<COL_BattleSetupsConfig>(battleSetupsConfigOverride, name: "battleSetupsConfigOverride");
 			forcedCharacterId_1 = s.SerializeObject<StringID>(forcedCharacterId_1, name: "forcedCharacterId_1");
 			forcedCharacterId_2 = s.SerializeObject<StringID>(forcedCharacterId_2, name: "forcedCharacterId_2");
 			bossItemReward = s.SerializeObject<StringID>(bossItemReward, name: "bossItemReward");

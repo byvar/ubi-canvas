@@ -1,6 +1,6 @@
 namespace UbiArt.ITF {
 	[Games(GameFlags.COL)]
-	public partial class COL_SpiderControllerComponent : CSerializable {
+	public partial class COL_SpiderControllerComponent : ActorComponent {
 		public float travelDistance;
 		public float idleDuration;
 		public float travelDurationUp;

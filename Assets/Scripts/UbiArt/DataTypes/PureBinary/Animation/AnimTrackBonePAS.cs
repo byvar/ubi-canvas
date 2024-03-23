@@ -8,14 +8,42 @@ namespace UbiArt.Animation {
 		public short scaleX;
 		public short scaleY;
 
+		public Bone3D angle3D;
+		public Bone3D pos3D;
+		public Bone3D pos2_3D;
+		public uint col_unknown;
+
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
-			frame = s.Serialize<ushort>(frame, name: "frame");
-			angle = s.Serialize<short>(angle, name: "angle");
-			posX = s.Serialize<short>(posX, name: "posX");
-			posY = s.Serialize<short>(posY, name: "posY");
-			scaleX = s.Serialize<short>(scaleX, name: "scaleX");
-			scaleY = s.Serialize<short>(scaleY, name: "scaleY");
+			if (s.Context.Settings.Game == Game.COL) {
+				frame = s.Serialize<ushort>(frame, name: nameof(frame));
+				angle3D = s.SerializeObject<Bone3D>(angle3D, name: nameof(angle3D));
+				pos3D = s.SerializeObject<Bone3D>(pos3D, name: nameof(pos3D));
+				pos2_3D = s.SerializeObject<Bone3D>(pos2_3D, name: nameof(pos2_3D));
+				scaleX = s.Serialize<short>(scaleX, name: nameof(scaleX));
+				scaleY = s.Serialize<short>(scaleY, name: nameof(scaleY));
+				col_unknown = s.Serialize<uint>(col_unknown, name: nameof(col_unknown));
+			} else {
+				frame = s.Serialize<ushort>(frame, name: nameof(frame));
+				angle = s.Serialize<short>(angle, name: nameof(angle));
+				posX = s.Serialize<short>(posX, name: nameof(posX));
+				posY = s.Serialize<short>(posY, name: nameof(posY));
+				scaleX = s.Serialize<short>(scaleX, name: nameof(scaleX));
+				scaleY = s.Serialize<short>(scaleY, name: nameof(scaleY));
+			}
+		}
+
+		public class Bone3D : CSerializable {
+			public short X { get; set; }
+			public short Y { get; set; }
+			public short Z { get; set; }
+
+			protected override void SerializeImpl(CSerializerObject s) {
+				base.SerializeImpl(s);
+				X = s.Serialize<short>(X, name: nameof(X));
+				Y = s.Serialize<short>(Y, name: nameof(Y));
+				Z = s.Serialize<short>(Z, name: nameof(Z));
+			}
 		}
 
 		public Vec2d Position {
