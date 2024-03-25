@@ -7,7 +7,6 @@ namespace UbiArt.Animation {
 		public uint templateIndex;
 		public byte numPoints;
 		public Link[] points = new Link[0];
-		public StringID sid;
 
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);

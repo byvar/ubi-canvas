@@ -60,7 +60,12 @@ namespace UbiArt.Animation {
 				scaleY = (short)(value.y / OneOverShortMax);
 			}
 		}
-		public Angle Rotation => angle * OneOverShortMax;
+		public Angle Rotation {
+			get => angle * OneOverShortMax;
+			set {
+				angle = (short)(value / OneOverShortMax);
+			}
+		}
 
 		public const float OneOverShortMax = 0.000030518f;
 

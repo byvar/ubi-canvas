@@ -58,9 +58,9 @@ namespace UbiArt.Animation {
 				bankId0 = s.Serialize<uint>(bankId0, name: "bankId0");
 			}
 			bankId = s.Serialize<uint>(bankId, name: "bankId");
-			if (bankId != 0) {
-				bank = s.SerializeObject<Nullable<AnimPolylineBank>>(bank, name: "bank");
-			}
+			//if (bankId != 0) {
+			bank = s.SerializeObject<Nullable<AnimPolylineBank>>(bank, name: "bank");
+			//}
 
 			/*
 			Example of what comes after bonesDyn:

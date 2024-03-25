@@ -9,8 +9,8 @@ namespace UbiArt.Animation {
 		protected override void SerializeImpl(CSerializerObject s) {
 			base.SerializeImpl(s);
 			uvsIndex = s.Serialize<ushort>(uvsIndex, name: "uvsIndex");
-			alpha1 = s.Serialize<byte>(alpha1, name: "mesh1");
-			alpha2 = s.Serialize<byte>(alpha2, name: "mesh2");
+			alpha1 = s.Serialize<byte>(alpha1, name: "alpha1");
+			alpha2 = s.Serialize<byte>(alpha2, name: "alpha2");
 			for (int i = 0; i < points.Length; i++) {
 				points[i] = s.SerializeObject<Vec2d>(points[i], name: $"points[{i}]");
 			}

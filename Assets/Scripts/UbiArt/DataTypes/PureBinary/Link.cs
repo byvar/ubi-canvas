@@ -33,5 +33,8 @@ namespace UbiArt {
 		public static bool operator !=(Link x, Link y) {
 			return !(x == y);
 		}
+
+		public Link() { }
+		public Link(uint link) { stringID = link; }
 	}
 }
