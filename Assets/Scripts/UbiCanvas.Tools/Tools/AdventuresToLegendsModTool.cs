@@ -148,6 +148,7 @@ namespace UbiCanvas.Tools
 			await new AtlasBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new HomeBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
+			await new AnimationsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
 			await new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Build();
@@ -161,6 +162,7 @@ namespace UbiCanvas.Tools
 			new AtlasBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new HomeBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			new LocalisationBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
+			new AnimationsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			if (fullClean) new TexturesBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			if (fullClean) new SoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
 			if (fullClean) new WwiseSoundsBuilder(UnitySettings.Tools_AdventuresToLegends_ProjectPath).Clean();
