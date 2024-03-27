@@ -1216,6 +1216,10 @@ namespace UbiCanvas.Conversion {
 						FixOneLumsChainSpawnMode(oldContext, newSettings, lc.Result);
 						break;
 					}
+				case "world_arcade/ra_common/ra_gym/ra_gym.isc": {
+						await CreateDevActors(oldContext, newSettings, scene);
+						break;
+					}
 				case "world/rlc_dojo/festivalofspeed/dojo_festivalofspeed_nmi.isc": {
 						ZiplineToRope_OnlyLeft(oldContext, newSettings, scene);
 						break;
@@ -4268,6 +4272,241 @@ namespace UbiCanvas.Conversion {
 				if(ball == null) continue;
 				ball.startWithHalo = true;
 			}
+		}
+
+		public async Task CreateDevActors(Context context, Settings newSettings, Scene scene) {
+			async Task<Actor> CreateDevActor(string devId, Vec2d position, bool flip, string idleAnim, string helloAnim, 
+				Vec2d animScale, float timeBeforeSpeak, params FairyNode.FairyText[] text) {
+				var devPath = $"world/custom/dev/{devId}/";
+				var templatePath = new Path($"{devPath}{devId}.tpl");
+				if (CreateTemplateIfNecessary(templatePath, "DEV", out var devTPL)) {
+					devTPL.sizeOf = 0x100000;
+
+					var animsPath = $"{devPath}animation/";
+					var skeletonPath = new Path($"{animsPath}{devId}.skl");
+					var texturePath = new Path($"{animsPath}{devId}.tga");
+					var pbkPath = new Path($"{animsPath}{devId}.pbk");
+					var actorName = pbkPath.GetFilenameWithoutExtension();
+					var bankId = new StringID(actorName);
+
+					var animTPL = devTPL.obj.AddComponent<AnimatedComponent_Template>();
+					animTPL.scale = animScale;
+					animTPL.animSet = new SubAnimSet_Template() {
+						animPackage = new AnimResourcePackage() {
+							skeleton = skeletonPath,
+							textureBank = new CListO<TextureBankPath>() {
+								new TextureBankPath() {
+									id = bankId,
+									patchBank = pbkPath,
+									materialShader = new Path("world/common/matshader/regularbuffer/backlighted.msh"),
+									textureSet = new GFXMaterialTexturePathSet() {
+										diffuse = texturePath
+									}
+								}
+							},
+							animPathAABB = new CListO<AnimPathAABB>(),
+							packed = true,
+							fromHD = true
+						},
+						animations = new CListO<SubAnim_Template>()
+					};
+					animTPL.tree = new AnimTree_Template() {
+						nodes = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>(),
+						nodeTransitions = new CListO<BlendTreeTransition_Template<AnimTreeResult>>(),
+					};
+
+					void AddAnim(string nodeName, string animName, bool loop) {
+						var animationPath = $"{animsPath}{animName}.anm";
+						animTPL.animSet.animPackage.animPathAABB.Add(new AnimPathAABB() {
+							name = animName,
+							path = new Path(animationPath),
+							aabb = new AABB() {
+								MIN = new Vec2d(-100, -100),
+								MAX = new Vec2d(100, 100),
+							},
+						});
+						animTPL.animSet.animations.Add(new SubAnim_Template() {
+							friendlyName = animName,
+							name = new Path(animationPath),
+							loop = loop,
+							forceZOffset = true,
+							forceZOffset2 = SubAnim_Template.BOOL._true,
+						});
+						/*
+						animTPL.tree.nodes.Add(new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+							nodeName = nodeName,
+							animationName = animName,
+						}));
+						 * */
+					}
+					animTPL.tree.nodes.Add(new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+						nodeName = "idle",
+						animationName = idleAnim,
+					}));
+					animTPL.tree.nodes.Add(new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodeSequence_Template() {
+						nodeName = "hello",
+						leafs = new CListO<Generic<BlendTreeNodeTemplate<AnimTreeResult>>>() {
+							new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+								nodeName = "hello_hello",
+								animationName = helloAnim,
+							}),
+							new Generic<BlendTreeNodeTemplate<AnimTreeResult>>(new AnimTreeNodePlayAnim_Template() {
+								nodeName = "hello_idle",
+								animationName = idleAnim,
+							})
+						}
+					}));
+					animTPL.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
+						blend = 5,
+						from = new CArrayO<StringID>() { "idle" },
+						to = new CArrayO<StringID>() { "hello" }
+					});
+					animTPL.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
+						blend = 5,
+						from = new CArrayO<StringID>() { "hello_hello" },
+						to = new CArrayO<StringID>() { "hello_idle" },
+						blendFromTransition = 0
+					});
+					animTPL.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
+						blend = 10,
+						from = new CArrayO<StringID>() { "hello_hello" },
+						to = new CArrayO<StringID>() { "idle" },
+						blendFromTransition = 10
+					});
+					animTPL.tree.nodeTransitions.Add(new BlendTreeTransition_Template<AnimTreeResult>() {
+						blend = 10,
+						from = new CArrayO<StringID>() { "hello_idle" },
+						to = new CArrayO<StringID>() { "idle" },
+						blendFromTransition = 10
+					});
+					AddAnim("hello", helloAnim, false);
+					AddAnim("idle", idleAnim, true);
+					animTPL.defaultAnimation = "idle";
+
+					var playAnimOnTrig = devTPL.obj.AddComponent<PlayAnimOnTriggerComponent_Template>();
+					playAnimOnTrig.triggerOnAnim = "hello";
+					playAnimOnTrig.triggerOffAnim = "idle";
+
+					var diactTPL = devTPL.obj.AddComponent<DialogActorComponent_Template>();
+					diactTPL.balloonPath = new Path("world/common/logicactor/dialog/balloon/dialogballoon_character.act");
+					diactTPL.balloon3DPath = new Path("world/common/logicactor/dialog/balloon/dialogballoon3d_character.act");
+				}
+
+				var dev = devTPL.obj.Instantiate(templatePath);
+				MainContext.Loader.AddLoadedActor(dev);
+				scene.AddActor(dev);
+				dev.POS2D = position;
+				dev.xFLIPPED = flip;
+
+				var diact = dev.GetComponent<DialogActorComponent>();
+				diact.enableDialog = true;
+				diact.is3D = true;
+				diact.widthTextAreaMax = 5f;
+				diact.offset = new Vec2d(0f, 2.5f);
+
+				var trig = await AddNewActor(scene, new Path("world/common/logicactor/trigger/components/trigger_box.tpl"));
+				TransformAABB(trig, new AABB() {
+					MIN = dev.POS2D + Vec2d.Up * 2.5f - new Vec2d(5, 5),
+					MAX = dev.POS2D + Vec2d.Up * 2.5f + new Vec2d(5, 5)
+				});
+				trig.GetComponent<TriggerComponent>().mode = TriggerComponent.Mode.Multiple;
+				trig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath(dev.USERFRIENDLY)
+				});
+				if (CloneTemplateIfNecessary(trig.LUA, "onoff", "ON/OFF", trig.template, out var newTrigTPL, act: trig)) {
+					newTrigTPL.sizeOf += 0x1000;
+					var tr = newTrigTPL.obj.GetComponent<TriggerComponent_Template>();
+					tr.onExitEvent = new Generic<UbiArt.ITF.Event>(new EventTrigger() { activated = false });
+					//tr.onEnterEvent = new Generic<UbiArt.ITF.Event>(new EventStartDialog());
+					//tr.onExitEvent = new Generic<UbiArt.ITF.Event>(new EventBreakDialog());
+				}
+
+				// Add captain dialogue
+				var dialogueTPLPath = new Path($"world/custom/intro/captain_dialogue.tpl");
+				if (CreateTemplateIfNecessary(dialogueTPLPath, "INTRO ACTOR", out var dialogueTPL)) {
+					dialogueTPL.obj.AddComponent<LinkComponent_Template>();
+					var d = dialogueTPL.obj.AddComponent<DialogComponent_Template>();
+					d.activeOnTrigger = true;
+					d.useOasis = true; // Localized
+					d.replaceSpeakersByActivator = false;
+					d.instructionList = new CArrayO<Generic<InstructionDialog>>();
+					if (timeBeforeSpeak > 0) {
+						d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogWait() { time = timeBeforeSpeak }));
+					}
+					foreach (var l in text) {
+						if (l.WaitTime > 0) {
+							d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogWait() {
+								time = l.WaitTime
+							}));
+						}
+						if (l.FocusCam) {
+							d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogCam() {
+								typeCamera = InstructionDialogCam.Enum_typeCamera.dialog
+							}));
+						}
+						d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogText() {
+							actorName = dev.USERFRIENDLY,
+							mood = 4,
+							sizeText = l.TextSize / 1.5f,
+							text = l.Text,
+							idLoc = l.Id,
+						}));
+						if (l.FocusCam) {
+							d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogCam() {
+								typeCamera = InstructionDialogCam.Enum_typeCamera.engine
+							}));
+						}
+						d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogWait()));
+					}
+					d.instructionList.Add(new Generic<InstructionDialog>(new InstructionDialogStop()));
+				}
+				var dialogueActor = dialogueTPL.obj.Instantiate(dialogueTPLPath);
+				dialogueActor.POS2D = dev.POS2D;
+				var dialogueActorD = dialogueActor.GetComponent<DialogComponent>();
+				dialogueActorD.playOnce = false;
+				dialogueActorD.loop = true;
+				dialogueActorD.endTime_Default = 2f;
+				dialogueActorD.endTime_Accel = 1.75f;
+				dialogueActorD.wordTime_Default /= 1.5f;
+				dialogueActorD.wordTime_Accel /= 1.5f;
+				scene.AddActor(dialogueActor);
+				dialogueActor.parentBind = new UbiArt.Nullable<Bind>(new Bind() {
+					parentPath = new ObjectPath(dev.USERFRIENDLY),
+				});
+				var dialogueLinks = dialogueActor.GetComponent<LinkComponent>();
+				dialogueLinks.Children.Add(new ChildEntry() {
+					Path = new ObjectPath(dev.USERFRIENDLY),
+				});
+				trig.GetComponent<LinkComponent>().Children.Add(new ChildEntry() {
+					Path = new ObjectPath(dialogueActor.USERFRIENDLY)
+				});
+
+				// Add camera modifier
+				var cm = await AddNewActor(scene, new Path("world/common/camera/camera/components/cameramodifier.tpl"), contextToLoadFrom: LegendsContext);
+				var cmc = cm.GetComponent<CameraModifierComponent>();
+				cmc.localAABB = new AABB() {
+					MIN = -Vec2d.One * 0.5f,
+					MAX = Vec2d.One * 0.5f,
+				};
+				cmc.CM = new();
+				cmc.CM.lookAtOffsetZ = 9;
+				cmc.CM.lookAtOffsetMaxZ = 11;
+				//cmc.CM.lookAtOffsetMaxY = 1.5f;
+				//cmc.CM.lookAtOffsetY = 3f;
+				cmc.CM.modifierPriority = 5;
+				cmc.CM.constraintTopIsActive = true;
+				cmc.CM.constraintBottomIsActive = true;
+				TransformAABB(cm, new AABB() {
+					MIN = dev.POS2D + Vec2d.Up * 2.5f - new Vec2d(13, 9),
+					MAX = dev.POS2D + Vec2d.Up * 2.5f + new Vec2d(13, 9)
+				});
+
+				return dev;
+			}
+			await CreateDevActor("blue", new Vec2d(-20f, -0.9f), true, 
+				"anm_idle", "anm_notice", Vec2d.One / 450f, 1f,
+				new FairyNode.FairyText(80100, "<DEV_BLUE_1>"),
+				new FairyNode.FairyText(80101, "<DEV_BLUE_2>"));
 		}
 
 		public class FairyNode {

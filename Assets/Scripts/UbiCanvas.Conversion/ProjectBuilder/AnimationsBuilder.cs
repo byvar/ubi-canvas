@@ -53,8 +53,6 @@ namespace UbiCanvas.Conversion {
 
 					#region Skeleton
 					currentLink = 1;
-					var drawOrder = new Skeleton(skeletonData).DrawOrder;
-					List<string> boneDrawOrder = drawOrder.Select(s => s.Bone.Data.Name).ToList();
 
 					// Create skeleton
 					var skeleton = new AnimSkeleton() {
@@ -83,14 +81,14 @@ namespace UbiCanvas.Conversion {
 						skeleton.boneTags.Add(b.Name);
 						skeleton.boneTags2.Add($"BoneTag2_{b.Name}");
 
-						var drawIndex = boneDrawOrder.IndexOf(b.Name);
+						//var drawIndex = boneDrawOrder.IndexOf(b.Name);
 
 						var boneDyn = new AnimBoneDyn() {
 							position = new Vec2d(b.X, -b.Y),
 							angle = new Angle(b.Rotation, degrees: true),
 							scale = new Vec2d(/*b.Length **/ b.ScaleX, b.ScaleY),
 							float6 = 1,
-							z = drawIndex// / (float)skeletonData.Bones.Count
+							z = 0 //drawIndex// / (float)skeletonData.Bones.Count
 						};
 						//UnityEngine.Debug.Log($"{b.Name}: {boneDyn.position} - {boneDyn.angle}");
 						skeleton.bonesDyn.Add(boneDyn);
@@ -112,6 +110,9 @@ namespace UbiCanvas.Conversion {
 						},
 						templates = new CListO<AnimTemplate>()
 					};
+					var drawOrder = new Skeleton(skeletonData).DrawOrder;
+					var slotDrawOrder = drawOrder.Select(s => s.Data.Index).ToList();
+
 					var skin = skeletonData.DefaultSkin;
 					foreach (var att in skin.Attachments) {
 						var slot = skeletonData.Slots.ElementAt(att.SlotIndex);
@@ -142,7 +143,7 @@ namespace UbiCanvas.Conversion {
 									angle = 0f,
 									scale = new Vec2d(1f, 1f), // Should this change?
 									float6 = 1,
-									z = 0f
+									z = slotDrawOrder.IndexOf(slot.Index) //) / (float)slotDrawOrder.Count
 								}
 							},
 							patches = new CListO<AnimPatch>() {
@@ -172,13 +173,7 @@ namespace UbiCanvas.Conversion {
 							var uv = new Vec2d(region.UVs[pi * 2], region.UVs[pi * 2 + 1]);
 							var pos = new Vec2d(region.Offset[pi * 2], region.Offset[pi * 2 + 1]);
 							if (region.Region is AtlasRegion ar) {
-								uv = pi switch {
-									UL => new Vec2d(ar.u, ar.v),
-									UR => new Vec2d(ar.u2, ar.v),
-									BL => new Vec2d(ar.u, ar.v2),
-									BR => new Vec2d(ar.u2, ar.v2),
-									_ => uv
-								};
+								// Calculate UV
 								if (ar.degrees == 90) {
 									// Uvs are rotated
 									uv = pi switch {
@@ -188,12 +183,36 @@ namespace UbiCanvas.Conversion {
 										BR => new Vec2d(ar.u2, ar.v),
 										_ => uv
 									};
+								} else {
+									uv = pi switch {
+										UL => new Vec2d(ar.u, ar.v),
+										UR => new Vec2d(ar.u2, ar.v),
+										BL => new Vec2d(ar.u, ar.v2),
+										BR => new Vec2d(ar.u2, ar.v2),
+										_ => uv
+									};
+								}
+
+								// Calculate position
+								var minPos = new Vec2d(-region.Width, -region.Height) / 2;
+								var maxPos = new Vec2d(region.Width, region.Height) / 2;
+								minPos += new Vec2d(
+									ar.offsetX / ar.originalWidth * region.Width,
+									ar.offsetY / ar.originalHeight * region.Height);
+								if (ar.degrees == 90) {
+									maxPos -= new Vec2d(
+										(ar.originalWidth - ar.offsetX - ar.packedHeight) / ar.originalWidth * region.Width,
+										(ar.originalHeight - ar.offsetY - ar.packedWidth) / ar.originalHeight * region.Height);
+								} else {
+									maxPos -= new Vec2d(
+										(ar.originalWidth - ar.offsetX - ar.packedWidth) / ar.originalWidth * region.Width,
+										(ar.originalHeight - ar.offsetY - ar.packedHeight) / ar.originalHeight * region.Height);
 								}
 								pos = pi switch {
-									UL => new Vec2d(-region.Width, region.Height) / 2f,
-									UR => new Vec2d(region.Width, region.Height) / 2f,
-									BL => new Vec2d(-region.Width, -region.Height) / 2f,
-									BR => new Vec2d(region.Width, -region.Height) / 2f,
+									UL => new Vec2d(minPos.x, maxPos.y),
+									UR => new Vec2d(maxPos.x, maxPos.y),
+									BL => new Vec2d(minPos.x, minPos.y),
+									BR => new Vec2d(maxPos.x, minPos.y),
 									_ => pos
 								};
 								pos *= new Vec2d(region.ScaleX, region.ScaleY);
@@ -229,7 +248,7 @@ namespace UbiCanvas.Conversion {
 						var spineSkeleton = new Skeleton(skeletonData);
 						var animationPath = $"{uncookedFolder}/{anm.Name}.anm";
 						animationPaths.Add(new Path(animationPath));
-						var fps = 30f;
+						var fps = 60f;
 						int frames = (int)MathF.Floor(anm.Duration * fps);
 						var animation = new AnimTrack() {
 							version = AnimTrack.VersionLegends,
@@ -313,9 +332,26 @@ namespace UbiCanvas.Conversion {
 								rot -= new Angle(b.Data.Rotation, degrees: true);
 								scl /= new Vec2d(b.Data.ScaleX, b.Data.ScaleY);
 
-								bf.Position.Add(pos);
-								bf.Angle.Add(rot);
-								bf.Scale.Add(scl);
+								var f = new BoneFrame() {
+									Frame = i,
+									Position = pos,
+									Angle = rot,
+									Scale = scl
+								};
+								var lastFrame = bf.Frames.LastOrDefault();
+								if (lastFrame == null || !lastFrame.Matches(f)) {
+									if (lastFrame != null && lastFrame.Frame != (i - 1)) {
+										// Current frame does not match last and is more than 1 frame beforet his one
+										// So we have to add a new keyframe here to keep the game from interpolating
+										bf.Frames.Add(new BoneFrame() {
+											Frame = i - 1,
+											Position = lastFrame.Position,
+											Angle = lastFrame.Angle,
+											Scale = lastFrame.Scale
+										});
+									}
+									bf.Frames.Add(f);
+								}
 								bi++;
 							}
 
@@ -323,9 +359,9 @@ namespace UbiCanvas.Conversion {
 						}
 
 						// Calculate PAS multipliers
-						var positions = boneFrames.SelectMany(bf => bf.Position);
-						var scales = boneFrames.SelectMany(bf => bf.Scale);
-						var angles = boneFrames.SelectMany(bf => bf.Angle);
+						var positions = boneFrames.SelectMany(bf => bf.Frames.Select(f => f.Position));
+						var scales = boneFrames.SelectMany(bf => bf.Frames.Select(f => f.Scale));
+						var angles = boneFrames.SelectMany(bf => bf.Frames.Select(f => f.Angle));
 						var positionMultiplier = positions.Max(p => MathF.Max(MathF.Abs(p.x), MathF.Abs(p.y))) + 0.5f;
 						var scaleMultiplier = scales.Max(p => MathF.Max(MathF.Abs(p.x), MathF.Abs(p.y))) + 0.5f;
 						var angleMultiplier = angles.Max(a => MathF.Abs(a)) + 0.5f;
@@ -333,20 +369,22 @@ namespace UbiCanvas.Conversion {
 						animation.multiplierP = positionMultiplier;
 						animation.multiplierS = scaleMultiplier;
 						foreach (var bf in boneFrames) {
-							bf.Position = bf.Position.Select(p => p / positionMultiplier).ToList();
-							bf.Scale = bf.Scale.Select(s => s / scaleMultiplier).ToList();
-							bf.Angle = bf.Angle.Select(a => new Angle(a / angleMultiplier)).ToList();
+							foreach (var f in bf.Frames) {
+								f.Position = f.Position / positionMultiplier;
+								f.Scale = f.Scale / scaleMultiplier;
+								f.Angle = new Angle(f.Angle / angleMultiplier);
+							}
 
 							animation.bonesLists.Add(new AnimTrackBonesList() {
 								startPAS = (ushort)animation.bonePAS.Count,
-								amountPAS = (ushort)bf.Position.Count
+								amountPAS = (ushort)bf.Frames.Count
 							});
-							for (int i = 0; i < frames; i++) {
+							foreach (var f in bf.Frames) {
 								animation.bonePAS.Add(new AnimTrackBonePAS() {
-									frame = (ushort)i,
-									Position = bf.Position[i],
-									Rotation = bf.Angle[i],
-									Scale = bf.Scale[i],
+									frame = (ushort)f.Frame,
+									Position = f.Position,
+									Rotation = f.Angle,
+									Scale = f.Scale,
 								});
 							}
 						}
@@ -440,9 +478,20 @@ namespace UbiCanvas.Conversion {
 		}
 
 		private class BoneFrames {
-			public List<Vec2d> Position { get; set; } = new List<Vec2d>();
-			public List<Angle> Angle { get; set; } = new List<Angle>();
-			public List<Vec2d> Scale { get; set; } = new List<Vec2d>();
+			public List<BoneFrame> Frames { get; set; } = new List<BoneFrame>();
+		}
+		private class BoneFrame {
+			public int Frame { get; set; }
+			public Vec2d Position { get; set; }
+			public Angle Angle { get; set; }
+			public Vec2d Scale { get; set; }
+
+			public bool Matches(BoneFrame frame) {
+				if (frame.Position != Position) return false;
+				if (frame.Angle != Angle) return false;
+				if (frame.Scale != Scale) return false;
+				return true;
+			}
 		}
 	}
 }
